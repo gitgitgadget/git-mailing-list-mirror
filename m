@@ -2,167 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 298E8C433FE
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 09:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B2DDC433EF
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:03:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11E5760E76
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 09:49:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5933D60E94
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:03:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241471AbhIFJuq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 05:50:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54174 "EHLO
+        id S241731AbhIFKEz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 06:04:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237787AbhIFJuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 05:50:44 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700D6C061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 02:49:40 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id n5so8906519wro.12
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 02:49:40 -0700 (PDT)
+        with ESMTP id S241464AbhIFKEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 06:04:55 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F87AC061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 03:03:50 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id i6so8833145edu.1
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 03:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=y8vfbbSdA0kLChkQx0/LEskvJ0AhAyn340gprNDtqpk=;
-        b=CswTMwJPcTwRuNPbyqaK1uj6fgXFXBWz5n2LhTEeBdrVWv4dEZJuSbX51kug8nn9lc
-         LQPLwHv1QVZtGuF/whWQT4YsNaLHAptJo3MZs2EeiRPWNRMEio2WBWxCT36//sLExko5
-         tI8c0vEeIzz62kOu/1JzaDthM8QVmoD4gIjxIZe6VY/YNplxWJJMiIgfAOPebsaZ5dex
-         jjGfiA/6u+Cj/UWgMJdBJfFhMNhWLX7ZWuw7+pJ/XShoFB2t1G0j3XAnN7xlj90zo/It
-         KJxPqNxl54zpZ1bys+A5xD1Qho1yCkB4ZgzIMmRDjt/lowdBzgl+Cb8A7L4bKcnRLVey
-         cf5Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=2h1TYyvsaKQ/w0yeBxsRVtYz1LaDYwbMSjeLKxuKkLY=;
+        b=l/kx1ktYJJae7TFTwsgxrw8NJtcFH3xJUTCGpvqsTctp+TQcMtTtaqOFJ0gGTQE2Bq
+         ItFHrm9NTpTpvQJCGhu6EzSqCFZKxApwJ5DOT1Qrj/dZQSezDztKPkWOaRzCnUiqomp5
+         XXveULempg1Bt4l85C0Y2NFCOysAHr71wyQ2NpNM7UGZOUI9Kz6bKtPHL/YPKJ/Vz1IL
+         gxvKw6movZ+FtlNqu4XoO4PYonOolc0mEPayTHkIFfgCu2gBFM5H9HvKb2V/yHLavPsF
+         WEtB7U2wcPDhy0bKbPuj+lx6sNH7kGsV8ChcsKA7ksxtZhcZ8F6km+8SmPODqa42qJcb
+         15ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=y8vfbbSdA0kLChkQx0/LEskvJ0AhAyn340gprNDtqpk=;
-        b=DY+W9tgU5FpUOE7/ZGUzIiO1n0IcAF7LtN7lB7V1E6Lw++o+wKXsI1mByFArTb8okE
-         uNEeDwdYwxDiffAf33KC7VqBslPqV64RJxOYt11+Q5u4oC+t9Xt1yEiE0xhoxKmorE5K
-         S7M4DxKknIamdusBd5eyJHVAxHIrMywl4ZYFGWyjKhbH8M6JHJfmoTuOR9BbYfH8KtY0
-         V5RC/dji2nqLftPqpk+V3c486DQUDk/+zrv6Gh1XnFVl9r3NYMf/h8B2yw4nkjOEi/xq
-         ljQljW/P0ULYxEBtyoxCWq4nsREKg5creu+LWhSsMa0pMGrwh9nP69QhU6Guy98K4tiQ
-         r+SQ==
-X-Gm-Message-State: AOAM532GAlc5/r48jaHb3Pist0JYtHlIC0MQD4wBCjIQXmP3mnvuqFIG
-        h1IFqJ0w+QiT0pYvMJ7ECFs=
-X-Google-Smtp-Source: ABdhPJzavzbZEVS0AHF9Fmjt79aoEBIOdwrQ1DBxcQAx9I6eSizsw7Bjupj/iCHiNcmlEkq0K7eTQQ==
-X-Received: by 2002:a5d:410b:: with SMTP id l11mr12536309wrp.76.1630921779073;
-        Mon, 06 Sep 2021 02:49:39 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.254])
-        by smtp.gmail.com with ESMTPSA id o18sm6565084wra.78.2021.09.06.02.49.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Sep 2021 02:49:38 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/7] git-sh-setup: remove unused git_pager() function
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>, Prathamesh Chavan <pc44800@gmail.com>,
-        Peter Baumann <peter.baumann@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-References: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
- <cover-v2-0.7-00000000000-20210906T070201Z-avarab@gmail.com>
- <patch-v2-1.7-8eb1dfbff5d-20210906T070201Z-avarab@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <55293c43-811b-b030-9512-7525f5ebfd12@gmail.com>
-Date:   Mon, 6 Sep 2021 10:49:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=2h1TYyvsaKQ/w0yeBxsRVtYz1LaDYwbMSjeLKxuKkLY=;
+        b=hNfo2+OEgmqsNRKkz215STyBb76HizB2eVoU2wCgdAmbruuITh3PyxzRzMdYxUWA7g
+         FrPdMm8VhAv+k3a03v2vyCUyR/6A+krLDBWQJqp3qkko/XeUkc8fauk9IiB+3P7jRURj
+         aMGJTzrJKNfSp+nYrFLG3KPm4shP5xhWre9vKvdmBP386SUKe8mRJU2iQiMNfTlWFJ44
+         RM1oaUDd7nO8XDsMmVUWlx9ryEq1pkNHMhBa5mPt3hvQea16mSUdsyiLRrA0fZY9gbQa
+         bHP42JKFKOt8zcguW2bXnl6Tm6moYU6wPU4I4qr+RYd81uGGj49vkiCK0CU435By0yCM
+         Tgvw==
+X-Gm-Message-State: AOAM533U2S562atx5hfc42ZUhLzV2jpfpGrYbNjfqOxfLB6CYIEY4H6t
+        SP2ltM1mOZ6jf5qr56xu+no=
+X-Google-Smtp-Source: ABdhPJwoLrj/KzE0x6I6lwmOcWvFlWKm7PPaVmIuJZyAKpFAjvPClgLis/OJp4F65FoPY1wPdJ8A+w==
+X-Received: by 2002:aa7:d487:: with SMTP id b7mr12240435edr.61.1630922628943;
+        Mon, 06 Sep 2021 03:03:48 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s23sm4295641eds.12.2021.09.06.03.03.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Sep 2021 03:03:48 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
+Date:   Mon, 06 Sep 2021 12:02:26 +0200
+References: <xmqq35qmiofp.fsf@gitster.g>
+ <CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com>
+Message-ID: <87tuiynhq4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <patch-v2-1.7-8eb1dfbff5d-20210906T070201Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
 
-On 06/09/2021 08:05, Ævar Arnfjörð Bjarmason wrote:
-> Remove the git_pager() function last referenced by non-test code in
-> 49eb8d39c78 (Remove contrib/examples/*, 2018-03-25).
-> 
-> We can also remove the test for this added in 995bc22d7f8 (pager: move
-> pager-specific setup into the build, 2016-08-04), the test that
-> actually matters is the one added in e54c1f2d253 (pager: set LV=-c
-> alongside LESS=FRSX, 2014-01-06) just above the removed test.
-> 
-> I.e. we don't care if the "LESS" and "LV" variables are set by
-> git-sh-setup anymore, no built-in uses them, we do care that pager.c
-> sets them, which we still test for.
+On Mon, Sep 06 2021, Carlo Arenas wrote:
 
-git_pager() might not be documented but I think it is useful for script 
-authors and I wouldn't be surprised if someone out there is using it. 
-The same goes for peel_committish(). It does not seem like a huge 
-maintenance burden to keep and maybe document these two functions.
+>> * fs/ssh-signing (2021-08-29) 9 commits
+>>  - ssh signing: test that gpg fails for unknown keys
+>>  - ssh signing: tests for logs, tags & push certs
+>>  - ssh signing: duplicate t7510 tests for commits
+>>  - ssh signing: verify signatures using ssh-keygen
+>>  - ssh signing: provide a textual signing_key_id
+>>  - ssh signing: retrieve a default key from ssh-agent
+>>  - ssh signing: add ssh key format and signing code
+>>  - ssh signing: add test prereqs
+>>  - ssh signing: preliminary refactoring and clean-up
+>>
+>>  Use ssh public crypto for object and push-cert signing.
+>>
+>>  Will merge to 'next'.
+>
+> This is causing ssh-keygen from OpenSSH 8.7 to segfault,
+> would it be reasonable to hold it until they get a chance to fix that?
+>
+> Carlo
+>
+> PS. provided them with a patch, and crash is reproducible with the tests
 
-Best Wishes
+Per my <87tuj7xhqo.fsf@evledraar.gmail.com:
+    
+    I'm also interested in this one. My reading of
+    <9075cdd1-e34d-5dcb-f2b8-69ae4abf587b@gigacodes.de> is that the author
+    plans to re-roll it sometimes around mid-September. I personally punted
+    on reviewing the current version while waiting for that.
 
-Phillip
-
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   git-sh-setup.sh  | 16 ----------------
->   t/t7006-pager.sh | 13 -------------
->   2 files changed, 29 deletions(-)
-> 
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 10d97641856..7ee4b0edff5 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -157,22 +157,6 @@ git_editor() {
->   	eval "$GIT_EDITOR" '"$@"'
->   }
->   
-> -git_pager() {
-> -	if test -t 1
-> -	then
-> -		GIT_PAGER=$(git var GIT_PAGER)
-> -	else
-> -		GIT_PAGER=cat
-> -	fi
-> -	for vardef in @@PAGER_ENV@@
-> -	do
-> -		var=${vardef%%=*}
-> -		eval ": \"\${$vardef}\" && export $var"
-> -	done
-> -
-> -	eval "$GIT_PAGER" '"$@"'
-> -}
-> -
->   sane_grep () {
->   	GREP_OPTIONS= LC_ALL=C grep @@SANE_TEXT_GREP@@ "$@"
->   }
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> index 0e7cf75435e..08f712a4497 100755
-> --- a/t/t7006-pager.sh
-> +++ b/t/t7006-pager.sh
-> @@ -49,19 +49,6 @@ test_expect_success TTY 'LESS and LV envvars are set for pagination' '
->   	grep ^LV= pager-env.out
->   '
->   
-> -test_expect_success !MINGW,TTY 'LESS and LV envvars set by git-sh-setup' '
-> -	(
-> -		sane_unset LESS LV &&
-> -		PAGER="env >pager-env.out; wc" &&
-> -		export PAGER &&
-> -		PATH="$(git --exec-path):$PATH" &&
-> -		export PATH &&
-> -		test_terminal sh -c ". git-sh-setup && git_pager"
-> -	) &&
-> -	grep ^LESS= pager-env.out &&
-> -	grep ^LV= pager-env.out
-> -'
-> -
->   test_expect_success TTY 'some commands do not use a pager' '
->   	rm -f paginated.out &&
->   	test_terminal git rev-list HEAD &&
-> 
+I see it's made it to 'next' already though...
