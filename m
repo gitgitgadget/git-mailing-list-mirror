@@ -2,105 +2,236 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B2DDC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A85CC433EF
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:10:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5933D60E94
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:03:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24C6C6101C
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 10:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241731AbhIFKEz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 06:04:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57536 "EHLO
+        id S241801AbhIFKLX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 06:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241464AbhIFKEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 06:04:55 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F87AC061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 03:03:50 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id i6so8833145edu.1
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 03:03:50 -0700 (PDT)
+        with ESMTP id S241751AbhIFKLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 06:11:22 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A198C061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 03:10:18 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id n5so8998187wro.12
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 03:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=2h1TYyvsaKQ/w0yeBxsRVtYz1LaDYwbMSjeLKxuKkLY=;
-        b=l/kx1ktYJJae7TFTwsgxrw8NJtcFH3xJUTCGpvqsTctp+TQcMtTtaqOFJ0gGTQE2Bq
-         ItFHrm9NTpTpvQJCGhu6EzSqCFZKxApwJ5DOT1Qrj/dZQSezDztKPkWOaRzCnUiqomp5
-         XXveULempg1Bt4l85C0Y2NFCOysAHr71wyQ2NpNM7UGZOUI9Kz6bKtPHL/YPKJ/Vz1IL
-         gxvKw6movZ+FtlNqu4XoO4PYonOolc0mEPayTHkIFfgCu2gBFM5H9HvKb2V/yHLavPsF
-         WEtB7U2wcPDhy0bKbPuj+lx6sNH7kGsV8ChcsKA7ksxtZhcZ8F6km+8SmPODqa42qJcb
-         15ww==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=w8l7W0qIUZVITH+8XLWYA1GItwcvdb/1rnJC+yNnIgY=;
+        b=PYktSo3bnNj8o1ycOALV+h92k/el17LHdtpK0LtIeTcjozuFM3pXjrMHJZn6ABYG/x
+         jRlNS/ZzWQarNLCnTINL0yTI7QvslxWZhHjUHyuR4Tjg7tdgnLfhKbg2sHtWTXnOHUY0
+         SX9acqztcOAI7wVf0QmiHO+RyAIkB35UwYPsqxb5Qlk3s+ETW4T2HVoCfbqSBpN8CIHp
+         ySmwreqIAyG3IDioQhpjYU9A0B3/nKddhNHtrTuTeLH4yUu/SG+vcqN6UMkLygkMX4nJ
+         e2JQvEuBccbirNn9A2panf6qKyfpKyQmpfpl6VpCu7Vbew3JE0gRIFEllkpo+ZNNd19W
+         3FJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=2h1TYyvsaKQ/w0yeBxsRVtYz1LaDYwbMSjeLKxuKkLY=;
-        b=hNfo2+OEgmqsNRKkz215STyBb76HizB2eVoU2wCgdAmbruuITh3PyxzRzMdYxUWA7g
-         FrPdMm8VhAv+k3a03v2vyCUyR/6A+krLDBWQJqp3qkko/XeUkc8fauk9IiB+3P7jRURj
-         aMGJTzrJKNfSp+nYrFLG3KPm4shP5xhWre9vKvdmBP386SUKe8mRJU2iQiMNfTlWFJ44
-         RM1oaUDd7nO8XDsMmVUWlx9ryEq1pkNHMhBa5mPt3hvQea16mSUdsyiLRrA0fZY9gbQa
-         bHP42JKFKOt8zcguW2bXnl6Tm6moYU6wPU4I4qr+RYd81uGGj49vkiCK0CU435By0yCM
-         Tgvw==
-X-Gm-Message-State: AOAM533U2S562atx5hfc42ZUhLzV2jpfpGrYbNjfqOxfLB6CYIEY4H6t
-        SP2ltM1mOZ6jf5qr56xu+no=
-X-Google-Smtp-Source: ABdhPJwoLrj/KzE0x6I6lwmOcWvFlWKm7PPaVmIuJZyAKpFAjvPClgLis/OJp4F65FoPY1wPdJ8A+w==
-X-Received: by 2002:aa7:d487:: with SMTP id b7mr12240435edr.61.1630922628943;
-        Mon, 06 Sep 2021 03:03:48 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s23sm4295641eds.12.2021.09.06.03.03.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Sep 2021 03:03:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
-Date:   Mon, 06 Sep 2021 12:02:26 +0200
-References: <xmqq35qmiofp.fsf@gitster.g>
- <CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com>
-Message-ID: <87tuiynhq4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=w8l7W0qIUZVITH+8XLWYA1GItwcvdb/1rnJC+yNnIgY=;
+        b=n9DJqI2JlirXTfIWxOrIhQnv+2zncgDycoBunRXGMzk0lxCP8w9jRsC0xIqoVPhjSN
+         W4AV4+A452h+4Y0i0ABJ6eTKXhue3d4MOlQsJJBzUC/hohK+RmMv4/9OeBew1WiQy1cd
+         bAxDL57mx7SpyqTxiuksshFCtyodhXZnhZymBnjS5pnWWN+Gd6ueZ9AGNIKkL27BiUxI
+         QAWWLwxvuUai8/yvmoW7VNRQPLEywV28hkKOeZw1WRMW6BIPQA+dzPE6EmEbz1EEuzWq
+         8xd8dWQWzpZtYjxKS4rbRKCa1piZuUIcatB/z4fXIGO7+EgJRPTXJEr6AkA2qsL4xSKc
+         cXWQ==
+X-Gm-Message-State: AOAM53124aY+5Yz9pVO/SuSvU23KHIYSkBU62sQNWUZHCIQ5OGXO3hq0
+        RcmT8qbX5BZvKyggnJk3BZ8=
+X-Google-Smtp-Source: ABdhPJy+jM4ToARbj86RzX03d/BbotmrsfVoHZP3HZ5TivViL5s5WDiBUJvyyjdejzqN0i4DDIf0tg==
+X-Received: by 2002:a5d:58dc:: with SMTP id o28mr12058930wrf.399.1630923016891;
+        Mon, 06 Sep 2021 03:10:16 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.254])
+        by smtp.googlemail.com with ESMTPSA id a10sm7475829wrd.51.2021.09.06.03.10.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Sep 2021 03:10:16 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 7/7] rebase: drop the internal `rebase--interactive`
+ command
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+ <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <4492cca369cdc0c8cd39b3dafab86d798cfbaa8f.1630497435.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <cf76b707-bd59-26f8-f257-02d773294495@gmail.com>
+Date:   Mon, 6 Sep 2021 11:10:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <4492cca369cdc0c8cd39b3dafab86d798cfbaa8f.1630497435.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi dscho
 
-On Mon, Sep 06 2021, Carlo Arenas wrote:
+Thanks for working on this, it opens up the possibility of future 
+cleanups now we're not constrained by supporting cmd_rebase__interactive()
 
->> * fs/ssh-signing (2021-08-29) 9 commits
->>  - ssh signing: test that gpg fails for unknown keys
->>  - ssh signing: tests for logs, tags & push certs
->>  - ssh signing: duplicate t7510 tests for commits
->>  - ssh signing: verify signatures using ssh-keygen
->>  - ssh signing: provide a textual signing_key_id
->>  - ssh signing: retrieve a default key from ssh-agent
->>  - ssh signing: add ssh key format and signing code
->>  - ssh signing: add test prereqs
->>  - ssh signing: preliminary refactoring and clean-up
->>
->>  Use ssh public crypto for object and push-cert signing.
->>
->>  Will merge to 'next'.
->
-> This is causing ssh-keygen from OpenSSH 8.7 to segfault,
-> would it be reasonable to hold it until they get a chance to fix that?
->
-> Carlo
->
-> PS. provided them with a patch, and crash is reproducible with the tests
+On 01/09/2021 12:57, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> [...]
+> @@ -437,24 +362,6 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+>   
+>   		break;
+>   	}
+> -	case ACTION_SHORTEN_OIDS:
+> -	case ACTION_EXPAND_OIDS:
+> -		ret = transform_todo_file(flags);
+> -		break;
+> -	case ACTION_CHECK_TODO_LIST:
+> -		ret = check_todo_list_from_file(the_repository);
+> -		break;
+> -	case ACTION_REARRANGE_SQUASH:
+> -		ret = rearrange_squash_in_todo_file();
+> -		break;
+> -	case ACTION_ADD_EXEC: {
+> -		struct string_list commands = STRING_LIST_INIT_DUP;
+> -
+> -		split_exec_commands(opts->cmd, &commands);
+> -		ret = add_exec_commands(&commands);
+> -		string_list_clear(&commands, 0);
+> -		break;
+> -	}
 
-Per my <87tuj7xhqo.fsf@evledraar.gmail.com:
-    
-    I'm also interested in this one. My reading of
-    <9075cdd1-e34d-5dcb-f2b8-69ae4abf587b@gigacodes.de> is that the author
-    plans to re-roll it sometimes around mid-September. I personally punted
-    on reviewing the current version while waiting for that.
+As Alban mentioned, I think it would be worth removing the enum members 
+as well as the case clauses here.
 
-I see it's made it to 'next' already though...
+Best Wishes
+
+Phillip
+
+>   	default:
+>   		BUG("invalid command '%d'", command);
+>   	}
+> @@ -476,98 +383,6 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+>   	return 0;
+>   }
+>   
+> -static const char * const builtin_rebase_interactive_usage[] = {
+> -	N_("git rebase--interactive [<options>]"),
+> -	NULL
+> -};
+> -
+> -int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+> -{
+> -	struct rebase_options opts = REBASE_OPTIONS_INIT;
+> -	struct object_id squash_onto = *null_oid();
+> -	enum action command = ACTION_NONE;
+> -	struct option options[] = {
+> -		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+> -			   REBASE_FORCE),
+> -		OPT_CALLBACK_F('k', "keep-empty", &options, NULL,
+> -			N_("keep commits which start empty"),
+> -			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
+> -			parse_opt_keep_empty),
+> -		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
+> -			   N_("allow commits with empty messages"),
+> -			   PARSE_OPT_HIDDEN),
+> -		OPT_BOOL(0, "rebase-merges", &opts.rebase_merges, N_("rebase merge commits")),
+> -		OPT_BOOL(0, "rebase-cousins", &opts.rebase_cousins,
+> -			 N_("keep original branch points of cousins")),
+> -		OPT_BOOL(0, "autosquash", &opts.autosquash,
+> -			 N_("move commits that begin with squash!/fixup!")),
+> -		OPT_BOOL(0, "signoff", &opts.signoff, N_("sign commits")),
+> -		OPT_BIT('v', "verbose", &opts.flags,
+> -			N_("display a diffstat of what changed upstream"),
+> -			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+> -		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+> -			    ACTION_CONTINUE),
+> -		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), ACTION_SKIP),
+> -		OPT_CMDMODE(0, "edit-todo", &command, N_("edit the todo list"),
+> -			    ACTION_EDIT_TODO),
+> -		OPT_CMDMODE(0, "show-current-patch", &command, N_("show the current patch"),
+> -			    ACTION_SHOW_CURRENT_PATCH),
+> -		OPT_CMDMODE(0, "shorten-ids", &command,
+> -			N_("shorten commit ids in the todo list"), ACTION_SHORTEN_OIDS),
+> -		OPT_CMDMODE(0, "expand-ids", &command,
+> -			N_("expand commit ids in the todo list"), ACTION_EXPAND_OIDS),
+> -		OPT_CMDMODE(0, "check-todo-list", &command,
+> -			N_("check the todo list"), ACTION_CHECK_TODO_LIST),
+> -		OPT_CMDMODE(0, "rearrange-squash", &command,
+> -			N_("rearrange fixup/squash lines"), ACTION_REARRANGE_SQUASH),
+> -		OPT_CMDMODE(0, "add-exec-commands", &command,
+> -			N_("insert exec commands in todo list"), ACTION_ADD_EXEC),
+> -		{ OPTION_CALLBACK, 0, "onto", &opts.onto, N_("onto"), N_("onto"),
+> -		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+> -		{ OPTION_CALLBACK, 0, "restrict-revision", &opts.restrict_revision,
+> -		  N_("restrict-revision"), N_("restrict revision"),
+> -		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+> -		{ OPTION_CALLBACK, 0, "squash-onto", &squash_onto, N_("squash-onto"),
+> -		  N_("squash onto"), PARSE_OPT_NONEG, parse_opt_object_id, 0 },
+> -		{ OPTION_CALLBACK, 0, "upstream", &opts.upstream, N_("upstream"),
+> -		  N_("the upstream commit"), PARSE_OPT_NONEG, parse_opt_commit,
+> -		  0 },
+> -		OPT_STRING(0, "head-name", &opts.head_name, N_("head-name"), N_("head name")),
+> -		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign_opt, N_("key-id"),
+> -			N_("GPG-sign commits"),
+> -			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> -		OPT_STRING(0, "strategy", &opts.strategy, N_("strategy"),
+> -			   N_("rebase strategy")),
+> -		OPT_STRING(0, "strategy-opts", &opts.strategy_opts, N_("strategy-opts"),
+> -			   N_("strategy options")),
+> -		OPT_STRING(0, "switch-to", &opts.switch_to, N_("switch-to"),
+> -			   N_("the branch or commit to checkout")),
+> -		OPT_STRING(0, "onto-name", &opts.onto_name, N_("onto-name"), N_("onto name")),
+> -		OPT_STRING(0, "cmd", &opts.cmd, N_("cmd"), N_("the command to run")),
+> -		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_autoupdate),
+> -		OPT_BOOL(0, "reschedule-failed-exec", &opts.reschedule_failed_exec,
+> -			 N_("automatically re-schedule any `exec` that fails")),
+> -		OPT_END()
+> -	};
+> -
+> -	opts.rebase_cousins = -1;
+> -
+> -	if (argc == 1)
+> -		usage_with_options(builtin_rebase_interactive_usage, options);
+> -
+> -	argc = parse_options(argc, argv, prefix, options,
+> -			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+> -
+> -	if (!is_null_oid(&squash_onto))
+> -		opts.squash_onto = &squash_onto;
+> -
+> -	if (opts.rebase_cousins >= 0 && !opts.rebase_merges)
+> -		warning(_("--[no-]rebase-cousins has no effect without "
+> -			  "--rebase-merges"));
+> -
+> -	return !!run_sequencer_rebase(&opts, command);
+> -}
+> -
+>   static int is_merge(struct rebase_options *opts)
+>   {
+>   	return opts->type == REBASE_MERGE;
+> diff --git a/git.c b/git.c
+> index 18bed9a9964..268cdd82cfc 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -577,7 +577,6 @@ static struct cmd_struct commands[] = {
+>   	{ "range-diff", cmd_range_diff, RUN_SETUP | USE_PAGER },
+>   	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+>   	{ "rebase", cmd_rebase, RUN_SETUP | NEED_WORK_TREE },
+> -	{ "rebase--interactive", cmd_rebase__interactive, RUN_SETUP | NEED_WORK_TREE },
+>   	{ "receive-pack", cmd_receive_pack },
+>   	{ "reflog", cmd_reflog, RUN_SETUP },
+>   	{ "remote", cmd_remote, RUN_SETUP },
+> 
+
