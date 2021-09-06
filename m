@@ -8,98 +8,135 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81CE4C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F9B8C433F5
 	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 18:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6107B6101C
+	by mail.kernel.org (Postfix) with ESMTP id 546526056C
 	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 18:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242559AbhIFSLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 14:11:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54748 "EHLO
+        id S233691AbhIFSLd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 14:11:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233859AbhIFSLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 14:11:37 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8C7C061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 11:10:31 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id f22so7617148qkm.5
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 11:10:31 -0700 (PDT)
+        with ESMTP id S230219AbhIFSLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 14:11:32 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DC3C061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 11:10:27 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id u4so235678qta.2
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 11:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IAcpsYUA5Mzn8TXgO5H03D7ilDHNfVc7/cHFWR/gQHg=;
-        b=oVFy8Fu2JLRDdoGmX9JQmfCX1bIx4jejGNqnG5g5peL9kGBv1PyQVlJspT855gMEJp
-         iGfkQHEvvNPosqQ6E9Kdmfgu7Is5i3hhTDU5r/0cHn9TRQ2XyDIIWGzK73Ff0qfQDGXt
-         W/8ErCcnP2maTceQ1ANA1S0KKDznQTRvSTCbLH7zroBUvXyokL5yp1jvqBf90UKPtsDJ
-         W4gOsBz8bRU8sQAa6QskGdKFB2ydGeTp0ND0tMDjNZExMIqotw5ez0Oq28+/2JpHJEpf
-         dyYc4zxXmPQNQkkztQLYgxy+eHI//RoibO7LCinfoeamOHL/R6UMarWgSMuLHYpuH2dy
-         yzXA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=da99FOW0pzHyxU0tEy8U8EnlwIG6MMfNZaJnpnvAUkk=;
+        b=OPTz7dJRXYKvCV0Xl3pNCutdhHDPtdYCaHKCGZNgsOgsf/FPHcpwoTsI/Oc/x5o8Xd
+         DWTukytmpupXeLq3uV/XkylpQfWEPQaZP4LATNP2HbfezPOHGN465GSU9jEKBy5Vw06o
+         41klovgrHpLxLfr5bRrxzvRFmevM636/C4/hIgQSbbn4Awxzu5IE07hYl1Hkh9A6R/gb
+         1V7RCPvzcz7kaxyyLDp2oyW2YKWfRwghaFhNW9Q83quLlSmSTydXYEfTX0inyQSWDafl
+         jGQpHOU4ZJZw2nA4qA7rKYpVmCt65LtxroNTDUA3og4TtgtD397NhNY/t1FAjX2kbzOY
+         RL5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IAcpsYUA5Mzn8TXgO5H03D7ilDHNfVc7/cHFWR/gQHg=;
-        b=ktQ9EJ9VDwxazPGBoRBH3v6fOJ4Cw4GwcdJG2Mj6Kr4WEXxy3gv0P38gpCrr3mWkun
-         idrOlCUaA5GZDycuEINM3qZLj+ngpFQ1FAjnndO5OJLzYdX22GjdWuTyfg52VIdusL1o
-         IREL00X5duQ++0FDzBee46UqXASyayFKlsjv7lf2cHAOPzNOsa9++ailz8tt/GeII77S
-         BihaoRDW5riNsuK8iI5NA8ZQcgyLu/oMqCmQofRJ2VjwigVh01ZTzt3jB9qaKY2gJu9a
-         7MAEOlowklQKCqNSfTIDWeHIoU+M6RjYGDimPhNInMOfb/8jzJhobAuty0g+jYkuHNk4
-         OxsA==
-X-Gm-Message-State: AOAM530WN38HtkSrhC3kFHf392y1Hyav1ZwQ20HFtJRWJmz7EJD0UyuB
-        qZbwzRQxz3PSsF31dXtG7mhyVAgAYeuibg==
-X-Google-Smtp-Source: ABdhPJxBO2mj+oY/IECKWwP3h/mYqvIfMOntyvmnnnUbauJ9Q9ldWHCug1n3mHabln8/tSMCZrDURA==
-X-Received: by 2002:a37:8e44:: with SMTP id q65mr11796369qkd.372.1630951830382;
-        Mon, 06 Sep 2021 11:10:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=da99FOW0pzHyxU0tEy8U8EnlwIG6MMfNZaJnpnvAUkk=;
+        b=Lwenl80mBBrBOrom5RL7oadM3PlSVnJ6aptVgtFxwJPfoCwh7ygmspJapPPubmd6NP
+         I8926lAZYtedw0VW5xpwoaVOMGB4qFZgVQDlRJIsLZMxat0PxwIDNpKgRt/pTvtJjpd/
+         YMo30nY1oyzeyebbrmPXyAkfCVMcJvY6SoFGpxLCMjgGLyh6taGpkUcyIWRv6rGFs4FP
+         s8FBThGJYi2cfb7UDjwPWGrJZFpaYhpoOOWe2BOFet5rTLnC/ZaYgSNRZfVygQ7i3vq8
+         qWL8mBEcQ9v0ixUp55oJE9fAc1g+oxrJ/tGEnZg3VzzS7ajgP+4NXdVZ8lTGs7Qbfps/
+         HZ3w==
+X-Gm-Message-State: AOAM531OLDcKov1wAbjZIBhi/qC71BPBmH48YzuGbNuLtQ7JADNMXasb
+        a0HOb5cKH+M7Ns045PWtD4nUeP2TloN8tQ==
+X-Google-Smtp-Source: ABdhPJyvx3TvPpAp84MdD64HVLWLY3EwApc/E8iEnUOrLxnHeYqAsMWNvjjKf/uXexvL2o0f7v0WRA==
+X-Received: by 2002:a05:622a:148e:: with SMTP id t14mr12010041qtx.356.1630951826716;
+        Mon, 06 Sep 2021 11:10:26 -0700 (PDT)
 Received: from CalumsBeastlyLaptop ([139.147.201.88])
-        by smtp.gmail.com with ESMTPSA id v8sm5741697qtk.49.2021.09.06.11.10.29
+        by smtp.gmail.com with ESMTPSA id r128sm7168709qke.98.2021.09.06.11.10.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Sep 2021 11:10:30 -0700 (PDT)
+        Mon, 06 Sep 2021 11:10:26 -0700 (PDT)
 Received: from calum by CalumsBeastlyLaptop with local (Exim 4.94.2)
         (envelope-from <calum@calumsbeastlylaptop.computercalum.com>)
-        id 1mNJ4f-002coC-Fq; Mon, 06 Sep 2021 14:10:29 -0400
+        id 1mNJ4b-002cn6-Pq; Mon, 06 Sep 2021 14:10:25 -0400
 From:   Calum McConnell <calumlikesapplepie@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Calum McConnell <calumlikesapplepie@gmail.com>
-Subject: [PATCH 2/3] Die if filter is attempted without a worktree
-Date:   Mon,  6 Sep 2021 14:10:01 -0400
-Message-Id: <20210906181002.625647-2-calumlikesapplepie@gmail.com>
+Subject: [PATCH 1/3] Add support for new %w wildcard in checkout filter
+Date:   Mon,  6 Sep 2021 14:10:00 -0400
+Message-Id: <20210906181002.625647-1-calumlikesapplepie@gmail.com>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210906181002.625647-1-calumlikesapplepie@gmail.com>
-References: <20210906181002.625647-1-calumlikesapplepie@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As far as I know, this isn't possible.  Rather than add a bunch of
-code to workarround something that might not be possible, lets just
-halt and catch fire if it does.  This might need to be removed before
-the change goes into master
+When building content filters with gitattributes, for instance to ensure
+git stores the plain-text rather than the binary form of data for certain
+formats, it is often advantageous to separate the filters into separate,
+potentially complex scripts.  However, as the $PWD where content filters
+are executed is unspecified the path to scripts needs to be specified as
+an absolute path.  That means that the guide for setting up a repository
+which uses scripts to filter content cannot simply consist of "include
+the following lines in your .git/config file", and it means that the
+otherwise safe operation of moving a git repository from one folder to
+another is decidedly unsafe.
+
+This %w (short for 'work tree') will allow such scripts to exist and
+be executed on each checkout, without needing to be added to the PATH
+or be dependent upon the $PWD of the checkout call.
 
 Signed-off-by: Calum McConnell <calumlikesapplepie@gmail.com>
 ---
- convert.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ convert.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 5d64ccce57..df70c250b0 100644
+index 0d6fb3410a..5d64ccce57 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -646,6 +646,11 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	sq_quote_buf(&worktreePath, the_repository->worktree);
- 	dict[1].value = worktreePath.buf;
+@@ -9,6 +9,7 @@
+ #include "sub-process.h"
+ #include "utf8.h"
+ #include "ll-merge.h"
++#include "repository.h"
  
-+	/* The results of a nonexistent worktree could be... weird.  Lets avoid*/
-+	if(dict[1].value == NULL){
-+		BUG("There is no worktree for this worktree substitution");
-+	}
-+
- 	/* expand all %f or %w with the quoted path */
+ /*
+  * convert.c - convert a file when checking it out and checking it in.
+@@ -630,19 +631,26 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 
+ 	/* apply % substitution to cmd */
+ 	struct strbuf cmd = STRBUF_INIT;
+-	struct strbuf path = STRBUF_INIT;
++	struct strbuf filePath = STRBUF_INIT;
++	struct strbuf worktreePath = STRBUF_INIT;
+ 	struct strbuf_expand_dict_entry dict[] = {
+ 		{ "f", NULL, },
++		{ "w", NULL, }, 
+ 		{ NULL, NULL, },
+ 	};
+ 
+-	/* quote the path to preserve spaces, etc. */
+-	sq_quote_buf(&path, params->path);
+-	dict[0].value = path.buf;
++	/* quote the paths to preserve spaces, etc. */
++	sq_quote_buf(&filePath, params->path);
++	dict[0].value = filePath.buf;
++	
++	sq_quote_buf(&worktreePath, the_repository->worktree);
++	dict[1].value = worktreePath.buf;
+ 
+-	/* expand all %f with the quoted path */
++	/* expand all %f or %w with the quoted path */
  	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
- 	strbuf_release(&filePath);
+-	strbuf_release(&path);
++	strbuf_release(&filePath);
++  	strbuf_release(&worktreePath);
++
+ 
+ 	strvec_push(&child_process.args, cmd.buf);
+ 	child_process.use_shell = 1;
 -- 
 2.30.2
 
