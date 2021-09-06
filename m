@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 743BAC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57232C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5344B61039
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30B4861039
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbhIFEkJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 00:40:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40044 "EHLO
+        id S233223AbhIFEkK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 00:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbhIFEkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 00:40:07 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 536B0C061575
+        with ESMTP id S229487AbhIFEkI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 00:40:08 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3193C061757
         for <git@vger.kernel.org>; Sun,  5 Sep 2021 21:39:03 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso3956922wms.3
+Received: by mail-wm1-x333.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso3956933wms.3
         for <git@vger.kernel.org>; Sun, 05 Sep 2021 21:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=MW3tSBFwhsYbOeZIB6QntgjRnTj9zpYEAbpIiSgoGcw=;
-        b=h64IBRomz7j8M46O8pQOxiusS9zPeUKznsmzzUnZ/24ZfzZS23czf0eLY73gpb+ZnC
-         CSaBr3YKdFC3ol9ROFwChJCDxiWN/87tUO3v7Du3c2CuKXeQWWDzH5JTFiMUBfdmau3w
-         Pov0vmWzFWbThgFMwdWWubz0CN96JycV1G8F2u/eg1jBKYo0UcomhNqLUNKja24Q7WFA
-         mwOb8fh4pMe7hClXpuMZThl4MCYwqQllvxfWqQx6ml2x3mso9xvDtlONV4ZLwtmsG897
-         6feGF/EXhCqr7itnQ0QLyUS2+O7FYtJiieUuXCXlJ6jPlwnxW1lGw7spvn5lKp/hgQAv
-         Bypg==
+        bh=X72Y2JXlkRf06MadaeInEifKFENsLmUYZCAf8FbSmSA=;
+        b=pukPdOB4fTIlQoMVdAi39qwp4qJ+3PR74q5krKOajC9ZjqZLCZZjIqqhUqUXrO8E24
+         F6yE+fUPPOlvC2BCLn3Xix+8ebIWNZQuipElgEVkEVUWx/L+T4zpSVnMfhZ/SPM+aJW1
+         9e45uDw9RBAW9BysweUm746ceB4pgTgpr6EloSpyCUepjEmWXQH0zcxoBK8+u16/HtoB
+         ztqf+IJZttjlZ7gfboElRK84DPRoqYBn8vWIzubuRTsf9CWWPAIWZ4Nf2Fg4oYENWGuY
+         HdsyDVcK29kyjVmPo9f4K55g75mFG88TaU+YGdRAOyscAN5dxehMy5AqFeDWGEUX1iEd
+         vphA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=MW3tSBFwhsYbOeZIB6QntgjRnTj9zpYEAbpIiSgoGcw=;
-        b=k+FHfo1FtlaEjs4ODx1iL4toBSNDeoKCMMK+LQO5inNbmsX5TbjR5JyYGHxXchn+y/
-         R5oscY+ZeejyjfhEfOxzSF6NYjUsn3DqRtnDCZCx53zIW3Ge5jQyDzxDRuySXnPk25Oy
-         eRaDKPB8pG4re6mspBAgbFMuwk7t0QVAgNDVhQ2Jb/5l0h5NJC6t3jmnYQGaG5khVhsu
-         495UQ8C9s4KYYmkiomkmscXQbpehhGxNloqH0m3CSyfqpDHd4JP+D5F5TH8T/pkTtq7A
-         bghRUJSFaAGNNSGj5oBXLH2pAcLCbXfSsDcLmVWTkXZP4TSLl8t6qPKSyM4vVT0irLIR
-         BKQA==
-X-Gm-Message-State: AOAM531nytLEKlQog6w5W8P9n/OIQSl0k/+wAbud3YhtrE7HvM8X3Vij
-        u0oa999o9kXLDGtxxVeILcu0qLbOzsM=
-X-Google-Smtp-Source: ABdhPJx+RwsckuRWSiUKCMCCRz5SqEwZJ5LV0DHoL42PkzQe1emYUBoo7nGsb6rz4sDWExiXt36jgw==
-X-Received: by 2002:a1c:f314:: with SMTP id q20mr9128879wmq.154.1630903141950;
-        Sun, 05 Sep 2021 21:39:01 -0700 (PDT)
+        bh=X72Y2JXlkRf06MadaeInEifKFENsLmUYZCAf8FbSmSA=;
+        b=NjX4DTfS+YaGAhwTLnwPO4i7jjJkug1THMVolCndV9DslPYeDTUlDjNBy6Ciul5ZE5
+         zEIKbqLMBLnh59Xmq9tt59NMQdUzNly/raaFuZexoXxdwORrBrG66K0PDCBlZRuphOpJ
+         Fn4k/vSz3CrbumIc559FC1ww51yAYp3PNEmdiTdWIbA4wepgdSLHhFScRXGp9XrvwCor
+         5h6EQnm5iSYIebRVW15NIIfqD/Xk1BNl8X6GE2mwekLMbc+Yk/0AZgVLP6DtGaygNOtT
+         Tw5vTJE3heOH/lF/SVI42px+Ajis35/FfPs1nWeFyC5HNSDZwfGgmxc+Hpvtuq7IWIcP
+         aTrA==
+X-Gm-Message-State: AOAM532AcmCPFsLWI/kLWcV8q43E1o4iO3RVbB42X/kmO23Bo947XoBa
+        zQLDS2jgPebLSXWZT+p4gmP7xSExU4s=
+X-Google-Smtp-Source: ABdhPJyxSFu3oZ72M2kDN9tZhGAcLoHoMwGrGgsXT4Thk4nGN7dZIyGJBlTFrDjFAN9mhuEc9YyiZg==
+X-Received: by 2002:a05:600c:3213:: with SMTP id r19mr9442754wmp.11.1630903142554;
+        Sun, 05 Sep 2021 21:39:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q85sm6116574wme.23.2021.09.05.21.39.01
+        by smtp.gmail.com with ESMTPSA id q14sm6578420wrc.31.2021.09.05.21.39.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 21:39:01 -0700 (PDT)
-Message-Id: <pull.1022.v5.git.1630903140.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1022.v4.git.1630902006.gitgitgadget@gmail.com>
+        Sun, 05 Sep 2021 21:39:02 -0700 (PDT)
+Message-Id: <2f566f330e01ed4249edad54671e98301dbeec5a.1630903140.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1022.v5.git.1630903140.gitgitgadget@gmail.com>
 References: <pull.1022.v4.git.1630902006.gitgitgadget@gmail.com>
+        <pull.1022.v5.git.1630903140.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Sep 2021 04:38:57 +0000
-Subject: [PATCH v5 0/3] test-lib-functions.sh: keep user's HOME, TERM and SHELL for 'test_pause' and
- 'debug'
+Date:   Mon, 06 Sep 2021 04:38:58 +0000
+Subject: [PATCH v5 1/3] test-lib-functions: use 'TEST_SHELL_PATH' in
+ 'test_pause'
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,123 +76,40 @@ Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v4:
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
- * 3/3: use a for loop instead of while loop + heredoc, it's simpler and the
-   need for the later did not match the code.
+3f824e91c8 (t/Makefile: introduce TEST_SHELL_PATH, 2017-12-08)
+made it easy to use a different shell for the tests than 'SHELL_PATH'
+used at compile time. But 'test_pause' still invokes 'SHELL_PATH'.
 
-v4:
+If TEST_SHELL_PATH is set, invoke that shell in 'test_pause' for
+consistency.
 
- * 2/3: improved the wording for the warning and caution as suggested by
-   Elijah,, and moved the warning so it relates to the use of test_pause
-   itself, not just the new flags, as suggested by Junio. Adapted the commit
-   messages accordingly.
- * 3/3: changed the approach: instead of changing HOME, just copy ~/.gdbinit
-   and ~/.lldbinit to the test HOME, as suggested by Carlo. This seems safer
-   as this way $USER_HOME/.gitconfig does not interfere with the behaviour
-   of the command being debugged (as Junio remarked in [1], but for
-   test_pause). If other config files are needed for other debuggers, they
-   can be added when the need arises.
- * [23]/3: also adapted the synopsys of 'test_pause' and 'debug' in t/README
-   for better discoverability of the new features.
+Suggested-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ t/test-lib-functions.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1] https://lore.kernel.org/git/xmqqa6kvoptx.fsf@gitster.g/
-
-v3:
-
- * Added '-a' flag as suggested by Elijah, equivalent to '-t -s -h' for
-   'test_pause' and to '-t -h' for 'debug'
-
-v2:
-
- * added 1/3 as a preliminary step to use TEST_SHELL_PATH in test_pause
-   instead of SHELL_PATH, as suggested by Carlo
- * implemented the change in behaviour through optional flags in both
-   test_pause and debug. This seemed to be the simplest way to keep the
-   current behaviour but also provide a way to improve the UX.
-
-v1: This series proposes two small quality-of-life improvements (in my
-opinion) to the 'test_pause' and 'debug' test functions: using the original
-values of HOME and TERM (before they are changed by the test framework) and
-using SHELL instead of SHELL_PATH.
-
-The later might be too big of a change, but I think it makes sense. We could
-add a new GIT_TEST_* to conditionnaly change the behaviour, but I kept it
-simple for v1.
-
-Cheers, Philippe.
-
-Philippe Blain (3):
-  test-lib-functions: use 'TEST_SHELL_PATH' in 'test_pause'
-  test-lib-functions: optionally keep HOME, TERM and SHELL in
-    'test_pause'
-  test-lib-functions: keep user's debugger config files and TERM in
-    'debug'
-
- t/README                |  11 +++--
- t/test-lib-functions.sh | 107 ++++++++++++++++++++++++++++++++++------
- t/test-lib.sh           |   6 ++-
- 3 files changed, 103 insertions(+), 21 deletions(-)
-
-
-base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1022%2Fphil-blain%2Ftest-pause-and-debug-easier-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1022/phil-blain/test-pause-and-debug-easier-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/1022
-
-Range-diff vs v4:
-
- 1:  2f566f330e0 = 1:  2f566f330e0 test-lib-functions: use 'TEST_SHELL_PATH' in 'test_pause'
- 2:  a231d560e68 = 2:  a231d560e68 test-lib-functions: optionally keep HOME, TERM and SHELL in 'test_pause'
- 3:  a8b12788fa4 ! 3:  ebf92b6b2c3 test-lib-functions: keep user's debugger config files and TERM in 'debug'
-     @@ Commit message
-          HOME to USER_HOME as in 'test_pause' to avoid user configuration in
-          $USER_HOME/.gitconfig from interfering with the command being debugged.
-      
-     -    Note that we use a while loop and a heredoc to protect against
-     -    $USER_HOME containing spaces.
-     -
-          Also, add a flag to launch the debugger with the original value of
-          TERM, and add the same warning as for 'test_pause'.
-      
-     @@ t/test-lib-functions.sh: test_pause () {
-      +		shift
-      +	done &&
-      +
-     -+	dotfiles="
-     -+	.gdbinit
-     -+	.lldbinit
-     -+	"
-     -+	while read -r dotfile
-     ++	dotfiles=".gdbinit .lldbinit"
-     ++
-     ++	for dotfile in $dotfiles
-      +	do
-      +		dotfile="$USER_HOME/$dotfile" &&
-      +		test -f "$dotfile" && cp "$dotfile" "$HOME" || :
-     -+	done <<-EOF &&
-     -+	$dotfiles
-     -+	EOF
-     ++	done &&
-      +
-      +	TERM="$DEBUG_TERM" GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7 &&
-      +
-     -+	while read -r dotfile
-     ++	for dotfile in $dotfiles
-      +	do
-      +		rm -f "$HOME/$dotfile"
-     -+	done <<-EOF
-     -+	$dotfiles
-     -+	EOF
-     ++	done
-       }
-       
-       # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
-
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index e28411bb75a..1884177e293 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -139,7 +139,7 @@ test_tick () {
+ # Be sure to remove all invocations of this command before submitting.
+ 
+ test_pause () {
+-	"$SHELL_PATH" <&6 >&5 2>&7
++	"$TEST_SHELL_PATH" <&6 >&5 2>&7
+ }
+ 
+ # Wrap git with a debugger. Adding this to a command can make it easier
 -- 
 gitgitgadget
+
