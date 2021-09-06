@@ -2,123 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A1DBC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB7E0C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:32:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D01256109F
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:24:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C28DE60F43
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232318AbhIFWZ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 18:25:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54192 "EHLO
+        id S237799AbhIFWd1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 18:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhIFWZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 18:25:58 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8E5C061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 15:24:52 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id bt14so15895158ejb.3
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 15:24:52 -0700 (PDT)
+        with ESMTP id S231857AbhIFWdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 18:33:24 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D0EC061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 15:32:19 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id n11so11157033edv.11
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 15:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=MZzt4A1Ht8rYVohRG9YNVSrqBkGxlT4oKemCwvXEyDs=;
-        b=lctMWfp2QsAYa0BW/Y5tszz3Ac/StjHgu203go3AXW1hNki/PzACHqAJ4q8yag+8Gf
-         V64SzKsbfDhDXe8gbnKGKWDbOude8OF3Nv8KF+XH77JU8ZNLJgZbx2AZvmH+yO71f0rp
-         EStECUBEn34V1V6qeaDCdJ1Wc2noca3tEdnrcT5eIux0NP5b3/+OUieCvuj9qiQBekHW
-         VXH3aS+JRzrTp7wpF93Nsf0KPmK88PKAHoh+rFqxEMBQhmZJrcAbkNyCp6BsF0haipWi
-         orKH0Gg3e65VLI5zRBFUtu6wdr0KHGoA6r2LEZWUA4heBusE6oUwoJLC6NKP4YFb6PjN
-         P05A==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=mmTUI4wu3cw7TqQHv2i2c1vVGbz135NXdnqnWF7nMiA=;
+        b=bTQPWHzIshuk0I7sB4ICEgBETv9CVdCiEpg2ObbD7fjUgj6WL0jRggI9Lw1LBOcPBl
+         MPcRlnKWnhNB6uhCx/LsbX54JIWmwE/74SJf7z/pt0U7HjDuFEdvpa0irysH5NXBPxL2
+         lJdOboospDZ0ryR2Luo++vhUei8vnqgmWfy6lXPh3IzVNOoDSP+PxuQ0ODfZX+QlRTYn
+         ZmROZ+bZ7CoKwsj42MX6r6j3bCIqHyQZqgS6e3FtecpGL/NGXmWZHSjwGLbTzwNorA2q
+         fqhd5+gMWnKHbI0ahiq+SRxifaX0uXi81HfsDxUVp2bjWD/L4BXyZ81aVHMrBbAgWuHQ
+         BN7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=MZzt4A1Ht8rYVohRG9YNVSrqBkGxlT4oKemCwvXEyDs=;
-        b=LjvjSYG1VXUe0L4WKnQMHMoQGpfesBkxLA6y+qo2zbXiHlt4CLkh0iEwh+rQa1QqvN
-         iWHX9LKOR8oYcrIEYoOmmvzCwJ3+Cwg9dMRW61001F1ZeKDvI0bN5OztCQDfs8gm3Pj2
-         c7Bvp+pkbGLgb+rqvpOyLzijeOEfokQKhpOBJUkJCGpvRIjCf4xgO1vHY+1HrqMKb9MJ
-         iw21/RDVNcyKXbi3iRpqx9eM/RSixf54CGC26rts8vGMjYOCl01O/TZHNCz3Gw21/CY0
-         vXiZYNH6FQ2eXg9tB6Yc3v1s9chKoc8iiu0kweF7f8/BIf40QLhymXtCXuLU/P/JPoA4
-         xeTA==
-X-Gm-Message-State: AOAM530j1QFZJljr76wGuCywrCcxISNloyuGOoMmtOmcUz0fCidbVspR
-        1T57N1Kj1Ry50He2tWoM3t8=
-X-Google-Smtp-Source: ABdhPJzjOqfFvRFMbEFBlf1fXDP/ESckeQwk7xXqzf8S3e31l0NsRHWH1zFlbZEBefuPQNjXwjZWBg==
-X-Received: by 2002:a17:906:3854:: with SMTP id w20mr15316866ejc.537.1630967091260;
-        Mon, 06 Sep 2021 15:24:51 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=mmTUI4wu3cw7TqQHv2i2c1vVGbz135NXdnqnWF7nMiA=;
+        b=nSbFsUTEnHSObE/ZrAb0H76xlA1BuhQXND92X8OHst7AWtd3MZNSF1HASGjEcYXPY0
+         r35uC8dh9sxL4wfAvgNEmosk32NVERUoO/WLHTG3rgsUVEbQpL1UClArEY7iJrKw4FZq
+         1JPdaxiYAQqNq0mqxPZP0zWQTdhuHgzBwsZ+f6NAUduh8iq0SizkovG/esJzEQLwUrOC
+         da5hBEjLzivX6uh6HbHthe0V+CNpdpMWVS5PddbBpd1bU6mCs9IoHqFodxnUHPFb3ABu
+         0S2okYCGNY843bKtblApEaH5KaHVlAHm3Ye41kMuAFmm2/Jw45KamkV76plDfvmCqyT2
+         rfWw==
+X-Gm-Message-State: AOAM530DrlauQBmL0hdm8WcquDTx6jsVWOCj/gPqlqExbUN+ps8bsPuN
+        WyRNCav12tRYdBKHtBqVRvQMInMu1SoZ5g==
+X-Google-Smtp-Source: ABdhPJxDZpSoqjCbMMv3J1o8VwLfcbBgdlpTp0KlFwPbSznzJeupJEKEHnYrCpM6nG/QJktF3C5gfQ==
+X-Received: by 2002:a05:6402:5215:: with SMTP id s21mr15280793edd.236.1630967537640;
+        Mon, 06 Sep 2021 15:32:17 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e3sm4500738ejr.118.2021.09.06.15.24.50
+        by smtp.gmail.com with ESMTPSA id i6sm4433933ejd.57.2021.09.06.15.32.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Sep 2021 15:24:50 -0700 (PDT)
+        Mon, 06 Sep 2021 15:32:16 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
-Date:   Tue, 07 Sep 2021 00:21:28 +0200
-References: <xmqq35qmiofp.fsf@gitster.g>
- <CAFQ2z_N8pUsp3cdBpybHBD-V9_1sARCZvSxr0UkMfcwCoQfCbw@mail.gmail.com>
- <xmqq4kaxe5dt.fsf@gitster.g>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>, Prathamesh Chavan <pc44800@gmail.com>,
+        Peter Baumann <peter.baumann@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v2 1/7] git-sh-setup: remove unused git_pager() function
+Date:   Tue, 07 Sep 2021 00:27:14 +0200
+References: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
+ <cover-v2-0.7-00000000000-20210906T070201Z-avarab@gmail.com>
+ <patch-v2-1.7-8eb1dfbff5d-20210906T070201Z-avarab@gmail.com>
+ <55293c43-811b-b030-9512-7525f5ebfd12@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqq4kaxe5dt.fsf@gitster.g>
-Message-ID: <87h7exnxzh.fsf@evledraar.gmail.com>
+In-reply-to: <55293c43-811b-b030-9512-7525f5ebfd12@gmail.com>
+Message-ID: <87czplnxn3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Sep 06 2021, Junio C Hamano wrote:
+On Mon, Sep 06 2021, Phillip Wood wrote:
 
-> Han-Wen Nienhuys <hanwen@google.com> writes:
+> Hi =C3=86var
 >
->> On Fri, Sep 3, 2021 at 12:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->>> * hn/reftable (2021-08-26) 29 commits
->>>  - SQUASH??? https://github.com/git/git/runs/3439941236?check_suite_focus=true#step:5:700
->>>  - reftable: fixup for new base topic 3/3
->>>  - reftable: fixup for new base topic 2/3
->>>  - reftable: fixup for new base topic 1/3
->> ..
->>>  The "reftable" backend for the refs API.
->>
->> I posted a subset of these patches as
->> https://lore.kernel.org/git/pull.1081.git.git.1630335476.gitgitgadget@gmail.com/
+> On 06/09/2021 08:05, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Remove the git_pager() function last referenced by non-test code in
+>> 49eb8d39c78 (Remove contrib/examples/*, 2018-03-25).
+>> We can also remove the test for this added in 995bc22d7f8 (pager:
+>> move
+>> pager-specific setup into the build, 2016-08-04), the test that
+>> actually matters is the one added in e54c1f2d253 (pager: set LV=3D-c
+>> alongside LESS=3DFRSX, 2014-01-06) just above the removed test.
+>> I.e. we don't care if the "LESS" and "LV" variables are set by
+>> git-sh-setup anymore, no built-in uses them, we do care that pager.c
+>> sets them, which we still test for.
 >
-> Thanks for a ping.  I saw it but haven't read it.
->
->> As discussed with AEvar, it will probably speed things up if we can
->> focus on getting the base library submitted without hooking it up to
->> Git. This would avoid cross-interactions with other pending topics,
->> and reduce the size of the more controversial topic (hooking it up to
->> Git).
->
-> My worry is that a "base library" that is not hooked up to anything
-> that works in the system would not be properly reviewed at all.  Of
-> course, without review, it would speed things up, but it is unclear
-> if that the kind of speed we want.
->
-> Anyway, I'll eject the old topic and replace them with the latest
-> one soonish.
+> git_pager() might not be documented but I think it is useful for
+> script authors and I wouldn't be surprised if someone out there is
+> using it. The same goes for peel_committish(). It does not seem like a
+> huge maintenance burden to keep and maybe document these two
+> functions.
 
-The proposal is to still have it hooked up to t/helper/test-reftable.c,
-the build system, and t0032-reftable-unittest.sh.
+The git_pager() and peel_committish() seem to thoroughly be in the same
+camp as the now-removed git-parse-remote.sh (see a89a2fbfccd
+(parse-remote: remove this now-unused library, 2020-11-14)) and say its
+get_remote_merge_branch(). I.e. we carried it for a while, but the
+function was never publicly documented.
 
-So we'd build and test it on all platforms, getting that working in some
-stable fashion would already be a big step forward.
+I think rather than document these it makes sense to just kick that
+maintenance burden over to whoever decided they'd rely on undocumented
+shellscript functions git was shipping.
 
-What we wouldn't get right away is the series as of things like
-0a0d5fe74d4 (refs: RFC: Reftable support for git-core, 2021-08-17),
-i.e. hooking up refs/reftable-backend.c, changes to refs.[ch], running
-reftable with some mode of "git init".
-
-As discussed elsewhere that step would currently fail with some tests
-failing, but most/all of those failures are due to the integration of
-the reftable library into git, not failings of the library itself or the
-reftable format.
-
-
+In these cases they can rather easily use the documented GIT_PAGER
+environment variable directly, and their own invocation of "git
+rev-parse" for peel_committish().
