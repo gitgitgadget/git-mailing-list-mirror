@@ -2,71 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 500DCC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 332C2C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:16:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 109376108D
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:06:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05361600CC
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233404AbhIFWHc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 18:07:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S240687AbhIFWRM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 18:17:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231256AbhIFWHc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 18:07:32 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC6DFC061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 15:06:26 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id e21so15740209ejz.12
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 15:06:26 -0700 (PDT)
+        with ESMTP id S237799AbhIFWRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 18:17:11 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD72C061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 15:16:06 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id n11so11115673edv.11
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 15:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=MFEM7VT+Tn63uNGK2BkAdNo3BAFUgyHBbEL/QeiI3XU=;
-        b=aDg4k8YbgzIdgGyJo979s8mVrxv/aYjNsRsRNENgs7XhjTc9HzcRwmLSv9xun1y0Yn
-         m9b/Wi1sw6yU8WGWksYa2lzRCLB5Z3C2H3d9JzMQJlZ/epl6AiQ8A2jpcQwuyKzLCDfy
-         AQ/g0qUmcOd4XrjjzgjLt1J+Q2Is2EoUuLhI9v+f9C3rU4lvRBacxHHMP/sc/gYwI9n2
-         fDJY6NThuCNYYSApj/hT65S2hRAyWoahW2Qfk1t8PTvSchcCTrruztxutBCKaq5XXUII
-         2UIg4toa9NqXSMFfZGc8ZqgjGPmqpFKHOEPy7/iLaIjlu5TH0aG6ZesYWPN5evMdwxGw
-         PN6g==
+        bh=LREdg2UkNqospH0gw3oozAAGNiBeZPxkAkJ1rMvo4TA=;
+        b=M9oDiPZGE29IVuJcenfcMlczsz5OsB7KAl7KsilS2xd/CqALVYCcpB99GSSWeR4gRy
+         QMfpl5x9NFzDQ/k0cFZFo+DVWccYQMZDXVHLx90abrO6uMcTJePluvqIBPxhlQxybtHO
+         lFJP3M+2CaYzAtAtvwjwHo/3Yz8Y7B4hE+50wbjEr0TjhP0Kij5L+7c7k6YzMFI4ExEj
+         vENiKHhLyYc+hJZYcbiDkrq95uB934hAguKXp2y/dXanr8zWsUXaU255NO6EUHwYwje/
+         hD/ipFkFSquojnDN3LnLw6O2lta6uNtNQIhhflYKoQtTSqtgXFEoRxTUrXrFVhaq8LhY
+         2yxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=MFEM7VT+Tn63uNGK2BkAdNo3BAFUgyHBbEL/QeiI3XU=;
-        b=BhsgI/pgQI1t1cJpZgcU7Rh5ppB3x5DDRCEsIZIRZ3Ytl5GSsHQGE+9kaQBIXOdq3g
-         vRREhmSW3OtDrhipUkuHvJYJwrWHlQpsdRbGhg6jrwdxxjyBz+CkNcdTeHBcpvmzzF8J
-         IN0wnxrj0Qh5DCTPVaL4XOcs4DTIMC7aERnMuoXJyM5TopA66pYJGQIyp0k6NZIZzk/a
-         42C0XZMRjdP6FrkOCIF96TIs5bGJ+W6enUmSy3gDQqiFUnbU3eGLG9iyUfnRHOhfgdgn
-         WWoQXhi2y5VMVt6aayNKx7ALKbDOGZJtjPg5zlkq893Kh5YKDp2qOR/zf3XvPZ5+jaMK
-         aMig==
-X-Gm-Message-State: AOAM530JJ6GuyyZofbOnfB9dhP7FWvdTLZdzWE1Sn0F8lR1tavxeA1bm
-        oGj9yorfLzUDAzcicz68ErI=
-X-Google-Smtp-Source: ABdhPJwr0fIcrcjYfRHMk/EcsWjnCAyllYPUw6GMcp9lblpM1l1MVLXVe/KEzFpVHiHxb3GGxx49NQ==
-X-Received: by 2002:a17:907:2d8b:: with SMTP id gt11mr15489283ejc.432.1630965985287;
-        Mon, 06 Sep 2021 15:06:25 -0700 (PDT)
+        bh=LREdg2UkNqospH0gw3oozAAGNiBeZPxkAkJ1rMvo4TA=;
+        b=s2zGMqW91LWxqbBq/5ZT/JJePFFvvUUwiXztXtqARNhj63GRq1pkDHtl9sxNfdAcXs
+         i5XBDisA/cfPGgODhFwKYaQqcSl3j+vrA+kpVl0m2Bs/VnX3htMB4QYWo7NDZmcRF8aO
+         d82MJlYYP4oaf4yMBjcrzkJ4mc4gvhKZuMvgq5aguV2Xmz9kBu4jZHywcpvlVzSY+5X/
+         ImSj/qMDDdB0SQialQHBZMW4rqHKEOszSUoKyNwnJyEPyHuKJoqIZui+Yvhwv0IZZvb3
+         XXT2zMGJVRjTEGciyogNbCWZYj9FT+ZPrFGIpa3XHAWZf8I1yH9GtIAcLcG9ljEVaSQv
+         XuFw==
+X-Gm-Message-State: AOAM530xYTJp+Z+2jwy/udbA6jnne38SBQR9JUvNTIlfQR/3CknGIX6O
+        FD5Z7uK1RcA+m0wjQbZPUaU=
+X-Google-Smtp-Source: ABdhPJwHXkcZ2qrdcklKca8gW+j3hm6SdniQ64AIKBMCkFtLhBaPsHU0aAkB2Sk3t4vuJWbngCINCw==
+X-Received: by 2002:a05:6402:1653:: with SMTP id s19mr15495493edx.163.1630966564714;
+        Mon, 06 Sep 2021 15:16:04 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id c28sm4594397ejc.102.2021.09.06.15.06.24
+        by smtp.gmail.com with ESMTPSA id x9sm5314906edj.95.2021.09.06.15.16.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Sep 2021 15:06:24 -0700 (PDT)
+        Mon, 06 Sep 2021 15:16:04 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, lilinchao@oschina.cn,
-        Elijah Newren <newren@gmail.com>, jerry@skydio.com
-Subject: Re: [PATCH v2] apply: resolve trivial merge without hitting
- ll-merge with "--3way"
-Date:   Mon, 06 Sep 2021 23:59:42 +0200
-References: <xmqqczr26i9f.fsf@gitster.g>
- <20210905190657.2906699-1-gitster@pobox.com>
+To:     Calum McConnell <calumlikesapplepie@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] Die if filter is attempted without a worktree
+Date:   Tue, 07 Sep 2021 00:09:11 +0200
+References: <20210906181002.625647-1-calumlikesapplepie@gmail.com>
+ <20210906181002.625647-2-calumlikesapplepie@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210905190657.2906699-1-gitster@pobox.com>
-Message-ID: <87pmtlnyu7.fsf@evledraar.gmail.com>
+In-reply-to: <20210906181002.625647-2-calumlikesapplepie@gmail.com>
+Message-ID: <87lf49nye4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,59 +73,56 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Sep 05 2021, Junio C Hamano wrote:
+On Mon, Sep 06 2021, Calum McConnell wrote:
 
-> +	if (!image->buf || type != OBJ_BLOB)
-> +		die("unable to read blob object %s", oid_to_hex(result_id));
+> As far as I know, this isn't possible.  Rather than add a bunch of
+> code to workarround something that might not be possible, lets just
+> halt and catch fire if it does.  This might need to be removed before
+> the change goes into master
+>
+> Signed-off-by: Calum McConnell <calumlikesapplepie@gmail.com>
+> ---
+>  convert.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/convert.c b/convert.c
+> index 5d64ccce57..df70c250b0 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -646,6 +646,11 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+>  	sq_quote_buf(&worktreePath, the_repository->worktree);
+>  	dict[1].value = worktreePath.buf;
+>  
+> +	/* The results of a nonexistent worktree could be... weird.  Lets avoid*/
+> +	if(dict[1].value == NULL){
+> +		BUG("There is no worktree for this worktree substitution");
+> +	}
 
-This die() message seems to only be applicable to the first condition
-here, shouldn't this be:
+This BUG() addition is itself buggy, elsewhere e.g. in builtin/gc.c you
+can see where we have conditions like:
 
-    if (!image->buf)
-        die(_("unable to read blob object %s"), oid_to_hex(result_id));
-    if (type != OBJ_BLOB)
-        die(_("object %s is %s, expected blob"), oid_to_hex(result_id), type_name(type));
+    the_repository->worktree ? the_repository->worktree : the_repository->gitdir;
 
-Also as shown there, missing _() for marking the translation.
+I'm not bothering much with the greater context here, but if we suppose
+that we have a case where worktreePath.buf is NULL, then
+the_repository->worktree surely must have been NULL, and if you check
+what sq_quote_buf() does, you'll see:
 
-> [...]
-> +test_expect_success 'apply binary file patch' '
-> +	git reset --hard main &&
+    void sq_quote_buf(struct strbuf *dst, const char *src)
+    [...]
+            while (*src) {
 
-Partly this is cleaning up a mess after an existing test, but here
-there's no reason we can't use test_when_finished() for all the new
-tests to make them clean up after themselves:
+I.e. we'd segfault anyway if that "src" were to be NULL.
 
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index cc3aa3314a3..c3c9b52e30d 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -232,6 +232,8 @@ test_expect_success 'apply with --3way --cached and conflicts' '
- 
- test_expect_success 'apply binary file patch' '
- 	git reset --hard main &&
-+	test_when_finished "git reset --hard main" &&
-+
- 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
- 	git add bin.png &&
- 	git commit -m "add binary file" &&
-@@ -246,7 +248,8 @@ test_expect_success 'apply binary file patch' '
- '
- 
- test_expect_success 'apply binary file patch with 3way' '
--	git reset --hard main &&
-+	test_when_finished "git reset --hard main" &&
-+
- 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
- 	git add bin.png &&
- 	git commit -m "add binary file" &&
-@@ -261,7 +264,8 @@ test_expect_success 'apply binary file patch with 3way' '
- '
- 
- test_expect_success 'apply full-index patch with 3way' '
--	git reset --hard main &&
-+	test_when_finished "git reset --hard main" &&
-+
- 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
- 	git add bin.png &&
- 	git commit -m "add binary file" &&
+Even if that weren't the case then that's not the same as the
+worktreePath.buf being NULL, which even if we suppose sq_quote_buf()
+won't segfault and just returned won't AFAICT ever be the case, see the
+comment for strbuf_slopbuf in strbuf.c. So I think that even if you
+somehow reached this with a NULL worktree that BUG() won't ever be
+reached.
+
+I think this can probably just be dropped, to the extent that we need
+some check like this it seems like it should happen a lot earlier in
+convert.c than here, i.e. during the early setup can't we detect & abort
+if we don't have a required worktree?
+
