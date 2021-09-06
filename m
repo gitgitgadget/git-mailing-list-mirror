@@ -7,67 +7,68 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6393C433F5
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 01:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C21CAC433FE
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 01:16:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A23F61027
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 01:05:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B59E6023D
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 01:16:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237823AbhIFBGi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 21:06:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S238445AbhIFBRF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 21:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235845AbhIFBGh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 21:06:37 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3488C061575
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 18:05:33 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id t19so10122811ejr.8
-        for <git@vger.kernel.org>; Sun, 05 Sep 2021 18:05:33 -0700 (PDT)
+        with ESMTP id S231383AbhIFBRB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 21:17:01 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81358C061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 18:15:57 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id me10so10136123ejb.11
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 18:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=jlhn/UnxkI7eaW9QeA+CqoAyIcXZt1GRvPqwV2YBPfQ=;
-        b=YvM9MNFmDhU7K7UXKe5ayJ4KBUtmQBWA7DqdTGSSFc1Rl+RC27G2VUTnnVYRhlUW1m
-         lie408qfy/RrOHQ+/W+Co3/YHQcK83/p1AMC8xt7CzsAY3FeThQaqaCuOiMxoYbfWy5P
-         8gZ6MKUx4lsykAxgGz85HOAPmjay0823rCUbh/iSVfP48Nrl07CdC4Hqefv+LmuXBdba
-         NPCUMYX110awH8eisgqtvXKMcnWkTYY7lTu9BlfSVZ+i3zxvqRfr8MjODSKYaGfqTCZu
-         VusAE7TH3xWLF7d33FfFm/BlHvN0hoa1hgJHNdBjmiXOkeGZskq13isWQf5TiOVHD8Ne
-         mLzQ==
+        bh=Q0xWpRwUUn/P+13VCL4XWiJgelk4XaSYNf6vpk1ZVu4=;
+        b=NSWrQo7p5LeOkRutF5SF+Thdzngbo9rcvMwO2rbaDR8sIUaY128/1kj9aP6RWg4YRM
+         xV4jhYu8Wtfstg1c1mBD2+pYOxNivojuuA9sUMq4Y7NCplFdH/T1U888kdFJpCmdWV5v
+         +vukDoyOEPoTY8jAaAvsSbWhM+VRn6Nw+/A0Gd5+KN6q8WBdRzzxsXbfjUKUCaWe5RCV
+         7Srja6UdoMJjm17WTrAStr0LM5vas+Zxif2a4NV79j+xU8WcDSirFTLmbFfyr0uIUs6l
+         bJus6ABqjp30s9yXO3CGX2aTvUimduZ0RSXVgVSS/znE7Dt97crlcYg8kQuApPyliY2m
+         1p3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=jlhn/UnxkI7eaW9QeA+CqoAyIcXZt1GRvPqwV2YBPfQ=;
-        b=uPOVII1KQAkFMUYO6Ai5TpLk9QV8vuR/5LRl3LAoTphucPTjAKkxjG8WQwOPcyqJBD
-         8vVzvbpuxB9x5St4f+huhIVmvzCwum2HFqKW0CLgAFV+2vqtZ/X8M26aof43CoilDKEK
-         vjLRFx3la/aE3vdaX00z3YhiTuYg3cyVKrR/6vSpeKLVFxrxjKNURzUZC7AX2sX5lXMP
-         UAh/Io/XHEiA5K20AECP5H82wHiGij7uzOPfjj1qqhK/n8T6toD7c+spEyWDo+rxJhJR
-         5SPfeqGSy8rvOKin1t73lplxkDTx045HpaVDHjg/FGuErUbvKK1MKfiKpOVFJ2Qc4IrX
-         502Q==
-X-Gm-Message-State: AOAM531UJCczfiX4fb/SqAOlwPKxA7yNHFtanBjGLr2QnGimBsbv4gMx
-        La6G0fSTLbtD782oW70Z+zin0JJjnCZ0wg==
-X-Google-Smtp-Source: ABdhPJwHmdB/ngEcW6ekCEsG8jR8tflzt2KBbj2o5mGEtn48tDMcGJMmvfT7X8WWiDJoLeN5ixUIDw==
-X-Received: by 2002:a17:906:2bc3:: with SMTP id n3mr11015388ejg.548.1630890332314;
-        Sun, 05 Sep 2021 18:05:32 -0700 (PDT)
+        bh=Q0xWpRwUUn/P+13VCL4XWiJgelk4XaSYNf6vpk1ZVu4=;
+        b=PmCt+SOAbJm6w/5HFH+1jWq5MxAGs6jIKo25fitzmuGzciz1QNGFNlYKlvUoAlnW6v
+         cRvFrdF1FocHN6hyJQQ/WgczG2PE7tPMsGZ1P1BzHhaJySwZErXDbZuOhF/5hWP8/ia0
+         FVrM9u3Kk93/s7D8YMA2vllSmr+V7j4IsY198dFD0Tq8+HD4syYDyvo/4EE47f+46VZf
+         Nb0CZY3ZYqjEYc8zNPYgNDimrrODfQrqbj1N18am4K5Lrp3Rq3nf48NI+X7bumXnUknh
+         ICFCWFujRANGS5k4eY0JXfGJtDolDzLjlW+UmWqHK8fLySZ/GbVv2jSnnQbZWSIt9Z3X
+         4iFQ==
+X-Gm-Message-State: AOAM530c0gbGH/Rm/eE1hcgz861aMbd+l5CM4FV82slAx5IyBVb44Y3m
+        +BV9iM/qdn9xrAczc9MIAiItKIA8y32A1w==
+X-Google-Smtp-Source: ABdhPJwcRZI8/eyb+f47X1RiYzrFHIYiyujvo0kZ89zNm/MCKMBqcghLfRLcr+GtH/EAbwxnC7ciVA==
+X-Received: by 2002:a17:906:74d:: with SMTP id z13mr11109107ejb.127.1630890955790;
+        Sun, 05 Sep 2021 18:15:55 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e21sm2939095ejj.4.2021.09.05.18.05.31
+        by smtp.gmail.com with ESMTPSA id j22sm3021912ejt.11.2021.09.05.18.15.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 18:05:31 -0700 (PDT)
+        Sun, 05 Sep 2021 18:15:55 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/15] [RFC] Upstreaming the Scalar command
-Date:   Mon, 06 Sep 2021 02:59:03 +0200
+Subject: Re: [PATCH v2 08/15] scalar: implement the `clone` subcommand
+Date:   Mon, 06 Sep 2021 03:12:11 +0200
 References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
  <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
+ <f3223c10788fe836d0322006dc2dcbafe08f6b5b.1630691688.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
-Message-ID: <877dfupl7o.fsf@evledraar.gmail.com>
+In-reply-to: <f3223c10788fe836d0322006dc2dcbafe08f6b5b.1630691688.git.gitgitgadget@gmail.com>
+Message-ID: <8735qipkqd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,25 +78,37 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Sep 03 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> Changes since v1:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
->  * A couple typos were fixed
->  * The code parsing the output of ls-remote was made more readable
->  * The indentation used in scalar.txt now consistently uses tabs
->  * We no longer hard-code core.bare = false when registering with Scalar
+> This implements Scalar's opinionated `clone` command: it tries to use a
+> partial clone and sets up a sparse checkout by default. In contrast to
+> `git clone`, `scalar clone` sets up the worktree in the `src/`
+> subdirectory, to encourage a separation between the source files and the
+> build output (which helps Git tremendously because it avoids untracked
+> files that have to be specifically ignored when refreshing the index).
 
-A summary of outstanding but unaddressed things would be useful during
-re-rolls. In this case at least:
+Perhaps it's simpler to just say about that /src/ injection:
 
- - My point that the build system part of this is more complex than it
-   probably needs to be:
-   https://lore.kernel.org/git/87mtoxwt63.fsf@evledraar.gmail.com/
+    `scalar clone` adds an implicit "/src" subdirectory to whatever
+    directory the user provides, with the added stricture on top of
+    doing that with "git clone" that the "src" cannot exist already.
 
- - My point & Junio concurring with some style suggestions:
-   https://lore.kernel.org/git/xmqqk0jxft1p.fsf@gitster.g
+...
 
- - My minor style comment about the ", 1". Just saying it's
-   "outstanding" because I think what you had & I just replied to in
-   https://lore.kernel.org/git/87bl56plbi.fsf@evledraar.gmail.com/ might
-   have been a dismissal of the macro suggestion (which I don't like
-   either), not just the simpler "get rid of init verbosity to all 1".
+> +	if (is_directory(enlistment))
+> +		die(_("directory '%s' exists already"), enlistment);
+> +
+> +	dir = xstrfmt("%s/src", enlistment);
+
+Which also seems to suggest a bug here. I.e. if I "git clone <repo>
+/tmp/xyz/abc" and Ctrl+C it we'll remove "abc", but leave "xyz"
+behind. Since we're creating that "xyz" (or "src") implicitly here an
+abort/ctrl+C followed by a retry is going to run into this error, isn't
+it?
+
+I.e. it seems what's missing in this state machine is checking if the
+directory was there already, and if it isn't add it to the existing
+atexit() removals.
+
+Which may be tricky seeing as this is shelling out to "init" then
+"fetch" etc, i.e. who removes it? But maybe not.
