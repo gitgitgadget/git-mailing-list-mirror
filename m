@@ -7,60 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 475F7C4332F
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 13:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC4E2C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 13:35:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37103600CC
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 13:30:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0E2460F43
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 13:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233549AbhIFNcC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 09:32:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47902 "EHLO
+        id S242548AbhIFNgM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 09:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241526AbhIFNcB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 09:32:01 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C25AC061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 06:30:56 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id w7so6508335ilj.12
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 06:30:56 -0700 (PDT)
+        with ESMTP id S242515AbhIFNgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 09:36:12 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A06C061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 06:35:07 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id q3so8738112iot.3
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 06:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=tm8yFZUSdTnqIjKGZ6VZglkuTBXRVbKsUQ1CjpbZbZY=;
-        b=aHnWkzAehb2qHWD3WROay627D0OsXBtSAXMLpgbBS56+ml3xs/j7yPL5u68LAUvf9y
-         4kVmmfTdQTwB00zQyrSAVIv4OUYjJjR00U3RbVMRaHua6TQ0OMSCYlWj0KBPTYHnkEmV
-         7ljZpxYA80/nEGDsC62SmjQw2YdD6ej8VRkwZX4WLOSxl6osCq8IPSjI2Bx4AqoDtF0g
-         GYBWZiOS8HpjEewfZjmSBpQeQdCZIXIMbnunqMxZKZnsOKlQn4Ddgx63/90ylrVdHLxg
-         hYBL8FNqhXUvyrkDg9rmqFyGZhVjCkCr817+am2pzRfjLETD4WTnlStxpD0xMvePvY1b
-         oguQ==
+        bh=fko4D56w5d3vW4Dsu+9juYeEsGS6DvXYrNeS2TrZiCU=;
+        b=B0QlIj45G/UzgjJi3NrVgAkk8KKpafmicM6jwxvt+OVw1lA3yR5Oz0FrJDjR0TMnQw
+         uDpLW/86ukFIaHIFY2OlKh+8JU2jsw9edEhauO9lL7LloltRde4a3IrZGnBFH6mOgZ1s
+         2F0me2Wph/BDCQoFtDRuGQ8tkAJ8rf0gqjLudAhe0Z+2LXuQASOchXgQG7pGPIibgtrp
+         nE29NLG8LD92stva8zhWmiwz4PTpNvfrpXXQtQrYRgQEBsJ2I7nZq3QZNveJYS27Q/Ij
+         gesS4hK8mTFd5t9ID1Dm2RvlcfiG0tNNKCHrv0x4Yne9wx13T+q6JDxs9t+npja4ua6j
+         Nf4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tm8yFZUSdTnqIjKGZ6VZglkuTBXRVbKsUQ1CjpbZbZY=;
-        b=DQ/oh/5FAh2BpzhWzIHZO+F3xnHHAhGj1zzl4iiKBh93JLWlIa+4Lw9MDen2LY/Sq+
-         OUXrwpxedi210t2oLoe8hux2gkNXuGensN2PD3PljaK/eYbdlGp2MroNQtVGvGM6q0u2
-         rPECwn9+MC++SYBa1iTE3nej8Q0zfHfaOacuJ2iE0vjM08n+wUYHK7ycApdHbVlW1Nxq
-         obQP9GGJneB+Su6z/m0avTXcstlKQiSVV9+qRUi1iBTIsC+5OWg4WBZYZedvUVn29Tom
-         yvPRfHoEKYVQex9nX20iRBsvThwQxIYKfkDWIiP5x2ZNBI1njEg35Vqur+5q1pP6zThc
-         O78Q==
-X-Gm-Message-State: AOAM533HfXFPenRM4Z4uGJXuBPDyEBQBMRhrN1hPt6bQ9fOweQFmz7TP
-        cDXJ/SROANDZ6p2fltgQWezvoigUU4pMyUzS6uWD1tbryrQvqjWgkvc=
-X-Google-Smtp-Source: ABdhPJxnzlTZ++6VdEamfDyUJ3WWiNxqPKsB5bp4n4tnddV0FuEGpK2mu0hwjpMQdh37ghptk63LbExeYEDWNzTVV4U=
-X-Received: by 2002:a92:c68a:: with SMTP id o10mr8543614ilg.163.1630935056017;
- Mon, 06 Sep 2021 06:30:56 -0700 (PDT)
+        bh=fko4D56w5d3vW4Dsu+9juYeEsGS6DvXYrNeS2TrZiCU=;
+        b=pP8GGyYiA7Qvhm3t85ITFCnzb5Gr5eepefpB1VPuPJ6gO77HMr8/pcZ3MO8Vnoe0La
+         LoUBFruXJsS/vaEqzqk9V8G8gtLuEHVuh4imhwptOKUHxuZyFUMsDbDYyBLDfs/T7GEs
+         tmMOJ2KxOLUfYqU1pZo7atEikIWWph93KcdiRYP7dRlghlBtVk/+BA6GiLdC/hGfXKyp
+         azDpC321jlOqPopSuWKjdEVI9QD6CqHmAHdOvDmFj1UVza2/maQJoCLPgJIPHRnO06xi
+         d0UCImqEWALoxlukAp980+2gjYh+j+8Zmu6gWcS6utMjE7a/mhsW0Ylv/rul7uNfa65F
+         rG6Q==
+X-Gm-Message-State: AOAM531WBy30HVICh6DhXj7v3NZ9cYLhCLoBguAI7allD2rTlgzwq3j9
+        d8R1BSqr8WPN61vJHFt7ux0L32KYWqrk0vioTmIeWEWQdyCaH3wTKJ4=
+X-Google-Smtp-Source: ABdhPJx3o1t1hsrYS+71emReHcM64Asye/57YBURyik+o0n+Je0faNZP7lqpyvyVtkXNlInbGbbVVvv8IQAGj9mvtNo=
+X-Received: by 2002:a5d:8484:: with SMTP id t4mr9518721iom.126.1630935307207;
+ Mon, 06 Sep 2021 06:35:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <CAOLTT8RzHb5zWUm1psZRTP=iST-jP4DBmG2Zh1UPdo6z+QyHcg@mail.gmail.com>
- <YTS8yiYwR+eeZf4+@coredump.intra.peff.net>
-In-Reply-To: <YTS8yiYwR+eeZf4+@coredump.intra.peff.net>
+References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <YTNps0YBOaRNvPzk@coredump.intra.peff.net>
+ <CAOLTT8QYe3PBPxSH8CYY+FatSfT7C5m6nccR2xMZ1yxSDFh5OQ@mail.gmail.com> <YTTBCWlsC1cBZMio@coredump.intra.peff.net>
+In-Reply-To: <YTTBCWlsC1cBZMio@coredump.intra.peff.net>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 6 Sep 2021 21:30:45 +0800
-Message-ID: <CAOLTT8SYx4f8x-0zjXLJVOpW4-Mj34mjsfwr6tWo0PbZAV9B0w@mail.gmail.com>
-Subject: Re: [hacky PATCH 0/2] speeding up trivial for-each-ref invocations
+Date:   Mon, 6 Sep 2021 21:34:56 +0800
+Message-ID: <CAOLTT8QqLXdvL5Y8OkEzuctGgnDHA1DQu8ZaxQGnfHPBqNVm4g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ref-filter: implement "quick" formats
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -68,57 +70,40 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=885=E6=97=A5=E5=91=
-=A8=E6=97=A5 =E4=B8=8B=E5=8D=888:49=E5=86=99=E9=81=93=EF=BC=9A
+=A8=E6=97=A5 =E4=B8=8B=E5=8D=889:07=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On Sun, Sep 05, 2021 at 04:19:53PM +0800, ZheNing Hu wrote:
+> On Sun, Sep 05, 2021 at 04:20:07PM +0800, ZheNing Hu wrote:
 >
-> > > In this version there are 2 patches, tested against 'git for-each-ref
-> > > --format=3D"%(objectname) %(refname)"' on a fully packed repo with 50=
-0k
-> > > refs:
-> > >
+> > > +       case REF_FORMAT_QUICK_OBJECTNAME_REFNAME:
+> > > +               printf("%s %s\n", oid_to_hex(oid), refname);
+> > > +               return 0;
+> > > +       }
+> > > +       BUG("unknown ref_format_quick value: %d", format->quick);
+> > > +}
+> > > +
 > >
-> > Regarding this 500k refs, is there any way I can reproduce it?
+> > So as a fast path, we actually avoided format_ref_array_item() when we =
+are using
+> > %(objectname) and %(refname). But the problem is that it=E2=80=99s not =
+very elegant
+> > (using string compare), and it is no optimization for other atoms that
+> > require in-depth
+> > parsing. I remember the "fast path" used by =C3=86var last time, and it
+> > seems that Junio doesn't
+> > like them. [1][2]
 >
-> Try this in a clone of linux.git (or any other repo):
+> Yes, I did say it was "pretty horrible". :)
 >
->   git rev-list HEAD |
->   head -500000 |
->   perl -lne 'print "create refs/foo/$. $_"' |
->   git update-ref --stdin
+> It was mostly meant as a proof-of-concept to see where the time was
+> going, and what was possible. It _could_ be used as a stop-gap while
+> improving the general performance, but it's gross enough that it's
+> probably not a good idea (it's increased maintenance, but also it
+> dis-incentivizes fixing the real problems).
 >
->   git pack-refs --all --prune
->
 
-Sorry, It seems that the above command is difficult to complete on my
-machine (it took more than ten minutes). It may be stuck on git update-ref.
-So I tried to reproduce it in a repo which containing 76K refs:
+Agree. Like you said, these performance gaps are caused by the used_atom
+system.
 
-Benchmark #1: jk-for-each-ref-speedup~2: git for-each-ref
---format=3D'%(refname) %(objectname)'
- Time (mean =C2=B1 =CF=83):     108.0 ms =C2=B1   1.9 ms    [User: 55.2 ms,=
- System: 52.1 ms]
- Range (min =E2=80=A6 max):   105.7 ms =E2=80=A6 112.4 ms    26 runs
-
-Benchmark #2: jk-for-each-ref-speedup~1: git for-each-ref
---format=3D'%(refname) %(objectname)'
- Time (mean =C2=B1 =CF=83):      88.2 ms =C2=B1   1.7 ms    [User: 44.8 ms,=
- System: 43.1 ms]
- Range (min =E2=80=A6 max):    85.8 ms =E2=80=A6  93.2 ms    32 runs
-
-Benchmark #3:jk-for-each-ref-speedup: git for-each-ref
---format=3D'%(refname) %(objectname)'
-  Time (mean =C2=B1 =CF=83):      69.0 ms =C2=B1   2.0 ms    [User: 22.7 ms=
-, System: 46.1 ms]
- Range (min =E2=80=A6 max):    66.2 ms =E2=80=A6  74.1 ms    41 runs
-
-For %(refname) and %(objectname), this performance optimization is
-indeed amazing.
-
-> Though I actually think for these tests that it is not important that
-> each ref point to a unique commit (we are not opening up the objects at
-> all, and just treating the oids as strings).
->
 > -Peff
 
 Thanks.
