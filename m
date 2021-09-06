@@ -2,210 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA50C433FE
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F23C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 06:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8CA66103C
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 04:39:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD13D60EC0
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 06:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234459AbhIFEkN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 00:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40056 "EHLO
+        id S239389AbhIFGQm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 02:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232881AbhIFEkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 00:40:09 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467B1C061757
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 21:39:05 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id u16so7768792wrn.5
-        for <git@vger.kernel.org>; Sun, 05 Sep 2021 21:39:05 -0700 (PDT)
+        with ESMTP id S239281AbhIFGQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 02:16:41 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8350CC061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 23:15:37 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id g14so4832347pfm.1
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 23:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=nM4aaP8pkz0FH4bfit6iJAJdj/G5Ya05UiNpb3kibMY=;
-        b=PJAMLEqsMsCtAlT5vFwRk7VO5HJmEhhgbqS1MQqNixVMI2Rdjg7eUs6BiOipTAzobk
-         hqrXm3A3zvLu9SdhU5sJIikb/yZS19dms2b/WplHdDml2l4658eHAdIe1Y9FK+kPcS+t
-         0ZB5AEZMRgqIWwybnMMz3Y5ud0ds5d0ga4EQYUd0ectWHD/CrbAfJKqt9gvrKNH0lkHq
-         /qbW2p31sWtq+NW4rhU2EQQOGsllzScJ9uqlc90+rU8t1ZxNuHlzP159D5e/mRJWO+4W
-         ep6DIDlBwbENhMRkJaeKsvOG8F9ie46q2Lz5uidWF3Z2735kMqQpqirUmKHHV5avL1Py
-         hRlQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GyTL9EwIOanZyrlYii7C++wdFBrmiM73Hs570ntEavQ=;
+        b=GWMP6+NuoX/kzQb6MWOmw6c7N8kwSZxCtSw+lq9AKuzf9VgrLb7gykeCWAy0P9FqXQ
+         /q9EjqtyisBNyj3Wx/qm7iJSY3KFUwbltMRhq2LxHXucvtOJfFh93URRD1jHiOj7L3mt
+         GTRvIGz+7ysf+DPqVYCWsSzpsnVCoHPjOmn2J1K2z3q5Ds6W+U7ehEsTGht0TJkvQ97X
+         gSsJ7DYemlfhyb+lqTvHMpuIm8SzM4xxCbJY/0UKRgOHb3jWPKIR62rB/jkK2vxfivQ5
+         ecRNANG5FMiqp+ELyVHcmnFrTJVuWVLh6xX1wd/B0oc7GWGr3gULMe2AJ2JhRHaKl8p3
+         E+7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=nM4aaP8pkz0FH4bfit6iJAJdj/G5Ya05UiNpb3kibMY=;
-        b=uXf/mf3jYkvpwyyRwbgTm23RfUGCcfFKS/sSVJzT/H8kd/6H/8VBscWNJDlnhc0x/U
-         lenF6HE8KDrUUU4jR1aO3NfOi+dG7NSxRMlM/l79rCLZjZuN5F1ZUb0cRJJ42zxu/yjn
-         brKP7n2pOZZGqrQSHjJxZTCLWVuA5zLObvc7HxFRA4YMWCVo8+9QUiAWuMHYjFqisTjL
-         cf2a0TlvymGrjDTnW+Huzq4Y6bGBWYrk7SNeAjDE54M+onRdE39pa7ebH7eavdBE4cM0
-         M2kMqJUu9UHVKPNu1skY0P894BRrmpKWZrFghwX2oCZx8Dq03VmHgQ4UYakURYcsPhIA
-         /7lw==
-X-Gm-Message-State: AOAM532lDxdePSih0EQyJdyDlqWQSn1i6sSDhvW+lXR81owtGaPBi80X
-        cqxU/Hja54jKj2K/L9OcsIgU4fkyH0c=
-X-Google-Smtp-Source: ABdhPJzszu/o5ZlB/DyZrLd7e1lapyYgJbfcp/AO4M3Iy7N2W7k+di9fBIkDpdjJawaMszlRxbMBGw==
-X-Received: by 2002:a05:6000:1b8d:: with SMTP id r13mr11152871wru.230.1630903143865;
-        Sun, 05 Sep 2021 21:39:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14sm6578467wrc.31.2021.09.05.21.39.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 21:39:03 -0700 (PDT)
-Message-Id: <ebf92b6b2c379ed007ec66e97dc4ad7aecb7ad81.1630903140.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1022.v5.git.1630903140.gitgitgadget@gmail.com>
-References: <pull.1022.v4.git.1630902006.gitgitgadget@gmail.com>
-        <pull.1022.v5.git.1630903140.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Sep 2021 04:39:00 +0000
-Subject: [PATCH v5 3/3] test-lib-functions: keep user's debugger config files
- and TERM in 'debug'
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GyTL9EwIOanZyrlYii7C++wdFBrmiM73Hs570ntEavQ=;
+        b=SLY+uTvNrEkkonaeIoU4F6o1KjOMlS7Kt/yJ0hrRu/tv5J0kvTkF+yCxf7G8+ucTIm
+         LCkLJ1HMy9ifh9RT9cXHB4r5lZ2WDGJvawZlreZ42CLMGEeAyQXJm0oSdk6mHrogwwm4
+         qPzf3k4l7XCT7F+fScPauVwQNPeWnoMCmjrNs5giDaC8YZyLfP4CdyMG2ZzW62T1xMXo
+         OocFOjpSeK7hMjmhkwD6btej1Levxu5Q01P66fSFEMz2MBRiDEhseS+G5amVBzgM1TcO
+         tLI9I+WrloLVYLStWLnQrM7puyCFPbDZ2FCRCylPZaYB6ldWu4Rj1C8vQcvRzxmfTvHB
+         QDNg==
+X-Gm-Message-State: AOAM530spFx/ulyfPlziRlJxjCFoY3vzwROcEnI/L72Z6aI+X/17WcOP
+        hZ8xznaYmiWy/ZCYpbarnUA=
+X-Google-Smtp-Source: ABdhPJzdqcvbywBpxpvCi+iuwI83jICkrxwsYcHe2xNbJWe1RHZMaUmgXUFOmFKbWunC17Lrtf58Mw==
+X-Received: by 2002:a63:7455:: with SMTP id e21mr9772051pgn.188.1630908936947;
+        Sun, 05 Sep 2021 23:15:36 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-68.three.co.id. [180.214.233.68])
+        by smtp.gmail.com with ESMTPSA id j1sm6226713pjz.36.2021.09.05.23.15.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Sep 2021 23:15:36 -0700 (PDT)
+Subject: Re: [PATCH 2/4] Makefile for list-object-filter extensions
+To:     Andrew Olsen via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Andrew Olsen <andrew232@gmail.com>,
+        Andrew Olsen <andrew.olsen@koordinates.com>
+References: <pull.1031.git.1630885899.gitgitgadget@gmail.com>
+ <43415de761ac029b67645d9131b38e761ef6ae21.1630885899.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <20713339-ba53-38e2-b20c-befe68dc147e@gmail.com>
+Date:   Mon, 6 Sep 2021 13:15:29 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <43415de761ac029b67645d9131b38e761ef6ae21.1630885899.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On 06/09/21 06.51, Andrew Olsen via GitGitGadget wrote:
+> From: Andrew Olsen <andrew.olsen@koordinates.com>
+> 
+> Custom list-object-filter extensions can be compiled into Git using the
+> FILTER_EXTENSIONS Makefile argument.
+> 
 
-The 'debug' function in test-lib-functions.sh is used to invoke a
-debugger at a specific line in a test. It inherits the value of HOME and
-TERM set by 'test-lib.sh': HOME="$TRASH_DIRECTORY" and TERM=dumb.
+This can be squashed to previous patch.
 
-Changing the value of HOME means that any customization configured in a
-developers' debugger configuration file (like $HOME/.gdbinit or
-$HOME/.lldbinit) are not available in the debugger invoked by
-'test_pause'.
-
-Changing the value of TERM to 'dumb' means that colored output
-is disabled in the debugger.
-
-To make the debugging experience with 'debug' more pleasant, leverage
-the variable USER_HOME, added in the previous commit, to copy a
-developer's ~/.gdbinit and ~/.lldbinit to the test HOME. We do not set
-HOME to USER_HOME as in 'test_pause' to avoid user configuration in
-$USER_HOME/.gitconfig from interfering with the command being debugged.
-
-Also, add a flag to launch the debugger with the original value of
-TERM, and add the same warning as for 'test_pause'.
-
-Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- t/README                |  6 +++--
- t/test-lib-functions.sh | 60 +++++++++++++++++++++++++++++++----------
- 2 files changed, 50 insertions(+), 16 deletions(-)
-
-diff --git a/t/README b/t/README
-index cc8be6e67ad..e924bd81e2d 100644
---- a/t/README
-+++ b/t/README
-@@ -800,10 +800,12 @@ see test-lib-functions.sh for the full list and their options.
-    argument.  This is primarily meant for use during the
-    development of a new test script.
- 
-- - debug <git-command>
-+ - debug [options] <git-command>
- 
-    Run a git command inside a debugger. This is primarily meant for
--   use when debugging a failing test script.
-+   use when debugging a failing test script. With '-t', use your
-+   original TERM instead of test-lib.sh's "dumb", so that your
-+   debugger interface has colors.
- 
-  - test_done
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 5bed34e47e0..eef2262a360 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -190,25 +190,57 @@ test_pause () {
- # Wrap git with a debugger. Adding this to a command can make it easier
- # to understand what is going on in a failing test.
- #
-+# Usage: debug [options] <git command>
-+#   -d <debugger>
-+#   --debugger=<debugger>
-+#	Use <debugger> instead of GDB
-+#   -t
-+#	Use your original TERM instead of test-lib.sh's "dumb".
-+#	This usually restores color output in the debugger.
-+#	WARNING: the command being debugged might behave differently than when
-+#	running the test.
-+#
- # Examples:
- #     debug git checkout master
- #     debug --debugger=nemiver git $ARGS
- #     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
- debug () {
--	case "$1" in
--	-d)
--		GIT_DEBUGGER="$2" &&
--		shift 2
--		;;
--	--debugger=*)
--		GIT_DEBUGGER="${1#*=}" &&
--		shift 1
--		;;
--	*)
--		GIT_DEBUGGER=1
--		;;
--	esac &&
--	GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7
-+	GIT_DEBUGGER=1 &&
-+	DEBUG_TERM=$TERM &&
-+	while test $# != 0
-+	do
-+		case "$1" in
-+		-t)
-+			DEBUG_TERM="$USER_TERM"
-+			;;
-+		-d)
-+			GIT_DEBUGGER="$2" &&
-+			shift
-+			;;
-+		--debugger=*)
-+			GIT_DEBUGGER="${1#*=}"
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		shift
-+	done &&
-+
-+	dotfiles=".gdbinit .lldbinit"
-+
-+	for dotfile in $dotfiles
-+	do
-+		dotfile="$USER_HOME/$dotfile" &&
-+		test -f "$dotfile" && cp "$dotfile" "$HOME" || :
-+	done &&
-+
-+	TERM="$DEBUG_TERM" GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7 &&
-+
-+	for dotfile in $dotfiles
-+	do
-+		rm -f "$HOME/$dotfile"
-+	done
- }
- 
- # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
