@@ -2,89 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D88F9C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 21:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 500DCC433EF
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A76B76108D
-	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 21:55:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 109376108D
+	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 22:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234543AbhIFV4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Sep 2021 17:56:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57065 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231256AbhIFV4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Sep 2021 17:56:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 590D813BEC0;
-        Mon,  6 Sep 2021 17:55:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+3EIKql2R7RUT0KxGXe95kTEOlFkBvQcSjnYWt
-        8Nr4M=; b=ITqI8ldvpJPZapLiIhKUwokq9PmdHQJWNGGZYEaTB5csjMGURKzqUX
-        Hj/SG+6mxu1ItQA1swJeN6sEqZSHQ2PkUWDegwIw3OTzm8C8bGRLa0gHR/yS0WvN
-        s5VhugIH5iEEj8aP3287CKRz37d/qT4ORXgIIDbfSYmo5r/kHWv5g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F57313BEBF;
-        Mon,  6 Sep 2021 17:55:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7595813BEBE;
-        Mon,  6 Sep 2021 17:55:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
-References: <xmqq35qmiofp.fsf@gitster.g>
-        <CAFQ2z_N8pUsp3cdBpybHBD-V9_1sARCZvSxr0UkMfcwCoQfCbw@mail.gmail.com>
-Date:   Mon, 06 Sep 2021 14:55:10 -0700
-In-Reply-To: <CAFQ2z_N8pUsp3cdBpybHBD-V9_1sARCZvSxr0UkMfcwCoQfCbw@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Mon, 6 Sep 2021 12:36:41 +0200")
-Message-ID: <xmqq4kaxe5dt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233404AbhIFWHc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Sep 2021 18:07:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231256AbhIFWHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Sep 2021 18:07:32 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC6DFC061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 15:06:26 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id e21so15740209ejz.12
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 15:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=MFEM7VT+Tn63uNGK2BkAdNo3BAFUgyHBbEL/QeiI3XU=;
+        b=aDg4k8YbgzIdgGyJo979s8mVrxv/aYjNsRsRNENgs7XhjTc9HzcRwmLSv9xun1y0Yn
+         m9b/Wi1sw6yU8WGWksYa2lzRCLB5Z3C2H3d9JzMQJlZ/epl6AiQ8A2jpcQwuyKzLCDfy
+         AQ/g0qUmcOd4XrjjzgjLt1J+Q2Is2EoUuLhI9v+f9C3rU4lvRBacxHHMP/sc/gYwI9n2
+         fDJY6NThuCNYYSApj/hT65S2hRAyWoahW2Qfk1t8PTvSchcCTrruztxutBCKaq5XXUII
+         2UIg4toa9NqXSMFfZGc8ZqgjGPmqpFKHOEPy7/iLaIjlu5TH0aG6ZesYWPN5evMdwxGw
+         PN6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=MFEM7VT+Tn63uNGK2BkAdNo3BAFUgyHBbEL/QeiI3XU=;
+        b=BhsgI/pgQI1t1cJpZgcU7Rh5ppB3x5DDRCEsIZIRZ3Ytl5GSsHQGE+9kaQBIXOdq3g
+         vRREhmSW3OtDrhipUkuHvJYJwrWHlQpsdRbGhg6jrwdxxjyBz+CkNcdTeHBcpvmzzF8J
+         IN0wnxrj0Qh5DCTPVaL4XOcs4DTIMC7aERnMuoXJyM5TopA66pYJGQIyp0k6NZIZzk/a
+         42C0XZMRjdP6FrkOCIF96TIs5bGJ+W6enUmSy3gDQqiFUnbU3eGLG9iyUfnRHOhfgdgn
+         WWoQXhi2y5VMVt6aayNKx7ALKbDOGZJtjPg5zlkq893Kh5YKDp2qOR/zf3XvPZ5+jaMK
+         aMig==
+X-Gm-Message-State: AOAM530JJ6GuyyZofbOnfB9dhP7FWvdTLZdzWE1Sn0F8lR1tavxeA1bm
+        oGj9yorfLzUDAzcicz68ErI=
+X-Google-Smtp-Source: ABdhPJwr0fIcrcjYfRHMk/EcsWjnCAyllYPUw6GMcp9lblpM1l1MVLXVe/KEzFpVHiHxb3GGxx49NQ==
+X-Received: by 2002:a17:907:2d8b:: with SMTP id gt11mr15489283ejc.432.1630965985287;
+        Mon, 06 Sep 2021 15:06:25 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id c28sm4594397ejc.102.2021.09.06.15.06.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Sep 2021 15:06:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, lilinchao@oschina.cn,
+        Elijah Newren <newren@gmail.com>, jerry@skydio.com
+Subject: Re: [PATCH v2] apply: resolve trivial merge without hitting
+ ll-merge with "--3way"
+Date:   Mon, 06 Sep 2021 23:59:42 +0200
+References: <xmqqczr26i9f.fsf@gitster.g>
+ <20210905190657.2906699-1-gitster@pobox.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20210905190657.2906699-1-gitster@pobox.com>
+Message-ID: <87pmtlnyu7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1C6D4B3A-0F5D-11EC-B862-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> On Fri, Sep 3, 2021 at 12:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->> * hn/reftable (2021-08-26) 29 commits
->>  - SQUASH??? https://github.com/git/git/runs/3439941236?check_suite_focus=true#step:5:700
->>  - reftable: fixup for new base topic 3/3
->>  - reftable: fixup for new base topic 2/3
->>  - reftable: fixup for new base topic 1/3
-> ..
->>  The "reftable" backend for the refs API.
->
-> I posted a subset of these patches as
-> https://lore.kernel.org/git/pull.1081.git.git.1630335476.gitgitgadget@gmail.com/
+On Sun, Sep 05 2021, Junio C Hamano wrote:
 
-Thanks for a ping.  I saw it but haven't read it.
+> +	if (!image->buf || type != OBJ_BLOB)
+> +		die("unable to read blob object %s", oid_to_hex(result_id));
 
-> As discussed with AEvar, it will probably speed things up if we can
-> focus on getting the base library submitted without hooking it up to
-> Git. This would avoid cross-interactions with other pending topics,
-> and reduce the size of the more controversial topic (hooking it up to
-> Git).
+This die() message seems to only be applicable to the first condition
+here, shouldn't this be:
 
-My worry is that a "base library" that is not hooked up to anything
-that works in the system would not be properly reviewed at all.  Of
-course, without review, it would speed things up, but it is unclear
-if that the kind of speed we want.
+    if (!image->buf)
+        die(_("unable to read blob object %s"), oid_to_hex(result_id));
+    if (type != OBJ_BLOB)
+        die(_("object %s is %s, expected blob"), oid_to_hex(result_id), type_name(type));
 
-Anyway, I'll eject the old topic and replace them with the latest
-one soonish.
+Also as shown there, missing _() for marking the translation.
 
-Thanks.
+> [...]
+> +test_expect_success 'apply binary file patch' '
+> +	git reset --hard main &&
+
+Partly this is cleaning up a mess after an existing test, but here
+there's no reason we can't use test_when_finished() for all the new
+tests to make them clean up after themselves:
+
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index cc3aa3314a3..c3c9b52e30d 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -232,6 +232,8 @@ test_expect_success 'apply with --3way --cached and conflicts' '
+ 
+ test_expect_success 'apply binary file patch' '
+ 	git reset --hard main &&
++	test_when_finished "git reset --hard main" &&
++
+ 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
+ 	git add bin.png &&
+ 	git commit -m "add binary file" &&
+@@ -246,7 +248,8 @@ test_expect_success 'apply binary file patch' '
+ '
+ 
+ test_expect_success 'apply binary file patch with 3way' '
+-	git reset --hard main &&
++	test_when_finished "git reset --hard main" &&
++
+ 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
+ 	git add bin.png &&
+ 	git commit -m "add binary file" &&
+@@ -261,7 +264,8 @@ test_expect_success 'apply binary file patch with 3way' '
+ '
+ 
+ test_expect_success 'apply full-index patch with 3way' '
+-	git reset --hard main &&
++	test_when_finished "git reset --hard main" &&
++
+ 	cp "$TEST_DIRECTORY/test-binary-1.png" bin.png &&
+ 	git add bin.png &&
+ 	git commit -m "add binary file" &&
