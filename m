@@ -2,430 +2,288 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01AF7C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E74DC4332F
 	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 00:45:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7AD16101C
+	by mail.kernel.org (Postfix) with ESMTP id DB1EB61054
 	for <git@archiver.kernel.org>; Mon,  6 Sep 2021 00:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232506AbhIFAaB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 20:30:01 -0400
-Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:41218 "EHLO
-        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229735AbhIFAaA (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 5 Sep 2021 20:30:00 -0400
-Received: from MTA-07-4.privateemail.com (mta-07-1.privateemail.com [198.54.122.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id 166F3807EC
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 20:28:56 -0400 (EDT)
-Received: from mta-07.privateemail.com (localhost [127.0.0.1])
-        by mta-07.privateemail.com (Postfix) with ESMTP id 974BF18000AF;
-        Sun,  5 Sep 2021 20:28:54 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.206])
-        by mta-07.privateemail.com (Postfix) with ESMTPA id 13FAA18000A9;
-        Sun,  5 Sep 2021 20:28:53 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
+        id S232675AbhIFAiq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 20:38:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42558 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229735AbhIFAiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 20:38:46 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51846C061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 17:37:42 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso3740558wms.3
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 17:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JuwnO0OjH+gaWVzdYXPNxFdAhQNQj1eUzI5FLTaLbX8=;
+        b=IkSSMxnJtpt+7O33Cvco6suI74rrx9fOUfO7jW7e3QloWrsYirIIYdPSdrBwlEU/Gg
+         fA+u40jBEBKNLaJn3mKWdPyw2iAEROcDAgMTYP2ilGtSon7DsfS/Gg4aqqixgoPFPie0
+         Z6CG3IHLbtOEGnN5o2xda3RMPVzz+uEeW4zqMaaw0gJCRepxZ8Sq7B4CV/7Kg4DZ1ode
+         PtHsC5ny7YALegWXFrWBGF0p4UmeHJLGcwkT4Y7wuQZ7wCCLbpbH4hElMwSzFwAk511n
+         mk7P9FwIYmokuHE1gYU06rijmEP+gDZ8fqQsmBFoRuGSuHI4952wURvjyZPvZzT+25bN
+         058g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JuwnO0OjH+gaWVzdYXPNxFdAhQNQj1eUzI5FLTaLbX8=;
+        b=h3XgabTvQOIWWkTvTE9EtbYh1ZHFrSNEcSQd1tqdUN2cEZm5IC9xEv+XoX03Fu3Fjk
+         I1BcIQHeRPUz0szSCe9vOG++nm2T4DPrw4iJn55EO6W8igv85M7mswCktIfQR8d5/TlK
+         J85F0W/zmeRZQUp3ZZBGvN1dJu0SYeZGQwmOmvYpmT4Mp9gDBPR2u2sXM+jkR/qczPKS
+         F+hyr+2bdcixt6nLMpagnSOcCX7TTKBucvKwq8wKINYym+RcZB98oz3zmS21M4ZNcAth
+         yPWPyu5MMleEzUn458KLZrZubQe+PfCW0OqD7Kx4fQ7KSwsq3Kv/fO+hP3LwvzpxiW9A
+         3DLA==
+X-Gm-Message-State: AOAM533qUHnTiwzjBAzlcPJmwLx7PsXf9Nrmn/sGtyyf6bilS2kM6PUQ
+        5KX27vhO/iL8HCY1bhLvywTgTQUoc8OSZA==
+X-Google-Smtp-Source: ABdhPJz1qazPUB5lLh9JhVp6Nti+6oSO+rTujgFmV+3MmPzyDHBLRly7yZh3vXtrxZKk14iY6PrOzw==
+X-Received: by 2002:a1c:402:: with SMTP id 2mr8982783wme.158.1630888660570;
+        Sun, 05 Sep 2021 17:37:40 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i5sm6254175wrc.86.2021.09.05.17.37.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Sep 2021 17:37:40 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v3] pretty: colorize pattern matches in commit messages
-Date:   Sun,  5 Sep 2021 20:28:42 -0400
-Message-Id: <20210906002842.10995-1-someguy@effective-light.com>
-X-Mailer: git-send-email 2.33.0
+        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] test-tool run-command: remove dead "testsuite" code
+Date:   Mon,  6 Sep 2021 02:37:37 +0200
+Message-Id: <patch-1.1-d1e464da0a9-20210906T002938Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.821.g8b294b0dcf8
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git log" command limits its output to the commits that contain strings
-matched by a pattern when the "--grep=<pattern>" option is used, but unlike
-output from "git grep -e <pattern>", the matches are not highlighted,
-making them harder to spot.
+Remove the "test-tool run-command testsuite" sub-sub-command, it has
+not been used since 4c2c38e800f (ci: modification of main.yml to use
+cmake for vs-build job, 2020-06-26), see also the earlier
+6081d3898fe (ci: retire the Azure Pipelines definition, 2020-04-11)
+for another phasing out of the command.
 
-Teach the pretty-printer code to highlight matches from the
-"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-options (to view the last one, you may have to ask for --pretty=fuller).
+This the "testsuite" functionality here was added in
+be5d88e1128 (test-tool run-command: learn to run (parts of) the
+testsuite, 2019-10-04), and then first used in 46689317ac0 (ci: also
+build and test with MS Visual Studio on Azure Pipelines, 2019-10-04).
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+I'd started out fixing a bug in the "init" pattern here. We set "next"
+to "-1" and then proceed to memset() the whole struct to "0", so the
+two "STRING_LIST_INIT_DUP" here are also redundant to our setting of
+the "strdup_strings" members later on.
+
+But rather than fix that let's just remove this whole thing, as
+nothing is using it.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
-v2: make the commit message whole (add the missing ingredients), rename
-    append_matched_line() to append_line_with_color(), use
-    colors[GREP_COLOR_MATCH_SELECTED] instead of
-    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
-    customized, don't copy strings to a buffer when not coloring in
-    append_line_with_color(), rename next_match() to grep_next_match(),
-    repurpose grep_next_match()/match_one_pattern() for use in
-    append_line_with_color() (allowing us to remove duplicated matching
-    code in append_line_with_color()), document how to customize the
-    feature and modify some of the tests to fit the feature better.
 
-v3: fix a formatting issue with the added documentation.
----
- Documentation/git-log.txt |   8 +++
- grep.c                    |  41 +++++++++------
- grep.h                    |   3 ++
- pretty.c                  | 107 +++++++++++++++++++++++++++++++++-----
- t/t4202-log.sh            |  42 +++++++++++++++
- 5 files changed, 174 insertions(+), 27 deletions(-)
+There's a trivial conflict here with ab/config-based-hooks-base. This
+removes code, that series adds a couple of new (but unrelated)
+functions in-between some of these removed functions.
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 0498e7bacb..c689f7d235 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -241,6 +241,14 @@ This setting can be disabled by the `--no-notes` option,
- overridden by the `GIT_NOTES_DISPLAY_REF` environment variable,
- and overridden by the `--notes=<ref>` option.
+ t/helper/test-run-command.c | 151 ------------------------------------
+ 1 file changed, 151 deletions(-)
+
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 7ae03dc7123..1d41c0eda81 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -10,14 +10,10 @@
  
-+color.grep.selected::
-+	Determines the non matching text (background) color of selected lines,
-+	when `--grep`, `--author` or `--committer` are used.
-+
-+color.grep.matchSelected::
-+	Determines the matching text (foreground) color of selected lines, when
-+	`--grep`, `--author` or `--committer` are used.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/grep.c b/grep.c
-index 424a39591b..6b036ee18a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -956,18 +956,23 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 	const char *start = bol;
+ #include "test-tool.h"
+ #include "git-compat-util.h"
+-#include "cache.h"
+ #include "run-command.h"
+ #include "strvec.h"
+ #include "strbuf.h"
+ #include "parse-options.h"
+-#include "string-list.h"
+-#include "thread-utils.h"
+-#include "wildmatch.h"
+ #include "gettext.h"
+ #include "parse-options.h"
  
- 	if ((p->token != GREP_PATTERN) &&
--	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
-+	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
-+	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
- 		return 0;
- 
- 	if (p->token == GREP_PATTERN_HEAD) {
--		const char *field;
--		size_t len;
--		assert(p->field < ARRAY_SIZE(header_field));
--		field = header_field[p->field].field;
--		len = header_field[p->field].len;
--		if (strncmp(bol, field, len))
--			return 0;
--		bol += len;
-+		if (!(eflags & REG_NOTBOL)) {
-+			const char *field;
-+			size_t len;
-+
-+			assert(p->field < ARRAY_SIZE(header_field));
-+			field = header_field[p->field].field;
-+			len = header_field[p->field].len;
-+			if (strncmp(bol, field, len))
-+				return 0;
-+			bol += len;
-+		}
-+
- 		switch (p->field) {
- 		case GREP_HEADER_AUTHOR:
- 		case GREP_HEADER_COMMITTER:
-@@ -1159,21 +1164,26 @@ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
+@@ -55,151 +51,6 @@ static int task_finished(int result,
  	return 1;
  }
  
--static int next_match(struct grep_opt *opt, char *bol, char *eol,
--		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
-+int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
-+		    enum grep_context ctx, regmatch_t *pmatch,
-+		    enum grep_header_field field, int eflags)
- {
- 	struct grep_pat *p;
- 	int hit = 0;
+-struct testsuite {
+-	struct string_list tests, failed;
+-	int next;
+-	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
+-};
+-#define TESTSUITE_INIT \
+-	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
+-
+-static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
+-		     void **task_cb)
+-{
+-	struct testsuite *suite = cb;
+-	const char *test;
+-	if (suite->next >= suite->tests.nr)
+-		return 0;
+-
+-	test = suite->tests.items[suite->next++].string;
+-	strvec_pushl(&cp->args, "sh", test, NULL);
+-	if (suite->quiet)
+-		strvec_push(&cp->args, "--quiet");
+-	if (suite->immediate)
+-		strvec_push(&cp->args, "-i");
+-	if (suite->verbose)
+-		strvec_push(&cp->args, "-v");
+-	if (suite->verbose_log)
+-		strvec_push(&cp->args, "-V");
+-	if (suite->trace)
+-		strvec_push(&cp->args, "-x");
+-	if (suite->write_junit_xml)
+-		strvec_push(&cp->args, "--write-junit-xml");
+-
+-	strbuf_addf(err, "Output of '%s':\n", test);
+-	*task_cb = (void *)test;
+-
+-	return 1;
+-}
+-
+-static int test_finished(int result, struct strbuf *err, void *cb,
+-			 void *task_cb)
+-{
+-	struct testsuite *suite = cb;
+-	const char *name = (const char *)task_cb;
+-
+-	if (result)
+-		string_list_append(&suite->failed, name);
+-
+-	strbuf_addf(err, "%s: '%s'\n", result ? "FAIL" : "SUCCESS", name);
+-
+-	return 0;
+-}
+-
+-static int test_failed(struct strbuf *out, void *cb, void *task_cb)
+-{
+-	struct testsuite *suite = cb;
+-	const char *name = (const char *)task_cb;
+-
+-	string_list_append(&suite->failed, name);
+-	strbuf_addf(out, "FAILED TO START: '%s'\n", name);
+-
+-	return 0;
+-}
+-
+-static const char * const testsuite_usage[] = {
+-	"test-run-command testsuite [<options>] [<pattern>...]",
+-	NULL
+-};
+-
+-static int testsuite(int argc, const char **argv)
+-{
+-	struct testsuite suite = TESTSUITE_INIT;
+-	int max_jobs = 1, i, ret;
+-	DIR *dir;
+-	struct dirent *d;
+-	struct option options[] = {
+-		OPT_BOOL('i', "immediate", &suite.immediate,
+-			 "stop at first failed test case(s)"),
+-		OPT_INTEGER('j', "jobs", &max_jobs, "run <N> jobs in parallel"),
+-		OPT_BOOL('q', "quiet", &suite.quiet, "be terse"),
+-		OPT_BOOL('v', "verbose", &suite.verbose, "be verbose"),
+-		OPT_BOOL('V', "verbose-log", &suite.verbose_log,
+-			 "be verbose, redirected to a file"),
+-		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
+-		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
+-			 "write JUnit-style XML files"),
+-		OPT_END()
+-	};
+-
+-	memset(&suite, 0, sizeof(suite));
+-	suite.tests.strdup_strings = suite.failed.strdup_strings = 1;
+-
+-	argc = parse_options(argc, argv, NULL, options,
+-			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+-
+-	if (max_jobs <= 0)
+-		max_jobs = online_cpus();
+-
+-	dir = opendir(".");
+-	if (!dir)
+-		die("Could not open the current directory");
+-	while ((d = readdir(dir))) {
+-		const char *p = d->d_name;
+-
+-		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
+-		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
+-		    !ends_with(p, ".sh"))
+-			continue;
+-
+-		/* No pattern: match all */
+-		if (!argc) {
+-			string_list_append(&suite.tests, p);
+-			continue;
+-		}
+-
+-		for (i = 0; i < argc; i++)
+-			if (!wildmatch(argv[i], p, 0)) {
+-				string_list_append(&suite.tests, p);
+-				break;
+-			}
+-	}
+-	closedir(dir);
+-
+-	if (!suite.tests.nr)
+-		die("No tests match!");
+-	if (max_jobs > suite.tests.nr)
+-		max_jobs = suite.tests.nr;
+-
+-	fprintf(stderr, "Running %d tests (%d at a time)\n",
+-		suite.tests.nr, max_jobs);
+-
+-	ret = run_processes_parallel(max_jobs, next_test, test_failed,
+-				     test_finished, &suite);
+-
+-	if (suite.failed.nr > 0) {
+-		ret = 1;
+-		fprintf(stderr, "%d tests failed:\n\n", suite.failed.nr);
+-		for (i = 0; i < suite.failed.nr; i++)
+-			fprintf(stderr, "\t%s\n", suite.failed.items[i].string);
+-	}
+-
+-	string_list_clear(&suite.tests, 0);
+-	string_list_clear(&suite.failed, 0);
+-
+-	return !!ret;
+-}
+-
+ static uint64_t my_random_next = 1234;
  
- 	pmatch->rm_so = pmatch->rm_eo = -1;
- 	if (bol < eol) {
--		for (p = opt->pattern_list; p; p = p->next) {
-+		for (p = ((ctx == GREP_CONTEXT_HEAD)
-+			   ? opt->header_list : opt->pattern_list);
-+			  p; p = p->next) {
- 			switch (p->token) {
- 			case GREP_PATTERN: /* atom */
- 			case GREP_PATTERN_HEAD:
- 			case GREP_PATTERN_BODY:
--				hit |= match_next_pattern(p, bol, eol, ctx,
--							  pmatch, eflags);
-+				if ((field == GREP_HEADER_FIELD_MAX) || (p->field == field))
-+					hit |= match_next_pattern(p, bol, eol,
-+								  ctx, pmatch,
-+								  eflags);
- 				break;
- 			default:
- 				break;
-@@ -1262,7 +1272,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- 				line_color = opt->colors[GREP_COLOR_FUNCTION];
- 		}
- 		*eol = '\0';
--		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
-+		while (grep_next_match(opt, bol, eol, ctx, &match,
-+				       GREP_HEADER_FIELD_MAX, eflags)) {
- 			if (match.rm_so == match.rm_eo)
- 				break;
+ static uint64_t my_random(void)
+@@ -373,8 +224,6 @@ int cmd__run_command(int argc, const char **argv)
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	int jobs;
  
-diff --git a/grep.h b/grep.h
-index 72f82b1e30..d2943e29ea 100644
---- a/grep.h
-+++ b/grep.h
-@@ -177,6 +177,9 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
- void compile_grep_patterns(struct grep_opt *opt);
- void free_grep_patterns(struct grep_opt *opt);
- int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
-+int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
-+		    enum grep_context ctx, regmatch_t *pmatch,
-+		    enum grep_header_field field, int eflags);
- 
- struct grep_source {
- 	char *name;
-diff --git a/pretty.c b/pretty.c
-index 9631529c10..65cb63e725 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,15 +431,71 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-+				   const char *line, size_t linelen,
-+				   int color, enum grep_context ctx,
-+				   enum grep_header_field field)
-+{
-+	char *buf, *eol;
-+	const char *line_color, *match_color;
-+	regmatch_t match;
-+	struct strbuf tmp_sb;
-+	int eflags = 0;
-+
-+	if (!opt || !want_color(color) || opt->invert) {
-+		strbuf_add(sb, line, linelen);
-+		return;
-+	}
-+
-+	if (ctx == GREP_CONTEXT_HEAD)
-+		eflags = REG_NOTBOL;
-+
-+	strbuf_init(&tmp_sb, linelen + 1);
-+	strbuf_add(&tmp_sb, line, linelen);
-+
-+	buf = tmp_sb.buf;
-+	eol = buf + linelen;
-+	line_color = opt->colors[GREP_COLOR_SELECTED];
-+	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
-+
-+	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_grow(sb, strlen(line_color) + strlen(match_color) +
-+			    strlen(GIT_COLOR_RESET));
-+		strbuf_add(sb, line_color, strlen(line_color));
-+		strbuf_add(sb, buf, match.rm_so);
-+		strbuf_add(sb, match_color, strlen(match_color));
-+		strbuf_add(sb, buf + match.rm_so,
-+			   match.rm_eo - match.rm_so);
-+		strbuf_add(sb, GIT_COLOR_RESET,
-+			   strlen(GIT_COLOR_RESET));
-+		buf += match.rm_eo;
-+		eflags = REG_NOTBOL;
-+	}
-+
-+	if (buf != line) {
-+		strbuf_grow(sb, strlen(line_color));
-+		strbuf_add(sb, line_color, strlen(line_color));
-+	}
-+
-+	strbuf_add(sb, buf, eol - buf);
-+	strbuf_release(&tmp_sb);
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
- {
-+	struct strbuf id;
- 	struct ident_split ident;
- 	char *line_end;
- 	const char *mailbuf, *namebuf;
- 	size_t namelen, maillen;
- 	int max_length = 78; /* per rfc2822 */
-+	enum grep_header_field field = GREP_HEADER_FIELD_MAX;
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 
- 	if (pp->fmt == CMIT_FMT_ONELINE)
- 		return;
-@@ -496,9 +552,22 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		strbuf_init(&id, namelen + maillen + 4);
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: %.*s", what,
-+			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ");
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
-+				       GREP_CONTEXT_HEAD, field);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1935,8 +2004,9 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
-+				 int color, int tabwidth, const char *line,
-+				 int linelen)
- {
- 	const char *tab;
- 
-@@ -1953,7 +2023,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_line_with_color(sb, opt, line, tab - line, color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1968,7 +2040,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
- 	 */
--	strbuf_add(sb, line, linelen);
-+	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
-+			       GREP_HEADER_FIELD_MAX);
- }
- 
- /*
-@@ -1980,11 +2053,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
-+				     line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_line_with_color(sb, opt, line, linelen, pp->color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2002,7 +2080,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2023,14 +2103,17 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
--					     line, linelen);
-+			strbuf_add_tabexpand(sb, opt, pp->color,
-+					     pp->expand_tabs_in_log, line,
-+					     linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_line_with_color(sb, opt, line, linelen,
-+					       pp->color, GREP_CONTEXT_BODY,
-+					       GREP_HEADER_FIELD_MAX);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9dfead936b..72138fa7a0 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -449,6 +449,48 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
- 	)
- '
- 
-+cat > expect << EOF
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+Author: [1;31mA U[m Thor <author@example.com>
-+EOF
-+
-+test_expect_success 'log --author' '
-+	git log --color=always --author="A U" >log &&
-+	grep Author log >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat > expect << EOF
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+Commit:     C O [1;31mMitter[m <committer@example.com>
-+EOF
-+
-+test_expect_success 'log --committer' '
-+	git log --color=always --pretty=fuller --committer="Mitter" >log &&
-+	grep "Commit:" log >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat > expect << EOF
-+    [1;31msec[mond
-+EOF
-+
-+test_expect_success 'log --grep color' '
-+	git log --color=always --grep=sec >log &&
-+	grep sec log >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
+-	if (argc > 1 && !strcmp(argv[1], "testsuite"))
+-		exit(testsuite(argc - 1, argv + 1));
+ 	if (!strcmp(argv[1], "inherited-handle"))
+ 		exit(inherit_handle(argv[0]));
+ 	if (!strcmp(argv[1], "inherited-handle-child"))
 -- 
-2.33.0
+2.33.0.821.g8b294b0dcf8
 
