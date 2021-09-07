@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACA6C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC29C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC26661057
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:36:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08A7A610E9
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344595AbhIGNiF (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1344600AbhIGNiF (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 7 Sep 2021 09:38:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58878 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243642AbhIGNiB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1344029AbhIGNiB (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Sep 2021 09:38:01 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96ACC061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 06:36:50 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id z9-20020a7bc149000000b002e8861aff59so1901482wmi.0
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 06:36:50 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 783B8C061757
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 06:36:51 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id u9so14477554wrg.8
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 06:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yTex/uN01jFfTNtZtCCmfB+c28nuWNYj2f6J1XEjXiw=;
-        b=ons2G2gcUiVkG7VP8n6kQXneq18o7nZDoOZvXHiFpUOvuRMiNVCis5jtUQKzpbCBcV
-         vqWGTZTd2QZ2xW+zKKjNdkLpsHEX76cvyKjE4IJfwppZKPH3RdfkuFQaEf7X9b6SMxpi
-         rTIYcb49TzbkYZz/yCZJkLgc9bD1jKBWsT0ZAUtrXjXlcasySXPk/A+JYFjWvL4c4A7R
-         PLNH77L06MNlkZ3zuUC80nZVEY6ukvTwHQ9fHnntgy4ZnusIBc6LYmHWSj1wBl6GLGP8
-         au7O8/7eyuI7CYI5Q0XYwsAmI284k5JmiDqWjNiHsjWGPjyV7iN+JSYE7c+w60kt+dQQ
-         gMcA==
+        bh=WbsBZWVl4KvCj9IY03Gebo9jmW5xuo+m0X7mW1oG4Nk=;
+        b=KxDpCA7hF+k4TeKQLTev6tZRapJAvTpESjTn1CGJjjckJh1RbJpoWlwSFRwYWVl7ii
+         6amt1KG33wX7NpNmX4+ot4Wricwo4KJ7rDU7oJ4yjRCmUPPZ5XsgI4gAl7MPUkqmocaW
+         6JvWyAg5PVXtlpq/B5l1WmnR/PyUXUt+jFUmOEpUzZdKW0T7lFyHGNvfL+1b/Y5cvbtd
+         tDQ66uirKgtAtrjyqqnor882Ffk7R2bgrLqEihTR44dPNpGPWL7uSnhs2EiGArNlhDoq
+         Dy/Y5nwbsCKWT52CLOH4De3JxcJIHX/Z4tc48vK/SPaleUnjvDli0+KWJnUjAH8b3ajP
+         5hgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yTex/uN01jFfTNtZtCCmfB+c28nuWNYj2f6J1XEjXiw=;
-        b=kMuPfjal0vq4wkMq8YMwLmbCGGnFeCt1UMZoLojdx0zdWyxCOJ3srL5yWoxOBgppzD
-         O/8i688YIfl9iV1CWKfMTRONlvBVcayS+cznCsy1AFXpwt7guXbvLyc2js1CF4obfsPL
-         IgHrJZVXi/bj3c6OjvBlO4hK8vADmUwa5xz7ycJhS0Nw8inNnDFPsCSCISm1mq/0JltJ
-         hKAD6gPawuMPH1qsZnmHh7idA3rOLk09HpVxWM3FnqgaMPnGGW2ltJMljIeyuo6ZPsxu
-         S3BmPHHRtfpj1G+PEufyy8J1Y1zr+wxgR2bF72+1oyKuYdS5ChCvnqHos+xmOd1ckwKs
-         uUXw==
-X-Gm-Message-State: AOAM5319tWFX8X3kJTt1s+qOQ5ToFOKx9klhl6ofT8AkffKXlNKxqQ85
-        J14W3wH5CbNuGUXy0TU4bqGfTJCKSKQ=
-X-Google-Smtp-Source: ABdhPJwU+3AjD6uRwjIL8Uz6tj6BfoeMCM2IJ8MeemPFn8TUfTan6nQqZedktjkWvo6qFovdteGlww==
-X-Received: by 2002:a05:600c:b46:: with SMTP id k6mr4055723wmr.35.1631021809567;
-        Tue, 07 Sep 2021 06:36:49 -0700 (PDT)
+        bh=WbsBZWVl4KvCj9IY03Gebo9jmW5xuo+m0X7mW1oG4Nk=;
+        b=OUVq+S6T43vt2LKFd4FMMq8zfyEj8AeEhhPl2sLw6hjeRUFQe0JfEDOWVLtNObsiOE
+         K8VOxBbseP3jIEiLqWnNzB5lnqRmqdNc8E2U/PSH2RQikjJhCf7y9Whkr5LkXD70ZxlD
+         Jx6mMflMhtmT0Wxqe0taBJu3p01x1SAycrunVdm2IGd/RP8xoXojtPcd0M8s/wxvzXHv
+         j45EUWjJzfT8jT6xng0m9vap5MgNZzfK1+GmX+ZpMPiROXRxf0bKCiPk8Zfky97Xnl8r
+         TIJd6l59ruF21dr50P5I7DfSMNtu5k+a7m39y+AeHKlC2PL0Pa/nJWeskcAM59toz1bT
+         eHJw==
+X-Gm-Message-State: AOAM5321XnPim4K3jIVkObmAo/WbIIZKVMe9ieVK7JnGmPrrjalqL8Rh
+        18knyXa65+Z1WlhjWMbB3u77S0FquAY=
+X-Google-Smtp-Source: ABdhPJxi4mgtVWGH740U2ZWdxV0lsGnHYuhO2L1ukovCf0nnTHPjM1S88IgtRmbUBscJQMWJbZGDaA==
+X-Received: by 2002:a5d:464c:: with SMTP id j12mr19374291wrs.27.1631021810137;
+        Tue, 07 Sep 2021 06:36:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e2sm11116724wra.40.2021.09.07.06.36.49
+        by smtp.gmail.com with ESMTPSA id e3sm13896025wrv.18.2021.09.07.06.36.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 07 Sep 2021 06:36:49 -0700 (PDT)
-Message-Id: <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1067.v2.git.git.1630947142.gitgitgadget@gmail.com>
+Message-Id: <e158882812fef0c6a69fb0bc1ff5d46f38906426.1631021808.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
 References: <pull.1067.v2.git.git.1630947142.gitgitgadget@gmail.com>
+        <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Sep 2021 13:36:41 +0000
-Subject: [PATCH v3 0/7] Gets rid of "if reflog exists, append to it regardless of config settings"
+Date:   Tue, 07 Sep 2021 13:36:42 +0000
+Subject: [PATCH v3 1/7] show-branch: show reflog message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,135 +70,87 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<As discussed in
-CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-v3:
+Before, --reflog option would look for '\t' in the reflog message. As refs.c
+already parses the reflog line, the '\t' was never found, and show-branch
+--reflog would always say "(none)" as reflog message
 
- * fix show-branch
- * add some more context to commit messages
- * change calling convention for log_ref_setup; could fold into predecessor
-   if needed too.
+Add test.
 
-Han-Wen Nienhuys (7):
-  show-branch: show reflog message
-  refs: trim newline from reflog message
-  test-ref-store: tweaks to for-each-reflog-ent format
-  t1400: use test-helper ref-store to inspect reflog contents
-  refs: drop force_create argument of create_reflog API
-  RFC: refs: reflog entries aren't written based on reflog existence.
-  refs: change log_ref_setup calling convention
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ builtin/show-branch.c  | 12 +++++++-----
+ t/t3202-show-branch.sh | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
- builtin/checkout.c             |   2 +-
- builtin/show-branch.c          |   7 +-
- reflog-walk.c                  |   6 +-
- refs.c                         |   9 ++-
- refs.h                         |   4 +-
- refs/debug.c                   |   5 +-
- refs/files-backend.c           | 128 +++++++++++++--------------------
- refs/packed-backend.c          |   3 +-
- refs/refs-internal.h           |   2 +-
- t/helper/test-ref-store.c      |   8 +--
- t/t1400-update-ref.sh          |  21 +++---
- t/t1405-main-ref-store.sh      |   6 +-
- t/t1406-submodule-ref-store.sh |   6 +-
- t/t3202-show-branch.sh         |  15 ++++
- 14 files changed, 101 insertions(+), 121 deletions(-)
-
-
-base-commit: e0a2f5cbc585657e757385ad918f167f519cfb96
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1067%2Fhanwen%2Freflog-touch-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1067/hanwen/reflog-touch-v3
-Pull-Request: https://github.com/git/git/pull/1067
-
-Range-diff vs v2:
-
- -:  ----------- > 1:  e158882812f show-branch: show reflog message
- 1:  995d450da42 ! 2:  d16d94164c1 refs: trim newline from reflog message
-     @@ Commit message
-      
-       ## builtin/show-branch.c ##
-      @@ builtin/show-branch.c: int cmd_show_branch(int ac, const char **av, const char *prefix)
-     - 				show_one_commit(rev[i], 1);
-     + 			char *logmsg;
-     + 			char *nth_desc;
-     + 			const char *msg;
-     +-			char *end;
-     + 			timestamp_t timestamp;
-     + 			int tz;
-     + 
-     +@@ builtin/show-branch.c: int cmd_show_branch(int ac, const char **av, const char *prefix)
-     + 				break;
-       			}
-     - 			else
-     --				puts(reflog_msg[i]);
-     -+				puts(reflog_msg[i]); /* XXX - this puts a
-     -+							newline. Did we put two
-     -+							newlines beforehand? */
-       
-     - 			if (is_head)
-     - 				head_at = i;
-     +-			end = strchr(logmsg, '\n');
-     +-			if (end)
-     +-				*end = '\0';
-     +-
-     + 			msg = (*logmsg == '\0') ? "(none)" : logmsg;
-     + 			reflog_msg[i] = xstrfmt("(%s) %s",
-     + 						show_date(timestamp, tz,
-      
-       ## reflog-walk.c ##
-      @@ reflog-walk.c: void get_reflog_message(struct strbuf *sb,
- 2:  11b296a55e9 = 3:  e273963216c test-ref-store: tweaks to for-each-reflog-ent format
- 3:  9ec09cc64cd = 4:  52093fce57c t1400: use test-helper ref-store to inspect reflog contents
- 4:  aa25fd9b7de ! 5:  ce0047028dd refs: drop force_create argument of create_reflog API
-     @@ Commit message
-          There is only one caller, builtin/checkout.c, and it hardcodes
-          force_create=1.
-      
-     +    This argument was introduced in abd0cd3a301 (refs: new public ref function:
-     +    safe_create_reflog, 2015-07-21), which promised to immediately use it in a
-     +    follow-on commit, but that never happened.
-     +
-          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-      
-       ## builtin/checkout.c ##
-     @@ refs/files-backend.c: error:
-       	int fd;
-       
-      -	if (log_ref_setup(refs, refname, force_create, &fd, err))
-     -+	if (log_ref_setup(refs, refname, /*force_create=*/1, &fd, err))
-     ++	if (log_ref_setup(refs, refname, 1, &fd, err))
-       		return -1;
-       
-       	if (fd >= 0)
- 5:  f6a7c5ad56e ! 6:  7a030cfd3e2 RFC: refs: reflog entries aren't written based on reflog existence.
-     @@ Commit message
-          The reftable storage backend cannot distinguish between a non-existing
-          reflog, and an empty one. Therefore it cannot mimick this functionality.
-      
-     -    In CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com,
-     -    we came to the conclusion that this feature is probably a remnant from
-     -    the time that reflogs weren't enabled by default, and it does not need
-     -    to be kept.
-     +    With this feature, it is possible to mark only specific branches as subject to
-     +    reflog updates. When introduced, it presumably served as a cheap substitute for
-     +    introducing branch.$NAME.logRefUpdate configuration setting.
-     +
-     +    Reflogs are small and don't impact the runtime of normal operations, so this
-     +    flexibility is not very useful. Since it incurs complexity for alternate ref
-     +    backends, we remove it.
-     +
-     +    Further background to this change is in
-     +    <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>.
-      
-          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-      
- -:  ----------- > 7:  1124dbad594 refs: change log_ref_setup calling convention
-
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index d77ce7aeb38..902a0d99850 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -762,6 +762,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			char *logmsg;
+ 			char *nth_desc;
+ 			const char *msg;
++			char *end;
+ 			timestamp_t timestamp;
+ 			int tz;
+ 
+@@ -771,11 +772,12 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 				reflog = i;
+ 				break;
+ 			}
+-			msg = strchr(logmsg, '\t');
+-			if (!msg)
+-				msg = "(none)";
+-			else
+-				msg++;
++
++			end = strchr(logmsg, '\n');
++			if (end)
++				*end = '\0';
++
++			msg = (*logmsg == '\0') ? "(none)" : logmsg;
+ 			reflog_msg[i] = xstrfmt("(%s) %s",
+ 						show_date(timestamp, tz,
+ 							  DATE_MODE(RELATIVE)),
+diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
+index ad9902a06b9..d4d64401e4b 100755
+--- a/t/t3202-show-branch.sh
++++ b/t/t3202-show-branch.sh
+@@ -4,6 +4,9 @@ test_description='test show-branch'
+ 
+ . ./test-lib.sh
+ 
++# arbitrary reference time: 2009-08-30 19:20:00
++GIT_TEST_DATE_NOW=1251660000; export GIT_TEST_DATE_NOW
++
+ test_expect_success 'setup' '
+ 	test_commit initial &&
+ 	for i in $(test_seq 1 10)
+@@ -146,4 +149,16 @@ test_expect_success 'show branch --merge-base with N arguments' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'show branch --reflog=2' '
++	sed "s/^>	//" >expect <<-\EOF &&
++	>	! [refs/heads/branch10@{0}] (4 years, 5 months ago) commit: branch10
++	>	 ! [refs/heads/branch10@{1}] (4 years, 5 months ago) commit: branch10
++	>	--
++	>	+  [refs/heads/branch10@{0}] branch10
++	>	++ [refs/heads/branch10@{1}] initial
++	EOF
++	git show-branch --reflog=2 >actual &&
++	test_cmp actual expect
++'
++
+ test_done
 -- 
 gitgitgadget
+
