@@ -2,84 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC569C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 17:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83BE4C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:01:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93AC4610C8
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 17:39:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 582CA60698
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232959AbhIGRkp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 13:40:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50602 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhIGRko (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 13:40:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D2C215F13A;
-        Tue,  7 Sep 2021 13:39:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=pLYJAH7W6Rme
-        PsaamJ1tZKOFFbJbOXXuE3tgn9sgCgs=; b=PDissUldbK1guEmXU6ripjCNkzLL
-        BsahMAR3c6tzpqDsORDg5VXCZirg3+MBDJdB3bkwUOtuAsSIChQzJOt8i3QFBMBd
-        UOIvzs4EetdSy3yI3sOkLMEaUA1/PJXdSz3ZaoqbyybhlbnASnnJY2nE5Xx4gAuV
-        jN7MmAGpblxytr0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F7AF15F139;
-        Tue,  7 Sep 2021 13:39:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C324F15F137;
-        Tue,  7 Sep 2021 13:39:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
-References: <xmqq35qmiofp.fsf@gitster.g>
-        <CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com>
-        <87tuiynhq4.fsf@evledraar.gmail.com> <xmqq8s09e5i0.fsf@gitster.g>
-Date:   Tue, 07 Sep 2021 10:39:33 -0700
-In-Reply-To: <xmqq8s09e5i0.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        06 Sep 2021 14:52:39 -0700")
-Message-ID: <xmqq35qgcmju.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1344755AbhIGSCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 14:02:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40816 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229574AbhIGSCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 14:02:40 -0400
+Received: (qmail 19844 invoked by uid 109); 7 Sep 2021 18:01:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Sep 2021 18:01:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15938 invoked by uid 111); 7 Sep 2021 18:01:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Sep 2021 14:01:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 7 Sep 2021 14:01:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
+Message-ID: <YTeo/dCFfpAIfo3K@coredump.intra.peff.net>
+References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
+ <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
+ <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
+ <YTTARcEvpXWSDfYW@coredump.intra.peff.net>
+ <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 90DEA1F8-1002-11EC-8E59-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Sep 07, 2021 at 01:28:33PM +0800, ZheNing Hu wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Mon, Sep 06 2021, Carlo Arenas wrote:
->>
->>>> * fs/ssh-signing (2021-08-29) 9 commits
->>...
->>     I'm also interested in this one. My reading of
->>     <9075cdd1-e34d-5dcb-f2b8-69ae4abf587b@gigacodes.de> is that the au=
-thor
->>     plans to re-roll it sometimes around mid-September. I personally p=
-unted
->>     on reviewing the current version while waiting for that.
->
-> Ouch.  Let's eject it and wait for the promised reroll, then.
+> > I think it's just because pretty_print_ref() does not take a "flag"
+> > parameter for the caller. So it never sees that REF_ISSYMREF is set.
+> >
+> 
+> yeah, pretty_print_ref() does not set the flag, this is a defect of
+> pretty_print_ref(), maybe we need to find a way to set this flag.
 
-Actually, let's not do so immediately.  As I wrote in
-https://lore.kernel.org/git/xmqq4kawcmqg.fsf@gitster.g/ I'd like to
-wait and decide after seeing how big the fix need to be.
+In general, I think it could take a flag parameter from its caller. But
+its caller comes indirectly from for_each_tag_name(), which isn't a
+regular ref-iterator. It would probably need to switch to using
+read_ref_full() to get the flags.
 
-Thanks.
+> > I notice that the --verify output also shows the short refname, which
+> > makes me wonder if %(symref) would have other bugs there (because it
+> > has to re-resolve the ref to come up with the symref destination).
+> >
+> 
+> This may be easy to fix:
+> 
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 452558ec95..4be5d36366 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -152,11 +152,11 @@ static int verify_tag(const char *name, const char *ref,
+>         if (format->format)
+>                 flags = GPG_VERIFY_OMIT_STATUS;
+> 
+> -       if (gpg_verify_tag(oid, name, flags))
+> +       if (gpg_verify_tag(oid, ref, flags))
+>                 return -1;
+> 
+>         if (format->format)
+> -               pretty_print_ref(name, oid, format);
+> +               pretty_print_ref(ref, oid, format);
+> 
+>         return 0;
+>  }
+
+Yeah, I think that would work, although:
+
+  - there's another caller in cmd_verify_tag() which seems to just pass
+    whatever was on the command line. It doesn't even resolve the ref
+    itself!
+
+  - I suspect people may be relying on the current behavior. The
+    original was added to be able to compare the internal tagname to the
+    refname. I.e., that:
+
+      git tag -v --format='%(refname) %(tag)' foo
+
+    would show "foo foo". Now that _should_ be "%(refname:strip=2)", I
+    think, but we'd probably be breaking scripts. OTOH, it really feels
+    like _not_ handing over a real, fully-qualified refname to the
+    ref-filter code will mean other things are broken (e.g.,
+    ATOM_UPSTREAM is assuming we have a fully-qualified ref).
+
+    I think a backwards-compatible way of fixing it would be to have
+    this call hand over the full refname to the ref-filter code, but
+    tell it that %(refname) should default to strip=2. And then anybody
+    who wants the full name can use %(refname:strip=0).
+
+    It makes the behavior confusing and quirky, but we can't avoid that
+    without breaking compatibility.
+
+-Peff
