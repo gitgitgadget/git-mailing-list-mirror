@@ -7,67 +7,67 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78CE4C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC928C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:46:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5503D6108E
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:45:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A9F060724
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344298AbhIGMqS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 08:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47172 "EHLO
+        id S1344314AbhIGMrv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 08:47:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343949AbhIGMqP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:46:15 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23452C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:45:09 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id jg16so19440939ejc.1
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:45:09 -0700 (PDT)
+        with ESMTP id S231600AbhIGMru (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 08:47:50 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D41EC061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:46:44 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id bt14so19445215ejb.3
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=sXhmQg3HT7boNaZYrmUVKKJOvw8N7mILSHdE89KxfWs=;
-        b=EyFyQTZuSh0l0vuFyhw1BAOVFXFZVQsvDAVdISdtVdVeoOgTKQ7saD8BzHhiTZaK/w
-         Jm3mn6+NBwJPYBEjkWkbjU9bXtbS+ocnO2MtvkKfJ22MhgCECG2Y+oaQ2KMEwDY9DIqY
-         yo2H615NvqUoyzlQx/jp7bUADUxt1b5ORR0z1R+BhJpU8Qh/j3NHS+VlmEy6xUl+tkCL
-         LlxUoRgoQy+WhUGXOMZhh+6QxyVBfaFG5e7qydjfiBgwQHJDKpsrxsVicM5ITrcyPjnk
-         KdeHjJ6Cj9IJkXl1MGY9Uubsi9L1hL6rFu7GhKboJ4WN6/jP6zr6+xSJF6/S4ZDmh2IH
-         2jRA==
+        bh=BLlI0/OjMoAJ/C4ynIt9eb9u/odyufT7F7H9HNemG0k=;
+        b=FiJbWHbAg0TWvL77+jLbcI5RgnCglSPhyCt6L+2/yaFbVZ6hSlmB0vRN2FK62d1zzk
+         tUG0aIqGtT66UaTzm6+TnsR1z+w6K/frqHX3c6FpNXt5i6x3wtIp3Lnwz7pEtgqJ1VHE
+         Ncxo70LgO7pPf4xgTevHHtrmc4Sf17Id1HE6573nD3tLFCBEn3KZQEtG4RKgaJuDnKyy
+         TFyYFyhNWQ8xMbvpzfx5thYQYKIYUuM6qRTOc7Q6cM0RLN66XGIUEvGUVhVmh8ze/6x/
+         R2LMn28uiaavRyMa7XYrfZZU5Pdd9Tqo/ckT16LDXJPzOqHAfce6x5+KqSL9xa4MbwiR
+         Vd/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=sXhmQg3HT7boNaZYrmUVKKJOvw8N7mILSHdE89KxfWs=;
-        b=nt4sH8VIdLgW9MppLBcOncJ7P6zm4gNswu7VtnfZI2kHkLJozeciVxV0lyGxUNhdrM
-         o/WFVByuwc4hD26M1PbJTl/xKRhkU2Jq8eL6gJUl5l84kaN3zsS7l9z9lb4Xpm5w8eBH
-         etrJrO4eA7WGsAwKp1KiisCcNrdpbQJbh7qPhGUS/2LXnS4MRLkNSaI2FtD3gJhKDWru
-         UB76WbQeeYRcapq6Sv3Af/0s8ligyac4HOpLNWYhi1dQOkZ1/C9f4tSH6+ti0tck9ODe
-         YWvIJIgJicTCPC9sRsIGLg0ldWbqAlz3sAaP8AEMUaVp8BteUMJokphekMyHZfm8kI+a
-         uzIA==
-X-Gm-Message-State: AOAM533Z0NfAgVDgNgdl2VJvp6NUr81GI0tYsngJ/1xLprTqQJyIMrPf
-        UIyTbTw8vXIEIjDMNoarBr5cn+Oke3Zfrw==
-X-Google-Smtp-Source: ABdhPJwzJTA2XHtuTrONr2rMsBnrX/sF8fC6D+9F3IKpe0uRkQnYv33b5n65MR3XhlBS9LteN5TMxg==
-X-Received: by 2002:a17:906:4f04:: with SMTP id t4mr18162324eju.568.1631018707451;
-        Tue, 07 Sep 2021 05:45:07 -0700 (PDT)
+        bh=BLlI0/OjMoAJ/C4ynIt9eb9u/odyufT7F7H9HNemG0k=;
+        b=im4IgBbWrCNZZjqW6VWb/TIXRSXkovjc0yiOa2m59SwP8ihcdXanNftZEOJK3ELC4r
+         aLYRbrxc65A5Rj9M+VzywpQcqxFjWBJvewtTlIqoXz3LMWnsJ6exglzf0snFNHNBEjn7
+         HYqQEEvrsRG4QX9p4jsdJf+CUWrQCcs2SDzXnrGoXWZo74hElzbID07LVx3Kmlm60rL6
+         ss91s2MZPjdYLhgAJOXBMdTZcaTUmYNaKtCcBqh0TNN84qQctcWeEBwx0imI4qJfOuur
+         ZweS3QHwkeUUsMtCU9GgVV1gWjbIUUBtkvCmPBrMJapVVAMVzvEllAYcHDIDNCbbhHrr
+         hV0g==
+X-Gm-Message-State: AOAM531oCQ381jQGgRQ8lxIomld+9x1ZvCXzR1DgvHQZwQdXAFE9A6LK
+        o3rPTmSKlIwg3iE4yqmUbVV2p8MUPwY3GA==
+X-Google-Smtp-Source: ABdhPJzQZC/mUVYmyS/yMr1eT7RLzSSTixI9s2o4COv0ISHAXmrzrAoG3GdNY3ppWOUOhwcq497m7A==
+X-Received: by 2002:a17:906:c055:: with SMTP id bm21mr18591279ejb.350.1631018802823;
+        Tue, 07 Sep 2021 05:46:42 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v13sm5444194ejx.72.2021.09.07.05.45.06
+        by smtp.gmail.com with ESMTPSA id cz15sm3104339edb.50.2021.09.07.05.46.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 05:45:07 -0700 (PDT)
+        Tue, 07 Sep 2021 05:46:42 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Atharva Raykar <raykar.ath@gmail.com>
 Cc:     git@vger.kernel.org, christian.couder@gmail.com,
         emilyshaffer@google.com, gitster@pobox.com, jrnieder@gmail.com,
         kaartic.sivaraam@gmail.com, pc44800@gmail.com,
         periperidip@gmail.com
-Subject: Re: [PATCH 07/13] submodule: remove fetch_in_submodule shell function
-Date:   Tue, 07 Sep 2021 14:44:27 +0200
+Subject: Re: [PATCH 08/13] submodule--helper: remove update-clone subcommand
+Date:   Tue, 07 Sep 2021 14:46:10 +0200
 References: <20210907115932.36068-1-raykar.ath@gmail.com>
- <20210907115932.36068-8-raykar.ath@gmail.com>
+ <20210907115932.36068-9-raykar.ath@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210907115932.36068-8-raykar.ath@gmail.com>
-Message-ID: <87sfyglfl9.fsf@evledraar.gmail.com>
+In-reply-to: <20210907115932.36068-9-raykar.ath@gmail.com>
+Message-ID: <87o894lfim.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,12 +77,11 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Sep 07 2021, Atharva Raykar wrote:
 
-> This function has no more use in 'git-submodule.sh' after
-> bd82d7d467 (submodule: move core cmd_update() logic to C, 2021-07-20),
-> where we moved all of its uses to C, which has its own version for the
-> same.
+> We no longer need this subcommand as the shell version calls the
+> 'update' subcommand instead, which does all the cloning within C itself.
+>
+> We also no longer need the 'update_clone_submodules()' and
+> 'update_clone_submodule()' functions, so we remove those as well.
 
-This commit ID appears to be a reference to your own 06/13, so the OID
-won't work once this is merged to git.git.
-
-Perhaps just squash this into 06/13 instead?
+So in 04/13 update_clone_submodules() was renamed, but now we're getting
+rid of it. Maybe there's not an easy way to avoid this churn, but if there is...
