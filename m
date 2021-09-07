@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CA94C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8EDC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:43:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8D63604AC
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:28:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C69761101
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbhIGF3y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 01:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32818 "EHLO
+        id S237062AbhIGFoT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 01:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231362AbhIGF3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 01:29:52 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E22B9C061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 22:28:45 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id q3so11197301iot.3
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 22:28:45 -0700 (PDT)
+        with ESMTP id S233236AbhIGFoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 01:44:13 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C142C061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 22:43:08 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id i13so8851517ilm.4
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 22:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=DRBs4CSasFpmvUrCLu581fM5jBPUMcpT6i0LLxqsf48=;
-        b=E4mHAg9LIjznKhNCUOEZamGedm1sQpjiKSIYNJAn0DVgn/1Gucdydigtdmj5NPdOpW
-         gvY+CNZixuyLUlYNL8YCjDCail6jm05rRSkw0eygLxJGzNtFCMNcoP6+RyvgOw/Lg+L+
-         AzKzZKwOWBK4ZHEqxrusLsqsZsbADEr3GRvfhfV50YnIu4lrEoZAqFBorikyj+wKpgXP
-         Bc9hzXPTdi3RV8WaRKxl5rM3ijhBBGRgG9bM3N8q8fRwoJlHjHp+UsHp7ZmizpjLfOL2
-         4/FaQhP+FeNPL2ItAiS+kmH34z388hXyljQYX2qUZj/Jh3vwbqaOZUB7CTmSgZaD62ie
-         7rbQ==
+        bh=5Jh+r6Sp34BwUA6neGg0cmGkBKXiFwGnEvmouqbh/0A=;
+        b=iqoigPgzfCreYAQwRtyaZL4Qhd6ZFB8TlS2OxtrtShGjQSq28eMUfVSRTtkVDlPYZz
+         y0sW4utGPT09NQe5wJPn0yGS5yJSH6/NOjzxTS2uvlSTFsFWU4wxFWTag+80uZLfjW+M
+         7hSzBNM7ISaOFUzMAVhHxsByX9s/z+wWokNN/eWPRl3AjU/jz9I/6pS0yYxv45RCezQ2
+         SCddKubukF7YfLObS2tc9LUfUX58IfndYuYNoSFOBI1upxVNX+0wVZ+R3uDth7CiVu53
+         CyiHtJ4IsqIP0FkdQzJnXZBuWJp/a5JbmCeYQ8SpohZ5ijKhfIzctdewaxTTZAlGOn4T
+         Xkpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DRBs4CSasFpmvUrCLu581fM5jBPUMcpT6i0LLxqsf48=;
-        b=fVZEtV6XsWx5d5HuQjt2m4nPuienuvpCqYTVXM10dACUu2fWt1kgY4YoPMDMmD3BP5
-         awW4UgbYBzGCTznq4wIUeYqaYtaR5Qq5Gj0lFcJIeBLOOSSjuvs3jLsKwsyGDmjbZajw
-         48jRVkRXx7AYvXLHSOTuASPJzS5kC4qQksDanOqjJMxrhPxrV8eP3TGrLpchEXRSQ9gk
-         it5LF1YabbtwihPFeRI2IUDaEhn7E0faprOs3a3jkxnmkyA4iC9NhOXDUlmmOHudWPdt
-         CurUL0FjZQTf23FW6zWhMh7Uqvy90NklBF413n60nDr2AS3E+JGh7ZenYJspOef7uIK0
-         Evaw==
-X-Gm-Message-State: AOAM531A5pdtTjCqPlQomTWXuXuixA4WT9VNutArATX51BZWIoPnTSYa
-        GfNOESpHXtcjRwTZEZw3sbaLe2TMm63brIMHCHVz/xGR0S8xH7Hqrn8=
-X-Google-Smtp-Source: ABdhPJx4OmK3z9BGB6XnXJ+Fqn0uejWJXUXMsh4mpsOBnjPe24zNHr3OX6YU0tM9QSGz1RjLJ27zS2E0XkKLKFzr8dc=
-X-Received: by 2002:a05:6602:2cc5:: with SMTP id j5mr12456178iow.156.1630992525291;
- Mon, 06 Sep 2021 22:28:45 -0700 (PDT)
+        bh=5Jh+r6Sp34BwUA6neGg0cmGkBKXiFwGnEvmouqbh/0A=;
+        b=JDzgpGHCnNYYF+ILDk/wYs1NukqRF/q5qFoZOneE+ghIAjEgEZeZZFBLVrmpDeHMKe
+         SOzfSlrL3ctCLHBkJEOFMiUJOi7JiWDSiE0WD7vNuYwNX5vyXjTL9mfgsjW/iQ1mXnRB
+         /ZFMrA5Fnw1UHdwZcFY+UY/AoVWwsLDVlkxr6Ejw/kdCwAJVaYXep32QbKr7eheAGops
+         UO6HKEvnLaV1LUudmnzIZabJ/MxcL1ovV5hnLzcPwZCNtwfcNtiNErqCCt+dQc9RTgGJ
+         9V8BmEFaAWe2NrmabkIHHy7P1O46NAe4740j9DmIst060odn9se7qDqJ9RSRGmmEOmA1
+         TK6g==
+X-Gm-Message-State: AOAM530sN2i1nHD+r2+c/U5SU2i25gwUFfjGPx7OxYsAfPemXYXFsN+/
+        U295jeEgoZ2Ubos+SXF/aL9R3P+PneGodqUS5JI=
+X-Google-Smtp-Source: ABdhPJw6mdNGzLbyK3ogSSpecHja3oYpPk95YmW+CsHW8YGutXDRTVEiXeznMh+VELwPqsBsVT/x9W+UrDfeSqx6Pxg=
+X-Received: by 2002:a92:d752:: with SMTP id e18mr11265957ilq.254.1630993387498;
+ Mon, 06 Sep 2021 22:43:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
- <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com> <YTTARcEvpXWSDfYW@coredump.intra.peff.net>
-In-Reply-To: <YTTARcEvpXWSDfYW@coredump.intra.peff.net>
+ <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com> <YTTC2IUO1ZmTOEoR@coredump.intra.peff.net>
+In-Reply-To: <YTTC2IUO1ZmTOEoR@coredump.intra.peff.net>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 7 Sep 2021 13:28:33 +0800
-Message-ID: <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
+Date:   Tue, 7 Sep 2021 13:42:56 +0800
+Message-ID: <CAOLTT8QzNt8dv5-Q4nV9XU9Tq7KZVSjaYcM3T4F=F=xZ9A3UUA@mail.gmail.com>
 Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
 To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>
@@ -68,120 +68,95 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=885=E6=97=A5=E5=91=
-=A8=E6=97=A5 =E4=B8=8B=E5=8D=889:04=E5=86=99=E9=81=93=EF=BC=9A
+=A8=E6=97=A5 =E4=B8=8B=E5=8D=889:15=E5=86=99=E9=81=93=EF=BC=9A
 >
 > On Sun, Sep 05, 2021 at 04:20:02PM +0800, ZheNing Hu wrote:
 >
-> > But here is a terrible fact: we did not use ref_array_sort() for sortin=
-g here.
-> > So in fact, for_each_fullref_in() does the sorting work () for us by
-> > default sort (%(refname)),
-> > This may be due to the file system or some implementation of ref_iterat=
-or.
-> > But this limit the application of this optimization when we use other
-> > atoms to sort.
->
-> Right. This technique does not help at all if you use --sort. I do think
-> it's reasonable to rely on the sorted output of the for_each_ref()
-> functions; other parts of Git likely do as well, so I think we'd try
-> pretty hard to maintain that (and no, it's not a filesystem thing; we do
-> make sure to sort it ourselves; see the calls to sort_ref_dir()).
->
-> > > +       /*
-> > > +        * the %(symref) placeholder is broken with pretty_print_ref(=
-),
-> > > +        * which our streaming code uses. I suspect this is a sign of=
- breakage
-> > > +        * in other callers like verify_tag(), which should be fixed.=
- But for
-> > > +        * now just disable streaming.
-> > > +        *
-> > > +        * Note that this implies we've parsed the format already wit=
-h
-> > > +        * verify_ref_format().
-> > > +        */
-> > > +       if (need_symref)
-> > > +               return;
-> > > +
+> > > +       if (ref_cbdata->filter->streaming_format) {
+> > > +               pretty_print_ref(refname, oid, ref_cbdata->filter->st=
+reaming_format);
 > >
-> > I haven=E2=80=99t taken a closer look at why pretty_print_ref() does no=
-t
-> > support %(symref),
-> > we can skip it first.
+> > So we directly use pretty_print_ref() in streaming mode, OK.
+> >
+> > > +       } else {
+> > > +               /*
+> > > +                * We do not open the object yet; sort may only need =
+refname
+> > > +                * to do its job and the resulting list may yet to be=
+ pruned
+> > > +                * by maxcount logic.
+> > > +                */
+> > > +               ref =3D ref_array_push(ref_cbdata->array, refname, oi=
+d);
+> > > +               ref->commit =3D commit;
+> > > +               ref->flag =3D flag;
+> > > +               ref->kind =3D kind;
+> > > +       }
+> > >
+> > >         return 0;
+> > >  }
+> >
+> > Therefore, in streaming mode, there is no need to push ref to
+> > ref_array, which can
+> > reduce the overhead of malloc(), free(), which makes sense.
 >
-> I think it's just because pretty_print_ref() does not take a "flag"
-> parameter for the caller. So it never sees that REF_ISSYMREF is set.
+> By the way, one thing I wondered here: how much of the benefit is from
+> avoiding the ref_array, and how much is from skipping the sort entirely.
+>
+> It turns out that most of it is from the latter. If I do this:
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 89cb6307d4..037d5db814 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -78,7 +78,11 @@ int cmd_for_each_ref(int argc, const char **argv, cons=
+t char *prefix)
+>         filter.name_patterns =3D argv;
+>         filter.match_as_path =3D 1;
+>         filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUD=
+E_BROKEN);
+> -       ref_array_sort(sorting, &array);
+> +       /*
+> +        * we should skip this only when we are using the default refname
+> +        * sorting, but as an experimental hack, we'll just comment it ou=
+t.
+> +        */
+> +       // ref_array_sort(sorting, &array);
+>
+>         if (!maxcount || array.nr < maxcount)
+>                 maxcount =3D array.nr;
+>
+> then the timings I get are:
+>
+>   Benchmark #1: ./git.old for-each-ref --format=3D'%(objectname) %(refnam=
+e)'
+>     Time (mean =C2=B1 =CF=83):     341.4 ms =C2=B1   7.4 ms    [User: 299=
+.8 ms, System: 41.6 ms]
+>     Range (min =E2=80=A6 max):   333.5 ms =E2=80=A6 355.1 ms    10 runs
+>
+>   Benchmark #2: ./git.new for-each-ref --format=3D'%(objectname) %(refnam=
+e)'
+>     Time (mean =C2=B1 =CF=83):     249.1 ms =C2=B1   5.7 ms    [User: 211=
+.8 ms, System: 37.2 ms]
+>     Range (min =E2=80=A6 max):   245.9 ms =E2=80=A6 267.0 ms    12 runs
+>
+>   Summary
+>     './git.new for-each-ref --format=3D'%(objectname) %(refname)'' ran
+>       1.37 =C2=B1 0.04 times faster than './git.old for-each-ref --format=
+=3D'%(objectname) %(refname)''
+>
+> So of the 1.5x improvement that the original patch showed, 1.37x is from
+> skipping the sort of the already-sorted data. I suspect that has less to
+> do with sorting at all, and more to do with the fact that even just
+> formatting "%(refname)" for each entry takes a non-trivial amount of
+> time.
 >
 
-yeah, pretty_print_ref() does not set the flag, this is a defect of
-pretty_print_ref(), maybe we need to find a way to set this flag.
-I also deliberately avoided %(symref) when refactoring git cat-file --batch=
-,
-perhaps the improvements here can also be applied to git cat-file --batch
-
-> There aren't many callers of that function, so I think nobody ever
-> really noticed. But you can see the bug like this:
->
->   git init repo
->   cd repo
->
->   git commit --allow-empty -m foo
->   git tag -s -m bar annotated &&
->   git symbolic-ref refs/tags/symref refs/tags/annotated
->
->   # this is ok; ref-filter handles the flags
->   git tag --list --format=3D'list: %(refname) %(symref)'
->
->   # not ok; we do not tell the formatter about the flags, so it does
->   # not notice that "symref" is a symref
->   git tag --verify --format=3D'verify: %(refname) %(symref)' annotated sy=
-mref
->
-> I notice that the --verify output also shows the short refname, which
-> makes me wonder if %(symref) would have other bugs there (because it
-> has to re-resolve the ref to come up with the symref destination).
->
-
-This may be easy to fix:
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 452558ec95..4be5d36366 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -152,11 +152,11 @@ static int verify_tag(const char *name, const char *r=
-ef,
-        if (format->format)
-                flags =3D GPG_VERIFY_OMIT_STATUS;
-
--       if (gpg_verify_tag(oid, name, flags))
-+       if (gpg_verify_tag(oid, ref, flags))
-                return -1;
-
-        if (format->format)
--               pretty_print_ref(name, oid, format);
-+               pretty_print_ref(ref, oid, format);
-
-        return 0;
- }
-
-> > Unfortunately, this optimization may not be helpful for git cat-file --=
-batch,
-> > see [1], batch_object_write() directly constructs a ref_array_item and =
-call
-> > format_ref_array_item() to grab data, It does not use ref_array. So it =
-also
-> > does not have this malloc() | free() overhead.
->
-> Right. It would only be helped by the "quick" formats in the second
-> patch (and by skipping the malloc/free of the individual
-> ref_array_items).
->
-
-Yes, your test is indeed worth thinking about: how to avoid
-intermediate data to reduce overhead.
+Yes, I think this overhead may come from get_ref_atom_value() instead
+of QSORT_S().
 
 > -Peff
 
 Thanks.
 --
-ZheNing Hu
+ZheNing
