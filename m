@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05B53C433FE
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6BCC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:00:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DEEF3610FF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 063F8610FF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245749AbhIGMBo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 08:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36740 "EHLO
+        id S1343572AbhIGMBt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 08:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343565AbhIGMBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:01:36 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38575C0613D9
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:00:28 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id w8so9688233pgf.5
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:00:28 -0700 (PDT)
+        with ESMTP id S1343694AbhIGMBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 08:01:41 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95B1C06129F
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:00:31 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id gp20-20020a17090adf1400b00196b761920aso1923246pjb.3
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hb2LF+VpU/wqyJ3haQb6Y8wlYbcsPSXqAXl1nkeaUko=;
-        b=nxZ2V+sV6ng+vcZHgrs+VKGpzk+wz0tMJ/WeQaWIiWxKrYS3xc8Q4qr66o1mDEM73Y
-         WLeiGvUk4wwnEGJ1mgJS2GK1vPIYkpqvZhZET/uvcVaFjf44Ut3xLtuOU+TZMaX7B4pm
-         tEoFgZgoM4CiG7VAnN524G6Ndgr0uKG/eEwnDHaEErZAYenpVmHodvHqWX3FsKDysgCA
-         K+z1byZO6k9UFcf+ANhRnkL5MhMRceBv96yRkANR/AZooI1Ocvq2A4iKYA5T33MG9jA4
-         PNlr92GXVsxknUxzcjWr6BcZrrvDo+KNNApneAxSsoe6mrMUEJhnrBJ+FnRCFM4yT3C7
-         9Wfw==
+        bh=bcqeJD0tPfZy9idd41wYtUZfDBgAzWfTVjg39tfKUhc=;
+        b=LBNZA+/+Uho2QoyaZ1mdVeybZirCV/ygnlAERDeJonWwYqEx44uTNQja7c+aUOEDMa
+         cJKRIyBQxGngNSy87XSGX331h7j8xfl/yaOKUu+SxkCY9R/lFkRl6o7aplzB6D5szJqw
+         wN78wmEDxqQ7Qx9pQwwB6S/kz+Q6kM4kVM+aywIFbyalPp3hZYWA4W0HjPSIKgpiuXbD
+         PoJCF03gtUZUBWivQ+lHwBn+WzZL2g422AeXaM9Qxi6ya9w+8Ud6S4x+hxzuaHfHyMX6
+         ifjKhsyck8a3Aub3xehX7C4XlL6cQYQIMZUGdqi8dZLAfIwYptB+XwUyTW0mczlJmcsQ
+         6XLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hb2LF+VpU/wqyJ3haQb6Y8wlYbcsPSXqAXl1nkeaUko=;
-        b=TTCVAamws08EfnumFotKQLY73bY6SudTo0GX7cON2BzhuIL/A+Aq1PEHArpIq2Wf2e
-         BgNGYUyI9KmJTAODGBRyBLqpB0CllAEX5Kh4CfRRFQrOfqCtCecV+iNUo6jW1qWUbc/6
-         ejJRcVlw3xnXo5uy76D3y2BCafm3J2tkwdaqg8TmcObylAZCmBXaUUmbihTpZr8ZhGNu
-         cRQEWS3R/LgmAi/LleFzyBn+pv8B+i5mRVlOuozPvZQ3wG8VPMR7NroJhWlsC6VP/Nc5
-         xCw8JEnqzt8oWvajwzPZm8U0InJ9S1VJpi799kQnPgjV54Iql2jazEIOLp+YpTGjynEu
-         3Dqw==
-X-Gm-Message-State: AOAM5339vS5BiqnHN3KLkimehbZu4zYwp1IwRDx9LhpVNXVCXHHO/AFi
-        qEKgMYCjKsCnDPr9BcjUuC1coYv9qW8=
-X-Google-Smtp-Source: ABdhPJw34UE3p37s/y4Q/0GfmEVb9WxutGQweqJOfRU4c2JToLU3MhpfBzCkLj93eOryOK+OrsoyfQ==
-X-Received: by 2002:aa7:9e92:0:b0:40a:344:92c7 with SMTP id p18-20020aa79e92000000b0040a034492c7mr15965787pfq.71.1631016027607;
-        Tue, 07 Sep 2021 05:00:27 -0700 (PDT)
+        bh=bcqeJD0tPfZy9idd41wYtUZfDBgAzWfTVjg39tfKUhc=;
+        b=Qprsq5IMOZQ7fgbdiq4Rz3aaiDf9nthUuMEreU52jG1n15H/+Mi+BXI6DKi40zz3lD
+         nH2EEduv4kGuE2WiZpAZ2SBuB9lseHrLlL1HFIv8ife2v78Ve9tK1H2/GF+cdkfez1kB
+         YR8kWxNaZ1g5CO7WXUI52BO78qNYrP/ui4csGFyc7WIL96pmaLkZk7OXQOf541hlitL8
+         TwiZishw2B07T1lkphWXBK3IC5lUVC/6vN7XxHikLAuOWBiY7PhCrfQilvG4+zfPWARD
+         ARhQriw/QB1yY4vO8e9n/ddMAsaLIIVUriIVaMwQmGkUzI6vJ2yWYds4LPFpAawh8xFP
+         LrLA==
+X-Gm-Message-State: AOAM533Ag5R9WiIrqshF5X6Y2dcDaJHhA4LpwYBKyonKz1xzYmJtmgs7
+        ObQ9R1PIGMKubuRDNrFZTUGSxZAnNg4=
+X-Google-Smtp-Source: ABdhPJz/iMDOhuQadP1qgjgHk4y2WywfurZJdIOi5RKpY3ZY9IKDB4J9oeU5hggySLXqld+0W/qB+g==
+X-Received: by 2002:a17:902:b193:b029:11a:a179:453a with SMTP id s19-20020a170902b193b029011aa179453amr14494588plr.69.1631016030968;
+        Tue, 07 Sep 2021 05:00:30 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.121.210])
-        by smtp.gmail.com with ESMTPSA id a142sm11248150pfd.172.2021.09.07.05.00.24
+        by smtp.gmail.com with ESMTPSA id a142sm11248150pfd.172.2021.09.07.05.00.27
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Sep 2021 05:00:26 -0700 (PDT)
+        Tue, 07 Sep 2021 05:00:30 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, emilyshaffer@google.com,
         gitster@pobox.com, jrnieder@gmail.com, kaartic.sivaraam@gmail.com,
         pc44800@gmail.com, periperidip@gmail.com, avarab@gmail.com,
         Atharva Raykar <raykar.ath@gmail.com>
-Subject: [PATCH 10/13] submodule--helper: remove shell interface to ensure_core_worktree()
-Date:   Tue,  7 Sep 2021 17:29:29 +0530
-Message-Id: <20210907115932.36068-11-raykar.ath@gmail.com>
+Subject: [PATCH 11/13] submodule--helper: remove print-default-remote subcommand
+Date:   Tue,  7 Sep 2021 17:29:30 +0530
+Message-Id: <20210907115932.36068-12-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210907115932.36068-1-raykar.ath@gmail.com>
 References: <20210907115932.36068-1-raykar.ath@gmail.com>
@@ -74,71 +74,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'ensure-core-worktree' subcommand is no longer needed since the
-conversion of the update code from shell to C.
-
-Let's remove the subcommand, and while we are at it, let's rename
-'do_ensure_core_worktree()' to 'ensure_core_worktree()' to signal that
-it is no longer a utility function meant to be called by another
-function.
+This subcommand was once useful for submodule functionality, but after
+the various conversions of shell code to C, it is no longer used.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <periperidip@gmail.com>
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 ---
- builtin/submodule--helper.c | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ builtin/submodule--helper.c | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e3e85600c3..597e303889 100644
+index 597e303889..9470ff3de0 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2740,7 +2740,7 @@ static int push_check(int argc, const char **argv, const char *prefix)
- 	return 0;
+@@ -73,21 +73,6 @@ static char *get_default_remote(void)
+ 	return repo_get_default_remote(the_repository, refname);
  }
  
--static void do_ensure_core_worktree(const char *path)
-+static void ensure_core_worktree(const char *path)
- {
- 	const struct submodule *sub;
- 	const char *cw;
-@@ -2771,19 +2771,6 @@ static void do_ensure_core_worktree(const char *path)
- 	}
- }
- 
--static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
+-static int print_default_remote(int argc, const char **argv, const char *prefix)
 -{
--	const char *path;
+-	char *remote;
 -
--	if (argc != 2)
--		BUG("submodule--helper ensure-core-worktree <path>");
+-	if (argc != 1)
+-		die(_("submodule--helper print-default-remote takes no arguments"));
 -
--	path = argv[1];
--	do_ensure_core_worktree(path);
+-	remote = get_default_remote();
+-	if (remote)
+-		printf("%s\n", remote);
 -
+-	free(remote);
 -	return 0;
 -}
 -
- static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ static int starts_with_dot_slash(const char *str)
  {
- 	int i;
-@@ -3017,7 +3004,7 @@ static int update_submodule(struct update_data *update_data)
- 	char *prefixed_path;
- 	struct string_list err = STRING_LIST_INIT_DUP;
- 
--	do_ensure_core_worktree(update_data->sm_path);
-+	ensure_core_worktree(update_data->sm_path);
- 
- 	if (update_data->recursive_prefix)
- 		prefixed_path = xstrfmt("%s%s", update_data->recursive_prefix,
-@@ -3441,7 +3428,6 @@ static struct cmd_struct commands[] = {
- 	{"add-clone", add_clone, 0},
- 	{"update", module_update, 0},
- 	{"run-update-procedure", run_update_procedure, 0},
--	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
+ 	return str[0] == '.' && is_dir_sep(str[1]);
+@@ -3434,7 +3419,6 @@ static struct cmd_struct commands[] = {
+ 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+ 	{"status", module_status, SUPPORT_SUPER_PREFIX},
+-	{"print-default-remote", print_default_remote, 0},
+ 	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
+ 	{"deinit", module_deinit, 0},
+ 	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
 -- 
 2.32.0
 
