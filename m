@@ -4,126 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66AC7C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A4FC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 22:10:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 342EA61103
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:57:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DACBA60EE6
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 22:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346091AbhIGV6M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 17:58:12 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52203 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232037AbhIGV6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:58:11 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6DBF9160856;
-        Tue,  7 Sep 2021 17:57:04 -0400 (EDT)
+        id S1347474AbhIGWLf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 18:11:35 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51464 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236249AbhIGWLe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 18:11:34 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A4BE1454D9;
+        Tue,  7 Sep 2021 18:10:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=cLJxXZ5QvwDs
-        H4AhbAMj74S72iyIcLeRnyy+q5aiTq0=; b=RmI9Lk6V4FUa1ObfOYRNrdRkV71X
-        PS5uSoPAl1iLvit5C1dnpt1/CvwTDZxjPKssB99bhRUBC1KPkFpykrjxBnjTEGGL
-        jhTFG0SQS0WpR9nHXIJWysmrKo6vpHxMr8OsR+vdTtAzhNO1mTuJBdPuTV6BubX/
-        zz8nuB+Zei/qzXg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6750D160855;
-        Tue,  7 Sep 2021 17:57:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
+         bh=/C8zpPvovenli9PTQAuOyiUYHYYbsrrV5bPL2p9R8x4=; b=VA0DaXRV2e1t
+        jVDyyn5zy5bYBvW4RHrQfvEU6oqMky6I1hzkVIDM9/KMgu1XtHXeNO1HGsUVJiN3
+        IhmphtED6pIZi/MaP4F2dzejdoVnaF/GHguPNLijKbgz84hWtXyP9+8g4c6YmEmV
+        pYbW0JK/IfbWuK8TifWXYwDs3r5bExQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 540F71454D8;
+        Tue,  7 Sep 2021 18:10:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC0B5160852;
-        Tue,  7 Sep 2021 17:57:01 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 75B331454D7;
+        Tue,  7 Sep 2021 18:10:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com, emilyshaffer@google.com
-Subject: Re: [PATCH 2/2] bugreport: slightly better memory management
-References: <20210903115933.622847-1-bagasdotme@gmail.com>
-        <20210904021231.88534-1-carenas@gmail.com>
-        <20210904021231.88534-3-carenas@gmail.com>
-Date:   Tue, 07 Sep 2021 14:56:59 -0700
-In-Reply-To: <20210904021231.88534-3-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 3 Sep 2021 19:12:31 -0700")
-Message-ID: <xmqqy28882xg.fsf@gitster.g>
+To:     git@vger.kernel.org
+Subject: [PATCH] hash-object: prefix_filename() returns allocated memory
+ these days
+cc:     peff@peff.net
+Date:   Tue, 07 Sep 2021 15:10:22 -0700
+Message-ID: <xmqqsfyg82b5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 87F1B4F8-1026-11EC-B53E-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 666EF53C-1028-11EC-B793-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+Back when a1be47e4 (hash-object: fix buffer reuse with --path in a
+subdirectory, 2017-03-20) was written, the prefix_filename() helper
+used a static piece of memory to the caller, making the caller
+responsible for copying it, if it wants to keep it across another
+call to the same function.  Two callers of the prefix_filename() in
+hash-object were made to xstrdup() the value obtained from it.
 
-> 238b439d69 (bugreport: add tool to generate debugging info, 2020-04-16)
-> introduces an UNLEAK for a strbuf that contains the buffer that gets
-> flushed to disk earlier, instead of simply cleaning the buffer.
->
-> do so, and while at it, move the free() call for another temporary stri=
-ng
-> closer to its creator, so it is easier to keep track of.
+But in the same series, when e4da43b1 (prefix_filename: return newly
+allocated string, 2017-03-20) changed the rule to gave the caller
+possession of the memory, we forgot to revert one of the xstrdup()
+changes, allowing the returned value to leak.
 
-'do so' -> 'Do so'.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  builtin/bugreport.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> index 17042381c3..a9bedde1e8 100644
-> --- a/builtin/bugreport.c
-> +++ b/builtin/bugreport.c
-> @@ -152,6 +152,7 @@ int cmd_bugreport(int argc, const char **argv, cons=
-t char *prefix)
->  	strbuf_addstr(&report_path, "git-bugreport-");
->  	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), =
-0, 0);
->  	strbuf_addstr(&report_path, ".txt");
-> +	free(prefixed_filename);
+ * "git show -W e4da43b1 builtin/hash-object.c" made me curious.
 
-Correct, but it can be raised even further.  We can free it after we
-addstr to report_path.
+ builtin/hash-object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I looked at the existing callers of prefix_filename(), hoping that
-many of them might take it in a strbuf they have, in which case we
-may be able to expose an alternative interface to take a caller
-supplied strbuf to clean this one up.  But it seems this is the only
-one, so "store in a temporary, strbuf_addstr it, and immediately
-free the temporary" here would be good.
-
->  	switch (safe_create_leading_directories(report_path.buf)) {
->  	case SCLD_OK:
-> @@ -181,6 +182,7 @@ int cmd_bugreport(int argc, const char **argv, cons=
-t char *prefix)
->  		die_errno(_("unable to write to %s"), report_path.buf);
-> =20
->  	close(report);
-> +	strbuf_release(&buffer);
-
-We are done with the strbuf once write_in_full() returns, but this
-is close enough.
-
-> @@ -191,8 +193,6 @@ int cmd_bugreport(int argc, const char **argv, cons=
-t char *prefix)
->  	fprintf(stderr, _("Created new report at '%s'.\n"),
->  		user_relative_path);
-> =20
-> -	free(prefixed_filename);
-> -	UNLEAK(buffer);
->  	UNLEAK(report_path);
->  	return !!launch_editor(report_path.buf, NULL, NULL);
-
-Having reviewed all, I am not sure if my reaction is "good, now we
-are cleaner" or "meh, for the same reason why report_path can be
-left alive, it is fine to leave buffer alive, too".
-
+diff --git c/builtin/hash-object.c w/builtin/hash-object.c
+index 640ef4ded5..084cba204b 100644
+--- c/builtin/hash-object.c
++++ w/builtin/hash-object.c
+@@ -117,7 +117,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
+ 		prefix = setup_git_directory_gently(&nongit);
+ 
+ 	if (vpath && prefix)
+-		vpath = xstrdup(prefix_filename(prefix, vpath));
++		vpath = prefix_filename(prefix, vpath);
+ 
+ 	git_config(git_default_config, NULL);
+ 
