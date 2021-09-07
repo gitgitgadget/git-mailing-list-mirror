@@ -2,150 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93CF6C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 22:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFDDC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 23:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BFA76112F
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 22:48:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FB5160F01
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 23:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236148AbhIGWtm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 18:49:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45380 "EHLO
+        id S233111AbhIGX2B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 19:28:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbhIGWtl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 18:49:41 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1985C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 15:48:34 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id v2so519414oie.6
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 15:48:34 -0700 (PDT)
+        with ESMTP id S230238AbhIGX2A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 19:28:00 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D65F3C061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 16:26:53 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id i6so277096edu.1
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 16:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7R4ymXiw5r3Btqjo+UolaUjyaiNjGtecADYcrLlAybk=;
-        b=NQGWpWIGhLyMudYXKxD5Qa74kUduoookr48e8Za/UhR6rC526mRAdVKN9INpE3ho5K
-         2wirPXPf9RmdP6z0XC2TjZM4wqhjFfFtZHaFLnwRbpAmhDftmhYyCmU7Di//2KhkbbQW
-         1V5uzRlo1Ux6OYbRt61jRI2GKr7EgUt77jv/ZnQaKjbW2mgEORawJ72oKTKQbPClGQxc
-         tmLLEUFXZdbLt3uYtaDAw9NdPlVhv2NaOJe+h9dtB9d5l2l7HKwab1bkrXMU7JelZTG9
-         75LPUDJkHR93z0djuNSDmlUjAiR9aJZZ/yoMDhd/dbEEkYhI+MYgGZJFIEw4BjebbuZg
-         +rdw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=gYsGPkE5eeIRX3SysT2+d4QDBMW1vDZKtmhKleYk2jE=;
+        b=aKCs+RuPTPv2X0AEc+mcnCSC4nXw5tqDZg/af/+chYecGy9IdKdy7z51mmH9y3aXQT
+         UaoDR4o3+lKquTaoEzYRCAgAuFy/hx3Gh1nQ3vDSwZLrCOQU/RXwnBApwZ7RNGayLm+p
+         DAz7F4CecnEyM/AA9lkBQxMWYEPHzS1fEDn3mMEYWAoIEBg73JCy9Ltr0BWWk/uXGMZo
+         msmkHXFuZyGt1zBsJ6siApJYKuhnB3DwAiJGVU9LcodaU092b1l/SOw23g7TayCAm6Li
+         o6Uwmy2k21myfl+cGY9PEUeePx2k5hl3L5ZRayXye786gSsCWZa3gtXwVDgqiKvDM3lT
+         UyJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7R4ymXiw5r3Btqjo+UolaUjyaiNjGtecADYcrLlAybk=;
-        b=onmuDkUOsdQtP6aAsFscwh2Io+mhm41qOy1w/QbHz7Si0HM5btIn96X1sqKfmNSP11
-         rMnII2CWsV1khHJIdUvv3rtvgnkDB0s9bodWtkznj/k1CY7edBet3etnos8TG3VKDqoW
-         3OD4g8wYLcOXHIqF1oshAI/T0xxh2pE+1OEE31xCU4L1K7iZnKvCybuaHVyF0Ivda43a
-         RsXApR6Of380TZK74H2I2DoTm4MGjwg6Yiii3w3owbtsrl8y2qivwSfhm2efrkzfIJ1J
-         UdYeMj4Et6mnhFhyjFCHphP/bSFT8yS1C2DA+k28yJdEjlDcHVToMEqdSyt4Stpf0Vj8
-         Uk0w==
-X-Gm-Message-State: AOAM531vqHL6PfZgZYoZIi2+IRoLL7ukVLluEAP2BbyKMdum8n0BRSwg
-        UuVQJF5xsCCtdcODs9GOw5unuOhaCuhO6W1UXiw=
-X-Google-Smtp-Source: ABdhPJw0bx/kOr6BN+YsmPqHbqqzHtOuPkXQ743izEeRuruS6GmLH1snFECrKVenwyetEcU5AWbHR0ZFVlbTg5rXsXo=
-X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr316211oiw.31.1631054913924;
- Tue, 07 Sep 2021 15:48:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=gYsGPkE5eeIRX3SysT2+d4QDBMW1vDZKtmhKleYk2jE=;
+        b=fYCjUzPH3RQJ0a8MX02sO7jvSPoPNLE86tXGQwQzT1FbkHB+ko82OTuHR4CFA8jz1x
+         Dt92n426gFLgh6To5GO2aDFMKrF5sP6ywoyffONH0Jmds9kGStqi8hU0vY40YMmZD4Fm
+         /jq7Cj2v+fpMysSISQmcyEsfbbXC3/AuyWgSkwizpsvIT6bIBFtw7bTbsjyE9365G0dB
+         VBete4WM4fQfAKzhJ3+rkAXaKGOT7RQFUQwn3SrV1MUu8VxXttbO6gHJ7xQs2CNYAFMc
+         Ov4n8+sgRjOGOFukYmBtwvLMtUQZqB9Ky3EoYmmRfXVPFOikweu+5CVZFz3iOqOop7fd
+         7X2A==
+X-Gm-Message-State: AOAM5306OPZMyeaBOi3jqZuHodRroMUFJiyfwZuADEE20ycsC3RSqp7x
+        syEhgymsTtW7Hgc112E4Q9U=
+X-Google-Smtp-Source: ABdhPJx37SdL3Lg6OAJOp505WfX/fG9UPwePKU8CjXjiT13br0LNBRWOdz0cX1aCTmrULz2D50zFnw==
+X-Received: by 2002:a05:6402:22b3:: with SMTP id cx19mr779387edb.238.1631057212364;
+        Tue, 07 Sep 2021 16:26:52 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v10sm202188edt.25.2021.09.07.16.26.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Sep 2021 16:26:52 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] pack-write: use more idiomatic strbuf usage for
+ packname construction
+Date:   Wed, 08 Sep 2021 01:22:05 +0200
+References: <cover.1630461918.git.me@ttaylorr.com>
+ <cover-0.3-00000000000-20210907T193600Z-avarab@gmail.com>
+ <patch-1.3-0e6ef07ce00-20210907T193600Z-avarab@gmail.com>
+ <YTfl7U93ttUQu2jc@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YTfl7U93ttUQu2jc@nand.local>
+Message-ID: <87pmtkj7b8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
- <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <xmqqk0k0ndbq.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet> <4e998676-4975-8ac2-35a0-34416938b62e@kdbg.org>
- <nycvar.QRO.7.76.6.2109071930080.55@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2109071930080.55@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 7 Sep 2021 15:48:22 -0700
-Message-ID: <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 7, 2021 at 11:51 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Hannes,
->
-> On Thu, 2 Sep 2021, Johannes Sixt wrote:
->
-> > Am 02.09.21 um 16:18 schrieb Johannes Schindelin:
-> > > On Wed, 1 Sep 2021, Junio C Hamano wrote:
-> > >> A good goal.  There is no remaining use case where (a fictitious and
-> > >> properly working version of) "--preserve-merges" option cannot be
-> > >> replaced by "--rebase-merges", is it?  I somehow had a feeling that
-> > >> the other Johannes (sorry if it weren't you, j6t) had cases that the
-> > >> former worked better, but perhaps I am mis-remembering things.
-> > >
-> > > I think that I managed to address whatever concerns there were about the
-> > > `--rebase-merges` backend in the meantime.
-> >
-> > That was either my suggestion/desire to make no-rebase-cousins the
-> > default. That has been settled.
-> >
-> > Or my wish not to redo the merge, but to replay the first-parent
-> > difference. The idea never got traction, and I've long since abandoned
-> > my implementation of it.
->
-> Thank you for clarifying.
->
-> Yes, I remember how that idea came up, and I even tried that strategy for
-> a couple of merging rebases of Git for Windows' branch thicket. Sadly, it
-> did not work half as well as I had hoped.
->
-> The best idea I had back then still is in want of being implemented: sort
-> of a "four-way merge". It is basically the same as a three-way merge, but
-> allows for the pre-images to differ in the context (and yes, this cannot
-> be represented using the current conflict markers). Definitely not
-> trivial.
 
-merge-ort opens a new possibility (since it does merges without
-touching the index or working tree): Take the merge commit, M, that
-you are trying to transplant.  Hold on to it for a minute.  Do what
-rebase-merges does now; namely, do a simple merge of the desired new
-branches that otherwise ignores M to get your new merge commit N.
-Hang on to N too for a minute.  Now use merge-ort to auto-remerge M
-(much like AUTO_MERGE or --remerge-diff does) to get a new merge
-commit that we'll call pre-M.  If M was a clean merge that the user
-didn't amend, then pre-M will match M.  If M wasn't a clean merge or
-was amended, then pre-M will otherwise differ from M by not including
-any manual changes the user made when they originally created M --
-such as removing conflict markers, fixing semantic conflicts, evil
-changes, etc.
+On Tue, Sep 07 2021, Taylor Blau wrote:
 
-Now we've got three merge commits: pre-M, M, and N.  (Technically,
-pre-M and N might be toplevel trees rather than full commits, but
-whatever.)  The difference between pre-M and M represent the manual
-work the user did in order to create M.  Now, do a three-way
-(non-recursive) merge of those commits, to get the rebased result, R.
-This operation has the affect of applying the changes from pre-M to M
-on top of N.
+> On Tue, Sep 07, 2021 at 09:42:36PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Change code added in 5889271114a (finish_tmp_packfile():use strbuf for
+>
+> s/Change code/Code/ ?
 
-There's obviously some edge cases (e.g. nested conflict markers), but
-I think they're better than the edge cases presented by the
-alternatives:
-  * the first-parent difference idea silently discards intermediate
-changes from reapplying other patches (especially if other patches are
-added or dropped), which to me feels _very_ dangerous
-  * the current rebase-merges idea silently discards manual user
-changes within the original merge commit (i.e. it hopes that there is
-no difference between pre-M and M), which can also be lossy
-  * I don't think this idea drops any data, but it does run the risk
-of conflicts that are difficult to understand.  But I suspect less so
-than your five-way merge would entail.
+That would make it:
 
-If the difficulty of conflicts in this scheme is too high, we could do
-a few things like providing multiple versions (e.g. if either
-pre-M:file or N:file had conflicts, or maybe if R:file has nested
-conflicts, then place both R:file and N:file in the working tree
-somewhere) or pointing at special commands that help users figure out
-what went on (e.g. 'git log -1 --remerge-diff M -- file').
+    Change code added in X (...) to do strbuf_reset() instead...
+
+Instead of:
+
+    Code added in X (...) to do strbuf_reset() instead...
+
+> (I wondered also if the missing space in 5889271114a's subject line was
+> intentional, but it does appear in the original commit.)
+
+*Nod*, it was automatically generated.
+
+> Reading this patch, I'm not sure I agree that this makes the later
+> changes any easier. To be honest, replacing things like
+>
+>>  	if (rev_tmp_name) {
+>> -		strbuf_addf(name_buffer, "%s.rev", hash_to_hex(hash));
+>> -		if (rename(rev_tmp_name, name_buffer->buf))
+>> +		strbuf_addf(&sb, "%s%s.rev", tmp_basename->buf,
+>> +			    hash_to_hex(hash));
+>> +		if (rename(rev_tmp_name, sb.buf))
+>>  			die_errno("unable to rename temporary reverse-index file");
+>> -
+>> -		strbuf_setlen(name_buffer, basename_len);
+>> +		strbuf_reset(&sb);
+>
+> Does not much help or hurt the readability, at least in my opinion. One
+> advantage of the pre-image is that we're doing less copying, but that's
+> probably splitting hairs at this point.
+
+> So, I would probably be just as happy without this patch. You mentioned
+> that it makes the later changes easier, but I couldn't come up with why.
+> I may be missing something, in which case it may be helpful to know what
+> that is and how it makes this change necessary.
+
+It's not that continually appending/trimming the strbuf is per-se less
+readable than having a "prefix" and copying/appending to it, and as you
+point out this moves us towards more allocations, but in this case
+that's not the bottleneck.
+
+It's that if I retain the current pattern while splitting up these
+functions I'd need to pass a "basename_len" owned by the caller between
+the two, and we'd end up juggling the "tmpname" as the "if
+(write_bitmap_index)" codepath is moved around.
+
+So just having each site get the prefix and add its own suffix seemed
+much easier to deal with,.
