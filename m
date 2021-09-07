@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F20C433FE
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C2DC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E5BF6103E
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E64066103E
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345979AbhIGVGY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 17:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50098 "EHLO
+        id S1346621AbhIGVG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 17:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230354AbhIGVGX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S245337AbhIGVGX (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Sep 2021 17:06:23 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D08BC061757
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2744C061575
         for <git@vger.kernel.org>; Tue,  7 Sep 2021 14:05:16 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso2841547wms.3
+Received: by mail-wr1-x436.google.com with SMTP id u16so20490wrn.5
         for <git@vger.kernel.org>; Tue, 07 Sep 2021 14:05:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BrIOyyYw+jCFvpv61hsUXTft4vxNbyrxYjFHyiRi1Vo=;
-        b=C0WzcyK7JjCaBlxCiAgra/QRH0eW479GnBwSd55YdDbuFtdnBo5hTRcNH0ZKsx0QQH
-         pWIxxb9RcD+FsqMLtWF6R2SEGBN2JCh59e1XxGxTij2gM+zC/i6cmJ/YvtUBmO8v3DwL
-         FzmDNd/9zLuI7oEpT0Jf/IvcDaDNkQC6suKpkd6TOG04VNJ6Ra8QB60WYkaiZgFIKhsw
-         OvFsybsjckpQqG1B/Vg2hUXM2yRp1smYqHMBKrTZ9SGaQzA7ZvXvN9PTgeBElR8S9qwj
-         o2BpdLxuGwwnmhnpCVUJMSPAsgXuFZ4KGEXFrGbL4loD92y9IjVmzvfRGw36r7Z1NuTd
-         TqOg==
+        bh=pKPQH7LwQtfFgrYlegGI8c5fEAyto9CC1WAj6hyGcrE=;
+        b=omXiePf9eVIlsHQTJBVAsFjoq8Ym/7AaKg4TUir9fJuEIvvux8uGTf/7qb5sCA40pT
+         ka489d/72KE68TtZwF5pobR1xmaIE36VGW/vo1vDL5HVPURYVmBg99IWHTf/GFxppkkF
+         ltlLEpCcK9Xi7lahtgNn4aUlsRyjLsBiIXs19wWXUxobiegYlejpJjngz7yBhm/tI1/h
+         bZtYpv9vfshYAzORvT3LUc2gJfKuculZ/NV0WkB4IZ/gocmkSZyRzXnlxJ2beU1pw/y0
+         oA98ft2PvdpOPsEW9HS1+wbJEua5+k0mLeWGJbrqQY3UVxH65PaGf87/6m4MBCTscUmF
+         LTHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BrIOyyYw+jCFvpv61hsUXTft4vxNbyrxYjFHyiRi1Vo=;
-        b=oregTSuzVOlP9IEsRdSnJj4bf1ji2S8EPUquqsmuE3DNnSXbAS7kh4usojj2CG6+1j
-         p2WoaKCFjegjJDsvFQqJ8adHHxWTLpmK+IYWYM89nM4NCSdP0Kd8cXVmEQoXmIq+luvM
-         8iIrSu1UQx2COpGztjnPw4u3gPDVFIcFBmH1F9DDc3iJ/W25Oc9mKT8ChqhlkU8pE1ef
-         gTo81Inlbxlw5iS4Q5QHKdDJfaUJH+pq0v1PXEB7c5eKVQe7Fea1FVHXhqJ2j4lwumYS
-         qNZ50qKaPBr3KoDt4mtJaWQuYBWGLxpeMoK4/eTXGqNdLIprX2hXPEv21W1+wt2Of8+z
-         X8hQ==
-X-Gm-Message-State: AOAM533lR+J5fbQFLKitxjdk9C+i6e4DsTWAYft1Rx45PbZvf6SdurV2
-        pC9xR/YBclpqtZ5ONwsbbyQDxK2JoOQ=
-X-Google-Smtp-Source: ABdhPJxvAUhm2GcWKk8h6Nf3Set19og3fBSoNOE3rYAFKZyFAk+u7mXN+t9N4+sP1vsmUuRgvAkq8Q==
-X-Received: by 2002:a1c:443:: with SMTP id 64mr175429wme.180.1631048715001;
+        bh=pKPQH7LwQtfFgrYlegGI8c5fEAyto9CC1WAj6hyGcrE=;
+        b=D5gjHzKa974ui5jdQsmI7WCjMAboDnZIHiEayqoNB8cBa4hVozEU8EzktcxlB//r08
+         u8w5KyILWCeSgm3DZkL0p6PAwssGUdpBdphoQ7aP0ScETkftvwVgqeHMEoi8rbNAWQgq
+         SCjXAmsnQDGn+VOo8g3rZMBpteaFcNd7yW6R2oSFULfeiCH+lHgfY9Ntbop5D28musjm
+         8LBMi83rmWijiPXH8r97aW1e8OMdvstbMgC4PWBawmMDG0coMpIXP+B33k4ssFh30761
+         bx/ohK404PkGoaxtOKXmD7WZhM/I9AOqKNuJ7wnaPEKO5lzRNJNRPDCpwfBO1a3My0a9
+         1JUA==
+X-Gm-Message-State: AOAM531Kw4IFzCIe7XfoHgB/SO23nWG0cn5GffVVqBzkx1iDXYtWeORV
+        V0mjsDQGdRsBsFZaijzTuc4EAOfEcr0=
+X-Google-Smtp-Source: ABdhPJxkq9e0D9MDYY30Wos69OITwjk6B6mQK3f4lkBAb6QNvB9aFmHWrIR6u2u3SniZjXGKW1VExw==
+X-Received: by 2002:adf:b7cd:: with SMTP id t13mr326804wre.63.1631048715569;
         Tue, 07 Sep 2021 14:05:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e3sm141166wrv.18.2021.09.07.14.05.14
+        by smtp.gmail.com with ESMTPSA id i9sm151276wmi.44.2021.09.07.14.05.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 14:05:14 -0700 (PDT)
-Message-Id: <8da29d539fc2c9700630d5ec4a80cacf64d44aa0.1631048713.git.gitgitgadget@gmail.com>
+        Tue, 07 Sep 2021 14:05:15 -0700 (PDT)
+Message-Id: <acda0f599475c07c6c1a5e75384e0cff98d2c19f.1631048713.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
 References: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
         <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Sep 2021 21:05:02 +0000
-Subject: [PATCH v3 01/11] t5520: do not use `pull.rebase=preserve`
+Date:   Tue, 07 Sep 2021 21:05:03 +0000
+Subject: [PATCH v3 02/11] remote: warn about unhandled branch.<name>.rebase
+ values
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,39 +82,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Even if those tests try to override that setting, let's not use it
-because it is deprecated: let's use `merges` instead.
+We ignore them silently, but it actually makes sense to warn the users
+that their config setting has no effect.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5520-pull.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/remote.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index e2c0c510222..bb9b6b900eb 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -598,7 +598,7 @@ test_expect_success '--rebase=false create a new merge commit' '
- 
- test_expect_success '--rebase=true rebases and flattens keep-merge' '
- 	git reset --hard before-preserve-rebase &&
--	test_config pull.rebase preserve &&
-+	test_config pull.rebase merges &&
- 	git pull --rebase=true . copy &&
- 	test_cmp_rev HEAD^^ copy &&
- 	echo file3 >expect &&
-@@ -620,9 +620,9 @@ test_expect_success '--rebase=invalid fails' '
- 	test_must_fail git pull --rebase=invalid . copy
- '
- 
--test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-merge' '
-+test_expect_success '--rebase overrides pull.rebase=merges and flattens keep-merge' '
- 	git reset --hard before-preserve-rebase &&
--	test_config pull.rebase preserve &&
-+	test_config pull.rebase merges &&
- 	git pull --rebase . copy &&
- 	test_cmp_rev HEAD^^ copy &&
- 	echo file3 >expect &&
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 7f88e6ce9de..5705e088e5b 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -318,6 +318,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 		 * truth value with >= REBASE_TRUE.
+ 		 */
+ 		info->rebase = rebase_parse_value(value);
++		if (info->rebase == REBASE_INVALID)
++			warning(_("unhandled branch.%s.rebase=%s; assuming "
++				  "'true'"), name, value);
+ 		break;
+ 	case PUSH_REMOTE:
+ 		if (info->push_remote_name)
 -- 
 gitgitgadget
 
