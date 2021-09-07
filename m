@@ -2,112 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8780C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D31FC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:41:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9039260E94
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:39:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76EF661102
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347305AbhIGVk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 17:40:57 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59681 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229875AbhIGVky (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:40:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 803081450F2;
-        Tue,  7 Sep 2021 17:39:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2xH5HK0oy7rb
-        vnlP8SyLU/mZ1nYhw8mrSKB5JX7BezQ=; b=bn2IW+Qbrpq+vcEnLhnJ1ej2rjI9
-        OFneIrpuN2phgsZOr2vSbtq/eNt0SeTnSf5zhWxCqwuJgapO/U8ItDHF32t/E79i
-        xC0Ftg/lIdUs/v/S4OnVkSWrCqd5sDIHz0ADqddvKcGZ7nrdKSwVTbao0QmSyraM
-        CaLkQlVaLCE+JNY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78DAF1450F1;
-        Tue,  7 Sep 2021 17:39:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C5A261450ED;
-        Tue,  7 Sep 2021 17:39:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com, emilyshaffer@google.com
-Subject: Re: [PATCH 1/2] bugreport: avoid duplicating options in usage()
-References: <20210903115933.622847-1-bagasdotme@gmail.com>
-        <20210904021231.88534-1-carenas@gmail.com>
-        <20210904021231.88534-2-carenas@gmail.com>
-Date:   Tue, 07 Sep 2021 14:39:43 -0700
-In-Reply-To: <20210904021231.88534-2-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 3 Sep 2021 19:12:30 -0700")
-Message-ID: <xmqq35qg9iao.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1347372AbhIGVmp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 17:42:45 -0400
+Received: from mout.gmx.net ([212.227.15.19]:44339 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1347360AbhIGVmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 17:42:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631050894;
+        bh=F5n7cPU0UC1ueKmuTDgVpXKqYRGOqw5H5zOTegVOMDM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ou1sCP3NWx3ILw7tiFZqXx+cF5rnBmA/gc0KG4JoULJtT1G4N8pzgBoyrW/6KYYzT
+         inHS9xI6ejXkqow/JedYdmmt488NMEeGB0cpEpYLJoBmCa+T2mChmwxIOPjlvL4jZ7
+         r2vCRkpXEt2k9buvW1rIt9DlOvQ+CtQbPY6+BQ2Y=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M26rD-1mPdie3PRp-002ZRn; Tue, 07
+ Sep 2021 23:41:33 +0200
+Date:   Tue, 7 Sep 2021 23:41:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>
+Subject: Re: [PATCH] test-tool run-command: remove dead "testsuite" code
+In-Reply-To: <patch-1.1-d1e464da0a9-20210906T002938Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109072339550.55@tvgsbejvaqbjf.bet>
+References: <patch-1.1-d1e464da0a9-20210906T002938Z-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1DE7E020-1024-11EC-85CD-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-453903156-1631050910=:55"
+X-Provags-ID: V03:K1:nwQnKa/kk+oUgDEYIfFF+bGVZWpL1VwXzHpfSWs4ANZDKVskwfQ
+ XTYoFoqkKaBplsla6kBJaK3p01ZjQfVXrLxVdwF92bnjlneJSn+zHlNEcD50JWED/83ZOJf
+ ImKlnSDUlZH80ahbPpgRr18FAIJhXobsV+ZzTAEvM4t3OJ1wXOPIWc9eVYBagcT5fTXIgo4
+ nVNBM7rUwBdKGguuEBXxw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4Bmdr3zS5vg=:sQ57t9b/1Bou1Ovv23PsON
+ PUqmbSAkDW9LUGipqm3O/3qKLXk+MB3BxhNfnhJ6EIuuMYgWIgri8uA1FJnm80GIimVxpIC8M
+ FCSMw0+juppiD5nEL/xH+r10FgxQS9G8UCXL5JcjU/ahb7R9lX4CUmdzPXBKGBbPrjwqB+U5Q
+ p5GQBnNdd6MJoUxaJBoIKuos5kEttGPJ9U/BwvnLSvtgHxvj6SvsxjW1KrDQznRaFAjDiaaz5
+ MFgl5GUtm5RX57DQvXb/ZCdIv7mv60SSXfpKCqfnD8y/P8+cCewtYjzY7G7+FRJqTcQsRW/ZV
+ BtdU9gtbTH5r+mdZmJ3WWDrGDehvyhWBmFTs2qA6ZwdYQM2/0kvCwqNeLL8+RjRoGK09KKJo1
+ TCGic8Yq7ho99ge9VWrq1BJdtDdJ4wtg+Y3PnYt8fadnqxtEfzwlHyJe7oCRfBnMQ2/7ZpnRh
+ K58N+kGmardu9h0F6IJaQZF4EDA5sCZQzXrn4PtzGGz4QWeqnvaqoyDsH2RL9y1g7jpbkncrm
+ POupdCQvd7Gd0SYkIdMCAmaMbssT+wkveeVyV1dVAjnQ0jnk0msJUgxZFekzT/Vtc2t4hO2ll
+ Plh9elDQNO7K4/uUBnVd5U3fALE8moGOgADFK1EKbsQR8MGVsW5VSz3KD279aFu+4NnFo65dL
+ yC2E2ukiJD+az0TltHoglUZVsrNZwTxCJps7nyleQkRypX7k209HCwWhsxN3X0pQQ+fw8lvjN
+ +G3TMsN5LIUIjUz67C3fRcECtSIvnKdZkI1QXGJQ24yTa7jyEywaFoBwNBBOQmtp9d2fdyC7t
+ sHqdCQW+nCRX4pUVnxJF3uWMmkpmHVZtPtTG6f0pcMdZhlovaw63M8pi8lvYRp2DCgl9zEkf3
+ tky/bMkrABm1N98wfl51Giu89yJBoxuqJTmuDYD00ik6v5GKn3zfxoCYde/9HZXK1fI/tNAEn
+ tXYPF5fiI806FE5zpk46lMjmiaIV+hhyYQakm8h54phQjWYKsFrOp3gOrPL3114lMhiwIW9Du
+ P/qhVpRM09St+BD1VFyKzfpsSzIIL8H7Beq7aDMLWyB55EVLCczcocgVfEUCUjGhX45aKfyhK
+ QqA+B5Th7e++z1Rk+RJDGxQ6gg0vXFGEKop5EjiSjoIRnohsqX8elKrlA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> 238b439d69 (bugreport: add tool to generate debugging info, 2020-04-16)
-> includes the options with the commandline, which then means they will
-> be duplicated in the output of `git bugreport -h`.
->
-> remove them and while at it, make sure usage() is called if the wrong
-> number of parameters is provided (ex: `git bugreport help`)
+--8323328-453903156-1631050910=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-'remove' -> 'Remove'.
+Hi =C3=86var,
 
->  static const char * const bugreport_usage[] =3D {
-> -	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format=
->]"),
-> +	N_("git bugreport"),
+On Mon, 6 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I do not quite see this as an improvement.  Without this change, the
-user will see
+> Remove the "test-tool run-command testsuite" sub-sub-command, it has
+> not been used since 4c2c38e800f (ci: modification of main.yml to use
+> cmake for vs-build job, 2020-06-26), see also the earlier
+> 6081d3898fe (ci: retire the Azure Pipelines definition, 2020-04-11)
+> for another phasing out of the command.
 
-	usage: git bugreport [-o <file>] [-s <format>]
+Sure, the code is currently unused, but I had hoped to use it when
+BusyBox-w32 support in Git for Windows would be more robust.
 
-	    -o <file>
-		... explanation of what -o does ...
-	    -s <format>
-		... explanation of what -s does ...
+Ciao,
+Johannes
 
-and with the patch, it becomes unclear, especially for those who are
-not used to "git subcommand -h" output convention, as we'd see only
-
-	usage: git bugreport
-
-on the first line, no?  If the patch is to use
-
-	N_("git bugreport [<options>]")
-
-as the new text, then that would be an improvement, though.
-
-> @@ -141,6 +140,8 @@ int cmd_bugreport(int argc, const char **argv, cons=
-t char *prefix)
-> =20
->  	argc =3D parse_options(argc, argv, prefix, bugreport_options,
->  			     bugreport_usage, 0);
-> +	if (argc)
-> +		usage_with_options(bugreport_usage, bugreport_options);
-
-This is a good change (until we gain positional argument to the
-subcommand, at which time we'd need to rethink the error checking).
-
->  	/* Prepare the path to put the result */
->  	prefixed_filename =3D prefix_filename(prefix,
+--8323328-453903156-1631050910=:55--
