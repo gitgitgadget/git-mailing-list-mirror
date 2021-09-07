@@ -2,79 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE406C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B693C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:19:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A11B860ED8
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:12:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F042C61100
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:19:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345762AbhIGSOB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 14:14:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40832 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245148AbhIGSOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 14:14:00 -0400
-Received: (qmail 19907 invoked by uid 109); 7 Sep 2021 18:12:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Sep 2021 18:12:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16311 invoked by uid 111); 7 Sep 2021 18:12:54 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Sep 2021 14:12:54 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Sep 2021 14:12:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: expired key in junio-gpg-pub
-Message-ID: <YTerpXCxYx+f+8ws@coredump.intra.peff.net>
+        id S1345798AbhIGSUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 14:20:44 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59331 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245718AbhIGSUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 14:20:44 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F9A6143835;
+        Tue,  7 Sep 2021 14:19:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WVhiL4t4vvZQc3lIl1ZKKF8DExgDbipfKAbWue
+        vrLjw=; b=G92K79c4++3Suz8vs+UGLeGyQhyoXxa0d3r8QlXatdFH5zAnGsr8Yt
+        2r1ew6ewbiUsU+1hrOl82Ghbkyiv/emQdU6Ij/W/YUXcblbu8XXIMz/zvu5J0Clg
+        guNkk1bIaroOf1FQ1CC9eB8/MvTqMZ0Fe8IyW8JzdAdNZyex+Rm6k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 89534143834;
+        Tue,  7 Sep 2021 14:19:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D0B9C143833;
+        Tue,  7 Sep 2021 14:19:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+        <87h7f4tf0b.fsf@osv.gnss.ru>
+Date:   Tue, 07 Sep 2021 11:19:33 -0700
+In-Reply-To: <87h7f4tf0b.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        01 Sep 2021 19:52:20 +0300")
+Message-ID: <xmqqy288b64q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: 276A76C4-1008-11EC-A2AC-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It looks like your signing key is expired, and tag verification fails:
+Sergey Organov <sorganov@gmail.com> writes:
 
-  $ mkdir /tmp/foo
-  $ export GNUPGHOME=/tmp/foo
-  $ git cat-file blob junio-gpg-pub | gpg --import
-  gpg: WARNING: unsafe permissions on homedir '/tmp/foo'
-  gpg: keybox '/tmp/foo/pubring.kbx' created
-  gpg: key 20D04E5A713660A7: 27 signatures not checked due to missing keys
-  gpg: /tmp/foo/trustdb.gpg: trustdb created
-  gpg: key 20D04E5A713660A7: public key "Junio C Hamano <gitster@pobox.com>" imported
-  gpg: Total number processed: 1
-  gpg:               imported: 1
-  gpg: no ultimately trusted keys found
+> Here is a patch that fixes diff-index to accept --cc again:
 
-  $ git tag -v v2.33.0
-  object 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
-  type commit
-  tag v2.33.0
-  tagger Junio C Hamano <gitster@pobox.com> 1629141357 -0700
+Sorry for the delay; I did not notice there was a patch buried in a
+discussion thread.
 
-  Git 2.33
-  gpg: WARNING: unsafe permissions on homedir '/tmp/foo'
-  gpg: Signature made Mon Aug 16 15:15:57 2021 EDT
-  gpg:                using RSA key E1F036B1FEE7221FC778ECEFB0B5E88696AFE6CB
-  gpg: Good signature from "Junio C Hamano <gitster@pobox.com>" [unknown]
-  gpg:                 aka "Junio C Hamano <junio@pobox.com>" [unknown]
-  gpg:                 aka "Junio C Hamano <jch@google.com>" [unknown]
-  gpg: Note: This key has expired!
-  Primary key fingerprint: 96E0 7AF2 5771 9559 80DA  D100 20D0 4E5A 7136 60A7
-       Subkey fingerprint: E1F0 36B1 FEE7 221F C778  ECEF B0B5 E886 96AF E6CB
+We might later need to do this suppression in more codepaths if we
+find more regressions, but let's have one fix at a time.  
 
-  $ echo $?
-  1
+Will queue.
 
-Have you extended the expiration on it? I wasn't able to find any
-updates on the keyservers I checked. But regardless, we should probably
-ship an updated one via the tag.
+>  builtin/diff-index.c |  6 +++---
+>  diff-merges.c        | 14 ++++----------
+>  diff-merges.h        |  2 +-
 
--Peff
+This would deserve new tests that cover the existing use cases,
+given that both of us (and other reviewers in the original thread)
+did not notice how big a regression we are causing.
+
+We care about --cc naturally falling back to -p when there is only
+one other thing to compare with, and also we care about --cc that
+allows us to compare during conflict resolution, at least, I think.
+
+It can and should come as a separate step, of course.  Unbreaking
+gitk for an already known breakage would be more urgent than hunting
+for other breakages, even though the latter might result in a more
+thorough fix in the end.
+
+Thanks.
