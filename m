@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A7C7C433FE
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58AFAC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67D5E60F45
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EE4260F45
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346861AbhIGVGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 17:06:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50158 "EHLO
+        id S1346536AbhIGVGt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 17:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346735AbhIGVGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:06:34 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92285C061796
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 14:05:20 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id t18so87093wrb.0
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 14:05:20 -0700 (PDT)
+        with ESMTP id S1346766AbhIGVGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 17:06:35 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC45C0617AE
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 14:05:21 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id g16so33146wrb.3
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 14:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=R3kvvAjuHU9kB8pCXZcktms6JeImZmVmMGH/f8QJMOw=;
-        b=g9cCkHC07gdH12eeazrGCvp9LBqizP0vNV/xH/4V+PXhzfLlMV0gP3zh0FHpyXveRg
-         VWLWQt5npd099zFWAfDdBaIKNobvA2+fbQIVytuhIFsSzGcIUfI4V2pOF/WUW4em8Xpa
-         tcVLhIQOcCv462Rpq9fayMbTjmX5oPapgiIqNN7WNZJNpbyVFIeesdzfYowZ3mOCZHF6
-         oaKoE4SvRxQWLYg8KyofT70gRzg+HvlCmIE2xhQYx0f3pDoH05r2+JHMSfw/UapiIHRG
-         Q6/HQh6837T+FxllCsG/fZA7iVy+CBXunCRoFboHJLWv6x8o0Bs04Dn119xGmqJOYWDT
-         ZhQw==
+        bh=l8z9o2v5U1jTIzXPH+7GeQ1zKN07gZFlF+avMENwnVA=;
+        b=FlxJv0G4q2HAqVgS3rrT7leZy7Xr36QF3ssKn4+2aGEscrPb+6FjyXyHjuyG49iDNQ
+         DOc8u6DNPC1ab7RDxCrFYgQLgffrGEtqYfjUAUKOGvcE1+gE1PqMnKTRwAdEI/tosjAE
+         SZMnlDAhUcqW4khu/HblH6CF+T9kRKioq8wIGtvx2r/dlorQ4XogKdXEQRKoU5SQ6PSI
+         5AcqNY7ypb7BgMN0NG9oBvhetHPDSv0z0vMWr6yFvjqopmU8IF1uTYagYMJhNjWt8oc5
+         9ImqKA+hze3vcpOcDIRNcvZU77R07GVriBO0n48r8d1UKQqXSRgXaBZNJHoBp5KRI6MJ
+         1UNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=R3kvvAjuHU9kB8pCXZcktms6JeImZmVmMGH/f8QJMOw=;
-        b=iCWqeMj3NlaAV8ST23ydQCrgHJvBuy7ht7s3jYPxCwgsyc+surk+3Ya5gJvkXxFjOH
-         XLJFtf4W7LemmVuItXInAXKGSSwfLl7A6pL8aRSgP5/Da13+dgzBNHt1VOFSxXqsHAba
-         vkeU0VRuMAGBVPi5Hgtryt2MgHehG+NMlSTKjOyVfCbEwsV1flGHjeEaGJH6xBq0/BFu
-         XdDOb1+dux7RSJ41syOFgKUHTniSniyS60DvcZpqSqoWK6n/qNmtDsjV1eSsBwW8vu85
-         S9gQY8uFYHbyY0fFeCJ6Yr3bVDmeyoPAt8Csf7M4eY35x0BAuUkypQHXNbSEO5EX9bfM
-         bPTQ==
-X-Gm-Message-State: AOAM533bm4IDg5AZO7u6ly7oGaWxoRwHR654rd8ndFgVxiPj1ioN3Mcy
-        a6c7GrIKZfLc/VTgrenMo85OeRkNbAc=
-X-Google-Smtp-Source: ABdhPJxfqcLaCfN1wEKI91xtp89gsioe4fvYC7B7Zb+dnqTOD6YUn0WEp9VTgXfYocGGJ+w32oiaTg==
-X-Received: by 2002:adf:c44b:: with SMTP id a11mr333407wrg.416.1631048719269;
+        bh=l8z9o2v5U1jTIzXPH+7GeQ1zKN07gZFlF+avMENwnVA=;
+        b=w6ghvYVl2+AY5+1OfyLuSseWleiShvHCLBHJ0+0NWcUiV8wSm6gv1UO7BEZzWaO4+W
+         JCtrvX89J+xzdl6lp5TRsaCLdUJTlZ0nnmyBZ8FRsDx6qLLs779mLgtJM1+/IoWfVMgv
+         wQiJKAjEos3SPCNlHpGkaRZexZ1ehjg04D/uZOimR9jAQ7Zrsia+QJmzYZthwSLFxNyl
+         N+oWqG1RaEfxADs8Agqf/FveAWU1Tx5b5PBKa5yLao3J0zeKbLsaCYsqt5k1CGdBmGqq
+         +W3E4+DTCjqT386tlSLDkmWQozvLbWNOzhQ02My6z4KkhiAsu1BURtzgOKfzf+qCqyCX
+         f+sg==
+X-Gm-Message-State: AOAM530qqErNrnVfgfV99556jr6DP0nPGvTGNxnIKNCwdyqUcuqZXJYk
+        BGrTv0tXlhLYnAk5fiPzCv9nr9WK/dU=
+X-Google-Smtp-Source: ABdhPJxy/WRO6f2GMSZYRKWJTppi3vyErSVjtXaP44UPC9a/vwkcgS+rWA+d7SQ7lgiAxNfurHswGw==
+X-Received: by 2002:adf:e404:: with SMTP id g4mr312398wrm.143.1631048719809;
         Tue, 07 Sep 2021 14:05:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w29sm77371wra.88.2021.09.07.14.05.18
+        by smtp.gmail.com with ESMTPSA id n18sm154975wmc.22.2021.09.07.14.05.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 07 Sep 2021 14:05:19 -0700 (PDT)
-Message-Id: <d23f245b68442df01f698bb9f5aaabcc5bee5f9c.1631048713.git.gitgitgadget@gmail.com>
+Message-Id: <6905c8746ba2049e9ddfa8ceff5c714559ebdb86.1631048713.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
 References: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
         <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Sep 2021 21:05:09 +0000
-Subject: [PATCH v3 08/11] rebase: remove obsolete code comment
+Date:   Tue, 07 Sep 2021 21:05:10 +0000
+Subject: [PATCH v3 09/11] rebase: stop mentioning the -p option in comments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,27 +81,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now that we no longer have a `--preserve-merges` backend, this comment
-needs to be adjusted.
+We no longer support `--preserve-merges`, therefore it does not make
+sense to keep mentioning that option, even in code comments.
 
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
  builtin/rebase.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0935e8d6e83..b8eb8e8304b 100644
+index b8eb8e8304b..c4d4cf25028 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1415,7 +1415,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		if (options.ignore_date)
- 			strvec_push(&options.git_am_opts, "--ignore-date");
- 	} else {
--		/* REBASE_MERGE and PRESERVE_MERGES */
-+		/* REBASE_MERGE */
- 		if (ignore_whitespace) {
- 			string_list_append(&strategy_options,
- 					   "ignore-space-change");
+@@ -909,7 +909,7 @@ static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-/* -i followed by -p is still explicitly interactive, but -p alone is not */
++/* -i followed by -r is still explicitly interactive, but -r alone is not */
+ static int parse_opt_interactive(const struct option *opt, const char *arg,
+ 				 int unset)
+ {
 -- 
 gitgitgadget
 
