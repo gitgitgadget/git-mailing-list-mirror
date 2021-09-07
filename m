@@ -7,80 +7,91 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27C0EC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 377A3C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3C11610F8
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:22:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14FE161103
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 18:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345796AbhIGSYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 14:24:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60797 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245718AbhIGSYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 14:24:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A255315F5C5;
-        Tue,  7 Sep 2021 14:22:55 -0400 (EDT)
+        id S1345837AbhIGS2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 14:28:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55388 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236461AbhIGS2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 14:28:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5AF7C1438C6;
+        Tue,  7 Sep 2021 14:27:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9pJN6aApbji6
-        lCHK2gJC/Fn3t/C/7ZOBZbIs31YAzqo=; b=TJhVMvtSExkq3gsRO/sS9Ypf4G7D
-        3B8tmS+BpTEONZqWV5n3HG6uigagkF52RwhCSYMQoleG2StC0o61f7Q1UeU7oGCC
-        pFTjjieEuKhYJennAx5sCyamWvstcrNtOX0SQyhBHv2hJcB1qZGDOYnwxK8O4v72
-        pWWgw4dOVeQEUxU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99D9715F5C4;
-        Tue,  7 Sep 2021 14:22:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=8WRgc34A1P5a
+        3K2Z4o+CF8mL7jah1+wNSUI52ST6P48=; b=jptcC019t6FTiYm2JYTcFZc5U2NV
+        yIN/SjJDXBlrkeBXqxCIOG7PYQJiNhJ9NCaliseAGsPltzlCHLEMiPUGj5Jc8+/3
+        qm7h1B/S1GpdFA+3vk0RR/rDjG0qaGUBsOnC0xlKxRP+VZ34GDlSIvK9g+2ranAX
+        2clo9Q2eLoDl0uc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53DF21438C5;
+        Tue,  7 Sep 2021 14:27:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BDD4715F5C0;
-        Tue,  7 Sep 2021 14:22:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85B071438C4;
+        Tue,  7 Sep 2021 14:27:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 0/3] add a test mode for SANITIZE=leak, run it in CI
-References: <cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com>
-        <cover-v4-0.3-00000000000-20210907T151855Z-avarab@gmail.com>
-        <YTeW+MpIVNCcd2nF@coredump.intra.peff.net>
-Date:   Tue, 07 Sep 2021 11:22:50 -0700
-In-Reply-To: <YTeW+MpIVNCcd2nF@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 7 Sep 2021 12:44:40 -0400")
-Message-ID: <xmqqtuiwb5z9.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+        <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+        <xmqqk0k0ndbq.fsf@gitster.g> <87y28anq98.fsf@evledraar.gmail.com>
+Date:   Tue, 07 Sep 2021 11:27:40 -0700
+In-Reply-To: <87y28anq98.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 06 Sep 2021 08:58:13 +0200")
+Message-ID: <xmqqpmtkb5r7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9CCA9B38-1008-11EC-B875-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4A1AB728-1009-11EC-A055-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Tue, Sep 07, 2021 at 05:33:28PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+> On Wed, Sep 01 2021, Junio C Hamano wrote:
 >
-> OK, I think we should proceed with this series/approach, then. The
-> question of friction when CI fails is an open one, but we won't know
-> until we have more data. So let's see what happens. :)
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>>
+>>> In 427c3bd28ab (rebase: deprecate --preserve-merges, 2019-03-11) (whi=
+ch was
+>>> included in v2.22.0), we officially deprecated the --preserve-merges
+>>> backend. Over two years later, it is time to drop that backend, and h=
+ere is
+>>> a patch series that does just that.
+>>
+>> A good goal.  There is no remaining use case where (a fictitious and
+>> properly working version of) "--preserve-merges" option cannot be
+>> replaced by "--rebase-merges", is it?  I somehow had a feeling that
+>> the other Johannes (sorry if it weren't you, j6t) had cases that the
+>> former worked better, but perhaps I am mis-remembering things.
 >
-> The patches themselves look fine to me, though I had a few nits on the
-> third commit message.
+> Fair enough. To be clear I think this series is fine as-is, we've just
+> usually done "now that this function is dead, rm it" as part of the
+> series that makes it dead, so I figured fixups/squashes to change those
+> parts would be welcome & integrated, likewise Alban Gruin's suggestions
+> in <62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.com>.
+>
+> But the git-sh-i18n.sh change and/or his suggestions can be done after
+> this lands...
 
-Thank you all.
-
-Let's see a copy-edited v5 and we can go from there.
-
-
+I have this funny feeling that the "Fair enough" is thrown at a
+comment that you didn't intend to ;-)
