@@ -2,161 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8EDC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68271C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:50:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C69761101
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:43:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FBF4600AA
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 05:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237062AbhIGFoT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 01:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
+        id S231295AbhIGFvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 01:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233236AbhIGFoN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 01:44:13 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C142C061575
-        for <git@vger.kernel.org>; Mon,  6 Sep 2021 22:43:08 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id i13so8851517ilm.4
-        for <git@vger.kernel.org>; Mon, 06 Sep 2021 22:43:08 -0700 (PDT)
+        with ESMTP id S230226AbhIGFvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 01:51:39 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ED7EC061575
+        for <git@vger.kernel.org>; Mon,  6 Sep 2021 22:50:34 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id a13so11236664iol.5
+        for <git@vger.kernel.org>; Mon, 06 Sep 2021 22:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=5Jh+r6Sp34BwUA6neGg0cmGkBKXiFwGnEvmouqbh/0A=;
-        b=iqoigPgzfCreYAQwRtyaZL4Qhd6ZFB8TlS2OxtrtShGjQSq28eMUfVSRTtkVDlPYZz
-         y0sW4utGPT09NQe5wJPn0yGS5yJSH6/NOjzxTS2uvlSTFsFWU4wxFWTag+80uZLfjW+M
-         7hSzBNM7ISaOFUzMAVhHxsByX9s/z+wWokNN/eWPRl3AjU/jz9I/6pS0yYxv45RCezQ2
-         SCddKubukF7YfLObS2tc9LUfUX58IfndYuYNoSFOBI1upxVNX+0wVZ+R3uDth7CiVu53
-         CyiHtJ4IsqIP0FkdQzJnXZBuWJp/a5JbmCeYQ8SpohZ5ijKhfIzctdewaxTTZAlGOn4T
-         Xkpg==
+        bh=At/CboAoX9EBVCP3bovEz48v1ujeNN+IaxDbAeP5D6k=;
+        b=FemMkm+i71QjZO2KKj+kOaMmmpzUJLCFee0fitKegVVJQuPKaulttRyGkRd0BkPcr6
+         d39P4o3vrt2PBhr8atcwrwKqFek7uUjNWDgYfYAspUziObIyXNvQ/JB9GlZkr+Osi7j2
+         lPirNL/e50m8hhktkZ1/GwNsiO6NhqttDsCjgkvmr2bv5XvyZmDV3e7Vwlnys8aPGN60
+         ++Vylty8u1cNS78w7ONugv0dAAqbuu/dKIyfHP17jlSIV5QN+kFoWwAT5POVh4OVQbla
+         OZeD7LGnDlY+eq0dbbkpdQyRY0DHOtjBhYfnklQxbbMurwr/8NllPcQD34D1lD6YLZu9
+         rH/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5Jh+r6Sp34BwUA6neGg0cmGkBKXiFwGnEvmouqbh/0A=;
-        b=JDzgpGHCnNYYF+ILDk/wYs1NukqRF/q5qFoZOneE+ghIAjEgEZeZZFBLVrmpDeHMKe
-         SOzfSlrL3ctCLHBkJEOFMiUJOi7JiWDSiE0WD7vNuYwNX5vyXjTL9mfgsjW/iQ1mXnRB
-         /ZFMrA5Fnw1UHdwZcFY+UY/AoVWwsLDVlkxr6Ejw/kdCwAJVaYXep32QbKr7eheAGops
-         UO6HKEvnLaV1LUudmnzIZabJ/MxcL1ovV5hnLzcPwZCNtwfcNtiNErqCCt+dQc9RTgGJ
-         9V8BmEFaAWe2NrmabkIHHy7P1O46NAe4740j9DmIst060odn9se7qDqJ9RSRGmmEOmA1
-         TK6g==
-X-Gm-Message-State: AOAM530sN2i1nHD+r2+c/U5SU2i25gwUFfjGPx7OxYsAfPemXYXFsN+/
-        U295jeEgoZ2Ubos+SXF/aL9R3P+PneGodqUS5JI=
-X-Google-Smtp-Source: ABdhPJw6mdNGzLbyK3ogSSpecHja3oYpPk95YmW+CsHW8YGutXDRTVEiXeznMh+VELwPqsBsVT/x9W+UrDfeSqx6Pxg=
-X-Received: by 2002:a92:d752:: with SMTP id e18mr11265957ilq.254.1630993387498;
- Mon, 06 Sep 2021 22:43:07 -0700 (PDT)
+        bh=At/CboAoX9EBVCP3bovEz48v1ujeNN+IaxDbAeP5D6k=;
+        b=aQj/9frxhzBCbmHBwX65YvYZMj34mZPXLZEHTY6rtbatsmuxGKkDUTE5QvtYHl23DJ
+         Xqxc3lp6fVDCqa/glq1GuKVVvRhEGbfNDFGT+yHIpgOAPRIbIXo1aeF427r0KgeKUiG+
+         CaTFBmnNpOkWpnCALZ+Nh1pFYvAmcYsZfe11hFvt80foiX/uGKa3ni+BS1VhUGknft/T
+         QzuPnZ8iF5Nb+gzCGGElvtJWTEZX9qddkP3dINYWrDXJhXMPAhKmErQ/qn33+B0CIlVV
+         e12n0B7YTD0l6yLaORF/QrkJcoDdS7zf+E08fYguB3pD9AgSGROo95AU9+tzINPB5Uaf
+         TFaw==
+X-Gm-Message-State: AOAM533aEXzVToxtUJqCfD47Egl2OHW+ZvGl3qWgNT8M7cjykUDPbP2s
+        CBqdInztEUrzXPKgnm8/SbyazSfhwU+5Nz2q1OgzlyiTNL1BF3bJ5UQ=
+X-Google-Smtp-Source: ABdhPJw1VSBm9AXCejq2Dg0yFI+wSfgTN5anwnnZBgWgGglpxZz2xpA8Je+V2QrKGuJkT2zLmL2oTLeXvfIVcNWBv8w=
+X-Received: by 2002:a5d:8484:: with SMTP id t4mr12279266iom.126.1630993833059;
+ Mon, 06 Sep 2021 22:50:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
- <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com> <YTTC2IUO1ZmTOEoR@coredump.intra.peff.net>
-In-Reply-To: <YTTC2IUO1ZmTOEoR@coredump.intra.peff.net>
+References: <YTGLLQCvlnT17jo8@nand.local> <CAP8UFD2SNyCj6Weo4EeHt0Z-CW9CEJbQbzmU7jhwfJdNW9CrYQ@mail.gmail.com>
+ <CAOLTT8QufEU5Q64JfQyEOs4FYCsrNX2jgj8PdmYziVtKnRyu4w@mail.gmail.com>
+ <YTNrehKnfPo3E5RI@coredump.intra.peff.net> <CAOLTT8S1Tfu6YWcoHhZcydQYd_yBBCavdqyV_TzoOrEW6zHXGQ@mail.gmail.com>
+ <CAHd-oW7PKQRQMRhG8577SKXL=tKSNCj=kavCthKLwZHWa-0n9w@mail.gmail.com>
+In-Reply-To: <CAHd-oW7PKQRQMRhG8577SKXL=tKSNCj=kavCthKLwZHWa-0n9w@mail.gmail.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 7 Sep 2021 13:42:56 +0800
-Message-ID: <CAOLTT8QzNt8dv5-Q4nV9XU9Tq7KZVSjaYcM3T4F=F=xZ9A3UUA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
+Date:   Tue, 7 Sep 2021 13:50:21 +0800
+Message-ID: <CAOLTT8Ra93pBzML4wD0mOOBSM+boG3aTgtWc9qsiBHTMZ0m+=g@mail.gmail.com>
+Subject: Re: Git in Outreachy?
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <ttaylorr@github.com>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom verma <hariom18599@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=885=E6=97=A5=E5=91=
-=A8=E6=97=A5 =E4=B8=8B=E5=8D=889:15=E5=86=99=E9=81=93=EF=BC=9A
+Matheus Tavares Bernardino <matheus.bernardino@usp.br> =E4=BA=8E2021=E5=B9=
+=B49=E6=9C=886=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=888:36=E5=86=99=
+=E9=81=93=EF=BC=9A
 >
-> On Sun, Sep 05, 2021 at 04:20:02PM +0800, ZheNing Hu wrote:
->
-> > > +       if (ref_cbdata->filter->streaming_format) {
-> > > +               pretty_print_ref(refname, oid, ref_cbdata->filter->st=
-reaming_format);
+> On Sun, Sep 5, 2021 at 5:59 AM ZheNing Hu <adlternative@gmail.com> wrote:
 > >
-> > So we directly use pretty_print_ref() in streaming mode, OK.
-> >
-> > > +       } else {
-> > > +               /*
-> > > +                * We do not open the object yet; sort may only need =
-refname
-> > > +                * to do its job and the resulting list may yet to be=
- pruned
-> > > +                * by maxcount logic.
-> > > +                */
-> > > +               ref =3D ref_array_push(ref_cbdata->array, refname, oi=
-d);
-> > > +               ref->commit =3D commit;
-> > > +               ref->flag =3D flag;
-> > > +               ref->kind =3D kind;
-> > > +       }
+> > Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=884=E6=97=A5=E5=
+=91=A8=E5=85=AD =E4=B8=8B=E5=8D=888:50=E5=86=99=E9=81=93=EF=BC=9A
 > > >
-> > >         return 0;
-> > >  }
+> > > On Sat, Sep 04, 2021 at 03:40:41PM +0800, ZheNing Hu wrote:
+> > >
+> > > > This may be a place to promote my patches: See [1][2][3].
+> > > > It can provide some extra atoms for git cat-file --batch | --batch-=
+check,
+> > > > like %(tree), %(author), %(tagger) etc. Although some performance
+> > > > optimizations have been made, It still has small performance gap.
+> > > >
+> > > > If the community still expects git cat-file --batch to reuse the lo=
+gic
+> > > > of ref-filter,
+> > > > I expect it to get the attention of reviewers.
+> > > >
+> > > > The solutions I can think of to further optimize performance are:
+> > > > 1. Delay the evaluation of some ref-filter intermediate data.
+> > > > 2. Let ref-filter code reentrant and can be called in multi-threade=
+d  to take
+> > > > advantage of multi-core.
+> > >
+> > > I don't think trying to thread it will help much. For expensive forma=
+ts,
+> > > where we have to actually open and parse objects, in theory we could =
+do
+> > > that in parallel. But most of our time there is spent in zlib getting
+> > > the object data, and that all needs to be done under a big lock.
 > >
-> > Therefore, in streaming mode, there is no need to push ref to
-> > ref_array, which can
-> > reduce the overhead of malloc(), free(), which makes sense.
+> > This big lock is "obj_read_lock()", right?
 >
-> By the way, one thing I wondered here: how much of the benefit is from
-> avoiding the ref_array, and how much is from skipping the sort entirely.
->
-> It turns out that most of it is from the latter. If I do this:
->
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index 89cb6307d4..037d5db814 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -78,7 +78,11 @@ int cmd_for_each_ref(int argc, const char **argv, cons=
-t char *prefix)
->         filter.name_patterns =3D argv;
->         filter.match_as_path =3D 1;
->         filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUD=
-E_BROKEN);
-> -       ref_array_sort(sorting, &array);
-> +       /*
-> +        * we should skip this only when we are using the default refname
-> +        * sorting, but as an experimental hack, we'll just comment it ou=
-t.
-> +        */
-> +       // ref_array_sort(sorting, &array);
->
->         if (!maxcount || array.nr < maxcount)
->                 maxcount =3D array.nr;
->
-> then the timings I get are:
->
->   Benchmark #1: ./git.old for-each-ref --format=3D'%(objectname) %(refnam=
-e)'
->     Time (mean =C2=B1 =CF=83):     341.4 ms =C2=B1   7.4 ms    [User: 299=
-.8 ms, System: 41.6 ms]
->     Range (min =E2=80=A6 max):   333.5 ms =E2=80=A6 355.1 ms    10 runs
->
->   Benchmark #2: ./git.new for-each-ref --format=3D'%(objectname) %(refnam=
-e)'
->     Time (mean =C2=B1 =CF=83):     249.1 ms =C2=B1   5.7 ms    [User: 211=
-.8 ms, System: 37.2 ms]
->     Range (min =E2=80=A6 max):   245.9 ms =E2=80=A6 267.0 ms    12 runs
->
->   Summary
->     './git.new for-each-ref --format=3D'%(objectname) %(refname)'' ran
->       1.37 =C2=B1 0.04 times faster than './git.old for-each-ref --format=
-=3D'%(objectname) %(refname)''
->
-> So of the 1.5x improvement that the original patch showed, 1.37x is from
-> skipping the sort of the already-sorted data. I suspect that has less to
-> do with sorting at all, and more to do with the fact that even just
-> formatting "%(refname)" for each entry takes a non-trivial amount of
-> time.
+> The object reading code actually releases this lock before doing zlib
+> decompression (and acquires it right after), to allow better
+> multi-threaded performance.
 >
 
-Yes, I think this overhead may come from get_ref_atom_value() instead
-of QSORT_S().
+Yeah, I guess this unlock place is in unpack_loose_short_header().
 
-> -Peff
+> However, it is unfortunately not so simple to call object reading
+> routines in multi-threaded code, even with this lock. The lock mainly
+> protects `oid_object_info_extended()` and its wrappers. Some global
+> resources used by these functions are also accessed outside of them,
+> which could lead to race conditions in threaded code.
+>
+> That's why `builtin/grep.c` and `grep.c` have some explicit calls to
+> `obj_read_lock()` outside `object-file.c` and `packfile.c`. (And it
+> can be quite tricky to identity these cases.)
+
+Indeed, a large number of global variables in ref-filter code are worth
+eliminating.
 
 Thanks.
 --
-ZheNing
+ZheNing Hu
