@@ -2,102 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C72F4C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 20:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E30FC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 20:57:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3DEC60E52
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 20:41:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B21361090
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 20:57:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345844AbhIGUmK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 16:42:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44566 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235991AbhIGUmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 16:42:09 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BF7C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 13:41:02 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id s16so140666qvt.13
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 13:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=peM+HGe2LFlrcD54RlbXLSf759p+E78mwQeheXjKi6Y=;
-        b=XmAtNb7Ckc89X/k3pNK4GDK9RUpgW4C07VITm9kfxwkJ8tfPoQBe9J/vfu2/bap2s9
-         gFlt++d5XsZWqpMeq6+Ejv5uWR3c+JSXBOEZunQDcKiuMou8M4V36YZ26UmwBH+eGoXK
-         9u6bxJG8qwz1vh8E6WI2HI7nA64oc319EfUn4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=peM+HGe2LFlrcD54RlbXLSf759p+E78mwQeheXjKi6Y=;
-        b=POR3QH1Akr5ivdaL9ZIN7wIJLlUaoREzFZgjX+PGZNNF9NB7Fg6NCADTQOWNfZiqY4
-         s4sHo25KG3yFOr64OKMD01GQZdKKJjXmUDCEZLQuRejHiomap5YJ7ETHQUlIqnwqE/N3
-         4CIMgn/ibunaDPLU5f/LzcOVmOJ46JXEHVb05TgBhvonCg/T9W5hW9LcK8f+AarY0P1d
-         93tfiCFUneYlaz4qrcQfW9rzBvOYsfNvqhnP1iynQkRq9tU8wLcayMXrZMOeGg0Gs+d1
-         exWrMOTwEBE6hXAymD+ofKFUY4BMdVK4g+4AuCOy99/7v6Oci85p2ZVFx4egDub9Xvbu
-         rAmA==
-X-Gm-Message-State: AOAM530y/ncjOEEGJ4Ok+nqbyIhYJNpd7lGLuB1/XNrJ9BreRRRVuPa/
-        8uMGmEwNvVXkozsCrAf07RHMHg==
-X-Google-Smtp-Source: ABdhPJw7zejm+jiHnDF1I/LEie+rd+WEPPUxP0WPjuSEVDVDlwO1RaKTboEiKlKa0TsA4/PonBjAuQ==
-X-Received: by 2002:a05:6214:a94:: with SMTP id ev20mr19346242qvb.53.1631047261927;
-        Tue, 07 Sep 2021 13:41:01 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id d129sm92337qkf.136.2021.09.07.13.41.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 13:41:01 -0700 (PDT)
-Date:   Tue, 7 Sep 2021 16:41:00 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        id S1346356AbhIGU65 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 16:58:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53692 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236693AbhIGU64 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 16:58:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E195C144B3D;
+        Tue,  7 Sep 2021 16:57:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NNkVmt5MgXF7z/ZnWwx+41YD42DrnnXIq956qv
+        bbviA=; b=sydpLGTYImYPlzC8YvO9h/y4U6DtqJcuP2enHREotf9/poE1BxrHza
+        Tvtg+K889cEedGt+veuPSL62ttxBidFwYJE9Jq0OyPlr9KQSBvSv1njFE7pjXnmC
+        KVCMoXvY87LCrz4kVRyhnNoNPRRBlDgNgG5L4NpaxvIcWqb74HLbQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DACCB144B3C;
+        Tue,  7 Sep 2021 16:57:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2E97A144B3B;
+        Tue,  7 Sep 2021 16:57:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: expired key in junio-gpg-pub
-Message-ID: <20210907204100.ptapvn4wrqn3qrzq@meerkat.local>
-References: <YTerpXCxYx+f+8ws@coredump.intra.peff.net>
- <xmqqbl54b1zn.fsf@gitster.g>
- <YTfL/eLKOiJdpH1c@coredump.intra.peff.net>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] Docs: web server must setenv GIT_PROTOCOL for v2
+References: <20210904151721.445117-1-konstantin@linuxfoundation.org>
+        <YTOW352xtsbvJcKy@coredump.intra.peff.net>
+Date:   Tue, 07 Sep 2021 13:57:45 -0700
+In-Reply-To: <YTOW352xtsbvJcKy@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 4 Sep 2021 11:55:11 -0400")
+Message-ID: <xmqqeea09k8m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YTfL/eLKOiJdpH1c@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4149C8D6-101E-11EC-AC47-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 04:30:53PM -0400, Jeff King wrote:
-> > I am reasonably sure that I've done update with pgp.mit.edu when I
-> > refreshed the expiration last time, but apparently I didn't update
-> > the in-tree copy.  I doubt that it is a good practice to ship the
-> > public key used to sign things in the repository in the repository
-> > itself, but if are not dropping the tag, I agree I should keep it up
-> > to date.
-> 
-> Yeah, I agree that the is potentially problematic: it's a circular
-> dependency, plus updating tags is awkward, per Ævar's other message.
+Jeff King <peff@peff.net> writes:
 
-It's not really as circular as it would appear at the outset -- at least not
-any more circular than any other situation, in reality. E.g. my favourite
-example:
+> On Sat, Sep 04, 2021 at 11:17:21AM -0400, Konstantin Ryabitsev wrote:
+>
+>> For the server-side to properly respond to v2 protocol requests, the
+>> webserver must set the GIT_PROTOCOL environment variable to the value of
+>> the Git-Protocol: request header.
+>
+> Thanks for assembling these examples.
+>
+> I don't mind having these in the technical documentation, but I think
+> most users won't find them there (nor would they even know they need to
+> be looking). Maybe the manpage for git-http-backend would be a better
+> spot. We can mention v2 in the "description" section, and then there's
+> some example config near the end that could include it.
+>
+> Unfortunately there isn't any nginx example config there at all yet. If
+> you have kernel.org config you could share, that would be great. But
+> even starting with just the "here's how you do v2" part would be
+> welcome.
 
-1. you should verify the checksum of your distro's ISO before installing it
-2. the checksum is available over a trusted https:// connection
-3. the trust anchors for that https verification come with the browser package
-4. which was installed from the ISO you downloaded the last time
-5. goto 1
+True, true.
 
-Bootstrapping trust is a hard problem and no matter how you look at it, at
-some point you have to just close your eyes and hope that the adversary isn't
-one step ahead of you.
+In the meantime, I'll queue this as-is.
 
-So, I'd say putting the key into the git repository itself is fine. After all,
-it gets imported into the local PGP keyring on someone's workstation, where it
-gets a separate life of its own.
-
--K
+Thanks.
