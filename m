@@ -7,66 +7,68 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E5B0C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4693C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:38:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 820BC6103E
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:35:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEF8060F92
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343867AbhIGMgb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 08:36:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44748 "EHLO
+        id S1344179AbhIGMjv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 08:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343935AbhIGMgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:36:25 -0400
+        with ESMTP id S245607AbhIGMju (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 08:39:50 -0400
 Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04ACC061757
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:35:19 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id i21so19386781ejd.2
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:35:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5300BC061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:38:44 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id u14so19332766ejf.13
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=DBes79dpVRurVT5l9FAUqxTRek3WxFCapyfCSQSABd0=;
-        b=kf9GklDhsMN+WordsuZ/Gbdrusz+ofggzuTf95nvVIUg2j3HVcuO7I4fyCMP4pJQ4I
-         yrG4LaEMaWlzNkWJ6Yox1Z6PNdK8JQAOWsxHpmyIWNcUa5KBsDA73qDeTcmZ04CpVX53
-         5VBGuiTl14D+w0SdOuzCoMgaDmO4yFQb6UmaFrd12IkJdN1XELehB8Sm+QHaTv1RRsrU
-         O9ADsk6Ip2JzybkMx0cbs/JEGhp9qYp1XnTgvObrXKxctHQVBr5O3PYKpbqzepUEsSSG
-         P0W+OUcD++LqRlP9LPf34VjtTYaR7UzsxXqCM2pAXYP9QnG6HZujV/c6/ISEc7T+pZ8c
-         HsTA==
+        bh=pu+Jy0y6NB3FUxV4r5eJze6R1XNVydc5isdb1SSCGI4=;
+        b=M6pi16ATWjQWvFUzgCxzC3vVjIgWgV0CrNqukpe2m62WLghr9Gq6K2sRKra8kUbklG
+         tgA2Qz9qFtGaK02Ox+VUDwIZmk1gFgOaVwXVbQd2VZDD7xxJBcj5hQNsm9IbwK5QNtIg
+         VU2SpxsP+lRBBfkGnY9byQeBDdes6J6Syj4xj0B+sazXNtr46VetVQZ4vgTON330LJV8
+         rmXjfTH157BcUD69LhkdUS7DsP/YSn1CtGsETf/EWM3QxxQ6XBD5R5PEIK0qhNtu+vzB
+         9Fxvx4AMKmyFlE4W/mHCUi1LRmjTXlq5bZHQIZ+u1JBTGaULfLpMOqUaaFK5IZs2SlLI
+         27LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=DBes79dpVRurVT5l9FAUqxTRek3WxFCapyfCSQSABd0=;
-        b=kLW+aR1UVByVl7RwMbsfCxln3TJSfbB+UnV7lvOvC8HyT1dmeQJ4608ehS1hhYF4dP
-         yfSCbYS6ETOBKqUljCAEbbgmYIhRqTdUnxdedc+KuU3j2CcqhXg3yOjlBYVQp1SHAHM0
-         CL2xF/XP+Fs0LgOmZ+mOGTYvREcAveca7d5lQQLtH63l60rzvQag2wY23wZxLK0Pi1Kq
-         o4qLoRinbtmhsLtOInCBb2p1s83rr53S8klBa/cKCWJfhtpMdDq50rVtUYMZ/YpDW7OD
-         sU3WgkfwRTuK8EvJsGiZYegwZSofAyelcAM6z4wRkz7woroXWyIQDhFbNcUY/c9P60Ov
-         /5lA==
-X-Gm-Message-State: AOAM5321fBdJhIfxpHzmhe920OzNas7In2jtUYlx0R8arEahsACxp3rM
-        8Rg0bpbq7ftkGXqwfhKAbR1qfdsoIqyCtQ==
-X-Google-Smtp-Source: ABdhPJwbYYiMuVeqejEQI/jysPuFKtu43hxGCkfp2Jtp9wXNfhgfPc4eZFqAOgm2xFboDTSzrdGhbA==
-X-Received: by 2002:a17:906:b14d:: with SMTP id bt13mr18372758ejb.39.1631018118022;
-        Tue, 07 Sep 2021 05:35:18 -0700 (PDT)
+        bh=pu+Jy0y6NB3FUxV4r5eJze6R1XNVydc5isdb1SSCGI4=;
+        b=GKckILsYnW4OrZRlLXpW4w/YCwndugp5I6Gn+DE+utAIc6P6+sskWPM/110yqvllR9
+         T9W8/FSW5qMtxhaP3MhKeyNrtcf+xROKQen/ALQNZv4TSdxQdDr819cRxbeLM1yf8L9b
+         sQ5xfvHGZ1gUVq3CFRPhH7PpyecPMqXnE8QW7edE+qjUsvY792OBKNoZ2R9Py6y/IvEq
+         Q4uJS9HQAehpfJq9rE2pVGW2f1CVWKvwaiziG5Z/ZDW7PEpAXRl8TbZniqftX/ZAc9tS
+         WVdBbNCl75a3aXxHjn30S7f51BrsEtwkkP8jXzuV/3ycIpKScc5DQOXt2ULhf2Ut1MDm
+         5S6g==
+X-Gm-Message-State: AOAM5315ekYHsS+7/em7byaSytLNZm5ZLHtwWgxIXxYwfrFQ8RCtdma7
+        hqnp39aabks7LTNSdyFVDcjeV8ITkhogwQ==
+X-Google-Smtp-Source: ABdhPJxfHQz43XFx5TPSJ4+yq3sed5Z9Y3fZ2KMf36MeBtyn9LTfie/7a0tHt/gxMYz2psb1WpAg5A==
+X-Received: by 2002:a17:906:4346:: with SMTP id z6mr18214991ejm.403.1631018322721;
+        Tue, 07 Sep 2021 05:38:42 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b13sm6004802ede.97.2021.09.07.05.35.17
+        by smtp.gmail.com with ESMTPSA id g19sm5498361eje.121.2021.09.07.05.38.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 05:35:17 -0700 (PDT)
+        Tue, 07 Sep 2021 05:38:42 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Atharva Raykar <raykar.ath@gmail.com>
 Cc:     git@vger.kernel.org, christian.couder@gmail.com,
         emilyshaffer@google.com, gitster@pobox.com, jrnieder@gmail.com,
         kaartic.sivaraam@gmail.com, pc44800@gmail.com,
         periperidip@gmail.com
-Subject: Re: [PATCH 00/13] submodule: convert the rest of 'update' to C
-Date:   Tue, 07 Sep 2021 14:34:51 +0200
+Subject: Re: [PATCH 02/13] submodule--helper: get remote names from any
+ repository
+Date:   Tue, 07 Sep 2021 14:37:51 +0200
 References: <20210907115932.36068-1-raykar.ath@gmail.com>
+ <20210907115932.36068-3-raykar.ath@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210907115932.36068-1-raykar.ath@gmail.com>
-Message-ID: <875yvcmum2.fsf@evledraar.gmail.com>
+In-reply-to: <20210907115932.36068-3-raykar.ath@gmail.com>
+Message-ID: <871r60muge.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,14 +78,20 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Sep 07 2021, Atharva Raykar wrote:
 
-> NOTE: This series uses ar/submodule-run-update-procedure [1]
+> `get_default_remote()` retrieves the name of a remote by resolving the
+> refs from of the current repository's ref store.
 >
-> This series builds upon the previous conversion work on 'submodule update' and
-> moves out all of that shell logic in 'git-submodule.sh' into
-> 'builtin/submodule--helper.c'. Even though this patch series looks long, a lot
-> of it is preparatory patches and cleanup of unused functions that result from
-> this conversion. The real action happens at [6/8].
+> Thus in order to use it for retrieving the remote name of a submodule,
+> we have to start a new subprocess which runs from the submodule
+> directory.
+>
+> Let's instead introduce a function called `repo_get_default_remote()`
+> which takes any repository object and retrieves the remote accordingly.
+>
+> `get_default_remote()` is then defined as a call to
+> `repo_get_default_remote()` with 'the_repository' passed to it.
 
-It looks like the 6/x part of that still applies, but not the "/8",
-i.e. this is now a 13-part series. Is this summary otherwise still
-current with what's being submitted here?
+I'd find this easier to follow if this were just squashed into the next
+commit. Both are rather small, but following the context of first adding
+a function, then using it, instead of just adding it, changing the old
+users etc. is harder than just having it in one commit.
