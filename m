@@ -2,150 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DE57C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 19:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E14CFC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 19:43:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37CD26108D
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 19:42:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8D75610F8
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 19:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346063AbhIGTn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 15:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59080 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346052AbhIGTnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 15:43:52 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8670C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 12:42:45 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id v20-20020a1cf714000000b002e71f4d2026so2449057wmh.1
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 12:42:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=r4ja/DthYVVjk8gR2AfxMJhrIukxcL8H8bW47mNb82k=;
-        b=MxHm8+2ewaKgAnie78Sex9/aICKfEAczfWAQXd9Msc0fjikcssn3bfckkc0RDJ6xXl
-         qqTqoBWdb2iKLvWQPYZynf9vPlEXpRV6atVjFJI7uKtJUCqMvnbwF+xw0U9WuedKqxPf
-         HiAxAekv5pKKM7a/W6UTZA+W1V1nqzzEXXbohb68paxuNE0bHzoiCf90DfhSorf0vAIK
-         rPcDlisCZQZGIV2B1OsnaslMXZcqSXNjSE9vQte+rrpNp6Rrq+BUSx9+2XLxPeSl5Ao4
-         OAokrEVBiplQWeRIEAeCT8HNX4l3DibqL2weTn3McrtY0NC328lXnE2fmJ/1h99Dgdo3
-         r4rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r4ja/DthYVVjk8gR2AfxMJhrIukxcL8H8bW47mNb82k=;
-        b=cGWrgHyesZJlydoNCUaqHWrfMpzkIJ9ncVzKZMBOdtb/vmbh9pv8ebohtI1wA7hGsn
-         3fjUhZokYGcLxB8RD5FQJGa9RgaGFWSgw5jm8nh3GZLZPJopcDB3/V+iO9bhb1x8o31u
-         6a92mwstuIOn6B53xzcQUpfIn/4KIhYY1f1QrVZO9uRGl7syGICYkTfNRplmkkNYGBc9
-         4ELxbYfLCvghz1ApLhcMYxX0czFZ/Ngy6COA7xxJU+sUte/AwYVtjQz/SvE98Zh3K7m5
-         44eYk6hY1VU6HOPvH1JlIC0UzVjJ1tnu3BYlNJn0dMiaGv/V6BOot6h2BUC7ogRnYk2C
-         BEDg==
-X-Gm-Message-State: AOAM531glx2V/ATnFecKCbs3fUkCFDnkfh3RpM69+9bSgh4dAt26m6BV
-        m2clBmifEAJRX/s0vWE6SXgRl04PoccybA==
-X-Google-Smtp-Source: ABdhPJxnpO0YTk/PvpODColRyrwvvWze74bFB7yzLDIRZjyl3WRIE5OvS0cuQjvSUm8kE2SW753vKw==
-X-Received: by 2002:a05:600c:230c:: with SMTP id 12mr5670349wmo.41.1631043764058;
-        Tue, 07 Sep 2021 12:42:44 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a10sm12075320wrd.51.2021.09.07.12.42.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 12:42:43 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] pack-write: rename *.idx file into place last (really!)
-Date:   Tue,  7 Sep 2021 21:42:38 +0200
-Message-Id: <patch-3.3-78976fcb7b2-20210907T193600Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.818.gd2ef2916285
-In-Reply-To: <cover-0.3-00000000000-20210907T193600Z-avarab@gmail.com>
-References: <cover.1630461918.git.me@ttaylorr.com> <cover-0.3-00000000000-20210907T193600Z-avarab@gmail.com>
+        id S1345578AbhIGTpA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 15:45:00 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51255 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1345525AbhIGTpA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 15:45:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631043827;
+        bh=MIFBwjYoMOMLdI/sFuhc7OSnjTqKjj5B7mjfEjTT4RY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QyA2hBCdGfxr32kpfxag2kxUoLJweo7np9LVu59TYZaLcbfC4Jj2NGvcayndqkdKc
+         CI5xYwqXw285GmcRHtPXbS1iTLgrwX9UVP4zRofmiHWzjamIe4fg0sbCe21/9V+XZR
+         lx+5Fo1VXqQHJCptIX2yJ5r+E06GW8cnMBkIWsa0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5wPb-1mKhGS0KeR-007Skb; Tue, 07
+ Sep 2021 21:43:47 +0200
+Date:   Tue, 7 Sep 2021 21:44:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 5/7] rebase: drop support for `--preserve-merges`
+In-Reply-To: <86cbe5b9-1a9e-0616-2d66-3130fcb9afb9@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109072135250.55@tvgsbejvaqbjf.bet>
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com> <d93a750a-9faf-c91a-c9f7-e968c7ed40f5@gmail.com>
+ <nycvar.QRO.7.76.6.2109071430320.55@tvgsbejvaqbjf.bet> <86cbe5b9-1a9e-0616-2d66-3130fcb9afb9@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:sIdTku/kbTwlW1DNP/oIElez1cn0bKZM3CPGa7G86kKfo4Wk56p
+ bp9M7RQlLtLssFBdBYbzgOO/65dCey/dqoTmpiVliHQn1Xr2TmRW8F3iN7X7yJsIfDpNAWx
+ Ef8nW8rGnuCKH5OpvaLrPWOZUUCpA+Sr9dmnMSg/LRJ0WujCUn2FL6r5lI8zJrvafSw3JO5
+ 9rQngKAUS6FD0+3PtXyGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CcjX27+5m7c=:mZEwGH+U4tkQTj14fWsEAg
+ EEJ7d9n8OjGG620RAww48IixAL4cfwf+H9/c6jKvz8IdR7qA2lw6Ac8A79jIGFogQdbrFIMp8
+ Cgph4uamSTb57OKgM2kAoHho3RG+Dzj+qMnsFtuUw/TUAwdDzowXQUaBttsVa1FPexeJaW/2R
+ VDqLPJDRDKX6Y9lJKUFxk9Htkkb9wyA0UfwObl39VOe5JaelLpwWA3g6XphU/MewwoMwPSneg
+ n/VTbsZNqlXuHvuIGbI54eOju5wWfm3eVI0BoSVsFbix/A759NqVqUrGeLX6v7cMDRM7+5mjd
+ nSoFh9oYanP3wp86dYgSDAzvnwhHpHUxo0rhPKJmNDkGdVsjwNrJKzsL0P9E2XlV2CpollcY0
+ KWTxEnksQ/Ez7ocealebZSQpfK0nwQRcunqnoawJdbN0WqyEPx5dGpGbn0zgipKAxPxOGGPHg
+ Lkq6zecXPBkCp2ZaTzHCyXx3N5cKXzUCgdidIXXx74JEmhcZkDkk4x4/TciUk+wa7SHhhikCI
+ Z56rGSLsdFJJZS8C8zPz66Pg3JwKSnuM4I319DRQ70YuTQOrowxXnyoJwYaHn1xtFaDSxl6Ih
+ 1pzsSbfAj4M3DF7M8hvQ/NVcT5v5hwleOtAsg8iiADpiPvcQKKeUByT5aIZO+FCPpba5aW1C0
+ fYKsOo4OExbBrlg1HbxyYQJdp2EfaavjoHNU99xsbvNnYdmj6dW6XxY6SCevi34b39PqabK16
+ qXSRoLbHPXJQnnPbJVWxsLrLX1wbPQjR7ZMvHkBoRSpNiM/dR8VHgDk605fmAHZddevvD1HD+
+ 6guGqBsoWU5VnmcmmOBJDC/GVVDgirpYuHWrzj+Cg8fyKVc66wepv2X/R6BXgY+OsE9qHR608
+ JKeQSmRMph1iaMPEE4ZrqI5dE+y0yhpNWh+GYL5SqrcZizZKWYpW0PRVff+IJjcWiYjfL4sJh
+ kWE2xmmYcGsZS7c1p3ucw7hUWkR0cXZ78w29QSLHwkFZfd8TTaAlANYk9YWQbq1JGbNzZVC7G
+ aUM/l6HlI4O88NKeiEWqF2iYS9OSpAhjJoljVWNCItLQSlpjhzcmzn7YeZd6tErTJNVL2DtnG
+ +ClrHCx/3F8sDVZ6Umm1p1KNJb9BhBUNvDBev86ZlL8UbK7iOMqnsNC7A==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-up a preceding commit (pack-write.c: rename `.idx` file into
-place last, 2021-08-16)[1] and rename the *.idx file in-place after we
-write the *.bitmap. The preceding commit fixed the issue of *.idx
-being written before *.rev files, but did not do so for *.idx files.
+Hi Phillip,
 
-See 7cc8f971085 (pack-objects: implement bitmap writing, 2013-12-21)
-for commentary at the time when *.bitmap was implemented about how
-those files are written out, nothing in that commit contradicts what's
-being done here.
+On Tue, 7 Sep 2021, Phillip Wood wrote:
 
-While we're at it let's add cross-commentary to both builtin/repack.c
-and builtin/pack-objects.c to point out the two places where we write
-out these sets of files in sequence.
+> On 07/09/2021 13:32, Johannes Schindelin wrote:
+> >
+> > On Mon, 6 Sep 2021, Phillip Wood wrote:
+> >
+> > > On 01/09/2021 12:57, Johannes Schindelin via GitGitGadget wrote:
+> > > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > >
+> > > > This option was deprecated in favor of `--rebase-merges` some time=
+ ago,
+> > > > and now we retire it.
+> > >
+> > > This all looks good to me. I did see the comment below in builtin/re=
+base.c
+> > > that could be tweaked if you reroll, but it is a very minor issue.
+> > >
+> > > /* -i followed by -p is still explicitly interactive, but -p alone i=
+s not
+> > > */
+> > > static int parse_opt_interactive(const struct option *opt, const cha=
+r
+> > > *arg,
+> > >                                   int unset)
+> >
+> > Right, without `-p` this comment does not make sense anymore. But once=
+ I
+> > replace the `-p` by `-r`, it _does_ make sense: `git rebase -r` is not
+> > interactive, but `git rebase -ir` _is_.
+> >
+> > > I do wonder if we need these option parsing functions now but that i=
+s a
+> > > question for another day.
+> >
+> > As the function parses the `-i`/`--interactive` option, which is not g=
+oing
+> > anywhere, we still need it.
+>
+> Sure I was just wondering if we could simplify things by using something=
+ like
+> OPT_BOOL rather than OPT_CALLBACK_F for "--am", "-i" and "-m". I haven't
+> looked too closely though
 
-1. https://lore.kernel.org/git/a6a4d2154e83d41c10986c5f455279ab249a910c.1630461918.git.me@ttaylorr.com/
+It's definitely a good question, and I wondered, too, but failed to share
+my conclusions with you.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/pack-objects.c | 11 ++++++++++-
- builtin/repack.c       |  8 ++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+The callback does two things: first, it switches the rebase type to
+`merge`, and then it also sets the flag (by setting a bit in the bit
+field) that the rebase is explicitly interactive.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 9fa4c6a9be8..fad3fe5651d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1249,7 +1249,6 @@ static void write_pack_file(void)
- 			stage_tmp_packfile(&tmp_basename, pack_tmp_name,
- 					   written_list, nr_written,
- 					   &pack_idx_opts, hash, &idx_tmp_name);
--			rename_tmp_packfile_idx(&tmp_basename, hash, &idx_tmp_name);
- 
- 			if (write_bitmap_index) {
- 				struct strbuf sb = STRBUF_INIT;
-@@ -1269,6 +1268,16 @@ static void write_pack_file(void)
- 				strbuf_release(&sb);
- 			}
- 
-+			/*
-+			 * We must write the *.idx last, so that anything that expects
-+			 * an accompanying *.rev, *.bitmap etc. can count on it being
-+			 * present.
-+			 *
-+			 * See also corresponding logic in the "exts"
-+			 * struct in builtin/repack.c
-+			 */
-+			rename_tmp_packfile_idx(&tmp_basename, hash, &idx_tmp_name);
-+
- 			free(idx_tmp_name);
- 			strbuf_release(&tmp_basename);
- 			free(pack_tmp_name);
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c3e47716093..dd438ebb3ee 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -211,6 +211,14 @@ static struct {
- 	{".rev", 1},
- 	{".bitmap", 1},
- 	{".promisor", 1},
-+	/*
-+	 * We must write the *.idx last, so that anything that expects
-+	 * an accompanying *.rev, *.bitmap etc. can count on it being
-+	 * present.
-+	 *
-+	 * See also corresponding logic in write_pack_file() in
-+	 * builtin/pack-objects.c
-+	 */
- 	{".idx"},
- };
- 
--- 
-2.33.0.818.gd2ef2916285
+The reason for this "explicitly interactive" wording is historical, of
+course, because historically some functionality was implemented by
+`git-rebase--interactive.sh` even if the rebase itself was intended _not_
+to be run interactively. Think `git rebase --exec <command>`, for example.
 
+These days, it is still true that `rebase-interactive.c` implements some
+functionality that is not necessarily meant to be executed interactively
+(again, `--exec`, but also `--rebase-merges`).
+
+So there _is_ a need for that option to do more than one thing, and as
+some options can try to set, say, the rebase type, it is important to
+handle those options immediately (as opposed to trying to set a flag based
+on `--interactive` and then trying to infer the rebase type from that flag
+_after_ `parse_options()` is done).
+
+Ciao,
+Dscho
