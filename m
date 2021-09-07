@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E86BC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64C61C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 125BA610E9
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 431C5610E9
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 13:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344615AbhIGNiH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 09:38:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58914 "EHLO
+        id S1344617AbhIGNiI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 09:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344577AbhIGNiE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 09:38:04 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4B40C0613D9
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 06:36:54 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u15-20020a05600c19cf00b002f6445b8f55so2290362wmq.0
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 06:36:54 -0700 (PDT)
+        with ESMTP id S1344229AbhIGNiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 09:38:01 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C555C06175F
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 06:36:52 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id n5so14483692wro.12
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 06:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WH2k3KghbeMFoOFf3HcPFHf0urOrSVpn5v9rkcW20KE=;
-        b=MGABPSdULOJgRwrrE90BfTF7FM0+ylahyMx3xtT/+qtI3aRSkxvHUqVaCDY/PJRjxf
-         Jd9wEp7bExmznm9bY1ZrSqIJsg3iC1czZXXplTLqQFtUp7u+Oh9xQoL06RJDQpED4/S9
-         EhodKHqrwRXPSGyBCOjg3js9xQtifq79WH4m/noW9nQ0cSneewjsERJbmab/htty415F
-         aA6AyUmm7IJS2p4cKvwP5wj7hKR6GXNVHKhJspHzempOYS726l1dqWMIcZtSt0EdZaMF
-         p2VgANcpM7auFA9wjxD3eIS3+pwv7HAAezwRebIc9p8ZKIuU9uX9jhdR5+xmKzCWTMkJ
-         B0Ow==
+        bh=JpwBKzKGV5OZrreDmuvwGx82dF6Vy4fzhGZLhC9Pd5Q=;
+        b=Lj0bPGeGfm+3DSnPQeX7LCCZblXuDwTaCzAyaViRe7Gxy7lTcZScsbufxoG5cmTJZt
+         RJszE5ufC5yBMAEuyhsFLf39rvBfTFa512bnND6E4DpoVGDudZ1OWpVkVZOv210G/yFq
+         ZDm55Hu7NElLaTGZ5256OpoP/Wo6tFak6PxRtNhT/zK4gaElWdx1A73uVXfk7J16t2GB
+         rB/g7uuaCvwUZtPbVtjjymQ0nzUOfxMqtdYBPTzurX09guTx40KZUeCsA1+wC2u95qu9
+         tiHTWIEl5AfipzK0kxBHdbmka0H9RfnkKYxyCxfS80xGoHUDFCbcprThBTciM+B3YVmC
+         rG8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WH2k3KghbeMFoOFf3HcPFHf0urOrSVpn5v9rkcW20KE=;
-        b=Sw+hZ0ZJq/g5NhV8G90rRPlj4T1uZ8fhrZxEaJTKtpgA27lkrml7kwu3cfsiDzLjG5
-         O90EEDK/WIAfWj5agMvBXcgE3zV5KxFEyWfHZUSEFTjgZ1hRJ9YEkYXovWOWK7kET5jw
-         cYiqLTHBVEaVm/g1x37Q2U4L62giy06s1Z2N49dP19o73am/1TTMotC5v3VCHWZaDkfc
-         0gUdCCmm53qg0NERCET57hie8Kp3quaO169cQNZfuvTBLjpNo6Ejob0TeIJ6c2/ERy6B
-         S3gMdj6DHJoi3Vryq7Gtl76FnFCn5CbqvDVU/FLM/+H+RE5GOSmgvuliJv7wnO6UUFMB
-         QsFQ==
-X-Gm-Message-State: AOAM533nd/HcaIiU9txVcG6ZWZ9SfWlalAHogtmhUMgr5684yYmH9c68
-        d8EL8Kw6aYwOHJqguwPhrOgC3NXsvEI=
-X-Google-Smtp-Source: ABdhPJz46f+/JPXWWriJK4PK/hOTgQy//IZ4a7zdL/TYJ/pYnzfNOhe5w+kY9oKIuTSdqMH9jjyyyQ==
-X-Received: by 2002:a7b:cbc9:: with SMTP id n9mr4103143wmi.50.1631021812854;
-        Tue, 07 Sep 2021 06:36:52 -0700 (PDT)
+        bh=JpwBKzKGV5OZrreDmuvwGx82dF6Vy4fzhGZLhC9Pd5Q=;
+        b=XxcLuuWDZMleJJCsTupZ2hpEgTBMpkMe8wjDGrU8i6VX6S7AefY/xLGHOFkjPH996W
+         fXocZxty/wJOm7W0TApC2UcDGXdBa+dtf6lS6JdmHrwmtwv0FoQ6w6UG7h4M/rHGF4qe
+         etC02fBT3UIS9EVoGbgLPW7Y4dfoiqwyx2Lqegc/P+7+HlBk+r50pMVzlFfRpBqB/XQY
+         s8PXJj3khAuDY2fvAEsyEU5zuPB/wG0BK18+0gkM/pfddh1ZWuE0WAEwPJOLRJXhw+B4
+         DF766+QCIRKHjagTmaoNqUPCIaCwO7uoTKFQzRLUU3nbWaavnRRMB+NJX9YywPer5JvI
+         jVOA==
+X-Gm-Message-State: AOAM532HnaobZC9Jg44X4geQABHznSrgW0jJknlN+J7sgrCrQHB1xDHM
+        AsAGO6oqar/H1jf02HVm825pXNs/GXg=
+X-Google-Smtp-Source: ABdhPJxs8xA5Ja0mBA2jXOI83iasz+OczNhkX5S1MnSMPwCVXfJnF0gkYJlXtjfbJE3MdYAd3RZBDQ==
+X-Received: by 2002:adf:eb4a:: with SMTP id u10mr18890893wrn.11.1631021810741;
+        Tue, 07 Sep 2021 06:36:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 17sm2309584wmj.20.2021.09.07.06.36.52
+        by smtp.gmail.com with ESMTPSA id r27sm1708078wrr.70.2021.09.07.06.36.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 06:36:52 -0700 (PDT)
-Message-Id: <ce0047028dd4941c7b91d3299107651238b1431f.1631021808.git.gitgitgadget@gmail.com>
+        Tue, 07 Sep 2021 06:36:50 -0700 (PDT)
+Message-Id: <d16d94164c141ded2a918aabf7044e360543fb61.1631021808.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
 References: <pull.1067.v2.git.git.1630947142.gitgitgadget@gmail.com>
         <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Sep 2021 13:36:46 +0000
-Subject: [PATCH v3 5/7] refs: drop force_create argument of create_reflog API
+Date:   Tue, 07 Sep 2021 13:36:43 +0000
+Subject: [PATCH v3 2/7] refs: trim newline from reflog message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,190 +78,191 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-There is only one caller, builtin/checkout.c, and it hardcodes
-force_create=1.
+Commit 523fa69c ("reflog: cleanse messages in the refs.c layer") standardizes
+how write entries into the reflog. This commit standardizes how we get messages
+out of the reflog. Before, the files backend implicitly added '\n' to the end of
+reflog message on reading, which creates a subtle incompatibility with alternate
+ref storage backends, such as reftable.
 
-This argument was introduced in abd0cd3a301 (refs: new public ref function:
-safe_create_reflog, 2015-07-21), which promised to immediately use it in a
-follow-on commit, but that never happened.
+We address this by stripping LF from the message before we pass it to the
+user-provided callback.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/checkout.c             | 2 +-
- refs.c                         | 9 ++++-----
- refs.h                         | 4 ++--
- refs/debug.c                   | 5 ++---
- refs/files-backend.c           | 5 ++---
- refs/packed-backend.c          | 3 +--
- refs/refs-internal.h           | 2 +-
- t/helper/test-ref-store.c      | 3 +--
- t/t1405-main-ref-store.sh      | 2 +-
- t/t1406-submodule-ref-store.sh | 2 +-
- 10 files changed, 16 insertions(+), 21 deletions(-)
+ builtin/show-branch.c          |  5 -----
+ reflog-walk.c                  |  6 ++----
+ refs/files-backend.c           | 30 +++++++++++++++---------------
+ t/t1405-main-ref-store.sh      |  5 ++---
+ t/t1406-submodule-ref-store.sh |  4 ++--
+ 5 files changed, 21 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b5d477919a7..3c6506e0595 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -876,7 +876,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				int ret;
- 				struct strbuf err = STRBUF_INIT;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 902a0d99850..58a894e81e2 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -762,7 +762,6 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			char *logmsg;
+ 			char *nth_desc;
+ 			const char *msg;
+-			char *end;
+ 			timestamp_t timestamp;
+ 			int tz;
  
--				ret = safe_create_reflog(refname, 1, &err);
-+				ret = safe_create_reflog(refname, &err);
- 				if (ret) {
- 					fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
- 						opts->new_orphan_branch, err.buf);
-diff --git a/refs.c b/refs.c
-index 8b9f7c3a80a..ca59a7cc652 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2347,16 +2347,15 @@ int reflog_exists(const char *refname)
+@@ -773,10 +772,6 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 				break;
+ 			}
+ 
+-			end = strchr(logmsg, '\n');
+-			if (end)
+-				*end = '\0';
+-
+ 			msg = (*logmsg == '\0') ? "(none)" : logmsg;
+ 			reflog_msg[i] = xstrfmt("(%s) %s",
+ 						show_date(timestamp, tz,
+diff --git a/reflog-walk.c b/reflog-walk.c
+index e9cd3283694..944cce929c8 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -245,8 +245,6 @@ void get_reflog_message(struct strbuf *sb,
+ 
+ 	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+ 	len = strlen(info->message);
+-	if (len > 0)
+-		len--; /* strip away trailing newline */
+ 	strbuf_add(sb, info->message, len);
  }
  
- int refs_create_reflog(struct ref_store *refs, const char *refname,
--		       int force_create, struct strbuf *err)
-+		       struct strbuf *err)
- {
--	return refs->be->create_reflog(refs, refname, force_create, err);
-+	return refs->be->create_reflog(refs, refname, err);
- }
+@@ -285,10 +283,10 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+ 		get_reflog_selector(&selector, reflog_info, dmode, force_date, 0);
+ 		if (oneline) {
+-			printf("%s: %s", selector.buf, info->message);
++			printf("%s: %s\n", selector.buf, info->message);
+ 		}
+ 		else {
+-			printf("Reflog: %s (%s)\nReflog message: %s",
++			printf("Reflog: %s (%s)\nReflog message: %s\n",
+ 			       selector.buf, info->email, info->message);
+ 		}
  
--int safe_create_reflog(const char *refname, int force_create,
--		       struct strbuf *err)
-+int safe_create_reflog(const char *refname, struct strbuf *err)
- {
- 	return refs_create_reflog(get_main_ref_store(the_repository), refname,
--				  force_create, err);
-+				  err);
- }
- 
- int refs_delete_reflog(struct ref_store *refs, const char *refname)
-diff --git a/refs.h b/refs.h
-index 48970dfc7e0..3c457bc19c8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -416,8 +416,8 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags);
-  * Setup reflog before using. Fill in err and return -1 on failure.
-  */
- int refs_create_reflog(struct ref_store *refs, const char *refname,
--		       int force_create, struct strbuf *err);
--int safe_create_reflog(const char *refname, int force_create, struct strbuf *err);
-+		       struct strbuf *err);
-+int safe_create_reflog(const char *refname, struct strbuf *err);
- 
- /** Reads log for the value of ref during at_time. **/
- int read_ref_at(struct ref_store *refs,
-diff --git a/refs/debug.c b/refs/debug.c
-index 1a7a9e11cfa..f6b01b1eba0 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -340,11 +340,10 @@ static int debug_reflog_exists(struct ref_store *ref_store, const char *refname)
- }
- 
- static int debug_create_reflog(struct ref_store *ref_store, const char *refname,
--			       int force_create, struct strbuf *err)
-+			       struct strbuf *err)
- {
- 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
--	int res = drefs->refs->be->create_reflog(drefs->refs, refname,
--						 force_create, err);
-+	int res = drefs->refs->be->create_reflog(drefs->refs, refname, err);
- 	trace_printf_key(&trace_refs, "create_reflog: %s: %d\n", refname, res);
- 	return res;
- }
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 206c9f8b932..04d73b89c9c 100644
+index 677b7e4cdd2..206c9f8b932 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1598,15 +1598,14 @@ error:
- 	return -1;
- }
+@@ -1897,17 +1897,15 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
+ 	int tz;
+ 	const char *p = sb->buf;
  
--static int files_create_reflog(struct ref_store *ref_store,
--			       const char *refname, int force_create,
-+static int files_create_reflog(struct ref_store *ref_store, const char *refname,
- 			       struct strbuf *err)
- {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_WRITE, "create_reflog");
- 	int fd;
- 
--	if (log_ref_setup(refs, refname, force_create, &fd, err))
-+	if (log_ref_setup(refs, refname, 1, &fd, err))
+-	/* old SP new SP name <email> SP time TAB msg LF */
+-	if (!sb->len || sb->buf[sb->len - 1] != '\n' ||
+-	    parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
++	/* old SP new SP name <email> SP time TAB msg */
++	if (!sb->len || parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
+ 	    parse_oid_hex(p, &noid, &p) || *p++ != ' ' ||
+-	    !(email_end = strchr(p, '>')) ||
+-	    email_end[1] != ' ' ||
++	    !(email_end = strchr(p, '>')) || email_end[1] != ' ' ||
+ 	    !(timestamp = parse_timestamp(email_end + 2, &message, 10)) ||
+ 	    !message || message[0] != ' ' ||
+-	    (message[1] != '+' && message[1] != '-') ||
+-	    !isdigit(message[2]) || !isdigit(message[3]) ||
+-	    !isdigit(message[4]) || !isdigit(message[5]))
++	    (message[1] != '+' && message[1] != '-') || !isdigit(message[2]) ||
++	    !isdigit(message[3]) || !isdigit(message[4]) ||
++	    !isdigit(message[5]))
+ 		return 0; /* corrupt? */
+ 	email_end[1] = '\0';
+ 	tz = strtol(message + 1, NULL, 10);
+@@ -1999,6 +1997,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 				strbuf_splice(&sb, 0, 0, bp + 1, endp - (bp + 1));
+ 				scanp = bp;
+ 				endp = bp + 1;
++				strbuf_trim_trailing_newline(&sb);
+ 				ret = show_one_reflog_ent(&sb, fn, cb_data);
+ 				strbuf_reset(&sb);
+ 				if (ret)
+@@ -2011,6 +2010,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ 				 * Process it, and we can end the loop.
+ 				 */
+ 				strbuf_splice(&sb, 0, 0, buf, endp - buf);
++				strbuf_trim_trailing_newline(&sb);
+ 				ret = show_one_reflog_ent(&sb, fn, cb_data);
+ 				strbuf_reset(&sb);
+ 				break;
+@@ -2060,7 +2060,7 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
+ 	if (!logfp)
  		return -1;
  
- 	if (fd >= 0)
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index f8aa97d7998..af7038de42d 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1618,8 +1618,7 @@ static int packed_reflog_exists(struct ref_store *ref_store,
+-	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
++	while (!ret && !strbuf_getline(&sb, logfp))
+ 		ret = show_one_reflog_ent(&sb, fn, cb_data);
+ 	fclose(logfp);
+ 	strbuf_release(&sb);
+@@ -3020,18 +3020,18 @@ static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
+ 	if ((*cb->should_prune_fn)(ooid, noid, email, timestamp, tz,
+ 				   message, policy_cb)) {
+ 		if (!cb->newlog)
+-			printf("would prune %s", message);
++			printf("would prune %s\n", message);
+ 		else if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
+-			printf("prune %s", message);
++			printf("prune %s\n", message);
+ 	} else {
+ 		if (cb->newlog) {
+-			fprintf(cb->newlog, "%s %s %s %"PRItime" %+05d\t%s",
+-				oid_to_hex(ooid), oid_to_hex(noid),
+-				email, timestamp, tz, message);
++			fprintf(cb->newlog, "%s %s %s %" PRItime " %+05d\t%s\n",
++				oid_to_hex(ooid), oid_to_hex(noid), email,
++				timestamp, tz, message);
+ 			oidcpy(&cb->last_kept_oid, noid);
+ 		}
+ 		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
+-			printf("keep %s", message);
++			printf("keep %s\n", message);
+ 	}
+ 	return 0;
  }
- 
- static int packed_create_reflog(struct ref_store *ref_store,
--			       const char *refname, int force_create,
--			       struct strbuf *err)
-+				const char *refname, struct strbuf *err)
- {
- 	BUG("packed reference store does not support reflogs");
- }
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 3155708345f..cc0e56e8c82 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -590,7 +590,7 @@ typedef int for_each_reflog_ent_reverse_fn(struct ref_store *ref_store,
- 					   void *cb_data);
- typedef int reflog_exists_fn(struct ref_store *ref_store, const char *refname);
- typedef int create_reflog_fn(struct ref_store *ref_store, const char *refname,
--			     int force_create, struct strbuf *err);
-+			     struct strbuf *err);
- typedef int delete_reflog_fn(struct ref_store *ref_store, const char *refname);
- typedef int reflog_expire_fn(struct ref_store *ref_store,
- 			     const char *refname, const struct object_id *oid,
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 0fcad9b3812..a65fda66ddc 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -180,11 +180,10 @@ static int cmd_reflog_exists(struct ref_store *refs, const char **argv)
- static int cmd_create_reflog(struct ref_store *refs, const char **argv)
- {
- 	const char *refname = notnull(*argv++, "refname");
--	int force_create = arg_flags(*argv++, "force-create");
- 	struct strbuf err = STRBUF_INIT;
- 	int ret;
- 
--	ret = refs_create_reflog(refs, refname, force_create, &err);
-+	ret = refs_create_reflog(refs, refname, &err);
- 	if (err.len)
- 		puts(err.buf);
- 	return ret;
 diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 76b15458409..3cb5e23d6db 100755
+index 49718b7ea7f..a600bedf2cd 100755
 --- a/t/t1405-main-ref-store.sh
 +++ b/t/t1405-main-ref-store.sh
-@@ -108,7 +108,7 @@ test_expect_success 'delete_reflog(HEAD)' '
+@@ -89,13 +89,12 @@ test_expect_success 'for_each_reflog()' '
+ test_expect_success 'for_each_reflog_ent()' '
+ 	$RUN for-each-reflog-ent HEAD >actual &&
+ 	head -n1 actual | grep one &&
+-	tail -n2 actual | head -n1 | grep recreate-main
++	tail -n1 actual | grep recreate-main
  '
  
- test_expect_success 'create-reflog(HEAD)' '
--	$RUN create-reflog HEAD 1 &&
-+	$RUN create-reflog HEAD &&
- 	git reflog exists HEAD
+ test_expect_success 'for_each_reflog_ent_reverse()' '
+ 	$RUN for-each-reflog-ent-reverse HEAD >actual &&
+-	head -n1 actual | grep recreate-main &&
+-	tail -n2 actual | head -n1 | grep one
++	tail -n1 actual | grep one
  '
  
+ test_expect_success 'reflog_exists(HEAD)' '
 diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index b0365c1fee0..78d40bdcd8b 100755
+index 0a87058971e..b0365c1fee0 100755
 --- a/t/t1406-submodule-ref-store.sh
 +++ b/t/t1406-submodule-ref-store.sh
-@@ -92,7 +92,7 @@ test_expect_success 'delete_reflog() not allowed' '
+@@ -74,13 +74,13 @@ test_expect_success 'for_each_reflog()' '
+ test_expect_success 'for_each_reflog_ent()' '
+ 	$RUN for-each-reflog-ent HEAD >actual &&
+ 	head -n1 actual | grep first &&
+-	tail -n2 actual | head -n1 | grep main.to.new
++	tail -n1 actual | grep main.to.new
  '
  
- test_expect_success 'create-reflog() not allowed' '
--	test_must_fail $RUN create-reflog HEAD 1
-+	test_must_fail $RUN create-reflog HEAD
+ test_expect_success 'for_each_reflog_ent_reverse()' '
+ 	$RUN for-each-reflog-ent-reverse HEAD >actual &&
+ 	head -n1 actual | grep main.to.new &&
+-	tail -n2 actual | head -n1 | grep first
++	tail -n1 actual | grep first
  '
  
- test_done
+ test_expect_success 'reflog_exists(HEAD)' '
 -- 
 gitgitgadget
 
