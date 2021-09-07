@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EECE5C433FE
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 10:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3DAFC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 10:58:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC07160E52
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 10:58:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB41760E52
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 10:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343792AbhIGK7g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 06:59:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50996 "EHLO
+        id S1343831AbhIGK7i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 06:59:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343804AbhIGK7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 06:59:34 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 133C6C061757
+        with ESMTP id S1343798AbhIGK7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 06:59:35 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F063BC061575
         for <git@vger.kernel.org>; Tue,  7 Sep 2021 03:58:28 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 192-20020a1c04c9000000b002f7a4ab0a49so1591179wme.0
+Received: by mail-wm1-x32b.google.com with SMTP id s24so908052wmh.4
         for <git@vger.kernel.org>; Tue, 07 Sep 2021 03:58:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Q00M4AtvtJU2iuLRc/A1xwyi5qwWrl9cgtEiDhBbJBY=;
-        b=lDojtrYSSIO4TZQj7Ctfr3ai48Nw6OIEKp4KOe/Ad4Y/ayP5bUvEkFcC0Zalt1Y3g2
-         iKvN9OrTQt3bAdZFXPyxeI957WXBFJ+82NEEu7Va4Yn9gdpF/kEx8SGOARLHvxrxp750
-         GNTBClj+UAJL2vLzSqQaD0KniNqqK7veu5jBINaThlqZEhfnQAS82pndrNXngxQ5s+ov
-         Pyw60CM1XuIzrpl6TAgovLk8saB0SqCsphBoad7MFXKjj0vU3gvY5pysp3ygylBYNoaw
-         dx5bucRBV0gEjEWU1kV2Qf7B79qaIXKzd9IEGvPqgeZ5RWisSlmH1P+2hNZAofLDYyZa
-         PvNQ==
+        bh=fZ8ux2fJFm1ThSxAdzfsS9LGMbQ1RnQhrszlzbvc+gE=;
+        b=ojfX/oMqfzJ3+NcUAEZ7rrjPlbmCktq5+NjR5xO88XUsCvL6ieUkjveor0tj+pTJZJ
+         IGubBN6UvVC9ClRlXjqe+jvY4mrdVTH4xSq0Oin7tU5uYupG+3zN/Sm81dfxAEm6RWTY
+         13I4/EiipTgUx7tQWv4IG9vn6Z/qrT6rHcJhaM/Imyr981GsMWUzkBp+2zkXtcLwlXqz
+         4QycFnxqzABPEfTs31opKcvlOBaZrSe8KVgM+kLQQLHBU1O/Xtz6dVQ7VZwRzYNMwj+2
+         539RUILUpOSuhQpcHoDtjxPbIAOUK92IeFippTbgOc5eIRBnIj7yNOTM3PCwEB8LIiLg
+         9RRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Q00M4AtvtJU2iuLRc/A1xwyi5qwWrl9cgtEiDhBbJBY=;
-        b=gGC6NLi3dN/Dhoa6K2mcWktlLBRyWnC8xqJ3snqQWPsyIToMxVcqPpPXAZrXIIv/UI
-         KBy6vd+q72gLAMe/8kH0nm2fE3hfh6cdukXbNlZFaPxBlVzsKQsOl1+EiXFB5xX9oO7R
-         zvJqL2QlXCDO7J80VLOQSl+Jpc3xDYWveXmASfvyX+avj4BzL1T3oTlTkNXQO4oYyieL
-         MDs4Q+TOXLvoxbZSUFx+kpbbhA9qw9EXGEV/dwLbMNz8QeOhapU4OP5FpeXxrQ+sr758
-         vOEuNuW622Cg3D6p630Gx6IvQ107/tuGO2uzu023LEBs16mAypyT6TSM/l4TM4CSdZKR
-         JPSg==
-X-Gm-Message-State: AOAM5310r7jhVu5GVwq15ryUhAdgHAB53tc10AAyzeJ81WKJuuLo1PpU
-        sVzEVlwWdV17YFgY/ImhsMxtBHFhr/VyOw==
-X-Google-Smtp-Source: ABdhPJw+1tVE7UBr7+v6jnnM/D8sdghkNCbkEK4oW+Ti6bZFdl6XQSZiB3DWKsf/ULTscDHM0F8t7Q==
-X-Received: by 2002:a1c:c911:: with SMTP id f17mr3265763wmb.190.1631012306414;
-        Tue, 07 Sep 2021 03:58:26 -0700 (PDT)
+        bh=fZ8ux2fJFm1ThSxAdzfsS9LGMbQ1RnQhrszlzbvc+gE=;
+        b=gDhJw5glDjchL7CFLNRk4bnUEvpf+BDIgM61cYcZkRmi0TF+lyc40fnSxWMygbX7k2
+         kn1vLMJo8SBGEMC2cCM/QcueqGrEolYRIHGEmacQaREREnaQHIVfoZ7MkyWrtvUyhO22
+         0x7AVtrHvcWeDxggl8e3Dcg+/nDnbfLUAqBykjVoB2yA9olOfDY2CzNdjE8PU9uqRuMo
+         b2+tNwpap6wWbYQSLXhjftH1mMr76CIXqM0aGjh/ALNd4R9rk1jqjrMDoG9nXZ9lN8eU
+         YWNh3i79gnIvCNpzMSesWEatUhxEjAn/eWikoE4BvKLv/acUl6HWQaq8LL5nyETWxyA4
+         14SQ==
+X-Gm-Message-State: AOAM530Z0Ci6o6aAUl41oKZrZuIOFGxRQli0VG3BM+c/pT4zekJ/cixg
+        eRaFjjFQNwt5J9sZBV/IS18t0IViwYIWWQ==
+X-Google-Smtp-Source: ABdhPJw69qGNvI3EnoZ0EVRlhnPwAKpsUdi7CC+MML2yl/OuO6hdfEbxUU9eughXKt0OoVoAt4vblw==
+X-Received: by 2002:a05:600c:221a:: with SMTP id z26mr3306894wml.142.1631012307337;
+        Tue, 07 Sep 2021 03:58:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l16sm8255602wrh.44.2021.09.07.03.58.25
+        by smtp.gmail.com with ESMTPSA id l16sm8255602wrh.44.2021.09.07.03.58.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 03:58:25 -0700 (PDT)
+        Tue, 07 Sep 2021 03:58:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 03/22] cat-file tests: test for missing object with -t and -s
-Date:   Tue,  7 Sep 2021 12:57:58 +0200
-Message-Id: <patch-v6-03.22-d442a309178-20210907T104559Z-avarab@gmail.com>
+Subject: [PATCH v6 04/22] cat-file tests: test that --allow-unknown-type isn't on by default
+Date:   Tue,  7 Sep 2021 12:57:59 +0200
+Message-Id: <patch-v6-04.22-0358273022f-20210907T104559Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.815.g21c7aaf6073
 In-Reply-To: <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
 References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com> <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
@@ -77,55 +77,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test for what happens when the -t and -s flags are asked to operate on
-a missing object, this extends tests added in 3e370f9faf0 (t1006: add
-tests for git cat-file --allow-unknown-type, 2015-05-03). The -t and
--s flags are the only ones that can be combined with
---allow-unknown-type, so let's test with and without that flag.
+Fix a blindspot in the tests for the --allow-unknown-type feature
+added in 39e4ae38804 (cat-file: teach cat-file a
+'--allow-unknown-type' option, 2015-05-03). We should check that
+--allow-unknown-type isn't on by default.
+
+Before this change all the tests would succeed if --allow-unknown-type
+was on by default, let's fix that by asserting that -t and -s die on a
+"garbage" type without --allow-unknown-type.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1006-cat-file.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ t/t1006-cat-file.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 18b3779ccb6..3a7b138fe4e 100755
+index 3a7b138fe4e..5e05ea0861e 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -315,6 +315,33 @@ test_expect_success '%(deltabase) reports packed delta bases' '
- 	}
- '
- 
-+missing_oid=$(test_oid deadbeef)
-+test_expect_success 'error on type of missing object' '
-+	cat >expect.err <<-\EOF &&
-+	fatal: git cat-file: could not get object info
-+	EOF
-+	test_must_fail git cat-file -t $missing_oid >out 2>err &&
-+	test_must_be_empty out &&
-+	test_cmp expect.err err &&
-+
-+	test_must_fail git cat-file -t --allow-unknown-type $missing_oid >out 2>err &&
-+	test_must_be_empty out &&
-+	test_cmp expect.err err
-+'
-+
-+test_expect_success 'error on size of missing object' '
-+	cat >expect.err <<-\EOF &&
-+	fatal: git cat-file: could not get object info
-+	EOF
-+	test_must_fail git cat-file -s $missing_oid >out 2>err &&
-+	test_must_be_empty out &&
-+	test_cmp expect.err err &&
-+
-+	test_must_fail git cat-file -s --allow-unknown-type $missing_oid >out 2>err &&
-+	test_must_be_empty out &&
-+	test_cmp expect.err err
-+'
-+
- bogus_type="bogus"
- bogus_content="bogus"
+@@ -347,6 +347,20 @@ bogus_content="bogus"
  bogus_size=$(strlen "$bogus_content")
+ bogus_sha1=$(echo_without_newline "$bogus_content" | git hash-object -t $bogus_type --literally -w --stdin)
+ 
++test_expect_success 'die on broken object under -t and -s without --allow-unknown-type' '
++	cat >err.expect <<-\EOF &&
++	fatal: invalid object type
++	EOF
++
++	test_must_fail git cat-file -t $bogus_sha1 >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual &&
++
++	test_must_fail git cat-file -s $bogus_sha1 >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual
++'
++
+ test_expect_success "Type of broken object is correct" '
+ 	echo $bogus_type >expect &&
+ 	git cat-file -t --allow-unknown-type $bogus_sha1 >actual &&
+@@ -363,6 +377,21 @@ bogus_content="bogus"
+ bogus_size=$(strlen "$bogus_content")
+ bogus_sha1=$(echo_without_newline "$bogus_content" | git hash-object -t $bogus_type --literally -w --stdin)
+ 
++test_expect_success 'die on broken object with large type under -t and -s without --allow-unknown-type' '
++	cat >err.expect <<-EOF &&
++	error: unable to unpack $bogus_sha1 header
++	fatal: git cat-file: could not get object info
++	EOF
++
++	test_must_fail git cat-file -t $bogus_sha1 >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual &&
++
++	test_must_fail git cat-file -s $bogus_sha1 >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual
++'
++
+ test_expect_success "Type of broken object is correct when type is large" '
+ 	echo $bogus_type >expect &&
+ 	git cat-file -t --allow-unknown-type $bogus_sha1 >actual &&
 -- 
 2.33.0.815.g21c7aaf6073
 
