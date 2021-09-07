@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE871C433FE
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0F6C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:18:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B301B61102
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:18:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B1E660F70
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 21:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347057AbhIGVTH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 17:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S1347074AbhIGVTN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 17:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243883AbhIGVTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:19:07 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6379FC061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 14:18:00 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id a20so72909ilq.7
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 14:18:00 -0700 (PDT)
+        with ESMTP id S1347091AbhIGVTM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 17:19:12 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C035C06175F
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 14:18:05 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id y132so123485wmc.1
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 14:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=7nudgiP2W7+e4NGltXu94bbx2ocxjBoo5J68bLuXjIg=;
-        b=N+G9/53aXTGEXAHCvm0J/iaLakpvuAGomWHj5jov3T7ssUJ0j3/KzZ+bRVc1omOKVD
-         5x0pnMS8/2dicLcWAEB5EWXJol/XbcrhRd/t8AUa7/87lWZnQvbTyFHvCDQBQkbXyDm9
-         pIyesTyKfc375P8ikbrrZakPDIZsYhpN9x7axiKrdCcq7azAhOJnhTd5uaH3QfyngnE6
-         tRVp3zFmYIPIK3RGebvY9ivqHJms6W0lkgbQupxNsjP5bdoEWTuMUw/4364NFuG190Tr
-         hFYzg71FCMtbwrc+cp6+KDz4KPXMHQboTiVrKecjwoCzt9iJJY3zA4CBgeVtFLL8VB+I
-         irrg==
+        bh=gxxkzrGJMqtxNns2UAEc8BJX7ki4xwBkiCITuOHgJ5Y=;
+        b=lIeBlpCMEUGc14AWl7vBdMnOG/NuSv3iylRwjZG9HJPI9QykbgcdUWT39tgNzopoQd
+         43TvvbGfHMjrSrWJR5jihfxca/iTEnGhfxAa6gfqEeO5dDLW83cFi3T6Rs6Bv+TCWEzR
+         Stmzb8ftU+aMexB5nAD2fkYF0maBbQcrRfU5ypXSCR5Xks9UCm+AYENqMjiUb6aiQiON
+         03REcihbzAUAXkDsrCNqwaKD5OXqnP+b4ObpSLWAOVnw6H5/k7NBi80Aru9E1WyEknIU
+         gTVdpU2qrqvJRGm8EoAisQn22G6McaPPoZdQDR+1hHDMYpYF/48BAJ93MlstMGt4O/An
+         /HrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=7nudgiP2W7+e4NGltXu94bbx2ocxjBoo5J68bLuXjIg=;
-        b=eBdnnsRD4A8+5VSgJHqZvGiAqtopxd/6mCmFA+jgGUOUVtM0dv85WeWZU3wJsrZFol
-         FnnDMe5N4CxrpwwzU9nnApsK779xYw8qsK6dy3TmwYHv50NpuuFmEdaZ9jT2S4LPduxT
-         9lwpyBQVolxc8qYppEzjScHFBwSEr6dU6bzKjVdu7q3yVbWuhaO8WabWo7C4xvkXjs+n
-         +RLRhl2/rQVc+gXcRFqi4/HUfYqY/NKYlFP0tr2mVkx5z2z7pq5sfFIa4g+43XpkiHRJ
-         BmPOZVxnESbA53bBcQvfu/+Uw42L3TtGfrNg/06UkQwkvIquq39IWYJI7siB9yVc7Fli
-         sfgA==
-X-Gm-Message-State: AOAM530tRGYF2IrTzf6/7MC1UMc1hrJ0JnzA3AuC0cwlUof1pghb0hEe
-        fbWjdzJK55LsbrieUzpkj4mxbMO2jboi3yZ0
-X-Google-Smtp-Source: ABdhPJzuuLnTEZ2+6h/Gcfx50xeMpA4kj2w7RCxb2qQPNBty9BUwKnhlsepzJZ8uVek+9IAyy2rRJQ==
-X-Received: by 2002:a92:d6c7:: with SMTP id z7mr208411ilp.4.1631049479619;
-        Tue, 07 Sep 2021 14:17:59 -0700 (PDT)
+        bh=gxxkzrGJMqtxNns2UAEc8BJX7ki4xwBkiCITuOHgJ5Y=;
+        b=OQOAJyxPtPRoPSWvBve0t5VZRj/aTByblrFIHsXU1o4Md5CdESgj9yFAzFZYQuE4WF
+         3HNxgLXw+BNNuPOjB/nbXDoOlPccD4Yxiq1xkNVYaKhoSVFGX5UF6qNaI/66VgA04P30
+         QYYD0gDIzr97q7agl3Fqu96dIDo+ijvViJ8Klc44MNcycmFqLi1/zrasZYAnr3mGAtF0
+         VgYfys5EFJhpUAWXBtlEOdV8xgrY+65GvuK/KZWYxAsxIlLHrFT99fSemQ1OGhqww/eV
+         4Psa932gxudEKI8pgdtVD9+fNsLJqL909fmIpKlpJn/wmZ/ZRZe8yJsxmyGsoSaeIdSE
+         GdbQ==
+X-Gm-Message-State: AOAM5319r2b4E99/Ii3c463XYOy9kpREqetFwC0NTYrAxi7zYOBQ8Esw
+        yYcPJv/btQGJ3CIM+AmB7l+FzpRrtgSmgMDi
+X-Google-Smtp-Source: ABdhPJwYlDGFN/fplnGcPfu1EbyaQybg+4TFSYrOaclloEI7Bn9ptzaJDmPgpueO7gsOX8wZOnJg9A==
+X-Received: by 2002:a1c:44c5:: with SMTP id r188mr203658wma.9.1631049483747;
+        Tue, 07 Sep 2021 14:18:03 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h8sm135194ile.39.2021.09.07.14.17.59
+        by smtp.gmail.com with ESMTPSA id l17sm139493wrz.35.2021.09.07.14.18.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 14:17:59 -0700 (PDT)
-Date:   Tue, 7 Sep 2021 17:17:58 -0400
+        Tue, 07 Sep 2021 14:18:03 -0700 (PDT)
+Date:   Tue, 7 Sep 2021 17:18:01 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net
-Subject: [PATCH 2/4] pack-bitmap.c: propagate namehash values from existing
+Subject: [PATCH 3/4] midx.c: respect 'pack.writeBitmapHashcache' when writing
  bitmaps
-Message-ID: <fa9f5633f6a0955c045168c80d4d9d7987a8327d.1631049462.git.me@ttaylorr.com>
+Message-ID: <be8f47e13c612f2fbe4d5f4f49794529b9424664.1631049462.git.me@ttaylorr.com>
 References: <cover.1631049462.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,85 +71,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When an old bitmap exists while writing a new one, we load it and build
-a "reposition" table which maps bit positions of objects from the old
-bitmap to their respective positions in the new bitmap. This can help
-when we encounter a commit which was selected in both the old and new
-bitmap, since we only need to permute its bit (not recompute it from
-scratch).
+In the previous commit, the bitmap writing code learned to propagate
+values from an existing hash-cache extension into the bitmap that it is
+writing.
 
-We do not, however, repurpose existing namehash values in the case of
-the hash-cache extension. There has been thus far no good reason to do
-so, since all of the namehash values for objects in the new bitmap would
-be populated during the traversal that was just performed by
-pack-objects when generating single-pack reachability bitmaps.
+Now that that functionality exists, let's expose it by teaching the 'git
+multi-pack-index' builtin to respect the `pack.writeBitmapHashCache`
+option so that the hash-cache may be written at all.
 
-But this isn't the case for multi-pack bitmaps, which are written via
-`git multi-pack-index write --bitmap` and do not perform any traversal.
-In this case all namehash values are set to zero, but we don't even
-bother to check the `pack.writeBitmapHashcache` option anyway, so it
-fails to matter.
+Two minor points worth noting here:
 
-There are two approaches we could take to fill in non-zero hash-cache
-values:
+  - The 'git multi-pack-index write' sub-command didn't previously read
+    any configuration (instead this is handled in the base command). A
+    separate handler is added here to respect this write-specific
+    config option.
 
-  - have either the multi-pack-index builtin run its own
-    traversal to attempt to fill in some values, or let a hypothetical
-    caller (like `pack-objects` when `repack` eventually drives the
-    `multi-pack-index` builtin) fill in the values they found during
-    their traversal
+  - I briefly considered adding a 'bitmap_flags' field to the static
+    options struct, but decided against it since it would require
+    plumbing through a new parameter to the write_midx_file() function.
 
-  - or copy any existing namehash values that were stored in an
-    existing bitmap to their corresponding positions in the new bitmap
-
-In a system where a repository is generally repacked with `git repack
---geometric=<d>` and occasionally repacked with `git repack -a`, the
-hash-cache coverage will tend towards all objects.
-
-Since populating the hash-cache is additive (i.e., doing so only helps
-our delta search), any intermediate lack of full coverage is just fine.
-So let's start by just propagating any values from the existing
-hash-cache if we see one.
-
-The next patch will respect the `pack.writeBitmapHashcache` option while
-writing MIDX bitmaps, and then test this new behavior.
+    Instead, a new MIDX-specific flag is added, which is translated to
+    the corresponding bitmap one.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ Documentation/config/pack.txt |  4 ++++
+ builtin/multi-pack-index.c    | 21 +++++++++++++++++++++
+ midx.c                        |  6 +++++-
+ midx.h                        |  1 +
+ 4 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e44af36933..cb876e7e9d 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1815,18 +1815,20 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- 	for (i = 0; i < num_objects; ++i) {
- 		struct object_id oid;
- 		struct object_entry *oe;
-+		uint32_t index_pos;
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index 763f7af7c4..ad7f73a1ea 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -159,6 +159,10 @@ pack.writeBitmapHashCache::
+ 	between an older, bitmapped pack and objects that have been
+ 	pushed since the last gc). The downside is that it consumes 4
+ 	bytes per object of disk space. Defaults to true.
+++
++When writing a multi-pack reachability bitmap, no new namehashes are
++computed; instead, any namehashes stored in an existing bitmap are
++permuted into their appropriate location when writing a new bitmap.
  
- 		if (bitmap_is_midx(bitmap_git))
--			nth_midxed_object_oid(&oid,
--					      bitmap_git->midx,
--					      pack_pos_to_midx(bitmap_git->midx, i));
-+			index_pos = pack_pos_to_midx(bitmap_git->midx, i);
- 		else
--			nth_packed_object_id(&oid, bitmap_git->pack,
--					     pack_pos_to_index(bitmap_git->pack, i));
-+			index_pos = pack_pos_to_index(bitmap_git->pack, i);
-+		nth_bitmap_object_oid(bitmap_git, &oid, index_pos);
- 		oe = packlist_find(mapping, &oid);
+ pack.writeReverseIndex::
+ 	When true, git will write a corresponding .rev file (see:
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 73c0113b48..dd1652531b 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -61,6 +61,23 @@ static struct option *add_common_options(struct option *prev)
+ 	return parse_options_concat(common_opts, prev);
+ }
  
--		if (oe)
-+		if (oe) {
- 			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
-+			if (bitmap_git->hashes && !oe->hash)
-+				oe->hash = get_be32(bitmap_git->hashes + index_pos);
-+		}
- 	}
++static int git_multi_pack_index_write_config(const char *var, const char *value,
++					     void *cb)
++{
++	if (!strcmp(var, "pack.writebitmaphashcache")) {
++		if (git_config_bool(var, value))
++			opts.flags |= MIDX_WRITE_BITMAP_HASH_CACHE;
++		else
++			opts.flags &= ~MIDX_WRITE_BITMAP_HASH_CACHE;
++	}
++
++	/*
++	 * No need to fall-back to 'git_default_config', since this was already
++	 * called in 'cmd_multi_pack_index()'.
++	 */
++	return 0;
++}
++
+ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ {
+ 	struct option *options;
+@@ -73,6 +90,10 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 		OPT_END(),
+ 	};
  
- 	return reposition;
++	opts.flags |= MIDX_WRITE_BITMAP_HASH_CACHE;
++
++	git_config(git_multi_pack_index_write_config, NULL);
++
+ 	options = add_common_options(builtin_multi_pack_index_write_options);
+ 
+ 	trace2_cmd_mode(argv[0]);
+diff --git a/midx.c b/midx.c
+index ccdc3e5702..6c35dcd557 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1008,9 +1008,13 @@ static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
+ 	struct pack_idx_entry **index;
+ 	struct commit **commits = NULL;
+ 	uint32_t i, commits_nr;
++	uint16_t options = 0;
+ 	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name, hash_to_hex(midx_hash));
+ 	int ret;
+ 
++	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
++		options |= BITMAP_OPT_HASH_CACHE;
++
+ 	prepare_midx_packing_data(&pdata, ctx);
+ 
+ 	commits = find_commits_for_midx_bitmap(&commits_nr, ctx);
+@@ -1049,7 +1053,7 @@ static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
+ 		goto cleanup;
+ 
+ 	bitmap_writer_set_checksum(midx_hash);
+-	bitmap_writer_finish(index, pdata.nr_objects, bitmap_name, 0);
++	bitmap_writer_finish(index, pdata.nr_objects, bitmap_name, options);
+ 
+ cleanup:
+ 	free(index);
+diff --git a/midx.h b/midx.h
+index aa3da557bb..541d9ac728 100644
+--- a/midx.h
++++ b/midx.h
+@@ -44,6 +44,7 @@ struct multi_pack_index {
+ #define MIDX_PROGRESS     (1 << 0)
+ #define MIDX_WRITE_REV_INDEX (1 << 1)
+ #define MIDX_WRITE_BITMAP (1 << 2)
++#define MIDX_WRITE_BITMAP_HASH_CACHE (1 << 3)
+ 
+ const unsigned char *get_midx_checksum(struct multi_pack_index *m);
+ char *get_midx_filename(const char *object_dir);
 -- 
 2.33.0.96.g73915697e6
 
