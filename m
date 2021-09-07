@@ -2,140 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8856DC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B486C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:55:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BB0060724
-	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:48:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E7FF6109D
+	for <git@archiver.kernel.org>; Tue,  7 Sep 2021 12:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344333AbhIGMty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 08:49:54 -0400
-Received: from mout.gmx.net ([212.227.15.19]:36263 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231600AbhIGMtx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:49:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631018923;
-        bh=DLPmm9REA05HO12unqFejJObOl5W3FVXCwm1IKmvFAA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LL6ztB0N1geUvgLHUTUeedJndi5vwqhAdHn0745fwspXnufPGdmwUvUHjoPT50rsC
-         ES79VGhZyrLMs9dYGlr+fS3bvOivUgW5x5oO02kOrNykOFTd8RwJ+MqxxkGyjff61d
-         J3OHEy5fMvug3C8yRcnQZAa12rHWTrfSN+IzxoDY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVeI2-1mVFVf32d2-00Rcm1; Tue, 07
- Sep 2021 14:48:43 +0200
-Date:   Tue, 7 Sep 2021 14:48:58 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
-In-Reply-To: <62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109071444260.55@tvgsbejvaqbjf.bet>
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1344448AbhIGM4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 08:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232913AbhIGM4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 08:56:47 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAC6C061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 05:55:41 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id eb14so13769874edb.8
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 05:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=WFE8SUbYgfivbQ7/7Mz5BcsKM+mZCpvTNiHDvbIaIYg=;
+        b=cFz0t/rjG6lAZnk59YTkdVUPpnpHfaZz9cCxJS4aJZdB8G2ZP8P0kl1sSzfoKkoJ5T
+         0YO+fITp218YpadiFMKrdL5AvRHIjWLLDZlxI1Ao65JQHZvgyIEHc+0WQW8eYGyoY7bS
+         LJfbDCCxluhT1bfhx6nITWmFIBN1CCF9tfUfU/4ScCU+DWspeY7nXT4oZXapbTCXQGAW
+         sRz2qFiJASj96GghPU3wVfVkZ/45n33IkgdmQF/Iz4rGkZ4Jv0tDEKkC++Sf54AoeePu
+         5XFYWiI05j8DcEWnVpDgEPWP3vE3GPK8boYmBTyFeJmHNqJyjF2PAGZ8znp/RHmC/7AN
+         j8aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=WFE8SUbYgfivbQ7/7Mz5BcsKM+mZCpvTNiHDvbIaIYg=;
+        b=dhytP3dUMyJzH2vfeqXjxGSW7Wfasptsnr1zRYi5cLHFw7WxWW6nOb82nxBp14/3c+
+         YoP5+dGvFbh0ip8Ks4zBMjIR82cb85Xj7T8+heeD3oGWKrWppKzJOWnIDCRf5kHqgZtL
+         gn+njPrZ8/cZfoNzjkmcUNWA6rAIrRtMy5+1TUrdf9MEnj9cK8mEPQWIsYi2pSUGeHoo
+         +oEoWTcMpidMKD6cgBibkr+iB+32/jQQcJYk6mvKW6VKC8C3rlkOBNTYbo90QEkSH+Qr
+         xjAJSXI0iOa5F3Yyd1Zdi75kD8yMpo1A/EuMxaJmYi9yUuK4eojaW/9nNBi4jNkM/0LE
+         k7xw==
+X-Gm-Message-State: AOAM533TehiBlCr+lTi8y/R8Dzl0uHsBlxHycqjEgZBbv+0LI3FDh0rp
+        XUtl3zOYf7qXmRY4/kPjvXeXatG4HTomoA==
+X-Google-Smtp-Source: ABdhPJzb+3yTh7UCVF69L4mqcyjN6neHsjfIB4XxJsDk8gtJz1DljjsjT8GqAOKAdjCRnYRRAlycaA==
+X-Received: by 2002:a05:6402:51c9:: with SMTP id r9mr18649241edd.65.1631019339577;
+        Tue, 07 Sep 2021 05:55:39 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v12sm6516661ede.16.2021.09.07.05.55.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Sep 2021 05:55:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        emilyshaffer@google.com, gitster@pobox.com, jrnieder@gmail.com,
+        kaartic.sivaraam@gmail.com, pc44800@gmail.com,
+        periperidip@gmail.com
+Subject: Re: [PATCH 09/13] submodule--helper: remove update-module-mode
+ subcommand
+Date:   Tue, 07 Sep 2021 14:49:49 +0200
+References: <20210907115932.36068-1-raykar.ath@gmail.com>
+ <20210907115932.36068-10-raykar.ath@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20210907115932.36068-10-raykar.ath@gmail.com>
+Message-ID: <87k0jslf3p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1492049009-1631018939=:55"
-X-Provags-ID: V03:K1:MdFoLQAazuO9eIW1rGF20q0wwjsLEdZ7GJeWLCqvGIL1LmyGokL
- Zav6sKX0IPYjT6qsa74SumRJCrRRUJSE6cufgrnafTmfRwCBncC108/iR6aAZ/5keO47k2o
- QuFYuvurLzNxnXoQlGtSwMYHayMgKhUMjwEDm20cxlRBVtI4+uvvXUiDZi5ipwPtxqiEhpo
- KPwpSAg3kMMBBxRXGa+Qw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R9Q1w4TF71M=:UQbNWnmNDJ1r8EM6qA19XL
- GWnD3UzpPotq0mqaIk6khUHHpFdERzeQyxVzdNmKLdVpm67bV7L3sJIU4enenPnKvqFOQW1Us
- o0WYAjPuy/K5uYeRcVMMl308h9vl5xrdOuQziXz4OyplyBD4mxDxHD9FxirpGaS8Gvk0HV97f
- NQVOHp8yWVgAelBu/6cFhFciStLlyh1bGIWq0M9NHXJoK/a1wT5X4KnWDlG6JU96GI6nKBOGX
- ZCWBx+HY8jju0KXjg3SEPuKhRJUL1Ybo96yL8Prry2WqE4LkCyn+urVBOJ59Y/hfCSrUQxA7r
- A7jZOuQj1WdimOGtMUwjEacFM55xwFB7TBux29bURGgUoziHOHopOfB23ESXUIX5kB3xn+q8P
- dFQjlpcjbT7SYSUkus7bTHKgnQ6Usv4kJkPd+090uC4e9rjVS14RlDSAR3TNy5xA0mocVfIcN
- 3RNNDi7X8CzlH25D6ete1omGAO8PDunclDtSz0kQyoko34sfYGCO06xYUoDwoLlW/t+uTUVAN
- 6urd6QCzS6EofhrV6U4OKBpIV7/FAhXpcII/wf90RojXX4p6CDt+NU19B80QmbP6w2H+kytcR
- KzASEFf3byLWDeldYnhwYssuJMMdOAjnmr/cwnaoBHcHp6mx9ghVPar+ao0zia+8xUj4B41rz
- GSwD9BNAahgf9/evkGaQf3mCrjJ2wX4Jvzs48tX3rP3s0uqKd1rvGgeoVxwZj1jqD+K06BcGg
- betc/byMi9ToaWWFhAABKbeFW6wDXiQoVWAVlYXPupwZEyaDeMvJIgdBE/WSNnFhK8qDiDR+N
- fCm69MesNK54WMRg6qVSVgMJpsoimwZ/ha+q2/UsO+FOhobGQVbkDrCEyzPj6v/xCbEF6Ov3s
- umfhwMxGhVcGlOZiWbldFkAoB9oYPuadQtu8lSaRFGN53vUZICsTyOG8Fdy7XlZVxSEUhliKA
- HX/iCoUW9ZqH3gtaz4WxoUWLhzsPbWekCjIaa0mZY1KZWyoYYAWdlH0E2mCPy9nIeLYIWX1ph
- OoixGwf8W79377GHZ3EnpD0cJ750DMocN0f24hF9Ptf/8rYaswjunjdHNUUFdsNSLfiuSEVd2
- hhscadwGDOfFM2fX32ShdYqDA264dk8PNuWcSMc2qrYwsu0ig46gQbn9g==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1492049009-1631018939=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, Sep 07 2021, Atharva Raykar wrote:
 
-Hi Alban,
-
-On Sun, 5 Sep 2021, Alban Gruin wrote:
-
-> Le 01/09/2021 =C3=A0 13:57, Johannes Schindelin via GitGitGadget a =C3=
-=A9crit=C2=A0:
-> > In 427c3bd28ab (rebase: deprecate --preserve-merges, 2019-03-11) (whic=
-h was
-> > included in v2.22.0), we officially deprecated the --preserve-merges
-> > backend. Over two years later, it is time to drop that backend, and he=
-re is
-> > a patch series that does just that.
-> >
-> > Changes since v1:
-> >
-> >  * Rebased onto v2.33.0
-> >
-> > Johannes Schindelin (7):
-> >   t5520: do not use `pull.rebase=3Dpreserve`
-> >   remote: warn about unhandled branch.<name>.rebase values
-> >   tests: stop testing `git rebase --preserve-merges`
-> >   pull: remove support for `--rebase=3Dpreserve`
-> >   rebase: drop support for `--preserve-merges`
-> >   git-svn: drop support for `--preserve-merges`
-> >   rebase: drop the internal `rebase--interactive` command
-> >
+> This subcommand was once useful for 'submodule update', but now that we
+> have converted the shell code to C, it is no longer used.
 >
-> This is good.
-
-Thanks!
-
-> preserve-merge is the only user of `rebase--interactive'.  In
-> builtin/rebase.c, it is the only producer of the following actions:
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Shourya Shukla <periperidip@gmail.com>
+> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 24 ------------------------
+>  1 file changed, 24 deletions(-)
 >
->  - ACTION_SHORTEN_OIDS
->  - ACTION_EXPAND_OIDS
->  - ACTION_CHECK_TODO_LIST
->  - ACTION_REARRANGE_SQUASH
->  - ACTION_ADD_EXEC
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index a628660d6b..e3e85600c3 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1993,29 +1993,6 @@ static void determine_submodule_update_strategy(struct repository *r,
+>  	free(key);
+>  }
+>  
+> -static int module_update_module_mode(int argc, const char **argv, const char *prefix)
+> -{
+> -	const char *path, *update = NULL;
+> -	int just_cloned;
+> -	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
+> -
+> -	if (argc < 3 || argc > 4)
+> -		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
+> -
+> -	just_cloned = git_config_int("just_cloned", argv[1]);
+> -	path = argv[2];
+> -
+> -	if (argc == 4)
+> -		update = argv[3];
+> -
+> -	determine_submodule_update_strategy(the_repository,
+> -					    just_cloned, path, update,
+> -					    &update_strategy);
+> -	fputs(submodule_strategy_to_string(&update_strategy), stdout);
+> -
+> -	return 0;
+> -}
+> -
+>  struct update_clone_data {
+>  	const struct submodule *sub;
+>  	struct object_id oid;
+> @@ -3463,7 +3440,6 @@ static struct cmd_struct commands[] = {
+>  	{"clone", module_clone, 0},
+>  	{"add-clone", add_clone, 0},
+>  	{"update", module_update, 0},
+> -	{"update-module-mode", module_update_module_mode, 0},
+>  	{"run-update-procedure", run_update_procedure, 0},
+>  	{"ensure-core-worktree", ensure_core_worktree, 0},
+>  	{"relative-path", resolve_relative_path, 0},
 
-Makes sense!
+So in https://lore.kernel.org/git/87sfyglfl9.fsf@evledraar.gmail.com I
+suggested squashing the shell removal, but I see now that here later in
+09-13/13.
 
-> Which in turn, are the only reason for these functions to exist:
->
->  - transform_todo_file()
+So yeah, having 08/13 stand-alone is easier to read then, but I think
+then squashing all of 09-13 together is better. I.e. there's no reason
+to remove these one at a time, let's just remove them all at once.
 
-My patch series already removed this.
+That also makes it clear that it's a remove-only change aside from your
+"refactor while at it" of renaming this function:
 
->  - check_todo_list_from_file() (from the sequencer)
+    -static int do_run_update_procedure(struct update_data *ud, struct string_list *err)
+    +static int run_update_procedure(struct update_data *ud, struct string_list *err)
 
-Good point!
+We could either skip that, or split that later refactoring into another
+commit.
 
->  - rearrange_squash_in_todo_file()
-
-This was already removed by my patch series.
-
->  - add_exec_commands()
-
-Actually, this function is still needed, but its scope can be reduced.
-
-Thank you!
-Dscho
-
---8323328-1492049009-1631018939=:55--
+Thanks for working on this, I'm exciting to see more of git-submodule.sh
+go away. Hopefully these comments I left are useful / will aid future
+reviewer readability of this series.
