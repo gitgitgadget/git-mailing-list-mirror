@@ -2,110 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B052C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 02:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FEEFC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 02:24:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D13C6108B
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 02:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3C126108D
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 02:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346139AbhIHCSY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 22:18:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35042 "EHLO
+        id S1347137AbhIHCZh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 22:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235450AbhIHCSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 22:18:20 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D515C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 19:17:12 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id m9so853523wrb.1
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 19:17:12 -0700 (PDT)
+        with ESMTP id S235450AbhIHCZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 22:25:33 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F7FC061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 19:24:26 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id y18so1205776ioc.1
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 19:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=mO6XkLHQL3a/TemDdoDtE/8OXCaWboURjrkTebQ11wg=;
-        b=mIscAzCTMau1ox7/GhcWXc5la0B9ateW+DF8B0lFklEsMJB+xqkrK3CWznEM1f4vxA
-         vLFinNVkfJIQVyeOcYNxQTgRaO8hREuagzsPg3xIi1OD+MIvmna4iO6tkUW5FuJy5wQ2
-         W1eer28AmTJs5odYNDhqtyqtL22tFPMicSK2sRqii3ymBU3e8IWMKPH9Tn78AUbMjnZE
-         /X1rnPfRKrat7r738un8JOej32G4qBu/qZ+0mFIc4aelWasRN9GlOSAx6o3ehIQEgl6d
-         G/TUsWc8SKaLJPeKDRBvxFUTPK5EX/3ou63xwo3nOpTG7bMHZKpqETBY8lk0smZUqiXJ
-         SYvw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=81UcoHzQ8PpWP7rqFvHuKJmKWnqtssulnwioT1ujEMM=;
+        b=YM5wVfWb7nUeBGK9JP3wuRg6KIy2opuOeA4pOWxyErhK/adNfqje17TESn5ElBtZKc
+         kmWH7KRKJ10YD7SqyQsQn1OeW3ok7+upu0/2KxXxzXhM4sg6RUAzx+jYSqe0cdutY3e3
+         v+3OHvxjNPpkiCeBTK51Mzs0By8mzTc+DhhOZjg7+lIyIYQtKFEpyhdVek2OlCfVtssz
+         rUHVrylA+NThMKYt6keXAKI05z4W2ikpOQbT2gW9pLaH9bQEWnPq8D9LO2UQeWy91uY5
+         NdyhPUAE8AcskVGz2Rvv1h8LvdkKtx56i048xpfRaVlP3blmvwCED+mQuPnyYO3hsqiT
+         uOVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mO6XkLHQL3a/TemDdoDtE/8OXCaWboURjrkTebQ11wg=;
-        b=L6GgR0xExS2/lluS0+E0iSPBTBAjLcTTzaYdWB6kqrwrgjM5VA5qU4I4bCByxjFHg0
-         LCjecPybD7/y2oWKGar9KJSfNgwvCqBQKUruKaVb3MrE+B6joIPaaSOHBI2qr3SBhTy+
-         eU4+74ZZliA08gEze++KdE2ijoTvFMP7a2ZgNscwL82IS/NzKXzzETNOx8iIOEpySVYA
-         5Czh19XLOE3ac6q9Swlg7IZzsCXGUg7DMFk8bU8eXmLTOe2EfZ7o1mlvKWgZsSlEbpkg
-         PQLSAaupljRYezEUqdfS3kGfApt6kP1qrlAz8F6k/aaxmTsXUEx++oRDsZqcl65htwD2
-         jqrg==
-X-Gm-Message-State: AOAM531zz4ZsM3PviSlchiAYfOyii+I8c1OFTrBuAjvtFxtLYi1fZmUe
-        ElfFpeu6wwqp7wCGXNTFjifGBiaQ3Y4=
-X-Google-Smtp-Source: ABdhPJxlQL3v8muP3O7IdRtkfy2nhS8gBuc4scu6eBuILWeaoyZJ91+lZX1FOwHzAhIY+CTtmYhpUg==
-X-Received: by 2002:adf:8b03:: with SMTP id n3mr1166718wra.439.1631067431308;
-        Tue, 07 Sep 2021 19:17:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n4sm649744wra.37.2021.09.07.19.17.10
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=81UcoHzQ8PpWP7rqFvHuKJmKWnqtssulnwioT1ujEMM=;
+        b=GoXyJ/+zyNTepCOKH7MnsLbXiQZdZofYSRryHaQ9g5ILGVL/ZRRzunwEUhvFl4OLgV
+         uyuv1KPU2FcyKvLpRJm/bqQO8IIbIi8C6DwOua0+Ap54iFJoZtYF4nBVyhnFKlSxSsDT
+         lUMfvsL/5fjj3jBm1j355LPMIv3XOclQflMOniiMOujYxewm7dUh6dM9bHcIJveTzfdm
+         fdLqKEB6OM0TeNxHooRqRodWqeBbaFYL9lhwem4SKpWvgFoMf6/bPG/yAZkH4SuopQaD
+         1JimDj36e9qhC9YGjmnR+b3Ry3IpxQ+xC5CYpzauPK5Jhc7Kj43X91ePf3/+OTLJRqLJ
+         Xtyg==
+X-Gm-Message-State: AOAM531NiMrXT7ff7687iyXaEfhHDAO/hj/FHZNpAMReVI+/zDKxnvbC
+        e2o9lpng0NJRtijTJRS8RpdxTw==
+X-Google-Smtp-Source: ABdhPJwWptPk7XaOGRPCCC+/yYpY/gIv1tQCK795PSRGVSA8iYXvZE5xXN9U3wZMGwFN5W2CWzAj2w==
+X-Received: by 2002:a02:cc59:: with SMTP id i25mr1363840jaq.125.1631067865708;
+        Tue, 07 Sep 2021 19:24:25 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h9sm396423ioz.30.2021.09.07.19.24.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 19:17:11 -0700 (PDT)
-Message-Id: <5fa7daf264b75fc5419e829683be2e6d83191908.1631067429.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1087.git.git.1631067429.gitgitgadget@gmail.com>
-References: <pull.1087.git.git.1631067429.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 02:17:09 +0000
-Subject: [PATCH 2/2] am: fix incorrect exit status on am fail to abort
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 07 Sep 2021 19:24:25 -0700 (PDT)
+Date:   Tue, 7 Sep 2021 22:24:24 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 1/4] t/helper/test-bitmap.c: add 'dump-hashes' mode
+Message-ID: <YTge2NlvvRC+VoPY@nand.local>
+References: <cover.1631049462.git.me@ttaylorr.com>
+ <918f9b275a1a03b6383e32f28cf1db26a6d67633.1631049462.git.me@ttaylorr.com>
+ <878s07kfsg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <878s07kfsg.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Wed, Sep 08, 2021 at 03:37:05AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > +static int bitmap_dump_hashes(void)
+> > +{
+> > +	return test_bitmap_hashes(the_repository);
+> > +}
+> > [...]
+> >  		return bitmap_list_commits();
+> > +	if (!strcmp(argv[1], "dump-hashes"))
+> > +		return bitmap_dump_hashes();
+>
+> Perhaps the return code only for the brevity of this test-only code?
+> Seems like having bitmap_dump_hashes() do the "return 0" would be better
+> in that case.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/am.c        | 3 ++-
- t/t4151-am-abort.sh | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Yeah, it is silly to just return a constant from bitmap_dump_hashes
+(and ditto for bitmap_list_commits), but it makes this easier to write.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0c2ad96b70e..c79e0167e98 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2106,7 +2106,8 @@ static void am_abort(struct am_state *state)
- 	if (!has_orig_head)
- 		oidcpy(&orig_head, the_hash_algo->empty_tree);
- 
--	clean_index(&curr_head, &orig_head);
-+	if (clean_index(&curr_head, &orig_head))
-+		die(_("failed to clean index"));
- 
- 	if (has_orig_head)
- 		update_ref("am --abort", "HEAD", &orig_head,
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index 501a7a9d211..f889f25a98f 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -195,7 +195,7 @@ test_expect_success 'am --abort leaves index stat info alone' '
- 	git diff-files --exit-code --quiet
- '
- 
--test_expect_failure 'git am --abort return failed exit status when it fails' '
-+test_expect_success 'git am --abort return failed exit status when it fails' '
- 	test_when_finished "rm -rf file-2/ && git reset --hard" &&
- 	git checkout changes &&
- 	git format-patch -1 --stdout conflicting >changes.mbox &&
--- 
-gitgitgadget
+I don't care either way. If you feel strongly, then please say so (but I
+can't imagine that you do).
+
+Thanks,
+Taylor
