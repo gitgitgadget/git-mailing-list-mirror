@@ -2,69 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A80C433FE
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C1EC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:47:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6B2C61108
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:44:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60F5F61163
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245337AbhIHKpx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 06:45:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36464 "EHLO
+        id S243868AbhIHKsZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 06:48:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231440AbhIHKpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 06:45:52 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D058CC061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 03:44:44 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id s25so2315824edw.0
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 03:44:44 -0700 (PDT)
+        with ESMTP id S231440AbhIHKsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 06:48:20 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98CEC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 03:47:09 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id s25so2324861edw.0
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 03:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=YOE/6IpkxPygusQAWR4QbWwtDK0KaTdxn9dbOPe4GVQ=;
-        b=gFljuCsvAcXpdRt6/FDiQ4Pu7yOj1XcqrNmVVpPhB8Z7r6P2n1dP9cjivHUBj+vCJ/
-         obC9viY8zpOmiyR3R/kU3z9x9K8YqkU/9o9ph36d3x3JsN6raaVnM9npANmB3kDi738u
-         Pcj3dUu4sRFQmRs1UjR5Xp1q0wkSzw3k5+FxSGSi7oLA4ceGyxbDHshK/cTV+WSCwuFn
-         ofOcput0TnkG+MfhlR6iMibMGUXiLD+tAFdXrQUE+8Gzpz9+dbAHwI55qmFAcmNH+tnW
-         Na/yw3prk9QUTH1raDsXvRyrI7JJ92UnSurA1uh3kPHZFOnjKR80P7z29hwUzOjCQMqo
-         1lRA==
+        bh=Xx8f0nB+m+CB6J8t9VC+KEYIz29eyWmlYC5Z44o5p0c=;
+        b=qEiJlv7qFNBJUTAYRKgkh/gjQS26brScFNTzTaf+e6oFRQ3vHKma39Li7gODmAiqQH
+         8clOzPnTorHA0FGY0f8bxhefPdSJ9nPXOF/cV8iHJjoTxChUNi7wJ0k/K7tf4TvN/efo
+         8UhxLX85mRPPgVr4jyhARX9arWzIPoWaV/nIZj5jutgQGuZX5ph8T2sw+9Qw+EMMBfot
+         pCxZkNFPQeMWeN0jUzNMWgn8QUmyBgjG+S3FSPtt1FgMZHg49Q84/jZLEPiGTzD3sJQx
+         c+1ydkutKuw4pOKYCcxOK9dceboIP1Xm5TGNUiZfPfd/R+iLIGOJnBVtTODDj6pjW7Br
+         nwFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=YOE/6IpkxPygusQAWR4QbWwtDK0KaTdxn9dbOPe4GVQ=;
-        b=txsbs9t9x2Y2SWEp0p8pl3d8dGjPRs8sfTcYLsOhKNGD/qKxzGxq3P/O9/g9GGIEAg
-         3qlHuyW47QK2o+ELUNhU0CrA7pZ3934NZrGkaAOmaAi1CZgyWLbzzUd06sqXgMJb19Yj
-         Uk3dqN0Fwd2irJONTUuoD3XB4QKX24BQKxn13qO8a/zs76hzcc9ddvzccKS6CVSaoega
-         pc3aNDUPEow0Ng/jf1U7MFa4AgcLIe8OAD9RPvOT6e6eE6yt89StPwUALBdMUV6M2a4w
-         GO8EwIlKeA90leRlaNbtSiPhK7nPyU9dxoLf+QFCoV/rhhXM1uJF5y1QRHyENVaXI5/a
-         XrOQ==
-X-Gm-Message-State: AOAM5325Zk5nIxrxMceAqjmhk6dUivuwTB2pRCBXdQd22J2epdowsuyM
-        mVytJYYt8zhZCmKbCLpKE5ieO24zuxmY/g==
-X-Google-Smtp-Source: ABdhPJx0UL7+IJij2cHf+Ga2un+dRQxdFvSIpbotokhlOhmrqFQLxxB6czmYwsyAP3p794+35Y7cmw==
-X-Received: by 2002:aa7:c6c8:: with SMTP id b8mr3122988eds.295.1631097883274;
-        Wed, 08 Sep 2021 03:44:43 -0700 (PDT)
+        bh=Xx8f0nB+m+CB6J8t9VC+KEYIz29eyWmlYC5Z44o5p0c=;
+        b=l8qULDQpO7ePD+uC6P1JaJQITLs7GnJoR+etLMPWA3osOxYuosWpGGmpDzJ05/8mCF
+         Uh/zk6/EW+3uVyRQmgoRDnt9Ds0wMsWYNxCUiAfZBL/idgDijEJFe+bXzYEH38bJsnL8
+         94XQd79mdX0bfleDHCYBwrI7/dypmdtZDTjmoHgDp/ZTmH2u4AMI/cDbh7wsShdN3AFk
+         TPFu9kOIuouEdSkknV1C4tIrPGHF0xNEoh1Y3MrI8+4I9rf0iJT5Mmar2pLuok+zgig1
+         V/NY6UUAMvpAuk9pfjVguJDttBtXVYjrfeMCy8NYxgwU3VKd574POlaBSMsV1TJyz3c8
+         9vnA==
+X-Gm-Message-State: AOAM532gdIooQNKPcWIGy/Pb6plTHaQhtHfa0vFDrWk4osL360/ytJw2
+        QUdxf3RcaqzQkepAKRkA0cgmziQpC+Fdxg==
+X-Google-Smtp-Source: ABdhPJwfq/L5j3NmGIjZguxN/p74yjjWkdqtVGF4312wmS2fFk1gK5BEXel0cWV8pirB7GuSLKEzUg==
+X-Received: by 2002:a05:6402:b47:: with SMTP id bx7mr3228620edb.319.1631098028273;
+        Wed, 08 Sep 2021 03:47:08 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id t20sm795871ejc.105.2021.09.08.03.44.42
+        by smtp.gmail.com with ESMTPSA id mb14sm816198ejb.81.2021.09.08.03.47.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 03:44:42 -0700 (PDT)
+        Wed, 08 Sep 2021 03:47:07 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 06/11] t3407: strengthen rebase --abort tests
-Date:   Wed, 08 Sep 2021 12:42:04 +0200
+Subject: Re: [PATCH 11/11] rebase: dereference tags
+Date:   Wed, 08 Sep 2021 12:45:20 +0200
 References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
- <87d7e9bf2d4537ddbdec8c8fa67190e81a426312.1631094563.git.gitgitgadget@gmail.com>
+ <e87ce4fe2537fa5ab6cedec43dd8ffb241bfe5ce.1631094563.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <87d7e9bf2d4537ddbdec8c8fa67190e81a426312.1631094563.git.gitgitgadget@gmail.com>
-Message-ID: <87a6knibxh.fsf@evledraar.gmail.com>
+In-reply-to: <e87ce4fe2537fa5ab6cedec43dd8ffb241bfe5ce.1631094563.git.gitgitgadget@gmail.com>
+Message-ID: <875yvbibtg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,18 +75,134 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Sep 08 2021, Phillip Wood via GitGitGadget wrote:
 
-> The existing tests only check that HEAD points to the correct
-> commit after aborting, they do not check that the original branch
-> is checked out.
-> [...]
-> +# Check that HEAD is equal to "pre-rebase" and the current branch is
-> +# "to-rebase"
-> +check_head() {
-> +	test_cmp_rev HEAD pre-rebase &&
-> +	test "$(git symbolic-ref HEAD)" = refs/heads/to-rebase
-> +}
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Aborting a rebase stated with 'git rebase <upstream> <tag-object>'
+> should checkout the commit pointed to by <tag-object>. Instead it gives
+>
+>     error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD':
+>     trying to write non-commit object
+>     710d743b2b9892457fdcc3970f397e6ec07447e0 to branch 'HEAD'
+>
+> This is because when we parse the command line arguments although we
+> check that the tag points to a commit we remember the oid of the tag
+> and try and checkout that object rather than the commit it points
+> to. Fix this by using lookup_commit_reference_by_name() when parsing
+> the command line.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> ---
+>  builtin/rebase.c        | 18 +++++++++++-------
+>  t/t3407-rebase-abort.sh | 18 ++++++++++++++----
+>  2 files changed, 25 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 93fcc0df2ad..8bf7660a24b 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1903,13 +1903,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			die_if_checked_out(buf.buf, 1);
+>  			options.head_name = xstrdup(buf.buf);
+>  		/* If not is it a valid ref (branch or commit)? */
+> -		} else if (!get_oid(branch_name, &options.orig_head) &&
+> -			   lookup_commit_reference(the_repository,
+> -						   &options.orig_head))
+> -			options.head_name = NULL;
+> -		else
+> -			die(_("fatal: no such branch/commit '%s'"),
+> -			    branch_name);
+> +		} else {
+> +			struct commit *commit =
+> +				lookup_commit_reference_by_name(branch_name);
+> +			if (commit) {
+> +				oidcpy(&options.orig_head, &commit->object.oid);
+> +				options.head_name = NULL;
+> +			} else {
+> +				die(_("fatal: no such branch/commit '%s'"),
+> +				    branch_name);
+> +			}
+> +		}
 
-I reflexively thought "use test_cmp here!", but in this case that's
-pointless as any difference is noted by test_cmp_rev, we're really
-seeing what HEAD is checked out to here. I see we use the same pattern
-in various other tests...
+Suggested style nit:
+
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 8bf7660a24b..c751ef866fd 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1906,13 +1906,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		} else {
+ 			struct commit *commit =
+ 				lookup_commit_reference_by_name(branch_name);
+-			if (commit) {
+-				oidcpy(&options.orig_head, &commit->object.oid);
+-				options.head_name = NULL;
+-			} else {
++			if (!commit)
+ 				die(_("fatal: no such branch/commit '%s'"),
+ 				    branch_name);
+-			}
++
++			oidcpy(&options.orig_head, &commit->object.oid);
++			options.head_name = NULL;
+ 		}
+ 	} else if (argc == 0) {
+ 		/* Do not need to switch branches, we are already on it. */
+
+I.e. handle the "die" case right away & skip the indenting of the
+non-assert code.
+
+(Also grepping around we could really use a fatal non-gentle version of
+lookup_commit_reference_by_name(), but that's another more general
+cleanup...)
+
+>  	} else if (argc == 0) {
+>  		/* Do not need to switch branches, we are already on it. */
+>  		options.head_name =
+> diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+> index 2f41b06e028..310cd0c736c 100755
+> --- a/t/t3407-rebase-abort.sh
+> +++ b/t/t3407-rebase-abort.sh
+> @@ -11,18 +11,18 @@ test_expect_success setup '
+>  	test_commit a a a &&
+>  	git branch to-rebase &&
+>  
+> -	test_commit b a b &&
+> -	test_commit c a c &&
+> +	test_commit --annotate b a b &&
+> +	test_commit --annotate c a c &&
+>  
+>  	git checkout to-rebase &&
+>  	test_commit "merge should fail on this" a d d &&
+> -	test_commit "merge should fail on this, too" a e pre-rebase
+> +	test_commit --annotate "merge should fail on this, too" a e pre-rebase
+>  '
+>  
+>  # Check that HEAD is equal to "pre-rebase" and the current branch is
+>  # "to-rebase"
+>  check_head() {
+> -	test_cmp_rev HEAD pre-rebase &&
+> +	test_cmp_rev HEAD pre-rebase^{commit} &&
+>  	test "$(git symbolic-ref HEAD)" = refs/heads/to-rebase
+>  }
+>  
+> @@ -67,6 +67,16 @@ testrebase() {
+>  		test_path_is_missing "$state_dir"
+>  	'
+>  
+> +	test_expect_success "rebase$type --abort when checking out a tag" '
+> +		test_when_finished "git symbolic-ref HEAD refs/heads/to-rebase" &&
+> +		git reset --hard a -- &&
+> +		test_must_fail git rebase$type --onto b c pre-rebase &&
+> +		test_cmp_rev HEAD b^{commit} &&
+> +		git rebase --abort &&
+> +		test_cmp_rev HEAD pre-rebase^{commit} &&
+> +		! git symbolic-ref HEAD
+> +	'
+> +
+>  	test_expect_success "rebase$type --abort does not update reflog" '
+>  		# Clean up the state from the previous one
+>  		git reset --hard pre-rebase &&
+
+This whole series looks good to me, left some comments on other
+patches. Consider the above suggested squash highly optional :)
