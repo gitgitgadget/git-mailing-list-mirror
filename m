@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 982F5C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 09:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2991C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 09:49:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BAB361139
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 09:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD3CA61153
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 09:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349637AbhIHJuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 05:50:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52174 "EHLO
+        id S1350250AbhIHJum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 05:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347816AbhIHJuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 05:50:35 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09CEC061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 02:49:27 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id d6so2295820wrc.11
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 02:49:27 -0700 (PDT)
+        with ESMTP id S1348506AbhIHJug (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 05:50:36 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2803C06175F
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 02:49:28 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id l7-20020a1c2507000000b002e6be5d86b3so1037214wml.3
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 02:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EPek7zPE71UPQnRcrHy4dEprcD4wlseTed/S+Am4RYg=;
-        b=Bs4amrTQ4CUeN0UAJBCQwiZKpd8QBKV8+Gn2WPQKwHSMyEVu1mhKGKZo6Pxgmiucci
-         +3nGK9H85McuG0HHFVuDHxYjPtnx3rveOdGjCWUepw1uDnZqaXDyodSQsz4eDk/5SWB3
-         3++4tBnLvLidilOKjeXJTnFu9goF6W8YPcChlL0uVDy/4NAYR5CzeU25zMTO0+qqc8y7
-         KXrYbZa65UGfS63YxeqIPDTXpLoVaN1yTWE5DOK33yJzZefcB+7s3ARviuEkWzugRdEf
-         c6osQc38kAa/+ydm2fPzOSmwWZwHe1JF+M/4X3dTw+xcrRfwyGnQx5xUku4ztHO2SV+Q
-         vrIg==
+        bh=yt8R3/UWqtUM7CQB1VKV8KNf4gJG872khhd+8FEB2U8=;
+        b=W+6HefLHdnaBbRc3gKkmuOUWdzpRPB5sYyaZMtEHJUxyOUL0UP5PNEDcO3BLPU+D2X
+         uucuAedvPVbpKQRvyvs2f07KL2/WmOAd7qcX263G+xKjmVpBec5KStjuXjxsITicrzKw
+         76DywAy+n5kOwhOwBmwbtU2pG3UY2gbgQJuIbcXKvwcXC/dG87xACQoO12bRIV8zxF8c
+         68VaEpBGILyJfiE8zQKNDuYXg/ggEY1MkQjvUnlIT4fHE8kS7Gy55m2Pv22/0qxYwWf8
+         BtCxr89+GI2FDd53FzEAVCriP4TZOYM1CstG1xx4NDLAq3ZPO9sYEUZ2Kq1rCs7nUAew
+         RIRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EPek7zPE71UPQnRcrHy4dEprcD4wlseTed/S+Am4RYg=;
-        b=Bzap7wPmuVwnKzl9bd0F/wPi9ZZvmAheNBHuSoI8S9/8Z/+1kwbKEuSMmDjIqcOm3S
-         2DHjHVJYBOvk5gYIRWH/kwbBnOHT7wn3CU8mNqRN0lUUW2K/mU5Vbgu/xcJRjreiBwuT
-         XnBN7GOqTDmDpzyjh2gdl0fVSLD8Q5mCuse6Xqo8F5O0EBWO8V1ijUOQVwwxOVudsofq
-         h9zFMusJYv5aTeJi2FpD2sx5n7dzBa2Eg2YbxmyYeQ7MOsnL74MRwdJ1NPxBOoq3X/mb
-         SAGsvufEiZvyEvKBKDIdevVS+uzSoqonWoK/KZv9vIwvRWtq/fyx2pxVbhhmFR6N1vAL
-         9ncw==
-X-Gm-Message-State: AOAM532YKAzEpr/2hzYDexp+udY5pFp0p9B5V8bpEIvnFvjWVJywJIRM
-        og+8/PTeyjPglShDFhp4G+gMVYNpQm4=
-X-Google-Smtp-Source: ABdhPJy7jq0VAru7kphRy6megvJ02iyirfSzxcEIfNfIrIDWwY0Xyh2tDX1WMIlaALZROndw0UCx3g==
-X-Received: by 2002:a05:6000:374:: with SMTP id f20mr2982348wrf.129.1631094566342;
-        Wed, 08 Sep 2021 02:49:26 -0700 (PDT)
+        bh=yt8R3/UWqtUM7CQB1VKV8KNf4gJG872khhd+8FEB2U8=;
+        b=O3R7Ibg6jRaGBqCw9SnfzNyjtlJp947Pt9v9vuELD6onCIqaBxciWdBATXcDNz19gt
+         rk/Q1cKoxBxaE7+4BMveax8vIAeuEdyPKFyZeo2vDq6nL0i6fXfoIYcw6c08Xcx3VcRx
+         eRn3hbpivxoDkD6l/wUmR1391jVB/0DIacaUcuWMdQPFCxg8JoYKnotFGJWs1PBpnxp6
+         fztoLJcmrWiFwVZFofnJimSy+yoBnighP3V++EXWdIjseK/EIPDERT93K1IJclY9NV8Q
+         ToXvQzu530XsZ3r5+CMEVVlO5JWuH8IQYNTbTV8iDVJnd9kpWq8Xkanett7oUQtUGtiI
+         VPVg==
+X-Gm-Message-State: AOAM533R3tgkXNzWBtwByPhBDrpHbKTdeVTB6PlKKOtqX4xsoZQfkdrn
+        Zs9kXbBxjv1NLpk+8S6uvn5oxc/XORM=
+X-Google-Smtp-Source: ABdhPJzYTLVU98/Dy4QLeJc5A+R4Y1/QRFeCQGFAFX4ywklJot3pAd23/l5k9Vm9BNzfIUnFBOX0Zg==
+X-Received: by 2002:a1c:e915:: with SMTP id q21mr45653wmc.180.1631094567434;
+        Wed, 08 Sep 2021 02:49:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i4sm1768983wmd.5.2021.09.08.02.49.26
+        by smtp.gmail.com with ESMTPSA id z1sm1512368wmi.34.2021.09.08.02.49.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 02:49:26 -0700 (PDT)
-Message-Id: <bef70d86d53714cc8e5ade1b65adf6cd1b0fde28.1631094563.git.gitgitgadget@gmail.com>
+        Wed, 08 Sep 2021 02:49:27 -0700 (PDT)
+Message-Id: <87d7e9bf2d4537ddbdec8c8fa67190e81a426312.1631094563.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
 References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 09:49:15 +0000
-Subject: [PATCH 04/11] t3407: rename a variable
+Date:   Wed, 08 Sep 2021 09:49:17 +0000
+Subject: [PATCH 06/11] t3407: strengthen rebase --abort tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,70 +75,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-$dotest holds the name of the rebase state directory and was named
-after the state directory used at the time the test was added. As we
-no longer use that name rename the variable to reflect its purpose.
+The existing tests only check that HEAD points to the correct
+commit after aborting, they do not check that the original branch
+is checked out.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t3407-rebase-abort.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/t3407-rebase-abort.sh | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 8d913d73bad..d36a3f2758b 100755
+index 624d2ee3fa4..72cf391156d 100755
 --- a/t/t3407-rebase-abort.sh
 +++ b/t/t3407-rebase-abort.sh
-@@ -21,35 +21,35 @@ test_expect_success setup '
+@@ -19,6 +19,13 @@ test_expect_success setup '
+ 	test_commit "merge should fail on this, too" a e pre-rebase
+ '
  
++# Check that HEAD is equal to "pre-rebase" and the current branch is
++# "to-rebase"
++check_head() {
++	test_cmp_rev HEAD pre-rebase &&
++	test "$(git symbolic-ref HEAD)" = refs/heads/to-rebase
++}
++
  testrebase() {
  	type=$1
--	dotest=$2
-+	state_dir=$2
- 
- 	test_expect_success "rebase$type --abort" '
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
+ 	state_dir=$2
+@@ -29,7 +36,7 @@ testrebase() {
  		test_must_fail git rebase$type main &&
--		test_path_is_dir "$dotest" &&
-+		test_path_is_dir "$state_dir" &&
+ 		test_path_is_dir "$state_dir" &&
  		git rebase --abort &&
- 		test_cmp_rev to-rebase pre-rebase &&
--		test ! -d "$dotest"
-+		test ! -d "$state_dir"
+-		test_cmp_rev to-rebase pre-rebase &&
++		check_head &&
+ 		test_path_is_missing "$state_dir"
  	'
  
- 	test_expect_success "rebase$type --abort after --skip" '
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type main &&
--		test_path_is_dir "$dotest" &&
-+		test_path_is_dir "$state_dir" &&
+@@ -41,7 +48,7 @@ testrebase() {
  		test_must_fail git rebase --skip &&
  		test_cmp_rev HEAD main &&
  		git rebase --abort &&
- 		test_cmp_rev to-rebase pre-rebase &&
--		test ! -d "$dotest"
-+		test ! -d "$state_dir"
+-		test_cmp_rev to-rebase pre-rebase &&
++		check_head &&
+ 		test_path_is_missing "$state_dir"
  	'
  
- 	test_expect_success "rebase$type --abort after --continue" '
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type main &&
--		test_path_is_dir "$dotest" &&
-+		test_path_is_dir "$state_dir" &&
- 		echo c > a &&
- 		echo d >> a &&
- 		git add a &&
-@@ -57,7 +57,7 @@ testrebase() {
+@@ -56,7 +63,7 @@ testrebase() {
+ 		test_must_fail git rebase --continue &&
  		! test_cmp_rev HEAD main &&
  		git rebase --abort &&
- 		test_cmp_rev to-rebase pre-rebase &&
--		test ! -d "$dotest"
-+		test ! -d "$state_dir"
+-		test_cmp_rev to-rebase pre-rebase &&
++		check_head &&
+ 		test_path_is_missing "$state_dir"
  	'
  
- 	test_expect_success "rebase$type --abort does not update reflog" '
 -- 
 gitgitgadget
 
