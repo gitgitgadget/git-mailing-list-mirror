@@ -2,148 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3D3DC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96E22C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:46:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A2A661178
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 725826115C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350585AbhIHTl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46792 "EHLO
+        id S241759AbhIHTrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235623AbhIHTl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:41:58 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB569C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:40:49 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id dc3so4004804ejb.10
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:40:49 -0700 (PDT)
+        with ESMTP id S234047AbhIHTro (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:47:44 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D50C061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:46:34 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id w78so3887100qkb.4
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:46:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iJQwAOgGdxICoT9Po7nzQHpx/4ntV433VT/qXbiqMz8=;
-        b=R6rbqTb4sAuP2URY8AWEC2fYDq1g4deCIqQcAIyrAikdC11mnX9cKgNu6B0kunjqd7
-         x7CcMguJeOl1GaMB/+BodPBD3Ib8gGHa2mzIG+u9mnrW+KFDyzxZVfKvVoxdwDZgtSS7
-         TzkpWXCKBQhHsNCqMKXboMQ849V7uLqSXMcJP143d22d2uEMx1LWRtGo97gBFKvSQ8fh
-         ahYmEcuEXSSg6nPDu0wjaJAISm+ofX2k1ZOmqbOwiUPqFZAMrAw+fR8IjTH09//BkcQ1
-         iPBcL+BUePLIg/rp0YfJoVePdOdjQnB0sTtpdqNq/UuJLUpi0/9pNH5Hl7pODzYKeoys
-         ogXA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DEKAikD3cz7czfnlTlJzHKxLrFrCESe0Fy1xSqQe4IA=;
+        b=bCxgLh5nbIGlRBF36KaRDYE1/p7WL92Axz0FXuBNhjlGnk2KglvoyuE6aQvcX4UUra
+         FT9TE2JtIZu6BtAnJ/5uYydKMrbeqOvNZiwiAqWmqZBh7SutB5Jm3QRiCiN/EduNNz5E
+         7eAsymgWUioCqtY/oSQp/SzUQ+QvT3N4oHJTBVkg6KcPoWq841KR3SY+J1SviUUXlgBn
+         h98LVoz7YMI098WzClGydCsDNh9J5QS5IFhPD3Ypp6wc61KcackgK2liPGGMC1NcDJtA
+         8Dx1qvjpnWwPpe3Xmtv/Ql3a/MGWt+ACtWkJEkrp/UCVmGqO33IImoacPaONL/+Yznzz
+         LxvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=iJQwAOgGdxICoT9Po7nzQHpx/4ntV433VT/qXbiqMz8=;
-        b=ZNancVp/IlK4aw48tOJOBQcT0MmG0Bd4BT4JghUttF0x2FP2FppMYBNomzlHSMYIj5
-         fVfATC9Ns4lp0yRsAg0IBz4a8iUstr+AdOPAmr7g2IGcKzjHMkNDcS++Id3GqsT2jmUF
-         /t1a+9cDluUxeYS804xH9R0djQbu3eve07RD9jK3o1NWCl8Smuj0OBipORy+MUL6Xpo3
-         6Br290vtsqa1yjroUOzkU3ZbIDjJwrKmROBj3mTWadY6+ys7+1FiDgrlpgBm4sk4272D
-         eOAiIoMmwuXmCfIkoLc4bLKb7aMdeubWPe2isD+DA2qEdq3hc1oWBtJPMrAqLPioWU1v
-         hY5g==
-X-Gm-Message-State: AOAM531lANDmumOKVnqyDxkBPIXIvzqu+RdPo9yblbEMyQbfpLDOCffF
-        tLRbZteJhIIrD/MOOJQBVI8=
-X-Google-Smtp-Source: ABdhPJy6bQcfPNsH8NEd+OVR5YTAUIGQL1QcpsYiLDNXaCXJs5hQmXetQL4ZJQx3aLHqF7uqro8Msw==
-X-Received: by 2002:a17:906:3fd7:: with SMTP id k23mr1567423ejj.176.1631130048303;
-        Wed, 08 Sep 2021 12:40:48 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id fp13sm344631ejc.29.2021.09.08.12.40.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 12:40:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-        <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 5/6] help: correct logic error in combining --all and
- --config
-Date:   Wed, 08 Sep 2021 21:37:01 +0200
-References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
- <patch-5.6-bcc640d32a1-20210908T151949Z-avarab@gmail.com>
- <CAPig+cSK+wLPUDuGf1d41J_F5jQS+J=a=7kHQLV07-ZKZW9GsA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CAPig+cSK+wLPUDuGf1d41J_F5jQS+J=a=7kHQLV07-ZKZW9GsA@mail.gmail.com>
-Message-ID: <87bl52hn40.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DEKAikD3cz7czfnlTlJzHKxLrFrCESe0Fy1xSqQe4IA=;
+        b=UbtXoxKDBZtTCchC+r04KctfG5WabUqWFWFnjdNy8D7AgyVWsqKa83i0PQ4pWHXBHy
+         ayVSTmtdzx3CWdXh+CQ1mXWtIzCMDdhB2aRSjkvFpETSU4SJL2daRQm9UTdDDqokHxW8
+         fOGeTlqlNJlDcsvABq6OfxcwmbZXVZTxC9oNjL/F13QZwouC0zzfEL3qLH7j1JrzXZv3
+         IO3a3PvfzdSYxLuoDcyjJ6kcSDhAeYG40NxA93vxpBQhmdb0KCfH1AxRIVBnEPCN3LGK
+         vcNoEwOYp2olXdD3eU4NX+/wpgQXZnX5BelCt+/wEfHwoIV4sRyXcxJoeenIFSfh93D5
+         KF5A==
+X-Gm-Message-State: AOAM5327WGlJcj6kbnYABfa193m7ogwLIXYLygbn9XeHjiuQqAFwitPF
+        oAVNYthtLwGMvG5snFIOwh4=
+X-Google-Smtp-Source: ABdhPJz3luw9fF6bKy7pmsimyCDNLiQ3pVgjXQg/bexd28WLRKYhjqtfx5e1lIoSx3xbC0BTiM5bLg==
+X-Received: by 2002:a37:a596:: with SMTP id o144mr5346287qke.135.1631130393735;
+        Wed, 08 Sep 2021 12:46:33 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
+        by smtp.gmail.com with ESMTPSA id v14sm53295qkb.88.2021.09.08.12.46.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 12:46:33 -0700 (PDT)
+Subject: Re: [PATCH 06/13] add: skip paths that are outside sparse-checkout
+ cone
+To:     Matheus Tavares <matheus.bernardino@usp.br>, gitgitgadget@gmail.com
+Cc:     derrickstolee@github.com, dstolee@microsoft.com,
+        git@vger.kernel.org, gitster@pobox.com, newren@gmail.com
+References: <eeba97ad492307302637faf33f6bf6ae8965faa3.1629842085.git.gitgitgadget@gmail.com>
+ <20210827211310.108999-1-matheus.bernardino@usp.br>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <28762f8f-d9b4-caf8-18b5-3cdbf6b59a7d@gmail.com>
+Date:   Wed, 8 Sep 2021 15:46:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <20210827211310.108999-1-matheus.bernardino@usp.br>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Sep 08 2021, Eric Sunshine wrote:
-
-> On Wed, Sep 8, 2021 at 11:24 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> Fix a bug in the --config option that's been there ever since its
->> introduction in 3ac68a93fd2 (help: add --config to list all available
->> config, 2018-05-26). Die when --all and --config are combined,
->> combining them doesn't make sense.
+On 8/27/2021 5:13 PM, Matheus Tavares wrote:
+> On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
 >>
->> The code for the --config option when combined with an earlier
->> refactoring done to support the --guide option in
->> 65f98358c0c (builtin/help.c: add --guide option, 2013-04-02) would
->> cause us to take the "--all" branch early and ignore the --config
->> option.
->>
->> Let's instead list these as incompatible, both in the synopsis and
->> help output, and enforce it in the code itself.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->> diff --git a/builtin/help.c b/builtin/help.c
->> @@ -549,18 +550,26 @@ int cmd_help(int argc, const char **argv, const ch=
-ar *prefix)
->> +       /* Incompatible options */
->> +       if (show_all + !!show_config + show_guides > 1)
->> +               usage_with_options(builtin_help_usage, builtin_help_opti=
-ons);
->
-> I personally find it highly frustrating when a program merely dumps
-> the usage statement without any explanation of what exactly it doesn't
-> like about the command-line. Printing out a simple:
->
->     --all, --guides, --config are mutually exclusive
->
-> message would go a long way toward reducing the frustration level.
->
-> (Aside: I also find it more hostile than helpful when programs dump
-> the usage statement for a command-line invocation error -- even if
-> preceded by an explanation of the error -- since the explanation
-> usually gets drowned-out by the often multi-page usage text, and the
-> user has to go spelunking around the wall of output to try to figure
-> out what actually went wrong. It's much more helpful and easy to
-> figure out what went wrong with the invocation when only a simple
-> error message is printed -- without usage statement. However, that's a
-> separate battle, as Git already has plenty of places which dump the
-> usage statement in response to an invocation error.)
+>> Subject: [PATCH 06/13] add: skip paths that are outside sparse-checkout cone
+> 
+> Perhaps this could be "skip _tracked_ paths that ..." (to help
+> differentiate the end goal of this patch from the previous one).
+> 
+>> diff --git a/pathspec.c b/pathspec.c
+>> index 44306fdaca2..0e6e60fdc5a 100644
+>> --- a/pathspec.c
+>> +++ b/pathspec.c
+>> @@ -39,7 +39,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>>                 return;
+>>         for (i = 0; i < istate->cache_nr; i++) {
+>>                 const struct cache_entry *ce = istate->cache[i];
+>> -               if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
+>> +               if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
+>> +                   (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
+> 
+> Hmm, even though we skip the sparse paths here, cmd_add() will call
+> add_files_to_cache() at the end and still update these paths in the
+> index. I think there are two ways to fix this. We could either change
+> run_diff_files() to skip these paths (but I don't know how other callers
+> of this functions want to handle this, so maybe this needs to hide
+> behind an option flag):
 
-I'll make it emit something more helpful.
+You are absolutely right to point this out. I had missed this interaction.
+But, this is also already broken. The patch below adds a check to show that
+'git add' does not add the sparse_entry, but it does (even when applied
+before any patch in this series). That is: all the modified tests fail
+after this change. I'll work to fix this issue before the next version of
+this series.
 
-More generally I've got quite a bit of parse_options() improvements
-queued up locally that I've been trying to trickle in at the rate I can
-get them through the list, review over at [1] would be much appreciated.
+Thanks,
+-Stolee
 
-I wonder if we can do this automatically, we already have the
-builtin_help_usage, we could parse that in the general case and find
-that certain options are mutually exclusive per the examples there.
+--- >8 ---
 
-We'd then discover what option we parsed when usage_with_options() was
-called, and automatically emit a useful message in these sorts of cases.
+From 21dab466d221e8632d98553f5f1fa900a2d47c7f Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Wed, 8 Sep 2021 15:40:32 -0400
+Subject: [PATCH] t3705: test that 'sparse_entry' is unstaged
 
-Of course the usage strings might be incomplete or wrong, but part of
-the point would be to find those cases & a test mode to die() if a
-command was called with some option combinations not suggested as
-working according to its documented usage...
+The tests in t3705-add-sparse-checkout.sh check to see how 'git add'
+behaves with paths outside the sparse-checkout definition. These
+currently check to see if a given warning is present but not that the
+index is not updated with the sparse entries. Add a new
+'test_sparse_entry_unstaged' helper to be sure 'git add' is behaving
+correctly.
 
-https://lore.kernel.org/git/cover-0.2-00000000000-20210901T110917Z-avarab@g=
-mail.com/
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t3705-add-sparse-checkout.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+index 2b1fd0d0eef..d31a0d4f550 100755
+--- a/t/t3705-add-sparse-checkout.sh
++++ b/t/t3705-add-sparse-checkout.sh
+@@ -36,6 +36,11 @@ setup_gitignore () {
+ 	EOF
+ }
+ 
++test_sparse_entry_unstaged () {
++	git status --porcelain >actual &&
++	! grep "A  sparse_entry" actual
++}
++
+ test_expect_success 'setup' "
+ 	cat >sparse_error_header <<-EOF &&
+ 	The following pathspecs didn't match any eligible path, but they do match index
+@@ -55,6 +60,7 @@ test_expect_success 'git add does not remove sparse entries' '
+ 	setup_sparse_entry &&
+ 	rm sparse_entry &&
+ 	test_must_fail git add sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp error_and_hint stderr &&
+ 	test_sparse_entry_unchanged
+ '
+@@ -73,6 +79,7 @@ test_expect_success 'git add . does not remove sparse entries' '
+ 	rm sparse_entry &&
+ 	setup_gitignore &&
+ 	test_must_fail git add . 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 
+ 	cat sparse_error_header >expect &&
+ 	echo . >>expect &&
+@@ -88,6 +95,7 @@ do
+ 		setup_sparse_entry &&
+ 		echo modified >sparse_entry &&
+ 		test_must_fail git add $opt sparse_entry 2>stderr &&
++		test_sparse_entry_unstaged &&
+ 		test_cmp error_and_hint stderr &&
+ 		test_sparse_entry_unchanged
+ 	'
+@@ -98,6 +106,7 @@ test_expect_success 'git add --refresh does not update sparse entries' '
+ 	git ls-files --debug sparse_entry | grep mtime >before &&
+ 	test-tool chmtime -60 sparse_entry &&
+ 	test_must_fail git add --refresh sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp error_and_hint stderr &&
+ 	git ls-files --debug sparse_entry | grep mtime >after &&
+ 	test_cmp before after
+@@ -106,6 +115,7 @@ test_expect_success 'git add --refresh does not update sparse entries' '
+ test_expect_success 'git add --chmod does not update sparse entries' '
+ 	setup_sparse_entry &&
+ 	test_must_fail git add --chmod=+x sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp error_and_hint stderr &&
+ 	test_sparse_entry_unchanged &&
+ 	! test -x sparse_entry
+@@ -116,6 +126,7 @@ test_expect_success 'git add --renormalize does not update sparse entries' '
+ 	setup_sparse_entry "LINEONE\r\nLINETWO\r\n" &&
+ 	echo "sparse_entry text=auto" >.gitattributes &&
+ 	test_must_fail git add --renormalize sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp error_and_hint stderr &&
+ 	test_sparse_entry_unchanged
+ '
+@@ -124,6 +135,7 @@ test_expect_success 'git add --dry-run --ignore-missing warn on sparse path' '
+ 	setup_sparse_entry &&
+ 	rm sparse_entry &&
+ 	test_must_fail git add --dry-run --ignore-missing sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp error_and_hint stderr &&
+ 	test_sparse_entry_unchanged
+ '
+@@ -148,6 +160,7 @@ test_expect_success 'do not warn when pathspec matches dense entries' '
+ test_expect_success 'add obeys advice.updateSparsePath' '
+ 	setup_sparse_entry &&
+ 	test_must_fail git -c advice.updateSparsePath=false add sparse_entry 2>stderr &&
++	test_sparse_entry_unstaged &&
+ 	test_cmp sparse_entry_error stderr
+ 
+ '
+-- 
+2.33.0.vfs.signtest.55.g904c8365e91
