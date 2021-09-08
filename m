@@ -2,105 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D09BCC433FE
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6ECC433FE
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:02:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC24861167
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7592861102
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351416AbhIHK6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 06:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349357AbhIHK6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 06:58:35 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2D5C061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 03:57:28 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id x11so3397224ejv.0
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 03:57:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=X6qSMBktIKUCDYL8orIxp6xmcJEIz3Qhf9YFGLpAfJY=;
-        b=Ae27jOsTDRP6+IXP7szspumXz0NnM/AHDQhbtn45ndV/QDZoP/oiRzmG4+4tT23qex
-         5cMOSqMxYxNIvHNBCwzor8jgaVvz5XEQVq+RM6cZORxWerbDFUxnxTWD2OSeO8RD60Hy
-         4UeESk9JL4sDcclNimQQyUJ+3pTm0YOzcQmWxKkqv5o3mShQKQz87B1SquRHbN4pDoIQ
-         Olk07EpAkCJT24gsAFpbgTbW4kT/hQNykNFsUOI3L5QwkDJwYBLUVbUfd8hwnt9jel+L
-         pTrTt0tf06PCDCXo/kXeIyNg8wNQGbfKMx0tALnqBmbtg70pyCu2bQb5RvWZM5VOZsjr
-         M23A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=X6qSMBktIKUCDYL8orIxp6xmcJEIz3Qhf9YFGLpAfJY=;
-        b=TmkUDUMilmngoWIxe5psO2N2eUb6GWR7G/Apn9l84HAsofzS2gfRwu30sag3Mm1K4F
-         TOJjIvhOnE6gKi8QWctN1sTK43Bf26GEMyIoBuACfsMJ3GSH/GzEUIF8OaDbHJeZr/Pa
-         P8TQzCWpndvtIhomJ1I0dCR/x8grVjydLdiu9mDgFDH94ooq9/y8Ywytn57ieHvstGFb
-         1EcHsqWNl6yYUuGDK8/O97bNz4eM2sgi9ux9MZSBalT7HALqmIebGJrjjauU+Az3j8AO
-         P1xLNiQHBZX9MEsEHKNtGSyUKFxk33kczky2ZrgsTTu3QwWyzQfUPXgW8NMJ42NK23lG
-         9TxQ==
-X-Gm-Message-State: AOAM532hxtvVEYYtiLOKSpRQ95j/V+rvBiZExBDSNb9rROgVVgyttFFv
-        OTJTNhaDiAMB8BpXeztV1q8Kb+lleSevxQ==
-X-Google-Smtp-Source: ABdhPJwO5SjnoUkFhf1pQmTxLIAce97CS8YBKxmBmkrp+llC5d8pB67AZdICQtuhLUNDWSDeXyz5Qg==
-X-Received: by 2002:a17:907:2a51:: with SMTP id fe17mr3327609ejc.179.1631098646711;
-        Wed, 08 Sep 2021 03:57:26 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f22sm844303ejz.122.2021.09.08.03.57.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 03:57:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Colin Curtis <colinpcurtis@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add cmd_gud and detect libiconv path for Mac OS
-Date:   Wed, 08 Sep 2021 12:50:48 +0200
-References: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
-Message-ID: <871r5zibca.fsf@evledraar.gmail.com>
+        id S1349085AbhIHLED (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 07:04:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51086 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233694AbhIHLEB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 07:04:01 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EBE2EB198;
+        Wed,  8 Sep 2021 07:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=ZwPRWdR9R7rW4z2PlZIg8qfdj
+        eSklze35rU9Oj7fqwc=; b=rHp7nLipIE1LST2NGaTOKHjYP5TScwUvJnfYpHb7E
+        /RcgJgNqA0YaJWjpDRreUVJT/DItmg7Vf74R/JwqB9VqC5C/DflMS2L6zAEiM3xh
+        +jkxzwkEGqkcPVraKSC55OuQ67gg+Mw6Muq5qzYYn8PmLrPjWNno/O1OD9tB41ff
+        OA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 959A9EB195;
+        Wed,  8 Sep 2021 07:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18E42EB194;
+        Wed,  8 Sep 2021 07:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBv?= =?utf-8?B?w6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 0/3] add a test mode for SANITIZE=leak, run it in CI
+References: <cover-v4-0.3-00000000000-20210907T151855Z-avarab@gmail.com>
+        <cover-v5-0.3-00000000000-20210907T212626Z-avarab@gmail.com>
+Date:   Wed, 08 Sep 2021 04:02:50 -0700
+Message-ID: <xmqq35qf72jp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4F2D8BE2-1094-11EC-9FCB-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Tue, Sep 07 2021, Colin Curtis wrote:
-
-> From: Colin Curtis <colinpcurtis@gmail.com>
+> We can compile git with SANITIZE=3Dleak, and have had various efforts i=
+n
+> the past such as 31f9acf9ce2 (Merge branch 'ah/plugleaks', 2021-08-04)
+> to plug memory leaks, but have had no CI testing of it to ensure that
+> we don't get regressions. This series adds a GIT_TEST_* mode for
+> checking those regressions, and runs it in CI.
 >
-> The gud command opens the Pro Git book webpage in the default
-> web browser.  The reason to add this command is due to the
-> play on words when saying 'git gud', which sounds like 'get good'.
-> Hence this command when invoked will open up the Pro Git 
-> webpage to allow the user to 'get good' at git.
+> Since I submitted v2 the delta between origin/master..origin/seen
+> broke even t0001-init.sh when run under SANITIZE=3Dleak, so this series
+> will cause test smoke on "seen".
+>
+> That failure is due to a bug in es/config-based-hooks [1] and the
+> hn/reftable topic, i.e. these patches are legitimately catching
+> regressions in "seen" from day 1.
 
-Purely in terms of implementation if we had this sort of thing it really
-would belong in "git help", not in an overly cleverly named new
-built-in.
+So is there a point in sending this out to the list, before sending
+fixes to these broken topic and making sure they get corrected?
 
-More generally we don't link to git-scm.org now for anything
-significant, AFAICT the only things we do link to are to our own
-generated documentation.
+Because the CI does not "bisect" to tell us "ok, up to this point in
+'seen', all the topics merged play well together", the overall
+effect in the bigger picture is that 'seen' with this series would
+cause CI to stay in failed state.
 
-[Not with my Git PLC hat on, in case anyone's wondering]
+For now, I'll keep this near the tip of 'seen'.
 
-I don't think we should be further endorsing proprietary documentation
-in liue of improving the free docs in git.git itself.
+Thanks.
 
-If this command (whether via "git help" or not) linked to anything it
-should be to our own https://git-scm.com/docs/user-manual; if there's
-things lacking there let's try to improve the freely available docs.
-
-And purely in terms of UX once we had such freely available docs we
-should not be opening a webpage to display them, but linking to a
-manpage etc. Perhaps we should be opening a webpage, and indeed "git
-help" can do that for you, but that should be to docs we have built
-locally & are guaranteed to apply to the git version you're working
-with.
