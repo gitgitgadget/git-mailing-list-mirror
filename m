@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40809C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B813BC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:19:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2653761153
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2AD261153
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240945AbhIHSUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 14:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55954 "EHLO
+        id S1349564AbhIHSUQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 14:20:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350052AbhIHSTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 14:19:32 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46CA1C061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:18:24 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id v18-20020a17090abb9200b001977b4087bcso1752921pjr.7
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:18:24 -0700 (PDT)
+        with ESMTP id S1350077AbhIHSTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 14:19:34 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EBFEC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:18:26 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id w6-20020a0cfc46000000b00370b0997afeso5416225qvp.15
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ygzJ6b8a8bFYZxear5vdaxSwG+hiPr4gi3hgG1EaGjs=;
-        b=emfQOohNpxsYZrw5s53FSuyfF1d4XkYcKsy9qt2phUahGY2nfleUu/LwG7P4bq2pV0
-         CV1yCSsdemFuwS6iX0styd5nsyFORBIo62WJF9R6d8G6FhZJEgvR/ca7BPZmCXYYYR/2
-         aZrW/yOdAcdygi7lLMG+c8GD6aRcc+D2OQb2um6a2dDzFv928V7SE1UHja0rLiu+MbTh
-         evdL+EiNu9qANFuXSFP9i3OtvS8CE4I70g6zkgMYRFnlsEf/KeofSajk8O24qRhqKtO3
-         iH+BhCtRwMU/JJO2NuVX6a9YaixwMVy6hQKMwWc2dPscwUskJGIc5nlQIIgts8a9oRIk
-         Fo+Q==
+        bh=ytIwWEjE21hUv1o4wz/VybIzvmJWeQ+hmqCbY+L6llw=;
+        b=NqmVY8kHXPQiAOOpJMQ7ObBpK+BlaNI3q5rZlt9Yw/1eIX+ob7X7MUwNE4hmjw40x+
+         SUXVniDipT1uhKP8ZGov5dNklyjMkiqrb3Z2R9FxMgXg6tfC18HB3lGJXAJqhcmjgiMp
+         qF8hYIJqQ4x2N0E01j6s0ZLOuMqS2jqCJ1RoQO9/qw1cbPJx6nfG05Qv8Sy7e5ceORVD
+         zs1W3syMbd8hPa60e73+VU5Qp7oLNgNelGan99qGgx5xH2ciAAa7Yw7kqvJjOx1w92EC
+         4pKHHudApDK3QtF3adQajcnpj7+qnBDNhkBS+Y/M6mUwhsbvIxwkl6KkS5qAY+onmMNR
+         7kkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ygzJ6b8a8bFYZxear5vdaxSwG+hiPr4gi3hgG1EaGjs=;
-        b=XL88By/uFD2WT7Dd2z5JRIkQcbdg0oKGBkdFtqJROCs749jLxgr1fOLS0HtSN96G0D
-         lANvjh4hsHhkIbZ0Z8Ohh8FRWyb3xWQslONplwuolsN80VDhvCOEDRx6jlTXYiaxXNS0
-         5qPfps7gFyAuP5kEzsR0Eq04h1BdEsHKLp7vBqB/Y6q2/IhFOnZ5tDALxqAb5UWX/uwS
-         EzCUgFkR1aX2EsaA5TelBnaWTVqff1MNVJIvFJy4sGjY6ucY/WzINXe5+u8oT/HtCQN5
-         3T/XBtRASvswO+uOJJud0cMEckQmP4OKF1YP1iWy05uw6kWGKW+HYL7I+Xu0m2mVDaWN
-         eZ6g==
-X-Gm-Message-State: AOAM533OwRgl+RtfXWbsD3AnfICUaWffyWYsq3H0vXIC2OqhbmiySFd3
-        MIjagL33cVc6LPeH1ZatJ6rfOHCnsfoLaW2eghyKuOZTwZZEffmoXgvPpTnUc40fionQG83Wn9K
-        LT/nsdQuQra6n1XIn2m2/pGhMa2Cs33bTG07I/JG8V1VfIrLhAUK6WI222xHR6Yct2sFj5ZfYbx
-        6m
-X-Google-Smtp-Source: ABdhPJwlmRcTvyYbvFJwRQVmlvTbxkqWps0DtIGHW05LfH/y/d9gBuW7XjiIDS/gPjURef2bo6vnELrrY/zqZAkSLIsa
+        bh=ytIwWEjE21hUv1o4wz/VybIzvmJWeQ+hmqCbY+L6llw=;
+        b=K98VEdGlwjPf6ReGgyKycpuGygg5ByX+YUhbttM7rjbMI9FKRLrgLUr6exy1jh2HB1
+         SnS586rqxXONyJIoNlTc+odFOviD4zGUEA23cbMMIXG/HfkQdw4ku8LI8TQ412fYgPwA
+         QCEK0mNWbZrC0+L5B2CKy2ztLD3FjpXCAANWzBMU43h0QFnd9VQh5TJ2l0WxKuJyZir5
+         1Q0risp+g6pzp9bVwYUxC1RrNzrLMZkTQx6WUjtkV6hoaVF3K6JUkYet3vkl02D/YOdU
+         VKcPNI0bvf6XeeSoBbJjhU7kAPr+7uyXRV/is4tXXFxMh+kPZpZw5dOvMJhEo1OQHJpZ
+         q3jg==
+X-Gm-Message-State: AOAM532t7+jjn8XRp+6fUxK8UgcK/msnlvB0AOVwwTIy9RJb2NHEAGbh
+        xcSBSlVXLUfn0hGhf45uMM/BpmmeODa2ZpU8R9aiI+0MPKG50yfQdkkKmYmqeyu8arIsqcuDmtf
+        Y8Zu7semIsGMcQ0ksTGYuY0VYpsRErh4YtJ32uvsyHuqmDDXFnB46WjJa+yRPP/M/UcEkRL2VnO
+        oZ
+X-Google-Smtp-Source: ABdhPJzccHlbGwblfIvOYacftmtrhX59Fh87bxPu7X9qLMdyVooViJWMWZWYiatCtpB+Nqu9KN+Y8Q2YyJvsVeUB2gsi
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:903:248f:b029:128:d5ea:18a7 with
- SMTP id p15-20020a170903248fb0290128d5ea18a7mr4162585plw.83.1631125103581;
- Wed, 08 Sep 2021 11:18:23 -0700 (PDT)
-Date:   Wed,  8 Sep 2021 11:18:14 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:1843:: with SMTP id
+ d3mr5438869qvy.10.1631125105241; Wed, 08 Sep 2021 11:18:25 -0700 (PDT)
+Date:   Wed,  8 Sep 2021 11:18:15 -0700
 In-Reply-To: <cover.1631123754.git.jonathantanmy@google.com>
-Message-Id: <7ab764f27061c04c589262e621ef664357682ca9.1631123754.git.jonathantanmy@google.com>
+Message-Id: <f149dee7afffc9de72d3b81dfb1afbd2b027c9b4.1631123754.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1631123754.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
-Subject: [PATCH 2/3] revision: remove "submodule" from opt struct
+Subject: [PATCH 3/3] DO NOT SUBMIT commit-reach,revision: verify non-mixing
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
@@ -71,388 +70,514 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clean up a TODO in revision.h by removing the "submodule" field from
-struct setup_revision_opt. This field is only used to specify the ref
-store to use, so use rev_info->repo to determine the ref store instead.
+This patch is provided to show reviewers how I'm verifying that there is
+no mixing of object structs in the revision walking mechanisms. I've
+intercepted any creation of commit nodes in alloc.c (whether through
+alloc_commit_node() directly or through alloc_object_node()) to add the
+repository in which that node is allocated, and checked all additions of
+commits to data structures (as far as I can tell) in commit-reach.c and
+revision.c to make sure that the repository in the added objects is what
+we expect. This ensures that any flags set are set on the correct nodes
+(for example, it won't be set on an object allocated in the_repository
+and then checked from an object allocated in a submodule).
 
-The only users of this field are merge-ort.c and merge-recursive.c.
-However, both these files specify the superproject as rev_info->repo and
-the submodule as setup_revision_opt->submodule. In order to be able to
-pass the submodule as rev_info->repo, all commits must be parsed with
-the submodule explicitly specified; this patch does that as well. (An
-incremental solution in which only some commits are parsed with explicit
-submodule will not work, because if the same commit is parsed twice in
-different repositories, there will be 2 heap-allocated object structs
-corresponding to that commit, and any flag set by the revision walking
-mechanism on one of them will not be reflected onto the other.)
+I'll leave out this patch in subsequent revisions of this patch set.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- merge-ort.c       | 55 +++++++++++++++++++++++++++++++----------------
- merge-recursive.c | 51 ++++++++++++++++++++++++++++---------------
- revision.c        | 16 +++++---------
- revision.h        |  1 -
- 4 files changed, 76 insertions(+), 47 deletions(-)
+ alloc.c        |  2 ++
+ commit-reach.c | 60 +++++++++++++++++++++++++------------
+ object.h       |  1 +
+ revision.c     | 80 ++++++++++++++++++++++++++++++++------------------
+ 4 files changed, 97 insertions(+), 46 deletions(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 515dc39b7f..419ac0f396 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -32,6 +32,7 @@
- #include "promisor-remote.h"
- #include "revision.h"
- #include "strmap.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "tree.h"
- #include "unpack-trees.h"
-@@ -1511,7 +1512,6 @@ static int find_first_merges(struct repository *repo,
- 	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
- 		  oid_to_hex(&a->object.oid));
- 	repo_init_revisions(repo, &revs, NULL);
--	rev_opts.submodule = path;
- 	/* FIXME: can't handle linked worktrees in submodules yet */
- 	revs.single_worktree = path != NULL;
- 	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
-@@ -1521,7 +1521,7 @@ static int find_first_merges(struct repository *repo,
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(&revs)) != NULL) {
- 		struct object *o = &(commit->object);
--		if (in_merge_bases(b, commit))
-+		if (repo_in_merge_bases(repo, b, commit))
- 			add_object_array(o, NULL, &merges);
- 	}
- 	reset_revision_walk();
-@@ -1536,7 +1536,7 @@ static int find_first_merges(struct repository *repo,
- 		contains_another = 0;
- 		for (j = 0; j < merges.nr; j++) {
- 			struct commit *m2 = (struct commit *) merges.objects[j].item;
--			if (i != j && in_merge_bases(m2, m1)) {
-+			if (i != j && repo_in_merge_bases(repo, m2, m1)) {
- 				contains_another = 1;
- 				break;
- 			}
-@@ -1557,10 +1557,13 @@ static int merge_submodule(struct merge_options *opt,
- 			   const struct object_id *b,
- 			   struct object_id *result)
+diff --git a/alloc.c b/alloc.c
+index 957a0af362..98b8c06834 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -96,6 +96,7 @@ void *alloc_object_node(struct repository *r)
  {
-+	const struct submodule *submodule;
-+	struct repository subrepo;
-+	struct strbuf sb = STRBUF_INIT;
-+	int ret = 0;
- 	struct commit *commit_o, *commit_a, *commit_b;
- 	int parent_count;
- 	struct object_array merges;
--	struct strbuf sb = STRBUF_INIT;
- 
- 	int i;
- 	int search = !opt->priv->call_depth;
-@@ -1576,6 +1579,10 @@ static int merge_submodule(struct merge_options *opt,
- 	if (is_null_oid(b))
- 		return 0;
- 
-+	/*
-+	 * NEEDSWORK: Remove this when all submodule object accesses are
-+	 * through explicitly specified repositores.
-+	 */
- 	if (add_submodule_odb(path)) {
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s (not checked out)"),
-@@ -1583,39 +1590,49 @@ static int merge_submodule(struct merge_options *opt,
- 		return 0;
- 	}
- 
--	if (!(commit_o = lookup_commit_reference(opt->repo, o)) ||
--	    !(commit_a = lookup_commit_reference(opt->repo, a)) ||
--	    !(commit_b = lookup_commit_reference(opt->repo, b))) {
-+	submodule = submodule_from_path(opt->repo, null_oid(), path);
-+	if (repo_submodule_init(&subrepo, opt->repo, submodule)) {
-+		path_msg(opt, path, 0,
-+				_("Failed to merge submodule %s (not checked out)"),
-+				path);
-+		return 0;
-+	}
-+
-+	if (!(commit_o = lookup_commit_reference(&subrepo, o)) ||
-+	    !(commit_a = lookup_commit_reference(&subrepo, a)) ||
-+	    !(commit_b = lookup_commit_reference(&subrepo, b))) {
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s (commits not present)"),
- 			 path);
--		return 0;
-+		goto cleanup;
- 	}
- 
- 	/* check whether both changes are forward */
--	if (!in_merge_bases(commit_o, commit_a) ||
--	    !in_merge_bases(commit_o, commit_b)) {
-+	if (!repo_in_merge_bases(&subrepo, commit_o, commit_a) ||
-+	    !repo_in_merge_bases(&subrepo, commit_o, commit_b)) {
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s "
- 			   "(commits don't follow merge-base)"),
- 			 path);
--		return 0;
-+		goto cleanup;
- 	}
- 
- 	/* Case #1: a is contained in b or vice versa */
--	if (in_merge_bases(commit_a, commit_b)) {
-+	if (repo_in_merge_bases(&subrepo, commit_a, commit_b)) {
- 		oidcpy(result, b);
- 		path_msg(opt, path, 1,
- 			 _("Note: Fast-forwarding submodule %s to %s"),
- 			 path, oid_to_hex(b));
--		return 1;
-+		ret = 1;
-+		goto cleanup;
- 	}
--	if (in_merge_bases(commit_b, commit_a)) {
-+	if (repo_in_merge_bases(&subrepo, commit_b, commit_a)) {
- 		oidcpy(result, a);
- 		path_msg(opt, path, 1,
- 			 _("Note: Fast-forwarding submodule %s to %s"),
- 			 path, oid_to_hex(a));
--		return 1;
-+		ret = 1;
-+		goto cleanup;
- 	}
- 
- 	/*
-@@ -1627,10 +1644,10 @@ static int merge_submodule(struct merge_options *opt,
- 
- 	/* Skip the search if makes no sense to the calling context.  */
- 	if (!search)
--		return 0;
-+		goto cleanup;
- 
- 	/* find commit which merges them */
--	parent_count = find_first_merges(opt->repo, path, commit_a, commit_b,
-+	parent_count = find_first_merges(&subrepo, path, commit_a, commit_b,
- 					 &merges);
- 	switch (parent_count) {
- 	case 0:
-@@ -1664,7 +1681,9 @@ static int merge_submodule(struct merge_options *opt,
- 	}
- 
- 	object_array_clear(&merges);
--	return 0;
-+cleanup:
-+	repo_clear(&subrepo);
-+	return ret;
+ 	struct object *obj = alloc_node(r->parsed_objects->object_state, sizeof(union any_object));
+ 	obj->type = OBJ_NONE;
++	obj->repo = r;
+ 	return obj;
  }
  
- static void initialize_attr_index(struct merge_options *opt)
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 3355d50e8a..bc5b34d56e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -24,6 +24,7 @@
- #include "repository.h"
- #include "revision.h"
- #include "string-list.h"
-+#include "submodule-config.h"
- #include "submodule.h"
+@@ -120,6 +121,7 @@ void *alloc_commit_node(struct repository *r)
+ {
+ 	struct commit *c = alloc_node(r->parsed_objects->commit_state, sizeof(struct commit));
+ 	init_commit_node(c);
++	c->object.repo = r;
+ 	return c;
+ }
+ 
+diff --git a/commit-reach.c b/commit-reach.c
+index c226ee3da4..eb868c3837 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -9,6 +9,30 @@
  #include "tag.h"
- #include "tree-walk.h"
-@@ -1113,7 +1114,6 @@ static int find_first_merges(struct repository *repo,
- 	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
- 		  oid_to_hex(&a->object.oid));
- 	repo_init_revisions(repo, &revs, NULL);
--	rev_opts.submodule = path;
- 	/* FIXME: can't handle linked worktrees in submodules yet */
- 	revs.single_worktree = path != NULL;
- 	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
-@@ -1123,7 +1123,7 @@ static int find_first_merges(struct repository *repo,
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(&revs)) != NULL) {
- 		struct object *o = &(commit->object);
--		if (in_merge_bases(b, commit))
-+		if (repo_in_merge_bases(repo, b, commit))
- 			add_object_array(o, NULL, &merges);
- 	}
- 	reset_revision_walk();
-@@ -1138,7 +1138,7 @@ static int find_first_merges(struct repository *repo,
- 		contains_another = 0;
- 		for (j = 0; j < merges.nr; j++) {
- 			struct commit *m2 = (struct commit *) merges.objects[j].item;
--			if (i != j && in_merge_bases(m2, m1)) {
-+			if (i != j && repo_in_merge_bases(repo, m2, m1)) {
- 				contains_another = 1;
- 				break;
- 			}
-@@ -1174,6 +1174,9 @@ static int merge_submodule(struct merge_options *opt,
- 			   const struct object_id *base, const struct object_id *a,
- 			   const struct object_id *b)
- {
-+	const struct submodule *submodule;
-+	struct repository subrepo;
-+	int ret = 0;
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
- 	struct object_array merges;
-@@ -1197,27 +1200,37 @@ static int merge_submodule(struct merge_options *opt,
- 	if (is_null_oid(b))
- 		return 0;
+ #include "commit-reach.h"
  
-+	/*
-+	 * NEEDSWORK: Remove this when all submodule object accesses are
-+	 * through explicitly specified repositores.
-+	 */
- 	if (add_submodule_odb(path)) {
- 		output(opt, 1, _("Failed to merge submodule %s (not checked out)"), path);
- 		return 0;
- 	}
- 
--	if (!(commit_base = lookup_commit_reference(opt->repo, base)) ||
--	    !(commit_a = lookup_commit_reference(opt->repo, a)) ||
--	    !(commit_b = lookup_commit_reference(opt->repo, b))) {
--		output(opt, 1, _("Failed to merge submodule %s (commits not present)"), path);
-+	submodule = submodule_from_path(opt->repo, null_oid(), path);
-+	if (repo_submodule_init(&subrepo, opt->repo, submodule)) {
-+		output(opt, 1, _("Failed to merge submodule %s (not checked out)"), path);
- 		return 0;
- 	}
- 
-+	if (!(commit_base = lookup_commit_reference(&subrepo, base)) ||
-+	    !(commit_a = lookup_commit_reference(&subrepo, a)) ||
-+	    !(commit_b = lookup_commit_reference(&subrepo, b))) {
-+		output(opt, 1, _("Failed to merge submodule %s (commits not present)"), path);
-+		goto cleanup;
-+	}
++static void checked_put(struct repository *repo, struct prio_queue *queue, struct commit *commit)
++{
++	if (repo != commit->object.repo)
++		*(int *)0=1;
++	prio_queue_put(queue, commit);
++}
++#define prio_queue_put DO_NOT_USE
 +
- 	/* check whether both changes are forward */
--	if (!in_merge_bases(commit_base, commit_a) ||
--	    !in_merge_bases(commit_base, commit_b)) {
-+	if (!repo_in_merge_bases(&subrepo, commit_base, commit_a) ||
-+	    !repo_in_merge_bases(&subrepo, commit_base, commit_b)) {
- 		output(opt, 1, _("Failed to merge submodule %s (commits don't follow merge-base)"), path);
--		return 0;
-+		goto cleanup;
++static struct commit_list *checked_insert(struct repository *repo, struct commit *item, struct commit_list **list)
++{
++	if (repo != item->object.repo)
++		*(int *)0=1;
++	return commit_list_insert(item, list);
++}
++#define commit_list_insert DO_NOT_USE
++
++static struct commit_list *checked_insert_by_date(struct repository *repo, struct commit *item, struct commit_list **list)
++{
++	if (repo != item->object.repo)
++		*(int *)0=1;
++	return commit_list_insert_by_date(item, list);
++}
++#define commit_list_insert_by_date DO_NOT_USE
++
+ /* Remember to update object flag allocation in object.h */
+ #define PARENT1		(1u<<16)
+ #define PARENT2		(1u<<17)
+@@ -66,11 +90,11 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 		commit_list_append(one, &result);
+ 		return result;
+ 	}
+-	prio_queue_put(&queue, one);
++	checked_put(r, &queue, one);
+ 
+ 	for (i = 0; i < n; i++) {
+ 		twos[i]->object.flags |= PARENT2;
+-		prio_queue_put(&queue, twos[i]);
++		checked_put(r, &queue, twos[i]);
  	}
  
- 	/* Case #1: a is contained in b or vice versa */
--	if (in_merge_bases(commit_a, commit_b)) {
-+	if (repo_in_merge_bases(&subrepo, commit_a, commit_b)) {
- 		oidcpy(result, b);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
-@@ -1227,9 +1240,10 @@ static int merge_submodule(struct merge_options *opt,
- 		else
- 			; /* no output */
- 
--		return 1;
-+		ret = 1;
-+		goto cleanup;
- 	}
--	if (in_merge_bases(commit_b, commit_a)) {
-+	if (repo_in_merge_bases(&subrepo, commit_b, commit_a)) {
- 		oidcpy(result, a);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
-@@ -1239,7 +1253,8 @@ static int merge_submodule(struct merge_options *opt,
- 		else
- 			; /* no output */
- 
--		return 1;
-+		ret = 1;
-+		goto cleanup;
+ 	while (queue_has_nonstale(&queue)) {
+@@ -92,7 +116,7 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 		if (flags == (PARENT1 | PARENT2)) {
+ 			if (!(commit->object.flags & RESULT)) {
+ 				commit->object.flags |= RESULT;
+-				commit_list_insert_by_date(commit, &result);
++				checked_insert_by_date(r, commit, &result);
+ 			}
+ 			/* Mark parents of a found merge stale */
+ 			flags |= STALE;
+@@ -106,7 +130,7 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 			if (repo_parse_commit(r, p))
+ 				return NULL;
+ 			p->object.flags |= flags;
+-			prio_queue_put(&queue, p);
++			checked_put(r, &queue, p);
+ 		}
  	}
  
- 	/*
-@@ -1251,10 +1266,10 @@ static int merge_submodule(struct merge_options *opt,
- 
- 	/* Skip the search if makes no sense to the calling context.  */
- 	if (!search)
--		return 0;
-+		goto cleanup;
- 
- 	/* find commit which merges them */
--	parent_count = find_first_merges(opt->repo, &merges, path,
-+	parent_count = find_first_merges(&subrepo, &merges, path,
- 					 commit_a, commit_b);
- 	switch (parent_count) {
- 	case 0:
-@@ -1281,7 +1296,9 @@ static int merge_submodule(struct merge_options *opt,
+@@ -128,7 +152,7 @@ static struct commit_list *merge_bases_many(struct repository *r,
+ 			 * We do not mark this even with RESULT so we do not
+ 			 * have to clean it up.
+ 			 */
+-			return commit_list_insert(one, &result);
++			return checked_insert(r, one, &result);
  	}
  
- 	object_array_clear(&merges);
--	return 0;
-+cleanup:
-+	repo_clear(&subrepo);
-+	return ret;
+ 	if (repo_parse_commit(r, one))
+@@ -143,7 +167,7 @@ static struct commit_list *merge_bases_many(struct repository *r,
+ 	while (list) {
+ 		struct commit *commit = pop_commit(&list);
+ 		if (!(commit->object.flags & STALE))
+-			commit_list_insert_by_date(commit, &result);
++			checked_insert_by_date(r, commit, &result);
+ 	}
+ 	return result;
  }
+@@ -155,7 +179,7 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+ 	if (!in)
+ 		return ret;
  
- static int merge_mode_and_contents(struct merge_options *opt,
+-	commit_list_insert(in->item, &ret);
++	checked_insert(the_repository, in->item, &ret);
+ 
+ 	for (i = in->next; i; i = i->next) {
+ 		struct commit_list *new_commits = NULL, *end = NULL;
+@@ -287,7 +311,7 @@ static int remove_redundant_with_gen(struct repository *r,
+ 		/* push the STALE bits up to min generation */
+ 		struct commit_list *stack = NULL;
+ 
+-		commit_list_insert(walk_start[i], &stack);
++		checked_insert(r, walk_start[i], &stack);
+ 		walk_start[i]->object.flags |= STALE;
+ 
+ 		while (stack) {
+@@ -317,7 +341,7 @@ static int remove_redundant_with_gen(struct repository *r,
+ 			while (parents) {
+ 				if (!(parents->item->object.flags & STALE)) {
+ 					parents->item->object.flags |= STALE;
+-					commit_list_insert(parents->item, &stack);
++					checked_insert(r, parents->item, &stack);
+ 					break;
+ 				}
+ 				parents = parents->next;
+@@ -410,7 +434,7 @@ static struct commit_list *get_merge_bases_many_0(struct repository *r,
+ 	cnt = remove_redundant(r, rslt, cnt);
+ 	result = NULL;
+ 	for (i = 0; i < cnt; i++)
+-		commit_list_insert_by_date(rslt[i], &result);
++		checked_insert_by_date(r, rslt[i], &result);
+ 	free(rslt);
+ 	return result;
+ }
+@@ -451,7 +475,7 @@ int repo_is_descendant_of(struct repository *r,
+ 	if (generation_numbers_enabled(the_repository)) {
+ 		struct commit_list *from_list = NULL;
+ 		int result;
+-		commit_list_insert(commit, &from_list);
++		checked_insert(r, commit, &from_list);
+ 		result = can_all_from_reach(from_list, with_commit, 0);
+ 		free_commit_list(from_list);
+ 		return result;
+@@ -550,7 +574,7 @@ struct commit_list *reduce_heads(struct commit_list *heads)
+ 	}
+ 	num_head = remove_redundant(the_repository, array, num_head);
+ 	for (i = 0; i < num_head; i++)
+-		tail = &commit_list_insert(array[i], tail)->next;
++		tail = &checked_insert(the_repository, array[i], tail)->next;
+ 	free(array);
+ 	return result;
+ }
+@@ -588,7 +612,7 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+ 	if (parse_commit(new_commit) < 0)
+ 		return 0;
+ 
+-	commit_list_insert(old_commit, &old_commit_list);
++	checked_insert(the_repository, old_commit, &old_commit_list);
+ 	ret = repo_is_descendant_of(the_repository,
+ 				    new_commit, old_commit_list);
+ 	free_commit_list(old_commit_list);
+@@ -765,7 +789,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 		struct commit_list *stack = NULL;
+ 
+ 		list[i]->object.flags |= assign_flag;
+-		commit_list_insert(list[i], &stack);
++		checked_insert(the_repository, list[i], &stack);
+ 
+ 		while (stack) {
+ 			struct commit_list *parent;
+@@ -789,7 +813,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 					    commit_graph_generation(parent->item) < min_generation)
+ 						continue;
+ 
+-					commit_list_insert(parent->item, &stack);
++					checked_insert(the_repository, parent->item, &stack);
+ 					break;
+ 				}
+ 			}
+@@ -907,7 +931,7 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 			c->object.flags |= PARENT2;
+ 			parse_commit(c);
+ 
+-			prio_queue_put(&queue, *item);
++			checked_put(the_repository, &queue, *item);
+ 		}
+ 	}
+ 
+@@ -917,7 +941,7 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 		if (current->object.flags & PARENT1) {
+ 			current->object.flags &= ~PARENT1;
+ 			current->object.flags |= reachable_flag;
+-			commit_list_insert(current, &found_commits);
++			checked_insert(the_repository, current, &found_commits);
+ 			num_to_find--;
+ 		}
+ 
+@@ -933,7 +957,7 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 				continue;
+ 
+ 			p->object.flags |= PARENT2;
+-			prio_queue_put(&queue, p);
++			checked_put(the_repository, &queue, p);
+ 		}
+ 	}
+ 
+diff --git a/object.h b/object.h
+index 3b38c9cc98..22e9d2a52a 100644
+--- a/object.h
++++ b/object.h
+@@ -90,6 +90,7 @@ struct object {
+ 	unsigned type : TYPE_BITS;
+ 	unsigned flags : FLAG_BITS;
+ 	struct object_id oid;
++	struct repository *repo;
+ };
+ 
+ const char *type_name(unsigned int type);
 diff --git a/revision.c b/revision.c
-index 0dabb5a0bc..7e7c41fedd 100644
+index 7e7c41fedd..ba30e58921 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2563,8 +2563,7 @@ static int for_each_good_bisect_ref(struct ref_store *refs, each_ref_fn fn, void
- 	return for_each_bisect_ref(refs, fn, cb_data, term_good);
+@@ -33,6 +33,30 @@
+ #include "bloom.h"
+ #include "json-writer.h"
+ 
++static void checked_put(struct repository *repo, struct prio_queue *queue, struct commit *commit)
++{
++	if (repo != commit->object.repo)
++		*(int *)0=1;
++	prio_queue_put(queue, commit);
++}
++#define prio_queue_put DO_NOT_USE
++
++static struct commit_list *checked_insert(struct repository *repo, struct commit *item, struct commit_list **list)
++{
++	if (repo != item->object.repo)
++		*(int *)0=1;
++	return commit_list_insert(item, list);
++}
++#define commit_list_insert DO_NOT_USE
++
++static struct commit_list *checked_insert_by_date(struct repository *repo, struct commit *item, struct commit_list **list)
++{
++	if (repo != item->object.repo)
++		*(int *)0=1;
++	return commit_list_insert_by_date(item, list);
++}
++#define commit_list_insert_by_date DO_NOT_USE
++
+ volatile show_early_output_fn_t show_early_output;
+ 
+ static const char *term_bad;
+@@ -1124,9 +1148,9 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 				continue;
+ 			p->object.flags |= (SEEN | NOT_USER_GIVEN);
+ 			if (list)
+-				commit_list_insert_by_date(p, list);
++				checked_insert_by_date(revs->repo, p, list);
+ 			if (queue)
+-				prio_queue_put(queue, p);
++				checked_put(revs->repo, queue, p);
+ 		}
+ 		return 0;
+ 	}
+@@ -1166,9 +1190,9 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 		if (!(p->object.flags & SEEN)) {
+ 			p->object.flags |= (SEEN | NOT_USER_GIVEN);
+ 			if (list)
+-				commit_list_insert_by_date(p, list);
++				checked_insert_by_date(revs->repo, p, list);
+ 			if (queue)
+-				prio_queue_put(queue, p);
++				checked_put(revs->repo, queue, p);
+ 		}
+ 		if (revs->first_parent_only)
+ 			break;
+@@ -1291,7 +1315,7 @@ static int still_interesting(struct commit_list *src, timestamp_t date, int slop
+  * the result of "A..B" without --ancestry-path, and limits the latter
+  * further to the ones that can reach one of the commits in "bottom".
+  */
+-static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *list)
++static void limit_to_ancestry(struct repository *repo, struct commit_list *bottom, struct commit_list *list)
+ {
+ 	struct commit_list *p;
+ 	struct commit_list *rlist = NULL;
+@@ -1302,7 +1326,7 @@ static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *li
+ 	 * process parents before children.
+ 	 */
+ 	for (p = list; p; p = p->next)
+-		commit_list_insert(p->item, &rlist);
++		checked_insert(repo, p->item, &rlist);
+ 
+ 	for (p = bottom; p; p = p->next)
+ 		p->item->object.flags |= TMP_MARK;
+@@ -1362,12 +1386,12 @@ static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *li
+  * to filter the result of "A..B" further to the ones that can actually
+  * reach A.
+  */
+-static struct commit_list *collect_bottom_commits(struct commit_list *list)
++static struct commit_list *collect_bottom_commits(struct repository *repo, struct commit_list *list)
+ {
+ 	struct commit_list *elem, *bottom = NULL;
+ 	for (elem = list; elem; elem = elem->next)
+ 		if (elem->item->object.flags & BOTTOM)
+-			commit_list_insert(elem->item, &bottom);
++			checked_insert(repo, elem->item, &bottom);
+ 	return bottom;
  }
  
--static int handle_revision_pseudo_opt(const char *submodule,
--				      struct rev_info *revs,
-+static int handle_revision_pseudo_opt(struct rev_info *revs,
- 				      const char **argv, int *flags)
- {
- 	const char *arg = argv[0];
-@@ -2572,7 +2571,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 	struct ref_store *refs;
- 	int argcount;
+@@ -1399,7 +1423,7 @@ static int limit_list(struct rev_info *revs)
+ 	struct commit *interesting_cache = NULL;
  
--	if (submodule) {
-+	if (revs->repo != the_repository) {
- 		/*
- 		 * We need some something like get_submodule_worktrees()
- 		 * before we can go through all worktrees of a submodule,
-@@ -2581,9 +2580,8 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	if (revs->ancestry_path) {
+-		bottom = collect_bottom_commits(original_list);
++		bottom = collect_bottom_commits(revs->repo, original_list);
+ 		if (!bottom)
+ 			die("--ancestry-path given but there are no bottom commits");
+ 	}
+@@ -1427,7 +1451,7 @@ static int limit_list(struct rev_info *revs)
+ 		    !revs->line_level_traverse)
+ 			continue;
+ 		date = commit->date;
+-		p = &commit_list_insert(commit, p)->next;
++		p = &checked_insert(revs->repo, commit, p)->next;
+ 
+ 		show = show_early_output;
+ 		if (!show)
+@@ -1443,7 +1467,7 @@ static int limit_list(struct rev_info *revs)
+ 		limit_left_right(newlist, revs);
+ 
+ 	if (bottom) {
+-		limit_to_ancestry(bottom, newlist);
++		limit_to_ancestry(revs->repo, bottom, newlist);
+ 		free_commit_list(bottom);
+ 	}
+ 
+@@ -3133,14 +3157,14 @@ static struct commit_list **simplify_one(struct rev_info *revs, struct commit *c
+ 	for (cnt = 0, p = commit->parents; p; p = p->next) {
+ 		pst = locate_simplify_state(revs, p->item);
+ 		if (!pst->simplified) {
+-			tail = &commit_list_insert(p->item, tail)->next;
++			tail = &checked_insert(revs->repo, p->item, tail)->next;
+ 			cnt++;
+ 		}
+ 		if (revs->first_parent_only)
+ 			break;
+ 	}
+ 	if (cnt) {
+-		tail = &commit_list_insert(commit, tail)->next;
++		tail = &checked_insert(revs->repo, commit, tail)->next;
+ 		return tail;
+ 	}
+ 
+@@ -3230,7 +3254,7 @@ static void simplify_merges(struct rev_info *revs)
+ 		 * Do not free(list) here yet; the original list
+ 		 * is used later in this function.
  		 */
- 		if (!revs->single_worktree)
- 			BUG("--single-worktree cannot be used together with submodule");
--		refs = get_submodule_ref_store(submodule);
--	} else
--		refs = get_main_ref_store(revs->repo);
-+	}
-+	refs = get_main_ref_store(revs->repo);
+-		commit_list_insert(commit, &yet_to_do);
++		checked_insert(revs->repo, commit, &yet_to_do);
+ 	}
+ 	while (yet_to_do) {
+ 		list = yet_to_do;
+@@ -3252,7 +3276,7 @@ static void simplify_merges(struct rev_info *revs)
+ 		commit = pop_commit(&list);
+ 		st = locate_simplify_state(revs, commit);
+ 		if (st->simplified == commit)
+-			tail = &commit_list_insert(commit, tail)->next;
++			tail = &checked_insert(revs->repo, commit, tail)->next;
+ 	}
+ }
+ 
+@@ -3316,13 +3340,13 @@ static void trace2_topo_walk_statistics_atexit(void)
+ 	jw_release(&jw);
+ }
+ 
+-static inline void test_flag_and_insert(struct prio_queue *q, struct commit *c, int flag)
++static inline void test_flag_and_insert(struct repository *repo, struct prio_queue *q, struct commit *c, int flag)
+ {
+ 	if (c->object.flags & flag)
+ 		return;
+ 
+ 	c->object.flags |= flag;
+-	prio_queue_put(q, c);
++	checked_put(repo, q, c);
+ }
+ 
+ static void explore_walk_step(struct rev_info *revs)
+@@ -3352,7 +3376,7 @@ static void explore_walk_step(struct rev_info *revs)
+ 		mark_parents_uninteresting(c);
+ 
+ 	for (p = c->parents; p; p = p->next)
+-		test_flag_and_insert(&info->explore_queue, p->item, TOPO_WALK_EXPLORED);
++		test_flag_and_insert(revs->repo, &info->explore_queue, p->item, TOPO_WALK_EXPLORED);
+ }
+ 
+ static void explore_to_depth(struct rev_info *revs,
+@@ -3393,7 +3417,7 @@ static void indegree_walk_step(struct rev_info *revs)
+ 		else
+ 			*pi = 2;
+ 
+-		test_flag_and_insert(&info->indegree_queue, parent, TOPO_WALK_INDEGREE);
++		test_flag_and_insert(revs->repo, &info->indegree_queue, parent, TOPO_WALK_INDEGREE);
+ 
+ 		if (revs->first_parent_only)
+ 			return;
+@@ -3464,8 +3488,8 @@ static void init_topo_walk(struct rev_info *revs)
+ 		if (repo_parse_commit_gently(revs->repo, c, 1))
+ 			continue;
+ 
+-		test_flag_and_insert(&info->explore_queue, c, TOPO_WALK_EXPLORED);
+-		test_flag_and_insert(&info->indegree_queue, c, TOPO_WALK_INDEGREE);
++		test_flag_and_insert(revs->repo, &info->explore_queue, c, TOPO_WALK_EXPLORED);
++		test_flag_and_insert(revs->repo, &info->indegree_queue, c, TOPO_WALK_INDEGREE);
+ 
+ 		generation = commit_graph_generation(c);
+ 		if (generation < info->min_generation)
+@@ -3482,7 +3506,7 @@ static void init_topo_walk(struct rev_info *revs)
+ 		struct commit *c = list->item;
+ 
+ 		if (*(indegree_slab_at(&info->indegree, c)) == 1)
+-			prio_queue_put(&info->topo_queue, c);
++			checked_put(revs->repo, &info->topo_queue, c);
+ 	}
  
  	/*
- 	 * NOTE!
-@@ -2707,12 +2705,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+@@ -3545,7 +3569,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
+ 
+ 		(*pi)--;
+ 		if (*pi == 1)
+-			prio_queue_put(&info->topo_queue, parent);
++			checked_put(revs->repo, &info->topo_queue, parent);
+ 
+ 		if (revs->first_parent_only)
+ 			return;
+@@ -3635,7 +3659,7 @@ static enum rewrite_result rewrite_one_1(struct rev_info *revs,
+ 	}
+ }
+ 
+-static void merge_queue_into_list(struct prio_queue *q, struct commit_list **list)
++static void merge_queue_into_list(struct repository *repo, struct prio_queue *q, struct commit_list **list)
  {
- 	int i, flags, left, seen_dashdash, revarg_opt;
- 	struct strvec prune_data = STRVEC_INIT;
--	const char *submodule = NULL;
- 	int seen_end_of_options = 0;
+ 	while (q->nr) {
+ 		struct commit *item = prio_queue_peek(q);
+@@ -3644,7 +3668,7 @@ static void merge_queue_into_list(struct prio_queue *q, struct commit_list **lis
+ 		if (p && p->item->date >= item->date)
+ 			list = &p->next;
+ 		else {
+-			p = commit_list_insert(item, list);
++			p = checked_insert(repo, item, list);
+ 			list = &p->next; /* skip newly added item */
+ 			prio_queue_get(q); /* pop item */
+ 		}
+@@ -3655,7 +3679,7 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
+ {
+ 	struct prio_queue queue = { compare_commits_by_commit_date };
+ 	enum rewrite_result ret = rewrite_one_1(revs, pp, &queue);
+-	merge_queue_into_list(&queue, &revs->commits);
++	merge_queue_into_list(revs->repo, &queue, &revs->commits);
+ 	clear_prio_queue(&queue);
+ 	return ret;
+ }
+@@ -4075,7 +4099,7 @@ static void create_boundary_commit_list(struct rev_info *revs)
+ 		if (c->object.flags & (SHOWN | BOUNDARY))
+ 			continue;
+ 		c->object.flags |= BOUNDARY;
+-		commit_list_insert(c, &revs->commits);
++		checked_insert(revs->repo, c, &revs->commits);
+ 	}
  
--	if (opt)
--		submodule = opt->submodule;
--
- 	/* First, search for "--" */
- 	if (opt && opt->assume_dashdash) {
- 		seen_dashdash = 1;
-@@ -2741,7 +2735,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 		if (!seen_end_of_options && *arg == '-') {
- 			int opts;
- 
--			opts = handle_revision_pseudo_opt(submodule,
-+			opts = handle_revision_pseudo_opt(
- 						revs, argv + i,
- 						&flags);
- 			if (opts > 0) {
-diff --git a/revision.h b/revision.h
-index 0c65a760ee..5578bb4720 100644
---- a/revision.h
-+++ b/revision.h
-@@ -336,7 +336,6 @@ extern volatile show_early_output_fn_t show_early_output;
- struct setup_revision_opt {
- 	const char *def;
- 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
--	const char *submodule;	/* TODO: drop this and use rev_info->repo */
- 	unsigned int	assume_dashdash:1,
- 			allow_exclude_promisor_objects:1;
- 	unsigned revarg_opt;
+ 	/*
+@@ -4179,7 +4203,7 @@ struct commit *get_revision(struct rev_info *revs)
+ 	if (revs->reverse) {
+ 		reversed = NULL;
+ 		while ((c = get_revision_internal(revs)))
+-			commit_list_insert(c, &reversed);
++			checked_insert(revs->repo, c, &reversed);
+ 		revs->commits = reversed;
+ 		revs->reverse = 0;
+ 		revs->reverse_output_stage = 1;
 -- 
 2.33.0.309.g3052b89438-goog
 
