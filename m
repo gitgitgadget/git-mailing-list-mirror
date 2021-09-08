@@ -2,127 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA838C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D09BCC433FE
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5C0E60ED8
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC24861167
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351205AbhIHK6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 06:58:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41662 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351119AbhIHK6c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 06:58:32 -0400
-Received: (qmail 23203 invoked by uid 109); 8 Sep 2021 10:57:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Sep 2021 10:57:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26088 invoked by uid 111); 8 Sep 2021 10:57:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Sep 2021 06:57:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Sep 2021 06:57:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] Docs: web server must setenv GIT_PROTOCOL for v2
-Message-ID: <YTiXEEEs36NCEr9S@coredump.intra.peff.net>
-References: <20210904151721.445117-1-konstantin@linuxfoundation.org>
- <YTOW352xtsbvJcKy@coredump.intra.peff.net>
- <20210907211128.mauwgxupbredgx7w@meerkat.local>
- <YTiVDo4m5B5RcfCg@coredump.intra.peff.net>
+        id S1351416AbhIHK6j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 06:58:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349357AbhIHK6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 06:58:35 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2D5C061757
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 03:57:28 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id x11so3397224ejv.0
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 03:57:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=X6qSMBktIKUCDYL8orIxp6xmcJEIz3Qhf9YFGLpAfJY=;
+        b=Ae27jOsTDRP6+IXP7szspumXz0NnM/AHDQhbtn45ndV/QDZoP/oiRzmG4+4tT23qex
+         5cMOSqMxYxNIvHNBCwzor8jgaVvz5XEQVq+RM6cZORxWerbDFUxnxTWD2OSeO8RD60Hy
+         4UeESk9JL4sDcclNimQQyUJ+3pTm0YOzcQmWxKkqv5o3mShQKQz87B1SquRHbN4pDoIQ
+         Olk07EpAkCJT24gsAFpbgTbW4kT/hQNykNFsUOI3L5QwkDJwYBLUVbUfd8hwnt9jel+L
+         pTrTt0tf06PCDCXo/kXeIyNg8wNQGbfKMx0tALnqBmbtg70pyCu2bQb5RvWZM5VOZsjr
+         M23A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=X6qSMBktIKUCDYL8orIxp6xmcJEIz3Qhf9YFGLpAfJY=;
+        b=TmkUDUMilmngoWIxe5psO2N2eUb6GWR7G/Apn9l84HAsofzS2gfRwu30sag3Mm1K4F
+         TOJjIvhOnE6gKi8QWctN1sTK43Bf26GEMyIoBuACfsMJ3GSH/GzEUIF8OaDbHJeZr/Pa
+         P8TQzCWpndvtIhomJ1I0dCR/x8grVjydLdiu9mDgFDH94ooq9/y8Ywytn57ieHvstGFb
+         1EcHsqWNl6yYUuGDK8/O97bNz4eM2sgi9ux9MZSBalT7HALqmIebGJrjjauU+Az3j8AO
+         P1xLNiQHBZX9MEsEHKNtGSyUKFxk33kczky2ZrgsTTu3QwWyzQfUPXgW8NMJ42NK23lG
+         9TxQ==
+X-Gm-Message-State: AOAM532hxtvVEYYtiLOKSpRQ95j/V+rvBiZExBDSNb9rROgVVgyttFFv
+        OTJTNhaDiAMB8BpXeztV1q8Kb+lleSevxQ==
+X-Google-Smtp-Source: ABdhPJwO5SjnoUkFhf1pQmTxLIAce97CS8YBKxmBmkrp+llC5d8pB67AZdICQtuhLUNDWSDeXyz5Qg==
+X-Received: by 2002:a17:907:2a51:: with SMTP id fe17mr3327609ejc.179.1631098646711;
+        Wed, 08 Sep 2021 03:57:26 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f22sm844303ejz.122.2021.09.08.03.57.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Sep 2021 03:57:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Colin Curtis <colinpcurtis@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add cmd_gud and detect libiconv path for Mac OS
+Date:   Wed, 08 Sep 2021 12:50:48 +0200
+References: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
+Message-ID: <871r5zibca.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YTiVDo4m5B5RcfCg@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 08, 2021 at 06:48:47AM -0400, Jeff King wrote:
 
-> Both of the included examples here have been tested to work. The one for
-> lighttpd is a little less direct than I'd like, but I couldn't find a
-> way to directly set an environment variable to the value of a request
-> header. From my reading of the documentation, lighttpd will set
-> HTTP_GIT_PROTOCOL automatically, but git-http-backend looks only at
-> GIT_PROTOCOL. Arguably http-backend should do this translation itself.
+On Tue, Sep 07 2021, Colin Curtis wrote:
 
-So having discovered this, I kind of wonder if these documentation
-patches are barking up the wrong tree. There is no reason we would not
-want v2 to work out of the box (after all, it does for git://).
+> From: Colin Curtis <colinpcurtis@gmail.com>
+>
+> The gud command opens the Pro Git book webpage in the default
+> web browser.  The reason to add this command is due to the
+> play on words when saying 'git gud', which sounds like 'get good'.
+> Hence this command when invoked will open up the Pro Git 
+> webpage to allow the user to 'get good' at git.
 
-The patch below does that (and could replace both my and Konstantin's
-documentation patches).
+Purely in terms of implementation if we had this sort of thing it really
+would belong in "git help", not in an overly cleverly named new
+built-in.
 
-This also makes me wonder if we should be documenting the use of
-AcceptEnv for ssh (which sadly I don't think we can make work
-out-of-the-box).
+More generally we don't link to git-scm.org now for anything
+significant, AFAICT the only things we do link to are to our own
+generated documentation.
 
--- >8 --
-Subject: [PATCH] http-backend: handle HTTP_GIT_PROTOCOL CGI variable
+[Not with my Git PLC hat on, in case anyone's wondering]
 
-When a client requests the v2 protocol over HTTP, they set the
-Git-Protocol header. Webservers will generaly make that available to our
-CGI as HTTP_GIT_PROTOCOL in the environment. However, that's not
-sufficient for upload-pack, etc, to respect it; they look in
-GIT_PROTOCOL (without the HTTP_ prefix).
+I don't think we should be further endorsing proprietary documentation
+in liue of improving the free docs in git.git itself.
 
-Either the webserver or the CGI is responsible for relaying that HTTP
-header into the GIT_PROTOCOL variable. Traditionally, our tests have
-configured the webserver to do so, but that's a burden on the server
-admin. We can make this work out of the box by having the http-backend
-CGI copy the contents.
+If this command (whether via "git help" or not) linked to anything it
+should be to our own https://git-scm.com/docs/user-manual; if there's
+things lacking there let's try to improve the freely available docs.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- http-backend.c          | 4 ++++
- t/lib-httpd/apache.conf | 2 --
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/http-backend.c b/http-backend.c
-index b329bf63f0..2f4b4c11de 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -739,6 +739,7 @@ static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
- int cmd_main(int argc, const char **argv)
- {
- 	char *method = getenv("REQUEST_METHOD");
-+	const char *proto_header;
- 	char *dir;
- 	struct service_cmd *cmd = NULL;
- 	char *cmd_arg = NULL;
-@@ -789,6 +790,9 @@ int cmd_main(int argc, const char **argv)
- 	http_config();
- 	max_request_buffer = git_env_ulong("GIT_HTTP_MAX_REQUEST_BUFFER",
- 					   max_request_buffer);
-+	proto_header = getenv("HTTP_GIT_PROTOCOL");
-+	if (proto_header)
-+		setenv(GIT_PROTOCOL_ENVIRONMENT, proto_header, 1);
- 
- 	cmd->imp(&hdr, cmd_arg);
- 	return 0;
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index afa91e38b0..71761e3299 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -81,8 +81,6 @@ PassEnv GIT_TRACE
- PassEnv GIT_CONFIG_NOSYSTEM
- PassEnv GIT_TEST_SIDEBAND_ALL
- 
--SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
--
- Alias /dumb/ www/
- Alias /auth/dumb/ www/auth/dumb/
- 
--- 
-2.33.0.621.ga797e945d8
-
+And purely in terms of UX once we had such freely available docs we
+should not be opening a webpage to display them, but linking to a
+manpage etc. Perhaps we should be opening a webpage, and indeed "git
+help" can do that for you, but that should be to docs we have built
+locally & are guaranteed to apply to the git version you're working
+with.
