@@ -2,207 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C1EC433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2427EC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:48:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60F5F61163
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:47:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C94C61164
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 10:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243868AbhIHKsZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 06:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231440AbhIHKsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 06:48:20 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98CEC061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 03:47:09 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id s25so2324861edw.0
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 03:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Xx8f0nB+m+CB6J8t9VC+KEYIz29eyWmlYC5Z44o5p0c=;
-        b=qEiJlv7qFNBJUTAYRKgkh/gjQS26brScFNTzTaf+e6oFRQ3vHKma39Li7gODmAiqQH
-         8clOzPnTorHA0FGY0f8bxhefPdSJ9nPXOF/cV8iHJjoTxChUNi7wJ0k/K7tf4TvN/efo
-         8UhxLX85mRPPgVr4jyhARX9arWzIPoWaV/nIZj5jutgQGuZX5ph8T2sw+9Qw+EMMBfot
-         pCxZkNFPQeMWeN0jUzNMWgn8QUmyBgjG+S3FSPtt1FgMZHg49Q84/jZLEPiGTzD3sJQx
-         c+1ydkutKuw4pOKYCcxOK9dceboIP1Xm5TGNUiZfPfd/R+iLIGOJnBVtTODDj6pjW7Br
-         nwFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Xx8f0nB+m+CB6J8t9VC+KEYIz29eyWmlYC5Z44o5p0c=;
-        b=l8qULDQpO7ePD+uC6P1JaJQITLs7GnJoR+etLMPWA3osOxYuosWpGGmpDzJ05/8mCF
-         Uh/zk6/EW+3uVyRQmgoRDnt9Ds0wMsWYNxCUiAfZBL/idgDijEJFe+bXzYEH38bJsnL8
-         94XQd79mdX0bfleDHCYBwrI7/dypmdtZDTjmoHgDp/ZTmH2u4AMI/cDbh7wsShdN3AFk
-         TPFu9kOIuouEdSkknV1C4tIrPGHF0xNEoh1Y3MrI8+4I9rf0iJT5Mmar2pLuok+zgig1
-         V/NY6UUAMvpAuk9pfjVguJDttBtXVYjrfeMCy8NYxgwU3VKd574POlaBSMsV1TJyz3c8
-         9vnA==
-X-Gm-Message-State: AOAM532gdIooQNKPcWIGy/Pb6plTHaQhtHfa0vFDrWk4osL360/ytJw2
-        QUdxf3RcaqzQkepAKRkA0cgmziQpC+Fdxg==
-X-Google-Smtp-Source: ABdhPJwfq/L5j3NmGIjZguxN/p74yjjWkdqtVGF4312wmS2fFk1gK5BEXel0cWV8pirB7GuSLKEzUg==
-X-Received: by 2002:a05:6402:b47:: with SMTP id bx7mr3228620edb.319.1631098028273;
-        Wed, 08 Sep 2021 03:47:08 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id mb14sm816198ejb.81.2021.09.08.03.47.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 03:47:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 11/11] rebase: dereference tags
-Date:   Wed, 08 Sep 2021 12:45:20 +0200
-References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
- <e87ce4fe2537fa5ab6cedec43dd8ffb241bfe5ce.1631094563.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <e87ce4fe2537fa5ab6cedec43dd8ffb241bfe5ce.1631094563.git.gitgitgadget@gmail.com>
-Message-ID: <875yvbibtg.fsf@evledraar.gmail.com>
+        id S1346088AbhIHKt4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 06:49:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41648 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231440AbhIHKtz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 06:49:55 -0400
+Received: (qmail 23156 invoked by uid 109); 8 Sep 2021 10:48:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Sep 2021 10:48:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25858 invoked by uid 111); 8 Sep 2021 10:48:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Sep 2021 06:48:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Sep 2021 06:48:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] Docs: web server must setenv GIT_PROTOCOL for v2
+Message-ID: <YTiVDo4m5B5RcfCg@coredump.intra.peff.net>
+References: <20210904151721.445117-1-konstantin@linuxfoundation.org>
+ <YTOW352xtsbvJcKy@coredump.intra.peff.net>
+ <20210907211128.mauwgxupbredgx7w@meerkat.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210907211128.mauwgxupbredgx7w@meerkat.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Sep 07, 2021 at 05:11:28PM -0400, Konstantin Ryabitsev wrote:
 
-On Wed, Sep 08 2021, Phillip Wood via GitGitGadget wrote:
+> On Sat, Sep 04, 2021 at 11:55:11AM -0400, Jeff King wrote:
+> > Unfortunately there isn't any nginx example config there at all yet. If
+> > you have kernel.org config you could share, that would be great. But
+> > even starting with just the "here's how you do v2" part would be
+> > welcome.
+> 
+> I'll see if I can come up with something to put into
+> Documentation/git-http-backend.txt, but I can't right away -- hopefully in
+> early October once a bunch of conferences are over.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Aborting a rebase stated with 'git rebase <upstream> <tag-object>'
-> should checkout the commit pointed to by <tag-object>. Instead it gives
->
->     error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD':
->     trying to write non-commit object
->     710d743b2b9892457fdcc3970f397e6ec07447e0 to branch 'HEAD'
->
-> This is because when we parse the command line arguments although we
-> check that the tag points to a commit we remember the oid of the tag
-> and try and checkout that object rather than the commit it points
-> to. Fix this by using lookup_commit_reference_by_name() when parsing
-> the command line.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-> ---
->  builtin/rebase.c        | 18 +++++++++++-------
->  t/t3407-rebase-abort.sh | 18 ++++++++++++++----
->  2 files changed, 25 insertions(+), 11 deletions(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 93fcc0df2ad..8bf7660a24b 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1903,13 +1903,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			die_if_checked_out(buf.buf, 1);
->  			options.head_name = xstrdup(buf.buf);
->  		/* If not is it a valid ref (branch or commit)? */
-> -		} else if (!get_oid(branch_name, &options.orig_head) &&
-> -			   lookup_commit_reference(the_repository,
-> -						   &options.orig_head))
-> -			options.head_name = NULL;
-> -		else
-> -			die(_("fatal: no such branch/commit '%s'"),
-> -			    branch_name);
-> +		} else {
-> +			struct commit *commit =
-> +				lookup_commit_reference_by_name(branch_name);
-> +			if (commit) {
-> +				oidcpy(&options.orig_head, &commit->object.oid);
-> +				options.head_name = NULL;
-> +			} else {
-> +				die(_("fatal: no such branch/commit '%s'"),
-> +				    branch_name);
-> +			}
-> +		}
+It would be great if you could add nginx examples at some point. But in
+the meantime, we can do this much easier patch to make sure we don't
+forget about mentioning the protocol bits.
 
-Suggested style nit:
+-- >8 --
+Subject: [PATCH] docs/http-backend: mention v2 protocol
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 8bf7660a24b..c751ef866fd 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1906,13 +1906,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		} else {
- 			struct commit *commit =
- 				lookup_commit_reference_by_name(branch_name);
--			if (commit) {
--				oidcpy(&options.orig_head, &commit->object.oid);
--				options.head_name = NULL;
--			} else {
-+			if (!commit)
- 				die(_("fatal: no such branch/commit '%s'"),
- 				    branch_name);
--			}
+There's a little bit of configuration needed at the webserver level in
+order to get the client's v2 protocol probes to Git. But when we
+introduced the v2 protocol, we never documented these explicitly.
+
+Commit 9181c4a9ac (Docs: web server must setenv GIT_PROTOCOL for v2,
+2021-09-04) now mentions them in the v2 docs themselves, but users
+configuring git-over-http for the first time are more likely to be
+looking in the git-http-backend manpage. Let's make sure we mention it
+there, too, and give some examples.
+
+Both of the included examples here have been tested to work. The one for
+lighttpd is a little less direct than I'd like, but I couldn't find a
+way to directly set an environment variable to the value of a request
+header. From my reading of the documentation, lighttpd will set
+HTTP_GIT_PROTOCOL automatically, but git-http-backend looks only at
+GIT_PROTOCOL. Arguably http-backend should do this translation itself.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-http-backend.txt | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 558966aa83..4797bc8aec 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -16,7 +16,9 @@ A simple CGI program to serve the contents of a Git repository to Git
+ clients accessing the repository over http:// and https:// protocols.
+ The program supports clients fetching using both the smart HTTP protocol
+ and the backwards-compatible dumb HTTP protocol, as well as clients
+-pushing using the smart HTTP protocol.
++pushing using the smart HTTP protocol. It also supports Git's
++more-efficient "v2" protocol if properly configured; see the
++discussion of `GIT_PROTOCOL` in the ENVIRONMENT section below.
+ 
+ It verifies that the directory has the magic file
+ "git-daemon-export-ok", and it will refuse to export any Git directory
+@@ -76,6 +78,7 @@ Apache 2.x::
+ ----------------------------------------------------------------
+ SetEnv GIT_PROJECT_ROOT /var/www/git
+ SetEnv GIT_HTTP_EXPORT_ALL
++SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
+ ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+ ----------------------------------------------------------------
+ +
+@@ -203,6 +206,9 @@ $HTTP["url"] =~ "^/git" {
+ 		"GIT_PROJECT_ROOT" => "/var/www/git",
+ 		"GIT_HTTP_EXPORT_ALL" => ""
+ 	)
++	$REQUEST_HEADER["Git-Protocol"] == "version=2" {
++		setenv.add-environment += ("GIT_PROTOCOL" => "version=2")
++	}
+ }
+ ----------------------------------------------------------------
+ +
+@@ -264,6 +270,11 @@ a repository with an extremely large number of refs.  The value can be
+ specified with a unit (e.g., `100M` for 100 megabytes). The default is
+ 10 megabytes.
+ 
++Clients may probe for optional protocol capabilities using the
++`Git-Protocol` HTTP header. In order to support these, the webserver
++must be configured to pass the contents of that header to
++`git-http-backend` in the `GIT_PROTOCOL` environment variable.
 +
-+			oidcpy(&options.orig_head, &commit->object.oid);
-+			options.head_name = NULL;
- 		}
- 	} else if (argc == 0) {
- 		/* Do not need to switch branches, we are already on it. */
+ The backend process sets GIT_COMMITTER_NAME to '$REMOTE_USER' and
+ GIT_COMMITTER_EMAIL to '$\{REMOTE_USER}@http.$\{REMOTE_ADDR\}',
+ ensuring that any reflogs created by 'git-receive-pack' contain some
+-- 
+2.33.0.621.ga797e945d8
 
-I.e. handle the "die" case right away & skip the indenting of the
-non-assert code.
-
-(Also grepping around we could really use a fatal non-gentle version of
-lookup_commit_reference_by_name(), but that's another more general
-cleanup...)
-
->  	} else if (argc == 0) {
->  		/* Do not need to switch branches, we are already on it. */
->  		options.head_name =
-> diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-> index 2f41b06e028..310cd0c736c 100755
-> --- a/t/t3407-rebase-abort.sh
-> +++ b/t/t3407-rebase-abort.sh
-> @@ -11,18 +11,18 @@ test_expect_success setup '
->  	test_commit a a a &&
->  	git branch to-rebase &&
->  
-> -	test_commit b a b &&
-> -	test_commit c a c &&
-> +	test_commit --annotate b a b &&
-> +	test_commit --annotate c a c &&
->  
->  	git checkout to-rebase &&
->  	test_commit "merge should fail on this" a d d &&
-> -	test_commit "merge should fail on this, too" a e pre-rebase
-> +	test_commit --annotate "merge should fail on this, too" a e pre-rebase
->  '
->  
->  # Check that HEAD is equal to "pre-rebase" and the current branch is
->  # "to-rebase"
->  check_head() {
-> -	test_cmp_rev HEAD pre-rebase &&
-> +	test_cmp_rev HEAD pre-rebase^{commit} &&
->  	test "$(git symbolic-ref HEAD)" = refs/heads/to-rebase
->  }
->  
-> @@ -67,6 +67,16 @@ testrebase() {
->  		test_path_is_missing "$state_dir"
->  	'
->  
-> +	test_expect_success "rebase$type --abort when checking out a tag" '
-> +		test_when_finished "git symbolic-ref HEAD refs/heads/to-rebase" &&
-> +		git reset --hard a -- &&
-> +		test_must_fail git rebase$type --onto b c pre-rebase &&
-> +		test_cmp_rev HEAD b^{commit} &&
-> +		git rebase --abort &&
-> +		test_cmp_rev HEAD pre-rebase^{commit} &&
-> +		! git symbolic-ref HEAD
-> +	'
-> +
->  	test_expect_success "rebase$type --abort does not update reflog" '
->  		# Clean up the state from the previous one
->  		git reset --hard pre-rebase &&
-
-This whole series looks good to me, left some comments on other
-patches. Consider the above suggested squash highly optional :)
