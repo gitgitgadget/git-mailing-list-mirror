@@ -7,69 +7,68 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F9D5C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19DFDC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:16:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82D2561158
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:15:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE15960249
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343763AbhIHNQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 09:16:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42918 "EHLO
+        id S1346096AbhIHNRI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 09:17:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235989AbhIHNQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:16:26 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A90C061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:15:17 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id l24so1765227qtj.4
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:15:17 -0700 (PDT)
+        with ESMTP id S1343914AbhIHNRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:17:07 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E5AC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:15:59 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id x5so1732351qtq.13
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MGE/xU+XQsh5EWgXuvPHIfww6TxM9oqS0WWac4MR2ck=;
-        b=JZv9zS+wW1FDmWJJER9h4/UpZgaYCzpYbdDkZaFMmt2RyvsNREOCikseFhbMcSs+lY
-         bWtxFeyMNKUU58ztJH4+3+Zs6kUPtVAr1G6ax7Ob21we8vQ0WD0O0PTeJX7sPUuNEb8r
-         5FMzHFbE3UlUM+XFMzXbljJtVbOLx/N7ZZhaz0CzPwY5Kul03dszHUKaU3/2zaNIWPtL
-         ThJYq6mHt+XPQnGyoFrRCv2c9di4ZipbyKp1tikLB8p5GwnpBq7JYbECL5o/U3f0A8V5
-         ZUr1wVh7E8ANh9/soCYDoqv8OuU3RrWscylD/F0+wqwIPwIUXRC4yzAEQksMlRoZ4478
-         oJug==
+        bh=+4eu1xYIA3FiXN/HQmsL11Qvap6vP7Czax866okiUBI=;
+        b=CLLZx+ujRlTR64jAvL7NhQnKQoSNgXl5TS4JucFUG9WgNMcbHwm8kttbqjxJGxE3nr
+         f3iMC/XCu68+TCJI1yslg93SoKb9RZ3Fxxqs+KjA2n9CnVwpQfCmltsVGBMNQNqatmaB
+         nBiA3dXcFcDvdWO33HK/cZ9x7MnW2eg3vivcf+IXAuWPuPZogcHcXW9xxoSiClvOtMWO
+         HVYP46oKLJGalzDK0S2FXNY+cGnexKMQ5i3s68K+I406n6KFLVNre1lTTK1kU/dT6Y1a
+         l6aZ4rGGJiP0K95IK5whsQUPPTvgKZSp/lJKj+ZrcDgZWqbYfxfs/oIWmH33U2aL/BQd
+         AWyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=MGE/xU+XQsh5EWgXuvPHIfww6TxM9oqS0WWac4MR2ck=;
-        b=tUtKs407ucxMsajbLtliX66GYaT5wDZNCx6NS1FjEXY97exsWH3smAggKg/frT8BHv
-         gJQ85IlwNHQt4BOxDrS4owwUB8VeFG26NJIts3izenckV3pk3WNC96XPwSxYGc0FxQKD
-         2aJFWDuzqTEzlqaJ/BXdrmY64aAcyzOGfnJjhb5u78K4g30Cvw28M6Om7Psdx9LNE35U
-         WRiEuxVykYm1u6mMR8EFbCxfF6jb3wSedpxCiGSOL57Xms9MqE77IY1TFqQLtC0lCMAD
-         a/YcUjypqJaRaHEjwsFuDOB/SmXkc6wFBGiDFLHiMnVJikKpwpXpeSAUIHQPh6DWst2M
-         tyVg==
-X-Gm-Message-State: AOAM532tK3o7MFUKhmkfFgFiNL4zFrhGOPRckjeTsvPIiuCHrH8g+AgU
-        I53e5BMYRdHuG6Vhbt7VxkDteMlKBQo=
-X-Google-Smtp-Source: ABdhPJyZ/KbPZP0O38xSVXGxCwxPwNUITyJ7eZI4T3+DZLOCq78x3KTPapbbHMVF5TKMeREJDlum4w==
-X-Received: by 2002:ac8:4818:: with SMTP id g24mr3525048qtq.328.1631106916914;
-        Wed, 08 Sep 2021 06:15:16 -0700 (PDT)
+        bh=+4eu1xYIA3FiXN/HQmsL11Qvap6vP7Czax866okiUBI=;
+        b=CdPBLV/a5TnAIua8NfZ5cQYIjUf23Eiz41IEtuHWUyDZcka+ix96446q8KZC+eEnfW
+         GJOOpRqZk+Pwqfd5Djyj2EZBqpcp5ndLN7sgdesRnVukxOmPrNhDB9lBVu+xwLmQ87EP
+         UImuagnVI3AioOPS87LuWyBBLEkVBcGqe6Y4HqpC0ehoN8JKAq8WluxWbgbaHQFdSAuL
+         S5nmtABxZrgaPJmkWwSRMYtrEkkz/u6TXII3/OGJmEaWgf/MqqkUEpm1g3cRPbDWj19p
+         T55JXGDHVCvNqkiFOfcilee4khJok0Ji9Zr2Rs2yLAuG6uWOBTCrvTncaa1UriDiGAeD
+         1AhQ==
+X-Gm-Message-State: AOAM5310fSM/k0O4RxbEScdCSVNrjhhA3AIchLR6x7tqKo/lw+89GOgC
+        72pTjruVzZydltME1ot9wpujyn7kXo8=
+X-Google-Smtp-Source: ABdhPJxypiAQFHxBKmtVhCuteAlTiIDWCVxN1JE0cIRJp7kYnD+f+MXzbSr4Kk1y4VZbsmNiPC2UIg==
+X-Received: by 2002:ac8:5845:: with SMTP id h5mr3645101qth.91.1631106958726;
+        Wed, 08 Sep 2021 06:15:58 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
-        by smtp.gmail.com with ESMTPSA id p123sm1697527qke.94.2021.09.08.06.15.16
+        by smtp.gmail.com with ESMTPSA id a189sm1631557qkf.114.2021.09.08.06.15.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 06:15:16 -0700 (PDT)
-Subject: Re: [PATCH 3/3] stash: restore untracked files AFTER restoring
- tracked files
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+        Wed, 08 Sep 2021 06:15:58 -0700 (PDT)
+Subject: Re: [PATCH 0/3] Fix D/F issues in stash
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 References: <pull.1086.git.git.1631065426.gitgitgadget@gmail.com>
- <ac8ca07481d2ed4156036c2441d10712a1b92b0e.1631065427.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2109081003270.55@tvgsbejvaqbjf.bet>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <53a16340-561b-dc67-5562-31d16460da84@gmail.com>
-Date:   Wed, 8 Sep 2021 09:15:15 -0400
+Message-ID: <c39e1b86-479f-2a07-9e9b-9da2bf1c9493@gmail.com>
+Date:   Wed, 8 Sep 2021 09:15:57 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <ac8ca07481d2ed4156036c2441d10712a1b92b0e.1631065427.git.gitgitgadget@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2109081003270.55@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -77,24 +76,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/7/2021 9:43 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 9/8/2021 4:04 AM, Johannes Schindelin wrote:
+> Hi Elijah,
 > 
-> If a user deletes a file and places a directory of untracked files
-> there, then stashes all these changes, the untracked directory of files
-> cannot be restored until after the corresponding file in the way is
-> removed.  So, restore changes to tracked files before restoring
-> untracked files.
+> On Wed, 8 Sep 2021, Elijah Newren via GitGitGadget wrote:
 > 
-> There is no similar problem to worry about in the opposite directory,
+>> This series fixes a few D/F issues in the stash command. These were some
+>> issues I found while working on unintentional removal of untracked
+>> files/directories and the current working directory, and I'm just submitting
+>> them separately.
+> 
+> Awesome work! Apart from asking for an additional clarification in the
+> commit message of the second patch, I have nothing else to offer but my
+> sincere thanks for working on the `stash` code.
 
-s/directory/direction/ ?
-
-> because untracked files are always additive.  Said another way, there's
-> no way to "stash a removal of an untracked file" because if an untracked
-> file is removed, git simply doesn't know about it.
-
-Makes sense.
+I found what is probably a typo in a commit message, but otherwise this
+looks great.
 
 Thanks,
 -Stolee
