@@ -2,131 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D1AC433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C0FC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BB696113C
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:04:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3AFE60F6C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237107AbhIHTF7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:05:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38296 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbhIHTF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:05:58 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B56FC061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:04:50 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id h16so6846820lfk.10
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:04:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dGAJAoZvKQ6A3M40JSXLeP5B6ATvoDu3ZIdqnQfoNIM=;
-        b=kW65Ga0McWAjg/EtfGkk+PF5IFnqyAMpyeD9UV6LYn+u2u6V0XeRjLi86I3bwM8AjX
-         CVNYrnaZmofB0YGz2dgqQ7+Mm8rsK8vQuaTXT4QtlYC1jXolsK2djRSx3qzeDzmZmD/L
-         sN29/GKm/xuxaBiUEp4KkAepgZwWPbl0Ci+b7gaxnPgPCwZrScX8/C3w7aOSbcX5SDWE
-         fO+J+E4JmwU8B/+9Z16uqpVvGMtZZ+pfBb1X1cY1RUtMsxA/OYJ8Des383W7jxJQTvPD
-         k6A0Qx8kLDHwVXhMDv8EdIBikhmHCiZ4zNcPrQIkniMAqo84KUsI8DEH0VCmSnenGrL/
-         mDwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=dGAJAoZvKQ6A3M40JSXLeP5B6ATvoDu3ZIdqnQfoNIM=;
-        b=f1KCUIUMx3/40o1n5yCsyJznDeowxJ2y4hyYkyIX1VxpHd+cdzHsL7lG7rRwNFm/Bs
-         N3B6ETPN7t/JbF9g3Mi61piiaZcKxC7E/K7x0Vp2w29/H7klrxChWbTeWpM26ypOlygB
-         Us54/BJxYpBxlQD0ZEOqmHf7fKTBlzAIGKEoRjMB4Z5zDzGJEVQ0aERfc+gnxyEneitR
-         8SQWxZW7ZoKkWhm3hMp0uRVFU+zOCb+tnzzcCYKwfAo3/vWQ3TNvLpLDOLYCTtMQWpiE
-         /l1eFhtY5+Mi5jlk0ZTNmMPjLH/jpfJntiHyIDD2FYv5NlLqYI2Edoht14gVOVzccrf2
-         NjFQ==
-X-Gm-Message-State: AOAM533ZthTKiOloh4nWAxp3aBWBUuRydUep4d7xyHhOx9RqCoPhE745
-        FrKNQGetqnytIZbyAWYYSTI/2zqkAlw=
-X-Google-Smtp-Source: ABdhPJzJW/EvF1D7ZZK7IAAxYkUMpUYy/fnF05XlDHhvI9Lpkj64y0iJRU9CaWs+YMPQ+m4tx2oNyA==
-X-Received: by 2002:a19:700b:: with SMTP id h11mr3592799lfc.180.1631127888495;
-        Wed, 08 Sep 2021 12:04:48 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d7sm327165ljc.129.2021.09.08.12.04.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 12:04:47 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
-References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
-        <87pmtjkwsj.fsf@osv.gnss.ru>
-        <cbd0d173-ef17-576b-ab7a-465d42c82265@kdbg.org>
-Date:   Wed, 08 Sep 2021 22:04:46 +0300
-In-Reply-To: <cbd0d173-ef17-576b-ab7a-465d42c82265@kdbg.org> (Johannes Sixt's
-        message of "Wed, 8 Sep 2021 19:23:52 +0200")
-Message-ID: <87pmtiopm9.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S245429AbhIHTMY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:12:24 -0400
+Received: from mout.gmx.net ([212.227.15.19]:38211 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235927AbhIHTMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:12:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631128267;
+        bh=m7gDqs4YeA8TitY6PKZ+kjqOE16oob7j6EC7dHNLkw4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=c8wGUNmFOunZhV6DA10Ix31S7Lfzxh2EujIF8kSMmlqkodNmgpwlmVYi1A9W78wlD
+         MtYFcsnmc9Zgui6DvqFC7Nmk2m+0BNqq0dNTlxxi1TvMEFCSnoSx5C9Hlg+sRRnt03
+         HwhClf/zCJOwNI2J/+VbPZkoCLRtoGYTCSLjZLD0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCKFk-1mFpVp2nh4-009T8S; Wed, 08
+ Sep 2021 21:11:07 +0200
+Date:   Wed, 8 Sep 2021 21:11:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 10/15] scalar: implement the `run` command
+In-Reply-To: <xmqqk0jxft1p.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2109082100180.55@tvgsbejvaqbjf.bet>
+References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <c3f16bccd023601bb1d041c36cf5f49011abcb76.1630359290.git.gitgitgadget@gmail.com> <877dg2xbjp.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2109031747290.55@tvgsbejvaqbjf.bet>
+ <xmqqk0jxft1p.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1395184817-1631128285=:55"
+X-Provags-ID: V03:K1:zJpnmFLgtSC8aFDBGtA2uay4xGWXl5jVoGZ0nGJTJyMsunzJKGX
+ qFB56FUGzr6o17WylxRlc9GQCt5LmtKE79fXsaY+eYzp/ZKY2ZJ2iD5phHANApVq1SDjD8H
+ My5TYCZF8/+e6Lu+7wjoqkYwUhQGuoIDeGRXgmjVOqTtnSLkGFq3GHkSImSJTOtFmeWHqRN
+ 1P83gk+WIyX9Nvi8e3jIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:knHZpjwgTW0=:ZJpa+bTulBrTn+oAmSt7Vp
+ SmvyIxfIYHE2+T4kTivOQb1mdqY3ytBl4zdAZxYlUBvXzZh+ohS6sYlgIPRAIRoCFSOo/lO0G
+ JXA/MUNVD16AoGUm7Kr2rAl+CykKEKJZ2Z+UUHw8PuXCTIJTKXrkNxDQTmhP8QD6Y7B0/hXgA
+ Sj0ptV05CMzyBPr6RmfywSM0YauZAyK7259viuDtFBr7HZWeVTO9QaHHr2GdNyOhnVHvneUmC
+ OC1dccfmm9VBcdU1u/Hkhm71alM5GELa3WwV1BL4112IPHDLcy4uLwUaMvWVwOWqzywvzefnB
+ qFhn0xvpA3i0T/6DDlauXasMjZNTsTXUSe+8yLIyjN9sKWr0JPeNl3XaFVXseCx9uwbG4MQFG
+ eXvVUQ+jPRc06RgLvMXYNlRQ1yun80jZYGFaBQBpCfG3pje76NeLBjTX8gj5wfrTs2maiBZCl
+ uDJ14zn7YiDbak9M7UrureyIbsYjJ2qlzc/PBcxAAshYJ0PFnOkuS0pEfVwRKLgKdEdRwX1FE
+ zChVrlERS9CnI0Ds/PvvHJ+6Z3ATFc49G328LnWLD9LhKk4tJBX/3agMq9BoARwghmOmM3i4V
+ q3oW4AVKvO6D66sz/f1iOC75JNnqwBLQfz1DPgTC/jRrHas1wiRYzZ42TzjBXdg5vmxsXD0PM
+ 9/fj59leT2ZpioL5QbgLRB1tahxWLvaDCq0rO/K87ahjQoi79NYLaF222RkdlYf1EJqDn/zcO
+ CkJNxr9bHmd5oFQ7yU6wZ41DgG7jjjm/sRxrMWGEBPxAFMNJmhh1tWUwo6RGahqVg0uz6yfD8
+ jvOWoP45n/OdOhSZjhEXle9ToGStwkfpZb5arj3nms482ZAhLMeMngl5rOhMS2XSdHqigfL8D
+ Jeqx7bHwkBZ/GN5kPBtcC/HLjQ6is/Tou2zLnaBibeFVWcKQv8p0+EKjF9PyHGVUbOW+xnrMq
+ CJkEmBByTJDjeBqxyXSVxzlqerNcmDIazQJTHOYdjTCdSHFTt8hEjiwzYv2apubH8f9odK8O7
+ KFqmneteejl23HRVmp6EhQiiq0yD2xEpFBetBtYddeIdT5gytwnyo+5g0eoH2x3y7DJO5bRVx
+ fosY0sb+EQwNO4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Am 08.09.21 um 15:43 schrieb Sergey Organov:
->> Besides, nobody yet told us why gitk uses --cc option in invocation of
->> 'diff-index' in the first place. Does it actually *rely* on particular
->> undocumented behavior of "diff-index --cc", or is it just a copy-paste
->> *leftover*?
+--8323328-1395184817-1631128285=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Junio,
+
+On Fri, 3 Sep 2021, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> No, it is not a left-over. The thing is,
+> > Hi =C3=86var,
+> >
+> > On Tue, 31 Aug 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> On Mon, Aug 30 2021, Derrick Stolee via GitGitGadget wrote:
+> >>
+> >> > +	const char *usagestr[] =3D { NULL, NULL };
+> >>
+> >> Missing usage strings?
+> >
+> > This command will show a generated usage, i.e. a non-static string. It
+> > therefore cannot be specified here already. See the `strbuf_*()` calls
+> > populating `buf` and the `usagestr[0] =3D buf.buf;` assignment.
+> >
+> >> > +	if (argc =3D=3D 0)
+> >>
+> >> Style nit (per style guide): s/argc =3D=3D 0/!argc/g.
+> >
+> > It is true that we often do this, but in this instance it would be
+> > misleading: `argc` is a counter, not a Boolean.
 >
-> - there is one point in the code where gitk adds options -p -C --cc (and
-> more) to the command line (around line 8034),
+> That argument could be a plausible excuse to deviate from the style
+> if it were
 >
-> - and there is a totally different point in the code where it is decided
-> whether diff-index, diff-tree, or diff-files is invoked (proc diffcmd
-> around line 7871).
+> 	if (argc =3D=3D 0)
+> 		do no args case;
+> 	else if (argc =3D=3D 1)
+> 		do one arg case;
+> 	else if (argc =3D=3D 2)
+> 		do two args case;
+> 	...
 >
-> IOW, Gitk expects that these option combinations can always be passed to
-> all three commands.
+> Replacing the first one with "if (!argc)" may make it less readable.
+>
+> But I do not think the reasoning applies here
+>
+> 	if (argc =3D=3D 0)
+> 		do a thing that applies only to no args case;
+>
+> without "else".  This is talking about "do we have any argument? Yes
+> or no?" Boolean here.
 
-I see, but the problem here is that while diff-files and diff-tree both
-accept --cc according to their documentation, diff-index does not. This
-means that, strictly speaking, gitk makes a mistake treating all 3
-commands universally with respect to command-line arguments when it uses
---cc.
+Well, I offer a differing opinion. But you're right, we are at least
+consistent in Git's source code in using `!i` where other projects would
+use `i =3D=3D 0`, and consistency is definitely something I'd like to see =
+more
+in Git, not less.
+
+So I changed it as you suggested.
 
 >
-> Gitk does not want to look at a commit and then decide which incarnation
-> of the command it wants to use (--cc vs. -p) depending on whether it is
-> a merge commit or not. This decision is delegated to command that is
-> invoked.
+> >> > +	if (!strcmp("all", argv[0]))
+> >> > +		i =3D -1;
+> >>
+> >> Style nit (per style guide): missing braces here.
+> >
+> > The style guide specifically allows my preference to leave single-line
+> > blocks without curlies.
+>
+> Actually, the exception goes the other way, no?
+>
+> We generally want to avoid such an unnecessary braces around a
+> single statement block.  But when we have an else clause that has a
+> block with multiple statements (hence braces are required), as an
+> exception, the guide asks you to write braces around the body of the
+> if side for consistency.
 
-The problem is not in the kind of commit, the problem is in the command
-being invoked. diff-index doesn't support --cc according to its
-documentation, and thus gitk relies on undocumented behavior of
-diff-index. It might well be the case that it just happened to be
-"working", thus nobody cared.
+You're right. I am somehow still using the previous style where we
+_required_ single-line blocks _not_ to have curly brackets (see e.g.
+aa1c48df817 ([PATCH] ls-tree enhancements, 2005-04-15), the `else` part of
+the added `if (! eltbuf)` block).
 
-> Therefore, silent fall-back from --cc to -p in case of non-merge
-> commits or non-conflicted index is absolutely necessary.
+>
+> When you only have just a couple of lines on the "else {}" side, I
+> do not think it matters too much either way for readability, though.
+> I cannot see the "else" side in the above clause, but IIRC it wasn't
+> just a few lines, was it?
 
-I didn't change semantics of --cc, so this thing was not broken at all.
-I just disabled the --cc option in diff-index command, to match the
-documentation.
+It depends what you count as "just a few lines". There are seven lines
+enclosed within the curly brackets of the `else` block.
 
-As a side note, in fact Git does no "silent fall-back from --cc to -p in
-case of non-merge commits", even though the behavior could be indeed
-seen like this. Instead, --cc implies -p, and, as --cc does not
-otherwise affect treating of non-merge commits, only -p is left active
-for them. Once again, this has not been recently changed, so does not
-need to be fixed.
+But as much as I enjoy thorough reviews of the Scalar code, I am failing
+at getting excited about code style discussions, therefore I simply went
+with your suggestion to enclose even the single-line block in curly
+brackets.
 
 Thanks,
--- Sergey Organov
+Dscho
+
+--8323328-1395184817-1631128285=:55--
