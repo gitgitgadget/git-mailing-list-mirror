@@ -2,109 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E25C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9951C433EF
 	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:50:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 616B961139
+	by mail.kernel.org (Postfix) with ESMTP id CBC2F60724
 	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346634AbhIHBuY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 21:50:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57172 "EHLO
+        id S1346863AbhIHBvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 21:51:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233884AbhIHBuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 21:50:23 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB28C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:49:14 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id i6so655062edu.1
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:49:14 -0700 (PDT)
+        with ESMTP id S233884AbhIHBvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 21:51:07 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E54C061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:50:00 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id u4so580247qta.2
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=R+Djvj8yrzrCTPJ4aUI7xjH0LZ6QQVkyBWw67dCvhZo=;
-        b=gn0pERWj9ruk3vzDSXRxswz+L1vO8miAkZCn1b40X7JOicXt1kpDTlqsDWkOixqD75
-         bOtzKrkxkFA9c57eB0HGEU7FoDGHVpBldZsp9HZSgTwYPkWp762iO9SWcJEBfpw0Rinq
-         lGNNBEsZETKOqVAplBboklDSRxgUIy+SOaZnpBq7X+z06J/3tWxAZo12I2+f1V2EofWP
-         +3aGVv/eU7UBkqsoKrXfnz3MaZYr2htkxnkK4Tdhj9IuCoqUMxr84/9sbzGXpop6DnWK
-         KJO5ZVN9IcYr6JgeFqN75Ri7bLGTIP+uWMASgFNswg0wigxG/bY7OYiO14QleKtNz0SR
-         9reg==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xnuL7r5497pNpYA8FkqnyYgPKwThxdFOq8Dcr5/dJA0=;
+        b=WxpDJCe8EoXiX6kGBkgSO5CZxMo6yFzGehYJ2BhHO3cS/kDjDYP1WIsxnW8t9zyNuL
+         23Cw5dSwAeOgAPo7Ty+M2upQr4OLlWxWDTJU311r/9JqlxT/kd8Y1PzzwNRgMzr9EO4p
+         8LqhUNxT4KnzYXkkU/iCdDePftLWxYMOAF0Wjp9oLZKfY5VSRKH7nbhFxOc3JJj6TmyW
+         k1w0eycry2rdE6TyieTQLKAUixjrWaIs4fwFbOaRJ/mm5mjofdeltuY2zMBwZaA7fDcF
+         VRNZBqY+was2v5Nhkc2sdZpsQP3bQcJqJJep/4d7TEqi9c9YnL5OswLxDZOzFAxZwYYF
+         Z1OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=R+Djvj8yrzrCTPJ4aUI7xjH0LZ6QQVkyBWw67dCvhZo=;
-        b=MrUglhDHXoeeuiFM27lL2BxWRmtslKo4Qo3uAlbIIKorHHFOjrXe0YhEyAimXQqkJU
-         G4ZwXzJ1Boj3TBst+4V9mSKv2b+WgDn9MDBOVdB4djY19JAlX296cJg4qTYHPE/gGx7n
-         ZjrZ3MfoR7+EOCUm7Ripq9XqVJLNHb+ic3hkBunSV/1rnLoInxAyJaCk76fu6IcED/kl
-         6YndfTXNUlJL5dZ3wtYEnaZemUh3L5pYOJnaGsA7EhJ4w2E+aUxcnQTBEGLKcSjwDfGX
-         m3DUMdvOECftAajg3y+vOfzfikWz/rRF8c1PUCckBLXIDnJWGzqD4sjfZTk3SpB3E+Tq
-         /8gQ==
-X-Gm-Message-State: AOAM53353xwwMeB1lQdp2EGCTyZX1Hu/FGZR/kIY1bIapZst7JfXX0sG
-        yc6Hyzjg/ZxNU1k0Ro9Fiv460m1bNAvA0A==
-X-Google-Smtp-Source: ABdhPJyW4VgFRTuectemTbGWDf38FQOCT/2wHGbjfRF6P1L8bIqh1uk8YQk3sVJoYboRTP1r9yIrAw==
-X-Received: by 2002:a05:6402:268f:: with SMTP id w15mr1346679edd.186.1631065752755;
-        Tue, 07 Sep 2021 18:49:12 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o21sm295564edc.47.2021.09.07.18.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 18:49:12 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 4/4] t5326: test propagating hashcache values
-Date:   Wed, 08 Sep 2021 03:46:29 +0200
-References: <cover.1631049462.git.me@ttaylorr.com>
- <acf3ec60cb6f151a9f121d242f38fef6711cced4.1631049462.git.me@ttaylorr.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <acf3ec60cb6f151a9f121d242f38fef6711cced4.1631049462.git.me@ttaylorr.com>
-Message-ID: <87zgsnj0q0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xnuL7r5497pNpYA8FkqnyYgPKwThxdFOq8Dcr5/dJA0=;
+        b=Zuj6g2c2jDW0RyZIgI3OPMJfWA3x9KLrkoM2nFwF/cjkdfj3zwPPvesbc/lhZP2TWD
+         9j+A/CQfWtrOVzg7ITyPFJjn6iDeIX9Q//Qqxfy4QUnaE3XDp0QgZYmFxwxKPe7Gwwp4
+         U+CM8PkfSb5YETjblUjuFhpSdsw8ej8JS/f6Xz5I6t566HqiJgcxizIkLb1ipaBICnJ3
+         vvpaWXyepv1CfAE6B2hXXl728omCjKDwU31rtmR/gMWBTmLPA7n5wPeGrW4ZVgbMTXf/
+         ODcmQwOrY3G9vDKev2IG7jS/+NtN5JQxDwMNGqKIEdzQk+ZVQShKLMy+7ttAC9nfixJY
+         M3kA==
+X-Gm-Message-State: AOAM532yMDOL5R4XKaQ3izk457yoxNQ5WwEcMAwQicE2VShEOfpbk+XL
+        jhFpvz6mCfW5t33bTHEuscxMc4ql5g4=
+X-Google-Smtp-Source: ABdhPJx4PhjGgdgZmrQXp8sG8fkVH8umIMdNhszMt6SE7gbAZ1CKOvGFVfAg7k0aDPPidCBs3TzxfQ==
+X-Received: by 2002:ac8:7d0d:: with SMTP id g13mr1376239qtb.367.1631065799612;
+        Tue, 07 Sep 2021 18:49:59 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7cea:2105:277f:d972? ([2600:1700:e72:80a0:7cea:2105:277f:d972])
+        by smtp.gmail.com with ESMTPSA id o23sm629036qkk.40.2021.09.07.18.49.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Sep 2021 18:49:59 -0700 (PDT)
+Subject: Re: [PATCH v2 2/6] merge: make sparse-aware with ORT
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
+ <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
+ <bb150483bcfd0469cd88bab735bc1178fb6628f5.1629841966.git.gitgitgadget@gmail.com>
+ <CABPp-BEF0htk-Q-+wiF+XgTWRRtDc5FPJKauWZAivLGuMgWeAQ@mail.gmail.com>
+ <e8a875aa-181f-e71f-55ee-012edccf7ecb@gmail.com>
+Message-ID: <b9591211-e58c-f913-d72c-1c0c5cd4a9c7@gmail.com>
+Date:   Tue, 7 Sep 2021 21:49:57 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <e8a875aa-181f-e71f-55ee-012edccf7ecb@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 8/30/2021 1:18 PM, Derrick Stolee wrote:
+> On 8/27/2021 6:43 PM, Elijah Newren wrote:
+>> On Tue, Aug 24, 2021 at 2:52 PM Derrick Stolee via GitGitGadget
+>>> +       ensure_not_expanded checkout -f update-deep &&
+>>> +       (
+>>> +               sane_unset GIT_TEST_MERGE_ALGORITHM &&
+>>> +               git -C sparse-index config pull.twohead ort &&
+>>> +               ensure_not_expanded merge -m merge update-folder1 &&
+>>> +               ensure_not_expanded merge -m merge update-folder2
+>>> +       )
+>>>  '
+>>
+>> Should you use test_config rather than git config here?
+> 
+> That's a better pattern. It's not technically _required_ for these
+> tests because the repositories are completely rewritten at the start
+> of each new test, but it's best to be a good example.
 
-On Tue, Sep 07 2021, Taylor Blau wrote:
+Actually, test_config runs test_when_finished, and that results in
+the following message and failure on macOS and Windows:
 
-> Now that we both can propagate values from the hashcache, and respect
-> the configuration to enable the hashcache at all, test that both of
-> these function correctly by hardening their behavior with a test.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  t/t5326-multi-pack-bitmaps.sh | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->
-> diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-> index 4ad7c2c969..24148ca35b 100755
-> --- a/t/t5326-multi-pack-bitmaps.sh
-> +++ b/t/t5326-multi-pack-bitmaps.sh
-> @@ -283,4 +283,36 @@ test_expect_success 'pack.preferBitmapTips' '
->  	)
->  '
->  
-> +test_expect_success 'hash-cache values are propagated from pack bitmaps' '
-> +	rm -fr repo &&
-> +	git init repo &&
-> +	test_when_finished "rm -fr repo" &&
+	BUG 'test_when_finished does nothing in a subshell'
 
-It seems the need for this "rm -fr repo" dance instead of just relying
-on test_when_finished "rm -rf repo" is because of a 3x tests in a
-function in tb/multi-pack-bitmaps that should probably be combined into
-one, i.e. they share the same logical "repo" setup.
+So, I'll leave this as-is.
 
-> +	(
-> +		cd repo &&
-> +
-> +		git config pack.writeBitmapHashCache true &&
-
-s/git config/test_config/, surely.
+Thanks,
+-Stolee
