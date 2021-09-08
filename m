@@ -2,123 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8248C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 20:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBBA0C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 20:15:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B562E61078
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 20:02:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C343261167
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 20:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349670AbhIHUDi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 16:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51564 "EHLO
+        id S1348344AbhIHURA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 16:17:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241581AbhIHUDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 16:03:36 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7C4C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 13:02:27 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id u4so3011332qta.2
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 13:02:27 -0700 (PDT)
+        with ESMTP id S233179AbhIHUQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 16:16:56 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F34FC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 13:15:48 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id e6-20020ac84e46000000b0029baad9aaa0so5453229qtw.11
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 13:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7YDkmRcMTSFLFQA0rK7ydWAizBTjUbppS/unVFfCNkY=;
-        b=Rd2C+lHmTq+vNsn/FGjqnm0VzbliwvB/QMUd2lsKHFVXaHF2V8oE+eTCNbpqzaaya2
-         FAnEEd6x6Woy+hVaswgXNG60pkA/W0ZdkXQhVLiFK7KSMN+ulniDuxe0Z9SnXN45Vlup
-         S/+117VZSTyFSWmqbHEVCiur/x3z4F9yczwR4yR42KeMLq9NM62sn+aV4cN8X7obpQ7H
-         /p7f20rMiPnUiomt9iQXqvKuxyJrZUQhMzKkmbiPSDg97lSegFexAiUd+0hXX5Q48aZB
-         uQl91veHaEMoyadsXPhRcVXLGRbyffqdeIqS1+cyiExTRBo32x8rZvKbZkUP7iYY4ODh
-         fwMQ==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=JtYyfZNlcwi9zDUmHnDpuMFC26IDare8w5MNCylepxI=;
+        b=jK6CTgWzMLx1aCJIFnKeUuMRJXrM/oHqYM/ngrH0HrHaGsL5fV8H2G41Qgosh25Jl6
+         RPuDdoCbhnH0xgG9tNvMefI6js+oif2p2ymWcZnkJ9qiW/doO+IZ9ARJjMKkJWVzt41f
+         SdkKuBN1qwU5CVe3GE+SsNok1Js+jFDBbA/QQce7wGBurfMtI47WG7GgVTEQ94hXwvH4
+         TWRWzs0JN7N3dN63hhfg2olumz81QJXV1nmr9XKrQHn+DClcfkLgt2rcw20QWDbRBGlG
+         7RpNwzwkBiwdLLpeS+vboRZbzZv16ijth07TAuB7iCbncHFYjZI5ydpKjaDQsdtQJeRL
+         BTlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7YDkmRcMTSFLFQA0rK7ydWAizBTjUbppS/unVFfCNkY=;
-        b=AuIPdUnlm1R3To9oL/6+xpDBPeca8oVqaMTDppcQD6FtoevAQt9MVbOv4/sG+bKEdq
-         x4OUgWEGEiCc2NzmXom4m8BIW0aDntf6AYdepMjEJy7NPl6eYLyFOAhcj520e5BykMCR
-         bBdcOzO7fn+35ZG5il32/VdyGVdaNmch5pB1jLsGAWS+pTU1908iq/7vcXmTuttfz8aA
-         sbRKgrdVdSbPlnNC9YYsO7mZ2PZ90KQ+BHxb36d+wzttHIk9Ti6MJQZA2F8UKc0NEhIV
-         qjuKBwmNk/jF0+7mg0qmzCbYZxR0u1gkLhxpJsm4BvZLocgg132AH5wj55B/Wbz7lXPA
-         sEhw==
-X-Gm-Message-State: AOAM5307tNFgnxO7JrwmEbFxKR1ZafxOi/QIYxZtc3M1yR6e41SbmfIn
-        atbSJKLrmWa7NhhAVXQKhYs=
-X-Google-Smtp-Source: ABdhPJz40qRyetUAF60KkdWJvOLTofF9EO5Byn2YHtm8Nc90hhFVyGpjaI2b5bVbZAJnnNrGyA1pSw==
-X-Received: by 2002:ac8:7f06:: with SMTP id f6mr93256qtk.262.1631131346430;
-        Wed, 08 Sep 2021 13:02:26 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
-        by smtp.gmail.com with ESMTPSA id w6sm85413qkf.95.2021.09.08.13.02.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 13:02:26 -0700 (PDT)
-Subject: Re: [PATCH 06/13] add: skip paths that are outside sparse-checkout
- cone
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>, gitgitgadget@gmail.com
-Cc:     derrickstolee@github.com, dstolee@microsoft.com,
-        git@vger.kernel.org, gitster@pobox.com, newren@gmail.com
-References: <eeba97ad492307302637faf33f6bf6ae8965faa3.1629842085.git.gitgitgadget@gmail.com>
- <20210827211310.108999-1-matheus.bernardino@usp.br>
- <28762f8f-d9b4-caf8-18b5-3cdbf6b59a7d@gmail.com>
-Message-ID: <41852f4f-5b37-2527-c907-1de2a6d2018d@gmail.com>
-Date:   Wed, 8 Sep 2021 16:02:24 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <28762f8f-d9b4-caf8-18b5-3cdbf6b59a7d@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=JtYyfZNlcwi9zDUmHnDpuMFC26IDare8w5MNCylepxI=;
+        b=vmnrwjeEGm7SK4vjkGONdjObH+kG1BI6bQ8/kR/H7J6H5SyGy1/75o/kn7oQTxc5bh
+         opYJR00wUpmpahRdvEnoyJ/0gqjjYEbiiFQHLLVFO25dx8fyIUwSBIbPdeiPp29D74cf
+         M8C7um9s6kw0xLIHsop2/Pe75kE9rxwfH5h+YJRTU4gUdvAiwztM4NPq/MTHwi1/srdB
+         g3fTEoKczHDXufX0OyBHgpf1kKuxXoDFLd18OCBGv3qemS51skiFhMzNVNWWUvtzkwob
+         I/AG9wBY0NXrcUUBUQAmBdRWriOY4PeM9mva4iTWjT8EnQuHNUArjqh0nmnDrlvNCKjg
+         uqlA==
+X-Gm-Message-State: AOAM530Vc+R7Gn810r/LbDpFy3UadenFmhDrN0o1DQjdAT4gon+IGikq
+        0GVqisPpojEz0P/COWZfofI9T9oIrxztmyREf8NJk7JWJAMBz6XMYssVMvZrqmxR/2iby93ADoI
+        Pc5T5+o5I148LNlY2ksD/NLj7pVbDnX80ArDmiNWSfBWmSLdXPafYQNLrfz3FMA8=
+X-Google-Smtp-Source: ABdhPJwPF0buKwRnAkCAOHEiLgmhaCBmSDwSIZeDbA5cHZOsqReqR7cSBN+s2w//Nz8KYnMFTLAh96OQvly4ag==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:f01f:16dd:49c0:66ce])
+ (user=steadmon job=sendgmr) by 2002:ad4:40d1:: with SMTP id
+ x17mr70983qvp.7.1631132147498; Wed, 08 Sep 2021 13:15:47 -0700 (PDT)
+Date:   Wed,  8 Sep 2021 13:15:45 -0700
+Message-Id: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
+Subject: [RFC PATCH] branch: add "inherit" option for branch.autoSetupMerge
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/8/2021 3:46 PM, Derrick Stolee wrote:
-> On 8/27/2021 5:13 PM, Matheus Tavares wrote:
->> On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
->>>
->>> Subject: [PATCH 06/13] add: skip paths that are outside sparse-checkout cone
->>
->> Perhaps this could be "skip _tracked_ paths that ..." (to help
->> differentiate the end goal of this patch from the previous one).
->>
->>> diff --git a/pathspec.c b/pathspec.c
->>> index 44306fdaca2..0e6e60fdc5a 100644
->>> --- a/pathspec.c
->>> +++ b/pathspec.c
->>> @@ -39,7 +39,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
->>>                 return;
->>>         for (i = 0; i < istate->cache_nr; i++) {
->>>                 const struct cache_entry *ce = istate->cache[i];
->>> -               if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
->>> +               if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
->>> +                   (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
->>
->> Hmm, even though we skip the sparse paths here, cmd_add() will call
->> add_files_to_cache() at the end and still update these paths in the
->> index. I think there are two ways to fix this. We could either change
->> run_diff_files() to skip these paths (but I don't know how other callers
->> of this functions want to handle this, so maybe this needs to hide
->> behind an option flag):
-> 
-> You are absolutely right to point this out. I had missed this interaction.
-> But, this is also already broken. The patch below adds a check to show that
-> 'git add' does not add the sparse_entry, but it does (even when applied
-> before any patch in this series). That is: all the modified tests fail
-> after this change. I'll work to fix this issue before the next version of
-> this series.
+It can be helpful when creating a new branch to use the existing
+tracking configuration from the branch point. However, there is
+currently not a method to automatically do so.
 
-Of course, the reason for the failures is because the 'sparse_entry' is
-staged as part of setup_sparse_entry. Not a bug.
+Teach branch.autoSetupMerge a new "inherit" option. When this is set,
+creating a new branch will cause the tracking configuration to default
+to the configuration of the branch point, if set.
 
-This makes things more difficult to test, so I'll look around for an
-alternative way to test that 'git add' is behaving correctly.
+NEEDS WORK:
+* this breaks `git checkout -b new-branch --recurse-submodules`
+* add documentation
+* add tests
+* check corner cases, including whether this plays well with related
+  cmd-line options (switch, checkout, branch)
 
-Thanks,
--Stolee
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+I'll be looking into the --recurse-submodules breakage today, and then
+I'll work on polishing the patch after that's fixed. But I thought it's
+worth getting an idea of how the list feels about the feature in general
+while I sort through the issues.
+
+ branch.c | 36 +++++++++++++++++++++++++++++++++++-
+ branch.h |  3 ++-
+ config.c |  3 +++
+ 3 files changed, 40 insertions(+), 2 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 7a88a4861e..17d4cc5128 100644
+--- a/branch.c
++++ b/branch.c
+@@ -126,6 +126,38 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 	return -1;
+ }
+ 
++static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
++{
++	struct strbuf key = STRBUF_INIT;
++	char *remote;
++	const char *bare_ref;
++
++	bare_ref = orig_ref;
++	skip_prefix(orig_ref, "refs/heads/", &bare_ref);
++
++	strbuf_addf(&key, "branch.%s.remote", bare_ref);
++	if (git_config_get_string(key.buf, &remote)) {
++		warning("branch.autoSetupMerge=inherit, but could not find %s",
++			key.buf);
++		strbuf_release(&key);
++		return 1;
++	}
++	tracking->remote = remote;
++
++	strbuf_reset(&key);
++	strbuf_addf(&key, "branch.%s.merge", bare_ref);
++	if (git_config_get_string(key.buf, &tracking->src)) {
++		warning("branch.autoSetupMerge=inherit, but could not find %s",
++			key.buf);
++		strbuf_release(&key);
++		return 1;
++	}
++
++	tracking->matches = 1;
++	strbuf_release(&key);
++	return 0;
++}
++
+ /*
+  * This is called when new_ref is branched off of orig_ref, and tries
+  * to infer the settings for branch.<new_ref>.{remote,merge} from the
+@@ -139,7 +171,9 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 
+ 	memset(&tracking, 0, sizeof(tracking));
+ 	tracking.spec.dst = (char *)orig_ref;
+-	if (for_each_remote(find_tracked_branch, &tracking))
++	if (track == BRANCH_TRACK_INHERIT && inherit_tracking(&tracking, orig_ref))
++		return;
++	else if (for_each_remote(find_tracked_branch, &tracking))
+ 		return;
+ 
+ 	if (!tracking.matches)
+diff --git a/branch.h b/branch.h
+index df0be61506..6484bda8a2 100644
+--- a/branch.h
++++ b/branch.h
+@@ -10,7 +10,8 @@ enum branch_track {
+ 	BRANCH_TRACK_REMOTE,
+ 	BRANCH_TRACK_ALWAYS,
+ 	BRANCH_TRACK_EXPLICIT,
+-	BRANCH_TRACK_OVERRIDE
++	BRANCH_TRACK_OVERRIDE,
++	BRANCH_TRACK_INHERIT
+ };
+ 
+ extern enum branch_track git_branch_track;
+diff --git a/config.c b/config.c
+index cb4a8058bf..4bd5a18faf 100644
+--- a/config.c
++++ b/config.c
+@@ -1580,6 +1580,9 @@ static int git_default_branch_config(const char *var, const char *value)
+ 		if (value && !strcasecmp(value, "always")) {
+ 			git_branch_track = BRANCH_TRACK_ALWAYS;
+ 			return 0;
++		} else if (value && !strcasecmp(value, "inherit")) {
++			git_branch_track = BRANCH_TRACK_INHERIT;
++			return 0;
+ 		}
+ 		git_branch_track = git_config_bool(var, value);
+ 		return 0;
+-- 
+2.33.0.153.gba50c8fa24-goog
+
