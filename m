@@ -2,139 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C9DC4332F
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7125C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:40:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97A5E61157
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B76CF61074
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351479AbhIHLZR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 07:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45566 "EHLO
+        id S1349310AbhIHLlo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 07:41:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351306AbhIHLZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 07:25:15 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC36C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:24:07 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id v10so2745610wrd.4
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:24:07 -0700 (PDT)
+        with ESMTP id S235453AbhIHLln (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 07:41:43 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC89C061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:40:36 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id x5so1479164qtq.13
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TW6UFTzZ+QULGGc8KN5tLIiTgHZXppX2ImGqtUqI5sQ=;
-        b=INGovI4/xcEWUoyaPcaObXYGCHgdiCdTROa2fH+OjG9GbmZvA5aMpfA15cLu8NPxhY
-         VXZ4x5R46dCgbxhjT/wt4lI4UoMcyz73LzGs0/rvKeh4Eb3liv+q2l06r5CxIxEndKMd
-         Lx3JkGE1e3VF1j6PCI66ZbrPlTyzyIOpfxiSfBEDqz5hwW50+1Rt/PLFDP9HjfFOTwUA
-         2AWslLxpnDlHR/CGZRsvsLvFAcxExBGi2Sd7d4mM4oRWya4NZ6RjwLt4bbqrtBUK1H6w
-         jkil/3EZnUGrdqKpAXJOHtkM00KdrYoWTOvMzEC+BJQRahUmQ1edc0B25Zp5NwePBSid
-         6v6A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=eeJmXRO3dUM4JApE3eOD/rkDf23nfqBJHwCCPYz1aM0=;
+        b=I59qmI4S9uZq4cjEceOQ3CPxjpIVPO1mVAh7lIiXrGTBK98F6FAOunoXPAst9/E6C5
+         VDfsZv+hMCNpiDhALgLpYZ5bpKAZr/U6a1ocpoIQhv/qnkOMQ6rL65sN3QnWCDWXF2zP
+         hn24a4ENiTV+TsA02yP8gJs/ZjiQEG6EIaM4L1u2qkD3+hesfSU5tfM76Mg8BmiWS1Tm
+         yX/tgDhFhycsa1gHmM+x1VTazs5ncViPfQ3HuJ8XLJePMMjWLmH5boX7SMVd79VDimZ3
+         nMF0dXMhaAjg2hDEbY/V6i2aoOZTjlmry0dUljPVvhNWNSoavGb84Z4jKzKIFl/4QEb+
+         sQ/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TW6UFTzZ+QULGGc8KN5tLIiTgHZXppX2ImGqtUqI5sQ=;
-        b=tIlo4F+QVEOZB756hoTFEKOM6Sq1qPH5Vifa9HiDbLXf+ILiiALif7Taar+mVmGQuG
-         wGSZ+AG5wQaYOkKQJoFd+Tuzy9+e71ywZpUbOgPl4vSfQ7JSCR2KnBdLp9p8MR4fZ6E9
-         KmfM+V294Bn+Hx14/SRAv0fwO17NHboBwF+yscxdyaYrtwkHznzdFn8O7GxLoDQGmNaE
-         5ixIU42TK2vcjwnJqc25keCHJCCtN1zeim997Cbyo0hHuueFMaIwW11W/ufcjk2Nq+5Q
-         riX5bJe+7ZwjFqxy14yHych/fgom880PhII1NS+v3ImLwXzf7sh8Luh5+Z2vhdv1MMAI
-         ulyg==
-X-Gm-Message-State: AOAM5334DpmLnGrsv3h4IkaMoff+mf1SN/nHrwrGLBBxOBdgj4myb3VZ
-        pjTyM3E7XkbHKp0tw/NIAyqm9lJlWrc=
-X-Google-Smtp-Source: ABdhPJwkg9v5HnNjcbRDUeyI6tmO6QzYYimcleOZo0qsi5A4sruC6LHJLpH2j3t/4cRHqK0I6q1ACQ==
-X-Received: by 2002:adf:f84d:: with SMTP id d13mr3535297wrq.292.1631100246145;
-        Wed, 08 Sep 2021 04:24:06 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm1814676wmp.1.2021.09.08.04.24.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 04:24:05 -0700 (PDT)
-Message-Id: <20f5bbae5463cde26505f49bbcf80fdeeb9f65f4.1631100241.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1019.v3.git.1631100241.gitgitgadget@gmail.com>
-References: <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
-        <pull.1019.v3.git.1631100241.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 11:24:00 +0000
-Subject: [PATCH v3 5/6] sequencer: ensure full index if not ORT strategy
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=eeJmXRO3dUM4JApE3eOD/rkDf23nfqBJHwCCPYz1aM0=;
+        b=GnlhWOe+kaIqx8BRGXpHFn3JLh5xcs2S410g6x8VMU+falAqkDBO7Ok8vY5EuLEg9U
+         OCVCeNm9FEb/Z3fYb4qoElh65M5QQCvo5xQhVMe62beRjmXKtf7Ra9IWx8fuMRAo6t8F
+         zDuP4aopph9e4gVg0XA2j4DAvtmD2Kh2aIeOTPUZg8srJnS+jQN+raB/5EigXJz7O/Km
+         4bKiZbfsaghhau9ZE0YXWBvXBB6EFsaJ1SYXS2jcGRSEMCoFpr4DQYKdHrNLccQ+bEnf
+         xsQWd/f46N0enJY4I88InEkWL2QAVJsaVQ99/2/Liu+4zNdICx0s2djEwQeu+1xYY0GH
+         AROA==
+X-Gm-Message-State: AOAM532aUZgQiTSSd0sw10GKNbAh1QoXgXd9gPUd6Oq/CV4o16WJNQy4
+        o468GJ/ddKADMFO6/vEary0=
+X-Google-Smtp-Source: ABdhPJwdGSTxla2o9H3eHXsqWhIdWqpdJp8b7MHZonPljCV0D2pOyuS/UWcbJr5lNKjudlfM5U7NsQ==
+X-Received: by 2002:ac8:53d8:: with SMTP id c24mr3251066qtq.280.1631101235049;
+        Wed, 08 Sep 2021 04:40:35 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
+        by smtp.gmail.com with ESMTPSA id f29sm1308946qtv.34.2021.09.08.04.39.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 04:40:18 -0700 (PDT)
+Subject: Re: [PATCH v5 0/9] Sparse index: delete ignored files outside sparse
+ cone
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
+ <pull.1009.v5.git.1631065353.gitgitgadget@gmail.com>
+ <xmqqwnnr7icz.fsf@gitster.g> <xmqqczpj7dyk.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4a0125d2-67d9-b533-4f8b-618c3de3b411@gmail.com>
+Date:   Wed, 8 Sep 2021 07:39:54 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, stolee@gmail.com, gitster@pobox.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <xmqqczpj7dyk.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 9/8/2021 2:56 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> Updates in V5
+>>> =============
+>>>
+>>>  * Updated the locality of a cache_entry pointer.
+>>>
+>>>  * Rephrased a comment.
+>>>
+>>>  * Removed the patch adding a config option.
+>>>
+>>>  * I tried, but failed, to create a scenario where the call to
+>>>    cache_tree_update() causes a test to fail. I still think this is valuable
+>>>    as defensive programming for the reasons mentioned in the patch, which is
+>>>    why I didn't remove them here.
+>>
+>> OK.  
+>>
+>> The 'sg/test-split-index-fix' topic that has been queued in 'seen'
+>> textually depended on the earlier iteration of this topic, so I'll
+>> discard it while replacing this topic.
+> 
+> I rebased the dependent topic myself, but I would not be surprised
+> if I weren't careful enough and introduced a new bug.  Please double
+> check when a new 'seen' is pushed out in several hours.
 
-The sequencer is used by 'cherry-pick' and 'rebase' to sequence a list
-of operations that modify the index. Since we intend to remove the need
-for 'command_requires_full_index', we need to ensure the sparse index is
-expanded every time it is written to disk between these steps. That is,
-unless the merge strategy is 'ort' where the index can remain sparse
-throughout.
+Did you have any conflicts? I don't think this version changed any
+of the textual dependencies. Anyway, the test suite passes with
+GIT_TEST_SPARSE_INDEX=1 on my machine at 'seen' (except for an issue
+with t7900-maintenance.sh that is unrelated).
 
-There are two main places to be extra careful about a full index:
-
-1. Right before calling merge_trees(), ensure the index is full. This
-   happens within an 'else' where the 'if' block checks if the 'ort'
-   strategy is selected.
-
-2. During read_and_refresh_cache(), the index might be written to disk
-   and converted to sparse in the process. Ensure it expands back to
-   full afterwards by checking if the strategy is _not_ 'ort'. This
-   'if' statement is the logical negation of the 'if' in item (1).
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- sequencer.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3f..228bc089d22 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -652,6 +652,7 @@ static int do_recursive_merge(struct repository *r,
- 		merge_switch_to_result(&o, head_tree, &result, 1, show_output);
- 		clean = result.clean;
- 	} else {
-+		ensure_full_index(r->index);
- 		clean = merge_trees(&o, head_tree, next_tree, base_tree);
- 		if (is_rebase_i(opts) && clean <= 0)
- 			fputs(o.obuf.buf, stdout);
-@@ -2346,6 +2347,7 @@ static int read_and_refresh_cache(struct repository *r,
- 			_(action_name(opts)));
- 	}
- 	refresh_index(r->index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
-+
- 	if (index_fd >= 0) {
- 		if (write_locked_index(r->index, &index_lock,
- 				       COMMIT_LOCK | SKIP_IF_UNCHANGED)) {
-@@ -2353,6 +2355,13 @@ static int read_and_refresh_cache(struct repository *r,
- 				_(action_name(opts)));
- 		}
- 	}
-+
-+	/*
-+	 * If we are resolving merges in any way other than "ort", then
-+	 * expand the sparse index.
-+	 */
-+	if (opts->strategy && strcmp(opts->strategy, "ort"))
-+		ensure_full_index(r->index);
- 	return 0;
- }
- 
--- 
-gitgitgadget
-
+Thanks,
+-Stolee
