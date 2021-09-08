@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD949C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 05:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48992C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 05:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 930F961157
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 05:15:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2819B6054F
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 05:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236010AbhIHFRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 01:17:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        id S237620AbhIHFRD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 01:17:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232339AbhIHFQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 01:16:58 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F39C3C061757
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 22:15:50 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id 18so1016121pfh.9
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 22:15:50 -0700 (PDT)
+        with ESMTP id S234923AbhIHFQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 01:16:59 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3419BC061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 22:15:52 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 17so1336068pgp.4
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 22:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pzJvCmPxG446CHNTS/woGu4NjKJ/nUg4ehBPN6zNlag=;
-        b=X+qM/70TmxzAvvmq+xMssvZhuGXQAR/OF9aktmhMHl5lDAkUxltua26sAgl2rZctLY
-         uGZpEc5a+Kgfyt4HaqA2tafkFDClhSXKACkQIIjJjc22d7gtsFewlxUSFZW1nhA9T0gW
-         CtYGH5CV0vuoCOKLfBjloV0X6elc+Ftmf3P4VcwqUVDsd/f5xYCsMw7sAgKF4IN7V++7
-         aSCpj6q4xdq5FYx1Mt8a02AVosltdGvrWcAQlCgzpeEo/BNd4h+3V3afapj6b9rTPsob
-         RAM4o6xm6REJLmHDDw433vcvOF7V1jRQn9js8EqnmBy04x3MLwpteRy9cyDZTlo2PYOv
-         X+DQ==
+        bh=/BZkJi39hAhkcL9/EsGMdpjmstFnyJurrszdmhqp22w=;
+        b=RhdlxJTktmQU+5EFBpR6655KR4thyEFssgn/qTNP8EKjCaORTKVgV6W5z+cpVHzAai
+         wK53a90x02TsxRpWnY4N/7qnMyYZQf+HcsAo+lKPVjK0TfXhE+j2Pv/oKO5JfOgm8DYd
+         Mi3AYGEcKiQKm4xRrZ8S+13aVDNF6je/Rn/sKbxGAfNQhR5n98eQU8dWHxeslmjy2w2u
+         NVlVcWxCICn215sJ7NyjR+2ANcu5Rd1iR1Vts4S760xmhWKLdbL46O1dPaC5zF+V2pQF
+         sMjQUvuxNHzH+lJ4fpnBqr5MbAaxK065s83JmzuXsAu/PufEoJPULFctV5wZuSaEcyzL
+         9z7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pzJvCmPxG446CHNTS/woGu4NjKJ/nUg4ehBPN6zNlag=;
-        b=ch80Pot1qXsS+GxDLosWOH9Pmx2Y6R1ynMMhXH7pJZrFTykENnZ5ZgNCnxpg81EN9B
-         pKPv+AiLQegR6y4nwBTQWuXL0rs5Ij+hf+zriYv5P1R1lkkR0dcl2lRcwuQjQkbiK5BO
-         xzwww6WBfx+9/6FtUOitX/yZnLPrvIQi1VUobE3mlmpLsMGSRP0lVJc0p3jMB66JcWPD
-         7yf6f4Apbaa64ZJZ1KglvthSyD/IlKiWro7YlMSQYmneNoGUaCgm2Q7FCwD41cEP6mjo
-         cXXFyYVGkj8Isr5dHJgYqYz1VM5DfJaiRHdypwux3Nr7psS+eTTTWJruy0kAk7qSZf2Q
-         ryfw==
-X-Gm-Message-State: AOAM531QUSMRjOrQssncCp2u6lefaLxXDN6pQs5qP0wsr/GsAnsIFmQJ
-        6T5R6KCaGygjwIQCk/hJvNcgcpkt+mp7Rg==
-X-Google-Smtp-Source: ABdhPJyHiyuVuDedmLhC0hwz8/Dh8p1zlqwzKwk+ckpst0KeYvzoUa8xs4wtJUj/hwIylXWdUM46RQ==
-X-Received: by 2002:a63:af4a:: with SMTP id s10mr1932951pgo.469.1631078150261;
-        Tue, 07 Sep 2021 22:15:50 -0700 (PDT)
+        bh=/BZkJi39hAhkcL9/EsGMdpjmstFnyJurrszdmhqp22w=;
+        b=qFUVqoze1bDyMb82woSW/sX7PMaTWDc/CRcbTZnGv61vv/aehVWH+Cl8fIhh3befgr
+         yMD62gwMFhIB6PgA48oAWIC5wybCyT2ZXyeeYv49gPgL8snJR4idT76FBlNsOB6KmuhT
+         nnYFAf+swCethNLs1CoGTzFKMyxB94wogDFLXBEo2S2+lGTntxHwX6clnGsztv1S1JZ+
+         okSgzfpyJTcF32vcXKX7YLcY2vaEQ6qRbKTkO7khAiLJf6udR2XJD+TcspnPcz8c7Hrw
+         ZMW/tgLQ+I/9tt1DhudJ2l2KIUFE4bYC6kw2kamfohIbBpP3XcmIgYK/+C8hbc48WvZl
+         3g9w==
+X-Gm-Message-State: AOAM531D2aEmkvOgol5rZtE49N12bn5teEG7iAcZmoHL0nnh/0Qzr203
+        LlOBP2nlR/8FGg6r4vTAZroAa22J/IG5bA==
+X-Google-Smtp-Source: ABdhPJyg943d6CsK3hRh6wULUjq/2hPlyTAtwpcjTWsvF3eXkZ1SSCVlJqYpTEit5exo4l3nuJq6xA==
+X-Received: by 2002:a62:7594:0:b0:416:310f:d083 with SMTP id q142-20020a627594000000b00416310fd083mr1880651pfc.33.1631078151465;
+        Tue, 07 Sep 2021 22:15:51 -0700 (PDT)
 Received: from localhost.localdomain ([74.213.228.209])
-        by smtp.gmail.com with ESMTPSA id s200sm745665pfs.89.2021.09.07.22.15.49
+        by smtp.gmail.com with ESMTPSA id s200sm745665pfs.89.2021.09.07.22.15.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Sep 2021 22:15:49 -0700 (PDT)
+        Tue, 07 Sep 2021 22:15:51 -0700 (PDT)
 From:   Colin Curtis <colinpcurtis@gmail.com>
 X-Google-Original-From: Colin Curtis <colinpcurtis826@ucla.edu>
 To:     git@vger.kernel.org
 Cc:     Colin Curtis <colinpcurtis@gmail.com>
-Subject: [PATCH 1/2] add cmd_gud to open git-scm.com webpage
-Date:   Tue,  7 Sep 2021 22:13:39 -0700
-Message-Id: <20210908051340.13332-2-colinpcurtis826@ucla.edu>
+Subject: [PATCH 2/2] add liconv link for makefile
+Date:   Tue,  7 Sep 2021 22:13:40 -0700
+Message-Id: <20210908051340.13332-3-colinpcurtis826@ucla.edu>
 X-Mailer: git-send-email 2.30.1 (Apple Git-130)
 In-Reply-To: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
 References: <20210908051340.13332-1-colinpcurtis826@ucla.edu>
@@ -74,170 +74,46 @@ X-Mailing-List: git@vger.kernel.org
 From: Colin Curtis <colinpcurtis@gmail.com>
 
 ---
- .gitignore                |  1 +
- Documentation/git-gud.txt | 33 +++++++++++++++++++++++++++++++++
- Makefile                  |  3 ++-
- builtin.h                 |  1 +
- builtin/gud.c             | 27 +++++++++++++++++++++++++++
- git.c                     |  1 +
- t/t9904-git-gud.sh        | 16 ++++++++++++++++
- 7 files changed, 81 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/git-gud.txt
- create mode 100644 builtin/gud.c
- create mode 100755 t/t9904-git-gud.sh
+ Makefile      | 8 ++++++--
+ builtin/gud.c | 2 +-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 311841f9be..5fec146bd8 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -75,6 +75,7 @@
- /git-gc
- /git-get-tar-commit-id
- /git-grep
-+/git-gud
- /git-hash-object
- /git-help
- /git-http-backend
-diff --git a/Documentation/git-gud.txt b/Documentation/git-gud.txt
-new file mode 100644
-index 0000000000..357ff915a6
---- /dev/null
-+++ b/Documentation/git-gud.txt
-@@ -0,0 +1,33 @@
-+git-gud(1)
-+===========
-+
-+NAME
-+----
-+git-gud - Display git-scm.com website
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git gud' [-d | --display] [<pathspec>...]
-+
-+DESCRIPTION
-+-----------
-+
-+'git gud' command opens the webpage for git-scm.com in the default
-+web browser.
-+
-+OPTIONS
-+-------
-+-d::
-+--display::
-+	Opens the webpage for git-scm.com in the default browser
-+
-+OUTPUT
-+------
-+If the '[-d | --display]' option is present, then the command opens
-+up the git-scm.com webpage in the default web browser.  Otherwise,
-+nothing is done.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index 429c276058..379cd91a97 100644
+index 379cd91a97..e1679cca47 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1108,6 +1108,7 @@ BUILTIN_OBJS += builtin/fsck.o
- BUILTIN_OBJS += builtin/gc.o
- BUILTIN_OBJS += builtin/get-tar-commit-id.o
- BUILTIN_OBJS += builtin/grep.o
-+BUILTIN_OBJS += builtin/gud.o
- BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
- BUILTIN_OBJS += builtin/index-pack.o
-@@ -1513,7 +1514,7 @@ ifndef NO_ICONV
+@@ -1,6 +1,6 @@
+ # The default target of this Makefile is...
+ all::
+-
++OS := $(shell uname)
+ # Define V=1 to have a more verbose compile.
+ #
+ # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
+@@ -1514,7 +1514,11 @@ ifndef NO_ICONV
  		ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
  			ICONV_LINK += -lintl
  		endif
--		EXTLIBS += $(ICONV_LINK) -liconv
-+		EXTLIBS += $(ICONV_LINK) /usr/local/Cellar/libiconv/1.16/lib/libiconv.dylib # -liconv
+-		EXTLIBS += $(ICONV_LINK) /usr/local/Cellar/libiconv/1.16/lib/libiconv.dylib # -liconv
++		ifeq ($(OS),Darwin)
++			EXTLIBS += $(ICONV_LINK) /usr/local/Cellar/libiconv/1.16/lib/libiconv.dylib
++		else
++			EXTLIBS += $(ICONV_LINK) -liconv
++		endif
  	endif
  endif
  ifdef ICONV_OMITS_BOM
-diff --git a/builtin.h b/builtin.h
-index 16ecd5586f..e183a1a8d4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -162,6 +162,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix);
- int cmd_gc(int argc, const char **argv, const char *prefix);
- int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
- int cmd_grep(int argc, const char **argv, const char *prefix);
-+int cmd_gud(int argc, const char **argv, const char *prefix);
- int cmd_hash_object(int argc, const char **argv, const char *prefix);
- int cmd_help(int argc, const char **argv, const char *prefix);
- int cmd_index_pack(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/gud.c b/builtin/gud.c
-new file mode 100644
-index 0000000000..04808a08f5
---- /dev/null
+index 04808a08f5..9a5a1e71ac 100644
+--- a/builtin/gud.c
 +++ b/builtin/gud.c
-@@ -0,0 +1,27 @@
-+#include <stdio.h>
-+#include "builtin.h"
-+#include "parse-options.h"
-+
-+static int display_page;
-+
-+static const char * const builtin_gud_usage[] = {
-+	N_("git gud [<options>]"),
-+	NULL
-+};
-+
-+static struct option builtin_gud_options[] = {
-+        OPT_BOOL('d', "display", &display_page, N_("display the webpage for git-scm.com")),
-+		OPT_END()
-+};
-+
-+int cmd_gud(int argc, const char **argv, const char *prefix)
-+{    
-+
-+    argc = parse_options(argc, argv, prefix,
-+                builtin_gud_options, builtin_gud_usage, 0);
-+    if (display_page) {
-+        system("open https://git-scm.com/book/en/v2");
-+    }
-+    
-+    return 0;
-+}
+@@ -24,4 +24,4 @@ int cmd_gud(int argc, const char **argv, const char *prefix)
+     }
+     
+     return 0;
+-}
 \ No newline at end of file
-diff --git a/git.c b/git.c
-index 18bed9a996..2da1f4d2d4 100644
---- a/git.c
-+++ b/git.c
-@@ -536,6 +536,7 @@ static struct cmd_struct commands[] = {
- 	{ "gc", cmd_gc, RUN_SETUP },
- 	{ "get-tar-commit-id", cmd_get_tar_commit_id, NO_PARSEOPT },
- 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
-+	{ "gud", cmd_gud, RUN_SETUP },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
-diff --git a/t/t9904-git-gud.sh b/t/t9904-git-gud.sh
-new file mode 100755
-index 0000000000..47fa97498c
---- /dev/null
-+++ b/t/t9904-git-gud.sh
-@@ -0,0 +1,16 @@
-+#!/bin/sh
-+test_description='git-gud test
-+
-+This test runs git-gud and makes sure it does not crash.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'runs correctly with no args' '
-+	git gud
-+'
-+
-+test_expect_success 'runs correctly with -d option' '
-+	git gud -d
-+'
-+
-+test_done
++}
 -- 
 2.30.1 (Apple Git-130)
 
