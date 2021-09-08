@@ -2,94 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85AB4C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 423C4C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E23760F6C
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:46:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 226B7610A3
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351060AbhIHHrm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 03:47:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52238 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350731AbhIHHrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 03:47:21 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73AE5C06175F
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 00:46:14 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id 22so1602048qkg.2
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 00:46:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fggER/0eLEI+c7gd088LckwH+XWNUrajimbW0gPCslE=;
-        b=duZ+j6VN36GdK7P+c9qFIzRcvySHxFj9vjLbl9/2NNvjo8QMQCLhZ0YZxC1MXu24hC
-         4TqgsMkccSJcckxhigQxLYl6cNJu9qf1lkkEapojXOEgxsCqu8irkuyaKNtMFCy5ZMlI
-         GczDZMw/pocsnxo6ltmcJzV8SAKaXJPgTqbP4oQMtbl0rB/PI3nsONLt6UZEQBdcrBeq
-         v1evUVdmceXVzIPz4VMDk2CPy/GX+PZMJM5UM5mkw9CmTDbJGcpN2vVoJcoGgryXV5YC
-         9Roo5k47ykGsxr08SI0/1ZpdUfq3ZM/1PVlD358LDcP0J3m1LbVuplHDkbtGYjOiI4zK
-         WNHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fggER/0eLEI+c7gd088LckwH+XWNUrajimbW0gPCslE=;
-        b=TgcYEI90dQt0lFuZgfzzCpxjRdLwxRRGIcYsAn4QUFmuANa+RFzFBw6jYwnpsX+4z9
-         dpNDZb0S4hihOxj1e9nt+k+/actACxTQO+PAz+4og1ry/sftKrJxqw7QFqX1QySAxL4L
-         wwquCfcMHAc14RsaxoRK9D88wnY4PTmVPUbPLNnPIoJozO+LMzt/K5NWbW0tB40g2ap+
-         8hD75eV6zzW/Fc6io7f6Y+Kxr5XPtxvVhL/HJSYRji9S3YLE4s2vG1cc9qkDTOHXULXv
-         PyYkANr4RxfYeoPqhrtsBPCUQemX3dT2AYLvwYT05Ga6FwVtRNlGIBLYzKwjPyMfz7xf
-         gXCA==
-X-Gm-Message-State: AOAM530zcGg3yb7JubSxcs9tPcDhPtBLAn9vCAAspB4mlJcuB9dQjgJ9
-        fiqeTVPPp6HB5is+DmP0TetOc1BtLzM=
-X-Google-Smtp-Source: ABdhPJzOev25iscn/LlbYovlAMvh3gyxPN7IN9KNGCjFDM0vi4Nm+3VF7KMu1AhhnKWziEx1CWFHYw==
-X-Received: by 2002:a05:620a:166d:: with SMTP id d13mr2030961qko.491.1631087173497;
-        Wed, 08 Sep 2021 00:46:13 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id v14sm1122935qkb.88.2021.09.08.00.46.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Sep 2021 00:46:13 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     hanwen@google.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH 4/4] fixup! reftable: utility functions
-Date:   Wed,  8 Sep 2021 00:45:57 -0700
-Message-Id: <20210908074557.38141-5-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.481.g26d3bed244
-In-Reply-To: <20210908074557.38141-1-carenas@gmail.com>
-References: <pull.1081.git.git.1630335476.gitgitgadget@gmail.com>
- <20210908074557.38141-1-carenas@gmail.com>
+        id S234575AbhIHHyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 03:54:19 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57581 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1345419AbhIHHyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 03:54:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631087582;
+        bh=V1fTWjymuCKIAAQmho0Ss2u1bXWZbBc4VCNWc/R7t7A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XLtn3S1uPH6hBPZscNcKTb3GT3Mx/SslWv0xMsKYQfSgbXKF9t1AWAnnYrtCuqsd2
+         cDUv27pJivA/qjNPxdXLI9dhkh78rjFNLnab0wf7rTjKW4pzQlMoAaxNApHMaUWIxV
+         Uhl44xAON0rb4FRqriHOocQz7nzQ8GtuHEpr/53Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0oG5-1nBjiN1yWj-00wjR9; Wed, 08
+ Sep 2021 09:53:02 +0200
+Date:   Wed, 8 Sep 2021 09:53:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] tests: remove leftover untracked files
+In-Reply-To: <pull.1088.git.git.1631076472457.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109080950540.55@tvgsbejvaqbjf.bet>
+References: <pull.1088.git.git.1631076472457.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:DmSfYpWJEwbXq+SDv1qjrmduhuTpX/qC/A1k0SHnRx/wHHbIZ0C
+ mSbUwse+16p3vtv+BrxHoJ/1Lb/w7nsJIHu3Ib5MK4EpWJUnau83oKDudjdym0WLvBxNwYe
+ SlCf37bOEcD8NPdNAjC9W0/Cf5BzWsGoaMtpxMomwG0eivlfGSxjwoOaTXKI8DO5sASl0r2
+ YA5RxiCO+8nwJkeDTi2+g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VkXFPe6/taI=:QXZUZbdVC42CkzPUsV8vLt
+ LsIssijMhdzaztFSerpsbPqbULYXgDrgmiQ5ROtoSZ6s9+YfyBST0NOgZoDyxqJZNXtwNN41x
+ ZGv2HMlY+5s8E1HoewXt1wtdeJy2ezZFxAFXoXwn6vP9sx98iyPPW+AvJbu3tAMcvDnYERC+V
+ 55/VBocWon2UGrz4eWNi9q2rlmsMssNK2KgAhN2NzuEpvipbZkUziWSoz4EVBoDUCL+VlD97e
+ AEgchFRU/WbHHOYrQyyWrRCkYlsWCwr9B0xs3K3OftSS/wQYiyjF2zCdia+YmhKE8DmK2rzxT
+ PkBP8CxBmsFspyySSrkJPVVfb8XpjR3TfXAeDCTdp2duNsoZHki9yiNQbU/Il3ZNTGepGMN7T
+ jmgdVorwqLNmnYZOMpZDOCdTLbvoab6YECv5dqqop38VAVR04wdcaYI6NwUCZ1HQsN/G0Z6Y1
+ dcx8aM014QCsbowFiw6+CT9yik/4sv1zpqp4pfmEMQdbt/UMWv8tm9wZIqYu/PVgoz6UIH05d
+ Mh7AAd+KwlFO/YkeRpfm0X28OLtyWCkidPcEp/38gsPLExPuPoSCfHk1s+dXCRFF5uBVUfkRO
+ c7p+NBq5abf7d169YmUOiQx7kAPrpn8jNBN7v+qncffDNJJh562HOveBPU2FTZbBXpVd4gV/C
+ 5fmNdh/vOia59Jg5Io+C3cg6tSI3vGtqfyXvKOLESOeJz0bpWsO1RdM3uHPXJy6oL3tT13w5F
+ vmrRHY3cMykiZUl7tzMsPJuEVzh+MF1kV+Pe3kLEewavHKSMWF++Dwcsr8Q/NCeJuGRJ1qZor
+ Djj9cd8Yd+cICASTMvKDLADuWXaYnacFRXTnr0c/O4Xh2Y6LI20DsxF+PRw0VCxdjg/hwbvF6
+ SWYzWi0+YIDe6+pNpI/0tjMTmJLnHUZJRbHVhGhbUdqiNmVAPEKj89EWC1sEFPRttWmHgmqwl
+ IYBeDz+TUTIAJNl+YC37bKWlyg7VwPMpG3+ymaC3ZKnDN6phGY1S4Jk3LnHtxXhT7xhl3qFIB
+ 5C/XtnXpxlPH3gdqiwm4ylkzL/XoF3S9Wpl6FPpvmAgYTG5gZv9CxqfuMnvORMGHHgfT+Yh1k
+ hFoKNKKbPUCtiUipS0B11JpyPw/29mF8SVxdvFuxAu7+nccbjnicBvAUg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- reftable/basics.h | 1 -
- 1 file changed, 1 deletion(-)
+Hi Elijah,
 
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 096b36862b..0645b74196 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -54,7 +54,6 @@ void reftable_free(void *p);
- void *reftable_calloc(size_t sz);
- 
- /* Find the longest shared prefix size of `a` and `b` */
--struct strbuf;
- int common_prefix_size(struct strbuf *a, struct strbuf *b);
- 
- #endif
--- 
-2.33.0.481.g26d3bed244
+On Wed, 8 Sep 2021, Elijah Newren via GitGitGadget wrote:
 
+> From: Elijah Newren <newren@gmail.com>
+>
+> Remove untracked files that are unwanted after they are done being used.
+>
+> While the set of cases in this patch is certainly far from
+> comprehensive, it was motivated by some work to see what the fallout
+> would be if we were to make the removal of untracked files as a side
+> effect of other commands into an error.  Some cases were a bit more
+> involved than the testcase changes included in this patch, but the ones
+> included here represent the simple cases.  While this patch is not that
+> important since we are not changing the behavior of those other commands
+> into an error in the near term, I thought these changes were useful
+> anyway as an explicit documentation of the intent that these untracked
+> files are no longer useful.
+
+While I find it a bit distracting when things are getting fixed that are
+not exactly broken (there is enough that is broken and needs to be
+fixed!), at least this patch is not disruptive and since you already did
+the work, I am in favor of integrating the patch.
+
+Thanks,
+Dscho
