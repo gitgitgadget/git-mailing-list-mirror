@@ -7,141 +7,126 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06DE1C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D1AC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:04:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C97DC6113C
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:01:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BB696113C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240231AbhIHTCe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:02:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37508 "EHLO
+        id S237107AbhIHTF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbhIHTCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:02:33 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE8C0C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:01:23 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id k13so6884413lfv.2
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:01:22 -0700 (PDT)
+        with ESMTP id S230044AbhIHTF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:05:58 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B56FC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:04:50 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id h16so6846820lfk.10
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rplVcR4pBnjGlH7SC2gSRnQzvBJP0GebXowk4eJ5Lak=;
-        b=ma06RI0aQ5HSQKOXKpXOMOg0h0eN3Qk3S/zIcO2tdl1416G/h5IjL+KwVkszImuY6u
-         W2pTh+Kj7X6qx1aiIV2ff/nsHRSHicgJtODZsVC0d2V2uebQoesvOCX4cSEBidhDc9r0
-         Aw3q8brovVih/R4iwEEbiZr6+FTvc+313Bom4LLl50VJZ+QFbSz6bHTjoqPw1EIC58K9
-         eDBKPQz0TlWlQposz+DyTIIfTrdKsZ+PbUdbWAVwN4oVJtR+wuVKZEHja80Ns8TFVBqD
-         cd1r1TfI5QkpLa3XdCP36lgpV9aVL6eqpmaUCO8hsILYl/8695q+p/9sB2hXfTiFIK6Q
-         p7qg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dGAJAoZvKQ6A3M40JSXLeP5B6ATvoDu3ZIdqnQfoNIM=;
+        b=kW65Ga0McWAjg/EtfGkk+PF5IFnqyAMpyeD9UV6LYn+u2u6V0XeRjLi86I3bwM8AjX
+         CVNYrnaZmofB0YGz2dgqQ7+Mm8rsK8vQuaTXT4QtlYC1jXolsK2djRSx3qzeDzmZmD/L
+         sN29/GKm/xuxaBiUEp4KkAepgZwWPbl0Ci+b7gaxnPgPCwZrScX8/C3w7aOSbcX5SDWE
+         fO+J+E4JmwU8B/+9Z16uqpVvGMtZZ+pfBb1X1cY1RUtMsxA/OYJ8Des383W7jxJQTvPD
+         k6A0Qx8kLDHwVXhMDv8EdIBikhmHCiZ4zNcPrQIkniMAqo84KUsI8DEH0VCmSnenGrL/
+         mDwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rplVcR4pBnjGlH7SC2gSRnQzvBJP0GebXowk4eJ5Lak=;
-        b=8AxWRGwUfuD+27r+eT6VlyQjFfSYuGtr6w9PgtdgMne/ab+0N3jSSKZzNTqVyEYCpy
-         25rt9l0ClDmjn4e4D2Qnf98qxEHXek1SkPXM/2pVAlEywEUx4YCq6JOEaptG7On7Z5Q8
-         JHa/4bKCY8xRUlRbSlrug91aetnZqlzsMFgl5F4f+5hP5KtueFSzwS8RkAjxusGysw1z
-         nTH3MuAFRFiXScZ0+oGK0u1LQGxg34kIgn6VPqIGjL7BQxqEN+CkEk6qiNzhXCzZKtrJ
-         EkryOhVshx3uZvZJtWX7EMHoswK7Bd9Dbn4k4TVOibAstNPMWOcsZGj4Kr3NNfjMP0b+
-         4LrA==
-X-Gm-Message-State: AOAM532R+V0yoadf5IgsNJurrg7cmbDg+R4Q/44IYrz5OyNL8wraepQe
-        A3diW/CU5WRI/RhRnIw0qmVvJh78lHeJ5YjuzHUM3gdtYiA=
-X-Google-Smtp-Source: ABdhPJyOrLQIZCiUTRiKhPb/O/6CyluVatTEaIlUzQJh9WprizHAsJyER8cKkvf+ApAmVkDht2PIZZ6rqZ1muhrMIvY=
-X-Received: by 2002:a05:6512:10d6:: with SMTP id k22mr3759611lfg.575.1631127681192;
- Wed, 08 Sep 2021 12:01:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=dGAJAoZvKQ6A3M40JSXLeP5B6ATvoDu3ZIdqnQfoNIM=;
+        b=f1KCUIUMx3/40o1n5yCsyJznDeowxJ2y4hyYkyIX1VxpHd+cdzHsL7lG7rRwNFm/Bs
+         N3B6ETPN7t/JbF9g3Mi61piiaZcKxC7E/K7x0Vp2w29/H7klrxChWbTeWpM26ypOlygB
+         Us54/BJxYpBxlQD0ZEOqmHf7fKTBlzAIGKEoRjMB4Z5zDzGJEVQ0aERfc+gnxyEneitR
+         8SQWxZW7ZoKkWhm3hMp0uRVFU+zOCb+tnzzcCYKwfAo3/vWQ3TNvLpLDOLYCTtMQWpiE
+         /l1eFhtY5+Mi5jlk0ZTNmMPjLH/jpfJntiHyIDD2FYv5NlLqYI2Edoht14gVOVzccrf2
+         NjFQ==
+X-Gm-Message-State: AOAM533ZthTKiOloh4nWAxp3aBWBUuRydUep4d7xyHhOx9RqCoPhE745
+        FrKNQGetqnytIZbyAWYYSTI/2zqkAlw=
+X-Google-Smtp-Source: ABdhPJzJW/EvF1D7ZZK7IAAxYkUMpUYy/fnF05XlDHhvI9Lpkj64y0iJRU9CaWs+YMPQ+m4tx2oNyA==
+X-Received: by 2002:a19:700b:: with SMTP id h11mr3592799lfc.180.1631127888495;
+        Wed, 08 Sep 2021 12:04:48 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id d7sm327165ljc.129.2021.09.08.12.04.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Sep 2021 12:04:47 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
+        <87pmtjkwsj.fsf@osv.gnss.ru>
+        <cbd0d173-ef17-576b-ab7a-465d42c82265@kdbg.org>
+Date:   Wed, 08 Sep 2021 22:04:46 +0300
+In-Reply-To: <cbd0d173-ef17-576b-ab7a-465d42c82265@kdbg.org> (Johannes Sixt's
+        message of "Wed, 8 Sep 2021 19:23:52 +0200")
+Message-ID: <87pmtiopm9.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
- <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com> <CANQDOdeEic1ktyGU=dLEPi=FkU84Oqv9hDUEkfAXcS0WTwRJtQ@mail.gmail.com>
- <003701d7a422$21c32740$654975c0$@nexbridge.com> <CANQDOdcKsUqrQ6K6MEBoXS1BW8_tO8mx4tcq6nvqyiuM4e2CmA@mail.gmail.com>
- <87h7evkghf.fsf@evledraar.gmail.com>
-In-Reply-To: <87h7evkghf.fsf@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 8 Sep 2021 12:01:10 -0700
-Message-ID: <CANQDOddSa4KguS0phCcZwK6FneSyLQQkWdrTbNM0+7dGVKVQpw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Implement a batched fsync option for core.fsyncObjectFiles
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 7, 2021 at 6:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
->
-> On Tue, Sep 07 2021, Neeraj Singh wrote:
->
-> > On Tue, Sep 7, 2021 at 12:54 PM Randall S. Becker
-> > <rsbecker@nexbridge.com> wrote:
-> >>
-> >> On September 7, 2021 3:44 PM, Neeraj Singh wrote:
-> >> >On Fri, Aug 27, 2021 at 4:49 PM Neeraj K. Singh via GitGitGadget <git=
-gitgadget@gmail.com> wrote:
-> >> >>
-> >> >> Thanks to everyone for review so far! I've responded to the previou=
-s
-> >> >> feedback and changed the patch series a bit.
-> >> >>
-> >> >> Changes since v1:
-> >> >>
-> >> >>  * Switch from futimes(2) to futimens(2), which is in POSIX.1-2008.=
- Contrary
-> >> >>    to dscho's suggestion, I'm still implementing the Windows versio=
-n in the
-> >> >>    same patch and I'm not doing autoconf detection since this is a =
-POSIX
-> >> >>    function.
-> >>
-> >> While POSIX.1-2008, this function is not available on every single
-> >> POSIX-compliant platform. Please make sure that the code will not
-> >> cause a breakage on some platforms - the ones I maintain, in
-> >> particular. Neither futimes nor futimens is available on either
-> >> NonStop ia64 or x86. The platform only has utime, so this needs to
-> >> be wrapped with an option in config.mak.uname.
-> >>
-> >> Thanks,
-> >> Randall
-> >
-> > Ugh. Fair enough.  How do other contributors feel about me moving back
-> > to utime, but instead just doing the utime over in
-> > builtins/pack-objects.c?  The idea would be to eliminate the mtime
-> > logic entirely from write_loose_object and just do it at the top-level
-> > in loosen_unused_packed_objects.
->
-> Aside from where it lives, can't we just have a wrapper that takes both
-> the filename & fd, and then on some platforms will need to dispatch to a
-> slower filename-only version, but can hopefully use the new fd-accepting
-> function?
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I had some concerns around using utime() while a file descriptor is open.
-There's some risk of sharing violation on Windows (doesn't matter since we'=
-d
-be using futimens), but I was also concerned that there might be some OSes =
-that
-update the mtime on close(fd), thus overwriting the effects of utime.
-Maybe that's an unwarranted concern, but it's part of why I didn't want to =
-have
-different call sequences on different OSes.
+> Am 08.09.21 um 15:43 schrieb Sergey Organov:
+>> Besides, nobody yet told us why gitk uses --cc option in invocation of
+>> 'diff-index' in the first place. Does it actually *rely* on particular
+>> undocumented behavior of "diff-index --cc", or is it just a copy-paste
+>> *leftover*?
+>
+> No, it is not a left-over. The thing is,
+>
+> - there is one point in the code where gitk adds options -p -C --cc (and
+> more) to the command line (around line 8034),
+>
+> - and there is a totally different point in the code where it is decided
+> whether diff-index, diff-tree, or diff-files is invoked (proc diffcmd
+> around line 7871).
+>
+> IOW, Gitk expects that these option combinations can always be passed to
+> all three commands.
 
-I'd be happy to implement your suggestion though and see what happens. But =
-I
-also feel that this time update thing is pretty ancillary to the real
-goal of my change.
-I'm only doing it because it's in the same area. The effects of
-getting mtime wrong
-would be pretty subtle -- I think we'd just not be deleting some
-unpacked unreachable
-objects as soon as expected.  Do you have a strong objection to
-lifting the time update
-logic out?
+I see, but the problem here is that while diff-files and diff-tree both
+accept --cc according to their documentation, diff-index does not. This
+means that, strictly speaking, gitk makes a mistake treating all 3
+commands universally with respect to command-line arguments when it uses
+--cc.
+
+>
+> Gitk does not want to look at a commit and then decide which incarnation
+> of the command it wants to use (--cc vs. -p) depending on whether it is
+> a merge commit or not. This decision is delegated to command that is
+> invoked.
+
+The problem is not in the kind of commit, the problem is in the command
+being invoked. diff-index doesn't support --cc according to its
+documentation, and thus gitk relies on undocumented behavior of
+diff-index. It might well be the case that it just happened to be
+"working", thus nobody cared.
+
+> Therefore, silent fall-back from --cc to -p in case of non-merge
+> commits or non-conflicted index is absolutely necessary.
+
+I didn't change semantics of --cc, so this thing was not broken at all.
+I just disabled the --cc option in diff-index command, to match the
+documentation.
+
+As a side note, in fact Git does no "silent fall-back from --cc to -p in
+case of non-merge commits", even though the behavior could be indeed
+seen like this. Instead, --cc implies -p, and, as --cc does not
+otherwise affect treating of non-merge commits, only -p is left active
+for them. Once again, this has not been recently changed, so does not
+need to be fixed.
+
+Thanks,
+-- Sergey Organov
