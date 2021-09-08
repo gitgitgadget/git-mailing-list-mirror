@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1947EC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C9DC4332F
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E955E61153
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97A5E61157
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351473AbhIHLZT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 07:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
+        id S1351479AbhIHLZR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 07:25:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351468AbhIHLZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 07:25:16 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39717C061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:24:08 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id d6so2697392wrc.11
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:24:08 -0700 (PDT)
+        with ESMTP id S1351306AbhIHLZP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 07:25:15 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC36C061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:24:07 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id v10so2745610wrd.4
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NhVGodYegspo2WMnVFa4iDfSwEgWB/VRcImjAbZjlZ4=;
-        b=AyJ512aG3UG3YfCfYigumXuBBqvouVA1pu5UylyOKb/JejBU0WHu7C6uvICqULBhEb
-         qcUTSaPEUWx8Tb89RP83BcZ43PHUqYthE+5y+TTQ475enqiCyyAIjrgBGTkvYHVFsvdA
-         X9vQp4jSygAOtfJwaSwi6yQUKB3RqPxiO1ReNJAuSIb3BdFBmMu1FVGR9hFQZk5uwxvJ
-         3GSoTf1sJZiSHqbSoH1jgEXTI3Scd8QqkpVZAE9++DcqG4fUB6W2woJQBz+m7LIL5+eK
-         RJQMSFV6ErT+ZD451x+rhwQ58jQKO8EQgigY6Bsj0rbBtiQ6BtLevKINV20GpO2TDeOD
-         BpQg==
+        bh=TW6UFTzZ+QULGGc8KN5tLIiTgHZXppX2ImGqtUqI5sQ=;
+        b=INGovI4/xcEWUoyaPcaObXYGCHgdiCdTROa2fH+OjG9GbmZvA5aMpfA15cLu8NPxhY
+         VXZ4x5R46dCgbxhjT/wt4lI4UoMcyz73LzGs0/rvKeh4Eb3liv+q2l06r5CxIxEndKMd
+         Lx3JkGE1e3VF1j6PCI66ZbrPlTyzyIOpfxiSfBEDqz5hwW50+1Rt/PLFDP9HjfFOTwUA
+         2AWslLxpnDlHR/CGZRsvsLvFAcxExBGi2Sd7d4mM4oRWya4NZ6RjwLt4bbqrtBUK1H6w
+         jkil/3EZnUGrdqKpAXJOHtkM00KdrYoWTOvMzEC+BJQRahUmQ1edc0B25Zp5NwePBSid
+         6v6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NhVGodYegspo2WMnVFa4iDfSwEgWB/VRcImjAbZjlZ4=;
-        b=wlH/ggoY19OeRiUP0E+iP3i7Kpg+0R4IJ3og0V9L8yECIvduA9PhyZ8M7Jh2lL6Gyr
-         nvMSBrxScr7+BnbXzs2DSod758+fzILK50bNQaCVuOe5RJOga0ukFiTHpt1eTdoDrCfJ
-         zJQqkfA9DIQKVedF+Iq8mJwuERftO429Z84olO6+w4jDO7VMRGMYINXyMiqkNAv2li2R
-         EYKR8rHet3NH4W5+71hvjy9U9SavuuvSNl+bbUh/BkcNSpmiVZTE44oXMd/lDxCzde6o
-         kX/Cx6TKLHOspzE+3TYUphi1Ko18j8TK7JhzW9BM5EJpzWJxfTEFhWPedn2R2EAxzPh3
-         RFAQ==
-X-Gm-Message-State: AOAM533FkfRwIqJ6ye9Thdgoeahrd1n/m4HPnFP4TuA6jEALMozQom2n
-        Fg2lcs8wlbtlu3YSiZCjnV95ouormMc=
-X-Google-Smtp-Source: ABdhPJyaM7H/N23C68m4T28sUU5+MmQOtM7+PjC7bOyvTcdHYL7jDKV13pCU6kpzdFLd+6QWYdtFrg==
-X-Received: by 2002:adf:de09:: with SMTP id b9mr3447644wrm.114.1631100246834;
+        bh=TW6UFTzZ+QULGGc8KN5tLIiTgHZXppX2ImGqtUqI5sQ=;
+        b=tIlo4F+QVEOZB756hoTFEKOM6Sq1qPH5Vifa9HiDbLXf+ILiiALif7Taar+mVmGQuG
+         wGSZ+AG5wQaYOkKQJoFd+Tuzy9+e71ywZpUbOgPl4vSfQ7JSCR2KnBdLp9p8MR4fZ6E9
+         KmfM+V294Bn+Hx14/SRAv0fwO17NHboBwF+yscxdyaYrtwkHznzdFn8O7GxLoDQGmNaE
+         5ixIU42TK2vcjwnJqc25keCHJCCtN1zeim997Cbyo0hHuueFMaIwW11W/ufcjk2Nq+5Q
+         riX5bJe+7ZwjFqxy14yHych/fgom880PhII1NS+v3ImLwXzf7sh8Luh5+Z2vhdv1MMAI
+         ulyg==
+X-Gm-Message-State: AOAM5334DpmLnGrsv3h4IkaMoff+mf1SN/nHrwrGLBBxOBdgj4myb3VZ
+        pjTyM3E7XkbHKp0tw/NIAyqm9lJlWrc=
+X-Google-Smtp-Source: ABdhPJwkg9v5HnNjcbRDUeyI6tmO6QzYYimcleOZo0qsi5A4sruC6LHJLpH2j3t/4cRHqK0I6q1ACQ==
+X-Received: by 2002:adf:f84d:: with SMTP id d13mr3535297wrq.292.1631100246145;
         Wed, 08 Sep 2021 04:24:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n1sm1838028wrp.49.2021.09.08.04.24.06
+        by smtp.gmail.com with ESMTPSA id z6sm1814676wmp.1.2021.09.08.04.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 04:24:06 -0700 (PDT)
-Message-Id: <36cecb22330dd52191e810a828eccbe098c48827.1631100241.git.gitgitgadget@gmail.com>
+        Wed, 08 Sep 2021 04:24:05 -0700 (PDT)
+Message-Id: <20f5bbae5463cde26505f49bbcf80fdeeb9f65f4.1631100241.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1019.v3.git.1631100241.gitgitgadget@gmail.com>
 References: <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
         <pull.1019.v3.git.1631100241.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 11:24:01 +0000
-Subject: [PATCH v3 6/6] sparse-index: integrate with cherry-pick and rebase
+Date:   Wed, 08 Sep 2021 11:24:00 +0000
+Subject: [PATCH v3 5/6] sequencer: ensure full index if not ORT strategy
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,111 +78,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The hard work was already done with 'git merge' and the ORT strategy.
-Just add extra tests to see that we get the expected results in the
-non-conflict cases.
+The sequencer is used by 'cherry-pick' and 'rebase' to sequence a list
+of operations that modify the index. Since we intend to remove the need
+for 'command_requires_full_index', we need to ensure the sparse index is
+expanded every time it is written to disk between these steps. That is,
+unless the merge strategy is 'ort' where the index can remain sparse
+throughout.
+
+There are two main places to be extra careful about a full index:
+
+1. Right before calling merge_trees(), ensure the index is full. This
+   happens within an 'else' where the 'if' block checks if the 'ort'
+   strategy is selected.
+
+2. During read_and_refresh_cache(), the index might be written to disk
+   and converted to sparse in the process. Ensure it expands back to
+   full afterwards by checking if the strategy is _not_ 'ort'. This
+   'if' statement is the logical negation of the 'if' in item (1).
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/rebase.c                         |  6 ++++
- builtin/revert.c                         |  3 ++
- t/t1092-sparse-checkout-compatibility.sh | 39 ++++++++++++++++++++++--
- 3 files changed, 46 insertions(+), 2 deletions(-)
+ sequencer.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 33e09619005..27433d7c5a2 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -559,6 +559,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
+diff --git a/sequencer.c b/sequencer.c
+index 7f07cd00f3f..228bc089d22 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -652,6 +652,7 @@ static int do_recursive_merge(struct repository *r,
+ 		merge_switch_to_result(&o, head_tree, &result, 1, show_output);
+ 		clean = result.clean;
+ 	} else {
++		ensure_full_index(r->index);
+ 		clean = merge_trees(&o, head_tree, next_tree, base_tree);
+ 		if (is_rebase_i(opts) && clean <= 0)
+ 			fputs(o.obuf.buf, stdout);
+@@ -2346,6 +2347,7 @@ static int read_and_refresh_cache(struct repository *r,
+ 			_(action_name(opts)));
+ 	}
+ 	refresh_index(r->index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
 +
- 	if (!is_null_oid(&squash_onto))
- 		opts.squash_onto = &squash_onto;
- 
-@@ -1430,6 +1433,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
+ 	if (index_fd >= 0) {
+ 		if (write_locked_index(r->index, &index_lock,
+ 				       COMMIT_LOCK | SKIP_IF_UNCHANGED)) {
+@@ -2353,6 +2355,13 @@ static int read_and_refresh_cache(struct repository *r,
+ 				_(action_name(opts)));
+ 		}
+ 	}
 +
- 	options.allow_empty_message = 1;
- 	git_config(rebase_config, &options);
- 	/* options.gpg_sign_opt will be either "-S" or NULL */
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 237f2f18d4c..6c4c22691bd 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -136,6 +136,9 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 			PARSE_OPT_KEEP_ARGV0 |
- 			PARSE_OPT_KEEP_UNKNOWN);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	/* implies allow_empty */
- 	if (opts->keep_redundant_commits)
- 		opts->allow_empty = 1;
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index d9424ed6427..886e78715fe 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -527,6 +527,38 @@ test_expect_success 'merge with conflict outside cone' '
- 	test_all_match git rev-parse HEAD^{tree}
- '
- 
-+test_expect_success 'cherry-pick/rebase with conflict outside cone' '
-+	init_repos &&
-+
-+	for OPERATION in cherry-pick rebase
-+	do
-+		test_all_match git checkout -B tip &&
-+		test_all_match git reset --hard merge-left &&
-+		test_all_match git status --porcelain=v2 &&
-+		test_all_match test_must_fail git $OPERATION merge-right &&
-+		test_all_match git status --porcelain=v2 &&
-+
-+		# Resolve the conflict in different ways:
-+		# 1. Revert to the base
-+		test_all_match git checkout base -- deep/deeper2/a &&
-+		test_all_match git status --porcelain=v2 &&
-+
-+		# 2. Add the file with conflict markers
-+		test_all_match git add folder1/a &&
-+		test_all_match git status --porcelain=v2 &&
-+
-+		# 3. Rename the file to another sparse filename and
-+		#    accept conflict markers as resolved content.
-+		run_on_all mv folder2/a folder2/z &&
-+		test_all_match git add folder2 &&
-+		test_all_match git status --porcelain=v2 &&
-+
-+		test_all_match git $OPERATION --continue &&
-+		test_all_match git status --porcelain=v2 &&
-+		test_all_match git rev-parse HEAD^{tree} || return 1
-+	done
-+'
-+
- test_expect_success 'merge with outside renames' '
- 	init_repos &&
- 
-@@ -665,8 +697,11 @@ test_expect_success 'sparse-index is not expanded' '
- 	test_config -C sparse-index pull.twohead ort &&
- 	(
- 		sane_unset GIT_TEST_MERGE_ALGORITHM &&
--		ensure_not_expanded merge -m merge update-folder1 &&
--		ensure_not_expanded merge -m merge update-folder2
-+		for OPERATION in "merge -m merge" cherry-pick rebase
-+		do
-+			ensure_not_expanded merge -m merge update-folder1 &&
-+			ensure_not_expanded merge -m merge update-folder2 || return 1
-+		done
- 	)
- '
++	/*
++	 * If we are resolving merges in any way other than "ort", then
++	 * expand the sparse index.
++	 */
++	if (opts->strategy && strcmp(opts->strategy, "ort"))
++		ensure_full_index(r->index);
+ 	return 0;
+ }
  
 -- 
 gitgitgadget
+
