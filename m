@@ -2,102 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70B30C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96130C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:43:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 577C26113A
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:42:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A932610FF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348610AbhIHNnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 09:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49222 "EHLO
+        id S1349497AbhIHNoi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 09:44:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235591AbhIHNnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:43:20 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B619C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:42:12 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id n5so3335879wro.12
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:42:12 -0700 (PDT)
+        with ESMTP id S1347918AbhIHNog (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:44:36 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79339C061757
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:43:28 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id f18so4538489lfk.12
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UnO3DD46EoiaShZElnEdWYUSawmoSiqebsLgKR8SmUI=;
-        b=m5rzoipi5K972HWtFELJw2e6yQYM01DZ1xBSy0udVQi4xEMpSJ3xH2m+A4BWcJN2Vz
-         3CG3qK+BOxX3trXytg8J7ycW2MUIagjlPUN2MGJIMxVNJaEM0A4qnYw8a4ru3Hqsj0N0
-         lnpAPAG0Sj4+eaiS3RNOheGBxR4pWFQ+QYSrH1wEn875ITR33/GcIoY25saq65lDDFUJ
-         e3/NIAiEeRrr2D5YQfUpMihls8nSSqwiZsCFBWgM+h4edU19NNkSZDwHtq6EgRIXuRvO
-         qGZLpC23ZdHwpjbB0PUzcijm8u+jxLcFKzYiMGk8PGt33rq1Y2oAdAexPcdGzoZxznRx
-         ZxIg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=r0OAFT09LAUb+FOXfUpwWL+EhSbgU66rNHWRpzW1znQ=;
+        b=No5LXxP5bPZNO1Ig00X7ZF9A/9NPJZPEdz9Zaw6WBRgo8kLjWLmAPJdt9VxXv56ZH1
+         vUCNyWiMU3qd2695pWg3UqcoPJO3YCauVtBBAwyrGwCYvj5C52ezbncHxFax9pM69iUh
+         ofAq4Mdrthw6CbzQiyMkgim2It8Xp72rJyIcORdI58YL18MHduHvs+G0gvRATY75n5a0
+         Gkp/TEfM2oDOQ6grMwN2bRkvp1QMtNV5C4U0PiLMRAJLbce9j8N8CJj0/0h2sdWuyLxt
+         PMkhn0hwWT3+d0dHtqqGZN13jpuyvOemOvjVMvN7mPjMrJ/n3ad35VfyQintCMJUh1+X
+         lalA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=UnO3DD46EoiaShZElnEdWYUSawmoSiqebsLgKR8SmUI=;
-        b=NWVcG422JU5Tlexes36S1lktRe99krN+6DjlQk26mc1VJ3Knzjrc05PT60o3xNDyvu
-         sJjjhLa8NnpKxsKhWi5+yNN2VoOEbQXilg5l54sekDNqg5M5hDxKz9x+BahxC0NPSGWW
-         vRpC6u676ufMn0JoAPfLe7EhwtdIo/h2WVyXEXXYid9pxIwXF2cyb2jdgEFlii+tu1oL
-         5TpX00L1CpnYICY0E4d/sZDJHlRZY94nMYIzD+GBN5e/G/HsOD6zfpQRTZGGVTayaCP3
-         E1QLYR3GAVQzJOo9dhvhI5YHNmPykKtkk2qa9P5DdvA60TMEpxsQoOPJKBoDBv6ZaVIq
-         wOMg==
-X-Gm-Message-State: AOAM530/jUpuzapvc0zW5tQY/NtxmcefXejtHsHBPOKQFFnS5CWNEFFL
-        cVGfEissjbgkufXWgGRiwNM=
-X-Google-Smtp-Source: ABdhPJyLicU2swgtUCLATdibvlOmq/gJ4I5A3rHgAPEc6FQCA2tG9EyOGsaDr4aaBN9gFJyGUyTadg==
-X-Received: by 2002:adf:90cc:: with SMTP id i70mr4175951wri.408.1631108530986;
-        Wed, 08 Sep 2021 06:42:10 -0700 (PDT)
-Received: from [192.168.1.240] (205.96.189.80.dyn.plus.net. [80.189.96.205])
-        by smtp.gmail.com with ESMTPSA id n1sm2167148wrp.49.2021.09.08.06.42.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 06:42:10 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 03/11] t3407: use test_cmp_rev
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
- <dfa27d7a8e7e0a9e03e228653ebff639a449ac77.1631094563.git.gitgitgadget@gmail.com>
- <87ilzbic3l.fsf@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <e347691c-9f5e-9103-8690-014aa0054717@gmail.com>
-Date:   Wed, 8 Sep 2021 14:42:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=r0OAFT09LAUb+FOXfUpwWL+EhSbgU66rNHWRpzW1znQ=;
+        b=kWHtQ92/xa9pTmYyg8iDMBV+2RmTjL2yWTHFOoh3Rk3nYV9h7oBMiozUCmtoHWgwbc
+         sTg+Y1WBRtV/gKqrlS4XHBz65p6qIUbxorB5wHv+NuEJNa9nHLdpQTNIbiGfuUKpLiiA
+         uhKbJKs3qsDwqITPxnetD/puJ9WMm6h2KYdu3kDa6dz/QDmtJmRJ1TmA4VkY0hTmx70w
+         jmLFewZvUPHXwSWzkLa6tG/NvFOn8ABtpClFnn8b3bXex7z+PPivW602XVQdrnuwOQMe
+         tNHKWrBU47DXDuYhhhq/m6/lssYay9uDU6dHs4L1gv5CR4euJ+NT+Sa+VWle0iLO3xHy
+         Sd4A==
+X-Gm-Message-State: AOAM5333tqkFhC2S4U+dvrcXlKQE6Hso98xE1eRejd/xQQDFt6I4VA5j
+        Z7+6ScIPV9qirRvZ8pTNLWfEwyrJdsM=
+X-Google-Smtp-Source: ABdhPJySS8x6gLs0DuPEpoAPvZYScdzcNsFZm6HGc9OlZK6R/mEYxDUpT/vBRz1eH+ZK8lZpD4W8IA==
+X-Received: by 2002:a05:6512:1289:: with SMTP id u9mr2702293lfs.296.1631108606580;
+        Wed, 08 Sep 2021 06:43:26 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id x13sm210488lfa.260.2021.09.08.06.43.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Sep 2021 06:43:25 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
+Date:   Wed, 08 Sep 2021 16:43:24 +0300
+In-Reply-To: <xmqqy288b64q.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        07 Sep 2021 11:19:33 -0700")
+Message-ID: <87pmtjkwsj.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87ilzbic3l.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/09/2021 11:40, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Sep 08 2021, Phillip Wood via GitGitGadget wrote:
-> 
->> @@ -54,9 +54,9 @@ testrebase() {
->>   		echo d >> a &&
->>   		git add a &&
->>   		test_must_fail git rebase --continue &&
->> -		test $(git rev-parse HEAD) != $(git rev-parse main) &&
->> +		! test_cmp_rev HEAD main &&
-> 
-> Use "test_cmp_rev !", making the shell do the negation is troublesome
-> for the same reason we don't do it with git command, it potentially
-> hides segfaults (and that test helper invokes "git", hence the optional
-> "!" first argument).
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks, I didn't realize one could pass "!" to test_cmp_rev - it gives a 
-better message on failure as well as avoiding hidden segfaults
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Here is a patch that fixes diff-index to accept --cc again:
+>
+> Sorry for the delay; I did not notice there was a patch buried in a
+> discussion thread.
+>
+> We might later need to do this suppression in more codepaths if we
+> find more regressions, but let's have one fix at a time.
 
-Best Wishes
+I'm pretty positive there should be nothing left. This commit was
+diff-index specific, and doesn't affect anything else. Nowhere in entire
+series the semantics of --cc itself has been changed, it has been only
+disabled as particular option in diff-index command-line parsing.
+Overall, this is pretty local change.
 
-Phillip
+>
+> Will queue.
+>
+>>  builtin/diff-index.c |  6 +++---
+>>  diff-merges.c        | 14 ++++----------
+>>  diff-merges.h        |  2 +-
+>
+> This would deserve new tests that cover the existing use cases,
+> given that both of us (and other reviewers in the original thread)
+> did not notice how big a regression we are causing.
+
+I don't see it as a "big regression", but no wonder the breakage was
+entirely unexpected, see below.
+
+>
+> We care about --cc naturally falling back to -p when there is only
+> one other thing to compare with, and also we care about --cc that
+> allows us to compare during conflict resolution, at least, I think.
+
+The problem here is not with -c/--cc itself, it is rather with
+diff-index. It's neither documented nor tested nor obvious what -c/--cc
+should mean in diff-index, given -c/--cc description (e.g., in "git help
+log"):
+
+       -c
+           With this option, diff output for a merge commit shows the
+           differences [...]
+
+How an option to deal with merge commits is applicable to diff-index,
+that:
+
+    git-diff-index - Compare a tree to the working tree or index
+
+???
+
+Besides, nobody yet told us why gitk uses --cc option in invocation of
+'diff-index' in the first place. Does it actually *rely* on particular
+undocumented behavior of "diff-index --cc", or is it just a copy-paste
+*leftover*?
+
+Overall, the original commit had a mistake, as the commit that was meant
+to be pure refactoring had changed observable behavior, even if
+undocumented. However, the essence of the commit, disabling of "diff for
+merge /commits/" options in diff-index that does not deal with /commits/,
+could still be the right thing to do long term.
+
+Thanks,
+-- Sergey Organov
