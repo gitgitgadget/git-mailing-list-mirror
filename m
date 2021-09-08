@@ -2,78 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE97DC433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13D55C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:20:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A528A61179
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:20:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 000C7611AD
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244084AbhIHTVZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:21:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62113 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbhIHTVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:21:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46B95E7947;
-        Wed,  8 Sep 2021 15:20:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v4grpblMn34KHEEo/KLwC56YxrG9NZd8iqC9l5
-        FW3/o=; b=ttiMzCqdcinpv9BXYa3J6HB0lcuUVgRBvJfyGtEMboGR4dfki6tPdZ
-        FFAwraftQrAuUDi6NZAAkDpVeUIhbainUjT8Qdgo6nTax/dWW2ByxQZ/5Y6RCK7O
-        RLc2a/HedPVuk2HEWj8iPzBBR5m8ajwhIhDiL4FAzFHJYpgiZ5oDI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D95CE7946;
-        Wed,  8 Sep 2021 15:20:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C526E7945;
-        Wed,  8 Sep 2021 15:20:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Azeem Bande-Ali <me@azeemba.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #02; Wed, 8)
-References: <xmqqsfyf5b74.fsf@gitster.g>
-        <CABye917yakh8sfGAmuLRiBXmYwTMo-zxquoAJTmve8cZme+G-w@mail.gmail.com>
-Date:   Wed, 08 Sep 2021 12:20:15 -0700
-In-Reply-To: <CABye917yakh8sfGAmuLRiBXmYwTMo-zxquoAJTmve8cZme+G-w@mail.gmail.com>
-        (Azeem Bande-Ali's message of "Wed, 8 Sep 2021 12:55:20 -0400")
-Message-ID: <xmqqczpi3mds.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1351314AbhIHTVg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42058 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350598AbhIHTVd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:21:33 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B53C061757
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:20:25 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id a4so4621600lfg.8
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oDeAC2zHKKB0qiwTrJpk+h5dgWwBlGVT05tW/fEjRwk=;
+        b=O9U8J7rJTfFadGA3pelvo6N7+H7BckXq9dgR1f0vxlTasl6YVHi7y4rtIOL44GDLvw
+         2kLjgGcgkZvjzYcGffI61Uhgk14jdCYqVEEs3p8atPgsx35PAd9/plLUS/sF49lea6rf
+         bNxWgJ7sTPP4njT5lyYSWxuribqHYznXB/5S8Rmi7kPxGiff3aIVt3v3VuNS/D6jhxJf
+         A/spdhPHOqVnncXLFneFCrqAlEZBGDGulRcHE/BzKLnMVgGRDujZMudblEdxDf9TNb7A
+         /qcSesexL6k4sDedbwb1UkiEuzjFmq6i0ve98Bfxoxrc3s4L/P5de8XVMHZwUoSr6u0d
+         OCfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oDeAC2zHKKB0qiwTrJpk+h5dgWwBlGVT05tW/fEjRwk=;
+        b=XqrY6lS3oNbRpnk9igQFfdH7He+UI5YwiCDLpPnWSfred3/PGJOlZAS21zURpKoVR7
+         gibSIPOIFbeEFWwhPEQBr2yKKMVeM90v7juZiOoQd16O6c4dVW7z8ABMNrnAS59TspNY
+         z84h1PkkNWsOU9s5PL+RZnsAR2oMzaCm2tCDWKjTrpxbnFtppoLbPgwAU5qx1tXAbS2A
+         OeeJqsKAxykE3VFPar8owHCLaKmVTilHQGFd8qmarVC6xawJ6E93KmLuRh08pIz6Jrxd
+         R9raiM0OvfpSCoeYQdsbCsTT4fsEyWndMFqeToFMgQTKQbAviTlNhBTnOFxYomOKdd5c
+         hcrg==
+X-Gm-Message-State: AOAM533jRuRHV4v+QGvKSxcGLtVxycprqoF55jWtxREmgJEtUASK6X2Z
+        E3GN46Ok3V+MofgGqdGuuNaTXYw3lUAdCUKCD28=
+X-Google-Smtp-Source: ABdhPJxxeVH6//9cX28mjAFGLWvrUfFH1PKzULBjGC1VamUpdffclKiBe4KQuEt7ndxpwIhQ6esScyEVKBU0cn0sQBI=
+X-Received: by 2002:a05:6512:32ca:: with SMTP id f10mr3664424lfg.557.1631128823621;
+ Wed, 08 Sep 2021 12:20:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CBE84FF6-10D9-11EC-B474-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+ <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com> <CANQDOdeEic1ktyGU=dLEPi=FkU84Oqv9hDUEkfAXcS0WTwRJtQ@mail.gmail.com>
+ <CANQDOdeX-SoWnh5DJ9ZdNLfPdAW-wtp_fo99r0Rwe1DQqx4W5Q@mail.gmail.com>
+ <xmqqmton7ehn.fsf@gitster.g> <CANQDOddQsf4Jj+634mdnJXaPG=2idCbCHd1iXO2qm1EMGcDmXg@mail.gmail.com>
+ <xmqqr1dy3mq5.fsf@gitster.g>
+In-Reply-To: <xmqqr1dy3mq5.fsf@gitster.g>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 8 Sep 2021 12:20:14 -0700
+Message-ID: <CANQDOddtfO20dysG=p2g2CVHZCAVWAr7=T-srSristJ=VGirGw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] Implement a batched fsync option for core.fsyncObjectFiles
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Azeem Bande-Ali <me@azeemba.com> writes:
-
-> On Wed, Sep 8, 2021 at 11:39 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * ab/help-autocorrect-prompt (2021-08-14) 1 commit
->>  - help.c: help.autocorrect=prompt waits for user action
->>
->>  The logic for auto-correction of misspelt subcommands learned to go
->>  interactive when the help.autocorrect configuration variable is set
->>  to true.
->>
->>  Will merge to 'next'.
+On Wed, Sep 8, 2021 at 12:12 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Just a minor issue with the description: help.autocorrect will have to
-> be set to "prompt" for this setting to work.
+> Neeraj Singh <nksingh85@gmail.com> writes:
+>
+> > On Tue, Sep 7, 2021 at 11:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Neeraj Singh <nksingh85@gmail.com> writes:
+> >>
+> >> > BTW, I updated the github PR to enable batch mode everywhere, and all
+> >> > the tests passed, which is good news to me.
+> >>
+> >> I doubt that fsyncObjectFiles is something we can reliably test in
+> >> CI, either with the new batched thing or with the original "when we
+> >> close one, make sure the changes hit the disk platter" approach.  So
+> >> I am not sure what conclusion we should draw from such an experiment,
+> >> other than "ok, it compiles cleanly."  After all, unless we cause
+> >> system crashes, what we thought we have written and close(2) would
+> >> be seen by another process that we spawn after that, with or without
+> >> sync, no?
+> >
+> > The main failure mode I was worried about is that some test or other part
+> > of Git is relying on a loose object being immediately available after it is
+> > added to the ODB. With batch mode, the loose objects aren't actually
+> > available until the bulk checkin is unplugged.
+>
+> Ah, I see.  If there are two processes that communicate over pipes
+> to decide whose turn it is (perhaps a producer of data that feeds
+> fast-import may wait for fast-import to say "I gave this label to
+> the object you requested" and goes ahead to use that object), and at
+> the point that the "other" process takes its turn, if the objects
+> are not "flushed" yet, things can break.  That's a valid concern.
 
-I think this was already pointed out in an earlier edition of the
-What's cooking report, but I simply forgot to update it.
-
-Sorry, and thanks.
-
+That's right. This appears to be a possibility in the existing bulk
+checkin code that produces packfiles for large objects as well, but
+my change makes the situation much more common.
