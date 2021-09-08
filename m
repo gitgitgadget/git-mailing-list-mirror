@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1EFDC433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB3E8C433FE
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAC6E60E97
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D69AC60E97
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348801AbhIHNm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 09:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48958 "EHLO
+        id S1344707AbhIHNm3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 09:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243881AbhIHNmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:42:25 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74F20C061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:41:17 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id i3so1765223wmq.3
+        with ESMTP id S1344532AbhIHNm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:42:26 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10663C061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:41:18 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d6so3338381wrc.11
         for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oFa9M4k19kNRart/HjXJxyS+9vVejrqwfcHUQrTobqk=;
-        b=YahGNggaNXzTnXB99KiaWBc8UReQXDn6TPpP6sfRulg0hNPTLgRxqjbdfzIW7+4Sri
-         md6D0Sahv2VhdrlhjV2jlGduPTt2OGBfHgk3ERfgBFo5W4d9ymdsXQrDnm3h7yme64u1
-         WA/2XJmcEPCZsjT+lPOz/Uv21uVHVrFeOeWH97uRrcas1HbWLWkybga2U5Q7Ff84259D
-         FQxIwCfwjtsHFtIzyvVibcf8Llj/vv8IInvEV5D3jsTI1A/dGaM8doyEZqTpDKGJffzj
-         dknSMF+LEPdjq7tQA3Xm1Ia5BuCBv4kMZgR80J9fmu/ioLaqayCf9pNoFaWeDK4qHQ5T
-         +HRw==
+        bh=rmRBP5gqh6McvajV8o0dq4SeUyNVcIizrxGNl0q3wLA=;
+        b=Hib0Vetz4dGa4chjUXHhyZR/z8k4kxOaQ4zQEUcUQFexFNn3It2ZjHxDb+3ZqqdTor
+         q+h+osgczpWOhg3J+7sQdZ74BIK92mmBxG3xyfk36GspZ8B+VA7117cRaFW/Im+y+hQQ
+         t/lb4F7LXojBEPR5/bKheofOWo8SuHSfgGJoo0tzVjtA/2u6FTQiXwCbuMeCwyLaDlA8
+         nZbqKVD4GvoSgCV/vsULFBFGzvqN+lseWUgj66WHFbFqQVAN+XXagDNB1NSlsjeKuAj2
+         2fnR4nofNZdDeMuN3uxwqKCaPNyVklGCNDgPzVyK3mvbjq8VVHwpy4sMK9tAJkSJAEy1
+         vL1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oFa9M4k19kNRart/HjXJxyS+9vVejrqwfcHUQrTobqk=;
-        b=sr7xMIfAiml5hKItTGtIMzqXajLHgjFKXYhxTvu1gtxy5Zz2YiQddFEzCFKlacGJKg
-         t0mJnxo1svaWYHktA8Z2ZZt+DDoW8Y1rTgR4EqFsvyf7WvOuG49bf2tfKVdvG3hwzcxI
-         KkY57DhO2L/+46+OWDLvHPqnTCgn5Rwer+Er4UCWvmBtP9+403DppPoKEGbOG8G6H4Ph
-         nEvulIrV+l2/Rr7blvYd/BqyuBQeNQxtSrySy7oBoTwl1Mndue4T0tJHUiPWRewY9CvF
-         mutAKiOPHKXTGpw0G9PtpqwsrhdeOXZ06qfE+J4R+XDUO99eeBk6BFgkDTwl3zTzUWKf
-         Quqg==
-X-Gm-Message-State: AOAM5335euMH1cj3a7FBuS31os5evnNBqLapqe5JY+JuF3PgHf3Qh2ls
-        J9inwU0KebVLuSm0S3Vbi1qNk6FlQ6E=
-X-Google-Smtp-Source: ABdhPJzISZyUdtClaqJfO79lAjfsx3HuMhu9WBulgJs3ozrE0QwzElUlOVHS/omnLDZiNlKDaFw84Q==
-X-Received: by 2002:a7b:c192:: with SMTP id y18mr3685200wmi.163.1631108476131;
+        bh=rmRBP5gqh6McvajV8o0dq4SeUyNVcIizrxGNl0q3wLA=;
+        b=r3KJTNwHt61P9Gdvqbupwz2fuI8HKez6tHVqPbqh5cVOd98641V7DTSA13anrdnXlw
+         XKSveObDP7MGys8HkehIvcCe0WYEKggYoNdaIDr/ZB3GuLcC/neg1XjEWgQiZuWb85MQ
+         sBH3N41HtSPFQ+z64oNitHZaVniUVF+ptc/+Vmg6Kq8OaWwA0lwBabqb7cwMEv+SkCMS
+         Bc5aPMDUpSU2N2fxCzMNtqOvVXkQXrLUIoG+2F21jS0adt/B+LCwkvdiQ3AQe5/u76dp
+         C8xwxNvdjeGxni57vTiNisRO5rS3ZBXOwcuyfP6XrVd/4rG4JMZtBLwgRwnn6oWrEc3q
+         1KIw==
+X-Gm-Message-State: AOAM530i7w+3VBRxtOmAFmKuxFXRNJpLXrl7EKtagfJNDH5u8d7XwUHk
+        fmDSDKtCbLXJSMoxQqkJy5COGRk6KZM=
+X-Google-Smtp-Source: ABdhPJxljw0oWw3yP7QGKCNiC3ZhydjitD0BYSzvV/vf7LLIwh8ZSHndxnxOqdlZekZgPpwzgf8ylQ==
+X-Received: by 2002:a5d:5042:: with SMTP id h2mr4115189wrt.57.1631108476698;
         Wed, 08 Sep 2021 06:41:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 19sm2140325wmo.39.2021.09.08.06.41.15
+        by smtp.gmail.com with ESMTPSA id r25sm2621172wrc.26.2021.09.08.06.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 06:41:15 -0700 (PDT)
-Message-Id: <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
+        Wed, 08 Sep 2021 06:41:16 -0700 (PDT)
+Message-Id: <c8a92d4242b4dfad71297d1eec9c3ef658641193.1631108472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
 References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 13:41:11 +0000
-Subject: [PATCH 4/5] rebase -i: don't fork git checkout
+Date:   Wed, 08 Sep 2021 13:41:12 +0000
+Subject: [PATCH 5/5] rebase: remove unused parameter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,70 +75,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The "apply" based rebase has avoided forking git checkout since
-ac7f467fef ("builtin/rebase: support running "git rebase <upstream>"",
-2018-08-07). The code that handles the checkout was moved into libgit
-by b309a97108 ("reset: extract reset_head() from rebase", 2020-04-07)
-so lets start using it for the "merge" based rebase as well. This
-opens the way for us to stop calling the post-checkout hook in the
-future.
+Now that we use reset_head() we don't need to pass orig_head around.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c | 29 ++++-------------------------
- 1 file changed, 4 insertions(+), 25 deletions(-)
+ builtin/rebase.c |  3 +--
+ sequencer.c      | 12 +++++-------
+ sequencer.h      |  5 ++---
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 12f093121d9..1520f75a491 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -377,8 +377,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 		split_exec_commands(opts->cmd, &commands);
+ 		ret = complete_action(the_repository, &replay, flags,
+ 			shortrevisions, opts->onto_name, opts->onto,
+-			&opts->orig_head, &commands, opts->autosquash,
+-			&todo_list);
++			&commands, opts->autosquash, &todo_list);
+ 	}
+ 
+ 	string_list_clear(&commands, 0);
 diff --git a/sequencer.c b/sequencer.c
-index d51440ddcd9..1a9dbc70d3c 100644
+index 1a9dbc70d3c..a7ea60a7a82 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4192,42 +4192,21 @@ int apply_autostash_oid(const char *stash_oid)
- 	return apply_save_autostash_oid(stash_oid, 1);
+@@ -4193,8 +4193,7 @@ int apply_autostash_oid(const char *stash_oid)
  }
  
--static int run_git_checkout(struct repository *r, struct replay_opts *opts,
--			    const char *commit, const char *action)
--{
--	struct child_process cmd = CHILD_PROCESS_INIT;
--	int ret;
--
--	cmd.git_cmd = 1;
--
--	strvec_push(&cmd.args, "checkout");
--	strvec_push(&cmd.args, commit);
--	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
--
--	if (opts->verbose)
--		ret = run_command(&cmd);
--	else
--		ret = run_command_silent_on_success(&cmd);
--
--	if (!ret)
--		discard_index(r->index);
--
--	return ret;
--}
--
  static int checkout_onto(struct repository *r, struct replay_opts *opts,
- 			 const char *onto_name, const struct object_id *onto,
- 			 const struct object_id *orig_head)
+-			 const char *onto_name, const struct object_id *onto,
+-			 const struct object_id *orig_head)
++			 const char *onto_name, const struct object_id *onto)
  {
  	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
  
--	if (run_git_checkout(r, opts, oid_to_hex(onto), action)) {
-+	if (reset_head(r, onto, "checkout", NULL, RESET_HEAD_DETACH |
-+		       RESET_ORIG_HEAD | RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
-+		       NULL, action, "rebase")) {
- 		apply_autostash(rebase_path_autostash());
- 		sequencer_remove_state(opts);
- 		return error(_("could not detach HEAD"));
- 	}
+@@ -5567,9 +5566,8 @@ static int skip_unnecessary_picks(struct repository *r,
  
--	return update_ref(NULL, "ORIG_HEAD", orig_head, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-+	return 0;
- }
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    struct commit *onto, const struct object_id *orig_head,
+-		    struct string_list *commands, unsigned autosquash,
+-		    struct todo_list *todo_list)
++		    struct commit *onto, struct string_list *commands,
++		    unsigned autosquash, struct todo_list *todo_list)
+ {
+ 	char shortonto[GIT_MAX_HEXSZ + 1];
+ 	const char *todo_file = rebase_path_todo();
+@@ -5616,7 +5614,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
  
- static int stopped_at_head(struct repository *r)
+ 		return error(_("nothing to do"));
+ 	} else if (res == -4) {
+-		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
++		checkout_onto(r, opts, onto_name, &onto->object.oid);
+ 		todo_list_release(&new_todo);
+ 
+ 		return -1;
+@@ -5644,7 +5642,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 
+ 	res = -1;
+ 
+-	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
++	if (checkout_onto(r, opts, onto_name, &oid))
+ 		goto cleanup;
+ 
+ 	if (require_clean_work_tree(r, "rebase", "", 1, 1))
+diff --git a/sequencer.h b/sequencer.h
+index cdeb0c6be47..352b24014bb 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -163,9 +163,8 @@ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 				 struct string_list *commands);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    struct commit *onto, const struct object_id *orig_head,
+-		    struct string_list *commands, unsigned autosquash,
+-		    struct todo_list *todo_list);
++		    struct commit *onto, struct string_list *commands,
++		    unsigned autosquash, struct todo_list *todo_list);
+ int todo_list_rearrange_squash(struct todo_list *todo_list);
+ 
+ /*
 -- 
 gitgitgadget
-
