@@ -2,115 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEF6C433FE
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 856ECC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:18:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8986A61100
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:14:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B4BE6113D
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349799AbhIHSPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 14:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54954 "EHLO
+        id S1349956AbhIHSTb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 14:19:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349791AbhIHSPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 14:15:14 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661ADC06179A
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:14:05 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id u4so2701437qta.2
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:14:05 -0700 (PDT)
+        with ESMTP id S1349892AbhIHST3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 14:19:29 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E88EC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:18:21 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id a62-20020a254d410000b0290592f360b0ccso3412402ybb.14
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Apae0yJuYSFuVB+GwfCjiStu02Fc0IJxd5fKl8X3GNs=;
-        b=T8vhRarKl/bRbzWHKhNlimakm9clYUXDcl0SN0SXEwQ7X0FPXkY1qhbR+bfVMud5b6
-         eSgLM/+y4l+L3ISSEw7+LO6x4g1ZqnTw+SAdT2FKD6i57n8IW0QIMEBPUT/gbZeuO4D8
-         /h8Yv0d44MgKsQaXQSAKI8NxDBIWiYr3Fzdbak+dkN0y2dWScNIzBkItJJ22y4r5+vmw
-         MaLQCUj3qxEpoEwF8bAmBmmFcZxDCwt2QmFD0xU9EF6BZL4w4c4rxYg1hPVw7ksW4XeF
-         2c/IWomGtDPGa04ze+XJC2bEj5O3bsPxL1NxHp1jKxb7jTVeBklMRPgpg0wHmRHCum3k
-         2M3A==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=xt/VX876xrsX5wgQ+eNdVWWflK1GwqJS1EuQBodiZtQ=;
+        b=BrgeI4BX6J3bVAUHd93iaYkHi3XQxK81pmkn80ZSciETdwAJf9QueTSNZJmQz23NSU
+         EzGecU1YQMfzXF8nfxkXs2+//eVRK1U+hhZnr0q+YwvQI0jE4l27xOQajxtAgV7eMR9G
+         pJRSxJyvIMUx0eK34W5WvPjfSJWhs1yPTFe8B3/xqBnf/M4YpgwTFgBLZkN4LMb1G28j
+         vG6UnjjBMGoRU69Ou5k1FFop6ylzuYwDsI7elJxzjIC6LNW5B4inDxeDhi2kKW3ysV4f
+         QHF2dNZ2gtz45+vIL4tBbQDfvqFLrvQNfgglGb69GDje/gVaYW9RGvqUNZyU4rSeKmSK
+         Sc6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Apae0yJuYSFuVB+GwfCjiStu02Fc0IJxd5fKl8X3GNs=;
-        b=U7gDXfUbbXOVGFTY7ZNdsLfFZEyPwFME6aLdu39w8uKzmn1TIrgg89H/Rm6VPUTQPg
-         krKWCVCen9TxpNUIgmOSD19FrsalX5ZB8BTUC37ukjaKCBSYMP5jO58WC8W7AKxMcmsP
-         iP86E8JJgA/u2yi40f4erv82dl/w+kaqzjjV1m5R/1M7+/W81sUB2pJLfQI+m1B+1h5h
-         VFxieRnv03V9UqnuLzp0nxHgnUAWClk9M8Xs9SfH6siIGbd9hQltjgx8YKI5Og3+Iu4A
-         23mJRVk1hF6W/AV2ApE42QA731d/LPbBg/KXK0eSd7zyqEr0GWyS5VuN2VwQ2wwycgnd
-         Boqg==
-X-Gm-Message-State: AOAM533TPueyeMNbxWrhaKCRrl9+rLU8kgM0muvawkCq+snmXD7ayill
-        +UO0c5MZrxE5V65x7XKRcv16ghtRCUI6WA==
-X-Google-Smtp-Source: ABdhPJxGBg1kZ/Ksmw/wFht4MH9rHTeVXotIWCQ6Ph0D0pynGeQbqv68KudF8rjO7XXPOILkiFpCjg==
-X-Received: by 2002:ac8:1e05:: with SMTP id n5mr5061032qtl.151.1631124844602;
-        Wed, 08 Sep 2021 11:14:04 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id k186sm2352887qkd.47.2021.09.08.11.14.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 11:14:04 -0700 (PDT)
-Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
- <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
-Date:   Wed, 8 Sep 2021 14:14:03 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
-MIME-Version: 1.0
-In-Reply-To: <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=xt/VX876xrsX5wgQ+eNdVWWflK1GwqJS1EuQBodiZtQ=;
+        b=2KuivXax9cHz6tY99vJ14oHGAZzWIa8mR+bmb/75u4LEu5y/phbmtmYYYW0WNnMNHx
+         owlB4QM8do0KNqk6g3O/OXkc+nzdWN4b5SRNz/1BsgMscnV8jeVamisUxyvElizxTiyk
+         kv4/BzyEcwwSwv5NKOQIzEtw2e2ypdf5kHItnmAos7n3gEsZ3JBMQlmkyHano2tb4c4c
+         ILfzJ2RGtwXaVelFE9n3Bbp1dPYXHxhqk23Vnl0GPhw+GL7mTexcEPet8mtCHV7DSlWb
+         LeRELPb5PTomocVdH5NRMeEB3tnwXGkdJxBUEFpd9O3ZbxK9G4CSrwX+WXKX+fPvYRka
+         jgbQ==
+X-Gm-Message-State: AOAM5324/j2WoWRs8PGKt1CuedEHYJ2sJ4j31krGb8ByCDszBXyAhE0b
+        X/PcYqRkqFsW7mSLptnxSedgPkG2F6YQv37nH83xBz8SlKZkiVeUMQBXbBea7L8M4nwnUsiBSqx
+        ETplReN0YzAMm76Lm2VgedllLX69stQ92D3kRJK60Ru6fQsY8NWf0NnTZ/TAVT9dJn3M8VPmECD
+        b9
+X-Google-Smtp-Source: ABdhPJx0C8w8GvqG8kRi7jnu2vx11fKTg4at0scl0VfFhJGA1Gr9Qp+1ijzYwbfpaf5aJ2Soxe3j0kAmI/Bc/pAH9lDe
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:6087:: with SMTP id
+ u129mr6138288ybb.513.1631125100457; Wed, 08 Sep 2021 11:18:20 -0700 (PDT)
+Date:   Wed,  8 Sep 2021 11:18:12 -0700
+Message-Id: <cover.1631123754.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
+Subject: [PATCH 0/3] More add_submodule_odb() cleanup in merge code
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+(CC-ing Elijah in case he has insight into the merge-ort part.)
 
-Le 2021-09-08 à 09:41, Phillip Wood via GitGitGadget a écrit :
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> The "apply" based rebase has avoided forking git checkout since
-> ac7f467fef ("builtin/rebase: support running "git rebase <upstream>"",
-> 2018-08-07). The code that handles the checkout was moved into libgit
-> by b309a97108 ("reset: extract reset_head() from rebase", 2020-04-07)
-> so lets start using it for the "merge" based rebase as well. This
-> opens the way for us to stop calling the post-checkout hook in the
-> future.
-> 
+While continuing the effort into removing add_submodule_odb() (as part
+of the submodule partial clone effort) I came across this part of the
+merge code that specifies the repository being operated on in two ways:
+one as a struct repository pointer and the other as a path. This patch
+set unifies the two.
 
-While in general I think it's a good thing to avoid forking, this change
-might result in behavioral differences. Any config that affects
-'git checkout' but not the internal 'reset.c::reset_head' function might
-play a role in the rebase UX.
+I normally would not send refactoring patches unless I also have a
+feature patch that uses the results of said refactoring, but in this
+case, I think that these patches are worth having since they clarify a
+potentially unclear part of the API.
 
-One that immediately came to mind is 'submodule.recurse'. This initial 'onto'
-checkout was pretty much the only part of 'git rebase' that did something useful
-for submodules, so it's kind of sad to see it regress. [That is, until someone
-takes the time to implement 'git rebase --recurse-submodules' and makes sure *all*
-code paths that touch the working tree pay attention to this flag, and that will
-probably necessitate 'git merge --recurse-submodules' first because of the 'merge'
-backend... as far as I'm aware it's on Emily's list [1], it's also on mine but
-I don't know when I'll get the time.]
+Note that these patches mean that the merging code no longer supports
+submodules that have their .git dirs in the worktree, but from what I
+can tell, this seems to be the direction we're going in
+(repo_submodule_init() does not support such submodules).
 
-Anyway, I'm not saying that we should not do what this patch is proposing, but
-I think caveats such as that should be documented in the commit message, and maybe
-an audit of other configs that might results in behavioural differences should be done.
+Patch 3 is included to show how I'm verifying some things. Including
+something like that in the master branch would probably require
+conditional compilation (to exclude the additional field in struct
+object used for checking, among other things), so I'm just including it
+here for informational purposes.
 
-Thanks,
+All these patches work under GIT_TEST_MERGE_ALGORITHM=recursive and
+GIT_TEST_MERGE_ALGORITHM=ort (and when that envvar is unset, for good
+measure).
 
-Philippe.
+Jonathan Tan (3):
+  t6437: run absorbgitdirs on repos
+  revision: remove "submodule" from opt struct
+  DO NOT SUBMIT commit-reach,revision: verify non-mixing
 
-[1] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/t/#m0229af9183a84c2367f21e82adfbd21f08aa4437
+ alloc.c                    |  2 +
+ commit-reach.c             | 60 +++++++++++++++++-------
+ merge-ort.c                | 55 +++++++++++++++-------
+ merge-recursive.c          | 51 +++++++++++++-------
+ object.h                   |  1 +
+ revision.c                 | 96 ++++++++++++++++++++++----------------
+ revision.h                 |  1 -
+ t/t6437-submodule-merge.sh |  9 ++--
+ 8 files changed, 179 insertions(+), 96 deletions(-)
+
+-- 
+2.33.0.309.g3052b89438-goog
+
