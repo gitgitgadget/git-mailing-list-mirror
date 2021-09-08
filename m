@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D00FFC433FE
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E1BC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B84AD60E77
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A797E6109F
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 13:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237856AbhIHNmY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 09:42:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
+        id S1344667AbhIHNm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 09:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232509AbhIHNmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:42:23 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5059C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:41:15 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id v10so3393078wrd.4
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:41:15 -0700 (PDT)
+        with ESMTP id S237967AbhIHNmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:42:24 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E30BBC061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 06:41:16 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 196-20020a1c04cd000000b002fa489ffe1fso1208073wme.4
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 06:41:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2iPLUGTOJY4odLXStPmKukFtdEo+mKLcOyoakKL0eR8=;
-        b=CGLRhSps+bcKdEzMO96hfwChOvoag7BuH6a55mz0NoeWvaz9dW6DFj0r6s68sGzMYW
-         eJzpXSnZLUTIgrRP9vtej+WctGoRlUFI8I6ITiOnmipNluFQo3mcKJYobiKEvbzxySz4
-         QMczjTRVMwNq4GDLSPIPVfTsu/j91vjKjjdnAa8ap3c/7Q1DjSc1Rq/WwJHB/qNcuf9B
-         bCfOYUE5b/0+UfRldSXMNw7tcqJu50Dh0MxJIWEzS57/j69nsdbqr4NDS8eMyGbnSNIa
-         xox3WqSPjC+1nzkbaZmkdW1f/C8YjBnlJIlFuiYn6ArfdF3vTJ1oQWH5BspIoS2Klt1C
-         gFOQ==
+        bh=82mj4O3sQeL4xRrDph3+NBTpjhpDJqHGG56do4lmAug=;
+        b=AVca6gXrdSzsVc0AvgiBZjOOJDbJb/yiYpnqbl60jYL9Oju8DcV3qHuqqUKmmQ37aR
+         9eyWQy6DxiQ+yZE2h2CFBwZsA3tvNlihvP9jlkzv03H+49/cS6m1nR7USFKvoj0Wh13R
+         t3wYH4O4rs0nzhAuAGvueiVinscMjKvO5NjI3uFHCUk3C480G0JTAFgRe51nUjtSZTr0
+         c9FYgRNn1qLxOZzmtPOYtQbPLzXCNOX3QfClXy1+n4fCUh/S876EGcdMhvVkrJWXJgqY
+         5wnaZ02aHX3Q7l64rIUGYzsrR3mjjI35C3PQquil5cwVWppVtCeq02KH7be2X5/dMixq
+         u3JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2iPLUGTOJY4odLXStPmKukFtdEo+mKLcOyoakKL0eR8=;
-        b=1J17La1R9wKQnkyMJrhXzoUZRFeFo03ewhG5SNwptYAVLtxqM4hgSwQQRSW0ADzGqD
-         YTjNQVcI2DRXxdTZhrIsajl/zsQUk4gvTZc0f5xGij6PX1Rlw3vQpXxzMbtdOH+Y/X8t
-         wV5DB0h6R2AVOUWGb8GdmwLXYqBa4J0BFm1jxozocM0Z9dpJj9V/n/g2yA093OPltjQU
-         5R75r9PIs0GInJuvmC9JzJViraPG2Nv3Fj6oQKdXvxGbUxl6LkW6DoxoPEJITvQsfCu/
-         TCXak/R1MelDmiBvBKzDcCGbVs3m3teYDsSa6Poq0R47exzDnvGqdt9vu5UYJvqM6Md8
-         UJHA==
-X-Gm-Message-State: AOAM532KGXMNfVQRDbIGWSJYCr2b0FoPKCyDBKWyBrTpmRCnmNOEolTd
-        VzpqNJzzoHQS3bKPPXG/vsLkOZZEfU4=
-X-Google-Smtp-Source: ABdhPJxhdJ898tNjPAso72mkxfeBWhgBRiMBeY6vYY0oy4rqHAQQI9Ee4SFpq7HjMxeN3POQ+st+ZQ==
-X-Received: by 2002:a5d:58ef:: with SMTP id f15mr4310257wrd.160.1631108474423;
-        Wed, 08 Sep 2021 06:41:14 -0700 (PDT)
+        bh=82mj4O3sQeL4xRrDph3+NBTpjhpDJqHGG56do4lmAug=;
+        b=0hsA36wo0HtIkAt8N2ZD4n+/41lhCQTDvpKS7ZkDkWKDKDLEPLPKSoHHHTd2zLtx7R
+         qkVzx5leacuDPkSy/6tUB/vPecjQQgpjdYJcd085f4JTDaXKqSYwWG6o+kdGjSPmEFJH
+         xS09EpiRSs7szbUulz/suGInKDPzFmGb3xMpfggH/siRaQZ+DLxvl/BcZjMT7q2SwxKs
+         tfn9YWj2q0hF8b+ZNYVEABEonq8Q2GqhsiKLDGADN+hp2VSKf/G1iQFU3hy6QXTDz08Y
+         wugCHLqw6mTIR3vC7RzrepE4h4wqkxUFl6Njp3V2QI9k2ePlvVf0p8UF7BGrfVEyVOaN
+         F55A==
+X-Gm-Message-State: AOAM530lMcQ+o9fepFhmxV5Ppx2E27UsaqcpdM7+xLanT5o13Fnax9E3
+        xVeC821pfb4QguWLmRrG+nxGNNybBZE=
+X-Google-Smtp-Source: ABdhPJxx70Bh+Sj0Nucb0NsvsdQtdVW+inSABp5NKkCne5mMLoLO0xRCL/dAIJe78EDpiOal/qpsgw==
+X-Received: by 2002:a7b:c405:: with SMTP id k5mr3615683wmi.87.1631108475590;
+        Wed, 08 Sep 2021 06:41:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d7sm2207954wrf.3.2021.09.08.06.41.14
+        by smtp.gmail.com with ESMTPSA id v21sm2335559wra.92.2021.09.08.06.41.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 06:41:14 -0700 (PDT)
-Message-Id: <53cde4825b408e5fb893bbd9a222e7387d69a408.1631108472.git.gitgitgadget@gmail.com>
+        Wed, 08 Sep 2021 06:41:15 -0700 (PDT)
+Message-Id: <614555fc10f336cc6f7681501247209aac879269.1631108472.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
 References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Sep 2021 13:41:08 +0000
-Subject: [PATCH 1/5] sequencer.c: factor out a function
+Date:   Wed, 08 Sep 2021 13:41:10 +0000
+Subject: [PATCH 3/5] reset_head(): mark oid parameter as const
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,71 +75,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This code is heavily indented and obscures the high level logic within
-the loop. Lets move it to its own function before modifying it in the
-next commit.
+We do not write to oid so mark it as const in preparation for the next
+commit.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c | 38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ reset.c | 4 ++--
+ reset.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3f..a248c886c27 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4254,6 +4254,27 @@ static int stopped_at_head(struct repository *r)
+diff --git a/reset.c b/reset.c
+index 4bea758053b..5b578d6bb68 100644
+--- a/reset.c
++++ b/reset.c
+@@ -8,8 +8,8 @@
+ #include "tree.h"
+ #include "unpack-trees.h"
  
- }
+-int reset_head(struct repository *r, struct object_id *oid, const char *action,
+-	       const char *switch_to_branch, unsigned flags,
++int reset_head(struct repository *r, const struct object_id *oid,
++	       const char *action, const char *switch_to_branch, unsigned flags,
+ 	       const char *reflog_orig_head, const char *reflog_head,
+ 	       const char *default_reflog_action)
+ {
+diff --git a/reset.h b/reset.h
+index 12f83c78e28..6d2be511b8c 100644
+--- a/reset.h
++++ b/reset.h
+@@ -12,8 +12,8 @@
+ #define RESET_HEAD_REFS_ONLY (1<<3)
+ #define RESET_ORIG_HEAD (1<<4)
  
-+static int reread_todo_if_changed(struct repository *r,
-+				  struct todo_list *todo_list,
-+				  struct replay_opts *opts)
-+{
-+	struct stat st;
-+
-+	if (stat(get_todo_path(opts), &st)) {
-+		return error_errno(_("could not stat '%s'"),
-+				   get_todo_path(opts));
-+	} else if (match_stat_data(&todo_list->stat, &st)) {
-+		/* Reread the todo file if it has changed. */
-+		todo_list_release(todo_list);
-+		if (read_populate_todo(r, todo_list, opts))
-+			return -1; /* message was printed */
-+		/* `current` will be incremented on return */
-+		todo_list->current = -1;
-+	}
-+
-+	return 0;
-+}
-+
- static const char rescheduled_advice[] =
- N_("Could not execute the todo command\n"
- "\n"
-@@ -4433,20 +4454,9 @@ static int pick_commits(struct repository *r,
- 							item->commit,
- 							arg, item->arg_len,
- 							opts, res, 0);
--		} else if (is_rebase_i(opts) && check_todo && !res) {
--			struct stat st;
--
--			if (stat(get_todo_path(opts), &st)) {
--				res = error_errno(_("could not stat '%s'"),
--						  get_todo_path(opts));
--			} else if (match_stat_data(&todo_list->stat, &st)) {
--				/* Reread the todo file if it has changed. */
--				todo_list_release(todo_list);
--				if (read_populate_todo(r, todo_list, opts))
--					res = -1; /* message was printed */
--				/* `current` will be incremented below */
--				todo_list->current = -1;
--			}
-+		} else if (is_rebase_i(opts) && check_todo && !res &&
-+			   reread_todo_if_changed(r, todo_list, opts)) {
-+			return -1;
- 		}
+-int reset_head(struct repository *r, struct object_id *oid, const char *action,
+-	       const char *switch_to_branch, unsigned flags,
++int reset_head(struct repository *r, const struct object_id *oid,
++	       const char *action, const char *switch_to_branch, unsigned flags,
+ 	       const char *reflog_orig_head, const char *reflog_head,
+ 	       const char *default_reflog_action);
  
- 		todo_list->current++;
 -- 
 gitgitgadget
 
