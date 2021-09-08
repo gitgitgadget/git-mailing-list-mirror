@@ -2,179 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95AD1C433FE
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06DE1C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:01:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DD1360E77
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:59:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C97DC6113C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349162AbhIHTAM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:00:12 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38555 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233242AbhIHTAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631127537;
-        bh=jUkW7Gx55Gph7MBlTHAEWm9y2YjXjsiybIqI7PvC6i4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jgVeUh0FEU+29gfuPCbLmgXGHyxXGg/YpowTxP9zIZfPci7O4IpLCQ1BvWInP91N4
-         vWiu+HJdtxZAibC2JlxTZKA7R+n6stH0xUuOXDFro7+7s7NI42A1ZE5Eh/kwtziYDV
-         a60+vgyWdiBrzZyt1L+9rG4NM14pU1nOBOlRx0rI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDQeK-1mGvEl19Ow-00AUdA; Wed, 08
- Sep 2021 20:58:57 +0200
-Date:   Wed, 8 Sep 2021 20:59:13 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 08/15] scalar: implement the `clone` subcommand
-In-Reply-To: <xmqqwnnxftzn.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109082049290.55@tvgsbejvaqbjf.bet>
-References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <2cbf0b611133df5fa7eed1bf38460f9d119d2a6e.1630359290.git.gitgitgadget@gmail.com> <xmqqsfyoqm6e.fsf@gitster.g> <nycvar.QRO.7.76.6.2109031709190.55@tvgsbejvaqbjf.bet> <xmqqwnnxftzn.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S240231AbhIHTCe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37508 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230044AbhIHTCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:02:33 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE8C0C061575
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 12:01:23 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id k13so6884413lfv.2
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 12:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rplVcR4pBnjGlH7SC2gSRnQzvBJP0GebXowk4eJ5Lak=;
+        b=ma06RI0aQ5HSQKOXKpXOMOg0h0eN3Qk3S/zIcO2tdl1416G/h5IjL+KwVkszImuY6u
+         W2pTh+Kj7X6qx1aiIV2ff/nsHRSHicgJtODZsVC0d2V2uebQoesvOCX4cSEBidhDc9r0
+         Aw3q8brovVih/R4iwEEbiZr6+FTvc+313Bom4LLl50VJZ+QFbSz6bHTjoqPw1EIC58K9
+         eDBKPQz0TlWlQposz+DyTIIfTrdKsZ+PbUdbWAVwN4oVJtR+wuVKZEHja80Ns8TFVBqD
+         cd1r1TfI5QkpLa3XdCP36lgpV9aVL6eqpmaUCO8hsILYl/8695q+p/9sB2hXfTiFIK6Q
+         p7qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rplVcR4pBnjGlH7SC2gSRnQzvBJP0GebXowk4eJ5Lak=;
+        b=8AxWRGwUfuD+27r+eT6VlyQjFfSYuGtr6w9PgtdgMne/ab+0N3jSSKZzNTqVyEYCpy
+         25rt9l0ClDmjn4e4D2Qnf98qxEHXek1SkPXM/2pVAlEywEUx4YCq6JOEaptG7On7Z5Q8
+         JHa/4bKCY8xRUlRbSlrug91aetnZqlzsMFgl5F4f+5hP5KtueFSzwS8RkAjxusGysw1z
+         nTH3MuAFRFiXScZ0+oGK0u1LQGxg34kIgn6VPqIGjL7BQxqEN+CkEk6qiNzhXCzZKtrJ
+         EkryOhVshx3uZvZJtWX7EMHoswK7Bd9Dbn4k4TVOibAstNPMWOcsZGj4Kr3NNfjMP0b+
+         4LrA==
+X-Gm-Message-State: AOAM532R+V0yoadf5IgsNJurrg7cmbDg+R4Q/44IYrz5OyNL8wraepQe
+        A3diW/CU5WRI/RhRnIw0qmVvJh78lHeJ5YjuzHUM3gdtYiA=
+X-Google-Smtp-Source: ABdhPJyOrLQIZCiUTRiKhPb/O/6CyluVatTEaIlUzQJh9WprizHAsJyER8cKkvf+ApAmVkDht2PIZZ6rqZ1muhrMIvY=
+X-Received: by 2002:a05:6512:10d6:: with SMTP id k22mr3759611lfg.575.1631127681192;
+ Wed, 08 Sep 2021 12:01:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nJ69/jysqwiJkhFRn3JtU9h78OFTTK2DQNzw3fjktHOwww1AHd+
- kACDWl3iILVgWKqLssjRS9vGNlBQlKHDqsLF4y1Ta6AsULv0p1udvQGmSlUxg6gASiEyAUq
- QT8GbqnOJWRfOyiW2FOMs3dd5fVYCgYuap6WuUdkmVXSuMlz8/QpDBIq48pg5UvK6Jpcjar
- S0163/axZOa5nDliGq68w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AhrV2YkcKpA=:cJKItgjT9DHKyxBUKf/U2Z
- qLKsEvV1BrHt/Bhga6OhJhKivdGxg+9G3I4dhSfIFTqoVu/ayMPVRxmJ1yx7xoXFs/hZl9LgQ
- y44QnepdGS20dO1SWldzvmVPyzIWFxMkTN4W00Vx+km8WrYBeZznWfKyGdvgNU5WcSm3O9Jv1
- 6DQaclTnpZdIIYJXD4lm6mpizT52S9Lc/nDaGzqsho0oLFLIv8BBuc3GL4qp4jod0IrVLHIMt
- o2AWyj5fJx40g4CoNkdFzvp+gfEOULSre+jrhMEUqtigPYrqzLJPLIJ5sx9dWjXNJi0ZkEC3+
- o9Rp6L17WVEgcSYPwMG7rq1jziie8t45wFoderyH0+umyTBBDdMLOTkgf4Y1gCKbl9Ij3s/K8
- gB8JfeyLfC4krvQ8yfvV8NFCL7V2K2z7qEfS3i88+jm8uOK4d/M5nWYPOg1FyOdBG1EeEoi0X
- lVYezFLyqhs6irVN+TlSSQTrFBTJfl5FDqk72T3ejwGiQpk3tFSNjwSPcvYwWqRoKgnlDAiXL
- sxTUsW+A6LcEsnCHe/u9gc3h2w7iipQQM1HfBihvKsq7fqW8Q5Uv+JZMfQeI0fO7PtI5W/5S4
- Ig5XyQi6ZNpKlzxxWSqm2qSEVnL6nuQxPXgKfvlK/Z6wg7Ca53k4RuTPTulwyOeM8mBL4PnMr
- MQ78qbmi4A8dPMI73wO/srXXWiBljAXslfbCTi07dt69yRgpAOp3bHoJ41QEsjukpvzrvlsgd
- +9wOqrvshOFxkJryZ1oeU0Frx+9KBZOdIxCIEJ8wbRp2dUK1ZJDOu8TrXkTJWClP0eYDAr/AO
- MAC8+hfkwXlfXd30iFvRdR+sL/BYjwTR0wVNfOIsK5MR1N0IIMtPwgXJ6q2m/rZk+iQJE8OCV
- SyQsFjQrabUEjPaGlCnqsJZbrm7Ub2Srq5THbSTc6K3O+zwj9y7dPS/fIXeURpdupBYBqsT+X
- DLrACGjk381mOMEMC+oICdGWgqnRmVPbILLmkeSvwdr+ht18o/sFv42/ZnI6eFeGSH0oiTDZl
- lAPIrc9ap+OjDcFPMTnj6rCAoj1/rH9tWOSO/2h+5g3KCjM5lS5vQ0ygwoOeKsXtf1qCaTnM0
- 5vj/weZPKHyWEw=
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+ <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com> <CANQDOdeEic1ktyGU=dLEPi=FkU84Oqv9hDUEkfAXcS0WTwRJtQ@mail.gmail.com>
+ <003701d7a422$21c32740$654975c0$@nexbridge.com> <CANQDOdcKsUqrQ6K6MEBoXS1BW8_tO8mx4tcq6nvqyiuM4e2CmA@mail.gmail.com>
+ <87h7evkghf.fsf@evledraar.gmail.com>
+In-Reply-To: <87h7evkghf.fsf@evledraar.gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 8 Sep 2021 12:01:10 -0700
+Message-ID: <CANQDOddSa4KguS0phCcZwK6FneSyLQQkWdrTbNM0+7dGVKVQpw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] Implement a batched fsync option for core.fsyncObjectFiles
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Fri, 3 Sep 2021, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Sep 7, 2021 at 6:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> > It would even work if the current line is shorter, but as you point ou=
-t:
-> > it is wasteful. And it could be improved to be more readable. I rework=
-ed
-> > it, and it now looks like this:
-> >
-> > 	if (!pipe_command(&cp, NULL, 0, &out, 0, NULL, 0)) {
-> > 		const char *line =3D out.buf;
-> >
-> > 		while (*line) {
-> > 			const char *eol =3D strchrnul(line, '\n'), *p;
-> > 			size_t len =3D eol - line;
-> > 			char *branch;
-> >
-> > 			if (!skip_prefix(line, "ref: ", &p) ||
-> > 			    !strip_suffix_mem(line, &len, "\tHEAD")) {
-> > 				line =3D eol + (*eol =3D=3D '\n');
-> > 				continue;
-> > 			}
-> >
-> > 			eol =3D line + len;
-> > 			if (skip_prefix(p, "refs/heads/", &p)) {
-> > 				branch =3D xstrndup(p, eol - p);
-> > 				strbuf_release(&out);
-> > 				return branch;
-> > 			}
-> >
-> > 			error(_("remote HEAD is not a branch: '%.*s'"),
-> > 			      (int)(eol - p), p);
-> > 			strbuf_release(&out);
-> > 			return NULL;
-> > 		}
-> > 	}
-> >
-> > It now parses the output line by line, looking for the expected prefix=
- and
-> > suffix, then verifies the ref name format, and either returns the shor=
-t
-> > branch name or errors out with the message that this is not a branch.
 >
-> It is much easier to read and understand how the loop works with
-> above.
-
-Excellent.
-
-> >> > +			error(_("remote HEAD is not a branch: '%.*s'"),
-> >> > +			      (int)(head - ref), ref);
-> >> > +			strbuf_release(&out);
-> >> > +			return NULL;
+> On Tue, Sep 07 2021, Neeraj Singh wrote:
+>
+> > On Tue, Sep 7, 2021 at 12:54 PM Randall S. Becker
+> > <rsbecker@nexbridge.com> wrote:
 > >>
-> >> OK.  Any symref whose basename is HEAD in their remote-tracking
-> >> hierarchy would have been rejected earlier in the loop.
+> >> On September 7, 2021 3:44 PM, Neeraj Singh wrote:
+> >> >On Fri, Aug 27, 2021 at 4:49 PM Neeraj K. Singh via GitGitGadget <git=
+gitgadget@gmail.com> wrote:
+> >> >>
+> >> >> Thanks to everyone for review so far! I've responded to the previou=
+s
+> >> >> feedback and changed the patch series a bit.
+> >> >>
+> >> >> Changes since v1:
+> >> >>
+> >> >>  * Switch from futimes(2) to futimens(2), which is in POSIX.1-2008.=
+ Contrary
+> >> >>    to dscho's suggestion, I'm still implementing the Windows versio=
+n in the
+> >> >>    same patch and I'm not doing autoconf detection since this is a =
+POSIX
+> >> >>    function.
 > >>
-> >> Is there a particular reason why we return early here, instead of
-> >> breaking out of hte loop and let the generic "failed to get" code
-> >> path below to handle this case?
+> >> While POSIX.1-2008, this function is not available on every single
+> >> POSIX-compliant platform. Please make sure that the code will not
+> >> cause a breakage on some platforms - the ones I maintain, in
+> >> particular. Neither futimes nor futimens is available on either
+> >> NonStop ia64 or x86. The platform only has utime, so this needs to
+> >> be wrapped with an option in config.mak.uname.
+> >>
+> >> Thanks,
+> >> Randall
 > >
-> > Yes, the reason is that I wanted to err on the side of caution. If the
-> > remote repository reports a default branch that is not a default branc=
-h at
-> > all, I do not want to pretend that things are fine and then run into
-> > trouble later when we set up a non-branch as remote-tracking target or
-> > something like that.
+> > Ugh. Fair enough.  How do other contributors feel about me moving back
+> > to utime, but instead just doing the utime over in
+> > builtins/pack-objects.c?  The idea would be to eliminate the mtime
+> > logic entirely from write_loose_object and just do it at the top-level
+> > in loosen_unused_packed_objects.
 >
-> Wouldn't we have the same problem when the remote end does not
-> advertise HEAD and we fall back to "local default", though?  We'd
-> run into trouble later as we use "local default" that may correspond
-> to a non-branch there as remote-tracking target, or something like
-> that.
+> Aside from where it lives, can't we just have a wrapper that takes both
+> the filename & fd, and then on some platforms will need to dispatch to a
+> slower filename-only version, but can hopefully use the new fd-accepting
+> function?
 
-All true, there will be trouble at some stage.
+I had some concerns around using utime() while a file descriptor is open.
+There's some risk of sharing violation on Windows (doesn't matter since we'=
+d
+be using futimens), but I was also concerned that there might be some OSes =
+that
+update the mtime on close(fd), thus overwriting the effects of utime.
+Maybe that's an unwarranted concern, but it's part of why I didn't want to =
+have
+different call sequences on different OSes.
 
-The difference between the two cases, in my mind, is that cloning an empty
-repository would run into the latter code path and might still have a
-chance to work as intended by using the local default branch name.
-
-In any case, as I indicated earlier, I am _very_ interested in moving as
-much functionality as possible from Scalar to Git proper. In this
-instance, I hope to move most of the code from `scalar.c` to `clone.c`
-(guarded by one or more new options). And as soon as that happens, the
-discussion we're having right now will be moot ;-)
-
-Which means that I want to weigh how much effort to put into polishing an
-unlikely code path on one side, and on the other side how much effort to
-put into moving the functionality away from `contrib/` and deleting that
-unlikely code path.
-
-In the same vein, while this patch series contains (mostly) code in
-`contrib/` (and therefore technically does not need to adhere strictly to
-Git's code style), it is probably wise to pay closer attention to the code
-style particularly in those parts that are prone to be moved verbatim (or
-close to verbatim) to Git proper.
-
-Thanks,
-Dscho
-
-> Not that I care too deeply in the error case, though.  I just felt
-> that this early return was an uneven way to follow the principle to
-> err on the side of caution, as we continue with the local default
-> when the other side fails to tell us what their HEAD points at.
->
-> Thanks.
->
+I'd be happy to implement your suggestion though and see what happens. But =
+I
+also feel that this time update thing is pretty ancillary to the real
+goal of my change.
+I'm only doing it because it's in the same area. The effects of
+getting mtime wrong
+would be pretty subtle -- I think we'd just not be deleting some
+unpacked unreachable
+objects as soon as expected.  Do you have a strong objection to
+lifting the time update
+logic out?
