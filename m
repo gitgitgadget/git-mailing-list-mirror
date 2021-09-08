@@ -7,170 +7,95 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C0FC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC8BC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3AFE60F6C
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3575460F6C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 19:11:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245429AbhIHTMY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 15:12:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38211 "EHLO mout.gmx.net"
+        id S1349336AbhIHTNC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 15:13:02 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56489 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235927AbhIHTMW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 15:12:22 -0400
+        id S1345251AbhIHTM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 15:12:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631128267;
-        bh=m7gDqs4YeA8TitY6PKZ+kjqOE16oob7j6EC7dHNLkw4=;
+        s=badeba3b8450; t=1631128297;
+        bh=JecNp87opHi2vZlMpTqwU6r//uxZtiF/Z6rJost1EGE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c8wGUNmFOunZhV6DA10Ix31S7Lfzxh2EujIF8kSMmlqkodNmgpwlmVYi1A9W78wlD
-         MtYFcsnmc9Zgui6DvqFC7Nmk2m+0BNqq0dNTlxxi1TvMEFCSnoSx5C9Hlg+sRRnt03
-         HwhClf/zCJOwNI2J/+VbPZkoCLRtoGYTCSLjZLD0=
+        b=ePRzl3OMSB6cjYoQ7zFHUt/93egYBtAgn8fpk48yv37bplApsa/0tQO77dKF47zu0
+         8U9nsHDJOVW7+DCtOyLsWvULOYlm3zI4gnGmzqzJiNColIdsTnWBLJpJXU/MCr6y6k
+         v9XmcdpHz7/KS4g7cRMoj+Yz1jP6g5MqcLE6BA0E=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCKFk-1mFpVp2nh4-009T8S; Wed, 08
- Sep 2021 21:11:07 +0200
-Date:   Wed, 8 Sep 2021 21:11:23 +0200 (CEST)
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFsZ3-1mA4LW1CP9-00HNDJ; Wed, 08
+ Sep 2021 21:11:37 +0200
+Date:   Wed, 8 Sep 2021 21:11:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 10/15] scalar: implement the `run` command
-In-Reply-To: <xmqqk0jxft1p.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109082100180.55@tvgsbejvaqbjf.bet>
-References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <c3f16bccd023601bb1d041c36cf5f49011abcb76.1630359290.git.gitgitgadget@gmail.com> <877dg2xbjp.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2109031747290.55@tvgsbejvaqbjf.bet>
- <xmqqk0jxft1p.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 07/15] scalar: implement 'scalar list'
+In-Reply-To: <7d68dc36-81b3-1c8e-61d7-c656aee8c1fb@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109082111360.55@tvgsbejvaqbjf.bet>
+References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com> <fb7c931ddb3a248542bc6a03d09189e937315d0c.1630691688.git.gitgitgadget@gmail.com> <7d68dc36-81b3-1c8e-61d7-c656aee8c1fb@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1395184817-1631128285=:55"
-X-Provags-ID: V03:K1:zJpnmFLgtSC8aFDBGtA2uay4xGWXl5jVoGZ0nGJTJyMsunzJKGX
- qFB56FUGzr6o17WylxRlc9GQCt5LmtKE79fXsaY+eYzp/ZKY2ZJ2iD5phHANApVq1SDjD8H
- My5TYCZF8/+e6Lu+7wjoqkYwUhQGuoIDeGRXgmjVOqTtnSLkGFq3GHkSImSJTOtFmeWHqRN
- 1P83gk+WIyX9Nvi8e3jIg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:knHZpjwgTW0=:ZJpa+bTulBrTn+oAmSt7Vp
- SmvyIxfIYHE2+T4kTivOQb1mdqY3ytBl4zdAZxYlUBvXzZh+ohS6sYlgIPRAIRoCFSOo/lO0G
- JXA/MUNVD16AoGUm7Kr2rAl+CykKEKJZ2Z+UUHw8PuXCTIJTKXrkNxDQTmhP8QD6Y7B0/hXgA
- Sj0ptV05CMzyBPr6RmfywSM0YauZAyK7259viuDtFBr7HZWeVTO9QaHHr2GdNyOhnVHvneUmC
- OC1dccfmm9VBcdU1u/Hkhm71alM5GELa3WwV1BL4112IPHDLcy4uLwUaMvWVwOWqzywvzefnB
- qFhn0xvpA3i0T/6DDlauXasMjZNTsTXUSe+8yLIyjN9sKWr0JPeNl3XaFVXseCx9uwbG4MQFG
- eXvVUQ+jPRc06RgLvMXYNlRQ1yun80jZYGFaBQBpCfG3pje76NeLBjTX8gj5wfrTs2maiBZCl
- uDJ14zn7YiDbak9M7UrureyIbsYjJ2qlzc/PBcxAAshYJ0PFnOkuS0pEfVwRKLgKdEdRwX1FE
- zChVrlERS9CnI0Ds/PvvHJ+6Z3ATFc49G328LnWLD9LhKk4tJBX/3agMq9BoARwghmOmM3i4V
- q3oW4AVKvO6D66sz/f1iOC75JNnqwBLQfz1DPgTC/jRrHas1wiRYzZ42TzjBXdg5vmxsXD0PM
- 9/fj59leT2ZpioL5QbgLRB1tahxWLvaDCq0rO/K87ahjQoi79NYLaF222RkdlYf1EJqDn/zcO
- CkJNxr9bHmd5oFQ7yU6wZ41DgG7jjjm/sRxrMWGEBPxAFMNJmhh1tWUwo6RGahqVg0uz6yfD8
- jvOWoP45n/OdOhSZjhEXle9ToGStwkfpZb5arj3nms482ZAhLMeMngl5rOhMS2XSdHqigfL8D
- Jeqx7bHwkBZ/GN5kPBtcC/HLjQ6is/Tou2zLnaBibeFVWcKQv8p0+EKjF9PyHGVUbOW+xnrMq
- CJkEmBByTJDjeBqxyXSVxzlqerNcmDIazQJTHOYdjTCdSHFTt8hEjiwzYv2apubH8f9odK8O7
- KFqmneteejl23HRVmp6EhQiiq0yD2xEpFBetBtYddeIdT5gytwnyo+5g0eoH2x3y7DJO5bRVx
- fosY0sb+EQwNO4=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9rdSHit8PJf5DdLhMB3vL8IWvGV3WAqBydyoOwOrV4ZdduBXbsj
+ JZXqWLE2gfc+9+NOMwhFVhhhtOn/vT+6zxOmUl4yjNj4BD7y9dAimxWiIm9RqvnAgf+45yT
+ M8pMgSo14kLI/fkhKnV1CnUu54GcIEwevIXFRwooqHUh69nkfWHf0S7VbCaP15iRsLwZD5/
+ R+MTkbfb/5LIVOwJ39WZw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NAnDx5Ln4Jo=:WJa8QLp5d1QyT47+C77Mv1
+ bqmbVwN+s2opEeIcppXmLA1VNlUjruaNZK6oQTeLXTL5BvrEyz9ffRrTikNtOWSuQMiu79ko/
+ GWX2i7SLd+I57tbB1P9Xkc1JyRzk+M77k0Wx7dyn6S8/fCDylzV+jhSa0Kdu8C89iHdSdigtt
+ +orwdzZhjGR2uJj1jWkY2bXQ67rupdseYoTUqBdMR2eVOqeph9RaZbcm+RYKTR7c6vTO3WLDs
+ Xp3TS6XDcocj/h78l5d4zeBKDEaVTfOeUBVIoEagFBc5AmM95QnA/jjv/sdawAIDZjYJ/q0jD
+ 7uWbjhDiRdwpDVD7QGPq8Jf4q/FAoC38hYRdn7XHU7DmwGZj2DuaRjq07bbx5ID3HbJ+tZKa3
+ Vqbj8l7cJmZxsLPQDQvbqnmyC+g3PByoMBrCGj9A/kWEueGrIvuIGtHHODfK2ffXhwjzQmdu9
+ vqLn5nNrpEDKwRZKnrKVkweLyvDIfchXaxfvPDUU0TYOcnFEVqA3q6DA/69gnbWlrIlGoWSLy
+ 2RJsxBFETHAlVb4LBGd8rBMPDEZuBhYo2+/Xinqk+QN/O4CE9NKceXsjZv9XkeH/iDrmVg9LM
+ fR0WAaQxBTW4KDx+hgblL3883lca5IzQW3yOQfUNx06llFaq1hkjw7k8p9ma/4xGVky/KGh7H
+ /3Y+1IUCfemhG31Kb8IVA5WX9JwAs6fUTsjvRM35XlpYZ9gKr7le3Z+0xsnYi6Sd/tuyEqqkM
+ RPDLh9d3G8i6fIPjdWGVDy5fErVTuut6mi3jd4Q7TbjMRZ/zgKwqmUxL6lOFMygNESmg4dOJf
+ rWhmFcHjS3jThv2eI6lZBT/CzJXTZdtDMNTSsv9hH25WngG0GhmhEOnZbdjABi0r8cGrjWuiV
+ tpq4OCDCCMG4tMkNlReIjBA7zdXGiqHrDsmR2b2hXcZVw5CZ0oabUP/CCdWQQcE/Ee9HxkuHr
+ HirsWXpQmXNk9iV9g+8EWS8D1nn1BboUBMLmvxCG3pOTv+aIPho6MdrhZfS2pOViDP7hXpgLy
+ uNpC9i8IP+WtfgYSMSJRhSjQ3tDZUZab4wac4PTwMIO+AjW6r+8xjc76tsPtKPtCnbzkQKQyE
+ 74L3c5AAZaTQwM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Bagas,
 
---8323328-1395184817-1631128285=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 4 Sep 2021, Bagas Sanjaya wrote:
 
-Hi Junio,
-
-On Fri, 3 Sep 2021, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 04/09/21 00.54, Derrick Stolee via GitGitGadget wrote:
+> > +List
+> > +~~~~
+> > +
+> > +list::
+> > +	To see which repositories are currently registered by the service, r=
+un
+> > +	`scalar list`. This subcommand does not need to be run inside a Scal=
+ar
+> > +	enlistment.
+> > +
 >
-> > Hi =C3=86var,
-> >
-> > On Tue, 31 Aug 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> >> On Mon, Aug 30 2021, Derrick Stolee via GitGitGadget wrote:
-> >>
-> >> > +	const char *usagestr[] =3D { NULL, NULL };
-> >>
-> >> Missing usage strings?
-> >
-> > This command will show a generated usage, i.e. a non-static string. It
-> > therefore cannot be specified here already. See the `strbuf_*()` calls
-> > populating `buf` and the `usagestr[0] =3D buf.buf;` assignment.
-> >
-> >> > +	if (argc =3D=3D 0)
-> >>
-> >> Style nit (per style guide): s/argc =3D=3D 0/!argc/g.
-> >
-> > It is true that we often do this, but in this instance it would be
-> > misleading: `argc` is a counter, not a Boolean.
+> I think the man-page-style wording should be:
 >
-> That argument could be a plausible excuse to deviate from the style
-> if it were
->
-> 	if (argc =3D=3D 0)
-> 		do no args case;
-> 	else if (argc =3D=3D 1)
-> 		do one arg case;
-> 	else if (argc =3D=3D 2)
-> 		do two args case;
-> 	...
->
-> Replacing the first one with "if (!argc)" may make it less readable.
->
-> But I do not think the reasoning applies here
->
-> 	if (argc =3D=3D 0)
-> 		do a thing that applies only to no args case;
->
-> without "else".  This is talking about "do we have any argument? Yes
-> or no?" Boolean here.
+> > list::
+> >  List enlistments that are currently registered by Scalar. This
+> >  subcommand does not need to be run inside an enlistment.
 
-Well, I offer a differing opinion. But you're right, we are at least
-consistent in Git's source code in using `!i` where other projects would
-use `i =3D=3D 0`, and consistency is definitely something I'd like to see =
-more
-in Git, not less.
+Thank you, I adopted that wording.
 
-So I changed it as you suggested.
-
->
-> >> > +	if (!strcmp("all", argv[0]))
-> >> > +		i =3D -1;
-> >>
-> >> Style nit (per style guide): missing braces here.
-> >
-> > The style guide specifically allows my preference to leave single-line
-> > blocks without curlies.
->
-> Actually, the exception goes the other way, no?
->
-> We generally want to avoid such an unnecessary braces around a
-> single statement block.  But when we have an else clause that has a
-> block with multiple statements (hence braces are required), as an
-> exception, the guide asks you to write braces around the body of the
-> if side for consistency.
-
-You're right. I am somehow still using the previous style where we
-_required_ single-line blocks _not_ to have curly brackets (see e.g.
-aa1c48df817 ([PATCH] ls-tree enhancements, 2005-04-15), the `else` part of
-the added `if (! eltbuf)` block).
-
->
-> When you only have just a couple of lines on the "else {}" side, I
-> do not think it matters too much either way for readability, though.
-> I cannot see the "else" side in the above clause, but IIRC it wasn't
-> just a few lines, was it?
-
-It depends what you count as "just a few lines". There are seven lines
-enclosed within the curly brackets of the `else` block.
-
-But as much as I enjoy thorough reviews of the Scalar code, I am failing
-at getting excited about code style discussions, therefore I simply went
-with your suggestion to enclose even the single-line block in curly
-brackets.
-
-Thanks,
+Ciao,
 Dscho
-
---8323328-1395184817-1631128285=:55--
