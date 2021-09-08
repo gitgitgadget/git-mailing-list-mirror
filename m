@@ -7,98 +7,110 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA43C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEF6C433FE
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:14:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5308961158
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:04:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8986A61100
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 18:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241199AbhIHSFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 14:05:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
+        id S1349799AbhIHSPR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 14:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbhIHSFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 14:05:16 -0400
+        with ESMTP id S1349791AbhIHSPO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 14:15:14 -0400
 Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B640C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:04:08 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id l24so2653019qtj.4
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:04:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661ADC06179A
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 11:14:05 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id u4so2701437qta.2
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 11:14:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=scUkg5OvEqlWJJ/bkjg/WdV0vXKu7/BEUkiMCFrVr04=;
-        b=boedHx2EfbdC7fma4xvAC4Fsc4gGA43b7OwDkn1fOPoSmrz2+RgHInkVSplDWEGDAB
-         04moFx86z0+SKiErVzw7FxIgiq9EG3C/9O8NSfl7uiu1VYFvFp1bcIMPulkxM1cDNGWV
-         y6y1QfgVCMvJfkbXm/ny4KiJ0T8YalGdn9ymprxk0CMFnOULxdw7YiP3UchiuvWJCMut
-         JPbsrSST6U986cl0lzz6vF4KbupC+wsHh296NkY0CqPgFacH5n7EQXIJ/Es9yZVl+Ngb
-         CiB96S+46YNCwT4gPk6vmyuH6QUh/fBsAPE4adpWwFZ4h7xZpdMhPp7M45dUmrX0pZCX
-         ffIQ==
+        bh=Apae0yJuYSFuVB+GwfCjiStu02Fc0IJxd5fKl8X3GNs=;
+        b=T8vhRarKl/bRbzWHKhNlimakm9clYUXDcl0SN0SXEwQ7X0FPXkY1qhbR+bfVMud5b6
+         eSgLM/+y4l+L3ISSEw7+LO6x4g1ZqnTw+SAdT2FKD6i57n8IW0QIMEBPUT/gbZeuO4D8
+         /h8Yv0d44MgKsQaXQSAKI8NxDBIWiYr3Fzdbak+dkN0y2dWScNIzBkItJJ22y4r5+vmw
+         MaLQCUj3qxEpoEwF8bAmBmmFcZxDCwt2QmFD0xU9EF6BZL4w4c4rxYg1hPVw7ksW4XeF
+         2c/IWomGtDPGa04ze+XJC2bEj5O3bsPxL1NxHp1jKxb7jTVeBklMRPgpg0wHmRHCum3k
+         2M3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=scUkg5OvEqlWJJ/bkjg/WdV0vXKu7/BEUkiMCFrVr04=;
-        b=04xMrVedMBMgWAmwNj+j0odc56MZSB9XPwSVdAha+/tWjRghcS9gs/3qw93rIwH4op
-         Wu9JE2Cw+wGwkXBm4mlxdeH2FyGVZNiIozypdh/Ij61+Ru3zba+kfH6EV5Xw1/0lPeIc
-         BNURWoY19BMBPrgvoBZYmY7VlzXVCcYYkVJYFTyxHB2o3KdUALly8ejXpYNboA0Lw1HY
-         GNoARYbLQsDBgGlK6m9JIbW54qKn/xO+MxucrQIfL5N7f+5WTF+R/dfaz9nJa40jqo2G
-         Ji47/aDAPRQZrYvMPfm1Is49Cp+e+BeDJjefVDH2E+4gQe1dd87Sma+fECkah77xZXhj
-         NHZw==
-X-Gm-Message-State: AOAM532xsiYiefPDB4f+EqhH8UZbQcGIcYM25UYn/N+jtWH+fkVbzU10
-        VsxZqSXhs8L3jVfXMElWQSczXQYgxOLgMVnR
-X-Google-Smtp-Source: ABdhPJxDVqbIb1J5X+YgAYvz+RncE7AAUb2IhqTjJ08SzvXx7kiT6ZwPLM9N3TSoIG/rLnlv6ZZGMQ==
-X-Received: by 2002:ac8:740a:: with SMTP id p10mr4836642qtq.37.1631124247694;
-        Wed, 08 Sep 2021 11:04:07 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
-        by smtp.gmail.com with ESMTPSA id w185sm2330631qkd.30.2021.09.08.11.04.06
+        bh=Apae0yJuYSFuVB+GwfCjiStu02Fc0IJxd5fKl8X3GNs=;
+        b=U7gDXfUbbXOVGFTY7ZNdsLfFZEyPwFME6aLdu39w8uKzmn1TIrgg89H/Rm6VPUTQPg
+         krKWCVCen9TxpNUIgmOSD19FrsalX5ZB8BTUC37ukjaKCBSYMP5jO58WC8W7AKxMcmsP
+         iP86E8JJgA/u2yi40f4erv82dl/w+kaqzjjV1m5R/1M7+/W81sUB2pJLfQI+m1B+1h5h
+         VFxieRnv03V9UqnuLzp0nxHgnUAWClk9M8Xs9SfH6siIGbd9hQltjgx8YKI5Og3+Iu4A
+         23mJRVk1hF6W/AV2ApE42QA731d/LPbBg/KXK0eSd7zyqEr0GWyS5VuN2VwQ2wwycgnd
+         Boqg==
+X-Gm-Message-State: AOAM533TPueyeMNbxWrhaKCRrl9+rLU8kgM0muvawkCq+snmXD7ayill
+        +UO0c5MZrxE5V65x7XKRcv16ghtRCUI6WA==
+X-Google-Smtp-Source: ABdhPJxGBg1kZ/Ksmw/wFht4MH9rHTeVXotIWCQ6Ph0D0pynGeQbqv68KudF8rjO7XXPOILkiFpCjg==
+X-Received: by 2002:ac8:1e05:: with SMTP id n5mr5061032qtl.151.1631124844602;
+        Wed, 08 Sep 2021 11:14:04 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id k186sm2352887qkd.47.2021.09.08.11.14.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 11:04:07 -0700 (PDT)
-Subject: Re: [PATCH 09/13] rm: add --sparse option
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <6c9c986ff43fe7f065c27e61468534007e70d2a7.1629842085.git.gitgitgadget@gmail.com>
- <CAHd-oW5JD56UerW6N18Ap9Dmt9eVyd7dZKUhJR6-hSjzzM0s5A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cb7881d7-754e-05fe-16c3-bf2afac4fb3f@gmail.com>
-Date:   Wed, 8 Sep 2021 14:04:02 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Wed, 08 Sep 2021 11:14:04 -0700 (PDT)
+Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
+ <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
+Date:   Wed, 8 Sep 2021 14:14:03 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <CAHd-oW5JD56UerW6N18Ap9Dmt9eVyd7dZKUhJR6-hSjzzM0s5A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/27/2021 5:17 PM, Matheus Tavares Bernardino wrote:
-> On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> Subject: [PATCH 09/12] rm: add --sparse option
+Hi Phillip,
+
+Le 2021-09-08 à 09:41, Phillip Wood via GitGitGadget a écrit :
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 > 
-> Maybe mention in the commit message that, for now, rm's --sparse only
-> affects entries with the skip_worktree bit set? (Which will be changed
-> in the following patch.)
-
-I will expand with these details.
- 
->>  test_expect_success 'recursive rm does not remove sparse entries' '
->>         git reset --hard &&
->> -       git sparse-checkout set sub/dir &&
->> +       git sparse-checkout set sub/dir/ &&
+> The "apply" based rebase has avoided forking git checkout since
+> ac7f467fef ("builtin/rebase: support running "git rebase <upstream>"",
+> 2018-08-07). The code that handles the checkout was moved into libgit
+> by b309a97108 ("reset: extract reset_head() from rebase", 2020-04-07)
+> so lets start using it for the "merge" based rebase as well. This
+> opens the way for us to stop calling the post-checkout hook in the
+> future.
 > 
-> Is this change necessary?
 
-No, it is not. Thanks.
+While in general I think it's a good thing to avoid forking, this change
+might result in behavioral differences. Any config that affects
+'git checkout' but not the internal 'reset.c::reset_head' function might
+play a role in the rebase UX.
 
--Stolee
+One that immediately came to mind is 'submodule.recurse'. This initial 'onto'
+checkout was pretty much the only part of 'git rebase' that did something useful
+for submodules, so it's kind of sad to see it regress. [That is, until someone
+takes the time to implement 'git rebase --recurse-submodules' and makes sure *all*
+code paths that touch the working tree pay attention to this flag, and that will
+probably necessitate 'git merge --recurse-submodules' first because of the 'merge'
+backend... as far as I'm aware it's on Emily's list [1], it's also on mine but
+I don't know when I'll get the time.]
+
+Anyway, I'm not saying that we should not do what this patch is proposing, but
+I think caveats such as that should be documented in the commit message, and maybe
+an audit of other configs that might results in behavioural differences should be done.
+
+Thanks,
+
+Philippe.
+
+[1] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/t/#m0229af9183a84c2367f21e82adfbd21f08aa4437
