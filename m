@@ -2,112 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FFA1C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1556C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:21:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7979061139
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:08:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB0C861139
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345886AbhIHBJX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 21:09:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
+        id S1345787AbhIHBWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 21:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239456AbhIHBJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 21:09:15 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4AEC061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:08:08 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id n14-20020a05600c3b8e00b002f8bd2f8ab6so260139wms.5
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:08:08 -0700 (PDT)
+        with ESMTP id S233422AbhIHBWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 21:22:44 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3839DC061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:21:37 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id t19so717030ejr.8
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7B9yckRlPJrugyN1EhI/tEULU1+CP3quKyttdiTb5dc=;
-        b=lOnfI/AdCb4V2csSfD9LzGEBPq/GAB+h3mY1odfGtiG3P4yyQXzz14FI1QDeO2HeXL
-         g2Dwz2n5c7nTv2wJ8Nl4jbsp6RhNGfYW2FoGRfAJ4eysAk4sAV9hhkrjvGEh5bR9jpRS
-         cZC2Pgz+D3Fdwp24vz9MNxvco5SUE6XzwSCvJqgdQngLbs3jSnYUHEAd8BMD2P8M9mb1
-         NkqT4j77VlgdwTE8kHWxTNVhi/xMBDBOd/HTxkIivjgD5P2eg0qMhlHBiIKNF72z6pP2
-         J9AkOjl6DWibhrjzWAH2B77EDgC/whQZPm85aDEUCEIrEebVfPPj2cMS6B/lco5c/5EU
-         UjMQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UkrZx1MyjUuRNSIuX5JvfQkfRfwLJViMi7/99QgbU10=;
+        b=nTj82umLHc99H7bjUI25f+C8VnuEpzCG37UNcGItlDtjxbSmK5ep8Bf6Ck2OSefztq
+         lcBacABMhc2X3lOeRV2ihUpy2SYoPbGO7hL4iKj/Lnv42GExtbAAXkPc1ZeSz8dLT9Rk
+         QATo6nUc1OeODy78UCzsGws8C0AwUCxgP42CgX3UBEHUJjFNuDL2s94RYfC5UeSFcXiD
+         9wq4ksPvtCznnz+4OisAi0tle4oZuBR2FuvFiOg8UApWy3poC9/QjzwPfIFWXoq6y7/D
+         xVNgUp0P5RTCxgRuMZSgXMpivsqGUY+2XN9G6pvue/fFonGWSsn/F2+awi5sqUD2ETRQ
+         QwVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7B9yckRlPJrugyN1EhI/tEULU1+CP3quKyttdiTb5dc=;
-        b=qIKM6R9lI/xnDvmE+A4qOR9+oeJIPu8mXd69e7xOsttki5m4kWYCXfpC+2dWkFS5cr
-         adRYQlu+oOO8D1IArBMXiWnqhtMfx+WI9bVAk+SGRG539lCo94N1NazacHnFhszcID1R
-         CX5cd7Qf9WjeHP3DwfysCwNY/JLY2xbTQtIBczeFS9szRwd1scZESbrz06+oqKG6KhiK
-         srbVgTvntpxdo8Lqa39SYKvH+BPaIX/tagfyBYAHB2xeFYOMl7yTTnjWTJvhGbpvrlJ+
-         bU7MkQmkdfkaor8eMmSUozTXJPZdK3eh/Thgj5k3rnkJnGh91R2+yR0kA0FMfQuFajxV
-         YWag==
-X-Gm-Message-State: AOAM532cupMXukYmysXLW+j22F7HmTrCIZSs+eIaZxQ49mwUKjllmFYU
-        HAX05APGNIf8mZxM9/LJ0/sPK3uKJn49yQ==
-X-Google-Smtp-Source: ABdhPJwV/MkfAW234RT+S9trDgEfZjsPvAsovZqDY5CZgTxmTsnablAPfpqjBl6GdIKnxkb9Dyo/yA==
-X-Received: by 2002:a05:600c:4e93:: with SMTP id f19mr886538wmq.185.1631063286856;
-        Tue, 07 Sep 2021 18:08:06 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 17sm503596wmj.20.2021.09.07.18.08.06
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UkrZx1MyjUuRNSIuX5JvfQkfRfwLJViMi7/99QgbU10=;
+        b=MkcR9H+BsjLD7AEeGfumumDG6HJaeKMXcOLnSObwUqm0xla5k9Kt1mhyzfNSYpnSu5
+         MD/OXgRIzXZtm0TYpMXk1OxwgConvU2eSmdclwSL2kG9UPnU+JIwBYEO0HE8E+VlX+4F
+         Vjvc2VeEcTwLWd6jTqs6qSDD6f3vpZnxX1AuziHVW9FK4nuR1NA5VOzuLzDj6P2ccZuT
+         cTa1DjnQyDn8D3e32/e1V8DPD+opWUWhyXAqhuTLcZ+YJX4VPnyXciWAKZ9OX21TJoiB
+         pLaYM7t2+I/oAJoBr/ejOn6iArhJhWegCoUcesWhsMh2ootnghCoKt6ZhSFFdJ57+XJB
+         Xm0w==
+X-Gm-Message-State: AOAM530oaM5HBMwbUgdJsqn4YYUMbEaJKSYQyXnWpmCENILWXwh5ruM6
+        BOFa+FqZAIwp3L7aUIgpjidCvRRxN97cvA==
+X-Google-Smtp-Source: ABdhPJwTfRMPZds+AcghRvfdsDCeb7EhQxxj0GG6AO29cEQNt31jYUiXoThN+jgi7emGZ4fkJj+WKQ==
+X-Received: by 2002:a17:906:840f:: with SMTP id n15mr1360126ejx.460.1631064095583;
+        Tue, 07 Sep 2021 18:21:35 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id cz15sm281003edb.50.2021.09.07.18.21.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 18:08:06 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Tue, 07 Sep 2021 18:21:34 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] pack-write: skip *.rev work when not writing *.rev
-Date:   Wed,  8 Sep 2021 03:08:03 +0200
-Message-Id: <patch-1.1-366ba928bd-20210908T010743Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.819.gea1b153a43c
-In-Reply-To: <9f40019eb3d3315cb03440e6237bced4feb6cf67.1617116623.git.me@ttaylorr.com>
-References: <9f40019eb3d3315cb03440e6237bced4feb6cf67.1617116623.git.me@ttaylorr.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 4/4] pack-write: rename *.idx file into place last
+ (really!)
+Date:   Wed, 08 Sep 2021 03:14:12 +0200
+References: <cover.1630461918.git.me@ttaylorr.com>
+ <cover-v2-0.4-0000000000-20210908T003631Z-avarab@gmail.com>
+ <patch-v2-4.4-70f4a9767d-20210908T003631Z-avarab@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <patch-v2-4.4-70f4a9767d-20210908T003631Z-avarab@gmail.com>
+Message-ID: <87lf47kgkh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a performance regression introduced in a587b5a786 (pack-write.c:
-extract 'write_rev_file_order', 2021-03-30) and stop needlessly
-allocating the "pack_order" array and sorting it with
-"pack_order_cmp()", only to throw that work away when we discover that
-we're not writing *.rev files after all.
 
-This redundant work was not present in the original version of this
-code added in 8ef50d9958 (pack-write.c: prepare to write 'pack-*.rev'
-files, 2021-01-25). There we'd call write_rev_file() from
-e.g. finish_tmp_packfile(), but we'd "return NULL" early in
-write_rev_file() if not doing a "WRITE_REV" or "WRITE_REV_VERIFY".
+On Wed, Sep 08 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- pack-write.c | 3 +++
- 1 file changed, 3 insertions(+)
+> Follow-up a preceding commit (pack-write.c: rename `.idx` file into
+> place last, 2021-08-16)[1] and rename the *.idx file in-place after we
+> write the *.bitmap. The preceding commit fixed the issue of *.idx
+> being written before *.rev files, but did not do so for *.idx files.
+>
+> See 7cc8f971085 (pack-objects: implement bitmap writing, 2013-12-21)
+> for commentary at the time when *.bitmap was implemented about how
+> those files are written out, nothing in that commit contradicts what's
+> being done here.
+>
+> Note that the referenced earlier commit[1] is overly optimistic about
+> "clos[ing the] race", i.e. yes we'll now write the files in the right
+> order, but we might still race due to our sloppy use of fsync(). See
+> the thread at [2] for a rabbit hole of various discussions about
+> filesystem races in the face of doing and not doing fsync() (and if
+> doing fsync(), not doing it properly).
 
-diff --git a/pack-write.c b/pack-write.c
-index f1fc3ecafa..1883848e7c 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -224,6 +224,9 @@ const char *write_rev_file(const char *rev_name,
- 	uint32_t i;
- 	const char *ret;
- 
-+	if (!(flags & WRITE_REV) && !(flags & WRITE_REV_VERIFY))
-+		return NULL;
-+
- 	ALLOC_ARRAY(pack_order, nr_objects);
- 	for (i = 0; i < nr_objects; i++)
- 		pack_order[i] = i;
--- 
-2.33.0.819.gea1b153a43c
+Actually I think it's a bit worse than that, we will unconditionally
+fsync() the *.pack we write out, but in stage_tmp_packfiles() (the
+behavior pre-dates both this series and its parent, I just think my
+stage_tmp_packfiles() is easier to follow) we'll not write the *.idx
+file with fsync() since we won't pass WRITE_IDX_VERIFY.
 
+The same goes for *.rev (which oddly makes its fsync() conditional on
+WRITE_IDX_VERIFY), but not *.bitmap, which fsyncs unconditionally just
+like *.pack does.
+
+And then of course we'll do all these in-place renames but nothing
+fsyncs the fd of the directory, so the metadata and new names being
+committed to disk & visible to other processes is anyone's guess.
+
+But not only is that metadata commit not made, but due to the
+inconsistent fsync() we might end up with an *.idx that's partial and
+renamed in-place.
+
+In any case, any such issues pre-date this series and the series by
+Taylor it depends on, just adding some #leftoverbits for future fsync()
+fixes since I spent time looking into it.
