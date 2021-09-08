@@ -2,102 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD83C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66E46C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:39:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC86661157
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:34:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 342EB61154
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348657AbhIHQfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 12:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241837AbhIHQfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 12:35:25 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F7BC061757
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 09:34:15 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id z2so6100525lft.1
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 09:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jCE6zpKcPf9lHDQp7fVUyDcvAsJuo0kC3xYIYgurKr8=;
-        b=YiU852KXAAQ5GX7LK5iI4srTiRTVDN6lcxfFESHLpnf/mrB6CHPMRtEYABZxue3ESe
-         yUBXHbW9erczwwWS4frHd3zQfWqBISs5s2s5kaoa996ioTrzVyyA3R+kycKwOpyXDIHI
-         otIqBulgZDTWszfaDz/k5tfuiefqDmjPMqlP40Pbhsl2Zb3kWPVpuaXy+G6Ts5Vi+llB
-         YBmaYmw7rqpfZ5eaFtc9FowQYpMT5x4cZVlV0oOfAWwd21lRuQitkmZCE+KGLTG0fF2G
-         T6zQyXOCy6QMIMjyBjaqAHdzS2eLZrQs2ps1pD4IR2zy4fIURRxNxpS1wHUWFAiTaB36
-         7Y7g==
+        id S1348690AbhIHQkZ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 8 Sep 2021 12:40:25 -0400
+Received: from mail-lf1-f54.google.com ([209.85.167.54]:35629 "EHLO
+        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231666AbhIHQkW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 12:40:22 -0400
+Received: by mail-lf1-f54.google.com with SMTP id k13so6111632lfv.2
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 09:39:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jCE6zpKcPf9lHDQp7fVUyDcvAsJuo0kC3xYIYgurKr8=;
-        b=l1HNqQ/Hvre3iQDmYIVqtbs7KWwPeXAXWn9mnCseXSdg2dIr08JY14QzUHqSFn4ZaN
-         6BkuRyc4qy1PXMfG82waD8MIgQmHCjTCBHNlAag7oF8GtyqM+16nuvsEfMh9Ubn6dhxX
-         IQ5UWcYqdhZO6E4ku680lBuRDWanN94RWooz/Ze6d9frYFceVIi+Fco3EoDaCqN8Ouhj
-         8B72cWJxGSLgzDEKIMLRkgjEKuL2ELLTAYZhkH25FXrmRJndTl4iayA8POxEzTAehmDo
-         1+Ej3TXr1OHMFjBQBfDq6pTPQYrgE+tCfM0g2TAnPAgx/bWu2wXclk+heUbegvQapnBF
-         zySA==
-X-Gm-Message-State: AOAM530yzQV5HieJeCnLP2QQqTqM6Ippg0uLeR2Ci5pycWbISprDjKdO
-        aHMQLwcH9zgMU7pr7+JRwW8oyE1e/Ec5MveQ1v1Bf2oduBI=
-X-Google-Smtp-Source: ABdhPJz3qf7PKCex6VoKobk19zHcWC0hoZVmOBnVtNutvr+J6XYmYlkr/WOkVyJKgRHGIVCMODGQJKOX6n4gxJP6WkU=
-X-Received: by 2002:ac2:46c4:: with SMTP id p4mr3342112lfo.668.1631118853552;
- Wed, 08 Sep 2021 09:34:13 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yA7rSMLQTWT24rGCRxWw/G2V26cX9yLbhqsUZfkkN/U=;
+        b=U3JwBsn+sXq7XnR8BKtDUk9vW1CE3PJUBVncFRmJEYLfZ6L8K9zF/Jq6qUt6fmgr8c
+         6yZEVYb+pUud44fMT5oSCpmZLC3qH4wdTPH3+YoyODA478zShUQ74CYMdfS6TP0I4QQi
+         EDzprSiitHekbxAQyG5z8yrWf+QDKNJKZ/UJJt+2b8YfptVHCYhXB11P29ldEPmmUjGU
+         yYXSztlmRiI6mQK+HNdro9eOZqpNU+Tz0I7tIQvskVGVml4xWp3ElLH+g/hz/oRIHjnp
+         dI5QYwsgJ4J+xekK7ZddrIRxtng4Y3psJdLe0+LVtFFJyDDa2LYe0JFIWoJ3Jpp8zAp2
+         izRQ==
+X-Gm-Message-State: AOAM5336+KbulOB6Bmz+ntuLNnU21+9aH3cNmsb6/dXVAk2X97GK17WT
+        Gnx835o3cIqLD//2A+wi0uG8QIWvQvR/xRa5c0A=
+X-Google-Smtp-Source: ABdhPJxoU6bU80sd5OA3+XfJWMmiAzhMZaTs+yzhvrbkqcdMsuIyTN8LglTCUZRBMktQMarf7j/eZylIQIdgtjkDNzU=
+X-Received: by 2002:a05:6512:b8d:: with SMTP id b13mr3237275lfv.443.1631119153571;
+ Wed, 08 Sep 2021 09:39:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
- <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com> <CANQDOdeEic1ktyGU=dLEPi=FkU84Oqv9hDUEkfAXcS0WTwRJtQ@mail.gmail.com>
- <CANQDOdeX-SoWnh5DJ9ZdNLfPdAW-wtp_fo99r0Rwe1DQqx4W5Q@mail.gmail.com> <xmqqmton7ehn.fsf@gitster.g>
-In-Reply-To: <xmqqmton7ehn.fsf@gitster.g>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 8 Sep 2021 09:34:04 -0700
-Message-ID: <CANQDOddQsf4Jj+634mdnJXaPG=2idCbCHd1iXO2qm1EMGcDmXg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Implement a batched fsync option for core.fsyncObjectFiles
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
+References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com> <patch-5.6-bcc640d32a1-20210908T151949Z-avarab@gmail.com>
+In-Reply-To: <patch-5.6-bcc640d32a1-20210908T151949Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 8 Sep 2021 12:39:02 -0400
+Message-ID: <CAPig+cSK+wLPUDuGf1d41J_F5jQS+J=a=7kHQLV07-ZKZW9GsA@mail.gmail.com>
+Subject: Re: [PATCH 5/6] help: correct logic error in combining --all and --config
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 7, 2021 at 11:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Sep 8, 2021 at 11:24 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Fix a bug in the --config option that's been there ever since its
+> introduction in 3ac68a93fd2 (help: add --config to list all available
+> config, 2018-05-26). Die when --all and --config are combined,
+> combining them doesn't make sense.
 >
-> Neeraj Singh <nksingh85@gmail.com> writes:
+> The code for the --config option when combined with an earlier
+> refactoring done to support the --guide option in
+> 65f98358c0c (builtin/help.c: add --guide option, 2013-04-02) would
+> cause us to take the "--all" branch early and ignore the --config
+> option.
 >
-> > BTW, I updated the github PR to enable batch mode everywhere, and all
-> > the tests passed, which is good news to me.
+> Let's instead list these as incompatible, both in the synopsis and
+> help output, and enforce it in the code itself.
 >
-> I doubt that fsyncObjectFiles is something we can reliably test in
-> CI, either with the new batched thing or with the original "when we
-> close one, make sure the changes hit the disk platter" approach.  So
-> I am not sure what conclusion we should draw from such an experiment,
-> other than "ok, it compiles cleanly."  After all, unless we cause
-> system crashes, what we thought we have written and close(2) would
-> be seen by another process that we spawn after that, with or without
-> sync, no?
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/builtin/help.c b/builtin/help.c
+> @@ -549,18 +550,26 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+> +       /* Incompatible options */
+> +       if (show_all + !!show_config + show_guides > 1)
+> +               usage_with_options(builtin_help_usage, builtin_help_options);
 
-The main failure mode I was worried about is that some test or other part
-of Git is relying on a loose object being immediately available after it is
-added to the ODB. With batch mode, the loose objects aren't actually
-available until the bulk checkin is unplugged.
+I personally find it highly frustrating when a program merely dumps
+the usage statement without any explanation of what exactly it doesn't
+like about the command-line. Printing out a simple:
 
-I agree that it is not easy to test whether the data is actually going
-to durable
-storage at the expected time.  FWIW, I did take a disk IO trace on Windows to
-verify that we are issuing disk writes and flushes at the right time.
-But that's a
-one-time test that would be hard to make automated.
+    --all, --guides, --config are mutually exclusive
+
+message would go a long way toward reducing the frustration level.
+
+(Aside: I also find it more hostile than helpful when programs dump
+the usage statement for a command-line invocation error -- even if
+preceded by an explanation of the error -- since the explanation
+usually gets drowned-out by the often multi-page usage text, and the
+user has to go spelunking around the wall of output to try to figure
+out what actually went wrong. It's much more helpful and easy to
+figure out what went wrong with the invocation when only a simple
+error message is printed -- without usage statement. However, that's a
+separate battle, as Git already has plenty of places which dump the
+usage statement in response to an invocation error.)
