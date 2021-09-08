@@ -7,115 +7,114 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7125C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8764C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:44:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B76CF61074
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C993F6056C
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 11:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349310AbhIHLlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 07:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49402 "EHLO
+        id S1351557AbhIHLpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 07:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235453AbhIHLln (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 07:41:43 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC89C061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:40:36 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id x5so1479164qtq.13
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:40:36 -0700 (PDT)
+        with ESMTP id S1351560AbhIHLpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 07:45:38 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86DD5C0613CF
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 04:44:30 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id u4so1229224qvb.6
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 04:44:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eeJmXRO3dUM4JApE3eOD/rkDf23nfqBJHwCCPYz1aM0=;
-        b=I59qmI4S9uZq4cjEceOQ3CPxjpIVPO1mVAh7lIiXrGTBK98F6FAOunoXPAst9/E6C5
-         VDfsZv+hMCNpiDhALgLpYZ5bpKAZr/U6a1ocpoIQhv/qnkOMQ6rL65sN3QnWCDWXF2zP
-         hn24a4ENiTV+TsA02yP8gJs/ZjiQEG6EIaM4L1u2qkD3+hesfSU5tfM76Mg8BmiWS1Tm
-         yX/tgDhFhycsa1gHmM+x1VTazs5ncViPfQ3HuJ8XLJePMMjWLmH5boX7SMVd79VDimZ3
-         nMF0dXMhaAjg2hDEbY/V6i2aoOZTjlmry0dUljPVvhNWNSoavGb84Z4jKzKIFl/4QEb+
-         sQ/w==
+        bh=wiNVEn6bY0ygoqDH0oifU+OqbDLpn0nKnUl7zG2qMlg=;
+        b=lHRuBXaKlUMVTfQvUcz+sRHfbYTbUQi8uNdbzIn/zB7L1w1T1nvxgm6r77crxO1UVP
+         4MvOerXxqOj/zjmXbQH+sADfz6iQ+nNzz0wLrqcsLwYhK/SVKJ7JV71Ph0G5EOiMFxl6
+         DRBF04oZesSxASM2GAcVKVYR+v7S7+Mcz5a2oxGdnh5+BJoqVXUk+neLLsRQjXFGdFaf
+         lNl/xNJDEOfw9kwbOjxIYsTRbHVRVQbbaKkcYL/19zwLOUzgedVOgdOBHsX63jyjIzLN
+         TUjcu7Z2HXxrul+sY48HPUrw7ID7d1hRQHwQ5gpyyQ3gAVGaxBqZvrnIf4KZ15leHmEo
+         2iwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=eeJmXRO3dUM4JApE3eOD/rkDf23nfqBJHwCCPYz1aM0=;
-        b=GnlhWOe+kaIqx8BRGXpHFn3JLh5xcs2S410g6x8VMU+falAqkDBO7Ok8vY5EuLEg9U
-         OCVCeNm9FEb/Z3fYb4qoElh65M5QQCvo5xQhVMe62beRjmXKtf7Ra9IWx8fuMRAo6t8F
-         zDuP4aopph9e4gVg0XA2j4DAvtmD2Kh2aIeOTPUZg8srJnS+jQN+raB/5EigXJz7O/Km
-         4bKiZbfsaghhau9ZE0YXWBvXBB6EFsaJ1SYXS2jcGRSEMCoFpr4DQYKdHrNLccQ+bEnf
-         xsQWd/f46N0enJY4I88InEkWL2QAVJsaVQ99/2/Liu+4zNdICx0s2djEwQeu+1xYY0GH
-         AROA==
-X-Gm-Message-State: AOAM532aUZgQiTSSd0sw10GKNbAh1QoXgXd9gPUd6Oq/CV4o16WJNQy4
-        o468GJ/ddKADMFO6/vEary0=
-X-Google-Smtp-Source: ABdhPJwdGSTxla2o9H3eHXsqWhIdWqpdJp8b7MHZonPljCV0D2pOyuS/UWcbJr5lNKjudlfM5U7NsQ==
-X-Received: by 2002:ac8:53d8:: with SMTP id c24mr3251066qtq.280.1631101235049;
-        Wed, 08 Sep 2021 04:40:35 -0700 (PDT)
+        bh=wiNVEn6bY0ygoqDH0oifU+OqbDLpn0nKnUl7zG2qMlg=;
+        b=mJ2MQWKGGInfg0N8kwPC2skZG/+N6v+O4CqWDSTTmE7LZREZtfWr2Rj0NPPSQNiHTN
+         S/7h/e7UoO70j7UBNq/SYKy1XLi51LTIZ8mW/owMdKlY/b99hrkgEXUo2lTcvorDhBa+
+         HsSf0/PCcFRoQnETXyBySVUc/n9Fd1Z4yoAcPw5Y9BPxRguTtwDzOFfCNM9AtBzue/Qc
+         otk9JaKbauADbZaiI+FjPdp8Fh9pw5y40rVZJXze+Ou8FqttqZy32pxQVc3OBfOMI2Ne
+         nSmsmmPbVSIXyBfmZtlmfxCj4kjYj3YvRhkNJR6w098WcBxxEvdNkuy4Bmf07+OblzcA
+         0tAw==
+X-Gm-Message-State: AOAM531FOqA7mywEEgoGbMW8xgXcU0wbuQjU4g1TBky4uMxe+mLnAtrR
+        aujnsiCoRW3IE9RNVsGzKnQ=
+X-Google-Smtp-Source: ABdhPJyVrCk2GPD2jmfwXN9VefpuUg0wKlPXkGFxaxL4ud5zROP914IVfpXK4XiBlb/2PuTUgPyTLA==
+X-Received: by 2002:a05:6214:504:: with SMTP id v4mr3382538qvw.49.1631101469697;
+        Wed, 08 Sep 2021 04:44:29 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:79fe:8f64:ef46:a881? ([2600:1700:e72:80a0:79fe:8f64:ef46:a881])
-        by smtp.gmail.com with ESMTPSA id f29sm1308946qtv.34.2021.09.08.04.39.57
+        by smtp.gmail.com with ESMTPSA id e5sm1364806qts.0.2021.09.08.04.44.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 04:40:18 -0700 (PDT)
-Subject: Re: [PATCH v5 0/9] Sparse index: delete ignored files outside sparse
- cone
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
- <pull.1009.v5.git.1631065353.gitgitgadget@gmail.com>
- <xmqqwnnr7icz.fsf@gitster.g> <xmqqczpj7dyk.fsf@gitster.g>
+        Wed, 08 Sep 2021 04:44:29 -0700 (PDT)
+Subject: Re: [PATCH v10 0/3] maintenance: add support for systemd timers on
+ Linux
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4a0125d2-67d9-b533-4f8b-618c3de3b411@gmail.com>
-Date:   Wed, 8 Sep 2021 07:39:54 -0400
+To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <20210827210255.12565-1-lenaic@lhuard.fr>
+ <20210904205500.13074-1-lenaic@lhuard.fr>
+ <28e0f22a-e9be-bb18-df0f-4d95cb6d5145@gmail.com>
+Message-ID: <4c0c1fd4-f3f4-5e3a-abd2-0350c18b18b7@gmail.com>
+Date:   Wed, 8 Sep 2021 07:44:26 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqczpj7dyk.fsf@gitster.g>
+In-Reply-To: <28e0f22a-e9be-bb18-df0f-4d95cb6d5145@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/8/2021 2:56 AM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 9/7/2021 12:48 PM, Derrick Stolee wrote:
+> On 9/4/2021 4:54 PM, Lénaïc Huard wrote:
+>> Hello,
+>>
+>> Please find hereafter my updated patchset to add support for systemd
+>> timers on Linux for the `git maintenance start` command.
+>>
+>> The only changes compared to the previous version are fixes for the
+>> two typos in a comment that Ramsay Jones pointed out [1]
+>>
+>> [1] https://lore.kernel.org/git/51246c10-fe0b-b8e5-cdc3-54bdc6c8054e@ramsayjones.plus.com/
 > 
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> Updates in V5
->>> =============
->>>
->>>  * Updated the locality of a cache_entry pointer.
->>>
->>>  * Rephrased a comment.
->>>
->>>  * Removed the patch adding a config option.
->>>
->>>  * I tried, but failed, to create a scenario where the call to
->>>    cache_tree_update() causes a test to fail. I still think this is valuable
->>>    as defensive programming for the reasons mentioned in the patch, which is
->>>    why I didn't remove them here.
->>
->> OK.  
->>
->> The 'sg/test-split-index-fix' topic that has been queued in 'seen'
->> textually depended on the earlier iteration of this topic, so I'll
->> discard it while replacing this topic.
-> 
-> I rebased the dependent topic myself, but I would not be surprised
-> if I weren't careful enough and introduced a new bug.  Please double
-> check when a new 'seen' is pushed out in several hours.
+> The changes in the most recent two versions look good to me.
 
-Did you have any conflicts? I don't think this version changed any
-of the textual dependencies. Anyway, the test suite passes with
-GIT_TEST_SPARSE_INDEX=1 on my machine at 'seen' (except for an issue
-with t7900-maintenance.sh that is unrelated).
+I recently tested the 'seen' branch for an unrelated reason, but found
+that the t7900-maintenance.sh test failed for me. It was during test 34,
+'start and stop Linux/systemd maintenance' with the following issue:
+
+  + systemd-analyze verify systemd/user/git-maintenance@.service
+  Failed to create /user.slice/user-1000.slice/session-44.scope/init.scope control group: Permission denied
+  Failed to initialize manager: Permission denied
+
+Now, this test has the prereq SYSTEMD_ANALYZE, but for some reason this
+later command fails for permission issues. I'm running Ubuntu, if that
+helps.
 
 Thanks,
 -Stolee
