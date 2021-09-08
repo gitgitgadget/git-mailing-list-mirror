@@ -6,91 +6,77 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8BAC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 15:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6DFBC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:12:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7041960EE6
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 15:47:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CB456113E
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 16:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352172AbhIHPsk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 11:48:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61002 "EHLO
+        id S1346386AbhIHQNI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 12:13:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53286 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349646AbhIHPsk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 11:48:40 -0400
+        with ESMTP id S230091AbhIHQNI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 12:13:08 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1F00ECC0F;
-        Wed,  8 Sep 2021 11:47:31 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E8F14ECEDD;
+        Wed,  8 Sep 2021 12:11:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=lR8rJ3ociOUJ
-        iH61EP86JdHr32ZBoXvO64JDI0G+t3c=; b=KyvL/+oB1iFf1EUwmugLBoKoGxKp
-        30F3oLQtzDPWmubJejgeHDEke67xweIbq6tJR0hgvCC/j/BCEymYGO3qcK9q8eoc
-        wdH0Cac/kYWmbm/KtEB4MfpFHNpYNIO289r6/ELG67vNlKmybb6h6t3L/NISt5/X
-        TgadrJy/3ZtgYJ0=
+        :content-type; s=sasl; bh=4MiKG3B4FOmq3GZxUvjxsHGTke50v1n8QUe6qe
+        4HHcs=; b=aJ2fYXkKsxnwiO/dSfz/N3Jw9Fk2EuNtteEeWBzwqSkzjUDXAqxQ5+
+        cfikMwZ+s8VbtMoCy6kBNdnZ9sFPk0Mi1FI8f4HtAjb9L+txFJtRbNolkXZwtEGT
+        3hyp5DIyUaNngldqil0ZKoBKhqNfv2pJA2yjF2qFUC2OcoG9RIcec=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9765BECC0E;
-        Wed,  8 Sep 2021 11:47:31 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0428ECEDC;
+        Wed,  8 Sep 2021 12:11:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F5D2ECC0D;
-        Wed,  8 Sep 2021 11:47:30 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6B54EECEDB;
+        Wed,  8 Sep 2021 12:11:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] pack-write: skip *.rev work when not writing *.rev
-References: <9f40019eb3d3315cb03440e6237bced4feb6cf67.1617116623.git.me@ttaylorr.com>
-        <patch-1.1-366ba928bd-20210908T010743Z-avarab@gmail.com>
-        <CAPUEspgh0kbm-ro13Xt2-g-hPoBMK2-34iP2GvK_gaa2bGC+GQ@mail.gmail.com>
-        <YTgjA/mwH7wY4oyZ@nand.local>
-Date:   Wed, 08 Sep 2021 08:47:30 -0700
-In-Reply-To: <YTgjA/mwH7wY4oyZ@nand.local> (Taylor Blau's message of "Tue, 7
-        Sep 2021 22:42:11 -0400")
-Message-ID: <xmqqo8935ast.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v5 0/9] Sparse index: delete ignored files outside
+ sparse cone
+References: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
+        <pull.1009.v5.git.1631065353.gitgitgadget@gmail.com>
+        <xmqqwnnr7icz.fsf@gitster.g> <xmqqczpj7dyk.fsf@gitster.g>
+        <4a0125d2-67d9-b533-4f8b-618c3de3b411@gmail.com>
+Date:   Wed, 08 Sep 2021 09:11:58 -0700
+In-Reply-To: <4a0125d2-67d9-b533-4f8b-618c3de3b411@gmail.com> (Derrick
+        Stolee's message of "Wed, 8 Sep 2021 07:39:54 -0400")
+Message-ID: <xmqqk0jr59o1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1357D528-10BC-11EC-B1B2-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7ED90D46-10BF-11EC-9EC0-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> On Tue, Sep 07, 2021 at 06:35:10PM -0700, Carlo Arenas wrote:
->> On Tue, Sep 7, 2021 at 6:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->> > +       if (!(flags & WRITE_REV) && !(flags & WRITE_REV_VERIFY))
->> > +               return NULL;
->>
->> I see this expression matches exactly the logic from 8ef50d9958 which
->> is why I presume
->> you used it, but the simpler (and logically equivalent[1]) :
->>
->>   if !((flags & WRITE_REV) || (flags & WRITE_REV_VERIFY))
+>> I rebased the dependent topic myself, but I would not be surprised
+>> if I weren't careful enough and introduced a new bug.  Please double
+>> check when a new 'seen' is pushed out in several hours.
 >
-> Even simpler would be:
->
->     if (!(flags & (WRITE_REV | WRITE_REV_VERIFY)))
->
-> although with optimization flags other than -O0, it seems that each of
-> these three produce the same result [1], so I don't think that it
-> matters much either way ;-).
+> Did you have any conflicts? I don't think this version changed any
+> of the textual dependencies. Anyway, the test suite passes with
+> GIT_TEST_SPARSE_INDEX=1 on my machine at 'seen' (except for an issue
+> with t7900-maintenance.sh that is unrelated).
 
-If all result in the same binary, the only deciding factor would be
-how readable the code is to human readers.
+There was a bit of test refactoring in the other topic, so I
+initially punted but then I found a bit of energy to look at
+the conflict and realize it was not all that bad.
 
-I too find that your version, "we care about these two bits---if
-flags does not have either of them, then...", the easiest to follow.
-But the original is not unreadable and is good enough once it has
-already been written.
-
-Thanks.
