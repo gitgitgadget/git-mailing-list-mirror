@@ -2,122 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C88C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F929C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:31:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA39F61151
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:23:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E855D60238
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245428AbhIHBYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 21:24:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51322 "EHLO
+        id S243548AbhIHBcy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 21:32:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbhIHBYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 21:24:33 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC6CC061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:23:26 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id t19so724771ejr.8
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:23:26 -0700 (PDT)
+        with ESMTP id S229946AbhIHBcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 21:32:53 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467A5C061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:31:45 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id n11so544082edv.11
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=BXw5eBEdHt7xQ1SWliLCHiqTn/WbH2IHtopI892uZqI=;
-        b=mXIiV0MtBaARgyDuGwCaGttnPCaQmfIAK0XIvsblGoREc47e/OqEYgXDMWx8NPnTT7
-         C+pSPwTzWLBBfbGbQScXMIlk1Q9kccQSBpidSEnGU5wp+rJh5oosEUD1czmsUdukfzMx
-         st6x6OHlDWlG7KnyZOiUtz2m89cjnO/IC92HDDevZeabhMon5ChEjMUz1+9eyE57GaiJ
-         2hpexxuYBUM+eR+XKeAfjPPGWOc3eA90JGoGU6Yk5MDwvP0n3xiJQ7PuXEDqcA5uUHxo
-         qb/jUyk81TBfw5Wt5UfJHI78Gg54jUkfjWn328zysIJ7f45EsY9AsTSzQG7qrhnzxUZD
-         WKDg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ypRFJq9rLzUznt5X1H5LJDJbFPJpn8Di7fWRY/X+9ck=;
+        b=Pe/prvz1Wzj1YPieriV0PXHsQgWry33NegDdTiJGh9uhu0espqJrxpoOSXdGEPsYHK
+         ThL6XHLyjLXR5mJaXr/zwC+l19WJbnjzNWL4vJ7Jc8L1SW7I0TuwB/n8T8UknYkG5FG/
+         EF6Cc9tcOg6TQ7nol1Rb/ygO6dUke9DkeBjWt3yX3AI427xhYXvq9S6i6ieZxq0IcAm9
+         EktI45idVBZTsutoT8ogGnDeK2hYt12Nq4FyOAEkqDZrnBU7wy8vD8VuT8dtK3DJwYrz
+         XJZG60d5aD7mNNTaSlVPqUCXkXGi9iM7sdSgDHTs3ZiHhLwhLdsC+zRY1Iv860QWrLeB
+         QwiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=BXw5eBEdHt7xQ1SWliLCHiqTn/WbH2IHtopI892uZqI=;
-        b=FObQXb38Og8u3GHuO6qciC+xE5QwKAM32KHZkasP3kRZUxX1nMPaymHNxUj6O7I1pq
-         X+e5qoj9Zbtlhk7nT5RHzMXnzKQfOm/C6fplRCR2/1QUN2VYEbcCtMp8BZUuvjyMw1ws
-         LAQJto6ssVrOFUxKf2DjOHL9ENAUBpg+Rs/3VnJxn3iBMhN7wrurOIg1DceJPT0m+o7D
-         Y1/+ALCqGgytlcr1LM5ttqiwxzQ9wxIasD2qIdOPt0BXwVDdBSzY9+kZQZcOcAca7Mkp
-         7Xl1jJsgZ1/OpxzXuaioq5AOoI/3CKQWTkseWWR9RGBDnUBvt+KbDJFNOzLN4W/HrjXP
-         Gb3Q==
-X-Gm-Message-State: AOAM533fDt6A7Oi61pdEx8sajEo7FKKXN7ZLnpumA4XyA1BjJrDO+Ops
-        GCRUKtAb8WXmXWkav5b1OeM=
-X-Google-Smtp-Source: ABdhPJyGz0MlgKZH2xKLpAYvp3keI09YP2zxXw5MEaVSsj52xx8iLtu07Rq/lJEIAUAtHyadFSV4ig==
-X-Received: by 2002:a17:906:4a82:: with SMTP id x2mr1342403eju.111.1631064205220;
-        Tue, 07 Sep 2021 18:23:25 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=ypRFJq9rLzUznt5X1H5LJDJbFPJpn8Di7fWRY/X+9ck=;
+        b=CNzizeDJtbuGDizKpy71sCsKX+HfKGa7F6NgIQ+HDZxnAGfq3OM8CIp57n3hybfAXb
+         DmI2wfdBoo592OaYkDY+n9uWwrFwMVL1vxncRccB7rFzS7rpLOCyPT5pX3Pd2ukj9mT3
+         1fs+YaN7aLYnx47wUuuDauFPWcPVmG97WwPskYRIZRG8aGXeDG3bljESvRBWIJYBEbjG
+         Phi4ExPlQrmp+i4dKgoP12ZAwgL23LCP1LQe/+wop5eCP2y+TgpuPYIIdAV2oaD61MG+
+         HSE57DTzOTO8muZmTLp7s56awLDUw3vH9SpOia/egIMqKQ+T1DapQPfXfwQ2lijqKpzl
+         zAEw==
+X-Gm-Message-State: AOAM533fuumL8nV6NaGzebONKMz416uHDpbxpFHubEOmZfNhKGc4iMJq
+        Btd0mgsW+1/uluZsatXntzL8bPmpi0YpLQ==
+X-Google-Smtp-Source: ABdhPJwLsUU+YM0ThLEuaArJKwRmbazKl1uDw50ARESuaEOv6oRfNyK7Avg0n0N0elF7Fa7eTLNxWw==
+X-Received: by 2002:a05:6402:1385:: with SMTP id b5mr1227552edv.276.1631064703600;
+        Tue, 07 Sep 2021 18:31:43 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w13sm292943ede.24.2021.09.07.18.23.24
+        by smtp.gmail.com with ESMTPSA id bw25sm32843ejb.20.2021.09.07.18.31.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 18:23:24 -0700 (PDT)
+        Tue, 07 Sep 2021 18:31:42 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 0/6] Implement a batched fsync option for
- core.fsyncObjectFiles
-Date:   Wed, 08 Sep 2021 03:22:38 +0200
-References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
- <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com>
- <CANQDOdeEic1ktyGU=dLEPi=FkU84Oqv9hDUEkfAXcS0WTwRJtQ@mail.gmail.com>
- <003701d7a422$21c32740$654975c0$@nexbridge.com>
- <CANQDOdcKsUqrQ6K6MEBoXS1BW8_tO8mx4tcq6nvqyiuM4e2CmA@mail.gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 00/11] Drop support for git rebase --preserve-merges
+Date:   Wed, 08 Sep 2021 03:30:41 +0200
+References: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CANQDOdcKsUqrQ6K6MEBoXS1BW8_tO8mx4tcq6nvqyiuM4e2CmA@mail.gmail.com>
-Message-ID: <87h7evkghf.fsf@evledraar.gmail.com>
+In-reply-to: <pull.195.v3.git.1631048712.gitgitgadget@gmail.com>
+Message-ID: <87czpjkg3m.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Sep 07 2021, Neeraj Singh wrote:
+On Tue, Sep 07 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> On Tue, Sep 7, 2021 at 12:54 PM Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
->>
->> On September 7, 2021 3:44 PM, Neeraj Singh wrote:
->> >On Fri, Aug 27, 2021 at 4:49 PM Neeraj K. Singh via GitGitGadget <gitgitgadget@gmail.com> wrote:
->> >>
->> >> Thanks to everyone for review so far! I've responded to the previous
->> >> feedback and changed the patch series a bit.
->> >>
->> >> Changes since v1:
->> >>
->> >>  * Switch from futimes(2) to futimens(2), which is in POSIX.1-2008. Contrary
->> >>    to dscho's suggestion, I'm still implementing the Windows version in the
->> >>    same patch and I'm not doing autoconf detection since this is a POSIX
->> >>    function.
->>
->> While POSIX.1-2008, this function is not available on every single
->> POSIX-compliant platform. Please make sure that the code will not
->> cause a breakage on some platforms - the ones I maintain, in
->> particular. Neither futimes nor futimens is available on either
->> NonStop ia64 or x86. The platform only has utime, so this needs to
->> be wrapped with an option in config.mak.uname.
->>
->> Thanks,
->> Randall
+> In 427c3bd28ab (rebase: deprecate --preserve-merges, 2019-03-11) (which w=
+as
+> included in v2.22.0), we officially deprecated the --preserve-merges
+> backend. Over two years later, it is time to drop that backend, and here =
+is
+> a patch series that does just that.
 >
-> Ugh. Fair enough.  How do other contributors feel about me moving back
-> to utime, but instead just doing the utime over in
-> builtins/pack-objects.c?  The idea would be to eliminate the mtime
-> logic entirely from write_loose_object and just do it at the top-level
-> in loosen_unused_packed_objects.
+> Changes since v2:
+>
+>  * Removed the no-longer-needed script_snippet variable
+>  * Enhanced the commit message of the git svn patch to clarify that the
+>    deprecation happened only in v2.25 there
+>  * Adjusted code comments that still talked about the removed option
+>  * Removed some no-longer-needed ACTION_* enum values
+>  * We now also drop check_todo_list_from_file() because it is no longer
+>    needed
+>  * The todo_list_add_exec_commands() function is now scoped to the file
+>    (because there are no longer any outside users)
+>  * When users still use the options, they are no longer met by Git's blank
+>    stares, but by a helpful error message suggesting to use --rebase-merg=
+es
+>    instead
+>
+> Changes since v1:
+>
+>  * Rebased onto v2.33.0
+>
+> Johannes Schindelin (11):
+>   t5520: do not use `pull.rebase=3Dpreserve`
+>   remote: warn about unhandled branch.<name>.rebase values
+>   tests: stop testing `git rebase --preserve-merges`
+>   pull: remove support for `--rebase=3Dpreserve`
+>   rebase: drop support for `--preserve-merges`
+>   git-svn: drop support for `--preserve-merges`
+>   rebase: drop the internal `rebase--interactive` command
+>   rebase: remove obsolete code comment
+>   rebase: stop mentioning the -p option in comments
+>   rebase: remove a no-longer-used function
+>   sequencer: restrict scope of a formerly public function
 
-Aside from where it lives, can't we just have a wrapper that takes both
-the filename & fd, and then on some platforms will need to dispatch to a
-slower filename-only version, but can hopefully use the new fd-accepting
-function?
+I've looked this version over & followed all the discussions on the
+earlier rounds (this year), this looks good to me. Thanks a lot for
+working on it:
+
+Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
