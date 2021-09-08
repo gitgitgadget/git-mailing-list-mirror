@@ -7,81 +7,107 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B90D7C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A489C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:38:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ADE761139
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:35:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5399A61132
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 01:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345857AbhIHBgc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Sep 2021 21:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53966 "EHLO
+        id S1346614AbhIHBje (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Sep 2021 21:39:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344184AbhIHBgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Sep 2021 21:36:32 -0400
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084C9C061575
-        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:35:25 -0700 (PDT)
-Received: by mail-vs1-xe29.google.com with SMTP id a25so640583vso.5
-        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:35:24 -0700 (PDT)
+        with ESMTP id S1346223AbhIHBjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Sep 2021 21:39:33 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D50C061575
+        for <git@vger.kernel.org>; Tue,  7 Sep 2021 18:38:26 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id bt14so815690ejb.3
+        for <git@vger.kernel.org>; Tue, 07 Sep 2021 18:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xAXeHT3wg+4WTExk7yXoT0XmwWi0VG/AOWCLilw+GTo=;
-        b=nD6EzgDwub+pjtexsakzyxdk6drBowqByTAt6oLoTwRv767bq/oXw7mfLkqi4kvD7M
-         lvYlqj0lkfG9CqJ5cIS59pWoK/qbL3P1fHYRS+rUO1oZv7KN7HgmfJ9SmUWK1NP7qkOH
-         jQuJFiB3Ya1m1sTBBFyLrPwJxJheHGBI6OP042zn4EJAPkmLkfZiDqTLR0I3Wu64vKl/
-         1zERVQnA5HRbLl06Atx810oQK5TZlgLo37aMuyde/S7sshXXTsqLuW1fREXqYmakPkxw
-         u1HvdMeeiKpS6qgz4bN1uF7EDbqO3ARpsHiq1Z6vI75mHFSEOU2FNh+xNFhjzvO+XX/s
-         fAwQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ASGMnVpuXmnXlC86sjUmqBsAWi2iTArdOKfzhLVmtv4=;
+        b=gJ3emz7bcYdHFYALo11NzUjq7bsCRPppkqE3YFBlyuh0Kd7SbPi8LMQQtuUc/qioqV
+         zWgDUp8Yh+uTSDxPE1hyK70TqtSzWZUMD97JbTzTev9E1JTopiYfuSUn1DRlVdCEX3rg
+         +c25nOk/Pn6Dns+rRLj0yP6HBUjhjZfukuIjJrXbN/g2EBDLh25HXEJd0TtKtMRg/7n+
+         IxunzNf4rklc0CpKPAdcNvr6h1MFyYYuLjXjsBiKyqLU4totiyGPjEMSV666+T6czJcw
+         rvuGdDvmh/Cgz3DlbucsjEGwH8hhPUJc3d0Pd4IERnxbo5nBdI1r40fLcuuJqPtBY8Mb
+         nIjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xAXeHT3wg+4WTExk7yXoT0XmwWi0VG/AOWCLilw+GTo=;
-        b=gKkCZYnUixINWDfeNrZgRm2EqQ4736On1/Nlp7U2KslyGeG2CcEjaoZnB0FR+6m1DL
-         kgtn7+ubjW/WObEFx00psMDP7EbR2uT1YsDsLWJiiGZZbYQMg85n55R2FgfCMIJqkV8b
-         fDupWLkX72BI6bjAjXzc5BSufB/iWxi5ncgfCsUy5Vejk6ls1zEkPEaCLOYlEd2uNRmQ
-         Vbz+oBB+RAvMxuM1n9KKERqacKBZaX2AzoXu/eDA0T3HTgitmn1IUdmAIjdL5XferQma
-         TmiRz7j6CEXtLoytyyMQno4nzWfQg98D0O6b+mcWtznTkzu0izWG6hbTwAq8509Z0Wcc
-         8C5Q==
-X-Gm-Message-State: AOAM533Tq20SvC2RbLKfcnYqbFevjoNmq8m6btl0/ohCxaJDbEav9JXO
-        3UX5WKnjELAOrR0Yyi6aSXkAtR+M9JZ9xaxRmGI=
-X-Google-Smtp-Source: ABdhPJzH0m18ZUtfiizljToLJamjdAvIVCgRA40Hob73F4O75fcuDozLKLfR2nayqZWt1oJ+480gUFQFLZVCaqqnT9c=
-X-Received: by 2002:a05:6102:1012:: with SMTP id q18mr815841vsp.3.1631064923606;
- Tue, 07 Sep 2021 18:35:23 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ASGMnVpuXmnXlC86sjUmqBsAWi2iTArdOKfzhLVmtv4=;
+        b=IXaPeVKDJKk01LCyZC0YQ1TfuxFW/b3qm+Tp8kHYHnIKiwm4+eDIr5HT+PUSRS5tP7
+         MLj/Nr2cD9y8ERddhgjOqXcbEL2G+BvGHBHUrAHr2WPlBscbl9URQqeVMPBZpeO7Fauk
+         MMJrraD2JTlrHxYJhv1fjhBTRjczizHZmdV9MGpw9Zgon/He4KPPITDhkwb2cf5wsYMk
+         OrxWji5uUGs5PkihhJxMKvryS7/cWT6OLVMNYA7aL4FIcqW5UEJiEzWFJTm44GQ6u1x5
+         pzCEbP8U4V+fXJmFkeNq77xPQcYZNmL8vogEFlnRmpQE2yL++2uHm/2LSaggo+rJMi0c
+         HLug==
+X-Gm-Message-State: AOAM533aL86JXLROLjtxz4aaAgPHlu5qYlgleSqjQzo2ApJlQvp481QS
+        F0BozsSEAa2LjqsoWZg5Qt+ndUuP2W3X1g==
+X-Google-Smtp-Source: ABdhPJw8/e0PBrjO/L0+JDEw1H6k1jqXaCEAcDXyU413xUghkhw4lrauOyIh69ucQIO4tn7zYMhwJQ==
+X-Received: by 2002:a17:906:7d83:: with SMTP id v3mr1408721ejo.216.1631065104807;
+        Tue, 07 Sep 2021 18:38:24 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b13sm279975ede.97.2021.09.07.18.38.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Sep 2021 18:38:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 1/4] t/helper/test-bitmap.c: add 'dump-hashes' mode
+Date:   Wed, 08 Sep 2021 03:37:05 +0200
+References: <cover.1631049462.git.me@ttaylorr.com>
+ <918f9b275a1a03b6383e32f28cf1db26a6d67633.1631049462.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <918f9b275a1a03b6383e32f28cf1db26a6d67633.1631049462.git.me@ttaylorr.com>
+Message-ID: <878s07kfsg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <9f40019eb3d3315cb03440e6237bced4feb6cf67.1617116623.git.me@ttaylorr.com>
- <patch-1.1-366ba928bd-20210908T010743Z-avarab@gmail.com>
-In-Reply-To: <patch-1.1-366ba928bd-20210908T010743Z-avarab@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 7 Sep 2021 18:35:10 -0700
-Message-ID: <CAPUEspgh0kbm-ro13Xt2-g-hPoBMK2-34iP2GvK_gaa2bGC+GQ@mail.gmail.com>
-Subject: Re: [PATCH] pack-write: skip *.rev work when not writing *.rev
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 7, 2021 at 6:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> +       if (!(flags & WRITE_REV) && !(flags & WRITE_REV_VERIFY))
-> +               return NULL;
 
-I see this expression matches exactly the logic from 8ef50d9958 which
-is why I presume
-you used it, but the simpler (and logically equivalent[1]) :
+On Tue, Sep 07 2021, Taylor Blau wrote:
 
-  if !((flags & WRITE_REV) || (flags & WRITE_REV_VERIFY))
+> +int test_bitmap_hashes(struct repository *r)
+> +{
+> +	struct bitmap_index *bitmap_git = prepare_bitmap_git(r);
+> +	struct object_id oid;
+> +	uint32_t i;
+> +
+> +	if (!bitmap_git->hashes)
+> +		goto cleanup;
+> +
+> +	for (i = 0; i < bitmap_num_objects(bitmap_git); i++) {
+> +		nth_bitmap_object_oid(bitmap_git, &oid, i);
+> +
+> +		printf("%s %"PRIu32"\n",
+> +		       oid_to_hex(&oid), get_be32(bitmap_git->hashes + i));
+> +	}
+> +
+> +cleanup:
+> +	free_bitmap_index(bitmap_git);
+> +
+> +	return 0;
+> +}
 
-is easier to read IMHO
+Seems like it should return void, it doesn't ever return non-0, nor in
+the rest of this series....
 
-Carlo
+> +static int bitmap_dump_hashes(void)
+> +{
+> +	return test_bitmap_hashes(the_repository);
+> +}
+> [...]
+>  		return bitmap_list_commits();
+> +	if (!strcmp(argv[1], "dump-hashes"))
+> +		return bitmap_dump_hashes();
 
-[1] https://en.wikipedia.org/wiki/De_Morgan%27s_laws
+Perhaps the return code only for the brevity of this test-only code?
+Seems like having bitmap_dump_hashes() do the "return 0" would be better
+in that case.
