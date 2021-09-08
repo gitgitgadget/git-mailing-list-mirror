@@ -6,89 +6,82 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17BCCC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 06:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBC5C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:02:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F272961154
-	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 06:56:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AE3161100
+	for <git@archiver.kernel.org>; Wed,  8 Sep 2021 07:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347936AbhIHG5f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 02:57:35 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54866 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347914AbhIHG5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 02:57:31 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 674EB162EE8;
-        Wed,  8 Sep 2021 02:56:23 -0400 (EDT)
+        id S1347959AbhIHHDg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 03:03:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64170 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346759AbhIHHDe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 03:03:34 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA338E335B;
+        Wed,  8 Sep 2021 03:02:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cG47VbZGdLPspobmzukNj532i+ibYvFH0OOCaN
-        Epkhg=; b=oh9nBHB3BLKs6Q2gXhGg4tS9+TGP9fqwLxH2XGKpvgsrMBkRU1LJ6N
-        z/7jojFHkmtbJoFeFYjbBbDQrTOoeWpbTDFIJ++vlfSA0f56blTUmZ7gwbFuS8RC
-        l/+/HmdcMEXrIGAKP7/QTsZTDI+GOuFN+Osb7DjspgWeLbtxV+RcE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EB4F162EE7;
-        Wed,  8 Sep 2021 02:56:23 -0400 (EDT)
+        :content-type; s=sasl; bh=LLxMbAckFLjVY+R72DuGCTW2Mj0D57w/+0pnVn
+        aYjME=; b=j6J3FTpG60aoZ5u1Rcq7VtLEOtPO/C2yTTABD5nfKLcgtAoJe6Q+nC
+        eoqY4jZcOg8X8W+yV0KrtxFFIbKGVQ++fFWoeGW7FPFdU/72ewFSF3NkSbdV+mht
+        8mZ1OnUrBv75Nw5OHJdc7UC2h8S05NdiQ8GPGQXuJw2R+slf7o5Tg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E20E0E335A;
+        Wed,  8 Sep 2021 03:02:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A940A162EE6;
-        Wed,  8 Sep 2021 02:56:20 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 643F3E3359;
+        Wed,  8 Sep 2021 03:02:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v5 0/9] Sparse index: delete ignored files outside
- sparse cone
-References: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
-        <pull.1009.v5.git.1631065353.gitgitgadget@gmail.com>
-        <xmqqwnnr7icz.fsf@gitster.g>
-Date:   Tue, 07 Sep 2021 23:56:19 -0700
-In-Reply-To: <xmqqwnnr7icz.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        07 Sep 2021 22:21:16 -0700")
-Message-ID: <xmqqczpj7dyk.fsf@gitster.g>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] t4151: document a pair of am --abort bugs
+References: <pull.1087.git.git.1631067429.gitgitgadget@gmail.com>
+        <b8a418bc63ab0a4add25724a11eb5f992e3d4472.1631067429.git.gitgitgadget@gmail.com>
+Date:   Wed, 08 Sep 2021 00:02:25 -0700
+In-Reply-To: <b8a418bc63ab0a4add25724a11eb5f992e3d4472.1631067429.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Wed, 08 Sep 2021
+        02:17:08 +0000")
+Message-ID: <xmqq8s077doe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DF67BE44-1071-11EC-BF56-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: B963B12A-1072-11EC-B286-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> Updates in V5
->> =============
->>
->>  * Updated the locality of a cache_entry pointer.
->>
->>  * Rephrased a comment.
->>
->>  * Removed the patch adding a config option.
->>
->>  * I tried, but failed, to create a scenario where the call to
->>    cache_tree_update() causes a test to fail. I still think this is valuable
->>    as defensive programming for the reasons mentioned in the patch, which is
->>    why I didn't remove them here.
->
-> OK.  
->
-> The 'sg/test-split-index-fix' topic that has been queued in 'seen'
-> textually depended on the earlier iteration of this topic, so I'll
-> discard it while replacing this topic.
+> +test_expect_failure 'git am --abort returns us to a clean state' '
+> +	git checkout changes &&
+> +	git format-patch -1 --stdout conflicting >changes.mbox &&
+> +	test_must_fail git am --3way changes.mbox &&
+> +
+> +	# Make a change related to the rest of the am work
+> +	echo related change >>file-2 &&
+> +
+> +	# Abort, and expect the related change to go away too
+> +	git am --abort &&
+> +	git status --porcelain -uno >actual &&
+> +	test_must_be_empty actual
 
-I rebased the dependent topic myself, but I would not be surprised
-if I weren't careful enough and introduced a new bug.  Please double
-check when a new 'seen' is pushed out in several hours.
+This test makes me worried.  It is perfectly normal for "am" to be
+asked to work in a dirty working tree as long as the index is clean
+and the working tree files that are involved in the patch are
+unmodified.  Even though you may want "am --abort" to restore the
+paths that the operation touched to their original state, I am not
+sure if that is always possible, given that there may have been
+dirty working tree files to begin with.
 
-Thanks.
+And the above test would succeed if "git am --abort" internally
+called "git reset --hard", which definitely is not what we want to
+see.  We want the local changes in dirty working tree files that
+weren't involved in the patch application to stay, even after
+running "am --abort".
