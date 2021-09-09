@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D89C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F28FC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:20:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17A3A60E94
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:15:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CF9261104
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234636AbhIILQb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 07:16:31 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52789 "EHLO mout.gmx.net"
+        id S235553AbhIILWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 07:22:00 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60489 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234216AbhIILQa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:16:30 -0400
+        id S234216AbhIILV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:21:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631186116;
-        bh=u3MKC/k4n138DYJQ/KaY1xE70RL49Gh2LWAC11/KhKk=;
+        s=badeba3b8450; t=1631186441;
+        bh=nVcIUkWtzWAf99ySkBp6dabSAslgKw0WmBSK+xKCjLw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Tm7yDlUmNjXQR8zLhL3AVlf3h/f1AcU0dqZ2jzZwDTRoPYOtOMP4lbHw18LY9Q+jh
-         5oPJbs/1f74ZnFlaWgDTsRDBY1FX3PfYwPiskjdBOs3XItVLcFSh6xvdXz77tr1cCk
-         0riAPzuY+Kx80KMspuIVv+VhO1Lbc2YsthJ6O/XM=
+        b=cs3giM62OtZisAdbYimZWNxqrNNko5m1hbHR2yu83W0wkvtKobil0yVWmlwtqXL91
+         1BGfaVYPi1zqo74iDKDIlrR827ZNFmcceyuIW7K0yNnOZyVx1UqPbsWsRcFtnccc4M
+         L2SxP6rPe81s77AsOqghMrlTPFXnv20ovmmCY4Wc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGRK-1mhT2A3ED0-00JISN; Thu, 09
- Sep 2021 13:15:16 +0200
-Date:   Thu, 9 Sep 2021 13:15:15 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5mGB-1mzjPv3rwp-017AYj; Thu, 09
+ Sep 2021 13:20:41 +0200
+Date:   Thu, 9 Sep 2021 13:20:40 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: ar/submodule-add-more, was Re: What's cooking in git.git (Sep 2021,
- #02; Wed, 8)
-In-Reply-To: <xmqqsfyf5b74.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109091314350.59@tvgsbejvaqbjf.bet>
-References: <xmqqsfyf5b74.fsf@gitster.g>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 2/2] pull: release packs before fetching
+In-Reply-To: <xmqqh7eu3mjb.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2109091319170.59@tvgsbejvaqbjf.bet>
+References: <pull.1032.git.1631089771.gitgitgadget@gmail.com> <0e956ae7bba906277c77103ae329bce6d6da4cfe.1631089771.git.gitgitgadget@gmail.com> <xmqqh7eu3mjb.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3/WdOudmyPTE/wpsWr2ByDyD0PTGs4KqqfnDEgea4rOJVJIv3CI
- 4sP93eQjWz3z0XEnNilzS6iBWayXFUEcHMPmnCt0lxMIH7tXVB7FZmaB7FohJCdGm2vx63I
- 7+L6SPSmBf37oxrj3wNIAdkXLopUv+FwUAje8dbSHEB1bpxEybY6kvzUnPn2kc8zsy2vGsk
- w/h6iSgzE0YSbRUbuumGw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5vYdFoUFpFo=:SZikjMPdzkZkPJTLR6z+iB
- BIGJ5dDLkZnFiquJdsN0ZzWroEnR1wEUy4lPEtGdHEMqiYVsAx8SbHo4RTHNMHxg+lrsM5zYu
- NUPJW9wbxnwePVds8oOqh3ZZ+1jLER99uFV/O7DxSkFvEMoI50ysP7pnYE/L1zRzmkpoOxbMX
- aI+DUENQRt/u8L4NGhDfsYEJK7Xp2vJNih0lZJHoy/AGdXXvA0bp3ZxRNiikRtWPTjfbnQgdE
- u9EqYM1mH+mKD4hraaNtcJnO8d+CWr3L5iesSkNk5PrU/8N4kWmT++rimxjb3D7bnKYwKoIR7
- 7OUrROO7E5F3clDBqHWqpXl3OHh+IormLA0lJzU4myu6gPvGTfTtVtmMZmv+OdmVbSOM4BAL6
- Bt6nlUz2aIiIIQAqa50K2muUaKaS8g8oBH7uII8pGepJDpI9mGjhldKOweUPeh5CTfIm3Gdn2
- qTnnHxl/HSGompgtQvDGc3tZsc779H9oOCA9eFrSjLosMljIUehk+qkBueGP4kc5zsFF3Uie0
- DWiZP11bh+K42dWEZb5oCx/EO4I1x6XqrjUjvJ2eDBq/S2RFERVJUYfMq2f8xRLVpqt4gvTUP
- 5qF98nX7zAnjC7a+aUd/RA5/M5C9xIzBgN0EBf5tN0w7VQInLWO8+zr2gWFZ3SDP0gvBAbMCp
- KLCpzvGEFS++dHD7RVoVispJ7I0Qe8UKEJ4s60X8ZmLojWNz0OsYXe7vufp7NLCE5+unC8nN/
- /pNHFAJfQx05vVwgas4ti3YkY/uXqfZoVAgoSGAd0dRgaP9flaLSFxOGsVYFu6/jR4JPZlFYH
- 54N/yeF5EtL1igp7La4e/8uk1G9/e4WoAAuDqROJ95ypQZCez+LFNwQC5I9kz2NLiCMIah3N+
- Jtdg7DrY5euCnfuuoLJR40yL/Yk/PDdeerTOe6V2aR+Q890ABrcFNhLAEqqE4xzcYQwOgrcxe
- TWB2SY0SIAaZ4tncO58FaBjcfITnCIHRGxUhPWHNcBDEU1XSbYbK6PvdqU/OekreRCK+TLl4s
- 64eGLDb932T7pyFSxnsMp+w5ZqK3bHFs8mprZmUd9VrI9hsh65IJeMENR+AWxafyq8/NdUC03
- qa0wwjEINnGluw=
+X-Provags-ID: V03:K1:dGoINlB9NsaZ6CBLFMVr1cczZGXnqiq/a6ADF5DOEyguWDV0p3n
+ sYJuxWa0BICbNk58G9V8sj9EQO711B0ezufRo4YN2huM9CrM3icE+EYorpnT3ix+P205H/m
+ TouPsG6mbm2kG4gNRokportV+Ex6whFLRHmKBKnnCGWJ+xAQaToXxonx2VNCYBzNc3IT6Jc
+ a1WTdZHFed/QUttferuhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BgUR0bY6KPs=:fLF0oBIYYIbPmBiH8gHBS2
+ rDSHdQReGaswbicVUOhacOGUe3BnjLiBe4qdw748DSq23sSX4yKamDicLky5WWBpeuwl3aufR
+ dm4o3Yl2wP3bYWwJ7K2Fii2a90JgiZz3k4HtcrHiK/JQvkBVccpHuXhEo/XJOZaI5LsqwWYvW
+ KCG7Jbziz/HmWAbRtb/Q8bnRCw8Ruc4UJqBrQXFfS2rOrE43cKVfrkE+eujstVR2VhmYAM4jA
+ y1XG4KvZaqagNPGDa6rBj+u2M3vbxSGML2rHkBL01V46MBZmkERMplN40f7IlLPSghxCjB+yW
+ amIyv72pSNWnsAbBufWAko/9PTNNWy3FFr0lpGtRYAoX90YyMx35fwsB2oANan9+cqmNyXaR1
+ YBreCW0/T+5apMdM9pVbxJlgKLtfGzVlgsjuBjSIkWVq+fO6X5zKxAakdGiWrKXFRjWx/N/2C
+ sRHIHkPrG5poOnOZl5WjBaEcyHbK8LJVk3Y0UgsMBu7P0s4dFw+W7gCJJ1j/DRPLQX/LCVMmx
+ wwlvMUanZNjyXHVOs/bTlr4V4E/pGP2acZuK8zDPHqTp5peh1gEgNSWcfQ6UD1FUnupM6Mhdm
+ Y3/UHtFb3Ca/du4jbZw5DomorXpav65/gYecj1yUL+FqbZ8ncWY1mpiuzBUXQXFcm/9bwminU
+ D1LJl/S/ROF326YKAEautCLI6bkPY/cEvCYxk8WA1Ej6nn3+DmKy59mYsyO7DcrC9wikllN5U
+ DJKQyqDUy6f0JgMMI7ZBaiyJvmNqJNMYKH4HH4T+dIZncMH80ngbItqsO59ngCbj6aHELYO1F
+ f+ysDajWQRca8Tas45I7vLNoJzSLyaHjihbwC45ZKfr4pIKa7ofS/dMPB/98PiCHmRugR2u0t
+ Aiyxv8VMRQVaSSp1yyf1Ioi9O10bTOP0XAYBdcwhdLEE1l4P854J2qt+Sw25b0X2lF+Rc7TzJ
+ 3E8nM1ciWrIg93VRbT29RkzK9zRncFbW+epoB0lNZhEdkBHqtjgVc/4XoxU3ZuMfjeAP5PS0L
+ U1zcfANyKeg55lU+BbzySoHEB2FxP51LL744+3BhSuZWzmEUsBgP7cKK6H/YRo8K5uAtik7sx
+ W8rgMg4kpBjQ8k=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,25 +74,86 @@ Hi Junio,
 
 On Wed, 8 Sep 2021, Junio C Hamano wrote:
 
-> * ar/submodule-add-more (2021-08-10) 10 commits
->  - submodule--helper: rename compute_submodule_clone_url()
->  - submodule--helper: remove resolve-relative-url subcommand
->  - submodule--helper: remove add-config subcommand
->  - submodule--helper: remove add-clone subcommand
->  - submodule--helper: convert the bulk of cmd_add() to C
->  - dir: libify and export helper functions from clone.c
->  - submodule--helper: remove repeated code in sync_submodule()
->  - submodule--helper: refactor resolve_relative_url() helper
->  - submodule--helper: add options for compute_submodule_clone_url()
->  - Merge branch 'ar/submodule-add-config' into ar/submodule-add
->  (this branch uses ar/submodule-add-config.)
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
->  More parts of "git submoudle add" has been rewritten in C.
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > On Windows, files cannot be removed nor renamed if there are still
+> > handles held by a process. To remedy that, we try to release all open
+> > handles to any `.pack` file before e.g. repacking (which would want to
+> > remove the original `.pack` file(s) after it is done).
+> >
+> > Since the `read_cache_unmerged()` and/or the `get_oid()` call in `git
+> > pull` can cause `.pack` files to be opened, we need to release the ope=
+n
+> > handles before calling `git fetch`: the latter process might want to
+> > spawn an auto-gc, which in turn might want to repack the objects.
+> >
+> > This commit is similar in spirit to 5bdece0d705 (gc/repack: release
+> > packs when needed, 2018-12-15).
+> >
+> > This fixes https://github.com/git-for-windows/git/issues/3336.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/pull.c | 2 ++
+> >  1 file changed, 2 insertions(+)
 >
->  Will merge to 'next'.
+> After run_fetch() returns, we then go on to access objects from our
+> object store (that's natural---after all, we fetched because we
+> wanted to access the objects we have plus objects they have to offer
+> to us) and the object store is transparently reopened for us.  Which
+> may make a bit confusing API to newbies, but is an easy one to use,
+> once we get used to it.
+>
+> A few general comments.
+>
+>  * Right now, run_fetch() does not do anything that needs to access
+>    objects, but there is no reason to expect that will continue to
+>    be the case, and once we added an call to an innocuous helper
+>    function that happens to access objects, the close_object_store()
+>    call made by the caller before run_fetch() was called becomes
+>    moot.  The more we can delay the call to close_object_store(),
+>    the better.  And the absolute last point we can defer the call to
+>    close_object_store() is where immediately before run_fetch() calls
+>    run_command_v_opt() to spawn "git fetch".
+>
+>  * Which makes me wonder if we may be better off having a bit in the
+>    flags word the run_command() API takes to make a call to
+>    close_object_store() for us.  run_fetch() that uses the
+>    run_command API can use that bit without having to worry about
+>    making a call to close_object_store() itself and when.
+>
+>  * Hits from "git grep -A2 close_object_store()" shows a notable
+>    pattern.  Before run_auto_maintenance(), we often see a call to
+>    it.  It almost feels (but I didn't dig it deeper) that a call to
+>    run_auto_maintenance() that does not call close_object_store()
+>    before doing so is a bug (there is one in builtin/commit.c).
+>
+>  * Which in turn makes me wonder if these many calls to close before
+>    run_auto_maintenance() should be moved to run_auto_maintenance()
+>    itself (which in turn can use the new flags bit in the
+>    run_command() API).
+>
+> Sprinkling yet another call to close_object_store() as we discover
+> need for doing so like this patch does is certainly OK, but as we
+> add new hooks and higher-level commands, it will get messier and
+> messier.  It probably may make sense to go in and clean it up,
+> hopefully guided by the above observations, either before this
+> "fix", or soon after it graduates before we forget.
 
-If you use the description in the release notes, please
-`s/submoudle/submodule/` first.
+I like those ideas, and submitted a follow-up patch series.
+
+> Will queue, but will not merge down to 'next' until I hear an Ack on
+> the commit-graph stuff.
+
+Thank you.
+
+For procedural reasons, I would like to keep the current patch series
+as-is, because that will free some mental space for me maintaining Git for
+Windows (where I already merged them, after a contributor verified the
+fix).
 
 Thanks,
 Dscho
