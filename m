@@ -7,83 +7,96 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 318E4C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B37C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:13:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1515760E94
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09ABA60E94
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234771AbhIILKD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 07:10:03 -0400
-Received: from mout.gmx.net ([212.227.17.22]:44285 "EHLO mout.gmx.net"
+        id S235254AbhIILOi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 07:14:38 -0400
+Received: from mout.gmx.net ([212.227.17.22]:38517 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233990AbhIILKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:10:00 -0400
+        id S235270AbhIILOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631185727;
-        bh=oTb09RQVRjLu3iVNUby3Hx2lozL+ZuHPpKeTBJjhSGA=;
+        s=badeba3b8450; t=1631186005;
+        bh=PfYdSK8QrcatPN2EJGFVnYZf5fijOKF9cR38NmDUu98=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lhhNFwEG6nrsC9BDpYBUb3QKwWy+xvRFVolfzDubZhfGEc1oRY5M3FP0KBdX1ml9T
-         Af05GLVUMJ9OmJyMH8hx/eRI/nTQpoZkKrIBLHgBvHQd6hPMbQOSWR4ysmqTZP9PgG
-         e2C4m1K7efxnFeNFxnhsk9W3ONoKyPkezegRxc8A=
+        b=LvAtxDQP1i5JXdxTlZByq20g8Bg2t9hF4GuB4VRtUv6LXE7J76KHC5NzUfoP4+Z73
+         1RVWz8KJErNwHVTB219ZgDRc0HhPcnjTJuoTWgPJNxebXQ+ARDvVpulJ8MBIz3qhn4
+         Vka7kDlGrrYfyj2eLuUPDOFUxEQHGlcqJEWOZpDA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1mKSAH3FGE-0052QW; Thu, 09
- Sep 2021 13:08:47 +0200
-Date:   Thu, 9 Sep 2021 13:08:47 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zFj-1n1wSE2Vtr-0150f9; Thu, 09
+ Sep 2021 13:13:25 +0200
+Date:   Thu, 9 Sep 2021 13:13:24 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: mr/bisect-in-c-4, was Re: What's cooking in git.git (Sep 2021, #02;
+Subject: lh/systemd-timers, was Re: What's cooking in git.git (Sep 2021, #02;
  Wed, 8)
 In-Reply-To: <xmqqsfyf5b74.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109091308200.59@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2109091312240.59@tvgsbejvaqbjf.bet>
 References: <xmqqsfyf5b74.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C7DWlwLi2iQ903/rjX+aTRgOC64u3TuvpAG4bp/x4hATVhZHAYR
- ykT4NAUW9gxo1CTOq4OvA37aZFkIqvhfcizWO8BWIhbwXa+yVWGn6StGhgjWkt/wS27gpmO
- 6iDPlgvS3Xfv0s2jZq+qNoNa309omeYyYM4rpmWH/x2ySplYH7lfDWG0CnBTFBzEsvcBU9y
- vUrlyxPICZeHVx5V5mdUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jNi0DxljUJc=:F18qH8KNsD0gd6UgP7EpQI
- ALoKrbHV7oRO90G4oyMsJCRkq7H7NbgRMthVOPrcJ11H6r7cdGanBA/wY5NVXnYDSfHucFwk5
- qqtXLntihK4ZQjR1vd01mGhCgYQIe2TLGNNsIN9cw3cyBgUk8AO3SyO1REFUYVBMNW9JX5CNE
- 3Hqez8gPEZt/GmD/gjSpXHgwi5Yd1wkWbj0GQ6grw35n/azot/P6Kt9RGJNdJXD74LHp1diL5
- vHWNB16snyFeGcipDbOG8mMFkaemxK0D80aeHDZfgYHZB/M+70zVq4zCIstY+umiACWrJgAFl
- V40e3A3nYYPeTmonEt8uE/+j0MniVh9/5+JxOEjzaW+iBV5xMFIYHPRWdLrtB5UG2IXePp8Yj
- jgr170cU4NmZ1SLoVONf+nbXi6ZGH3qp8yq4kQ5WCQkw2MPdTOBfwWC9HtODCxcfmNYd2uo7u
- V/S6D/ZkJUV71sA7I2C2Jj07jk4k1vhvvdP40PM+2jb53ilGSD6HmMCO3srPgN1XB/coyLSuM
- geIY5UK2+93RDUnMUcfjLSKtX9ibIp8dOfeb7M80U5h1Ce/1/gDppz17bERsUZmTF41RU2ODx
- i4aW3MrjBCXmsA+9qWdZzQ/urCTVvagv2z9IZGghpD9ALwtKvTb2OS82AaN/33scSWHnsUUL0
- YPPQy7wfJ/ECl9DZ0us48xJKThH0OK3R1Gyjdae8RrY5koFtInIdvH0mbae5MW4tZQ5gvYJkG
- KHdP5Q+ILqGfao95IAe4x2T/l1G5Lr+88HzzH1b4nkQ+/Q64angRL1uzaF7w3Wph4PlkknqNs
- chUPbtTeBzzGFpPgAc69LBJok4csTLypf2x/QMDDqcqT/hl41KAMgnCZShAiifxIU3J3IXLj5
- lYsFtv3Iz57Gy3u2kwN40aobdf7sZpDIcxE60m42453U4RTJ93ZHY+M3GKQXcW8YnGyo1OmtE
- 3Mrypc42kEMWX25NQzCGWiqCfZ1hKAo3Pg/8CRZK6sOi2IhauPtW9uv0rgL76jH+T03D9VQSc
- tDNvyOsfMAZV3qnKgLjIW43wKewbaiaj6tUS5WUKLTn5YklNapcDkf0crBQAtXktGQmm60WjE
- Pu8RsnLTnD0tIM=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-542889223-1631186006=:59"
+X-Provags-ID: V03:K1:E0iXHAGjvapnFRrbjWEzi81q5SIjXwVp5owrH8oOjc9RqADcyzj
+ YTmRD/PBy2GhNly9ImCCxxctamAGxKJhQZcMxpxHJdgGSExXrnBvaMtoq5+8szNeQhI1Q9I
+ 1EnGT4jbi7S/8wm6CF2WJtk4xvpwmRHuDOy23i+nAW1xa8RJIaLL+btHwubnA2fkTprtasv
+ XiNac+OR3BDqoQVd/VB8w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3qBmyodZs6w=:r8PVytNcaqkoW7AOX2LQYY
+ kO4HKYl0kjRaCs81OHE+Qhcq6vp5TOBRW7Cdu9w5s3GvB4HQgb2Z7fielri2WawlhfOJyHbaO
+ qXRduWIMDopmHt9vc6WTDFhADl+rYx1r63mJEa1naBNLGFT75dsw+OM5fZGausHPIlWzOKr3m
+ 9GGuN8Dh4R+ipb8rOuymHGPKYEbnHqN42Lgqv08TmYFIehmnDicanzDaasXBK7GtX9DPYObov
+ 3lT3qjHzt9QUA/7Q+qibHnymxCdLEsuohsqE2gqCULBrnqwAMcKn8J2AdxmlkMjJtBJ3KoLJi
+ SDuNCDfxG7j8tC5nB4PPBbzlOAwzjxMr7II2v+D0grxIjgQV73/ttFeOu//FxlUAItLyMqhXy
+ V8s2CVqL3SyRnZEwVXhPfrEopeCzo0BTwAipe6dV0xxVQc9W1E6l1G+tpPNVu6aGKEo5oFWgM
+ UHFf67scJirwC9538mXAgJRTG7XH6qmPstSWmlMRx3mT0Lc1HicU4iKkUN0kTllXBrxY4sSMh
+ dZWwGul0536wgbVCzvo+RlI7kkqaH8gJjT5AD4M2Rlll/W0hym8M5UFa+rV/Q+oLzVDmXh+87
+ vYfQWXVD7HPlWOe1VVLnGlLj9gtKnITvK7XAXkqIKxJLcK7U2R8y7nnqwNLt30LAiF1U8fEny
+ Miggr6z7Q0gTX3U4uT7nobaJXJhKE8f8cVvkpriwvImCtP2NVBJtOVXze9NLEmi76S37dNUjT
+ SCjaTvcYVfGnQssrowCp0j4QarF2xwoaMpJQlmT/bj/8QgJKFMDtEOxzWkUDNECKumJMhTuWZ
+ B4y69PY60tYnrvFSLf/y6XdlDylDakuWHDmW191CNG3Pv8t2AFB5ZUnDudFz+hVwR/bB9LKXG
+ QGbgP8i26otNsxF8KjbYhehUlUE02Nex9Qfq7XPeH1lo2vBo/eOs9OztcL6Xmy+kIFNs7UZsX
+ mFiAotQTGJU+JH0pErxa72n3vvNQb6SFgTY356yA+i8d17LLuAmR3TjMJPMfNdGjXRdqexUpZ
+ bQOXg9ZR844eQv2udkA4tPXfEORWuS78nk6+xDnJfC8V0ivOZgeZEAxC6G5I5eVNC2+m22u0G
+ 3BtuC3uICrwFSU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-542889223-1631186006=:59
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 Hi Junio,
 
 On Wed, 8 Sep 2021, Junio C Hamano wrote:
 
-> * mr/bisect-in-c-4 (2021-09-02) 6 commits
->  - bisect--helper: retire `--bisect-next-check` subcommand
->  - bisect--helper: reimplement `bisect_run` shell
->  - bisect--helper: reimplement `bisect_visualize()`shell function in C
->  - run-command: make `exists_in_PATH()` non-static
->  - t6030-bisect-porcelain: add test for bisect visualize
->  - t6030-bisect-porcelain: add tests to control bisect run exit cases
+> * lh/systemd-timers (2021-09-07) 3 commits
+>  - maintenance: add support for systemd timers on Linux
+>  - maintenance: `git maintenance run` learned `--scheduler=3D<scheduler>=
+`
+>  - cache.h: Introduce a generic "xdg_config_home_for(=E2=80=A6)" functio=
+n
 >
->  Rewrite of "git bisect" in C continues.
+>  "git maintenance" scheduler learned to use systemd timers as a
+>  possible backend.
+>
+>  Will merge to 'next'.
 
-=46rom my point of view, this is ready for `next`.
+Yes!
+
+And since you merged down `js/maintenance-launchctl-fix` to `master`
+already, I guess I won't be rebasing it on top.
 
 Ciao,
 Dscho
+
+--8323328-542889223-1631186006=:59--
