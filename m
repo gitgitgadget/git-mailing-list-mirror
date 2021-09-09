@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8839C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 19:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C76FEC41535
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 19:38:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1B6161059
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 19:32:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 940AD61059
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 19:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245505AbhIITeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 15:34:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62033 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245415AbhIITeF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 15:34:05 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B8C7D14037D;
-        Thu,  9 Sep 2021 15:32:54 -0400 (EDT)
+        id S1343785AbhIITkH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 15:40:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58547 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343755AbhIITkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 15:40:06 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F278C155BAE;
+        Thu,  9 Sep 2021 15:38:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GCY0EbCdYOzc
-        FAbn/18u2cIKutloJH297z7rrwXHw4o=; b=RGObM53j1g/V6TaZhdogNgIJYvBZ
-        PGYXYKdxCdPdsdXQ9ecfVIok9GuQnavbBJ/CpmErmHGZ89zXLKOhKHdmm9FzzTNN
-        liT6LztL8UuejwWi55JlRjlahdUJLdOvP1CjVtoRT0QyTBaNKYWolS0zuQGfd0Vp
-        nei7555WJ1rnnyQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B255914037C;
-        Thu,  9 Sep 2021 15:32:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=KVB7XRiMK9Ws
+        8LyjLryBqG7AGhjoVY5AlaA69dgKW34=; b=Nuq1AgKtOjdwji6n0/7bAQmPZjB6
+        XldMT5/Vmbj85kW+xeD3Q1DPsdQxBnxMcMMkixRgAxUHmkTl6vorzZSC2WN7tO4J
+        OxmTC3QUnnic1vMlMDcs0hlykURM4G8QNNIVm48i476ySUL226CLU6nUbqRT5jE5
+        BDhgwfR98t2WTuc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EC093155BAD;
+        Thu,  9 Sep 2021 15:38:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0518614037B;
-        Thu,  9 Sep 2021 15:32:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 41660155BAB;
+        Thu,  9 Sep 2021 15:38:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH 4/9] pack-write.c: rename `.idx` files after `*.rev`
+Subject: Re: [PATCH 5/9] builtin/repack.c: move `.idx` files into place last
 References: <cover.1630461918.git.me@ttaylorr.com>
         <cover.1631157880.git.me@ttaylorr.com>
-        <0fb2c25f5ad8bfdccd653f760b1c4beeb05273e7.1631157880.git.me@ttaylorr.com>
-Date:   Thu, 09 Sep 2021 12:32:50 -0700
-In-Reply-To: <0fb2c25f5ad8bfdccd653f760b1c4beeb05273e7.1631157880.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Wed, 8 Sep 2021 23:24:59 -0400")
-Message-ID: <xmqqee9xzgrh.fsf@gitster.g>
+        <3b10a97ec0e7c9e672904e6415909a1b8cea872e.1631157880.git.me@ttaylorr.com>
+Date:   Thu, 09 Sep 2021 12:38:52 -0700
+In-Reply-To: <3b10a97ec0e7c9e672904e6415909a1b8cea872e.1631157880.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Wed, 8 Sep 2021 23:25:03 -0400")
+Message-ID: <xmqqa6klzghf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B9281B1E-11A4-11EC-8525-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 91120544-11A5-11EC-90E7-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,36 +62,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> This still leaves the issue of `.idx` files being renamed into place
-> before the auxiliary `.bitmap` file is renamed when in pack-object.c's
-> write_pack_file() "write_bitmap_index" is true. That race will be
-> addressed in subsequent commits.
+> In a similar spirit as the previous patch, fix the identical problem
+> from `git repack` (which invokes `pack-objects` with a temporary
+> location for output, and then moves the files into their final location=
+s
+> itself).
 
-OK.  I was about to suggest s/after .*rev/last/ on the title, but
-the above makes it clear that we are not ready for such a title.
+OK.  This array is used in cmd_repack() to call rename() in the
+order in which its elements appear, so moving the entry to the last
+means it will be renamed the last.
 
->
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
->  pack-write.c | 2 +-
+>  builtin/repack.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/pack-write.c b/pack-write.c
-> index 95b063be94..077710090e 100644
-> --- a/pack-write.c
-> +++ b/pack-write.c
-> @@ -491,9 +491,9 @@ void finish_tmp_packfile(struct strbuf *name_buffer=
-,
->  				      pack_idx_opts->flags);
-> =20
->  	rename_tmp_packfile(name_buffer, pack_tmp_name, "pack");
-> -	rename_tmp_packfile(name_buffer, idx_tmp_name, "idx");
->  	if (rev_tmp_name)
->  		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
-> +	rename_tmp_packfile(name_buffer, idx_tmp_name, "idx");
-> =20
->  	free((void *)idx_tmp_name);
->  }
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 5f9bc74adc..c3e4771609 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -208,10 +208,10 @@ static struct {
+>  	unsigned optional:1;
+>  } exts[] =3D {
+>  	{".pack"},
+> -	{".idx"},
+>  	{".rev", 1},
+>  	{".bitmap", 1},
+>  	{".promisor", 1},
+> +	{".idx"},
+>  };
+
+And the .idx entry MUST stay the last.  I wonder if dropping the
+trailing comma and replace it with a "/* must be at the end */"
+comment would be an effective way to ensure that.
