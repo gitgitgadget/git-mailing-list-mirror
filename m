@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06ECDC433F5
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE0EC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D29B761059
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:18:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D211661059
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242188AbhIIOT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 10:19:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41610 "EHLO
+        id S237019AbhIIOUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 10:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346703AbhIIOTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:19:52 -0400
+        with ESMTP id S1346601AbhIIOTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 10:19:53 -0400
 Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4793C10DC42
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 05:42:11 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id u19-20020a7bc053000000b002f8d045b2caso1297306wmc.1
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 05:42:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6901DC10DC45
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 05:42:13 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id g74so1250034wmg.5
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 05:42:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wQoqKhPuQ+ZkU0s4Z1vyskfxutKgklrrY5j5hKb335o=;
-        b=WZ1T/iyIoIxSwx6KknQdnF/E+6JACI9Azd6LxfgxuA9tPO+AtFM0Zv/z7InJyCb5JJ
-         THpyPe4ea4C5UsZC+zNSiyrNDLpJaQe27WGxYDFs1Np9ngOy4rjeTOzeBWBpq5LZEgA8
-         DEj1qFtST7Ol55bGHcKj9JKAjYJ5eYGA56kXODg+eMY0SxL25Wx8ro8oUD/2rSNBdz+T
-         tqBT+55fcCACEq1M4GQQ4JuhKNK/U4G1a+TfBxAIKiT0ohPEtMBnnYhYPPCW8vFAeOhA
-         TChmG+cWkgS8JRKCC7lvH2H9Gi4xauRNA3H48vf9DUCXPmvewRhYKPVP7RDbnjMajJ3P
-         UqNw==
+        bh=wQFAkh6iPGl4+gHDzwwaymLh9mq6wirma5ptMQKbIvY=;
+        b=cvTi6lqadFffL7tAofQNqk/dhirGnppusXGbhFFx8UWJogM8OblBL7PaH57XunDc+Z
+         fCtq7Fql9iuiiM+9uU1CUE32M4s3OQ23sHT06mE6gC2sB11Q8feicNn9sXFSkyd8JTrM
+         7J5yFG+kOCHkZToLl/rYz9wbkfTi1UZO6B0IXftgnKXVBxpc1OshovHK/OU/h57m0YMx
+         q9OEvbTnHwxBHTzMXg7ZNLslpY7bbKjLm+7zj/WDk1paqTAzsYOyIx9iVh9k8Ej8h3Kc
+         MCTizMJG8Ow0A67Jq6OrUTSpam4ThL0DV+9QCDmbKq2WO+tj88zL08xHXYqPx/e+V5ns
+         6Jhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wQoqKhPuQ+ZkU0s4Z1vyskfxutKgklrrY5j5hKb335o=;
-        b=nQlPnPG2UXdiPgqH0+ud2LCk/s32ulfn0MjE9GljEX8FCb6UiiU7moWAPSIE+6jAhX
-         kCIdqoJm2hpShsBnSLNym4rjgF/LXKuS9REAbaLZPRh6mpTIDb33OuoDaLeuiJA8lkXw
-         3mGT+zJ57cF92C1zR2QXrZh2+opTfAret597XH0I4mp4ydRgSJSrvVtAUviNSZPX/HWM
-         OBQrkk3P70jOqkSt4TkJdzMYw/x6ldcrmU+iJPfKL7E33+MWSH/3GXh8gwFp8OpK7Lsv
-         nwcwsx1BCjvaxxdu4NUE9/tTCSa0v7tPHF1pt+PH8zoOX0Nn66RtRHI++9w0ifowUsYl
-         gTWQ==
-X-Gm-Message-State: AOAM533dPkcg1EbIK28hV891B2VZK+4hTEa5leq+rSSVJJ8A/hmpCzmM
-        QS5MDmjrQT9i3bLAMIQETWnNOy50Q2xlbw==
-X-Google-Smtp-Source: ABdhPJyGYy1Pd53ZaYNycfAr+H5WY2jb4HQH64dEKJmFAQsXuqKOUXeGr9mbvyVIpH64rBrq1PvDeg==
-X-Received: by 2002:a1c:8096:: with SMTP id b144mr2712731wmd.189.1631191329326;
-        Thu, 09 Sep 2021 05:42:09 -0700 (PDT)
+        bh=wQFAkh6iPGl4+gHDzwwaymLh9mq6wirma5ptMQKbIvY=;
+        b=XOGT1fqxm5lF+mxeYWJGe4AoyDO8q2p4JfOeSIKXnupD+XZVSHcXO2qbTH4fK2qJDy
+         wLj0136N4Gj3l8V3IM+heTmJ2UNz82wdM64c6zKcm1arV79hUanaAr4906moQ7Ls2r3a
+         ftodZRPQWM0QHcbU1hje1qXN3+AbxXQsFQ7MRoPExJLkloKUPR+8IY8yXcpOEGlFCf92
+         LOjLMnrbHBo9PIVz2PBF0VLCg8ANvhySUraCYZUmDgNqB7eB8LGmA3I2CxgGpTUuJcJd
+         MFVEqLhdi49+LcOKUnYACj5hTVMSpPm/TuA2svTkmtxyLJbjVaWIHqGuMJGYXVrM8ndP
+         PJUg==
+X-Gm-Message-State: AOAM532EhG7bUj/atpJ6Pb9Lk+iq0Sod1XmsvZH4C6kEp4zWySWMWrSK
+        VeO2vNAQK9jUvY3HuoApi0Yq/Bg77ftAaQ==
+X-Google-Smtp-Source: ABdhPJytgvMzX7zz7vebkfphZ6qqtHH5xyI38q2ApVrZQI7xlQACF2QcJ2jBERpiTaCI81v+HHEKlA==
+X-Received: by 2002:a7b:cb9a:: with SMTP id m26mr2716491wmi.77.1631191331288;
+        Thu, 09 Sep 2021 05:42:11 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j25sm1742081wrc.12.2021.09.09.05.42.08
+        by smtp.gmail.com with ESMTPSA id j25sm1742081wrc.12.2021.09.09.05.42.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 05:42:08 -0700 (PDT)
+        Thu, 09 Sep 2021 05:42:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,12 +70,12 @@ Cc:     Emily Shaffer <emilyshaffer@google.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/5] config-based hooks restarted
-Date:   Thu,  9 Sep 2021 14:41:58 +0200
-Message-Id: <cover-v4-0.5-00000000000-20210909T122802Z-avarab@gmail.com>
+Subject: [PATCH v4 2/5] hook: allow parallel hook execution
+Date:   Thu,  9 Sep 2021 14:42:00 +0200
+Message-Id: <patch-v4-2.5-b03e70c805e-20210909T122802Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.867.g88ec4638586
-In-Reply-To: <20210819033450.3382652-1-emilyshaffer@google.com>
-References: <20210819033450.3382652-1-emilyshaffer@google.com>
+In-Reply-To: <cover-v4-0.5-00000000000-20210909T122802Z-avarab@gmail.com>
+References: <20210819033450.3382652-1-emilyshaffer@google.com> <cover-v4-0.5-00000000000-20210909T122802Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,992 +83,447 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a re-roll of Emily's es/config-based-hooks topic that goes on
-top of the v5 of my ab/config-based-hooks-base, and which doesn't have
-errors under SANITIZE=leak.
+From: Emily Shaffer <emilyshaffer@google.com>
 
-Emily: Sorry, I've got no intention to steal this one too, hopefully
-you can get around to your own re-roll.
+In many cases, there's no reason not to allow hooks to execute in
+parallel, if more than one was provided. hook.c already calls
+run_processes_parallel(), so all we need to do is allow the job count we
+hand to run_processes_parallel() to be greater than 1.
 
-But per my
-https://lore.kernel.org/git/87sfyfgtfh.fsf@evledraar.gmail.com/ the
-lack of this re-roll is is currently blocking the pick-up of my
-re-rolled v5 of ab/config-based-hooks-base at [1], as well as causing
-a failure in "seen" when combined with my ab/sanitize-leak-ci (and
-hn/reftable, but that's another issue...).
+If users have specified no alternative, we can use the processor count
+from online_cpus() to run an efficient number of tasks at once. However,
+users can also override this number if they want by configuring
+'hook.jobs'.
 
-Junio: So hopefully you can pick up the v5[1] of the base topic now &
-this preliminary v4 of es/config-based-hooks.
+To avoid looking up 'hook.jobs' in cases where we don't end up with any
+hooks to run anyways, teach the hook runner commands to notice if
+.jobs==0 and do a config or online_cpus() lookup if so, when we already
+know we have jobs to run.
 
-The range-diff below is against Emily's 30ffe98601e, i.e. her v3 at
-[2].
+Serial execution can still be performed by setting .jobs == 1.
 
-This version is based on Emily's preliminary cf1f8e34a34
-(nasamuffin/config-based-hooks-restart), which appeared to be her
-August 31 rebasing addressing of many outstanding points in the v3
-series.
-
-My own changes on top of that were twofold: Adjustments to changes in
-the base topic (many done to make the overall diff/changes here
-smaller), and memory leak fixes to get this to pass under
-SANITIZE=leak, there's various other minor but not-notable changes
-here and there, see the range-diff.
-
-1. https://lore.kernel.org/git/cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/20210819033450.3382652-1-emilyshaffer@google.com/
-
-Emily Shaffer (5):
-  hook: run a list of hooks instead
-  hook: allow parallel hook execution
-  hook: introduce "git hook list"
-  hook: include hooks from the config
-  hook: allow out-of-repo 'git hook' invocations
-
- Documentation/config.txt      |   2 +
- Documentation/config/hook.txt |  22 +++
- Documentation/git-hook.txt    | 157 ++++++++++++++++++-
- builtin/am.c                  |   4 +-
- builtin/checkout.c            |   2 +-
- builtin/clone.c               |   2 +-
- builtin/hook.c                |  71 ++++++++-
- builtin/merge.c               |   2 +-
- builtin/rebase.c              |   2 +-
- builtin/receive-pack.c        |   9 +-
- builtin/worktree.c            |   2 +-
- commit.c                      |   2 +-
- git.c                         |   2 +-
- hook.c                        | 277 +++++++++++++++++++++++++++++-----
- hook.h                        |  45 +++++-
- read-cache.c                  |   2 +-
- refs.c                        |   2 +-
- reset.c                       |   3 +-
- sequencer.c                   |   4 +-
- t/t1800-hook.sh               | 194 +++++++++++++++++++++++-
- transport.c                   |   2 +-
- 21 files changed, 734 insertions(+), 74 deletions(-)
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/config.txt      |  2 ++
+ Documentation/config/hook.txt |  4 ++++
+ Documentation/git-hook.txt    | 17 ++++++++++++++++-
+ builtin/am.c                  |  4 ++--
+ builtin/checkout.c            |  2 +-
+ builtin/clone.c               |  2 +-
+ builtin/hook.c                |  4 +++-
+ builtin/merge.c               |  2 +-
+ builtin/rebase.c              |  2 +-
+ builtin/receive-pack.c        |  9 +++++----
+ builtin/worktree.c            |  2 +-
+ commit.c                      |  2 +-
+ hook.c                        | 35 ++++++++++++++++++++++++++++++++---
+ hook.h                        | 16 +++++++++++++++-
+ read-cache.c                  |  2 +-
+ refs.c                        |  2 +-
+ reset.c                       |  3 ++-
+ sequencer.c                   |  4 ++--
+ transport.c                   |  2 +-
+ 19 files changed, 92 insertions(+), 24 deletions(-)
  create mode 100644 Documentation/config/hook.txt
 
-Range-diff against v3:
-1:  6d6400329cd ! 1:  2f0cac14965 hook: run a list of hooks instead
-    @@ Commit message
-         executable for a single hook event.
-     
-         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-    +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/hook.c ##
-     @@ builtin/hook.c: static int run(int argc, const char **argv, const char *prefix)
-    @@ builtin/hook.c: static int run(int argc, const char **argv, const char *prefix)
-      	const char *hook_name;
-     -	const char *hook_path;
-     +	struct list_head *hooks;
-    -+
-      	struct option run_options[] = {
-      		OPT_BOOL(0, "ignore-missing", &ignore_missing,
-      			 N_("exit quietly with a zero exit code if the requested hook cannot be found")),
-     @@ builtin/hook.c: static int run(int argc, const char **argv, const char *prefix)
-    - 	git_config(git_default_config, NULL);
-    - 
-    + 	 * run_hooks() instead...
-    + 	 */
-      	hook_name = argv[0];
-     -	if (ignore_missing)
-    ++	hooks = list_hooks(hook_name);
-    ++	if (list_empty(hooks)) {
-    ++		clear_hook_list(hooks);
-    ++
-    + 		/* ... act like a plain run_hooks() under --ignore-missing */
-     -		return run_hooks_oneshot(hook_name, &opt);
-     -	hook_path = find_hook(hook_name);
-     -	if (!hook_path) {
-    -+	hooks = list_hooks(hook_name);
-    -+	if (list_empty(hooks)) {
-    -+		/* ... act like run_hooks_oneshot() under --ignore-missing */
-     +		if (ignore_missing)
-     +			return 0;
-      		error("cannot find a hook named %s", hook_name);
-    @@ builtin/hook.c: static int run(int argc, const char **argv, const char *prefix)
-     
-      ## hook.c ##
-     @@
-    - #include "hook-list.h"
-    + #include "run-command.h"
-      #include "config.h"
-      
-     +static void free_hook(struct hook *ptr)
-     +{
-    -+	if (ptr)
-    -+		free(ptr->feed_pipe_cb_data);
-    ++	if (!ptr)
-    ++		return;
-    ++
-    ++	free(ptr->feed_pipe_cb_data);
-     +	free(ptr);
-     +}
-     +
-    @@ hook.c
-     +	struct list_head *pos, *tmp;
-     +	list_for_each_safe(pos, tmp, head)
-     +		remove_hook(pos);
-    ++	free(head);
-     +}
-     +
-    - static int known_hook(const char *name)
-    + const char *find_hook(const char *name)
-      {
-    - 	const char **p;
-    + 	static struct strbuf path = STRBUF_INIT;
-     @@ hook.c: const char *find_hook(const char *name)
-      
-      int hook_exists(const char *name)
-      {
-     -	return !!find_hook(name);
-    -+	return !list_empty(list_hooks(name));
-    ++	struct list_head *hooks;
-    ++	int exists;
-    ++
-    ++	hooks = list_hooks(name);
-    ++	exists = !list_empty(hooks);
-    ++	clear_hook_list(hooks);
-    ++
-    ++	return exists;
-     +}
-     +
-     +struct list_head *list_hooks(const char *hookname)
-    @@ hook.c: static int notify_hook_finished(int result,
-      }
-      
-     -int run_hooks(const char *hook_name, const char *hook_path,
-    --	      struct run_hooks_opt *options)
-     +int run_hooks(const char *hook_name, struct list_head *hooks,
-    -+		    struct run_hooks_opt *options)
-    + 	      struct run_hooks_opt *options)
-      {
-     -	struct strbuf abs_path = STRBUF_INIT;
-     -	struct hook my_hook = {
-    @@ hook.c: int run_hooks(const char *hook_name, const char *hook_path,
-     -		my_hook.hook_path = abs_path.buf;
-     -	}
-     -	cb_data.run_me = &my_hook;
-    -+
-     +	cb_data.head = hooks;
-     +	cb_data.run_me = list_first_entry(hooks, struct hook, list);
-      
-    @@ hook.c: int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *optio
-      
-     -	ret = run_hooks(hook_name, hook_path, options);
-     +	ret = run_hooks(hook_name, hooks, options);
-    -+
-    + 
-      cleanup:
-      	run_hooks_opt_clear(options);
-    -+	clear_hook_list(hooks);
-    - 	return ret;
-    - }
-     
-      ## hook.h ##
-     @@
-    @@ hook.h
-      #include "run-command.h"
-     +#include "list.h"
-      
-    - /*
-    -  * Returns the path to the hook file, or NULL if the hook is missing
-    -@@ hook.h: const char *find_hook(const char *name);
-    - int hook_exists(const char *hookname);
-    - 
-      struct hook {
-     +	struct list_head list;
-      	/* The path to the hook */
-      	const char *hook_path;
-      
-    -@@ hook.h: struct hook {
-    - 	void *feed_pipe_cb_data;
-    - };
-    - 
-    -+/*
-    -+ * Provides a linked list of 'struct hook' detailing commands which should run
-    -+ * in response to the 'hookname' event, in execution order.
-    -+ */
-    -+struct list_head *list_hooks(const char *hookname);
-    -+
-    - struct run_hooks_opt
-    - {
-    - 	/* Environment vars to be set for each hook */
-     @@ hook.h: struct hook_cb_data {
-      	/* rc reflects the cumulative failure state */
-      	int rc;
-    @@ hook.h: struct hook_cb_data {
-      	struct hook *run_me;
-      	struct run_hooks_opt *options;
-      	int *invoked_hook;
-    +@@ hook.h: struct hook_cb_data {
-    + const char *find_hook(const char *name);
-    + 
-    + /**
-    +- * A boolean version of find_hook()
-    ++ * Provides a linked list of 'struct hook' detailing commands which should run
-    ++ * in response to the 'hookname' event, in execution order.
-    ++ */
-    ++struct list_head *list_hooks(const char *hookname);
-    ++
-    ++/**
-    ++ * A boolean version of list_hooks()
-    +  */
-    + int hook_exists(const char *hookname);
-    + 
-     @@ hook.h: void run_hooks_opt_clear(struct run_hooks_opt *o);
-    + 
-    + /**
-    +  * Takes an already resolved hook found via find_hook() and runs
-    +- * it. Does not call run_hooks_opt_clear() for you.
-    ++ * it. Does not call run_hooks_opt_clear() for you, but does call
-    ++ * clear_hook_list().
-       *
-       * See run_hooks_oneshot() for the simpler one-shot API.
-       */
-     -int run_hooks(const char *hookname, const char *hook_path,
-    --	      struct run_hooks_opt *options);
-     +int run_hooks(const char *hookname, struct list_head *hooks,
-    -+		    struct run_hooks_opt *options);
-    - 
-    - /**
-    -  * Calls find_hook() on your "hook_name" and runs the hooks (if any)
-    -@@ hook.h: int run_hooks(const char *hookname, const char *hook_path,
-    -  */
-    - int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options);
-    + 	      struct run_hooks_opt *options);
-      
-    -+/* Empties the list at 'head', calling 'free_hook()' on each entry */
-    ++/**
-    ++ * Empties the list at 'head', calling 'free_hook()' on each
-    ++ * entry. Called implicitly by run_hooks() (and run_hooks_oneshot()).
-    ++ */
-     +void clear_hook_list(struct list_head *head);
-     +
-    - #endif
-    + /**
-    +  * Calls find_hook() on your "hook_name" and runs the hooks (if any)
-    +  * with run_hooks().
-2:  dfb995ce4d4 ! 2:  b03e70c805e hook: allow parallel hook execution
-    @@ Commit message
-         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-         Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    + ## Documentation/config.txt ##
-    +@@ Documentation/config.txt: include::config/guitool.txt[]
-    + 
-    + include::config/help.txt[]
-    + 
-    ++include::config/hook.txt[]
-    ++
-    + include::config/http.txt[]
-    + 
-    + include::config/i18n.txt[]
-    +
-      ## Documentation/config/hook.txt (new) ##
-     @@
-     +hook.jobs::
-    @@ Documentation/git-hook.txt: OPTIONS
-     +--jobs::
-     +	Only valid for `run`.
-     ++
-    -+Specify how many hooks to run simultaneously. If this flag is not specified, use
-    -+the value of the `hook.jobs` config. If the config is not specified, use the
-    -+number of CPUs on the current system. Some hooks may be ineligible for
-    -+parallelization: for example, 'commit-msg' intends hooks modify the commit
-    -+message body and cannot be parallelized.
-    ++Specify how many hooks to run simultaneously. If this flag is not specified,
-    ++uses the value of the `hook.jobs` config, see linkgit:git-config[1]. If the
-    ++config is not specified, uses the number of CPUs on the current system. Some
-    ++hooks may be ineligible for parallelization: for example, 'commit-msg' intends
-    ++hooks modify the commit message body and cannot be parallelized.
-     +
-     +CONFIGURATION
-     +-------------
-    @@ hook.c: static int notify_hook_finished(int result,
-     +}
-     +
-      int run_hooks(const char *hook_name, struct list_head *hooks,
-    - 		    struct run_hooks_opt *options)
-    + 	      struct run_hooks_opt *options)
-      {
-     @@ hook.c: int run_hooks(const char *hook_name, struct list_head *hooks,
-      		.options = options,
-    @@ hook.c: int run_hooks(const char *hook_name, struct list_head *hooks,
-      
-      	if (!options)
-      		BUG("a struct run_hooks_opt must be provided to run_hooks");
-    - 
-    --
-    +@@ hook.c: int run_hooks(const char *hook_name, struct list_head *hooks,
-      	cb_data.head = hooks;
-      	cb_data.run_me = list_first_entry(hooks, struct hook, list);
-      
-    @@ hook.h: struct run_hooks_opt
-     +	 */
-     +	int jobs;
-     +
-    - 	/* Resolve and run the "absolute_path(hook)" instead of
-    + 	/*
-    + 	 * Resolve and run the "absolute_path(hook)" instead of
-      	 * "hook". Used for "git worktree" hooks
-    - 	 */
-     @@ hook.h: struct run_hooks_opt
-      	int *invoked_hook;
-      };
-      
-     -#define RUN_HOOKS_OPT_INIT { \
-    --	.env = STRVEC_INIT, \
-    --	.args = STRVEC_INIT, \
-    --}
-    --
-    - /*
-    -  * To specify a 'struct string_list', set 'run_hooks_opt.feed_pipe_ctx' to the
-    -  * string_list and set 'run_hooks_opt.feed_pipe' to 'pipe_from_string_list()'.
-    -@@ hook.h: struct hook_cb_data {
-    - 	int *invoked_hook;
-    - };
-    - 
-     +#define RUN_HOOKS_OPT_INIT_SERIAL { \
-     +	.jobs = 1, \
-     +	.env = STRVEC_INIT, \
-    @@ hook.h: struct hook_cb_data {
-     +
-     +#define RUN_HOOKS_OPT_INIT_PARALLEL { \
-     +	.jobs = 0, \
-    -+	.env = STRVEC_INIT, \
-    -+	.args = STRVEC_INIT, \
-    -+}
-    -+
-    - void run_hooks_opt_clear(struct run_hooks_opt *o);
-    - 
-    - /**
-    + 	.env = STRVEC_INIT, \
-    + 	.args = STRVEC_INIT, \
-    + }
-     
-      ## read-cache.c ##
-     @@ read-cache.c: static int do_write_locked_index(struct index_state *istate, struct lock_file *l
-3:  c8a04306e90 ! 3:  3e647b8dba7 hook: introduce "git hook list"
-    @@ Commit message
-         hooks were configured and whether or not they will run.
-     
-         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-    +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Documentation/git-hook.txt ##
-     @@ Documentation/git-hook.txt: SYNOPSIS
-    @@ builtin/hook.c: static const char * const builtin_hook_run_usage[] = {
-     +
-     +static int list(int argc, const char **argv, const char *prefix)
-     +{
-    -+	struct list_head *head, *pos;
-    ++	struct list_head *hooks;
-    ++	struct list_head *pos;
-     +	const char *hookname = NULL;
-    -+	struct strbuf hookdir_annotation = STRBUF_INIT;
-    -+
-     +	struct option list_options[] = {
-     +		OPT_END(),
-     +	};
-    ++	int ret = 0;
-     +
-     +	argc = parse_options(argc, argv, prefix, list_options,
-     +			     builtin_hook_list_usage, 0);
-     +
-    -+	if (argc < 1)
-    ++	/*
-    ++	 * The only unnamed argument provided should be the hook-name; if we add
-    ++	 * arguments later they probably should be caught by parse_options.
-    ++	 */
-    ++	if (argc != 1)
-     +		usage_msg_opt(_("You must specify a hook event name to list."),
-     +			      builtin_hook_list_usage, list_options);
-     +
-     +	hookname = argv[0];
-     +
-    -+	head = hook_list(hookname);
-    ++	hooks = list_hooks(hookname);
-     +
-    -+	if (list_empty(head))
-    -+		return 1;
-    ++	if (list_empty(hooks)) {
-    ++		ret = 1;
-    ++		goto cleanup;
-    ++	}
-     +
-    -+	list_for_each(pos, head) {
-    ++	list_for_each(pos, hooks) {
-     +		struct hook *item = list_entry(pos, struct hook, list);
-     +		item = list_entry(pos, struct hook, list);
-     +		if (item)
-     +			printf("%s\n", item->hook_path);
-     +	}
-     +
-    -+	clear_hook_list(head);
-    -+	strbuf_release(&hookdir_annotation);
-    ++cleanup:
-    ++	clear_hook_list(hooks);
-     +
-    -+	return 0;
-    ++	return ret;
-     +}
-      static int run(int argc, const char **argv, const char *prefix)
-      {
-    @@ builtin/hook.c: int cmd_hook(int argc, const char **argv, const char *prefix)
-      		return run(argc, argv, prefix);
-      
-     
-    - ## hook.c ##
-    -@@ hook.c: struct list_head *list_hooks(const char *hookname)
-    - {
-    - 	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
-    + ## t/t1800-hook.sh ##
-    +@@ t/t1800-hook.sh: test_expect_success 'git hook usage' '
-    + 	test_expect_code 129 git hook run &&
-    + 	test_expect_code 129 git hook run -h &&
-    + 	test_expect_code 129 git hook run --unknown 2>err &&
-    ++	test_expect_code 129 git hook list &&
-    ++	test_expect_code 129 git hook list -h &&
-    + 	grep "unknown option" err
-    + '
-      
-    -+
-    - 	INIT_LIST_HEAD(hook_head);
-    +@@ t/t1800-hook.sh: test_expect_success 'git hook run -- pass arguments' '
-    + 	test_cmp expect actual
-    + '
-      
-    - 	if (!hookname)
-    -@@ hook.c: struct list_head *list_hooks(const char *hookname)
-    - 
-    - 	if (have_git_dir()) {
-    - 		const char *hook_path = find_hook(hookname);
-    --
-    --		/* Add the hook from the hookdir */
-    - 		if (hook_path) {
-    - 			struct hook *to_add = xmalloc(sizeof(*to_add));
-    - 			to_add->hook_path = hook_path;
-    ++test_expect_success 'git hook list: does-not-exist hook' '
-    ++	test_expect_code 1 git hook list does-not-exist
-    ++'
-    ++
-    ++test_expect_success 'git hook list: existing hook' '
-    ++	cat >expect <<-\EOF &&
-    ++	.git/hooks/test-hook
-    ++	EOF
-    ++	git hook list test-hook >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    + test_expect_success 'git hook run -- out-of-repo runs excluded' '
-    + 	write_script .git/hooks/test-hook <<-EOF &&
-    + 	echo Test hook
-4:  af14116d0fa < -:  ----------- hook: allow running non-native hooks
-5:  2bbb179962e ! 4:  d0f5b30fb27 hook: include hooks from the config
-    @@ Metadata
-      ## Commit message ##
-         hook: include hooks from the config
-     
-    -    Teach the hook.[hc] library to parse configs to populare the list of
-    +    Teach the hook.[hc] library to parse configs to populate the list of
-         hooks to run for a given event.
-     
-         Multiple commands can be specified for a given hook by providing
-         multiple "hook.<friendly-name>.command = <path-to-hook>" and
-    -    "hook.<friendly-name>.event = <hook-event>" lines. Hooks will be run in
-    -    config order of the "hook.<name>.event" lines.
-    +    "hook.<friendly-name>.event = <hook-event>" lines. Hooks will be started
-    +    in config order of the "hook.<name>.event" lines (but may run in
-    +    parallel).
-     
-         For example:
-     
-    -      $ git config --list | grep ^hook
-    +      $ git config --get-regexp "^hook\."
-           hook.bar.command=~/bar.sh
-           hook.bar.event=pre-commit
-     
-    -      $ git hook run
-    -      # Runs ~/bar.sh
-    -      # Runs .git/hooks/pre-commit
-    +      # Will run ~/bar.sh, then .git/hooks/pre-commit
-    +      $ git hook run pre-commit
-     
-         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-     
-    @@ Documentation/config/hook.txt
-      	hook execution. If unspecified, defaults to the number of processors on
-     
-      ## Documentation/git-hook.txt ##
-    -@@ Documentation/git-hook.txt: Git is unlikely to use for a native hook later on. For example, Git is much less
-    - likely to create a `mytool-validate-commit` hook than it is to create a
-    - `validate-commit` hook.
-    +@@ Documentation/git-hook.txt: This command is an interface to git hooks (see linkgit:githooks[5]).
-    + Currently it only provides a convenience wrapper for running hooks for
-    + use by git itself. In the future it might gain other functionality.
-      
-    -+This command parses the default configuration files for pairs of configs like
-    ++It's possible to use this command to refer to hooks which are not native to Git,
-    ++for example if a wrapper around Git wishes to expose hooks into its own
-    ++operation in a way which is already familiar to Git users. However, wrappers
-    ++invoking such hooks should be careful to name their hook events something which
-    ++Git is unlikely to use for a native hook later on. For example, Git is much less
-    ++likely to create a `mytool-validate-commit` hook than it is to create a
-    ++`validate-commit` hook.
-    ++
-    ++This command parses the default configuration files for sets of configs like
-     +so:
-     +
-     +  [hook "linter"]
-     +    event = pre-commit
-    -+    command = ~/bin/linter --c
-    ++    command = ~/bin/linter --cpp20
-     +
-    -+In this example, `[hook "linter"]` represents one script - `~/bin/linter --c` -
-    -+which can be shared by many repos, and even by many hook events, if appropriate.
-    ++In this example, `[hook "linter"]` represents one script - `~/bin/linter
-    ++--cpp20` - which can be shared by many repos, and even by many hook events, if
-    ++appropriate.
-    ++
-    ++To add an unrelated hook which runs on a different event, for example a
-    ++spell-checker for your commit messages, you would write a configuration like so:
-    ++
-    ++  [hook "linter"]
-    ++    event = pre-commit
-    ++    command = ~/bin/linter --cpp20
-    ++  [hook "spellcheck"]
-    ++    event = commit-msg
-    ++    command = ~/bin/spellchecker
-    ++
-    ++With this config, when you run 'git commit', first `~/bin/linter --cpp20` will
-    ++have a chance to check your files to be committed (during the `pre-commit` hook
-    ++event`), and then `~/bin/spellchecker` will have a chance to check your commit
-    ++message (during the `commit-msg` hook event).
-     +
-     +Commands are run in the order Git encounters their associated
-     +`hook.<name>.event` configs during the configuration parse (see
-    @@ Documentation/git-hook.txt: Git is unlikely to use for a native hook later on. F
-     +  [hook "linter"]
-     +    event = pre-commit
-     +    event = pre-push
-    -+    command = ~/bin/linter --c
-    ++    command = ~/bin/linter --cpp20
-     +
-    -+With this config, `~/bin/linter --c` would be run by Git before a commit is
-    ++With this config, `~/bin/linter --cpp20` would be run by Git before a commit is
-     +generated (during `pre-commit`) as well as before a push is performed (during
-     +`pre-push`).
-     +
-    @@ Documentation/git-hook.txt: Git is unlikely to use for a native hook later on. F
-     +
-     +  [hook "linter"]
-     +    event = pre-commit
-    -+    command = ~/bin/linter --c
-    ++    command = ~/bin/linter --cpp20
-     +  [hook "no-leaks"]
-     +    event = pre-commit
-     +    command = ~/bin/leak-detector
-     +
-     +With this config, before a commit is generated (during `pre-commit`), Git would
-    -+first start `~/bin/linter --c` and second start `~/bin/leak-detector`. It would
-    -+evaluate the output of each when deciding whether to proceed with the commit.
-    ++first start `~/bin/linter --cpp20` and second start `~/bin/leak-detector`. It
-    ++would evaluate the output of each when deciding whether to proceed with the
-    ++commit.
-     +
-     +For a full list of hook events which you can set your `hook.<name>.event` to,
-     +and how hooks are invoked during those events, see linkgit:githooks[5].
-     +
-    ++Git will ignore any `hook.<name>.event` that specifies an event it doesn't
-    ++recognize. This is intended so that tools which wrap Git can use the hook
-    ++infrastructure to run their own hooks; see <<WRAPPERS>> for more guidance.
-    ++
-     +In general, when instructions suggest adding a script to
-    -+`.git/hooks/<hook-event>`, you can specify it in the config instead by running
-    -+`git config --add hook.<some-name>.command <path-to-script> && git config --add
-    -+hook.<some-name>.event <hook-event>` - this way you can share the script between
-    -+multiple repos. That is, `cp ~/my-script.sh ~/project/.git/hooks/pre-commit`
-    -+would become `git config --add hook.my-script.command ~/my-script.sh && git
-    -+config --add hook.my-script.event pre-commit`.
-    ++`.git/hooks/<hook-event>`, you can specify it in the config instead by running:
-    ++
-    ++----
-    ++git config hook.<some-name>.command <path-to-script>
-    ++git config --add hook.<some-name>.event <hook-event>
-    ++----
-    ++
-    ++This way you can share the script between multiple repos. That is, `cp
-    ++~/my-script.sh ~/project/.git/hooks/pre-commit` would become:
-    ++
-    ++----
-    ++git config hook.my-script.command ~/my-script.sh
-    ++git config --add hook.my-script.event pre-commit
-    ++----
-     +
-      SUBCOMMANDS
-      -----------
-    @@ Documentation/git-hook.txt: Git is unlikely to use for a native hook later on. F
-      +
-      Any positional arguments to the hook should be passed after an
-      optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
-    +@@ Documentation/git-hook.txt: config is not specified, uses the number of CPUs on the current system. Some
-    + hooks may be ineligible for parallelization: for example, 'commit-msg' intends
-    + hooks modify the commit message body and cannot be parallelized.
-    + 
-    ++[[WRAPPERS]]
-    ++WRAPPERS
-    ++--------
-    ++
-    ++`git hook run` has been designed to make it easy for tools which wrap Git to
-    ++configure and execute hooks using the Git hook infrastructure. It is possible to
-    ++provide arguments, environment variables (TODO this is missing from reroll TODO),
-    ++and stdin via the command line, as well as specifying parallel or series
-    ++execution if the user has provided multiple hooks.
-    ++
-    ++Assuming your wrapper wants to support a hook named "mywrapper-start-tests", you
-    ++can have your users specify their hooks like so:
-    ++
-    ++  [hook "setup-test-dashboard"]
-    ++    event = mywrapper-start-tests
-    ++    command = ~/mywrapper/setup-dashboard.py --tap
-    ++
-    ++Then, in your 'mywrapper' tool, you can invoke any users' configured hooks by
-    ++running:
-    ++
-    ++----
-    ++git hook run mywrapper-start-tests \
-    ++  # providing something to stdin
-    ++  --stdin some-tempfile-123 \
-    ++  # setting an env var (TODO THIS IS MISSING TODO)
-    ++  --env MYWRAPPER_EXECUTION_MODE=foo \
-    ++  # execute hooks in serial
-    ++  --jobs 1 \
-    ++  # plus some arguments of your own...
-    ++  -- \
-    ++  --testname bar \
-    ++  baz
-    ++----
-    ++
-    ++Take care to name your wrapper's hook events in a way which is unlikely to
-    ++overlap with Git's native hooks (see linkgit:githooks[5]) - a hook event named
-    ++`mywrappertool-validate-commit` is much less likely to be added to native Git
-    ++than a hook event named `validate-commit`. If Git begins to use a hook event
-    ++named the same thing as your wrapper hook, it may invoke your users' hooks in
-    ++unintended and unsupported ways.
-    ++
-    + CONFIGURATION
-    + -------------
-    + include::config/hook.txt[]
-     
-      ## builtin/hook.c ##
-     @@ builtin/hook.c: static int list(int argc, const char **argv, const char *prefix)
-    @@ builtin/hook.c: static int list(int argc, const char **argv, const char *prefix)
-     +						  : _("hook from hookdir"));
-      	}
-      
-    - 	clear_hook_list(head);
-    + cleanup:
-     
-      ## hook.c ##
-     @@ hook.c: static void free_hook(struct hook *ptr)
-    + 	if (!ptr)
-    + 		return;
-    + 
-    ++	free(ptr->name);
-    + 	free(ptr->feed_pipe_cb_data);
-      	free(ptr);
-      }
-      
-    @@ hook.c: static void free_hook(struct hook *ptr)
-     +
-     +	if (!to_add) {
-     +		/* adding a new hook, not moving an old one */
-    -+		to_add = xmalloc(sizeof(*to_add));
-    -+		to_add->name = name;
-    -+		to_add->feed_pipe_cb_data = NULL;
-    ++		to_add = xcalloc(1, sizeof(*to_add));
-    ++		to_add->name = xstrdup_or_null(name);
-     +	}
-     +
-     +	list_add_tail(&to_add->list, head);
-    @@ hook.c: static void free_hook(struct hook *ptr)
-      {
-      	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
-     @@ hook.c: int hook_exists(const char *name)
-    + 	return exists;
-    + }
-      
-    - struct hook_config_cb
-    - {
-    --	struct strbuf *hook_key;
-    ++struct hook_config_cb
-    ++{
-     +	const char *hook_event;
-    - 	struct list_head *list;
-    - };
-    - 
-    ++	struct list_head *list;
-    ++};
-    ++
-     +/*
-     + * Callback for git_config which adds configured hooks to a hook list.  Hooks
-     + * can be configured by specifying both hook.<friend-name>.command = <path> and
-    @@ hook.c: int hook_exists(const char *name)
-     +	 */
-     +	strbuf_add(&subsection_cpy, subsection, subsection_len);
-     +
-    -+	append_or_move_hook(data->list, strbuf_detach(&subsection_cpy, NULL));
-    -+
-    ++	append_or_move_hook(data->list, subsection_cpy.buf);
-    ++	strbuf_release(&subsection_cpy);
-     +
-     +	return 0;
-     +}
-     +
-      struct list_head *list_hooks(const char *hookname)
-    - {
-    - 	if (!known_hook(hookname))
-    -@@ hook.c: struct list_head *list_hooks(const char *hookname)
-    - struct list_head *list_hooks_gently(const char *hookname)
-      {
-      	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
-     +	struct hook_config_cb cb_data = {
-    @@ hook.c: struct list_head *list_hooks(const char *hookname)
-      		BUG("null hookname was provided to hook_list()!");
-      
-     -	if (have_git_dir()) {
-    --		const char *hook_path = find_hook_gently(hookname);
-    +-		const char *hook_path = find_hook(hookname);
-    ++	/* Add the hooks from the config, e.g. hook.myhook.event = pre-commit */
-    ++	git_config(hook_config_lookup, &cb_data);
-    + 
-    +-		/* Add the hook from the hookdir */
-     -		if (hook_path) {
-     -			struct hook *to_add = xmalloc(sizeof(*to_add));
-     -			to_add->hook_path = hook_path;
-    @@ hook.c: struct list_head *list_hooks(const char *hookname)
-     -			list_add_tail(&to_add->list, hook_head);
-     -		}
-     -	}
-    -+	/* Add the hooks from the config, e.g. hook.myhook.event = pre-commit */
-    -+	git_config(hook_config_lookup, &cb_data);
-    -+
-     +	/* Add the hook from the hookdir. The placeholder makes it easier to
-     +	 * allocate work in pick_next_hook. */
-    -+	if (find_hook_gently(hookname))
-    ++	if (find_hook(hookname))
-     +		append_or_move_hook(hook_head, NULL);
-      
-      	return hook_head;
-    @@ hook.c: static int pick_next_hook(struct child_process *cp,
-      	cp->trace2_hook_name = hook_cb->hook_name;
-      	cp->dir = hook_cb->options->dir;
-      
-    -+	/* to enable oneliners, let config-specified hooks run in shell.
-    -+	 * config-specified hooks have a name. */
-    ++	/*
-    ++	 * to enable oneliners, let config-specified hooks run in shell.
-    ++	 * config-specified hooks have a name.
-    ++	 */
-     +	cp->use_shell = !!run_me->name;
-     +
-      	/* add command */
-    @@ hook.c: static int pick_next_hook(struct child_process *cp,
-     +		}
-     +
-     +		strvec_push(&cp->args, command);
-    ++		free(command);
-    ++		strbuf_release(&cmd_key);
-     +	} else {
-     +		/* ...from hookdir. */
-     +		const char *hook_path = NULL;
-     +		/*
-    -+		 *
-     +		 * At this point we are already running, so don't validate
-    -+		 * whether the hook name is known or not.
-    ++		 * whether the hook name is known or not. Validation was
-    ++		 * performed earlier in list_hooks().
-     +		 */
-    -+		hook_path = find_hook_gently(hook_cb->hook_name);
-    ++		hook_path = find_hook(hook_cb->hook_name);
-     +		if (!hook_path)
-     +			BUG("hookdir hook in hook list but no hookdir hook present in filesystem");
-     +
-    @@ hook.c: static int notify_start_failure(struct strbuf *out,
-      }
-     
-      ## hook.h ##
-    -@@ hook.h: int hook_exists(const char *hookname);
-    +@@
-      
-      struct hook {
-      	struct list_head list;
-    @@ hook.h: int hook_exists(const char *hookname);
-     +	 * The friendly name of the hook. NULL indicates the hook is from the
-     +	 * hookdir.
-     +	 */
-    -+	const char *name;
-    ++	char *name;
-      
-      	/*
-      	 * Use this to keep state for your feed_pipe_fn if you are using
-     
-      ## t/t1800-hook.sh ##
-     @@
-    - #!/bin/bash
-    + #!/bin/sh
-      
-     -test_description='git-hook command'
-     +test_description='git-hook command and config-managed multihooks'
-    @@ t/t1800-hook.sh
-      . ./test-lib.sh
-      
-     +setup_hooks () {
-    ++	test_config hook.ghi.command "/path/ghi"
-     +	test_config hook.ghi.event pre-commit --add
-    -+	test_config hook.ghi.command "/path/ghi" --add
-    ++	test_config hook.ghi.event test-hook --add
-    ++	test_config_global hook.def.command "/path/def"
-     +	test_config_global hook.def.event pre-commit --add
-    -+	test_config_global hook.def.command "/path/def" --add
-     +}
-     +
-     +setup_hookdir () {
-    @@ t/t1800-hook.sh
-      	test_expect_code 129 git hook run -h &&
-     +	test_expect_code 129 git hook list -h &&
-      	test_expect_code 129 git hook run --unknown 2>err &&
-    - 	grep "unknown option" err
-    - '
-    + 	test_expect_code 129 git hook list &&
-    + 	test_expect_code 129 git hook list -h &&
-    +@@ t/t1800-hook.sh: test_expect_success 'git hook list: does-not-exist hook' '
-    + 
-    + test_expect_success 'git hook list: existing hook' '
-    + 	cat >expect <<-\EOF &&
-    +-	.git/hooks/test-hook
-    ++	hook from hookdir
-    + 	EOF
-    + 	git hook list test-hook >actual &&
-    + 	test_cmp expect actual
-     @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-      	test_cmp expect actual
-      '
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +test_expect_success 'git hook list orders by config order' '
-     +	setup_hooks &&
-     +
-    -+	cat >expected <<-EOF &&
-    ++	cat >expected <<-\EOF &&
-     +	def
-     +	ghi
-     +	EOF
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +	# configuring it locally.
-     +	test_config hook.def.event "pre-commit" --add &&
-     +
-    -+	cat >expected <<-EOF &&
-    ++	cat >expected <<-\EOF &&
-     +	ghi
-     +	def
-     +	EOF
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +	test_cmp expected actual
-     +'
-     +
-    ++test_expect_success 'hook can be configured for multiple events' '
-    ++	setup_hooks &&
-    ++
-    ++	# 'ghi' should be included in both 'pre-commit' and 'test-hook'
-    ++	git hook list pre-commit >actual &&
-    ++	grep "ghi" actual &&
-    ++	git hook list test-hook >actual &&
-    ++	grep "ghi" actual
-    ++'
-    ++
-     +test_expect_success 'git hook list shows hooks from the hookdir' '
-     +	setup_hookdir &&
-     +
-    -+	cat >expected <<-EOF &&
-    ++	cat >expected <<-\EOF &&
-     +	hook from hookdir
-     +	EOF
-     +
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +'
-     +
-     +test_expect_success 'inline hook definitions resolve paths' '
-    -+	write_script sample-hook.sh <<-EOF &&
-    ++	write_script sample-hook.sh <<-\EOF &&
-     +	echo \"Sample Hook\"
-     +	EOF
-     +
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +	test_config hook.stdin-b.event "test-hook" --add &&
-     +	test_config hook.stdin-b.command "xargs -P1 -I% echo b%" --add &&
-     +
-    -+	cat >input <<-EOF &&
-    ++	cat >input <<-\EOF &&
-     +	1
-     +	2
-     +	3
-     +	EOF
-     +
-    -+	cat >expected <<-EOF &&
-    ++	cat >expected <<-\EOF &&
-     +	a1
-     +	a2
-     +	a3
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +	echo 3
-     +	EOF
-     +
-    -+	cat >expected <<-EOF &&
-    ++	cat >expected <<-\EOF &&
-     +	1
-     +	2
-     +	3
-    @@ t/t1800-hook.sh: test_expect_success 'stdin to hooks' '
-     +
-     +	rm -rf .git/hooks
-     +'
-    ++
-    ++test_expect_success 'rejects hooks with no commands configured' '
-    ++	test_config hook.broken.event "test-hook" &&
-    ++
-    ++	echo broken >expected &&
-    ++	git hook list test-hook >actual &&
-    ++	test_cmp expected actual &&
-    ++	test_must_fail git hook run test-hook
-    ++'
-    ++
-      test_done
-6:  30ffe98601e ! 5:  5d5e9726fd8 hook: allow out-of-repo 'git hook' invocations
-    @@ git.c: static struct cmd_struct commands[] = {
-      	{ "init-db", cmd_init_db },
-     
-      ## hook.c ##
-    -@@ hook.c: struct list_head *list_hooks_gently(const char *hookname)
-    +@@ hook.c: struct list_head *list_hooks(const char *hookname)
-      
-      	/* Add the hook from the hookdir. The placeholder makes it easier to
-      	 * allocate work in pick_next_hook. */
-    --	if (find_hook_gently(hookname))
-    -+	if (have_git_dir() && find_hook_gently(hookname))
-    +-	if (find_hook(hookname))
-    ++	if (have_git_dir() && find_hook(hookname))
-      		append_or_move_hook(hook_head, NULL);
-      
-      	return hook_head;
-     
-      ## t/t1800-hook.sh ##
-    -@@ t/t1800-hook.sh: test_expect_success 'git hook run -- pass arguments' '
-    +@@ t/t1800-hook.sh: test_expect_success 'git hook list: existing hook' '
-      	test_cmp expect actual
-      '
-      
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0c0e6b859f1..6fb218f649d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -391,6 +391,8 @@ include::config/guitool.txt[]
+ 
+ include::config/help.txt[]
+ 
++include::config/hook.txt[]
++
+ include::config/http.txt[]
+ 
+ include::config/i18n.txt[]
+diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
+new file mode 100644
+index 00000000000..96d3d6572c1
+--- /dev/null
++++ b/Documentation/config/hook.txt
+@@ -0,0 +1,4 @@
++hook.jobs::
++	Specifies how many hooks can be run simultaneously during parallelized
++	hook execution. If unspecified, defaults to the number of processors on
++	the current system.
+diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+index fa68c1f3912..79e82479ec6 100644
+--- a/Documentation/git-hook.txt
++++ b/Documentation/git-hook.txt
+@@ -8,7 +8,8 @@ git-hook - run git hooks
+ SYNOPSIS
+ --------
+ [verse]
+-'git hook' run [--to-stdin=<path>] [--ignore-missing] <hook-name> [-- <hook-args>]
++'git hook' run [--to-stdin=<path>] [--ignore-missing] [(-j|--jobs) <n>]
++	<hook-name> [-- <hook-args>]
+ 
+ DESCRIPTION
+ -----------
+@@ -42,6 +43,20 @@ OPTIONS
+ 	tools that want to do a blind one-shot run of a hook that may
+ 	or may not be present.
+ 
++-j::
++--jobs::
++	Only valid for `run`.
+++
++Specify how many hooks to run simultaneously. If this flag is not specified,
++uses the value of the `hook.jobs` config, see linkgit:git-config[1]. If the
++config is not specified, uses the number of CPUs on the current system. Some
++hooks may be ineligible for parallelization: for example, 'commit-msg' intends
++hooks modify the commit message body and cannot be parallelized.
++
++CONFIGURATION
++-------------
++include::config/hook.txt[]
++
+ SEE ALSO
+ --------
+ linkgit:githooks[5]
+diff --git a/builtin/am.c b/builtin/am.c
+index 9e3d4d9ab44..c7ffc7eafc5 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -446,7 +446,7 @@ static void am_destroy(const struct am_state *state)
+ static int run_applypatch_msg_hook(struct am_state *state)
+ {
+ 	int ret;
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 
+ 	assert(state->msg);
+ 	strvec_push(&opt.args, am_path(state, "final-commit"));
+@@ -467,7 +467,7 @@ static int run_applypatch_msg_hook(struct am_state *state)
+  */
+ static int run_post_rewrite_hook(const struct am_state *state)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 	strvec_push(&opt.args, "rebase");
+ 	opt.path_to_stdin = am_path(state, "rewritten");
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 863b02a7d7c..6b99d31c6ba 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -107,7 +107,7 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 27fc05ee511..986c3b1932a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -776,7 +776,7 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
+-	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 
+ 	if (option_no_checkout)
+ 		return 0;
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 398980523aa..9b6272cfd3b 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -22,7 +22,7 @@ static const char * const builtin_hook_run_usage[] = {
+ static int run(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 	int ignore_missing = 0;
+ 	const char *hook_name;
+ 	struct list_head *hooks;
+@@ -31,6 +31,8 @@ static int run(int argc, const char **argv, const char *prefix)
+ 			 N_("exit quietly with a zero exit code if the requested hook cannot be found")),
+ 		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
+ 			   N_("file to read into hooks' stdin")),
++		OPT_INTEGER('j', "jobs", &opt.jobs,
++			    N_("run up to <n> hooks simultaneously")),
+ 		OPT_END(),
+ 	};
+ 	int ret;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index f215f264cc8..c01eb535d6b 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -448,7 +448,7 @@ static void finish(struct commit *head_commit,
+ 		   const struct object_id *new_head, const char *msg)
+ {
+ 	struct strbuf reflog_message = STRBUF_INIT;
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	const struct object_id *head = &head_commit->object.oid;
+ 
+ 	if (!msg)
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index ee68a1df492..a4bbb9abb35 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1314,7 +1314,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	char *squash_onto_name = NULL;
+ 	int reschedule_failed_exec = -1;
+ 	int allow_preemptive_ff = 1;
+-	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index ebec6f3bb10..7460124b743 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -909,7 +909,7 @@ static int run_receive_hook(struct command *commands,
+ 			    int skip_broken,
+ 			    const struct string_list *push_options)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	struct receive_hook_feed_context ctx;
+ 	struct command *iter = commands;
+ 
+@@ -948,7 +948,7 @@ static int run_receive_hook(struct command *commands,
+ 
+ static int run_update_hook(struct command *cmd)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 	strvec_pushl(&opt.args,
+ 		     cmd->ref_name,
+@@ -1432,7 +1432,8 @@ static const char *push_to_checkout(unsigned char *hash,
+ 				    struct strvec *env,
+ 				    const char *work_tree)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
++
+ 	opt.invoked_hook = invoked_hook;
+ 
+ 	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
+@@ -1628,7 +1629,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ static void run_update_post_hook(struct command *commands)
+ {
+ 	struct command *cmd;
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		if (cmd->error_string || cmd->did_not_exist)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 330867c19bf..30905067906 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -382,7 +382,7 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 
+ 		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
+ 		strvec_pushl(&opt.args,
+diff --git a/commit.c b/commit.c
+index 842e47beae2..a38bd047524 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1700,7 +1700,7 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    int *invoked_hook,
+ 		    const char *name, ...)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SERIAL;
+ 	va_list args;
+ 	const char *arg;
+ 
+diff --git a/hook.c b/hook.c
+index 2b2c16a9095..600030c59ec 100644
+--- a/hook.c
++++ b/hook.c
+@@ -208,6 +208,28 @@ static int notify_hook_finished(int result,
+ 	return 0;
+ }
+ 
++/*
++ * Determines how many jobs to use after we know we want to parallelize. First
++ * priority is the config 'hook.jobs' and second priority is the number of CPUs.
++ */
++static int configured_hook_jobs(void)
++{
++	/*
++	 * The config and the CPU count probably won't change during the process
++	 * lifetime, so cache the result in case we invoke multiple hooks during
++	 * one process.
++	 */
++	static int jobs = 0;
++	if (jobs)
++		return jobs;
++
++	if (git_config_get_int("hook.jobs", &jobs))
++		/* if the config isn't set, fall back to CPU count. */
++		jobs = online_cpus();
++
++	return jobs;
++}
++
+ int run_hooks(const char *hook_name, struct list_head *hooks,
+ 	      struct run_hooks_opt *options)
+ {
+@@ -217,7 +239,6 @@ int run_hooks(const char *hook_name, struct list_head *hooks,
+ 		.options = options,
+ 		.invoked_hook = options->invoked_hook,
+ 	};
+-	int jobs = 1;
+ 
+ 	if (!options)
+ 		BUG("a struct run_hooks_opt must be provided to run_hooks");
+@@ -225,7 +246,11 @@ int run_hooks(const char *hook_name, struct list_head *hooks,
+ 	cb_data.head = hooks;
+ 	cb_data.run_me = list_first_entry(hooks, struct hook, list);
+ 
+-	run_processes_parallel_tr2(jobs,
++	/* INIT_PARALLEL sets jobs to 0, so go look up how many to use. */
++	if (!options->jobs)
++		options->jobs = configured_hook_jobs();
++
++	run_processes_parallel_tr2(options->jobs,
+ 				   pick_next_hook,
+ 				   notify_start_failure,
+ 				   options->feed_pipe,
+@@ -244,7 +269,11 @@ int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options)
+ {
+ 	struct list_head *hooks;
+ 	int ret = 0;
+-	struct run_hooks_opt hook_opt_scratch = RUN_HOOKS_OPT_INIT;
++	/*
++	 * Turn on parallelism by default. Hooks which don't want it should
++	 * specify their options accordingly.
++	 */
++	struct run_hooks_opt hook_opt_scratch = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 	if (!options)
+ 		options = &hook_opt_scratch;
+diff --git a/hook.h b/hook.h
+index 49b4c335f86..fe16ab35028 100644
+--- a/hook.h
++++ b/hook.h
+@@ -25,6 +25,13 @@ struct run_hooks_opt
+ 	/* Args to be passed to each hook */
+ 	struct strvec args;
+ 
++	/*
++	 * Number of threads to parallelize across. Set to 0 to use the
++	 * 'hook.jobs' config or, if that config is unset, the number of cores
++	 * on the system.
++	 */
++	int jobs;
++
+ 	/*
+ 	 * Resolve and run the "absolute_path(hook)" instead of
+ 	 * "hook". Used for "git worktree" hooks
+@@ -68,7 +75,14 @@ struct run_hooks_opt
+ 	int *invoked_hook;
+ };
+ 
+-#define RUN_HOOKS_OPT_INIT { \
++#define RUN_HOOKS_OPT_INIT_SERIAL { \
++	.jobs = 1, \
++	.env = STRVEC_INIT, \
++	.args = STRVEC_INIT, \
++}
++
++#define RUN_HOOKS_OPT_INIT_PARALLEL { \
++	.jobs = 0, \
+ 	.env = STRVEC_INIT, \
+ 	.args = STRVEC_INIT, \
+ }
+diff --git a/read-cache.c b/read-cache.c
+index 875f6c1dea5..98e9fb8b04e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3069,7 +3069,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
+ {
+ 	int ret;
+ 	int was_full = !istate->sparse_index;
+-	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 	ret = convert_to_sparse(istate);
+ 
+diff --git a/refs.c b/refs.c
+index 73d4a939267..5543b8cdaba 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2062,7 +2062,7 @@ int ref_update_reject_duplicates(struct string_list *refnames,
+ static int run_transaction_hook(struct ref_transaction *transaction,
+ 				const char *state)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	struct string_list to_stdin = STRING_LIST_INIT_NODUP;
+ 	int ret = 0, i;
+ 
+diff --git a/reset.c b/reset.c
+index 1237ced8a58..63a9c513409 100644
+--- a/reset.c
++++ b/reset.c
+@@ -127,7 +127,8 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 					    reflog_head);
+ 	}
+ 	if (run_hook) {
+-		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
++
+ 		strvec_pushl(&opt.args,
+ 			     oid_to_hex(orig ? orig : null_oid()),
+ 			     oid_to_hex(oid),
+diff --git a/sequencer.c b/sequencer.c
+index db8044ab47d..979cd01c303 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1148,7 +1148,7 @@ int update_head_with_reflog(const struct commit *old_head,
+ static int run_rewrite_hook(const struct object_id *oldoid,
+ 			    const struct object_id *newoid)
+ {
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	struct strbuf tmp = STRBUF_INIT;
+ 	struct string_list to_stdin = STRING_LIST_INIT_DUP;
+ 	int code;
+@@ -4522,7 +4522,7 @@ static int pick_commits(struct repository *r,
+ 		if (!stat(rebase_path_rewritten_list(), &st) &&
+ 				st.st_size > 0) {
+ 			struct child_process notes_cp = CHILD_PROCESS_INIT;
+-			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
++			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 
+ 			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
+ 			notes_cp.git_cmd = 1;
+diff --git a/transport.c b/transport.c
+index 4ca8fc0391d..33da71a108b 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1204,7 +1204,7 @@ static int run_pre_push_hook(struct transport *transport,
+ 			     struct ref *remote_refs)
+ {
+ 	int ret = 0;
+-	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_PARALLEL;
+ 	struct ref *r;
+ 	struct string_list to_stdin = STRING_LIST_INIT_NODUP;
+ 
 -- 
 2.33.0.867.g88ec4638586
 
