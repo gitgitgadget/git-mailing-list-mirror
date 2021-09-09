@@ -2,135 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7850C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 03:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96246C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 05:53:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C750160F92
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 03:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E49760F13
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 05:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350159AbhIID1U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 23:27:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350162AbhIID0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 23:26:34 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F5AC0617A8
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 20:25:24 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id q3so532108iot.3
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 20:25:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ajkVj0Qyvw/bQUPoafTQ+yX+kdQZvrArM4W/UBNO2dA=;
-        b=JBrhKeDy4v6ffTEu+qUTtJzbiM4Osaqg+AjCUUdvacinuTDek07LXl54U1y0Roj87Z
-         S9Ekzah7VguNkzIg+S39dd1CM665/BKu53X33TyDEMHGiFWulVsi3H1vD6xiaJI3QQOX
-         1adIxiMdpoMj7WtKQy1toGSr9OWOt0Qi5QaWFukYLofeunw9yy8TT9g4/dtpfHK61EYP
-         DIPkZHY9C76iyMwRtjUr3e+9JT+kF2jMRVyWMQ+CCll4VAIuNIJlNmdUbYLJZufRy2+b
-         SRS+RvQAHgUbYtHf6MVj/Sb43/Bxeo1EPJPa6eYpG1HRlNLGZ/OmAfgpk0MHomjigLmp
-         GVng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ajkVj0Qyvw/bQUPoafTQ+yX+kdQZvrArM4W/UBNO2dA=;
-        b=4FGR3oYganQbtXrYLN77EmNGbQ3H6RQbtdeZLx0W+uiVZ27oPP2dqFns3duvd6GFe+
-         tIGfA/W/Yruo1tHS59gbVZ2ggF6OfYVPmIYWSOPXyg+Az4DBsN+RYIrAAtVqj/zU1DLI
-         pAFNVyMLA+Z3BkeRb3rXDMx/o8uGdFnm682SXYrHIwkaDoxI8m9WDMU4XBWbSMBw5ZKu
-         9IGXrBrZmqpAG/oCOYphtLQdYxHU/qn65z6ZpSpdQhBdSZfc9d/TZT2D77HNm58TMa1y
-         gSAcvMrcfXI5m2DVeHx3iE/djIhsvxMBOQReo8AYFoUVwfpS/pZekscdF0Eygmv03fQG
-         ppvQ==
-X-Gm-Message-State: AOAM5308StSNIzE3J+28GTp7P+K+0gGdJTlEDxiT7c6EIJEXUodnX5iV
-        S5DRHkKP+m4GJKLX0u55gRVU8a23j6rVdrQQ
-X-Google-Smtp-Source: ABdhPJxljJWfWK3JJf855VsjTXfP/BZ5yiAnKnCESCpzj0zCXP9S9znflWmKE1Pw1F/tJ/n+mXufRA==
-X-Received: by 2002:a5e:9901:: with SMTP id t1mr792240ioj.92.1631157923522;
-        Wed, 08 Sep 2021 20:25:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o15sm296187ilo.73.2021.09.08.20.25.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 20:25:23 -0700 (PDT)
-Date:   Wed, 8 Sep 2021 23:25:22 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com
-Subject: [PATCH 9/9] pack-objects: rename .idx files into place after .bitmap
- files
-Message-ID: <d8286cf1075dc85231128145c5abb0db3881032b.1631157880.git.me@ttaylorr.com>
-References: <cover.1630461918.git.me@ttaylorr.com>
- <cover.1631157880.git.me@ttaylorr.com>
+        id S1350648AbhIIFyW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 01:54:22 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:48554 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1350953AbhIIFyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 01:54:17 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:5893:3d2:2851:be4f])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id A5DB34FAD92;
+        Thu,  9 Sep 2021 07:53:04 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1631166784; bh=MpPzmSogbX/hzw2t7uvBhnV4X+4EapG9coeW44EDdxo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=znPnhklSj1/4WdjnAQ1MAj46VVUPjYARVRdECEbbY7R/APon/rBKn9UhTcnfhO5aq
+         LgGvfzG9TQX8o3bZd17r5fkRwE+LmrhYeMVsOp1c4ZfakT0PTmB2oiHbNk819oC3mz
+         FYevk3PysSlWmKRi+vyPnNw+VsfQEqBIwJOdjtz4=
+From:   =?ISO-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr>
+To:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v10 0/3] maintenance: add support for systemd timers on Linux
+Date:   Thu, 09 Sep 2021 07:52:56 +0200
+Message-ID: <1749747.rkkkC1iLqI@coruscant.lhuard.fr>
+In-Reply-To: <4c0c1fd4-f3f4-5e3a-abd2-0350c18b18b7@gmail.com>
+References: <20210827210255.12565-1-lenaic@lhuard.fr> <28e0f22a-e9be-bb18-df0f-4d95cb6d5145@gmail.com> <4c0c1fd4-f3f4-5e3a-abd2-0350c18b18b7@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1631157880.git.me@ttaylorr.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Le mercredi 8 septembre 2021, 13:44:26 CEST Derrick Stolee a =C3=A9crit :
+> On 9/7/2021 12:48 PM, Derrick Stolee wrote:
+> > On 9/4/2021 4:54 PM, L=C3=A9na=C3=AFc Huard wrote:
+> >> Hello,
+> >>=20
+> >> Please find hereafter my updated patchset to add support for systemd
+> >> timers on Linux for the `git maintenance start` command.
+> >>=20
+> >> The only changes compared to the previous version are fixes for the
+> >> two typos in a comment that Ramsay Jones pointed out [1]
+> >>=20
+> >> [1]
+> >> https://lore.kernel.org/git/51246c10-fe0b-b8e5-cdc3-54bdc6c8054e@ramsa=
+yj
+> >> ones.plus.com/>=20
+> > The changes in the most recent two versions look good to me.
+>=20
+> I recently tested the 'seen' branch for an unrelated reason, but found
+> that the t7900-maintenance.sh test failed for me. It was during test 34,
+> 'start and stop Linux/systemd maintenance' with the following issue:
+>=20
+>   + systemd-analyze verify systemd/user/git-maintenance@.service
+>   Failed to create /user.slice/user-1000.slice/session-44.scope/init.scope
+> control group: Permission denied Failed to initialize manager: Permission
+> denied
+>=20
+> Now, this test has the prereq SYSTEMD_ANALYZE, but for some reason this
+> later command fails for permission issues. I'm running Ubuntu, if that
+> helps.
 
-In preceding commits the race of renaming .idx files in place before
-.rev files and other auxiliary files was fixed in pack-write.c's
-finish_tmp_packfile(), builtin/repack.c's "struct exts", and
-builtin/index-pack.c's final(). As noted in the change to pack-write.c
-we left in place the issue of writing *.bitmap files after the *.idx,
-let's fix that issue.
+Thank you for the feedback.
 
-See 7cc8f971085 (pack-objects: implement bitmap writing, 2013-12-21)
-for commentary at the time when *.bitmap was implemented about how
-those files are written out, nothing in that commit contradicts what's
-being done here.
+Could you please share which version of Ubuntu and which version of systemd=
+=20
+you are using=E2=80=AF?
 
-Note that this commit and preceding ones only close any race condition
-with *.idx files being written before their auxiliary files if we're
-optimistic about our lack of fsync()-ing in this are not tripping us
-over. See the thread at [1] for a rabbit hole of various discussions
-about filesystem races in the face of doing and not doing fsync() (and
-if doing fsync(), not doing it properly).
+I=E2=80=99ve just tried to start an Ubuntu Impish 21.10 which uses systemd=
+=20
+248.3-1ubuntu3 and to test the `seen` git branch.
 
-In particular, in this case of writing to ".git/objects/pack" we only
-write and fsync() the individual files, but if we wanted to guarantee
-that the metadata update was seen in that way by concurrent processes
-we'd need to fsync() on the "fd" of the containing directory. That
-concern is probably more theoretical than not, modern OS's tend to be
-more on the forgiving side than the overly pedantic side of
-implementing POSIX FS semantics.
+All tests of `t/t7900-maintenance.sh` passed including the one which is=20
+failing for you.
 
-1. https://lore.kernel.org/git/8735qgkvv1.fsf@evledraar.gmail.com/
+As `systemd-analyse verify` should only check a unit file validity [1], I=20
+wouldn=E2=80=99t expect it to fail on a cgroup manipulation.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+[1] https://www.freedesktop.org/software/systemd/man/systemd-analyze.html#s=
+ystemd-analyze%20verify%20FILE...
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 944134b6f2..a01767a384 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1250,7 +1250,6 @@ static void write_pack_file(void)
- 			stage_tmp_packfiles(&tmpname, pack_tmp_name,
- 					    written_list, nr_written,
- 					    &pack_idx_opts, hash, &idx_tmp_name);
--			rename_tmp_packfile_idx(&tmpname, &idx_tmp_name);
- 
- 			if (write_bitmap_index) {
- 				size_t tmpname_len = tmpname.len;
-@@ -1267,6 +1266,8 @@ static void write_pack_file(void)
- 				strbuf_setlen(&tmpname, tmpname_len);
- 			}
- 
-+			rename_tmp_packfile_idx(&tmpname, &idx_tmp_name);
-+
- 			free(idx_tmp_name);
- 			strbuf_release(&tmpname);
- 			free(pack_tmp_name);
--- 
-2.33.0.96.g73915697e6
+I tried to run=20
+systemd-analyze verify /etc/systemd/system/sshd.service
+and it didn=E2=80=99t produce the error you mentioned but if I `strace` it,=
+ I can find:
+
+mkdir("/sys/fs/cgroup/unified/user.slice/user-1000.slice/session-3.scope/
+init.scope", 0755) =3D -1 EACCES (Permission denied)
+
+This makes me think your version of systemd is wrongly considering this cgr=
+oup=20
+directory failure as fatal.
+I=E2=80=99d like to know more precisely which versions are affected.
+
+Kind regards,
+L=C3=A9na=C3=AFc.
+
+
