@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF79C433FE
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 01:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CC49C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 01:10:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A724261158
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 01:10:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3417661166
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 01:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349018AbhIIBL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 21:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35402 "EHLO
+        id S1349069AbhIIBL1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 21:11:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232144AbhIIBLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1348992AbhIIBLZ (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 Sep 2021 21:11:25 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485FEC061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 18:10:16 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id n5so5853320wro.12
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 18:10:16 -0700 (PDT)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21AFEC061757
+        for <git@vger.kernel.org>; Wed,  8 Sep 2021 18:10:17 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id m25-20020a7bcb99000000b002e751bcb5dbso171052wmi.5
+        for <git@vger.kernel.org>; Wed, 08 Sep 2021 18:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ufllTAVUWjOkaIdXGf/jGHTqL8USx303QyicMMrIdZM=;
-        b=G+qp50cjQXoX+/EyG3yC4Uk74AMYiJth58aB73p8tIyn4dTeq4ac3CGan0iLsnfiJx
-         o48UQqCcNyDjvJ6O78eGiOvv9ywlVuQuybw8o7cWZPtLbkTGCF21eKcCCY3exRuiVr8x
-         BeGicmCidugMBksxNyLPQUFo9Neec6V8j6pULJIqD8RgUnlMmLCM3a/Zo0a0uIwWhSwK
-         HqfzUDV9caWejhaiN9e9gag7nhFv3pcxWU2/3muLCqPD/nqyEGFRyBrOJEQX3oAwcZit
-         lmU/bLJQlk3rsYIbGJkQvopV/QfTgL3WfLoUCHl5zQWJbhwyMFd6JZrKeYH120SkmO/C
-         GDlQ==
+        bh=atz5YvkpaYU5ftvnFbIOSkz/cMePbWWY6xkV8tze44E=;
+        b=KIyyyL9oSwv67Df2olV42kKx/KhTZgRP9kWEXCvyugyQC0PD/sgwHobY+9qO5n+j5s
+         lxSv4A+DhnB5eeGpTwmlUTBwdwUCojoNJapn/ctviKSOVqgB1IuJRmwoXx5BDEitYYXM
+         PzSYdmpQsyEiI5ejBbJ0qn/q4NoysuUUwJqyngzzOH6g4hlfIZv/hDWz/20I7V0dNK5X
+         pWvYlouCStkkhsXjSiBVtWiireQeS+1ij/ViQoGe/+K3fKsWi6NXiD5NifOKUeMx4FBB
+         JhSOftoDtm2u/JqTal/IqsTcVk/R0aDjfX0xWRZl2yh50S5tdiurmCwd8P1kcLy0EyM4
+         9ZBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ufllTAVUWjOkaIdXGf/jGHTqL8USx303QyicMMrIdZM=;
-        b=ybKhAxtKor6vX0qGyWlJpKGSSdCEN1k+ezhd92pxlRlqgFoD2wlmtP7rfPa70y1nxM
-         fTyPY+5zQm2kJNTGwUyitATf2cjKdDfpUH9xcz/BajE9OiGi45+n9qQUrVMA25Fs1RY0
-         EHaz7M2g9f96JzEj2jatwQyQNJZ17aJgUIEKTZH3CjEQwWrh3btU0QYJLOzxSl3l6th/
-         Dhx54V2Wpr/K31RJxn6SxczqXK1UOwhgJncfpNXVho8Tw52mxIwLnqkWDgeK1tu/0QTT
-         mSc6yRx45YuuFHtdyFTGbPIOHhEJarHd9/DEgrUFuLDgOL6VhUafsESd+QmxiioM6OGV
-         ebVA==
-X-Gm-Message-State: AOAM531bydB3hCUjtYWkQepg0MVtk0mRylF7ppw0IukWCiIBsa0ngVkF
-        lRfi4d+mkWbZWoRLCZbxk9iLXOk/5iINTw==
-X-Google-Smtp-Source: ABdhPJzhdB7RyYJbEs6vg2LZ6iXUy8P96dKfhjBxCCot0VACfVZLBJ1TPq8L7kbhKmKB1f1z/4tJQA==
-X-Received: by 2002:adf:8b19:: with SMTP id n25mr453812wra.216.1631149814521;
-        Wed, 08 Sep 2021 18:10:14 -0700 (PDT)
+        bh=atz5YvkpaYU5ftvnFbIOSkz/cMePbWWY6xkV8tze44E=;
+        b=dSRnw7IkQLR7OoIdwQ5WFk41hSHBBQYHJLuT5UMgRnHbkx7az1KfxQ9vxs8R1gTAZo
+         iwp3zo7YWTltZ48r0PAZoXFNK2Mmksc/q/oucgZIvYXV1sSBV2rPc9E2IGHKVtkLxWCy
+         hFVgxehvmtIs4WM2UGuTBeu80OOzi7wkxNB99AHsxKa2CDFX+wG2eHFKkKz4VpF4w0nX
+         7VIfTnefXtiV7L1i6mAZG2tFboKytUdVoqNEeJHfBdhb4LEZNtgQsnGsYnIm8dD1zIM8
+         4FL6b52IiqQ+XzUmJV8xlG4UjbhW/hXWIpLBrEN0MdRXRtX4PD2n1AeHuVY+//uARLXp
+         HQcg==
+X-Gm-Message-State: AOAM532MqEfNckkZ73q4+wRFV29m2mVr8uXUDvnJUBVSalm3ZVcvM4Xj
+        K1r8STqY6/VEu2igNNJxx6z2g5Drqlmh4g==
+X-Google-Smtp-Source: ABdhPJwjtwLG0zdM3vxAPuejVDlYK8MnPKtKL37viQanqy2JaYhhCZnyVfJgaaoQ4CSa7tbXaMVVSQ==
+X-Received: by 2002:a7b:c405:: with SMTP id k5mr204036wmi.87.1631149815470;
+        Wed, 08 Sep 2021 18:10:15 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k4sm187422wrm.74.2021.09.08.18.10.13
+        by smtp.gmail.com with ESMTPSA id k4sm187422wrm.74.2021.09.08.18.10.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 18:10:13 -0700 (PDT)
+        Wed, 08 Sep 2021 18:10:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,12 +66,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/2] progress.c API users: fix bogus counting
-Date:   Thu,  9 Sep 2021 03:10:10 +0200
-Message-Id: <cover-v4-0.2-00000000000-20210909T010722Z-avarab@gmail.com>
+Subject: [PATCH v4 1/2] commit-graph: fix bogus counter in "Scanning merged commits" progress line
+Date:   Thu,  9 Sep 2021 03:10:11 +0200
+Message-Id: <patch-v4-1.2-4cc3923089d-20210909T010722Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.825.gdc3f7a2a6c7
-In-Reply-To: <cover-v3-0.2-00000000000-20210823T102722Z-avarab@gmail.com>
-References: <cover-v3-0.2-00000000000-20210823T102722Z-avarab@gmail.com>
+In-Reply-To: <cover-v4-0.2-00000000000-20210909T010722Z-avarab@gmail.com>
+References: <cover-v3-0.2-00000000000-20210823T102722Z-avarab@gmail.com> <cover-v4-0.2-00000000000-20210909T010722Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,84 +79,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix bad uses of the progress.c API. See
-https://lore.kernel.org/git/cover-v3-0.2-00000000000-20210823T102722Z-avarab@gmail.com
-for the v3.
+From: SZEDER Gábor <szeder.dev@gmail.com>
 
-This re-roll is on top of a merge conflict in v3 with 7a132c628e5
-(checkout: make delayed checkout respect --quiet and --no-progress,
-2021-08-26), i.e. the mt/quiet-with-delayed-checkout topic.
+The final value of the counter of the "Scanning merged commits"
+progress line is always one less than its expected total, e.g.:
 
-SZEDER Gábor (2):
-  commit-graph: fix bogus counter in "Scanning merged commits" progress
-    line
-  entry: show finer-grained counter in "Filtering content" progress line
+  Scanning merged commits:  83% (5/6), done.
 
- commit-graph.c |  2 +-
- entry.c        | 12 +++++-------
- 2 files changed, 6 insertions(+), 8 deletions(-)
+This happens because while iterating over an array the loop variable
+is passed to display_progress() as-is, but while C arrays (and thus
+the loop variable) start at 0 and end at N-1, the progress counter
+must end at N. Fix this by passing 'i + 1' to display_progress(), like
+most other callsites do.
 
-Range-diff against v3:
-1:  443374551ad = 1:  4cc3923089d commit-graph: fix bogus counter in "Scanning merged commits" progress line
-2:  71c93f624ec ! 2:  54a09b5b883 entry: show finer-grained counter in "Filtering content" progress line
-    @@ Commit message
-         straightforward to fix it with the current progress.c library (see [3]
-         for an attempt), so let's leave it for now.
-     
-    +    Let's also initialize the *progress to "NULL" while we're at it. Since
-    +    7a132c628e5 (checkout: make delayed checkout respect --quiet and
-    +    --no-progress, 2021-08-26) we have had progress conditional on
-    +    "show_progress", usually we use the idiom of a "NULL" initialization
-    +    of the "*progress", rather than the more verbose ternary added in
-    +    7a132c628e5.
-    +
-         1. https://lore.kernel.org/git/20210620200303.2328957-1-szeder.dev@gmail.com/
-         2. http://lore.kernel.org/git/20210802214827.GE23408@szeder.dev
-         3. https://lore.kernel.org/git/20210620200303.2328957-7-szeder.dev@gmail.com/
-    @@ Commit message
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## entry.c ##
-    -@@ entry.c: static int remove_available_paths(struct string_list_item *item, void *cb_data)
-    - int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
-    +@@ entry.c: int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
-    + 			    int show_progress)
-      {
-      	int errs = 0;
-     -	unsigned delayed_object_count;
-     +	unsigned processed_paths = 0;
-      	off_t filtered_bytes = 0;
-      	struct string_list_item *filter, *path;
-    - 	struct progress *progress;
-    -@@ entry.c: int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
-    +-	struct progress *progress;
-    ++	struct progress *progress = NULL;
-    + 	struct delayed_checkout *dco = state->delayed_checkout;
-    + 
-    + 	if (!state->delayed_checkout)
-      		return errs;
-      
-      	dco->state = CE_RETRY;
-     -	delayed_object_count = dco->paths.nr;
-    --	progress = start_delayed_progress(_("Filtering content"), delayed_object_count);
-    -+	progress = start_delayed_progress(_("Filtering content"), dco->paths.nr);
-    +-	progress = show_progress
-    +-		? start_delayed_progress(_("Filtering content"), delayed_object_count)
-    +-		: NULL;
-    ++	if (show_progress)
-    ++		progress = start_delayed_progress(_("Filtering content"), dco->paths.nr);
-      	while (dco->filters.nr > 0) {
-      		for_each_string_list_item(filter, &dco->filters) {
-      			struct string_list available_paths = STRING_LIST_INIT_NODUP;
-    @@ entry.c: int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
-      
-      			if (!async_query_available_blobs(filter->string, &available_paths)) {
-      				/* Filter reported an error */
-    -@@ entry.c: int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
-    +@@ entry.c: int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
-      				ce = index_file_exists(state->istate, path->string,
-      						       strlen(path->string), 0);
-      				if (ce) {
+There's an RFC series to add a GIT_TEST_CHECK_PROGRESS=1 mode[1] which
+catches this issue in the 'fetch.writeCommitGraph' and
+'fetch.writeCommitGraph with submodules' tests in
+'t5510-fetch.sh'. The GIT_TEST_CHECK_PROGRESS=1 mode is not part of
+this series, but future changes to progress.c may add it or similar
+assertions to catch this and similar bugs elsewhere.
+
+1. https://lore.kernel.org/git/20210620200303.2328957-1-szeder.dev@gmail.com/
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ commit-graph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 00614acd65d..46170592204 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2125,7 +2125,7 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
+ 
+ 	ctx->num_extra_edges = 0;
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+-		display_progress(ctx->progress, i);
++		display_progress(ctx->progress, i + 1);
+ 
+ 		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
+ 			  &ctx->commits.list[i]->object.oid)) {
 -- 
 2.33.0.825.gdc3f7a2a6c7
 
