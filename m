@@ -2,132 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D45DC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 15:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CDEC433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 16:23:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FC8F6113A
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 15:56:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA6EB611CB
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 16:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236597AbhIIP5U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 11:57:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36384 "EHLO
+        id S235020AbhIIQYd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 12:24:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbhIIP5T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 11:57:19 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C2AC061574
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 08:56:09 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id i6so3329738edu.1
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 08:56:09 -0700 (PDT)
+        with ESMTP id S233059AbhIIQYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 12:24:31 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D938C061574
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 09:23:22 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id b10so3037144ioq.9
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 09:23:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5zAm1wVcp3vRkoE5PPCqZ7xthqnsGnVBI67rwEbaB20=;
-        b=UwFfdG7R0DLD1Ag71LWs+Bp8y9IJsntq4WsTYhPk1AOf06+PXfVWXI4+Yot49wATJZ
-         MFTq1NqKUuK1qkavoX354OvLX8aPpuPhT6q9qOEAUVM7vPbrxwQxF9IFX1kx8ZN579nH
-         5gWWH3HsPvtAEj7stB+Hbz3Dd67vNs6eaDgtqEo0FrhLifjwF0qUzJ12ANfOMh9IEV6B
-         CPgfLbi96Wv57edFeryTnCcPoEV9enQUgh4PmHp2EfKb8f+RwnXArm0fs7iPc050xRXe
-         MhuJgdVZzU5fpDv3rk5RCWa2TtpfYVn0wbCrY1vh3vncuLvIHbUNl9EnPpewJA22aFd2
-         xMUQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=bc8baCofuRZeGPfcnJTiKB1cWGiYozKdmMFFpsfqVlE=;
+        b=bnZGGrci7m8muLtZVIIYta7uBcqF6Q1sWdJwTU/nstcSASqA+n5mVa9GM6Aib/KbI0
+         wPk3JSwPSOU5Q0AgeBDVHGyRxFmt/jaZLrh+1LVbNFihwz3QrCc++EzMFkHt5xxMLsFQ
+         JWy3pF2fj2FH1/admAFExbxbKAyeI5kL+FtJRzuxaDNVUdpqDWe8t1cLiMOlZYsWrm94
+         7Qt8qnz8VJ3QDPwGeNUJuI6VaEs71IDn6BvAP1ynf60oLJ8MI2Pl4mX3kD2HfhrrkAt7
+         E6nOyePcat67AB/Y5DAEm3PyafElXfd9Rb9qNIlIQWd20HVXpGPineaJbnQ86xOI8vKt
+         tV9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=5zAm1wVcp3vRkoE5PPCqZ7xthqnsGnVBI67rwEbaB20=;
-        b=m1i7sdUtDfGj+WDKdwKwPPeGTpxfrTBBB5uhXOOMtb3kWvUkEUo6m3Ok7BqfjmsN6+
-         uDh/HlbtgmNpVUUnfayaPWPrHoTLu8me0ueLDO2NzIQvvmN+N1P0iYhgKbiOYMnnmFhy
-         O+g+bM8fEVD7Nuy6jua/6gBCaoJm7azGAvri/vzYifs4cK1gL+QgkmU7G74zouWNBec0
-         8/YXwHUktQln5DfsLB79Slnbra+bWfumCZehu5npPLjbWs8gtrBL+eEHa3NeD4M1zBuq
-         IS98t0+gRg1iXMWIKE74dNMlA/w333lMP/pUUrSzpfAY6+Fy5RHRRlusUvPQhLfzLSnC
-         HEdQ==
-X-Gm-Message-State: AOAM5326/6vDBtzfcdPZi1ZRkG8P+ad7kCehgyhVti5nIEbTLvPTt3eH
-        9Cq+kOK9j2H9H9UELeiNf4dytzXTtW4udA==
-X-Google-Smtp-Source: ABdhPJz7Ga1A2I5zQhwKrtULi9f8Ruqp3yhImo3plEs0oloa5oMwejFWaPPRVa2tgh4VzMjcI1E7NA==
-X-Received: by 2002:a05:6402:27cd:: with SMTP id c13mr3863995ede.266.1631202968153;
-        Thu, 09 Sep 2021 08:56:08 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id di4sm939049edb.34.2021.09.09.08.56.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bc8baCofuRZeGPfcnJTiKB1cWGiYozKdmMFFpsfqVlE=;
+        b=ZgOiERDwOGz71BgP3VXeKsdZKezy4ZYe8RlMyTonuWYYZbqtJziavvOpcvBUXBwK8j
+         y8ToFHWNNvc8a/EUesWupjgbGEEBx2Z11PTQqJ2xxKsfUxgI3SdfdLeDCBysxgWUf/w2
+         3947DZejqgVExXM6XbgdfAE4qqRoNuqPL0NJrwwjuPV+HkngDhRzX6Grsi5gPt5r9cra
+         02ak5YXIYWVIqCCQmpOVl3AghL3Audmq5dKeDQ277yEoGL7nniCATtE1dk24raCnf9ci
+         dGcYFTHrsRQB2xN4GKoAB0n4dx3uMIj9J9NIDG+xFwPN1hhLoQ2P1BEGJNirUh00fzxL
+         ffuQ==
+X-Gm-Message-State: AOAM531TXfDZhhmzZBjCJ3WKMLSufCqoXv2Ez4ff1YZH7JPjN4WDumpK
+        epx6aTeLHcqTeGioWgMLAyGeDn1qrVCpqTQz
+X-Google-Smtp-Source: ABdhPJz90IAF4DkKTkxQ3DtKjvQVldP44G2U8w80RLDXTTjb5LBPdg/wXC2ghH1i4F1ntGKWClLQhQ==
+X-Received: by 2002:a05:6638:2257:: with SMTP id m23mr556144jas.137.1631204601659;
+        Thu, 09 Sep 2021 09:23:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b10sm1089648ils.13.2021.09.09.09.23.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 08:56:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
+        Thu, 09 Sep 2021 09:23:21 -0700 (PDT)
+Date:   Thu, 9 Sep 2021 12:23:20 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net
 Subject: Re: [PATCH 3/4] midx.c: respect 'pack.writeBitmapHashcache' when
  writing bitmaps
-Date:   Thu, 09 Sep 2021 17:50:47 +0200
+Message-ID: <YTo0+FzYjpYG7B5I@nand.local>
 References: <cover.1631049462.git.me@ttaylorr.com>
  <be8f47e13c612f2fbe4d5f4f49794529b9424664.1631049462.git.me@ttaylorr.com>
- <874kavkfjg.fsf@evledraar.gmail.com> <YTgfuAKJv1rXXm7i@nand.local>
- <87zgsmdu6d.fsf@evledraar.gmail.com> <87v93adr8r.fsf@evledraar.gmail.com>
+ <874kavkfjg.fsf@evledraar.gmail.com>
+ <YTgfuAKJv1rXXm7i@nand.local>
+ <87zgsmdu6d.fsf@evledraar.gmail.com>
+ <87v93adr8r.fsf@evledraar.gmail.com>
  <YTogUpdtjsFlbqYM@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YTogUpdtjsFlbqYM@nand.local>
-Message-ID: <8735qdeoa0.fsf@evledraar.gmail.com>
+ <8735qdeoa0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8735qdeoa0.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Sep 09 2021, Taylor Blau wrote:
-
-> On Thu, Sep 09, 2021 at 11:34:16AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> In similar spirit as my
->> https://lore.kernel.org/git/87v93bidhn.fsf@evledraar.gmail.com/ I
->> started seeing if not doing the flags via getopt but instead variables &
->> setting the flags later was better, and came up with this on top. Not
->> for this series, more to muse on how we can write these subcommands in a
->> simpler manner (or not).
+On Thu, Sep 09, 2021 at 05:50:47PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >> I may have discovered a subtle bug in the process, in
+> >> cmd_multi_pack_index_repack() we end up calling write_midx_internal(),
+> >> which cares about MIDX_WRITE_REV_INDEX, but only
+> >> cmd_multi_pack_index_write() will set that flag, both before & after my
+> >> patch. Are we using the wrong flags during repack as a result?
+> >
+> > Only the `write` sub-command would ever want to set that flag, since we
+> > don't support writing a bitmap after `expire`. So that part seems right,
+> > but perhaps there is a another problem you're seeing?
 >
-> Sure, I think that everything you wrote here is correct. I don't have a
-> strong opinion, really, but one benefit of not manipulating a single
-> 'flags' int is that we don't have to do stuff like:
->
->   if (git_config_bool(var, value))
->     opts.flags |=3D FLAG_FOO;
->   else
->     opts.flags &=3D ~FLAG_FOO;
->
-> and instead can write `opts.foo =3D git_config_bool(var, value)`.
+> In midx_repack() we'll call write_midx_internal(). That function gets
+> the "flags" we pass to midx_repack() and will check
+> MIDX_WRITE_REV_INDEX. I haven't checked whether we actually reach that,
+> but that's what I was wondering, i.e. whether the repack routine would
+> "write" when repacking, and we missed the flag option there.
 
-*nod*
+I don't think it's a problem in practice. We would never have
+MIDX_WRITE_REV_INDEX set when executing cmd_multi_pack_index_repack(),
+(and the same is true for all other subcommands besides `write`) because
+the default value for flags is just MIDX_PROGRESS (if isatty(2)), and we
+only add the WRITE_REV_INDEX bit from within the write handler.
 
-> Of course, the trade-off is that you later have to turn `opts.foo` into
-> flags at some point (or pass each option as an individual parameter). So
-> nothing's free, and I see it as a toss-up between which is easier to
-> read and write.
+More generally, that is to say "we only support writing a bitmap from
+the `write` sub-command". There is no reason that we couldn't lift this
+limitation and support writing a bitmap on the resulting MIDX after
+`expire` or `repack` we just haven't done so.
 
-I think that trade-off is usually a benefit, also in the pack-write.c
-etc. case, i.e. you enforce a clear boundary between the built-in and
-the underlying API, and don't have to e.g. wonder if some write flag is
-handled by verify() (which will just care about the progress flag), as
-you pass some moral equivalent of a "struct
-all_the_options_for_all_the_things" around between all of them.
+But I don't see any problems with not getting the right flags, etc.
 
-I realize trying to solve that problem from a different angle may be how
-you ended up going for per-subcommand config reading....
-
->> I may have discovered a subtle bug in the process, in
->> cmd_multi_pack_index_repack() we end up calling write_midx_internal(),
->> which cares about MIDX_WRITE_REV_INDEX, but only
->> cmd_multi_pack_index_write() will set that flag, both before & after my
->> patch. Are we using the wrong flags during repack as a result?
->
-> Only the `write` sub-command would ever want to set that flag, since we
-> don't support writing a bitmap after `expire`. So that part seems right,
-> but perhaps there is a another problem you're seeing?
-
-In midx_repack() we'll call write_midx_internal(). That function gets
-the "flags" we pass to midx_repack() and will check
-MIDX_WRITE_REV_INDEX. I haven't checked whether we actually reach that,
-but that's what I was wondering, i.e. whether the repack routine would
-"write" when repacking, and we missed the flag option there.
+Thanks,
+Taylor
