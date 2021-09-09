@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68484C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A366BC433FE
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:47:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4ADE2611BF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:47:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82875611C3
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233376AbhIIJsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 05:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38046 "EHLO
+        id S233362AbhIIJs0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 05:48:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233298AbhIIJsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 05:48:22 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E1EC061757
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 02:47:13 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id q26so1630364wrc.7
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 02:47:13 -0700 (PDT)
+        with ESMTP id S233353AbhIIJsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 05:48:23 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E558C061575
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 02:47:14 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m25-20020a7bcb99000000b002e751bcb5dbso905544wmi.5
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 02:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=No0m+FC8vTeDAjRvJpQi7E/Q85MXPRqDHqXhZ+8Yp1Q=;
-        b=jfxLwPEQ40gUU7k/Pnm4B/hmRbBT8uclPUmN1bKK905pxaoJiLSOGUL3hREAoLmXfT
-         Hafm4hQ2ZGCGZKNIYmueBSzHiw1T4EAetz8s1HTlvPyfYcZ7k+O7ycCmsUgcVIQTCQZd
-         F92fuAc0kqgpQ3k3Ucjs3Bfkeqr4GmL1qF8v/dzQxHcPPiOqMgpkhlu3kQOigtBcELvw
-         vqIMk2h3HIcVJr006iB9GeOcezXlmcEbe+N0d4bjeMplDD9fyMOaIi8hfEBQmY677TVH
-         P2RnBxtKfKoWtN3kp2s7CvcoiTuy6GfXzZSY8s9iHN6VR7Bw6bjL6XpSiUvgtZtkPhzW
-         8zig==
+        bh=lRLRAwzz8Uo3OJpONkw1O0Db0i4OOTboCPE1JdXn1zA=;
+        b=B2/AyyVc6bJJPjAGwd7Ff3l0/mjptHb6dJLwCqjU6gfWDt6r+jHhCFxq4EFiVVAtUv
+         r5txU7rHVTTbmKwDsm7NQ/ThSa96s0HiTqBZkFOt2okRna+18tQdl5h5ag4mnIZnBfGl
+         QvtfX7zBMX92IOOdWEU/Ts22h2emU22n/CKGGQYpvN2L+M63mZKjsV+bE0FzUmIhGDUl
+         UurF55r/FTAxno8+hQVvfff8Lo0g9qtyOMnom5beI8CoQ2qljmo5RKVyy4B++5QbWpiT
+         Jt/n6XoijukY8zjg3ySyaHFEkEHR4mZqagj9PBwHoHam3tS2Dbaug2DAaPlRFHc02Of6
+         K8qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=No0m+FC8vTeDAjRvJpQi7E/Q85MXPRqDHqXhZ+8Yp1Q=;
-        b=O1nF75Bbvuh641zvmMr91QQDot7WsUV/Q6AgwL9PO1RnDBu5jbAJSd+p22kPFuMkBt
-         c3brcvaEeTagP+udPBVwgwZmr8mWnB79bDGuO9/5lSl5JE2S/6gXInYL1kkCpAP1/rYU
-         BsOydrt2MXooUT4Z+gj7MHm9EWD7HwOaUkA0StDvStr/opjRRjjR9LlEa3x2OLrRqE2w
-         970p5dp3NZwkiYu+FCRoLwfiBcEnZxA8B32pTfVdmtJfmy7G86ANKrRsn/EBf3zD7FUS
-         ujdb7RA40wa2cbe7DYy0u0YVr3YvYWyK/p7wNjQ7GjCBuSlechuCIqJpT7dKxZG10SQc
-         3sMw==
-X-Gm-Message-State: AOAM531H2zDDKr8tS8DkG39siEKpZ5EnarhyFuNXRUEYwIso6kGBcHXe
-        a/wbuD8Qp3vR2hUdgZr/kxdGMLOMHC8=
-X-Google-Smtp-Source: ABdhPJyDHW4kKAubpjYK4bj+v0DrLlZ8aemGhm7e6Y6Ke6XjoE6uEqzOmt+c3hAPDssw8gCUGLgCQg==
-X-Received: by 2002:a05:6000:1563:: with SMTP id 3mr2516817wrz.139.1631180832415;
-        Thu, 09 Sep 2021 02:47:12 -0700 (PDT)
+        bh=lRLRAwzz8Uo3OJpONkw1O0Db0i4OOTboCPE1JdXn1zA=;
+        b=3Ixf6MEz4JJIsQ4dM7Zty0s5bD/nc/dd0+XHLxTyG38MSn1CjZ0I81o1EDWSXNmJv8
+         JjGC1W+7R9tv3pMNRjkih7grtI/PtkbeYX16zYIsJ2jHyVfIUu918FbEWwGgDEJxlQ9p
+         1wV1F3/fgyETmlFlhBdZYS0XBBlDsCKakcsPTUMJgJmuoLpIIsngnjd4zBVVG++OSAOW
+         n/GQogAtQdhqv4PUZyGURZsbKHaBdgx2XtzUM+date7reK2F/miSVMpP2Ru8agFB/nx+
+         smGUbLk2EtXvLg1ZA1A9gWdMK5S2ggQ+VJ8GL/TvlRgmX95c++r3r4ofkJodGHUUAmOp
+         lQ5Q==
+X-Gm-Message-State: AOAM531ox/+bUUmxzkSClU8MvNnvxWhL1mtYr8JxGYd3Rao2EmZhE4k6
+        bz038V4bay2SmQhECtt0+DMhZmtF6mE=
+X-Google-Smtp-Source: ABdhPJyCU3e9Jc3yV8dAhLmFdIQm+wKHKemjwLrOYOpoPYFsOuUSb+sELSYj8OKSDChVQ2JARmGiyA==
+X-Received: by 2002:a05:600c:4e87:: with SMTP id f7mr2020814wmq.191.1631180833090;
+        Thu, 09 Sep 2021 02:47:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g1sm1292542wmk.2.2021.09.09.02.47.12
+        by smtp.gmail.com with ESMTPSA id w15sm1065188wmi.4.2021.09.09.02.47.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 09 Sep 2021 02:47:12 -0700 (PDT)
-Message-Id: <990d4ca934862845429506583b73bc2fd4ad2405.1631180828.git.gitgitgadget@gmail.com>
+Message-Id: <dd708c84687b40a5482f4c6ac8a39e23fc59ac3b.1631180828.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1035.git.1631180828.gitgitgadget@gmail.com>
 References: <pull.1035.git.1631180828.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Sep 2021 09:47:07 +0000
-Subject: [PATCH 3/4] run_auto_maintenance(): implicitly close the object store
+Date:   Thu, 09 Sep 2021 09:47:08 +0000
+Subject: [PATCH 4/4] Close object store closer to spawning child processes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,93 +75,144 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Before spawning the auto maintenance, we need to make sure that we
-release all open file handles to all the `.pack` files (and MIDX files
-and commit-graph files and...) so that the maintenance process has the
-freedom to delete those files.
+In many cases where we spawned child processes that _may_ trigger a
+repack, we explicitly closed the object store first (so that the
+`repack` process can delete the `.pack` files, which would otherwise not
+be possible on Windows since files cannot be deleted as long as they as
+still in use).
 
-So far, we did this manually every time before calling
-`run_auto_maintenance()`. With the new `close_object_store` flag, we can
-do that implicitly in that function, which is more robust because future
-callers won't be able to forget to close the object store.
+Wherever possible, we now use the new `close_object_store` bit of the
+`run_command()` API, to delay closing the object store even further.
+This makes the code easier to maintain because it is now more obvious
+that we only release those file handles because of those child
+processes.
 
-Note: this changes behavior slightly, as we previously _always_ closed
-the object store, but now we only close the object store when actually
-running the auto maintenance. In practice, this should not matter (if
-anything, it might speed up operations where auto maintenance is
-disabled).
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/am.c     | 1 -
- builtin/fetch.c  | 2 --
- builtin/merge.c  | 1 -
- builtin/rebase.c | 1 -
- run-command.c    | 1 +
- 5 files changed, 1 insertion(+), 5 deletions(-)
+ builtin/gc.c           | 18 ++++++------------
+ builtin/pull.c         |  3 +--
+ builtin/receive-pack.c |  3 +--
+ 3 files changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0c2ad96b70e..f239e4ddde0 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1848,7 +1848,6 @@ next:
- 	 */
- 	if (!state->rebasing) {
- 		am_destroy(state);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f05d2f0a1ac..ddee9f8324f 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -663,8 +663,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	gc_before_repack();
+ 
+ 	if (!repository_format_precious_objects) {
 -		close_object_store(the_repository->objects);
- 		run_auto_maintenance(state->quiet);
- 	}
+-		if (run_command_v_opt(repack.v, RUN_GIT_CMD))
++		if (run_command_v_opt(repack.v,
++				      RUN_GIT_CMD | RUN_CLOSE_OBJECT_STORE))
+ 			die(FAILED_RUN, repack.v[0]);
+ 
+ 		if (prune_expire) {
+@@ -848,7 +848,7 @@ static int run_write_commit_graph(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	child.git_cmd = 1;
++	child.git_cmd = child.close_object_store = 1;
+ 	strvec_pushl(&child.args, "commit-graph", "write",
+ 		     "--split", "--reachable", NULL);
+ 
+@@ -864,7 +864,6 @@ static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
+ 	if (!the_repository->settings.core_commit_graph)
+ 		return 0;
+ 
+-	close_object_store(the_repository->objects);
+ 	if (run_write_commit_graph(opts)) {
+ 		error(_("failed to write commit-graph"));
+ 		return 1;
+@@ -913,7 +912,7 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	child.git_cmd = 1;
++	child.git_cmd = child.close_object_store = 1;
+ 	strvec_push(&child.args, "gc");
+ 
+ 	if (opts->auto_flag)
+@@ -923,7 +922,6 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts)
+ 	else
+ 		strvec_push(&child.args, "--no-quiet");
+ 
+-	close_object_store(the_repository->objects);
+ 	return run_command(&child);
  }
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 25740c13df1..c9ac8664e18 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2133,8 +2133,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 					     NULL);
- 	}
+ 
+@@ -1097,14 +1095,12 @@ static int multi_pack_index_expire(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	child.git_cmd = 1;
++	child.git_cmd = child.close_object_store = 1;
+ 	strvec_pushl(&child.args, "multi-pack-index", "expire", NULL);
+ 
+ 	if (opts->quiet)
+ 		strvec_push(&child.args, "--no-progress");
  
 -	close_object_store(the_repository->objects);
 -
- 	if (enable_auto_gc)
- 		run_auto_maintenance(verbosity < 0);
+ 	if (run_command(&child))
+ 		return error(_("'git multi-pack-index expire' failed"));
  
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 22f23990b37..e4994e369af 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -469,7 +469,6 @@ static void finish(struct commit *head_commit,
- 			 * We ignore errors in 'gc --auto', since the
- 			 * user should see them.
- 			 */
--			close_object_store(the_repository->objects);
- 			run_auto_maintenance(verbosity < 0);
- 		}
- 	}
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 33e09619005..ba09ebb9e66 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -740,7 +740,6 @@ static int finish_rebase(struct rebase_options *opts)
- 	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
- 	unlink(git_path_auto_merge(the_repository));
- 	apply_autostash(state_dir_path("autostash", opts));
+@@ -1155,7 +1151,7 @@ static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+-	child.git_cmd = 1;
++	child.git_cmd = child.close_object_store = 1;
+ 	strvec_pushl(&child.args, "multi-pack-index", "repack", NULL);
+ 
+ 	if (opts->quiet)
+@@ -1164,8 +1160,6 @@ static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+ 	strvec_pushf(&child.args, "--batch-size=%"PRIuMAX,
+ 				  (uintmax_t)get_auto_pack_size());
+ 
 -	close_object_store(the_repository->objects);
- 	/*
- 	 * We ignore errors in 'git maintenance run --auto', since the
- 	 * user should see them.
-diff --git a/run-command.c b/run-command.c
-index e2dc6243774..229bdff9971 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1891,6 +1891,7 @@ int run_auto_maintenance(int quiet)
- 		return 0;
+-
+ 	if (run_command(&child))
+ 		return error(_("'git multi-pack-index repack' failed"));
  
- 	maint.git_cmd = 1;
-+	maint.close_object_store = 1;
- 	strvec_pushl(&maint.args, "maintenance", "run", "--auto", NULL);
- 	strvec_push(&maint.args, quiet ? "--quiet" : "--no-quiet");
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d9f0156d969..751372041c2 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -578,7 +578,7 @@ static int run_fetch(const char *repo, const char **refspecs)
+ 		strvec_pushv(&args, refspecs);
+ 	} else if (*refspecs)
+ 		BUG("refspecs without repo?");
+-	ret = run_command_v_opt(args.v, RUN_GIT_CMD);
++	ret = run_command_v_opt(args.v, RUN_GIT_CMD | RUN_CLOSE_OBJECT_STORE);
+ 	strvec_clear(&args);
+ 	return ret;
+ }
+@@ -999,7 +999,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			oidclr(&rebase_fork_point);
+ 	}
  
+-	close_object_store(the_repository->objects);
+ 	if (run_fetch(repo, refspecs))
+ 		return 1;
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 2d1f97e1ca7..9d5e0e3d11c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -2580,10 +2580,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 			proc.no_stdin = 1;
+ 			proc.stdout_to_stderr = 1;
+ 			proc.err = use_sideband ? -1 : 0;
+-			proc.git_cmd = 1;
++			proc.git_cmd = proc.close_object_store = 1;
+ 			proc.argv = argv_gc_auto;
+ 
+-			close_object_store(the_repository->objects);
+ 			if (!start_command(&proc)) {
+ 				if (use_sideband)
+ 					copy_to_sideband(proc.err, -1, NULL);
 -- 
 gitgitgadget
-
