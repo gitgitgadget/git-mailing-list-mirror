@@ -2,105 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D13C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 10:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 209F9C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 10:24:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 439726113E
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 10:23:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02498610A3
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 10:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233648AbhIIKYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 06:24:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbhIIKYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 06:24:18 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19AD7C061575
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 03:23:09 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id x11so2619324ejv.0
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 03:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=5J4FhOYb4udJ6PXal4gWl7+ajlXWhLMVc3tpq1bPCzk=;
-        b=iZY3fxskF4qbFP+AY9uV5BWR8lJ2NbVEi5TW4EaK36n+npuSophsj19mLM8cFz0yJ/
-         9MRJgsXnOW+3rja9XD2rH7OOWcV3aAt716oK4/fGoXCewNbWrPW1CsG23D3rFsnLQARd
-         wljGkGEkb+c8WBbBOb2hNRbTGebkHGGfkERq7AwOmwOtv+QQzGnehAvT5h5LMzNTHdjN
-         TCKkexR+R9pl3Ydf/1/lDhpxW3A3JbVky+IWASVJEozxAR18PZbyaVdE3KIuWVGfszHB
-         V6dGi2xlSsO8yRQzigAph/wXtlRV69ztrgTVAIY1GKLBIQ6YlzkUplDRs6bWOQrtW485
-         X8Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=5J4FhOYb4udJ6PXal4gWl7+ajlXWhLMVc3tpq1bPCzk=;
-        b=mnWHk8+y6MAUtKxvlGqRz75bkcgM6eDvEJTkX2levSxEhUH7on5pBk0rowr5aCQkXL
-         rn1hWkIyfR6yFcwG9+pHVS0xwXoDz2RIoftHmit4hzUzFxg7jm3jQ+TVoNybAc/Pvkel
-         plWYLLwljUWWt2D5dUyLaKGua2e+r0X3w8wmoQzm5H2heka8wS5MLjRcWOuryyWBjM5t
-         ZTKJj4r1/jr0DTuyHLSNtt8VHA5S6Cp9I33UAJ7OpA8wqNpM0klx0U3XGLnzOo3xR841
-         eB4Qk0UZBpLqie7ZVTK1XH5vdPWPsvSX+zdo+YV5bYZwCBOjkPcDWaIk/7fxvw9xPcsX
-         8m4g==
-X-Gm-Message-State: AOAM533byGDvhQYFV30A5PfqbzGS2LY4qrk1JdHOYTy2PZ0aBSFsiKvw
-        4rHcGqi7gWwFPAeQF3nGNNxZGaGnPiwovw==
-X-Google-Smtp-Source: ABdhPJw2132dIRY3mUSvWcX0C4bscjPpXWbmTkC7oQAnlkokNynJ8vV6nut/31UIp2HWjZ+UwjmZJg==
-X-Received: by 2002:a17:906:7b54:: with SMTP id n20mr2498652ejo.525.1631182987473;
-        Thu, 09 Sep 2021 03:23:07 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id x13sm700371ejv.64.2021.09.09.03.23.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 03:23:06 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/15] [RFC] Upstreaming the Scalar command
-Date:   Thu, 09 Sep 2021 12:14:57 +0200
-References: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
- <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
-Message-ID: <87r1dydp4m.fsf@evledraar.gmail.com>
+        id S233605AbhIIKZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 06:25:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:44147 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229980AbhIIKZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 06:25:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631183049;
+        bh=qd0R+JcVGw1t18fxLM/Xoawl6nBkErzDSFWD0FCT0sA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=d/bRf4q6JI7gJbb4PQuXfIwOrtxsABM6mmM6nALZMFufbNbO6Q/dzHI9hn/XXtp7n
+         kneGyHwG+qaxJnij2ylJfIlxweUBhTbbT74/Fm1bfTMeNHlRJZifJ+RuwVtnVQcyuU
+         52P97WzX2h49HthPqqdyouubAw6yxofTeTz/hgNY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4JqV-1mO0F60HeD-000I0y; Thu, 09
+ Sep 2021 12:24:09 +0200
+Date:   Thu, 9 Sep 2021 12:24:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] gc: remove unused launchctl_get_uid() call
+In-Reply-To: <patch-1.1-93adb856b0c-20210909T012244Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109091222260.59@tvgsbejvaqbjf.bet>
+References: <b0d6bb0b07f29e68f5bcdf4c69d3d726d77882c0.1629819840.git.gitgitgadget@gmail.com> <patch-1.1-93adb856b0c-20210909T012244Z-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1400499668-1631183050=:59"
+X-Provags-ID: V03:K1:hAb0ig0khD9FzorAgN0hMuyBhoxdnMMdjT0UpULC89YefPHzXes
+ rFsaVAo21rpO317tlXt2g0Mx88yaFRLC2mZ+s0Owg8S8TxMqOVSzzgUsu5RJxZ2HP9d3L8e
+ ENZCPwrGWmFEDGkzEGLXG4KuBOrEw6N8dA9EK9fq9lNZhD4FFvDDdBKxN28NIC25RY6z5Pp
+ ON96G1mBRgG+60WrVNypw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8D26BjrqIrw=:2mxUWc6y0Z2t/eBbzNTQsI
+ sDqJpqjP3EbNyEsIEp6MYf7Gf86gDc23rj6guMVCU0p51PprJ/McYyk4NvG/4U4mNALeChcyx
+ Xv3Y7v3rrAA+DMdwIdwRB2FqNlRSysdC8u8v+ej9M5apEgKq+kkbySVK4LuxWEyL4ea0XytgY
+ RynKEULjerCIpYY/A+0mb6mCz1e79KeRkgmdWpbMwHaRU2POmse1IXFlB9cMD2zfa039QqYYX
+ zdqPRipWip3yql6Zel7B2zZ+uY4neAr61svPOkVZbICdBzxi0aF7Gqqkn6iBx2imrghExyZ/d
+ y1/wpGE9vsN1AYf2mPRLxYSPEYUbyqdttRw6GvE5xU0R1CAhhP+PUkgpniX3JFYLLQb0zCEGw
+ miQOI2Etp7ly51BxPUmGPC/gHkXLMTQw8iL+g96iPcnWS5qt+1FyQWwz0OZGzomk2jlPsTkCs
+ ErqLLNMA3mkmEkhq4nYDKsLvfU4/hBjYj9bekA4/RstJ/EGI4d6ZtXc/hUmcpGoh7QSqsaTEv
+ YvTG4Gl3bpyZ3Ux2spEkBHBidk0aopwyrC957y+YevcTLLrRAIZDB9VOaMJegZwIdXxEWdCfy
+ DA7RqA9B9qmfQFHCHKbSUCcpnP6vJIbjHFMF3r+30vbCzUv+zLcclX1auJ42BYQNBPiYQyGar
+ 5uBmMvbtP0sMG1UskAcY6NXBnkoUBPKswGgz0tq7euP9c+43zNT1LOJddPXLwqSTDVwqbLcPX
+ dmVV8iXm/1BqAvvhyQbIPC6MHXia9M00Dq3f3ubNGT/K5GG87Vz94Brga1m28DhWK9D6/cgif
+ qEqXrlRU2UYRp5YXCECF5kxtYsV+bI2/kZp6eswjAi0CuW1ssGsy1TluI3hD6ck1TdDbMDurV
+ LB31SQX5pO858o78BuqH0tQEJ8T5jvGp/LBvP3GbuFU7OLzvOjEwX/rFTX86DXZT+LHvEQm29
+ X08UT/g/JRymg6v/thOOt3xGsfXfsPawzfnUdP6btiE/qQ1zNu4dwcgTbgrbWdqq42K+tVvbn
+ j00zI+ybUBnFHyFLPsgYZ4oIe9iJl7JYww6Vt15zpG/DEPUfXeqleBvuLJe7LTe05qII/kfBT
+ z84RvnXHEEa3IY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Sep 08 2021, Johannes Schindelin via GitGitGadget wrote:
+--8323328-1400499668-1631183050=:59
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Changes since v2:
+Hi =C3=86var,
+
+On Thu, 9 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> When the launchctl_boot_plist() function was added in
+> a16eb6b1ff3 (maintenance: skip bootout/bootstrap when plist is
+> registered, 2021-08-24), an unused call to launchctl_get_uid() was
+> added along with it. That call appears to have been copy/pasted from
+> launchctl_boot_plist().
 >
->  * Adjusted the description of the list command in the manual page , as
->    suggested by Bagas.
->  * Addressed two style nits in cmd_run().
->  * The documentation of git reconfigure -a was improved.
->
-> Changes since v1:
->
->  * A couple typos were fixed
->  * The code parsing the output of ls-remote was made more readable
->  * The indentation used in scalar.txt now consistently uses tabs
->  * We no longer hard-code core.bare = false when registering with Scalar
+> Since we can remove that, we can also get rid of the "result"
+> variable, whose only purpose was allow for the free() between its
+> assignment and the return. That pattern also appears to have been
+> copy/pasted from launchctl_boot_plist().
 
-In the summary I had on v1->v2 points 1-3 are for v2->v3, respectively,
-outstanding, addressed, outstanding:
+I don't find the most crucial information in that commit message: what is
+the fall-out of the removal of this call?
 
-    https://lore.kernel.org/git/877dfupl7o.fsf@evledraar.gmail.com/
+Such an analysis (_with_ a summary of it in the commit message) is
+definitely required. And it should not be left as an exercise for the
+reader.
 
-In addition the discussion ending here:
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109082112270.55@tvgsbejvaqbjf.bet/
+Ciao,
+Johannes
 
-For that point: I think it's fair enough not to properly handle the
-cleanup case in "scalar clone", but perhaps add a note in the commit
-message that unlike "git clone" this is known not to clean after itself
-properly on ctrl+c?
+--8323328-1400499668-1631183050=:59--
