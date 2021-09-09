@@ -2,144 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E63B5C433FE
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 22:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6CB6C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 22:58:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C99DF610FF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 22:57:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95F09611AD
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 22:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347719AbhIIW7J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 18:59:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43402 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347053AbhIIW7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 18:59:08 -0400
-Received: (qmail 1242 invoked by uid 109); 9 Sep 2021 22:57:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Sep 2021 22:57:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17819 invoked by uid 111); 9 Sep 2021 22:57:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Sep 2021 18:57:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Sep 2021 18:57:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Max Kirillov <max@max630.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t5562: use alarm() to interrupt timed child-wait
-Message-ID: <YTqRdU1Tgn/HVhdA@coredump.intra.peff.net>
+        id S1348027AbhIIW7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 18:59:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64965 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346669AbhIIW7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 18:59:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1CE41157089;
+        Thu,  9 Sep 2021 18:58:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Ic/1k2hwa+sQ
+        wgCsl+Bi0qGU8b4vGpzUnduJhJcpO0E=; b=HQZrFQpgBxWOXTtEK9V7X3u+nZBS
+        DOLUIiZMe0LzIFoih7sn8HGCSAoHE7czjD3tEfFPvaLxTrlkgItCRvlPF44LxxN2
+        u84jZGQMu+GKSYdMmUu9y5ENB0RbjMQ5eOPsk6IHGe3Px3/dQNyhEE0xknnVf3r8
+        VDpbHFQgYQhyqXs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1533D157088;
+        Thu,  9 Sep 2021 18:58:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 602D0157087;
+        Thu,  9 Sep 2021 18:58:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH 1/5] http: drop support for curl < 7.18.0 (again)
+References: <cover-v4-0.5-00000000000-20210730T175650Z-avarab@gmail.com>
+        <cover-0.5-00000000000-20210908T152807Z-avarab@gmail.com>
+        <patch-1.5-3ffa2f491dd-20210908T152807Z-avarab@gmail.com>
+Date:   Thu, 09 Sep 2021 15:58:39 -0700
+In-Reply-To: <patch-1.5-3ffa2f491dd-20210908T152807Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 8 Sep
+ 2021 17:31:52 +0200")
+Message-ID: <xmqq35qdxso0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: 79F47E2A-11C1-11EC-91C7-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The t5562 script occasionally takes 60 extra seconds to complete due to
-a race condition in the invoke-with-content-length.pl helper.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-The way it's supposed to work is this:
+> In 644de29e220 (http: drop support for curl < 7.19.4, 2021-07-30) we
+> dropped support for curl < 7.19.4, so we can drop support for this
+> non-obvious dependency on curl < 7.18.0.
 
-  - we set up a SIGCLD handler
-
-  - we kick off http-backend and write to it with a set content-length,
-    but _don't_ close the pipe
-
-  - we sleep for 60 seconds, assuming that SIGCLD from http-backend
-    finishing will interrupt us
-
-  - after the sleep finishes (whetherby 60 seconds or because it was
-    interrupted by the signal), we check a flag to see if our SIGCLD
-    handler was called. If not, then we complain.
-
-This usually completes immediately, because the signal interrupts our
-sleep. But very occasionally the child process dies _before_ we hit the
-sleep, so we don't realize it. The test still completes successfully
-(because our $exited flag is set), but it takes an extra 60 seconds.
-
-There's no way to check the flag and sleep atomically. So the best we
-can do with this approach is to sleep in smaller chunks (say, 1 second)
-and check the flag incrementally. Then we waste a maximum of 1 second if
-we lose the race. This was proposed in:
-
-  https://lore.kernel.org/git/20190218205028.32486-1-max@max630.net/
-
-and it does work. But we can do better.
-
-Instead of blocking on sleep and waiting for the child signal to
-interrupt us, we can block on the child exiting and set an alarm signal
-to trigger the timeout.
-
-This lets us exit the script immediately when the child behaves (with no
-race possible), and wait a maximum of 60 seconds when it doesn't.
-
-Note one small subtlety: perl is very willing to restart the waitpid()
-call after the alarm is delivered, even if we've thrown an exception via
-die. "perldoc -f alarm" claims you can get around this with an eval/die
-combo (and even has some example code), but it doesn't seem to work for
-me with waitpid(); instead, we continue waiting until the child exits.
-
-So instead, we'll instruct the child process to exit in the alarm
-handler itself. In the original code this was done by calling
-close($out). That would continue to work, since our child is always
-http-backend, which should exit when its stdin closes. But we can be
-even more robust against a hung or confused child by sending a KILL
-signal, which should terminate it immediately.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-This was discussed recently in:
-
-  https://lore.kernel.org/git/YRretXfEfiVujSeO@coredump.intra.peff.net/
-
-I had planned to resurrect Max's patch (linked above), but came up with
-this better solution.
-
- t/t5562/invoke-with-content-length.pl | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/t/t5562/invoke-with-content-length.pl b/t/t5562/invoke-with-content-length.pl
-index 0943474af2..718dd9b49d 100644
---- a/t/t5562/invoke-with-content-length.pl
-+++ b/t/t5562/invoke-with-content-length.pl
-@@ -13,11 +13,6 @@
- defined read($body_fh, $body_data, $body_size) or die "Cannot read $body_filename: $!";
- close($body_fh);
- 
--my $exited = 0;
--$SIG{"CHLD"} = sub {
--        $exited = 1;
--};
--
- # write data
- my $pid = open(my $out, "|-", @command);
- {
-@@ -29,8 +24,13 @@
- }
- print $out $body_data or die "Cannot write data: $!";
- 
--sleep 60; # is interrupted by SIGCHLD
--if (!$exited) {
--        close($out);
-+$SIG{ALRM} = sub {
-+        kill 'KILL', $pid;
-         die "Command did not exit after reading whole body";
-+};
-+alarm 60;
-+
-+my $ret = waitpid($pid, 0);
-+if ($ret != $pid) {
-+        die "confusing return from waitpid: $ret";
- }
--- 
-2.33.0.731.g46856368d1
+Will queue; this one is obviously correct.
