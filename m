@@ -8,86 +8,97 @@ X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84185C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 21:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAD31C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 21:50:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E74061131
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 21:46:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFCF3611B0
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 21:50:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347460AbhIIVrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 17:47:09 -0400
-Received: from mout.web.de ([212.227.15.3]:37249 "EHLO mout.web.de"
+        id S1346952AbhIIVvs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 17:51:48 -0400
+Received: from mout.web.de ([212.227.15.14]:32931 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1345868AbhIIVrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 17:47:08 -0400
+        id S232371AbhIIVvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 17:51:47 -0400
+X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Sep 2021 17:51:47 EDT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631223952;
-        bh=rxwjtceI1+GesFKUTJQs9ZyuEh6Yz+MNNUAPNry9E/U=;
+        s=dbaedf251592; t=1631224236;
+        bh=uZGBxqA9UdWCYvTqNC0mLipS2JMCyS73ycBMUkmYYzc=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=dNw+Npwg/NKwyQiTE1iZQ4Rq5Vlsrc7P6no0PHah8+Zd0BWsIpMi0sQ3cg0VSanqC
-         5QMNSVUcO+MMAwhs3sdRZocx7w0TuA6p1WSVvX6rSGeN1DyEUtXoGuKPn7xdu7FklK
-         Zog8EAhFgA+Y62fU95mUKEbKjyShS6NtZBCvOARQ=
+        b=G0Gks0Y7NhzqOkW38RH7B3eTsgFV/jAtRsHWD/Jy7Q49lDDUdJJb0YREO/edzgATc
+         IZ3hufkFoK1iy2WZtod7H7beNyfrRjLsKRv94iqhoffzWljoP0AfTcqAr0Rz8ttkoC
+         goiY6SjQRycoflveqpxl9Mw0fMoVQkZVMlrLEK/I=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0M7sga-1nAnGR3YDw-00vS4R; Thu, 09 Sep 2021 23:45:51 +0200
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0LuqfJ-1n6gg70g9B-0108pm; Thu, 09 Sep 2021 23:45:30 +0200
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] refs/files-backend: remove unused open mode parameter
-Message-ID: <ea424e3d-6269-f50d-1a4a-643bb95cfa12@web.de>
-Date:   Thu, 9 Sep 2021 23:45:51 +0200
+Subject: [PATCH] setup: use xopen and xdup in sanitize_stdfds
+Message-ID: <2431d9cf-a2ed-ba4e-f7e5-a8427d9f9860@web.de>
+Date:   Thu, 9 Sep 2021 23:45:29 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4ETcY3kD7Lzd4CpZkGHsGwv38TCFaOAnzPFHNnLvg2FhS0MO504
- //jWT0O0w2+GJk0TQhF9C6fm7pqtMg5WIvBmB0jKCNrJPKqKWRETYXBjeymD+a0wJ9kn//r
- UeSeg4kaH5JwRk6SRrz7m656yEAf8kiiH+o55WhRwO+9AksoFllsILiRknxXpQTUI2lUgQE
- WLgiiNaqbqYKg6UVDniOA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d0L/yfgygow=:zXPzWrh1kGmehQUKmiqwQk
- +QVwF4QRx9p+R0hKH2l64eGrZtZdrw8CZx147fGGvoTeIy8SaVL+XhHaI2qyDYtXKxwLxFoj5
- V1DFSIkt/egIxvg97ar3HA6k5DqmEGMCWgE3P+1hAsDARrUPf85Ch4dyiCXl02pPjte39p/T0
- P2v3dBNEgYvW/JYoIWOJ8cKDyounub/coi011/OpUWixg6ZeSLCSU17PHQjShpKO1bB3OVzh7
- lJK02ZYsBt7AfJrG8BBn4kJgbuwcFF6AzP8sa/txwutkH76s8EGvDxJEU1IlDLs/+1DfoXL2Q
- /9ltzzF7sXlyFmzAV8s0aHqOylGZtYCj/oy7oCT9hJpLDUsudC8Pu+BUqirIfSebyMYuauVIK
- 06uz1XzGn2xqRh1Q2YznjvDzUO6w/pKBU/AzjA+/Py6fb/JtAZbGnf5utfokm6aarnn7FInfs
- tv6RuEbWTOFRrxAoh6FsO5q8LPoNLnV29yoTh15yXCxcVspYLP/aQUbcROaHooe/8x8orOZ8D
- PTINRTunVd/3ez7W5rTHzB5WIhjf1j29aftUcqQU/6IefwMKytyVLQCWUSdzV1feKNaPTG25o
- Jd/UQXy5rIjJZffrSqsN90e3Z2Gbf73kd88s5Jlc/hB802Q7jhYJgKGDqwwbl0tb3Leud8zE7
- 9lTZjwr+fuP1DWgY0QFz0rzP/s6Tb90aefm5CTTb04E1pLEZ2fPulNRrAfwp2y8qt4mCZ3Hd9
- hcrDgko5cbjrZaeVxYd5/dMz9xaIy/0DK1MvdCjmbjxtXLjo8i9PYvMBTHwxtSI6wXh9qZ8jO
- snsBg09Jl4kmf1gQbAJlWu2tMOupqn1VbeWeyREiPmauYXgghGWINscWTLCcy+r2mqqtNXrHi
- W+idHQkUF2OGiYHTCoc8A6R8qsN1Y8l4Hv7fn7Tt25zaE7kGfdFhEAhTamCXMUrq3dgcBanDg
- /tAj3hit/QEpqdj60LpsGkaNVtQ4WlYoHXciRYzVEU4KuoXELhd36KQENsbydRf4SmtYHceL8
- vNeimSEhGP6ots5tsippfbA11sBYgdwoVB1uyfbzBR03IGm89NEAvz4E7L4tf+CHIQ==
+X-Provags-ID: V03:K1:oc1B1NRCVtjGJ1fHM0De/Xm/dMCT/wiSOaD5Y6Dazu4OSJOL4+L
+ /THZ1c9sQCosoY127xgr9i5tlCUlorJ7b8OPd4fcxU2VpKadECnvz4DLWgiw2aEjvvoWhVG
+ r1ETOgyGshekNOz1O7J9hMDKSej5srknKMLTpniCDnths8mZKUDw+l1SZi1DEE4xSYO/05Q
+ f/fyAvlD8oDiKu4qOqJkg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:616DxjA+34Q=:eWXVEsdbX/i8VS+qbCp8kD
+ AWbXSXYelpfs/MEwqtBvA1HTjFRAB8+mTCu4NiFfCe3clpq1krnQj0p/nev9lVYtHYpwOuQr4
+ aht+LpNM9twLeEOdIRhn/gTROWJ7s2IQRxzGvwZxBmkCRvDJKHCUDnNR7mLu1Pgk27tIn4q1X
+ Ah0T97IsnphnORbjZsvMwYmHCt3V+yc0cwHIwTOZMKpjN3gqTsa8aLB7Dr0/10NswMKrdRewM
+ F9tIKvLIo1VmqNTdyPcJ3TCXvQ/X+FBCcYoukrHbKyCKnb03SbLcvp1kirBnJcIvn/Epc+Ap0
+ KGA4+ywoEP3awPW5Ew0E7hFlY5H5Ks8x+Cl5aFwacJ1KLkiAhk2/2KUve8HP28ApX7z2a+QI2
+ F9jpSCl4XLcppP9T5lTOYQuZdzQYz5lEg7yYoY3UcTdCu6ZhQkv6qE9OstFkEz69PESdSg+5w
+ i2DAPyv5KonGPGTJzCWwFwP7xA2Ebm9XraMjR/0JHWHdU8oE10FR9ln4+2HNFWXaaBmMMn/8c
+ rlChuvbghnTNT944iyXK7omf0xXZEEdrC+mEIEWWHJH5Cl0nWGWiV+OWRoMVGpAkP/UeWjq9o
+ cqL9RIxqbMYWHG/Y3wfpY+XOJEt7aYs9N1O2ykk7ac/fJ2vq/zpjwoIGlEXXZxEwp4e2tVCzF
+ Yt55USST7YmkViJ6nZElV7VLQ9Q0iZssaztAlIW/kCixqe99wTKG/3Rfx4ICbNYWeeQHaTdfw
+ vxBpKy0z7Q5kYPUaCwV0pTFz+qq6OczGzwQnMSm2c6eiZhgEIYTLj6W4gC0wEVtaWifr6u4Up
+ KVf0QCeL3NbHlj3FhDHwoDqbsFNeMpcHlZdeQZ4pshIcJJnGMMYYfHghhJ3k9Gqkq+G3ERk7r
+ KL8fqx6sqc0ydFt/zRmRUjsCCzjwNsJiPJu6+g7l9uyQqwPg90Mb80d+OxoaJ7m9nu/5iqOFt
+ VaJqWk3hRaSk/GtJ6IYivvAYfaV1Z3mtwQhapdyfXzdtewfAcbloU0SO9de7o6HtHAWbllDRU
+ 8y75lSk/8J1kc+Kz3Km+Fal2+2kwDcR8b6LIulTEED5c3ys3I+rgeKsP8AmDWP0sDg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We only need to provide a mode if we are willing to let open(2) create
-the file, which is not the case here, so drop the unnecessary parameter.
+Replace the catch-all error message with specific ones for opening and
+duplicating by calling the wrappers xopen and xdup.  The code becomes
+easier to follow when error handling is reduced to two letters.
+
+Remove the unnecessary mode parameter while at it -- we expect /dev/null
+to already exist.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- refs/files-backend.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ setup.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 677b7e4cdd..74c0385873 100644
-=2D-- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1569,7 +1569,7 @@ static int log_ref_setup(struct files_ref_store *ref=
-s,
- 			goto error;
- 		}
- 	} else {
--		*logfd =3D open(logfile, O_APPEND | O_WRONLY, 0666);
-+		*logfd =3D open(logfile, O_APPEND | O_WRONLY);
- 		if (*logfd < 0) {
- 			if (errno =3D=3D ENOENT || errno =3D=3D EISDIR) {
- 				/*
+diff --git a/setup.c b/setup.c
+index eb9367ca5c..347d7181ae 100644
+=2D-- a/setup.c
++++ b/setup.c
+@@ -1423,11 +1423,9 @@ const char *resolve_gitdir_gently(const char *suspe=
+ct, int *return_error_code)
+ /* if any standard file descriptor is missing open it to /dev/null */
+ void sanitize_stdfds(void)
+ {
+-	int fd =3D open("/dev/null", O_RDWR, 0);
+-	while (fd !=3D -1 && fd < 2)
+-		fd =3D dup(fd);
+-	if (fd =3D=3D -1)
+-		die_errno(_("open /dev/null or dup failed"));
++	int fd =3D xopen("/dev/null", O_RDWR);
++	while (fd < 2)
++		fd =3D xdup(fd);
+ 	if (fd > 2)
+ 		close(fd);
+ }
 =2D-
 2.33.0
