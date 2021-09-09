@@ -2,121 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD67BC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA0CC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:46:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90AAD61242
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:43:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C224610FF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:46:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344234AbhIIOpB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 10:45:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47206 "EHLO
+        id S245432AbhIIOrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 10:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242950AbhIIOov (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:44:51 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3DE3C03402D
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 07:23:53 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id x10-20020a056830408a00b004f26cead745so2669582ott.10
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 07:23:53 -0700 (PDT)
+        with ESMTP id S237100AbhIIOrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 10:47:31 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6093FC04E218
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 07:37:09 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id b7so2579438iob.4
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 07:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7rATKVkf07nG+rTT8IoM7IH1Wjb3ebLiJSfF+KJG+aI=;
-        b=aB8uUU4wutbLfMYccprleO5Pj/SaXUwnObWnDfyinvrf/GtjOawv+WQjHzQsemnB5T
-         OPZSQmZEq3wRuOsOLp5Os248uOTVPX1wgngER4Alov5qDGix0JZEJuVHHPiD0L0IvIar
-         HgNEoQRWeYrGkXbiVLS2Nlf+FR9CrQp+SUDUyOkxZ5W+iYAGZpTPPRIRwAmuPRJSa+xC
-         f4G4oOBoeGtMXF1G0fu5Fnlw+1nFzqunEMtqWZOeRFwbRwnlqj4YaRRzF+EGaUNVdlDF
-         UykSqV+pz+JPzr4MF5xfiIF8DuW1wk0yTP25KuoE707t6aD2qBWjqgrNG1P9EZIsNpMC
-         l4lg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=lmzsWYym1W4zc6Yza5PZE+VEPPgpvYDvA2uRgdoVI+w=;
+        b=rUpEBMktMqpo+OSiOZzqBW4v/tObGBpfDJSC1qH4ZJeglaMtThqpJ8qhmu+W7ycmA0
+         v8XA1e1FjgO6gFx7laGL/gOf6Y0ik46+0HydqXERaOtJceHVuL8AJ0ZPV0f+eVH6mt4h
+         QwZwaXhgchPK50rTCK046yj2epK39EQPLSgVwixppUu+liinqwtonfmCsnoh8m6d46NA
+         yQ89exgVHrRb0T1SDbxjW3RMqXV3q3CcPIYrj1XgFkmMwr2eQbYtsEoq4uLZl6p0ZnFJ
+         nqRC+aL4ZFJsNV+zGhBu8eCZU87Pj7tbL0d3kM+usAGkgPl2foup5UD1b2dMPs2YL2OQ
+         MRzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7rATKVkf07nG+rTT8IoM7IH1Wjb3ebLiJSfF+KJG+aI=;
-        b=tN0he7syNxgCac8ijaE4gZDFDwv6fFZVKKYhYHVQDCN/IUnl75C/wfk24JwqWiHf+K
-         vtOBO8nxkjeH73Pz8PmI7wssVYgwGi0RKPqPW8BmLrIl+wXbSzR8gl5KJrQ+tCvr5c3q
-         s6fa6N++6hA9NNmJnneFFhpvBYihlH5pLt1vSN2JmxxeJ1Eq4URcCiWi90x5RfOtgZha
-         ZNhuyk1xFvmZVkRh332ok5MPtObOJwGcILYNB8EntQooNQr1IqanV3yjJCk9yiJ2pFm6
-         dvic8uYPm6gi/VdS6Sug+pB4aQsBcMvBYzAvmAxD+u7aMbE+Q51sSj4L/+tx6DkPcaPf
-         a5sA==
-X-Gm-Message-State: AOAM532n5bD82NLDJ/LqlWB2Ca8vVegEf2NGx7Yb7sQiE1eLuZCDC+5r
-        3XRrAka5n0j5GiTjsZzyYvZSzvNgNLp/PCiHBKg=
-X-Google-Smtp-Source: ABdhPJzz0CGSl8a5pbbvH6LT/AcAvAFMq5wVI7/Xc7rVDqhASCg3UrDUlZ0/rQVoSAtRrbTtDf22V7OFQK2ZDB24zFI=
-X-Received: by 2002:a05:6830:2b24:: with SMTP id l36mr87782otv.25.1631197432926;
- Thu, 09 Sep 2021 07:23:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=lmzsWYym1W4zc6Yza5PZE+VEPPgpvYDvA2uRgdoVI+w=;
+        b=IfeR0dOii/4zpqEcFz500Pln2qBbAWN404Rjs/+m5BpetaMazy6wylwR2PuBUhN1Zj
+         ChdZdyNU60WmsR8NLwQFtDreXJHALRkxeQVm/r7V1yt0YHHYW0DQmYIiAcdfBbnAcGpp
+         XBsIeoeJg0/CmyxGNbOIy5enZqT+YMV8s//NdbnUlWWOjB2R+hOwJcC60zse602duJjz
+         5Jy2sEpOQTBFRvVPGvt8K4Kk/HtqvEr9SXWeP4Zznryz0vz7GCSZYj1Cgp8q4uG3dj5x
+         TzvtN1a75eCYTbqXXHnacMP4KhE4PwRsFQuSncAyg22Waf/1WyKJZ5O0mpVb1RzDQeIS
+         zWfA==
+X-Gm-Message-State: AOAM5336Y/77K7xBDJ1ch8FgoyOkKM8X3Fggwpjy7BL2/P5ScaKh9cA1
+        /FN2Z9G92AHpJPFRMxjg9VtniOsuYU/9THyu
+X-Google-Smtp-Source: ABdhPJxJsKORswCTn3sjZIC0gcwVIdsZ35M+SRpga106zBkNffiJrU6iq2xnW8fNWjv7HHhbW9bMBg==
+X-Received: by 2002:a05:6602:1503:: with SMTP id g3mr2929707iow.25.1631198228837;
+        Thu, 09 Sep 2021 07:37:08 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d8sm942720ilv.55.2021.09.09.07.37.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Sep 2021 07:37:08 -0700 (PDT)
+Date:   Thu, 9 Sep 2021 10:37:07 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 4/9] pack-write.c: rename `.idx` files after `*.rev`
+Message-ID: <YTocEy7PZqL6nvuY@nand.local>
+References: <cover.1630461918.git.me@ttaylorr.com>
+ <cover.1631157880.git.me@ttaylorr.com>
+ <0fb2c25f5ad8bfdccd653f760b1c4beeb05273e7.1631157880.git.me@ttaylorr.com>
+ <87h7eufaw5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <xmqqsfyf5b74.fsf@gitster.g> <d6721839-114a-3309-25aa-1926fa198bf7@gmail.com>
-In-Reply-To: <d6721839-114a-3309-25aa-1926fa198bf7@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Sep 2021 07:23:41 -0700
-Message-ID: <CABPp-BH1Zdh7esBKeUu9hr4tM9kO=dgpyDwCMnsJ=XGxpZ7RvQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #02; Wed, 8)
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h7eufaw5.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 8, 2021 at 2:57 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Thu, Sep 09, 2021 at 09:46:57AM +0200, Ævar Arnfjörð Bjarmason wrote:
 >
-> On 9/8/2021 11:38 AM, Junio C Hamano wrote:> * ds/sparse-index-ignored-files (2021-09-07) 10 commits
-> >  - sparse-checkout: clear tracked sparse dirs
-> >  - sparse-index: add SPARSE_INDEX_MEMORY_ONLY flag
-> >  - attr: be careful about sparse directories
-> >  - sparse-checkout: create helper methods
-> >  - sparse-index: use WRITE_TREE_MISSING_OK
-> >  - sparse-index: silently return when cache tree fails
-> >  - unpack-trees: fix nested sparse-dir search
-> >  - sparse-index: silently return when not using cone-mode patterns
-> >  - t7519: rewrite sparse index test
-> >  - Merge branch 'ds/add-with-sparse-index' into ds/sparse-index-ignored-files
-> >  (this branch is used by sg/test-split-index-fix.)
+> On Wed, Sep 08 2021, Taylor Blau wrote:
+>
+> > [...]
 > >
-> >  In cone mode, the sparse-index codepath learned to remove ignored
-> >  files (like build artifacts) outside the sparse cone, allowing the
-> >  entire directory outside the sparse cone to be removed, which is
-> >  especially useful when the sparse patterns change.
-> >
-> >  Will merge to 'next'?
+> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 >
-> I think this one is ready to go. Elijah chimed in on the latest
-> version, too.
+> git commit --amend --signed-off-by-harder ? :)
 
-Yep, looks good to me.
+I don't think so, though I had to check myself before sending.
+Documentation/SubmittingPatches says:
 
-> This also means that perhaps we could start tracking the sparse
-> index integrations with merge, rebase, cherry-pick, and revert [1]?
-> This series has also had quite a bit of review, but the latest
-> version has not had an ack.
->
-> [1] https://lore.kernel.org/git/pull.1019.v3.git.1631100241.gitgitgadget@gmail.com
+    Notice that you can place your own `Signed-off-by` trailer when
+    forwarding somebody else's patch with the above rules for
+    D-C-O.  Indeed you are encouraged to do so.  Do not forget to
+    place an in-body "From: " line at the beginning to properly attribute
+    the change to its true author (see (2) above).
 
-v2 was already nearly ready to go, with just some very minor comments
-and questions.  Your email responses to individual patches explained
-most of the remaining bits, leaving just the typo, which you corrected
-in v3.  So, I went ahead and put my Reviewed-by on it.
+Here it's awkward because you modified my original patch and then I sent
+your modified result out. But I think the s-o-b chain still makes sense:
+I wrote the original patch, and signed it off. Then you modified it,
+signing that off. Finally, I sent it to the list, signing off on your
+modification.
 
-If this series had been picked up by Junio and listed in the "What's
-cooking" email, I'd suggest it was also ready for next.
+> I.e. the duplicate header entry can go, maybe something Junio will fix
+> up while queuing...
 
-> I also plan to send a new version of the --sparse RFC [2], which
-> is based on [1]. I don't want to get too far ahead of what the
-> community has capacity to review.
->
-> [2] https://lore.kernel.org/git/pull.1018.git.1629842085.gitgitgadget@gmail.com/
+If I misread SubmittingPatches then I'm happy to fix it myself, but this
+was the intended outcome.
 
-Sorry for not responding.  I found a simple typo but wanted to have
-something more to say than just that.  I was happy with what looked
-like the high level direction, and then noticed that Matheus was
-giving you lots of good comments and he understood some of the details
-better than me.  I'll try to find some time to review when you send
-the re-roll.
+Thanks,
+Taylor
