@@ -2,176 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 044C3C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 08:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A690C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:09:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D24C460FC0
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 08:34:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25FCE61041
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 09:09:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231634AbhIIIfP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 04:35:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
+        id S231892AbhIIJLH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 05:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230250AbhIIIfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 04:35:14 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107F3C061575
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 01:34:05 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id bt14so2000265ejb.3
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 01:34:04 -0700 (PDT)
+        with ESMTP id S230379AbhIIJLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 05:11:02 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A976BC061575
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 02:09:53 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id f65so1214772pfb.10
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 02:09:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=BHU8lk2ic2sv/nLAy/CSkpkatY1rTX4S3uz/l0gFHQU=;
-        b=B7YhBvd7fgnBWRJaPvWzHHK9h35TK6Q5090URgFE4Rgxzg/SqA6F+qhDyxS9l3VP93
-         Oh0zsElPaLdkzVwIkTSGf+RkzOI8NuszCUSY65yQgcE1rH9V/qA34XBpXvBUnYxLX3fW
-         I0PpNgIXr/T4OTazsh7vZD6IvItJYjyuoY86Im9cDXoyfNYTkgUS611cslXRNon/cY/e
-         BnT7wQND42qv6Xmo4YfM68S5UFX8t1uaA+eTStWeWR6Ncf/IG4/nSC2KSxedvx5GNBc2
-         u4y5bj7cwCtHbXQOSXaY+4fe4sAiRHX5pgejEgdaZqUnTUASxBveYbDO23VOs655Pr6l
-         TVsg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=w5qZzwjEu2koA6LcITVJV24m3AexX8hAfbqXcXFZDuM=;
+        b=MMFYjPNPIC1IbkALpxi2AFSd7FBMtz0N1NP/7SJiXwFxUblkUsZi7sDoy2KPEkULNe
+         FYB3yY7bjR/4jLVmAu317xbSryT5wQpp2nV38oC1e0cTr29WG9pfZJ9hvJFZctmp9z/Q
+         VtIBRSMxeb15SaPK8BngeLK0jLz3vyg7gLUAWSqRltpAguIvufJpH/DMYxHZ73cvP9vj
+         rLNgTTTheC6/epamUaMCovMXSgul/M1+v3uLkwGKdi0kSXAAVEZnHMm5enSqCkOz9gow
+         u1COlbwR3GO1K7KxL+m2/ZuGAE9rhUz/mrwxndPl7/1IJFiCUX9w/7FpwaQshysyxLNl
+         AaNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=BHU8lk2ic2sv/nLAy/CSkpkatY1rTX4S3uz/l0gFHQU=;
-        b=cI7sYLVMRlXqf+fx6qwf1hzZjfgZHPyB5VzF9hDx44Xvdph6eEOYFjA1Ok5DqL/6IC
-         /ImIb4yg3FYcFvah+tWrA1di7ICeO+alWKfuLUb+z+qDjBkBuz04CrwUBdfHEJuAZMYC
-         FOn0hOXrgYMCckSYUHNM+l8wiCw+XdA0eCqAMOdGIoyaOFMIRCNOxDiFEdjAzV9Q1yFJ
-         dAol9+Xd+U1lGWoPzWmDsGtrtIX1hSdetPqy+sjuwLiHEfaOaxgm532wK3amB+UDuST2
-         FQRwGiyqW21KKy4qbenoBfd1OwDHSxsvzYgswOdev2r7oJb78uxhUpYiZohmGozyVQj7
-         eEFw==
-X-Gm-Message-State: AOAM532EIxjhLrAVM7gv20yAUreW6il8MGZtPLlELipGXIp8eXC2CZ1P
-        qwoHa5ZzNqjyVUjTBbk8LLiFF1UIoPzhjA==
-X-Google-Smtp-Source: ABdhPJw7E7IZuI7TujFFSokaHMeCDx5WBYRFooyTW1BZ+mGwYxgCUNUs8TM9gvd7uKIdapVms5TVNQ==
-X-Received: by 2002:a17:906:3809:: with SMTP id v9mr2151793ejc.355.1631176443489;
-        Thu, 09 Sep 2021 01:34:03 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m12sm545861ejd.21.2021.09.09.01.34.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 01:34:03 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 3/4] midx.c: respect 'pack.writeBitmapHashcache' when
- writing bitmaps
-Date:   Thu, 09 Sep 2021 10:18:10 +0200
-References: <cover.1631049462.git.me@ttaylorr.com>
- <be8f47e13c612f2fbe4d5f4f49794529b9424664.1631049462.git.me@ttaylorr.com>
- <874kavkfjg.fsf@evledraar.gmail.com> <YTgfuAKJv1rXXm7i@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YTgfuAKJv1rXXm7i@nand.local>
-Message-ID: <87zgsmdu6d.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=w5qZzwjEu2koA6LcITVJV24m3AexX8hAfbqXcXFZDuM=;
+        b=EGi8QXykOpDnixDEmCgZEX2O+jihOnrGQjmwoYRQt9O6s4cHhANbP28gK8asPiQ/FJ
+         d8UuBRPIGCXyppdX+PGKEqrqPAEMeGySf5rMpBCpc98oN0uKG+n6bX1uMsCaB9FantKF
+         WkwvVxHvXF+Gbtm6eScX9UvEeVZmiN61P/zpyKQQg/P/wfec+wHo3rxxPowu+31OXPUZ
+         0c8jPKCjV0clRMogFqe4euz6+/2584WPGg4dOk9fT6RXPyFOgRMeX9cu1lC4hZ9s31H8
+         YFKaCfk/8qAKln9I5+JjNDQJhHj3us44PsQ/ewfSsP06epp/Lu3xW8YQ2+FPeSrfUCkG
+         yZkw==
+X-Gm-Message-State: AOAM532tobe/eMcF4enaZ8cAtlwGd8SRJmJW+jXDa+Zz0Bn/nC1Uumfa
+        rLO4x0mm97JcGHyIb19rAVPfsI3BA1I=
+X-Google-Smtp-Source: ABdhPJwTUCRsxcGxZmG29sBnAteM6wfdrLwiI/f5a+ROc8SGCc6BNhMeSqUD5k+frjK+5ClcoGEYBA==
+X-Received: by 2002:aa7:98ce:0:b0:40d:a02f:5a59 with SMTP id e14-20020aa798ce000000b0040da02f5a59mr2201001pfm.20.1631178592952;
+        Thu, 09 Sep 2021 02:09:52 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.108])
+        by smtp.gmail.com with ESMTPSA id g3sm1620908pgj.66.2021.09.09.02.09.51
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Sep 2021 02:09:52 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v5 0/1] ci: new github-action for git-l10n code review
+Date:   Thu,  9 Sep 2021 17:09:26 +0800
+Message-Id: <20210909090927.66336-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210902023139.89251-1-worldhello.net@gmail.com>
+References: <20210902023139.89251-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-On Tue, Sep 07 2021, Taylor Blau wrote:
+## Changes since v4
 
-> On Wed, Sep 08, 2021 at 03:40:19AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Tue, Sep 07 2021, Taylor Blau wrote:
->>
->> > +static int git_multi_pack_index_write_config(const char *var, const c=
-har *value,
->> > +					     void *cb)
->> > +{
->> > +	if (!strcmp(var, "pack.writebitmaphashcache")) {
->> > +		if (git_config_bool(var, value))
->> > +			opts.flags |=3D MIDX_WRITE_BITMAP_HASH_CACHE;
->> > +		else
->> > +			opts.flags &=3D ~MIDX_WRITE_BITMAP_HASH_CACHE;
->> > +	}
->> > +
->> > +	/*
->> > +	 * No need to fall-back to 'git_default_config', since this was alre=
-ady
->> > +	 * called in 'cmd_multi_pack_index()'.
->> > +	 */
->> > +	return 0;
->> > +}
->> > +
->> >  static int cmd_multi_pack_index_write(int argc, const char **argv)
->> >  {
->> >  	struct option *options;
->> > @@ -73,6 +90,10 @@ static int cmd_multi_pack_index_write(int argc, con=
-st char **argv)
->> >  		OPT_END(),
->> >  	};
->> >
->> > +	opts.flags |=3D MIDX_WRITE_BITMAP_HASH_CACHE;
->> > +
->> > +	git_config(git_multi_pack_index_write_config, NULL);
->> > +
->>
->> Since this is a write-only config option it would seem more logical to
->> just call git_config() once, and have a git_multip_pack_index_config,
->> which then would fall back on git_default_config, so we iterate it once,
->> and no need for a comment about the oddity.
->
-> Perhaps, but I'm not crazy about each sub-command having to call
-> git_config() itself when 'write' is the only one that actually has any
-> values to read.
->
-> FWIW, the commit-graph builtin does the same thing as is written here
-> (calling git_config() twice, once in cmd_commit_graph() with
-> git_default_config as the callback and again in cmd_commit_graph_write()
-> with git_commit_graph_write_config as the callback).
+* "git-po-helper check-commits" can work with bare repository now. So do not use
+  "actions/checkout@v2" to prepare workspace any more.
 
-I didn't notice your earlier d356d5debe5 (commit-graph: introduce
-'commitGraph.maxNewFilters', 2020-09-17). As an aside the test added in
-that commit seems to be broken or not testing that code change at all,
-if I comment out the git_config(git_commit_graph_write_config, &opts)
-it'll pass.
+* "git-po-helper learned how to fetch missing blobs in a batch. So do a blobless
+  partial clone.
 
-As a comment on this series I'd find 4/4 squashed into 3/4 easier to
-read, when I did a "git blame" and found d356d5debe5 I discovered the
-test right away, if and when this gets merged someone might do the same,
-but not find the test as easily (they'd probably then grep the config
-variable name and find it eventually...).
 
-More importantly, the same issue with the commit-graph test seems to be
-the case here, if I comment out the added config reading code it'll
-still pass, it seems to be testing something, but not that the config is
-being read.
+## range-diff v4...v5
 
-> So I'm not opposed to cleaning it up, but I'd rather be consistent with
-> the existing behavior. To be honest, I'm not at all convinced that
-> reading the config twice is a bottleneck here when compared to
-> generating a MIDX.
+1:  0067ccc ! 1:  1c43d6b ci: new github-action for git-l10n code review
+    @@ .github/workflows/l10n.yml (new)
+     +    permissions:
+     +      pull-requests: write
+     +    steps:
+    -+      - uses: actions/checkout@v2
+    -+        with:
+    -+          fetch-depth: '1'
+    -+      - name: Fetch missing commits
+    -+        id: fetch-commits
+    ++      - name: Setup base and head objects
+    ++        id: setup-tips
+     +        run: |
+     +          if test "${{ github.event_name }}" = "pull_request_target"
+     +          then
+    @@ .github/workflows/l10n.yml (new)
+     +            base=${{ github.event.before }}
+     +            head=${{ github.event.after }}
+     +          fi
+    ++          echo "::set-output name=base::$base"
+    ++          echo "::set-output name=head::$head"
+    ++      - name: Run partial clone
+    ++        run: |
+    ++          git -c init.defaultBranch=master init --bare .
+    ++          git remote add \
+    ++            --mirror=fetch \
+    ++            origin \
+    ++            https://github.com/${{ github.repository }}
+    ++          # Fetch tips that may be unreachable from github.ref:
+    ++          # - For a forced push, "$base" may be unreachable.
+    ++          # - For a "pull_request_target" event, "$head" may be unreachable.
+     +          args=
+    -+          for commit in $base $head
+    ++          for commit in \
+    ++            ${{ steps.setup-tips.outputs.base }} \
+    ++            ${{ steps.setup-tips.outputs.head }}
+     +          do
+     +            case $commit in
+     +            *[^0]*)
+     +              args="$args $commit"
+     +              ;;
+     +            *)
+    -+              # Ignore ZERO-OID.
+    ++              # Should not fetch ZERO-OID.
+     +              ;;
+     +            esac
+     +          done
+    -+          # Unshallow the repository, and fetch missing commits using partial
+    -+          # clone.  "$base" may be missing due to forced push, and "$head"
+    -+          # may be missing due to the "pull_request_target" event.
+    -+          git fetch --unshallow --filter=blob:none origin $args
+    -+          echo "::set-output name=base::$base"
+    -+          echo "::set-output name=head::$head"
+    ++          git -c protocol.version=2 fetch \
+    ++            --progress \
+    ++            --no-tags \
+    ++            --no-write-fetch-head \
+    ++            --filter=blob:none \
+    ++            origin \
+    ++            ${{ github.ref }} \
+    ++            $args
+     +      - uses: actions/setup-go@v2
+     +        with:
+     +          go-version: '>=1.16'
+    @@ .github/workflows/l10n.yml (new)
+     +        run: |
+     +          exit_code=0
+     +          git-po-helper check-commits \
+    -+              --github-action-event="${{ github.event_name }}" -- \
+    -+              ${{ steps.fetch-commits.outputs.base }}..${{ steps.fetch-commits.outputs.head }} \
+    -+              >git-po-helper.out 2>&1 ||
+    -+            exit_code=$?
+    ++            --github-action-event="${{ github.event_name }}" -- \
+    ++            ${{ steps.setup-tips.outputs.base }}..${{ steps.setup-tips.outputs.head }} \
+    ++            >git-po-helper.out 2>&1 || exit_code=$?
+     +          if test $exit_code -ne 0 || grep -q WARNING git-po-helper.out
+     +          then
+     +            # Remove ANSI colors which are proper for console logs but not
 
-It's never going to matter at all for performance, I should have been
-clearer with my comments. I meant them purely as a "this code is hard to
-follow" comment.
+----
 
-I.e. since we read the config twice, and in both commit-graph.c and
-multi-pack-index.c munge and write to the "opts" struct on
-parse_options(), you'll need to follow logic like:
+Jiang Xin (1):
+  ci: new github-action for git-l10n code review
 
-    1. Read config in cmd_X(), might set variable xyz
-    2. Do parse_options() in cmd_X(), might set variable xyz also
-    3. Now in cmd_X_subcmd(), read config, might set variable xyz
-    4. Do parse_options() in cmd_X(), migh set variable xyz also
+ .github/workflows/l10n.yml | 105 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
+ create mode 100644 .github/workflows/l10n.yml
 
-Of course in this case the relevant opts.flags only matters for the
-"write" subcommand, so on more careful reading we don't need to worry
-about the value flip-flopping between config defaults and getopts
-settings, but just in terms of establishing a pattern we'll be following
-in the subcommand built-ins I think this is setting us up for more
-complexity than is needed.
+-- 
+2.33.0
 
-As far as being consistent with existing behavior, in git-worktree,
-git-stash which are both similarly structured subcommands we follow the
-pattern of calling git_config() once, it seems to me better to follow
-that pattern than the one in d356d5debe5 if the config can be
-unambiguously parsed in one pass.
