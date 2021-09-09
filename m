@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD700C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 861DBC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B97CE61059
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 689DA61131
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344360AbhIIOUR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 10:20:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41836 "EHLO
+        id S244271AbhIIOUT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 10:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348599AbhIIOTx (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1348612AbhIIOTx (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Sep 2021 10:19:53 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA367C10DC46
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 05:42:13 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id z9-20020a7bc149000000b002e8861aff59so1402961wmi.0
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 05:42:13 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853F1C10DC48
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 05:42:15 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id v10so2380816wrd.4
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 05:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L4+ryNm5+CD2dBR5sVF6+8JwaQ9mh+UY5gTpMjTHb8k=;
-        b=Vdw9k6Qc46ua/wr+fWhx1yPtVMv/cXamfT4/x0WaQ3pT3rSaSMtKrnAHtvw1gk3jnC
-         8EF0n4CzAotQorGEs8/M1TAA0GLbz6at5R2/AE/U+BcoXmeirVcgw582v2ONiQKBgtzR
-         E/tvdLi5Zgleb+6pmAHykQbEDMRCioU8rf3YHCUEGxj0JuKjySxWuDDXst6Cu8E6GmoE
-         +4CYeS8Xm8w9zUQeOShf95zHIU1+rm38hoETTpdFqNBTRQerVenVfG1zyoADYZRMsIRl
-         0vfZMrU6tYDv8YghzETfGZ2lcz3zYRmUwdHNjNbNKRTZCDodgy/hqioJAI0hXkNyfHBX
-         jr3g==
+        bh=cgYfONj+HBmQH587+jI3XQjsFeFBrsmXwTixygeOUVg=;
+        b=fBcNeZj6JGngpNji52r7FVPD4YyS2zTBQE1aVq6LBzlEenwzcrW1q7oJTNN+khw/49
+         Ct0ODDIko2MmYqG7U/mYBp1VNTH/xziWZFl9HLffG3rCEunNsossk94A2Hfzmxd6Xq2/
+         k7IpQWjILgv9471E+E8320rQ9HAujX2tIraN3axkniZhTgR/2HlLKOKcbpH2+SwwltIP
+         DB8fg38b2g0j9IEFgkMkOSNtlwW/bneRrKg2dKx47QgCqgZNbZan8EGXDaoBqzWqz/HC
+         C/ZRoDU2PFksCJH18m1WptnqMSWBHB6Z6DJvYrO9fVc0YYG91qxu7yDxy43w33b6M2Lj
+         pwag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L4+ryNm5+CD2dBR5sVF6+8JwaQ9mh+UY5gTpMjTHb8k=;
-        b=o4EvBdBoL5b+J2ThphVTogPBi2hDXNOYg5Xmkx2vdO6kdcFTtWpDd4LM4YEvEdbsRZ
-         Jgs5FhNIBXSUn+oRNCvui041fxdoIjbkMKFaQHWjBMv/uhE3Pj4K6YU3kzE6oy+06hjc
-         JPxuwVQ88p0x8/1nwDAy2iK5lU35rINfnE4A8663S1QJeEX7oonTNQuUnDl7q8S6P1RQ
-         ASv+O8uWrA5In/NQ2+N5mdUd6lruzEJ7TNKB5MQjvrPJ1F4r20fn1Te02/h7qF6bwio4
-         kZk5waS9F2B9rS44VAXbfXUHL0I/PRcWvMhcF5PkDFL+qQvCxE4EcWQ+HSnbpxrJ1Dac
-         ZskA==
-X-Gm-Message-State: AOAM533Bxh3obDdujWUgV/ukjzl138xsLHFxjpatxPohbYpiVvWsPdh4
-        r2vhWSQUw/wsu5niCMgJDiUPjymwQVspOw==
-X-Google-Smtp-Source: ABdhPJz5Bl+rJmoDOrxIafliSRcrskYZtYCJeWIqi/Q51ScnapMCUVFQifiTLGfGhSCKcW/+OaglAQ==
-X-Received: by 2002:a1c:7c12:: with SMTP id x18mr2832671wmc.114.1631191332050;
-        Thu, 09 Sep 2021 05:42:12 -0700 (PDT)
+        bh=cgYfONj+HBmQH587+jI3XQjsFeFBrsmXwTixygeOUVg=;
+        b=v6BRWguJ8cRWMVPXdRaAin0eQ6uC+QlcwLt/SNmFvCI4YPciR+rp4XmyTQgV/L/tQI
+         aNVN2txQ12Aj0njQd4ezZhbp4XK93WgyF2P5DaxIDOr60j+fpED4GAJXAaPqs+/IRu4l
+         SPM5UMXApz4UVa55HHA1mPoo69+l37yMQcEvm8ft7BwkZrr85lGantiRarezNXAsZZiV
+         KRnaM+G+4ddvyKGdZc16DlwAyhkK30xCmP/fRta++hljHLX4MJeTjp+cO4QsPYkNZ9kq
+         dlu3nS74oDqbxZXpyH8nkfGKm+0Ss3N8T1N31sBoNUp+21aCCv6JPOoAxotPa3QsYK5X
+         QMKw==
+X-Gm-Message-State: AOAM532G8G+o6v6ssIXEqsfTVkyFaCpmvu+hBgaMz4ctiS6zV01DOG79
+        kR9GbeHuIO9Knc4XWk8e1PW7toy1GrvAwA==
+X-Google-Smtp-Source: ABdhPJxO0zflogSeMRYYnfmNwzx3ZqisrCfxd4GirB23jRul/vBTzVUDnOEVgFSvtBNS/M6aC3tehg==
+X-Received: by 2002:a5d:58e9:: with SMTP id f9mr3268646wrd.154.1631191333876;
+        Thu, 09 Sep 2021 05:42:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j25sm1742081wrc.12.2021.09.09.05.42.11
+        by smtp.gmail.com with ESMTPSA id j25sm1742081wrc.12.2021.09.09.05.42.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 05:42:11 -0700 (PDT)
+        Thu, 09 Sep 2021 05:42:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,17 +67,14 @@ Cc:     Emily Shaffer <emilyshaffer@google.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Josh Steadmon <steadmon@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 3/5] hook: introduce "git hook list"
-Date:   Thu,  9 Sep 2021 14:42:01 +0200
-Message-Id: <patch-v4-3.5-3e647b8dba7-20210909T122802Z-avarab@gmail.com>
+        Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH v4 5/5] hook: allow out-of-repo 'git hook' invocations
+Date:   Thu,  9 Sep 2021 14:42:03 +0200
+Message-Id: <patch-v4-5.5-5d5e9726fd8-20210909T122802Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.867.g88ec4638586
 In-Reply-To: <cover-v4-0.5-00000000000-20210909T122802Z-avarab@gmail.com>
 References: <20210819033450.3382652-1-emilyshaffer@google.com> <cover-v4-0.5-00000000000-20210909T122802Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -85,156 +82,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-If more than one hook will be run, it may be useful to see a list of
-which hooks should be run. At very least, it will be useful for us to
-test the semantics of multihooks ourselves.
+Since hooks can now be supplied via the config, and a config can be
+present without a gitdir via the global and system configs, we can start
+to allow 'git hook run' to occur without a gitdir. This enables us to do
+things like run sendemail-validate hooks when running 'git send-email'
+from a nongit directory.
 
-For now, only list the hooks which will run in the order they will run
-in; later, it might be useful to include more information like where the
-hooks were configured and whether or not they will run.
+It still doesn't make sense to look for hooks in the hookdir in nongit
+repos, though, as there is no hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-hook.txt |  5 ++++
- builtin/hook.c             | 52 ++++++++++++++++++++++++++++++++++++++
- t/t1800-hook.sh            | 14 ++++++++++
- 3 files changed, 71 insertions(+)
+ git.c           |  2 +-
+ hook.c          |  2 +-
+ t/t1800-hook.sh | 20 +++++++++++++++-----
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index 79e82479ec6..88588b38143 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git hook' run [--to-stdin=<path>] [--ignore-missing] [(-j|--jobs) <n>]
- 	<hook-name> [-- <hook-args>]
-+'git hook' list <hook-name>
+diff --git a/git.c b/git.c
+index 540909c391f..39988ee3b02 100644
+--- a/git.c
++++ b/git.c
+@@ -538,7 +538,7 @@ static struct cmd_struct commands[] = {
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
+ 	{ "hash-object", cmd_hash_object },
+ 	{ "help", cmd_help },
+-	{ "hook", cmd_hook, RUN_SETUP },
++	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "init", cmd_init_db },
+ 	{ "init-db", cmd_init_db },
+diff --git a/hook.c b/hook.c
+index b825fa7c7ae..dc3033cb4c7 100644
+--- a/hook.c
++++ b/hook.c
+@@ -181,7 +181,7 @@ struct list_head *list_hooks(const char *hookname)
  
- DESCRIPTION
- -----------
-@@ -30,6 +31,10 @@ optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
- arguments (if any) differ by hook name, see linkgit:githooks[5] for
- what those are.
+ 	/* Add the hook from the hookdir. The placeholder makes it easier to
+ 	 * allocate work in pick_next_hook. */
+-	if (find_hook(hookname))
++	if (have_git_dir() && find_hook(hookname))
+ 		append_or_move_hook(hook_head, NULL);
  
-+list::
-+	Print a list of hooks which will be run on `<hook-name>` event. If no
-+	hooks are configured for that event, print nothing and return 1.
-+
- OPTIONS
- -------
- 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 9b6272cfd3b..1e6b15d565a 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -8,8 +8,11 @@
- 
- #define BUILTIN_HOOK_RUN_USAGE \
- 	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
-+#define BUILTIN_HOOK_LIST_USAGE \
-+	N_("git hook list <hook-name>")
- 
- static const char * const builtin_hook_usage[] = {
-+	BUILTIN_HOOK_LIST_USAGE,
- 	BUILTIN_HOOK_RUN_USAGE,
- 	NULL
- };
-@@ -19,6 +22,53 @@ static const char * const builtin_hook_run_usage[] = {
- 	NULL
- };
- 
-+static const char *const builtin_hook_list_usage[] = {
-+	BUILTIN_HOOK_LIST_USAGE,
-+	NULL
-+};
-+
-+static int list(int argc, const char **argv, const char *prefix)
-+{
-+	struct list_head *hooks;
-+	struct list_head *pos;
-+	const char *hookname = NULL;
-+	struct option list_options[] = {
-+		OPT_END(),
-+	};
-+	int ret = 0;
-+
-+	argc = parse_options(argc, argv, prefix, list_options,
-+			     builtin_hook_list_usage, 0);
-+
-+	/*
-+	 * The only unnamed argument provided should be the hook-name; if we add
-+	 * arguments later they probably should be caught by parse_options.
-+	 */
-+	if (argc != 1)
-+		usage_msg_opt(_("You must specify a hook event name to list."),
-+			      builtin_hook_list_usage, list_options);
-+
-+	hookname = argv[0];
-+
-+	hooks = list_hooks(hookname);
-+
-+	if (list_empty(hooks)) {
-+		ret = 1;
-+		goto cleanup;
-+	}
-+
-+	list_for_each(pos, hooks) {
-+		struct hook *item = list_entry(pos, struct hook, list);
-+		item = list_entry(pos, struct hook, list);
-+		if (item)
-+			printf("%s\n", item->hook_path);
-+	}
-+
-+cleanup:
-+	clear_hook_list(hooks);
-+
-+	return ret;
-+}
- static int run(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -94,6 +144,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
- 	if (!argc)
- 		goto usage;
- 
-+	if (!strcmp(argv[0], "list"))
-+		return list(argc, argv, prefix);
- 	if (!strcmp(argv[0], "run"))
- 		return run(argc, argv, prefix);
- 
+ 	return hook_head;
 diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 6431b19e392..7a1dae4e95e 100755
+index 68e7ff7de7e..6b6ba30e88e 100755
 --- a/t/t1800-hook.sh
 +++ b/t/t1800-hook.sh
-@@ -9,6 +9,8 @@ test_expect_success 'git hook usage' '
- 	test_expect_code 129 git hook run &&
- 	test_expect_code 129 git hook run -h &&
- 	test_expect_code 129 git hook run --unknown 2>err &&
-+	test_expect_code 129 git hook list &&
-+	test_expect_code 129 git hook list -h &&
- 	grep "unknown option" err
- '
- 
-@@ -97,6 +99,18 @@ test_expect_success 'git hook run -- pass arguments' '
+@@ -128,15 +128,25 @@ test_expect_success 'git hook list: existing hook' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'git hook list: does-not-exist hook' '
-+	test_expect_code 1 git hook list does-not-exist
-+'
+-test_expect_success 'git hook run -- out-of-repo runs excluded' '
+-	write_script .git/hooks/test-hook <<-EOF &&
+-	echo Test hook
+-	EOF
++test_expect_success 'git hook run: out-of-repo runs execute global hooks' '
++	test_config_global hook.global-hook.event test-hook --add &&
++	test_config_global hook.global-hook.command "echo no repo no problems" --add &&
 +
-+test_expect_success 'git hook list: existing hook' '
-+	cat >expect <<-\EOF &&
-+	.git/hooks/test-hook
-+	EOF
-+	git hook list test-hook >actual &&
++	echo "global-hook" >expect &&
++	nongit git hook list test-hook >actual &&
++	test_cmp expect actual &&
++
++	echo "no repo no problems" >expect &&
+ 
+-	nongit test_must_fail git hook run test-hook
++	nongit git hook run test-hook 2>actual &&
 +	test_cmp expect actual
-+'
+ '
+ 
+ test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
++	write_script .git/hooks/test-hook <<-EOF &&
++	echo Test hook
++	EOF
 +
- test_expect_success 'git hook run -- out-of-repo runs excluded' '
- 	write_script .git/hooks/test-hook <<-EOF &&
- 	echo Test hook
+ 	mkdir my-hooks &&
+ 	write_script my-hooks/test-hook <<-\EOF &&
+ 	echo Hook ran $1 >>actual
 -- 
 2.33.0.867.g88ec4638586
 
