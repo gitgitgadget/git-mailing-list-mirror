@@ -2,134 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17EE8C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E78C3C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:39:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00547610FF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:29:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C898461207
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 14:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbhIIObE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 10:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43812 "EHLO
+        id S239625AbhIIOkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 10:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240522AbhIIOa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:30:58 -0400
-Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 441E2C14115C
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 06:21:09 -0700 (PDT)
-Received: by mail-vk1-xa33.google.com with SMTP id j5so694670vki.0
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 06:21:09 -0700 (PDT)
+        with ESMTP id S243977AbhIIOkQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 10:40:16 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B609C1A2702
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 06:57:34 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id s24so1424064wmh.4
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 06:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=43wxCOzwK+gePuMKhP8P2cjKMYjCr5sAjarY12/3NU4=;
-        b=PdXZJYboSGtI2EPqBquP1jnAZXNNw+dsKQRqbUaewWgfrSZNWmW8Rba8efO2z/pjIJ
-         gDiNZEy9JaJxA53zMfQapOZFf42Ii10zubD2N4+N7QjzDnmfyKJrWae/krzuw/lVVbtM
-         vY1xoTX/zrRmLtmPS0aDv7nXHYgIVn641+IsYeUncH9D+0rbBH19Cq8G6fZ5mEpvc51O
-         GVftLg84gmr9xdqCQBKn1Hk23WaR+um8+T4f6KPszeBebJvgDpdPRfxL5U82pZfYWYHP
-         Qma6RQtp0HGMGuUNTLhQkiYouTfQFBRe8EhSfJemZAYJLUUwrxDISuvpY/H8aEuMsYNu
-         2nwQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7YRBMWpIz7Co39C7px/QXHKO4R84JzGL3ch60IcQFCY=;
+        b=g+zvBLQRvE6dGF5iBk7AdEuNz2WOJuaaE94DVj7SLwZPb0zinRjBgrRpQgXd/Hg1Yu
+         NQvEb8NJdjfmWulUVSqss0G2BQxTI+dPAVMOuGGjVInuRpz4aK+EDqYAK34cG4ViD9+V
+         ymh+bLeALX0spk3ePug26CP7tW3cceGuJxbtaViTB3HM1SMrUQ86Ip4xnmsDbGyecyWJ
+         annozOUe0J4Rlde3rKB18CXO6ALQwhkISgeQ7Y4q5aHfVjcUhu5jEPsSt41QdatLERMe
+         PRO2Ffphep0nF0SGvcbAg72x9obIzYK3sxXAYQ3ovThPvpiU0OsOnLRQOLL1heaZ36ZW
+         BuHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=43wxCOzwK+gePuMKhP8P2cjKMYjCr5sAjarY12/3NU4=;
-        b=vlh9kWz1ywyB0pqaSQEBAmk+bNAu4u3vAdFFE4+yght7RSKPCdRKPyz2AlT49BgvvI
-         KVnUyGu5WCH0s8f7FeU86S84HjibBWF9A8Fij5hAzQw3RrT5sy4GGYQyf18SKTTFmNS8
-         UwkqTgPLyIHd9+cv7CedCk1o/hb3kj9jldUcR0pRQ9+ODe/G53TQneSnh7k/OS9oljk1
-         wAVljBM3Tc5mrQv+thM2+n+Qli/TBv4/GdehiyTmRWFqjGSYbdDQSxk+gNDKHrezeT3m
-         4wY9/E6IltCgvyD/qcv/rvGQU89Ga70yLbdGapc0VRCqT0nkp6RZpfDYORl3woewOhsh
-         wHzA==
-X-Gm-Message-State: AOAM532IB2YIZRxmI/rmuAAOzbQZw0B2HljH5lRrQ2BdAycvKBwliG3Y
-        H36BAB3+j16YkQWByTCkDt8NRqjJNEiu8grArIy0tcRa8fXMs2kvMwo=
-X-Google-Smtp-Source: ABdhPJyOSas0eViLia5vkfT3KkMF7x+H7Zqi2Kwh85NcGRNfYTqZVqIPX8zj3Rb9aVgQ/z4WCVEPPb58cs4poBlI+7o=
-X-Received: by 2002:a05:6122:734:: with SMTP id 52mr1429505vki.8.1631193668039;
- Thu, 09 Sep 2021 06:21:08 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=7YRBMWpIz7Co39C7px/QXHKO4R84JzGL3ch60IcQFCY=;
+        b=06Y8p31cu7Re8j3T4rOatex29oaMS+3o6SCwXoLG16Q4L4EpbUMDDv2yo3/uJ5hI4Z
+         PFY12D8XG58YI/WkK00/WODB+1PHaQ1nR4/HL9J1b6Bremz5S8qUERcNjdyjQCcq4lIw
+         7NCLrxkd20RLpqupJP31UG1xcAnoFLKM0pxRXRKtS1xh5EMMULnYDkAttSc0X/6Fu10U
+         knf4h3/knFKVkOgPH7e1D7jd78wlGsO9nY7INs9Hi8Y3pmNoA/zzE4a2uxypMO2vhLz8
+         47JBOvZ4rYc7GEEnOFXv/bYkv4qPx73poSHB3S6TD+3INRe2rOFSWFW64gVQ901SKTVZ
+         hUhA==
+X-Gm-Message-State: AOAM533lfXUOOw5Vpv/KMnu7GxGPbu84Po0bXjwKQlW/SNKQVntGpQ1X
+        rKXAjgKxrX0RZYWJooCvFfw=
+X-Google-Smtp-Source: ABdhPJxAS9hM7skY/kpRM0D85RzFIV4LJVj0CADFqBa9ApAFkrN7OLdLigZr86y5hj9eveypm580uw==
+X-Received: by 2002:a7b:c7cd:: with SMTP id z13mr3189031wmk.51.1631195853148;
+        Thu, 09 Sep 2021 06:57:33 -0700 (PDT)
+Received: from [192.168.1.240] (187.96.189.80.dyn.plus.net. [80.189.96.187])
+        by smtp.gmail.com with ESMTPSA id z2sm1778985wma.45.2021.09.09.06.57.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Sep 2021 06:57:32 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        phillip.wood@dunelm.org.uk,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
+ <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
+ <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
+ <c42d4051-59cd-094a-4570-32cf4d38ec27@gmail.com>
+ <e7224105-83c6-7f12-f63a-474bd477583a@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <408dc1d3-44b8-a955-4d7b-94f23fa8a6bc@gmail.com>
+Date:   Thu, 9 Sep 2021 14:57:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <CAOLTT8RzHb5zWUm1psZRTP=iST-jP4DBmG2Zh1UPdo6z+QyHcg@mail.gmail.com>
- <YTS8yiYwR+eeZf4+@coredump.intra.peff.net> <CAOLTT8SYx4f8x-0zjXLJVOpW4-Mj34mjsfwr6tWo0PbZAV9B0w@mail.gmail.com>
- <YTehP58NfcnDSWEc@coredump.intra.peff.net>
-In-Reply-To: <YTehP58NfcnDSWEc@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 9 Sep 2021 21:20:56 +0800
-Message-ID: <CAOLTT8TSNtVqZrdYpRpUp-JfvHUpDAMEo5k4SkiLJUjMmefcLA@mail.gmail.com>
-Subject: Re: [hacky PATCH 0/2] speeding up trivial for-each-ref invocations
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e7224105-83c6-7f12-f63a-474bd477583a@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=888=E6=97=A5=E5=91=
-=A8=E4=B8=89 =E4=B8=8A=E5=8D=881:28=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Mon, Sep 06, 2021 at 09:30:45PM +0800, ZheNing Hu wrote:
->
-> > Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=885=E6=97=A5=E5=
-=91=A8=E6=97=A5 =E4=B8=8B=E5=8D=888:49=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > On Sun, Sep 05, 2021 at 04:19:53PM +0800, ZheNing Hu wrote:
-> > >
-> > > > > In this version there are 2 patches, tested against 'git for-each=
--ref
-> > > > > --format=3D"%(objectname) %(refname)"' on a fully packed repo wit=
-h 500k
-> > > > > refs:
-> > > > >
-> > > >
-> > > > Regarding this 500k refs, is there any way I can reproduce it?
-> > >
-> > > Try this in a clone of linux.git (or any other repo):
-> > >
-> > >   git rev-list HEAD |
-> > >   head -500000 |
-> > >   perl -lne 'print "create refs/foo/$. $_"' |
-> > >   git update-ref --stdin
-> > >
-> > >   git pack-refs --all --prune
-> > >
-> >
-> > Sorry, It seems that the above command is difficult to complete on my
-> > machine (it took more than ten minutes). It may be stuck on git update-=
-ref.
-> > So I tried to reproduce it in a repo which containing 76K refs:
->
-> Mine didn't take nearly that wrong, but it does depend on filesystem and
-> disk performance. It's going to create 500k lock files in refs/foo. :)
->
-> You can cheat a bit like this:
->
->   {
->     # grab existing packed refs; don't worry about peel lines or the
->     # header comment, we're producing a lowest-common denominator
->     # version of the file
->     grep '^[0-9a-f]' packed-refs
->
->     # now make our new fake refs
->     git rev-list HEAD |
->     head -500000 |
->     perl -lne 'print "$_ refs/foo/$."'
->   } >packed-refs.tmp
->   mv packed-refs.tmp packed-refs
->
->   # and now ask Git to repack to get everything sorted, etc
->   git pack-refs --all --prune
->
-> It sounds like you were able to come up with a smaller version to play
-> with anyway, but I enjoy coming up with such hacks. :)
->
+Hi Philippe
 
-Thanks, this method really works. :-)
+On 09/09/2021 13:40, Philippe Blain wrote:
+>>> While in general I think it's a good thing to avoid forking, this
+>>> change might result in behavioral differences. Any config that
+>>> affects 'git checkout' but not the internal 'reset.c::reset_head'
+>>> function might play a role in the rebase UX.
+>>>
+>>> One that immediately came to mind is 'submodule.recurse'. This
+>>> initial 'onto' checkout was pretty much the only part of 'git
+>>> rebase' that did something useful for submodules, so it's kind of
+>>> sad to see it regress.
+>>
+>> Thanks for pointing that out. As a non-submodule user my question
+>> would be is it actually useful for the initial checkout to work that
+>> way if the rest of rebase (and the checkout for the am backend)
+>> ignores submodules? reset.c::reset_head() just uses unpack trees like
+>> checkout so if rebase read 'submodule.recurse' then reset_head()
+>> would work like 'git checkout' and also 'git rebase --abort' and the
+>> "reset" command in the todo list would start checking out submodules.
 
-> -Peff
+it would also affect fast-forwards
 
---
-ZheNing Hu
+>> I'm reluctant to do that until the merge backend also handles
+>> submodules unless there is a good reason that such partial submodule
+>> support would help submodule users.
+> 
+> Yeah, it's not that useful, I have to admit; it can also be very confusing
+> since some parts of rebase are affected, and some not. For example, any 
+> time
+> the rebase stops, like for 'edit', 'break', and when there are 
+> conflicts, the
+> submodules are not updated. So I think a full solution is better than a 
+> partial
+> solution; in the meantime I'm thinking the change you are proposing 
+> would actually
+> be less confusing, even if it slightly changes behaviour...
+> 
+> As an aside, I *think* reading submodule.recurse in rebase like it's 
+> done in checkout
+> et al., i.e. something like this:
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 33e0961900..125ec907e4 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -26,6 +26,7 @@
+>   #include "rerere.h"
+>   #include "branch.h"
+>   #include "sequencer.h"
+> +#include "submodule.h"
+>   #include "rebase-interactive.h"
+>   #include "reset.h"
+> 
+> @@ -1106,6 +1107,9 @@ static int rebase_config(const char *var, const 
+> char *value, void *data)
+>           return git_config_string(&opts->default_backend, var, value);
+>       }
+> 
+> +    if (!strcmp(var, "submodule.recurse"))
+> +        return git_default_submodule_config(var, value, data);
+
+That looks about right to me though I think it would be safer to call 
+git_default_submodule_config() for submodule.* rather than just 
+submodule.recurse
+
+>       return git_default_config(var, value, data);
+>   }
+> 
+> 
+> would actually also affect the merges
+> performed during the rebase, since that would affect the "global" state 
+> in submodule.c.
+> I hacked exactly that the other day but did not test extensively...
+
+merge-ort.c:checkout() which is used by merge_switch_to_result() uses 
+unpack_trees() so it will pick up the global state and hopefully should 
+just work (cc'ing Elijah to check as I didn't look what happens when 
+there are conflicts). merge-recursive.c:update_file_flags() does this 
+when updating the work tree
+
+        if (S_ISGITLINK(contents->mode)) { 
+
+                 /* 
+
+                  * We may later decide to recursively descend into 
+
+                  * the submodule directory and update its index 
+
+                  * and/or work tree, but we do not do that now. 
+
+                  */ 
+
+                 update_wd = 0; 
+
+                 goto update_index; 
+
+        } 
+
+ 
+
+so it looks like it does not update the submodule directory. Given 
+merge-ort is now the default perhaps it's time for rebase (and 
+cherry-pick/revert) to start reading the submodule config settings (we 
+parse the config before we know if we'll be using merge-ort so I don't 
+know how easy it would be to only parse the submodule settings if we are 
+using merge-ort).
+
+Best Wishes
+
+Phillip
