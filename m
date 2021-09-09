@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C8B4C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 318E4C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAB3B60E94
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1515760E94
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 11:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234886AbhIILJV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 07:09:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52367 "EHLO mout.gmx.net"
+        id S234771AbhIILKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 07:10:03 -0400
+Received: from mout.gmx.net ([212.227.17.22]:44285 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234216AbhIILJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:09:20 -0400
+        id S233990AbhIILKA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:10:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631185687;
-        bh=adf5ernARKfAtG45gsuF+gF6aKRX1MV9upzDXtN5giw=;
+        s=badeba3b8450; t=1631185727;
+        bh=oTb09RQVRjLu3iVNUby3Hx2lozL+ZuHPpKeTBJjhSGA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iuKCWwmTxgW84dnxGsl2AJG4vzMDKiqYS8iYFZCNlbxeUzjjs8L5DG9CP2/DOE+FB
-         xEi78yWfUeXb2oN5JhPAV/d9qitgaI8go/02t96rCL7eSoX/JxWcVZwgNsT3waU6EF
-         +a9L37JFO9u71HOdK+E1Jmt/3r6niu1heDvQouUU=
+        b=lhhNFwEG6nrsC9BDpYBUb3QKwWy+xvRFVolfzDubZhfGEc1oRY5M3FP0KBdX1ml9T
+         Af05GLVUMJ9OmJyMH8hx/eRI/nTQpoZkKrIBLHgBvHQd6hPMbQOSWR4ysmqTZP9PgG
+         e2C4m1K7efxnFeNFxnhsk9W3ONoKyPkezegRxc8A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMobU-1mgvFz0ZJU-00IpTW; Thu, 09
- Sep 2021 13:08:07 +0200
-Date:   Thu, 9 Sep 2021 13:08:06 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1mKSAH3FGE-0052QW; Thu, 09
+ Sep 2021 13:08:47 +0200
+Date:   Thu, 9 Sep 2021 13:08:47 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: js/retire-preserve-merges, was Re: What's cooking in git.git (Sep
- 2021, #02; Wed, 8)
+Subject: mr/bisect-in-c-4, was Re: What's cooking in git.git (Sep 2021, #02;
+ Wed, 8)
 In-Reply-To: <xmqqsfyf5b74.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109091307070.59@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2109091308200.59@tvgsbejvaqbjf.bet>
 References: <xmqqsfyf5b74.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wCJMWyfxsimE2XytzW0oWJgl4QtB3DY+IHyTHOqcP3WgTqMuUlf
- OvDPQRzRkL9Mpa0R1ybrZ3sFUXSFWql82LN8qEJjoEFbJ5DsleR2MOaFIcIuWAdeO9ySZER
- sTA4DCF0qZoVB/+hKD4UuAYOwQyfVf1Yt2s0EahcEuu+847FoHIvf+SRoT4dFcdmqmHJqmK
- DMpaBqZx806bPv6auNAZw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/42YM3gyZIE=:XwFC5otqMZiDsg5WbICKsY
- jzaRS3TEAXBko068RkBjRNbfNtWiRAQ5PdPaGkn4rjY9Fu1xZ/fMj5YAnE2XuTJ/6xoPyaD3V
- CODycYGYKI7nzTlwRRLWO+PS31BN3KRm4ShMSzxkwWnSB7vO9NZjs3YIxRIpOyFzyEMkGYui8
- bYeqDxvMJf5Hrucw8HHlMs09wjvaV7KcLu0wIPpKJ0p2GT5WXRpWzC0Z2kWChZjQfv+0ezK9h
- byoefyi/qeIzyXQ6deB5BIeuhhzxCy+u2+xZcqORnqb7kKYNFLrD5KuzTuv0BWSe1xpzdXgIv
- OZT6Zn+Y1Ia2GOMVjfXxYQ6AwW1wWJ+uJ091cbnTCNPWYICLuJO0oWAP2PLNoAFl7sfdr4xdY
- ft8WcO6SJ5eECn4ysxMIliW/f0rLEN6dh/J5TLENUjQt8EE5XOx3y1qc1YnhIzfzSxLqpvj5Q
- aGyY40dPm5zLD2779Up/Y8WeWtSxHZohnSG0xSTzAHTAspwwMOsGajLFUZexlr9ydZ9YlQrVa
- WIdSAT59tAQnNg7123l5VQ8OGajZxH+izxBoe0UXEP8GoVGyEbweTFo1pHrReazjOjcvAtZ7t
- Df7TJsap42bzGcvW+JTe+0PiIJsXGBCJDkrsRvFJNuNdmKAlGkwuQdR5oFJgBfFkUgyFVXefq
- MEjRdtJmsTPmNA1mxktFc6d6P7RepkTYdVmtG9q5DkDMsy8C1oPSYwAb+UvDrEhQBO4TZt/UH
- mp4ZKWxHjVTV65i56+10bPBDcjMiAPwZR7/NiY5nGqpH2DSfGY938Bdg3B6+gppH3o9ny4DTD
- KVJ9pXNWYHeIHDU8xnRdTFRLEWgGbse2QOg4GQgvaM5khc3Lya0GP9potHZGtwsRjN1mDk17y
- eqPqYEkM1TIvkSORK4syOjdAzNMbwkRmNGwI2LYicB7w6KCwHttNeS6C9IzDV9RmuZp+bA58b
- MllL5vRKPcF/liysl7OGvKXkspjkHGFC4fNInWMDRPzxy00UlSaG27sPUPr9DWm/LlYrlGKWn
- S4H197OXHcoDrSKvp3WMjBoa6RabDc329mSyMimoWNalN7PtbHra082jAsBi1TI8Jrrs33num
- GK5Dg3pAumXmEE=
+X-Provags-ID: V03:K1:C7DWlwLi2iQ903/rjX+aTRgOC64u3TuvpAG4bp/x4hATVhZHAYR
+ ykT4NAUW9gxo1CTOq4OvA37aZFkIqvhfcizWO8BWIhbwXa+yVWGn6StGhgjWkt/wS27gpmO
+ 6iDPlgvS3Xfv0s2jZq+qNoNa309omeYyYM4rpmWH/x2ySplYH7lfDWG0CnBTFBzEsvcBU9y
+ vUrlyxPICZeHVx5V5mdUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jNi0DxljUJc=:F18qH8KNsD0gd6UgP7EpQI
+ ALoKrbHV7oRO90G4oyMsJCRkq7H7NbgRMthVOPrcJ11H6r7cdGanBA/wY5NVXnYDSfHucFwk5
+ qqtXLntihK4ZQjR1vd01mGhCgYQIe2TLGNNsIN9cw3cyBgUk8AO3SyO1REFUYVBMNW9JX5CNE
+ 3Hqez8gPEZt/GmD/gjSpXHgwi5Yd1wkWbj0GQ6grw35n/azot/P6Kt9RGJNdJXD74LHp1diL5
+ vHWNB16snyFeGcipDbOG8mMFkaemxK0D80aeHDZfgYHZB/M+70zVq4zCIstY+umiACWrJgAFl
+ V40e3A3nYYPeTmonEt8uE/+j0MniVh9/5+JxOEjzaW+iBV5xMFIYHPRWdLrtB5UG2IXePp8Yj
+ jgr170cU4NmZ1SLoVONf+nbXi6ZGH3qp8yq4kQ5WCQkw2MPdTOBfwWC9HtODCxcfmNYd2uo7u
+ V/S6D/ZkJUV71sA7I2C2Jj07jk4k1vhvvdP40PM+2jb53ilGSD6HmMCO3srPgN1XB/coyLSuM
+ geIY5UK2+93RDUnMUcfjLSKtX9ibIp8dOfeb7M80U5h1Ce/1/gDppz17bERsUZmTF41RU2ODx
+ i4aW3MrjBCXmsA+9qWdZzQ/urCTVvagv2z9IZGghpD9ALwtKvTb2OS82AaN/33scSWHnsUUL0
+ YPPQy7wfJ/ECl9DZ0us48xJKThH0OK3R1Gyjdae8RrY5koFtInIdvH0mbae5MW4tZQ5gvYJkG
+ KHdP5Q+ILqGfao95IAe4x2T/l1G5Lr+88HzzH1b4nkQ+/Q64angRL1uzaF7w3Wph4PlkknqNs
+ chUPbtTeBzzGFpPgAc69LBJok4csTLypf2x/QMDDqcqT/hl41KAMgnCZShAiifxIU3J3IXLj5
+ lYsFtv3Iz57Gy3u2kwN40aobdf7sZpDIcxE60m42453U4RTJ93ZHY+M3GKQXcW8YnGyo1OmtE
+ 3Mrypc42kEMWX25NQzCGWiqCfZ1hKAo3Pg/8CRZK6sOi2IhauPtW9uv0rgL76jH+T03D9VQSc
+ tDNvyOsfMAZV3qnKgLjIW43wKewbaiaj6tUS5WUKLTn5YklNapcDkf0crBQAtXktGQmm60WjE
+ Pu8RsnLTnD0tIM=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,28 +73,17 @@ Hi Junio,
 
 On Wed, 8 Sep 2021, Junio C Hamano wrote:
 
-> * js/retire-preserve-merges (2021-09-07) 11 commits
->  - sequencer: restrict scope of a formerly public function
->  - rebase: remove a no-longer-used function
->  - rebase: stop mentioning the -p option in comments
->  - rebase: remove obsolete code comment
->  - rebase: drop the internal `rebase--interactive` command
->  - git-svn: drop support for `--preserve-merges`
->  - rebase: drop support for `--preserve-merges`
->  - pull: remove support for `--rebase=3Dpreserve`
->  - tests: stop testing `git rebase --preserve-merges`
->  - remote: warn about unhandled branch.<name>.rebase values
->  - t5520: do not use `pull.rebase=3Dpreserve`
+> * mr/bisect-in-c-4 (2021-09-02) 6 commits
+>  - bisect--helper: retire `--bisect-next-check` subcommand
+>  - bisect--helper: reimplement `bisect_run` shell
+>  - bisect--helper: reimplement `bisect_visualize()`shell function in C
+>  - run-command: make `exists_in_PATH()` non-static
+>  - t6030-bisect-porcelain: add test for bisect visualize
+>  - t6030-bisect-porcelain: add tests to control bisect run exit cases
 >
->  The "--preserve-merges" option of "git rebase" has been removed.
->
->  Will merge to 'next'?
+>  Rewrite of "git bisect" in C continues.
 
-I think so, given the rate of reviews still trickling in tending toward
-zero.
-
-We probably want to keep it in `next` for quite a while, too, to make sure
-that people get the memo.
+=46rom my point of view, this is ready for `next`.
 
 Ciao,
 Dscho
