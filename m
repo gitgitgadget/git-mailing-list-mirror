@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33E68C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 23:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DE8AC433FE
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 23:25:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14F6F6108B
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 23:25:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AA36610C9
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 23:25:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbhIIX0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 19:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54360 "EHLO
+        id S1349593AbhIIX0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 19:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349824AbhIIX0I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 19:26:08 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE4A1C061768
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 16:24:51 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id l10so90107ilh.8
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 16:24:51 -0700 (PDT)
+        with ESMTP id S1349786AbhIIX0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 19:26:10 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90AEC061574
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 16:24:57 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id a15so40527iot.2
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 16:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=YuS+c34GpEkv6uyewZNPiRjnuUT1cG2SH2pGnbUWU6A=;
-        b=GViBO+8jRyO99UDOpzLT39MARq/aHEKHLXhxt+gSaiRwq9Yqfl+U3d38lVn3IDLV1j
-         LRd7XErHneu0pFu6pk2eOYjDva/K8iUsNKXHNjvufW2Fi47A5tiAxNGhmEAw5IMFtnJn
-         KJkmQIZx5vLO4o+itUl8gP8WFsjn8vP4KUkdum6b8s+9rEn3DCaCfNo5FdsHJ4E6g12r
-         SmFzvoCIdLv/v6U9SLcV5ryuxXSLouT2r3GnSkdpGH76L9r158+1rQI9jcYat8W9Ly0R
-         bewOh+zj6G+CqA8iAfsimIyHChWQqygv5gAZRz2LPVbHg3zAYW56uBYcgvqEWEZP/BkI
-         tqxQ==
+        bh=1uinzz2bN2Y1Ub0Dz+81s2OdRoZ4GU5uPFUToyOrrOI=;
+        b=oChU+nk4T/T3vh7WISZ8BRtKLvdOAD+p/GuMaMHM01Q2Jcalt2/ydgjdxvpeKKwXFP
+         1jC6na4I7LIAZ94QM5xnT+9Eo5t2OQg3pkxOHmMtkgcjbvXUoD4sqxj15B6gclFB3+t2
+         319edK+B3qnhqhEJLY4hQuwCSw3qNbKgT3hsv8AcOnnyEJruj0acFbqNUuTypLFzLBm/
+         TzP0NybBDN38f9G8x29o9lYPuaNT9MtDyfkWnGuZ26gR6tLPC0Zlr2HskC+SykbQOQAq
+         aNJm7kJ4UleyDJZW27ZEQb1yahgxmhEzlWkhphOe+bj93SC7CNYO0YQ0+44GIt7+wrrM
+         AgWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=YuS+c34GpEkv6uyewZNPiRjnuUT1cG2SH2pGnbUWU6A=;
-        b=eEp3rL30RvZ5uTSYuqgYn9hjVPdtNVLS/cQbQCLBWD2e/iwDptFAUP9gzKUw51s8tq
-         uN2YwfigkVOGvzEVAmYqCUXzHrvu1+374mZ3djIFZzFhtDuCdrVWtwn1yOBtc0bL3n3C
-         mJv1vsq5ok7bb2IldgdqqLUaV5s1IkdeMi5tW+5aTwfkAeGPRO1Ap8Xv1t4vILky2A96
-         xgtgLXTQd1AwnxYqw7HSvdTsdMCDs8NVeGojzYvswCZliSqd7xAoDKSXdptHtNXcn8Y1
-         FYlEbU/2FQMIMLh9RQEeXlZ6BP9ZVYWb1S+faEl5iHZDiH6vMx2s00ZR6HqW5HthdL1D
-         jw3g==
-X-Gm-Message-State: AOAM533K2TkENmeJ+wGEBUjmQyXwCGQYw+UMGKqb3r9C9ieUgdX3mxfr
-        gTvtXyKJkzcXeK0Yd9HLTM2F3MFcGI7Pdxx7
-X-Google-Smtp-Source: ABdhPJwjdfH18h42Dl2wrbfzLVthQiZZkkkCg2zcjoig2X0WXmiMhz16X2iL1ZHX66sz0YW134ub7A==
-X-Received: by 2002:a05:6e02:1a87:: with SMTP id k7mr4334034ilv.122.1631229891140;
-        Thu, 09 Sep 2021 16:24:51 -0700 (PDT)
+        bh=1uinzz2bN2Y1Ub0Dz+81s2OdRoZ4GU5uPFUToyOrrOI=;
+        b=of4ipRyRfR6Kws+6z9L3oYmBZ+GHTQvGayNTZAbfSSe3BMha93iFjMPzcKhy4dvC/n
+         Qzf9ohQ7n/cSmwHjQz0Pp4fctbA8HIibSj1sO/pjcJ7nnV3rco5XaVu0yz1VHT8YvokE
+         dHZNbT9zuHqv2N+okMDsr6pizBlmUw++tpffHPyAZ+VCZU8YuxilLVmoN3PRXhKMDhFY
+         bsAAtwnEqxmKaQKvkPqqLH+8nP5d1ePjRde/yHK/tRC9d0PkZCYJMN2OdflSz1zCJWyY
+         mAWAjfrVIfrmU34gB2xrYqQQMrKa91QwZykqP+pqV+eWRBI0t4Kn/qkXzcOg1f1iqasl
+         1YwA==
+X-Gm-Message-State: AOAM5311w+oFu2kR3mPWmBDvb6/CLhdgVIjS+7NcfKKqhLIaYSFHmhcW
+        cxO10Ksrn1ktKwYSYUHaX4y3qYENZEucTf1Z
+X-Google-Smtp-Source: ABdhPJykz3CwOzakMjSCUXdumz76L+nM7Zob8J2wRm89959jwey8w1u3X+FRQbXJBgh8sH2hsDkARw==
+X-Received: by 2002:a5e:c30c:: with SMTP id a12mr4617524iok.52.1631229897107;
+        Thu, 09 Sep 2021 16:24:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e12sm1612748ile.14.2021.09.09.16.24.50
+        by smtp.gmail.com with ESMTPSA id v1sm1561115ile.83.2021.09.09.16.24.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 16:24:50 -0700 (PDT)
-Date:   Thu, 9 Sep 2021 19:24:49 -0400
+        Thu, 09 Sep 2021 16:24:56 -0700 (PDT)
+Date:   Thu, 9 Sep 2021 19:24:56 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, gitster@pobox.com
-Subject: [PATCH v2 6/9] index-pack: refactor renaming in final()
-Message-ID: <1e4d0ea0f398ba48cf1b1f87122ab343bdb296e2.1631228928.git.me@ttaylorr.com>
+Subject: [PATCH v2 8/9] pack-write: split up finish_tmp_packfile() function
+Message-ID: <90bebe4e51c3bc84d156912db84e0d2774f56354.1631228928.git.me@ttaylorr.com>
 References: <cover.1631157880.git.me@ttaylorr.com>
  <cover.1631228928.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,93 +75,155 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-Refactor the renaming in final() into a helper function, this is
-similar in spirit to a preceding refactoring of finish_tmp_packfile()
-in pack-write.c.
+Split up the finish_tmp_packfile() function and use the split-up version
+in pack-objects.c in preparation for moving the step of renaming the
+*.idx file later as part of a function change.
 
-Before e37d0b8730b (builtin/index-pack.c: write reverse indexes,
-2021-01-25) it probably wasn't worth it to have this sort of helper,
-due to the differing "else if" case for "pack" files v.s. "idx" files.
-
-But since we've got "rev" as well now, let's do the renaming via a
-helper, this is both a net decrease in lines, and improves the
-readability, since we can easily see at a glance that the logic for
-writing these three types of files is exactly the same, aside from the
-obviously differing cases of "*final_name" being NULL, and
-"make_read_only_if_same" being different.
+Since the only other caller of finish_tmp_packfile() was in
+bulk-checkin.c, and it won't be needing a change to its *.idx renaming,
+provide a thin wrapper for the old function as a static function in that
+file. If other callers end up needing the simpler version it could be
+moved back to "pack-write.c" and "pack.h".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/index-pack.c | 48 +++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 25 deletions(-)
+ builtin/pack-objects.c |  7 +++++--
+ bulk-checkin.c         | 16 ++++++++++++++++
+ pack-write.c           | 22 +++++++++++++---------
+ pack.h                 |  7 +++++--
+ 4 files changed, 39 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 6cc4890217..3e3736cd95 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1477,6 +1477,22 @@ static void write_special_file(const char *suffix, const char *msg,
- 	strbuf_release(&name_buf);
- }
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 2a105c8d6e..944134b6f2 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1217,6 +1217,7 @@ static void write_pack_file(void)
+ 		if (!pack_to_stdout) {
+ 			struct stat st;
+ 			struct strbuf tmpname = STRBUF_INIT;
++			char *idx_tmp_name = NULL;
  
-+static void rename_tmp_packfile(const char **final_name,
-+				const char *curr_name,
-+				struct strbuf *name, unsigned char *hash,
-+				const char *ext, int make_read_only_if_same)
+ 			/*
+ 			 * Packs are runtime accessed in their mtime
+@@ -1246,9 +1247,10 @@ static void write_pack_file(void)
+ 					&to_pack, written_list, nr_written);
+ 			}
+ 
+-			finish_tmp_packfile(&tmpname, pack_tmp_name,
++			stage_tmp_packfiles(&tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+-					    &pack_idx_opts, hash);
++					    &pack_idx_opts, hash, &idx_tmp_name);
++			rename_tmp_packfile_idx(&tmpname, &idx_tmp_name);
+ 
+ 			if (write_bitmap_index) {
+ 				size_t tmpname_len = tmpname.len;
+@@ -1265,6 +1267,7 @@ static void write_pack_file(void)
+ 				strbuf_setlen(&tmpname, tmpname_len);
+ 			}
+ 
++			free(idx_tmp_name);
+ 			strbuf_release(&tmpname);
+ 			free(pack_tmp_name);
+ 			puts(hash_to_hex(hash));
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index c19d471f0b..8785b2ac80 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -23,6 +23,22 @@ static struct bulk_checkin_state {
+ 	uint32_t nr_written;
+ } state;
+ 
++static void finish_tmp_packfile(struct strbuf *basename,
++				const char *pack_tmp_name,
++				struct pack_idx_entry **written_list,
++				uint32_t nr_written,
++				struct pack_idx_option *pack_idx_opts,
++				unsigned char hash[])
 +{
-+	if (*final_name != curr_name) {
-+		if (!*final_name)
-+			*final_name = odb_pack_name(name, hash, ext);
-+		if (finalize_object_file(curr_name, *final_name))
-+			die(_("unable to rename temporary '*.%s' file to '%s"),
-+			    ext, *final_name);
-+	} else if (make_read_only_if_same) {
-+		chmod(*final_name, 0444);
-+	}
++	char *idx_tmp_name = NULL;
++
++	stage_tmp_packfiles(basename, pack_tmp_name, written_list, nr_written,
++			    pack_idx_opts, hash, &idx_tmp_name);
++	rename_tmp_packfile_idx(basename, &idx_tmp_name);
++
++	free(idx_tmp_name);
 +}
 +
- static void final(const char *final_pack_name, const char *curr_pack_name,
- 		  const char *final_index_name, const char *curr_index_name,
- 		  const char *final_rev_index_name, const char *curr_rev_index_name,
-@@ -1505,31 +1521,13 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 		write_special_file("promisor", promisor_msg, final_pack_name,
- 				   hash, NULL);
+ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+diff --git a/pack-write.c b/pack-write.c
+index b9f9cd5c14..c21aed64b3 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -470,21 +470,28 @@ static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
+ 	strbuf_setlen(name_prefix, name_prefix_len);
+ }
  
--	if (final_pack_name != curr_pack_name) {
--		if (!final_pack_name)
--			final_pack_name = odb_pack_name(&pack_name, hash, "pack");
--		if (finalize_object_file(curr_pack_name, final_pack_name))
--			die(_("cannot store pack file"));
--	} else if (from_stdin)
--		chmod(final_pack_name, 0444);
--
--	if (final_index_name != curr_index_name) {
--		if (!final_index_name)
--			final_index_name = odb_pack_name(&index_name, hash, "idx");
--		if (finalize_object_file(curr_index_name, final_index_name))
--			die(_("cannot store index file"));
--	} else
--		chmod(final_index_name, 0444);
--
--	if (curr_rev_index_name) {
--		if (final_rev_index_name != curr_rev_index_name) {
--			if (!final_rev_index_name)
--				final_rev_index_name = odb_pack_name(&rev_index_name, hash, "rev");
--			if (finalize_object_file(curr_rev_index_name, final_rev_index_name))
--				die(_("cannot store reverse index file"));
--		} else
--			chmod(final_rev_index_name, 0444);
--	}
-+	rename_tmp_packfile(&final_pack_name, curr_pack_name, &pack_name,
-+			    hash, "pack", from_stdin);
-+	rename_tmp_packfile(&final_index_name, curr_index_name, &index_name,
-+			    hash, "idx", 1);
-+	if (curr_rev_index_name)
-+		rename_tmp_packfile(&final_rev_index_name, curr_rev_index_name,
-+				    &rev_index_name, hash, "rev", 1);
+-void finish_tmp_packfile(struct strbuf *name_buffer,
++void rename_tmp_packfile_idx(struct strbuf *name_buffer,
++			     char **idx_tmp_name)
++{
++	rename_tmp_packfile(name_buffer, *idx_tmp_name, "idx");
++}
++
++void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 const char *pack_tmp_name,
+ 			 struct pack_idx_entry **written_list,
+ 			 uint32_t nr_written,
+ 			 struct pack_idx_option *pack_idx_opts,
+-			 unsigned char hash[])
++			 unsigned char hash[],
++			 char **idx_tmp_name)
+ {
+-	const char *idx_tmp_name, *rev_tmp_name = NULL;
++	const char *rev_tmp_name = NULL;
  
- 	if (do_fsck_object) {
- 		struct packed_git *p;
+ 	if (adjust_shared_perm(pack_tmp_name))
+ 		die_errno("unable to make temporary pack file readable");
+ 
+-	idx_tmp_name = write_idx_file(NULL, written_list, nr_written,
+-				      pack_idx_opts, hash);
+-	if (adjust_shared_perm(idx_tmp_name))
++	*idx_tmp_name = (char *)write_idx_file(NULL, written_list, nr_written,
++					       pack_idx_opts, hash);
++	if (adjust_shared_perm(*idx_tmp_name))
+ 		die_errno("unable to make temporary index file readable");
+ 
+ 	rev_tmp_name = write_rev_file(NULL, written_list, nr_written, hash,
+@@ -493,9 +500,6 @@ void finish_tmp_packfile(struct strbuf *name_buffer,
+ 	rename_tmp_packfile(name_buffer, pack_tmp_name, "pack");
+ 	if (rev_tmp_name)
+ 		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
+-	rename_tmp_packfile(name_buffer, idx_tmp_name, "idx");
+-
+-	free((void *)idx_tmp_name);
+ }
+ 
+ void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
+diff --git a/pack.h b/pack.h
+index 1c17254c0a..b22bfc4a18 100644
+--- a/pack.h
++++ b/pack.h
+@@ -110,11 +110,14 @@ int encode_in_pack_object_header(unsigned char *hdr, int hdr_len,
+ int read_pack_header(int fd, struct pack_header *);
+ 
+ struct hashfile *create_tmp_packfile(char **pack_tmp_name);
+-void finish_tmp_packfile(struct strbuf *name_buffer,
++void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 const char *pack_tmp_name,
+ 			 struct pack_idx_entry **written_list,
+ 			 uint32_t nr_written,
+ 			 struct pack_idx_option *pack_idx_opts,
+-			 unsigned char sha1[]);
++			 unsigned char hash[],
++			 char **idx_tmp_name);
++void rename_tmp_packfile_idx(struct strbuf *basename,
++			     char **idx_tmp_name);
+ 
+ #endif
 -- 
 2.33.0.96.g73915697e6
 
