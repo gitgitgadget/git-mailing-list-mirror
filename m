@@ -2,98 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC20BC433F5
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 02:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CF5C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 03:00:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFCEB611AF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 02:50:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B7D161186
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 03:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236177AbhIICvJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Sep 2021 22:51:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231898AbhIICvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Sep 2021 22:51:09 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FCCC061575
-        for <git@vger.kernel.org>; Wed,  8 Sep 2021 19:50:00 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id v16so428410ilo.10
-        for <git@vger.kernel.org>; Wed, 08 Sep 2021 19:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Pkpk1jncG2PFhWHhgztteDz/AMgPCUoQQN6XSAfohmA=;
-        b=05F2tyyEJPOogGMyPSmGpq+5e3tj6+Ul1hC1WgH/+Qd8ODM9iIsZJ+bGDnB1x83PNx
-         otsMUrT/wR8E4xQEpi8RuUWY317eABcQnP5l3s67yMvhnWpsRv0+RFuAdgB2YFCk6P85
-         954h5uxSPBveNiU6OqWmSqUPx6Riep9vglKv4RE8aytgHT39id0sOmPR4pSle7Q8wlF4
-         nUUofjMTqYtalItqxQDIpHo2IzVjeI/AyongA2Dv3qqreYy5lO6X8AaJsOl0xrYxkB6R
-         GKoyKvYSnRh9VaM+zbtvHwVZkSQwZG2J8xsUs+11HL1OJpXuEDw8ZRqoMuWiD9aP6qR5
-         ZzxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Pkpk1jncG2PFhWHhgztteDz/AMgPCUoQQN6XSAfohmA=;
-        b=fAqwcNNjllBUxBjtOmgIhF1fGi9vvp8KR5v//1Nm0q9ea8QLmMDHOqDUmNJAyneopt
-         i/ZlggdPvYpllQOCWU2cCuS4dGQjk/Hhv2sNhuuiX0qapC7bvwYpvdYwKnQXLnw6TUtP
-         JCR1NnMLhxjpFKE5624vG7ldQBle0Wz//aFHwffV5NjxvrrrIXrCNGVU8TGmrwbX74EE
-         BEneWL8zNJSIEcJ7UCF02iyC6waelTkJSks4mlac2b06/71aUVAS4xEasEiwAPMaXrKe
-         CdU61ZKGyzYY1REmtj+qAnr0JSKJjxgi0LdKHHlOEw1rHOQEIHY68OMj44vzjWz1fjE6
-         echw==
-X-Gm-Message-State: AOAM533Vvj1U/4Ofdnbx0AZj0ktgvHo1dYLG1jf/MQYB9r2vEH85cHWd
-        xBZ6F/UNijvpuyKH55snBBC/IQ==
-X-Google-Smtp-Source: ABdhPJwa+CwS8ryEq7FLzStmuXCd4TWY/wkYtaIaFBwArb+RRetK6jdYLBRh0Wjb02LWvm24gL8SIA==
-X-Received: by 2002:a05:6e02:1aa5:: with SMTP id l5mr536615ilv.271.1631155799903;
-        Wed, 08 Sep 2021 19:49:59 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z18sm261666ilo.60.2021.09.08.19.49.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 19:49:59 -0700 (PDT)
-Date:   Wed, 8 Sep 2021 22:49:58 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com
-Subject: Re: [PATCH v2 0/3] prevent opening packs too early
-Message-ID: <YTl2Vn6eB2MyXehM@nand.local>
-References: <cover.1630461918.git.me@ttaylorr.com>
- <cover.1631139433.git.me@ttaylorr.com>
- <877dfqhb8n.fsf@evledraar.gmail.com>
- <8735qeh8h5.fsf@evledraar.gmail.com>
- <YTlfp/tRmNy0kt+b@nand.local>
- <87y286fs3v.fsf@evledraar.gmail.com>
- <87pmtifp2e.fsf@evledraar.gmail.com>
+        id S244107AbhIIDBN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Sep 2021 23:01:13 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:34222 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232039AbhIIDBM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Sep 2021 23:01:12 -0400
+Received: from [10.0.2.15] ([195.213.6.49])
+        by smtp with ESMTPA
+        id OAI9m3pVzdY2SOAIAmqH0I; Thu, 09 Sep 2021 04:00:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1631156402; bh=f0EcOwOFy+/KPsbaOJybbyLBZAqpyW8thCRTA/RQyjg=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=KaW3eV5dWAhe8F4ITkBUnlTWVay3TyIRi0lnuBzqwXNR2SXQl3Us07U5M1OHKCfOc
+         99JRlT2apQk+/8cvbvGajhjp9QJPYe0kpFKv6VmWC3cQlE8f9pOqsv4TwykdIjCAA0
+         yjcP2pf+oe6c7yVdWUTAn5JWdrWxzBdThiUqj40eVDG7mlvyxHCako9qcJquFBQOBY
+         kiq7DOF7pwlF8Mqe5Qys0Zsd4l+3SWPhVYCKXw4rpAqjNCBGVfjQGn4KeRtzFhqIuH
+         DOkTAZ8S9Y4AgjdVNTq6ymFHNfYiWM5h/N0MDrfNzikKxspyJB97CTk6D4/Ko7eGcr
+         YYELRRxvVeMXQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=NP5OB3yg c=1 sm=1 tr=0
+ a=ng+ES6eBAmcw5j0aA4HDOQ==:117 a=ng+ES6eBAmcw5j0aA4HDOQ==:17
+ a=IkcTkHD0fZMA:10 a=stkexhm8AAAA:8 a=__yGolY-nz7B_ldSFkcA:9 a=QEXdDO2ut3YA:10
+ a=pIW3pCRaVxJDc-hWtpF8:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: What's cooking in git.git (Sep 2021, #02; Wed, 8)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqsfyf5b74.fsf@gitster.g>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <c0c24993-77e2-51a1-c352-0399c59f1f94@ramsayjones.plus.com>
+Date:   Thu, 9 Sep 2021 03:59:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqsfyf5b74.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87pmtifp2e.fsf@evledraar.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfP0OyreJ5129fkhLW6C7ScdJrZJqAmsaHI0Mxde48dC5T2jUYH7ASRGSKC3Rqo661M/+v4+/E2nljUjSe152WnxymAA03lQUCz/q5veVxK8NhqRhxrK7
+ JQjEVZ9QVoIyGO8G0I1hOWBhOThYA6A+V9MNdQQzcx1wWHpJZ4JuasY7n/2e4eZWj2NlzvWLc5r+qg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 09, 2021 at 04:36:17AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Also: That avar-tb/idx-rename-race-3 has a bug where I didn't update the
-> bulk-checkin.c code accordingly, missed it because I was running a glob
-> of tests that included "*pack*,*rev*", but missed "*large*". I've got a
-> avar-tb/idx-rename-race-4 which fixes it. Sorry about that.
->
-> https://github.com/git/git/compare/master...avar:avar-tb/idx-rename-race-4
 
-Yep, I noticed the same thing while running make test on the series
-before sending it out. Your fix matches mine (which is to move the
-change from 7/8 to 2/8).
 
-While I was fixing the second patch, I inserted a new one just before it
-to store the hash in a `unsigned char hash[GIT_MAX_RAWSZ]` instead of a
-`struct object_id`.
+On 08/09/2021 16:38, Junio C Hamano wrote:
 
-Thanks,
-Taylor
+test t5319-multi-pack-index.sh on 'seen' has been failing for
+several days, so I had a quick look tonight. This issue relates
+to the following two topics:
+
+> * jb/midx-revindex-fix (2021-08-23) 1 commit
+>  - multi-pack-index: fix *.rev cleanups with --object-dir
+> 
+>  An implementation in "multi-pack-index write" that takes object
+>  directory inconsistently used that and the object store of the
+>  default repository, causing segfaults and possibly corrupting
+>  repositories.
+> 
+>  On hold.
+>  cf. <xmqqo89jbf49.fsf@gitster.g>
+> 
+
+...
+
+> * tb/multi-pack-bitmaps (2021-09-01) 27 commits
+>  - p5326: perf tests for MIDX bitmaps
+>  - p5310: extract full and partial bitmap tests
+>  - midx: respect 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+>  - t7700: update to work with MIDX bitmap test knob
+>  - t5319: don't write MIDX bitmaps in t5319
+>  - t5310: disable GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
+>  - t0410: disable GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
+>  - t5326: test multi-pack bitmap behavior
+>  - t/helper/test-read-midx.c: add --checksum mode
+>  - t5310: move some tests to lib-bitmap.sh
+>  - pack-bitmap: write multi-pack bitmaps
+>  - pack-bitmap: read multi-pack bitmaps
+>  - pack-bitmap.c: avoid redundant calls to try_partial_reuse
+>  - pack-bitmap.c: introduce 'bitmap_is_preferred_refname()'
+>  - pack-bitmap.c: introduce 'nth_bitmap_object_oid()'
+>  - pack-bitmap.c: introduce 'bitmap_num_objects()'
+>  - midx: avoid opening multiple MIDXs when writing
+>  - midx: close linked MIDXs, avoid leaking memory
+>  - midx: infer preferred pack when not given one
+>  - midx: reject empty `--preferred-pack`'s
+>  - midx: clear auxiliary .rev after replacing the MIDX
+>  - midx: fix `*.rev` cleanups with `--object-dir`
+>  - midx: disallow running outside of a repository
+>  - Documentation: describe MIDX-based bitmaps
+>  - pack-bitmap-write.c: free existing bitmaps
+>  - pack-bitmap-write.c: gracefully fail to write non-closed bitmaps
+>  - pack-bitmap.c: harden 'test_bitmap_walk()' to check type bitmaps
+> 
+>  The reachability bitmap file used to be generated only for a single
+>  pack, but now we've learned to generate bitmaps for history that
+>  span across multiple packfiles.
+> 
+>  Will merge to 'next'.
+
+The merge commit 24cade3ceb ("Merge branch 'jb/midx-revindex-fix' into seen",
+2021-09-07) basically takes two versions of the same patch and keeps both
+versions of the same test. The two patches are:
+
+  - c575d4a2d9 ("multi-pack-index: fix *.rev cleanups with --object-dir",
+    2021-08-23)
+  - 426c00e454 ("midx: fix `*.rev` cleanups with `--object-dir`", 2021-08-31)
+
+(the second patch is from the 'tb/multi-pack-bitmaps' branch).
+
+The second patch even includes an acknowledgment of 'Original-patch-by:
+Johannes Berg <johannes@sipsolutions.net>' (ie the first patch).
+
+  $ ./t5319-multi-pack-index.sh -i -v
+...
+  expecting success of 5319.19 'multi-pack-index *.rev cleanup with --object-dir':
+...
+  ok 19 - multi-pack-index *.rev cleanup with --object-dir
+
+  expecting success of 5319.20 'multi-pack-index *.rev cleanup with --object-dir':
+...
+  fatal: not a git repository (or any of the parent directories): .git
+...
+  $
+
+The 'fatal' message is issued by a call to 'nongit git multi-pack-index ... write'
+command, which implies that 'git multi-pack-index' dies when not run from
+a repository. When the original patch was written, that command would not
+have died, so somewhere between v2.33.0 and 'seen' (maybe as part of the
+'tb/multi-pack-bitmaps' branch, I haven't looked), that was changed and
+that test no longer works.
+
+If I had to change that test to take account of that change in behaviour,
+then it would look pretty much the same as the new test in Taylor's commit
+(and which can now be seen as test #19 above).
+
+So, a solution would be to simply drop 'jb/midx-revindex-fix', since it
+has effectively been incorporated into Taylor's branch. You could also
+go the other way around, drop commit 426c00e454 from Taylor's branch and
+fix up the test in Johannes's patch ... :-P
+
+Well, I only had a quick look so (hopefully) I haven't missed something
+obvious!
+
+ATB,
+Ramsay Jones
+
