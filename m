@@ -2,120 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0955C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 17:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B88CDC433F5
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 17:51:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF8516101A
-	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 17:50:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A14DB60F45
+	for <git@archiver.kernel.org>; Thu,  9 Sep 2021 17:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242091AbhIIRvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Sep 2021 13:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34748 "EHLO
+        id S242419AbhIIRxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Sep 2021 13:53:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237255AbhIIRva (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Sep 2021 13:51:30 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16399C061574
-        for <git@vger.kernel.org>; Thu,  9 Sep 2021 10:50:21 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id w17so2169266qta.9
-        for <git@vger.kernel.org>; Thu, 09 Sep 2021 10:50:21 -0700 (PDT)
+        with ESMTP id S237575AbhIIRxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Sep 2021 13:53:04 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C4BBC061574
+        for <git@vger.kernel.org>; Thu,  9 Sep 2021 10:51:55 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id a16-20020a63d410000000b00268ebc7f4faso1583758pgh.17
+        for <git@vger.kernel.org>; Thu, 09 Sep 2021 10:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JL/LbbOV3wPwxgZLyqXajE28KnmJIlmRkpljJSLOHW8=;
-        b=nkE4UUITLEa0f22xbfR94JBoIFDdwhInNBjH7KWh0/ETssVNwhw5pp5dkvquiK8ScM
-         MoWytPN2PAYc0NHwN9tXHDrdrfz25UYTzRwl2kWAPDkzaSmk6UrxYZ+MdxtFW4YXd6NL
-         dwMa/HU6oSU5OpvTB7m3aDTdPAyO+2b40pBmIt09Im34CjhKZjbeSfRA8/SgK3mNoRbi
-         ud7OkjuaggmGx6fQxFtCDCrGLq0nJzb28AYVUqvw1hoHW+2pYiP/vkvPcnsML7IaAmfT
-         bMjwCk6+xZ+Du5afjRL/y/03v9xjwt/tWfxel2d7CHl3RLEuDHrh5VMn9MbLWgziXBj2
-         fyDg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=lvM8HMlJI5jcGrCXy8kNTrXUEM0UxXxzDbTy+RaryHc=;
+        b=GIf2VU805VeqBwC6yHT+mjAejKIC8gGyqKxQAbPXGJEKwUWHDAUeZYffPuRfoSVK25
+         z+w4bMP6JKcrX1no5/hKh3nryeVnpR25gfO5ByDzQ/NRNG82FBNBGg7WzGapL9DZaBD0
+         Myp+ozj6ao0SvKX5ZM5lGGnlL3X77N6Tf7k08u4zhw2OTxr6/EUyPWJQaOKHZTdIltWq
+         rF0SLn1umf05QPNZLqeII62gZ5GB+Ii7hISH52SvQBWCVv2mLmI1EVXCqW5Rro5/GFgk
+         95jm2+Aq3fS5yePxSKSJn7igMwwPsu8x6efrCUpLeZ/xYhyre6lpaVCQnQt5oLwPbBYO
+         SA+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JL/LbbOV3wPwxgZLyqXajE28KnmJIlmRkpljJSLOHW8=;
-        b=wFWOjW4vaiNDucA/XFqui/fTW8RGc9Shoc4+qp7eI733Sqpo7jpQ93Ap7kg4n8J918
-         O/ooZNqoCIPZobHpI9t7CH/Ry4ZfmCuhVaxjplWIqr21Ea41bM0OUDD8bpBeUKO+hPiv
-         BrIKzoCPlZDBHT/kQJThtjMbQoGIrcb8Y2x136iuyZU4qpbuaif0yGHmzV1Bzq+b2+E+
-         0pex1j2Ds3j1fHcc+ec0JfiJPGVIl9zhy82poXicWWaDoJR1ztG1M1071aX5HrxOeuoF
-         FvCIYzakniN8DuTWnTsi/VawOX3ZmbaSQKUy0ZU7+rAX1DHgG4bvAHGPebtyXoLZxfZu
-         xsyg==
-X-Gm-Message-State: AOAM530/ltxgI9Qjjw8Il17Tfg6E9Cn161j+slHrZEFNfBSndI72KPIM
-        GQEjWnaHeKbkZopgMeDIzBk=
-X-Google-Smtp-Source: ABdhPJxX6rjSoHMhUHUa4/RjY0y5N19+bUw/Ub4/zU4lWXO47zKTImxaHwSjk8dJtud8f2OKeg04iw==
-X-Received: by 2002:ac8:51da:: with SMTP id d26mr4091030qtn.331.1631209820178;
-        Thu, 09 Sep 2021 10:50:20 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id o23sm1515523qtq.7.2021.09.09.10.50.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Sep 2021 10:50:19 -0700 (PDT)
-Subject: Re: [PATCH] Docs: web server must setenv GIT_PROTOCOL for v2
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20210904151721.445117-1-konstantin@linuxfoundation.org>
- <YTOW352xtsbvJcKy@coredump.intra.peff.net>
- <20210907211128.mauwgxupbredgx7w@meerkat.local>
- <YTiVDo4m5B5RcfCg@coredump.intra.peff.net>
- <YTiXEEEs36NCEr9S@coredump.intra.peff.net>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <64a5aaf1-64af-3599-8520-ff3b55411e2a@gmail.com>
-Date:   Thu, 9 Sep 2021 13:50:18 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <YTiXEEEs36NCEr9S@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=lvM8HMlJI5jcGrCXy8kNTrXUEM0UxXxzDbTy+RaryHc=;
+        b=pjarZ70m3Up48jPCE4zsEGHdFR0k0afjhGgNi6rtUwu6ZT6PLw3k9G1NIdKOKQ5e4M
+         eGTadxCJcr7z0BEOtbv0rc4G3hrgEmp0X8ei69PHBaoJkoeDyvptRILTuXmTserzuxxd
+         oKu3eq0Qu8PaoD0wmSisB1VPP0P+zBzNedB98AOkTY+YrG4doj6k2pQxbxV4oPYO8m/Y
+         1w8/N+mcVbX5IBDwQguk3/AUjbZYR9QK4JiW712x0C63sElOcdr1cBFD0h0aiQq4dfu7
+         53ToX80XM+3tyi8EYHDawwIl8vxApzuUE62Ahd2CAc0aqPPvvqQoAO5ndVu1HM9G6X4k
+         UQ+Q==
+X-Gm-Message-State: AOAM530tAvoxVqAaPd8fBHk0B9PkbWvAfPotoXDCfNt5ewHw/ebqrQsI
+        s+xmO2atNzImjCkVGgem6/wN01dJGMuNf8iPtV8e
+X-Google-Smtp-Source: ABdhPJxOj/HjnIn4LQYkXvzW16b4sTnDdT2vAqo6UPVf+Bfjijok9N+WIWiD2jb1TDr52F8O0JnEKtTfzUZKbcmaXl05
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:fd7:: with SMTP id
+ gd23mr70540pjb.1.1631209914613; Thu, 09 Sep 2021 10:51:54 -0700 (PDT)
+Date:   Thu,  9 Sep 2021 10:51:52 -0700
+In-Reply-To: <CABPp-BGKBMtue-T1ah-+RQHJ+ceYBVsqs54Vx0p-Hs+UkLXPtw@mail.gmail.com>
+Message-Id: <20210909175152.2550626-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BGKBMtue-T1ah-+RQHJ+ceYBVsqs54Vx0p-Hs+UkLXPtw@mail.gmail.com>
+X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
+Subject: Re: [PATCH 0/3] More add_submodule_odb() cleanup in merge code
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-Le 2021-09-08 à 06:57, Jeff King a écrit :
-> On Wed, Sep 08, 2021 at 06:48:47AM -0400, Jeff King wrote:
+> On Wed, Sep 8, 2021 at 11:18 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+> >
+> > (CC-ing Elijah in case he has insight into the merge-ort part.)
 > 
->> Both of the included examples here have been tested to work. The one for
->> lighttpd is a little less direct than I'd like, but I couldn't find a
->> way to directly set an environment variable to the value of a request
->> header. From my reading of the documentation, lighttpd will set
->> HTTP_GIT_PROTOCOL automatically, but git-http-backend looks only at
->> GIT_PROTOCOL. Arguably http-backend should do this translation itself.
+> All the submodule merging related functions were lifted from
+> merge-recursive.c and minimally modified to fit the new structure.
+> The only substantive change I made was to fix the merge result for
+> virtual merge bases, but that's like one or two lines of code.  In
+> particular, everything relating to submodule objects was totally
+> untouched...and I think that's reflected in the fact that your PATCH 2
+> basically is the same patch twice, once for merge-recursive and once
+> for merge-ort.
 > 
-> So having discovered this, I kind of wonder if these documentation
-> patches are barking up the wrong tree. There is no reason we would not
-> want v2 to work out of the box (after all, it does for git://).
+> I read over PATCH 2 and I didn't find anything that looked
+> problematic, but I'm not up-to-speed on the add_submodule_odb and repo
+> handling bits of the codebase so I'm not sure I would catch anything.
+> But I am encouraged by the fact that it looks like you did the same
+> stuff to merge-recursive and merge-ort; I'd be worried you missed
+> something if that weren't the case.
+
+Thanks for taking a look.
+
+> As a sidenote, though...
 > 
-> The patch below does that (and could replace both my and Konstantin's
-> documentation patches).
-
-I agree it's nice to make it work out of the box, without the web server
-admin having to configure anything. But, I'm not sure we should completely
-drop the documentation patches: your patch will only affect future versions
-of git-http-backend, and users of previous versions will be left without
-any documentation as to how to configure it for protocol v2. So I would think we should
-keep the documentation patches, maybe with a mention "this should not be necessary
-in Git 2.34 and later versions" or something like that (since your
-commit message mentions that it "generally" should work like that depending
-on the web servers).
-
+> This does remind me that I noticed that the following functions from
+> object-store.h do not take an explicit repository:
 > 
-> This also makes me wonder if we should be documenting the use of
-> AcceptEnv for ssh (which sadly I don't think we can make work
-> out-of-the-box).
+> write_object_file()
+> hash_object_file()
+> hash_object_file_literally()
+> force_object_loose()
+> 
+> I have a patch sitting around somewhere (possibly only still
+> referenced in my 'temp' branch) to make repo_*() variants of the above
+> functions, and turn the above into simple wrappers of the repo_*()
+> variants which just pass the_repository (much like someone else did
+> with read_object_file() and repo_read_object_file()).  It also updates
+> merge-ort to use the new repo_*() functions.  However, I ended up
+> excluding it from my merge-ort submissions since it wasn't necessary.
+> Would this be of interest in your submodule work, though?  I guess
+> it'd only matter if we started doing real merges of submodules as part
+> of a parent repo merge.  (As opposed to the fast-forward-only merges
+> that merge-recursive/merge-ort do right now for submodules.)
 
-I think it would be a good idea to document it, yes. FWIW I found out about
-it at https://docs.gitlab.com/ee/administration/git_protocol.html.
-
-Cheers,
-Philippe.
+I think that these functions would be useful if we were to write into
+submodules (for example, in a real merge of submodules, as you said).
+Right now my submodule work is just making it support partial clones, so
+I'm not planning to introduce any new submodule writes. (Well, besides
+the fact that a lazy-fetch in a submodule would end up with new objects,
+but that's already handled because we do the fetch in a separate process
+in the submodule's gitdir.)
