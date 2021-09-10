@@ -2,119 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0541C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 17:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85D41C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 17:14:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B818F611B0
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 17:07:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 692C5610C9
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 17:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbhIJRIi convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 10 Sep 2021 13:08:38 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:28142 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbhIJRIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 13:08:38 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 18AH6vPU048628
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 10 Sep 2021 13:06:57 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>
-Cc:     <git@vger.kernel.org>, "'Jeff King'" <peff@peff.net>,
-        "'brian m . carlson'" <sandals@crustytoothpaste.net>,
-        "'Bagas Sanjaya'" <bagasdotme@gmail.com>
-References: <cover-0.5-00000000000-20210908T152807Z-avarab@gmail.com>        <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com> <xmqqr1dwtlt1.fsf@gitster.g>
-In-Reply-To: <xmqqr1dwtlt1.fsf@gitster.g>
-Subject: RE: [PATCH v2 0/8] post-v2.33 "drop support for ancient curl" follow-up
-Date:   Fri, 10 Sep 2021 13:06:52 -0400
-Message-ID: <024f01d7a666$4338a620$c9a9f260$@nexbridge.com>
+        id S230482AbhIJRPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 13:15:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52708 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229664AbhIJRPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 13:15:21 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 42E9BE67EA;
+        Fri, 10 Sep 2021 13:14:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=yfdj13RT0bW7
+        NqKZIXnx+iug3Z4Zew5ILLIa/qKCtGo=; b=vbeQpVWzpLFH9pmVaDwALE9Knw+Q
+        awt/Z1wJLtIZ8ZodcwwMZhB6kGVFFow+WuQNdtfH49HABXPu3/hITC2G15udL67n
+        3dfwFVY5kw0Mo6HBM6qGItEzILU7gLCQ15RWOw1U67tvr3Z9leFQy887QpoyJfrN
+        SjFxuiRLv/tI7nk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39737E67E9;
+        Fri, 10 Sep 2021 13:14:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76142E67E8;
+        Fri, 10 Sep 2021 13:14:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v2 0/8] post-v2.33 "drop support for ancient curl"
+ follow-up
+References: <cover-0.5-00000000000-20210908T152807Z-avarab@gmail.com>
+        <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
+Date:   Fri, 10 Sep 2021 10:14:05 -0700
+In-Reply-To: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 10 Sep
+ 2021 13:04:25
+        +0200")
+Message-ID: <xmqqbl50tkte.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIKiDYEGGDgat8hC4mgK2jv2Uo19wJ6mpY6AgZJDOirE7RUAA==
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 825C6106-125A-11EC-A41D-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On September 10, 2021 12:53 PM, Junio C Hamano wrote:
->To: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->Cc: git@vger.kernel.org; Jeff King <peff@peff.net>; brian m . carlson <sandals@crustytoothpaste.net>; Bagas Sanjaya
-><bagasdotme@gmail.com>
->Subject: Re: [PATCH v2 0/8] post-v2.33 "drop support for ancient curl" follow-up
->
->Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Version 1 of this had a really bad bug where we'd effectively make all
->> supported curl versions act like 7.19.4, i.e. the oldest supported
->> version except for a couple of our supported features. This is because
->> most of the things checked with the "ifdef" checks are enum fields,
->> not macros. So basically the "devil's advocate" Jeff King pointed out
->> in [2] was already the case. Oops!
->
->Wow.  Thanks for bothering to actually test ;-)
->
->Because we learned that "#ifdef CURL_SOME_FEATURE_WE_WANT" is not a generally applicable way to conditionally build for various
->features and we'd need to switch on the version numbers, it is now clear (at least to me) that the central registry approach would be a
->direction to go.
->
->> In this v2 we're instead checking LIBCURL_VERSION_NUM consistently,
->> even in those cases where we are checking things that are defined via
->> macros.
->
->Nice.
->
->>     ++ * For each X symbol we need from curl we define our own
->>     ++ * GIT_CURL_HAVE_X. If multiple similar symbols with the same prefix
->>     ++ * were defined in the same version we pick one and check for that name.
->>      + *
->>      + * Keep any symbols in date order of when their support was
->>      + * introduced, oldest first, in the official version of cURL library.
->>     @@ git-curl-compat.h (new)
->>      +/**
->>      + * CURLOPT_TCP_KEEPALIVE was added in 7.25.0, released in March 2012.
->>      + */
->>     -+#ifdef CURLOPT_TCP_KEEPALIVE
->>     ++#if LIBCURL_VERSION_NUM >= 0x071900
->>      +#define GITCURL_HAVE_CURLOPT_TCP_KEEPALIVE 1
->>      +#endif
->
->What we have in the posted patch is perfectly OK and serviceable, but this organization somewhat surprised me.
->
->Instead of one #if...#endif block per a feature macro, I expected to see a sequence of
->
->	/* 7.34.0 (0x072200) - Dec 2013 */
->	#if 0x072200 < VERSION
->	#define HAVE_FOO 1
->	#define HAVE_BAR 1
->	...
->	#endif
->
->	/* 7.25.0 (0x071900) - March 2012 */
->	#if 0x071900 < VERSION
->	#define HAVE_BAZ 1
->	#define HAVE_QUX 1
->	...
->        #endif
->
->
->because it would make it more clear which features can now be unconditionally used when we raise the cut-off point for the oldest
->supported version if we group these entries along the versions.
->
->Thanks.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Not that it might matter much, but both NonStop platforms are now on curl 7.78.0 and we are deploying git under OpenSSL 3 this week or next. So any objections I might previously have had are now fortunately really moot.
-Cheers,
--Randall
+> This is a follow-up to the already-integrated topic for dropping
+> support for older curl versions submitted before the v2.33 release[1].
 
+To which commit are these expected to apply?  I am having trouble
+wiggling 5 and 7 in.
+
+Thanks.
