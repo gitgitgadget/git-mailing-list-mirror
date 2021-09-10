@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9441DC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A53C433FE
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7255F61100
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C013F6108B
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232784AbhIJLb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 07:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45144 "EHLO
+        id S232793AbhIJLb3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 07:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232537AbhIJLb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 07:31:27 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FB0C061574
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:16 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id g16so2156556wrb.3
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:16 -0700 (PDT)
+        with ESMTP id S232783AbhIJLb2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 07:31:28 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2487CC061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:17 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id i3so972389wmq.3
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CScxchun0IGE4F54QA74ikvO0lE/HgcYiZkwErIEqcY=;
-        b=MlqmT3OhYWnNJiZ5NXJRXfzYR7eSpJDJMLUvNXHE7FIL2MCsSFX+U1Y7N2Hd3A/5NZ
-         WFGHzsOx3ZuDaF5BfnT4u+wb308/iDAaXxuBU091BXbFeO3xIm38RaAlxfcRoCaXyxuM
-         uZu6PLE0ZZd3nvmZhMQ0PpD0JT+QGsqp3N+YHQ5vQ2WtnnPVtKuawT5H7dcKh2w0YwQO
-         Ga8x8yB1tTzNR85SaXjd+Q41jCN/58kWNXSvE4vcmVgodkNCR3nfQcud0DOMaAHkKos4
-         WXvNqQscMOXh0a1H70jkRtroGhFPcNcMtlEQ8hWpMPbFACjqWC+UwfyfYNLvICbPmlLt
-         3WiQ==
+        bh=3qjkeoBLWZp3W3G37t1lZY6yDIN2SCEN+Ps8suMIGCI=;
+        b=pzCAYJwMexyuplwkoz3Ujc8gnOa001VSbZ2DA0jqLoiRqHoErAyAPa0ePDudnKsSQI
+         eduEQUoM5xBhd4pcDps2z4JeAvn/O4pLjqrIX/EsvZ7DQHRDeLDH1NRRuDUVH5hL2c8f
+         aN7EPqafdiUeBrCB+Auw1A9BEyUTX6TuF/cPAfjWimIzXVtvMC2w4Ce/uJTzRoN5tpfe
+         PXnyok1UJgYkeIV3wKi03obRj8FD4fptQ39ZZE0iMjxrkjzQ2/ic42VJB4fGmvM1ELJH
+         eNhVpQzTWyP2QG6oP/vqo19KzQpigbj8+67/aRFs5AykXTjEzvys1XyDgRcZE3Iy7QBM
+         NGPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CScxchun0IGE4F54QA74ikvO0lE/HgcYiZkwErIEqcY=;
-        b=kAIH5AmdHFsGTYEPti+I5SD9TpKDLM1JRxPw1OyRaU3Rcz7fDpGiYn5nKQdsV+95x6
-         TJlJlDqdDnvr/PfbvpWsFj0nu413XLEYMDSufJFy3JG2j0UYbViG0H8sQhGOtigGgItQ
-         0ysq/u+vDubRWXOG/oHtfxOSYOSo5335ryTHdF3ZhWklvOZ03ZdwYV2tnrcS7eGBUwYd
-         j1LEGLPBc4KYMT1OiDPyjLQ1FaQeOpTRcW8RdNzrAV3++sZiSizDlkjC55Es9vx1YRrd
-         R7FAb0/A4+8U3uPXv2lfAcwy3NaM36wOqSwO7/u+YqEyFc54cy43DOgRQRKuRAilO8re
-         U3xA==
-X-Gm-Message-State: AOAM5329Yel6kR+K9WswgF16YYWxCh5hgeSzfDtbs3vLhAQwlcFUn6Z3
-        MZTvP71SKT4B1BvF/vyZbZikYlH5aQZDlQ==
-X-Google-Smtp-Source: ABdhPJxNrJaRowNn27DY0zTV1abbxpvlfndpFQe6LXxcXas7pEfYMJAj1x+Xk+QyREttVq3wxMBPNw==
-X-Received: by 2002:adf:f1c4:: with SMTP id z4mr2838845wro.418.1631273414526;
-        Fri, 10 Sep 2021 04:30:14 -0700 (PDT)
+        bh=3qjkeoBLWZp3W3G37t1lZY6yDIN2SCEN+Ps8suMIGCI=;
+        b=28IPBd+U9Psf+QVDmRCWOkZ2fGp8TmtwiBXBVBJnJWzczshazCTh0FMTqYzvYPSQEa
+         P330SjhYmzNL7yHp8pDpdqX8aMu8SF2uNutbKvIUshXN+G/cLJox+Zro4VLuFNTz2Vdd
+         HGXQDpSRfPsq4L1cHJLZRz6DqD6/AO6J1qYhInt8XChjViXaWAugzjkSylcH01+GrmbI
+         EGyDN84BP5nWr998KKqtlQT4h0h+/oAJ+BOgewM1IYinHf4DDxhFfHZeTPBkpT32OcaE
+         lDXKwrFUiIaDXy575529AdWtGttXZIJc0v2fOrTN9W4GRinLMVENn+v711GAviBrkWrl
+         L4/g==
+X-Gm-Message-State: AOAM532My/fwNQ3Te6HscfWtHDdHB+vYqHZ7dTG7JebmQltOHuUisl3b
+        ksbYt7RrUd2GhNrjiwoaiX1I+zvsH63qDA==
+X-Google-Smtp-Source: ABdhPJwoSVCgl66m9AdBVRYZpLoKB7SG2HK9Pk0NwaHN55iDg3aB+dT5TTSbDQMqtaeJnGo5RR6G8g==
+X-Received: by 2002:a05:600c:3554:: with SMTP id i20mr7755070wmq.164.1631273415449;
+        Fri, 10 Sep 2021 04:30:15 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6sm4103278wmp.1.2021.09.10.04.30.13
+        by smtp.gmail.com with ESMTPSA id z6sm4103278wmp.1.2021.09.10.04.30.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 10 Sep 2021 04:30:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -67,12 +67,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/5] help: fix usage nits & bugs, completion shellscript->C
-Date:   Fri, 10 Sep 2021 13:28:41 +0200
-Message-Id: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
+Subject: [PATCH v2 1/5] help: correct the usage string in -h and documentation
+Date:   Fri, 10 Sep 2021 13:28:42 +0200
+Message-Id: <patch-v2-1.5-b10bfd21f14-20210910T112545Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.873.g125ff7b9940
-In-Reply-To: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com> <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,203 +80,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes various bugs & edge cases in the "git help" command,
-and improves and splits the internal-only "--completion-for-config"
-option into two, and as a result can get rid of an awk/sort -u
-pipeline in the bash completion.
+Clarify the usage string in the documentation so we group e.g. -i and
+--info, and add the missing short options to the "-h" output.
 
-For v1, see : https://lore.kernel.org/git/cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com/
+The alignment of the second line is off now, but will be fixed with
+another series of mine[1]. In the meantime let's just assume that fix
+will make it in eventually for the purposes of this patch, if it's
+misaligned for a bit it doesn't matter much.
 
-This should address all the feedback on v1 and more. I dropped the 4/6
-refactoring change, we now also specifically say what option
-combinations are bad before emitting usage info, as requested by Eric
-Sunshine.
+1. https://lore.kernel.org/git/cover-0.2-00000000000-20210901T110917Z-avarab@gmail.com
 
-Ævar Arnfjörð Bjarmason (5):
-  help: correct the usage string in -h and documentation
-  help: correct usage & behavior of "git help --guides"
-  help tests: add test for --config output
-  help: correct logic error in combining --all and --config
-  help / completion: make "git help" do the hard work
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-help.txt | 2 +-
+ builtin/help.c             | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
- Documentation/git-help.txt             |   9 +-
- builtin/help.c                         | 110 ++++++++++++++++++-------
- contrib/completion/git-completion.bash |  21 +++--
- t/t0012-help.sh                        |  46 +++++++++++
- 4 files changed, 140 insertions(+), 46 deletions(-)
-
-Range-diff against v1:
-1:  b5c79d87847 = 1:  b10bfd21f14 help: correct the usage string in -h and documentation
-2:  1ebd443e43c ! 2:  039639a0dd3 help: correct usage string for "git help --guides"
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    help: correct usage string for "git help --guides"
-    +    help: correct usage & behavior of "git help --guides"
-     
-         As noted in 65f98358c0c (builtin/help.c: add --guide option,
-         2013-04-02) and a133737b809 (doc: include --guide option description
-    @@ Commit message
-         argument we'll now error out.
-     
-         The comment being removed was added in 15f7d494380 (builtin/help.c:
-    -    split "-a" processing into two, 2013-04-02) and is no longer
-    -    applicable as explained above.
-    +    split "-a" processing into two, 2013-04-02). The "Ignore any remaining
-    +    args" part of it is now no longer applicable as explained above, let's
-    +    just remove it entirely, it's rather obvious that if we're returning
-    +    we're done.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ builtin/help.c: static struct option builtin_help_options[] = {
-      };
-      
-     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-    - 	int nongit;
-    - 	enum help_format parsed_help_format;
-    - 	const char *page;
-    -+	int standalone = 0;
-    - 
-    - 	argc = parse_options(argc, argv, prefix, builtin_help_options,
-      			builtin_help_usage, 0);
-      	parsed_help_format = help_format;
-      
-     +	/* Options that take no further arguments */
-    -+	standalone = show_config || show_guides;
-    -+	if (standalone && argc)
-    -+		usage_with_options(builtin_help_usage, builtin_help_options);
-    ++	if (argc && show_guides)
-    ++		usage_msg_opt(_("--guides cannot be combined with other options"),
-    ++			      builtin_help_usage, builtin_help_options);
-     +
-      	if (show_all) {
-      		git_config(git_help_config, NULL);
-      		if (verbose) {
-     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-    - 	if (show_guides)
-    - 		list_guides_help();
-      
-    --	if (show_all || show_guides) {
-    -+	if (show_all || standalone) {
-    + 	if (show_all || show_guides) {
-      		printf("%s\n", _(git_more_info_string));
-     -		/*
-     -		* We're done. Ignore any remaining args
-    @@ t/t0012-help.sh: test_expect_success 'basic help commands' '
-      '
-      
-     +test_expect_success 'invalid usage' '
-    -+	test_expect_code 129 git help -c git-add &&
-     +	test_expect_code 129 git help -g git-add
-     +'
-     +
-3:  d0a8045c9ed = 3:  258282095de help tests: add test for --config output
-4:  e4bc7e57a6d < -:  ----------- help: refactor "for_human" control flow in cmd_help()
-5:  bcc640d32a1 ! 4:  32d73d5273c help: correct logic error in combining --all and --config
-    @@ builtin/help.c: static const char * const builtin_help_usage[] = {
-      };
-      
-     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-    + 	int nongit;
-      	enum help_format parsed_help_format;
-      	const char *page;
-    - 	int standalone = 0;
-     +	int need_config = 0;
-      
-      	argc = parse_options(argc, argv, prefix, builtin_help_options,
-    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-      	parsed_help_format = help_format;
-      
-     +	/* Incompatible options */
-    -+	if (show_all + !!show_config + show_guides > 1)
-    -+		usage_with_options(builtin_help_usage, builtin_help_options);
-    ++	if (show_all && show_config)
-    ++		usage_msg_opt(_("--config and --all cannot be combined"),
-    ++			      builtin_help_usage, builtin_help_options);
-    ++
-    ++	if (show_config && show_guides)
-    ++		usage_msg_opt(_("--config and --guides cannot be combined"),
-    ++			      builtin_help_usage, builtin_help_options);
-     +
-      	/* Options that take no further arguments */
-    - 	standalone = show_config || show_guides;
-    - 	if (standalone && argc)
-    - 		usage_with_options(builtin_help_usage, builtin_help_options);
-    ++	if (argc && show_config)
-    ++		usage_msg_opt(_("--config cannot be combined with command or guide names"),
-    ++			      builtin_help_usage, builtin_help_options);
-    + 	if (argc && show_guides)
-    +-		usage_msg_opt(_("--guides cannot be combined with other options"),
-    ++		usage_msg_opt(_("--guides cannot be combined with command or guide names"),
-    + 			      builtin_help_usage, builtin_help_options);
-      
-     -	if (show_all) {
-     +	need_config = show_all || show_config;
-    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-     -	if (show_guides)
-     -		list_guides_help();
-     -
-    --	if (show_all || standalone) {
-    +-	if (show_all || show_guides) {
-     -		printf("%s\n", _(git_more_info_string));
-     -		return 0;
-     -	}
-    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-     
-      ## t/t0012-help.sh ##
-     @@ t/t0012-help.sh: test_expect_success 'basic help commands' '
-    + '
-      
-      test_expect_success 'invalid usage' '
-    - 	test_expect_code 129 git help -c git-add &&
-     -	test_expect_code 129 git help -g git-add
-     +	test_expect_code 129 git help -g git-add &&
-    ++	test_expect_code 129 git help -c git-add &&
-    ++	test_expect_code 129 git help -g git-add &&
-     +
-     +	test_expect_code 129 git help -a -c &&
-     +	test_expect_code 129 git help -g -c
-6:  940061e84d1 ! 5:  e995a42cb8d help / completion: make "git help" do the hard work
-    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
-      
-     -	if (show_config) {
-     -		int for_human = show_config == 1;
-    --
-    --		if (for_human)
-    --			setup_pager();
-    --		list_config_help(for_human);
-    --		if (for_human)
-     +	switch (show_config) {
-     +	case SHOW_CONFIG_UNSET:
-     +		break;
-    -+	case SHOW_CONFIG_HUMAN:
-    -+		setup_pager();
-    -+		/* fallthrough */
-     +	case SHOW_CONFIG_VARS:
-     +	case SHOW_CONFIG_SECTIONS:
-     +		list_config_help(show_config);
-    -+		if (show_config == SHOW_CONFIG_HUMAN)
-    - 			printf("\n%s\n", _("'git help config' for more information"));
-      
-    +-		if (!for_human) {
-    +-			list_config_help(for_human);
-    +-			return 0;
-    +-		}
-    ++		return 0;
-    ++	case SHOW_CONFIG_HUMAN:
-    + 		setup_pager();
-    +-		list_config_help(for_human);
-    ++		list_config_help(show_config);
-    + 		printf("\n%s\n", _("'git help config' for more information"));
-    ++
-      		return 0;
-    + 	}
-    + 
-     
-      ## contrib/completion/git-completion.bash ##
-     @@ contrib/completion/git-completion.bash: __git_config_vars=
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 44fe8860b3f..568a0b606f3 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git help' [-a|--all [--[no-]verbose]] [-g|--guides]
+-	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
++	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/help.c b/builtin/help.c
+index b7eec06c3de..44ea2798cda 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -59,7 +59,8 @@ static struct option builtin_help_options[] = {
+ };
+ 
+ static const char * const builtin_help_usage[] = {
+-	N_("git help [--all] [--guides] [--man | --web | --info] [<command>]"),
++	N_("git help [-a|--all] [-g|--guides] [--[no-]verbose]]\n"
++	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
+ 	NULL
+ };
+ 
 -- 
 2.33.0.873.g125ff7b9940
 
