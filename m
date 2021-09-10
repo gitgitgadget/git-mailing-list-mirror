@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3AA1C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43B6AC4332F
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A58C761100
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 276E96108B
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232828AbhIJLbc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 07:31:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45164 "EHLO
+        id S232831AbhIJLbd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 07:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232817AbhIJLba (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 07:31:30 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7918C061574
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:19 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id w29so1388284wra.8
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:19 -0700 (PDT)
+        with ESMTP id S232825AbhIJLbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 07:31:31 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95460C061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:20 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id q11so2135133wrr.9
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ptltSDCTtcLfQ+U8xcSudHvONAbaGZzTt/hw9/KbJ+s=;
-        b=XvIsl8SMIA0lnVx/Y8LPtm7nbK+SBGYaU0bpcTmdQ/zZZqgku4pcog/yWRn3FdLae3
-         tR3H0OPca0KPSggxB28VVLUfAaAiNFWKCWgYnvkg4eMY+bz51LwFW8qdVQ7j+8Aw65dK
-         IP1SAsYvhl2qGmgJPc18eTcUKpDii/mpT353S1b4Fz7b1rB16IUH6SzENz3qx02aCrqR
-         qp1mXHx2OHX6YCP81kzLQdNOMcR0lIruEz241NxYXHdXGCEeBsRYnYKYrvTQj1ex9+9Z
-         sulBtNNh756szAWCvi7BQWFdjVRhWmSbA4k1odcFNN1NwwKUkXdod/Dg17rRaCY9t94/
-         tDoQ==
+        bh=/eY1ueUYdEDuAGdyZGIHZ2CPeL/4O89ymJqXO+cYuZU=;
+        b=dK1205fQsROTsMKl6Zfs4OUh4PDJ7Jz+q+ALHnpR8gU931iwjmTE/JSJfykJrVrfds
+         +IJrRcttIx/Kv7tRM+/0WwgqsbowUO/mO9TIkviYvDGOKnTFbA3A+InZk31SZZKEx1Ov
+         rQE2XLg72DFaBJUSs8bp99mCf3dgoDgOdlLBczLqptwihdb/8eSgmjlcgmUD9s+zm3h3
+         UVGaGrLeUeTyUrI5Ge09c14f2a4LrTY+IBFDGVnmDMGC8T50tZfwKJ9WIJEd3BejmU2m
+         L/b2Zqso+HjdXAyJlJ8R7TMigvManYJYuGoSyFSpRV9eduIU9WjydBpwTEoXUNm6hZu/
+         rs7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ptltSDCTtcLfQ+U8xcSudHvONAbaGZzTt/hw9/KbJ+s=;
-        b=F3UIPABF+ETv7JV+kJhDrLvt4xDPRmOS4ZRshXKbhrIyn1xdtYfKipX3Sqj8JLMD6q
-         xlMBlG+EKu4vXcz0fSAoR7ARFcT7+RfP0hvk6qO6Opsmq2A/2x/JvZYlcjaXViVxzdjo
-         re3UHgTRhGl5eAcVQxtgY6h2ZgYUusChmTmas/2+cJgI/iNM0/6+tFpScrPhnqnUlh0R
-         afpRtEgmcAwSaFMAuxcV5FNpA6qCtw+bEJv8LqbZT2uW0ssPQKOz2ayig7G+g9qwKW6U
-         17KA6w0Hnb1/6bLaB7MfMSlUB05mxqz3G08fhMLXS/vXh7Y/zrZEeB0X8yyA9ZxzrS4k
-         7MeA==
-X-Gm-Message-State: AOAM5331UOZsaQ930D9hW4RkF6lzD2hvraD5kil9CRloi7EbkgKcDj7m
-        cc9kH9CXHkfh8d1SqnIG8gG+avnwlBrTjQ==
-X-Google-Smtp-Source: ABdhPJx0RCldQvd4QAyejieectHMUzkgLQqYUac9xentRUQrh55ptNz95kjbr+UVc9LuCMLODKtgfg==
-X-Received: by 2002:adf:906a:: with SMTP id h97mr903250wrh.220.1631273418062;
+        bh=/eY1ueUYdEDuAGdyZGIHZ2CPeL/4O89ymJqXO+cYuZU=;
+        b=D/b7ISa4JQDybQnLNgs4t2Kv2rjwUTjbpLpJ6fJeLzD8YOTBAcH72VwH4hfw3vYLAd
+         rr2EO87BHMKqUTLtw/IQt3NDmX+6bYBwxSRRoOEDBGWF3v8tMTpLkuHIzvr/QkiazM7U
+         CrVtFeR1AiYCnsdfe05EDu1YXY9FmOWIZ9HHdfjTL8OEOt04/g/zGdhtNUu45m7DBJCJ
+         4MuH9yPZB2uCs3k7umglMwCN96HWUDhmT+rabCjSkdyeuHI5mQwfUicVGXjSYLIEG1g5
+         bjVH9lxc22zK/ukvoNfWYBhJnNqBkW+aH+9D8vsKasmdrLGZHivzqe9L/XI2xd5je9/c
+         5kKQ==
+X-Gm-Message-State: AOAM531LWKWpFbyqcDcpgwlqI2PxL53Of/88DZ5nVXAU5empYhNOk8Tt
+        scrSr18/7CnexMGOhhCZx/DESBWf14grjQ==
+X-Google-Smtp-Source: ABdhPJyP8x8JUzyGFH0QtQ9ECgZU2FwWQ+hsW0lY+R7lmscpEiyM+erBVW1kx71K1XL2c3dHL5Gmcw==
+X-Received: by 2002:a05:6000:1569:: with SMTP id 9mr9165362wrz.343.1631273418818;
         Fri, 10 Sep 2021 04:30:18 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6sm4103278wmp.1.2021.09.10.04.30.17
+        by smtp.gmail.com with ESMTPSA id z6sm4103278wmp.1.2021.09.10.04.30.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Sep 2021 04:30:17 -0700 (PDT)
+        Fri, 10 Sep 2021 04:30:18 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/5] help: correct logic error in combining --all and --config
-Date:   Fri, 10 Sep 2021 13:28:45 +0200
-Message-Id: <patch-v2-4.5-32d73d5273c-20210910T112545Z-avarab@gmail.com>
+Subject: [PATCH v2 5/5] help / completion: make "git help" do the hard work
+Date:   Fri, 10 Sep 2021 13:28:46 +0200
+Message-Id: <patch-v2-5.5-e995a42cb8d-20210910T112545Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.873.g125ff7b9940
 In-Reply-To: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com> <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
@@ -80,136 +80,246 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a bug in the --config option that's been there ever since its
-introduction in 3ac68a93fd2 (help: add --config to list all available
-config, 2018-05-26). Die when --all and --config are combined,
-combining them doesn't make sense.
+The "help" builtin has been able to emit configuration variables since
+e17ca926371 (completion: drop the hard coded list of config vars,
+2018-05-26), but it hasn't produced exactly the format the completion
+script wanted. Let's do that.
 
-The code for the --config option when combined with an earlier
-refactoring done to support the --guide option in
-65f98358c0c (builtin/help.c: add --guide option, 2013-04-02) would
-cause us to take the "--all" branch early and ignore the --config
-option.
+We got partway there in 2675ea1cc0f (completion: use 'sort -u' to
+deduplicate config variable names, 2019-08-13) and
+d9438873c4d (completion: deduplicate configuration sections,
+2019-08-13), but after both we still needed some sorting,
+de-duplicating and awk post-processing of the list.
 
-Let's instead list these as incompatible, both in the synopsis and
-help output, and enforce it in the code itself.
+We can instead simply do the relevant parsing ourselves (we were doing
+most of it already), and call string_list_remove_duplicates() after
+already sorting the list, so the caller doesn't need to invoke "sort
+-u".
+
+This changes the output of the section list to emit lines like "alias"
+instead of "alias.". The dot suffix is better done as an argument to
+__gitcomp().
+
+This means that we'll have the list_config_help() function do a bit
+more work, let's switch its "for_human" to passing a full
+"show_config", but as an enum type so we can have the compiler check
+what values we're expecting to get.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-help.txt |  1 +
- builtin/help.c             | 37 +++++++++++++++++++++++++++----------
- t/t0012-help.sh            |  7 ++++++-
- 3 files changed, 34 insertions(+), 11 deletions(-)
+ builtin/help.c                         | 67 ++++++++++++++++++--------
+ contrib/completion/git-completion.bash | 21 ++++----
+ t/t0012-help.sh                        | 24 +++++++++
+ 3 files changed, 81 insertions(+), 31 deletions(-)
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index cb8e3d4da9e..96d5f598b4b 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git help' [-a|--all [--[no-]verbose]]
- 	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
- 'git help' [-g|--guides]
-+'git help' [-c|--config]
- 
- DESCRIPTION
- -----------
 diff --git a/builtin/help.c b/builtin/help.c
-index 51b18c291d8..05ba2cbe380 100644
+index 05ba2cbe380..9eb09d4804e 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -62,6 +62,7 @@ static const char * const builtin_help_usage[] = {
- 	N_("git help [-a|--all] [--[no-]verbose]]\n"
- 	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
- 	N_("git help [-g|--guides]"),
-+	N_("git help [-c|--config]"),
- 	NULL
+@@ -38,7 +38,12 @@ static const char *html_path;
+ 
+ static int show_all = 0;
+ static int show_guides = 0;
+-static int show_config;
++enum show_config_type {
++	SHOW_CONFIG_UNSET = 0,
++	SHOW_CONFIG_HUMAN,
++	SHOW_CONFIG_VARS,
++	SHOW_CONFIG_SECTIONS,
++} show_config;
+ static int verbose = 1;
+ static unsigned int colopts;
+ static enum help_format help_format = HELP_FORMAT_NONE;
+@@ -48,7 +53,10 @@ static struct option builtin_help_options[] = {
+ 	OPT_HIDDEN_BOOL(0, "exclude-guides", &exclude_guides, N_("exclude guides")),
+ 	OPT_BOOL('g', "guides", &show_guides, N_("print list of useful guides")),
+ 	OPT_BOOL('c', "config", &show_config, N_("print all configuration variable names")),
+-	OPT_SET_INT_F(0, "config-for-completion", &show_config, "", 2, PARSE_OPT_HIDDEN),
++	OPT_SET_INT_F(0, "config-for-completion-vars", &show_config, "",
++		      SHOW_CONFIG_VARS, PARSE_OPT_HIDDEN),
++	OPT_SET_INT_F(0, "config-for-completion-sections", &show_config, "",
++		      SHOW_CONFIG_SECTIONS, PARSE_OPT_HIDDEN),
+ 	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
+ 	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
+ 			HELP_FORMAT_WEB),
+@@ -73,7 +81,7 @@ struct slot_expansion {
+ 	int found;
  };
  
-@@ -548,18 +549,34 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	int nongit;
- 	enum help_format parsed_help_format;
- 	const char *page;
-+	int need_config = 0;
+-static void list_config_help(int for_human)
++static void list_config_help(enum show_config_type type)
+ {
+ 	struct slot_expansion slot_expansions[] = {
+ 		{ "advice", "*", list_config_advices },
+@@ -91,6 +99,8 @@ static void list_config_help(int for_human)
+ 	const char **p;
+ 	struct slot_expansion *e;
+ 	struct string_list keys = STRING_LIST_INIT_DUP;
++	struct string_list keys_uniq = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
+ 	int i;
  
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
- 			builtin_help_usage, 0);
- 	parsed_help_format = help_format;
+ 	for (p = config_name_list; *p; p++) {
+@@ -121,34 +131,48 @@ static void list_config_help(int for_human)
+ 	for (i = 0; i < keys.nr; i++) {
+ 		const char *var = keys.items[i].string;
+ 		const char *wildcard, *tag, *cut;
++		const char *dot = NULL;
++		struct strbuf sb = STRBUF_INIT;
  
-+	/* Incompatible options */
-+	if (show_all && show_config)
-+		usage_msg_opt(_("--config and --all cannot be combined"),
-+			      builtin_help_usage, builtin_help_options);
-+
-+	if (show_config && show_guides)
-+		usage_msg_opt(_("--config and --guides cannot be combined"),
-+			      builtin_help_usage, builtin_help_options);
-+
- 	/* Options that take no further arguments */
-+	if (argc && show_config)
-+		usage_msg_opt(_("--config cannot be combined with command or guide names"),
-+			      builtin_help_usage, builtin_help_options);
- 	if (argc && show_guides)
--		usage_msg_opt(_("--guides cannot be combined with other options"),
-+		usage_msg_opt(_("--guides cannot be combined with command or guide names"),
- 			      builtin_help_usage, builtin_help_options);
+-		if (for_human) {
++		switch (type) {
++		case SHOW_CONFIG_HUMAN:
+ 			puts(var);
+ 			continue;
++		case SHOW_CONFIG_SECTIONS:
++			dot = strchr(var, '.');
++			break;
++		case SHOW_CONFIG_VARS:
++			break;
++		case SHOW_CONFIG_UNSET:
++			BUG("should not get SHOW_CONFIG_UNSET here");
+ 		}
+-
+ 		wildcard = strchr(var, '*');
+ 		tag = strchr(var, '<');
  
--	if (show_all) {
-+	need_config = show_all || show_config;
-+	if (need_config)
- 		git_config(git_help_config, NULL);
+-		if (!wildcard && !tag) {
+-			puts(var);
++		if (!dot && !wildcard && !tag) {
++			string_list_append(&keys_uniq, var);
+ 			continue;
+ 		}
+ 
+-		if (wildcard && !tag)
++		if (dot)
++			cut = dot;
++		else if (wildcard && !tag)
+ 			cut = wildcard;
+ 		else if (!wildcard && tag)
+ 			cut = tag;
+ 		else
+ 			cut = wildcard < tag ? wildcard : tag;
+ 
+-		/*
+-		 * We may produce duplicates, but that's up to
+-		 * git-completion.bash to handle
+-		 */
+-		printf("%.*s\n", (int)(cut - var), var);
++		strbuf_add(&sb, var, cut - var);
++		string_list_append(&keys_uniq, sb.buf);
++		strbuf_release(&sb);
 +
-+	if (show_all) {
- 		if (verbose) {
- 			setup_pager();
- 			list_all_cmds_help();
-@@ -570,6 +587,14 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 		list_commands(colopts, &main_cmds, &other_cmds);
  	}
+ 	string_list_clear(&keys, 0);
++	string_list_remove_duplicates(&keys_uniq, 0);
++	for_each_string_list_item(item, &keys_uniq)
++		puts(item->string);
++	string_list_clear(&keys_uniq, 0);
+ }
  
-+	if (show_guides)
-+		list_guides_help();
-+
-+	if (show_all || show_guides) {
-+		printf("%s\n", _(git_more_info_string));
-+		return 0;
-+	}
-+
- 	if (show_config) {
- 		int for_human = show_config == 1;
- 
-@@ -583,14 +608,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ static enum help_format parse_help_format(const char *format)
+@@ -595,16 +619,19 @@ int cmd_help(int argc, const char **argv, const char *prefix)
  		return 0;
  	}
  
--	if (show_guides)
--		list_guides_help();
--
--	if (show_all || show_guides) {
--		printf("%s\n", _(git_more_info_string));
--		return 0;
--	}
--
- 	if (!argv[0]) {
- 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
- 		list_common_cmds_help();
+-	if (show_config) {
+-		int for_human = show_config == 1;
++	switch (show_config) {
++	case SHOW_CONFIG_UNSET:
++		break;
++	case SHOW_CONFIG_VARS:
++	case SHOW_CONFIG_SECTIONS:
++		list_config_help(show_config);
+ 
+-		if (!for_human) {
+-			list_config_help(for_human);
+-			return 0;
+-		}
++		return 0;
++	case SHOW_CONFIG_HUMAN:
+ 		setup_pager();
+-		list_config_help(for_human);
++		list_config_help(show_config);
+ 		printf("\n%s\n", _("'git help config' for more information"));
++
+ 		return 0;
+ 	}
+ 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8108eda1e86..19b8a172878 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2503,7 +2503,14 @@ __git_config_vars=
+ __git_compute_config_vars ()
+ {
+ 	test -n "$__git_config_vars" ||
+-	__git_config_vars="$(git help --config-for-completion | sort -u)"
++	__git_config_vars="$(git help --config-for-completion-vars)"
++}
++
++__git_config_sections=
++__git_compute_config_sections ()
++{
++	test -n "$__git_config_sections" ||
++	__git_config_sections="$(git help --config-for-completion-sections)"
+ }
+ 
+ # Completes possible values of various configuration variables.
+@@ -2717,16 +2724,8 @@ __git_complete_config_variable_name ()
+ 		__gitcomp "$__git_config_vars" "" "$cur_" "$sfx"
+ 		;;
+ 	*)
+-		__git_compute_config_vars
+-		__gitcomp "$(echo "$__git_config_vars" |
+-				awk -F . '{
+-					sections[$1] = 1
+-				}
+-				END {
+-					for (s in sections)
+-						print s "."
+-				}
+-				')" "" "$cur_"
++		__git_compute_config_sections
++		__gitcomp "$__git_config_sections" "" "$cur_" "."
+ 		;;
+ 	esac
+ }
 diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 595bf81f133..cbc9b64f79f 100755
+index cbc9b64f79f..4405eb6dde5 100755
 --- a/t/t0012-help.sh
 +++ b/t/t0012-help.sh
-@@ -35,7 +35,12 @@ test_expect_success 'basic help commands' '
+@@ -95,6 +95,30 @@ test_expect_success 'git help -c' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'invalid usage' '
--	test_expect_code 129 git help -g git-add
-+	test_expect_code 129 git help -g git-add &&
-+	test_expect_code 129 git help -c git-add &&
-+	test_expect_code 129 git help -g git-add &&
++test_expect_success 'git help --config-for-completion-vars' '
++	git help -c >human &&
++	grep -E \
++	     -e "^[^.]+\.[^.]+$" \
++	     -e "^[^.]+\.[^.]+\.[^.]+$" human |
++	     sed -e "s/\*.*//" -e "s/<.*//" |
++	     sort -u >human.munged &&
 +
-+	test_expect_code 129 git help -a -c &&
-+	test_expect_code 129 git help -g -c
++	git help --config-for-completion-vars >vars &&
++	test_cmp human.munged vars
++'
++
++test_expect_success 'git help --config-for-completion-sections' '
++	git help -c >human &&
++	grep -E \
++	     -e "^[^.]+\.[^.]+$" \
++	     -e "^[^.]+\.[^.]+\.[^.]+$" human |
++	     sed -e "s/\..*//" |
++	     sort -u >human.munged &&
++
++	git help --config-for-completion-sections >sections &&
++	test_cmp human.munged sections
++'
++
+ test_expect_success 'generate builtin list' '
+ 	git --list-cmds=builtins >builtins
  '
- 
- test_expect_success "works for commands and guides by default" '
 -- 
 2.33.0.873.g125ff7b9940
 
