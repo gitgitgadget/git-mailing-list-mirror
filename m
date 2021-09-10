@@ -6,87 +6,79 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 588B3C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 22:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 619F7C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 22:08:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E86461205
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 22:05:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40ACA6120A
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 22:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234722AbhIJWGi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 18:06:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52694 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232572AbhIJWGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 18:06:38 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7826C14A423;
-        Fri, 10 Sep 2021 18:05:26 -0400 (EDT)
+        id S234707AbhIJWKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 18:10:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51547 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234694AbhIJWKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 18:10:06 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03527E85FC;
+        Fri, 10 Sep 2021 18:08:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BhJ8PJpRdHMz
-        /WwpIX4SxyKlhwqSzJUG9Pe2HC2O9uI=; b=ycnsndYjQW7QZZrNLOlYzrPsTZf4
-        29hEhEo4+9uCTHBgmfNLq0HIBXhnRbVvUNT8HKawdCI4q0y2bhLColMeE+SSp/pX
-        LLQPQ6nfVCfglxlPXZI+MQpIHk9JFkTWTicAM7dmYYU/D+87ZkUafCL4Y7m7a/s1
-        zlT+MakbsGoXnCg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D06B14A422;
-        Fri, 10 Sep 2021 18:05:26 -0400 (EDT)
+        :content-type; s=sasl; bh=1g2G9L1lC8tw4BxBH/SamNpk7ewP/2qhTPbln/
+        J41Qk=; b=WhezpeXCOQlUmsIcORd9xT2VeyvzIdyRTdG7WqTGqAajNEV9/SK+u6
+        QnYxgc0u16pvVCE4Iy9A28g+FWEHPkQENgYfU+DqQL3qD2xOX2PcY82cNIpVI5Sa
+        LzQbYctpEKMBWZWIY5g5FupRePQBNTdqCIMpSc3p01Ac8fB8GXjpU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED769E85FB;
+        Fri, 10 Sep 2021 18:08:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B7A2714A420;
-        Fri, 10 Sep 2021 18:05:23 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 73F64E85FA;
+        Fri, 10 Sep 2021 18:08:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] test-tool run-command: fix confusing init pattern
-References: <nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet>
-        <patch-1.1-0aa4523ab6e-20210909T130849Z-avarab@gmail.com>
-        <nycvar.QRO.7.76.6.2109101319110.59@tvgsbejvaqbjf.bet>
-        <87pmtgb4m1.fsf@evledraar.gmail.com>
-Date:   Fri, 10 Sep 2021 15:05:22 -0700
-In-Reply-To: <87pmtgb4m1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 10 Sep 2021 21:32:03 +0200")
-Message-ID: <xmqq1r5wrsrh.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] Docs: web server must setenv GIT_PROTOCOL for v2
+References: <20210904151721.445117-1-konstantin@linuxfoundation.org>
+        <YTOW352xtsbvJcKy@coredump.intra.peff.net>
+        <20210907211128.mauwgxupbredgx7w@meerkat.local>
+        <YTiVDo4m5B5RcfCg@coredump.intra.peff.net>
+        <YTiXEEEs36NCEr9S@coredump.intra.peff.net>
+        <xmqqee9x1wvh.fsf@gitster.g> <xmqqa6kl1wjs.fsf@gitster.g>
+        <YTtECuP2/A6+EI4J@coredump.intra.peff.net>
+        <YTtleYs48A1NpUpp@coredump.intra.peff.net>
+Date:   Fri, 10 Sep 2021 15:08:52 -0700
+In-Reply-To: <YTtleYs48A1NpUpp@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 10 Sep 2021 10:02:33 -0400")
+Message-ID: <xmqqwnnoqe17.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 326D53F2-1283-11EC-B33A-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF6EC156-1283-11EC-8E82-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> The diff does too many things, some of which are your purely personal
->> preferences and do not actually need to be changed. This is a much mor=
-e
->> to-the-point diff:
+> On Fri, Sep 10, 2021 at 07:39:54AM -0400, Jeff King wrote:
 >
-> We've been slowly converting everything to designated initializers. It
-> seems to make sense to just do that if the line is being touched anyway=
-.
+>> I'll re-roll with that change, plus some documentation changes adapted
+>> to this new approach.
+>
+> Here's what I came up with. I think this should replace both
+> jk/http-backend-handle-proto-header and kr/doc-webserver-config-for-v2.
+> The latter does give some specific nginx tips which I didn't carry over,
+> but they shouldn't be necessary after the change in http-backend. If we
+> do want to include them, they can be mentioned as optional if we later
+> add an nginx example config to the http-backend manpage.
 
-Perhaps a preliminary clean-up patch is called for in such a case?
+All look sensible.  This topic will appear in the next round of
+integration, not today's.
 
-I do not think anybody can immediately see what the difference
-between the old -1 and the new 0 in TESTSUITE_INIT macro means in
-Dscho's alternative, but if we had a preliminary clean-up whose sole
-change is to use designated initializers, the real "to-the-point"
-step would become much easier to see which member that used to be
-initialized to -1 is now getting zero-initialized.
-
-And yes, changing the initializer style *and* the values the members
-are initialized to in a same patch is much worse than sticking to
-the style of the unreadable original.  It buries the real change in
-the noise.
-
->>  #define TESTSUITE_INIT \
->> -	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
->> +	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, 0, 0, 0, 0, 0, 0, 0 }
+Thanks.
