@@ -2,184 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E189AC433F5
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ADE3C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 13:02:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B546A611C8
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:08:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E91A61059
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 13:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233000AbhIJMKG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 08:10:06 -0400
-Received: from mout.gmx.net ([212.227.17.22]:43233 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232873AbhIJMKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 08:10:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631275726;
-        bh=59aMM1SbqDo3dE8FMpXw2c3o8Ql4JroYPLcrxeDT8J4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iTrDL76FUFx2Z7vH4gyYzZqn5IOe8kIdY6XJ8o9+7rwnGgCCMFGYqZVd6KghGLbZJ
-         T0hscKUNdocGtaG/DXoXVqjTX0SWXDUXsItFPpDTLrJVOeg+PdwbNfPyMd9c8BHae/
-         jM1O38y2ZsMbA+z1U5xzQN+fmi1/U+gNo0R66Zco=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mk0NU-1mn1ja2XXs-00kPWt; Fri, 10
- Sep 2021 14:08:46 +0200
-Date:   Fri, 10 Sep 2021 14:08:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
-In-Reply-To: <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109101325410.59@tvgsbejvaqbjf.bet>
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <xmqqk0k0ndbq.fsf@gitster.g> <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet> <4e998676-4975-8ac2-35a0-34416938b62e@kdbg.org>
- <nycvar.QRO.7.76.6.2109071930080.55@tvgsbejvaqbjf.bet> <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233256AbhIJNEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 09:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233185AbhIJNED (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 09:04:03 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2795BC061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 06:02:52 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id u15-20020a05600c19cf00b002f6445b8f55so1357168wmq.0
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 06:02:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fangyi-io.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=//kH8LfMD8D+Rh3K+0fl87sff3S6wTNEAzdO2wfkmlo=;
+        b=gF9aBNhGEhQRQDIKhMB0GySTC6N3g6VAB9xs0im49PeGYmfdnrrpGVF+3ZnOdJ89wq
+         D6hwok8L9oEfprTR5Kq1w/4wXd4UbAHwgQpTdGu6CPQ15IWVOdX2fIFTZGTMLP9TE7Ay
+         BMz0mCudipxZKxydYLXNCi+OW0+x0hB0eI8VRDunHBo0Y8oKpRNmhC0v5y0PecYod7JR
+         CEcdaKuIxAzXfCBcAnm+O6/gHJF+3cb3AjwSSOBdEVpOfIZR+QeIjiGrbYwEpXLVJUR/
+         QPwtI4wDyg1YSqosGUKCxt+OEOq5r2qqhC27+Fg98GSUJc7VQrDnSSHVraSicu7zIMp5
+         6HKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=//kH8LfMD8D+Rh3K+0fl87sff3S6wTNEAzdO2wfkmlo=;
+        b=5AbTdD7S+AkCxVXhRooEpyPET0dHYMn+We7mTNg3WNynhA8gcEzBGMHcoB8e5xsdjl
+         UCHc93rALqIu6ykbxoDazg+HLzCypELyKjwxIiOLDkeTZdghdYZz82SY8yW/WN5WfKHQ
+         MsH1T4/6sM2rake4vEiy3LwrmTc4bSixO9IYHk2nPIFQes74m/fmfj5xn+8eFQhvQp1n
+         CsM1pDwVrNoblRoPvUh3hl++/LNjV+7qII3v9hrbDw/rTr1ZPLwp7vvYWksNs6oz1C7M
+         7FbfsQUyLyVhkTvJWEFUHP8wwmMjksJqaobtwwN4vgAiOeFTg27LezN8HoJixJ4ocUfB
+         LpbQ==
+X-Gm-Message-State: AOAM531Vyiu6IYLnA8htcceHMtCBKJhUe5aw+qqkNqBWt2q0o9ORLmoP
+        9Si21Ej7b20+HOMqMoExCPftTM1chpAlBz5Q
+X-Google-Smtp-Source: ABdhPJxCz3Znl2MuIvPTAKrl6PXzj3mBvDFuOIBVgZu5M5PTIc3oGgzWp+bJRuG9KBkZCkrpNF4KeQ==
+X-Received: by 2002:a7b:c751:: with SMTP id w17mr8475355wmk.162.1631278970260;
+        Fri, 10 Sep 2021 06:02:50 -0700 (PDT)
+Received: from localhost.localdomain (cpc157871-brnt5-2-0-cust279.4-2.cable.virginm.net. [86.4.97.24])
+        by smtp.googlemail.com with ESMTPSA id n5sm4228001wmd.29.2021.09.10.06.02.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Sep 2021 06:02:49 -0700 (PDT)
+From:   Fangyi Zhou <me@fangyi.io>
+To:     git@vger.kernel.org
+Cc:     Fangyi Zhou <me@fangyi.io>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Birger Skogeng Pedersen <birgersp@gmail.com>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        CB Bailey <cbailey32@bloomberg.net>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz=20Riveros?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz=20Riveros?= <chrisadr@gentoo.org>,
+        Ed Maste <emaste@FreeBSD.org>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jean-Noel Avila <jean-noel.avila@scantech.fr>,
+        Jessica Clarke <jrtc27@jrtc27.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Kazuhiro Kato <kato-k@ksysllc.co.jp>,
+        Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>,
+        Kevin Willford <Kevin.Willford@microsoft.com>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Peter Kaestle <peter@piie.net>,
+        Peter Kaestle <peter.kaestle@nokia.com>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
+        =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>,
+        Slavica Djukic <slavicadj.ip2018@gmail.com>
+Subject: [PATCH] .mailmap: Update mailmap
+Date:   Fri, 10 Sep 2021 14:02:36 +0100
+Message-Id: <20210910130236.40101-1-me@fangyi.io>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:A6+8nervFHmyhF9dqESj+IIydxxqWWMEmG82TCcxeQb0l0giFi4
- 7ZGZldW09doukVpeO3yLzXDzXuAoyzwEt4buTXoAG9jE3fBiVX0MMzcRpA1qFXoWY//VLAU
- TYB8pEDdgemIQGtrx6PM5y1ECHknDo6H4JNQ/kvtrDxrRPt6f3oV5+smgyABhrmO5sSZP5K
- d3Z5ELsZDtcPbQrNWWw7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+Ywtp5pU52c=:WRNgLxhVUlYBgLMluriGOZ
- kNVX+GmjBTrgsNbHQZ1xRd/aJYKuRV1nkd7c25b6OREwiqQ446DOKj5xtYTzaJiP2nInPFFDi
- khGTA/XFpqyq8skjVP+uoSQ7eeZ1D6kxfgGB1ic7m2bXK398TP0ZAc5e9bwJ+bPaJgt7C3w2c
- 4DZ3T32WsmDsRz+rIqvd9DRGme7kZa0+BF5RsPoMcJ3RGIF5UqEoNoX9pOeUvyR5hpQhed4v2
- s0oKkNfpQG3JBb95ZwfcoWtF7TX7k2wXeIDS3caTNIZjyKXRSUWeqMFqmb0GI/uuTSvhD1WP9
- xYPZ/L/2/4P1QLkBD4gsLtI3bcRfsK9+GKU6s3k8QMnYpvAeJPUweszFkevLlZ7mOhVF532dN
- 50zYj77a4Css06IseXbrKqDXhtuID2B0HH5blqxJmiybi6Q2WwA7kvf1lW33ErOejm/r8YyJO
- mI8V/F9HpntabKIQ/s3A7dNo+BUMCp/9Hbiw8wAMWTC4o5xSmWwpfZKbpDofZGlSJy+lE2kvG
- EO7ycEzwSKsdT/hugMFeAMiFkXF4fBiWyAgNb1cweovZVGrd0DKu0PVEbPYfv2p3QVppOlCXq
- anC96UtxjOKES3RG6NjXo5FnPI5zQwqJ2rGJIgbQJ37bD19uvIc7E9jrKI5oqXHmo7NPcY68N
- Ja7qqIRH39t1i71PYmU4lCONCt/jlbRlc32Dfd2SYosykyXEYPx3k6Js/5VtqXDrmjdniX9B6
- rVnLygCzn+m21LGpyIpJbHjxhh4G3WGVXYyNmRjZLCS6Ur17ipEZ5nvt7tyjbqyfQ4TaZf0aU
- bU7SWpyFBpjuEQdpnZ2XtSI3gQemIpv+qtScuytUliSaRSX23+KC9xWQkaj8lKhGV2b2WBXNU
- C7jUvgBRTzg+KJFyhQxsmoMicA2E3+v9z+YV3OxXPSAHG0xzoffoP+oUISNOdqzAX4R2X1ufh
- Y7EseWj/on68yZbTNGpuBun7S4VkfWQdJVwgpBA4jh/tXW0ioCyxUDfs45ssyFd1zIsqcNxFA
- RULWu2ISVWKTQiJA3BIxxv74qnF0pzpLrv6d7OmORMhKzLv4Q0qlR9Xr1vJ2uQfs4cJptHRCH
- g9p8aJ7roQOuZ0=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Similar to a35b13fce0 (Update .mailmap, 2018-11-09).
 
-On Tue, 7 Sep 2021, Elijah Newren wrote:
+This patch makes the output of `git shortlog -nse v2.10.0..master`
+duplicate-free by taking/guessing the current and preferred
+addresses for authors that appear with more than one address.
 
-> On Tue, Sep 7, 2021 at 11:51 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 2 Sep 2021, Johannes Sixt wrote:
-> >
-> > > Am 02.09.21 um 16:18 schrieb Johannes Schindelin:
-> > > > On Wed, 1 Sep 2021, Junio C Hamano wrote:
-> > > >> A good goal.  There is no remaining use case where (a fictitious =
-and
-> > > >> properly working version of) "--preserve-merges" option cannot be
-> > > >> replaced by "--rebase-merges", is it?  I somehow had a feeling th=
-at
-> > > >> the other Johannes (sorry if it weren't you, j6t) had cases that =
-the
-> > > >> former worked better, but perhaps I am mis-remembering things.
-> > > >
-> > > > I think that I managed to address whatever concerns there were abo=
-ut the
-> > > > `--rebase-merges` backend in the meantime.
-> > >
-> > > That was either my suggestion/desire to make no-rebase-cousins the
-> > > default. That has been settled.
-> > >
-> > > Or my wish not to redo the merge, but to replay the first-parent
-> > > difference. The idea never got traction, and I've long since abandon=
-ed
-> > > my implementation of it.
-> >
-> > Thank you for clarifying.
-> >
-> > Yes, I remember how that idea came up, and I even tried that strategy =
-for
-> > a couple of merging rebases of Git for Windows' branch thicket. Sadly,=
- it
-> > did not work half as well as I had hoped.
-> >
-> > The best idea I had back then still is in want of being implemented: s=
-ort
-> > of a "four-way merge". It is basically the same as a three-way merge, =
-but
-> > allows for the pre-images to differ in the context (and yes, this cann=
-ot
-> > be represented using the current conflict markers). Definitely not
-> > trivial.
->
-> merge-ort opens a new possibility (since it does merges without
-> touching the index or working tree): Take the merge commit, M, that
-> you are trying to transplant.  Hold on to it for a minute.  Do what
-> rebase-merges does now; namely, do a simple merge of the desired new
-> branches that otherwise ignores M to get your new merge commit N.
-> Hang on to N too for a minute.  Now use merge-ort to auto-remerge M
-> (much like AUTO_MERGE or --remerge-diff does) to get a new merge
-> commit that we'll call pre-M.  If M was a clean merge that the user
-> didn't amend, then pre-M will match M.  If M wasn't a clean merge or
-> was amended, then pre-M will otherwise differ from M by not including
-> any manual changes the user made when they originally created M --
-> such as removing conflict markers, fixing semantic conflicts, evil
-> changes, etc.
->
-> Now we've got three merge commits: pre-M, M, and N.  (Technically,
-> pre-M and N might be toplevel trees rather than full commits, but
-> whatever.)  The difference between pre-M and M represent the manual
-> work the user did in order to create M.  Now, do a three-way
-> (non-recursive) merge of those commits, to get the rebased result, R.
-> This operation has the affect of applying the changes from pre-M to M
-> on top of N.
->
-> There's obviously some edge cases (e.g. nested conflict markers), but
-> I think they're better than the edge cases presented by the
-> alternatives:
->   * the first-parent difference idea silently discards intermediate
-> changes from reapplying other patches (especially if other patches are
-> added or dropped), which to me feels _very_ dangerous
->   * the current rebase-merges idea silently discards manual user
-> changes within the original merge commit (i.e. it hopes that there is
-> no difference between pre-M and M), which can also be lossy
->   * I don't think this idea drops any data, but it does run the risk
-> of conflicts that are difficult to understand.  But I suspect less so
-> than your five-way merge would entail.
->
-> If the difficulty of conflicts in this scheme is too high, we could do
-> a few things like providing multiple versions (e.g. if either
-> pre-M:file or N:file had conflicts, or maybe if R:file has nested
-> conflicts, then place both R:file and N:file in the working tree
-> somewhere) or pointing at special commands that help users figure out
-> what went on (e.g. 'git log -1 --remerge-diff M -- file').
+Updated from <20200805065408.1242617-1-martin.agren@gmail.com>,
+taking into consideration of <xmqqsgcm4ij5.fsf@gitster.c.googlers.com>,
+and other replies.
 
-While I agree that `merge-ort` makes a lot of things much better, I think
-in this context we need to keep in mind that those nested merge conflicts
-can really hurt.
+Use the by far most common e-mail address:
+ * Brandon Williams
+ * Jiang Xin
 
-In my tests (I tried to implement a strategy where a 3-way merge is done
-with M and N^, using the parent commits of M as merge parents
-successively, see
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.1804130002090.65@ZVAVAG-6OXH=
-6DA.rhebcr.pbec.zvpebfbsg.pbz/
-for the nitty gritty), I ran into _nasty_ nested merge conflicts, even
-with trivial examples. And I came to the conviction that treating the
-merge conflict markers as Just Another Line was the main culprit.
+Use the most recent e-mail address:
+ * Birger Skogeng Pedersen
+ * Christopher Díaz Riveros
+ * Ed Maste
+ * Fangyi Zhou
+ * Jean-Noël Avila
+ * Kevin Willford
+ * Peter Kaestle
 
-I wish I had the time to try out your proposed strategy with the
-conconcted example I presented in that mail I linked above. Because now I
-am curious what it would do...
+Use the one from their "Signed-off-by":
+ * Damien Robert
+ * Kazuhiro Kato
+ * Sibi Siddharthan
 
-Ciao,
-Dscho
+Use the most recent name / name with correct accents:
+ * CB Bailey
+ * Christopher Díaz Riveros
+ * Jessica Clarke
+ * Slavica Đukić
+
+Do not merge:
+ * Andreas Schwab
+
+Signed-off-by: Fangyi Zhou <me@fangyi.io>
+
+---
+Please let me know if you approve those changes or not.
+If no reply is received, the entry will be added in comments.
+
+---
+ .mailmap | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/.mailmap b/.mailmap
+index 9c6a446bdf..ff0887d9e0 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -27,13 +27,16 @@ Ben Peart <benpeart@microsoft.com> <peartben@gmail.com>
+ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+ Benoit Sigoure <tsunanet@gmail.com> <tsuna@lrde.epita.fr>
+ Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
++Birger Skogeng Pedersen <birger.sp@gmail.com> <birgersp@gmail.com>
+ Brandon Casey <drafnel@gmail.com> <casey@nrlssc.navy.mil>
+ Brandon Williams <bwilliams.eng@gmail.com> <bmwill@google.com>
++Brandon Williams <bwilliamseng@gmail.com> <bmwill@google.com>
+ brian m. carlson <sandals@crustytoothpaste.net>
+ brian m. carlson <sandals@crustytoothpaste.net> <sandals@crustytoothpaste.ath.cx>
+ brian m. carlson <sandals@crustytoothpaste.net> <bk2204@github.com>
+ Bryan Larsen <bryan@larsen.st> <bryan.larsen@gmail.com>
+ Bryan Larsen <bryan@larsen.st> <bryanlarsen@yahoo.com>
++CB Bailey <cbailey32@bloomberg.net> Charles Bailey
+ Cheng Renquan <crquan@gmail.com>
+ Chris Shoemaker <c.shoemaker@cox.net>
+ Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
+@@ -41,10 +44,12 @@ Christian Ludwig <chrissicool@gmail.com> <chrissicool@googlemail.com>
+ Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
+ Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
+ Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
+-Christopher Díaz Riveros <chrisadr@gentoo.org> Christopher Diaz Riveros
++Christopher Díaz Riveros <christopher.diaz.riv@gmail.com> <chrisadr@gentoo.org>
++Christopher Díaz Riveros <christopher.diaz.riv@gmail.com> Christopher Diaz Riveros
+ Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
+ Clemens Buchacher <drizzd@gmx.net> <clemens.buchacher@intel.com>
+ Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
++Damien Robert <damien.olivier.robert+git@gmail.com> <damien.olivier.robert@gmail.com>
+ Dan Johnson <computerdruid@gmail.com>
+ Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
+ Dana L. How <danahow@gmail.com> Dana How
+@@ -64,13 +69,15 @@ Derrick Stolee <dstolee@microsoft.com> Derrick Stolee via GitGitGadget <gitgitga
+ Deskin Miller <deskinm@umich.edu>
+ Đoàn Trần Công Danh <congdanhqx@gmail.com> Doan Tran Cong Danh
+ Dirk Süsserott <newsletter@dirk.my1.cc>
++Ed Maste <emaste@FreeBSD.org> <emaste@freebsd.org>
+ Eric Blake <eblake@redhat.com> <ebb9@byu.net>
+ Eric Hanchrow <eric.hanchrow@gmail.com> <offby1@blarg.net>
+ Eric S. Raymond <esr@thyrsus.com>
+ Eric Wong <e@80x24.org> <normalperson@yhbt.net>
+ Erik Faye-Lund <kusmabite@gmail.com> <kusmabite@googlemail.com>
+ Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> <eyvind-git@orakel.ntnu.no>
+-Fangyi Zhou <fangyi.zhou@yuriko.moe> Zhou Fangyi
++Fangyi Zhou <me@fangyi.io> <fangyi.zhou@yuriko.moe>
++Fangyi Zhou <me@fangyi.io> Zhou Fangyi <fangyi.zhou@yuriko.moe>
+ Florian Achleitner <florian.achleitner.2.6.31@gmail.com> <florian.achleitner2.6.31@gmail.com>
+ Franck Bui-Huu <vagabon.xyz@gmail.com> <fbuihuu@gmail.com>
+ Frank Lichtenheld <frank@lichtenheld.de> <djpig@debian.org>
+@@ -102,11 +109,14 @@ Jason Riedy <ejr@eecs.berkeley.edu> <ejr@cs.berkeley.edu>
+ Jay Soffian <jaysoffian@gmail.com> <jaysoffian+git@gmail.com>
+ Jean-Noël Avila <jn.avila@free.fr> Jean-Noel Avila
+ Jean-Noël Avila <jn.avila@free.fr> Jean-Noël AVILA
++Jean-Noël Avila <jn.avila@free.fr> Jean-Noel Avila <jean-noel.avila@scantech.fr>
+ Jeff King <peff@peff.net> <peff@github.com>
+ Jeff Muizelaar <jmuizelaar@mozilla.com> <jeff@infidigm.net>
+ Jens Axboe <axboe@kernel.dk> <axboe@suse.de>
+ Jens Axboe <axboe@kernel.dk> <jens.axboe@oracle.com>
+ Jens Lindström <jl@opera.com> Jens Lindstrom <jl@opera.com>
++Jessica Clarke <jrtc27@jrtc27.com> James Clarke
++Jiang Xin <worldhello.net@gmail.com> <zhiyou.jx@alibaba-inc.com>
+ Jim Meyering <jim@meyering.net> <meyering@redhat.com>
+ Joachim Berdal Haga <cjhaga@fys.uio.no>
+ Joachim Jablon <joachim.jablon@people-doc.com> <ewjoachim@gmail.com>
+@@ -138,10 +148,12 @@ Karsten Blees <blees@dcon.de> <karsten.blees@dcon.de>
+ Karsten Blees <blees@dcon.de> <karsten.blees@gmail.com>
+ Kay Sievers <kay.sievers@vrfy.org> <kay.sievers@suse.de>
+ Kay Sievers <kay.sievers@vrfy.org> <kay@mam.(none)>
++Kazuhiro Kato <kato-k@ksysllc.co.jp> <kazuhiro.kato@hotmail.co.jp>
+ Kazuki Saitoh <ksaitoh560@gmail.com> kazuki saitoh <ksaitoh560@gmail.com>
+ Keith Cascio <keith@CS.UCLA.EDU> <keith@cs.ucla.edu>
+ Kent Engstrom <kent@lysator.liu.se>
+ Kevin Leung <kevinlsk@gmail.com>
++Kevin Willford <Kevin.Willford@microsoft.com> <kewillf@microsoft.com>
+ Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
+ Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
+ Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
+@@ -211,6 +223,7 @@ Peter Baumann <waste.manager@gmx.de> <Peter.B.Baumann@stud.informatik.uni-erlang
+ Peter Baumann <waste.manager@gmx.de> <siprbaum@stud.informatik.uni-erlangen.de>
+ Peter Krefting <peter@softwolves.pp.se> <peter@softwolves.pp.se>
+ Peter Krefting <peter@softwolves.pp.se> <peter@svarten.intern.softwolves.pp.se>
++Peter Kaestle <peter@piie.net> <peter.kaestle@nokia.com>
+ Petr Baudis <pasky@ucw.cz> <pasky@suse.cz>
+ Petr Baudis <pasky@ucw.cz> <xpasky@machine>
+ Phil Hord <hordp@cisco.com> <phil.hord@gmail.com>
+@@ -242,9 +255,11 @@ Sebastian Schuberth <sschuberth@gmail.com> <sschuberth@visageimaging.com>
+ Seth Falcon <seth@userprimary.net> <sfalcon@fhcrc.org>
+ Shawn O. Pearce <spearce@spearce.org>
+ Wei Shuyu <wsy@dogben.com> Shuyu Wei
++Sibi Siddharthan <sibisiddharthan.github@gmail.com> <sibisiv.siddharthan@gmail.com>
+ Sidhant Sharma <tigerkid001@gmail.com> Sidhant Sharma [:tk]
+ Simon Hausmann <hausmann@kde.org> <simon@lst.de>
+ Simon Hausmann <hausmann@kde.org> <shausman@trolltech.com>
++Slavica Đukić <slawica92@hotmail.com> Slavica Djukic <slavicadj.ip2018@gmail.com>
+ Stefan Beller <stefanbeller@gmail.com> <stefanbeller@googlemail.com>
+ Stefan Beller <stefanbeller@gmail.com> <sbeller@google.com>
+ Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@atlas-elektronik.com>
+@@ -296,3 +311,7 @@ Yi-Jyun Pan <pan93412@gmail.com>
+ anonymous <linux@horizon.com>
+ anonymous <linux@horizon.net>
+ İsmail Dönmez <ismail@pardus.org.tr>
++
++# Do not merge
++# Andreas Schwab <schwab@linux-m68k.org>
++# Andreas Schwab <schwab@suse.de>
+-- 
+2.32.0
+
