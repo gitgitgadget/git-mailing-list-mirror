@@ -2,191 +2,281 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A202CC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9441DC433EF
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 732F761051
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:23:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7255F61100
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 11:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbhIJLY6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 07:24:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53949 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232537AbhIJLY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 07:24:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631273023;
-        bh=lEVoGAx5uYB3J9jAQyNhNWZYNF2Scpt6qswE+uv/qFc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Sa/ZkWeyXy65fyGYPbXy0xfa58KWf1cpHuHVlBlSJaVhjov15u4cSzCN6ziwfb/Uk
-         Z9adrFVeaR9JjHw9RS2lktx+cF43LZhziyMASEtMEoy7iRCVKfpuIng9gI+kgsCkMh
-         ifPdcu1aPd8HFl2suPmYl7INZ12SRhamSZKDEsNU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mr9Bk-1mlOmW3IhS-00oDov; Fri, 10
- Sep 2021 13:23:42 +0200
-Date:   Fri, 10 Sep 2021 13:23:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        id S232784AbhIJLb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 07:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45144 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232537AbhIJLb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 07:31:27 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FB0C061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:16 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id g16so2156556wrb.3
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 04:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CScxchun0IGE4F54QA74ikvO0lE/HgcYiZkwErIEqcY=;
+        b=MlqmT3OhYWnNJiZ5NXJRXfzYR7eSpJDJMLUvNXHE7FIL2MCsSFX+U1Y7N2Hd3A/5NZ
+         WFGHzsOx3ZuDaF5BfnT4u+wb308/iDAaXxuBU091BXbFeO3xIm38RaAlxfcRoCaXyxuM
+         uZu6PLE0ZZd3nvmZhMQ0PpD0JT+QGsqp3N+YHQ5vQ2WtnnPVtKuawT5H7dcKh2w0YwQO
+         Ga8x8yB1tTzNR85SaXjd+Q41jCN/58kWNXSvE4vcmVgodkNCR3nfQcud0DOMaAHkKos4
+         WXvNqQscMOXh0a1H70jkRtroGhFPcNcMtlEQ8hWpMPbFACjqWC+UwfyfYNLvICbPmlLt
+         3WiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CScxchun0IGE4F54QA74ikvO0lE/HgcYiZkwErIEqcY=;
+        b=kAIH5AmdHFsGTYEPti+I5SD9TpKDLM1JRxPw1OyRaU3Rcz7fDpGiYn5nKQdsV+95x6
+         TJlJlDqdDnvr/PfbvpWsFj0nu413XLEYMDSufJFy3JG2j0UYbViG0H8sQhGOtigGgItQ
+         0ysq/u+vDubRWXOG/oHtfxOSYOSo5335ryTHdF3ZhWklvOZ03ZdwYV2tnrcS7eGBUwYd
+         j1LEGLPBc4KYMT1OiDPyjLQ1FaQeOpTRcW8RdNzrAV3++sZiSizDlkjC55Es9vx1YRrd
+         R7FAb0/A4+8U3uPXv2lfAcwy3NaM36wOqSwO7/u+YqEyFc54cy43DOgRQRKuRAilO8re
+         U3xA==
+X-Gm-Message-State: AOAM5329Yel6kR+K9WswgF16YYWxCh5hgeSzfDtbs3vLhAQwlcFUn6Z3
+        MZTvP71SKT4B1BvF/vyZbZikYlH5aQZDlQ==
+X-Google-Smtp-Source: ABdhPJxNrJaRowNn27DY0zTV1abbxpvlfndpFQe6LXxcXas7pEfYMJAj1x+Xk+QyREttVq3wxMBPNw==
+X-Received: by 2002:adf:f1c4:: with SMTP id z4mr2838845wro.418.1631273414526;
+        Fri, 10 Sep 2021 04:30:14 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z6sm4103278wmp.1.2021.09.10.04.30.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Sep 2021 04:30:14 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-tool run-command: fix confusing init pattern
-In-Reply-To: <patch-1.1-0aa4523ab6e-20210909T130849Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109101319110.59@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet> <patch-1.1-0aa4523ab6e-20210909T130849Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/5] help: fix usage nits & bugs, completion shellscript->C
+Date:   Fri, 10 Sep 2021 13:28:41 +0200
+Message-Id: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.873.g125ff7b9940
+In-Reply-To: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2066968464-1631273022=:59"
-X-Provags-ID: V03:K1:n/FxwxZxz/lCcGlv3DVu/JG+B+lBK8CcHT1dTqqKcMgwsWWXbTK
- YApFTrBLGTMkODp3OwacKVQNyR4J94onOgsLoe52QnvOkCNYBkZdcMER4WHXuSDZxp15cmR
- OdSF8+MKjanW060+KLCbSthoA+mRiCA84vfn3xpQmZTlKaL5nQyXegGrU8KmD9ILzoJHi0/
- MLndC5QXPItAuIqL7LtbA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nRXMPI2vfog=:Z664GxjqLuY1E2X94tHpgX
- h1i/1zcbY2v8rJQi58RypYe1wGZMsrq3CC32sxn5E+VbUdkA+QOYFdQDzGVRKws0fdIwQxLCO
- BdoEp8UzVlnDNUvkyuqgofsnlXIf8qdRmFeXNl95tGYewg/A2kY1iEF9nPut3CLdwc0iWqpBG
- mI3aLj/q98oTwwWBLwLqicXrW6w2yU56mOjo8hq6tLlvRs19SujO5+2C14tqeVlTT/LZ1Sgro
- 3GATONbpgv/i6Zx7ejpSsgHI2+Y5BP75aprn8Hn833f8McMMOa6ciW+zlq33nCPq5WJVE0wjF
- OPyDe/lJvcmDc4eQUbIh0N52ls1sdZmI488ABoBPMQzJd6t41VX1/leTbEqdzEnv3cO3SyuHA
- N7dBivXE8oEJPJPJxhr+oIRBT3TIbN21UULVBfb48lEt7YO7IfYnrqWCdD1Ai6gVdvLJ4YAWS
- CzMKDgyN15t6/P7Q16B/cSKBqrp2kIwVvPGEEiBQnWIiHc+J+d6InKhTrrAcVV+fDvgH+yTEa
- IDBl/Y5t6Fl4Q6F91vrRwl70+92/uSjoXNz3ntBO23WHUH/8hvdrYgajBXJWGh+ILTyh6fyeH
- RGLXOhoAqAqilzqJxBMCeQZyxHyK9bGBLgbbgPFfExAASaRj/z9MxvXiJe9zsOGSjGvVePsOl
- 3JEBC/72K5QobjPVUlQTuuRRMBbjO4EjWF9+iUa8egbhV5zqYUWQ05VxB3RNCkdMdDuJpCGf+
- 4Bvvd9GJQ+rRMzaRPQ8GxaisC8TGiL21pOLqqTfuoBJo/NbiF/BdHE8L0rnTWqWjDz5AzTVft
- fGdC+2SnvJmzxY+eEKuxIXN7jYHcOP2YP//Nmx7/0zsf0Y6KPy+tBy/49iTQ+SZRbuz0crfBH
- S6Rwvc8BTAWhUexuSzYMhKeuiWDdUPWIFDYmllCSe0Wmr458hIGdwax4DaVCO2uVE6nUIoMWb
- P7Cn3MCLHzuO0aHZQs8kvlqR4M3umtxlUGm7NjzuAmKIzimDHsYlsyuDDGi1FElYloE3YrejO
- DwArw6GgC8QLl0oX8Lt8ub6tY8eiUBUIfwkMBIeIP2OW0Dw0Oa1v7Gj7wbWhdeu1WtMlmBtN8
- 0aydfQrRDZ1R9c=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This series fixes various bugs & edge cases in the "git help" command,
+and improves and splits the internal-only "--completion-for-config"
+option into two, and as a result can get rid of an awk/sort -u
+pipeline in the bash completion.
 
---8323328-2066968464-1631273022=:59
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+For v1, see : https://lore.kernel.org/git/cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com/
 
-Hi =C3=86var,
+This should address all the feedback on v1 and more. I dropped the 4/6
+refactoring change, we now also specifically say what option
+combinations are bad before emitting usage info, as requested by Eric
+Sunshine.
 
-the commit title is misleading: it suggests that there is a bug that needs
-to be fixed.
+Ævar Arnfjörð Bjarmason (5):
+  help: correct the usage string in -h and documentation
+  help: correct usage & behavior of "git help --guides"
+  help tests: add test for --config output
+  help: correct logic error in combining --all and --config
+  help / completion: make "git help" do the hard work
 
-The idea of the patch, however, is to avoid redundant code, and if
-described that way, the patch is a lot better for it.
+ Documentation/git-help.txt             |   9 +-
+ builtin/help.c                         | 110 ++++++++++++++++++-------
+ contrib/completion/git-completion.bash |  21 +++--
+ t/t0012-help.sh                        |  46 +++++++++++
+ 4 files changed, 140 insertions(+), 46 deletions(-)
 
-On Thu, 9 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Range-diff against v1:
+1:  b5c79d87847 = 1:  b10bfd21f14 help: correct the usage string in -h and documentation
+2:  1ebd443e43c ! 2:  039639a0dd3 help: correct usage string for "git help --guides"
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    help: correct usage string for "git help --guides"
+    +    help: correct usage & behavior of "git help --guides"
+     
+         As noted in 65f98358c0c (builtin/help.c: add --guide option,
+         2013-04-02) and a133737b809 (doc: include --guide option description
+    @@ Commit message
+         argument we'll now error out.
+     
+         The comment being removed was added in 15f7d494380 (builtin/help.c:
+    -    split "-a" processing into two, 2013-04-02) and is no longer
+    -    applicable as explained above.
+    +    split "-a" processing into two, 2013-04-02). The "Ignore any remaining
+    +    args" part of it is now no longer applicable as explained above, let's
+    +    just remove it entirely, it's rather obvious that if we're returning
+    +    we're done.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ builtin/help.c: static struct option builtin_help_options[] = {
+      };
+      
+     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+    - 	int nongit;
+    - 	enum help_format parsed_help_format;
+    - 	const char *page;
+    -+	int standalone = 0;
+    - 
+    - 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+      			builtin_help_usage, 0);
+      	parsed_help_format = help_format;
+      
+     +	/* Options that take no further arguments */
+    -+	standalone = show_config || show_guides;
+    -+	if (standalone && argc)
+    -+		usage_with_options(builtin_help_usage, builtin_help_options);
+    ++	if (argc && show_guides)
+    ++		usage_msg_opt(_("--guides cannot be combined with other options"),
+    ++			      builtin_help_usage, builtin_help_options);
+     +
+      	if (show_all) {
+      		git_config(git_help_config, NULL);
+      		if (verbose) {
+     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+    - 	if (show_guides)
+    - 		list_guides_help();
+      
+    --	if (show_all || show_guides) {
+    -+	if (show_all || standalone) {
+    + 	if (show_all || show_guides) {
+      		printf("%s\n", _(git_more_info_string));
+     -		/*
+     -		* We're done. Ignore any remaining args
+    @@ t/t0012-help.sh: test_expect_success 'basic help commands' '
+      '
+      
+     +test_expect_success 'invalid usage' '
+    -+	test_expect_code 129 git help -c git-add &&
+     +	test_expect_code 129 git help -g git-add
+     +'
+     +
+3:  d0a8045c9ed = 3:  258282095de help tests: add test for --config output
+4:  e4bc7e57a6d < -:  ----------- help: refactor "for_human" control flow in cmd_help()
+5:  bcc640d32a1 ! 4:  32d73d5273c help: correct logic error in combining --all and --config
+    @@ builtin/help.c: static const char * const builtin_help_usage[] = {
+      };
+      
+     @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+    + 	int nongit;
+      	enum help_format parsed_help_format;
+      	const char *page;
+    - 	int standalone = 0;
+     +	int need_config = 0;
+      
+      	argc = parse_options(argc, argv, prefix, builtin_help_options,
+    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+      	parsed_help_format = help_format;
+      
+     +	/* Incompatible options */
+    -+	if (show_all + !!show_config + show_guides > 1)
+    -+		usage_with_options(builtin_help_usage, builtin_help_options);
+    ++	if (show_all && show_config)
+    ++		usage_msg_opt(_("--config and --all cannot be combined"),
+    ++			      builtin_help_usage, builtin_help_options);
+    ++
+    ++	if (show_config && show_guides)
+    ++		usage_msg_opt(_("--config and --guides cannot be combined"),
+    ++			      builtin_help_usage, builtin_help_options);
+     +
+      	/* Options that take no further arguments */
+    - 	standalone = show_config || show_guides;
+    - 	if (standalone && argc)
+    - 		usage_with_options(builtin_help_usage, builtin_help_options);
+    ++	if (argc && show_config)
+    ++		usage_msg_opt(_("--config cannot be combined with command or guide names"),
+    ++			      builtin_help_usage, builtin_help_options);
+    + 	if (argc && show_guides)
+    +-		usage_msg_opt(_("--guides cannot be combined with other options"),
+    ++		usage_msg_opt(_("--guides cannot be combined with command or guide names"),
+    + 			      builtin_help_usage, builtin_help_options);
+      
+     -	if (show_all) {
+     +	need_config = show_all || show_config;
+    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+     -	if (show_guides)
+     -		list_guides_help();
+     -
+    --	if (show_all || standalone) {
+    +-	if (show_all || show_guides) {
+     -		printf("%s\n", _(git_more_info_string));
+     -		return 0;
+     -	}
+    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+     
+      ## t/t0012-help.sh ##
+     @@ t/t0012-help.sh: test_expect_success 'basic help commands' '
+    + '
+      
+      test_expect_success 'invalid usage' '
+    - 	test_expect_code 129 git help -c git-add &&
+     -	test_expect_code 129 git help -g git-add
+     +	test_expect_code 129 git help -g git-add &&
+    ++	test_expect_code 129 git help -c git-add &&
+    ++	test_expect_code 129 git help -g git-add &&
+     +
+     +	test_expect_code 129 git help -a -c &&
+     +	test_expect_code 129 git help -g -c
+6:  940061e84d1 ! 5:  e995a42cb8d help / completion: make "git help" do the hard work
+    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+      
+     -	if (show_config) {
+     -		int for_human = show_config == 1;
+    --
+    --		if (for_human)
+    --			setup_pager();
+    --		list_config_help(for_human);
+    --		if (for_human)
+     +	switch (show_config) {
+     +	case SHOW_CONFIG_UNSET:
+     +		break;
+    -+	case SHOW_CONFIG_HUMAN:
+    -+		setup_pager();
+    -+		/* fallthrough */
+     +	case SHOW_CONFIG_VARS:
+     +	case SHOW_CONFIG_SECTIONS:
+     +		list_config_help(show_config);
+    -+		if (show_config == SHOW_CONFIG_HUMAN)
+    - 			printf("\n%s\n", _("'git help config' for more information"));
+      
+    +-		if (!for_human) {
+    +-			list_config_help(for_human);
+    +-			return 0;
+    +-		}
+    ++		return 0;
+    ++	case SHOW_CONFIG_HUMAN:
+    + 		setup_pager();
+    +-		list_config_help(for_human);
+    ++		list_config_help(show_config);
+    + 		printf("\n%s\n", _("'git help config' for more information"));
+    ++
+      		return 0;
+    + 	}
+    + 
+     
+      ## contrib/completion/git-completion.bash ##
+     @@ contrib/completion/git-completion.bash: __git_config_vars=
+-- 
+2.33.0.873.g125ff7b9940
 
-> In be5d88e1128 (test-tool run-command: learn to run (parts of) the
-> testsuite, 2019-10-04) an init pattern was added that would use
-> TESTSUITE_INIT, but then promptly memset() everything back to 0. We'd
-> then set the "dup" on the two string lists. Our setting of "next" to
-> "-1" thus did nothing, we'd reset it to "0" before using it.
->
-> Let's just use the init macro for the STRING_LIST members, we can then
-> remove the already redundant memset().
->
-> Note that while we compile this code, there's no in-tree user for the
-> "testsuite" target being modified here anymore, see the discussion at
-> and around <nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet>[1].
->
-> 1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbe=
-jvaqbjf.bet/
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->
-> This patch is the immediate reason for why I submitted
-> https://lore.kernel.org/git/patch-1.1-d1e464da0a9-20210906T002938Z-avara=
-b@gmail.com/,
-> since Johannes would prefer to keep it let's fix this init pattern.
-
-The diff does too many things, some of which are your purely personal
-preferences and do not actually need to be changed. This is a much more
-to-the-point diff:
-
-=2D- snip --
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 7ae03dc7123..14c57365e76 100644
-=2D-- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -61,7 +61,7 @@ struct testsuite {
- 	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
- };
- #define TESTSUITE_INIT \
--	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
-+	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, 0, 0, 0, 0, 0, 0, 0 }
-
- static int next_test(struct child_process *cp, struct strbuf *err, void *=
-cb,
- 		     void **task_cb)
-@@ -142,9 +142,6 @@ static int testsuite(int argc, const char **argv)
- 		OPT_END()
- 	};
-
--	memset(&suite, 0, sizeof(suite));
--	suite.tests.strdup_strings =3D suite.failed.strdup_strings =3D 1;
--
- 	argc =3D parse_options(argc, argv, NULL, options,
- 			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-=2D- snap --
-
-I would strongly suggest to use this diff instead.
-
-Ciao,
-Johannes
-
-
->
->  t/helper/test-run-command.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-> index 7ae03dc7123..8e42516bdc1 100644
-> --- a/t/helper/test-run-command.c
-> +++ b/t/helper/test-run-command.c
-> @@ -56,12 +56,15 @@ static int task_finished(int result,
->  }
->
->  struct testsuite {
-> -	struct string_list tests, failed;
-> +	struct string_list tests;
-> +	struct string_list failed;
->  	int next;
->  	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
->  };
-> -#define TESTSUITE_INIT \
-> -	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_DUP, -1, 0, 0, 0, 0, 0, 0 }
-> +#define TESTSUITE_INIT { \
-> +	.tests =3D STRING_LIST_INIT_DUP, \
-> +	.failed =3D STRING_LIST_INIT_DUP, \
-> +}
->
->  static int next_test(struct child_process *cp, struct strbuf *err, void=
- *cb,
->  		     void **task_cb)
-> @@ -142,9 +145,6 @@ static int testsuite(int argc, const char **argv)
->  		OPT_END()
->  	};
->
-> -	memset(&suite, 0, sizeof(suite));
-> -	suite.tests.strdup_strings =3D suite.failed.strdup_strings =3D 1;
-> -
->  	argc =3D parse_options(argc, argv, NULL, options,
->  			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
->
-> --
-> 2.33.0.867.g88ec4638586
->
->
-
---8323328-2066968464-1631273022=:59--
