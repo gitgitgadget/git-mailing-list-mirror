@@ -2,113 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB09C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 09:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4512AC433EF
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 10:30:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30D5D6105A
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 09:33:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19F3F610C8
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 10:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232058AbhIJJe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 05:34:29 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50831 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231818AbhIJJe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 05:34:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631266392;
-        bh=fcgm9FsgKsXNqE+V1Yjukh8nUj+Hjk7Gs8fpr1DcmTk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=j97eyu27rA8ElETMALZ/WfU5CUSgew0pMaGR054NuILubwdQMSX9S6hV2oHHVZ6gK
-         PHnyJBjF10Q5omOmzKNLhbEMQU0x0pxdrzGhX7c+GxvjgaifqSof2jUZTMDJeTPIW3
-         MaV0WH0ntjrVO3RkCtLST5FFt/Al8kRj0Wjf/ofs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N9dsb-1n3EdW47nR-015XAr; Fri, 10
- Sep 2021 11:33:12 +0200
-Date:   Fri, 10 Sep 2021 11:33:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Miriam Rubio <mirucam@gmail.com>
-Subject: Re: mr/bisect-in-c-4, was Re: What's cooking in git.git (Sep 2021,
- #02; Wed, 8)
-In-Reply-To: <xmqqr1dxuigf.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2109101132460.59@tvgsbejvaqbjf.bet>
-References: <xmqqsfyf5b74.fsf@gitster.g>        <nycvar.QRO.7.76.6.2109091308200.59@tvgsbejvaqbjf.bet> <xmqqr1dxuigf.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232236AbhIJKbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 06:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232157AbhIJKbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 06:31:10 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F988C061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 03:29:59 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id w29so1154984wra.8
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 03:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=azrHGlFBxpY2WcVsSGH/q4iBKGUiKsb/4Kes5RjGzIY=;
+        b=I1Ji4NBK4dO1dJdJDlqs14Iw5dMCQ0k4M7HSVMFI21VB3graix4p+PYq1Q+4udaTWn
+         dR0Xk3n1qCX2c106C98Z1Uh0suPQNb0Xwpq2gEAB2iSKC2lZoCuySaJ1FtGcTjlrnw4f
+         ZuOzlLGQr3PitVO4YeZe+ivFaqxvYnyYtZFwIIZETH214yj4pue32a6bGLnrixf4rqgm
+         X8Ai9QFarSALD5jDnZ6Oi5uY4OhyyBiwPff2DDN/FLhWQwsBqN/xLy7SBjmq3hoc7WlJ
+         52U4I8iS/LWEp/K7CYyMHtC6E05WfGd9yhQCqr/NjF1HHXLrzZjw7WP9P6AXEXjnngdK
+         xc8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=azrHGlFBxpY2WcVsSGH/q4iBKGUiKsb/4Kes5RjGzIY=;
+        b=ksu7IWQbzekyVNZ0JM4CVWHd+xvLknVqvVG0pKq+rraePxkP/tli3sxxbOIYx0s/Qk
+         TrDUv0W0ulUoAxojLbmQEqGrG7E0jAgglmD3jgtge+nMuYAh/Gzv753ILAkzbcF+5w3u
+         4kZ/GREkwPoOK5e8kmt+P2MA3caJd5RjdFvRetVDbt18tcJboyem/ZXXXaUTH4iXUzgX
+         W9h2/2J9TUek7TcfNDMzDwwKiOaRUwni84+act2vqtT67nrfnV7sEv7r0rbU9O3NKbqj
+         msHy2VZW09/kHfdxe7IO616RBTQGoDda6NAWrAHAd1P291wheAhlnjnRx8nJNGVr/5Pv
+         ppdw==
+X-Gm-Message-State: AOAM531F0YdU+bDbe1CK5QbjecCyjN7qNu5tvH7M1mJi99jCn/cDT32S
+        aMyosV9xCojh2CM8u8j5vZ8eEfq7Hjc=
+X-Google-Smtp-Source: ABdhPJw1Yyp1OtzUy1xHHRPD36TItRI5K61djiB7XSxrn7o9B/54eNcBv9vsXKeohyHWCBZznDKHKw==
+X-Received: by 2002:a5d:6792:: with SMTP id v18mr6744280wru.416.1631269798137;
+        Fri, 10 Sep 2021 03:29:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j98sm800080wrj.88.2021.09.10.03.29.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Sep 2021 03:29:57 -0700 (PDT)
+Message-Id: <pull.1086.v2.git.git.1631269796.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1086.git.git.1631065426.gitgitgadget@gmail.com>
+References: <pull.1086.git.git.1631065426.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Sep 2021 10:29:53 +0000
+Subject: [PATCH v2 0/3] Fix D/F issues in stash
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GYs7Dg64ZB5vZnGH91NaloK9jY49GzlHrACzPyZXeIrLd5O1LrT
- kWrpVw71WtncarSxwMY5SGPGEx5FQ0c90XYyV16whgdnqNYUMzL8XmuUx1BtiNrhcdvhrr9
- QRniwia6ALkIvr66JJVrImKTMItksXIufCcF9flm1RjfUbvccGlpqhz1KK5MalyvwVbVWhp
- QW5FFIK9upWlqnGBE4oLQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JBq/7Xcftg8=:YC7RwfOX0SZ/zMaLF/MxB8
- xX+VVUUfw+c4gUP9LZ7hYtKB4O9irjEFm9GskRiKsaB9Sidymvy09FWSICNACfuHoLz95Ui7y
- iOCl0lsStRSVHxekBeKWzrqn9fYkQozifaRvFzOwVIZk9ZlwkFcEZZA5Zt9BtRvPfbS0yXJTN
- XOj98ZcbrVIUZmWZtqwGoCepTiWYIUOikrZSOA/NaInFu4MX2l35nNWJmj935V3PxgpgTRfi/
- rzOehngW67VSpP7/1skr6LjZvWqshIIYbGbEEj1li/NWN9E3txIEzR8CrRSzua/cD72s3yc1u
- VzwjMXRN/JZqP9UwzJgN3zjKVGekl9Edn9LqHA/1M/ss5fOkW6DqwjoVZklxAcVcWAROfNx8s
- OYz71+mYifoeXeNX+W8qqlXr2xQGXYcUwjhU5gKlqq51ytERhTt1vfegEmLfu7lAGQBSUrAK2
- fmzoslUqGFfiiC/q4oOkSicpspEzrM7nWMmJ92u2hBJyXt1iCSRWr8M7xbw1X2xjwNRC07ZEf
- ZkxR4y6IAG8a5h0XBmD1ypPOIZ6Bl8azLpVqKwIlx+e7y2VSylHI1+Z64rm88j2I82vctB97M
- Ci3Qh4d7ALWYBogrOUXp1pYAM1MjWLzXVCExhO8zZ8ac3bW9j5Sthe0bGMdTtUHHMPi6xWqPy
- /zMAPVlvtCJqTLvGnvyaF2gzjHA8oUBjdvdYX0Y84/rqN/MwpbqudU6QvRPgPtrB3A41WmPtz
- Btk/9dsdLDCoky/7w8+X8yLPCnr2pjx+QzM56b5P3sUUlSbzBKNdx+Skiv1cZS0KseiLDFqT6
- r/T8YnMYXOPFFf2VawREyzDvcpWkhJPHbEZITmVaxgs5YzbmyiNHHOZlsUy70tyeioVx1qTOx
- SUJggRWutW1pc0A9+wNXhKPZYy3JETfVMtC+kqB11AP58pp5T41zq9NVxt9M1KlT4rfO7SsZW
- dMASfmG1UhMZnN6Y7Xd8115sgtyuDrttBSwGq1W58+hqVyGUapLhOs/Yf0PRlCIgzh5tBpfZ4
- pDWUc+PpUCHo9b41sbvz3psuLYLpjVU6XioeFMOOdmJdoM2QZo7PIilS4HwZVyPah0ZSmHdnb
- wJbpNed/S09P0Q=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This series fixes a few D/F issues in the stash command. These were some
+issues I found while working on unintentional removal of untracked
+files/directories and the current working directory, and I'm just submitting
+them separately.
 
-On Thu, 9 Sep 2021, Junio C Hamano wrote:
+Changes since v1:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > On Wed, 8 Sep 2021, Junio C Hamano wrote:
-> >
-> >> * mr/bisect-in-c-4 (2021-09-02) 6 commits
-> >>  - bisect--helper: retire `--bisect-next-check` subcommand
-> >>  - bisect--helper: reimplement `bisect_run` shell
-> >>  - bisect--helper: reimplement `bisect_visualize()`shell function in =
-C
-> >>  - run-command: make `exists_in_PATH()` non-static
-> >>  - t6030-bisect-porcelain: add test for bisect visualize
-> >>  - t6030-bisect-porcelain: add tests to control bisect run exit cases
-> >>
-> >>  Rewrite of "git bisect" in C continues.
-> >
-> > From my point of view, this is ready for `next`.
->
-> You agreed that redirection with dup2()'s in [5/6] was good enough
-> for now [*1*], but in that case, we need to add a few fflush(stdout)
-> around the dup2() dance [*2*].
->
-> So this is not quite ready for 'next' yet, although it is almost
-> there, I'd think.
+ * Fix accidental creation of file named 'expect' (copy-paste problem...)
+ * Documented the reason for adding is_path_a_directory() and not using
+   is_directory()
+ * Removed typo, fixed up confusing wording, and added a companion test to
+   show that F->D and D->F have the same fix.
 
-Oh right, I fogot about the `fflush()` stuff.
+Elijah Newren (3):
+  t3903: document a pair of directory/file bugs
+  stash: avoid feeding directories to update-index
+  stash: restore untracked files AFTER restoring tracked files
 
-Thanks,
-Dscho
+ builtin/stash.c  | 20 ++++++++++++++---
+ t/t3903-stash.sh | 58 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 3 deletions(-)
 
->
->
-> [References]
->
-> *1* https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109090922310.55@tvgsb=
-ejvaqbjf.bet/
->
-> *2* https://lore.kernel.org/git/xmqqtuj2h7cp.fsf@gitster.g/
->
+
+base-commit: e0a2f5cbc585657e757385ad918f167f519cfb96
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1086%2Fnewren%2Fstash-df-fixes-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1086/newren/stash-df-fixes-v2
+Pull-Request: https://github.com/git/git/pull/1086
+
+Range-diff vs v1:
+
+ 1:  bc66a6ae75d ! 1:  5ddb70d332b t3903: document a pair of directory/file bugs
+     @@ Metadata
+       ## Commit message ##
+          t3903: document a pair of directory/file bugs
+      
+     +    There are three tests here, because the second bug is documented with
+     +    two tests: a file -> directory change and a directory -> file change.
+     +    The reason for the two tests is just to verify that both are indeed
+     +    broken but that both will be fixed by the same simple change (which will
+     +    be provided in a subsequent patch).
+     +
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## t/t3903-stash.sh ##
+     @@ t/t3903-stash.sh: test_expect_success 'stash -c stash.useBuiltin=false warning '
+      +		git rm filler &&
+      +		mkdir filler &&
+      +		echo contents >filler/file &&
+     -+		cp filler/file expect &&
+      +		git stash push
+      +	)
+      +'
+      +
+     -+test_expect_failure 'git stash can pop directory/file saved changes' '
+     ++test_expect_failure 'git stash can pop file -> directory saved changes' '
+      +	test_create_repo directory_file_switch_v2 &&
+      +	(
+      +		cd directory_file_switch_v2 &&
+     @@ t/t3903-stash.sh: test_expect_success 'stash -c stash.useBuiltin=false warning '
+      +		test_cmp expect filler/file
+      +	)
+      +'
+     ++
+     ++test_expect_failure 'git stash can pop directory -> file saved changes' '
+     ++	test_create_repo directory_file_switch_v3 &&
+     ++	(
+     ++		cd directory_file_switch_v3 &&
+     ++		test_commit init &&
+     ++
+     ++		mkdir filler &&
+     ++		test_write_lines some words >filler/file1 &&
+     ++		test_write_lines and stuff >filler/file2 &&
+     ++		git add filler &&
+     ++		git commit -m filler &&
+     ++
+     ++		git rm -rf filler &&
+     ++		echo contents >filler &&
+     ++		cp filler expect &&
+     ++		git stash push --include-untracked &&
+     ++		git stash apply --index &&
+     ++		test_cmp expect filler
+     ++	)
+     ++'
+      +
+       test_done
+ 2:  c7f5ae66a92 ! 2:  31e38c6c33c stash: avoid feeding directories to update-index
+     @@ builtin/stash.c: static int reset_head(void)
+       
+      +static int is_path_a_directory(const char *path)
+      +{
+     ++	/*
+     ++	 * This function differs from abspath.c:is_directory() in that
+     ++	 * here we use lstat() instead of stat(); we do not want to
+     ++	 * follow symbolic links here.
+     ++	 */
+      +	struct stat st;
+      +	return (!lstat(path, &st) && S_ISDIR(st.st_mode));
+      +}
+ 3:  ac8ca07481d ! 3:  6254938948c stash: restore untracked files AFTER restoring tracked files
+     @@ Commit message
+          removed.  So, restore changes to tracked files before restoring
+          untracked files.
+      
+     -    There is no similar problem to worry about in the opposite directory,
+     -    because untracked files are always additive.  Said another way, there's
+     -    no way to "stash a removal of an untracked file" because if an untracked
+     -    file is removed, git simply doesn't know about it.
+     +    There is no counterpart problem to worry about with the user deleting an
+     +    untracked file and then add a tracked one in its place.  Git does not
+     +    track untracked files, and so will not know the untracked file was
+     +    deleted, and thus won't be able to stash the removal of that file.
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     @@ t/t3903-stash.sh: test_expect_success 'git stash succeeds despite directory/file
+       	)
+       '
+       
+     --test_expect_failure 'git stash can pop directory/file saved changes' '
+     -+test_expect_success 'git stash can pop directory/file saved changes' '
+     +-test_expect_failure 'git stash can pop file -> directory saved changes' '
+     ++test_expect_success 'git stash can pop file -> directory saved changes' '
+       	test_create_repo directory_file_switch_v2 &&
+       	(
+       		cd directory_file_switch_v2 &&
+     +@@ t/t3903-stash.sh: test_expect_failure 'git stash can pop file -> directory saved changes' '
+     + 	)
+     + '
+     + 
+     +-test_expect_failure 'git stash can pop directory -> file saved changes' '
+     ++test_expect_success 'git stash can pop directory -> file saved changes' '
+     + 	test_create_repo directory_file_switch_v3 &&
+     + 	(
+     + 		cd directory_file_switch_v3 &&
+
+-- 
+gitgitgadget
