@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B7DAC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 20:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0576C433FE
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 20:07:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51A16611EF
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 20:07:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A5B1600AA
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 20:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233423AbhIJUI5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 16:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49410 "EHLO
+        id S233463AbhIJUI6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 16:08:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232310AbhIJUI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233397AbhIJUI5 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 10 Sep 2021 16:08:57 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D56EC061574
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF83C061756
         for <git@vger.kernel.org>; Fri, 10 Sep 2021 13:07:45 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id t18so4296932wrb.0
+Received: by mail-wm1-x332.google.com with SMTP id s24so2000060wmh.4
         for <git@vger.kernel.org>; Fri, 10 Sep 2021 13:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pQqugpku2xxjiYxuYMBKanWWBvkHhgXYN+FjSPHWdDU=;
-        b=KQy5v6S37m+r2r8pz80jFrTOqfCTqFXCEF44lG6vDyfqCrZ5RQTISTscIHLbwFKLL0
-         uEcT7nhzGQpjmEkpHD4W7/6V23sOcdx8tBB5y9uQZ7x/TqRwYVozujeLJyjOCag2nWbo
-         yAgvNn9S1bEYbSMzWoLU/Fx479lRCGzvn5AwNQGfoW97F2F8pl6RGsTl+Rkx/pfvWvbJ
-         rL9GeO2zI0T2jDwTyRn4MoW0Fg0kbdapRIQj5bshMiDiarIuGtXJuqqEFYG107rjQIWz
-         Gryj1a2i1lwbx15VMVRJAoc1uJQJYdHCdjZFlelDcamIc4G+9pUy8C7NgGQLeyIQ6234
-         tR3A==
+        bh=DxOW4Bn01bBa/mcyd4pJ8gtwbhAs8qH9JTxWAs/eu/8=;
+        b=mbRBdy2+kTW5GdNGW5Lc9kE6347ep9K7tdqdb8YSsnQ+DacBoNI3BTJ4Nwusla/Yz9
+         Uz9pVNQzftREBdRopnMaZ43klAmvgN6t46kn514AWwxUqBFbOxe7/I/23YQUdv/vH1rp
+         s6PAus+JW/oxxBf5Zxqpik9XW4n5GbASpPf1G6txo7g5Vma/tisrJUHaGWQI0ted9i7G
+         tMnsnYsQw+tvjmfUlPXusZZPf+1+AX/CDXlow6xYhfLjLm9+omgcdM7ydxdD7wO7ugNp
+         sp5QiIolIymK835XpOQdo7ecatAjxsq9TOVufblnMf684AKlPYOyeeWZZfFM2Fazt+uM
+         v5VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pQqugpku2xxjiYxuYMBKanWWBvkHhgXYN+FjSPHWdDU=;
-        b=3oSotTJmeGhTuRPpAoTG5n9V5/pwKhYGOspZBnY0B3ynOv5BHg4eqCSmNw4B3f4VuU
-         jvIjPKAPpH/hKcAlS8PSs1TeQpwvTX4Nh707nxvPiwSkcI5M0QRDIRlvTYYoSFp+VVB2
-         Ix6GjkcgMCSJoUYhRnHrR66o2sa5UzFrsh+23aDLkJrOoVYJ8VPB+WaGq7501MlD1meS
-         jQuEmHwVPAz3qangKWg2TwxfPOaBIevakxCBRvCeyF9nmIWVvwM+yku6/W2UkuVTUjcB
-         U2nM8QfJpsERx26KJdiLMgIulzv1dTfSuANEIaJWUhKmmFUgfP29cZJXggTHsPRH6Zmk
-         Di6w==
-X-Gm-Message-State: AOAM533rBUWhVlKOBfg5WhysxoOYyLQ/cj7+0MDJ3jEKcpe5VaIFJJIj
-        +DrMaLn6eUorQ1xb2jWhbnzj/F7pn3U=
-X-Google-Smtp-Source: ABdhPJz4n7wFc4uFrdU6WxA5DK6ppc5fnR+hGspugU1ssbMgdoiUlqidgsnIQlJFQmgphs5+m/WHBA==
-X-Received: by 2002:a5d:40c9:: with SMTP id b9mr11606232wrq.212.1631304463398;
-        Fri, 10 Sep 2021 13:07:43 -0700 (PDT)
+        bh=DxOW4Bn01bBa/mcyd4pJ8gtwbhAs8qH9JTxWAs/eu/8=;
+        b=KazyAYStap+ZpbOwZrVPhF+fyAHiOnHvccI+JVjdmeuyv7Q0DQJWHsOzeTjK4AH7yI
+         pbQIw9VonuBhY6FOrNeJuA7x46sEy7OSDkgxHozUIr393JZRsMApDbX2woY086xeba/r
+         fXbGqUrMc1pDTqQiZxMFGcjsb6n3utR3PLEAkRQhbFxzWtPqTCEBSeh57lXWOmXfazSJ
+         3ik72/aylfSE+PWGb4sod4b5buORD6yjKDcTue8kikSmIdWt1PN/rnmQuy/r/xTHaOH9
+         fzVQEFIIj0/JhBv//Msw9rW8byL8rk1ONg99CdWlz3iWLX9WOILqwlsHm3dEvp9QHY4K
+         bYPA==
+X-Gm-Message-State: AOAM532zPgMqrBGA3Xx3TxXs8YRKsHPrJ1mYFhsCTBvV1PXcrT1L5X96
+        WgeN6zp+kdX2NP9RtuXRpGoDR7Rn6PY=
+X-Google-Smtp-Source: ABdhPJw63n/ANMO8/Cjv8n5mykoPSuGA+pDRvLiDAgOj/jy+zhlxN7cizT01H1ZB2Sfzz9CTwo2FSw==
+X-Received: by 2002:a7b:c35a:: with SMTP id l26mr10262264wmj.124.1631304464126;
+        Fri, 10 Sep 2021 13:07:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t11sm5539523wmi.23.2021.09.10.13.07.43
+        by smtp.gmail.com with ESMTPSA id 48sm3764848wrc.14.2021.09.10.13.07.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 10 Sep 2021 13:07:43 -0700 (PDT)
-Message-Id: <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v7.git.git.1627998358.gitgitgadget@gmail.com>
+Message-Id: <b0bee197a051f066936bfa1875809eb3990270a0.1631304462.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
 References: <pull.1041.v7.git.git.1627998358.gitgitgadget@gmail.com>
+        <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
 From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Sep 2021 20:07:33 +0000
-Subject: [PATCH v8 0/9] ssh signing: Add commit & tag signing/verification via SSH keys using
- ssh-keygen
+Date:   Fri, 10 Sep 2021 20:07:34 +0000
+Subject: [PATCH v8 1/9] ssh signing: preliminary refactoring and clean-up
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,189 +80,311 @@ Cc:     Han-Wen Nienhuys <hanwen@google.com>,
         Gwyneth Morgan <gwymor@tilde.club>,
         Jonathan Tan <jonathantanmy@google.com>,
         Josh Steadmon <steadmon@google.com>,
-        Fabian Stelzer <fabian@stelzer.cloud>
+        Fabian Stelzer <fabian@stelzer.cloud>,
+        Fabian Stelzer <fs@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-openssh 8.7 will add valid-after, valid-before options to the allowed keys
-keyring. This allows us to pass the commit timestamp to the verification
-call and make key rollover possible and still be able to verify older
-commits. Set valid-after to the current date when adding your key to the
-keyring and set valid-before to make it fail if used after a certain date.
-Software like gitolite/github or corporate automation can do this
-automatically when ssh push keys are addded / removed I will add this
-feature in a follow up patch afterwards since the released 8.7 version has a
-broken ssh-keygen implementation which will break ssh signing completely.
+From: Fabian Stelzer <fs@gigacodes.de>
 
-v7:
+Openssh v8.2p1 added some new options to ssh-keygen for signature
+creation and verification. These allow us to use ssh keys for git
+signatures easily.
 
- * change unknown signing key behavior to fail verify-commit/tag just like
-   gpg does
- * add test for unknown signing keys for ssh & gpg
- * made default signing key retrieval configurable
-   (gpg.ssh.defaultKeyCommand). We could default this to "ssh-add -L" but
-   would risk some users signing with a wrong key
- * die() instead of error in case of incompatible signatures to match
-   current BUG() behaviour more
- * various review fixes (early return for config parse, missing free,
-   comments)
- * got rid of strcmp("ssh") branches and used format configurable callbacks
-   everywhere
- * moved documentation changes into the commits adding the specific
-   functionality
+In our corporate environment we use PIV x509 Certs on Yubikeys for email
+signing/encryption and ssh keys which I think is quite common
+(at least for the email part). This way we can establish the correct
+trust for the SSH Keys without setting up a separate GPG Infrastructure
+(which is still quite painful for users) or implementing x509 signing
+support for git (which lacks good forwarding mechanisms).
+Using ssh agent forwarding makes this feature easily usable in todays
+development environments where code is often checked out in remote VMs / containers.
+In such a setup the keyring & revocationKeyring can be centrally
+generated from the x509 CA information and distributed to the users.
 
-v8:
+To be able to implement new signing formats this commit:
+ - makes the sigc structure more generic by renaming "gpg_output" to
+   "output"
+ - introduces function pointers in the gpg_format structure to call
+   format specific signing and verification functions
+ - moves format detection from verify_signed_buffer into the check_signature
+   api function and calls the format specific verify
+ - renames and wraps sign_buffer to handle format specific signing logic
+   as well
 
- * fixes a bug around find-principals buffer i was releasing while still
-   iterating over it. Uses separate strbufs now.
- * rename a wrong variable in the tests
- * use git_config_pathname instead of string where applicable
+Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+---
+ fmt-merge-msg.c |   6 +--
+ gpg-interface.c | 104 +++++++++++++++++++++++++++++-------------------
+ gpg-interface.h |   2 +-
+ log-tree.c      |   8 ++--
+ pretty.c        |   4 +-
+ 5 files changed, 74 insertions(+), 50 deletions(-)
 
-Fabian Stelzer (9):
-  ssh signing: preliminary refactoring and clean-up
-  ssh signing: add test prereqs
-  ssh signing: add ssh key format and signing code
-  ssh signing: retrieve a default key from ssh-agent
-  ssh signing: provide a textual signing_key_id
-  ssh signing: verify signatures using ssh-keygen
-  ssh signing: duplicate t7510 tests for commits
-  ssh signing: tests for logs, tags & push certs
-  ssh signing: test that gpg fails for unknown keys
-
- Documentation/config/gpg.txt     |  45 ++-
- Documentation/config/user.txt    |   7 +
- builtin/receive-pack.c           |   4 +
- fmt-merge-msg.c                  |   6 +-
- gpg-interface.c                  | 577 ++++++++++++++++++++++++++++---
- gpg-interface.h                  |   8 +-
- log-tree.c                       |   8 +-
- pretty.c                         |   4 +-
- send-pack.c                      |   8 +-
- t/lib-gpg.sh                     |  28 ++
- t/t4202-log.sh                   |  23 ++
- t/t5534-push-signed.sh           | 101 ++++++
- t/t7031-verify-tag-signed-ssh.sh | 161 +++++++++
- t/t7510-signed-commit.sh         |  29 +-
- t/t7528-signed-commit-ssh.sh     | 398 +++++++++++++++++++++
- 15 files changed, 1341 insertions(+), 66 deletions(-)
- create mode 100755 t/t7031-verify-tag-signed-ssh.sh
- create mode 100755 t/t7528-signed-commit-ssh.sh
-
-
-base-commit: 8463beaeb69fe0b7f651065813def4aa6827cd5d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1041%2FFStelzer%2Fsshsign-v8
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1041/FStelzer/sshsign-v8
-Pull-Request: https://github.com/git/git/pull/1041
-
-Range-diff vs v7:
-
-  1:  91fd0159e1f =  1:  b0bee197a05 ssh signing: preliminary refactoring and clean-up
-  2:  fe98052a3ea =  2:  d08327ecb25 ssh signing: add test prereqs
-  3:  80d2d55d22e =  3:  c1e9bba8da0 ssh signing: add ssh key format and signing code
-  4:  83ece42e1de =  4:  8c430fc7a1b ssh signing: retrieve a default key from ssh-agent
-  5:  76bc9eb4079 =  5:  0864ed04670 ssh signing: provide a textual signing_key_id
-  6:  dc092c79796 !  6:  cfd66180249 ssh signing: verify signatures using ssh-keygen
-     @@ gpg-interface.c: static int verify_gpg_signed_buffer(struct signature_check *sig
-      +	const char *line;
-      +	size_t trust_size;
-      +	char *principal;
-     ++	struct strbuf ssh_principals_out = STRBUF_INIT;
-     ++	struct strbuf ssh_principals_err = STRBUF_INIT;
-      +	struct strbuf ssh_keygen_out = STRBUF_INIT;
-      +	struct strbuf ssh_keygen_err = STRBUF_INIT;
-      +
-     @@ gpg-interface.c: static int verify_gpg_signed_buffer(struct signature_check *sig
-      +		     "-f", ssh_allowed_signers,
-      +		     "-s", buffer_file->filename.buf,
-      +		     NULL);
-     -+	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_keygen_out, 0,
-     -+			   &ssh_keygen_err, 0);
-     -+	if (ret && strstr(ssh_keygen_err.buf, "usage:")) {
-     ++	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
-     ++			   &ssh_principals_err, 0);
-     ++	if (ret && strstr(ssh_principals_err.buf, "usage:")) {
-      +		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
-      +		goto out;
-      +	}
-     -+	if (ret || !ssh_keygen_out.len) {
-     ++	if (ret || !ssh_principals_out.len) {
-      +		/*
-      +		 * We did not find a matching principal in the allowedSigners
-      +		 * Check without validation
-     @@ gpg-interface.c: static int verify_gpg_signed_buffer(struct signature_check *sig
-      +		ret = -1;
-      +	} else {
-      +		/* Check every principal we found (one per line) */
-     -+		for (line = ssh_keygen_out.buf; *line;
-     ++		for (line = ssh_principals_out.buf; *line;
-      +		     line = strchrnul(line + 1, '\n')) {
-      +			while (*line == '\n')
-      +				line++;
-     @@ gpg-interface.c: static int verify_gpg_signed_buffer(struct signature_check *sig
-      +	sigc->payload = xmemdupz(payload, payload_size);
-      +	strbuf_stripspace(&ssh_keygen_out, 0);
-      +	strbuf_stripspace(&ssh_keygen_err, 0);
-     ++	/* Add stderr outputs to show the user actual ssh-keygen errors */
-     ++	strbuf_add(&ssh_keygen_out, ssh_principals_err.buf, ssh_principals_err.len);
-      +	strbuf_add(&ssh_keygen_out, ssh_keygen_err.buf, ssh_keygen_err.len);
-      +	sigc->output = strbuf_detach(&ssh_keygen_out, NULL);
-      +	sigc->gpg_status = xstrdup(sigc->output);
-     @@ gpg-interface.c: static int verify_gpg_signed_buffer(struct signature_check *sig
-      +out:
-      +	if (buffer_file)
-      +		delete_tempfile(&buffer_file);
-     ++	strbuf_release(&ssh_principals_out);
-     ++	strbuf_release(&ssh_principals_err);
-      +	strbuf_release(&ssh_keygen_out);
-      +	strbuf_release(&ssh_keygen_err);
-      +
-     @@ gpg-interface.c: int git_gpg_config(const char *var, const char *value, void *cb
-      +	if (!strcmp(var, "gpg.ssh.allowedsignersfile")) {
-      +		if (!value)
-      +			return config_error_nonbool(var);
-     -+		return git_config_string(&ssh_allowed_signers, var, value);
-     ++		return git_config_pathname(&ssh_allowed_signers, var, value);
-      +	}
-      +
-      +	if (!strcmp(var, "gpg.ssh.revocationfile")) {
-      +		if (!value)
-      +			return config_error_nonbool(var);
-     -+		return git_config_string(&ssh_revocation_file, var, value);
-     ++		return git_config_pathname(&ssh_revocation_file, var, value);
-      +	}
-      +
-       	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
-  7:  c17441566d9 !  7:  c8e21dc97f1 ssh signing: duplicate t7510 tests for commits
-     @@ t/t7528-signed-commit-ssh.sh (new)
-      +			git show --pretty=short --show-signature $commit >actual &&
-      +			grep "${GPGSSH_GOOD_SIGNATURE_UNTRUSTED}" actual &&
-      +			! grep "${GPGSSH_BAD_SIGNATURE}" actual &&
-     -+			grep "${KEY_NOT_TRUSTED}" actual &&
-     ++			grep "${GPGSSH_KEY_NOT_TRUSTED}" actual &&
-      +			echo $commit OK || exit 1
-      +		done
-      +	)
-     @@ t/t7528-signed-commit-ssh.sh (new)
-      +	test_must_fail git verify-commit eighth-signed-alt 2>actual &&
-      +	grep "${GPGSSH_GOOD_SIGNATURE_UNTRUSTED}" actual &&
-      +	! grep "${GPGSSH_BAD_SIGNATURE}" actual &&
-     -+	grep "${KEY_NOT_TRUSTED}" actual
-     ++	grep "${GPGSSH_KEY_NOT_TRUSTED}" actual
-      +'
-      +
-      +test_expect_success GPGSSH 'verify-commit exits success with matching minTrustLevel' '
-  8:  0763517d62d =  8:  b66e3e0284c ssh signing: tests for logs, tags & push certs
-  9:  a5add98197a !  9:  07afb94ed83 ssh signing: test that gpg fails for unkown keys
-     @@ Metadata
-      Author: Fabian Stelzer <fs@gigacodes.de>
-      
-       ## Commit message ##
-     -    ssh signing: test that gpg fails for unkown keys
-     +    ssh signing: test that gpg fails for unknown keys
-      
-          Test that verify-commit/tag will fail when a gpg key is completely
-          unknown. To do this we have to generate a key, use it for a signature
-
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index b969dc6ebb6..2901c5e4f8f 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -528,11 +528,11 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 			buf = payload.buf;
+ 			len = payload.len;
+ 			if (check_signature(payload.buf, payload.len, sig.buf,
+-					 sig.len, &sigc) &&
+-				!sigc.gpg_output)
++					    sig.len, &sigc) &&
++			    !sigc.output)
+ 				strbuf_addstr(&sig, "gpg verification failed.\n");
+ 			else
+-				strbuf_addstr(&sig, sigc.gpg_output);
++				strbuf_addstr(&sig, sigc.output);
+ 		}
+ 		signature_check_clear(&sigc);
+ 
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 127aecfc2b0..db54b054162 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -15,6 +15,12 @@ struct gpg_format {
+ 	const char *program;
+ 	const char **verify_args;
+ 	const char **sigs;
++	int (*verify_signed_buffer)(struct signature_check *sigc,
++				    struct gpg_format *fmt, const char *payload,
++				    size_t payload_size, const char *signature,
++				    size_t signature_size);
++	int (*sign_buffer)(struct strbuf *buffer, struct strbuf *signature,
++			   const char *signing_key);
+ };
+ 
+ static const char *openpgp_verify_args[] = {
+@@ -35,14 +41,29 @@ static const char *x509_sigs[] = {
+ 	NULL
+ };
+ 
++static int verify_gpg_signed_buffer(struct signature_check *sigc,
++				    struct gpg_format *fmt, const char *payload,
++				    size_t payload_size, const char *signature,
++				    size_t signature_size);
++static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
++			   const char *signing_key);
++
+ static struct gpg_format gpg_format[] = {
+-	{ .name = "openpgp", .program = "gpg",
+-	  .verify_args = openpgp_verify_args,
+-	  .sigs = openpgp_sigs
++	{
++		.name = "openpgp",
++		.program = "gpg",
++		.verify_args = openpgp_verify_args,
++		.sigs = openpgp_sigs,
++		.verify_signed_buffer = verify_gpg_signed_buffer,
++		.sign_buffer = sign_buffer_gpg,
+ 	},
+-	{ .name = "x509", .program = "gpgsm",
+-	  .verify_args = x509_verify_args,
+-	  .sigs = x509_sigs
++	{
++		.name = "x509",
++		.program = "gpgsm",
++		.verify_args = x509_verify_args,
++		.sigs = x509_sigs,
++		.verify_signed_buffer = verify_gpg_signed_buffer,
++		.sign_buffer = sign_buffer_gpg,
+ 	},
+ };
+ 
+@@ -72,7 +93,7 @@ static struct gpg_format *get_format_by_sig(const char *sig)
+ void signature_check_clear(struct signature_check *sigc)
+ {
+ 	FREE_AND_NULL(sigc->payload);
+-	FREE_AND_NULL(sigc->gpg_output);
++	FREE_AND_NULL(sigc->output);
+ 	FREE_AND_NULL(sigc->gpg_status);
+ 	FREE_AND_NULL(sigc->signer);
+ 	FREE_AND_NULL(sigc->key);
+@@ -257,16 +278,16 @@ error:
+ 	FREE_AND_NULL(sigc->key);
+ }
+ 
+-static int verify_signed_buffer(const char *payload, size_t payload_size,
+-				const char *signature, size_t signature_size,
+-				struct strbuf *gpg_output,
+-				struct strbuf *gpg_status)
++static int verify_gpg_signed_buffer(struct signature_check *sigc,
++				    struct gpg_format *fmt, const char *payload,
++				    size_t payload_size, const char *signature,
++				    size_t signature_size)
+ {
+ 	struct child_process gpg = CHILD_PROCESS_INIT;
+-	struct gpg_format *fmt;
+ 	struct tempfile *temp;
+ 	int ret;
+-	struct strbuf buf = STRBUF_INIT;
++	struct strbuf gpg_stdout = STRBUF_INIT;
++	struct strbuf gpg_stderr = STRBUF_INIT;
+ 
+ 	temp = mks_tempfile_t(".git_vtag_tmpXXXXXX");
+ 	if (!temp)
+@@ -279,10 +300,6 @@ static int verify_signed_buffer(const char *payload, size_t payload_size,
+ 		return -1;
+ 	}
+ 
+-	fmt = get_format_by_sig(signature);
+-	if (!fmt)
+-		BUG("bad signature '%s'", signature);
+-
+ 	strvec_push(&gpg.args, fmt->program);
+ 	strvec_pushv(&gpg.args, fmt->verify_args);
+ 	strvec_pushl(&gpg.args,
+@@ -290,18 +307,22 @@ static int verify_signed_buffer(const char *payload, size_t payload_size,
+ 		     "--verify", temp->filename.buf, "-",
+ 		     NULL);
+ 
+-	if (!gpg_status)
+-		gpg_status = &buf;
+-
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+-	ret = pipe_command(&gpg, payload, payload_size,
+-			   gpg_status, 0, gpg_output, 0);
++	ret = pipe_command(&gpg, payload, payload_size, &gpg_stdout, 0,
++			   &gpg_stderr, 0);
+ 	sigchain_pop(SIGPIPE);
+ 
+ 	delete_tempfile(&temp);
+ 
+-	ret |= !strstr(gpg_status->buf, "\n[GNUPG:] GOODSIG ");
+-	strbuf_release(&buf); /* no matter it was used or not */
++	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
++	sigc->payload = xmemdupz(payload, payload_size);
++	sigc->output = strbuf_detach(&gpg_stderr, NULL);
++	sigc->gpg_status = strbuf_detach(&gpg_stdout, NULL);
++
++	parse_gpg_output(sigc);
++
++	strbuf_release(&gpg_stdout);
++	strbuf_release(&gpg_stderr);
+ 
+ 	return ret;
+ }
+@@ -309,35 +330,32 @@ static int verify_signed_buffer(const char *payload, size_t payload_size,
+ int check_signature(const char *payload, size_t plen, const char *signature,
+ 	size_t slen, struct signature_check *sigc)
+ {
+-	struct strbuf gpg_output = STRBUF_INIT;
+-	struct strbuf gpg_status = STRBUF_INIT;
++	struct gpg_format *fmt;
+ 	int status;
+ 
+ 	sigc->result = 'N';
+ 	sigc->trust_level = -1;
+ 
+-	status = verify_signed_buffer(payload, plen, signature, slen,
+-				      &gpg_output, &gpg_status);
+-	if (status && !gpg_output.len)
+-		goto out;
+-	sigc->payload = xmemdupz(payload, plen);
+-	sigc->gpg_output = strbuf_detach(&gpg_output, NULL);
+-	sigc->gpg_status = strbuf_detach(&gpg_status, NULL);
+-	parse_gpg_output(sigc);
++	fmt = get_format_by_sig(signature);
++	if (!fmt)
++		die(_("bad/incompatible signature '%s'"), signature);
++
++	status = fmt->verify_signed_buffer(sigc, fmt, payload, plen, signature,
++					   slen);
++
++	if (status && !sigc->output)
++		return !!status;
++
+ 	status |= sigc->result != 'G';
+ 	status |= sigc->trust_level < configured_min_trust_level;
+ 
+- out:
+-	strbuf_release(&gpg_status);
+-	strbuf_release(&gpg_output);
+-
+ 	return !!status;
+ }
+ 
+ void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
+ {
+-	const char *output = flags & GPG_VERIFY_RAW ?
+-		sigc->gpg_status : sigc->gpg_output;
++	const char *output = flags & GPG_VERIFY_RAW ? sigc->gpg_status :
++							    sigc->output;
+ 
+ 	if (flags & GPG_VERIFY_VERBOSE && sigc->payload)
+ 		fputs(sigc->payload, stdout);
+@@ -441,6 +459,12 @@ const char *get_signing_key(void)
+ }
+ 
+ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
++{
++	return use_format->sign_buffer(buffer, signature, signing_key);
++}
++
++static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
++			  const char *signing_key)
+ {
+ 	struct child_process gpg = CHILD_PROCESS_INIT;
+ 	int ret;
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 80567e48948..feac4decf8b 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -17,7 +17,7 @@ enum signature_trust_level {
+ 
+ struct signature_check {
+ 	char *payload;
+-	char *gpg_output;
++	char *output;
+ 	char *gpg_status;
+ 
+ 	/*
+diff --git a/log-tree.c b/log-tree.c
+index 6dc4412268b..644893fd8cf 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -515,10 +515,10 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+ 
+ 	status = check_signature(payload.buf, payload.len, signature.buf,
+ 				 signature.len, &sigc);
+-	if (status && !sigc.gpg_output)
++	if (status && !sigc.output)
+ 		show_sig_lines(opt, status, "No signature\n");
+ 	else
+-		show_sig_lines(opt, status, sigc.gpg_output);
++		show_sig_lines(opt, status, sigc.output);
+ 	signature_check_clear(&sigc);
+ 
+  out:
+@@ -585,8 +585,8 @@ static int show_one_mergetag(struct commit *commit,
+ 		/* could have a good signature */
+ 		status = check_signature(payload.buf, payload.len,
+ 					 signature.buf, signature.len, &sigc);
+-		if (sigc.gpg_output)
+-			strbuf_addstr(&verify_message, sigc.gpg_output);
++		if (sigc.output)
++			strbuf_addstr(&verify_message, sigc.output);
+ 		else
+ 			strbuf_addstr(&verify_message, "No signature\n");
+ 		signature_check_clear(&sigc);
+diff --git a/pretty.c b/pretty.c
+index 9631529c10a..be477bd51f2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1432,8 +1432,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 			check_commit_signature(c->commit, &(c->signature_check));
+ 		switch (placeholder[1]) {
+ 		case 'G':
+-			if (c->signature_check.gpg_output)
+-				strbuf_addstr(sb, c->signature_check.gpg_output);
++			if (c->signature_check.output)
++				strbuf_addstr(sb, c->signature_check.output);
+ 			break;
+ 		case '?':
+ 			switch (c->signature_check.result) {
 -- 
 gitgitgadget
+
