@@ -2,139 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBA3C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E189AC433F5
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:08:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4108B610A3
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:07:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B546A611C8
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 12:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233019AbhIJMIS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 08:08:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232873AbhIJMIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 08:08:17 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 471DCC061574
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 05:07:06 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id e18so1078617qvo.1
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 05:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XL6GwTTzr2pavu2E30/yBUARPLhvEU5Xk+TlH/RQLYc=;
-        b=R8hKoS3bFjKJFy8wQDI+nw70xPBBJ/MbRq9CtTqatb3+L+s/oBeTfuBENXmH/hVM/c
-         psS/PI5WqgzCwAoMevmu2sm3yszXU+zKfUXKjr4MTSaC4EZVmzwmg7rNiiYXJuOZL4m+
-         buUdTiWjyglwrjTdWw2cG55pn83tHZt5+zIilDKYF4mfYgeG2GcXhtyjMBVd9SwwJ/IV
-         jFdKRJbf/DS9u7iwT7eWMB02SeA5NcwMqmJvXsptaMtlzJMxVjRzDedxhXav+h/06hf8
-         kx8staeieC05GlBcOdKRU7npP6RkLjX8t3yERbhspxrRAM7dWkcYVZwON5ElE5M02h5u
-         /OCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XL6GwTTzr2pavu2E30/yBUARPLhvEU5Xk+TlH/RQLYc=;
-        b=JwTs6wHMuZwC5ttCOkvlnzd8vWntuaKofq/1+kIzLwv3kSCeFxaRfzwhjqd78z4oMF
-         EnxNgev7tsSdiV7Wulw89W8g1FE9waaOhgfPepKIDIEaULpoBxJcjvC2C13gLIOKMeQ8
-         KmgFVIXNxTWuPXQi4p/SCxP5HRyto+zH1HQI7WfYfxMogtw335gdUvfwxbp7v/W58OQ5
-         +/qLdx9yX3C6rFbB7413yNJUdIiwQeoZ6md3nyBC38qLwf7C963tari7irDmSy0pJ3qD
-         756MlUX7x1M6Wk3MhyH/K7pdh0Sz9mEbm7fU+SN7ANlL40jMiPa0OfuV1Bm5sz+5SApg
-         KoWQ==
-X-Gm-Message-State: AOAM5311dYRY75kSVZEY+sZCI/opG0L/zfePvuPepKaglXy/UauNz+BG
-        RQKI2ws1oqmQvhkSrr+Z5Q8=
-X-Google-Smtp-Source: ABdhPJzz+0ZyaAmVtTUagJnrLTqGzd4rrb4YCVcijGrsl/Lah9tKE3luLuBExlQEx4pArH5xnFNZfQ==
-X-Received: by 2002:a0c:de02:: with SMTP id t2mr8083698qvk.54.1631275625396;
-        Fri, 10 Sep 2021 05:07:05 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id y29sm3203691qtm.4.2021.09.10.05.07.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Sep 2021 05:07:04 -0700 (PDT)
-Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
-To:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        id S233000AbhIJMKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 08:10:06 -0400
+Received: from mout.gmx.net ([212.227.17.22]:43233 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232873AbhIJMKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 08:10:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631275726;
+        bh=59aMM1SbqDo3dE8FMpXw2c3o8Ql4JroYPLcrxeDT8J4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iTrDL76FUFx2Z7vH4gyYzZqn5IOe8kIdY6XJ8o9+7rwnGgCCMFGYqZVd6KghGLbZJ
+         T0hscKUNdocGtaG/DXoXVqjTX0SWXDUXsItFPpDTLrJVOeg+PdwbNfPyMd9c8BHae/
+         jM1O38y2ZsMbA+z1U5xzQN+fmi1/U+gNo0R66Zco=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.174] ([213.196.213.44]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mk0NU-1mn1ja2XXs-00kPWt; Fri, 10
+ Sep 2021 14:08:46 +0200
+Date:   Fri, 10 Sep 2021 14:08:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
- <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
- <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
- <c42d4051-59cd-094a-4570-32cf4d38ec27@gmail.com>
- <e7224105-83c6-7f12-f63a-474bd477583a@gmail.com>
- <408dc1d3-44b8-a955-4d7b-94f23fa8a6bc@gmail.com>
- <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <d4eff812-374a-0523-a490-ea3058db585f@gmail.com>
-Date:   Fri, 10 Sep 2021 08:07:03 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
+In-Reply-To: <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109101325410.59@tvgsbejvaqbjf.bet>
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <xmqqk0k0ndbq.fsf@gitster.g> <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet> <4e998676-4975-8ac2-35a0-34416938b62e@kdbg.org>
+ <nycvar.QRO.7.76.6.2109071930080.55@tvgsbejvaqbjf.bet> <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:A6+8nervFHmyhF9dqESj+IIydxxqWWMEmG82TCcxeQb0l0giFi4
+ 7ZGZldW09doukVpeO3yLzXDzXuAoyzwEt4buTXoAG9jE3fBiVX0MMzcRpA1qFXoWY//VLAU
+ TYB8pEDdgemIQGtrx6PM5y1ECHknDo6H4JNQ/kvtrDxrRPt6f3oV5+smgyABhrmO5sSZP5K
+ d3Z5ELsZDtcPbQrNWWw7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+Ywtp5pU52c=:WRNgLxhVUlYBgLMluriGOZ
+ kNVX+GmjBTrgsNbHQZ1xRd/aJYKuRV1nkd7c25b6OREwiqQ446DOKj5xtYTzaJiP2nInPFFDi
+ khGTA/XFpqyq8skjVP+uoSQ7eeZ1D6kxfgGB1ic7m2bXK398TP0ZAc5e9bwJ+bPaJgt7C3w2c
+ 4DZ3T32WsmDsRz+rIqvd9DRGme7kZa0+BF5RsPoMcJ3RGIF5UqEoNoX9pOeUvyR5hpQhed4v2
+ s0oKkNfpQG3JBb95ZwfcoWtF7TX7k2wXeIDS3caTNIZjyKXRSUWeqMFqmb0GI/uuTSvhD1WP9
+ xYPZ/L/2/4P1QLkBD4gsLtI3bcRfsK9+GKU6s3k8QMnYpvAeJPUweszFkevLlZ7mOhVF532dN
+ 50zYj77a4Css06IseXbrKqDXhtuID2B0HH5blqxJmiybi6Q2WwA7kvf1lW33ErOejm/r8YyJO
+ mI8V/F9HpntabKIQ/s3A7dNo+BUMCp/9Hbiw8wAMWTC4o5xSmWwpfZKbpDofZGlSJy+lE2kvG
+ EO7ycEzwSKsdT/hugMFeAMiFkXF4fBiWyAgNb1cweovZVGrd0DKu0PVEbPYfv2p3QVppOlCXq
+ anC96UtxjOKES3RG6NjXo5FnPI5zQwqJ2rGJIgbQJ37bD19uvIc7E9jrKI5oqXHmo7NPcY68N
+ Ja7qqIRH39t1i71PYmU4lCONCt/jlbRlc32Dfd2SYosykyXEYPx3k6Js/5VtqXDrmjdniX9B6
+ rVnLygCzn+m21LGpyIpJbHjxhh4G3WGVXYyNmRjZLCS6Ur17ipEZ5nvt7tyjbqyfQ4TaZf0aU
+ bU7SWpyFBpjuEQdpnZ2XtSI3gQemIpv+qtScuytUliSaRSX23+KC9xWQkaj8lKhGV2b2WBXNU
+ C7jUvgBRTzg+KJFyhQxsmoMicA2E3+v9z+YV3OxXPSAHG0xzoffoP+oUISNOdqzAX4R2X1ufh
+ Y7EseWj/on68yZbTNGpuBun7S4VkfWQdJVwgpBA4jh/tXW0ioCyxUDfs45ssyFd1zIsqcNxFA
+ RULWu2ISVWKTQiJA3BIxxv74qnF0pzpLrv6d7OmORMhKzLv4Q0qlR9Xr1vJ2uQfs4cJptHRCH
+ g9p8aJ7roQOuZ0=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
-Le 2021-09-09 à 11:01, Elijah Newren a écrit :
-> Hi,
-> 
-> On Thu, Sep 9, 2021 at 6:57 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
-<snip>
->> merge-recursive.c:update_file_flags() does this
->> when updating the work tree
->>
->>          if (S_ISGITLINK(contents->mode)) {
->>
->>                   /*
->>
->>                    * We may later decide to recursively descend into
->>
->>                    * the submodule directory and update its index
->>
->>                    * and/or work tree, but we do not do that now.
->>
->>                    */
->>
->>                   update_wd = 0;
->>
->>                   goto update_index;
->>
->>          }
->>
->>
->>
->> so it looks like it does not update the submodule directory. Given
->> merge-ort is now the default perhaps it's time for rebase (and
->> cherry-pick/revert) to start reading the submodule config settings (we
->> parse the config before we know if we'll be using merge-ort so I don't
->> know how easy it would be to only parse the submodule settings if we are
->> using merge-ort).
-> 
-> I'd just parse any needed config in all cases.  The submodule settings
-> aren't going to hurt merge-recursive; it'll just ignore them.  (Or are
-> you worried about a mix-and-match of rebase calling both checkout and
-> merge code doing weird things, and you'd rather not have the checkout
-> bits update submodules if the merges won't?)
-> 
+On Tue, 7 Sep 2021, Elijah Newren wrote:
 
-Thanks for your input. I agree that reading the config in all cases would
-be simpler. We could even decide that since ort is the new default, the
-submodule support will not be "backported" to merge recursive (that would
-be way simpler to implement, I think) This way we can just document it as
-such and be done with it. But anyway, I think this is kind of
-orthogonal to this here series and should be done separately.
+> On Tue, Sep 7, 2021 at 11:51 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Thu, 2 Sep 2021, Johannes Sixt wrote:
+> >
+> > > Am 02.09.21 um 16:18 schrieb Johannes Schindelin:
+> > > > On Wed, 1 Sep 2021, Junio C Hamano wrote:
+> > > >> A good goal.  There is no remaining use case where (a fictitious =
+and
+> > > >> properly working version of) "--preserve-merges" option cannot be
+> > > >> replaced by "--rebase-merges", is it?  I somehow had a feeling th=
+at
+> > > >> the other Johannes (sorry if it weren't you, j6t) had cases that =
+the
+> > > >> former worked better, but perhaps I am mis-remembering things.
+> > > >
+> > > > I think that I managed to address whatever concerns there were abo=
+ut the
+> > > > `--rebase-merges` backend in the meantime.
+> > >
+> > > That was either my suggestion/desire to make no-rebase-cousins the
+> > > default. That has been settled.
+> > >
+> > > Or my wish not to redo the merge, but to replay the first-parent
+> > > difference. The idea never got traction, and I've long since abandon=
+ed
+> > > my implementation of it.
+> >
+> > Thank you for clarifying.
+> >
+> > Yes, I remember how that idea came up, and I even tried that strategy =
+for
+> > a couple of merging rebases of Git for Windows' branch thicket. Sadly,=
+ it
+> > did not work half as well as I had hoped.
+> >
+> > The best idea I had back then still is in want of being implemented: s=
+ort
+> > of a "four-way merge". It is basically the same as a three-way merge, =
+but
+> > allows for the pre-images to differ in the context (and yes, this cann=
+ot
+> > be represented using the current conflict markers). Definitely not
+> > trivial.
+>
+> merge-ort opens a new possibility (since it does merges without
+> touching the index or working tree): Take the merge commit, M, that
+> you are trying to transplant.  Hold on to it for a minute.  Do what
+> rebase-merges does now; namely, do a simple merge of the desired new
+> branches that otherwise ignores M to get your new merge commit N.
+> Hang on to N too for a minute.  Now use merge-ort to auto-remerge M
+> (much like AUTO_MERGE or --remerge-diff does) to get a new merge
+> commit that we'll call pre-M.  If M was a clean merge that the user
+> didn't amend, then pre-M will match M.  If M wasn't a clean merge or
+> was amended, then pre-M will otherwise differ from M by not including
+> any manual changes the user made when they originally created M --
+> such as removing conflict markers, fixing semantic conflicts, evil
+> changes, etc.
+>
+> Now we've got three merge commits: pre-M, M, and N.  (Technically,
+> pre-M and N might be toplevel trees rather than full commits, but
+> whatever.)  The difference between pre-M and M represent the manual
+> work the user did in order to create M.  Now, do a three-way
+> (non-recursive) merge of those commits, to get the rebased result, R.
+> This operation has the affect of applying the changes from pre-M to M
+> on top of N.
+>
+> There's obviously some edge cases (e.g. nested conflict markers), but
+> I think they're better than the edge cases presented by the
+> alternatives:
+>   * the first-parent difference idea silently discards intermediate
+> changes from reapplying other patches (especially if other patches are
+> added or dropped), which to me feels _very_ dangerous
+>   * the current rebase-merges idea silently discards manual user
+> changes within the original merge commit (i.e. it hopes that there is
+> no difference between pre-M and M), which can also be lossy
+>   * I don't think this idea drops any data, but it does run the risk
+> of conflicts that are difficult to understand.  But I suspect less so
+> than your five-way merge would entail.
+>
+> If the difficulty of conflicts in this scheme is too high, we could do
+> a few things like providing multiple versions (e.g. if either
+> pre-M:file or N:file had conflicts, or maybe if R:file has nested
+> conflicts, then place both R:file and N:file in the working tree
+> somewhere) or pointing at special commands that help users figure out
+> what went on (e.g. 'git log -1 --remerge-diff M -- file').
 
-Cheers,
-Philippe.
+While I agree that `merge-ort` makes a lot of things much better, I think
+in this context we need to keep in mind that those nested merge conflicts
+can really hurt.
+
+In my tests (I tried to implement a strategy where a 3-way merge is done
+with M and N^, using the parent commits of M as merge parents
+successively, see
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.1804130002090.65@ZVAVAG-6OXH=
+6DA.rhebcr.pbec.zvpebfbsg.pbz/
+for the nitty gritty), I ran into _nasty_ nested merge conflicts, even
+with trivial examples. And I came to the conviction that treating the
+merge conflict markers as Just Another Line was the main culprit.
+
+I wish I had the time to try out your proposed strategy with the
+conconcted example I presented in that mail I linked above. Because now I
+am curious what it would do...
+
+Ciao,
+Dscho
