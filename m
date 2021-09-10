@@ -2,39 +2,39 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E5AC433F5
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 14:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CA14C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 14:05:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7044461026
-	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 14:04:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6D3E61026
+	for <git@archiver.kernel.org>; Fri, 10 Sep 2021 14:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233785AbhIJOF4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 10:05:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43856 "EHLO cloud.peff.net"
+        id S233775AbhIJOG7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 10:06:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43862 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233658AbhIJOFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 10:05:55 -0400
-Received: (qmail 5763 invoked by uid 109); 10 Sep 2021 14:04:43 -0000
+        id S233593AbhIJOG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 10:06:57 -0400
+Received: (qmail 5773 invoked by uid 109); 10 Sep 2021 14:05:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Sep 2021 14:04:43 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Sep 2021 14:05:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25286 invoked by uid 111); 10 Sep 2021 14:04:43 -0000
+Received: (qmail 25318 invoked by uid 111); 10 Sep 2021 14:05:46 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Sep 2021 10:04:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Sep 2021 10:05:46 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Sep 2021 10:04:42 -0400
+Date:   Fri, 10 Sep 2021 10:05:45 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
         Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: [PATCH 1/5] t5551: test v2-to-v0 http protocol fallback
-Message-ID: <YTtl+gB0V+fe1hOJ@coredump.intra.peff.net>
+Subject: [PATCH 2/5] http-backend: handle HTTP_GIT_PROTOCOL CGI variable
+Message-ID: <YTtmOfCzvxYrBxso@coredump.intra.peff.net>
 References: <YTtleYs48A1NpUpp@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -44,73 +44,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since we use the v2 protocol by default, the connection of a v2 client
-to a v2 server is well covered by the test suite. And with the
-GIT_TEST_PROTOCOL_VERSION knob, we can easily test a v0 client
-connecting to a v2-aware server (which will then just speak v0). But we
-have no regular tests that a v2 client, when encountering a non-v2-aware
-server, will correctly fall back to using v0.
+When a client requests the v2 protocol over HTTP, they set the
+Git-Protocol header. Webservers will generally make that available to
+our CGI as HTTP_GIT_PROTOCOL in the environment. However, that's not
+sufficient for upload-pack, etc, to respect it; they look in
+GIT_PROTOCOL (without the HTTP_ prefix).
 
-In theory this is a job for the cross-version tests in t/interop, but:
+Either the webserver or the CGI is responsible for relaying that HTTP
+header into the GIT_PROTOCOL variable. Traditionally, our tests have
+configured the webserver to do so, but that's a burden on the server
+admin. We can make this work out of the box by having the http-backend
+CGI copy the contents of HTTP_GIT_PROTOCOL to GIT_PROTOCOL.
 
-  - they cover only git:// and file:// clones
+There are no new tests here. By removing the SetEnvIf line from our
+test Apache config, we're now relying on this behavior of http-backend
+to trigger the v2 protocol there (and there are numerous tests that fail
+if this doesn't work).
 
-  - they are not part of the usual test suite, so nobody ever runs them
-    anyway
-
-Since using v2 over http requires configuring the web server to pass
-along the Git-Protocol header, we can easily create a situation where
-the server does not respect the v2 probe, and the conversation falls
-back to v0.
-
-This works just fine. This new test is not about fixing any particular
-bug, but just making sure that the system works (and continues to work)
-as expected.
+There is one subtlety here: we copy HTTP_GIT_PROTOCOL only if there is
+no existing GIT_PROTOCOL variable. That leaves the webserver admin free
+to override the client's decision if they choose. This is unlikely to be
+useful in practice, but is more flexible. And indeed, it allows the
+v2-to-v0 fallback test added in the previous commit to continue working.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Not strictly necessary for this series, but it seemed like a good chance
-to beef up test coverage, and make sure the setenv() overwrite flag in
-the next patch was set sensibly. :)
+ http-backend.c          | 4 ++++
+ t/lib-httpd/apache.conf | 2 --
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
- t/lib-httpd/apache.conf     | 5 +++++
- t/t5551-http-fetch-smart.sh | 9 +++++++++
- 2 files changed, 14 insertions(+)
-
+diff --git a/http-backend.c b/http-backend.c
+index b329bf63f0..92ceb31f9a 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -739,6 +739,7 @@ static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
+ int cmd_main(int argc, const char **argv)
+ {
+ 	char *method = getenv("REQUEST_METHOD");
++	const char *proto_header;
+ 	char *dir;
+ 	struct service_cmd *cmd = NULL;
+ 	char *cmd_arg = NULL;
+@@ -789,6 +790,9 @@ int cmd_main(int argc, const char **argv)
+ 	http_config();
+ 	max_request_buffer = git_env_ulong("GIT_HTTP_MAX_REQUEST_BUFFER",
+ 					   max_request_buffer);
++	proto_header = getenv("HTTP_GIT_PROTOCOL");
++	if (proto_header)
++		setenv(GIT_PROTOCOL_ENVIRONMENT, proto_header, 0);
+ 
+ 	cmd->imp(&hdr, cmd_arg);
+ 	return 0;
 diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index afa91e38b0..1321357d8b 100644
+index 1321357d8b..180a41fe96 100644
 --- a/t/lib-httpd/apache.conf
 +++ b/t/lib-httpd/apache.conf
-@@ -117,6 +117,11 @@ Alias /auth/dumb/ www/auth/dumb/
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
- 	SetEnv GIT_HTTP_EXPORT_ALL
- </LocationMatch>
-+<LocationMatch /smart_v0/>
-+	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-+	SetEnv GIT_HTTP_EXPORT_ALL
-+	SetEnv GIT_PROTOCOL
-+</LocationMatch>
- ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
- ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
- ScriptAliasMatch /error_git_upload_pack/(.*)/git-upload-pack error.sh/
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 4f87d90c5b..cffc47a8e3 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -558,4 +558,13 @@ test_expect_success 'http auth forgets bogus credentials' '
- 	expect_askpass both user@host
- '
+@@ -81,8 +81,6 @@ PassEnv GIT_TRACE
+ PassEnv GIT_CONFIG_NOSYSTEM
+ PassEnv GIT_TEST_SIDEBAND_ALL
  
-+test_expect_success 'client falls back from v2 to v0 to match server' '
-+	GIT_TRACE_PACKET=$PWD/trace \
-+	GIT_TEST_PROTOCOL_VERSION=2 \
-+	git clone $HTTPD_URL/smart_v0/repo.git repo-v0 &&
-+	# check for v0; there the HEAD symref is communicated in the capability
-+	# line; v2 uses a different syntax on each ref advertisement line
-+	grep symref=HEAD:refs/heads/ trace
-+'
-+
- test_done
+-SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
+-
+ Alias /dumb/ www/
+ Alias /auth/dumb/ www/auth/dumb/
+ 
 -- 
 2.33.0.731.g24eb83922d
 
