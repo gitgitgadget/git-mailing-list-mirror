@@ -4,103 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A20C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5691C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:42:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 955C16103D
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:38:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9F9261074
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235623AbhIKKjY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 06:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41096 "EHLO
+        id S235650AbhIKKoJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 06:44:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235443AbhIKKjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 06:39:23 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C25BC061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:38:11 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id c22so4947654edn.12
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:38:11 -0700 (PDT)
+        with ESMTP id S235443AbhIKKoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 06:44:04 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5BFC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:42:52 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id qq21so3745194ejb.10
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=SxhugJkFKZ7dk29rW3Aw5bC/ONSIJmSqqwb4RtFngwM=;
-        b=JCPgm2mfhHPNtnmIrDo8a8JEvH/S9KAhE+C5I7AcTJbtsPy+NzEgOlBYPBkUEwP0hC
-         1wD1gxfqHswexHi7N2CLdqYarmJol4KbGa0wv3/loGxmv7jmwbvIh49M3712GFmzXUPo
-         mDbktaE7QG1ZPq8DnAkWK2p0/Wtoh1EdwMqmmLtU4Mvg/6cZ9rlKFrogc7bDIZX++yWy
-         zqvFTaEK1W2jMkvNPrYanK03lbXhQrU+ydcX27pONSNrYugueSsMv0MHoUyDSDOWsEXa
-         liytsx36Fqg1agFMBA3kjbJQ7OueSVVH+oieQuwkpMX6upCevWSrF1hA0n0u0l9RVjTv
-         9//w==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=wQlsv3D2pctZ+8ddGDTkeH2jRTniWr6w6Ai3Hkfo/rU=;
+        b=o37I5DQsnp2U4PpIKUhEZW7tsPf7qIeX83acU2poJr5afCP7ahpmr/buwc6aGOZhHm
+         q7L56WThLTwt60jXLgD7tFIUPkt6l45RfpdoU4KGAdXBea5DhXKN3EcRoBy0BPhfeyA+
+         Dly2mF2etyD7rsGZmxmlmMsaLR7JSBKi9NOSoCrES0etqJ6XMbgYw48NA6REL/avC6nz
+         jpurkBjXOmgSwsBbPbiUlA7MiK8vU93K6zWfT3BlVfg1Wx/wi9uXx9tTxmqoMo37tq0r
+         9WjuhIIjZlU36VKahxfTxe1GVc88lEO9udaSAzEpwNUjeXcp9ZdDRb40JwfIzmfTPNsc
+         66Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=SxhugJkFKZ7dk29rW3Aw5bC/ONSIJmSqqwb4RtFngwM=;
-        b=gDFjSJqMLPeWkollzPJyZ8u+ApDqSzKjGZTuXalaaNyguLYtaUGWQjMgSG6p8od5Au
-         Rucl9fpq8QrSqD1DF4vDr1pvhhYkxr6EdgpUd75ububWeuEAzJVIvw0LVpu4iZQQKs2e
-         oSaB0JNCqAJzokGHThYE9/AMN1zyxSVNDc7gjQcm70vXWjwTB6mCVvnGXW3f8Ag2l8j1
-         Mu+8Av57oYs0POe1E6edn1Fm87fs+LSPgcBZ4BWycf1sY2IjnJGpWUJ2Ab0USUo06AAP
-         Kkfd+lq30DsApGJNQl8RfrgYsWhDxzEU9aBAoBQiO7I2833wN77E7q0RI1c+lAFJPzU2
-         guFQ==
-X-Gm-Message-State: AOAM533F4ECk1L81PEcMBS4CGQ+t6wH3lrb5U8LbM4SW8b1GpM1dODIp
-        hdx4Vx8uae3gu74ABwX7cv8=
-X-Google-Smtp-Source: ABdhPJzbI5DD1AYF0HMwxFGEGsJalU32JX5SHgmt5A8L+8RHDNsBFsyLVgffMePq+lRFmTbZAy67qw==
-X-Received: by 2002:a50:ff0b:: with SMTP id a11mr2604441edu.373.1631356689938;
-        Sat, 11 Sep 2021 03:38:09 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=wQlsv3D2pctZ+8ddGDTkeH2jRTniWr6w6Ai3Hkfo/rU=;
+        b=POeGMJlUtdrdLyvVnReU1i3WYCwPVMkjYNNDxpwd4JAIsj8vkWFcll8jC0GxPj5J/I
+         6SenekHMfeTiwM3TH3iCCe0FqN+iViFXAeJcVEm6d7x9Zytw9wiAdlI1UQUAvvT1uFco
+         15JunQKL6GgR3s68kS4pPZHJNLW0OKjWTewFBui7KW9Gto7r1/kIa//5M5QbnOUl9wBP
+         fQv+GzJpyf335fXGddDgrBXorH2x4VpjEtoUWCKCWLbsTxm8AKXUVVG+wzZHBdRLR6MJ
+         gD7PDgB0SiaBx2ae2n6CZMeIL/9FYZb3v9LrRXU6cssGNgx9Xc1q+TXeOnLCnKVaptud
+         zqNw==
+X-Gm-Message-State: AOAM530XPjAUYLHVu1p1kl6Kr/Au8l8myRjazgcb1mJvxAtQfNdofF6R
+        q8barfbAVNVTHKEepfjzd/g=
+X-Google-Smtp-Source: ABdhPJyRtpEYVkbJpJ7cxUuYpvJsSYfzQV0iLitPIRxihNdWLXhirl3IVXlkBhKBP+XCJIPQ/2Visg==
+X-Received: by 2002:a17:907:7697:: with SMTP id jv23mr2276178ejc.451.1631356970849;
+        Sat, 11 Sep 2021 03:42:50 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bs13sm604657ejb.98.2021.09.11.03.38.09
+        by smtp.gmail.com with ESMTPSA id ay3sm616893ejb.0.2021.09.11.03.42.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 03:38:09 -0700 (PDT)
+        Sat, 11 Sep 2021 03:42:50 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 8/8] builtin/repack.c: pass `--refs-snapshot` when
- writing bitmaps
-Date:   Sat, 11 Sep 2021 12:27:39 +0200
-References: <cover.1631331139.git.me@ttaylorr.com>
- <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] notes: don't indent empty lines
+Date:   Sat, 11 Sep 2021 12:39:31 +0200
+References: <20210830072118.91921-1-sunshine@sunshineco.com>
+        <20210830072118.91921-4-sunshine@sunshineco.com>
+        <xmqqwno2505w.fsf@gitster.g>
+        <CAPig+cQ6FA0rUnkkTDRUD5vAD3cDXW9vtR1oX0pUJK5eJB9CHg@mail.gmail.com>
+        <xmqqeeaa4y0v.fsf@gitster.g>
+        <CAPig+cQdXp0c+JYthvy+bbr6vLR7nq4pQY3w+CADUtzr+Ang4A@mail.gmail.com>
+        <CAPig+cTFbnrPPSZbzihJ9gdGV2c4poXWyNjhK3mnr5_uRwpxbg@mail.gmail.com>
+        <xmqqwnnos2jz.fsf@gitster.g>
+        <CAPig+cQdAuLkZ0pDK6XOfm_WXCJAOm8Tr19oK14n-Tf7DcfW=w@mail.gmail.com>
+        <878s03c1of.fsf@evledraar.gmail.com>
+        <CAPig+cQ+qVNBJqHmQgk6D1fbYHHJpAxhfwyBOgevi9Hvs6JYkw@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
-Message-ID: <871r5v9z3i.fsf@evledraar.gmail.com>
+In-reply-to: <CAPig+cQ+qVNBJqHmQgk6D1fbYHHJpAxhfwyBOgevi9Hvs6JYkw@mail.gmail.com>
+Message-ID: <87wnnn8kba.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Sep 10 2021, Taylor Blau wrote:
+On Sat, Sep 11 2021, Eric Sunshine wrote:
 
-> +struct midx_snapshot_ref_data {
-> +	struct tempfile *f;
+> On Fri, Sep 10, 2021 at 9:59 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> >> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> >> > Have we made a decision about whether this patch series -- which
+>> >> > avoids indenting blank notes lines -- is desirable? Or are we worri=
+ed
+>> >> > about backward-compatibility?
+>>
+>> This change per-se seems nice, but even having reviewed it to the point
+>> of rewriting parts of it, I didn't really look into what the whole
+>> workflow you were trying to address is.
+>>
+>> So e.g. just to pick a random commit of your for show:
+>>     $ git show c990a4c11dd | sed 's/$/Z/'
+>> Here we end up also adding the whitespace indenting to the empty lines,
+>> whereas if we were trying to feed this to an editor we'd place those
+>> later Z's at the start of our line.
+>
+> I'm not sure what you mean by "feed this to an editor". Do you mean
+> sending the output of `git show` to an editor? I'm guessing that's not
+> what you mean, and that you instead are talking about editing the
+> commit message in an editor (say, via the "reword" option of `git
+> rebase --interactive`).
 
-Style/readability: Spare more than one byte for a variable name in a
-struct, maybe file, or tmpfile?
+Feed it to whatever, maybe I have a commit message in my terminal I
+highlight and copy/paste, my shell/terminal is highlighting line-endings
+etc.
 
-> +	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-> +		oid_to_hex(oid));
+I've got a default bias towards trimming this whitespace, I'm just
+wondering why notes are a special-case as opposed to our more general
+log/notes etc. output.
 
-Just an idea: Maybe the file could be lines of "+\tOID\n" instead of
-"+OID\n"? Lends itself more naturally to extension, use with the likes
-of string_list_split() etc.
+>> Are notes different? Or are they just similarly indented? For commits we
+>> don't insert that leading whitespace in the commit object, do notes get
+>> that part wrong too?
+>
+> Notes don't store the indented blank lines; it's only at output time,
+> such as with `git format-patch --notes` that the blank lines get
+> indented along with the rest of the note text (just as is happening in
+> your `git show` example in which the entire commit message is being
+> indented, including the blank lines).
 
-> +		for_each_string_list_item(item, preferred) {
-> +			for_each_ref_in(item->string, midx_snapshot_ref_one, &data);
-> +		}
+Ah, so with your change we'd end up with trimmed notes, but not the
+trimmed main body of the commit message?
 
-Cheap style commenst I know, but throughout this series there's an odd
-mixture of sometimes adding braces for one-lines, sometimes not, or in
-the case of that "else ;" I commented on not for something *much* bigger
-:)
+We don't have to fix everything at once, just establishing context,
+maybe it's useful for format-patch etc. in isolation...
 
-> +		if (midx_snapshot_refs(refs_snapshot) < 0)
-> +			die(_("could not take a snapshot of references"));
+>> It might be showing, but I've only used notes a few times, my main use
+>> of them is Junio's amlog.
+>
+> I also have only used notes a few times.
+>
+>> So even for someone experienced in git, I think some show & tell of
+>> step-by-step showing in the commit message how we end up with X before,
+>> and have Y with this change would help a lot.
+>
+> This all came about due to two unrelated circumstances: (1) a few
+> months ago, I configured Emacs to highlight trailing whitespace, and
+> (2) I decided to use `notes` to add commentary to a commit since,
+> although I normally just write the commentary directly in the patch
+> itself after running `git format-patch`, in this case, it likely will
+> be weeks or months before I finish the series, and was worried that
+> I'd forget the intended commentary by that time, thus recorded it as a
+> note. Since I've almost never used notes, I ran `git format-patch
+> --notes` as a test and was surprised to see the trailing whitespace on
+> the "blank" lines when viewing the patch in the editor.
+>
+> This submission started as a single patch which just "fixed" the bug
+> and added a test. Only after that was complete (but before I submitted
+> the patch), did I discover that other tests in the suite were failing
+> since the "fix" also changed git-log's default output format which
+> includes notes (indented). Since I so rarely use notes, I had either
+> forgotten that git-log showed notes or didn't know in the first place.
+> The submission grew to multiple patches due to fixing those
+> newly-failing tests.
+>
+> Anyhow, since then, I've discovered that `git format-patch
+> --range-diff` also indents blank lines. And you've now shown that `git
+> show` does, as well, so the behavior which triggered this "fix" turns
+> out to be somewhat normal in this project, rather than a one-off "bug"
+> in need of a fix.
 
-Seems like this die() should be moved into the midx_snapshot_refs()
-function and that function should use die_errno(), not die(), also it
-uses close_tempfile_gently(), shouldn't save the errno on failure there,
-clean up the tempfile, and then die?
+Per the above I wouldn't mind this just being changed for all of them,
+even one at a time.
