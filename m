@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A412C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D8D6C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EE77611BD
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DD0860F46
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235275AbhIKDeC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 23:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
+        id S235263AbhIKDeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 23:34:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235300AbhIKDeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 23:34:00 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CF70C061756
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:49 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id b7so4885474iob.4
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:49 -0700 (PDT)
+        with ESMTP id S235285AbhIKDeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 23:34:03 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C9AC061757
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:51 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id a15so4897375iot.2
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=VJpZVkqRjSBizAd4VUhQzPiopMFRuuF2IEzkU/g6r7M=;
-        b=BjIhkhrYXobJubqbkQSuRSCCfPoW3NcU1/z1jk4Zf+RwD4/tpGpIdoRC3p+btvEKAa
-         VKsAvTMefEApIixmMqJ5Qk6eGC359NkTzS6tvwieBAQMqt6jFf4oMeizvQ/yNTki23A/
-         kk89xIZphlrQ/KExeBmLbvq6zGwm1PtGLxEpOzxaEPHn+9M1GKiEHHby52hu0YSjXYpj
-         Xnn9RYJTWVJChVQtngdGmTy4F3wtw+pJvuBCyUv7/jKq0SDCOTcDJ5InaB7zHWj4RvjZ
-         NE61ixED2PVjpJYazfl7I4sp12nxU3lqX2SeOFvXR+ku7J7eCIq04p2gXzSrpfD0sf/u
-         4FRA==
+        bh=Uu0wawx66RaM8zpuLmxh0zsTeM4voy7ay4UAsO8S7Qc=;
+        b=YbcJOOriB3AmsIGja9CMPfXP/H7AIkxkyT+qGUC7slIQUG4X2PJT24WyQJDvoEPXaE
+         iGUxCzqujHyXLI8ZQBjSuukefXl2NoG2t9utKfl9ks/MCGorWfNFP8rwY4Qkv3/5d1X0
+         DiablMT2wVVxrHc12ob5qGhHJ3S8wzALhF7t0TDaaAOGFyZSQkO642i7Sj/naxSdpwJg
+         WEQB699Y+LXt7PA2rMvn6sM20bdg9n+KL0gYHYIDdGNz0MC5oAszcmUiMFHEBTNorWZz
+         6rZ4pq31QTPuVVX69JwHRLLO4Rwzy8b/Sedunmhat7FmeP90ALXUKYJ0g66NqIFnSUVP
+         dv4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VJpZVkqRjSBizAd4VUhQzPiopMFRuuF2IEzkU/g6r7M=;
-        b=XY1Cku3FNXK6EPdDS6EDLiOYuJSmcYY+sMOMOLUb972w4HyoxtWLHw6SkzSJmON5Fa
-         r7yxJj8ltdHXFSLGwg2Z+7D80Jm3CUQBwJbWMnXHpGLrtHOBNO+KEW1kAKq0jh9Tox5c
-         snacX1fL+g2PfoMptTqsPSlnA3MPPQFtuFifRqxn1ydQzU0bDl0eNsZf4qFeFjk89vZo
-         qrlrxRP2iI2ey7lAAIvar5saSLIxDmW2w0DOwlKbK56dWF70TrzzOEYmQH2kZj05EkYK
-         gTR/zuRu6vmGIXvOoXOgTgvAJO3W+YoYrzs+t9ff84w4gbWnlvR35waf+XgX0ImNiHPP
-         D0/g==
-X-Gm-Message-State: AOAM530GEzvqo8LToIS66kk5cyr1ZbOhWqA4M2o+a1f3T4ENQjc39KBn
-        AmEBuvBGB71GE9chsLeDXxc43/UXKpHPMKy7
-X-Google-Smtp-Source: ABdhPJw6AdL5kmoyCKIhBMuvODbh4KPRXSr3MMmwrQL3YjTc1BWVGZetgRDmqe9m40eM3ibAdstvgA==
-X-Received: by 2002:a02:cc30:: with SMTP id o16mr760067jap.101.1631331168330;
-        Fri, 10 Sep 2021 20:32:48 -0700 (PDT)
+        bh=Uu0wawx66RaM8zpuLmxh0zsTeM4voy7ay4UAsO8S7Qc=;
+        b=Q/2fAK2W4zkYgDB+KYzCwOxXx4evhhnLly1X0D7NoSmV8EcDNufIvMUgLu0b80hxVW
+         2zHmwuzjlTYZYLGSjbgLIaTmKB0n7gdBt8CxIstNbjTTXe3RjlHC9hrIw/QXgoon+HaO
+         lP7xiEMbNBC5uYh5aaKCFHngewVhGtgz673Jy6CVnIGKT2I46vLNzDbwSW5Z4uk5Bbns
+         yiksy5TaZ0vcxKiRx33Rv6UB4pDIGvS1GhggvAEXDKOxe7D5Zlq/jnTuqrtNGGCrQq+4
+         nrTi5Ek05ZP2y8jUDEnTqiARF0nAWROVvIQXL6vzOtqMOzYAkveAa6z3uovI4A/2/KfF
+         414A==
+X-Gm-Message-State: AOAM530xbIw3TkbE9KZa1Uo8WAlaPBi/6R28gk7otZNUIw+gD/ZGpNzm
+        lTsfPIJJT8u0mIJvIFjuMOYI01Odmw2omSKW
+X-Google-Smtp-Source: ABdhPJw0XZPZDZpp58SNZCuZrTw7/G9cZWVGqYX5+n2OfNDgKLaTaI3jbj8bI+MFfP28+OQT8ZQL5A==
+X-Received: by 2002:a5d:9ada:: with SMTP id x26mr754095ion.50.1631331170809;
+        Fri, 10 Sep 2021 20:32:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c5sm304009ilk.48.2021.09.10.20.32.48
+        by smtp.gmail.com with ESMTPSA id f3sm332051iow.3.2021.09.10.20.32.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Sep 2021 20:32:48 -0700 (PDT)
-Date:   Fri, 10 Sep 2021 23:32:47 -0400
+        Fri, 10 Sep 2021 20:32:50 -0700 (PDT)
+Date:   Fri, 10 Sep 2021 23:32:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net
-Subject: [PATCH 7/8] builtin/repack.c: make largest pack preferred
-Message-ID: <a790ee5ac6c03d6832599e77f84c352f577d6287.1631331139.git.me@ttaylorr.com>
+Subject: [PATCH 8/8] builtin/repack.c: pass `--refs-snapshot` when writing
+ bitmaps
+Message-ID: <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
 References: <cover.1631331139.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,201 +71,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When repacking into a geometric series and writing a multi-pack bitmap,
-it is beneficial to have the largest resulting pack be the preferred
-object source in the bitmap's MIDX, since selecting the large packs can
-lead to fewer broken delta chains and better compression.
+To prevent the race described in an earlier patch, generate and pass a
+reference snapshot to the multi-pack bitmap code, if we are writing one
+from `git repack`.
 
-Teach 'git repack' to identify this pack and pass it to the MIDX write
-machinery in order to mark it as preferred.
+This patch is mostly limited to creating a temporary file, and then
+calling for_each_ref(). Except we try to minimize duplicates, since
+doing so can drastically reduce the size in network-of-forks style
+repositories. In the kernel's fork network (the repository containing
+all objects from the kernel and all its forks), deduplicating the
+references drops the snapshot size from 934 MB to just 12 MB.
+
+But since we're handling duplicates in this way, we have to make sure
+that we preferred references (those listed in pack.preferBitmapTips)
+before non-preferred ones (to avoid recording an object which is pointed
+at by a preferred tip as non-preferred).
+
+We accomplish this by doing separate passes over the references: first
+visiting each prefix in pack.preferBitmapTips, and then over the rest of
+the references.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-repack.txt |  4 ++++
- builtin/repack.c             | 23 ++++++++++++++++++++++-
- pack-bitmap.c                |  2 +-
- pack-bitmap.h                |  1 +
- t/helper/test-read-midx.c    | 25 ++++++++++++++++++++++++-
- t/t7703-repack-geometric.sh  | 23 +++++++++++++++++++++++
- 6 files changed, 75 insertions(+), 3 deletions(-)
+ builtin/repack.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 0f2d235ca5..7183fb498f 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -190,6 +190,10 @@ this "roll-up", without respect to their reachability. This is subject
- to change in the future. This option (implying a drastically different
- repack mode) is not guaranteed to work with all other combinations of
- option to `git repack`.
-++
-+When writing a multi-pack bitmap, `git repack` selects the largest resulting
-+pack as the preferred pack for object selection by the MIDX (see
-+linkgit:git-multi-pack-index[1]).
- 
- -m::
- --write-midx::
 diff --git a/builtin/repack.c b/builtin/repack.c
-index cb4292ab37..e958caff8b 100644
+index e958caff8b..3fda837cb5 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -422,6 +422,13 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 	geometry->split = split;
+@@ -15,6 +15,8 @@
+ #include "promisor-remote.h"
+ #include "shallow.h"
+ #include "pack.h"
++#include "pack-bitmap.h"
++#include "refs.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -440,6 +442,61 @@ static void clear_pack_geometry(struct pack_geometry *geometry)
+ 	geometry->split = 0;
  }
  
-+static struct packed_git *get_largest_active_pack(struct pack_geometry *geometry)
++struct midx_snapshot_ref_data {
++	struct tempfile *f;
++	struct oidset seen;
++	int preferred;
++};
++
++static int midx_snapshot_ref_one(const char *refname,
++				 const struct object_id *oid,
++				 int flag, void *_data)
 +{
-+	if (geometry->split == geometry->pack_nr)
-+		return NULL;
-+	return geometry->pack[geometry->pack_nr - 1];
++	struct midx_snapshot_ref_data *data = _data;
++	struct object_id peeled;
++
++	if (!peel_iterated_oid(oid, &peeled))
++		oid = &peeled;
++
++	if (oidset_insert(&data->seen, oid))
++		return 0; /* already seen */
++
++	if (oid_object_info(the_repository, oid, NULL) != OBJ_COMMIT)
++		return 0;
++
++	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
++		oid_to_hex(oid));
++
++	return 0;
 +}
 +
- static void clear_pack_geometry(struct pack_geometry *geometry)
- {
- 	if (!geometry)
-@@ -469,6 +476,7 @@ static void midx_included_packs(struct string_list *include,
- }
++static int midx_snapshot_refs(struct tempfile *f)
++{
++	struct midx_snapshot_ref_data data;
++	const struct string_list *preferred = bitmap_preferred_tips(the_repository);
++
++	data.f = f;
++	oidset_init(&data.seen, 0);
++
++	if (!fdopen_tempfile(f, "w"))
++		 die(_("could not open tempfile %s for writing"),
++		     get_tempfile_path(f));
++
++	if (preferred) {
++		struct string_list_item *item;
++
++		data.preferred = 1;
++		for_each_string_list_item(item, preferred) {
++			for_each_ref_in(item->string, midx_snapshot_ref_one, &data);
++		}
++		data.preferred = 0;
++	}
++
++	for_each_ref(midx_snapshot_ref_one, &data);
++
++	return close_tempfile_gently(f);
++}
++
+ static void midx_included_packs(struct string_list *include,
+ 				struct string_list *existing_packs,
+ 				struct string_list *existing_kept_packs,
+@@ -477,6 +534,7 @@ static void midx_included_packs(struct string_list *include,
  
  static int write_midx_included_packs(struct string_list *include,
-+				     struct pack_geometry *geometry,
+ 				     struct pack_geometry *geometry,
++				     const char *refs_snapshot,
  				     int show_progress, int write_bitmaps)
  {
  	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -490,6 +498,19 @@ static int write_midx_included_packs(struct string_list *include,
- 	if (write_bitmaps)
- 		strvec_push(&cmd.args, "--bitmap");
+@@ -511,6 +569,9 @@ static int write_midx_included_packs(struct string_list *include,
+ 			;
+ 	}
  
-+	if (geometry) {
-+		struct packed_git *largest = get_largest_active_pack(geometry);
-+		if (largest)
-+			strvec_pushf(&cmd.args, "--preferred-pack=%s",
-+				     pack_basename(largest));
-+		else
-+			/*
-+			 * The largest pack was repacked, meaning only one pack
-+			 * exists (and tautologically, it is the largest).
-+			 */
-+			;
-+	}
++	if (refs_snapshot)
++		strvec_pushf(&cmd.args, "--refs-snapshot=%s", refs_snapshot);
 +
  	ret = start_command(&cmd);
  	if (ret)
  		return ret;
-@@ -776,7 +797,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		midx_included_packs(&include, &existing_packs,
+@@ -534,6 +595,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
+ 	struct pack_geometry *geometry = NULL;
+ 	struct strbuf line = STRBUF_INIT;
++	struct tempfile *refs_snapshot = NULL;
+ 	int i, ext, ret;
+ 	FILE *out;
+ 	int show_progress = isatty(2);
+@@ -622,6 +684,19 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
+ 		die(_(incremental_bitmap_conflict_error));
+ 
++	if (write_midx && write_bitmaps) {
++		struct strbuf path = STRBUF_INIT;
++
++		strbuf_addf(&path, "%s/%s_XXXXXX", get_object_directory(),
++			    "bitmap-ref-tips");
++
++		refs_snapshot = xmks_tempfile(path.buf);
++		if (midx_snapshot_refs(refs_snapshot) < 0)
++			die(_("could not take a snapshot of references"));
++
++		strbuf_release(&path);
++	}
++
+ 	if (geometric_factor) {
+ 		if (pack_everything)
+ 			die(_("--geometric is incompatible with -A, -a"));
+@@ -798,6 +873,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
  				    &existing_kept_packs, &names, geometry);
  
--		ret = write_midx_included_packs(&include,
-+		ret = write_midx_included_packs(&include, geometry,
+ 		ret = write_midx_included_packs(&include, geometry,
++						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
  						show_progress, write_bitmaps > 0);
  
  		string_list_clear(&include, 0);
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 8504110a4d..67be9be9a6 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1418,7 +1418,7 @@ static int try_partial_reuse(struct packed_git *pack,
- 	return 0;
- }
- 
--static uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
-+uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
- {
- 	struct multi_pack_index *m = bitmap_git->midx;
- 	if (!m)
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 469090bad2..7d407c5a4c 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -55,6 +55,7 @@ int test_bitmap_commits(struct repository *r);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 					 struct list_objects_filter_options *filter,
- 					 int filter_provided_objects);
-+uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
- 				       struct packed_git **packfile,
- 				       uint32_t *entries,
-diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index cb0d27049a..0038559129 100644
---- a/t/helper/test-read-midx.c
-+++ b/t/helper/test-read-midx.c
-@@ -3,6 +3,7 @@
- #include "midx.h"
- #include "repository.h"
- #include "object-store.h"
-+#include "pack-bitmap.h"
- 
- static int read_midx_file(const char *object_dir, int show_objects)
- {
-@@ -72,14 +73,36 @@ static int read_midx_checksum(const char *object_dir)
- 	return 0;
- }
- 
-+static int read_midx_preferred_pack(const char *object_dir)
-+{
-+	struct multi_pack_index *midx = NULL;
-+	struct bitmap_index *bitmap = NULL;
-+
-+	setup_git_directory();
-+
-+	midx = load_multi_pack_index(object_dir, 1);
-+	if (!midx)
-+		return 1;
-+
-+	bitmap = prepare_bitmap_git(the_repository);
-+	if (!(bitmap && bitmap_is_midx(bitmap)))
-+		return 1;
-+
-+
-+	printf("%s\n", midx->pack_names[midx_preferred_pack(bitmap)]);
-+	return 0;
-+}
-+
- int cmd__read_midx(int argc, const char **argv)
- {
- 	if (!(argc == 2 || argc == 3))
--		usage("read-midx [--show-objects|--checksum] <object-dir>");
-+		usage("read-midx [--show-objects|--checksum|--preferred-pack] <object-dir>");
- 
- 	if (!strcmp(argv[1], "--show-objects"))
- 		return read_midx_file(argv[2], 1);
- 	else if (!strcmp(argv[1], "--checksum"))
- 		return read_midx_checksum(argv[2]);
-+	else if (!strcmp(argv[1], "--preferred-pack"))
-+		return read_midx_preferred_pack(argv[2]);
- 	return read_midx_file(argv[1], 0);
- }
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 5ccaa440e0..7bdeffa111 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -180,4 +180,27 @@ test_expect_success '--geometric ignores kept packs' '
- 	)
- '
- 
-+test_expect_success '--geometric chooses largest MIDX preferred pack' '
-+	git init geometric &&
-+	test_when_finished "rm -fr geometric" &&
-+	(
-+		cd geometric &&
-+		git config core.multiPackIndex true &&
-+
-+		# These packs already form a geometric progression.
-+		test_commit_bulk --start=1 1 && # 3 objects
-+		test_commit_bulk --start=2 2 && # 6 objects
-+		ls $objdir/pack/pack-*.idx >before &&
-+		test_commit_bulk --start=4 4 && # 12 objects
-+		ls $objdir/pack/pack-*.idx >after &&
-+
-+		git repack --geometric 2 -dbm &&
-+
-+		comm -3 before after | xargs -n 1 basename >expect &&
-+		test-tool read-midx --preferred-pack $objdir >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
 -- 
 2.33.0.96.g73915697e6
-
