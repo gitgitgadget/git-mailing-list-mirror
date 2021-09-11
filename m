@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 148C3C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBDE1C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:12:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE02260724
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:07:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B92CA60F43
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 10:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235530AbhIKKIy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 06:08:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
+        id S235555AbhIKKNR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 06:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235443AbhIKKIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 06:08:52 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7E9C061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:07:40 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id jg16so9550775ejc.1
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:07:40 -0700 (PDT)
+        with ESMTP id S235443AbhIKKNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 06:13:16 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5643BC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:12:04 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id e21so9476367ejz.12
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 03:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=41fH0wK9Dy9f2lhVtNZteP/lyZ4xt7hVs9iQcCVAF+k=;
-        b=bxF0Tbc9R2Y80HvHJMEoGADyKvKcu6iR/NMO5C4Meth3b2J4vMZuozOYKJw9oBSDHz
-         QQXc69PzYY2bBmj7jWpMn8ZZ7o9rfMCKN4O6oUSxEychkyxsiLgfLTYhJqx8aTiX1xkj
-         vWS6QHBHZ9Z/Rk3JDwo7weTsBt9Ifu7CZH8IACoxMr3akPRCJpU+m03Ef+HrLB3bTe9E
-         3T107DBmwAphspJlk/uhiyzAVOtumBCqUTWJSjkPH2ZSbHgoHzNh1TLYk1v3Cdot/NhR
-         6zyolci0LmSDGW5t5ErR/I29LFygVxHVD/weKXK1h+tf0mFbeYe9RkgeunFK0hEAHbYT
-         JmTQ==
+        bh=TZTIswxjepikEoPUKLpdKfzFGnuJ/8bPvUVyWcBOfmc=;
+        b=PAY/OYzYQaSBEtnZ2CSkDP7aXHWPQPTjVSGlIDSvpj6aQqupwVU7M6sbu42vS4Yg76
+         nhE52vP0WD8+cYkDFsu+Ub4m2nMUJVOfEI4H82APeXt57WhksyCcMlEyTOAjPM0zaQ8B
+         wUuwCVCdM81oyKSa5Q9ZzbJEN1JICZ05mVmSDiG1JnQBscZeNRf31+Iy0H2E+lzns85V
+         eBpnuLKHjOQuIMQKwydHGLulHro85ZJOJE7AezF9LMigW58CRFSeLcmHsChiH2sGoqPq
+         y4C51WHl82kMnz8xlS0gMfnT1aJcyK5UeyblktJCBEpSGXSmQH8OWdigotCriLh56Uu9
+         eefw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=41fH0wK9Dy9f2lhVtNZteP/lyZ4xt7hVs9iQcCVAF+k=;
-        b=YVHM5gRbIah1kCiXYhYO7TChQOswbCVpU34JxYTSmP+zhhtrfJygeSrywUBtlewfSF
-         xKyj2Eg9yRL6wSILQLkbHMdq//7vo9zenQPmuYmH2u3c0Qfrxi6xTuR/HoBzhQjmXy/l
-         eTFCcMmB3B/GdtiAatrNNV//czekH8gO988aCduKh36p1MZ6799VPDWp2i6s9hL5ZcEV
-         bJrYAqhHGyvLVrOUDbZMeJkWY/QizZeoO1L3cc11CmrlKZ2Vb4z63SXty5g86HzCLA1l
-         MneB3ktUItnGbop329XLsfgRq10Dcc2OgUCKU2fKVQnui9ZQEC/Ibzd85FPvcoyWb7ZZ
-         mLaQ==
-X-Gm-Message-State: AOAM530S9dvf16AhSziI1dH4QTL7RdY+Fe5ZaB7U1ugu8prP4Nv81yBj
-        VcVP2T8D1cMCjnN8gXEsnX7l4aHxgi4wFQ==
-X-Google-Smtp-Source: ABdhPJzhwUZOO3xYHmZX8f8aLHrURYqoZD/1+CyGCix7QJQHZfF87N/ekOJ4fRi44Jm2vTMEAhxPzg==
-X-Received: by 2002:a17:906:3146:: with SMTP id e6mr2182380eje.296.1631354858751;
-        Sat, 11 Sep 2021 03:07:38 -0700 (PDT)
+        bh=TZTIswxjepikEoPUKLpdKfzFGnuJ/8bPvUVyWcBOfmc=;
+        b=uGXk3nkp6KhRzmr3Oio+o0Pbz5m1hjnAejr8XP+D/TRD8GzBK9Wi1z1hcIY1/wCsQD
+         a19Q4xArnrv1XOkFaMjWw+pbxXt/yDSNU2xz/ClEDmErh2nEmdHJWFI+AbGWP+0EK23M
+         ALGUoA78G4kGHlApOxrqFLxonqNxHH4aTAODuMK2tYBth7aOyZMy82CBsoEYrqDJiYxm
+         H2W/LZtshlyN7UfLcQD+jFxUt0GH/0MrgVl1hX3xbOKwoxdquSi6tv4ysxYSgEp9TzPE
+         NHS+3CmQclYvdBE/y4VSEKBwBZGGNU+sV0R+mMo36hheiV+CDLrugPIAEGXZ+c8X8/nF
+         3cSw==
+X-Gm-Message-State: AOAM533ZSiPu1y+hDUxFa4eKoEEFoNyNcYCN0V+9kQ7hYPQOQ5Qhu2/b
+        KQiL6BNykAc0okgW/dvHAnSiv6B1o8+ihw==
+X-Google-Smtp-Source: ABdhPJySkvAOHHRPX2MdPKMZnb6D+29xDEapcvDw9hvV5iGxwO5NXt8fkXS+7pQdQ/nutgPHM/LlEA==
+X-Received: by 2002:a17:906:51d4:: with SMTP id v20mr2202714ejk.9.1631355122856;
+        Sat, 11 Sep 2021 03:12:02 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v13sm571744ejh.62.2021.09.11.03.07.38
+        by smtp.gmail.com with ESMTPSA id q19sm697684edc.74.2021.09.11.03.12.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 03:07:38 -0700 (PDT)
+        Sat, 11 Sep 2021 03:12:02 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs mode
-Date:   Sat, 11 Sep 2021 12:05:05 +0200
+Subject: Re: [PATCH 1/8] midx: expose 'write_midx_file_only()' publicly
+Date:   Sat, 11 Sep 2021 12:07:57 +0200
 References: <cover.1631331139.git.me@ttaylorr.com>
- <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
+ <4afa03b972a1885c60fbf3716f22a7ab58056383.1631331139.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
-Message-ID: <87ee9va0ie.fsf@evledraar.gmail.com>
+In-reply-to: <4afa03b972a1885c60fbf3716f22a7ab58056383.1631331139.git.me@ttaylorr.com>
+Message-ID: <87a6kja0b2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,27 +74,26 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Sep 10 2021, Taylor Blau wrote:
 
-> +	struct strbuf buf = STRBUF_INIT;
-> +	while (strbuf_getline(&buf, stdin) != EOF) {
-> +		string_list_append(to, strbuf_detach(&buf, NULL));
+> -		if (ctx->m && midx_contains_pack(ctx->m, file_name))
+> -			return;
+> +		if (ctx->m) {
+> +			if (midx_contains_pack(ctx->m, file_name))
+> +				return;
+> +		} else if (ctx->to_include) {
+> +			if (!string_list_has_string(ctx->to_include, file_name))
+> +				return;
+> +		}
 
-If you strbuf_detach() it...
+I think this is equivalent to:
+
+		if (ctx->m && midx_contains_pack(ctx->m, file_name))
+			return;
+		else if (!ctx->m && string_list_has_string(...))
+			return;
+
+Just a suggestion/tip to reduce the diff size/nested if/if blocks.
 
 
-> +		struct string_list packs = STRING_LIST_INIT_NODUP;
+> +int write_midx_file_only(const char *object_dir, struct string_list *packs_to_include, const char *preferred_pack_name, unsigned flags);
 
-...init the list with NODUP...
-
-> +		string_list_clear(&packs, 0);
-
-...and call string_list_clear() you'll leak memory, since the
-string_list will think that someone else is taking care of this memory.
-
-I had some recent musings about how this API is bad, and I've got local
-WIP patches to fix it, but in the meantime you need to:
-
-    packs.strdup_strings = 1;
-
-Before calling string_list_clear(). I.e. we didn't strdup(), but during
-free() we pretend that we did, because we did, just not in
-string_list_append().
+Let's also line-wrap header changes like in the *.c file.
