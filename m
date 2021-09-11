@@ -2,295 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8BEEC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 005C8C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:17:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C59A60FDA
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:08:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDF5E60FDA
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232339AbhIKRJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 13:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbhIKRJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 13:09:58 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1685EC061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:08:45 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id u15so1471254wru.6
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=s2vTJbAmihWj3coDZa5CtrvKydJUz26Dx2iTiijB56o=;
-        b=OWklvqgrRfsnNAbeHnzgSUNZy2jBtiwkROOvEvGl4WsD4ufxr2RqiO7YUqyGC+SOaY
-         SI+b9CKcYhMDEx7G9da3xb81Fhv2ijazEvW/gg59lojSXEioYWPwwungzHT0xO0vcCQA
-         pZlidUn5AFdXp2h7BmvX1xzBCJCj2K08i+CrpEUWkpDVfwwPIoWYRuYNSzcxs39syGu+
-         +b9ugXEVagMuI8O8m4TPKgYgR7bLlJ0kRHbqN0lDrStkSjJfBICRH9hFlgKuydCpjw1H
-         jHc5ObMscoqjHulZ/g51MPfxXrQ0fYOQCnRpaRA2ANC0zNLUMG6m5LnrWYDZnRuxOv7d
-         tckw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s2vTJbAmihWj3coDZa5CtrvKydJUz26Dx2iTiijB56o=;
-        b=smrMviokVgcFA9eEAsEIJCgYCMXZl+DbmBll7oUGxZDzPV0uDtgYMaGipjCM6+3Ma7
-         I41K5ZRVHRCOdTI4uFQfEH3AVabEtaY/ZNNeCo+PYtwb7aytjhlR7wcElyhfk3aGchGT
-         slf+NtpjE9p7fO3bgH997vPVPbT3EvnDDcVWRIYJDi+cbBYBTvvs4Rjpix+w6zd2LWrB
-         CJAB/uewvDY2zm+gDZ3ch04Iu+vhsevvTDse4wWtYgpQZwGtGKaPmORJodHC9P00fTlZ
-         DqwtxTvC11ogScWGVJupJOskblK8jxzq7UT3j5k8/bsX6rk8svEUiGhL4Z9NvA0PRzXR
-         XMqQ==
-X-Gm-Message-State: AOAM530cxC7iWDF+W1PF00spvNW8iGcz9PTVzSEyFT+Ez0fVvoY4/STd
-        eOLxF1MOqd00XxdaY190CxnCsaEl5BU=
-X-Google-Smtp-Source: ABdhPJwGH2ioqTA4gQegt1Wu6VauIg/FMACJFcuJNvcLGYsexXrD6cUZkM27yo6HNfJ+1dAWEBfp5A==
-X-Received: by 2002:adf:f8d2:: with SMTP id f18mr3840782wrq.140.1631380123662;
-        Sat, 11 Sep 2021 10:08:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k17sm2160668wrq.7.2021.09.11.10.08.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 10:08:43 -0700 (PDT)
-Message-Id: <pull.1088.v2.git.git.1631380122593.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1088.git.git.1631076472457.gitgitgadget@gmail.com>
-References: <pull.1088.git.git.1631076472457.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 11 Sep 2021 17:08:42 +0000
-Subject: [PATCH v2] tests: remove leftover untracked files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232572AbhIKRSU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 13:18:20 -0400
+Received: from mout.web.de ([212.227.15.4]:36197 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230018AbhIKRST (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 13:18:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1631380612;
+        bh=j+Rhtgf2WWWe8j4jHVrgLruzPqx3KOzyUbEG3+VeEqk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=KvJ3ihmPIiEw5HuZACUieK2aqH8GP5saJOX5grcTwaoBhIB9kcPT0xHCi4LOOI4qf
+         dxvTQPdY/6HoZoLj7aInA9xpAvBiv+E9UY0GXe0WpyDdlS7oocpB9JI8075WcALLnC
+         BFkv8jCZM4+jVz58IPbEEfAMIjlsMQhb5jVXz920=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0M2qsI-1nF8yY07JG-00sgDd; Sat, 11 Sep 2021 19:16:52 +0200
+Subject: Re: [PATCH 3/3] packfile: use oidset for bad objects
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
+ <14d48124-d8bb-aa34-aad0-4203d699e17e@web.de>
+ <YTy8o3qXvyVv8fNr@coredump.intra.peff.net>
+ <3d637be1-f89f-414c-19ef-65c3943457e9@web.de>
+ <YTzhVfmObOf7DHqm@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <480dba11-e321-68f8-3983-1d918c24fbbc@web.de>
+Date:   Sat, 11 Sep 2021 19:16:51 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+In-Reply-To: <YTzhVfmObOf7DHqm@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jcybazG1IRnOiTIaU64g9Jc0JUDzei5KbuERkbgwBnoNoFTByLl
+ 74X60h9L1zd/A04a+PXnyGy7ApRdJXQmzt7PM8cCiuREfT9ys4rYdCRYt+5+tp4I9hMomCo
+ J3qTREEdzmSj9sey6qLCFIOI2ZigfIRAyiMbPcvGKJ7aozPqT5iCN8HTPaAxbro9rXJmNHt
+ YJzkMEh2at3A74VPUEHkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:m1l/WgSgRzM=:9yTqr+mp7Qpf8NuyJxQEuW
+ FfdPXRfanAwZIJCVYqNbW+Cs5grF/ymMWaizgWGJFzbocAvccCF4H9S9QUoxtupKTMtaar37i
+ /PUF8dvOcOyk2LNq1lnM2zx/9Iyspow2lLxDUQRD0F0RjneKJ1obdY3/QxgMARI4L5SfPlEgv
+ XBEoD0MbQlJwO0qoM5ujYF9AFm8Dfs3wY9pvSdyJqGQLJNbYmuwaHH16GHcQUutP5y+UocF3V
+ CgzfPJmQoe7G9ATsMuIUu1BJeiUpcKNdF+2zi/u9eU5aR3oz7CHVO6CWO8xFGhKr9E9J47Pxm
+ xUChD+x99Sa6rO4IcyTQgj4ejrUkluZa3l34S3aTj7IbCAZgEDl1UIKA1DyCsqQfFd7uGd49T
+ 1KyH+0ARlZzgoy7Zjw6PlxI0M9Pgjt41PV2Upo150wRRPGpP5atq5IiydRzejzeSvm3tABLcu
+ f9v+UN3KYQx5xW2aw65ZpYcXIT72gYy5NrnnEkdAmHjdMVxWlS8biXtdwaL+AUwEPf7gel/Xj
+ Qui3+cHsnFarc4YT/v/wmN1lIcSnnAPWITgx2TesZZexuIksVhWFDrTN+AwLvYL7pH2XAoM2J
+ N/fc0WNvHh3ZXaQOB71Lhb34b+LUPMFjVeWkL9pWpoGo8Ca0VH3acGuHF8C3qoWmw5GQeMK0s
+ h3Xs/Wm6wJoVmKAaLteYqOpTTZ7/SVUEXFOoInTSykRQZehzkNQATcHNsz/bLlpuIX/tynhIn
+ uDf/XxxEokJZ5MKlE0I+q2Z4a+8mxKRL/29ro8elCMzGjX6Ze8uL74RGBimZ4nuaZyGZgOs5H
+ sf7UODazmYVi9k65rf4kxmJzb6A7ShxYOeNLe2DLoS8tb8PTggFPBok40Fyjq7tsyH+Y3KDmu
+ nLqtZtZLq2qXl+Mwz84oDTvzBHSXfRkfeYFO8GFavrmQBK+KZyS0Ut83F/aR/mm1wpj4LLOON
+ UWUBCXbrazSTemcmGMRABL09+4ISt/mraNnI3HAXf1k1d3RJ7Fw6Mrs0GOFhBnucBmHVCkP9E
+ krk9obxKYoCQm+JdTCQkseqCGDe0cf54C2hspBIPruuuHeqeSv6Ky4lWa4pufUbTElvxrOHMd
+ 8zMPnlwyPDITe8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Am 11.09.21 um 19:03 schrieb Jeff King:
+> On Sat, Sep 11, 2021 at 06:08:38PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+>>>> +	nth_midxed_object_oid(&oid, m, pos);
+>>>> +	if (oidset_contains(&p->bad_objects, &oid))
+>>>> +		return 0;
+>>>
+>>> Calling nth_midxed_object_oid() implies a memcpy() under the hood. In
+>>> the old code, we'd skip that in the common case that we had no corrupt
+>>> objects, but now we'll pay the cost regardless. memcpy() isn't _that_
+>>> expensive, but I'd expect this to be a relatively hot code path.
+>>>
+>>> Is it worth sticking all of this inside:
+>>>
+>>>   if (oidset_size(&p->bad_objects))
+>>>
+>>> ?
+>>
+>> Hard to say.  It would certainly match the old code more closely.  Is a
+>> function call cheaper than copying 32 bytes?  Depends on the CPU and
+>> whether the hash is cached, I guess.  And cached it probably is, becaus=
+e
+>> the caller did a binary search for it..
+>
+> You already have a function call for nth_midxed_object_oid(), so
+> checking oidset_size() would be a strict improvement.
 
-Remove untracked files that are unwanted after they are done being used.
+If I read the assembly correctly nth_midxed_object_oid() is inlined by the
+compiler in my build, as is nth_midxed_pack_entry().  Both are defined in
+the same file, so other compilers may easily do the same.
 
-While the set of cases in this patch is certainly far from
-comprehensive, it was motivated by some work to see what the fallout
-would be if we were to make the removal of untracked files as a side
-effect of other commands into an error.  Some cases were a bit more
-involved than the testcase changes included in this patch, but the ones
-included here represent the simple cases.  While this patch is not that
-important since we are not changing the behavior of those other commands
-into an error in the near term, I thought these changes were useful
-anyway as an explicit documentation of the intent that these untracked
-files are no longer useful.
+>> We can pass on the original oid to avoid the nth_midxed_object_oid()
+>> call, but inlining the whole thing might even be nicer.
+>
+> Yeah, it occurs to me that oidset_size() would be a good candidate for
+> inlining, if that's what you mean.
 
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Acked-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    tests: remove leftover untracked files
-    
-    Changes since v1:
-    
-     * Added Acked-by's from Stolee and Dscho
+True, but I meant something else (see patch 4/3). :)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1088%2Fnewren%2Fremove-leftover-test-crud-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1088/newren/remove-leftover-test-crud-v2
-Pull-Request: https://github.com/git/git/pull/1088
-
-Range-diff vs v1:
-
- 1:  85d326a52d9 ! 1:  8812157be16 tests: remove leftover untracked files
-     @@ Commit message
-          anyway as an explicit documentation of the intent that these untracked
-          files are no longer useful.
-      
-     +    Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-     +    Acked-by: Derrick Stolee <stolee@gmail.com>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## t/t0090-cache-tree.sh ##
-
-
- t/t0090-cache-tree.sh                    | 1 +
- t/t2021-checkout-overwrite.sh            | 1 +
- t/t3404-rebase-interactive.sh            | 1 +
- t/t3435-rebase-gpg-sign.sh               | 1 +
- t/t3510-cherry-pick-sequence.sh          | 1 +
- t/t5304-prune.sh                         | 1 +
- t/t6415-merge-dir-to-symlink.sh          | 6 ++++--
- t/t6424-merge-unrelated-index-changes.sh | 1 +
- t/t6430-merge-recursive.sh               | 4 +++-
- t/t6436-merge-overwrite.sh               | 3 ++-
- t/t7201-co.sh                            | 1 +
- t/t7600-merge.sh                         | 1 +
- 12 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 9bf66c9e68d..90675726484 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -195,6 +195,7 @@ test_expect_success 'reset --hard gives cache-tree' '
- 
- test_expect_success 'reset --hard without index gives cache-tree' '
- 	rm -f .git/index &&
-+	git clean -fd &&
- 	git reset --hard &&
- 	test_cache_tree
- '
-diff --git a/t/t2021-checkout-overwrite.sh b/t/t2021-checkout-overwrite.sh
-index 70d69263e68..660132ff8d5 100755
---- a/t/t2021-checkout-overwrite.sh
-+++ b/t/t2021-checkout-overwrite.sh
-@@ -48,6 +48,7 @@ test_expect_success 'checkout commit with dir must not remove untracked a/b' '
- 
- test_expect_success SYMLINKS 'the symlink remained' '
- 
-+	test_when_finished "rm a/b" &&
- 	test -h a/b
- '
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index d877872e8f4..972ce026bbc 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -297,6 +297,7 @@ test_expect_success 'abort with error when new base cannot be checked out' '
- 		output &&
- 	test_i18ngrep "file1" output &&
- 	test_path_is_missing .git/rebase-merge &&
-+	rm file1 &&
- 	git reset --hard HEAD^
- '
- 
-diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
-index ec107668580..5f8ba2c7399 100755
---- a/t/t3435-rebase-gpg-sign.sh
-+++ b/t/t3435-rebase-gpg-sign.sh
-@@ -65,6 +65,7 @@ test_rebase_gpg_sign ! true  -i --gpg-sign --no-gpg-sign
- test_rebase_gpg_sign   false -i --no-gpg-sign --gpg-sign
- 
- test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
-+	test_when_finished "git clean -f" &&
- 	git reset --hard merged &&
- 	git config commit.gpgsign true &&
- 	git rebase -p --no-gpg-sign --onto=one fork-point main &&
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 49010aa9469..3b0fa66c33d 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -238,6 +238,7 @@ test_expect_success 'allow skipping commit but not abort for a new history' '
- '
- 
- test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
-+	test_when_finished "rm unrelated" &&
- 	pristine_detach initial &&
- 	git rm --cached unrelated &&
- 	git commit -m "untrack unrelated" &&
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 7cabb85ca6e..8ae314af585 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -291,6 +291,7 @@ test_expect_success 'prune: handle HEAD reflog in multiple worktrees' '
- 		cat ../expected >blob &&
- 		git add blob &&
- 		git commit -m "second commit in third" &&
-+		git clean -f && # Remove untracked left behind by deleting index
- 		git reset --hard HEAD^
- 	) &&
- 	git prune --expire=now &&
-diff --git a/t/t6415-merge-dir-to-symlink.sh b/t/t6415-merge-dir-to-symlink.sh
-index 2ce104aca7c..2655e295f5a 100755
---- a/t/t6415-merge-dir-to-symlink.sh
-+++ b/t/t6415-merge-dir-to-symlink.sh
-@@ -25,7 +25,8 @@ test_expect_success 'checkout does not clobber untracked symlink' '
- 	git reset --hard main &&
- 	git rm --cached a/b &&
- 	git commit -m "untracked symlink remains" &&
--	test_must_fail git checkout start^0
-+	test_must_fail git checkout start^0 &&
-+	git clean -fd    # Do not leave the untracked symlink in the way
- '
- 
- test_expect_success 'a/b-2/c/d is kept when clobbering symlink b' '
-@@ -34,7 +35,8 @@ test_expect_success 'a/b-2/c/d is kept when clobbering symlink b' '
- 	git rm --cached a/b &&
- 	git commit -m "untracked symlink remains" &&
- 	git checkout -f start^0 &&
--	test_path_is_file a/b-2/c/d
-+	test_path_is_file a/b-2/c/d &&
-+	git clean -fd    # Do not leave the untracked symlink in the way
- '
- 
- test_expect_success 'checkout should not have deleted a/b-2/c/d' '
-diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
-index 5e3779ebc93..89dd544f388 100755
---- a/t/t6424-merge-unrelated-index-changes.sh
-+++ b/t/t6424-merge-unrelated-index-changes.sh
-@@ -132,6 +132,7 @@ test_expect_success 'merge-recursive, when index==head but head!=HEAD' '
- 
- 	# Make index match B
- 	git diff C B -- | git apply --cached &&
-+	test_when_finished "git clean -fd" &&  # Do not leave untracked around
- 	# Merge B & F, with B as "head"
- 	git merge-recursive A -- B F > out &&
- 	test_i18ngrep "Already up to date" out
-diff --git a/t/t6430-merge-recursive.sh b/t/t6430-merge-recursive.sh
-index ffcc01fe65d..a0efe7cb6db 100755
---- a/t/t6430-merge-recursive.sh
-+++ b/t/t6430-merge-recursive.sh
-@@ -718,7 +718,9 @@ test_expect_success 'merge-recursive remembers the names of all base trees' '
- 	# merge-recursive prints in reverse order, but we do not care
- 	sort <trees >expect &&
- 	sed -n "s/^virtual //p" out | sort >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	git clean -fd
- '
- 
- test_expect_success 'merge-recursive internal merge resolves to the sameness' '
-diff --git a/t/t6436-merge-overwrite.sh b/t/t6436-merge-overwrite.sh
-index 84b4aacf496..c0b7bd7c3fe 100755
---- a/t/t6436-merge-overwrite.sh
-+++ b/t/t6436-merge-overwrite.sh
-@@ -68,7 +68,8 @@ test_expect_success 'will not overwrite removed file' '
- 	git commit -m "rm c1.c" &&
- 	cp important c1.c &&
- 	test_must_fail git merge c1a &&
--	test_cmp important c1.c
-+	test_cmp important c1.c &&
-+	rm c1.c  # Do not leave untracked file in way of future tests
- '
- 
- test_expect_success 'will not overwrite re-added file' '
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 7f6e23a4bb9..b7ba1c3268e 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -585,6 +585,7 @@ test_expect_success 'checkout --conflict=diff3' '
- '
- 
- test_expect_success 'failing checkout -b should not break working tree' '
-+	git clean -fd &&  # Remove untracked files in the way
- 	git reset --hard main &&
- 	git symbolic-ref HEAD refs/heads/main &&
- 	test_must_fail git checkout -b renamer side^ &&
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 2ef39d3088e..c773e30b3fa 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -717,6 +717,7 @@ test_expect_success 'failed fast-forward merge with --autostash' '
- 	git reset --hard c0 &&
- 	git merge-file file file.orig file.5 &&
- 	cp file.5 other &&
-+	test_when_finished "rm other" &&
- 	test_must_fail git merge --autostash c1 2>err &&
- 	test_i18ngrep "Applied autostash." err &&
- 	test_cmp file.5 file
-
-base-commit: e0a2f5cbc585657e757385ad918f167f519cfb96
--- 
-gitgitgadget
+Ren=C3=A9
