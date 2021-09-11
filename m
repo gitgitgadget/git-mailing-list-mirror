@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AED9C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 950C7C433EF
 	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57B6560F46
+	by mail.kernel.org (Postfix) with ESMTP id 6F9696113E
 	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 03:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235249AbhIKDdo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 23:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34206 "EHLO
+        id S235251AbhIKDds (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 23:33:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbhIKDdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 23:33:42 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11666C061574
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:31 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id z1so4882480ioh.7
-        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:31 -0700 (PDT)
+        with ESMTP id S229501AbhIKDdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 23:33:45 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC55C061574
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:33 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id f6so4951997iox.0
+        for <git@vger.kernel.org>; Fri, 10 Sep 2021 20:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=lHuYxpO7NYRr+JRkvTNdCiDMSBzMJzQdHVXX41gdwh4=;
-        b=pFukAJHF3Rn6nYwAOYbQWIebi7AiuD6tZJRCNy6bsdGkllscMC7Ebi0W6n63PfKPbt
-         9UHIqblzDg9wipRD84oF8GuLHC2Jmwqn0mu/ZYlxgSqN78SWe2GOZRm09f8K+4UjY/jp
-         dyBqymuO4Or8mgvPvAngu8JcuDKnoIRNIWYrtDBkYL1p+sT2R5MqwSI8jfLv6h1yBo8Q
-         /Gy1cTBfJ8Atw70juHQRw56VB+4jWhLLxFaWpDyB6IOSL+452RnkTCoZsZzLxf9IMc6x
-         G2OJU7MIZoE3ckVJi5+bfCzg0BbPtQT+zMG6pPYkZt5D8lRARp+oF5ZtENJCworzUvWa
-         I5cA==
+        bh=Nkb7fgnuRqEbS9laTpFPUA/upPT5bq5QrdPBIZQDpqM=;
+        b=STb2l4Y/GVrqpwJ8181Ox5fBnGy7vbU3o0TRevJhJMZtTzrDVlA3Td40TAto7e7OZS
+         R2hl4ZJOgNV8eBEm8glE2pDp8uncHfJvpLB1CB1intiyhxUfTF/vgVARY0+RxNekP9i+
+         7JdnCUhZOuVFkmHfsQm1N0boikfUU5/ZcvQD5wxz04nVP7gFVQmQ4kVQ8UvRZGfbTT3K
+         Ww23LZY5+CVOlZyqUIwguxr97ogxid3v11foNuiVwd67T0alRCwmYqqmtnPpWPk2534I
+         DKIeoeiR3Mz7C4Sfs7rFW4oOhpKjdNJBAbdMpVaVOv+EiEiPQhefzPUBq+IqjfRrHSaM
+         2OGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=lHuYxpO7NYRr+JRkvTNdCiDMSBzMJzQdHVXX41gdwh4=;
-        b=kyYjuA71eJZPWq3kHaDCxNSr6f4HMm+EUlrym/9RitnT5NMC0xo6BF1/YnEQTN8KM1
-         +U9oyMUeABEJJG3+4Q1QKnGZYpUkCzr19YZMX2gWKGfWlTh3CIKBH3pUxresfJrPKlnz
-         IjwP1CLRMNgBD34QFExQkOpdvmwUZqaeD9PTNAwXbSmtrgTUhwu6r0Er05nxyhbbhKPh
-         6wuffHqKetxySR21DWKasXYYGNrLfW81vBtaCi87hkuvDZbFmSt8g9lsDUa4Nk/PHxM9
-         OcccV4Pu6kjy2KC7oVAFsyXyaGJgk+6CEWu0Re0p3DI1kVc7qhy0TWsq/cVRNgoOffoW
-         lVLQ==
-X-Gm-Message-State: AOAM531JZcIYM8MCmaVIrDv5JgC9MHMAJcJxDG96hsm6S6N6ak8vuIBk
-        8FV9+dQHs+qsDOypXrKgYcrUl5GELmdHENbH
-X-Google-Smtp-Source: ABdhPJyyeMPdALWKiG5DCx4BnwYeG816l8qCVyFprfvb95Xu1PPqqZYH1aezez7ZdmGUBrpXlR9TJg==
-X-Received: by 2002:a02:caaf:: with SMTP id e15mr800087jap.11.1631331150259;
-        Fri, 10 Sep 2021 20:32:30 -0700 (PDT)
+        bh=Nkb7fgnuRqEbS9laTpFPUA/upPT5bq5QrdPBIZQDpqM=;
+        b=ZE+vGVvnLBhp+A6SSx9tV9YcIIVW4FisL3JWDvK3awRG7E2HPTABaVBu3UqOw/IhdR
+         S64C0hFo60tVKWyRBba6dai4PR+L3QkKy9UG18I+7r5wezlxqN03poJJt9BQSJKFgPW+
+         Szesvz2KCbh9likPI5rEqesR6wDH/vhdCYZ2PjY/HHGkguvhbn0lRmtfUZ9BB5UV4gmZ
+         TgVakzQZFHf2ZBRmODj33I/O4hLVGZmGIQ3hT8nB9FyrE9tn8X2upeSk9pD+u1/r8vVn
+         9Hl6yvX+fof7t6Y7+oUi8ff0+67jq5dUpVQ0X0dOhdF6dYmwSSOn8CNb/87exwPLL5p8
+         gVKQ==
+X-Gm-Message-State: AOAM531dnD6gg25itFbBtXjEF3LXYfU7RhzYXSaTZl9SvZ2geIKrGaec
+        CgnjvzcPf+9wqmZ8kRpfEf7VaVlJU/tgeH52
+X-Google-Smtp-Source: ABdhPJzkop/xs62Is5IRnVrzjXL5n9+/wDNc2CYwxm2mCFQWp0SZVmIOT5vQ6LJogPH+2zlkONi9jg==
+X-Received: by 2002:a02:3b15:: with SMTP id c21mr811313jaa.54.1631331152724;
+        Fri, 10 Sep 2021 20:32:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o15sm307185ilj.69.2021.09.10.20.32.29
+        by smtp.gmail.com with ESMTPSA id h10sm298280ilj.71.2021.09.10.20.32.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Sep 2021 20:32:30 -0700 (PDT)
-Date:   Fri, 10 Sep 2021 23:32:29 -0400
+        Fri, 10 Sep 2021 20:32:32 -0700 (PDT)
+Date:   Fri, 10 Sep 2021 23:32:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net
-Subject: [PATCH 1/8] midx: expose 'write_midx_file_only()' publicly
-Message-ID: <4afa03b972a1885c60fbf3716f22a7ab58056383.1631331139.git.me@ttaylorr.com>
+Subject: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs mode
+Message-ID: <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
 References: <cover.1631331139.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,162 +70,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expose a variant of the write_midx_file() function which ignores packs
-that aren't included in an explicit "allow" list.
+To power a new `--write-midx` mode, `git repack` will want to write a
+multi-pack index containing a certain set of packs in the repository.
 
-This will be used in an upcoming patch to power a new `--stdin-packs`
-mode of `git multi-pack-index write` for callers that only want to
-include certain packs in a MIDX (and ignore any packs which may have
-happened to enter the repository independently, e.g., from pushes).
+This new option will be used by `git repack` to write a MIDX which
+contains only the packs which will survive after the repack (that is, it
+will exclude any packs which are about to be deleted).
 
-Those patches will provide test coverage for this new function.
+This patch effectively exposes the function implemented in the previous
+commit via the `git multi-pack-index` builtin. An alternative approach
+would have been to call that function from the `git repack` builtin
+directly, but this introduces awkward problems around closing and
+reopening the object store, so the MIDX will be written out-of-process.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 50 +++++++++++++++++++++++++++++++++++++++-----------
- midx.h |  2 ++
- 2 files changed, 41 insertions(+), 11 deletions(-)
+ Documentation/git-multi-pack-index.txt |  4 ++++
+ builtin/multi-pack-index.c             | 26 ++++++++++++++++++++++++++
+ t/t5319-multi-pack-index.sh            | 15 +++++++++++++++
+ 3 files changed, 45 insertions(+)
 
-diff --git a/midx.c b/midx.c
-index 864034a6ad..29d1d107b3 100644
---- a/midx.c
-+++ b/midx.c
-@@ -475,6 +475,8 @@ struct write_midx_context {
- 	uint32_t num_large_offsets;
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index a9df3dbd32..009c989ef8 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -45,6 +45,10 @@ write::
  
- 	int preferred_pack_idx;
+ 	--[no-]bitmap::
+ 		Control whether or not a multi-pack bitmap is written.
 +
-+	struct string_list *to_include;
- };
++	--stdin-packs::
++		Write a multi-pack index containing only the set of
++		line-delimited pack index basenames provided over stdin.
+ --
  
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
-@@ -484,8 +486,13 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+ verify::
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 73c0113b48..77488b6b7b 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -47,6 +47,7 @@ static struct opts_multi_pack_index {
+ 	const char *preferred_pack;
+ 	unsigned long batch_size;
+ 	unsigned flags;
++	int stdin_packs;
+ } opts;
  
- 	if (ends_with(file_name, ".idx")) {
- 		display_progress(ctx->progress, ++ctx->pack_paths_checked);
--		if (ctx->m && midx_contains_pack(ctx->m, file_name))
--			return;
-+		if (ctx->m) {
-+			if (midx_contains_pack(ctx->m, file_name))
-+				return;
-+		} else if (ctx->to_include) {
-+			if (!string_list_has_string(ctx->to_include, file_name))
-+				return;
-+		}
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
- 
-@@ -1058,6 +1065,7 @@ static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
+ static struct option common_opts[] = {
+@@ -61,6 +62,15 @@ static struct option *add_common_options(struct option *prev)
+ 	return parse_options_concat(common_opts, prev);
  }
  
- static int write_midx_internal(const char *object_dir,
-+			       struct string_list *packs_to_include,
- 			       struct string_list *packs_to_drop,
- 			       const char *preferred_pack_name,
- 			       unsigned flags)
-@@ -1082,10 +1090,17 @@ static int write_midx_internal(const char *object_dir,
- 		die_errno(_("unable to create leading directories of %s"),
- 			  midx_name);
- 
--	for (cur = get_multi_pack_index(the_repository); cur; cur = cur->next) {
--		if (!strcmp(object_dir, cur->object_dir)) {
--			ctx.m = cur;
--			break;
-+	if (!packs_to_include) {
-+		/*
-+		 * Only reference an existing MIDX when not filtering which
-+		 * packs to include, since all packs and objects are copied
-+		 * blindly from an existing MIDX if one is present.
-+		 */
-+		for (cur = get_multi_pack_index(the_repository); cur; cur = cur->next) {
-+			if (!strcmp(object_dir, cur->object_dir)) {
-+				ctx.m = cur;
-+				break;
-+			}
- 		}
- 	}
- 
-@@ -1136,10 +1151,13 @@ static int write_midx_internal(const char *object_dir,
- 	else
- 		ctx.progress = NULL;
- 
-+	ctx.to_include = packs_to_include;
-+
- 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
- 	stop_progress(&ctx.progress);
- 
--	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop) {
-+	if ((ctx.m && ctx.nr == ctx.m->num_packs) &&
-+	    !(packs_to_include || packs_to_drop)) {
- 		struct bitmap_index *bitmap_git;
- 		int bitmap_exists;
- 		int want_bitmap = flags & MIDX_WRITE_BITMAP;
-@@ -1237,7 +1255,7 @@ static int write_midx_internal(const char *object_dir,
- 
- 	QSORT(ctx.info, ctx.nr, pack_info_compare);
- 
--	if (packs_to_drop && packs_to_drop->nr) {
-+	if (ctx.m && packs_to_drop && packs_to_drop->nr) {
- 		int drop_index = 0;
- 		int missing_drops = 0;
- 
-@@ -1380,7 +1398,17 @@ int write_midx_file(const char *object_dir,
- 		    const char *preferred_pack_name,
- 		    unsigned flags)
- {
--	return write_midx_internal(object_dir, NULL, preferred_pack_name, flags);
-+	return write_midx_internal(object_dir, NULL, NULL, preferred_pack_name,
-+				   flags);
++static void read_packs_from_stdin(struct string_list *to)
++{
++	struct strbuf buf = STRBUF_INIT;
++	while (strbuf_getline(&buf, stdin) != EOF) {
++		string_list_append(to, strbuf_detach(&buf, NULL));
++	}
++	string_list_sort(to);
 +}
 +
-+int write_midx_file_only(const char *object_dir,
-+			 struct string_list *packs_to_include,
-+			 const char *preferred_pack_name,
-+			 unsigned flags)
-+{
-+	return write_midx_internal(object_dir, packs_to_include, NULL,
-+				   preferred_pack_name, flags);
+ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ {
+ 	struct option *options;
+@@ -70,6 +80,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 			   N_("pack for reuse when computing a multi-pack bitmap")),
+ 		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
+ 			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
++		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
++			 N_("write multi-pack index containing only given indexes")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -86,6 +98,20 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 
+ 	FREE_AND_NULL(options);
+ 
++	if (opts.stdin_packs) {
++		struct string_list packs = STRING_LIST_INIT_NODUP;
++		int ret;
++
++		read_packs_from_stdin(&packs);
++
++		ret = write_midx_file_only(opts.object_dir, &packs,
++					   opts.preferred_pack, opts.flags);
++
++		string_list_clear(&packs, 0);
++
++		return ret;
++
++	}
+ 	return write_midx_file(opts.object_dir, opts.preferred_pack,
+ 			       opts.flags);
  }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index bb04f0f23b..385f0a3efd 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -168,6 +168,21 @@ test_expect_success 'write midx with two packs' '
  
- struct clear_midx_data {
-@@ -1660,7 +1688,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 	free(count);
+ compare_results_with_midx "two packs"
  
- 	if (packs_to_drop.nr) {
--		result = write_midx_internal(object_dir, &packs_to_drop, NULL, flags);
-+		result = write_midx_internal(object_dir, NULL, &packs_to_drop, NULL, flags);
- 		m = NULL;
- 	}
- 
-@@ -1851,7 +1879,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 		goto cleanup;
- 	}
- 
--	result = write_midx_internal(object_dir, NULL, NULL, flags);
-+	result = write_midx_internal(object_dir, NULL, NULL, NULL, flags);
- 	m = NULL;
- 
- cleanup:
-diff --git a/midx.h b/midx.h
-index aa3da557bb..aefa371c90 100644
---- a/midx.h
-+++ b/midx.h
-@@ -2,6 +2,7 @@
- #define MIDX_H
- 
- #include "repository.h"
-+#include "string-list.h"
- 
- struct object_id;
- struct pack_entry;
-@@ -62,6 +63,7 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
- int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
- 
- int write_midx_file(const char *object_dir, const char *preferred_pack_name, unsigned flags);
-+int write_midx_file_only(const char *object_dir, struct string_list *packs_to_include, const char *preferred_pack_name, unsigned flags);
- void clear_midx_file(struct repository *r);
- int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags);
- int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags);
++test_expect_success 'write midx with --stdin-packs' '
++	rm -fr $objdir/pack/multi-pack-index &&
++
++	idx="$(find $objdir/pack -name "test-2-*.idx")" &&
++	basename "$idx" >in &&
++
++	git multi-pack-index write --stdin-packs <in &&
++
++	test-tool read-midx $objdir | grep "\.idx$" >packs &&
++
++	test_cmp packs in
++'
++
++compare_results_with_midx "mixed mode (one pack + extra)"
++
+ test_expect_success 'write progress off for redirected stderr' '
+ 	git multi-pack-index --object-dir=$objdir write 2>err &&
+ 	test_line_count = 0 err
 -- 
 2.33.0.96.g73915697e6
 
