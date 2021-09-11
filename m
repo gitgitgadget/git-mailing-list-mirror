@@ -2,100 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F72AC4332F
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 00:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95F07C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 01:12:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 610AE60F8F
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 00:52:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67DF761212
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 01:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235043AbhIKAx7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Sep 2021 20:53:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60057 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235021AbhIKAx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Sep 2021 20:53:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1ED4314B1F8;
-        Fri, 10 Sep 2021 20:52:46 -0400 (EDT)
+        id S235005AbhIKBNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Sep 2021 21:13:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55916 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234989AbhIKBNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Sep 2021 21:13:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1423C925B;
+        Fri, 10 Sep 2021 21:12:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=y01veVAxiLMWSNPSwrArHTFm8Z2JSBKhipUBWI
-        iyvyU=; b=T6U2go24jNujw5zl1iHcp48NWeA2wMvlt9YHFI5+UgKfw4OwWLDxuQ
-        30Fkg9qYFRgXbDDSURxKSvWsJ+WnNMt0O8cvFXqQ4NQi14voknmpOovQ5L+xntVc
-        4ulVgQ+V2T1YhRQsoU8fQkB1zcPSnlMCvnZDgABhq+X+u2SoVrkvE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 172A914B1F7;
-        Fri, 10 Sep 2021 20:52:46 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=whQx4fFE5h5DIGIfUC7PvQKoo
+        3gt2SPdXk/72WvkXeA=; b=cVW/SpC5CMRNMn35Aqk8lNBbQ5aHTf7tTbaMT5E6q
+        zUT28w27OEf4Z3vrdzMgBUnEfopAA9XPVbehON0PSopzCbI4UUVmw2Awzxi8V/i1
+        Uy/E/9dfy4L5118Rh0EJRaV+3U5TWgOu1KVaC42TZVupwjQr83dBqDBKIcMyi2oD
+        S4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95B8BC925A;
+        Fri, 10 Sep 2021 21:12:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6284614B1F6;
-        Fri, 10 Sep 2021 20:52:43 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4DEFC9259;
+        Fri, 10 Sep 2021 21:12:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] branch: add "inherit" option for branch.autoSetupMerge
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
-        <0346f447548cfd11307173aaa3284d86a2ef689c.1631319742.git.steadmon@google.com>
-Date:   Fri, 10 Sep 2021 17:52:41 -0700
-In-Reply-To: <0346f447548cfd11307173aaa3284d86a2ef689c.1631319742.git.steadmon@google.com>
-        (Josh Steadmon's message of "Fri, 10 Sep 2021 17:25:20 -0700")
-Message-ID: <xmqqwnnondba.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/5] help: correct the usage string in -h and
+ documentation
+References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
+        <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
+        <patch-v2-1.5-b10bfd21f14-20210910T112545Z-avarab@gmail.com>
+Date:   Fri, 10 Sep 2021 18:12:31 -0700
+Message-ID: <xmqqr1dvoqyo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92861DC0-129A-11EC-B317-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 56E31F4A-129D-11EC-8CFB-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> It can be helpful when creating a new branch to use the existing
-> tracking configuration from the branch point. However, there is
-> currently not a method to automatically do so.
->
-> Teach branch.autoSetupMerge a new "inherit" option. When this is set,
-> creating a new branch will cause the tracking configuration to default
-> to the configuration of the branch point, if set.
+> diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+> index 44fe8860b3f..568a0b606f3 100644
+> --- a/Documentation/git-help.txt
+> +++ b/Documentation/git-help.txt
+> @@ -9,7 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git help' [-a|--all [--[no-]verbose]] [-g|--guides]
+> -	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
+> +	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
 
-So, when a new branch N is forked from an existing branch A that
-builds on branch B (which could be a local branch under refs/heads/
-or a remote-tracking branch under refs/remotes/), a plain-vanilla
-auto-setup-merge makes N build on A but with 'inherit', N is marked
-to build on B instead?
+This one is good, but ...
 
-I do not think it is wise to hide this useful feature behind a
-configuration variable.  
+> diff --git a/builtin/help.c b/builtin/help.c
+> index b7eec06c3de..44ea2798cda 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -59,7 +59,8 @@ static struct option builtin_help_options[] =3D {
+>  };
+> =20
+>  static const char * const builtin_help_usage[] =3D {
+> -	N_("git help [--all] [--guides] [--man | --web | --info] [<command>]"=
+),
+> +	N_("git help [-a|--all] [-g|--guides] [--[no-]verbose]]\n"
+> +	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
 
-Rather, this should be made available first to users who do not even
-set the configuration and then as a convenience measure, made usable
-via the configuration mechanism as well.
+Aside from the addition of so-far-missing "verbose", which is
+obviously a good change, I am not sure if the other change is a good
+idea.
 
-The current "git branch --track N A" makes N build on A, so perhaps
-"git branch --track=inherit N A" should make N build on whatever A
-builds on.  We may need to give a synonym --track=direct to the
-traditional "build on the original branch that was used to specfy
-the fork point" while doing so.
+This is because *_usage[] is designed to be always shown together
+with the list of options built from the option table the
+parse_options() uses, and the readers will see the correspondence
+between long and short options even more clear there.
 
-And then on top of that, we can add configuration variable handling.
+    $ git help -h
+    usage: git help [--all] [--guides] [--man | --web | --info] [<command=
+>]
 
-Depending on the value of branch.autoSetupMerge, "git branch -b" and
-"git checkout -b" would pretend as if "--track" or "--track=inherit"
-were given, or something along that line.  The end result may be the
-same for those who only use the configuration variables, but it
-would give us some flexibility to countermand the configuration from
-the command line.  Those who set branch.autoSetupMerge to 'inherit'
-cannot say "git checkout -b N --track=direct A" to express "With
-this single invocation alone I am making N build on A, even though I
-know I usually make N build on whatever A builds on" if you give
-only the configuration variable.
+        -a, --all             print all available commands
+        -g, --guides          print list of useful guides
+        -c, --config          print all configuration variable names
+        -m, --man             show man page
+        -w, --web             show manual in web browser
+        -i, --info            show info page
+        -v, --verbose         print command description
+
+If you look at output from=20
+
+    $ git grep -A4 -e '_usage\[' builtin/\*.c
+
+you'll notice that many of them do not even spell out each option
+and instead have a single [<options>] placeholder unless the command
+has only very small number of options.  With the number of options
+that "git help" takes, it might even be warranted to switch to the
+more generic "git help [<option>...] [<command>]".
+
+Not a strict veto, but just making sure if the over-cluttering of
+the early lines in "help -h" output has been considered as a
+possible downside before suggesting this change.
 
 Thanks.
