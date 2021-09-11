@@ -2,194 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E952C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 08:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF9DC433EF
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BB3E60F35
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 08:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9454060F92
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235406AbhIKIDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 04:03:06 -0400
-Received: from mout.web.de ([212.227.15.14]:41631 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235334AbhIKIDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 04:03:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631347301;
-        bh=w7snnXce2LM+ZPD4VOQ+Mof2r/y6sxTsKSwJhVS4Grs=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=LdJPhv1kT4I+JgEyQC+x9FGw0G3bw3hgwD+3yWaSfyUlLcdTrUNXUrj8Ry+hI7a58
-         K+VwGRCgtd2K82k66c+TNg11/QqQ943rkskeixMYUcq6jcqf8RVmp8y67R40qVmKtI
-         ZToyEVn21Sa/ti5C8a5hIn9TYKywYWhlhxEqcPeI=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LxNyU-1n0yJb18eo-016xZI; Sat, 11 Sep 2021 10:01:41 +0200
-Subject: [PATCH 3/3] packfile: use oidset for bad objects
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
-Message-ID: <14d48124-d8bb-aa34-aad0-4203d699e17e@web.de>
-Date:   Sat, 11 Sep 2021 10:01:40 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S235451AbhIKJRI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 11 Sep 2021 05:17:08 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:46844 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229494AbhIKJRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 05:17:08 -0400
+Received: by mail-ej1-f52.google.com with SMTP id kt8so9304363ejb.13
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:15:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=d2BAHIOSJyvHTcFkpXF7u8xjDQe2wUtJMiyKZuVZ4mE=;
+        b=o9iEGoYlZG1OF/xwS4Jjupg4yH08dxa9wyyOxN3pF6nYfS3jt03jPNz0Wk5OOzb8w3
+         aozZ/SfMRa0gmgdFMKSpSL5fPPal17jgn0ozw9wgpTmhn1vz7xWkmeSUC+iavi8YF4Qt
+         9GUtYSmytrOHa76oAv8JxA245FLH99bdRUILwNiTLAYalAg4HRIaKT+CAzVSFbwRw1PT
+         wV5Kzg+E8acoP2mD7U7Blk4aARki//W2SV4XS6h7q44EPVuw/mlOr51e5P9yMbPQDnCY
+         GGBfr2Ychz4AInUf0iZ4mOlHXfO1LrcKy51/9Kv/dpvdDsS39nSRn7MLIcsZsSIAAX6T
+         EWwA==
+X-Gm-Message-State: AOAM5300TPOSsIPl5as2iKKmm+7VW7xxBflt+rXniQX5FqeNK0a9owmg
+        oU6ZSmm+QOL/XyfyOLEmQ155Fky7WvVqMPF1LZ4=
+X-Google-Smtp-Source: ABdhPJwmwfpjfnCl/yjQu9q9SisKBcS9hF3b4BG6JXF4KH5/EmXS4IdQlJtnahbKkobPmy+WgtvSly0lrQG++mUkrtQ=
+X-Received: by 2002:a17:906:4691:: with SMTP id a17mr1966746ejr.36.1631351754947;
+ Sat, 11 Sep 2021 02:15:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Eeh0VQEvLSR8qJq3uGQB6DgfdT40Iha9+V+3hhogfSbXz/j9PYO
- 6koxjub2pn9Db9u8tiH7y1FpFmHvhLcY6mTSLiUem1ehnbryf8etSNX4PP+YYsdIwRetQ/+
- K5j499Xx3SqaQHumBRsHGSLOaa4CIlzvEs4IsLJedQD7WtArXx3zELkYW+NM3axEcJhGuUO
- 25CTpB/xtoy5UoxK2RHtA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/YyZCnvPZUI=:HrfR0PJx4MxzT5eO2nVpBV
- CZRe0eylZnR9rPIbSnIv6mzlg3cT66hXh7ygsPj+55NoY648eor/65S+Y8Eek+L/pKnewefCC
- s3rCiRzvAts/Sovgl4N/drPTlYkaNYvmjTLx7kESMHBrdWZ67t4hZmKy391hWKx12n5sJbTXX
- dKLODblU1921sGNJuf4QkwJTNFmsMrO1jCu7Zg3SzOqHawyYXZgmLXLIpf7ltAJtcjVLYW7pw
- rsRppYtQDlR4D0A4KuWyY+o9OBBgp7uA1U3hJaqW+w8rZXrtrGaxcP2k9s4mw27iYqhpmFEgi
- tt1vi+Oqx1GbMmFH4oCVgoSkIrVvWRlxEy/kCA7wdhAOyTDUJqjx4ycxZWr8ah+zvTY6bgAXJ
- wcZ6qJqFcAFbVMY7KYJYHiY+ZPVgf7xk9b3L4RpDmIpucpQ14NRQJE64faU0ispt1jn/SLBzH
- Vg0dPT23Hm9i/32hgcNeL4rR7x2X9arCc7qGn9a9YoEfVpGvD4RiLrfUI1IK5j81P7fo4UYB6
- FoJPZ8WlyffWhIr2PIs1zxNhiPy0qZuyp/Fzf3uSxbXo70oIsE/3Iphaja1wefd20tRzfPpp8
- FrEyGJoAqSmQp46kPlDafQ+VHuyKHd8GzUmDW0clQmm4dxe4x5TkfP5wRQ7wfyQrJgJlgecw1
- +t51qI+pJOGZ19nmdYC5cOfXvZyqgr3KGBrMoGtwE56MrTHZGPbC6bLKJWN+C01RODTOlTpi8
- bTlsggTppT5pffHObKoXCj8GRGly3Cg9o0JeyiqjBYJDZUw5yFyZuGvledc7sKVOSDLWNgZYM
- nYfRlQdguXvtjwHBSTLaWq8aESW3v9hsybNkZyxKf37GsZIucLhPeChxMacgfzxcDEOJh2YMn
- JTy2pscTGOEbVk/Q5BJ8GRDVyhEHgV8T0vKzAe6ZcLcmbd5PUdQh+74ZLYjt6OfNXbZMCCAU2
- hgbx5lPbEpcUtGVfziZz0od4/wY8+HM9gAXx7N1dZI6PWdeQY+yCzhikT30yLcbOsmzHO9JjV
- pq3p2wqgpept1e6tvsZCTRhNcmZNLT5zJTYot5LVEU7ytvFjSox7s07oFkB51iNGEA==
+References: <20210830072118.91921-1-sunshine@sunshineco.com>
+ <20210830072118.91921-4-sunshine@sunshineco.com> <xmqqwno2505w.fsf@gitster.g>
+ <CAPig+cQ6FA0rUnkkTDRUD5vAD3cDXW9vtR1oX0pUJK5eJB9CHg@mail.gmail.com>
+ <xmqqeeaa4y0v.fsf@gitster.g> <CAPig+cQdXp0c+JYthvy+bbr6vLR7nq4pQY3w+CADUtzr+Ang4A@mail.gmail.com>
+ <CAPig+cTFbnrPPSZbzihJ9gdGV2c4poXWyNjhK3mnr5_uRwpxbg@mail.gmail.com>
+ <xmqqwnnos2jz.fsf@gitster.g> <CAPig+cQdAuLkZ0pDK6XOfm_WXCJAOm8Tr19oK14n-Tf7DcfW=w@mail.gmail.com>
+ <878s03c1of.fsf@evledraar.gmail.com>
+In-Reply-To: <878s03c1of.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 11 Sep 2021 05:15:43 -0400
+Message-ID: <CAPig+cQ+qVNBJqHmQgk6D1fbYHHJpAxhfwyBOgevi9Hvs6JYkw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] notes: don't indent empty lines
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Store the object ID of broken pack entries in an oidset instead of
-keeping only their hashes in an unsorted array.  The resulting code is
-shorter and easier to read.  It also handles the (hopefully) very rare
-case of having a high number of bad objects better.
+On Fri, Sep 10, 2021 at 9:59 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> >> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> > Have we made a decision about whether this patch series -- which
+> >> > avoids indenting blank notes lines -- is desirable? Or are we worried
+> >> > about backward-compatibility?
+>
+> This change per-se seems nice, but even having reviewed it to the point
+> of rewriting parts of it, I didn't really look into what the whole
+> workflow you were trying to address is.
+>
+> So e.g. just to pick a random commit of your for show:
+>     $ git show c990a4c11dd | sed 's/$/Z/'
+> Here we end up also adding the whitespace indenting to the empty lines,
+> whereas if we were trying to feed this to an editor we'd place those
+> later Z's at the start of our line.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- midx.c         | 13 ++++---------
- object-store.h |  4 ++--
- packfile.c     | 27 +++++----------------------
- 3 files changed, 11 insertions(+), 33 deletions(-)
+I'm not sure what you mean by "feed this to an editor". Do you mean
+sending the output of `git show` to an editor? I'm guessing that's not
+what you mean, and that you instead are talking about editing the
+commit message in an editor (say, via the "reword" option of `git
+rebase --interactive`).
 
-diff --git a/midx.c b/midx.c
-index 321c6fdd2f..01623fb339 100644
-=2D-- a/midx.c
-+++ b/midx.c
-@@ -283,6 +283,7 @@ static int nth_midxed_pack_entry(struct repository *r,
- {
- 	uint32_t pack_int_id;
- 	struct packed_git *p;
-+	struct object_id oid;
+> Are notes different? Or are they just similarly indented? For commits we
+> don't insert that leading whitespace in the commit object, do notes get
+> that part wrong too?
 
- 	if (pos >=3D m->num_objects)
- 		return 0;
-@@ -303,15 +304,9 @@ static int nth_midxed_pack_entry(struct repository *r=
-,
- 	if (!is_pack_valid(p))
- 		return 0;
+Notes don't store the indented blank lines; it's only at output time,
+such as with `git format-patch --notes` that the blank lines get
+indented along with the rest of the note text (just as is happening in
+your `git show` example in which the entire commit message is being
+indented, including the blank lines).
 
--	if (p->num_bad_objects) {
--		uint32_t i;
--		struct object_id oid;
--		nth_midxed_object_oid(&oid, m, pos);
--		for (i =3D 0; i < p->num_bad_objects; i++)
--			if (hasheq(oid.hash,
--				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
--				return 0;
--	}
-+	nth_midxed_object_oid(&oid, m, pos);
-+	if (oidset_contains(&p->bad_objects, &oid))
-+		return 0;
+> It might be showing, but I've only used notes a few times, my main use
+> of them is Junio's amlog.
 
- 	e->offset =3D nth_midxed_offset(m, pos);
- 	e->p =3D p;
-diff --git a/object-store.h b/object-store.h
-index b4dc6668aa..c7bead66f6 100644
-=2D-- a/object-store.h
-+++ b/object-store.h
-@@ -10,6 +10,7 @@
- #include "khash.h"
- #include "dir.h"
- #include "oidtree.h"
-+#include "oidset.h"
+I also have only used notes a few times.
 
- struct object_directory {
- 	struct object_directory *next;
-@@ -75,9 +76,8 @@ struct packed_git {
- 	const void *index_data;
- 	size_t index_size;
- 	uint32_t num_objects;
--	uint32_t num_bad_objects;
- 	uint32_t crc_offset;
--	unsigned char *bad_object_sha1;
-+	struct oidset bad_objects;
- 	int index_version;
- 	time_t mtime;
- 	int pack_fd;
-diff --git a/packfile.c b/packfile.c
-index 04080a558b..8f6d1d6328 100644
-=2D-- a/packfile.c
-+++ b/packfile.c
-@@ -1163,29 +1163,17 @@ int unpack_object_header(struct packed_git *p,
+> So even for someone experienced in git, I think some show & tell of
+> step-by-step showing in the commit message how we end up with X before,
+> and have Y with this change would help a lot.
 
- void mark_bad_packed_object(struct packed_git *p, const struct object_id =
-*oid)
- {
--	unsigned i;
--	const unsigned hashsz =3D the_hash_algo->rawsz;
--	for (i =3D 0; i < p->num_bad_objects; i++)
--		if (hasheq(oid->hash, p->bad_object_sha1 + hashsz * i))
--			return;
--	p->bad_object_sha1 =3D xrealloc(p->bad_object_sha1,
--				      st_mult(GIT_MAX_RAWSZ,
--					      st_add(p->num_bad_objects, 1)));
--	hashcpy(p->bad_object_sha1 + hashsz * p->num_bad_objects, oid->hash);
--	p->num_bad_objects++;
-+	oidset_insert(&p->bad_objects, oid);
- }
+This all came about due to two unrelated circumstances: (1) a few
+months ago, I configured Emacs to highlight trailing whitespace, and
+(2) I decided to use `notes` to add commentary to a commit since,
+although I normally just write the commentary directly in the patch
+itself after running `git format-patch`, in this case, it likely will
+be weeks or months before I finish the series, and was worried that
+I'd forget the intended commentary by that time, thus recorded it as a
+note. Since I've almost never used notes, I ran `git format-patch
+--notes` as a test and was surprised to see the trailing whitespace on
+the "blank" lines when viewing the patch in the editor.
 
- const struct packed_git *has_packed_and_bad(struct repository *r,
- 					    const struct object_id *oid)
- {
- 	struct packed_git *p;
--	unsigned i;
+This submission started as a single patch which just "fixed" the bug
+and added a test. Only after that was complete (but before I submitted
+the patch), did I discover that other tests in the suite were failing
+since the "fix" also changed git-log's default output format which
+includes notes (indented). Since I so rarely use notes, I had either
+forgotten that git-log showed notes or didn't know in the first place.
+The submission grew to multiple patches due to fixing those
+newly-failing tests.
 
- 	for (p =3D r->objects->packed_git; p; p =3D p->next)
--		for (i =3D 0; i < p->num_bad_objects; i++)
--			if (hasheq(oid->hash,
--				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
--				return p;
-+		if (oidset_contains(&p->bad_objects, oid))
-+			return p;
- 	return NULL;
- }
-
-@@ -2016,13 +2004,8 @@ static int fill_pack_entry(const struct object_id *=
-oid,
- {
- 	off_t offset;
-
--	if (p->num_bad_objects) {
--		unsigned i;
--		for (i =3D 0; i < p->num_bad_objects; i++)
--			if (hasheq(oid->hash,
--				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
--				return 0;
--	}
-+	if (oidset_contains(&p->bad_objects, oid))
-+		return 0;
-
- 	offset =3D find_pack_entry_one(oid->hash, p);
- 	if (!offset)
-=2D-
-2.33.0
+Anyhow, since then, I've discovered that `git format-patch
+--range-diff` also indents blank lines. And you've now shown that `git
+show` does, as well, so the behavior which triggered this "fix" turns
+out to be somewhat normal in this project, rather than a one-off "bug"
+in need of a fix.
