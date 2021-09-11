@@ -2,125 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF9DC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4051C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9454060F92
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:15:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA34760F9D
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235451AbhIKJRI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 11 Sep 2021 05:17:08 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52]:46844 "EHLO
-        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhIKJRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 05:17:08 -0400
-Received: by mail-ej1-f52.google.com with SMTP id kt8so9304363ejb.13
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:15:55 -0700 (PDT)
+        id S235592AbhIKJfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 05:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55496 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235500AbhIKJfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 05:35:39 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F88C061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:27 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id d6so6249162wrc.11
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8pt+G5pzLtv9GhUBS+vmAHDy6Qb/ewLMSpN+2mMW0uU=;
+        b=BmSVKCQcgcdFNRDhahKyfxbC/74Z+v6I52DCQ+Gvy4K+KDwAdRGuaUC1cZqYLQnSGG
+         D7XhFxvi9hGZDMrLbtd0C7DvuICpEvD6UqLcHnKcGvrCGPRCyzxrh/x0o5JJ5PuD1CEx
+         r75yPcfcGTDQ4N0t/MdAC7tanv1I0BRZHSfzzn15W/9FZpFTHomfn2ACDzWyAXdZLzSA
+         iQNsB0Z8QlSjPp/xCBys+f42miPgGNlEzCY09+hisRmvOZDCddXNiDLoIKAK56f9I5ic
+         HUJKQjb0cwH9JFCL4CU4KpQ8asffDdYErcZ1IWBD+FFPJNcBGH9uzehzGvqcZB1WfqRE
+         Lwow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=d2BAHIOSJyvHTcFkpXF7u8xjDQe2wUtJMiyKZuVZ4mE=;
-        b=o9iEGoYlZG1OF/xwS4Jjupg4yH08dxa9wyyOxN3pF6nYfS3jt03jPNz0Wk5OOzb8w3
-         aozZ/SfMRa0gmgdFMKSpSL5fPPal17jgn0ozw9wgpTmhn1vz7xWkmeSUC+iavi8YF4Qt
-         9GUtYSmytrOHa76oAv8JxA245FLH99bdRUILwNiTLAYalAg4HRIaKT+CAzVSFbwRw1PT
-         wV5Kzg+E8acoP2mD7U7Blk4aARki//W2SV4XS6h7q44EPVuw/mlOr51e5P9yMbPQDnCY
-         GGBfr2Ychz4AInUf0iZ4mOlHXfO1LrcKy51/9Kv/dpvdDsS39nSRn7MLIcsZsSIAAX6T
-         EWwA==
-X-Gm-Message-State: AOAM5300TPOSsIPl5as2iKKmm+7VW7xxBflt+rXniQX5FqeNK0a9owmg
-        oU6ZSmm+QOL/XyfyOLEmQ155Fky7WvVqMPF1LZ4=
-X-Google-Smtp-Source: ABdhPJwmwfpjfnCl/yjQu9q9SisKBcS9hF3b4BG6JXF4KH5/EmXS4IdQlJtnahbKkobPmy+WgtvSly0lrQG++mUkrtQ=
-X-Received: by 2002:a17:906:4691:: with SMTP id a17mr1966746ejr.36.1631351754947;
- Sat, 11 Sep 2021 02:15:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8pt+G5pzLtv9GhUBS+vmAHDy6Qb/ewLMSpN+2mMW0uU=;
+        b=QgGBgQdTRD7EeuBbqAl+pL7EQL5w6Cx5arRkDvkcGDC8rd6Z2hh5c4RO7w2H0qQ7pG
+         EhSSjgChjhpK2gJFHOopw7cDEE3QDuR1SACmFXq/GwhRAG02ZyszqwvrnXtzBD995ezO
+         7GCxbxC0luvScnBFGCb56jpm7W8ufasLaKAX7hIkcdEp1DY2TI4F/6ggSpRGSVv6jwuJ
+         8pqSDp+F18aBLNOT+hifcnAGt4YaOKVCbcc8uonyRHt7IT5Y0p/lbUH+kw3pWYnwn8Pt
+         iciVXzH7vtQJyntR4Z2C3RPSP7S3j0XLcGcGbCW5VMwe5g64fDcOj/QtL11kwLWCK0uB
+         1Uzg==
+X-Gm-Message-State: AOAM5306/0NmdeDPqmoFCQVQ4JyoW9mQj8BbdtYEIqZrUZwH8WKuKv+S
+        FdC9JgVHTYN7N7mQuxFgMxZX5IBx1vDJCA==
+X-Google-Smtp-Source: ABdhPJzWqmko4VPkoGJQtjEAAGAg4isFpbe5IMvsDLZCXh5SUt/zTCjPlh9kWxHbA8wpr4AAUE7KGg==
+X-Received: by 2002:a05:6000:124a:: with SMTP id j10mr2211394wrx.431.1631352865369;
+        Sat, 11 Sep 2021 02:34:25 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id s10sm1161753wrg.42.2021.09.11.02.34.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Sep 2021 02:34:24 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Daniel Stenberg <daniel@haxx.se>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/9] post-v2.33 "drop support for ancient curl" follow-up
+Date:   Sat, 11 Sep 2021 11:34:14 +0200
+Message-Id: <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.984.gea2c3555113
+In-Reply-To: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
+References: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20210830072118.91921-1-sunshine@sunshineco.com>
- <20210830072118.91921-4-sunshine@sunshineco.com> <xmqqwno2505w.fsf@gitster.g>
- <CAPig+cQ6FA0rUnkkTDRUD5vAD3cDXW9vtR1oX0pUJK5eJB9CHg@mail.gmail.com>
- <xmqqeeaa4y0v.fsf@gitster.g> <CAPig+cQdXp0c+JYthvy+bbr6vLR7nq4pQY3w+CADUtzr+Ang4A@mail.gmail.com>
- <CAPig+cTFbnrPPSZbzihJ9gdGV2c4poXWyNjhK3mnr5_uRwpxbg@mail.gmail.com>
- <xmqqwnnos2jz.fsf@gitster.g> <CAPig+cQdAuLkZ0pDK6XOfm_WXCJAOm8Tr19oK14n-Tf7DcfW=w@mail.gmail.com>
- <878s03c1of.fsf@evledraar.gmail.com>
-In-Reply-To: <878s03c1of.fsf@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Sep 2021 05:15:43 -0400
-Message-ID: <CAPig+cQ+qVNBJqHmQgk6D1fbYHHJpAxhfwyBOgevi9Hvs6JYkw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] notes: don't indent empty lines
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 10, 2021 at 9:59 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> >> Eric Sunshine <sunshine@sunshineco.com> writes:
-> >> > Have we made a decision about whether this patch series -- which
-> >> > avoids indenting blank notes lines -- is desirable? Or are we worried
-> >> > about backward-compatibility?
->
-> This change per-se seems nice, but even having reviewed it to the point
-> of rewriting parts of it, I didn't really look into what the whole
-> workflow you were trying to address is.
->
-> So e.g. just to pick a random commit of your for show:
->     $ git show c990a4c11dd | sed 's/$/Z/'
-> Here we end up also adding the whitespace indenting to the empty lines,
-> whereas if we were trying to feed this to an editor we'd place those
-> later Z's at the start of our line.
+This is a follow-up to the already-integrated topic for dropping
+support for older curl versions submitted before the v2.33 release[1].
 
-I'm not sure what you mean by "feed this to an editor". Do you mean
-sending the output of `git show` to an editor? I'm guessing that's not
-what you mean, and that you instead are talking about editing the
-commit message in an editor (say, via the "reword" option of `git
-rebase --interactive`).
+See
+https://lore.kernel.org/git/cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com/
+for v2.
 
-> Are notes different? Or are they just similarly indented? For commits we
-> don't insert that leading whitespace in the commit object, do notes get
-> that part wrong too?
+This has relatively minor changes against v2. This addresses Jeff
+King's comments about the INSTALL phrasing, I split up the more
+general improvements into another commit.
 
-Notes don't store the indented blank lines; it's only at output time,
-such as with `git format-patch --notes` that the blank lines get
-indented along with the rest of the note text (just as is happening in
-your `git show` example in which the entire commit message is being
-indented, including the blank lines).
+The CURL_SOCKOPT_OK is now defined in terms of LIBCURL_VERSION_NUM
+like everything else.
 
-> It might be showing, but I've only used notes a few times, my main use
-> of them is Junio's amlog.
+I did not re-arrange the macros as suggested by Junio in
+http://lore.kernel.org/git/xmqqr1dwtlt1.fsf@gitster.g
 
-I also have only used notes a few times.
+Ævar Arnfjörð Bjarmason (9):
+  INSTALL: don't mention the "curl" executable at all
+  INSTALL: reword and copy-edit the "libcurl" section
+  INSTALL: mention that we need libcurl 7.19.4 or newer to build
+  Makefile: drop support for curl < 7.9.8 (again)
+  http: drop support for curl < 7.18.0 (again)
+  http: correct version check for CURL_HTTP_VERSION_2
+  http: correct curl version check for CURLOPT_PINNEDPUBLICKEY
+  http: centralize the accounting of libcurl dependencies
+  http: don't hardcode the value of CURL_SOCKOPT_OK
 
-> So even for someone experienced in git, I think some show & tell of
-> step-by-step showing in the commit message how we end up with X before,
-> and have Y with this change would help a lot.
+ INSTALL           |  15 +++---
+ Makefile          |  11 +---
+ git-curl-compat.h | 128 ++++++++++++++++++++++++++++++++++++++++++++++
+ http.c            |  35 ++++++-------
+ imap-send.c       |   2 +-
+ 5 files changed, 157 insertions(+), 34 deletions(-)
+ create mode 100644 git-curl-compat.h
 
-This all came about due to two unrelated circumstances: (1) a few
-months ago, I configured Emacs to highlight trailing whitespace, and
-(2) I decided to use `notes` to add commentary to a commit since,
-although I normally just write the commentary directly in the patch
-itself after running `git format-patch`, in this case, it likely will
-be weeks or months before I finish the series, and was worried that
-I'd forget the intended commentary by that time, thus recorded it as a
-note. Since I've almost never used notes, I ran `git format-patch
---notes` as a test and was surprised to see the trailing whitespace on
-the "blank" lines when viewing the patch in the editor.
+Range-diff against v2:
+ 1:  ac11cf8cfd1 !  1:  7b771aa70ef INSTALL: don't mention the "curl" executable at all
+    @@ INSTALL: Issues of note:
+      	- "libcurl" library is used by git-http-fetch, git-fetch, and, if
+     -	  the curl version >= 7.34.0, for git-imap-send.  You might also
+     -	  want the "curl" executable for debugging purposes. If you do not
+    --	  use http:// or https:// repositories, and do not want to put
+    --	  patches into an IMAP mailbox, you do not have to have them
+    --	  (use NO_CURL).
+    -+	  the curl version >= 7.34.0, for git-imap-send.
+    -+
+    -+	  If you do not use http:// or https:// repositories, and do
+    -+	  not want to put patches into an IMAP mailbox, you do not
+    -+	  have to have them (use NO_CURL).
+    - 
+    - 	- "expat" library; git-http-push uses it for remote lock
+    - 	  management over DAV.  Similar to "curl" above, this is optional
+    ++	  the curl version >= 7.34.0, for git-imap-send. If you do not
+    + 	  use http:// or https:// repositories, and do not want to put
+    + 	  patches into an IMAP mailbox, you do not have to have them
+    + 	  (use NO_CURL).
+ -:  ----------- >  2:  3b0119958a3 INSTALL: reword and copy-edit the "libcurl" section
+ 2:  4b653cee2d3 !  3:  dce6520a5c9 INSTALL: mention that we need libcurl 7.19.4 or newer to build
+    @@ Commit message
+     
+      ## INSTALL ##
+     @@ INSTALL: Issues of note:
+    - 	- "libcurl" library is used by git-http-fetch, git-fetch, and, if
+    - 	  the curl version >= 7.34.0, for git-imap-send.
+    + 	  not need that functionality, use NO_CURL to build without
+    + 	  it.
+      
+    -+	  Git version "7.19.4" of "libcurl" or later to build. This
+    -+	  version requirement may be bumped in the future.
+    ++	  Git requires version "7.19.4" or later of "libcurl", to
+    ++	  build (without NO_CURL). This version requirement may be
+    ++	  bumped in the future.
+     +
+    - 	  If you do not use http:// or https:// repositories, and do
+    - 	  not want to put patches into an IMAP mailbox, you do not
+    - 	  have to have them (use NO_CURL).
+    + 	- "expat" library; git-http-push uses it for remote lock
+    + 	  management over DAV.  Similar to "curl" above, this is optional
+    + 	  (with NO_EXPAT).
+ 3:  76c2aa6e78d =  4:  98cdb7c35a9 Makefile: drop support for curl < 7.9.8 (again)
+ 4:  e73a9ff1780 =  5:  7919debfd89 http: drop support for curl < 7.18.0 (again)
+ 5:  2567b888c3d =  6:  67bc1992762 http: correct version check for CURL_HTTP_VERSION_2
+ 6:  397d54a1352 =  7:  db7d6029dda http: correct curl version check for CURLOPT_PINNEDPUBLICKEY
+ 7:  8e57a8409c5 =  8:  e2e53cbfba1 http: centralize the accounting of libcurl dependencies
+ 8:  465ab33ebda !  9:  4bdec34a545 http: don't hardcode the value of CURL_SOCKOPT_OK
+    @@ git-curl-compat.h
+      
+     +/**
+     + * CURL_SOCKOPT_OK was added in 7.21.5, released in April 2011.
+    -+ *
+    -+ * This should be safe as CURL_SOCKOPT_OK has always been a macro, not
+    -+ * an enum field (checked on curl version 7.78.0, released on July 19,
+    -+ * 2021). Even if that were to change the value of "0" for "OK" is
+    -+ * unlikely to change.
+     + */
+    -+#ifndef CURL_SOCKOPT_OK
+    ++#if LIBCURL_VERSION_NUM < 0x071505
+     +#define CURL_SOCKOPT_OK 0
+     +#endif
+     +
+-- 
+2.33.0.984.gea2c3555113
 
-This submission started as a single patch which just "fixed" the bug
-and added a test. Only after that was complete (but before I submitted
-the patch), did I discover that other tests in the suite were failing
-since the "fix" also changed git-log's default output format which
-includes notes (indented). Since I so rarely use notes, I had either
-forgotten that git-log showed notes or didn't know in the first place.
-The submission grew to multiple patches due to fixing those
-newly-failing tests.
-
-Anyhow, since then, I've discovered that `git format-patch
---range-diff` also indents blank lines. And you've now shown that `git
-show` does, as well, so the behavior which triggered this "fix" turns
-out to be somewhat normal in this project, rather than a one-off "bug"
-in need of a fix.
