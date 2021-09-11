@@ -8,37 +8,37 @@ X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16DE5C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 20:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4691CC433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 20:42:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D868561153
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 20:40:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B97A60EE7
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 20:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234069AbhIKUlx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 16:41:53 -0400
-Received: from mout.web.de ([212.227.15.14]:55559 "EHLO mout.web.de"
+        id S234130AbhIKUnl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 16:43:41 -0400
+Received: from mout.web.de ([212.227.15.3]:57737 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229487AbhIKUlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 16:41:52 -0400
+        id S233608AbhIKUnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 16:43:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631392833;
-        bh=1ybyE/TefLvk4oGIRd+lwdl6BRhAhvdxk/TeEKwPKCI=;
+        s=dbaedf251592; t=1631392941;
+        bh=xJZnghI+6gjHEugvJNlOxXX5Xoz8chOUFnGa2sT0nRI=;
         h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=hybfs5o3TtqhDFyBHwEBFSUOHHR/a4aSIGAUdVOjaG6tz9XJDe0ze244MqWYnSZP7
-         mUj7xK+sSTZkAf6xWhI4u1PZu8gNFmTst5RK5wWHSjwHe5JoH4BrhjkXElQXLZzIw3
-         ZK6hKQAU3j6+Lf19iUrI4+k1fulzsTLGHefTGQFg=
+        b=iMArmhsKikIgAcAI04FJAx4f8FuVzKU89SQhGomo8ItjRqwxA/Wg4A1byy4aHWZye
+         fq5GZIRjDnpWqKqTw09nakLl2bM1lqfUvWfTonjqw7CCVd/mwfl4pQk8j6TsFQndyc
+         Dp7eTabltBNpCqVF5fGbv+vwocYN9t/SSXQ+ouSE=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LfVe5-1miqVc307V-00p2zZ; Sat, 11 Sep 2021 22:40:33 +0200
-Subject: [PATCH 3/5] packfile: convert mark_bad_packed_object() to object_id
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1N4vRY-1n6I5B2Cyy-010niP; Sat, 11 Sep 2021 22:42:21 +0200
+Subject: [PATCH v2 4/5] packfile: convert has_packed_and_bad() to object_id
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
  <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
-Message-ID: <a6d7114f-08c1-567a-d8d4-40becd2384f6@web.de>
-Date:   Sat, 11 Sep 2021 22:40:33 +0200
+Message-ID: <dcf75a98-8659-2df0-9d6d-4015aec81c6c@web.de>
+Date:   Sat, 11 Sep 2021 22:42:20 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -46,127 +46,92 @@ In-Reply-To: <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+yJWF6BFW5yNjB98ca1D1+Utp85eWIwjA/9JPh+pdj2gphOK3fk
- 7paLIwDMIUyhOGkGDXniwo34g7Tx0CbZTJ06K/7X+/D6vRTr4so1JE9r1qJEQMcpfJ/U+KT
- 12DuEiEbDgBAO/CGpJcBrg+2JoXI1eFhbcjYjiA1WhT6FGWiHB6/8SeIG48Z78LmW4uCS/F
- BE6ByTXa31xRjfaB1IKyA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HQ82SNxQHsM=:huX4zRSE7CTFMXqstdNXQJ
- N/XG15q0ydPRmQ3QZlx5RNIs0PBOW7MGlyejm16ArjjMIBOSL9e84IJNG0ekGu2/w6xEgFmSz
- 5Pe0LODu9z9y9c2sBpl0M9ao8wnXazlhLBhA01ZuKds+hh9XLltOWZA4taCVScIs7HrzIdqj5
- 0m3940EAL5vTUbeh9lpfCK0QHTtFJtecwkoadki21xUFjdkwxBZ3l44y43KBsClDuZa5X7WwU
- F7ZqEa7CBX8RvH8ARPsbk4X150Ghr0FDJwYUcK9An4MLEIzqkjBEk5z4oxYvQU598dCtL66eC
- 1iKDI+dZPUNctqMMPuoJbmvwnz0dqSr149Sw0oAPAPriGj+LhIagBez4frZKz/8lBYB9Nxp7h
- C5wSfJ0dl2MbbFOO0xmi4mbjsYjX/m1o8AjifdCrxfjUdPMtWLbozrVOX5l8oVoeuumI90jOv
- qlh9H/PprPd6hpaBkSyyZ6AZk8enqm4c9LG5ZdnqzWPwOunh8OWDOthI83GROBsP75i1gH8nv
- bbyREKMT7O0PuKbS4rPKi6G9R/TpsJn0M9PBke7Ycy0xpI8DyAz4PjNwF/Lof0fxuWE0de0/U
- pW1e7crGRFj0Hguvvm53LIhPPFj4AUF4tsd5nWbSFoydTyupmbRN7YsxlMcfjboU45cwXzuAW
- U4oetcGedhz1llsfch8Swp+NGbfAH8llNrupX/ZW+Kfs3B1RhWHvXfXLDCXwy3GCHKqlLGzYm
- RKA3MMropyu0UvTK3smt/+uOznun+lrbORVmXkrKQ7SL6k8xkUB3kCax3uHNPtxMfJj0D7Xi0
- LOZl9pfCXL5+Dh7ppnoak7dQFJ7FvgXY5jTeeumNFcDZFqZ7KmVib/f3/mde+ntGy3LTRrRIQ
- W1JSU6jGLk9XlVCiNSHDv3RQpuXKOcZ0CYckWM9C3rPuSUUglx+sV+1n+O582asipRBO0NBT4
- qY+Ia8+zhAAs2EW2usXp4PshM08tQSfg3ipKz7AUUQGcQM5Y9W+64ilEbMpEcq4UXsVm1/sCe
- qaT6DksKvrCEChvk79GN15DOlFMDdLYJgtQJbOLuntkacJkZt8N6hTJRO1fEMepbJQwo04lt1
- FEQNcXdEOyM+ns=
+X-Provags-ID: V03:K1:MmIye8tj4DCf0A33sYPf+aUdCQZ/tZXhZUuDnZgtDcCX30qwBqb
+ OS3bVkgtA66hakPDOO/vSEpvsipg7pIEGRJS/3ZQYT79xUwYs11QdHKW69JZyy8EG04Q1aq
+ q9tpoKx32Cf4E13S5Xv8rJ6npsCHlyaibGaRV5Ujzfor6g6sILUcMmRhwbdCJWyBxtOGrx+
+ QEORu+nVTRyx3lVSw/iTw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:J9Fbrqh3iNU=:bKpMCs47JA1SjiTKmNReWl
+ bYXU46J63D+zw0YH3Zg4ifPUpTzdOqNtuAFy9wLpfuV6KQhmqa+uLqjridFlHVcfY2Zcaa6LL
+ lAxR0oR1BUdx/d+ioB86cZIaEWkkYG1bMcgE5KVErMDEPsEEShX4YwZmpTOAtNKaKIUx1Pg1+
+ vju7ew7VR++oZRYFOQdZXERia5pBjL01IXGrSL077Q0fsDwMc0Uv24/0m4wCwV6zwDzcWigqm
+ lEo14NFnpzYMpVOi2Ic8vmYczxb4Jqq+EK4Xf/1WZ2gMEj9Vb/64SRFhXB9KmNUcdR6tVMIYa
+ Q3jqbbwrjwWaqO4vuzztqQwJgYqzf2c7UpqMuZGReFu9UOj8sJyB2/obzsKqkUQ8T6T3UGyd2
+ bQTHWGWCHwsw4oU3sBPUU9XIoVd0qjFTQRBuNFyUlkIPiD/SY61EK1YHlqTaONPLfL5+i+Nk5
+ 1OUIEMa1htBmyaltsRtqwTxkOS+9BGh7RwZ0HCKRqfZP2JR96x82VgG+J+Yf74MlTNtA2oZKs
+ ZAV4t3JJQOoBSEKqXT1R2wep8zBY3ZhsvVSQtnwSJMcaMqzT0ZM0Nf5jdbd2GHKQQJozEk5bv
+ R57f3NsuXMngx5DfhLuEm/qPJNtwmdIUZKWDV88vfB1bpJZEmnMtXuhinwqMhLHQQqJCsaS7U
+ dhA6qIdUbeSt3RIFgSbyhq1EEcBze7YHjVNBIJqfMqv4sY69S9GHYLk1XLZXy/dnbrYS65vw3
+ iOfc6OBYuLwZKP3aDHgtsCRLhJR1iiP7k9JwVtH5eKfznerECmooxmp56uRRyyh5x/kBGcbXW
+ LtSpTkG4vYYFbggA3gS06ROwm1LV/b6wUFGF0g6DPELcJeeq8s+xLuJmgPeuekH7lOVw/SQc8
+ SWPKm59rMp05gFQmftoBrWLkkk7Il/SWSaFIsmHJwHeUDRRXWNAP9GjWRRGGhRm4cogRSHOQi
+ XqcqmjB2TiJtDESioxZvRIkKr8PVPHktlJENVRxoV1UxUoYmcRnsxCZrfLjs+QxzQDTZu5qFs
+ jBVUCaYN+a8eVrZsNCgAav9ogqlNZEyU8cRdZuavviLXGAVgsfDaCtCdQxLy/N85WKzc3SPTC
+ OJNRJMviYQetjs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All callers have full object IDs, so pass them on instead of just their
-hash member.
+The single caller has a full object ID, so pass it on instead of just
+its hash member.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- object-file.c |  2 +-
- packfile.c    | 12 ++++++------
- packfile.h    |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ object-file.c | 2 +-
+ packfile.c    | 4 ++--
+ packfile.h    | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index a8be899481..fb5a385a06 100644
+index fb5a385a06..01e7058b4e 100644
 =2D-- a/object-file.c
 +++ b/object-file.c
-@@ -1616,7 +1616,7 @@ static int do_oid_object_info_extended(struct reposi=
-tory *r,
- 		return 0;
- 	rtype =3D packed_object_info(r, e.p, e.offset, oi);
- 	if (rtype < 0) {
--		mark_bad_packed_object(e.p, real->hash);
-+		mark_bad_packed_object(e.p, real);
- 		return do_oid_object_info_extended(r, real, oi, 0);
- 	} else if (oi->whence =3D=3D OI_PACKED) {
- 		oi->u.packed.offset =3D e.offset;
+@@ -1725,7 +1725,7 @@ void *read_object_file_extended(struct repository *r=
+,
+ 		die(_("loose object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), path);
+
+-	if ((p =3D has_packed_and_bad(r, repl->hash)) !=3D NULL)
++	if ((p =3D has_packed_and_bad(r, repl)) !=3D NULL)
+ 		die(_("packed object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), p->pack_name);
+ 	obj_read_unlock();
 diff --git a/packfile.c b/packfile.c
-index 4d0d625238..fb15fc5b49 100644
+index fb15fc5b49..04080a558b 100644
 =2D-- a/packfile.c
 +++ b/packfile.c
-@@ -1161,17 +1161,17 @@ int unpack_object_header(struct packed_git *p,
- 	return type;
+@@ -1176,14 +1176,14 @@ void mark_bad_packed_object(struct packed_git *p, =
+const struct object_id *oid)
  }
 
--void mark_bad_packed_object(struct packed_git *p, const unsigned char *sh=
-a1)
-+void mark_bad_packed_object(struct packed_git *p, const struct object_id =
-*oid)
+ const struct packed_git *has_packed_and_bad(struct repository *r,
+-					    const unsigned char *sha1)
++					    const struct object_id *oid)
  {
+ 	struct packed_git *p;
  	unsigned i;
- 	const unsigned hashsz =3D the_hash_algo->rawsz;
- 	for (i =3D 0; i < p->num_bad_objects; i++)
--		if (hasheq(sha1, p->bad_object_sha1 + hashsz * i))
-+		if (hasheq(oid->hash, p->bad_object_sha1 + hashsz * i))
- 			return;
- 	p->bad_object_sha1 =3D xrealloc(p->bad_object_sha1,
- 				      st_mult(GIT_MAX_RAWSZ,
- 					      st_add(p->num_bad_objects, 1)));
--	hashcpy(p->bad_object_sha1 + hashsz * p->num_bad_objects, sha1);
-+	hashcpy(p->bad_object_sha1 + hashsz * p->num_bad_objects, oid->hash);
- 	p->num_bad_objects++;
- }
 
-@@ -1272,7 +1272,7 @@ static int retry_bad_packed_offset(struct repository=
- *r,
- 	if (offset_to_pack_pos(p, obj_offset, &pos) < 0)
- 		return OBJ_BAD;
- 	nth_packed_object_id(&oid, p, pack_pos_to_index(p, pos));
--	mark_bad_packed_object(p, oid.hash);
-+	mark_bad_packed_object(p, &oid);
- 	type =3D oid_object_info(r, &oid, NULL);
- 	if (type <=3D OBJ_NONE)
- 		return OBJ_BAD;
-@@ -1722,7 +1722,7 @@ void *unpack_entry(struct repository *r, struct pack=
-ed_git *p, off_t obj_offset,
- 				nth_packed_object_id(&oid, p, index_pos);
- 				error("bad packed object CRC for %s",
- 				      oid_to_hex(&oid));
--				mark_bad_packed_object(p, oid.hash);
-+				mark_bad_packed_object(p, &oid);
- 				data =3D NULL;
- 				goto out;
- 			}
-@@ -1811,7 +1811,7 @@ void *unpack_entry(struct repository *r, struct pack=
-ed_git *p, off_t obj_offset,
- 				      " at offset %"PRIuMAX" from %s",
- 				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
- 				      p->pack_name);
--				mark_bad_packed_object(p, base_oid.hash);
-+				mark_bad_packed_object(p, &base_oid);
- 				base =3D read_object(r, &base_oid, &type, &base_size);
- 				external_base =3D base;
- 			}
+ 	for (p =3D r->objects->packed_git; p; p =3D p->next)
+ 		for (i =3D 0; i < p->num_bad_objects; i++)
+-			if (hasheq(sha1,
++			if (hasheq(oid->hash,
+ 				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
+ 				return p;
+ 	return NULL;
 diff --git a/packfile.h b/packfile.h
-index 3ae117a8ae..a982ed9994 100644
+index a982ed9994..186146779d 100644
 =2D-- a/packfile.h
 +++ b/packfile.h
-@@ -159,7 +159,7 @@ int packed_object_info(struct repository *r,
- 		       struct packed_git *pack,
+@@ -160,7 +160,7 @@ int packed_object_info(struct repository *r,
  		       off_t offset, struct object_info *);
 
--void mark_bad_packed_object(struct packed_git *p, const unsigned char *sh=
-a1);
-+void mark_bad_packed_object(struct packed_git *, const struct object_id *=
+ void mark_bad_packed_object(struct packed_git *, const struct object_id *=
 );
- const struct packed_git *has_packed_and_bad(struct repository *r, const u=
+-const struct packed_git *has_packed_and_bad(struct repository *r, const u=
 nsigned char *sha1);
++const struct packed_git *has_packed_and_bad(struct repository *, const st=
+ruct object_id *);
 
  #define ON_DISK_KEEP_PACKS 1
+ #define IN_CORE_KEEP_PACKS 2
 =2D-
 2.33.0
