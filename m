@@ -5,68 +5,68 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CE61C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CFCCC433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:04:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7148461212
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:03:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1033F611B0
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232435AbhIKRFI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 13:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41192 "EHLO
+        id S232518AbhIKRFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 13:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232339AbhIKRFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 13:05:05 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74B05C061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:03:52 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id q26so7505071wrc.7
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:03:52 -0700 (PDT)
+        with ESMTP id S231765AbhIKRFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 13:05:06 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9C5C061756
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:03:53 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u16so7500655wrn.5
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=UfNav2VnTQSjoaK2pzmm659fhNSxG6Zs5EbxrLkQGKw=;
-        b=pjU1/5JJ7RyyRiqG2DdHdwdKO+M//3Dl/DGZo28RZcD81lbMliExGTjefCgCFFIAmL
-         WIopuGC/2lF7Cx+JTugp5DW92lPseAetmVD7/xRHPiUGiP5EqQOKWH7BdnnT0a8obPmk
-         JEX2mYhz8f7+/DOh25nQQwNKJYrY0Z3wTORctLrd+V3AR7gqqMn4aCBFW4/X8RZKwtdI
-         HCKSyMBImEYYDY1uqDVXcewOsgYlY+3r1Npz50BdY5aP1uKTgiPQRi+yIRBtKXhiiBDd
-         X7VbsE1ETnJyFPqqNfNyldNJkQszDegeYZ6nbJHwilC9lYYSeJ5UUDT+RYe544eHTwIv
-         /7Fg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=zfWfPHMgm9u0K05BRsjEU1HqAMdMoIlWuokdizgG1MM=;
+        b=nBKw9oSfBsBgUy6UR0FXW+Rzw6XG07Ex1IQFlXqyTe7bnpQT4fH69VAneWnOfzylh/
+         /g5i83y7WwhUlS9AhAjAgcFvoZKhTGykCebLOipDPHC2qN5BzvTQJU5HmGRBOgGkN1tZ
+         anaJ2JaDUR+L7LORmFqEwZSDe3CqbINfrkgiMohUfYY+9RGwLJ20DAsCB7vk2+AvkZXv
+         CDlyHTzQSguzeOl+NVW2/sKrzqQCw4oGKh6TtLXfz3PN4rBIilHUEzfd9AbWEnzEmChI
+         ar/1hERtiRpCo7gd3FY5/uO8Ah3T3xqBnWHhQhIKj3XLAgWsiIesxw4kvzd5rIVOs3sD
+         OD4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=UfNav2VnTQSjoaK2pzmm659fhNSxG6Zs5EbxrLkQGKw=;
-        b=t6yZ+evS322wQOlkCanCSPPnr86yN6bkknOMNBG3wZlBsWPoRuFunIajnKriaqKI3z
-         YkCCFwFZRliXSlThZe+w9vsMUoxEsP0dRkx9r7PJrGmp/rsqbL3T8ctXMTxls5VCN/MX
-         c9qe6qwNi5KgLxFMgLdZ29qVRVx82Xre9Y6BDO5uvq4OfagfsnS/OpBYllR+g0DrJheL
-         zM+R1XgyjUi/T/Q68HzCcdHRWWUQv4oljMo/vtv1GMmdBZzajeNpb2H2Pror2qZ4hbO5
-         F9PDvLrPxeGpLJ1li1I5+5ceVHtH/mHEYOY6+xwHgHp049LnPZ1eTJ7bHu7nygUYckO2
-         +8Wg==
-X-Gm-Message-State: AOAM532BBEtFDmnoQikSpvGlBXnHdXZnLVSm4H0BHeflKkr2LJzVKXSj
-        1LCRFUyRG1EzuIQbgeZIXd65zl1mRA0=
-X-Google-Smtp-Source: ABdhPJxJcwqpX0XtYR3FJjX1tL+jA0DcbCEyjHV/aM+9xgv2iAbvDXSihmqtUv9rsb+nRFj8cMBRng==
-X-Received: by 2002:adf:c144:: with SMTP id w4mr3991460wre.398.1631379830946;
-        Sat, 11 Sep 2021 10:03:50 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=zfWfPHMgm9u0K05BRsjEU1HqAMdMoIlWuokdizgG1MM=;
+        b=0YVJg97YVhSIuw/kvx64eRdGLQYpEirt9dUfxN6hFZPfAhMgYxM/jFNX1MODEdbkZx
+         TdSgOWaJsdaza9dRTPCjmELRtT0K5RAU929P1MbTw1z/lxlqcfY9y8cRrhi7a+dDDy/y
+         QC472XvTSmMQB/CtCnhJn/xw8AlGwFkKWS6A/L2+pHp9pikPVTF4rQr/+4pALXI44Pjp
+         WSHbvf/kG6TInQvo9BoNtUgkqPQIK/UWh81jXRMbXN4Bw2+NcpTTF9GY2JsFEusB4wOf
+         3ampMMjxu9LQy0IHgvvvmE92muTIOYAT3q9UP9rAW62o9qN9p/tm0sn4KB0CQg5iHSxl
+         FZjQ==
+X-Gm-Message-State: AOAM533XbiEEU/VzTjZ7nTJj7TGFbztRWjGzdeenbCQjVvGTZf1yUT3N
+        PIlLcN1OQrwbaOyab+VmlzcMWRoudrQ=
+X-Google-Smtp-Source: ABdhPJxX1IQyYAd7ePQTS7ZhEVysK8YRj5IwmY56hEBeDmvrEW5w/cT44JGTt6v9GmBuQpG4VxOYRg==
+X-Received: by 2002:adf:d08d:: with SMTP id y13mr4019253wrh.156.1631379831703;
+        Sat, 11 Sep 2021 10:03:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p6sm2100145wrq.47.2021.09.11.10.03.50
+        by smtp.gmail.com with ESMTPSA id m8sm2148015wms.32.2021.09.11.10.03.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 10:03:50 -0700 (PDT)
-Message-Id: <06e04c88dea3e15a90f0a11795b7a8eea3533bc8.1631379829.git.gitgitgadget@gmail.com>
+        Sat, 11 Sep 2021 10:03:51 -0700 (PDT)
+Message-Id: <9ce7246c0e94ab8e73a4e87c11bdc2968d1e56b2.1631379829.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1036.v2.git.git.1631379829.gitgitgadget@gmail.com>
 References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
         <pull.1036.v2.git.git.1631379829.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 11 Sep 2021 17:03:48 +0000
-Subject: [PATCH v2 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-MIME-Version: 1.0
+Date:   Sat, 11 Sep 2021 17:03:49 +0000
+Subject: [PATCH v2 2/2] update documentation for new zdiff3 conflictStyle
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         Sergey Organov <sorganov@gmail.com>,
@@ -80,337 +80,208 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-"zdiff3" is identical to ordinary diff3 except that it allows compaction
-of common lines on the two sides of history at the beginning or end of
-the conflict hunk.  For example, the following diff3 conflict:
-
-    1
-    2
-    3
-    4
-    <<<<<<
-    A
-    B
-    C
-    D
-    E
-    ||||||
-    5
-    6
-    ======
-    A
-    X
-    C
-    Y
-    E
-    >>>>>>
-    7
-    8
-    9
-
-has common lines 'A', 'C', and 'E' on the two sides.  With zdiff3, one
-would instead get the following conflict:
-
-    1
-    2
-    3
-    4
-    A
-    <<<<<<
-    B
-    C
-    D
-    ||||||
-    5
-    6
-    ======
-    X
-    C
-    Y
-    >>>>>>
-    E
-    7
-    8
-    9
-
-Note that the common lines, 'A', and 'E' were moved outside the
-conflict.  Unlike with the two-way conflicts from the 'merge'
-conflictStyle, the zdiff3 conflict is NOT split into multiple conflict
-regions to allow the common 'C' lines to be shown outside a conflict,
-because zdiff3 shows the base version too and the base version cannot be
-reasonably split.
-
-Based-on-patch-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge-file.c                   |  2 +
- contrib/completion/git-completion.bash |  6 +--
- t/t6427-diff3-conflict-markers.sh      | 56 +++++++++++++++++++++
- xdiff-interface.c                      |  2 +
- xdiff/xdiff.h                          |  1 +
- xdiff/xmerge.c                         | 68 +++++++++++++++++++++++---
- 6 files changed, 126 insertions(+), 9 deletions(-)
+ Documentation/config/merge.txt     |  9 ++++++++-
+ Documentation/git-checkout.txt     |  3 +--
+ Documentation/git-merge-file.txt   |  3 +++
+ Documentation/git-merge.txt        | 32 +++++++++++++++++++++++++-----
+ Documentation/git-rebase.txt       |  6 +++---
+ Documentation/git-restore.txt      |  3 +--
+ Documentation/git-switch.txt       |  3 +--
+ Documentation/technical/rerere.txt | 10 +++++-----
+ builtin/checkout.c                 |  2 +-
+ 9 files changed, 50 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 06a2f90c487..e695867ee54 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -34,6 +34,8 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_BOOL('p', "stdout", &to_stdout, N_("send results to standard output")),
- 		OPT_SET_INT(0, "diff3", &xmp.style, N_("use a diff3 based merge"), XDL_MERGE_DIFF3),
-+		OPT_SET_INT(0, "zdiff3", &xmp.style, N_("use a zealous diff3 based merge"),
-+				XDL_MERGE_ZEALOUS_DIFF3),
- 		OPT_SET_INT(0, "ours", &xmp.favor, N_("for conflicts, use our version"),
- 			    XDL_MERGE_FAVOR_OURS),
- 		OPT_SET_INT(0, "theirs", &xmp.favor, N_("for conflicts, use their version"),
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b50c5d0ea38..8489ca39497 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1566,7 +1566,7 @@ _git_checkout ()
+diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
+index cb2ed589075..52d79117ef8 100644
+--- a/Documentation/config/merge.txt
++++ b/Documentation/config/merge.txt
+@@ -4,7 +4,14 @@ merge.conflictStyle::
+ 	shows a `<<<<<<<` conflict marker, changes made by one side,
+ 	a `=======` marker, changes made by the other side, and then
+ 	a `>>>>>>>` marker.  An alternate style, "diff3", adds a `|||||||`
+-	marker and the original text before the `=======` marker.
++	marker and the original text before the `=======` marker.  The
++	"merge" style tends to produce smaller conflict regions than diff3,
++	both because of the exclusion of the original text, and because
++	when a subset of lines match on the two sides they are just pulled
++	out of the conflict region.  Another alternate style, "zdiff3", is
++	similar to diff3 but removes matching lines on the two sides from
++	the conflict region when those matching lines appear near either
++	the beginning or end of a conflict region.
  
- 	case "$cur" in
- 	--conflict=*)
--		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
- 		;;
- 	--*)
- 		__gitcomp_builtin checkout
-@@ -2445,7 +2445,7 @@ _git_switch ()
+ merge.defaultToUpstream::
+ 	If merge is called without any commit argument, merge the upstream
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index b1a6fe44997..85c3d3513f7 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -265,8 +265,7 @@ When switching branches with `--merge`, staged changes may be lost.
+ 	The same as `--merge` option above, but changes the way the
+ 	conflicting hunks are presented, overriding the
+ 	`merge.conflictStyle` configuration variable.  Possible values are
+-	"merge" (default) and "diff3" (in addition to what is shown by
+-	"merge" style, shows the original contents).
++	"merge" (default), "diff3", and "zdiff3".
  
- 	case "$cur" in
- 	--conflict=*)
--		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
- 		;;
- 	--*)
- 		__gitcomp_builtin switch
-@@ -2886,7 +2886,7 @@ _git_restore ()
+ -p::
+ --patch::
+diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
+index f8560326132..7e9093fab60 100644
+--- a/Documentation/git-merge-file.txt
++++ b/Documentation/git-merge-file.txt
+@@ -70,6 +70,9 @@ OPTIONS
+ --diff3::
+ 	Show conflicts in "diff3" style.
  
- 	case "$cur" in
- 	--conflict=*)
--		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
- 		;;
- 	--source=*)
- 		__git_complete_refs --cur="${cur##--source=}"
-diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-index 25c4b720e72..de9c6190b9c 100755
---- a/t/t6427-diff3-conflict-markers.sh
-+++ b/t/t6427-diff3-conflict-markers.sh
-@@ -211,4 +211,60 @@ test_expect_success 'rebase --apply describes fake ancestor base' '
- 	)
- '
++--zdiff3::
++	Show conflicts in "zdiff3" style.
++
+ --ours::
+ --theirs::
+ --union::
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 3819fadac1f..259e1ac2cf0 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -238,7 +238,8 @@ from the RCS suite to present such a conflicted hunk, like this:
  
-+test_setup_zdiff3 () {
-+	test_create_repo zdiff3 &&
-+	(
-+		cd zdiff3 &&
-+
-+		test_write_lines 1 2 3 4 5 6 7 8 9 >basic &&
-+		test_write_lines 1 2 3 AA 4 5 BB 6 7 8 >middle-common &&
-+		test_write_lines 1 2 3 4 5 6 7 8 9 >interesting &&
-+
-+		git add basic middle-common &&
-+		git commit -m base &&
-+
-+		git branch left &&
-+		git branch right &&
-+
-+		git checkout left &&
-+		test_write_lines 1 2 3 4 A B C D E 7 8 9 >basic &&
-+		test_write_lines 1 2 3 CC 4 5 DD 6 7 8 >middle-common &&
-+		test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >interesting &&
-+		git add -u &&
-+		git commit -m letters &&
-+
-+		git checkout right &&
-+		test_write_lines 1 2 3 4 A X C Y E 7 8 9 >basic &&
-+		test_write_lines 1 2 3 EE 4 5 FF 6 7 8 >middle-common &&
-+		test_write_lines 1 2 3 4 A B C 5 6 G H I J 7 8 9 >interesting &&
-+		git add -u &&
-+		git commit -m permuted
-+	)
-+}
-+
-+test_expect_failure 'check zdiff3 markers' '
-+	test_setup_zdiff3 &&
-+	(
-+		cd zdiff3 &&
-+
-+		git checkout left^0 &&
-+
-+		test_must_fail git -c merge.conflictstyle=zdiff3 merge -s recursive right^0 &&
-+
-+		test_write_lines 1 2 3 4 A "<<<<<<< HEAD" B C D "||||||| $(git rev-parse --short HEAD^1)" 5 6 ======= X C Y ">>>>>>> right^0" E 7 8 9 >expect &&
-+		test_cmp expect basic &&
-+
-+		test_write_lines 1 2 3 "<<<<<<< HEAD" CC "||||||| $(git rev-parse --short HEAD^1)" AA ======= EE ">>>>>>> right^0" 4 5 "<<<<<<< HEAD" DD "||||||| $(git rev-parse --short HEAD^1)" BB ======= FF ">>>>>>> right^0" 6 7 8 >expect &&
-+		test_cmp expect middle-common &&
-+
-+		# Not passing this one yet.  For some reason, after extracting
-+		# the common lines "A B C" and "G H I J", the remaining part
-+		# is comparing "5 6" in the base to "5 6" on the left and
-+		# "D E F" on the right.  And zdiff3 currently picks the side
-+		# that matches the base as the merge result.  Weird.
-+		test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >expect &&
-+		test_cmp expect interesting
-+	)
-+'
-+
- test_done
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 609615db2cd..9977813a9d3 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -308,6 +308,8 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
- 			die("'%s' is not a boolean", var);
- 		if (!strcmp(value, "diff3"))
- 			git_xmerge_style = XDL_MERGE_DIFF3;
-+		else if (!strcmp(value, "zdiff3"))
-+			git_xmerge_style = XDL_MERGE_ZEALOUS_DIFF3;
- 		else if (!strcmp(value, "merge"))
- 			git_xmerge_style = 0;
- 		/*
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 7a046051468..8629ae287c7 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -65,6 +65,7 @@ extern "C" {
+ ------------
+ Here are lines that are either unchanged from the common
+-ancestor, or cleanly resolved because only one side changed.
++ancestor, or cleanly resolved because only one side changed,
++or cleanly resolved because both sides changed the same way.
+ <<<<<<< yours:sample.txt
+ Conflict resolution is hard;
+ let's go shopping.
+@@ -259,16 +260,37 @@ side wants to say it is hard and you'd prefer to go shopping, while the
+ other side wants to claim it is easy.
  
- /* merge output styles */
- #define XDL_MERGE_DIFF3 1
-+#define XDL_MERGE_ZEALOUS_DIFF3 2
+ An alternative style can be used by setting the "merge.conflictStyle"
+-configuration variable to "diff3".  In "diff3" style, the above conflict
+-may look like this:
++configuration variable to either "diff3" or "zdiff3".  In "diff3"
++style, the above conflict may look like this:
  
- typedef struct s_mmfile {
- 	char *ptr;
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 1659edb4539..df0c6041778 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -230,7 +230,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
- 	size += xdl_recs_copy(xe1, m->i1, m->chg1, needs_cr, 1,
- 			      dest ? dest + size : NULL);
- 
--	if (style == XDL_MERGE_DIFF3) {
-+	if (style == XDL_MERGE_DIFF3 || style == XDL_MERGE_ZEALOUS_DIFF3) {
- 		/* Shared preimage */
- 		if (!dest) {
- 			size += marker_size + 1 + needs_cr + marker3_size;
-@@ -327,7 +327,7 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
-  * lines. Try hard to show only these few lines as conflicting.
-  */
- static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
--		xpparam_t const *xpp)
-+				xpparam_t const *xpp, int style)
- {
- 	for (; m; m = m->next) {
- 		mmfile_t t1, t2;
-@@ -368,6 +368,42 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
- 			continue;
- 		}
- 		x = xscr;
-+		if (style == XDL_MERGE_ZEALOUS_DIFF3) {
-+			int advance1 = xscr->i1, advance2 = xscr->i2;
+ ------------
+ Here are lines that are either unchanged from the common
+-ancestor, or cleanly resolved because only one side changed.
++ancestor, or cleanly resolved because only one side changed,
+ <<<<<<< yours:sample.txt
++or cleanly resolved because both sides changed the same way.
+ Conflict resolution is hard;
+ let's go shopping.
+-|||||||
++||||||| base:sample.txt
++or cleanly resolved because both sides changed identically.
++Conflict resolution is hard.
++=======
++or cleanly resolved because both sides changed the same way.
++Git makes conflict resolution easy.
++>>>>>>> theirs:sample.txt
++And here is another line that is cleanly resolved or unmodified.
++------------
 +
-+			/*
-+			 * Advance m->i1 and m->i2 so that conflict for sides
-+			 * 1 and 2 start after common region.  Decrement
-+			 * m->chg[12] since there are now fewer conflict lines
-+			 * for those sides.
-+			 */
-+			m->i1 += advance1;
-+			m->i2 += advance2;
-+			m->chg1 -= advance1;
-+			m->chg2 -= advance2;
++while in "zdiff3" style, it may look like this:
 +
-+			/*
-+			 * Splitting conflicts due to internal common regions
-+			 * on the two sides would be inappropriate since we
-+			 * are also showing the merge base and have no
-+			 * reasonable way to split the merge base text.
-+			 */
-+			while (xscr->next)
-+				xscr = xscr->next;
-+
-+			/*
-+			 * Lower the number of conflict lines to not include
-+			 * the final common lines, if any.  Do this by setting
-+			 * number of conflict lines to
-+			 *   (line offset for start of conflict in xscr) +
-+			 *   (number of lines in the conflict in xscr)
-+			 */
-+			m->chg1 = (xscr->i1 - advance1) + (xscr->chg1);
-+			m->chg2 = (xscr->i2 - advance2) + (xscr->chg2);
-+			xdl_free_env(&xe);
-+			xdl_free_script(x);
-+			continue;
-+		}
- 		m->i1 = xscr->i1 + i1;
- 		m->chg1 = xscr->chg1;
- 		m->i2 = xscr->i2 + i2;
-@@ -419,6 +455,7 @@ static int lines_contain_alnum(xdfenv_t *xe, int i, int chg)
- static void xdl_merge_two_conflicts(xdmerge_t *m)
- {
- 	xdmerge_t *next_m = m->next;
-+	m->chg0 = next_m->i0 + next_m->chg0 - m->i0;
- 	m->chg1 = next_m->i1 + next_m->chg1 - m->i1;
- 	m->chg2 = next_m->i2 + next_m->chg2 - m->i2;
- 	m->next = next_m->next;
-@@ -430,12 +467,12 @@ static void xdl_merge_two_conflicts(xdmerge_t *m)
-  * it appears simpler -- because it takes up less (or as many) lines --
-  * if the lines are moved into the conflicts.
-  */
--static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m,
-+static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m, int style,
- 				      int simplify_if_no_alnum)
- {
- 	int result = 0;
++------------
++Here are lines that are either unchanged from the common
++ancestor, or cleanly resolved because only one side changed,
++or cleanly resolved because both sides changed the same way.
++<<<<<<< yours:sample.txt
++Conflict resolution is hard;
++let's go shopping.
++||||||| base:sample.txt
++or cleanly resolved because both sides changed identically.
+ Conflict resolution is hard.
+ =======
+ Git makes conflict resolution easy.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 55af6fd24e2..a61742c8f98 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -740,9 +740,9 @@ information about the rebased commits and their parents (and instead
+ generates new fake commits based off limited information in the
+ generated patches), those commits cannot be identified; instead it has
+ to fall back to a commit summary.  Also, when merge.conflictStyle is
+-set to diff3, the apply backend will use "constructed merge base" to
+-label the content from the merge base, and thus provide no information
+-about the merge base commit whatsoever.
++set to diff3 or zdiff3, the apply backend will use "constructed merge
++base" to label the content from the merge base, and thus provide no
++information about the merge base commit whatsoever.
  
--	if (!m)
-+	if (!m || style == XDL_MERGE_ZEALOUS_DIFF3)
- 		return result;
- 	for (;;) {
- 		xdmerge_t *next_m = m->next;
-@@ -482,6 +519,25 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 	int style = xmp->style;
- 	int favor = xmp->favor;
+ The merge backend works with the full commits on both sides of history
+ and thus has no such limitations.
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index 55bde91ef9e..5964810caa4 100644
+--- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -92,8 +92,7 @@ in linkgit:git-checkout[1] for details.
+ 	The same as `--merge` option above, but changes the way the
+ 	conflicting hunks are presented, overriding the
+ 	`merge.conflictStyle` configuration variable.  Possible values
+-	are "merge" (default) and "diff3" (in addition to what is
+-	shown by "merge" style, shows the original contents).
++	are "merge" (default), "diff3", and "zdiff3".
  
-+	/*
-+	 * XDL_MERGE_DIFF3 does not attempt to refine conflicts by looking
-+	 * at common areas of sides 1 & 2, because the base (side 0) does
-+	 * not match and is being shown.  Similarly, simplification of
-+	 * non-conflicts is also skipped due to the skipping of conflict
-+	 * refinement.
-+	 *
-+	 * XDL_MERGE_ZEALOUS_DIFF3, on the other hand, will attempt to
-+	 * refine conflicts looking for common areas of sides 1 & 2.
-+	 * However, since the base is being shown and does not match,
-+	 * it will only look for common areas at the beginning or end
-+	 * of the conflict block.  Since XDL_MERGE_ZEALOUS_DIFF3's
-+	 * conflict refinement is much more limited in this fashion, the
-+	 * conflict simplification will be skipped.
-+	 *
-+	 * See xdl_refine_conflicts() and xdl_simplify_non_conflicts()
-+	 * for more details, particularly looking for
-+	 * XDL_MERGE_ZEALOUS_DIFF3.
-+	 */
- 	if (style == XDL_MERGE_DIFF3) {
- 		/*
- 		 * "diff3 -m" output does not make sense for anything
-@@ -604,8 +660,8 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 		changes = c;
- 	/* refine conflicts */
- 	if (XDL_MERGE_ZEALOUS <= level &&
--	    (xdl_refine_conflicts(xe1, xe2, changes, xpp) < 0 ||
--	     xdl_simplify_non_conflicts(xe1, changes,
-+	    (xdl_refine_conflicts(xe1, xe2, changes, xpp, style) < 0 ||
-+	     xdl_simplify_non_conflicts(xe1, changes, style,
- 					XDL_MERGE_ZEALOUS < level) < 0)) {
- 		xdl_cleanup_merge(changes);
- 		return -1;
+ --ignore-unmerged::
+ 	When restoring files on the working tree from the index, do
+diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
+index 5c438cd5058..5c90f76fbe3 100644
+--- a/Documentation/git-switch.txt
++++ b/Documentation/git-switch.txt
+@@ -137,8 +137,7 @@ should result in deletion of the path).
+ 	The same as `--merge` option above, but changes the way the
+ 	conflicting hunks are presented, overriding the
+ 	`merge.conflictStyle` configuration variable.  Possible values are
+-	"merge" (default) and "diff3" (in addition to what is shown by
+-	"merge" style, shows the original contents).
++	"merge" (default), "diff3", and "zdiff3".
+ 
+ -q::
+ --quiet::
+diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
+index af5f9fc24f9..35d45414339 100644
+--- a/Documentation/technical/rerere.txt
++++ b/Documentation/technical/rerere.txt
+@@ -14,9 +14,9 @@ conflicts before writing them to the rerere database.
+ 
+ Different conflict styles and branch names are normalized by stripping
+ the labels from the conflict markers, and removing the common ancestor
+-version from the `diff3` conflict style. Branches that are merged
+-in different order are normalized by sorting the conflict hunks.  More
+-on each of those steps in the following sections.
++version from the `diff3` or `zdiff3` conflict styles.  Branches that
++are merged in different order are normalized by sorting the conflict
++hunks.  More on each of those steps in the following sections.
+ 
+ Once these two normalization operations are applied, a conflict ID is
+ calculated based on the normalized conflict, which is later used by
+@@ -42,8 +42,8 @@ get a conflict like the following:
+     >>>>>>> AC
+ 
+ Doing the analogous with AC2 (forking a branch ABAC2 off of branch AB
+-and then merging branch AC2 into it), using the diff3 conflict style,
+-we get a conflict like the following:
++and then merging branch AC2 into it), using the diff3 or zdiff3
++conflict style, we get a conflict like the following:
+ 
+     <<<<<<< HEAD
+     B
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f4cd7747d35..45606936c32 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1524,7 +1524,7 @@ static struct option *add_common_options(struct checkout_opts *opts,
+ 		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
+ 		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
+ 		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
+-			   N_("conflict style (merge or diff3)")),
++			   N_("conflict style (merge, diff3, or zdiff3)")),
+ 		OPT_END()
+ 	};
+ 	struct option *newopts = parse_options_concat(prevopts, options);
 -- 
 gitgitgadget
-
