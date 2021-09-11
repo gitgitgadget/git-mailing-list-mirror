@@ -2,114 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 005C8C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90952C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:28:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDF5E60FDA
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:17:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 657EA60FED
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 17:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232572AbhIKRSU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 13:18:20 -0400
-Received: from mout.web.de ([212.227.15.4]:36197 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230018AbhIKRST (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 13:18:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631380612;
-        bh=j+Rhtgf2WWWe8j4jHVrgLruzPqx3KOzyUbEG3+VeEqk=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=KvJ3ihmPIiEw5HuZACUieK2aqH8GP5saJOX5grcTwaoBhIB9kcPT0xHCi4LOOI4qf
-         dxvTQPdY/6HoZoLj7aInA9xpAvBiv+E9UY0GXe0WpyDdlS7oocpB9JI8075WcALLnC
-         BFkv8jCZM4+jVz58IPbEEfAMIjlsMQhb5jVXz920=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0M2qsI-1nF8yY07JG-00sgDd; Sat, 11 Sep 2021 19:16:52 +0200
-Subject: Re: [PATCH 3/3] packfile: use oidset for bad objects
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
- <14d48124-d8bb-aa34-aad0-4203d699e17e@web.de>
- <YTy8o3qXvyVv8fNr@coredump.intra.peff.net>
- <3d637be1-f89f-414c-19ef-65c3943457e9@web.de>
- <YTzhVfmObOf7DHqm@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <480dba11-e321-68f8-3983-1d918c24fbbc@web.de>
-Date:   Sat, 11 Sep 2021 19:16:51 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S232364AbhIKR3M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 13:29:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230018AbhIKR3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 13:29:10 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48ACFC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:27:57 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id s20so7929375oiw.3
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 10:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SwoL5iC4/DIb/1ZDKg5RNbEuJGDxoMx0jQVySZUK4r0=;
+        b=oggvThR5REnQ5X3irkA+ESqFLNP7ml10iFKnoXB5KWQqvcdKEDg0XK+bGTXtfw8BkQ
+         239R3iyKk0vQu5X6qtGSifYCG4uRSnEGb22F61N4dKRcn4ff4s7G6202oZdNq+jQnozI
+         aN0JE6EFAdBEOCfvhtaCY/1HKGfMJHgtz0hqvYYEuYbykbqObROC6ZGG7ZQXUf5bRSgg
+         ih+V5Dq80ofOfGM6RIxQ/VxvppD0FHS8Y0++DtOtDUbz1hHnf7+PyWrzS7ST5MkEjvfR
+         uqEVKigw783iogozx4M+Ikxtkx1Z+jIZZBGYglR7UXHGDXrzsOAoM4R/xUeq5/RCjcHv
+         HaOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SwoL5iC4/DIb/1ZDKg5RNbEuJGDxoMx0jQVySZUK4r0=;
+        b=ftMDF6X1g+TmL4VH9IEtTTBV/F6DL4BX603VoEY2L380nI76czrvgrNDzSd2189mff
+         338bp5dLj3nXOQkL4WQetH5JV6HaGImamiZbDlMunTKXotN933mQDNH4v6YDvAZMF0Az
+         bQqUfClWTrKs03v/f9YxGf74pMrDWUWjx9G6l7XV/5/3sVv+tDP5PTgI8Sx8S012OYQ9
+         p9L2llrCnvzFvg7URTU1jEdoBcDcIBbbmHQF9z1954SKMZI8XhsjMo48GHUF2bqJ62Rd
+         bzstXQ0AlEZ4/dIdz5DpMih9c/QT1u6gMH5xjhf8uZiDZ0TqGQsH3OEEwgl75A8/AqpQ
+         6HrQ==
+X-Gm-Message-State: AOAM531Kn7Bx1mpSM5nPBIXIsjYPJVcPoDsfSXQfpxSgvN+2A06Hyu7X
+        8Dq3pi4ndJ6uPW3ddeNm5zJSTkVAuxgLwppF5WLwNHH7RdI=
+X-Google-Smtp-Source: ABdhPJxZu5sqrpiBb+fra2b6QuBjoyzlm0xSO5U5+DIFqKtqiLi/tZj5fUJir5gDpU+zA4L2mRI1djqGJ1DbpoNw5w0=
+X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr2454048oiw.31.1631381276457;
+ Sat, 11 Sep 2021 10:27:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YTzhVfmObOf7DHqm@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jcybazG1IRnOiTIaU64g9Jc0JUDzei5KbuERkbgwBnoNoFTByLl
- 74X60h9L1zd/A04a+PXnyGy7ApRdJXQmzt7PM8cCiuREfT9ys4rYdCRYt+5+tp4I9hMomCo
- J3qTREEdzmSj9sey6qLCFIOI2ZigfIRAyiMbPcvGKJ7aozPqT5iCN8HTPaAxbro9rXJmNHt
- YJzkMEh2at3A74VPUEHkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:m1l/WgSgRzM=:9yTqr+mp7Qpf8NuyJxQEuW
- FfdPXRfanAwZIJCVYqNbW+Cs5grF/ymMWaizgWGJFzbocAvccCF4H9S9QUoxtupKTMtaar37i
- /PUF8dvOcOyk2LNq1lnM2zx/9Iyspow2lLxDUQRD0F0RjneKJ1obdY3/QxgMARI4L5SfPlEgv
- XBEoD0MbQlJwO0qoM5ujYF9AFm8Dfs3wY9pvSdyJqGQLJNbYmuwaHH16GHcQUutP5y+UocF3V
- CgzfPJmQoe7G9ATsMuIUu1BJeiUpcKNdF+2zi/u9eU5aR3oz7CHVO6CWO8xFGhKr9E9J47Pxm
- xUChD+x99Sa6rO4IcyTQgj4ejrUkluZa3l34S3aTj7IbCAZgEDl1UIKA1DyCsqQfFd7uGd49T
- 1KyH+0ARlZzgoy7Zjw6PlxI0M9Pgjt41PV2Upo150wRRPGpP5atq5IiydRzejzeSvm3tABLcu
- f9v+UN3KYQx5xW2aw65ZpYcXIT72gYy5NrnnEkdAmHjdMVxWlS8biXtdwaL+AUwEPf7gel/Xj
- Qui3+cHsnFarc4YT/v/wmN1lIcSnnAPWITgx2TesZZexuIksVhWFDrTN+AwLvYL7pH2XAoM2J
- N/fc0WNvHh3ZXaQOB71Lhb34b+LUPMFjVeWkL9pWpoGo8Ca0VH3acGuHF8C3qoWmw5GQeMK0s
- h3Xs/Wm6wJoVmKAaLteYqOpTTZ7/SVUEXFOoInTSykRQZehzkNQATcHNsz/bLlpuIX/tynhIn
- uDf/XxxEokJZ5MKlE0I+q2Z4a+8mxKRL/29ro8elCMzGjX6Ze8uL74RGBimZ4nuaZyGZgOs5H
- sf7UODazmYVi9k65rf4kxmJzb6A7ShxYOeNLe2DLoS8tb8PTggFPBok40Fyjq7tsyH+Y3KDmu
- nLqtZtZLq2qXl+Mwz84oDTvzBHSXfRkfeYFO8GFavrmQBK+KZyS0Ut83F/aR/mm1wpj4LLOON
- UWUBCXbrazSTemcmGMRABL09+4ISt/mraNnI3HAXf1k1d3RJ7Fw6Mrs0GOFhBnucBmHVCkP9E
- krk9obxKYoCQm+JdTCQkseqCGDe0cf54C2hspBIPruuuHeqeSv6Ky4lWa4pufUbTElvxrOHMd
- 8zMPnlwyPDITe8=
+References: <xmqqsfycqdxi.fsf@gitster.g>
+In-Reply-To: <xmqqsfycqdxi.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 11 Sep 2021 10:27:45 -0700
+Message-ID: <CABPp-BGR3dfJE7TZ+jkjDdWyeXYowmJhtoFaQ8_Abn=ZROhB5Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #03; Fri, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.09.21 um 19:03 schrieb Jeff King:
-> On Sat, Sep 11, 2021 at 06:08:38PM +0200, Ren=C3=A9 Scharfe wrote:
+On Fri, Sep 10, 2021 at 3:12 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->>>> +	nth_midxed_object_oid(&oid, m, pos);
->>>> +	if (oidset_contains(&p->bad_objects, &oid))
->>>> +		return 0;
->>>
->>> Calling nth_midxed_object_oid() implies a memcpy() under the hood. In
->>> the old code, we'd skip that in the common case that we had no corrupt
->>> objects, but now we'll pay the cost regardless. memcpy() isn't _that_
->>> expensive, but I'd expect this to be a relatively hot code path.
->>>
->>> Is it worth sticking all of this inside:
->>>
->>>   if (oidset_size(&p->bad_objects))
->>>
->>> ?
->>
->> Hard to say.  It would certainly match the old code more closely.  Is a
->> function call cheaper than copying 32 bytes?  Depends on the CPU and
->> whether the hash is cached, I guess.  And cached it probably is, becaus=
-e
->> the caller did a binary search for it..
+> --------------------------------------------------
+> [New Topics]
 >
-> You already have a function call for nth_midxed_object_oid(), so
-> checking oidset_size() would be a strict improvement.
-
-If I read the assembly correctly nth_midxed_object_oid() is inlined by the
-compiler in my build, as is nth_midxed_pack_entry().  Both are defined in
-the same file, so other compilers may easily do the same.
-
->> We can pass on the original oid to avoid the nth_midxed_object_oid()
->> call, but inlining the whole thing might even be nicer.
+> * en/stash-df-fix (2021-09-08) 3 commits
+>  - stash: restore untracked files AFTER restoring tracked files
+>  - stash: avoid feeding directories to update-index
+>  - t3903: document a pair of directory/file bugs
 >
-> Yeah, it occurs to me that oidset_size() would be a good candidate for
-> inlining, if that's what you mean.
+>  Fix "git stash" corner case where the tentative change involves
+>  changing a directory to a file (or vice versa).
 
-True, but I meant something else (see patch 4/3). :)
+I've got a v2 out to address all the feedback from Dscho, Stolee, and
+you (https://lore.kernel.org/git/pull.1087.v2.git.git.1631269876.gitgitgadget@gmail.com/)
 
-Ren=C3=A9
+Relatedly, I also have a v2 of am-issues that hasn't been picked up
+yet: https://lore.kernel.org/git/pull.1087.v2.git.git.1631269876.gitgitgadget@gmail.com/.
+v1 was acked by Dscho; v2 has some fixes related to your feedback.
+
+> * en/zdiff3 (2021-06-15) 2 commits
+>  - update documentation for new zdiff3 conflictStyle
+>  - xdiff: implement a zealous diff3, or "zdiff3"
+>
+>  "Zealous diff3" style of merge conflict presentation has been added.
+>
+>  Expecting a reroll.
+>  cf. <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
+
+I just sent a reroll, since I did have some fixes from Phillip and
+some new testcases, but it fails one of the testcases I made and I saw
+another suboptimal case that I lost but would like to include.  I
+still have this labelled RFC and it's definitely not ready.
+
+I do plan to get back to it eventually, but am focusing more on other
+topics, so you may want to eject this from seen for now.
+
+> * ms/customizable-ident-expansion (2021-09-01) 1 commit
+>  - keyword expansion: make "$Id$" string configurable
+>
+>  Instead of "$Id$", user-specified string (like $FreeBSD$) can be
+>  used as an in-blob placeholder for keyword expansion.
+
+Kinda disappointing to see mis-designs from CVS not only persist but
+get extended.  Perhaps I'm just biased...
+
+> * js/retire-preserve-merges (2021-09-07) 11 commits
+>   (merged to 'next' on 2021-09-10 at f645ffd7a3)
+>  + sequencer: restrict scope of a formerly public function
+>  + rebase: remove a no-longer-used function
+>  + rebase: stop mentioning the -p option in comments
+>  + rebase: remove obsolete code comment
+>  + rebase: drop the internal `rebase--interactive` command
+>  + git-svn: drop support for `--preserve-merges`
+>  + rebase: drop support for `--preserve-merges`
+>  + pull: remove support for `--rebase=preserve`
+>  + tests: stop testing `git rebase --preserve-merges`
+>  + remote: warn about unhandled branch.<name>.rebase values
+>  + t5520: do not use `pull.rebase=preserve`
+>
+>  The "--preserve-merges" option of "git rebase" has been removed.
+>
+>  Will merge to 'master'.
+
+I'm not objecting, but I'm kind of surprised to see this after your
+and Dscho's previous discussion at
+https://lore.kernel.org/git/xmqqv939uis8.fsf@gitster.g/; I thought
+it'd stay in next for a while.  Was this a mistake?
+
+> * en/remerge-diff (2021-08-31) 7 commits
+>  - doc/diff-options: explain the new --remerge-diff option
+>  - show, log: provide a --remerge-diff capability
+>  - tmp-objdir: new API for creating and removing primary object dirs
+>  - merge-ort: capture and print ll-merge warnings in our preferred fashion
+>  - ll-merge: add API for capturing warnings in a strbuf instead of stderr
+>  - merge-ort: add ability to record conflict messages in a file
+>  - merge-ort: mark a few more conflict messages as omittable
+>
+>  A new presentation for two-parent merge "--remerge-diff" can be
+>  used to show the difference between mechanical (and possibly
+>  conflicted) merge results and the recorded resolution.
+>
+>  What's the status of this one?
+
+Well...you asked lots of good high level questions that I think you
+felt I answered adequately.  I think that suggests the high level
+ideas are at least okay.  It's also been tested in the wild for months
+(and with the additional change of making `log -p` imply
+--remerge-diff), so that suggests it won't blow up.
+
+But as for actual patch review, the only one who has taken a look is
+Sergey, who reviewed the diff-merges portion of patch 6 and was happy
+with it.
+
+It'd be great to get some more of these patches reviewed.  In
+particular, if someone had time for just one patch, I'd really like to
+see someone review one of these:
+  * the tmp-objdir.c changes (patch 5)
+  * the integration of all the pieces in log-tree.c and revision.c (patch 6)
+  * the ll-merge.c changes (patch 3)
