@@ -2,142 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E15DC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 16:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB7DC433EF
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 16:09:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8B8461208
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 16:08:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D8EA61205
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 16:09:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbhIKQKC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 12:10:02 -0400
-Received: from mout.web.de ([212.227.15.4]:36643 "EHLO mout.web.de"
+        id S230230AbhIKQKJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 12:10:09 -0400
+Received: from mout.web.de ([212.227.15.14]:50775 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229519AbhIKQKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 12:10:02 -0400
+        id S229519AbhIKQKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 12:10:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631376523;
-        bh=05Z4jkKLJpZoidHD9mjl4lxCXgQUSFmwwaTirFUuHNE=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=EBcG74LhN4ifEQciniLl/5eCzas84yjh0TL/6ey4TIg07M5/NwuCIFvnwJ29LnCIY
-         5lDh8CuNB/nUQWEZLOaziz0C0ApjtdWYgr0wYRbt2At2TiRZyoHIqp4fZdhXs/sMBt
-         iCS2um8toeTLBSH8qF8dEc5Kk7hZYx8cQs9ejyTI=
+        s=dbaedf251592; t=1631376527;
+        bh=EwD3S4wRxiinSU3TS3SangzVbl1VI5zYRTNuAPxmKcs=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=eLoKWo2XSUeMJ7MhAwY6/hVKPiAv4+pLmVcVlGHyd1dqRFSMskkRzYylXLruT2q0E
+         51/3E1mNH7qAU4CVSU18XhxP2gyr9tErN25dfePID5q8WErtiIRHKfl/Wkgk36tFPr
+         jCrTYglhNiQTHyGS87eoLVBKvLrsUIz2xAME1vhE=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LbZpT-1mo1Jo06pv-00lBcz; Sat, 11 Sep 2021 18:08:43 +0200
-Subject: [PATCH 4/3] midx: inline nth_midxed_pack_entry()
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MKNl8-1mOXKD1NFG-001g3U; Sat, 11 Sep 2021 18:08:47 +0200
+Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Git List <git@vger.kernel.org>
+References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
+ <YSvsQcGNpCMZwS8o@nand.local> <xmqqeeaa6fey.fsf@gitster.g>
+ <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de>
+ <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
-Message-ID: <7d9e67bf-e057-694c-c976-ba19e9521882@web.de>
-Date:   Sat, 11 Sep 2021 18:08:42 +0200
+Message-ID: <8bd13e99-208b-4c22-90e6-28227593e9c4@web.de>
+Date:   Sat, 11 Sep 2021 18:08:46 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
+In-Reply-To: <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:V1cy5VYXHao0oNnhHCNdG0Arne/BIAQLjf2vRR9JS0SSJD1pH7q
- ju6lHa7ersCCjDATANdLJZQIyV0kk5xWmke2eJ3m+ZIA0Vv1oeeCf/g7VdoevEmhF9/Ejvy
- UYYNMNGUmX5+4vC0150L7frsQpEDYN21ZBRRAqI+w9h+Ggm+E2GSvvaFhubIlZLF3bjQ/m5
- tP9xrJsUbvFzKxMAHEtfQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rwiETTILFiM=:4SCj4ZvBeWSptCZZr4x5xI
- nKUOAgf29IWjbyf0iqwVy1oeZ6qe+cjKx5hwVimnU3yO9eP8SHu70CDIJ51e1XtMZWKU22CKg
- W8n8N/GNupGLC1fVHjp2brOvY4as8PBpE8QE5qEnF3O8ek89Y6MI7TRMyl+imFrq3CNgEDXid
- rwhxZ2vgK8as37oWyDjgbTRNGGH6I2wCvA64/ChTBttDO/R9EanF6aTTm2QgFB/Jsq5EWd9t8
- LxqyylImW2ifM7RRzX+YNW2GQPmsMmHN61+ocfaaYr9y+XgwA9dQYvTSovbzxPYpbe2SimuD5
- 3xJYzck8Rp4yh7Vete+yzSavirkhjUp+i85q+zyXAAIu14yoRFICsREZ0h6ds8hgMjrn44zxe
- vajyNUhOct2scOl7dCKlUlPbDNuliyf/VylHiJWb4VWkzbgsUnKrDLnVDxhh8So6cx/Z4n8zt
- 7Lq31i/bp/08BaQkWrP3mTydi0vu23uRF1VVyUAAM0wpOsV53XeuBoBSlNRhvIHtoBEQsJwLp
- qWc/vOQPdE4YQSPtUkjapjCnkPlQlErrlDoLfzV9jdcsdV3rzT4yv97VqmjcTMDyYjz7xDEV1
- NSrwKW4chxw+HlCBQasPLO3jDCYrtS7sNg2DVYUXL93fnZBaZq3aaqgt5QPryc5NjMlvlLmxF
- 3WtqBnlAKIrAr3IsoVccyPGHusbkL3Aoz9GkaATeegk4yfJ5Z75PnJYe7QsbX3yq3VKIFQnAs
- lFS3WK2sizPpjfTyvijMwuzslJlppgLumhnKlA1UcQzbdwbx2eXJUGlCcu6WcOkpv0c2AzNvA
- Ks94yQpLIw5lHBXUMQaXSICuipOgmIWxjBtdRzBNNkeGK6pi4btdnuQAU83gLU/E+G7p+QGeL
- yzWnET66qKkfXC/Ce2YO9oyU4TH9iNa9ASb3KL7OpXMJrCJgjVzB6nnwqwYBvSaQFPvbxYuxx
- d6BBqLLYwokVHixpPwzMzPWE3ovcQr+nsMndko8zv2jTiAAG9wQ6q9KFdghqtRVMMvsgDS4D/
- w2QwCPpppR9W06ZUnD1OilZUfQen1ay1lXAI09h9rEyAT0FcM3EnB64Wdm5bTWEMjaodiHXL3
- ZWTyF6b/liu+IQ=
+X-Provags-ID: V03:K1:4YvBSWEwN28Dd4ALJrIDigKLGo3n5WISckcL03niQapVW9bnEuI
+ q8KrvAdV/EdkIveOslSXJ3bjiIQYbTgo0xJqcGj3dd1+W77V2EdeuHiqbBmz5tckBejtPQ4
+ +zkcKhpseQSrLUgmLQiqcUPWK/yYATbLNuScD7UP5uJQURUBe9qOuubuQS/OM86kmMZosIm
+ 4d1f14iGC9k9zKq1Hkj5A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VC4E5PcL2yg=:T3lHkAgYEorzPl86b0dIES
+ gCqN2+UKdAUnRiCvEBDtwliGbnPYAURfxbn5WmcvHZVwqTOTnkpItC0ZtFqJ3m/x7YdOGALL3
+ C1Na/oxygX/n9xaGNVLdHuS06BANMgj77ud4QytoYi1el8+/ovn4Dt3K7SFJxOp0KK8OlDII4
+ 72IEAmvsKR8Lq5/hylVHAhzTpyF28CyF0n7YUPVn1/nmUcT+4AqmfIIr0qBHFtmzw8h921j8F
+ v6equstmvGPMurt0DYbdSdKbS1LPvON7mNKUdnlnTpyqK4wRObyrXiMeDjHg/tas/zLTWsnt/
+ /5kS+Xx8tuo9XcsEEppvxXFx58WBE58W/9zHwHObUZCUgXwhZa19WoXiHjJ3W2tTRscMuzAZ1
+ +C3abewfl9+NZETKgPlqoR0Jg1N1kgLExrmH7ebssw4EDo3hgByWAJ/cnsAZVQ59xClEohATB
+ efwPi5lMXczFjmHiXqIthTTLc7dZQotZsibq07K3hzIKfeOvJk50Sepwv+gnU+EPMxJczO93c
+ FDl1n0Am5JECeo0sBq63QDTSEekWPRK8iRaQR0dMM2oNnrZAYjvo7P9tnqXKOgv7hXtfYGrVx
+ sFomaGSVlIKlh7vzo42D53Eczl1BJ0sANcvHxrYsWZt8+SODzgwuVm1r2EuvhyXFqsP5cjT4O
+ 6QnbeTOtnW0l4wWImHjPpvbE2Jhi8U3YbrveSPbvBChD3s8mKGLHPObCiWKqCQReWDXRCa9TV
+ EFEkSHH6mKUszx394PqfrlWovXcm9w2R7fWiErwtlTypKOvCnpAGgqCNA5ZDMO6Bj1eDM3U9w
+ KNyl4M810KtiobeOkjS08q7GM4JSMgTk75D6EXFMPvNJTB0UflK/m9Ly/6EfdBFW619QGaGou
+ q9pBFhhoGNC+l4XLa3eGdOXfpnyrluntOZSge/cXQhMFHdV5Ef85SR6s8j75ZUzX+DC9Jf1oG
+ lxyGs+wQ8xAi34mF5KMoze8tt2PZNB2n65G3/miQyT8RTNiiA+LBTEvIEAW6Yqx/h8BwdZk9F
+ 6bNCpR05uQQMRKLDW0zy8v55EhZ69eg/l9kpc5EuLpai5pGDlr6G4l3XBc3FFWVKAHYLrXL3f
+ oH9xBibeHF3UCM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fill_midx_entry() finds the position of an object ID and passes it to
-nth_midxed_pack_entry(), which uses the position to look up the object
-ID for its own purposes.  Inline the latter into the former to avoid
-that lookup.
+Am 30.08.21 um 22:49 schrieb Jeff King:
+> On Mon, Aug 30, 2021 at 08:22:25PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+>>> It however may not be a bad idea to catch these code paths where a
+>>> local variable masks 'ignore_case' (and possibly other globals) and
+>>> rename these local ones to avoid a mistake like this.
+>>
+>> The name itself is OK, I think, but using it at global scope is
+>> confusing.  -Wshadow can help find such cases, but not this one, as
+>> test-hashmap.c doesn't include the global declaration.  Moving the
+>> global into a struct to provide a poor man's namespace would fix this
+>> for all namesakes, assisted by the compiler.  We'd then access it as
+>> the_config.ignore_case or even the_config.core.ignore_case.
+>>
+>> Moving all config-related variables would be quite noisy, I guess,
+>> and probably conflict with lots of in-flight patches, but might be
+>> worth it.
+>
+> Really most of these ought to be in the repository struct anyway, I
+> would think. The value of ignore_case comes from core.ignorecase, which
+> is going to be repository-specific. We are probably doing the wrong
+> thing already by looking at the parent core.ignorecase value when
+> operating in an in-process submodule, but nobody noticed because it's
+> quite unlikely for a submodule to have a different setting than the
+> parent.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- midx.c | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+Good point.  So fspathcmp() and friends would need a repo parameter. :-|
 
-diff --git a/midx.c b/midx.c
-index 01623fb339..59517938a8 100644
-=2D-- a/midx.c
-+++ b/midx.c
-@@ -276,14 +276,17 @@ uint32_t nth_midxed_pack_int_id(struct multi_pack_in=
-dex *m, uint32_t pos)
- 			(off_t)pos * MIDX_CHUNK_OFFSET_WIDTH);
- }
-
--static int nth_midxed_pack_entry(struct repository *r,
--				 struct multi_pack_index *m,
--				 struct pack_entry *e,
--				 uint32_t pos)
-+int fill_midx_entry(struct repository * r,
-+		    const struct object_id *oid,
-+		    struct pack_entry *e,
-+		    struct multi_pack_index *m)
- {
-+	uint32_t pos;
- 	uint32_t pack_int_id;
- 	struct packed_git *p;
--	struct object_id oid;
-+
-+	if (!bsearch_midx(oid, m, &pos))
-+		return 0;
-
- 	if (pos >=3D m->num_objects)
- 		return 0;
-@@ -304,8 +307,7 @@ static int nth_midxed_pack_entry(struct repository *r,
- 	if (!is_pack_valid(p))
- 		return 0;
-
--	nth_midxed_object_oid(&oid, m, pos);
--	if (oidset_contains(&p->bad_objects, &oid))
-+	if (oidset_contains(&p->bad_objects, oid))
- 		return 0;
-
- 	e->offset =3D nth_midxed_offset(m, pos);
-@@ -314,19 +316,6 @@ static int nth_midxed_pack_entry(struct repository *r=
-,
- 	return 1;
- }
-
--int fill_midx_entry(struct repository * r,
--		    const struct object_id *oid,
--		    struct pack_entry *e,
--		    struct multi_pack_index *m)
--{
--	uint32_t pos;
--
--	if (!bsearch_midx(oid, m, &pos))
--		return 0;
--
--	return nth_midxed_pack_entry(r, m, e, pos);
--}
--
- /* Match "foo.idx" against either "foo.pack" _or_ "foo.idx". */
- static int cmp_idx_or_pack_name(const char *idx_or_pack_name,
- 				const char *idx_name)
-=2D-
-2.33.0
+Ren=C3=A9
