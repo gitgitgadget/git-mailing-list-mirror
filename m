@@ -2,144 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE19C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 460A3C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:59:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49D806101D
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:40:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13D2461059
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231534AbhIKXlU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 19:41:20 -0400
-Received: from mout.web.de ([212.227.15.3]:54843 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230403AbhIKXlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 19:41:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1631403593;
-        bh=vwltlo/z9nXy4iFdtYinfPMzdiUR3gJHqNxnC0RQNcs=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=KAHnJQHnwsUa5T5yENw7e2FNYnB8nqKzfsfInqVhRMS6Y5spXMyvb1Hz3UJGOUfAq
-         iBuWCPEBdKFyqL0psj/2cgQCUigJexIb2+Be0EEDF99pN7nP2FRViccG3HKsm9x7VM
-         D51EPpTeI/kUvFAXdSpAJsTOVP9ASgB46OH90muY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1N3Xjb-1n7e5S0Yp1-010WrG; Sun, 12 Sep 2021 01:39:53 +0200
-Subject: Re: [PATCH 4/3] midx: inline nth_midxed_pack_entry()
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+        id S231820AbhILAA5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 20:00:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230435AbhILAA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 20:00:56 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5FDC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 16:59:43 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id x7so5334513pfa.8
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 16:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Wukr+IsUiNsCV6Yl8fLNtIxD8NV/99DUDGNa38gB20w=;
+        b=Lvuz2lgg8WZ63Yq397q3o/KRcLTmbZTs3pWj4+V5Xnlu0g5NC8Fzam9kYL9WDhcdNz
+         5vRdBuawWP195uR4GTM84nIBW0Xtu4BZT6PmJQVxOTG1rLIE9z/34KbNh6QdrsQgvEcK
+         RcILKLRhTdTwB2YRcDmzS55qpYPVZ3hQ+VtJGI8RzwQsnf1K/Shg0GKEQydJ06gj9mmv
+         cLj9iS29KZTFdzyepcwPRKaTd3L5F74HtwA4mNo6zBJgNzu+qphuGso7Il5LSsJYa9dX
+         /hpRlRy/2mh78dHFl+0d8/BThzApRBJjc02Ty9EEl3H+KMntpBhqHJYgkiKGrnn/kAdz
+         VjMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Wukr+IsUiNsCV6Yl8fLNtIxD8NV/99DUDGNa38gB20w=;
+        b=6l8n7OlXstiT6DgoOYa3wolNj1UDl+uEZ5Ct8N55RlVVjGN2Y0dsXWcM5EZ2n52ZYD
+         7nmPik+rbRI9WJJ+U1bxBa3NymdXzG51qqKYwzjK/xVJWF/8u3wMPBzEiSf1sUApU5zH
+         LCDj1MEI4ZVapPr8IptitbCpseX4zaSqjTNjLTnLGb7vBwdC9vIdCwNog8JUkda0JeHE
+         +VCEbFvoU+/cG6hLrvs2Wn38aCztNrSZejG0MKRttS2/TVkt4XqFSLnUz2M3CyoPZwLz
+         1vtiLQ29AaF7xI9dTdQZ9wyVZm7RjiybtK1bg5lMEdPvoLpFhMv3KDrk4n/mplPXBuId
+         fFvw==
+X-Gm-Message-State: AOAM533bK2GbHmQwp9OB9i4TWCbB60fHvD+KTrOCyvOdXo5s8fqL+rkF
+        Y/8JAU7Ge6yQ44+ZPQfQ1jU=
+X-Google-Smtp-Source: ABdhPJwQcED+VWAeBVffNydbkmf/Dzg6hacntk4cLCxKYdORweEWMtsGZXw8Z53Q3IL5/alu+Wa9eQ==
+X-Received: by 2002:a05:6a00:10ca:b0:3fe:3a9b:2100 with SMTP id d10-20020a056a0010ca00b003fe3a9b2100mr4447738pfu.59.1631404782986;
+        Sat, 11 Sep 2021 16:59:42 -0700 (PDT)
+Received: from Derricks-MacBook-Pro.local ([2600:6c5e:517f:f73e:c13a:5a43:8d62:620f])
+        by smtp.gmail.com with ESMTPSA id o2sm3044886pgc.47.2021.09.11.16.59.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Sep 2021 16:59:42 -0700 (PDT)
+Subject: Re: [PATCH v2 0/5] packfile: use oidset for bad objects
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
- <7d9e67bf-e057-694c-c976-ba19e9521882@web.de>
- <YTziaNywmCMn07IS@coredump.intra.peff.net>
- <120ffa79-d3cb-2e81-1da6-358e7407ec69@web.de>
- <YT0dgTgLVrtS9md6@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a96f8f25-46c6-5d61-6b3d-4b2da2e44566@web.de>
-Date:   Sun, 12 Sep 2021 01:39:52 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+ <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9cdf54db-132e-d771-e177-6673f7ad02bf@gmail.com>
+Date:   Sat, 11 Sep 2021 19:59:40 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <YT0dgTgLVrtS9md6@coredump.intra.peff.net>
+In-Reply-To: <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DPoHb2Y8DlRcFvDIZq+1mcoqQj20lqlD7aUmrPNM6B8umGsYV/9
- wAg5uPvHJlCOujQQGrM0m7o1XAGyYGXCB0fp0KyjMOjPE+US7q13dhahcstmblhENprz/ER
- b+uvMDKWUI5m04WdsDjyrYXA7LoGbJ2pBgga1nIPyvlF/3BehAa88zurjEz6OERC08hqMGc
- //2ub7KLV9CBltvQIPX3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UQrmI1eR9Hc=:m8r+68v/KJTlvnCRvkoyr5
- myuemCVqrPKyYpJcMlocnp11IenBeQKzaEKOIrnWoBOXkx4AfXxiWZEX7DLT0eblciNP6eVOC
- 6VI4LKp6V1imWfDzmbeO2fcW/6KbSqTkYvhBYUwKRNiBzzO4BKr6GzMbi4eN5PBBt68Z1o8c4
- aD4V10FzH6N/Z7qmlX3+ERayRWsv6NhmUY3nTfbTUhPOgwysdKRxE7PkA2I4BzHM6nGQVtEnr
- ytRsdK15+qUPktoEiiooiGX+rKK3MJ0mAFbCHCz0Dm/ag6PTjozoZi9eBJYookhkf9sw5l7YI
- XI9/CNdz1ePRIy1TTe/apydT2MtOUe+lS9t1iECPkZ8ZheGOuDfSCLaMRsmMWBWFTJ0Efbkfe
- FQH0BXinZ/sHKrGCOD/5Vakpvju768HUgKD1LR6XnKA8wVG6sx7QC5LwM0aj/iERiw+/izmfQ
- 1DutTH4RmeyXgB+9QNI04hxSIiGS4y+Ok66E21y8aLGobOGsPBcMz0tW1KHBV1qm7SafDq9wl
- bjjc419Bhd5oT4z4MwlqmBKDDK7aLTd/rudORh6Gjk6SkhZsSdASgqHdJjhnrkLbneXhI5hXX
- q8eYh1mvijAIkgKT0U/AgGur08huqabeaNYkBgkKjw39kv9gQoUfc6qSawseCNzkcMScqnJ8y
- fyupJPZXCp4JnTOT0Tawj4vu6spw2HdaQ45OVbIRFDdP7uKH9ndBjLcAsnY5k97JuDod5Mt+6
- ghJdUstWuZiko4L7VLav28BZAYo/9hP7B3ZLnmpan2oqz0IKm25XQrXsr52VGb1XOqocmNsae
- tiY/CKy2zMDxr4swpO7R5+GGVy5Zgci4AabYNEx+V5xfsGg9gnGnZjPFNCrRheMJfZ7R0D6ee
- 6Lqza0fofzdTwS7CVkQYQu7Zsrps/utqKtxIGR7o4MC9NVl3W4QJwGE6OganpOPmu8j1LDLs1
- 7kcrSrPfusGE5kU0BGDwtczYhAFlAV4NDHZi4+3f77OTv4pBDD73Yyhx8ZfZYdbIrSI7Lq2em
- OiO0e1ZjLbYQG2aF5clV0TXpDXsZevhw7HgwzC98us74afsT3GahBlMeWjFaJRAbAWbULHxhF
- PR+QhVDssy6xDI=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.09.21 um 23:20 schrieb Jeff King:
-> On Sat, Sep 11, 2021 at 10:31:34PM +0200, Ren=C3=A9 Scharfe wrote:
->
->> Am 11.09.21 um 19:07 schrieb Jeff King:
->>> On Sat, Sep 11, 2021 at 06:08:42PM +0200, Ren=C3=A9 Scharfe wrote:
->>>
->>>> @@ -304,8 +307,7 @@ static int nth_midxed_pack_entry(struct repositor=
-y *r,
->>>>  	if (!is_pack_valid(p))
->>>>  		return 0;
->>>>
->>>> -	nth_midxed_object_oid(&oid, m, pos);
->>>> -	if (oidset_contains(&p->bad_objects, &oid))
->>>> +	if (oidset_contains(&p->bad_objects, oid))
->>>>  		return 0;
->>>
->>> So we get to avoid the nth_midxed_object_oid() copy entirely. Very nic=
-e.
->>>
->>> Compared to the code before your series, we still have an extra functi=
-on
->>> call to oidset_contains(), which will (in the common case) notice we
->>> have no entries and immediately return. But I think that's getting int=
-o
->>> pointless micro-optimization.
->>
->> Right.  I measure a 0.5% slowdown for git multi-pack-index verify.  An
->> inline oidset_size call avoids it.  That's easy enough to add, so let's
->> have it!
->
-> I don't mind that, but I wonder if we can have our cake and eat it, too.
->
-> oidset_contains() is short, too, and could be inlined. Or if we're
-> worried about the size of the embedded kh_get_oid_set() getting inlined,
-> we could do something like:
->
->   static inline int oidset_contains(const struct oidset *set, const
-> 				    struct object_id *oid)
->   {
-> 	if (!oidset_size(set))
-> 		return 0;
-> 	return oidset_contains_func(set, oid);
->   }
->
-> That saves callers from having to deal with it, at the expense of a
-> slightly complicated oidset implementation.
->
-> I guess it's an extra integer comparison for callers that _do_ expect to
-> have a non-empty set. So maybe it is better left to the caller to
-> decide whether to optimize in this way.
->
-> (A totally inline oidset_contains() avoids the extra check, but possibly
-> at the cost of larger code size).
+On 9/11/21 4:31 PM, René Scharfe wrote:
+> Replace the custom hash array for remembering corrupt pack entries with
+> an oidset.  This shortens and simplifies the code.
+> 
+> Changes since v1:
+> - inline oidset_size()
+> - inline nth_midxed_pack_entry() early
+> - use oidset_size() to avoid a function call if no bad objects exist
+> 
+>   oidset: make oidset_size() an inline function
+>   midx: inline nth_midxed_pack_entry()
+>   packfile: convert mark_bad_packed_object() to object_id
+>   packfile: convert has_packed_and_bad() to object_id
+>   packfile: use oidset for bad objects
 
-I wondered the same.
+These were easy reads, and I understand the value of them.
 
-Inlining oidset_contains() would follow the spirit of khash.  It adds
-16KB to my build (ca. 688 bytes per caller).  Hmm.
+I initially hesitated to support the drop of
+nth_midxed_pack_entry(), since it was designed with things
+like midx bitmaps in mind (specifically, to also support
+lex-order-to-stable-order conversions). However, it seems
+that the midx bitmap series by Taylor is succeeding without
+needing such a translation.
 
-I expected the hybrid approach with an inlined emptiness check and a
-shared actual contains function to be as fast as the original code, due
-to caching.  I actually saw the 0.1% slowdown of git multi-pack-index
-verify when I added a fake bad object at the end of prepare_midx_pack()
-to simulate a non-empty oidset.  Hmm!
-
-Both are probably defensible, but for this series I took the more
-targeted approach to limit the impact.
-
-Ren=C3=A9
+Thanks,
+-Stolee
