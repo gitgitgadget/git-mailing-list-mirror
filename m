@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C89CC433FE
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D59DC433F5
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 112F9611F2
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20AEC610F8
+	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 09:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235613AbhIKJfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 05:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
+        id S235625AbhIKJfp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 05:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235593AbhIKJfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 05:35:41 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4E8C061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:29 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n7-20020a05600c3b8700b002f8ca941d89so2998166wms.2
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:29 -0700 (PDT)
+        with ESMTP id S235481AbhIKJfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 05:35:42 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D5DEC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:30 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id q26so6256490wrc.7
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 02:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tonfJRNugWaQnE1NJWdysbaFoIv02QBwjz55j2hSIQ8=;
-        b=bC5SUCysbmEDTdJGlbgVGysPZp2RKxtsJ5NSn1wm0cdw+RLwijNZFvI8mIpjWXC8n1
-         p+yFbQQQ/SpGyi0qCGvKEXArnIqPlIzAZP4Q+cJ/SsoNy8lg2OW+wq8pIn5cwcvnBE3B
-         32WBf+VvxFeqbnQ3XRisLyLKwDAHGzMc17rD+lxE3R3Hh6x0+MWnSyLXYYM3LRXwFk0q
-         pUjktiBm2FPYaqvyIZxkGBipZKeVV4swQRVnArqCy2GQPwgWTFpAKtYx8Dl5nT1170Rk
-         K0Uw8dU0zhMQPZJDBk+3LZ9YvdOJCStIwE/7xY+y4FveoXxxkv0O2TjkLKeDpW5kUQ1u
-         UxqA==
+        bh=8CUJ9JOnHzecSgSzLoU4bq9Gr8Ksw8h20GZiupK5mLo=;
+        b=ocfKPZJyzt1VGy3aurFJZQCUNxQJP+Ljmq2mwqEQwxNBFGNv8+lmNohD+629nEpE0u
+         1d3Hw6cg/P9OC2o6lIzABt99mUbKxJJkPlZNln/4K9lWNyPNTQDrdKQTI0doMpA1azww
+         nUS/NNrRiURuBhC8lyHM05lPXfKhb9hQq1ea8BCanhqoJQj8YD8axJLRAtHZj/giq1T+
+         REjtyVhERnKDMfayuwizD7Gi/ZwKMF6YJYQzbgaXNalz4F5AhhGsATgk06nYwlvAgrj7
+         E9b25hH3Ic1+AyfXFJmyBYQwsg4EkEv52AJ6qID7w/t1Bt13K8xX4TaZNBhH9I/zRxSN
+         g18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tonfJRNugWaQnE1NJWdysbaFoIv02QBwjz55j2hSIQ8=;
-        b=kzdYvh+Nd4FDWKUxCjmYk+kq1UMuVkbav2RtXhEDpDgdTUGC4K1ptOHNm61xBkutyF
-         jZbkZjbdvJP8l5tMF3Ell8I7MzSVCfG6nRI6qPl7qyVZCUNLQvrJk+qyq5JLyBNCXUJb
-         rE09Y+tothlhzmXNSqbVx+BnXtnZ7EjY7Ly2uRNM32zel0skxm8bRHNRx7fgkQ2AXb57
-         9olLxov9UJGPkHO8W4ln4O+TWH/WqAsJkj7mDzVcpSBmzUMOmH73NhaQs/w2DYNzrdVV
-         hZznIOumaaqtpaHyLboPzbEvmS6YbMwN84TrwegGJlp2Il43rFRiNFff3E9BNnU6mhGK
-         VmgA==
-X-Gm-Message-State: AOAM5309ElwzEk3agMR3D96ivEcoRjK4cnbn0F8kBx7iyTzfbVJlEJrq
-        xb04Op0XoBe1xh4XwauK3rHz7ARx9Z1WLg==
-X-Google-Smtp-Source: ABdhPJwgUhjS6aDc/ydNFMS0cqw/m9b8mJ7RCx3scWprQTX1LZdYvg9J3YJibfAwZ6WPWFt0Vkvbow==
-X-Received: by 2002:a1c:a747:: with SMTP id q68mr1957254wme.180.1631352867787;
-        Sat, 11 Sep 2021 02:34:27 -0700 (PDT)
+        bh=8CUJ9JOnHzecSgSzLoU4bq9Gr8Ksw8h20GZiupK5mLo=;
+        b=fbjP7OCZHEeKY4fkRbj1sfXVGBfmt2Xc/k2ZUReZClgRrNOZvDsJSopUvKpd6OCDGj
+         SvaV4TGU6tSvFWfbdBosgXtMep1Rafn+fnejDGtpCqExzG0/rkPdPF3RszyElBBW4aTc
+         fPSrBrWTvQulrdpwtJZXRdqWsq27sO8kvX1wARSh+KSa0kiGrfjgL6r69MPiPkdMfG5D
+         Yr8tOjZvw4AhxiQAf1ioLvw1CyT7cfVgrSGrAHj0QnFmnx5LKFTGWbqaCaxdVMu8FCUF
+         yNax30BynKdvzv+RBe+ngOn4VU5+eKp4zjzB2cmrBSS07j1kbvC4aCdumXmY3axPuzip
+         EOsA==
+X-Gm-Message-State: AOAM533VepExk8B9FVle1bXXPDShbxc33NjTX0CtOQTGKYXsR4BeGzgc
+        emXDrVci7rcbRu+D7IXwi1de9v33mqZ1WQ==
+X-Google-Smtp-Source: ABdhPJyqHu8dCqGYzb4IRnAMlcqmKg0rfp5bN6wDpZNwU/3wL9invvZYy9kG02fFbBssBfVPwxnBzg==
+X-Received: by 2002:a5d:58e9:: with SMTP id f9mr887985wrd.325.1631352868665;
+        Sat, 11 Sep 2021 02:34:28 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id s10sm1161753wrg.42.2021.09.11.02.34.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 02:34:27 -0700 (PDT)
+        Sat, 11 Sep 2021 02:34:28 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Daniel Stenberg <daniel@haxx.se>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/9] INSTALL: mention that we need libcurl 7.19.4 or newer to build
-Date:   Sat, 11 Sep 2021 11:34:17 +0200
-Message-Id: <patch-v3-3.9-dce6520a5c9-20210911T092751Z-avarab@gmail.com>
+Subject: [PATCH v3 4/9] Makefile: drop support for curl < 7.9.8 (again)
+Date:   Sat, 11 Sep 2021 11:34:18 +0200
+Message-Id: <patch-v3-4.9-98cdb7c35a9-20210911T092751Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.984.gea2c3555113
 In-Reply-To: <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
 References: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
@@ -78,30 +78,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Without NO_CURL=Y we require at least version "7.19.4" of libcurl, see
-644de29e220 (http: drop support for curl < 7.19.4, 2021-07-30). Let's
-document this in the "INSTALL" document.
+In 1119a15b5c8 (http: drop support for curl < 7.11.1, 2021-07-30)
+support for curl versions older than 7.11.1 was removed, and we
+currently require at least version 7.19.4, see 644de29e220 (http: drop
+support for curl < 7.19.4, 2021-07-30).
+
+In those changes this Makefile-specific check added in
+0890098780f (Decide whether to build http-push in the Makefile,
+2005-11-18) was missed, now that we're never going to use such an
+ancient curl version we don't need to check that we have at least
+7.9.8 here. I have no idea what in http-push.c broke on versions older
+than that.
+
+This does not impact "NO_CURL" setups, as this is in the "else" branch
+after that check.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- INSTALL | 4 ++++
- 1 file changed, 4 insertions(+)
+ Makefile | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/INSTALL b/INSTALL
-index d593f628749..795b02b6f96 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -144,6 +144,10 @@ Issues of note:
- 	  not need that functionality, use NO_CURL to build without
- 	  it.
- 
-+	  Git requires version "7.19.4" or later of "libcurl", to
-+	  build (without NO_CURL). This version requirement may be
-+	  bumped in the future.
-+
- 	- "expat" library; git-http-push uses it for remote lock
- 	  management over DAV.  Similar to "curl" above, this is optional
- 	  (with NO_EXPAT).
+diff --git a/Makefile b/Makefile
+index 429c276058d..378f58b950d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1436,15 +1436,8 @@ else
+ 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
+ 	PROGRAM_OBJS += http-fetch.o
+ 	PROGRAMS += $(REMOTE_CURL_NAMES)
+-	curl_check := $(shell (echo 070908; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+-	ifeq "$(curl_check)" "070908"
+-		ifndef NO_EXPAT
+-			PROGRAM_OBJS += http-push.o
+-		else
+-			EXCLUDED_PROGRAMS += git-http-push
+-		endif
+-	else
+-		EXCLUDED_PROGRAMS += git-http-push
++	ifndef NO_EXPAT
++		PROGRAM_OBJS += http-push.o
+ 	endif
+ 	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "072200"
 -- 
 2.33.0.984.gea2c3555113
 
