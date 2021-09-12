@@ -2,162 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C80C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 15:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E38D6C433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 16:16:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 23C5161050
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 15:43:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF3C6610CE
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 16:16:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235822AbhILPow (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 11:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbhILPov (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 11:44:51 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DF7C061574
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 08:43:37 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z94so4212531ede.8
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 08:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5Y210EtAYNw9H9PtPHHFFnTtpnJM8VnKy7hT/GFHbGo=;
-        b=EiLx2pvPZ6MzKLEba+KSnBHF3T7Y55x+D41aHdRHBQCmpFHh3bdX9Ng4iohGZ6/SxR
-         Y476eQs2IdLDZMGdCJ/+U7dCsKQd3nzvsejk0YafwJKY+ir2r3DKIM3ARgwB3L/fcWX1
-         xDBqtPfshCw2Fb0DNwN8VdZ1D58/Lbs5ymTgiDTOeZB22ndWj8AwFSt/o7yC63FwH92+
-         mb/RX48iZyuCHe51fCHFW+um/O4x+p7asag2DlSCWV5KQNRiwCBcShELqvg0VqOxq1nN
-         AI7r0Rf4WcTM0O5xUXMK+yewn4KBtKH+nfRUiwxWQp/gR/wi9qKzTV7DMqUB2e/kV2cC
-         5Wvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=5Y210EtAYNw9H9PtPHHFFnTtpnJM8VnKy7hT/GFHbGo=;
-        b=PLaGKHHQN8HNywPx3EEateWruz2MBqhKJ/JbzeklZs7Qvz9a1MLEiu8QTrzxNdIE/8
-         pxpLg7fMWlZCSFtsQrv91UuV1oyaV5+Ca0RSR1Rk3b8+/hsg0N756grIggKwc6r+iQVx
-         feKOhsbOcFGYYkKcQESd/V14reGs7sGy+fwdiNeur+Ug/F9oO8FJtvqNWqyfStPa3wZL
-         WM/ZG+m7rvPLWEP85QA3g4xJok4IvCaVvyHfuaQsi/UU4+d3Hdn8SL9NheIGVvBr4RJc
-         BcN8IUKxzpVExWRLKgrxYU/+gtmdr8VsSoySxfMTtOqnYaaXP/EH54h2NiEWDp9FO3KR
-         oeIQ==
-X-Gm-Message-State: AOAM532xKaMKHWCKmR+aJXUN7nlXIeuQGNVtWurT+TV7+pyoWuMjlfSs
-        g+NFukP/k/FnwKo2nDQJeSU=
-X-Google-Smtp-Source: ABdhPJyb3frswqXAo2TkqAHg6bY7nonZi+z3//3bSBTqq2w+1jMlaX31ZUUd63cNH26jen6hDQ9MOA==
-X-Received: by 2002:a05:6402:27c6:: with SMTP id c6mr8466408ede.111.1631461415448;
-        Sun, 12 Sep 2021 08:43:35 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h2sm2518138edd.43.2021.09.12.08.43.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Sep 2021 08:43:34 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs mode
-Date:   Sun, 12 Sep 2021 17:15:18 +0200
-References: <cover.1631331139.git.me@ttaylorr.com>
- <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
- <87ee9va0ie.fsf@evledraar.gmail.com> <YTzYYfBGqG87O5mN@nand.local>
- <CAPig+cRAKJyzuMwPNdmC+BobrMjk5TF-o3Ort8R0E77ij=g6_A@mail.gmail.com>
- <YT1kDVBHtPhxc6Wk@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YT1kDVBHtPhxc6Wk@nand.local>
-Message-ID: <87bl4x94ux.fsf@evledraar.gmail.com>
+        id S231451AbhILQRW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 12:17:22 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:39794 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229653AbhILQRV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 12:17:21 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mPS9D-0007yr-Be; Sun, 12 Sep 2021 17:16:06 +0100
+Subject: Re: Question about timezones in commit & tag dates
+To:     Fabian Stelzer <fs@gigacodes.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <b39aab0a-bf53-9e33-59a7-d4f1a06e72a7@gigacodes.de>
+ <87fsu997wn.fsf@evledraar.gmail.com>
+ <b121acdf-354f-c896-d2f6-b221ea2443c1@gigacodes.de>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <1002242a-a353-a904-5c1a-f23b0c5ed1a3@iee.email>
+Date:   Sun, 12 Sep 2021 17:16:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <b121acdf-354f-c896-d2f6-b221ea2443c1@gigacodes.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Sep 11 2021, Taylor Blau wrote:
-
-> On Sat, Sep 11, 2021 at 10:08:44PM -0400, Eric Sunshine wrote:
->> On Sat, Sep 11, 2021 at 12:25 PM Taylor Blau <me@ttaylorr.com> wrote:
->> > On Sat, Sep 11, 2021 at 12:05:05PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->> > > Before calling string_list_clear(). I.e. we didn't strdup(), but dur=
-ing
->> > > free() we pretend that we did, because we did, just not in
->> > > string_list_append().
->> >
->> > Good catch. It's kind of gross, but the result is:
->> >
->> >  static void read_packs_from_stdin(struct string_list *to)
->> >  {
->> > -       struct strbuf buf =3D STRBUF_INIT;
->> > +       struct strbuf buf =3D STRBUF_INIT_NODUP;
->> >         while (strbuf_getline(&buf, stdin) !=3D EOF) {
->> >                 string_list_append(to, strbuf_detach(&buf, NULL));
->> >         }
->> > @@ -107,6 +107,11 @@ static int cmd_multi_pack_index_write(int argc, c=
-onst char **argv)
->> >                 ret =3D write_midx_file_only(opts.object_dir, &packs,
->> >                                            opts.preferred_pack, opts.f=
-lags);
->> >
->> > +               /*
->> > +                * pretend strings are duplicated to free the memory a=
-llocated
->> > +                * by read_packs_from_stdin()
->> > +                */
->> > +               packs.strdup_strings =3D 1;
->> >                 string_list_clear(&packs, 0);
+On 12/09/2021 16:07, Fabian Stelzer wrote:
+> On 12.09.21 16:21, Ævar Arnfjörð Bjarmason wrote:
+>> On Sun, Sep 12 2021, Fabian Stelzer wrote:
 >>
->> An alternative is to do this:
+>>> Hi,
+>>> while working on correct key rollover and verifying signatures for past
+>>> commits for the ssh signing topic i am trying to understand how Git
+>>> deals with timestamps for commits & tags.
+>>> For ssh signing the user will manage expiration times within their
+>>> allowedSigners file. Those timestamps do not carry a timezone and i
+>>> would assume a user (or automatic generation of this file) will assume
+>>> the systems timezone for them.
+>>> Therefore i wanted to pass the commit & tags timestamps adjusted to the
+>>> system timezone to make sure key rollover will have no gaps or failed
+>>> verification's especially when commit and system timezone differ greatly
+>>> and might roll over to another day.
+>>>
+>>> However the commit & tags structs only seem to carry the objects
+>>> timestamp as is, simply ignoring any timezone information. For the ssh
+>>> feature i can easily enough parse the ident line again from the object
+>>> header. But while looking at the usage of the existing date fields i can
+>>> see that objects are sometimes sorted on and compared by these dates.
+>>> When commands provide cut off times (--since) i think they might include
+>>> or exclude commits erroneously when they were made in a different
+>>> timezone around the cutoff date. ("log --since" indeed gives me some
+>>> unexpected results when mixing multiple timezones. Based on some simple
+>>> testing i think it just stops output when a commit falls outside of this
+>>> window, even though there might be one before it wich is within)
+>>>
+>>> Is my understanding of this correct and this the expected behaviour?
+>>> I think generally for git this does not matter much. But in certain
+>>> situations this is problematic.
+>>>
+>>> I would have assumed that git would either add the timezone as well or
+>>> adjust the commit timestamp upon populating the date field in the commit
+>>> struct to UTC but i could not find anything like it.
+>> Timezones are ultimately display information that's confusing to humans,
+>> but not machines. Machines just need to deal with epochs, or when a
+>> human supplies them a date convert a formatted date + timezone pair to
+>> an epoch.
 >>
->>     struct strbuf buf =3D STRBUF_INIT;
->>     ...
->>     while (...) {
->>         string_list_append_nodup(to, strbuf_detach(&buf, NULL));
->>         ...
->>     }
->>     ...
->>     string_list_clear(&packs, 0);
+>> So in the key expiry case, I'd expect that any such system would say
+>> issue keys right now, now as in time(NULL), and we'd set those keys to
+>> expire after some time, say 1 day, so time(NULL) + 60 * 60 * 24;
 >>
->> That is, use string_list_append_nodup(), which is documented as
->> existing precisely for this sort of use-case:
+>> If you're in UTC that might yield a very satisfying (to humans, a
+>> machine won't care) expiry time. I.e. you'll get keys issued say at
+>> midnight, and expiring midnight the following day.
 >>
->>     Like string_list_append(), except string is never copied.  When
->>     list->strdup_strings is set, this function can be used to hand
->>     ownership of a malloc()ed string to list without making an extra
->>     copy.
->>
->> (I mention this only for completeness but don't care strongly which
->> approach is used.)
+>> What you're saying sounds to me like you're conflating the two
+>> things.
+> You are correct. I somehow thought the stored timestamp would be in the
+> specified timezone when it is not. The timezone is only used as
+> reference for display.
 >
-> Thanks for a great suggestion; I do prefer using the existing APIs where
-> possible, and it seems like string_list_append_nodup() was designed
-> exactly for this case.
+>> Anyway, maybe I've misunderstood you. I just don't see how something
+>> like key expiry would need to concern itself with anything but
+>> epochs. If you conflate timezones with that and say "here's a key, it
+>> expires at mindight" surely you'll have some keys last mere seconds,
+>> others 10 hours etc.
+>>
+> The ssh allowedSigners file specifies key expiry in a "%Y%m%d%H%M%S"
+> format without any timezone information. So i have to assume the systems
+> timezone is used.
+> But correcting my misconception of the stored commit timestamp i can
+> simply present it in the systems timezone for ssh to compare it with the
+> specified expiry date.
+>
+> Thanks for your help!
+It is possible to have, near the international date line, places that
+are more than 24 hours apart (local/calendar time), E.g compare Pago
+Pago (-11) and Apia (+13).
+In the wrong conditions, a 24hr expiry, using local/calendar time, could
+have already expired at a near neighbour, because of the shift in their
+local times. It ('date/time') is tricky confusing stuff without careful
+consideration of the standards and terminology [1,2]. Regular folks can
+easily be confused ;-) Sometimes things need spelling out rather more
+than one may have expected/hoped.
 
-I think Eric's suggestion is better in this case, maybe all cases.
-
-For what it's worth the alternate WIP approach I was hinting at is some
-version of this:
-https://lore.kernel.org/git/87bl6kq631.fsf@evledraar.gmail.com/
-
-I might change my mind, but I think ultimately running with move of the
-string_list_append_nodup() approach Eric points out is probably the
-right thing to do.
-
-I.e. it's the difference between declaring that a string list is "dup'd"
-upfront, and whenever we insert into it we make sure that's the case one
-way or another. Then when we clear we don't need to pass any options.
-
-It does mean that instead of extra clear functions we need to have
-*_nodup() versions of all the utility functions for this to work,
-e.g. in trying to convert this now there's no
-string_list_insert_nodup(), which would be needed.
-
-Or maybe the whole approch of the string_list API is just a dead-end in
-API design, i.e. it shouldn't have any "dup" mode, just nodup, if you
-need something dup'd you xstrdup()-it.
-
+[1] https://en.wikipedia.org/wiki/System_time and
+[2] https://en.wikipedia.org/wiki/Unix_time
+--
+Philip
