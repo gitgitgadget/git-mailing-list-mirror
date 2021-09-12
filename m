@@ -6,87 +6,91 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38E3DC433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 01:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31E82C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 01:57:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1954061004
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 01:51:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F261C610C8
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 01:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232479AbhILBwV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 21:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42218 "EHLO
+        id S234748AbhILB6R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 21:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbhILBwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 21:52:21 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABEFDC061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 18:51:07 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id l10so6242439ilh.8
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 18:51:07 -0700 (PDT)
+        with ESMTP id S230212AbhILB6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 21:58:17 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB012C061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 18:57:03 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id z1so7408825ioh.7
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 18:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=c7O4qnvaa4A6O33AOqR2UqQ/SGiim7OnnX0sX2ddt4c=;
-        b=dBkpPGlruFt4nyhmGdAn4M9k/JXic8PWNybQGPbfmjeFP88v3BF54nGTnGYibhfAti
-         auegbcu19WUV3zl4b3C/4r4BtwA9gLM2Q71uyiHf9iZZ9aCqHYSMxWby05BFwihB+xGk
-         KqOnXVFaTs0zYCdmvaqAia0WAUQaWWkvbAH/Inob51STGZ60KUGYOUX8myYL0lbs4lAK
-         gGtgzvCT7Yv0BxcJdPqzgvTLPkXq+MtmULDQjzpX92NCXUBD0mFHlS0rJ0UgyGcPdbEw
-         go0YXUY9rHIhQH5wPKMLtw3XMlK4sCHamNmnuJJcPNRaBPbbzPj2OXQQdkniOapXKyET
-         bS2w==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=PXsqirs73ZoUDdjJSWeUM+GpfSEOIgH6FsD0hVBh5hg=;
+        b=fjThcqUA/4GLZ2w4ijoli4ktMFB3S2L6BchzclJ/vNutKWw64LfYSv7i4u/xnLqc99
+         FDiLBplKp+L2icqmAp4JR/9/QleHRw3F/R273P0gnhsbuWtPA/hPIvq1ajoy5yeaRsM3
+         C25GFqqRRPT5GEssjaKxpbYzqT7nBsWa4BUlHjJmp5sAoRzIcq5W3fzj9vvflIvydZDL
+         Nwbzd69iVHwr/uH+j0LDnUhvCxfEp87ygrSAc0N21TlXGYXPev+juhkpn5jw9OoqcTly
+         9geW0KHv1X3x7iMEfxLiJyL32eGNl/CkHt65roUCAGCpRhDgXABJ/shMW5cp1W0zS35r
+         6RaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=c7O4qnvaa4A6O33AOqR2UqQ/SGiim7OnnX0sX2ddt4c=;
-        b=pgdd1nH6TcqeygD9OSwbJxv15cG0pgjmg/+y56AtAaxPSvuTV0iDNbAZQFoDSbjb++
-         GwNBEoPrJHQdpht0jKV/JWtb3ymhRhiQ+MCEEgH0yW3RUK6qfyx4ZKIcKkg+LLP+6Nni
-         xiHfRXzDgXj0nNm66flcGV+Ji9xn/3FNsHO7iQklVNcn5kZ4OOFtbBOjDAFzeHAZvnzc
-         W4WVQpggZYu1wDsaNKlSCLCXwdXI64gbLtooltFZxrODlQMiftA4l0oY67dWLN2/d2SX
-         RpjwdlO8bea9dBRklnbkmuvhVuCo5tpk3VZbDin2H/7AWx4kh3iNvRbqGdaVI4moP7zQ
-         qf6g==
-X-Gm-Message-State: AOAM532kFD51TuaT0l9KC++YpNgjBfPUzV9qgqPFDdHQeYqJC01HolnL
-        G14QKF7XZoVZGTE0T/Q/SUZyBQ==
-X-Google-Smtp-Source: ABdhPJzWMykT+wIJf1mdIyIO45dkgkq77K9VAgYsbpRwuz2JA2kBTXw21aiuk1Onz9d9kfV7IIgXJA==
-X-Received: by 2002:a05:6e02:120e:: with SMTP id a14mr3237631ilq.222.1631411466032;
-        Sat, 11 Sep 2021 18:51:06 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=PXsqirs73ZoUDdjJSWeUM+GpfSEOIgH6FsD0hVBh5hg=;
+        b=VRbnfGEon8nSS/T+x9SRUfdQVpxG7JdC8SfLbwA/NQXjt9rrTOr9xYri78eDgP4+vF
+         PCeNPPPj2chII0IWzZ9Rsv679VozCZRREbX6tKUQMTTVn3Lhsc0I9Tj0czMga+uVW0aQ
+         udxbcVhFGL1dHMP1PeooeaRZ1sztJY5S8UggRKSoS+wXhFkcye5tNVPhTO/nnJTiRYPQ
+         JrMtvdB/A2qhM0phKfta91eoamAXhIsEoXgFOYc5hDOa2VJ2k6m4PdUkygZZjah3KQLU
+         wFQARcxVLNMF1Ndsjmd8JjemBH7uBt4CuCChL4MWlDefVxsy09oJ5RfatoD0jg11Sguu
+         lBQw==
+X-Gm-Message-State: AOAM532cmRTX9v5DRqEsYujljjoy6GMbEF2csJGL5KmnwnSOw4IkSmdJ
+        zp0tqL6r7jzEup+IKEBwtz074A==
+X-Google-Smtp-Source: ABdhPJx3FAQVRa6lmWQKI8n4kFRpGrQZZHPym8tuPAGzQT4Xz0PKBucRMJjsZhcVboew9yQh/lf8eg==
+X-Received: by 2002:a05:6638:1347:: with SMTP id u7mr3951358jad.34.1631411823210;
+        Sat, 11 Sep 2021 18:57:03 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n2sm1920259ile.86.2021.09.11.18.51.05
+        by smtp.gmail.com with ESMTPSA id i20sm1901662ila.62.2021.09.11.18.57.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 18:51:05 -0700 (PDT)
-Date:   Sat, 11 Sep 2021 21:51:04 -0400
+        Sat, 11 Sep 2021 18:57:02 -0700 (PDT)
+Date:   Sat, 11 Sep 2021 21:57:02 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] packfile: use oidset for bad objects
-Message-ID: <YT1dCAuCE7xIIIk/@nand.local>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
- <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
- <9cdf54db-132e-d771-e177-6673f7ad02bf@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2021, #03; Fri, 10)
+Message-ID: <YT1ebpnuRhtS7oQl@nand.local>
+References: <xmqqsfycqdxi.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9cdf54db-132e-d771-e177-6673f7ad02bf@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqsfycqdxi.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 11, 2021 at 07:59:40PM -0400, Derrick Stolee wrote:
-> I initially hesitated to support the drop of
-> nth_midxed_pack_entry(), since it was designed with things
-> like midx bitmaps in mind (specifically, to also support
-> lex-order-to-stable-order conversions).
+On Fri, Sep 10, 2021 at 03:11:05PM -0700, Junio C Hamano wrote:
+> * tb/multi-pack-bitmaps (2021-09-09) 29 commits
+>
+> [...]
+>
+>  Will merge to 'master'.
 
-I didn't know that nth_midxed_pack_entry was designed with either
-purpose in mind, since it predates midx bitmaps by quite a bit.
+Hooray! I could not be more excited to see this get merged, since it has
+been quite the effort in designing, implementing, testing, and
+submitting these patches over the past year and a half.
 
-> However, it seems that the midx bitmap series by Taylor is succeeding
-> without needing such a translation.
+Thanks very much to the many reviewers (Peff, Stolee, Ævar, Jonathan Tan
+and you all come to mind; apologies if there were any that I missed
+along the way!) who took a careful look not only through this monstrous
+series, but also the many leading up to it.
 
-Right, it looks like that function is only called by fill_midx_entry()
-where it was inlined.
+(A small side-note, I think that my small series in [1] which builds on
+top of this one was missed, but otherwise is ready to be picked up).
 
 Thanks,
 Taylor
+
+[1]: https://lore.kernel.org/git/cover.1631049462.git.me@ttaylorr.com/
