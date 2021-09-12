@@ -2,88 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D4E3C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 19:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC5F0C433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 20:29:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04F646103D
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 19:02:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4D8661051
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 20:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235283AbhILTDO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 15:03:14 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50392 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234680AbhILTDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 15:03:13 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31C0B157CBF;
-        Sun, 12 Sep 2021 15:01:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=izKs1FiBw7ShIvAOdMFHypnTf8okFs4RWk/S7Z
-        pwMvQ=; b=UG/KR7XB1AcE/ThgmrY5JoHnPOFd2XurjhUyEZu45/UMd1k5JolCSi
-        2RcDLmjtqWO8GkSsIt8jIZGfz2m4tgtA4/sKEAPsBrA0cAYIz8IvUqO5f/jjM4cj
-        DOLkIPNSyTOx4YamflNFa0xwNhcsZgGpvSgf6dx4h9IqOoaBgFnEc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A773157CBE;
-        Sun, 12 Sep 2021 15:01:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72E18157CBD;
-        Sun, 12 Sep 2021 15:01:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH v3 0/9] post-v2.33 "drop support for ancient curl"
- follow-up
-References: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
-        <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
-        <YTzBUFY4p6obEqF+@coredump.intra.peff.net>
-Date:   Sun, 12 Sep 2021 12:01:54 -0700
-In-Reply-To: <YTzBUFY4p6obEqF+@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 11 Sep 2021 10:46:40 -0400")
-Message-ID: <xmqqilz5lisd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236285AbhILUa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 16:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58178 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236059AbhILUa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 16:30:27 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 892F6C061574
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 13:29:12 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id x10-20020a056830408a00b004f26cead745so10476140ott.10
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 13:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UlFfx408IPM+3ydBbelf9ru/HIFGJUfuslxJ20KJWLo=;
+        b=gBseeKiitl/fa2twspTyiPW0ku3gf7kWFvi9CFSkMOS6Q4rJhMxtA5ITxCxmYa1njp
+         +NHhXj0S7zvofRsiK6rX6IIX4OKjqCKKRdrOtyyWcoseMXwoEvOjSw8W96EtpwcZE6M0
+         SgOBZV2QE1LrFPB96XtCi/r/72AyCRNkK/+o1lmK6h3kW9dWdLuTCyS/5JRdmSekezTK
+         AvtH5iSS1K5xKf21kKNh1Nn9kYEu46FZSTAX8MLoHsRZkJPL6qT/sTG6sx1Fq2ta+N6K
+         8HhYT7kozp8xZB2gd6qpJAFnAzOyV70KAScP8E7VjTn0w9K9rN9GvBK0dC3PqmMhdtNe
+         +JCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UlFfx408IPM+3ydBbelf9ru/HIFGJUfuslxJ20KJWLo=;
+        b=kN/ek043W9dY43jTb9p0UUdd88LyeGDXZpyIHVDxvdUR+aCtm2q9pl2h+ehpFy9QrE
+         xz4ItXj/31hXu4UyclpG3JcLJMTcopZP0dINY9gGtKi+RqrpzJjQ2gbCNNITs5Nvp1P0
+         NaqbLXk6i0NipSWKBVZjlxKOMOAwz9HRZ2xOz2UXzCQc9X1TO0T6wYtmtrx65GXEDKTp
+         Qp+3P+M/il5MqZv2A7iGvvzhw7bBuRuFDO5GMfbAlIRCfWTUhtJpx8qQTrdqVKLeTSP6
+         cE/DQwtknpWy3vU1mirGIYfcw3Nf5yPTMAkxSN2vHdM8+Iliof2RLuAkvpG0dCC1PByX
+         9iAQ==
+X-Gm-Message-State: AOAM532nOzg4Lmiy+p7liIZoDAFq8OjDg6iyWc39l23gBZo+UNq5lYxO
+        cp9QRW1sK8ulH1Fbzk98ftg7DMqgoOQ=
+X-Google-Smtp-Source: ABdhPJysGnurXVNb3hp1MBjmKUYy7ycAGnXuCR8N4B+m3zIKMHqPC+xbWbY4Rfwf218WcAxqoSY5Ag==
+X-Received: by 2002:a9d:7b48:: with SMTP id f8mr7181448oto.296.1631478551654;
+        Sun, 12 Sep 2021 13:29:11 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id w9sm1345162oti.35.2021.09.12.13.29.10
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Sep 2021 13:29:11 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     lehmacdj@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH 0/3] windows: allow building without NO_UNIX_SOCKETS
+Date:   Sun, 12 Sep 2021 13:28:27 -0700
+Message-Id: <20210912202830.25720-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.481.g26d3bed244
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E6670000-13FB-11EC-9B15-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Eventhough NO_UNIX_SOCKETS was specifically added to support Windows,
+it might not be necessary in the future, because Windows added support
+for Unix Sockets in late 2017.
 
-> Probably not worth a re-roll, but maybe worth fixing up while applying:
->
->>  2:  4b653cee2d3 !  3:  dce6520a5c9 INSTALL: mention that we need libcurl 7.19.4 or newer to build
->>     @@ Commit message
->>      
->>       ## INSTALL ##
->>      @@ INSTALL: Issues of note:
->>     - 	- "libcurl" library is used by git-http-fetch, git-fetch, and, if
->>     - 	  the curl version >= 7.34.0, for git-imap-send.
->>     + 	  not need that functionality, use NO_CURL to build without
->>     + 	  it.
->>       
->>     -+	  Git version "7.19.4" of "libcurl" or later to build. This
->>     -+	  version requirement may be bumped in the future.
->>     ++	  Git requires version "7.19.4" or later of "libcurl", to
->>     ++	  build (without NO_CURL). This version requirement may be
->>     ++	  bumped in the future.
->
-> The comma after libcurl (before "to build") is extraneous (and IMHO
-> makes the sentence harder to read).
+The first patch is messy, specially considering how little was needed
+to build and run `git credential-cache` and its daemon, nothing broke
+on the trace2 code or tests, but additional testing to make sure will
+be recommended.
 
-Yes.  Also it would make it easier to follow if the parentheses
-around "without NO_CURL" are removed, I would think.
+Carlo Marcelo Arenas Belón (3):
+  t0301: fixes for windows compatibility
+  credential-cache: check for windows specific errors
+  git-compat-util: include declaration for unix sockets
+
+ builtin/credential-cache.c  |  5 +++--
+ git-compat-util.h           |  3 +++
+ t/t0301-credential-cache.sh | 28 ++++++++++++++++++++--------
+ 3 files changed, 26 insertions(+), 10 deletions(-)
+
+-- 
+2.33.0.481.g26d3bed244
+
