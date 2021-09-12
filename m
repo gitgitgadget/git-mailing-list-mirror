@@ -7,68 +7,68 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F48C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AE5DC433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:18:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F3F960FC0
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:15:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0892460FE3
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236582AbhILWQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 18:16:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53358 "EHLO
+        id S236562AbhILWT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 18:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235898AbhILWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 18:16:58 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77340C061574
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:15:43 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id h17so1239622edj.6
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:15:43 -0700 (PDT)
+        with ESMTP id S235898AbhILWT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 18:19:27 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49529C061574
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:18:12 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id t6so9937563edi.9
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=Ey5ndDpVbrp/0AoNww8U+nOHQkYH9iwh1wEuOwYkZds=;
-        b=PoflayIJ7N3ywbZMQ869a7IdLxDVL1Z5fOdCpSl3aM5GUFUVoWTs8+JGFqFnD0pVEI
-         nVOT+ThS1B1Fue1w/kpq0Y/Gu5wy8zdlI6ijteVHJoMHFzM3/EW84be1+ML4LlYL2lss
-         CB6Nn62ZbwVBG03+lEO8ADkdjHfTIKotDAgYqyLGSSwg8OV3n/geU0mVyiGaPmjUpirP
-         t/wr0OKRMLdDMAFBuqW7eVG5T/XSIQ6ETHV3h81jzK+p3RWgVNXmRe6GhPDRxnC1VyIX
-         /HCKA8E79z4j9xoD0SFApjGSIWxUXg6V9Jb2K0wKdtZAVzfK4ZQEbmZSWCZRSO0OAfk3
-         5OEA==
+        bh=Asvr3QbgppqsWk0oq6iBEQOz9OZPjY1Tx3KLYNqjd14=;
+        b=FzcrraJGnAvn7ZiwSDoZymA9C1FyZJYX2cIFACnbXHdno1sLSo7WPygktljexG3QlF
+         V2b/8Oigwu6vJU0WY67ZrM05KZIdrsXKR4eS4S+iy9UmJOf5LzZPUveYBRA+59u6Obvq
+         08r6g56911CCF2yhs94CGj9UxrAMhwCbuW+8VcCKTnr0KhE2S4TyLo3ZUHZNBFeEmjnr
+         UupCdilp9WtxmNYYLxPIX1nyPrbN2DCdAzVbIs2Ow2QFprtp6ACp4RAqHhjROVPstnsu
+         yzpu4HmTZLUmbrGby3oQLGuUIyWLMhapTgcjiRm8ehLMWTL4xglHqc+6dphFGpCn6O0m
+         4EzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=Ey5ndDpVbrp/0AoNww8U+nOHQkYH9iwh1wEuOwYkZds=;
-        b=NFkifWIfXGvtgewqSYtk7Gx627umofmUXBH+jG1eqXAUclRjHnR2yljUV9NrT1rz7K
-         IEYtHxKQOHtZCc3TjnfmhJ1E/j9g3OrA9N9+qBF9/o2X5dv76m+ByMBhYBB9tHHrEx0r
-         E03Lwwdg1unb7pwnoPqggwMU3LS+rFC+36bD2g0LYayDdtSA+70p0XZT+Rb92X5anm36
-         33w8VXGXxBinndaRwLwK2RQVbYfyDYqKea8wjzu/ciCOVM1PG5mu0syktlKtpdzdIzTr
-         FkTMeNXe+8UezoBpe4ZzePNkH0hCnWj+mZu8HClhKTWlz/H57Dw7Qt6dUFosbiVC26gj
-         c1jQ==
-X-Gm-Message-State: AOAM532cevWyu86quO3pAxZIk0KjB0zMpF49s/VwK7+qD7p0ceMF7tMn
-        2U60qhJrLstl95txKiokadMs41BE4m4lmg==
-X-Google-Smtp-Source: ABdhPJxs4b0VI9SB2LF3m6UYhKALQR4oNSP7pTu4ox40tK2tc3N1rwzTlO/mW6MZRC2jOQUps1Qsqw==
-X-Received: by 2002:a50:f1d9:: with SMTP id y25mr9965172edl.116.1631484941786;
-        Sun, 12 Sep 2021 15:15:41 -0700 (PDT)
+        bh=Asvr3QbgppqsWk0oq6iBEQOz9OZPjY1Tx3KLYNqjd14=;
+        b=fN6A9h9Ism8+sa4sv1SrERE/IccTZI0BHYDiXy7cKiMPYmp6/KwG6h1554GMPSifSy
+         eDzK+7f6h+sX1vA7pQg463cjxi3NX2wMJFZvP9fOF9JpM8GA5yMrNHSN6XLzHGWk9gcw
+         uN+fgeuRlGnYGez/LKZuQRR7VBt+s9yPJ/8G6aU+13F6mykWAYz71URhKA+eVzhQpHYO
+         gJvsCqPNL0sB8H3X2Oy/G2l2UQbHL+yzAL2QWe7Bam+n3kkDVHeFVUxoJ8kRuHyf5LZU
+         VVqROCNlSf0+Bp2V766Id0LccjaSBwxiMeidcBAnSbEjyXpkYw3v49mVo10xVQOuQZPh
+         jQ2Q==
+X-Gm-Message-State: AOAM533FEP9JuYi3lehFhbZIOno06otBPsBu2ddhXTfdcTiy/U5qSa/u
+        s1hr+igPCaFp9cHDx6WSEQk1IvCKwjuOAg==
+X-Google-Smtp-Source: ABdhPJyPpZxo5phF8dQJwmu6+7TgW0KifEX0jkhF8sygSXI/mnyk3bmydU1JPTQUxW+oYeoLModVOA==
+X-Received: by 2002:aa7:c2cb:: with SMTP id m11mr7116742edp.150.1631485090599;
+        Sun, 12 Sep 2021 15:18:10 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g9sm2520645ejo.60.2021.09.12.15.15.41
+        by smtp.gmail.com with ESMTPSA id x13sm2520456ejv.64.2021.09.12.15.18.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Sep 2021 15:15:41 -0700 (PDT)
+        Sun, 12 Sep 2021 15:18:09 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
         matheus.bernardino@usp.br, stolee@gmail.com, vdye@github.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 14/14] advice: update message to suggest '--sparse'
-Date:   Sun, 12 Sep 2021 23:58:35 +0200
+Subject: Re: [PATCH v2 02/14] t1092: behavior for adding sparse files
+Date:   Mon, 13 Sep 2021 00:17:12 +0200
 References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
  <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
- <f2abc387822378e02d0b221baf9a09ac91d44d7d.1631453010.git.gitgitgadget@gmail.com>
+ <61c23dc59a6e062e073ba3bea135c370a78415aa.1631453010.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <f2abc387822378e02d0b221baf9a09ac91d44d7d.1631453010.git.gitgitgadget@gmail.com>
-Message-ID: <87pmtd5tkj.fsf@evledraar.gmail.com>
+In-reply-to: <61c23dc59a6e062e073ba3bea135c370a78415aa.1631453010.git.gitgitgadget@gmail.com>
+Message-ID: <87lf415tge.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,94 +78,22 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Sep 12 2021, Derrick Stolee via GitGitGadget wrote:
 
-> -	fprintf(stderr, _("The following pathspecs didn't match any"
-> -			  " eligible path, but they do match index\n"
-> -			  "entries outside the current sparse checkout:\n"));
-> +	fprintf(stderr, _("The following paths and/or pathspecs matched "
-> +			  "paths that exist outside of your\n"
-> +			  "sparse-checkout definition, so will not be "
-> +			  "updated in the index:\n"));
->  	for_each_string_list_item(item, pathspec_list)
->  		fprintf(stderr, "%s\n", item->string);
+> +# NEEDSWORK: This documents current behavior, but is not a desirable
+> +# behavior (untracked files are handled differently than tracked).
 
-This before and after looks about as well line-wrapped...
-
->  	advise_if_enabled(ADVICE_UPDATE_SPARSE_PATH,
-> -			  _("Disable or modify the sparsity rules if you intend"
-> +			  _("Disable or modify the sparsity rules or"
-> +			    " use the --sparse option if you intend"
->  			    " to update such entries."));
->  }
-
-...but here..
-
->  	cat >sparse_error_header <<-EOF &&
-> -	The following pathspecs didn't match any eligible path, but they do match index
-> -	entries outside the current sparse checkout:
-> +	The following paths and/or pathspecs matched paths that exist outside of your
-> +	sparse-checkout definition, so will not be updated in the index:
->  	EOF
->  
->  	cat >sparse_hint <<-EOF &&
-> -	hint: Disable or modify the sparsity rules if you intend to update such entries.
-> +	hint: Disable or modify the sparsity rules or use the --sparse option if you intend to update such entries.
->  	hint: Disable this message with \"git config advice.updateSparsePath false\"
->  	EOF
-
-...this used to line-wrap at 80 characters, but is now a bit beyond
-that.
-
-Maybe instead make these two into bullet-points?
-
-Also the third "Disable" looks a bit jarring at first, it seems like a
-continuation of the first message, but it's just the standard "disable
-this message" we tend to print out.
-
-This commentary pre-dates this commit, but just in general:
-
-I think the advice system is best used where there's an initial
-non-optional message, and then the advice elaborates on what happened,
-how to fix it. A good example is the "short object ID %s is ambiguous"
-in object-name.c.
-
-But in this case both messages are rather long. I'd think better would
-be something like (and I didn't look very deeply at the involved code):
-
-    error("pathspec '%s' matched only outside sparse checkout")
-
-I.e. in e.g. cmd_rm() we loop through the pathspecs, and we error on the
-first one, so to a first approximation why do we need to for sparse emit
-ALL the pathspecs we didn't match? if we're going to error out anyway
-shouldn'w we just error out on the first one?
-
-But going on, I'd think this would be better overall (pseudocode):
-
-    error("pathspec '%s' matched only outside sparse checkout")
-    if (advice_enabled(ADVICE_UPDATE_SPARSE_PATH)) {
-        char *list_str;
-        list_of_bad_pathspecs = make_that_list(my_pathspec_string_list, &list_str);
-  
-      if (list_of_bad_pathspecs.nr > 1)
-            /* Emit a message that details what's wrong, but also has a
-             * list of all the other pathspecs we'd also die on if the user */
-      else
-          /* Ditto, but no list *?
-
-Maybe I'm missing something with the sparse implemention, but I'd think
-going above & beyond and listing all failures is a bit much in either
-case, i.e. for non-sparse we have:
-
-    $ git rm 'file-i-do-not-have' 'directory-i-do-not-have/'
-    fatal: pathspec 'file-i-do-not-have' did not match any files
-    $
-
-I'd think in general a user who's screwed up and typo'd both isn't going
-to be much harmed by us noting the first, maybe they'll get another
-error then.
-
-But usually it's obvious (e.g. you just ran the command in the wrong
-directory), so if you have a large list of pathspecs getting a firehose
-of all the things that didn't match can be less helpful due to being
-overrly verbose.
+I wonder if a test_expect_failure test would be better for the thing
+that is the desired behavior, but maybe we don't know what the CLI UI
+for that would look like yet.
 
 
+> +test_expect_success 'add outside sparse cone' '
+> +	init_repos &&
+> +
+> +	run_on_sparse mkdir folder1 &&
+> +	run_on_sparse ../edit-contents folder1/a &&
+> +	run_on_sparse ../edit-contents folder1/newfile &&
+> +	test_sparse_match test_must_fail git add folder1/a &&
+> +	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
+
+Just "grep" is preferred over "test_i18ngrep" now, the GETTEXT_POISON
+went away.
