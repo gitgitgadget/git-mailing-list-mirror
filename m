@@ -2,103 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 460A3C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E56FAC433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13D2461059
-	for <git@archiver.kernel.org>; Sat, 11 Sep 2021 23:59:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B83B7610A3
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231820AbhILAA5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 20:00:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
+        id S233186AbhILARV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 20:17:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbhILAA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 20:00:56 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5FDC061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 16:59:43 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id x7so5334513pfa.8
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 16:59:43 -0700 (PDT)
+        with ESMTP id S230435AbhILARU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 20:17:20 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C6EC061574
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:07 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id s24so3872861wmh.4
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Wukr+IsUiNsCV6Yl8fLNtIxD8NV/99DUDGNa38gB20w=;
-        b=Lvuz2lgg8WZ63Yq397q3o/KRcLTmbZTs3pWj4+V5Xnlu0g5NC8Fzam9kYL9WDhcdNz
-         5vRdBuawWP195uR4GTM84nIBW0Xtu4BZT6PmJQVxOTG1rLIE9z/34KbNh6QdrsQgvEcK
-         RcILKLRhTdTwB2YRcDmzS55qpYPVZ3hQ+VtJGI8RzwQsnf1K/Shg0GKEQydJ06gj9mmv
-         cLj9iS29KZTFdzyepcwPRKaTd3L5F74HtwA4mNo6zBJgNzu+qphuGso7Il5LSsJYa9dX
-         /hpRlRy/2mh78dHFl+0d8/BThzApRBJjc02Ty9EEl3H+KMntpBhqHJYgkiKGrnn/kAdz
-         VjMA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dk22lbSYFNPqy77Rn3DhIJirWfBroEabSZATpdNZ7yc=;
+        b=CaVKsv5Whwddlx0C8pQRsjDrRF81Fl1HI0ADWHr9N8h6RULjWniNfJy/LOfRq7yOvO
+         AAwaEwsBAI17eNnE90iPsDKhmJbi09Ln4wiKfaQgxl4z70k413iYbJO46R8Ag5+QLbnF
+         1yPPzfBG8/xGYJ4Lrun+sP+MpUkF2vgwjiAqBvctYGnqw2sTuUOFZi6zlTw/PTewInBG
+         RAQzWIISpz9CaSdZLjvCQENxtViAzebVaAq02iYlcPyJ9j1REIc68wdIa+NCezpgJwPa
+         FhpEmikxkpMsLayDyTgmFXdvSxWpqNA6Z++zd4PkNfn+8cKyimUzJ+ktS7CxMkZRo3UK
+         Ho2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Wukr+IsUiNsCV6Yl8fLNtIxD8NV/99DUDGNa38gB20w=;
-        b=6l8n7OlXstiT6DgoOYa3wolNj1UDl+uEZ5Ct8N55RlVVjGN2Y0dsXWcM5EZ2n52ZYD
-         7nmPik+rbRI9WJJ+U1bxBa3NymdXzG51qqKYwzjK/xVJWF/8u3wMPBzEiSf1sUApU5zH
-         LCDj1MEI4ZVapPr8IptitbCpseX4zaSqjTNjLTnLGb7vBwdC9vIdCwNog8JUkda0JeHE
-         +VCEbFvoU+/cG6hLrvs2Wn38aCztNrSZejG0MKRttS2/TVkt4XqFSLnUz2M3CyoPZwLz
-         1vtiLQ29AaF7xI9dTdQZ9wyVZm7RjiybtK1bg5lMEdPvoLpFhMv3KDrk4n/mplPXBuId
-         fFvw==
-X-Gm-Message-State: AOAM533bK2GbHmQwp9OB9i4TWCbB60fHvD+KTrOCyvOdXo5s8fqL+rkF
-        Y/8JAU7Ge6yQ44+ZPQfQ1jU=
-X-Google-Smtp-Source: ABdhPJwQcED+VWAeBVffNydbkmf/Dzg6hacntk4cLCxKYdORweEWMtsGZXw8Z53Q3IL5/alu+Wa9eQ==
-X-Received: by 2002:a05:6a00:10ca:b0:3fe:3a9b:2100 with SMTP id d10-20020a056a0010ca00b003fe3a9b2100mr4447738pfu.59.1631404782986;
-        Sat, 11 Sep 2021 16:59:42 -0700 (PDT)
-Received: from Derricks-MacBook-Pro.local ([2600:6c5e:517f:f73e:c13a:5a43:8d62:620f])
-        by smtp.gmail.com with ESMTPSA id o2sm3044886pgc.47.2021.09.11.16.59.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Sep 2021 16:59:42 -0700 (PDT)
-Subject: Re: [PATCH v2 0/5] packfile: use oidset for bad objects
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
- <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9cdf54db-132e-d771-e177-6673f7ad02bf@gmail.com>
-Date:   Sat, 11 Sep 2021 19:59:40 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dk22lbSYFNPqy77Rn3DhIJirWfBroEabSZATpdNZ7yc=;
+        b=sjgz1MTZ9wLDVlupFutVDFajUFhmzRJfXTAfs7KqwW1j4b8lqSq3XPcG5Oc95oumGT
+         cZgQtEl/XIMLKlJhQ4/pBCMU8J8UWAv/kN8pAzCLKvP4DgZkyiLwSWBp9jHQjlFWYuOO
+         d24yNCPqLWfNMwf9alT1VwbOaW9IMAtSuqsqeVR/EJMrIAB0TQ8wf6ZS4azIr7gHD9e6
+         wt4en6b2pRCp3/bbYwVu70L4VAqhYGqrFX3UCSHa+HLF/8YjzPzUYmZc6Jevoav2fsrR
+         tHnimaD41ecVoUv9chFVqzmsTRth1EX6cRuyayshMvbF9Ier2t/98ybN9vHm86Yo8m/G
+         K9vA==
+X-Gm-Message-State: AOAM530Dfk1c2KBpJuFI3+lZxqOt7Ou6Hqozi6v0XI+ws6KuldvbjgTp
+        jJ0CUz8VFCTN+0ZsUlG7Q+jSpgjU67HBLg==
+X-Google-Smtp-Source: ABdhPJwP9HwnGXgc44BYi3Q7g7e2O+LDKRlDN5x21OK6Vu7QelKQFdfmkI/NcRFSAK2HHrHRv8U5Zw==
+X-Received: by 2002:a1c:3587:: with SMTP id c129mr4538810wma.57.1631405765164;
+        Sat, 11 Sep 2021 17:16:05 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p5sm3301078wrd.25.2021.09.11.17.16.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Sep 2021 17:16:04 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/7] strvec: use size_t to store nr and alloc
+Date:   Sun, 12 Sep 2021 02:15:48 +0200
+Message-Id: <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.998.ga4d44345d43
+In-Reply-To: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
+References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
 MIME-Version: 1.0
-In-Reply-To: <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/21 4:31 PM, René Scharfe wrote:
-> Replace the custom hash array for remembering corrupt pack entries with
-> an oidset.  This shortens and simplifies the code.
-> 
-> Changes since v1:
-> - inline oidset_size()
-> - inline nth_midxed_pack_entry() early
-> - use oidset_size() to avoid a function call if no bad objects exist
-> 
->   oidset: make oidset_size() an inline function
->   midx: inline nth_midxed_pack_entry()
->   packfile: convert mark_bad_packed_object() to object_id
->   packfile: convert has_packed_and_bad() to object_id
->   packfile: use oidset for bad objects
+This is a proposed v2 of Jeff King's one-patch change to change
+strvec's nr/alloc from "int" to "size_t". As noted below I think it's
+worthwhile to not only change that in the struct, but also in code
+that directly references the "nr" member.
 
-These were easy reads, and I understand the value of them.
+On Sat, Sep 11 2021, Philip Oakley wrote:
 
-I initially hesitated to support the drop of
-nth_midxed_pack_entry(), since it was designed with things
-like midx bitmaps in mind (specifically, to also support
-lex-order-to-stable-order conversions). However, it seems
-that the midx bitmap series by Taylor is succeeding without
-needing such a translation.
+> On 11/09/2021 17:13, Ævar Arnfjörð Bjarmason wrote:
+>> On Sat, Sep 11 2021, Jeff King wrote:
+>>
+>>> We converted argv_array (which later became strvec) to use size_t in
+>>> 819f0e76b1 (argv-array: use size_t for count and alloc, 2020-07-28) in
+>>> order to avoid the possibility of integer overflow. But later, commit
+>>> d70a9eb611 (strvec: rename struct fields, 2020-07-28) accidentally
+>>> converted these back to ints!
+>>>
+>>> Those two commits were part of the same patch series. I'm pretty sure
+>>> what happened is that they were originally written in the opposite order
+>>> and then cleaned up and re-ordered during an interactive rebase. And
+>>> when resolving the inevitable conflict, I mistakenly took the "rename"
+>>> patch completely, accidentally dropping the type change.
+>>>
+>>> We can correct it now; better late than never.
+>>>
+>>> Signed-off-by: Jeff King <peff@peff.net>
+>>> ---
+>>> This was posted previously in the midst of another thread, but I don't
+>>> think was picked up. There was some positive reaction, but one "do we
+>>> really need this?" to which I responded in detail:
+>>>
+>>>   https://lore.kernel.org/git/YTIBnT8Ue1HZXs82@coredump.intra.peff.net/
+>>>
+>>> I don't really think any of that needs to go into the commit message,
+>>> but if that's a hold-up, I can try to summarize it (though I think
+>>> referring to the commit which _already_ did this and was accidentally
+>>> reverted would be sufficient).
+>> Thanks, I have a WIP version of this outstanding starting with this
+>> patch that I was planning to submit sometime, but I'm happy to have you
+>> pursue it, especially with the ~100 outstanding patches I have in
+>> master..seen.
+>>
+>> It does feel somewhere between iffy and a landmine waiting to be stepped
+>> on to only convert the member itself, and not any of the corresponding
+>> "int" variables that track it to "size_t".
+>>
+>> If you do the change I suggested in
+>> https://lore.kernel.org/git/87v93i8svd.fsf@evledraar.gmail.com/ you'll
+>> find that there's at least one first-order reference to this that now
+>> uses "int" that if converted to "size_t" will result in a wrap-around
+>> error, we're lucky that one has a test failure.
+>>
+>> I can tell you what that bug is, but maybe it's better if you find it
+>> yourself :) I.e. I found *that* one, but I'm not sure I found them
+>> all. I just s/int nr/size_t *nr/ and eyeballed the wall off compiler
+>> errors & the code context (note: pointer, obviously broken, but makes
+>> the compiler yell).
+>>
+>> That particular bug will be caught by the compiler as it involves a >= 0
+>> comparison against unsigned, but we may not not have that everywhere...
+>
+> I'm particularly interested in the int -> size_t change problem as part
+> of the wider 4GB limitations for the LLP64 systems [0] such as the
+> RaspPi, git-lfs (on windows [1]), and Git-for-Windows[2]. It is a big
+> problem.
 
-Thanks,
--Stolee
+Okey, fine, no fun excercise for the reader then ;)
+
+This is what I'd been sitting on locally since that recent thread, I
+polished it up a bit since Jeff King posted his version.
+
+The potential overflow bug I mentioned is in rebase.c. See
+5/7. "Potential" because it's not a bug now, but that code
+intentionally considers a strvec, and then iterates it from nr-1 to 0,
+and if it reaches 0 intentionally counts down one more to -1 to
+indicate that it's visited all elements.
+
+We then check that with i >= 0, except of course if it becomes
+unsigned that doesn't become -1, but rather it wraps around.
+
+The rest of this is all changes to have that s/int/size_t/ radiate
+outwards, i.e. when we assign that value to a variable somewhere its
+now a "size_t" instead of an "int" etc.
+
+> [0]
+> http://nickdesaulniers.github.io/blog/2016/05/30/data-models-and-word-size/
+> [1] https://github.com/git-lfs/git-lfs/issues/2434  Git on Windows
+> client corrupts files > 4Gb
+> [2] https://github.com/git-for-windows/git/pull/2179  [DRAFT] for
+> testing : Fix 4Gb limit for large files on Git for Windows
+
+Jeff King (1):
+  strvec: use size_t to store nr and alloc
+
+Ævar Arnfjörð Bjarmason (6):
+  remote-curl: pass "struct strvec *" instead of int/char ** pair
+  pack-objects: pass "struct strvec *" instead of int/char ** pair
+  sequencer.[ch]: pass "struct strvec *" instead of int/char ** pair
+  upload-pack.c: pass "struct strvec *" instead of int/char ** pair
+  rebase: don't have loop over "struct strvec" depend on signed "nr"
+  strvec API users: change some "int" tracking "nr" to "size_t"
+
+ builtin/pack-objects.c |  6 +++---
+ builtin/rebase.c       | 26 ++++++++++++--------------
+ connect.c              |  8 ++++----
+ fetch-pack.c           |  4 ++--
+ ls-refs.c              |  2 +-
+ remote-curl.c          | 23 +++++++++++------------
+ sequencer.c            |  8 ++++----
+ sequencer.h            |  4 ++--
+ serve.c                |  2 +-
+ shallow.c              |  5 +++--
+ shallow.h              |  6 ++++--
+ strvec.h               |  4 ++--
+ submodule.c            |  2 +-
+ upload-pack.c          |  7 +++----
+ 14 files changed, 53 insertions(+), 54 deletions(-)
+
+Range-diff against v1:
+-:  ----------- > 1:  2ef48d734e8 remote-curl: pass "struct strvec *" instead of int/char ** pair
+-:  ----------- > 2:  7f59a58ed97 pack-objects: pass "struct strvec *" instead of int/char ** pair
+-:  ----------- > 3:  c35cfb9c9c5 sequencer.[ch]: pass "struct strvec *" instead of int/char ** pair
+-:  ----------- > 4:  2e0b82d4316 upload-pack.c: pass "struct strvec *" instead of int/char ** pair
+-:  ----------- > 5:  be85a0565ef rebase: don't have loop over "struct strvec" depend on signed "nr"
+1:  498f5ed80dc ! 6:  ba17290852c strvec: use size_t to store nr and alloc
+    @@ Commit message
+         We can correct it now; better late than never.
+     
+         Signed-off-by: Jeff King <peff@peff.net>
+    +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## strvec.h ##
+     @@ strvec.h: extern const char *empty_strvec[];
+-:  ----------- > 7:  2edd9708888 strvec API users: change some "int" tracking "nr" to "size_t"
+-- 
+2.33.0.998.ga4d44345d43
+
