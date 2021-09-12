@@ -2,96 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 136C8C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23973C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:57:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5AE2611C3
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:29:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5E91610A3
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232619AbhILCaS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 22:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50430 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbhILCaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 22:30:17 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83B60C061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 19:29:04 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id q14so6323697ils.5
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 19:29:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=MOOXeZW9SHsmXwvyrCXcreqWwr/b9NT2jGb4O9JRL5o=;
-        b=Vlz77uea8AqoP4LapIY/EndoTvL8JPzkQlw/xlo5SxdUIF0PhI8JFPP0uaZ5w03GY8
-         bjL2WqEaq0nbHE9ETWdQFV8jmnKL/y41pMEWXSaHwPxMQBMkjoU9cAhBzvPOPHWBjshT
-         9uGkX5rTldsKTqn7uZBlO2Jgrh8jjWRljEvHR1OOFe8cb1SYZc3Asp+Vof+Kdp6R3NYg
-         9rabOHtFC5GXT8+eb4Rzt2Gae803HMCJyyqL/JX5WRchezRQZbQT/K+gCQGZU+T94mRK
-         aHexXey3QHOzpuMOmC8iShpZTd0hyO5B02tJ8h1Ep00j7FbnT88DF309Rs0oY/MOyuno
-         tUpg==
+        id S232480AbhILC7B convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 11 Sep 2021 22:59:01 -0400
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:47050 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230212AbhILC7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 22:59:01 -0400
+Received: by mail-ej1-f50.google.com with SMTP id kt8so12775652ejb.13
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 19:57:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MOOXeZW9SHsmXwvyrCXcreqWwr/b9NT2jGb4O9JRL5o=;
-        b=8PVDi2Xc31vbCGrJ6VYfAXCRuQHOx3TBiSIprMAB90+9GH8iADf21DsyqUeQvaItHm
-         XdZWPRQ8ZFe9AnQVdJPHnRGpS/PhvbYVD7/X5UNPIZ4pq+t9cu/Ex6x8qnBdpzxTIbqJ
-         oUKh8jZgAewNFg462/Rp1HX3bTL9ezqKP8PS97osA2mwWNowfw9zu3CxHF548Gnvn/H2
-         203VBnEo88frtn9wE7cbW6IrgxGUg+fuDboBJOUzxIQyL/IJWPYWA2uMsQGQYYYOUxaB
-         I5um2IDAGSvCBTCWhN2rYCb1AR9gmoUMw7uLPzNEvzXlsDvM4GsUCNP8AI2cGt5HzLf5
-         sOew==
-X-Gm-Message-State: AOAM530ICvR73D+Kb8vaIpuyobyZm9kAH4fLr3Kg0xobxrZiokIw7jYP
-        rTHRGU16RysB7IFQC+Rz6nOHrw==
-X-Google-Smtp-Source: ABdhPJzYg5PgSb9qq+BE9MkFBTHIiulBhYsjy5o++fzm3ydr8GwUC+5cHMcGSN6RMKG0M1pc8Fe15w==
-X-Received: by 2002:a92:8743:: with SMTP id d3mr3269520ilm.237.1631413743975;
-        Sat, 11 Sep 2021 19:29:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d8sm1933445ilv.55.2021.09.11.19.29.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 19:29:03 -0700 (PDT)
-Date:   Sat, 11 Sep 2021 22:29:03 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] packfile: use oidset for bad objects
-Message-ID: <YT1l75uQ50e2IaXM@nand.local>
-References: <4a702bfe-afd0-669a-c893-0262289c24b8@web.de>
- <e50c1465-59de-7fe1-de01-800404c7640e@web.de>
- <9cdf54db-132e-d771-e177-6673f7ad02bf@gmail.com>
- <YT1dCAuCE7xIIIk/@nand.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=R2NXsWioqB8tLiAIs6tq3DiKFnVQ2cGuTi93tIWDGgA=;
+        b=zRBq+TvpH1b9R/wojRGMOMdUf357jXes84nTaz4ct87VNNyn/u+0rsXdrYEMCBi9+t
+         1vxp0kUyRJKHLeTRRLquchCLlAtpwZV4b4kFu8yoq9YRqFmlKryyJF9bTJPmJREFg1Y2
+         d7OwASud1tifbwrTyoMuy2uij3w9tb1QVuDucetUAzSnlJ5hUR24NZhWfC2yR/etOMio
+         bhQJMJO9QjSJp+0AaEM0Tc4deHF+pg0APyxzTIJHofEI8pzt9Thve5w5RAdH5a/OKl+m
+         AhW9fCA/nTYMlL4LIRTPYKBQwopqGdHVAie1qQ9MFYkRaD9YfDUdXtTR0em9rYCBVHct
+         EdqQ==
+X-Gm-Message-State: AOAM533W9KcIb+zlEDsfG3ZJ/DgRxLXR5H/1fwYZG6HQ1dpWb0NS26sn
+        hsF0LVKEUo8f6tFusz8z1Rg3CZYermODblHCmA4=
+X-Google-Smtp-Source: ABdhPJw8TC2/H1AfTu6KV/oLgNV5lkH2Pi3o90D4aJd2tnYu3R+1WrRM9sGxrGyZ2GAn/vbl6Xr1KXwHeiAhjY0OBko=
+X-Received: by 2002:a17:906:4691:: with SMTP id a17mr5387669ejr.36.1631415466987;
+ Sat, 11 Sep 2021 19:57:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YT1dCAuCE7xIIIk/@nand.local>
+References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
+ <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com> <patch-v2-5.7-be85a0565ef-20210912T001420Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-5.7-be85a0565ef-20210912T001420Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 11 Sep 2021 22:57:36 -0400
+Message-ID: <CAPig+cTWjqCiW=M37sf41F7-M0U=fJdTgtM_YqdPTqS53rFHHg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] rebase: don't have loop over "struct strvec"
+ depend on signed "nr"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 11, 2021 at 09:51:04PM -0400, Taylor Blau wrote:
-> On Sat, Sep 11, 2021 at 07:59:40PM -0400, Derrick Stolee wrote:
-> > I initially hesitated to support the drop of
-> > nth_midxed_pack_entry(), since it was designed with things
-> > like midx bitmaps in mind (specifically, to also support
-> > lex-order-to-stable-order conversions).
+On Sat, Sep 11, 2021 at 8:16 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> As in the preceding commit, prepare for the "nr" member of "struct
+> strvec" changing from an "int" to a "size_t".
 >
-> I didn't know that nth_midxed_pack_entry was designed with either
-> purpose in mind, since it predates midx bitmaps by quite a bit.
+> Let's change this code added in f57696802c3 (rebase: really just
+> passthru the `git am` options, 2018-11-14) so that it won't cause a
+> bug if the "i" variable here is updated to be a "size_t" instead of an
+> "int".
+>
+> The reason it would be buggy is because this for-loop relied on
+> "counting down" from nr-1 to 0, we'll then decrement the variable one
+> last time, so a value of -1 indicates that we've visited all
+> elements. Since we're looking for a needle in the haystack having
+> looked at all the hay means that the needle isn't there.
 
-Thinking on it more, I can imagine that you wrote this function
-aspirationally envisioning something like MIDX bitmaps. And since you
-and I discussed the design together quite a bit, I imagine that that's
-the case ;-).
+s/haystack/&,/
 
-But I agree that after reading this series again, that the inline-ing
-suggested makes sense (and doesn't conflict with any series I have in
-flight which don't add any new callers).
+> Let's replace this with simpler code that loops overthe "struct
+> strvec" and checks the current needle is "-q", if it isn't and we're
+> doing a merge we die, otherwise we do a "REBASE_APPLY".
 
-Thanks,
-Taylor
+s/overthe/over the/
+
+Nit: comma-splice[1] at `"-q",`; replace comma with semicolon or period.
+
+[1]: https://lore.kernel.org/git/CAPx1GvfFPWvJsj+uJV7RZrv1rgEpio=pk6rKF2UrjHebVY=LPA@mail.gmail.com/
+
+> We've been able to simplify this code since 8295ed690bf (rebase: make
+> the backend configurable via config setting, 2020-02-15) when we
+> stopped using this for anything except this one check, so let's do
+> that and move the check into the loop itself.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
