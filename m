@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AD6BC433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A43EC433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2786D6113E
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35DAF61056
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235554AbhILNY4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 09:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49924 "EHLO
+        id S235490AbhILNY6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 09:24:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235454AbhILNYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 09:24:51 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7E0C061574
+        with ESMTP id S235292AbhILNYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 09:24:52 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD783C061757
         for <git@vger.kernel.org>; Sun, 12 Sep 2021 06:23:37 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id e26so4660865wmk.2
+Received: by mail-wr1-x436.google.com with SMTP id d21so2565236wra.12
         for <git@vger.kernel.org>; Sun, 12 Sep 2021 06:23:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lD+F5ROkJ1GD99oCdCR4e2ZGsZUS65fErrzTrsgh7hQ=;
-        b=UuGzt1FaIZd5ec/aOINpUT8F0zDs80U2CcBuZkxHVZyjKZs4kz4BRi81hfrh7/EyZs
-         nJluh8TDno+vPzy88OhDlHw7gkcPltEOHBhuWdtdJOL8yfWD6QKBcm/qngwzdhvn1gIG
-         wnkBEdl0XG1yX1EbR7UPm4cdw05l2cdnvO7FXBFs+cD1K3APn33bO1Ha6f/pcpEVxpW6
-         EzRGdbMjwkn/NvHfS46ktOBepmpog/FWQrtovtLzl2/CwYPjAvNjxbEQlHMgNsRUACIU
-         pYb7FAi4q2tsVIet2hEFLkgoTFZ6e8qCHZcR/ti59Ik9K4Z9vwS/yRYjqlFSbRtINeHS
-         RVAg==
+        bh=091FOS3cmDpnHLPChu5bX9sOuJNv/DvCABY/jg3a3ts=;
+        b=lk5HUr2Sj82nWG2nvuPDPfNQpXXVvgtQ0zvS/CT6iIQkgBmYd8c3fDLMXtys/8u9lI
+         i+VKNtzuDsa+vkD2E11KlANday8fthrhZrNE5HWpH+MxMUvjmuZDg+FIsfRfzTKNppsu
+         2s05xxMviNjbc3ZBmWMMLSKmBCOB87Tj8vJSPCvVdPYSqrSUEekxG0XJUVGeRh7q6oNG
+         cqxkn004huACf1SylaWqZ5eVawMHJhGdoUTbAeE9qG2d3BoeYbkArUXK5zBxh5Tj7MMY
+         562mvFdoCS+7/O1h6N/bfwZyDMjfODY18vWM3Tte+oQS8NFQtx0c+wF0nGknUZdbL4AF
+         WVwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lD+F5ROkJ1GD99oCdCR4e2ZGsZUS65fErrzTrsgh7hQ=;
-        b=zAEfXyrcZiASoRQkRaTI9LhDIqd3OVweBUz8RGuDrCtHSDL5J5jE91LYWrgNQRIilc
-         boGcceNVPYTPCJL+22jcoWap6J5h1rbT8gppxbKeUtYF4GX6szJMlPjL3gTg7IC33Dm8
-         dih/mA/Q7DDx6kOp/txZdO/EBJ/yjFemiFwfxQb3uI9ENnuY0jIlwHZ3pgtanqlHNFmt
-         nFe/eaWhJfXp0KQ0dl2tZjnLZpUch4QMspr3XZM6vkaL0pArSPHKSLriaTDK0TQ/gx7H
-         bnBxZmnEFhRgIcYoDsGeCoLuZTZv8vbGKfknyIbJAbtvUs7oQaPJcO45cmBqrzKMEXU0
-         1GWg==
-X-Gm-Message-State: AOAM530d3g1Km7TeeHANqkY1mvKSiiFgQXxeVUA77W+0+3HmTusawDsN
-        gNSmIN60tB/ZvecRiZSF2onxngWwPDw=
-X-Google-Smtp-Source: ABdhPJwM3+rf/R+ANNfZvtzhVdYED7usYxLMnctPmlE4b+09J9YbbMqKkQdLvjvaL8fV3xURBtRpyA==
-X-Received: by 2002:a05:600c:219:: with SMTP id 25mr6591144wmi.157.1631453015934;
-        Sun, 12 Sep 2021 06:23:35 -0700 (PDT)
+        bh=091FOS3cmDpnHLPChu5bX9sOuJNv/DvCABY/jg3a3ts=;
+        b=4sH9rJmuDx7jgYO5wMpNpDVo5YcfBq5k8ft/96KICaj4+udnPvPRWRU5wu1U/IRapg
+         4PMkPm5w8f1Km4XN58RpwmpOC83EBG9HKVcwDf6/gcTF79D5CoOCng7KTmQinsbQjuxw
+         q7Hiq3MV05cTELY0IK4NkDVFUE1DZClQ6wnKKoy4PwQRerPYYLLDkbZ+zst3hLHWbJqX
+         7w8mDqybLZiDoRjMxYwlycXM5XWy5vyWSevj0T+kFbosJHPP8Owg0C4nQvs4zgHRFj0D
+         KtRLnSarbgs+V++nGdxmY2ViSvz05UfgxGYK2vIqAjifA4emfeNOTLr2Q63COJc0wDel
+         RZkA==
+X-Gm-Message-State: AOAM5301N6SA8pGM2TfXPMjU+gS4srxfL/xZu4N3+R7bCyL3ftSDP2Vn
+        DtnOuEuvv+PnunavafAP1oTK7lBCwrk=
+X-Google-Smtp-Source: ABdhPJwof5Hcrrl6eMaQxLoxuwMCGNfB/opAbdTtNJ1rMqmjRGPBNi4Bp4JpAL5JfNHDSfjAx7ahOw==
+X-Received: by 2002:adf:f2c4:: with SMTP id d4mr7687693wrp.434.1631453016445;
+        Sun, 12 Sep 2021 06:23:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k17sm4636551wmj.0.2021.09.12.06.23.35
+        by smtp.gmail.com with ESMTPSA id o13sm1853897wri.53.2021.09.12.06.23.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Sep 2021 06:23:35 -0700 (PDT)
-Message-Id: <bac6cedfc8d50511975f146c41f1577f41976c6f.1631453010.git.gitgitgadget@gmail.com>
+        Sun, 12 Sep 2021 06:23:36 -0700 (PDT)
+Message-Id: <d4706e17cae03d68d5c9108b3570f7fd9d2500d7.1631453010.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
 References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
         <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 12 Sep 2021 13:23:22 +0000
-Subject: [PATCH v2 06/14] add: fail when adding an untracked sparse file
+Date:   Sun, 12 Sep 2021 13:23:23 +0000
+Subject: [PATCH v2 07/14] add: skip tracked paths outside sparse-checkout cone
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,197 +78,167 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The add_files() method in builtin/add.c takes a set of untracked files
-that are being added by the input pathspec and inserts them into the
-index. If these files are outside of the sparse-checkout cone, then they
-gain the SKIP_WORKTREE bit at some point. However, this was not checked
-before inserting into the index, so these files are added even though we
-want to avoid modifying the index outside of the sparse-checkout cone.
+When 'git add' adds a tracked file that is outside of the
+sparse-checkout cone, it checks the SKIP_WORKTREE bit to see if the file
+exists outside of the sparse-checkout cone. This is usually correct,
+except in the case of a merge conflict outside of the cone.
 
-Add a check within add_files() for these files and write the advice
-about files outside of the sparse-checkout cone.
+Modify add_pathspec_matched_against_index() to be more careful about
+paths by checking the sparse-checkout patterns in addition to the
+SKIP_WORKTREE bit. This causes 'git add' to no longer allow files
+outside of the cone that removed the SKIP_WORKTREE bit due to a merge
+conflict.
 
-This behavior change modifies some existing tests within t1092. These
-tests intended to document how a user could interact with the existing
-behavior in place. Many of these tests need to be marked as expecting
-failure. A future change will allow these tests to pass by adding a flag
-to 'git add' that allows users to modify index entries outside of the
+With only this change, users will only be able to add the file after
+adding the file to the sparse-checkout cone. A later change will allow
+users to force adding even though the file is outside of the
 sparse-checkout cone.
-
-The 'submodule handling' test is intended to document what happens to
-directories that contain a submodule when the sparse index is enabled.
-It is not trying to say that users should be able to add submodules
-outside of the sparse-checkout cone, so that test can be modified to
-avoid that operation.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/add.c                            | 14 +++++++++
- t/t1092-sparse-checkout-compatibility.sh | 37 ++++++++++++++++++------
- 2 files changed, 42 insertions(+), 9 deletions(-)
+ builtin/add.c                            |  4 ++++
+ pathspec.c                               |  5 +++--
+ t/t1091-sparse-checkout-builtin.sh       |  4 +++-
+ t/t1092-sparse-checkout-compatibility.sh | 21 ++++++++++++++-------
+ t/t3705-add-sparse-checkout.sh           | 12 ++++++++++++
+ 5 files changed, 36 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index 88a6c0c69fb..8ea9cae0e7a 100644
+index 8ea9cae0e7a..09c3fad6321 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -443,6 +443,7 @@ static void check_embedded_repo(const char *path)
- static int add_files(struct dir_struct *dir, int flags)
- {
- 	int i, exit_status = 0;
-+	struct string_list matched_sparse_paths = STRING_LIST_INIT_NODUP;
- 
- 	if (dir->ignored_nr) {
- 		fprintf(stderr, _(ignore_error));
-@@ -456,6 +457,11 @@ static int add_files(struct dir_struct *dir, int flags)
- 	}
- 
- 	for (i = 0; i < dir->nr; i++) {
-+		if (!path_in_sparse_checkout(dir->entries[i]->name, &the_index)) {
-+			string_list_append(&matched_sparse_paths,
-+					   dir->entries[i]->name);
+@@ -94,6 +94,10 @@ static void update_callback(struct diff_queue_struct *q,
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		const char *path = p->one->path;
++
++		if (!path_in_sparse_checkout(path, &the_index))
 +			continue;
-+		}
- 		if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
- 			if (!ignore_add_errors)
- 				die(_("adding files failed"));
-@@ -464,6 +470,14 @@ static int add_files(struct dir_struct *dir, int flags)
- 			check_embedded_repo(dir->entries[i]->name);
- 		}
++
+ 		switch (fix_unmerged_status(p, data)) {
+ 		default:
+ 			die(_("unexpected diff status %c"), p->status);
+diff --git a/pathspec.c b/pathspec.c
+index 44306fdaca2..ddeeba79114 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -39,7 +39,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+ 		return;
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		const struct cache_entry *ce = istate->cache[i];
+-		if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
++		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
++		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
+ 			continue;
+ 		ce_path_match(istate, ce, pathspec, seen);
  	}
-+
-+	if (matched_sparse_paths.nr) {
-+		advise_on_updating_sparse_paths(&matched_sparse_paths);
-+		exit_status = 1;
-+	}
-+
-+	string_list_clear(&matched_sparse_paths, 0);
-+
- 	return exit_status;
- }
+@@ -70,7 +71,7 @@ char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec)
  
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+-		if (ce_skip_worktree(ce))
++		if (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate))
+ 		    ce_path_match(istate, ce, pathspec, seen);
+ 	}
+ 
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 71236981e64..af99ae81b1d 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -406,7 +406,7 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged stat
+ 	git -C unmerged sparse-checkout disable
+ '
+ 
+-test_expect_success 'sparse-checkout reapply' '
++test_expect_failure 'sparse-checkout reapply' '
+ 	git clone repo tweak &&
+ 
+ 	echo dirty >tweak/deep/deeper2/a &&
+@@ -438,6 +438,8 @@ test_expect_success 'sparse-checkout reapply' '
+ 	test_i18ngrep "warning.*The following paths are unmerged" err &&
+ 	test_path_is_file tweak/folder1/a &&
+ 
++	# NEEDSWORK: We are asking to update a file outside of the
++	# sparse-checkout cone, but this is no longer allowed.
+ 	git -C tweak add folder1/a &&
+ 	git -C tweak sparse-checkout reapply 2>err &&
+ 	test_must_be_empty err &&
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 5b3f55e355e..997442b13e3 100755
+index 997442b13e3..0fdc5c7098c 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -301,8 +301,6 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
- 
--# NEEDSWORK: This documents current behavior, but is not a desirable
--# behavior (untracked files are handled differently than tracked).
- test_expect_success 'add outside sparse cone' '
- 	init_repos &&
- 
-@@ -312,7 +310,9 @@ test_expect_success 'add outside sparse cone' '
- 	test_sparse_match test_must_fail git add folder1/a &&
- 	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
- 	test_sparse_unstaged folder1/a &&
--	test_sparse_match git add folder1/newfile
-+	test_sparse_match test_must_fail git add folder1/newfile &&
-+	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
-+	test_sparse_unstaged folder1/newfile
- '
- 
- test_expect_success 'commit including unstaged changes' '
-@@ -343,7 +343,11 @@ test_expect_success 'commit including unstaged changes' '
- 	test_all_match git status --porcelain=v2
- '
- 
--test_expect_success 'status/add: outside sparse cone' '
-+# NEEDSWORK: Now that 'git add folder1/new' fails, the changes being
-+# attempted here fail for the sparse-checkout and sparse-index repos.
-+# We must enable a way for adding files outside the sparse-checkout
-+# done, even if it is by an optional flag.
-+test_expect_failure 'status/add: outside sparse cone' '
- 	init_repos &&
- 
- 	# folder1 is at HEAD, but outside the sparse cone
-@@ -368,10 +372,11 @@ test_expect_success 'status/add: outside sparse cone' '
- 	test_sparse_match test_must_fail git add --refresh folder1/a &&
- 	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
- 	test_sparse_unstaged folder1/a &&
-+	test_sparse_match test_must_fail git add folder1/new &&
-+	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
-+	test_sparse_unstaged folder1/new &&
- 
--	# NEEDSWORK: Adding a newly-tracked file outside the cone succeeds
--	test_sparse_match git add folder1/new &&
--
-+	# NEEDSWORK: behavior begins to deviate here.
- 	test_all_match git add . &&
- 	test_all_match git status --porcelain=v2 &&
- 	test_all_match git commit -m folder1/new &&
-@@ -527,7 +532,7 @@ test_expect_success 'merge, cherry-pick, and rebase' '
- # Right now, users might be using this flow to work through conflicts,
- # so any solution should present advice to users who try this sequence
- # of commands to follow whatever new method we create.
--test_expect_success 'merge with conflict outside cone' '
-+test_expect_failure 'merge with conflict outside cone' '
- 	init_repos &&
- 
- 	test_all_match git checkout -b merge-tip merge-left &&
-@@ -541,12 +546,18 @@ test_expect_success 'merge with conflict outside cone' '
+@@ -546,10 +546,10 @@ test_expect_failure 'merge with conflict outside cone' '
  	test_all_match git status --porcelain=v2 &&
  
  	# 2. Add the file with conflict markers
-+	# NEEDSWORK: Even though the merge conflict removed the
-+	# SKIP_WORKTREE bit from the index entry for folder1/a, we should
-+	# warn that this is a problematic add.
- 	test_all_match git add folder1/a &&
+-	# NEEDSWORK: Even though the merge conflict removed the
+-	# SKIP_WORKTREE bit from the index entry for folder1/a, we should
+-	# warn that this is a problematic add.
+-	test_all_match git add folder1/a &&
++	test_sparse_match test_must_fail git add folder1/a &&
++	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
++	test_sparse_unstaged folder1/a &&
++	test_all_match git add --sparse folder1/a &&
  	test_all_match git status --porcelain=v2 &&
  
  	# 3. Rename the file to another sparse filename and
- 	#    accept conflict markers as resolved content.
- 	run_on_all mv folder2/a folder2/z &&
-+	# NEEDSWORK: This mode now fails, because folder2/z is
-+	# outside of the sparse-checkout cone and does not match an
-+	# existing index entry with the SKIP_WORKTREE bit cleared.
- 	test_all_match git add folder2 &&
+@@ -558,7 +558,10 @@ test_expect_failure 'merge with conflict outside cone' '
+ 	# NEEDSWORK: This mode now fails, because folder2/z is
+ 	# outside of the sparse-checkout cone and does not match an
+ 	# existing index entry with the SKIP_WORKTREE bit cleared.
+-	test_all_match git add folder2 &&
++	test_sparse_match test_must_fail git add folder2 &&
++	test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
++	test_sparse_unstaged folder2/z &&
++	test_all_match git add --sparse folder2 &&
  	test_all_match git status --porcelain=v2 &&
  
-@@ -555,7 +566,7 @@ test_expect_success 'merge with conflict outside cone' '
- 	test_all_match git rev-parse HEAD^{tree}
- '
- 
--test_expect_success 'cherry-pick/rebase with conflict outside cone' '
-+test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
- 	init_repos &&
- 
- 	for OPERATION in cherry-pick rebase
-@@ -572,11 +583,17 @@ test_expect_success 'cherry-pick/rebase with conflict outside cone' '
- 		test_all_match git status --porcelain=v2 &&
- 
- 		# 2. Add the file with conflict markers
-+		# NEEDSWORK: Even though the merge conflict removed the
-+		# SKIP_WORKTREE bit from the index entry for folder1/a, we should
-+		# warn that this is a problematic add.
- 		test_all_match git add folder1/a &&
+ 	test_all_match git merge --continue &&
+@@ -586,7 +589,9 @@ test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
+ 		# NEEDSWORK: Even though the merge conflict removed the
+ 		# SKIP_WORKTREE bit from the index entry for folder1/a, we should
+ 		# warn that this is a problematic add.
+-		test_all_match git add folder1/a &&
++		test_sparse_match test_must_fail git add folder1/a &&
++		test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
++		test_sparse_unstaged folder1/a &&
  		test_all_match git status --porcelain=v2 &&
  
  		# 3. Rename the file to another sparse filename and
- 		#    accept conflict markers as resolved content.
-+		# NEEDSWORK: This mode now fails, because folder2/z is
-+		# outside of the sparse-checkout cone and does not match an
-+		# existing index entry with the SKIP_WORKTREE bit cleared.
+@@ -595,7 +600,9 @@ test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
+ 		# outside of the sparse-checkout cone and does not match an
+ 		# existing index entry with the SKIP_WORKTREE bit cleared.
  		run_on_all mv folder2/a folder2/z &&
- 		test_all_match git add folder2 &&
+-		test_all_match git add folder2 &&
++		test_sparse_match test_must_fail git add folder2 &&
++		test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
++		test_sparse_unstaged folder2/z &&
  		test_all_match git status --porcelain=v2 &&
-@@ -654,6 +671,7 @@ test_expect_success 'clean' '
- test_expect_success 'submodule handling' '
- 	init_repos &&
  
-+	test_sparse_match git sparse-checkout add modules &&
- 	test_all_match mkdir modules &&
- 	test_all_match touch modules/a &&
- 	test_all_match git add modules &&
-@@ -663,6 +681,7 @@ test_expect_success 'submodule handling' '
- 	test_all_match git commit -m "add submodule" &&
+ 		test_all_match git $OPERATION --continue &&
+diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+index af81b4b6846..678be1acbf9 100755
+--- a/t/t3705-add-sparse-checkout.sh
++++ b/t/t3705-add-sparse-checkout.sh
+@@ -158,6 +158,18 @@ test_expect_success 'do not warn when pathspec matches dense entries' '
+ 	git ls-files --error-unmatch dense_entry
+ '
  
- 	# having a submodule prevents "modules" from collapse
-+	test_sparse_match git sparse-checkout set deep/deeper1 &&
- 	test-tool -C sparse-index read-cache --table >cache &&
- 	grep "100644 blob .*	modules/a" cache &&
- 	grep "160000 commit $(git -C initial-repo rev-parse HEAD)	modules/sub" cache
++test_expect_success 'git add fails outside of sparse-checkout definition' '
++	test_when_finished git sparse-checkout disable &&
++	test_commit a &&
++	git sparse-checkout init &&
++	git sparse-checkout set a &&
++	echo >>sparse_entry &&
++
++	git update-index --no-skip-worktree sparse_entry &&
++	test_must_fail git add sparse_entry &&
++	test_sparse_entry_unstaged
++'
++
+ test_expect_success 'add obeys advice.updateSparsePath' '
+ 	setup_sparse_entry &&
+ 	test_must_fail git -c advice.updateSparsePath=false add sparse_entry 2>stderr &&
 -- 
 gitgitgadget
 
