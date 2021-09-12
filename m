@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23973C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA9BEC433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 03:00:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5E91610A3
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 02:57:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFCEF61076
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 03:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbhILC7B convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 11 Sep 2021 22:59:01 -0400
-Received: from mail-ej1-f50.google.com ([209.85.218.50]:47050 "EHLO
-        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbhILC7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Sep 2021 22:59:01 -0400
-Received: by mail-ej1-f50.google.com with SMTP id kt8so12775652ejb.13
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 19:57:47 -0700 (PDT)
+        id S234950AbhILDCC convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 11 Sep 2021 23:02:02 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:36559 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234937AbhILDCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Sep 2021 23:02:01 -0400
+Received: by mail-ed1-f49.google.com with SMTP id v24so2438924eda.3
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 20:00:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=R2NXsWioqB8tLiAIs6tq3DiKFnVQ2cGuTi93tIWDGgA=;
-        b=zRBq+TvpH1b9R/wojRGMOMdUf357jXes84nTaz4ct87VNNyn/u+0rsXdrYEMCBi9+t
-         1vxp0kUyRJKHLeTRRLquchCLlAtpwZV4b4kFu8yoq9YRqFmlKryyJF9bTJPmJREFg1Y2
-         d7OwASud1tifbwrTyoMuy2uij3w9tb1QVuDucetUAzSnlJ5hUR24NZhWfC2yR/etOMio
-         bhQJMJO9QjSJp+0AaEM0Tc4deHF+pg0APyxzTIJHofEI8pzt9Thve5w5RAdH5a/OKl+m
-         AhW9fCA/nTYMlL4LIRTPYKBQwopqGdHVAie1qQ9MFYkRaD9YfDUdXtTR0em9rYCBVHct
-         EdqQ==
-X-Gm-Message-State: AOAM533W9KcIb+zlEDsfG3ZJ/DgRxLXR5H/1fwYZG6HQ1dpWb0NS26sn
-        hsF0LVKEUo8f6tFusz8z1Rg3CZYermODblHCmA4=
-X-Google-Smtp-Source: ABdhPJw8TC2/H1AfTu6KV/oLgNV5lkH2Pi3o90D4aJd2tnYu3R+1WrRM9sGxrGyZ2GAn/vbl6Xr1KXwHeiAhjY0OBko=
-X-Received: by 2002:a17:906:4691:: with SMTP id a17mr5387669ejr.36.1631415466987;
- Sat, 11 Sep 2021 19:57:46 -0700 (PDT)
+        bh=w7LTP/ZiX5FdsbQj6tt1Br/y/kB92PkIuaoNsA8GcSM=;
+        b=nTgAwGxedE2m2SM5mTWwKu+72plPgpX+ot0tF+f2/7v+FOITEzw0ONwZPPMYzFbQ0Z
+         APrgJYov8TjRCGmSB6usnVA8mwRC6Mei8W87RrWIfJLPUxsYS6qKaToRMCy7Ub3kAonm
+         pJ4vVZ9AZ6u0G+R66fYeHM+f/Is+yahUrxj2rQ1gIU1x7wzdgm1u1swWmkmMX051fPoX
+         EEiNwsRf/CFcKao5xN9Mtyw1pQYnOzYRrHuuEesA7oNYzyKZMZyW/4D3M/v6nn4AEJgl
+         PxZDy0uFqBrmsjJDKYKsW/OL+RHPfDsuUK7zZoe/RDQCWtRkaGEt1Cxz+os/eIamLYWP
+         RFOQ==
+X-Gm-Message-State: AOAM530NRph4s4+0US3+4TEnPHJTg4u1cZxC/yUf+toxv99XPYlC9tZf
+        qeWALKr5fQoKxw6sucEmODexrdPHWvVGnnYQwEQ=
+X-Google-Smtp-Source: ABdhPJxJyIzFiijsULXfxoqLnDeHjOtNRvZuGEK4esIpsSVBZ16Zp7fLlziCW8GyACGpEZVg7Jw8BEbW+pOXrDajUlY=
+X-Received: by 2002:a05:6402:2686:: with SMTP id w6mr5951270edd.231.1631415646924;
+ Sat, 11 Sep 2021 20:00:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
- <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com> <patch-v2-5.7-be85a0565ef-20210912T001420Z-avarab@gmail.com>
-In-Reply-To: <patch-v2-5.7-be85a0565ef-20210912T001420Z-avarab@gmail.com>
+ <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com> <patch-v2-7.7-2edd9708888-20210912T001420Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-7.7-2edd9708888-20210912T001420Z-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Sep 2021 22:57:36 -0400
-Message-ID: <CAPig+cTWjqCiW=M37sf41F7-M0U=fJdTgtM_YqdPTqS53rFHHg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] rebase: don't have loop over "struct strvec"
- depend on signed "nr"
+Date:   Sat, 11 Sep 2021 23:00:36 -0400
+Message-ID: <CAPig+cTdisiKU-8i3kRuDqtwy6eQOA+jNbz8WGm627ojUwkgbA@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] strvec API users: change some "int" tracking "nr"
+ to "size_t"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
@@ -57,35 +57,34 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Sep 11, 2021 at 8:16 PM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> As in the preceding commit, prepare for the "nr" member of "struct
-> strvec" changing from an "int" to a "size_t".
+> Now that the strvec.h "int nr" has been changed to "size_t nr" in the
+> preceding commit change various users of the API so that their local
+> tracking (usually for-loop iteration) of the number of items in the
+> array uses "size_t" as well.
+
+s/change/changed/
+
+> These were found by changing the "nr" member to a pointer temporarily,
+> and manually looking at the codepaths that the compiler complained
+> about.
 >
-> Let's change this code added in f57696802c3 (rebase: really just
-> passthru the `git am` options, 2018-11-14) so that it won't cause a
-> bug if the "i" variable here is updated to be a "size_t" instead of an
-> "int".
+> As argued in <YTIBnT8Ue1HZXs82@coredump.intra.peff.net>[1] these
+> changes are not strictly necessary as a follow-up, but let's do them
+> anyway so we don't need to wonder about the "size_t" v.s. "int"
+> inconsistency going forward.
 >
-> The reason it would be buggy is because this for-loop relied on
-> "counting down" from nr-1 to 0, we'll then decrement the variable one
-> last time, so a value of -1 indicates that we've visited all
-> elements. Since we're looking for a needle in the haystack having
-> looked at all the hay means that the needle isn't there.
+> As noted in <87v93i8svd.fsf@evledraar.gmail.com> in that thread we
 
-s/haystack/&,/
+s/>/>[2]/
 
-> Let's replace this with simpler code that loops overthe "struct
-> strvec" and checks the current needle is "-q", if it isn't and we're
-> doing a merge we die, otherwise we do a "REBASE_APPLY".
-
-s/overthe/over the/
-
-Nit: comma-splice[1] at `"-q",`; replace comma with semicolon or period.
-
-[1]: https://lore.kernel.org/git/CAPx1GvfFPWvJsj+uJV7RZrv1rgEpio=pk6rKF2UrjHebVY=LPA@mail.gmail.com/
-
-> We've been able to simplify this code since 8295ed690bf (rebase: make
-> the backend configurable via config setting, 2020-02-15) when we
-> stopped using this for anything except this one check, so let's do
-> that and move the check into the loop itself.
+> have various things that interact with the "int argc" passed from
+> main() (e.g. setup_revisions()) and "struct strvec". Those things
+> could consistently use "int" before, but will now use some mixture of
+> "int" and "size_t". That's OK, but is the reason we're not converting
+> all API users to use "size_t" here for their own copies of "nr", or
+> when they pass that "nr" to other functions.
+>
+> 1. https://lore.kernel.org/git/YTIBnT8Ue1HZXs82@coredump.intra.peff.net/
+> 2. https://lore.kernel.org/git/87v93i8svd.fsf@evledraar.gmail.com/
 >
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
