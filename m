@@ -2,127 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E38D6C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 16:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D4E3C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 19:02:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF3C6610CE
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 16:16:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04F646103D
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 19:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231451AbhILQRW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 12:17:22 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:39794 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229653AbhILQRV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 12:17:21 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mPS9D-0007yr-Be; Sun, 12 Sep 2021 17:16:06 +0100
-Subject: Re: Question about timezones in commit & tag dates
-To:     Fabian Stelzer <fs@gigacodes.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <b39aab0a-bf53-9e33-59a7-d4f1a06e72a7@gigacodes.de>
- <87fsu997wn.fsf@evledraar.gmail.com>
- <b121acdf-354f-c896-d2f6-b221ea2443c1@gigacodes.de>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <1002242a-a353-a904-5c1a-f23b0c5ed1a3@iee.email>
-Date:   Sun, 12 Sep 2021 17:16:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S235283AbhILTDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 15:03:14 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50392 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234680AbhILTDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 15:03:13 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31C0B157CBF;
+        Sun, 12 Sep 2021 15:01:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=izKs1FiBw7ShIvAOdMFHypnTf8okFs4RWk/S7Z
+        pwMvQ=; b=UG/KR7XB1AcE/ThgmrY5JoHnPOFd2XurjhUyEZu45/UMd1k5JolCSi
+        2RcDLmjtqWO8GkSsIt8jIZGfz2m4tgtA4/sKEAPsBrA0cAYIz8IvUqO5f/jjM4cj
+        DOLkIPNSyTOx4YamflNFa0xwNhcsZgGpvSgf6dx4h9IqOoaBgFnEc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A773157CBE;
+        Sun, 12 Sep 2021 15:01:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72E18157CBD;
+        Sun, 12 Sep 2021 15:01:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH v3 0/9] post-v2.33 "drop support for ancient curl"
+ follow-up
+References: <cover-v2-0.8-00000000000-20210910T105523Z-avarab@gmail.com>
+        <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
+        <YTzBUFY4p6obEqF+@coredump.intra.peff.net>
+Date:   Sun, 12 Sep 2021 12:01:54 -0700
+In-Reply-To: <YTzBUFY4p6obEqF+@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 11 Sep 2021 10:46:40 -0400")
+Message-ID: <xmqqilz5lisd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <b121acdf-354f-c896-d2f6-b221ea2443c1@gigacodes.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6670000-13FB-11EC-9B15-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/09/2021 16:07, Fabian Stelzer wrote:
-> On 12.09.21 16:21, Ævar Arnfjörð Bjarmason wrote:
->> On Sun, Sep 12 2021, Fabian Stelzer wrote:
->>
->>> Hi,
->>> while working on correct key rollover and verifying signatures for past
->>> commits for the ssh signing topic i am trying to understand how Git
->>> deals with timestamps for commits & tags.
->>> For ssh signing the user will manage expiration times within their
->>> allowedSigners file. Those timestamps do not carry a timezone and i
->>> would assume a user (or automatic generation of this file) will assume
->>> the systems timezone for them.
->>> Therefore i wanted to pass the commit & tags timestamps adjusted to the
->>> system timezone to make sure key rollover will have no gaps or failed
->>> verification's especially when commit and system timezone differ greatly
->>> and might roll over to another day.
->>>
->>> However the commit & tags structs only seem to carry the objects
->>> timestamp as is, simply ignoring any timezone information. For the ssh
->>> feature i can easily enough parse the ident line again from the object
->>> header. But while looking at the usage of the existing date fields i can
->>> see that objects are sometimes sorted on and compared by these dates.
->>> When commands provide cut off times (--since) i think they might include
->>> or exclude commits erroneously when they were made in a different
->>> timezone around the cutoff date. ("log --since" indeed gives me some
->>> unexpected results when mixing multiple timezones. Based on some simple
->>> testing i think it just stops output when a commit falls outside of this
->>> window, even though there might be one before it wich is within)
->>>
->>> Is my understanding of this correct and this the expected behaviour?
->>> I think generally for git this does not matter much. But in certain
->>> situations this is problematic.
->>>
->>> I would have assumed that git would either add the timezone as well or
->>> adjust the commit timestamp upon populating the date field in the commit
->>> struct to UTC but i could not find anything like it.
->> Timezones are ultimately display information that's confusing to humans,
->> but not machines. Machines just need to deal with epochs, or when a
->> human supplies them a date convert a formatted date + timezone pair to
->> an epoch.
->>
->> So in the key expiry case, I'd expect that any such system would say
->> issue keys right now, now as in time(NULL), and we'd set those keys to
->> expire after some time, say 1 day, so time(NULL) + 60 * 60 * 24;
->>
->> If you're in UTC that might yield a very satisfying (to humans, a
->> machine won't care) expiry time. I.e. you'll get keys issued say at
->> midnight, and expiring midnight the following day.
->>
->> What you're saying sounds to me like you're conflating the two
->> things.
-> You are correct. I somehow thought the stored timestamp would be in the
-> specified timezone when it is not. The timezone is only used as
-> reference for display.
->
->> Anyway, maybe I've misunderstood you. I just don't see how something
->> like key expiry would need to concern itself with anything but
->> epochs. If you conflate timezones with that and say "here's a key, it
->> expires at mindight" surely you'll have some keys last mere seconds,
->> others 10 hours etc.
->>
-> The ssh allowedSigners file specifies key expiry in a "%Y%m%d%H%M%S"
-> format without any timezone information. So i have to assume the systems
-> timezone is used.
-> But correcting my misconception of the stored commit timestamp i can
-> simply present it in the systems timezone for ssh to compare it with the
-> specified expiry date.
->
-> Thanks for your help!
-It is possible to have, near the international date line, places that
-are more than 24 hours apart (local/calendar time), E.g compare Pago
-Pago (-11) and Apia (+13).
-In the wrong conditions, a 24hr expiry, using local/calendar time, could
-have already expired at a near neighbour, because of the shift in their
-local times. It ('date/time') is tricky confusing stuff without careful
-consideration of the standards and terminology [1,2]. Regular folks can
-easily be confused ;-) Sometimes things need spelling out rather more
-than one may have expected/hoped.
+Jeff King <peff@peff.net> writes:
 
-[1] https://en.wikipedia.org/wiki/System_time and
-[2] https://en.wikipedia.org/wiki/Unix_time
---
-Philip
+> Probably not worth a re-roll, but maybe worth fixing up while applying:
+>
+>>  2:  4b653cee2d3 !  3:  dce6520a5c9 INSTALL: mention that we need libcurl 7.19.4 or newer to build
+>>     @@ Commit message
+>>      
+>>       ## INSTALL ##
+>>      @@ INSTALL: Issues of note:
+>>     - 	- "libcurl" library is used by git-http-fetch, git-fetch, and, if
+>>     - 	  the curl version >= 7.34.0, for git-imap-send.
+>>     + 	  not need that functionality, use NO_CURL to build without
+>>     + 	  it.
+>>       
+>>     -+	  Git version "7.19.4" of "libcurl" or later to build. This
+>>     -+	  version requirement may be bumped in the future.
+>>     ++	  Git requires version "7.19.4" or later of "libcurl", to
+>>     ++	  build (without NO_CURL). This version requirement may be
+>>     ++	  bumped in the future.
+>
+> The comma after libcurl (before "to build") is extraneous (and IMHO
+> makes the sentence harder to read).
+
+Yes.  Also it would make it easier to follow if the parentheses
+around "without NO_CURL" are removed, I would think.
