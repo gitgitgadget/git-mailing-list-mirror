@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD6BDC433EF
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E216C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:43:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2F7B6101E
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:41:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE0026101E
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236560AbhILWnJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 18:43:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45728 "EHLO cloud.peff.net"
+        id S236602AbhILWod (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 18:44:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45738 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231891AbhILWnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 18:43:08 -0400
-Received: (qmail 17085 invoked by uid 109); 12 Sep 2021 22:41:54 -0000
+        id S236565AbhILWoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 18:44:32 -0400
+Received: (qmail 17099 invoked by uid 109); 12 Sep 2021 22:43:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 12 Sep 2021 22:41:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 12 Sep 2021 22:43:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2995 invoked by uid 111); 12 Sep 2021 22:41:53 -0000
+Received: (qmail 3002 invoked by uid 111); 12 Sep 2021 22:43:16 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 12 Sep 2021 18:41:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 12 Sep 2021 18:43:16 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 12 Sep 2021 18:41:53 -0400
+Date:   Sun, 12 Sep 2021 18:43:16 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] difftool: use "struct strvec" API in
- run_{dir,file}_diff()
-Message-ID: <YT6CMdITxaZZqufr@coredump.intra.peff.net>
+Subject: Re: [PATCH 2/2] parse-options API: remove OPTION_ARGUMENT feature
+Message-ID: <YT6ChAivw2Vk7Jkd@coredump.intra.peff.net>
 References: <cover-0.2-00000000000-20210911T182009Z-avarab@gmail.com>
- <patch-1.2-e7481eb0c0c-20210911T182009Z-avarab@gmail.com>
- <YT6BnnXeAWn8BycF@coredump.intra.peff.net>
+ <patch-2.2-28b43789b11-20210911T182009Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YT6BnnXeAWn8BycF@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.2-28b43789b11-20210911T182009Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 12, 2021 at 06:39:26PM -0400, Jeff King wrote:
+On Sat, Sep 11, 2021 at 08:21:12PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> It only becomes apparent with the second patch. I would have found it
-> much easier to understand with something like the patch below. And then
-> a further patch to use strvec_pushv instead of manually looping (even
-> getting rid of the argc parameters entirely!), and one to convert
-> run_file_diff() to use a struct child_process (which fixes its memory
-> leak).
+> As was noted in 1a85b49b87a (parse-options: make OPT_ARGUMENT() more
+> useful, 2019-03-14) there's only ever been one user of the
+> OPT_ARGUMENT(), that user was added in 20de316e334 (difftool: allow
+> running outside Git worktrees with --no-index, 2019-03-14).
 > 
-> -- >8 --
-> difftool: prepare "diff" cmdline in cmd_difftool()
+> The OPT_ARGUMENT() feature itself was added way back in
+> 580d5bffdea (parse-options: new option type to treat an option-like
+> parameter as an argument., 2008-03-02), but as discussed in
+> 1a85b49b87a wasn't used until 20de316e334 in 2019.
+> 
+> Now that the preceding commit has migrated this code over to using
+> "struct strvec" to manage the "args" member of a "struct
+> child_process", we can just use that directly instead of relying on
+> OPT_ARGUMENT.
 
-Note that this actually introduces a new leak of the strvec in the
-caller. So it would probably want the "ret =" think I suggested to be
-squashed in.
-
-(I wasn't really planning to make a finished patch, but just trying to
-illustrate what had confused me in your original. I ended up closer than
-I had planned, though).
+Yeah, the change in difftool here looks fine (regardless of how the
+cleanup in the first patch gets there). And I'm happy to see this
+somewhat weird OPT_ macro go away if nobody is using it.
 
 -Peff
