@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61554C433FE
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A94BC433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DE8561209
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 538106113E
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 13:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235483AbhILNYx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 09:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49912 "EHLO
+        id S235512AbhILNYy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 09:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235361AbhILNYu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235382AbhILNYu (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 12 Sep 2021 09:24:50 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71571C061574
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 06:23:35 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id w29so9502165wra.8
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A661C061757
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 06:23:36 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id b21-20020a1c8015000000b003049690d882so2107483wmd.5
         for <git@vger.kernel.org>; Sun, 12 Sep 2021 06:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2zkseZDCrX5eQCOfTAj1pziuYCUVx8n+RzgjO8cPYiw=;
-        b=pXJValooYvPuHvgxr2cF2+J6hmqw6variJGni7LBLXuRY+Emr60Wf/V8o9MrQeeQDb
-         Qs4iVbPgh87/IjKg1ncNeiBAI5ovPCh6SD2r9rBwAlWhy85cvhW3ZqLUjKS7doyyvzD7
-         HPQH1PneEa4OLWUNloA1Y9VSXDfwQyf98eG/0lnxo8IwieOiQtnFGYne6FgFTERG3rlz
-         Mn2DmPv3w7N3bt+4Ke1+OhSlwc56+KwR1Y1UKmaKivraSh8Wpp9vJPitfyrvLtCTtoKr
-         nYg5/1C+ec2DAaTlIlI2ZzMV6UKL0SE/PiwLTpyfjzrFQG6Y2VE5BZug8qkpfrw/0jex
-         SpLw==
+        bh=IFLBnCb01UTxiG6mjxXgFtXahLMWXCrHCCNfFoecSsw=;
+        b=YY7fRQlCz/Cs5G0c0zcZauUQTePi7jczQCVgvelGP54C1i6l2vP9AUt1h66gTIusqT
+         HPkjhnssWSTkE/0yJFpQvHhIal+fUIhDuQ7QPxrlk6ZLKg9qfpc9iEiilrw4bjjfRh2H
+         cFdvLtT9/PrU7PyOdi33en0xm/gnC3ydlJgUbcI9ZyFd9cJOGNcH3RU15OQVRan+zfyd
+         vQn3yLIrVHm5Im11fpvVwDNUJGA3crwo34E5U2XCm0ra7S8OXePtTf17d1JGiUcimn9D
+         7FLsHqtQFRgC7216tLluFGLjg/abVxF6vIBlEStowCKUnsm3P2vw4NXROkEzNGAFbO3s
+         vp2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2zkseZDCrX5eQCOfTAj1pziuYCUVx8n+RzgjO8cPYiw=;
-        b=Hx8y/U22PATgTqNoKLZPQqaovj809XjIICgbRjfnoGJTnrY8UEDLHVjPPxXl/wfo9+
-         YhOQBV5ZRWPRy/KRsRp+9Eq/pmslbvJ7rVdDKUDGovoTKMFoppNI6+jBWaN/aCilVzBA
-         qsSpxR/iPHRLUYR3zOVjm2n6ZHgnn3mQWjsB9fZB47XWOuqDmWlIercQF/J0C1rqwI2x
-         wXbROX7JQNSqdC4/3nva+FRaq/07cRmpuSb64+YYcaqLGoAD7FlMi91Eh6peT4Y7HYOy
-         0giO0QzvBJMF8jUqACY927v8AE7sCB62fAOp4qaxgyr0n2LNaU6mSCn29dWUZReXVjMQ
-         2kEg==
-X-Gm-Message-State: AOAM531Imut8yMT/huFXB4nZrdevW14SmGBIuOt4+YKnlAhR8QYegyz/
-        +PlIWzlAG1gPDowQp+Jqc41Tp+ZnP90=
-X-Google-Smtp-Source: ABdhPJzXldl0ahwzV0kS+V5R4gp9EgPol3aFVBeRMtfHyM3vkKR+6L+kBqFG011U5w15O7DT92ScCw==
-X-Received: by 2002:adf:f911:: with SMTP id b17mr7656703wrr.412.1631453014010;
+        bh=IFLBnCb01UTxiG6mjxXgFtXahLMWXCrHCCNfFoecSsw=;
+        b=0Ngreeww0c07KM4+uTQibwxZyJr2nNSNhh9BTCg0UVg4NMXe4cuuYFtfkyJHqdwYAE
+         w7vVMh9HFCoITcwu85VmLDruEHt+PvXVP3HwUcMiZxTUlaOomN8DKe6a09Dhx6UTzR/y
+         RV3vXJvKZwnx2LR2tOXv8MhncEsV8udPSYDQydp8Z8IpKqauKKQ6iJttOHqBG2voVDdj
+         ui002WBhkzHjuE82aKpzhBzN4c8wa4j3UxEEny59AR2ZQ2honIZ+R5Nik6nY7l7qgtiF
+         x9mXkCjl3G6UdzM6sOjXl3eFGUN07ebx9Sfd2qV1XWKD33ZCz8lGXZXL4jU4nRCF2nyd
+         BCmg==
+X-Gm-Message-State: AOAM530LxHkttmt+Dp+or4JurmDMIYT+w2pWoQbJcHAs/DFcr0tIxT7T
+        COaF+q0noCrmoL4BtaIP2fkUOTkuv4E=
+X-Google-Smtp-Source: ABdhPJxWFwBkS9V2tnR8mF41eMPe8f4RXmoeKxXpyIINOdwzFFN2a6v2Z5aYSgWDIZmx0zQczwfKNg==
+X-Received: by 2002:a05:600c:a49:: with SMTP id c9mr6580531wmq.159.1631453014645;
         Sun, 12 Sep 2021 06:23:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o24sm760912wmm.11.2021.09.12.06.23.33
+        by smtp.gmail.com with ESMTPSA id l3sm4088299wms.4.2021.09.12.06.23.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Sep 2021 06:23:33 -0700 (PDT)
-Message-Id: <747b52e7bde1a33953849de233a47a063337548a.1631453010.git.gitgitgadget@gmail.com>
+        Sun, 12 Sep 2021 06:23:34 -0700 (PDT)
+Message-Id: <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
 References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
         <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 12 Sep 2021 13:23:19 +0000
-Subject: [PATCH v2 03/14] dir: extract directory-matching logic
+Date:   Sun, 12 Sep 2021 13:23:20 +0000
+Subject: [PATCH v2 04/14] dir: select directories correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,63 +78,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The last_matching_pattern_from_list() logic performs some checks on the
-filetype of a path within the index when the PATTERN_FLAG_MUSTBEDIR flag
-is set. This works great when setting SKIP_WORKTREE bits within
-unpack_trees(), but doesn't work well when passing an arbitrary path
-such as a file within a matching directory.
+When matching a path against a list of patterns, the ones that require a
+directory match previously did not work when a filename is specified.
+This was fine when all pattern-matching was done within methods such as
+unpack_trees() that check a directory before recursing into the
+contained files. However, other commands will start matching individual
+files against pattern lists without that recursive approach.
 
-This change only rearranges the logic but does not change its
-functionality.
+We modify path_matches_dir_pattern() to take a strbuf 'path_parent' that
+is used to store the parent directory of 'pathname' between multiple
+pattern matching tests. This is loaded lazily, only on the first pattern
+it finds that has the PATTERN_FLAG_MUSTBEDIR flag.
 
-We will expand the path_matches_dir_pattern() method in a following
-change.
+If we find that a path has a parent directory, we start by checking to
+see if that parent directory matches the pattern. If so, then we do not
+need to query the index for the type (which can be expensive). If we
+find that the parent does not match, then we still must check the type
+from the index for the given pathname.
+
+Note that this does not affect cone mode pattern matching, but instead
+the more general -- and slower -- full pattern set. Thus, this does not
+affect the sparse index.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- dir.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ dir.c | 34 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 86afa2eae00..652135df896 100644
+index 652135df896..fe5ee87bb5f 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1303,6 +1303,19 @@ int match_pathname(const char *pathname, int pathlen,
- 				 WM_PATHNAME) == 0;
- }
+@@ -1305,10 +1305,38 @@ int match_pathname(const char *pathname, int pathlen,
  
-+static int path_matches_dir_pattern(const char *pathname,
-+				    int pathlen,
-+				    int *dtype,
-+				    struct path_pattern *pattern,
-+				    struct index_state *istate)
-+{
-+	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
-+	if (*dtype != DT_DIR)
-+		return 0;
+ static int path_matches_dir_pattern(const char *pathname,
+ 				    int pathlen,
++				    struct strbuf *path_parent,
+ 				    int *dtype,
+ 				    struct path_pattern *pattern,
+ 				    struct index_state *istate)
+ {
++	/*
++	 * Use 'alloc' as an indicator that the string has not been
++	 * initialized, in case the parent is the root directory.
++	 */
++	if (!path_parent->alloc) {
++		char *slash;
++		strbuf_addstr(path_parent, pathname);
++		slash = find_last_dir_sep(path_parent->buf);
 +
-+	return 1;
-+}
++		if (slash)
++			*slash = '\0';
++		else
++			strbuf_setlen(path_parent, 0);
++	}
 +
- /*
-  * Scan the given exclude list in reverse to see whether pathname
-  * should be ignored.  The first match (i.e. the last on the list), if
-@@ -1327,11 +1340,10 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
++	/*
++	 * If the parent directory matches the pattern, then we do not
++	 * need to check for dtype.
++	 */
++	if (path_parent->len &&
++	    match_pathname(path_parent->buf, path_parent->len,
++			   pattern->base,
++			   pattern->baselen ? pattern->baselen - 1 : 0,
++			   pattern->pattern, pattern->nowildcardlen,
++			   pattern->patternlen, pattern->flags))
++		return 1;
++
+ 	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+ 	if (*dtype != DT_DIR)
+ 		return 0;
+@@ -1331,6 +1359,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+ {
+ 	struct path_pattern *res = NULL; /* undecided */
+ 	int i;
++	struct strbuf path_parent = STRBUF_INIT;
+ 
+ 	if (!pl->nr)
+ 		return NULL;	/* undefined */
+@@ -1340,8 +1369,8 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
  		const char *exclude = pattern->pattern;
  		int prefix = pattern->nowildcardlen;
  
--		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR) {
--			*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
--			if (*dtype != DT_DIR)
--				continue;
--		}
-+		if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
-+		    !path_matches_dir_pattern(pathname, pathlen,
-+					      dtype, pattern, istate))
-+			continue;
+-		if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
+-		    !path_matches_dir_pattern(pathname, pathlen,
++		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR &&
++		    !path_matches_dir_pattern(pathname, pathlen, &path_parent,
+ 					      dtype, pattern, istate))
+ 			continue;
  
- 		if (pattern->flags & PATTERN_FLAG_NODIR) {
- 			if (match_basename(basename,
+@@ -1367,6 +1396,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+ 			break;
+ 		}
+ 	}
++	strbuf_release(&path_parent);
+ 	return res;
+ }
+ 
 -- 
 gitgitgadget
 
