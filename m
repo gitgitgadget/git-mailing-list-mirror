@@ -2,173 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF1EC433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F68BC433F5
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:24:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C60061027
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:22:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0540261039
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 22:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236613AbhILWX5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Sep 2021 18:23:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54628 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235898AbhILWX5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 18:23:57 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4D16F5AF4;
-        Sun, 12 Sep 2021 18:22:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mwZw5nDUB4sy
-        aVL+5dvtmqkQZf1XoNHLlvWAIj7woz0=; b=os1yE4UK6TDNbOOx6xDigQa8wspc
-        mvDd3URFUzSDdOBTwmBNvoxBNx5oBHOjrCv4ZfX4Zu/s0FxWhSAtLFWaKi/Zxmto
-        ByQH7iE6fz1nrWIHnlY3tgkdVf+wOHKCZBk8FQ3dNyF2YV1UCPxO17ZBcqSbziJD
-        3nfpPiMSxf0IaNc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99C25F5AF2;
-        Sun, 12 Sep 2021 18:22:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 049DFF5AF0;
-        Sun, 12 Sep 2021 18:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Carlo Arenas <carenas@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 2/6] blame: replace usage end blurb with better
- option spec
-References: <cover-v2-0.6-00000000000-20210910T153146Z-avarab@gmail.com>
-        <cover-v3-0.6-00000000000-20210911T190239Z-avarab@gmail.com>
-        <patch-v3-2.6-036eb0efb5b-20210911T190239Z-avarab@gmail.com>
-Date:   Sun, 12 Sep 2021 15:22:39 -0700
-In-Reply-To: <patch-v3-2.6-036eb0efb5b-20210911T190239Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 11 Sep
- 2021 21:09:01
-        +0200")
-Message-ID: <xmqqtuipjuxc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236595AbhILWZs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Sep 2021 18:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55294 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235898AbhILWZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 18:25:48 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DFBEC061574
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:24:33 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id o20so6074938ejd.7
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 15:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=v6z5dIFuUxNie51/gjtwd0d3yH7tMVd35E3jyFhZ5iw=;
+        b=ah7ar5Iq+jXE7nDlJc698is6RKRJS070KbaZz97iCJmqmE+YtD9vC+g81ZIVarHVkR
+         cIjqasNbOZjCNr5VjoFQ/9DKj64FJgVrj8QqYGTq7dpi11DjuNdFQSWHEV9CZmPznHoJ
+         euC5FYprCfOy+hCCU1eVcPcjX8LZDG00dtwYHNXAvvcwqs4vXRkg3mLwVLra52Xz/jYZ
+         OCJHPYGpTbK8aTVpD2hiEQNTo9V+6CFc1O3NtZ+jBF9qBUJubq0Kk8+E7zrS7Wp3qgZw
+         HCmCLnDaMS/IEXLBIhpBTBVncdHiiIalbx3OFrfiVoqWTiPtJQ9f2NiDUJM2cX4ipAim
+         o9UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=v6z5dIFuUxNie51/gjtwd0d3yH7tMVd35E3jyFhZ5iw=;
+        b=1w88FNuEDacx6CqmjYiGvQckSa63mOLYWjJWUb/k+7GZ4dwYPD8DJeJEXwV+JvkMaR
+         4ObW2hyZxZdN9bYfV1sVH5b1Gxiu9Ox6W1+bQAbjYBIuosiEcBARjzLrXyrKrz0VU7u0
+         a1GLXALxuQ6aosgCPWq6ghcN6ZbD64vydUs+WrDMJdyAjjyFdUpfOV3Vhqob8vpF1qjc
+         G09pcMPBOO5+aPSYfA2TK2zy3EbmZMSNeBYsUl9sVa23FJryysb2+NmIrpwOKXuXHkvT
+         hu1XYuPaT2hxMgZi+oer6xCVpwrnSDVM5nU3Xw9ZGl9lwt+Zm0vXOT4BXXtFnkHQWjSG
+         maSA==
+X-Gm-Message-State: AOAM533A9avb3bTAlA96VHIb7JUCkIV6heTwHu2TrlcUM59IULZcp0YM
+        g1yedAdJMPhXQ7TU6K9WjafShvSd4MZVEA==
+X-Google-Smtp-Source: ABdhPJysLdv2FRF9xP3V8XdwxdsrDwh83TC+PFcvzo/STneL1laZUKv/rzDPuc/H26yg42Q4DO1rVw==
+X-Received: by 2002:a17:907:76ee:: with SMTP id kg14mr9346265ejc.90.1631485471749;
+        Sun, 12 Sep 2021 15:24:31 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i13sm2836408edc.48.2021.09.12.15.24.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Sep 2021 15:24:31 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
+        matheus.bernardino@usp.br, stolee@gmail.com, vdye@github.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 04/14] dir: select directories correctly
+Date:   Mon, 13 Sep 2021 00:21:42 +0200
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+ <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
+Message-ID: <87h7ep5t5t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F1837D26-1417-11EC-8170-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Change the "git blame -h" output to be consistent with "git bundle
-> -h"'s, i.e. before this we'd emit:
->
->     $ git blame -h
->     usage: git blame [<options>] [<rev-opts>] [<rev>] [--] <file>
->
->         <rev-opts> are documented in git-rev-list(1)
->     [...]
->
-> Now instead of that we'll emit:
->
->     $ git blame -h
->     usage: git blame [<options>] [<git rev-list args>] [<rev>] [--] <fi=
-le>
->     [...]
+On Sun, Sep 12 2021, Derrick Stolee via GitGitGadget wrote:
 
-What we take are options that rev-list takes, not arguments like A..B,
-so the updated text seems to be more wrong.
+> +	/*
+> +	 * Use 'alloc' as an indicator that the string has not been
+> +	 * initialized, in case the parent is the root directory.
+> +	 */
+> +	if (!path_parent->alloc) {
 
-It does not even make much sense as a goal to make "blame" and
-"bundle" similar to begin with, does it?  It may make sense for
-"bundle" to be more similar to "pack-objects", in that the
-information the command needs ultimately is about what is needed by
-"rev-list --objects" (i.e. object enumeration), while "blame" is
-more similar to "log", in that it is interested in walking commit
-DAG but not about the trees and blobs connected to the commits in
-the DAG.  From the end-users' point of view, they do not care if
-"bundle" and "blame" are explained using similar terms.
+This isn't wrong, but seems to be way too cozy with the internal
+implementation details of strbuf. For what it's worth I renamed it to
+"alloc2" and found that this would be only the 3rd bit of code out of
+strbuf.[ch] that cares about that member.
 
-Also, not all <rev-opts> you can see from "git rev-list -h" would
-make sense in the context of "git blame".  "--no-merges" and any
-options that are related to the number of parents make no sense,
---all, --branches and the friends, when used to give multiple
-positive ends (i.e. starting points) of traversal, would not make
-sense at all, options about ordering and formatting output of
-rev-list of course would not make any difference.
+> +		char *slash;
+> +		strbuf_addstr(path_parent, pathname);
 
-At the very least, we should say <rev-list-options> there, or we
-should just drop the mention of "we also take some options meant for
-rev-list" from here, leaving:
+So is "pathname" ever the empty string? If not we could check the
+length?
 
-	usage: git blame [<options>] [<rev>] [--] <file>
+Or probably better: ...
 
-and nothing else?
+> @@ -1331,6 +1359,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+>  {
+>  	struct path_pattern *res = NULL; /* undecided */
+>  	int i;
+> +	struct strbuf path_parent = STRBUF_INIT;
 
-I am sympathetic to the original reasoning why we wanted to add a
-parenthetical "by the way, we also take (some) options rev-list
-takes" here.  This is because not all relevant options are described
-in the options[] array we have there (we delegate what we do not
-know to parse_revisions_opt()), and it is sort of understandable
-that they wanted to leave a hint that the list of options given here
-is not exhaustive.
-
-But in the longer run, if we really wanted to make the -h output
-useful to end users, what we should aim for is not to make it
-similar to "git bundle", but to ensure that the option summary
-includes the relevant options shared with rev-list (in other words,
-make the list of options cover all the options the command takes,
-not just the ones in today's options[] array).
-
-When that happens, users do not have to care which ones happen to be
-parsed by us via our call to parse_options_step(), and which other
-ones are given to parse_revision_opt().  There won't be any need to
-say "we also take some options..." with <rev-opts> in the original.
-
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 641523ff9af..e469829bc76 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -29,12 +29,8 @@
->  #include "refs.h"
->  #include "tag.h"
-> =20
-> -static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] [=
-<rev>] [--] <file>");
-> -
->  static const char *blame_opt_usage[] =3D {
-> -	blame_usage,
-> -	"",
-> -	N_("<rev-opts> are documented in git-rev-list(1)"),
-> +	N_("git blame [<options>] [<git rev-list args>] [<rev>] [--] <file>")=
-,
->  	NULL
->  };
-> =20
-> @@ -1107,7 +1103,8 @@ int cmd_blame(int argc, const char **argv, const =
-char *prefix)
->  				    nth_line_cb, &sb, lno, anchor,
->  				    &bottom, &top, sb.path,
->  				    the_repository->index))
-> -			usage(blame_usage);
-> +			usage_msg_opt(_("Invalid -L <range> parameter"),
-> +				      blame_opt_usage, options);
-
-"invalid -L <range>" is fine, but can't we parrot what the user gave
-us here?  You can give more than one -L to specify two ranges in the
-same file that are not contiguous:
-
-	git blame -L1,10 -L100.112 master..seen -- foo.c
-
-and it would be helpful to tell which one is broken.
-
->  		if ((!lno && (top || bottom)) || lno < bottom)
->  			die(Q_("file %s has only %lu line",
->  			       "file %s has only %lu lines",
+Just malloc + strbuf_init() this in the above function and have a
+"struct strbuf *" initialized to NULL here? Then we can use a much more
+idiomatic "is it NULL?" to check if it's initialized.
