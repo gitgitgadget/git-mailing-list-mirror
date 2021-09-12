@@ -2,112 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28953C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 04:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20798C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 05:53:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1881610CE
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 04:46:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E833261108
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 05:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232183AbhILErQ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 12 Sep 2021 00:47:16 -0400
-Received: from mail-ej1-f43.google.com ([209.85.218.43]:33365 "EHLO
-        mail-ej1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbhILErQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 00:47:16 -0400
-Received: by mail-ej1-f43.google.com with SMTP id x11so13211131ejv.0
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 21:46:02 -0700 (PDT)
+        id S229704AbhILFyt convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 12 Sep 2021 01:54:49 -0400
+Received: from mail-ej1-f48.google.com ([209.85.218.48]:38477 "EHLO
+        mail-ej1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhILFys (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 01:54:48 -0400
+Received: by mail-ej1-f48.google.com with SMTP id n27so13338458eja.5
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 22:53:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pOlP8mVt277hqGcFjS+/Imhn0DppMYpNF1+ZVXMOxJg=;
-        b=TfvQQvFhTNHIaFWuth3noU9n4qUL2qMy02MXBa3z1Ns3Cz8EjheCRD6NcvuD31kcQD
-         Mg9tAmgmj4qvPwKE++ZaXeHhBsRBJXmnz9zh4HZx8AnVMcaxo/oIjd3d5WERzLlvLjy6
-         uYyPXYdDvCa64qtViRoLE25jwi3DZeES3VMhHKY5og3kbcdw/P8XgObzaNGSByh9Eghr
-         02Kz6Z08tEeq4T4eNWykvnoXcQSztwXbIlnK4rU0p9W469ewfCpyGOyppfNfXngxrUmd
-         vgH3GO076CXlxjdra8NCp16vZNurVsnWnNAjk90q3wGenAuCXFNkHC5zM8pKpL0sZ3Ls
-         c7fA==
-X-Gm-Message-State: AOAM533LpRetHE5jMQdh/fxwudTFZMZ4zTraZ9LLGjfQUVDtd6KNZJho
-        9ae0hgV4ZmDxDUWxjpqd/20i252gcbWLWBlB5H0=
-X-Google-Smtp-Source: ABdhPJzaQjGnLdjpEzv8TKIjMkn/Z+qTfaQdaMRR01Bx6GZuVrFcK0Kawddpf7KIXYSDXIehnwtnYTctPlawrlPTRTg=
-X-Received: by 2002:a17:906:4691:: with SMTP id a17mr5679826ejr.36.1631421961708;
- Sat, 11 Sep 2021 21:46:01 -0700 (PDT)
+        bh=wFTLxIIh57bEar4rv4lMs5vPIP7VjFTEriHsFmGsxK8=;
+        b=mVgHKe2r7zBasjkUIzQo/Cgjl+CRXWHSBTPI7JBQKrSrzYYCEukXRdA8akuOfO3XC5
+         hDfmckgGGr5By16rlMLyaSo7OunrZSYKG9Gj48Ja4ptrr2ugmti6SXUz1CXpMfA4kbqi
+         PHUnVv8nxSTc9fxjQQxnJ8m+pQtD+cV56DA2PUsaoSeDKNVc6i6zf3C06e9sOZGVdYLE
+         fgO2Mco2NpDvB9XhVhOs7bQvD2z8d8OybNzsYwcRQfzFVFxA41zNQoUQ0DY3ZqHQlDvo
+         flq4F0pOzIkm2tzyo2LJSjoXn31FMj2oNIqW0ysUJMmjartuPaQtJ7aArZItxhm0XRvj
+         WXWQ==
+X-Gm-Message-State: AOAM530JZX5z8d6Bxpls/viqhZ05UrMU5hiz+JUWS4HrOFJVFe3qXW7i
+        c4WBvgltctNa3823xx7LSxmFBqciGl51hNxIfLHy2rs1
+X-Google-Smtp-Source: ABdhPJyTNRYDijz+mDNYvZSmkG6eu1YMTqPTvcip0NCjnim4H9E2j6YZklHJ7pz/LyIbmw1ksA0LFBXBuzPwWNARonA=
+X-Received: by 2002:a17:906:15cf:: with SMTP id l15mr6000100ejd.568.1631426014010;
+ Sat, 11 Sep 2021 22:53:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-v2-0.6-00000000000-20210910T153146Z-avarab@gmail.com>
- <cover-v3-0.6-00000000000-20210911T190239Z-avarab@gmail.com> <patch-v3-2.6-036eb0efb5b-20210911T190239Z-avarab@gmail.com>
-In-Reply-To: <patch-v3-2.6-036eb0efb5b-20210911T190239Z-avarab@gmail.com>
+References: <20210830072118.91921-1-sunshine@sunshineco.com>
+ <20210830072118.91921-4-sunshine@sunshineco.com> <xmqqwno2505w.fsf@gitster.g>
+ <CAPig+cQ6FA0rUnkkTDRUD5vAD3cDXW9vtR1oX0pUJK5eJB9CHg@mail.gmail.com>
+ <xmqqeeaa4y0v.fsf@gitster.g> <CAPig+cQdXp0c+JYthvy+bbr6vLR7nq4pQY3w+CADUtzr+Ang4A@mail.gmail.com>
+ <CAPig+cTFbnrPPSZbzihJ9gdGV2c4poXWyNjhK3mnr5_uRwpxbg@mail.gmail.com>
+ <xmqqwnnos2jz.fsf@gitster.g> <CAPig+cQdAuLkZ0pDK6XOfm_WXCJAOm8Tr19oK14n-Tf7DcfW=w@mail.gmail.com>
+ <878s03c1of.fsf@evledraar.gmail.com> <CAPig+cQ+qVNBJqHmQgk6D1fbYHHJpAxhfwyBOgevi9Hvs6JYkw@mail.gmail.com>
+ <87wnnn8kba.fsf@evledraar.gmail.com>
+In-Reply-To: <87wnnn8kba.fsf@evledraar.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 12 Sep 2021 00:45:50 -0400
-Message-ID: <CAPig+cRzzMEFKMEW1dMB=Y++kuoFUnLgRatV7_hFZ5BnSbpD+A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/6] blame: replace usage end blurb with better option spec
+Date:   Sun, 12 Sep 2021 01:53:23 -0400
+Message-ID: <CAPig+cTRo_bLrCyhWC5on-HHco=H=3Mc6Xfi4gRP0xVE+Xk=BA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] notes: don't indent empty lines
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 11, 2021 at 3:10 PM Ævar Arnfjörð Bjarmason
+On Sat, Sep 11, 2021 at 6:43 AM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Change the "git blame -h" output to be consistent with "git bundle
-> -h"'s, i.e. before this we'd emit:
-
-Just a couple tiny, tiny nits (which may or may not be worth a re-roll)...
-
->     $ git blame -h
->     usage: git blame [<options>] [<rev-opts>] [<rev>] [--] <file>
+> On Sat, Sep 11 2021, Eric Sunshine wrote:
+> > Notes don't store the indented blank lines; it's only at output time,
+> > such as with `git format-patch --notes` that the blank lines get
+> > indented along with the rest of the note text (just as is happening in
+> > your `git show` example in which the entire commit message is being
+> > indented, including the blank lines).
 >
->         <rev-opts> are documented in git-rev-list(1)
->     [...]
+> Ah, so with your change we'd end up with trimmed notes, but not the
+> trimmed main body of the commit message?
+
+That's correct. This "fix" is specific to the note-printing machinery
+which is invoked by (at least) git-format-patch and git-log.
+
+(Until your demonstration of git-show indentation, I wasn't even aware
+that blank lines in commit messages were getting indented there, as
+well.)
+
+> > Anyhow, since then, I've discovered that `git format-patch
+> > --range-diff` also indents blank lines. And you've now shown that `git
+> > show` does, as well, so the behavior which triggered this "fix" turns
+> > out to be somewhat normal in this project, rather than a one-off "bug"
+> > in need of a fix.
 >
-> Now instead of that we'll emit:
->
->     $ git blame -h
->     usage: git blame [<options>] [<git rev-list args>] [<rev>] [--] <file>
+> Per the above I wouldn't mind this just being changed for all of them,
+> even one at a time.
 
-This is lacking a hyphen between `git` and `rev-list`...
-
-> This makes it consistent with the usage spec used for "git bundle":
->
->     $ git bundle -h
->     usage: git bundle create [<options>] <file> <git-rev-list args>
-
-...whereas this has a hyphen between the two.
-
-> [...]
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> @@ -29,12 +29,8 @@
-> -       N_("<rev-opts> are documented in git-rev-list(1)"),
-> +       N_("git blame [<options>] [<git rev-list args>] [<rev>] [--] <file>"),
-
-Ditto regarding missing hyphen.
-
-> @@ -1107,7 +1103,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->                                     nth_line_cb, &sb, lno, anchor,
->                                     &bottom, &top, sb.path,
->                                     the_repository->index))
-> -                       usage(blame_usage);
-> +                       usage_msg_opt(_("Invalid -L <range> parameter"),
-> +                                     blame_opt_usage, options);
-
-builltin/blame.c seems to be pretty consistent about starting error
-and warning messages with a lowercase letter, so this perhaps should
-follow suit. Also, I think you can drop "parameter" without losing
-clarity:
-
-    invalid -L range
-
-would likely be good enough.
-
->                 if ((!lno && (top || bottom)) || lno < bottom)
->                         die(Q_("file %s has only %lu line",
->                                "file %s has only %lu lines",
+I'm not a fan of the trailing whitespace either, however, Junio does
+have the concern that there may be some tooling somewhere which relies
+upon the "indented blank lines" (even if such tooling would not be
+robust).
