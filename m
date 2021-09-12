@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20295C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 376A3C433FE
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0CC1610A3
-	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A0CA60E9B
+	for <git@archiver.kernel.org>; Sun, 12 Sep 2021 00:16:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234419AbhILARY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Sep 2021 20:17:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49974 "EHLO
+        id S234480AbhILARZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Sep 2021 20:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232515AbhILARW (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232111AbhILARW (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 11 Sep 2021 20:17:22 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95203C061574
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:08 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id d21so786443wra.12
-        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:08 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 365E6C061757
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:09 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m9so8496747wrb.1
+        for <git@vger.kernel.org>; Sat, 11 Sep 2021 17:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zkqemqG3cBjPTjtLRJ208voEVSZCzeHv7kV3xWaedt8=;
-        b=lm7I+LmzZjZwltXJEcQGndeeSn4V3aiipht7TYDaOBu8/GH2xJUaSnYbb9KzaY7eSZ
-         b53d6FYya4lTP9Yxdsd2wpuZ89Bb4JCel4Q7RD5mDmFnQAoxC974oMHVphOWXCQMxjJn
-         LO3bLiOHWO21T88HZYrFg2itlgGQuXASDOZl6+PNRhMu5aCXeZOtQStY3dwuXmYT06F+
-         6xSMWHk2FsdZFe+URNySsJMKknvlFPvrkvyYVT8sYZx8iH02P/o4DAvg8LL6UhldAm5+
-         JLqpjO72IFyFiKYJEi9XDejex+BAcKdCFxDyVFi0iYaSOrPi31dJbkWY6W5Z56VxOfvj
-         ZRqg==
+        bh=ZVygsSuXHuZJi9knm7pqlmkVdykROSUGvWUOAWL3Z94=;
+        b=UDp1Ug4bIgKr1NB6HFAzZB0r0R2e2Q86IzYex21spvTSep78CRp7LeaYdxspz1FPXx
+         vIW9/LMhFbaqOqBxgHLVf5GMRkTnMJAhrb+sGKDfXVwOJ1tnviPfWnM51t02AgpNZHQN
+         G8/s9zyjIt6wzxu2X5MKG4wziel7Gmo4+v2SMPKQ6WyfFKjcD5WKXIoesfdDjQSgvv+h
+         ajEnjNlXAarQof+3iEaIirFlpJqiiibzVy0dt9RS5x3nR1eLNGAEof17HhFuz2AAN0c5
+         QFtWjL70CgycpwxYvqxPcgxMUu/0V+SpfMgFan+3cLKSeKKrwuBfCLlTFfuk4Boe6yGG
+         8fVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zkqemqG3cBjPTjtLRJ208voEVSZCzeHv7kV3xWaedt8=;
-        b=WeUMa7V4vZJt4SMc1lyduCj/P7W9I3hhu11wIugIAOhR2M4HrSBE9JUvmLu5MmmHLs
-         RUZVJjI5/KCBTGDAJS+Fww15hMPTfx2+QKy7yZCFj7Wq7qao7o83EklgbBTkaraH6kPS
-         G7PCMCjhJrrb+ITXXjsYDIcznzucspAO5sOOEeS0HGgBCqzEfxHTdRSxuSXc63Ca0GcO
-         Z21jng7HAfAQWViRG7T1mYDQmvPCx8YTSvzWk4GnTBVyRf4razIjeb+oqIBKhLK3a3wf
-         ZY+Zas0rg/sdmP7taTZ+SYKbmw4+lo5OhyeqUe1D98NK3bchk2P9Bo9vUqXjb/5N/BhT
-         lfRw==
-X-Gm-Message-State: AOAM532DwuET0AXkHS8yn53sz98qrO/LwyZMh9uoc8xABPHVPtNPSVdi
-        0EroVlMcYkssBvTgLnEPyMNhx4SmSxq89g==
-X-Google-Smtp-Source: ABdhPJzOsRY02p2uXL8Qx9wt6qZ6JCH3GzrX677tuXussL++sDBZDdfrvEElrZh77bFNVlQ7cZ0iUA==
-X-Received: by 2002:a5d:628e:: with SMTP id k14mr5087570wru.414.1631405766871;
-        Sat, 11 Sep 2021 17:16:06 -0700 (PDT)
+        bh=ZVygsSuXHuZJi9knm7pqlmkVdykROSUGvWUOAWL3Z94=;
+        b=P/2RUcTb0wf+I2XO6GR7938fDKt1x2eMXIB9oQWmTh/9ZhWfYOjPKOJrHYD2MRxqZf
+         1lPGpmtG0ytwyxAJ37l5jObUffuvIQIyUl9RzmZ1151YoQH+9yAxxotbiDd34V6AqkCd
+         /+tVbLnjrSM2lolUMMVxL7SCe/soP6xjFU6NiGsRN0CJholD0+8bqTEY26Knj/hjXm2k
+         moKEtC55FXSQ+ASMDFgyPEi6lYdkTJo0bmRypjXVIhDAOJekYRWig1E4d0VEZvCwSJ8T
+         9x+azajUJXXmgmvocjbpIWrHUJTCUlVQYggdvG2uYUlj4IrmezCgE004748TeXP/uCeg
+         F9nA==
+X-Gm-Message-State: AOAM531gksl1ksQXXCcx5LZK159kHgwZ/AOrBct2HtBAF4WraWllu3jk
+        2FhvHfkJ1ZPNZx0KmHHWrQN+5f5uCByP5A==
+X-Google-Smtp-Source: ABdhPJxFIhrk4XwVo434GXW+MZOFZc+ag9ci8JOufgWejMECdm7WXcKpc/38o05LI4EcaugmF3CAUA==
+X-Received: by 2002:a5d:6792:: with SMTP id v18mr5098378wru.416.1631405767615;
+        Sat, 11 Sep 2021 17:16:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id p5sm3301078wrd.25.2021.09.11.17.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Sep 2021 17:16:06 -0700 (PDT)
+        Sat, 11 Sep 2021 17:16:07 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/7] pack-objects: pass "struct strvec *" instead of int/char ** pair
-Date:   Sun, 12 Sep 2021 02:15:50 +0200
-Message-Id: <patch-v2-2.7-7f59a58ed97-20210912T001420Z-avarab@gmail.com>
+Subject: [PATCH v2 3/7] sequencer.[ch]: pass "struct strvec *" instead of int/char ** pair
+Date:   Sun, 12 Sep 2021 02:15:51 +0200
+Message-Id: <patch-v2-3.7-c35cfb9c9c5-20210912T001420Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.998.ga4d44345d43
 In-Reply-To: <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
 References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email> <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
@@ -77,53 +77,70 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As in the preceding commit, prepare for the "nr" member of "struct
-strvec" changing from an "int" to a "size_t".
-
-In this case we end up passing the "nr" to setup_revisions(), which
-expects to take an argc/argv pair passed to main(), so we can't change
-its type.
-
-But we can defer the conversion until that point. Let's continue to
-pass the "struct strvec *" down into instead of "unwrapping" it in
-cases where the only source of the "int/char **" pair is a "struct
-strvec".
+strvec" changing from an "int" to a "size_t". These are the same sorts
+of changes to pass a "struct strvec *" further down instead of passing
+args->nr and args->v.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/pack-objects.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/rebase.c | 3 +--
+ sequencer.c      | 6 +++---
+ sequencer.h      | 4 ++--
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ec8503563a6..1902c0b6776 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3701,7 +3701,7 @@ static void mark_bitmap_preferred_tips(void)
- 	}
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index eb01f4d790b..27669880918 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -363,8 +363,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 			     oid_to_hex(&opts->restrict_revision->object.oid));
+ 
+ 	ret = sequencer_make_script(the_repository, &todo_list.buf,
+-				    make_script_args.nr, make_script_args.v,
+-				    flags);
++				    &make_script_args, flags);
+ 
+ 	if (ret)
+ 		error(_("could not generate todo list"));
+diff --git a/sequencer.c b/sequencer.c
+index 68316636921..a4ba434f173 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5355,8 +5355,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 	return 0;
  }
  
--static void get_object_list(int ac, const char **av)
-+static void get_object_list(struct strvec *rp)
+-int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+-			  const char **argv, unsigned flags)
++int sequencer_make_script(struct repository *r, struct strbuf *out,
++			  struct strvec *args, unsigned flags)
  {
- 	struct rev_info revs;
- 	struct setup_revision_opt s_r_opt = {
-@@ -3713,7 +3713,7 @@ static void get_object_list(int ac, const char **av)
+ 	char *format = NULL;
+ 	struct pretty_print_context pp = {0};
+@@ -5390,7 +5390,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 	pp.fmt = revs.commit_format;
+ 	pp.output_encoding = get_log_output_encoding();
  
- 	repo_init_revisions(the_repository, &revs, NULL);
- 	save_commit_buffer = 0;
--	setup_revisions(ac, av, &revs, &s_r_opt);
-+	setup_revisions(rp->nr, rp->v, &revs, &s_r_opt);
+-	if (setup_revisions(argc, argv, &revs, NULL) > 1)
++	if (setup_revisions(args->nr, args->v, &revs, NULL) > 1)
+ 		return error(_("make_script: unhandled options"));
  
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
-@@ -4138,7 +4138,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	} else if (!use_internal_rev_list)
- 		read_object_list_from_stdin();
- 	else {
--		get_object_list(rp.nr, rp.v);
-+		get_object_list(&rp);
- 		strvec_clear(&rp);
- 	}
- 	cleanup_preferred_base();
+ 	if (prepare_revision_walk(&revs) < 0)
+diff --git a/sequencer.h b/sequencer.h
+index 2088344cb37..36f67164f86 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -158,8 +158,8 @@ int sequencer_remove_state(struct replay_opts *opts);
+ #define TODO_LIST_REAPPLY_CHERRY_PICKS (1U << 7)
+ #define TODO_LIST_WARN_SKIPPED_CHERRY_PICKS (1U << 8)
+ 
+-int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+-			  const char **argv, unsigned flags);
++int sequencer_make_script(struct repository *r, struct strbuf *out,
++			  struct strvec *args, unsigned flags);
+ 
+ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 				 struct string_list *commands);
 -- 
 2.33.0.998.ga4d44345d43
 
