@@ -5,65 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC71C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74565C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:59:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38C3060F92
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:51:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D4D960F24
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239734AbhIMLwW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 07:52:22 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43173 "EHLO mout.gmx.net"
+        id S239769AbhIMMAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 08:00:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:43417 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239719AbhIMLwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 07:52:21 -0400
+        id S239719AbhIMMAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 08:00:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631533862;
-        bh=Upj2O2bd6TrbchzzoPr+V33i0+6jHgQUOau7E8tYBpA=;
+        s=badeba3b8450; t=1631534337;
+        bh=ygHNx8ETjH5Dbt/ir9fyAvw0yyG+rCm8+gv86/h9hEM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GjiQF80a060xfzM3y6rH33qwxgcmiTp2nGPGegDeES4fiHrokQ0D4+pLPyFVzca2I
-         UufVeHE5eQ8ynmqendka2Y6b+VYk9BQtUkNK8T93OXNpFHjRSeyce+hyvrBsmleZm2
-         +9iE6uF/38ptZJJYhlceSmxi84Vv5Mz+gWZaxyP8=
+        b=SotHecY0za4Ui+RzdRSsGdU2oyoRaF8KlwZuJeRkcSyaYQJ+IKJ9KbpLovOgF2793
+         wUVzppkbIIgixvypMqGL3GpwjLTX3AWS+pReqxvAG4szFZlm18PRqvV2iCYXGowNsG
+         NDezrMYTzQCPtRwTMTAbrcpL+oyJBBMZXjvk3v2E=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTmY-1mSWBf3FYM-00WVIQ; Mon, 13
- Sep 2021 13:51:01 +0200
-Date:   Mon, 13 Sep 2021 13:50:59 +0200 (CEST)
+Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAOJP-1mDsvC1iZ9-00BvDZ; Mon, 13
+ Sep 2021 13:58:57 +0200
+Date:   Mon, 13 Sep 2021 13:58:55 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
 cc:     git@vger.kernel.org, bagasdotme@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 1/3] t0301: fixes for windows compatibility
-In-Reply-To: <20210913085600.35506-2-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109131343440.55@tvgsbejvaqbjf.bet>
-References: <20210912202830.25720-1-carenas@gmail.com> <20210913085600.35506-1-carenas@gmail.com> <20210913085600.35506-2-carenas@gmail.com>
+Subject: Re: [PATCH v2 2/3] credential-cache: check for windows specific
+ errors
+In-Reply-To: <20210913085600.35506-3-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2109131357280.55@tvgsbejvaqbjf.bet>
+References: <20210912202830.25720-1-carenas@gmail.com> <20210913085600.35506-1-carenas@gmail.com> <20210913085600.35506-3-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1412209830-1631533861=:55"
-X-Provags-ID: V03:K1:2gksVUzz7c5DHbYm1whurgZUOlpHfYAI/sAvVGeDeBfl7OOFT3A
- BZDtFahyyfQmk9HPSYxALlkoltD9XHwwBIF8Au1Ii0oYqKtbZjQrnyeYU3OhMVhvn1CKB1C
- P16zhhe9rY8t0lKeEaABfYjZkJQ5eT58fUAxPxtZdI01JkTLZdpRRXlP4qrfOGlUn53M/sl
- ADOmgbuzCIRddi7XWry7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xgoDG6ucU1g=:jBq+LgMrgaY4t/RE9ko1nL
- VYmYapEEyHeVUorIA7b8xXKSgCo2mUz5JStZ5DP/7uNoDdm/XXqN/oMUH8PTmEMh/av7hsSd5
- XjF1LfPTimdEA82S5XCNZjqOamk6YFvFshKgwKQ+simGQrg4IxeKPHEw4CdCkVplysbq4Isll
- u0+1uAJ7HJffsNO1Bd0OLNvgrL5DysSPdAuFs7kQOfcKkGCHowwJtrs09408kGHhsPUjFS671
- 8bvd1I+s2hNW+w4QrYL6ydLjGh6yGzcV1AxD/zXX6k6dFJt122ChN+CS+MVsK75Js33c6Q3M6
- xYHC11AeVGEqP7gqO2C7JUXo8uklogFHF4+E9JTf7Tqxma+M2c3VnjaLHgqGCowvhYgHFHF74
- BqSEoD5XuKyDmEFowlDt2h3nYBwrUFgOYRdr8gXEeNeCtaJxn+ADRQzr+jhr7i9UK9zPV+l9q
- PPm7PobSxp2f3TdhlGtnppnv/G+seNme6C6LGZim9FQ5KlxE071fA1lGdpLzKhl9o5qRbLQNP
- /2pWWT4Mbh1f3HcvbUKziZ6UAA4IobgMgdcF4gDVq1J1PqMgC0Mea4RUm9wZdhm6ks6lD+rxh
- sW1cswO093V4S8swBAqeAGSdmgOxFgCLBwqW8VorN/BE9X7IBZmdOunqhQnYFmM5Dc2ymoy9U
- GL0pTdO+F5M6jizSbJ6vInGXCgclvZnOwEzwb0b9oYVsLxd686b117h/ijENBdzms1DA24NKc
- kXfCiBRbHF2WLAbJjUxAYWaRKNd/Gn2o9KhJk/roByxJbr1sZNbBiXOiRYw6DX/NkLA7Jp/wF
- VHoD9Mq4H6JgpihCGvUZsXctDTVO99emDpytJDtz/dZkmSqh0AodXKoxHajOEBtdBn/N5vqgB
- Afk/IXY+j05YaljYXALbYDJ9iHRkzffYaNAFV4thtWBY+oJCUAUxNm1MpgJd8YIC7F/vjeNGo
- ADCfKx1AfUiZ/CBM0qmysa3dXyqLvg8mnjpo5F5bNIaUXRpDdY7ePab2KX1hGO/ukPLKLEfNU
- d3o++ulsYvE35T9C24oZ8XDF8sshGu5PhpVbviFFQn34SidsS0qjGhSAK+FYr3HpN7lMQldeQ
- mKNe2P9phSgSio=
+Content-Type: multipart/mixed; boundary="8323328-838569380-1631534337=:55"
+X-Provags-ID: V03:K1:kIBP+Rxe6Mu1gHmFKpnVlxY5DfNp2spp+c2ER4fOdUUDRR0bh0o
+ o0WAv4VZXTg0yR3o1ND5YUmYczBctGPJJQV8p0DJxaUAPDANM9IkmvHD4UUb1U4G1sxDGcN
+ Bsmv3RDe1pOIPx4vfdDKaRpHECy0RzFBdCek53tfGZTencavoAkX7Iu0En/JFh/R03py282
+ 2Sj8hqdEUqXO3fOujZLxg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y6jWhUzDCVc=:c2Hi2LIA3lifUZuIwXWS/H
+ 1ws0XDETWKb+zWwMQ70Mhb77+mjQu0ELzR7OcfzUVuNQw9bO9n3xRVxgKvuQYmBOBR+i46ARi
+ INseO/22zQ5n0tEIDRyLhNlFSsuxKkbDeEhUsU2hbL9EvnV6KHAqDePi6+F7r/1NrMxAB+RH5
+ kidkcdQpolgdxjp5CY6y/EITwEwltgvecsoqcnyykWlzVpZynn1/AbMerxJ7pBo/jDdH3NuZm
+ ek4iGCBqd8Ts7JFmPx2RObKG8UCgxFyWC0kgkAH273oa0tkAprsx6wblq11RywJtqo0bxh2X9
+ JJi92CLgJsy189gKP2c4oTmLxotsnFBE63Zj6Qodv6nPj+/I6383L4Lzhv8lzFvw9MiIucf1g
+ KvCzCo+d9um7fCkNwck7p12Sdr4a3OmTOle8OB+BZio5moPQ1+G+HzrB3YSFiq/c9ai4H2lZC
+ Z77JV/pDzEJ39+Oq9AcZj5SeeM+MFpCphooolNO2xvzNJENy3EcNHSXt5gLsEqGx6WcToNQxa
+ WwMeHed+J0n4JROjgk9cKfwwHMdStd+faNQ9zU4qP9z/rQ7mwPFYuaF6DhzuB/iYA956Ax4aG
+ vsxQ3Vj5C9/SJ+WaXfXNNOWr6wH+RVfum+gxi7eGv7rsSm81/8UU04ZJTVSZiytaeE1aIka8v
+ X5nN62hGY9yr1hYxt/xZJ7Q71EBlQb9wQcBXQGt/SO963F/sdPQb0h6k+mZ/+2/1NPh63bEzZ
+ 9Qudwr0yAyTDFZuDfpLf17UCytPuzYLt56UL8mPeHbsRRtP1tMiX4prfTBraZfgWLfx3OU8CZ
+ MdGcSqZx85TKp3+pYfLOzasNDRYXj+z8HUvMv2wK/6mgQOCJHsTGVvZB0CumGTdFWurQItt/W
+ O6CY8bIpDy/M2oB75C92XUvnSUZfeKJR9viwzGEUY6keSeETmL/uji3DAwqat4VqrPQ6B6RLj
+ f60rW7EbSFYxGTW3q+DaYBu0IjuDSsKyZGjyXpRAl918ntxli92babOP/6CfWiSdDHp0fqwN9
+ nPB4/Rek/HYan0ZuRARXIgthjN8lwM7IJNoloIg4/PEYKt1yaEpeJiBu6w/6PAokT2XQgsZoS
+ J8cil37USweY8I=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -71,7 +72,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1412209830-1631533861=:55
+--8323328-838569380-1631534337=:55
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -79,172 +80,90 @@ Hi Carlo,
 
 On Mon, 13 Sep 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-> In preparation for a future patch that will allow building with
-> Unix Sockets in Windows, workaround a couple of issues from the
-> Mingw-W64 compatibility layer.
+> Connect and reset errors aren't what will be expected by POSIX but
+> are compatible with the ones used by WinSock.
 >
-> test -S is not able to detect that a file is a socket, so use
-
-Is that really true, even with recent MSYS2 versions? I thought I saw some
-patch flying around on the Cygwin mailing list that added support for Unix
-sockets...
-
-> test -e instead (through a library function).
->
-> `mkdir -m` will always fail with permission problems, so instead
-> call mkdir followed by chmod.
-
-Maybe explain that Windows' permission model is a lot more sophisticated
-(using Access Control Lists) and is therefore unable to interpret
-permissions like `0700`.
-
-And we probably need to mention then, too, that it is funny that `mkdir
--m` complains while `chmod` does _not_... Ah, historical reasons...
-
-Thanks,
-Dscho
-
->
-> The last invocation of mkdir would likely need the same treatment
-> but SYMLINK is unlikely to be enabled on Windows so it has been
-> punted for now.
+> To avoid any possibility of confusion with other systems checks
+> for disconnection and availability had been abstracted into helper
+> functions that are platform specific.
 >
 > Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 > ---
-> v2:
-> * avoid the confusing -f test as suggested by Bagas
-> * try to help casual readers as suggested by Junio
+> V2:
+> * Use helper functions to separate error handling as suggested by Junio
 >
->  t/t0301-credential-cache.sh | 32 ++++++++++++++++++++++++--------
->  1 file changed, 24 insertions(+), 8 deletions(-)
+>  builtin/credential-cache.c | 30 ++++++++++++++++++++++++++++--
+>  1 file changed, 28 insertions(+), 2 deletions(-)
 >
-> diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-> index ebd5fa5249..1f7b1e29e6 100755
-> --- a/t/t0301-credential-cache.sh
-> +++ b/t/t0301-credential-cache.sh
-> @@ -9,6 +9,21 @@ test -z "$NO_UNIX_SOCKETS" || {
->  	test_done
->  }
+> diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+> index e8a7415747..fd9f33d993 100644
+> --- a/builtin/credential-cache.c
+> +++ b/builtin/credential-cache.c
+> @@ -11,6 +11,32 @@
+>  #define FLAG_SPAWN 0x1
+>  #define FLAG_RELAY 0x2
 >
-> +test_path_is_socket () {
-> +	test -S "$1"
+> +#ifdef _WIN32
+
+While that works, I think we prefer `WIN32` (`_WIN32` is only used in
+`compat/` and `contrib/`).
+
+Other than that, looks good!
+
+Ciao,
+Dscho
+
+> +
+> +static int connection_closed(int error)
+> +{
+> +	return (error =3D=3D EINVAL);
 > +}
 > +
-> +# in Windows, Unix Sockets look just like regular files
-> +uname_s=3D$(uname -s)
-> +case $uname_s in
-> +*MINGW*)
-> +	test_socket_exist=3Dtest_path_exists
-> +	;;
-> +*)
-> +	test_socket_exist=3Dtest_path_is_socket
-> +	;;
-> +esac
-
-A more canonical way would probably be to imitate what we do with `pwd` in
-`t/test-lib.sh`:
-
-	test_path_is_socket () {
-		test -S "$1"
-	}
-
-	case $uname_s in
-	*MINGW*)
-		test_path_is_socket () {
-			# `test -S` cannot detect Win10's Unix sockets
-			test -e "$1"
-		}
-		;;
-	esac
-
+> +static int connection_fatally_broken(int error)
+> +{
+> +	return (error !=3D ENOENT) && (error !=3D ENETDOWN);
+> +}
 > +
->  # don't leave a stale daemon running
->  test_atexit 'git credential-cache exit'
+> +#else
+> +
+> +static int connection_closed(int error)
+> +{
+> +	return (error =3D=3D ECONNRESET);
+> +}
+> +
+> +static int connection_fatally_broken(int error)
+> +{
+> +	return (error !=3D ENOENT) && (error !=3D ECONNREFUSED);
+> +}
+> +
+> +#endif
+> +
+>  static int send_request(const char *socket, const struct strbuf *out)
+>  {
+>  	int got_data =3D 0;
+> @@ -28,7 +54,7 @@ static int send_request(const char *socket, const stru=
+ct strbuf *out)
+>  		int r;
 >
-> @@ -21,7 +36,7 @@ test_expect_success 'socket defaults to ~/.cache/git/c=
-redential/socket' '
->  		rmdir -p .cache/git/credential/
->  	" &&
->  	test_path_is_missing "$HOME/.git-credential-cache" &&
-> -	test -S "$HOME/.cache/git/credential/socket"
-> +	$test_socket_exist "$HOME/.cache/git/credential/socket"
->  '
+>  		r =3D read_in_full(fd, in, sizeof(in));
+> -		if (r =3D=3D 0 || (r < 0 && errno =3D=3D ECONNRESET))
+> +		if (r =3D=3D 0 || (r < 0 && connection_closed(errno)))
+>  			break;
+>  		if (r < 0)
+>  			die_errno("read error from cache daemon");
+> @@ -75,7 +101,7 @@ static void do_cache(const char *socket, const char *=
+action, int timeout,
+>  	}
 >
->  XDG_CACHE_HOME=3D"$HOME/xdg"
-> @@ -31,7 +46,7 @@ helper_test cache
->
->  test_expect_success "use custom XDG_CACHE_HOME if set and default socke=
-ts are not created" '
->  	test_when_finished "git credential-cache exit" &&
-> -	test -S "$XDG_CACHE_HOME/git/credential/socket" &&
-> +	$test_socket_exist "$XDG_CACHE_HOME/git/credential/socket" &&
->  	test_path_is_missing "$HOME/.git-credential-cache/socket" &&
->  	test_path_is_missing "$HOME/.cache/git/credential/socket"
->  '
-> @@ -48,7 +63,7 @@ test_expect_success 'credential-cache --socket option =
-overrides default location
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$HOME/dir/socket"
-> +	$test_socket_exist "$HOME/dir/socket"
->  '
->
->  test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exist=
-s" '
-> @@ -62,7 +77,7 @@ test_expect_success "use custom XDG_CACHE_HOME even if=
- xdg socket exists" '
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$HOME/.cache/git/credential/socket" &&
-> +	$test_socket_exist "$HOME/.cache/git/credential/socket" &&
->  	XDG_CACHE_HOME=3D"$HOME/xdg" &&
->  	export XDG_CACHE_HOME &&
->  	check approve cache <<-\EOF &&
-> @@ -71,7 +86,7 @@ test_expect_success "use custom XDG_CACHE_HOME even if=
- xdg socket exists" '
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$XDG_CACHE_HOME/git/credential/socket"
-> +	$test_socket_exist "$XDG_CACHE_HOME/git/credential/socket"
->  '
->
->  test_expect_success 'use user socket if user directory exists' '
-> @@ -79,14 +94,15 @@ test_expect_success 'use user socket if user directo=
-ry exists' '
->  		git credential-cache exit &&
->  		rmdir \"\$HOME/.git-credential-cache/\"
->  	" &&
-> -	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
-> +	mkdir -p "$HOME/.git-credential-cache/" &&
-> +	chmod 700 "$HOME/.git-credential-cache/" &&
->  	check approve cache <<-\EOF &&
->  	protocol=3Dhttps
->  	host=3Dexample.com
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$HOME/.git-credential-cache/socket"
-> +	$test_socket_exist "$HOME/.git-credential-cache/socket"
->  '
->
->  test_expect_success SYMLINKS 'use user socket if user directory is a sy=
-mlink to a directory' '
-> @@ -103,7 +119,7 @@ test_expect_success SYMLINKS 'use user socket if use=
-r directory is a symlink to
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$HOME/.git-credential-cache/socket"
-> +	$test_socket_exist "$HOME/.git-credential-cache/socket"
->  '
->
->  helper_test_timeout cache --timeout=3D1
+>  	if (send_request(socket, &buf) < 0) {
+> -		if (errno !=3D ENOENT && errno !=3D ECONNREFUSED)
+> +		if (connection_fatally_broken(errno))
+>  			die_errno("unable to connect to cache daemon");
+>  		if (flags & FLAG_SPAWN) {
+>  			spawn_daemon(socket);
 > --
 > 2.33.0.481.g26d3bed244
 >
 >
 
---8323328-1412209830-1631533861=:55--
+--8323328-838569380-1631534337=:55--
