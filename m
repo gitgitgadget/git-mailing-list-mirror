@@ -8,60 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11502C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F393CC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:40:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED25A610D1
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:40:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE0D7610CC
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346622AbhIMRl2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 13:41:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33474 "EHLO
+        id S1346663AbhIMRle (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 13:41:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343524AbhIMRlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 13:41:10 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6660C061786
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 10:39:15 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso7608136wms.3
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 10:39:15 -0700 (PDT)
+        with ESMTP id S243422AbhIMRlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 13:41:11 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 822BEC061787
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 10:39:16 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id l18-20020a05600c4f1200b002f8cf606262so7631759wmq.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 10:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LAObiEFm2DHUQ4KXSDgBkJFVd+MCaW15Pp6fawy8Adc=;
-        b=GSM8pc70roDZhn12NL3HFJPXuLtpPiI0rNWq0QYPewRCB4gE+hDVIhLcU1KuRdewSc
-         krZaGqm+qphZDOmWxDcC9RAGG8JMPit9aOFPP2CFiUezf968FKouB5u6K9uV+HNgCoXP
-         VFFIB61fVQZ8lRwdEkiSdecshp9eLOmWTRr46ip/u6g+VIq179lQDZh7J0CxGL4fg4y0
-         uCvZJAma0WNVput/qRN/Wr2rIb6AaovL1L6Z1WjGewUCAlmEgAO1IgsiP8JPq6bFWM61
-         rIR2+X5sluOq4nQ2JPhF3X3rL7t/KXhtGJWO2HyJnZ/OldKiDxmqjm4lAJqNqTLE4Ky1
-         l8vA==
+        bh=a2irW1fv9RC72W8TrdM2XrhdmNH14LBTJLZt6TJqbm4=;
+        b=AihB8xTT+P81dNEheEnXVmKI2eJXcRtldlGYDenhTUA0fGiL80pqKcIOVvvM8MEcZC
+         Rte4wgTWnRJLcvMru8CugeFxQbnAIdi4DYxa8sRNqZTnO0O8DKg1rQCxXscqkq0TABW8
+         xk9viuyN4IgQ9kYflwEkn9vhzYllSjK55pgfjiVKIc+Lq1T+7DCZibV+lqY+Vjbwh8Fx
+         T+6Pkf8ZcCSkHhwusEeNhUCpo8Cs11brTWxP3Lt32DhlOa/6pLdYwEH1njd/PrwL87A7
+         ZPNdyJMmvNqpV7R6wwwnfM+MncnsGC0WVH98x1sHsB26S25l2KUTkwizK7A4F1RVlVy6
+         6v2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LAObiEFm2DHUQ4KXSDgBkJFVd+MCaW15Pp6fawy8Adc=;
-        b=zRlNNOunpwxRJvnQRLBosYKpMr2mK1qfffsE8bHzClxzFKIIY9m0NHe7n5/beCykbp
-         mH0LYMEU4iaiW4jcZ3HWtfQssb97o52qqvf9gX+1GFY0CxOcydzWiWC7pydbHvhWskxz
-         0sfpa83E03jJmyPRueCVumvTdK/+f85wMk3spmfdr21ezxtgtNIuLtbFpdKEAAIBpsAo
-         KYZRQxHIU7Y4ZeLZsy0lCXsYWXJRYMRLE7Ry4rOeQP+Wg0QZxDvXU7CNC2+w0hn0QqcE
-         Ei60Tk1J+Fqu9+/J2J7raNOFYXFO56Vq7q5tL4TVwht+OCqXQyQpNFbn0gg2WTv9BmE8
-         MR7Q==
-X-Gm-Message-State: AOAM531RkH7Emev9yrVqz86Ds7o97UrTa70Jo6Q9s6fi+a1IdOEkKUtJ
-        r8mjjf6bOGTGBGwfBXuVsXBxPVQA5Fo=
-X-Google-Smtp-Source: ABdhPJyFoLTi927SqAU4s6bVrEUp0W/ziSNJQmgVXyczFE8BPrTp3w/KVk0hTOkfoP4zKEArt9olPQ==
-X-Received: by 2002:a1c:f607:: with SMTP id w7mr12764583wmc.65.1631554754426;
-        Mon, 13 Sep 2021 10:39:14 -0700 (PDT)
+        bh=a2irW1fv9RC72W8TrdM2XrhdmNH14LBTJLZt6TJqbm4=;
+        b=q7/PBxIwvYQHOt/+gsiCURN9fo2jo63gMX3+QXO5xvoYssnRfd7ae26NW17LJVwvWf
+         z0yAwtQpuczqrTXmfzeCC53lQhwc5gp0FVU0ikXFdKaScGk6/6MpD8Mutvrffnp33ZDM
+         3B3aIc8uzLrERpJXosBHm+QT8+zRknhlPxDrF6qTWA2/+CdPgdCofiQU42BKoQV6P+Y4
+         EPX6P2z9aGHnt+6eM3f4GVaIKXnT1cbGEP+0zNOyikio/nJSvrUBuF4+9kaZd+rit8+A
+         Idxmq3juS4dm4hjbsiaZA9+BwLOwg+QJ16Tx1704ustFc5MstWn/rz0g11vLkG+WS9TQ
+         cPiQ==
+X-Gm-Message-State: AOAM530yM9lEk343AqdOXtfXzXYoVxP0aq5Z9Ire7Rc4nk0I9vb4FlEi
+        KLZ8OVFMxdayDPON8RfilxbAsKidBPQ=
+X-Google-Smtp-Source: ABdhPJxBreMrjLFkP9K8X998Rg9B2SWchKWlcJGXFLF0d2n9oiAcasZd8NCAByGb7oegJVFM1PNhhQ==
+X-Received: by 2002:a05:600c:4ece:: with SMTP id g14mr12191904wmq.6.1631554755136;
+        Mon, 13 Sep 2021 10:39:15 -0700 (PDT)
 Received: from localhost.localdomain ([81.0.34.57])
-        by smtp.gmail.com with ESMTPSA id u25sm4428959wmm.5.2021.09.13.10.39.13
+        by smtp.gmail.com with ESMTPSA id u25sm4428959wmm.5.2021.09.13.10.39.14
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 13 Sep 2021 10:39:14 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v7 2/6] t6030-bisect-porcelain: add test for bisect visualize
-Date:   Mon, 13 Sep 2021 19:39:00 +0200
-Message-Id: <20210913173905.44438-3-mirucam@gmail.com>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: [PATCH v7 3/6] run-command: make `exists_in_PATH()` non-static
+Date:   Mon, 13 Sep 2021 19:39:01 +0200
+Message-Id: <20210913173905.44438-4-mirucam@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210913173905.44438-1-mirucam@gmail.com>
 References: <20210913173905.44438-1-mirucam@gmail.com>
@@ -71,29 +73,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test to control breakages in bisect visualize command.
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
+Remove the `static` keyword from `exists_in_PATH()` function
+and declare the function in `run-command.h` file.
+The function will be used in bisect_visualize() in a later
+commit.
+
+Mentored by: Christian Couder <chriscool@tuxfamily.org>
+Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- t/t6030-bisect-porcelain.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ run-command.c |  4 ++--
+ run-command.h | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 5986fbecd1..1be85d064e 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -973,4 +973,11 @@ test_expect_success 'bisect run fails with exit code equals or greater than 128'
- 	test_must_fail git bisect run ./test_script.sh
- '
+diff --git a/run-command.c b/run-command.c
+index f72e72cce7..da02553f44 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -210,9 +210,9 @@ static char *locate_in_PATH(const char *file)
+ 	return NULL;
+ }
  
-+test_expect_success 'bisect visualize with a filename with dash and space' '
-+	echo "My test line" >>"./-hello 2" &&
-+	git add -- "./-hello 2" &&
-+	git commit --quiet -m "Add test line" -- "./-hello 2" &&
-+	git bisect visualize -p -- "-hello 2"
-+'
+-static int exists_in_PATH(const char *file)
++int exists_in_PATH(const char *command)
+ {
+-	char *r = locate_in_PATH(file);
++	char *r = locate_in_PATH(command);
+ 	int found = r != NULL;
+ 	free(r);
+ 	return found;
+diff --git a/run-command.h b/run-command.h
+index af1296769f..aad027984d 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -182,6 +182,18 @@ void child_process_clear(struct child_process *);
+ 
+ int is_executable(const char *name);
+ 
++/**
++ * Check if the command exists on $PATH. This emulates the path search that
++ * execvp would perform, without actually executing the command so it
++ * can be used before fork() to prepare to run a command using
++ * execve() or after execvp() to diagnose why it failed.
++ *
++ * The caller should ensure that command contains no directory separators.
++ *
++ * Returns 1 if it is found in $PATH or 0 if the command could not be found.
++ */
++int exists_in_PATH(const char *command);
 +
- test_done
+ /**
+  * Start a sub-process. Takes a pointer to a `struct child_process`
+  * that specifies the details and returns pipe FDs (if requested).
 -- 
 2.29.2
 
