@@ -2,101 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 868A6C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A78FC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:19:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AD7D610D2
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:14:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A76F60F26
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240882AbhIMTPm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 15:15:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55728 "EHLO
+        id S240452AbhIMTUZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 15:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbhIMTPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:15:37 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12163C061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:14:19 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id c8-20020a7bc008000000b002e6e462e95fso161184wmb.2
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:14:18 -0700 (PDT)
+        with ESMTP id S229460AbhIMTUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 15:20:21 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F8FC061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id a1so11276259ilj.6
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YiMMZ6wY7F8B7c4MG0cQh4JbKiT6VjBbKIzcVWU27ds=;
-        b=I9G5y8JyP0C7SRozvCGM3COlkK17QOQjluQ89KAjYGd/8qG+igDq4DNDTptBuelji2
-         y4nAJOSy+BtC9qSIhMUDyG3BWln4/JmUdxJaIWCcPTMMgQDQZG7qXjLe/KTI8+/qsjE4
-         Q614M7OMD6iK6d3wDsufHCy/9UJfl33s5TxE6TZUFB5ill4+izyt11Zhj0mRe8FV9BH3
-         K7pyHD06lVXAVmc3hIxkUvB724z2CG2WLEtjwVSIWr9Zz5gX8OQFwx5vsvU/FTtb3EmN
-         m6hOh2JPSFF5THrzZpXemgn4MkHYPBmUYBmBv9aKJci3/rYy8YCuRVKZukow1esblzEs
-         m9ZA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tHqJKxCd7/dC8S0d0oBn1wKbTEmTq3aCi0t5fmtsPEo=;
+        b=q75O7gknd4fI86kpU318bcKvqEfDSZPcaMhSL1Z00soZJslVV614BiyQtcCrYoE+oD
+         y3dDup2URPMzUkyW+v6QqxO+dqigyVwSqUKGfnZRPSC+ElEfxiugNUv1GSIPwrANbcLo
+         BRAf/yiUY/sOLbnYGpUjv2RqTgCNIoyUjyk6VJX740dQ+enGaqkhPjU9JmeOgFYMoFjf
+         9bUeZcUSjwdnemxVSjE3+fapXoQUGK9LI8LxQTz2auok3KLsIu660N8A8JRSE8SNH5UA
+         bA72+4r9XAyluvwWbRP8hhwb5DSkuwkXiU6GhWw7O0ao3kXm9FZe83boYQKsTJ0OCqbu
+         3Usw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YiMMZ6wY7F8B7c4MG0cQh4JbKiT6VjBbKIzcVWU27ds=;
-        b=JXWnrGBSdrXD85hMxXz73odQHXULIYE1d5CZDWF/EsdHa4RTiCHFY/5FyRXrI5WMMi
-         KkQcZrsj3fj5umtm5i+C6pU/38lP+D1EZokO4vRY3BXtwJbkqoo2+EJCJB+fSy1Lue/U
-         17wDGvf+iFQ1VhqO/8Uc4VmVNzzzW0SkaA8UfcnBG+NiMsTgp7PaRUIA6Id9mCMAfdp+
-         Oifvxdw2Ri9yrGfq7oimrzGXXy3YMbaNaqOQnWIdAgPscImPLNZk14lWZeviSU849ZdZ
-         6btOjh1rogNpyGeEUniHdPzWioQNFnepNs3PTh5+CdRGhJI37DSK4beIspp2HBiMNVWq
-         LFcA==
-X-Gm-Message-State: AOAM531wDIKbMN268orfSChYC+6bDlH0tGfE/zbMpFSpln2utUIaEghk
-        Eo/G67CtICOC4OGYcOURpc6KT3H15uY=
-X-Google-Smtp-Source: ABdhPJwvtL0At3bOoWiBZXCidEBy627o944x7JaF2rzKmes1ZvGmOiZnuNZq703PDelMZA1FT0p80w==
-X-Received: by 2002:a1c:7310:: with SMTP id d16mr6817809wmb.30.1631560457692;
-        Mon, 13 Sep 2021 12:14:17 -0700 (PDT)
-Received: from ylate.lan (abayonne-651-1-48-114.w92-156.abo.wanadoo.fr. [92.156.201.114])
-        by smtp.googlemail.com with ESMTPSA id l2sm7711919wmi.1.2021.09.13.12.14.16
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tHqJKxCd7/dC8S0d0oBn1wKbTEmTq3aCi0t5fmtsPEo=;
+        b=1yO/Bz4slfrU8LCq8BWDRW41gnx1CgQcl4cNmHwNPoK6uvp5zO2tMn9UJeaxEfok8f
+         UG9ZOIskuYLHdbN41x918UioF4MTCeEespoX76o0cdOAytvqMemOyxvejYoqupe3T5KU
+         2Sx1fuGkz5THUBq5Y5Hhc3WZZRcNy7IR6pCHrAGLCubuAQ4OUsQigK9JHiDUMMlg8MuW
+         6RfFLQm8lSnGmwZlrw0isoK8zLdok/7X3zA6op9bcGUhQ0HIH/GFGF+JhrR2hYi68I8J
+         2kHN5Ijxoh4QQ3R87uQRcoJOmPuU8LElzHVzN1yb8Nd+ppCuSGcD3z6wfZROCPAwr8VZ
+         1MGg==
+X-Gm-Message-State: AOAM5333dDfkuWy+p6EAmTbGkzT8pOpjbwUBmRHf1GKjxM/heDvpBff3
+        Rml62YtJy+3kRmTFjsUNroKXmYlwGFIj2E3k
+X-Google-Smtp-Source: ABdhPJwWRlKKFp0pAs214moX8DUGKUkRex5vhiSdTpwjqLmEnIn3RnO5ECZXWDG7deZLLhDt9uuJ9g==
+X-Received: by 2002:a05:6e02:168d:: with SMTP id f13mr9062067ila.12.1631560745029;
+        Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b3sm5334511ilm.20.2021.09.13.12.19.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 12:14:17 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v1] git-clone.txt: add the --recursive option
-Date:   Mon, 13 Sep 2021 20:59:41 +0200
-Message-Id: <20210913185941.6247-1-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.30.2
+        Mon, 13 Sep 2021 12:19:04 -0700 (PDT)
+Date:   Mon, 13 Sep 2021 15:19:03 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com
+Subject: Re: [PATCH 0/3] Use default values from settings instead of config
+Message-ID: <YT+kJ5jhzn6rghc9@nand.local>
+References: <20210913181221.42635-1-chooglen@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210913181221.42635-1-chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds the --recursive option, an alias of --recurse-submodule, to
-git-clone's manual page.
+On Mon, Sep 13, 2021 at 11:12:18AM -0700, Glen Choo wrote:
+> I'm fairly new to the codebase (this is my first patch!), so I have some
+> questions/concerns that I wasn't able to figure out:
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
-I found this out when a friend told me he could not remember how to
-fetch submodules with git-clone, and when another one suggested
-`--recurse-submodule'.  I checked the man page, and I was surprised to
-find out that `--recursive' is not mentionned at all.
+Welcome to the Git community! :-).
 
-I did not modify the synopsis.  So, this alias, although shorter than
-the "real" option, would still be somewhat hidden in the man page.
+> - prepare_repo_settings() may have undesirable side effects or may
+>   not always be callable
 
- Documentation/git-clone.txt | 1 +
- 1 file changed, 1 insertion(+)
+Calling prepare_repo_settings() is definitely the right thing to do,
+because (as you note) it centralizes the default values for settings
+that it keeps track of.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 3fe3810f1c..8a578252a0 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -270,6 +270,7 @@ branch. This is useful e.g. to maintain minimal clones of the default
- branch of some repository for search indexing.
- 
- --recurse-submodules[=<pathspec>]::
-+--recursive[=<pathspec>]::
- 	After the clone is created, initialize and clone submodules
- 	within based on the provided pathspec.  If no pathspec is
- 	provided, all submodules are initialized and cloned.
--- 
-2.30.2
+You can call prepare_repo_settings() so long as you have a repository to
+call it on. Since fsck and gc must run inside of a repository, the
+callers you added are safe. And note that prepare_repo_settings() is
+idempotent, i.e., that it is a noop when called more than once.
 
+Thanks,
+Taylor
