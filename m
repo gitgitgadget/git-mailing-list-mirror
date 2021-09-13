@@ -2,86 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C07C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 05:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0316AC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 05:38:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9D6E60FED
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 05:34:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD49960FF2
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 05:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231902AbhIMFgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 01:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbhIMFgA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 01:36:00 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D181C061574
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 22:34:45 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id bb10so5058180plb.2
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 22:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=C4c2XkU2O4WS1+MFV7RgLNHOOQOQk37iuCVfvaab3WM=;
-        b=HejxL8sUL/q4k+k8eIZyYwOjVfE1Mm6YZ7EHbipzM+BjS11dNuehWoXEFzYzJz/3XQ
-         axHfT6brSi06uKjNKsfPOCZwcHBKcfCISJuwS53z/xkb10DG+wUp1LdL3wJMJzxTBalC
-         G59la/VM54csgoTB1LH3BHeWH2Dj3urEHryfbKFWQ5nqhw8JNTla+i6t9MDyIsh3vFXK
-         VmVD7NG2fdsTWj82zhNfEGmGJVejSoRgltp1Y9mPp7R/t6i5exyGwVyohVZDpO88UNlo
-         rPN/nfU+N0DQ4qn/RpKzy8VSCj+uWpi73kpyX0b6Q5wI/Raq49TJYjD4MpqCQ9gsai65
-         nv8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=C4c2XkU2O4WS1+MFV7RgLNHOOQOQk37iuCVfvaab3WM=;
-        b=Q4zp9XT/VBbbdUqeoBJjFk07M2KUuqf81HELvjiF+Yq+rl4JU4WHnjBawrbZr75Ad/
-         Bd3ksHqQr5N+bamJ+hebD97ALp/3B6OAgnDC0vIghKjJivQvB+Q+9eAff8fu6s3oMOSK
-         sxI++sBahOhYHlXnFLcyhxmDIAXBIoWRmADhOyqYW+tif0b0RKIHw79858lGhgXsc5ba
-         bt4Ss1u5/aiA12sub9W4r4pX3sAVx1rsqfGuc/rnnATmJ1IUoNj73kcGXEjzrQO/2u5d
-         Io6lG5IBFMifX1z4yW05MfXbShRvio1sh5TLSXaxT2jbVYupTHqf5D/gSxbmDVfF1e/P
-         MFDw==
-X-Gm-Message-State: AOAM530MS1G/2TsqJThpxR4UDBA62bQ+mkiIV7KxsIe3Vt+6dlBA2ZNt
-        dhjADCwEKjRXeYC9RVtB/LNUs55c7LdFBw==
-X-Google-Smtp-Source: ABdhPJwj2Z7efPSvhV9WhEcpZGIXNB3sR6JmTzfhQuDb8qn5IlSUrWV4ROw5pkzTscffWH59sWqERA==
-X-Received: by 2002:a17:902:e749:b0:13a:148d:2d32 with SMTP id p9-20020a170902e74900b0013a148d2d32mr8951104plf.51.1631511284884;
-        Sun, 12 Sep 2021 22:34:44 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-56.three.co.id. [116.206.12.56])
-        by smtp.gmail.com with ESMTPSA id b10sm5422355pfl.220.2021.09.12.22.34.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Sep 2021 22:34:44 -0700 (PDT)
-Subject: Re: [PATCH 1/3] t0301: fixes for windows compatibility
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     lehmacdj@gmail.com
-References: <20210912202830.25720-1-carenas@gmail.com>
- <20210912202830.25720-2-carenas@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <0606160d-1192-2074-b1ad-9c5d86c953d5@gmail.com>
-Date:   Mon, 13 Sep 2021 12:34:41 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S232802AbhIMFjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 01:39:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55173 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231953AbhIMFj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 01:39:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E8A5E2630;
+        Mon, 13 Sep 2021 01:38:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=RL3mQaxsJG9AfD7f92hGU8Cry
+        K/aTm/Wc9vAdGE4rFc=; b=oAncVkrbbSSIHrnCxAlvKhQCsARERSqydC8HvkxyU
+        3bULXp/YktPJzqtAOcmRdPfjNGwKMSOelV6S7I4HG458KVlMfJ2UdWX4nVSNY23p
+        9RccOcfbElx2VlND0hrWA048PfFrwrKBYEIirLuZx/wX/MUkwPDN0UrnvLF6Pmgp
+        pU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 87F99E262F;
+        Mon, 13 Sep 2021 01:38:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F048BE262E;
+        Mon, 13 Sep 2021 01:38:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v2 0/7] strvec: use size_t to store nr and alloc
+References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
+        <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
+        <YT586/CO7QsTb3TK@coredump.intra.peff.net>
+Date:   Sun, 12 Sep 2021 22:38:11 -0700
+Message-ID: <xmqqlf41ghmk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210912202830.25720-2-carenas@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C8C7ED30-1454-11EC-97B7-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/09/21 03.28, Carlo Marcelo Arenas Belón wrote:
-> test -S is not able to detect that a file is a socket, so use
-> test -f instead.
-> 
+Jeff King <peff@peff.net> writes:
 
-Isn't test -f just check for socket as regular file?
+> I'm a little "meh" on some of these, for a few reasons:
+>
+>  - anything calling into setup_revisions() eventually is just kicking
+>    the can anyway. And these are generally not buggy in the first place=
+,
+>    since they're bounded argv creations.
+>
+>  - passing a strvec instead of the broken-down pair is a less flexible
+>    interface. It's one thing if the callee benefits from seeing the
+>    strvec (say, because they may push more items onto it). But I think
+>    with strbufs, we have a general guideline that if a function _can_
+>    take the bare pointer, then it should. (Sorry, I don't have a
+>    succinct reference to CodingGuidelines or anything like that; I feel
+>    like this is wisdom we came up with on the list in the early days of
+>    strbufs).
+>
+>  - if we are going to pass a strvec, it should almost certainly be
+>    const, to make it clear how we intend to use it.
 
--- 
-An old man doll... just what I always wanted! - Clara
+All true.
+
+> These cases are largely stupid things that real people would never come
+> across. The real goal is making sure we don't get hit with a memory
+> safety bug (under-allocation, converting a big size_t to a negative int=
+,
+> etc).
+
+Yes. =20
+
+=C3=86var, I do not mean any disrespect to you, but I have to say that
+topics like this one are starting to wear my concentration and
+patience down really thin and making me really slow down.
+
+Perhaps I am biased by not yet having seen what you eventually want
+to build on top, and because of that I do not understood why and how
+these "clean ups" are so valuable to have right now (as opposed to
+just letting the sleeping dog lie), which you would of course have a
+much better chance to know than I do.
+
+But with that "bias", many of the recent patches from you look more
+like pointless churn, mixed with fixes to theoretical problems, than
+clean-ups with real benefits.
+
+What makes it worse is that there are occasional real gems among
+these "meh" patches, which means I have to read all of them anyway
+to sift wheat from chaff X-<.
