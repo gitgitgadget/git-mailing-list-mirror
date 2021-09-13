@@ -2,69 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54892C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0FF3C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:27:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 336E3610F7
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:26:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B800C603E8
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242220AbhIMT1y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 15:27:54 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:41604 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240628AbhIMT1x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:27:53 -0400
-Received: by mail-ed1-f45.google.com with SMTP id z94so9793750ede.8
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:26:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pjP+BbV/4sv+O1ynj+JLbfsFWMrGb3vUPGfQeD6+eAk=;
-        b=Qht+swK0gnH5y5b/+nRt32Xuhpc94UpIXO2gKd6Vp6bP9QvlBlznW5MkDvyMBwO6GT
-         HUkZnL/612KVHwAW5T7FxyCmRabt8Xr8MfuZifwOdpmUFgAIN+AiAY09ruAZ3MGL9Gvc
-         BrwGWvFM5JP/8xsPj3aY+VPc3vrhaLMO2WPX7AetN5lZJ8EUHZWMO/YG+2RxhefBVOB8
-         eQauGS+j5kyVBk9bawTvv30/C4mkP4/CD6tUAKewWTDWOcULvKEDiw30N7Fvv9eTjRpT
-         m9Y+OjsDO7ct/+Qab1qEyMrLcJJCmum8x/KSD1jvULvwl7QRlUJT9H0VFGXOGjzuUmB1
-         +Jtw==
-X-Gm-Message-State: AOAM533gahHP42MCqCtnc+gREEtdCy6nTe7n5olvzQ5iXTxY9Az9BzYB
-        FVLGzoYEjiAH0dJPGiKMIFa7+GX4uHrnEh3BvXWkH0TcA+M=
-X-Google-Smtp-Source: ABdhPJyLMcNIiuSLhtU2B9APhLp9OelqN6Lnqy8uETyhjNJFOkMk1kFrhD3UHOtuI0xlwTrBaYV1/luiqydMijNjOk4=
-X-Received: by 2002:a50:af86:: with SMTP id h6mr14845620edd.283.1631561196483;
- Mon, 13 Sep 2021 12:26:36 -0700 (PDT)
+        id S242229AbhIMT2l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 15:28:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46506 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240628AbhIMT2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 15:28:40 -0400
+Received: (qmail 20990 invoked by uid 109); 13 Sep 2021 19:27:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Sep 2021 19:27:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13325 invoked by uid 111); 13 Sep 2021 19:27:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Sep 2021 15:27:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 13 Sep 2021 15:27:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/4] difftool: use run_command() API in run_file_diff()
+Message-ID: <YT+mGUkQAG7eVZp0@coredump.intra.peff.net>
+References: <cover-0.2-00000000000-20210911T182009Z-avarab@gmail.com>
+ <cover-v2-0.4-00000000000-20210913T033204Z-avarab@gmail.com>
+ <patch-v2-3.4-2b093bd71fc-20210913T033204Z-avarab@gmail.com>
+ <YT+SkhLsfE/yIqhN@coredump.intra.peff.net>
+ <87a6kg46xh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20210913185941.6247-1-alban.gruin@gmail.com>
-In-Reply-To: <20210913185941.6247-1-alban.gruin@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Sep 2021 15:26:25 -0400
-Message-ID: <CAPig+cR=HUDgFctXzcigZ062c=QWYfGWUPuT7scc-xU_w3NT1w@mail.gmail.com>
-Subject: Re: [PATCH v1] git-clone.txt: add the --recursive option
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a6kg46xh.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 13, 2021 at 3:14 PM Alban Gruin <alban.gruin@gmail.com> wrote:
-> This adds the --recursive option, an alias of --recurse-submodule, to
-> git-clone's manual page.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
-> I found this out when a friend told me he could not remember how to
-> fetch submodules with git-clone, and when another one suggested
-> `--recurse-submodule'.  I checked the man page, and I was surprised to
-> find out that `--recursive' is not mentionned at all.
->
-> I did not modify the synopsis.  So, this alias, although shorter than
-> the "real" option, would still be somewhat hidden in the man page.
+On Mon, Sep 13, 2021 at 09:13:43PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Considering that the `--recursive` option was intentionally removed
-from `git-clone.txt` by bb62e0a99f (clone: teach --recurse-submodules
-to optionally take a pathspec, 2017-03-17), it's not clear that this
-change helps the situation.
+> Yes, I had something like that in the earlier round, but decided to try
+> to keep the diff minimal, churn and all that. So it would be nice, but
+> let's do it as some later cleanup if someone's interested.
+
+OK, let's leave it for now, then.
+
+> Aside: I did most of that removal of "argv" from the child_process
+> struct you suggested, it's in
+> avar/run-command-use-less-argv-use-args-instead in my repo if you're
+> curious / wanted to pick any of that up. I won't be submitting it any
+> time soon for the reasons noted upthread.
+
+Yeah, it's rather far-reaching, which is why I didn't do a
+mass-conversion when I introduced "args" in c460c0ecdc (run-command:
+store an optional argv_array, 2014-05-15). My plan was to clean up spots
+over time as we touched them, but of course that's quite a slow process.
+
+Mostly I just didn't want to see any sites going the _other_ direction,
+as in your original version of the series. :)
+
+I'm quite happy with what you ended up with here.
+
+-Peff
