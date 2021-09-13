@@ -5,231 +5,120 @@ X-Spam-Level:
 X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2155C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9842C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:38:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9E286108B
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:24:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2D8560FA0
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239149AbhIMLZ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 07:25:56 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60931 "EHLO mout.gmx.net"
+        id S239779AbhIMLjW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 07:39:22 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52781 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238684AbhIMLZz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 07:25:55 -0400
+        id S239904AbhIMLjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 07:39:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631532272;
-        bh=VqPBhWMUJDIDjGn5j/xtFlRjqnbn5AOHlyxoSLhAgiw=;
+        s=badeba3b8450; t=1631533070;
+        bh=Wcumie09TanHnQHIpYHGRpdQg7BOH11cglZs6Kuxdhg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a24SMMWVPMsY4m3zDNWuClFO+wflPZkB1dC5dDNpvQfvc93RtImz9ssAXSi3Zn6+1
-         LRhU0gD1onDeqGWfphDffdMZpTgfgdOAFPmw84hy3cBYUuKp8ZcrHb3O37/kF+Gj04
-         qAYg8Agxj1ktyr19N1z8MaZiDpVlnYWg9WQt1ngY=
+        b=ckfjMAZ81b305uXuH5JvhkTXfSgxSReXo+ZBBi96t4wpPQuaVD9sZvLlSfWS1nOTC
+         8TRWNk1fZaygSovduHEZhdYjUSPgOos77hfhnPWnX7P6v1LYdrxghJo+oCon86WOp8
+         JDnJyRRDmIH8hDjaUGGIlEYDeN6jUKqfytbfRfAk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mw9UK-1nFdjw2BZk-00s50h; Mon, 13
- Sep 2021 13:24:32 +0200
-Date:   Mon, 13 Sep 2021 13:24:30 +0200 (CEST)
+Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQ5vW-1mczqY2YWO-00M0GG; Mon, 13
+ Sep 2021 13:37:50 +0200
+Date:   Mon, 13 Sep 2021 13:37:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>
-Subject: merge-ort and --rebase-merges, was Re: [PATCH v2 0/7] Drop support
- for git rebase --preserve-merges
-In-Reply-To: <CABPp-BHWVO5VRhr1-Ou60F1wjKzJZ1e_dC01Mmzs+qB9kGayww@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109131319020.55@tvgsbejvaqbjf.bet>
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <xmqqk0k0ndbq.fsf@gitster.g> <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet> <4e998676-4975-8ac2-35a0-34416938b62e@kdbg.org>
- <nycvar.QRO.7.76.6.2109071930080.55@tvgsbejvaqbjf.bet> <CABPp-BFZfa7cchRTycdyMbnwb_f=vHxQYLA5QswuM0ExfxeMAQ@mail.gmail.com> <nycvar.QRO.7.76.6.2109101325410.59@tvgsbejvaqbjf.bet> <CABPp-BHWVO5VRhr1-Ou60F1wjKzJZ1e_dC01Mmzs+qB9kGayww@mail.gmail.com>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
+In-Reply-To: <8bd13e99-208b-4c22-90e6-28227593e9c4@web.de>
+Message-ID: <nycvar.QRO.7.76.6.2109131335260.55@tvgsbejvaqbjf.bet>
+References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de> <YSvsQcGNpCMZwS8o@nand.local> <xmqqeeaa6fey.fsf@gitster.g> <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de> <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net> <8bd13e99-208b-4c22-90e6-28227593e9c4@web.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:EQ240b+DLbniyQFmUX9uMnrnG4kkjlaVV9SK92gssoRs5xQiPwF
- ehlzqLew8/nZjOc4PKSvVt0ClE0Fc7scsVazvCuLEd9ZqVLsmeQ9EPzHOmgLg6i2sbv9axa
- QjlK9nfkcVnGIn1e8Uf01Rx+FmyB6hy2VvVlsLa781fd2X/CV+l1Rz7RJ0l35nd4eHiyWeo
- nXJUiM+kTvPFIvczXxWHQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MU+KbJwVOQA=:6FhavG0FozHBZVqhPaysve
- SW1N/AllYi2HhX6l7yQvUqxtr+o5kR7l3UzC0eS5IayTMZUG+zOvkT7/klwnNnfxcNzuyQf4S
- 7E89FtaXqtFxl2iCXYGvQCE/B8Zr0+hZigo3OwBohe8k9OB+DQcGeNzMaEq5IDmtAmSRL6EU0
- 4nPd0AizoRrqbx1WDaKceIif5W75c6Hw6tGI3YgHNIqQii1E307Wc7Cwc3cF/s/LrLo2Ulm0r
- B0eEEM+YJZoRLOX5JRGKZX767QaKo43n6QIttn3DiX1VY9XVbBZOojwEjVLS8ZY2jNb7wyzAs
- J7seDx21hs+w8y1fLujVqM7J8ZFAuJrU5vOPQOutyhWbEmQ/f0J0RNPWy/vcpyCxGDBC0xReP
- g87QWcGPzohQNRbjy9gy88wuJzImoaO0r7DPLzBX+G521zHEfL4nunflgtLAE8BUgJMC5liK0
- lhGYOCA7BR9uoXF4Rk7wOs7xP17JBaCVjzWSweH1KYRj6weikKk3nNYIhIPDFmjXK1ZlhB9Mv
- Cw2oqHw28lOebgsLh0IVnj/zt707mXKsTSPI4P6uHA+dLCWSkCBttzMCqcIIl0wbOWvfZIQNw
- 2MNWn6TVpyLeW9DIlndQbogr686RMtmdF6ffAySkU8alxaaOqV52/GHO7aU49+IqnwR0KUpci
- 70q/6CfhmPfSVIie+R195Z6u5e0C7nMf8zJJei91Rd6kTD30qpgoIRRZBMGK9Q6I8RAVN/2Xi
- zp30OoZl3XneAuXUz6EGsZB/2YvRxQZ232SVrH7ipbVhlvMek32NT71F7Ev1dpEHTaYdyMaNL
- vZquf/CYowl+ilsA7wK9Q+dNxIzvIfhC+LzISiLSWc8K3eDtm0sO3NX1RkXZwnAvkvnYLPW4y
- Lp+WKg94AU2c9fdlWT1LlyF94cTXejNN4rfdEvJH4LfT8W0ok3yYJDRQXAQ7Ci4pLMP4WJnFX
- axzjtVJcdIG3QD38TvMmS45+9tL8JhYW7IYn6/Msh/9g5TDogXZ+tHiHPdeythyknOVxXXqeG
- hMlMXY6X8dq1LxvbMX7kpdptgp8hWzyBVDGfI/omjavl0Ar0HH94aUp62ipKPTDmtpx5pr2vu
- x98/45oJzLPRUM=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1316402531-1631533070=:55"
+X-Provags-ID: V03:K1:OCXDDWRrADAq1J+e/146TMl26XEzOokvfsyqxCFixLqdF/jxG80
+ B5dudYhDJI1KTZxMo6loMKGwZeKXzlw6+sbeSy/r3aLSZpx+6zbMVF63rgoNRVoEc6tgZ9b
+ SGWN6WT55N39wScOW+yW0Vh+2LpPj1dz3/zXM9m1Qt/DuvTpkQ1IcyxUzg+2f9a/Jjmxj9e
+ vbBDkKkYKseR8ShmxdFAA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6NaMyW+PmT8=:C2XXgmb3gZ3gl6KXFr0Emr
+ 0VEbKYa8HrPEFZPxw/NIKDS74lHCAs3ztybOh7/5LKMXJe3Lr1qSDf9a2EWOB1/Fyf2UrMGGl
+ 3BJF106mVvMP7DlDnXbqTTy9HOABrNQbMOCLi0Tnf//qU7q9yN6JA5UQiczzlTUB6QTDCfJvQ
+ V9ZaKdqAWq5kIVr6d5yeZQ+EsjWbwPbqwSlSa+ltlcpODRaJL6LW0j99Djs4+2/j8jTzLGz0o
+ cSu54zyNv5wMGqZpBa/K0BtrN99wO5R9/33MrBuhFU73hyfZoRbHbQbor7X0AqNUADvQnWEvG
+ 4B/LGQhlCUurenVQp3EKmDlgeF2wM2OJDhpXa1B/65W/qSmjUPgMe42G7/Nci3WnlQWsD36pu
+ hzccKxQb1Cj3zKwiZvlVekYO/C6H/SQ0iBMQGEclsHEyy7WWw8Z/YcgUd0ljkr5FalL7bL74T
+ Q636LMo41pWPErd9ZB7csyNfxNYIrQd9H+rTC0+1yOZliwCCxjHM8GsjZOyPP8YlIVd8UKdXL
+ shdSCi9P9cDWbNdXQv+utleZFi/9KuyNl4IMeQU+se2kfkIUuoWv2amXFzlmdEe2uRFWSHvLX
+ 6rJ4vZnglRhSf8qRKLfaq7W6prAOJUAejYvFDSV1Z0py27Sb0ctvwNPrn8772X8dzudaCHF9e
+ QvlDtXLxfRvfkajMW50MnDJbkH095uzi7LcOmzxwLSDOWxhcqY2H/4qd4HFhjMYX0otMXTUcF
+ w8qrImCrIAbXwlkf3ccKoMvCFqD7tRASA9bniDvLkVBcL7BQeu8ludoBTg9b2qfpXCzgDn6Gy
+ kpkiN8LX+70mF7Ycc95/cZqmaPbnNezCWKCbS2K7+/PrtqfH3DjTz2EifTMcQvcokEDs3wuBg
+ C9g3TASxqwu8qu+iuvDuX3apV0EoR4ycmNCUkUtel6+M40bUmgwf3U49XpD9i/K7xOH8nCbdX
+ Q1F7TVMaVLQXxNTELhTk8Y/wGv/fuT9QApWixMYWDU43o0pVtWTDbJST+H/dfxTRgDTybKLsO
+ 5Egc/10Pu5ZpTUZTjwJM1lf5UUYWN5Rszz4IPYdu21AZKIAREel4WJWGzxFK3S5cgf6mprxyO
+ Tb+JGgcau5K7pE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 10 Sep 2021, Elijah Newren wrote:
+--8323328-1316402531-1631533070=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Sep 10, 2021 at 5:08 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+Hi Ren=C3=A9,
+
+On Sat, 11 Sep 2021, Ren=C3=A9 Scharfe wrote:
+
+> Am 30.08.21 um 22:49 schrieb Jeff King:
+> > On Mon, Aug 30, 2021 at 08:22:25PM +0200, Ren=C3=A9 Scharfe wrote:
 > >
-> > On Tue, 7 Sep 2021, Elijah Newren wrote:
+> >>> It however may not be a bad idea to catch these code paths where a
+> >>> local variable masks 'ignore_case' (and possibly other globals) and
+> >>> rename these local ones to avoid a mistake like this.
+> >>
+> >> The name itself is OK, I think, but using it at global scope is
+> >> confusing.  -Wshadow can help find such cases, but not this one, as
+> >> test-hashmap.c doesn't include the global declaration.  Moving the
+> >> global into a struct to provide a poor man's namespace would fix this
+> >> for all namesakes, assisted by the compiler.  We'd then access it as
+> >> the_config.ignore_case or even the_config.core.ignore_case.
+> >>
+> >> Moving all config-related variables would be quite noisy, I guess,
+> >> and probably conflict with lots of in-flight patches, but might be
+> >> worth it.
 > >
-> > > On Tue, Sep 7, 2021 at 11:51 AM Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > [... talk about re-resolving merge conflicts when recreating merges
-> > >  in a `git rebase --rebase-merges` run ...]
-> ...
-> >
-> > While I agree that `merge-ort` makes a lot of things much better, I th=
-ink
-> > in this context we need to keep in mind that those nested merge confli=
-cts
-> > can really hurt.
+> > Really most of these ought to be in the repository struct anyway, I
+> > would think. The value of ignore_case comes from core.ignorecase, whic=
+h
+> > is going to be repository-specific. We are probably doing the wrong
+> > thing already by looking at the parent core.ignorecase value when
+> > operating in an in-process submodule, but nobody noticed because it's
+> > quite unlikely for a submodule to have a different setting than the
+> > parent.
 >
-> Yes, and I'm not sure you fully appreciate how much either.
+> Good point.  So fspathcmp() and friends would need a repo parameter. :-|
 
-*grin*
+Yes, we will eventually have to pass `struct repository *r` into a _lot_
+of call chains. It'll be a disruptive change, yet if the submodule folks
+truly want to aim for in-process recursive treatment of submodules, there
+is no alternative.
 
-> [... a lot of insight that I totally agree with ...]
->
-> I believe the commit graph you were describing was this:
->
-> * rebase-of-original-merge
-> |\
-> | * rebase-of-local-add-caller-of-core
-> * | rebase-of-local-rename-to-hi
-> |/
-> * upstream
-> |
-> |
-> |
-> | * original-merge
-> | |\
-> | | * local-add-caller-of-core
-> | |/
-> |/|
-> | * local-rename-to-hi
-> |/
-> * initial-version
->
->
-> Further, the versions of main.c in each of those are as follows:
->
-> =3D=3D> initial-version:
-> int core(void) {
->     printf("Hello, world!\n");
-> }
->
->
-> =3D=3D> local-rename-to-hi:
-> int hi(void) {
->     printf("Hello, world!\n");
-> }
->
->
-> =3D=3D> local-add-caller-of-core:
-> int core(void) {
->     printf("Hello, world!\n");
-> }
-> /* caller */
-> void caller(void) {
->     core();
-> }
->
->
-> =3D=3D> what an automatic merge of the two local-* branches would give:
-> int hi(void) {
->     printf("Hello, world!\n");
-> }
-> /* caller */
-> void caller(void) {
->     core();
-> }
->
->
-> =3D=3D> original-merge (amended from above by s/core/hi/ in caller()):
-> int hi(void) {
->     printf("Hello, world!\n");
-> }
-> /* caller */
-> void caller(void) {
->     hi();
-> }
->
->
-> =3D=3D> upstream:
-> int greeting(void) {
->     printf("Hello, world!\n");
-> }
-> /* main event loop */
-> void event_loop(void) {
->     /* TODO: place holder for now */
-> }
->
->
-> =3D=3D> rebase-of-local-rename-to-hi (kept 'hi' over 'greeting'):
-> int hi(void) {
->     printf("Hello, world!\n");
-> }
-> /* main event loop */
-> void event_loop(void) {
->     /* TODO: place holder for now */
-> }
->
->
-> =3D=3D> rebase-of-local-add-caller-of-core (kept both new functions,
-> updated caller):
-> int greeting(void) {
->     printf("Hello, world!\n");
-> }
-> /* main event loop */
-> void event_loop(void) {
->     /* TODO: place holder for now */
-> }
-> /* caller */
-> void caller(void) {
->     greeting();
-> }
-
-That all matches my recollection of what I wanted to drive at.
-
-> If I've understood that all correctly, then my idea will give you the
-> following conflict to resolve:
->
-> =3D=3D> rebase-of-original-merge, before conflict resolution:
-> int hi(void) {
->     printf("Hello, world!\n");
-> }
-> /* main event loop */
-> void event_loop(void) {
->     /* TODO: place holder for now */
-> }
-> /* caller */
-> void caller(void) {
-> <<<<<<< HEAD
->     greeting();
-> ||||||| auto-remerge of original-merge
->     core();
-> =3D=3D=3D=3D=3D=3D=3D
->     hi();
-> >>>>>>> original-merge
-> }
-
-That looks very intriguing! I would _love_ to play with this a bit, and I
-think you provided enough guidance to get going. I am currently preparing
-to go mostly offline for the second half of September, read: I won't be
-able to play with this before October. But I am definitely interested,
-this sounds very exciting.
+FWIW on Windows there are other potentially repository-specific settings
+that are relevant in similar situations. For example, there is
+`core.symlinks`.
 
 Ciao,
 Dscho
+
+--8323328-1316402531-1631533070=:55--
