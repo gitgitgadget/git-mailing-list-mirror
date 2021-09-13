@@ -2,90 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A78FC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4984DC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A76F60F26
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:19:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BD5F60555
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240452AbhIMTUZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 15:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbhIMTUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:20:21 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F8FC061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id a1so11276259ilj.6
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tHqJKxCd7/dC8S0d0oBn1wKbTEmTq3aCi0t5fmtsPEo=;
-        b=q75O7gknd4fI86kpU318bcKvqEfDSZPcaMhSL1Z00soZJslVV614BiyQtcCrYoE+oD
-         y3dDup2URPMzUkyW+v6QqxO+dqigyVwSqUKGfnZRPSC+ElEfxiugNUv1GSIPwrANbcLo
-         BRAf/yiUY/sOLbnYGpUjv2RqTgCNIoyUjyk6VJX740dQ+enGaqkhPjU9JmeOgFYMoFjf
-         9bUeZcUSjwdnemxVSjE3+fapXoQUGK9LI8LxQTz2auok3KLsIu660N8A8JRSE8SNH5UA
-         bA72+4r9XAyluvwWbRP8hhwb5DSkuwkXiU6GhWw7O0ao3kXm9FZe83boYQKsTJ0OCqbu
-         3Usw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tHqJKxCd7/dC8S0d0oBn1wKbTEmTq3aCi0t5fmtsPEo=;
-        b=1yO/Bz4slfrU8LCq8BWDRW41gnx1CgQcl4cNmHwNPoK6uvp5zO2tMn9UJeaxEfok8f
-         UG9ZOIskuYLHdbN41x918UioF4MTCeEespoX76o0cdOAytvqMemOyxvejYoqupe3T5KU
-         2Sx1fuGkz5THUBq5Y5Hhc3WZZRcNy7IR6pCHrAGLCubuAQ4OUsQigK9JHiDUMMlg8MuW
-         6RfFLQm8lSnGmwZlrw0isoK8zLdok/7X3zA6op9bcGUhQ0HIH/GFGF+JhrR2hYi68I8J
-         2kHN5Ijxoh4QQ3R87uQRcoJOmPuU8LElzHVzN1yb8Nd+ppCuSGcD3z6wfZROCPAwr8VZ
-         1MGg==
-X-Gm-Message-State: AOAM5333dDfkuWy+p6EAmTbGkzT8pOpjbwUBmRHf1GKjxM/heDvpBff3
-        Rml62YtJy+3kRmTFjsUNroKXmYlwGFIj2E3k
-X-Google-Smtp-Source: ABdhPJwWRlKKFp0pAs214moX8DUGKUkRex5vhiSdTpwjqLmEnIn3RnO5ECZXWDG7deZLLhDt9uuJ9g==
-X-Received: by 2002:a05:6e02:168d:: with SMTP id f13mr9062067ila.12.1631560745029;
-        Mon, 13 Sep 2021 12:19:05 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b3sm5334511ilm.20.2021.09.13.12.19.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 12:19:04 -0700 (PDT)
-Date:   Mon, 13 Sep 2021 15:19:03 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com
-Subject: Re: [PATCH 0/3] Use default values from settings instead of config
-Message-ID: <YT+kJ5jhzn6rghc9@nand.local>
-References: <20210913181221.42635-1-chooglen@google.com>
+        id S242078AbhIMTWt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 15:22:49 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:28502 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241829AbhIMTWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 15:22:47 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mPrWD-0009ye-79; Mon, 13 Sep 2021 20:21:29 +0100
+Subject: Re: [PATCH v2 3/5] help tests: add test for --config output
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
+ <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
+ <patch-v2-3.5-258282095de-20210910T112545Z-avarab@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <d167b927-d7b8-dfe6-d012-37919d14128b@iee.email>
+Date:   Mon, 13 Sep 2021 20:21:28 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <patch-v2-3.5-258282095de-20210910T112545Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210913181221.42635-1-chooglen@google.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 13, 2021 at 11:12:18AM -0700, Glen Choo wrote:
-> I'm fairly new to the codebase (this is my first patch!), so I have some
-> questions/concerns that I wasn't able to figure out:
+On 10/09/2021 12:28, Ævar Arnfjörð Bjarmason wrote:
+> Add a missing test for checking what the --config output added in
+> ac68a93fd2 (help: add --config to list all available config,
 
-Welcome to the Git community! :-).
+This ref should be 3ac68a93fd2
+Probable hand editing mistake - it's Ok in 4/5
 
-> - prepare_repo_settings() may have undesirable side effects or may
->   not always be callable
+> 2018-05-26) looks like. We should not be emitting anything except
+> config variables and the brief usage information at the end here.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t0012-help.sh | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+>
+> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+> index c3aa016fd30..595bf81f133 100755
+> --- a/t/t0012-help.sh
+> +++ b/t/t0012-help.sh
+> @@ -77,6 +77,19 @@ test_expect_success 'git help -g' '
+>  	test_i18ngrep "^   tutorial   " help.output
+>  '
+>  
+> +test_expect_success 'git help -c' '
+> +	git help -c >help.output &&
+> +	cat >expect <<-\EOF &&
+> +
+> +	'"'"'git help config'"'"' for more information
+> +	EOF
+> +	grep -v -E \
+> +		-e "^[^.]+\.[^.]+$" \
+> +		-e "^[^.]+\.[^.]+\.[^.]+$" \
+> +		help.output >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'generate builtin list' '
+>  	git --list-cmds=builtins >builtins
+>  '
 
-Calling prepare_repo_settings() is definitely the right thing to do,
-because (as you note) it centralizes the default values for settings
-that it keeps track of.
-
-You can call prepare_repo_settings() so long as you have a repository to
-call it on. Since fsck and gc must run inside of a repository, the
-callers you added are safe. And note that prepare_repo_settings() is
-idempotent, i.e., that it is a noop when called more than once.
-
-Thanks,
-Taylor
