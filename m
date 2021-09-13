@@ -2,110 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D809C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 12:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9599BC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 12:45:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EED9160F9B
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 12:11:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B52A60FBF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 12:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236913AbhIMMMY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 08:12:24 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53169 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236301AbhIMMMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 08:12:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631535063;
-        bh=7+oxmG6mZq27XgMrJVhdNFqOTK+9hktU+RTK6hYfrIY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gjsDrivI/ohtDzJN4NJw30kKQnXNLqoW9yoff4Lr8JmunEdW+oHl1OW9G6msGJSm/
-         I8TdQB9Z9udk45J/2diyxHwDofe7CTjJgPDhqSkQ5bDKqU4YGchMcQOZUF3nN5bhp7
-         ufm2DygK6Azn8u6nvw+itH/uxFwcLI0Cbx/00538=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwZ4-1nDRXf1fDA-00uGAA; Mon, 13
- Sep 2021 14:11:03 +0200
-Date:   Mon, 13 Sep 2021 14:11:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: js/retire-preserve-merges, was Re: What's cooking in git.git (Sep
- 2021, #03; Fri, 10)
-In-Reply-To: <CABPp-BGR3dfJE7TZ+jkjDdWyeXYowmJhtoFaQ8_Abn=ZROhB5Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109131409530.55@tvgsbejvaqbjf.bet>
-References: <xmqqsfycqdxi.fsf@gitster.g> <CABPp-BGR3dfJE7TZ+jkjDdWyeXYowmJhtoFaQ8_Abn=ZROhB5Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S235184AbhIMMrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 08:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230106AbhIMMrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 08:47:00 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3838BC061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 05:45:44 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id t19so20746849ejr.8
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 05:45:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4sKKLTJrec1e7ETq04z7B+qSfIEnq38BzDIu/JwVxjQ=;
+        b=M2gKKy/tFwsEoKshw/kofmw9b4OqmtxBmU5z1ALpm91K4QG1bAP/xzRR4prG/3hR/c
+         TUC9qI1euOGlwtWppV/0eH3yMdcmEzi9S7mvK900esufXEt3jbDckPQ9fXMeZwCsKS23
+         UpkvbP3R1y/+yyqYuEw3zoHKMIL09BDYLoa8K93uqzLpXvorrDVUQW04eQQ0Ec8B0Ow4
+         QRnMOWoFRXlLij4EttdstYebk5OfquYH4ezqQIEa9gcB41UtjbPEQU+l8JY6mOqd0WeY
+         j14ORDc+5zxsSLa5SHXIE16xCn48DhzkEAN62RiHWiZ+lHuUzYQ07LYabAPSeMtrDwt7
+         vxgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=4sKKLTJrec1e7ETq04z7B+qSfIEnq38BzDIu/JwVxjQ=;
+        b=oiDBSkfl4ok+B//1hKD7JGqUZNu9irIR+zKeccMCrzjQGGdkcqvthSQolslpqbIaLD
+         bhRBARBmt3grvy1O3pBmwsIvYfAYfh4JfZ5QhHz+RTrfugJwVub7ycMxFuAxw6b1lgNN
+         2cl3vJ5fxU4JIL0TqLKkV3O7hEzYRYm4zqqNSt8OmYLfWkb4sX8O3C1fA2y03Q0Uf3H7
+         +CvLrHyJsyujwt1v/25BggBq6W13kFfWvkZkyjujDe4NtEcZ9c3rGB8tN/fiud9OvQrr
+         00+KQIle94rzkNqPGRO8XzAIoQWHTBns8CK/drFUP4bwvEzmhIouJ0btAQcKeD+y6HzP
+         IkGg==
+X-Gm-Message-State: AOAM5331xmDp9e1RR69bRnzEHmKzBGURBmV6ndQIS0/DkF4MS+CfhV/d
+        DJJXDzUFQVLw8v4qyUWuTes4BvAoYB1bng==
+X-Google-Smtp-Source: ABdhPJz6v12fqPy1ZrsMsFO3DsFey4f76xztYKXblAiSa1Jep3CUDM3yzdkhYkRIB7RALD+JXmhAfA==
+X-Received: by 2002:a17:906:144b:: with SMTP id q11mr12468243ejc.78.1631537142759;
+        Mon, 13 Sep 2021 05:45:42 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i26sm3824332edj.88.2021.09.13.05.45.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Sep 2021 05:45:42 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v2 0/7] strvec: use size_t to store nr and alloc
+Date:   Mon, 13 Sep 2021 14:29:01 +0200
+References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
+ <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
+ <YT586/CO7QsTb3TK@coredump.intra.peff.net> <xmqqlf41ghmk.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqlf41ghmk.fsf@gitster.g>
+Message-ID: <87mtog4pai.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kxRq6L/1EJvIUJZFvOQYozymwnwjGvz/orbCALzUOv+F1Q2QZ6c
- H3GgSaudnNSYPCyrG1j6/A9tZ3OHC1wCdHLc+xu5HFaihYrGhAPRF3jUsf5ismB3g2FU9vR
- f3JqWZckyKVyVNxcE4GwoQCBJgut9Dp88zGwVE5jk+M0LweqfekdPYYrA7tqtn7v8hoB+//
- /RCF0vHK++jYv2/FlrmJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ey8Ahm8eTB8=:167PZknc3jGN+q7CAlj8b/
- ubyib/FP2M8IxyyNwOYhKUDGkG28dYdHQLewApa+coUIPX4eGH4sBRbhWgIEG501ZyIkOd0Wg
- JRW7/2vFvDypM7QfWafXRg1743P/C0pvm20jWmv2fo6BkB79Ru2NYNYFnaAoDBfSvVL4r0iG+
- 0mcqJ27GRj8IRkX3EBNvFYwzkc6qdm3z8/XsrUVeJHTqxBtX6X1dRb/WESGSVyYPuoxnYEOI9
- RKuGui63ukC6mKuYtpFxuZCmx7/oj2rPch+SEx0KZn//7RbIivMvl7yK0Bj8girazOlnupyOX
- xWHGd2SeTbH7Q0xfV5/HCr8FXnBQoniOpoPDPVykCkE5mWtkSu1qI660xSfLEyyjoAb4WbemE
- O1cBZjTiB6Uv/BVOhyfBZk4gmmHDxse5fKudtEyCmMOR3Y0A66TCIXOspK+QLSSGWAm73opyN
- CBUfnQ5Mf1Zt14nguT3SC5RzqcXos20q3RBwczj42tdwZO/ace49rYRO5iRsCg4eB7iydQp2v
- aUhWFdLixAdLu3dvcfKpYZXNXFCM5inNmhK7pSeQpAXaeeI75NOt8zhlLqdVlpAKIRO96MKWH
- IBJO1ibGdaACJZOAQXbLpUnmO23E5NFsgJreuycnAfwbbZf/bI3rZ1PItAjjeuzQIAQ6pk3NJ
- C4nNXW6u2Km1nxambGqbP0Ir/Z2dv+EyuL5q8uSEoAzY02hgof8ICIkfZhyuzwO7t0Wc5epnB
- 8YMkcE0FxR3bSp898ijo9cJjFQjuJT7hOYz5VCjxAJjFwfkdnJ8egETKaNnoJRvnRrUlTE3cQ
- +fV0dP0i9d9LmtKK/RikFsfGttq+n7EDqyiSq3OntHguHd/dGDxMQcvMi1CmvzUwKWOYLVMIt
- KlNCQYuvtWhD4eWUiHyYB4TUGQ2UQu+j5u3Wjp1UBRlajj5m3kdBn8R38ECzQrWTsyqiEG1rI
- X9PQUzLHEi06ADAFOxna9xpwR+ZZiB0fpFhGJmQ0J81RiZQjoT9mLmZmp03m2nZzcV8moJOuK
- MBUW3Ocnc63DkiRzqQkcBdR251RbbsBYpPiZ04QkzwnNaou/x+2o8yWwi01ni71IEk3d7nbsi
- VSIs0AD3Y2W1pQ=
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah & Junio,
 
-On Sat, 11 Sep 2021, Elijah Newren wrote:
+On Sun, Sep 12 2021, Junio C Hamano wrote:
 
-> On Fri, Sep 10, 2021 at 3:12 PM Junio C Hamano <gitster@pobox.com> wrote=
-:
-> >
-> > --------------------------------------------------
-> > [New Topics]
-> >
-> > * js/retire-preserve-merges (2021-09-07) 11 commits
-> >   (merged to 'next' on 2021-09-10 at f645ffd7a3)
-> >  + sequencer: restrict scope of a formerly public function
-> >  + rebase: remove a no-longer-used function
-> >  + rebase: stop mentioning the -p option in comments
-> >  + rebase: remove obsolete code comment
-> >  + rebase: drop the internal `rebase--interactive` command
-> >  + git-svn: drop support for `--preserve-merges`
-> >  + rebase: drop support for `--preserve-merges`
-> >  + pull: remove support for `--rebase=3Dpreserve`
-> >  + tests: stop testing `git rebase --preserve-merges`
-> >  + remote: warn about unhandled branch.<name>.rebase values
-> >  + t5520: do not use `pull.rebase=3Dpreserve`
-> >
-> >  The "--preserve-merges" option of "git rebase" has been removed.
-> >
-> >  Will merge to 'master'.
+> Jeff King <peff@peff.net> writes:
 >
-> I'm not objecting, but I'm kind of surprised to see this after your
-> and Dscho's previous discussion at
-> https://lore.kernel.org/git/xmqqv939uis8.fsf@gitster.g/; I thought
-> it'd stay in next for a while.  Was this a mistake?
+>> I'm a little "meh" on some of these, for a few reasons:
+>>
+>>  - anything calling into setup_revisions() eventually is just kicking
+>>    the can anyway. And these are generally not buggy in the first place,
+>>    since they're bounded argv creations.
+>>
+>>  - passing a strvec instead of the broken-down pair is a less flexible
+>>    interface. It's one thing if the callee benefits from seeing the
+>>    strvec (say, because they may push more items onto it). But I think
+>>    with strbufs, we have a general guideline that if a function _can_
+>>    take the bare pointer, then it should. (Sorry, I don't have a
+>>    succinct reference to CodingGuidelines or anything like that; I feel
+>>    like this is wisdom we came up with on the list in the early days of
+>>    strbufs).
+>>
+>>  - if we are going to pass a strvec, it should almost certainly be
+>>    const, to make it clear how we intend to use it.
+>
+> All true.
+>
+>> These cases are largely stupid things that real people would never come
+>> across. The real goal is making sure we don't get hit with a memory
+>> safety bug (under-allocation, converting a big size_t to a negative int,
+>> etc).
+>
+> Yes.=20=20
+>
+> =C3=86var, I do not mean any disrespect to you, but I have to say that
+> topics like this one are starting to wear my concentration and
+> patience down really thin and making me really slow down.
 
-Oh, good catch! I would be very much in favor of cooking this until it is
-tender and ready for consumption.
+I'm sorry. I'll try to lay off on the patch firehose until the delta
+I've got in master..seen is way down from what it is now.
 
-Ciao,
-Dscho
+> Perhaps I am biased by not yet having seen what you eventually want
+> to build on top, and because of that I do not understood why and how
+> these "clean ups" are so valuable to have right now (as opposed to
+> just letting the sleeping dog lie), which you would of course have a
+> much better chance to know than I do.
+
+I could go into that, but it's probably best to leave it at: Yeah for
+these seemingly going nowhere small changes I'm generally taking them
+somewhere interesting.
+
+But figuring out how to split that is still a hard problem. E.g. I've
+had one series (the fsck error message improvements) that's been stalled
+for ~3 months due to size/including the "interesting" part, but recently
+relatively small increments of prep code changes seem to get a lot of
+review traction.
+
+As for this strvec.h s/int/size_t/ topic. I'm not taking that anywhere,
+Jeff suggested it and came up with the patch, I figured more helpful
+than "if we change s/int/size_t/g for x, shouldn't we change that for y
+which whe assign x to?" would be patches I had to do that, which I'd
+come up with after Jeff suggested this direction in response to another
+topic.
