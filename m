@@ -2,151 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3CAC433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C88BC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:25:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B25361029
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:22:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5716B610CE
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 19:25:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241824AbhIMTXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 15:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240837AbhIMTXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:23:37 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE9F6C061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:22:20 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id qq21so17476796ejb.10
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 12:22:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=IQnrGVZlb9FPvFgaFFrjGbxLACv/NR+1VBvXXs8tFjE=;
-        b=GkrJ+xa+nt+9IR7waZe7vRgvjzUCHADrU9vezWZPA0ZfsRncYXowxuPtXATX7SEOxd
-         G2B2r5gd32RjdvOlFkINje2ol9inGoj3rov/vihj0DxjfMz7D6gS3n3rU6wfOVGlgBg8
-         dONu6OjBlGbjyouNScviM96DxaaxvFpDjCz9RabdPuAwWxwIUeajon7/Twn+48YDK1fC
-         kUISDaaxGJkpVSudAjktYqnEO8zXkS/FxKwenzwp3xHFtpOVr2bMwH5fl6u4mSlWSJU8
-         Od30aBo2UMOJagknrrrNLEW4EhEuMdJbhkkw1WU0/nDRv2WROCHC+goKK4Ue2CZJd8qh
-         zscA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=IQnrGVZlb9FPvFgaFFrjGbxLACv/NR+1VBvXXs8tFjE=;
-        b=MCKCBPSkdrmr8msXfeHaQpMxl0n+G548wm92qm/cCzMYLHDvCr/Fw9RawtEHabfSFC
-         lT/nCn5pdaNYZELRMI/4l1WeN5ZuOuN3n9L+9jdtyiLtaTZtMvcsdHGoFB9N7QEa1GB2
-         9o+QP/WS6JJmDQT4hRjsfDlZglXisbraHi4hDS1R7v7p3pU4K+P0KbINMlLnxIQveQm9
-         IrWKa44M7yYbuWVA668ib8NSpRt4sMBsIPaQ9HvBViNw7tRHiBIryJYK3R/RRE9cuxcK
-         +wme9xdsQ6gDex71Vw2uB8f/e4v3jwk2NG+En/zMMhfNAF83WWyczp9uzyeOEfMZCw39
-         jZ1A==
-X-Gm-Message-State: AOAM533/ErLPlmzfpIW09X0b4xUI7umJ/FKfxs+WrLLW5Ye4QRtGo8U6
-        BHQ0tjnp4es0rP9uEE43O8U=
-X-Google-Smtp-Source: ABdhPJwWmHsHEy2+S4YdXLExiYEDlmk2z5AKgg5eIubyZfO460vjpMNSyI3uyawNC7/YmR0hnaUn5w==
-X-Received: by 2002:a17:906:4d53:: with SMTP id b19mr13942957ejv.180.1631560939403;
-        Mon, 13 Sep 2021 12:22:19 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id lb12sm3859005ejc.28.2021.09.13.12.22.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 12:22:18 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/4] difftool: use run_command() API in run_file_diff()
-Date:   Mon, 13 Sep 2021 21:13:43 +0200
-References: <cover-0.2-00000000000-20210911T182009Z-avarab@gmail.com>
- <cover-v2-0.4-00000000000-20210913T033204Z-avarab@gmail.com>
- <patch-v2-3.4-2b093bd71fc-20210913T033204Z-avarab@gmail.com>
- <YT+SkhLsfE/yIqhN@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YT+SkhLsfE/yIqhN@coredump.intra.peff.net>
-Message-ID: <87a6kg46xh.fsf@evledraar.gmail.com>
+        id S242181AbhIMT0a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 15:26:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61863 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240264AbhIMT03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 15:26:29 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AF8DD50C1;
+        Mon, 13 Sep 2021 15:25:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/ZfAQm1YJD7Y
+        Xle7i42zO4Gi2aHALb+qpcVUQeCBs0k=; b=JS4wyrjB7ZuKNRiF5erZFqmhE0Py
+        y8uA0Pv1c+fm5MfPFqJGo35QQrZLmGdX9/id0rG453zxFKhPH/3Faz4YOTf7nV+U
+        XHhb2TYj2uFbXmxRjoGgw0Guw7lnYC98tciWBCzddDwg8rkGmPNNqj5chSxgxI6T
+        DxLzHBKZKl6U324=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11734D50C0;
+        Mon, 13 Sep 2021 15:25:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12ED5D50BF;
+        Mon, 13 Sep 2021 15:25:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Matthias_A=C3=9Fhauer_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Subject: Re: [PATCH 1/2] help: make sure local html page exists before
+ calling external processes
+References: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
+        <8674d67a439a23425133fa005e519ebb6ac19c42.1631531219.git.gitgitgadget@gmail.com>
+Date:   Mon, 13 Sep 2021 12:25:11 -0700
+In-Reply-To: <8674d67a439a23425133fa005e519ebb6ac19c42.1631531219.git.gitgitgadget@gmail.com>
+        ("Matthias =?utf-8?Q?A=C3=9Fhauer?= via GitGitGadget"'s message of "Mon, 13
+ Sep 2021
+        11:06:57 +0000")
+Message-ID: <xmqqa6kgffc8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 50A9F9B4-14C8-11EC-839C-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Matthias A=C3=9Fhauer via GitGitGadget"  <gitgitgadget@gmail.com>
+writes:
 
-On Mon, Sep 13 2021, Jeff King wrote:
+> diff --git a/builtin/help.c b/builtin/help.c
+> index b7eec06c3de..77b1b926f60 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -467,11 +467,18 @@ static void get_html_page_path(struct strbuf *pag=
+e_path, const char *page)
+>  	if (!html_path)
+>  		html_path =3D to_free =3D system_path(GIT_HTML_PATH);
+> =20
+> -	/* Check that we have a git documentation directory. */
+> +	/*
+> +	 * Check that we have a git documentation directory and the page we'r=
+e
+> +	 * looking for exists.
+> +	 */
+>  	if (!strstr(html_path, "://")) {
+>  		if (stat(mkpath("%s/git.html", html_path), &st)
+>  		    || !S_ISREG(st.st_mode))
+>  			die("'%s': not a documentation directory.", html_path);
+> +		if (stat(mkpath("%s/%s.html", html_path, page), &st)
+> +		    || !S_ISREG(st.st_mode))
+> +			die("'%s/%s.html': documentation file not found.",
+> +				html_path, page);
 
-> On Mon, Sep 13, 2021 at 05:35:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> Change the run_file_diff() function to use the run_command() API
->> directly, instead of invoking the run_command_v_opt_cd_env() wrapper.
->>=20
->> This allows it, like run_dir_diff(), to use the "args" from "struct
->> strvec", instead of the "const char **argv" passed into
->> cmd_difftool(). This will be used in the subsequent commit to get rid
->> of OPT_ARGUMENT() from cmd_difftool().
->
-> It also fixes the existing leak of its "args" strvec.
->
-> I like the general direction here of putting the child_process in the
-> parent. There's a few opportunities for further cleanup it opens, but
-> I'm happy whether you want to pursue them or not (I'm also happy to do
-> them as real patches on top myself, but don't want to de-rail your
-> series).
+I do not remember why we did not originally use the "page"
+information and only checked "git.html", but because the "page" is
+ultimately what the end-user will see, I wonder if it even makes
+sense to still check "git.html" anymore.
 
-*nod*
+If the request were "git help -w git", the new check added here
+would catch the missing page, and for "git help -w log", it is
+unfair to call the directory that we successfully found the
+"git-log.html" in as "not a doc directory" only because it is for
+whatever reason is missing "git.html" next to it.
 
->>  static int run_file_diff(int prompt, const char *prefix,
->> -			 int argc, const char **argv)
->> +			 struct child_process *child)
->>  {
->> -	struct strvec args =3D STRVEC_INIT;
->>  	const char *env[] =3D {
->>  		"GIT_PAGER=3D", "GIT_EXTERNAL_DIFF=3Dgit-difftool--helper", NULL,
->>  		NULL
->>  	};
->> -	int i;
->>=20=20
->>  	if (prompt > 0)
->>  		env[2] =3D "GIT_DIFFTOOL_PROMPT=3Dtrue";
->>  	else if (!prompt)
->>  		env[2] =3D "GIT_DIFFTOOL_NO_PROMPT=3Dtrue";
->
-> This "save a NULL in env where we might stick something in later" is
-> ugly. Now that we have a child_process, it might be nicer as:
->
->   strvec_push(&env.args, "GIT_PAGER=3D");
->   strvec_push(&env.args, "GIT_EXTERNAL_DIFF=3Dgit-difftool--helper");
->   if (prompt > 0)
-> 	strvec_push(&env.args, "GIT_DIFFTOOL_PROMPT=3Dtrue");
->   else if (!prompt)
-> 	strvec_push(&env.args, "GIT_DIFFTOOL_NO_PROMPT=3Dtrue");
+It seems that this check dates back to 482cce82 (help: make
+'git-help--browse' usable outside 'git-help'., 2008-02-02); even in
+the context of that commit, I think it would have been better to
+check for the generated page_path instead of git.html, so I actually
+prefer to see the existing hardcoded check for git.html replaced with
+the new check.
 
-Yes, I had something like that in the earlier round, but decided to try
-to keep the diff minimal, churn and all that. So it would be nice, but
-let's do it as some later cleanup if someone's interested.
+Thanks.
 
->> +	child->git_cmd =3D 1;
->> +	child->dir =3D prefix;
->
-> These are the same in run_dir_diff(). We could do more of the shared
-> prep of the child_process in the caller. Likewise, we might want to pick
-> up run_dir_diff()'s no_stdin and clean_on_exit settings (and unsetting
-> use_shell, but I think that is already pointless; it defaults to false
-> in the first place, and git_cmd takes precedence over it anyway).
 
-*nod*, but can be left for some other time.
-
-Aside: I did most of that removal of "argv" from the child_process
-struct you suggested, it's in
-avar/run-command-use-less-argv-use-args-instead in my repo if you're
-curious / wanted to pick any of that up. I won't be submitting it any
-time soon for the reasons noted upthread.
-
-In any case it has rather large semantic and textual conflicts with the
-outstanding hook.[ch] topic, but with that branch + that applied + a few
-changes on top I was able to get the whole tree compiling & testing
-successfully earlier.
+>  	}
+> =20
+>  	strbuf_init(page_path, 0);
+> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+> index 5679e29c624..a83a59d44d9 100755
+> --- a/t/t0012-help.sh
+> +++ b/t/t0012-help.sh
+> @@ -77,6 +77,13 @@ test_expect_success 'generate builtin list' '
+>  	git --list-cmds=3Dbuiltins >builtins
+>  '
+> =20
+> +test_expect_success 'git help fails for non-existing html pages' '
+> +	configure_help &&
+> +	mkdir html-doc &&
+> +	touch html-doc/git.html &&
+> +	test_must_fail git -c help.htmlpath=3Dhtml-doc help status
+> +'
+> +
+>  while read builtin
+>  do
+>  	test_expect_success "$builtin can handle -h" '
