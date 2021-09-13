@@ -7,99 +7,108 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F7C7C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 714C3C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 18:01:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48D0A610CE
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 17:41:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58E1660C40
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 18:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346037AbhIMRmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 13:42:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54810 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345976AbhIMRma (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 13:42:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8990B15497E;
-        Mon, 13 Sep 2021 13:41:14 -0400 (EDT)
+        id S1346191AbhIMSDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 14:03:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54196 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346178AbhIMSDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 14:03:13 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7E3AE6CE2;
+        Mon, 13 Sep 2021 14:01:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TfFhBjRI4kBQ
-        n690c7RCprGjkGVkDWWCeDarSHmKNM4=; b=BfXEFN8+ps73ELEpL2ALOvZd4XjT
-        mhzDjmuL7BHHCg/m0nQluufqkTEKEQl7pys+V5R+Hwev5kEaUU4WeXjXyfkIW2/x
-        E5iq/oP1kfmHNvprV9o9bcxuHbNwCNPOwquN2KJCNS0gCI8jZDZycpPgpjn0+njY
-        adG4T2j8NBYhtrc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81E7115497D;
-        Mon, 13 Sep 2021 13:41:14 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=ZtEqkzkLBSaG
+        Us9Ry4doUwmZf5vX2tImGGHJs3B2aKU=; b=l0jZf3pKJ/5ygx9ou+hcufL7c5mK
+        a771ODOm71tomSY7dOwcrYbBBaocNhr+34064bayGJ0/cxLoYe2oTBH4/pMZRbHu
+        kam0alnKEC876WUpplicZS9bUTue9mtYE5oHMmgsZwPBa+QeT4KC+/dw2oLm74fH
+        wCgAptnCNhIyQ7k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AEA91E6CDF;
+        Mon, 13 Sep 2021 14:01:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DE80315497B;
-        Mon, 13 Sep 2021 13:41:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FB05E6CDE;
+        Mon, 13 Sep 2021 14:01:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH v4 0/9] post-v2.33 "drop support for ancient curl"
- follow-up
-References: <cover-v3-0.9-00000000000-20210911T092751Z-avarab@gmail.com>
-        <cover-v4-0.9-00000000000-20210913T144846Z-avarab@gmail.com>
-        <YT+EH1O+kPrf4T8j@coredump.intra.peff.net>
-Date:   Mon, 13 Sep 2021 10:41:10 -0700
-In-Reply-To: <YT+EH1O+kPrf4T8j@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 13 Sep 2021 13:02:23 -0400")
-Message-ID: <xmqq4kaogyq1.fsf@gitster.g>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        lehmacdj@gmail.com
+Subject: Re: [PATCH 1/3] t0301: fixes for windows compatibility
+References: <20210912202830.25720-1-carenas@gmail.com>
+        <20210912202830.25720-2-carenas@gmail.com>
+        <0606160d-1192-2074-b1ad-9c5d86c953d5@gmail.com>
+        <CAPUEspi1NzM34whXOT8T7NgJ1SCBGTPETcF0MY-UHz+kRqCTZQ@mail.gmail.com>
+Date:   Mon, 13 Sep 2021 11:01:54 -0700
+In-Reply-To: <CAPUEspi1NzM34whXOT8T7NgJ1SCBGTPETcF0MY-UHz+kRqCTZQ@mail.gmail.com>
+        (Carlo Arenas's message of "Mon, 13 Sep 2021 00:13:50 -0700")
+Message-ID: <xmqqtuiofj71.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C93BACF6-14B9-11EC-B723-98D80D944F46-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: AE35D672-14BC-11EC-856E-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> On Mon, Sep 13, 2021 at 04:51:20PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+> On Sun, Sep 12, 2021 at 10:34 PM Bagas Sanjaya <bagasdotme@gmail.com> w=
+rote:
+>> On 13/09/21 03.28, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>> > test -S is not able to detect that a file is a socket, so use
+>> > test -f instead.
+>>
+>> Isn't test -f just check for socket as regular file?
 >
->> This is a hopefully final re-roll with a small grammar improvement in
->> 3/8. See range-diff, pointed out/requested at
->> https://lore.kernel.org/git/YTzBUFY4p6obEqF+@coredump.intra.peff.net/
+> and that is exactly how they look; ironically a -f check in Linux
+> fails for sockets so maybe better to do -e?
 >
-> Well, I did say "no need to re-roll". :) But thank you for addressing
-> it. This version looks good to me.
+> an empty file with nothing that indicates in Windows Explorer or a
+> stat call (from WSL or git bash), that they are anything else.
 
-Yup, the word-diff from what was queued with a !fixup step looks
-pleasing ;-)
+It actually is a quite attractive idea to use "-e", or even more
+preferrably, test_path_exists.  For example:
 
-Will replace.
+@@ -31,7 +42,7 @@ helper_test cache
+=20
+ test_expect_success "use custom XDG_CACHE_HOME if set and default socket=
+s are not created" '
+ 	test_when_finished "git credential-cache exit" &&
+-	test -S "$XDG_CACHE_HOME/git/credential/socket" &&
++	test $FLAG "$XDG_CACHE_HOME/git/credential/socket" &&
+ 	test_path_is_missing "$HOME/.git-credential-cache/socket" &&
+ 	test_path_is_missing "$HOME/.cache/git/credential/socket"
+ '
 
-Let me mark it for 'next' in the What's cooking report.
+test_path_exists contrasts better with the two test_path_is_missing
+and explains what is being tested better.  Before this part, we have
+run some "git credential" test, and there are three possible places
+that the socket may appear (XDG, HOME/.git-credential-cache/ and
+HOME/.cache/git/credential/), and we want to make sure only one of
+them gets it.
+
+One possible downside is that it makes us rely more on our knowledge
+that we communicate via unix-domain socket (i.e. what the "socket"
+the test is checking is).  By assuming that a mere presence of some
+filesystem entity at the inspected path is OK, we may not notice a
+breakage that creates a regular file or a directory there by mistake,
+yet successfully carry out the credential tests.  It may even be a
+good thing, if future ourselves have somehow found out how to use a
+regular file or a directory for IPC instead of using a socket ;-).
 
 Thanks.
 
 
-$ git diff --word-diff @{1}
-diff --git c/INSTALL w/INSTALL
-index 5865e1630d..4140a3f5c8 100644
---- c/INSTALL
-+++ w/INSTALL
-@@ -144,9 +144,9 @@ Issues of note:
-	  not need that functionality, use NO_CURL to build without
-	  it.
-
-	  Git requires version "7.19.4" or later of "libcurl" to build
-	  without NO_CURL. This version requirement may be bumped in
-	  the future.
-
-	- "expat" library; git-http-push uses it for remote lock
-	  management over DAV.  Similar to "curl" above, this is optional
 
