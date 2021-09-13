@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF14CC433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 15:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D86A0C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 15:45:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBAE8610A6
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 15:45:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEFAE610A8
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 15:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245415AbhIMPrG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 11:47:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33256 "EHLO
+        id S245635AbhIMPrH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 11:47:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245594AbhIMPqn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244807AbhIMPqn (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Sep 2021 11:46:43 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17099C0A889C
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 08:19:36 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id r128-20020a1c4486000000b003065f0bc631so2622248wma.0
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 08:19:36 -0700 (PDT)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED750C0A889B
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 08:19:34 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id y132so6944102wmc.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 08:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ifyGM1bGx9+z5iO0Tty9Ca+lQnQVolwT7KptW3JJAZo=;
-        b=VWh86H9m7SmLvNwEOUnmS0onIrwUseWxLcXLTrjmJ8bXP/J9OXHm3Mnukrr2+3RyMG
-         xfNP4vraWIvXJiqIT0PxjjDIgcsvl2jJNzd8LC57qmujcB1ZQbisWGt2UiEsr8ZPIHEJ
-         DRM07CQX3Y4VBYF7OfJfrKYjEqaxopkmDsmGIS8b/MMk99Vzpf6sUp2yZGj7Dzqt7FAF
-         HwhmIXDwYVyhIk2mhzDDGiZVipsW8oNJptWL7U9WzTVz6UsRrpE5BxHgPKwFGzFyvE6k
-         JLQ7L5GCTx6qupbDRnlVFvXu5Sx06GhotNwWMIET7gPTOp4cF0DLHGeZ0RC9IN9mE3ws
-         +wVQ==
+        bh=NzPFbNI5mqavLRsRCxjdW4h17gl29AKfsozAHlpo1Wc=;
+        b=VPErcNxtJkWNbaUWEOgODTnt/OnXyfThi+RL7lh8SqsDhGgt/dTkyr9Yd4c08Qx4nu
+         0XuQi2UTmabg296+UYOXe7adwpqWRqTl5wCM4wusmGJ482by26pPIPEYD7oZCi/Vnh//
+         +5BDrYbc0RY7QozJ5BMWUaZl7KFmZdVZKpQgV9qPEW4CUpeiSOL4RTX3Var8YfWLkDh4
+         9tU9fAtTUPBQQmkc1LmN5x/u/cWDAVHPYm6AwvrWsLCwBHJMD5CtM0Y+gmDWbBpWpeJP
+         aqPXRhLi2wBNoDdn4dJOvPnYPCT7hpSKYy9eg75ySu6kwLV7kUwZybX8IsMitqHXmZEO
+         Ip9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ifyGM1bGx9+z5iO0Tty9Ca+lQnQVolwT7KptW3JJAZo=;
-        b=Q2Mvw8Es1alkKQDEdq2YB3BxjY9XGN/uQeLgdfr3f5NYzQw4Wk5W48dqkYkSfvVzOP
-         FlO9qNWlFqvYEbWje76LMe04q6rhWBT1qqnNON5I2sP/tueRCuXzlQm1TowCRVxVXGJP
-         sm2Gx3pVjyp1TU9EGSzzruxeCbWhkbeIez+1DIhPNy9acdqZDXj29nvdCztmFP41yPJO
-         q/4BFbjBb7fUJF2jpZ3HE/d5qJhUoJxaKYK/pVof0py8315EacJVpilYK7WSZHNIWf1f
-         Uiz7RloK48ooLfg0MZ7aNwEkLLHuOHfrSPIE+O0SCm/HNVJBlEcYRm9ZMBsC3QISuFQC
-         SnTQ==
-X-Gm-Message-State: AOAM5335A6MVyGpimc1lfI7eemAKVB70sTALzE61c/YLlBTJ7nGVYjOD
-        60rPfPCVcrRAYWFN+DysMaFSS80NaIw=
-X-Google-Smtp-Source: ABdhPJwl/UlTQLRudHGXSTgoYedTQ/4N4CdlGHbZMxfVkHIIWSYfWQ053fz1YPR9SdkPgS7IsJWEoQ==
-X-Received: by 2002:a05:600c:21d9:: with SMTP id x25mr5498060wmj.7.1631546374739;
-        Mon, 13 Sep 2021 08:19:34 -0700 (PDT)
+        bh=NzPFbNI5mqavLRsRCxjdW4h17gl29AKfsozAHlpo1Wc=;
+        b=cMS1XOjYhczDnFrH3fOURLM9picjT/pFkx2Du3ifOEvkS9/ORGQDw1xV+TZgzAR81u
+         ZPWsoJAw/O2He3qx0Tr+r7U/Oo/OJwtVTrb6lXACf2SVRJy/oNeTuPZGMBXaTQRIR82m
+         zkJQ60xBwAQQPGUyB4iEw6UEvQG04g9GhexO59Lp+ELTWudURzmGKDTb0Bm+lWr8+r4b
+         +Y5eOhRNFPlXYa2R2ElwE7bb/oqf+bJ+n1KuM/+YrUes+7A7jUZ1k2LFPE8gvHUUb+DA
+         PELiZ30RxCvzAEAMqxfbC1O8+cJN4MvG6+RiZWPzaX7zudmhqQoohESUSSC9Lh8VWeBg
+         rp3A==
+X-Gm-Message-State: AOAM5337If1ysgewmWhVFnyln6QFDLa20vC9B9MNPpZnTFP6cURdakWq
+        pM0zaOFaOPuF72ZiOtnHIC676pTqWDM=
+X-Google-Smtp-Source: ABdhPJxHrVy8uSjWgllGiOsR3nxvtBvrpRuxOuEtcstUIdEi+ryOqXGDC1eST2y8/Ub3bsPC86S61Q==
+X-Received: by 2002:a05:600c:2298:: with SMTP id 24mr6216056wmf.177.1631546373668;
+        Mon, 13 Sep 2021 08:19:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10sm7844824wrd.51.2021.09.13.08.19.33
+        by smtp.gmail.com with ESMTPSA id j23sm7129556wmo.14.2021.09.13.08.19.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Sep 2021 08:19:33 -0700 (PDT)
-Message-Id: <951de6bb1992773cda60791c4b7a09867b5e0f19.1631546362.git.gitgitgadget@gmail.com>
+Message-Id: <bc103e703e80072733859315c0ada3b154e30b71.1631546362.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
 References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
         <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Sep 2021 15:19:22 +0000
-Subject: [PATCH v2 11/11] rebase: dereference tags
+Date:   Mon, 13 Sep 2021 15:19:21 +0000
+Subject: [PATCH v2 10/11] rebase: use lookup_commit_reference_by_name()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,95 +79,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Aborting a rebase stated with 'git rebase <upstream> <tag-object>'
-should checkout the commit pointed to by <tag-object>. Instead it gives
-
-    error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD':
-    trying to write non-commit object
-    710d743b2b9892457fdcc3970f397e6ec07447e0 to branch 'HEAD'
-
-This is because when we parse the command line arguments although we
-check that the tag points to a commit we remember the oid of the tag
-and try and checkout that object rather than the commit it points
-to. Fix this by using lookup_commit_reference_by_name() when parsing
-the command line.
+peel_committish() appears to have been copied from the scripted rebase
+but it duplicates the functionality of
+lookup_commit_reference_by_name() so lets use that instead.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
----
- builtin/rebase.c        | 14 ++++++++------
- t/t3407-rebase-abort.sh | 18 ++++++++++++++----
- 2 files changed, 22 insertions(+), 10 deletions(-)
+ builtin/rebase.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 74663208468..2b70a196f9a 100644
+index 7905672d8de..74663208468 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1903,13 +1903,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die_if_checked_out(buf.buf, 1);
- 			options.head_name = xstrdup(buf.buf);
- 		/* If not is it a valid ref (branch or commit)? */
--		} else if (!get_oid(branch_name, &options.orig_head) &&
--			   lookup_commit_reference(the_repository,
--						   &options.orig_head))
-+		} else {
-+			struct commit *commit =
-+				lookup_commit_reference_by_name(branch_name);
-+			if (!commit)
-+				die(_("no such branch/commit '%s'"),
-+				    branch_name);
-+			oidcpy(&options.orig_head, &commit->object.oid);
- 			options.head_name = NULL;
--		else
--			die(_("no such branch/commit '%s'"),
--			    branch_name);
-+		}
- 	} else if (argc == 0) {
- 		/* Do not need to switch branches, we are already on it. */
- 		options.head_name =
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 162112ba5ea..ebbaed147a6 100755
---- a/t/t3407-rebase-abort.sh
-+++ b/t/t3407-rebase-abort.sh
-@@ -11,18 +11,18 @@ test_expect_success setup '
- 	test_commit a a a &&
- 	git branch to-rebase &&
- 
--	test_commit b a b &&
--	test_commit c a c &&
-+	test_commit --annotate b a b &&
-+	test_commit --annotate c a c &&
- 
- 	git checkout to-rebase &&
- 	test_commit "merge should fail on this" a d d &&
--	test_commit "merge should fail on this, too" a e pre-rebase
-+	test_commit --annotate "merge should fail on this, too" a e pre-rebase
- '
- 
- # Check that HEAD is equal to "pre-rebase" and the current branch is
- # "to-rebase"
- check_head() {
--	test_cmp_rev HEAD pre-rebase &&
-+	test_cmp_rev HEAD pre-rebase^{commit} &&
- 	test "$(git symbolic-ref HEAD)" = refs/heads/to-rebase
+@@ -762,17 +762,6 @@ static int finish_rebase(struct rebase_options *opts)
+ 	return ret;
  }
  
-@@ -67,6 +67,16 @@ testrebase() {
- 		test_path_is_missing "$state_dir"
- 	'
- 
-+	test_expect_success "rebase$type --abort when checking out a tag" '
-+		test_when_finished "git symbolic-ref HEAD refs/heads/to-rebase" &&
-+		git reset --hard a -- &&
-+		test_must_fail git rebase$type --onto b c pre-rebase &&
-+		test_cmp_rev HEAD b^{commit} &&
-+		git rebase --abort &&
-+		test_cmp_rev HEAD pre-rebase^{commit} &&
-+		! git symbolic-ref HEAD
-+	'
-+
- 	test_expect_success "rebase$type --abort does not update reflog" '
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
+-static struct commit *peel_committish(const char *name)
+-{
+-	struct object *obj;
+-	struct object_id oid;
+-
+-	if (get_oid(name, &oid))
+-		return NULL;
+-	obj = parse_object(the_repository, &oid);
+-	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
+-}
+-
+ static void add_var(struct strbuf *buf, const char *name, const char *value)
+ {
+ 	if (!value)
+@@ -1844,7 +1833,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			if (!strcmp(options.upstream_name, "-"))
+ 				options.upstream_name = "@{-1}";
+ 		}
+-		options.upstream = peel_committish(options.upstream_name);
++		options.upstream =
++			lookup_commit_reference_by_name(options.upstream_name);
+ 		if (!options.upstream)
+ 			die(_("invalid upstream '%s'"), options.upstream_name);
+ 		options.upstream_arg = options.upstream_name;
+@@ -1887,7 +1877,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.onto = lookup_commit_or_die(&merge_base,
+ 						    options.onto_name);
+ 	} else {
+-		options.onto = peel_committish(options.onto_name);
++		options.onto =
++			lookup_commit_reference_by_name(options.onto_name);
+ 		if (!options.onto)
+ 			die(_("Does not point to a valid commit '%s'"),
+ 				options.onto_name);
 -- 
 gitgitgadget
+
