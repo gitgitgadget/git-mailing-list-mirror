@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6323DC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 585F9C433F5
 	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 03:45:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 435F361027
+	by mail.kernel.org (Postfix) with ESMTP id 3368560F6D
 	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 03:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238527AbhIMDq6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S238443AbhIMDq6 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 12 Sep 2021 23:46:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39926 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238423AbhIMDq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Sep 2021 23:46:57 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C585BC061574
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 20:45:41 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id c8-20020a7bc008000000b002e6e462e95fso5853267wmb.2
-        for <git@vger.kernel.org>; Sun, 12 Sep 2021 20:45:41 -0700 (PDT)
+        with ESMTP id S235475AbhIMDq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Sep 2021 23:46:56 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF30C061574
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 20:45:40 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id m9so12367772wrb.1
+        for <git@vger.kernel.org>; Sun, 12 Sep 2021 20:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9eY7hWSNSEDzM9zTx+6Te8+LTHa2wP+SVnhxSnSDFJc=;
-        b=Wz3Av+WdpSYAxEpJXAhuvtTvwpp9qDpDR6c/zuwPPbmCWvlORrTh6cLs+LlnA4S8RT
-         t2CvcL1Et1x4pdWW8xwyoXQoaPQkVkTjStDyjlQjE0T5rUDencq2bN4wcDG9UqV84JFM
-         GjJ+M1BKbEU3AC/UvQIfw9FRvfy276kc+KdQ2pPhsqR6oV0efP4C/3eX9seQFl5Jh2jc
-         1gGbFZZNyHDQ061BC13FfJO5nBdAKolVzZg58egmlzYCJLSvWQojUiqZeN60sZ6RrnKa
-         mg6Mymg1JL3SliVQP/Vs43zW2UvXSQcyzq5fHXGwcN7Vjbsqm+ofaQ1LDXGhUHGM0OYK
-         5YYQ==
+        bh=7dm3dW3T1dZXmNkSAf2F7eqEB3ZH1aj6jR+HCuIkobU=;
+        b=ZokyLigoNsb//ZhfFw7JTI3vmszy4ddCAbgNe9g+iKWzSt0VVMJx6FqHPNsH/GtBhU
+         fSBcc5mn4vSoYxQ/4GfMmesi7jfl9+VyWCPMuNyJGhcQQlZulA1AflOy59PiEWb9drJd
+         5frHI3AUo3R1knXz9QhLfSJICeX38OMvrbulRTwvrSIvLPR6r0c4psDVs88uT6mCMJHh
+         FF7hZLEWVkc/yD6lXCvp1KLSfN9Lekgso4tqOd8npkAimrhuwVprBaKb0NafVQ4kkVBX
+         crSnRW3qjLvzS49KIEfM4ViMjrDXfkdcdg35smkzK7HFwViN4nkYm32lZ0bRUd8lrbyb
+         ra9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9eY7hWSNSEDzM9zTx+6Te8+LTHa2wP+SVnhxSnSDFJc=;
-        b=sKm9T9kfBRIWYposkDjU17VUyq7lUis9dYZGBcAnMqEknbC66iB1/57caisl1ZYakM
-         Wbe+6AuRqu41teLAPKEA2qk3Nj9NTSQOiJxw1Nbw9Pc16qF8gpTVxKCfsOCDtPc88NJk
-         FMgWbTyXxTVy0zn5rK9NRY+Rq5BLYcXXsOHe9VCuQky8ruP2eQPNyFXjArVGVVySZ873
-         1sPrB0VsSTZ3o9fBcCrH320+Wv48AbLxLYNYdtmln6oiarwLksinSVd+xWyduF9dKf11
-         PIcKrpOcI3AgORfh6wdCO8d++WcO4jzzb+e9hUHa9f67mxPrFVIhNsIl7vk43LmeDPQ5
-         dJ+g==
-X-Gm-Message-State: AOAM531GHDzj4YtltMotLjLirIKRxo/lnJTtB68gMmG4Hypj1MundgFx
-        uUXRAicZ0l6r3AIPwqGqrsicVjwHZ1XXSg==
-X-Google-Smtp-Source: ABdhPJzfIhb3mRC1Nf6ea8q8HowaCbojzMruk9KUY73N7qqaLPR72wtCqGXxcWlwFWJYJbfT1eHYXg==
-X-Received: by 2002:a7b:c052:: with SMTP id u18mr9034900wmc.105.1631504740094;
-        Sun, 12 Sep 2021 20:45:40 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o10sm6631472wrc.16.2021.09.12.20.45.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=7dm3dW3T1dZXmNkSAf2F7eqEB3ZH1aj6jR+HCuIkobU=;
+        b=AU53wQgHneusadVX51yjHZ/XGVGDmDUkrtptUm1hA+VZPTrf/eQWXvhZudq+9zDF/R
+         ExI66A5iTmWmJedRP+DMCvxHHJCMC/KB8rKRUxHkBsdwzxdSw5XYdFCHgWuy6qaPidjB
+         Ws+vDo6/lWWLurwIYS2BfberXznUDKfsihy+7WvTHcf5e7pr7RGwmoDTnLOzHcBlLCHW
+         cGcWYjqfLvMOu2OizSugoFHYzv2FduIEPCxzDwnMQucw+SUR/kVuWD5Dn7cfKxtCPyf/
+         ULY2f/E/CTiKeFSPs1C6Szgj2Ed12PkN3TelUqLTzAtKPuvSSCPIi60y05WdELtGwFts
+         Qj/w==
+X-Gm-Message-State: AOAM531fs8uhi+nFIjDc6cnE9cmFNoOTgt7R0sF3m10bgdcJEoUppxDt
+        1zjgZLuCPtqS/LWJ0APUOjAqKK2wr5zveg==
+X-Google-Smtp-Source: ABdhPJy7PLob0UQnyxMjp469kbaIafCRBPRU8dRvXSASftrL21Iu+krzEDYN4TPtgWKc34qElVAb8A==
+X-Received: by 2002:adf:d193:: with SMTP id v19mr10335956wrc.377.1631504739319;
         Sun, 12 Sep 2021 20:45:39 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o10sm6631472wrc.16.2021.09.12.20.45.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Sep 2021 20:45:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/4] difftool: prepare "diff" cmdline in cmd_difftool()
-Date:   Mon, 13 Sep 2021 05:35:38 +0200
-Message-Id: <patch-v2-2.4-1c2794115c7-20210913T033204Z-avarab@gmail.com>
+Subject: [PATCH v2 1/4] difftool: prepare "struct child_process" in cmd_difftool()
+Date:   Mon, 13 Sep 2021 05:35:37 +0200
+Message-Id: <patch-v2-1.4-f57c6c9b069-20210913T033204Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.999.ga5f89b684e9
 In-Reply-To: <cover-v2-0.4-00000000000-20210913T033204Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20210911T182009Z-avarab@gmail.com> <cover-v2-0.4-00000000000-20210913T033204Z-avarab@gmail.com>
@@ -77,65 +77,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Move the preparation of the "struct child_process" from run_dir_diff()
+to its only caller, cmd_difftool(). This is in preparation for
+migrating run_file_diff() to using the run_command() API directly, and
+to move more of the shared setup of the two to cmd_difftool().
 
-We call into either run_dir_diff() or run_file_diff(), each of which
-sets up a child argv starting with "diff" and some hard-coded options
-(depending on which mode we're using). Let's extract that logic into the
-caller, which will make it easier to modify the options for cases which
-affect both functions.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/difftool.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ builtin/difftool.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 9f08a8f3fd2..f8fcc67640f 100644
+index 6a9242a8032..9f08a8f3fd2 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -331,7 +331,6 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+@@ -331,7 +331,8 @@ static int checkout_path(unsigned mode, struct object_id *oid,
  }
  
  static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
--			int argc, const char **argv,
- 			struct child_process *child)
+-			int argc, const char **argv)
++			int argc, const char **argv,
++			struct child_process *child)
  {
  	char tmpdir[PATH_MAX];
-@@ -393,10 +392,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	child->clean_on_exit = 1;
- 	child->dir = prefix;
- 	child->out = -1;
--	strvec_pushl(&child->args, "diff", "--raw", "--no-abbrev", "-z",
--		     NULL);
--	for (i = 0; i < argc; i++)
--		strvec_push(&child->args, argv[i]);
- 	if (start_command(child))
- 		die("could not obtain raw diff");
- 	fp = xfdopen(child->out, "r");
-@@ -683,7 +678,6 @@ static int run_file_diff(int prompt, const char *prefix,
- 		env[2] = "GIT_DIFFTOOL_NO_PROMPT=true";
+ 	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
+@@ -352,7 +353,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	struct index_state wtindex;
+ 	struct checkout lstate, rstate;
+ 	int rc, flags = RUN_GIT_CMD, err = 0;
+-	struct child_process child = CHILD_PROCESS_INIT;
+ 	const char *helper_argv[] = { "difftool--helper", NULL, NULL, NULL };
+ 	struct hashmap wt_modified, tmp_modified;
+ 	int indices_loaded = 0;
+@@ -387,19 +387,19 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	rdir_len = rdir.len;
+ 	wtdir_len = wtdir.len;
  
- 
--	strvec_push(&args, "diff");
+-	child.no_stdin = 1;
+-	child.git_cmd = 1;
+-	child.use_shell = 0;
+-	child.clean_on_exit = 1;
+-	child.dir = prefix;
+-	child.out = -1;
+-	strvec_pushl(&child.args, "diff", "--raw", "--no-abbrev", "-z",
++	child->no_stdin = 1;
++	child->git_cmd = 1;
++	child->use_shell = 0;
++	child->clean_on_exit = 1;
++	child->dir = prefix;
++	child->out = -1;
++	strvec_pushl(&child->args, "diff", "--raw", "--no-abbrev", "-z",
+ 		     NULL);
  	for (i = 0; i < argc; i++)
- 		strvec_push(&args, argv[i]);
- 	return run_command_v_opt_cd_env(args.v, RUN_GIT_CMD, prefix, env);
-@@ -769,7 +763,12 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	 * will invoke a separate instance of 'git-difftool--helper' for
+-		strvec_push(&child.args, argv[i]);
+-	if (start_command(&child))
++		strvec_push(&child->args, argv[i]);
++	if (start_command(child))
+ 		die("could not obtain raw diff");
+-	fp = xfdopen(child.out, "r");
++	fp = xfdopen(child->out, "r");
+ 
+ 	/* Build index info for left and right sides of the diff */
+ 	i = 0;
+@@ -525,7 +525,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 
+ 	fclose(fp);
+ 	fp = NULL;
+-	if (finish_command(&child)) {
++	if (finish_command(child)) {
+ 		ret = error("error occurred running diff --raw");
+ 		goto finish;
+ 	}
+@@ -719,6 +719,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 		OPT_ARGUMENT("no-index", &no_index, N_("passed to `diff`")),
+ 		OPT_END()
+ 	};
++	struct child_process child = CHILD_PROCESS_INIT;
+ 
+ 	git_config(difftool_config, NULL);
+ 	symlinks = has_symlinks;
+@@ -769,6 +770,6 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
  	 * each file that changed.
  	 */
-+	strvec_push(&child.args, "diff");
-+	if (dir_diff)
-+		strvec_pushl(&child.args, "--raw", "--no-abbrev", "-z", NULL);
-+	strvec_pushv(&child.args, argv);
-+
  	if (dir_diff)
--		return run_dir_diff(extcmd, symlinks, prefix, argc, argv, &child);
--	return run_file_diff(prompt, prefix, argc, argv);
-+		return run_dir_diff(extcmd, symlinks, prefix, &child);
-+	return run_file_diff(prompt, prefix, child.args.nr, child.args.v);
+-		return run_dir_diff(extcmd, symlinks, prefix, argc, argv);
++		return run_dir_diff(extcmd, symlinks, prefix, argc, argv, &child);
+ 	return run_file_diff(prompt, prefix, argc, argv);
  }
 -- 
 2.33.0.999.ga5f89b684e9
