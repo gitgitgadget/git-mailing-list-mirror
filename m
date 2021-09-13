@@ -2,195 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-22.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB86C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 10:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DECAC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:07:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D2E360FF2
-	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 10:47:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B08F60FE6
+	for <git@archiver.kernel.org>; Mon, 13 Sep 2021 11:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239038AbhIMKsc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 06:48:32 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:17741 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238610AbhIMKsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 06:48:31 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mPjUX-000AIL-5K; Mon, 13 Sep 2021 11:47:14 +0100
-Subject: Re: [PATCH v2 0/7] strvec: use size_t to store nr and alloc
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <5e5e7fd9-83d7-87f7-b1ef-1292912b6c00@iee.email>
- <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <cdf72de4-4879-c4b9-e882-2e134c6ba45f@iee.email>
-Date:   Mon, 13 Sep 2021 11:47:12 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S239409AbhIMLIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 07:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239218AbhIMLIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 07:08:17 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0235C061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 04:07:01 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 196-20020a1c04cd000000b002fa489ffe1fso6619873wme.4
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 04:07:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=aSPnRDY1QYqVh8j8bp7hOHoqqyZTMNeH7iIbFe4Y4o8=;
+        b=RvKkLuLTDWMpkol3fRvP19RqzGNL+j5vIJyb7OWhwlyR4p2i8NWftSKBUlepNREoHg
+         OnOQcA2Ky93cvv/R/flSWKCcS24qFVv50EGlTdMykmdKOHaUPK8m5CaWon4MgeLuZN3Y
+         oRnEZro/N0CEtMy/IV+VVW2zCIP2mkBFz9Wa2qUa+xYXmMjJBa0CdDIyNU8ZMo8WWEAP
+         d3EOlu8xlmAcuc+nIxfbiqC8wpU5plPGUplg/zWUgzMOi/DyNQfQcmwnulg1xCu/EvpL
+         siFQTTJlYXGGQVx7cpjjct4Kg0SDnV/BvV5lqv9B1Z9NGrPGIzfJQvSj0BpAtiP9ymth
+         MUjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=aSPnRDY1QYqVh8j8bp7hOHoqqyZTMNeH7iIbFe4Y4o8=;
+        b=6EfRdATQuG86ALN8GlZHCXY+NmHWwZd2CIJrv5CPN2+Nx+eRyE3Oz9Qt+naEwrcBke
+         P7lQ6mK4XIguQ+ZRMUTjGrVaTeM1ylZKw+dwuSPSGo1uJ7YVIj1M5DIpxNc/TXxD3bkx
+         f2Nnrb8N+gQcIKQCL7UAvAEbffumy9G4tEH/7Zc73cAHIC4QTWx4b/hD0HZUvATemvBJ
+         K8jj6qZvTlu2t+FBE/CCP1+eDSnxXRG3fnEODBXztfXCdQ505yBDikywMCneuX3/NgDc
+         AoxR+oG+4qBgEFuYw6DcWICuSc7i7AfeliRQeeepS/1KjSFbelki59WfoXiBLqAMcvv5
+         MxBg==
+X-Gm-Message-State: AOAM531pQN058fv+ho5jQ7IEuW0eBpiQORWH+qX+ohl/MAy0JwCLwV37
+        HIQcyzMUWV3/qxVEMvb1YMsHiGkEK7M=
+X-Google-Smtp-Source: ABdhPJyU0Hv4EIxucKj4yQ5B4m/yI1luf2fABbbQ1Pbn86uMidw+R79G7+R1rSn1Z55Q9/E9dZR2NQ==
+X-Received: by 2002:a1c:2943:: with SMTP id p64mr10478242wmp.107.1631531220202;
+        Mon, 13 Sep 2021 04:07:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q7sm3739343wrr.10.2021.09.13.04.06.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Sep 2021 04:06:59 -0700 (PDT)
+Message-Id: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
+From:   "Matthias =?UTF-8?Q?A=C3=9Fhauer?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Mon, 13 Sep 2021 11:06:56 +0000
+Subject: [PATCH 0/2] documentation: handle non-existing html pages and document 'git version'
 MIME-Version: 1.0
-In-Reply-To: <cover-v2-0.7-00000000000-20210912T001420Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Matthias =?UTF-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/09/2021 01:15, Ævar Arnfjörð Bjarmason wrote:
-> This is a proposed v2 of Jeff King's one-patch change to change
-> strvec's nr/alloc from "int" to "size_t". As noted below I think it's
-> worthwhile to not only change that in the struct, but also in code
-> that directly references the "nr" member.
->
-> On Sat, Sep 11 2021, Philip Oakley wrote:
->
->> On 11/09/2021 17:13, Ævar Arnfjörð Bjarmason wrote:
->>> On Sat, Sep 11 2021, Jeff King wrote:
->>>
->>>> We converted argv_array (which later became strvec) to use size_t in
->>>> 819f0e76b1 (argv-array: use size_t for count and alloc, 2020-07-28) in
->>>> order to avoid the possibility of integer overflow. But later, commit
->>>> d70a9eb611 (strvec: rename struct fields, 2020-07-28) accidentally
->>>> converted these back to ints!
->>>>
->>>> Those two commits were part of the same patch series. I'm pretty sure
->>>> what happened is that they were originally written in the opposite order
->>>> and then cleaned up and re-ordered during an interactive rebase. And
->>>> when resolving the inevitable conflict, I mistakenly took the "rename"
->>>> patch completely, accidentally dropping the type change.
->>>>
->>>> We can correct it now; better late than never.
->>>>
->>>> Signed-off-by: Jeff King <peff@peff.net>
->>>> ---
->>>> This was posted previously in the midst of another thread, but I don't
->>>> think was picked up. There was some positive reaction, but one "do we
->>>> really need this?" to which I responded in detail:
->>>>
->>>>   https://lore.kernel.org/git/YTIBnT8Ue1HZXs82@coredump.intra.peff.net/
->>>>
->>>> I don't really think any of that needs to go into the commit message,
->>>> but if that's a hold-up, I can try to summarize it (though I think
->>>> referring to the commit which _already_ did this and was accidentally
->>>> reverted would be sufficient).
->>> Thanks, I have a WIP version of this outstanding starting with this
->>> patch that I was planning to submit sometime, but I'm happy to have you
->>> pursue it, especially with the ~100 outstanding patches I have in
->>> master..seen.
->>>
->>> It does feel somewhere between iffy and a landmine waiting to be stepped
->>> on to only convert the member itself, and not any of the corresponding
->>> "int" variables that track it to "size_t".
->>>
->>> If you do the change I suggested in
->>> https://lore.kernel.org/git/87v93i8svd.fsf@evledraar.gmail.com/ you'll
->>> find that there's at least one first-order reference to this that now
->>> uses "int" that if converted to "size_t" will result in a wrap-around
->>> error, we're lucky that one has a test failure.
->>>
->>> I can tell you what that bug is, but maybe it's better if you find it
->>> yourself :) I.e. I found *that* one, but I'm not sure I found them
->>> all. I just s/int nr/size_t *nr/ and eyeballed the wall off compiler
->>> errors & the code context (note: pointer, obviously broken, but makes
->>> the compiler yell).
->>>
->>> That particular bug will be caught by the compiler as it involves a >= 0
->>> comparison against unsigned, but we may not not have that everywhere...
->> I'm particularly interested in the int -> size_t change problem as part
->> of the wider 4GB limitations for the LLP64 systems [0] such as the
->> RaspPi, git-lfs (on windows [1]), and Git-for-Windows[2]. It is a big
->> problem.
-> Okey, fine, no fun excercise for the reader then ;)
+These two patches are grouped as one patch series, because they arose from
+the same Git for Windows issue [1], but they can be reviewed or applied
+independent from one another.
 
-There's a lot of weeds in there ;-)  In some ways it feels like the
-SHA1->SHA256 transition, but without the consensus, as the 'shifting
-foundations' problem only affect a subgroup of a subgroup (large Windows
-files and repositories).
->
-> This is what I'd been sitting on locally since that recent thread, I
-> polished it up a bit since Jeff King posted his version.
->
-> The potential overflow bug I mentioned is in rebase.c. See
-> 5/7. "Potential" because it's not a bug now, but that code
-> intentionally considers a strvec, and then iterates it from nr-1 to 0,
-> and if it reaches 0 intentionally counts down one more to -1 to
-> indicate that it's visited all elements.
+[1] https://github.com/git-for-windows/git/issues/3308
 
-It's these tidbits about how the problems surface, their detection and
-resolution that are really useful. Along with general awareness raising.
-At least here the issue is reasonably tightly focussed, and even then,
-testing is hard.
->
-> We then check that with i >= 0, except of course if it becomes
-> unsigned that doesn't become -1, but rather it wraps around.
->
-> The rest of this is all changes to have that s/int/size_t/ radiate
-> outwards, i.e. when we assign that value to a variable somewhere its
-> now a "size_t" instead of an "int" etc.
+Matthias Aßhauer (2):
+  help: make sure local html page exists before calling external
+    processes
+  documentation: add documentation for 'git version'
 
-In the LLP64 case, I'm somewhat concerned about the possible pushback of
-a wide spread s/int/size_t/ on the codebase's look & feel.
- (aside) I don't think there is even a `1S` to match the  the `1L` and
-`1U` shorthands used in various places.
+ Documentation/git-version.txt | 35 +++++++++++++++++++++++++++++++++++
+ builtin/help.c                |  9 ++++++++-
+ t/t0012-help.sh               |  7 +++++++
+ 3 files changed, 50 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/git-version.txt
 
-None of that is part of the series, but the patches are beneficial to
-the codes portability.
 
->
->> [0]
->> http://nickdesaulniers.github.io/blog/2016/05/30/data-models-and-word-size/
->> [1] https://github.com/git-lfs/git-lfs/issues/2434  Git on Windows
->> client corrupts files > 4Gb
->> [2] https://github.com/git-for-windows/git/pull/2179  [DRAFT] for
->> testing : Fix 4Gb limit for large files on Git for Windows
-> Jeff King (1):
->   strvec: use size_t to store nr and alloc
->
-> Ævar Arnfjörð Bjarmason (6):
->   remote-curl: pass "struct strvec *" instead of int/char ** pair
->   pack-objects: pass "struct strvec *" instead of int/char ** pair
->   sequencer.[ch]: pass "struct strvec *" instead of int/char ** pair
->   upload-pack.c: pass "struct strvec *" instead of int/char ** pair
->   rebase: don't have loop over "struct strvec" depend on signed "nr"
->   strvec API users: change some "int" tracking "nr" to "size_t"
->
->  builtin/pack-objects.c |  6 +++---
->  builtin/rebase.c       | 26 ++++++++++++--------------
->  connect.c              |  8 ++++----
->  fetch-pack.c           |  4 ++--
->  ls-refs.c              |  2 +-
->  remote-curl.c          | 23 +++++++++++------------
->  sequencer.c            |  8 ++++----
->  sequencer.h            |  4 ++--
->  serve.c                |  2 +-
->  shallow.c              |  5 +++--
->  shallow.h              |  6 ++++--
->  strvec.h               |  4 ++--
->  submodule.c            |  2 +-
->  upload-pack.c          |  7 +++----
->  14 files changed, 53 insertions(+), 54 deletions(-)
->
-> Range-diff against v1:
-> -:  ----------- > 1:  2ef48d734e8 remote-curl: pass "struct strvec *" instead of int/char ** pair
-> -:  ----------- > 2:  7f59a58ed97 pack-objects: pass "struct strvec *" instead of int/char ** pair
-> -:  ----------- > 3:  c35cfb9c9c5 sequencer.[ch]: pass "struct strvec *" instead of int/char ** pair
-> -:  ----------- > 4:  2e0b82d4316 upload-pack.c: pass "struct strvec *" instead of int/char ** pair
-> -:  ----------- > 5:  be85a0565ef rebase: don't have loop over "struct strvec" depend on signed "nr"
-> 1:  498f5ed80dc ! 6:  ba17290852c strvec: use size_t to store nr and alloc
->     @@ Commit message
->          We can correct it now; better late than never.
->      
->          Signed-off-by: Jeff King <peff@peff.net>
->     +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->      
->       ## strvec.h ##
->      @@ strvec.h: extern const char *empty_strvec[];
-> -:  ----------- > 7:  2edd9708888 strvec API users: change some "int" tracking "nr" to "size_t"
-
+base-commit: 8463beaeb69fe0b7f651065813def4aa6827cd5d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1038%2Frimrul%2Fdoc-version-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1038/rimrul/doc-version-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1038
+-- 
+gitgitgadget
