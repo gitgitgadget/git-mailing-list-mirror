@@ -6,63 +6,85 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B14AC433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E824C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:51:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D27560E52
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:48:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64EEE60EB6
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbhINRtW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 13:49:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63038 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232004AbhINRtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 13:49:14 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F038DD960;
-        Tue, 14 Sep 2021 13:47:56 -0400 (EDT)
+        id S231332AbhINRxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 13:53:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52629 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229785AbhINRxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 13:53:02 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02059147DA3;
+        Tue, 14 Sep 2021 13:51:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xzJtaZoD+MuHyeB8cMjkszcVylXIZR9cjl4YUj
-        p2eXA=; b=qMlX0LzSxpSIbzGGdt4+HeYB7sRese3ibHlH0Goxde5khdo8xIFatm
-        uU+bumy1OQWCfCXFGyKc0EBH1X9AQB9aCOTgYUrYGQs3AVQpyzQurqylM2Mrw4jN
-        7sUf3S2sU+h115XMPs3DWPfbz4vpz8qVPwn4uFyOdkHFzsey+J6rk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15AB2DD95D;
-        Tue, 14 Sep 2021 13:47:56 -0400 (EDT)
+        :content-type; s=sasl; bh=qVVdILLnL1IiwQwGoFs/W2RfaOqVHetOTHBsGi
+        ivD6s=; b=AQCc3q39QvS+JjzlFlVyskGHYIH18+1CNcVyL73WTHbowK+Gm3sYfO
+        BauFWt2MNZ9926o6CS+G54f26jOo/LjsqO3ooqb4HjqvOiOATYTwqk/r3+5pusah
+        9Tv1sbk/WPIVNPJBgcPJ8ceDHoTZnmttMljOkc2NTqw/2mErv39RE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDCE0147DA2;
+        Tue, 14 Sep 2021 13:51:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 95E0EDD95C;
-        Tue, 14 Sep 2021 13:47:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B602147DA1;
+        Tue, 14 Sep 2021 13:51:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2021, #04; Mon, 13)
-References: <xmqqtuinc3tx.fsf@gitster.g>
-        <88bb51c3-b5ab-77df-f9fb-b9252c2b0fa6@gmail.com>
-Date:   Tue, 14 Sep 2021 10:47:55 -0700
-In-Reply-To: <88bb51c3-b5ab-77df-f9fb-b9252c2b0fa6@gmail.com> (Derrick
-        Stolee's message of "Tue, 14 Sep 2021 09:33:29 -0400")
-Message-ID: <xmqq7dfj2gms.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v4 00/15] Upstreaming the Scalar command
+References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
+        <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2109141709330.59@tvgsbejvaqbjf.bet>
+Date:   Tue, 14 Sep 2021 10:51:40 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2109141709330.59@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 14 Sep 2021 17:10:16 +0200 (CEST)")
+Message-ID: <xmqq35q72ggj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E445A216-1583-11EC-85ED-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6B78FAE4-1584-11EC-BD52-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Perhaps this would be a good summary?
+> Hi,
 >
->   "git add", "git mv", and "git rm" have been adjusted to avoid
->   updating paths outside of the sparse-checkout definition unless
->   the user specifies a "--sparse" option.
+> On Tue, 14 Sep 2021, Johannes Schindelin via GitGitGadget wrote:
+>
+>> tl;dr: This series contributes the Scalar command to the Git project. This
+>> command provides an opinionated way to create and configure repositories
+>> with a focus on very large repositories.
+>>
+>> Changes since v3:
+>>
+>>  * Moved the "Changes since" section to the top, to make it easier to see
+>>    what changed.
+>>  * Reworded the commit message of the first patch.
+>>  * Removed the [RFC] prefix because I did not hear any objections against
+>>    putting this into contrib/.
+>
+> Forgot to say:
+>
+>   * Sent this out to reflect my latest state before taking off for two
+>     weeks.
 
-Let me steal that.  A correction to the topic summary like this is
-very much appreciated.
+Thanks, will queue.
+
+Have fun.
