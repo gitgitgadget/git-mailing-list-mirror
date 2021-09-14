@@ -6,120 +6,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93A36C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 01:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C0FC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 01:12:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D82F61108
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 01:09:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3B8161108
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 01:12:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237164AbhINBKi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 21:10:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51248 "EHLO
+        id S237530AbhINBN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 21:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237072AbhINBKh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 21:10:37 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC52C061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 18:09:20 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id b7so14721615iob.4
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 18:09:20 -0700 (PDT)
+        with ESMTP id S232209AbhINBN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 21:13:56 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E07C061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 18:12:39 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id a15so14732347iot.2
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 18:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=SKs7pb99cowh766MX1tCoqqg+E2Q8ISWMu3WD2gqDjk=;
-        b=bdFiynwGsse6AgrGQ/33GTzDwHwssCSv+cn0m9k9XA+z2IRCo0PwPVv7ltc6R56VPq
-         OZdegJ9F7CoGZVpem/l34VOvWUZB2J/wyC4qRFxJY6Q9q+eVoFTDqikjaas3KAW7G8sl
-         mcaKPRS6PR9zRNFtJRY94G/H5HR+r0hjcCBBF1mgBtd0nZk5hweugI6+pxAHd1Ra2qvh
-         KkNNloK4m90kEvTSqTR7KVOHmr9/uIDC4aGLMw5aZsOkJGRU0yYBWLA5DGGZDbyrv38a
-         r0Ybk2NJr9bHE3a0gimMu6/kfqCmi0qVumpmmbQ51ftQE3pcZS20iDYcXL0s956MnEjd
-         F7fQ==
+        bh=mh3SEtbRIdsLu7vBWb4YI2qYdiAJiOmdyLKrHy3XDgU=;
+        b=nQ15CPdQnWEPSMGkiQyGXwwrJHo2JdypTuOYzXHO/lo3OY/vqLHdZQCYWdRfo5IszX
+         q7scsOJW0PorJmUEMtj2C+wZFd+wkslZ7Dr+d7tSQL+MYIEe5WI9U8jf5xGy4Yg1S1Pe
+         FOWMu4Vx4NU5MmDDMC3KxtaX2tyC4sZ197uUp+nPEZmFcRvDHEQg6BaONpeTGwsaFe8B
+         bM/JHSk8rdpjfPUpKbWKbTtakXTBDgVBUXKAhQFHGm15pV+3bb7raO/TF4wvQYsAyqBX
+         2GCs0YansDS2plNsqE5pW3f5dk5lifCNPOFaShEsnmd4NMuJfP6DgSzOGmxgPhEm+Pxk
+         Jgaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=SKs7pb99cowh766MX1tCoqqg+E2Q8ISWMu3WD2gqDjk=;
-        b=qA9XU1u4UiTvEyLG73SXd+2S/GjQICFY0voCgE6UfEb+H0Mu4TqhaBZujtwB22C0Jt
-         m5LHzAC3DuMqCakwJajEFi4t6FmkO2rJwQK0xEJd4LXltRu4HhvJdRXlw6YhgovV6z1Y
-         6cpspSmHmS154w0QoKl6a4SEq5+Ige7HPEbSb3V0w2GtWgeDUUHW0b1A+KVbKnTf5EdU
-         u4ZUumeO6eJEEm5oDCyFnyx0Q3cOPuAOV2BN+YKEg8uAr3sH0tiC0sEEhugJomqLREoX
-         L3ILxLf20rCRxen4+NFlnXx5BduHgpRKa3LUyb+ZzELSSzZWAzDp1cpJu6e+qcjP7kH+
-         Q8ng==
-X-Gm-Message-State: AOAM531M9IC1vCdXdIc3sfofXlDj5YPSGFpEZIXQrZ0066/rSBF9fBJV
-        uBpehjGzmaTsSGUiVh/qvOxdhlXnzaBrtcHV
-X-Google-Smtp-Source: ABdhPJwp4eFjEnf6+ZTZiqpMuXYMKmxhCQA4Ri2RFmGdOF/xdz47J8tiW9BKfoXxo6z+MZK6d+P47g==
-X-Received: by 2002:a05:6638:2509:: with SMTP id v9mr12284577jat.95.1631581760265;
-        Mon, 13 Sep 2021 18:09:20 -0700 (PDT)
+        bh=mh3SEtbRIdsLu7vBWb4YI2qYdiAJiOmdyLKrHy3XDgU=;
+        b=mswEvKmvsqfZi9O9OHIvdk2eXRXUHPIIYdR2sEK/GGtPapwbWZfzd3GP3ppz9Qh4fu
+         MjeAMXDw8gCIvRM+K/HrP0SLEsqTwKE+fgVu0fdOLy0UOnECEE+Q8uA3F6qY7DhxiB10
+         VRSkjFEvrlAi5P16H4loyNux5xLb+mayN/oPygaT4ieyIAY9WsgRcQEtDdIXrb64rYVC
+         DDEK76SB1uaWeLyaLqCSpylpNpSd7bqQWyAiT0TNg5C0GUynOOGdtv+jlXs1+9R42pNt
+         Yynkxhv+dZQb67Vjysl2XGm0D1JFQQr8byusr92rBthA5Oc8z6us83gO4JDPxXGYwVhG
+         JkIw==
+X-Gm-Message-State: AOAM530h5fWFWzhqajhmMiEWjA/n3/BL2EKZy0LCsZ7SnF3sLGUmdm5J
+        vFlDw97oESj/qSb8tZHgca50AKA/pgtYOuJZ
+X-Google-Smtp-Source: ABdhPJwbNsSnSrSZnGGTNa9hCHIFs5UnYRsWGTSHl6JVhdSELGQb1Ywmc5kRNNV+3ce8sw0iSvV+sg==
+X-Received: by 2002:a05:6602:2436:: with SMTP id g22mr11712254iob.109.1631581959108;
+        Mon, 13 Sep 2021 18:12:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j5sm5769967ilu.11.2021.09.13.18.09.19
+        by smtp.gmail.com with ESMTPSA id m11sm5881424ilc.2.2021.09.13.18.12.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 18:09:20 -0700 (PDT)
-Date:   Mon, 13 Sep 2021 21:09:19 -0400
+        Mon, 13 Sep 2021 18:12:38 -0700 (PDT)
+Date:   Mon, 13 Sep 2021 21:12:38 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Glen Choo <chooglen@google.com>, Taylor Blau <me@ttaylorr.com>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/3] fsck: verify commit graph when implicitly enabled
-Message-ID: <YT/2PzbfE2p6TZ9r@nand.local>
-References: <20210913181221.42635-1-chooglen@google.com>
- <20210913181221.42635-2-chooglen@google.com>
- <YT+mlW851sRyt842@nand.local>
- <YT/bfZu5mnMMqq0z@chooglen-macbookpro.roam.corp.google.com>
- <CAPig+cS2E6c9YYKTThPSVpyBkouoL+nK2rgpsZxNODPmTr2hzQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 4/4] t5326: test propagating hashcache values
+Message-ID: <YT/3BuDa7KfUN/38@nand.local>
+References: <cover.1631049462.git.me@ttaylorr.com>
+ <acf3ec60cb6f151a9f121d242f38fef6711cced4.1631049462.git.me@ttaylorr.com>
+ <xmqqa6khi9ph.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cS2E6c9YYKTThPSVpyBkouoL+nK2rgpsZxNODPmTr2hzQ@mail.gmail.com>
+In-Reply-To: <xmqqa6khi9ph.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 13, 2021 at 07:32:07PM -0400, Eric Sunshine wrote:
-> On Mon, Sep 13, 2021 at 7:19 PM Glen Choo <chooglen@google.com> wrote:
-> > On Mon, Sep 13, 2021 at 03:29:25PM -0400, Taylor Blau wrote:
-> > > > +        git config --unset core.commitGraph &&
-> > >
-> > > But I'm not aware of a way to temporarily unset a configuration variable
-> > > for the duration of a test, so here I would probably write:
-> > >
-> > >     test_must_fail git -c core.commitGraph= fsck
-> > >
-> > > which Git interprets as "pretend this variable is unset in-core".
-> >
-> > From my testing, I suspect that git does not pretend the variable is
-> > unset, but rather, it pretends that the variable is set to the empty
-> > string. It seems that git behaves as if the variable is set to "false".
-> > This is called out in Documentation/git.txt:
-> >
-> >   Including the equals but with an empty value (like `git -c
-> >   foo.bar= ...`) sets `foo.bar` to the empty string which `git config
-> >   --type=bool` will convert to `false`.
-> >
-> > If the variable really is set to false, how might we proceed here? Shall
-> > we stick with test_when_finished?
->
-> That's probably reasonable, however, for robustness, you should
-> probably use test_unconfig() rather than raw `git config --unset` to
-> clear the variable.
+On Sun, Sep 12, 2021 at 05:46:18PM -0700, Junio C Hamano wrote:
+> What I am wondering is if we can come up with a "now, because we no
+> longer lose hashcache, we can do X so much better, here are the
+> numbers".
 
-Hmm. I'm not so sure, do other tests rely on the value of that variable?
-If so, test_unconfig() won't restore them.
+Sure, here they are. Bear in mind that these numbers are (a) on git.git
+and (b) with `pack.threads` set to 1 so the overall runtime looks more
+like CPU time.
 
-Even if we don't have any such tests now, it seems like we should err on
-the side of leaving it alone (although I suppose that future tests could
-set core.commitGraph to whatever value they need as long as they use the
-test_config function).
+  Test                            origin/tb/multi-pack-bitmaps   HEAD
+  -------------------------------------------------------------------------------------
+  5326.4: simulated clone         1.87(1.80+0.07)                1.46(1.42+0.03) -21.9%
+  5326.5: simulated fetch         2.66(2.61+0.04)                1.47(1.43+0.04) -44.7%
+  5326.6: pack to file (bitmap)   2.74(2.62+0.12)                1.89(1.82+0.07) -31.0%
 
-> Aside: This certainly makes one wonder if we should have a new
-> function in t/test-lib-functions.sh which unsets a variable for the
-> duration of a test only. However, that's outside the scope of this
-> submission.
+Apologies for taking a little while to respond, I spent longer than I'm
+willing to admit double checking these numbers with Peff because of
+inconsistencies in my testing setup.
 
-:-). I thought the same thing to myself when reviewing earlier today.
-That's why I recommended using test_when_finished upthread, but either
-approach is fine (my comments are definitely cosmetic, and don't matter
-to the substance of this thread, so ultimately I am fine with either).
+Alas, there they are. They are basically no different than having the
+name-hash for single pack bitmaps, it's just now we don't throw them
+away when generating a MIDX bitmap from a state where the repository
+already has a single-pack bitmap.
 
 Thanks,
 Taylor
