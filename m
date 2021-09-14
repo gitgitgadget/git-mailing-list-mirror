@@ -2,84 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD9BC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 02:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B509C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 02:43:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 247EF61151
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 02:06:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F2F2606A5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 02:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235913AbhINCHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Sep 2021 22:07:20 -0400
-Received: from mail-ej1-f51.google.com ([209.85.218.51]:34665 "EHLO
-        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbhINCHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Sep 2021 22:07:20 -0400
-Received: by mail-ej1-f51.google.com with SMTP id jg16so25251041ejc.1
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 19:06:03 -0700 (PDT)
+        id S236074AbhINCoc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Sep 2021 22:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236205AbhINCoa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Sep 2021 22:44:30 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83BFDC061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 19:43:14 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id f21so4949857plb.4
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 19:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/qFM+D+V5gqZiAt1zb0a0t9OuSAUEfJVlwWerW9V7fA=;
+        b=l+o9hw5/oQ4y1UFr6UE+5ip2WLHJjHogsHZSq2s9RrAfd37nwG6B0nVKd5rGS64kyC
+         z6+rxn2PAoH1HhJMgI6ydUiJfcRHYfeNeMAoH+NfX4GFdTOhTxNMobVKHKqQejnNNSQv
+         9HWPhgC93YRe/VG09Ke0Ub4VdeoxUH1O5La77hkkVFVzanU8nAf3jZHtYUj2C0nM12z6
+         SsT+QV2G+pmSVJtiwE7e62s118uyH/Uoiv6qW/v3FyNwKrWT2db3H9YfN8S7yp6hBO/M
+         rUOeXYsfdRy8ksmdmBYKwti4EIAyAVkWMckzTBFmzqNlkuCwsssDGukWvYzFJCXhJVPF
+         F3Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=O71SMb1K3fpR8ySKzShlc14auesxQW85dk+1WbOyf/0=;
-        b=ZWTWKhyFPJKi0CRgALqUEt4ybzorvipBXgU7pKlyZVYZ2ZOcaoyZZJA/LZNA+Adn3L
-         Nz8LL6OrDDiiK1D5390fokXqWlKu7MSeKijJm3sD3UdnGevtzR+8u8pTtWeOdgA5j7mL
-         SkFF40zuwvm8PKONQNXp1lUzkhiLp+JSMh/M8LYZED1ATjErx75tTRLYZonsUa12ytdK
-         WP7IwaTbv+1ykkmI/xxuBw8so8GyeN20j2WTLD96SRgJQRt315qDcvIn07W/IDWMnjEY
-         Bgy6s8JGl983bM14dCC/gwPCbZkG1AnnkSu10bBaDKvAHlqG82gwubHOy05jTo8YzbP+
-         st+A==
-X-Gm-Message-State: AOAM533TsYgPRfQnKF2kLdqVE9b9eWw9cORmZ6dDf1BTzbXdS6m0NAuD
-        FMc4/C3+x+cgXJq195JPoF5nduNuYBttravv/Ag=
-X-Google-Smtp-Source: ABdhPJxCwXdIYUWeJ9ImaL2MswxiM+a14GCuGs5/kJn5lRozz4qq4/oW5i2Ra6n/XFnxM0FsSXaOhDu/jIX1Sbs4zwA=
-X-Received: by 2002:a17:906:b46:: with SMTP id v6mr15967940ejg.262.1631585162783;
- Mon, 13 Sep 2021 19:06:02 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/qFM+D+V5gqZiAt1zb0a0t9OuSAUEfJVlwWerW9V7fA=;
+        b=h7Ilo1yStA7+7XSjM/z1u07KpcKh7iRv/MXcOIKIy+NbKcwrBcRv3WyyovVJARhgNQ
+         OfR62g7tEAznfuRomBH6OMBebNtIrct/OkJ0kU8MJ8CsbIhLgEcU60wX2xTmYpN9QqJh
+         O133evzKwOem+RgArGVnF32VvTjHAF2Vmcam4Zk22Xd7EZH3q8w8aldXrpkqaiF8uemk
+         Zo0TtUNS4dtNoc9D79w1wxvADCHQy4H/fyCybrQ4CnhOOrbvJqBeVRntf9F0woleI45W
+         Si9alElzSBAh/cV24BVR7u/YJcuc06zwzQ+1JLy6wwMf5VkNryc4k8qNW6qrDk+xyIgY
+         5Olw==
+X-Gm-Message-State: AOAM532lisPFtKEZU30zgNnQQf6CbwfRXzfHXoSjUWa5Oi/9i3lCAs5o
+        VRkfrOrMkGw6gqoq0pHgI5w=
+X-Google-Smtp-Source: ABdhPJxwNnV28qsQQ+E+rZNQo3UVitpgRZI1smnuUe3b3NSXrS1fxCLM8Lv3IYlo44hdIRch7Vxzog==
+X-Received: by 2002:a17:90a:2dc7:: with SMTP id q7mr2894107pjm.231.1631587394005;
+        Mon, 13 Sep 2021 19:43:14 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-6.three.co.id. [116.206.28.6])
+        by smtp.gmail.com with ESMTPSA id j123sm8805460pgc.77.2021.09.13.19.43.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Sep 2021 19:43:13 -0700 (PDT)
+Subject: Re: [PATCH] MyFirstContribution: Document --range-diff option when
+ writing v2
+To:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
+Cc:     emilyshaffer@google.com
+References: <20210913194816.51182-1-chooglen@google.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <02e15e8d-6923-9f21-8eeb-592eb0c9588b@gmail.com>
+Date:   Tue, 14 Sep 2021 09:43:09 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20210913181221.42635-1-chooglen@google.com> <20210913181221.42635-2-chooglen@google.com>
- <YT+mlW851sRyt842@nand.local> <YT/bfZu5mnMMqq0z@chooglen-macbookpro.roam.corp.google.com>
- <CAPig+cS2E6c9YYKTThPSVpyBkouoL+nK2rgpsZxNODPmTr2hzQ@mail.gmail.com> <YT/2PzbfE2p6TZ9r@nand.local>
-In-Reply-To: <YT/2PzbfE2p6TZ9r@nand.local>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Sep 2021 22:05:51 -0400
-Message-ID: <CAPig+cQ8q_nNgRd3taVP4RPpxK3xcDVQ+57Dw0biA0qnghUMkg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] fsck: verify commit graph when implicitly enabled
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Glen Choo <chooglen@google.com>, Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210913194816.51182-1-chooglen@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 13, 2021 at 9:09 PM Taylor Blau <me@ttaylorr.com> wrote:
-> On Mon, Sep 13, 2021 at 07:32:07PM -0400, Eric Sunshine wrote:
-> > On Mon, Sep 13, 2021 at 7:19 PM Glen Choo <chooglen@google.com> wrote:
-> > > If the variable really is set to false, how might we proceed here? Shall
-> > > we stick with test_when_finished?
-> >
-> > That's probably reasonable, however, for robustness, you should
-> > probably use test_unconfig() rather than raw `git config --unset` to
-> > clear the variable.
->
-> Hmm. I'm not so sure, do other tests rely on the value of that variable?
-> If so, test_unconfig() won't restore them.
+On 14/09/21 02.48, Glen Choo wrote:
+> In the "Sending V2" section, readers are directed to create v2 patches
+> without using --range-diff. However, it is custom to include a range
+> diff against the v1 patches as a reviewer aid.
+> 
+> Update the "Sending V2" section to include the --range-diff option. Also
+> include some explanation for -v2 and --range-diff to help the reader
+> understand the importance.
 
-There may be a misunderstanding. I wasn't saying that test_unconfig()
-alone would work. My "That's probably reasonable" referred to Glen's
-proposal of combining `git config --unset` with test_when_finished()
-to restore the variable. In addition to that, I suggested
-test_unconfig() as being a more robust choice in that recipe.
+I think plain "Changes since v1 [link]" is sufficient if you can 
+describe such changes well without resorting to range-diff.
 
-> > Aside: This certainly makes one wonder if we should have a new
-> > function in t/test-lib-functions.sh which unsets a variable for the
-> > duration of a test only. However, that's outside the scope of this
-> > submission.
->
-> :-). I thought the same thing to myself when reviewing earlier today.
-> That's why I recommended using test_when_finished upthread, but either
-> approach is fine (my comments are definitely cosmetic, and don't matter
-> to the substance of this thread, so ultimately I am fine with either).
-
-Yep.
+-- 
+An old man doll... just what I always wanted! - Clara
