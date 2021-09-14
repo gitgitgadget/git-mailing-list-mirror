@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B11C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4699C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BBC061185
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A37D6113B
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235873AbhINXwl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 19:52:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47582 "EHLO cloud.peff.net"
+        id S235895AbhINXwn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 19:52:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47590 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235891AbhINXwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 19:52:40 -0400
-Received: (qmail 28529 invoked by uid 109); 14 Sep 2021 23:51:22 -0000
+        id S235891AbhINXwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 19:52:42 -0400
+Received: (qmail 28543 invoked by uid 109); 14 Sep 2021 23:51:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 23:51:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 23:51:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30622 invoked by uid 111); 14 Sep 2021 23:51:21 -0000
+Received: (qmail 30629 invoked by uid 111); 14 Sep 2021 23:51:24 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 19:51:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 19:51:24 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 19:51:21 -0400
+Date:   Tue, 14 Sep 2021 19:51:24 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2 02/11] serve: return capability "value" from
- get_capability()
-Message-ID: <YUE1eSumQN2EXxiX@coredump.intra.peff.net>
+Subject: [PATCH v2 03/11] serve: add "receive" method for v2 capabilities
+ table
+Message-ID: <YUE1fGZc1FuuyUNH@coredump.intra.peff.net>
 References: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,83 +45,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the client sends v2 capabilities, they may be simple, like:
+We have a capabilities table that tells us what we should tell the
+client we are capable of, and what to do when a client gives us a
+particular command (e.g., "command=ls-refs"). But it doesn't tell us
+what to do when the client sends us back a capability (e.g.,
+"object-format=sha256"). We just collect them all in a strvec and hope
+somebody can use them later.
 
-  foo
+Instead, let's provide a function pointer in the table to act on these.
+This will eventually help us avoid collecting the strings, which will be
+more efficient and less prone to mischief.
 
-or have a value like:
+Using the new method is optional, which helps in two ways:
 
-  foo=bar
+  - we can move existing capabilities over to this new system gradually
+    in individual commits
 
-(all of the current capabilities actually expect a value, but the
-protocol allows for boolean ones).
-
-We use get_capability() to make sure the client's pktline matches a
-capability. In doing so, we parse enough to see the "=" and the value
-(if any), but we immediately forget it. Nobody cares for now, because they end
-up parsing the values out later using has_capability(). But in
-preparation for changing that, let's pass back a pointer so the callers
-know what we found.
-
-Note that unlike has_capability(), we'll return NULL for a "simple"
-capability. Distinguishing these will be useful for some future patches.
+  - some capabilities we don't actually do anything with anyway. For
+    example, the client is free to say "agent=git/1.2.3" to us, but we
+    do not act on the information in any way.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- serve.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ serve.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/serve.c b/serve.c
-index fd88b95343..78a4e83554 100644
+index 78a4e83554..a161189984 100644
 --- a/serve.c
 +++ b/serve.c
-@@ -139,7 +139,7 @@ void protocol_v2_advertise_capabilities(void)
- 	strbuf_release(&value);
- }
+@@ -70,6 +70,16 @@ struct protocol_capability {
+ 	 * This field should be NULL for capabilities which are not commands.
+ 	 */
+ 	int (*command)(struct repository *r, struct packet_reader *request);
++
++	/*
++	 * Function called when a client requests the capability as a
++	 * non-command. This may be NULL if the capability does nothing.
++	 *
++	 * For a capability of the form "foo=bar", the value string points to
++	 * the content after the "=" (i.e., "bar"). For simple capabilities
++	 * (just "foo"), it is NULL.
++	 */
++	void (*receive)(struct repository *r, const char *value);
+ };
  
--static struct protocol_capability *get_capability(const char *key)
-+static struct protocol_capability *get_capability(const char *key, const char **value)
- {
- 	int i;
- 
-@@ -149,16 +149,25 @@ static struct protocol_capability *get_capability(const char *key)
- 	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
- 		struct protocol_capability *c = &capabilities[i];
- 		const char *out;
--		if (skip_prefix(key, c->name, &out) && (!*out || *out == '='))
-+		if (!skip_prefix(key, c->name, &out))
-+			continue;
-+		if (!*out) {
-+			*value = NULL;
- 			return c;
-+		}
-+		if (*out++ == '=') {
-+			*value = out;
-+			return c;
-+		}
- 	}
- 
+ static struct protocol_capability capabilities[] = {
+@@ -164,12 +174,17 @@ static struct protocol_capability *get_capability(const char *key, const char **
  	return NULL;
  }
  
- static int is_valid_capability(const char *key)
+-static int is_valid_capability(const char *key)
++static int receive_client_capability(const char *key)
  {
--	const struct protocol_capability *c = get_capability(key);
-+	const char *value;
-+	const struct protocol_capability *c = get_capability(key, &value);
+ 	const char *value;
+ 	const struct protocol_capability *c = get_capability(key, &value);
  
- 	return c && c->advertise(the_repository, NULL);
+-	return c && c->advertise(the_repository, NULL);
++	if (!c || !c->advertise(the_repository, NULL))
++		return 0;
++
++	if (c->receive)
++		c->receive(the_repository, value);
++	return 1;
  }
-@@ -168,7 +177,8 @@ static int parse_command(const char *key, struct protocol_capability **command)
- 	const char *out;
  
- 	if (skip_prefix(key, "command=", &out)) {
--		struct protocol_capability *cmd = get_capability(out);
-+		const char *value;
-+		struct protocol_capability *cmd = get_capability(out, &value);
- 
- 		if (*command)
- 			die("command '%s' requested after already requesting command '%s'",
+ static int parse_command(const char *key, struct protocol_capability **command)
+@@ -262,7 +277,7 @@ static int process_request(void)
+ 		case PACKET_READ_NORMAL:
+ 			/* collect request; a sequence of keys and values */
+ 			if (parse_command(reader.line, &command) ||
+-			    is_valid_capability(reader.line))
++			    receive_client_capability(reader.line))
+ 				strvec_push(&keys, reader.line);
+ 			else
+ 				die("unknown capability '%s'", reader.line);
 -- 
 2.33.0.917.gae6ecbedc7
 
