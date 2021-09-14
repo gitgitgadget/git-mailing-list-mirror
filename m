@@ -2,89 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E824C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F94C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:53:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64EEE60EB6
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:51:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A7DC610F9
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 17:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231332AbhINRxD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 13:53:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52629 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbhINRxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 13:53:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02059147DA3;
-        Tue, 14 Sep 2021 13:51:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qVVdILLnL1IiwQwGoFs/W2RfaOqVHetOTHBsGi
-        ivD6s=; b=AQCc3q39QvS+JjzlFlVyskGHYIH18+1CNcVyL73WTHbowK+Gm3sYfO
-        BauFWt2MNZ9926o6CS+G54f26jOo/LjsqO3ooqb4HjqvOiOATYTwqk/r3+5pusah
-        9Tv1sbk/WPIVNPJBgcPJ8ceDHoTZnmttMljOkc2NTqw/2mErv39RE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDCE0147DA2;
-        Tue, 14 Sep 2021 13:51:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B602147DA1;
-        Tue, 14 Sep 2021 13:51:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v4 00/15] Upstreaming the Scalar command
-References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
-        <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2109141709330.59@tvgsbejvaqbjf.bet>
-Date:   Tue, 14 Sep 2021 10:51:40 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2109141709330.59@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 14 Sep 2021 17:10:16 +0200 (CEST)")
-Message-ID: <xmqq35q72ggj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231565AbhINRyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 13:54:44 -0400
+Received: from mail-ej1-f46.google.com ([209.85.218.46]:35625 "EHLO
+        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229854AbhINRyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 13:54:41 -0400
+Received: by mail-ej1-f46.google.com with SMTP id i21so240013ejd.2
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 10:53:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Bf+2ZuEzCfPvPD0JDtppisrziPiiLjv2hwhDberEXiM=;
+        b=i104NJsWrpizIOETtkDVt1LtYfnfPh5sftWEqre0TaJrAZ5Nxyv6REM5iM/jN68gm6
+         BbMFycqb5xmB7QKpVBmHUHIb1jTeGAmp/cqTIpY0U/7CZuJtID1QXBZG5ciMvz2f4668
+         SU1t4L16qeWPgStGPcOgJUefiOrTGw32hetvu8UuJl4npvpusOS0qBaA8+Vqo71hvGf/
+         yCoHKV2HMDlH+Ko/tVpZIv8MVuGs8hNzAoyTLjxlG7prcKZQwJYOKO1Vk37Ki9ppKO8j
+         +S1LtlhNI2zDO7Hi3TJCDLKyVs8tP0AyYOFfSbxOmYkXwOtoxxJXYBUhD2fY65orbFtX
+         GGzQ==
+X-Gm-Message-State: AOAM530hbfM65EvABrr124kYN/KPU2+GawUVpHl2LdO7UgQUUjyAI3SR
+        /dXet3HQlwD+WZseRtizOs61ghiezq73YA2IRXU=
+X-Google-Smtp-Source: ABdhPJwSYQsyrodVF3TF3QWAVQoTLG4yTIT2QZSIRRGSQlJxU0Sxr9lWG8gydhA1Tae9uVA85URxlZfBeLNfQpqVFzQ=
+X-Received: by 2002:a17:906:1484:: with SMTP id x4mr20038836ejc.72.1631642002701;
+ Tue, 14 Sep 2021 10:53:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6B78FAE4-1584-11EC-BD52-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+References: <20210913185941.6247-1-alban.gruin@gmail.com> <CAPig+cR=HUDgFctXzcigZ062c=QWYfGWUPuT7scc-xU_w3NT1w@mail.gmail.com>
+ <26422bc7-f1d4-4959-ce30-b26d8fe61888@gmail.com> <CAPig+cRGzmN6tH-5DmtnbW2cMHSSQ2RS_6d=B0xJ7QWKtG6yug@mail.gmail.com>
+ <d02c7f3b-221d-fbab-827a-a950bf28856c@gmail.com> <xmqqbl4v2gpu.fsf@gitster.g>
+In-Reply-To: <xmqqbl4v2gpu.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 14 Sep 2021 13:53:11 -0400
+Message-ID: <CAPig+cTQNkwWgpgu-Mw=Qd++cUVnFrrdnaQnaSZ79RexnNQFHg@mail.gmail.com>
+Subject: Re: [PATCH v1] git-clone.txt: add the --recursive option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alban Gruin <alban.gruin@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Sep 14, 2021 at 1:46 PM Junio C Hamano <gitster@pobox.com> wrote:
+> I am wondering if it is just a matter of either
+>
+>  * removing the "recursive" alias from the options table.  Because
+>    we accept unique prefix, --recurse=<arg> the user types will be
+>    taken as --recurse-submodules=<arg> anyway (until "git clone"
+>    learns another option --recurse-xyzzy=<arg>, at which time it
+>    will become ambiguous and error out, that is).
 
-> Hi,
->
-> On Tue, 14 Sep 2021, Johannes Schindelin via GitGitGadget wrote:
->
->> tl;dr: This series contributes the Scalar command to the Git project. This
->> command provides an opinionated way to create and configure repositories
->> with a focus on very large repositories.
->>
->> Changes since v3:
->>
->>  * Moved the "Changes since" section to the top, to make it easier to see
->>    what changed.
->>  * Reworded the commit message of the first patch.
->>  * Removed the [RFC] prefix because I did not hear any objections against
->>    putting this into contrib/.
->
-> Forgot to say:
->
->   * Sent this out to reflect my latest state before taking off for two
->     weeks.
+With this option, we risk breaking existing tooling which happens to
+use the deprecated --recursive.
 
-Thanks, will queue.
+> or
+>
+>  * adding the PARSE_OPT_HIDDEN bit to the OPT_ALIAS() element for
+>    the deprecated "recurse" option.
 
-Have fun.
+I was going to suggest this as a possible way forward to address
+Alban's most recent response to my response. The lack of
+PARSE_OPT_HIDDEN on OPT_ALIAS() almost seems like an oversight.
+
+> Between adding "--recursive" to the manual and describing it as a
+> deprecated synonym for "--recurse-submodules", and not doing so, I
+> do not have a strong preference.
+
+I don't have a strong preference either, especially considering how
+long ago --recursive was removed from the manual, however, adding it
+would help someone who runs across --recursive in existing tooling or
+old blog post and wants to know what it does.
