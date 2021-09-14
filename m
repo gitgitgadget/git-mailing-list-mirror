@@ -2,110 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1422C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 293A2C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:11:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 966706112D
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:33:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 094A760234
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233227AbhINNev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 09:34:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233225AbhINNet (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 09:34:49 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BCFDC061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:33:32 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso18427485otu.0
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:33:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=aboB+JOIG91AurB/qO9XdwuGqlnTRMwCGUw9KtsLpVA=;
-        b=QaY0LYlS3hMHfE1LPHYzSiwsuQ107vDUM/+F/IHskxOar/w5HVmdE+pZKvfhSVDJQc
-         XHeJ3j5E8mI5icq0JjtZHnxnQxkgBWJzuWK1d2Iu1zn42VX0q4K7MAgu7P2fhumiF9uC
-         g5pfyhlZbM4j0Ex2SRq4K7nyKP/YAr5r1zvBV9h2pMy2+Arj93Y7QhaUYW5fyeXMpbvJ
-         Jl01UJQONMhVImtc0JAFwcsIF5KwukUjdQ5OoSN7Nj6Kl1XkzJd3WhrCp3X6KN2CFw3Q
-         DVHRZvvXQtadW2vfRBpVcH13XRDrcCn82EBYKy+vxXmi8NezMl4nA4FB8i55d0UiCs6S
-         lINg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aboB+JOIG91AurB/qO9XdwuGqlnTRMwCGUw9KtsLpVA=;
-        b=1CUbM6YCL2UE6PG+OdKJTrbgbtRUgLhu03kwkFEEfLNYrn0t1LQo5A4ehPF46nb+iq
-         liJFChinOCt2BvFgU1z6VZz5CdG4pDDh5mTj+OAcz6nfLRiMKjfUCtxGN7kf4hZ2PqLr
-         MHuyRnZEAPrlsdw+DebiNXwD11bYiOPYRjPbqfRLvRtHojOPPV2IYYwcZOkKLudkwEcd
-         ScMHsMkid209jxrjIld8hDKGXu0U1WbqUBFqYWPG0SiChM6FN5bCBGi2YlRR2mO3JcPu
-         0Qwvc57RW67k0MEzS6BlGkHPWAI3lKP+84C74c/moTzl8sTUF6EW6JY6QTgYOD++R+Qe
-         HHkQ==
-X-Gm-Message-State: AOAM532WEN/AK27DqWGTSSGZXBMMrfxljcbIOoBfRNRj4EehDdyDcMOc
-        fyA8L6Q6Wi1Iaz2/7s6LlUOhxwotAINGxQ==
-X-Google-Smtp-Source: ABdhPJyvbMVDRYRbGEgmQIb20pijT07UF8kog+zMEWr8kOaBbXnIXRtWn4s1pQAge4pWwhZbaq5zQg==
-X-Received: by 2002:a9d:458a:: with SMTP id x10mr14843450ote.267.1631626411028;
-        Tue, 14 Sep 2021 06:33:31 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:69b3:ffa7:def5:d604? ([2600:1700:e72:80a0:69b3:ffa7:def5:d604])
-        by smtp.gmail.com with ESMTPSA id t9sm2447764oie.20.2021.09.14.06.33.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Sep 2021 06:33:30 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Sep 2021, #04; Mon, 13)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtuinc3tx.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <88bb51c3-b5ab-77df-f9fb-b9252c2b0fa6@gmail.com>
-Date:   Tue, 14 Sep 2021 09:33:29 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S233651AbhINONE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 10:13:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46952 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233654AbhINOND (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 10:13:03 -0400
+Received: (qmail 24188 invoked by uid 109); 14 Sep 2021 14:11:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 14:11:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23321 invoked by uid 111); 14 Sep 2021 14:11:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 10:11:45 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Sep 2021 10:11:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
+Message-ID: <YUCtoa4Wv1GWT1LE@coredump.intra.peff.net>
+References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
+ <YSvsQcGNpCMZwS8o@nand.local>
+ <xmqqeeaa6fey.fsf@gitster.g>
+ <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de>
+ <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net>
+ <8bd13e99-208b-4c22-90e6-28227593e9c4@web.de>
+ <nycvar.QRO.7.76.6.2109131335260.55@tvgsbejvaqbjf.bet>
+ <YT+FzPT0RCP2PdNL@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2109141215140.55@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <xmqqtuinc3tx.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2109141215140.55@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/13/2021 10:02 PM, Junio C Hamano wrote:
-...
-> * ds/add-rm-with-sparse-index (2021-09-12) 14 commits
->  - advice: update message to suggest '--sparse'
->  - mv: refuse to move sparse paths
->  - rm: skip sparse paths with missing SKIP_WORKTREE
->  - rm: add --sparse option
->  - add: update --renormalize to skip sparse paths
->  - add: update --chmod to skip sparse paths
->  - add: implement the --sparse option
->  - add: skip tracked paths outside sparse-checkout cone
->  - add: fail when adding an untracked sparse file
->  - dir: fix pattern matching on dirs
->  - dir: select directories correctly
->  - dir: extract directory-matching logic
->  - t1092: behavior for adding sparse files
->  - t3705: test that 'sparse_entry' is unstaged
->  (this branch uses ds/mergies-with-sparse-index and ds/sparse-index-ignored-files.)
-> 
->  "git add", "git mv", and "git rm" have been adjusted to work better
->  with the sparse index.
+On Tue, Sep 14, 2021 at 12:18:35PM +0200, Johannes Schindelin wrote:
 
-These changes apply more generally to the entire sparse-checkout
-feature. I can understand thinking it is only related to the
-sparse index because the tests follow the sparse index patterns.
-Those tests make sure that both full and sparse indexes are tested
-and have the same behavior.
+> Seeing as there seems to be some appetite for refactoring Git's code on
+> this list, I am thinking that the `struct repository *r` direction might
+> be the one to go for. And I mean like "move the globals into that struct"
+> as opposed to introducing that stack you talked about. It would even be a
+> refactoring where I would understand the motivation, and agree with it,
+> too.
 
-Perhaps this would be a good summary?
+Oh, definitely. Regardless of whether step 2 is "pass around the
+repository struct" or "treat the global repository struct as a stack",
+step 1 must be putting repository-related globals into the struct. I
+don't think there can be any solution that doesn't start with that. :)
 
-  "git add", "git mv", and "git rm" have been adjusted to avoid
-  updating paths outside of the sparse-checkout definition unless
-  the user specifies a "--sparse" option.
+And I think it can even be done incrementally with very little impact.
+Just s/ignore_case/the_repository->ignore_case/ in the use-sites is an
+improvement over the status quo. Even though it doesn't _fix_ anything,
+now we can easily see where the dependencies on repo-variables are. And
+of course follow-on steps to make sure we are passing around and
+accessing the right repository struct are then welcome.
 
-Thanks,
--Stolee
+-Peff
