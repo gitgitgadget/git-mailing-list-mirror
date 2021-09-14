@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83F23C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CD43C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:35:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F31660E9B
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:34:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BE89610CE
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233441AbhINTfi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 15:35:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57128 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233461AbhINTfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 15:35:30 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 808D2DE460;
-        Tue, 14 Sep 2021 15:34:12 -0400 (EDT)
+        id S232903AbhINTgk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 15:36:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51218 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232391AbhINTgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 15:36:39 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F974148941;
+        Tue, 14 Sep 2021 15:35:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DgPDJ6Y9DjtNnMMg3VdVkO7HpyQXuRAqovby81
-        uH30w=; b=Eb6A6CmYVDGiYxNKOlkzsLI/dlbi4QFQa48WzRW5szYAlAO008c3ta
-        MIxeRdKIR4yWLhZVFdk8dB2O8Y/G0thckOgW0GBa5SnFUGv01BdkfL9dUTF/IRib
-        2JarI0lX9LNls1WL8bARZ1zD3kN5w5oec3Cs+KOKv+RO17Poo1+NE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78ECBDE45F;
-        Tue, 14 Sep 2021 15:34:12 -0400 (EDT)
+        :content-type; s=sasl; bh=+B1KGADZAXBaYeHD23TcXlotGwgwdOIbISQiQA
+        vuhmA=; b=Qixtfw6H+k/OAZ0ZA6YNBJd34B+kTZIaUqMNPslUHy2ii2L9VY+z9V
+        2Tgv4DDn9AlG9cweHIIT1HGRvqbsyBEOuV2bNkkCgqXx8hZWfAC+WBkcH39y7oh7
+        miMM8ZIsfRD/1QXUT3amKltAmkL7TBTBqptDKF8OGl4ADdNxd5L5c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 675C1148940;
+        Tue, 14 Sep 2021 15:35:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 04C4EDE45D;
-        Tue, 14 Sep 2021 15:34:11 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B14E714893F;
+        Tue, 14 Sep 2021 15:35:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
@@ -49,155 +49,75 @@ Cc:     git@vger.kernel.org, Neeraj-Personal <nksingh85@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v3 2/6] core.fsyncobjectfiles: batched disk flushes
+Subject: Re: [PATCH v3 4/6] update-index: use the bulk-checkin infrastructure
 References: <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com>
         <pull.1076.v3.git.git.1631590725.gitgitgadget@gmail.com>
-        <f8b5b709e9edc363b2de7d4afa443deec0120ca0.1631590725.git.gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 12:34:11 -0700
-In-Reply-To: <f8b5b709e9edc363b2de7d4afa443deec0120ca0.1631590725.git.gitgitgadget@gmail.com>
-        (Neeraj Singh via GitGitGadget's message of "Tue, 14 Sep 2021 03:38:41
+        <6b5760389863d86fc15c69cfb31bafce5ad636e1.1631590725.git.gitgitgadget@gmail.com>
+Date:   Tue, 14 Sep 2021 12:35:17 -0700
+In-Reply-To: <6b5760389863d86fc15c69cfb31bafce5ad636e1.1631590725.git.gitgitgadget@gmail.com>
+        (Neeraj Singh via GitGitGadget's message of "Tue, 14 Sep 2021 03:38:43
         +0000")
-Message-ID: <xmqqfsu70x58.fsf@gitster.g>
+Message-ID: <xmqqbl4v0x3e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BCE8A7CC-1592-11EC-9DD5-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E4AA8D0C-1592-11EC-A62C-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> diff --git a/config.c b/config.c
-> index cb4a8058bff..9fe3602e1c4 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1509,7 +1509,13 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+> From: Neeraj Singh <neerajsi@microsoft.com>
+>
+> The update-index functionality is used internally by 'git stash push' to
+> setup the internal stashed commit.
+
+Nice.
+
+> This change enables bulk-checkin for update-index infrastructure to
+> speed up adding new objects to the object database by leveraging the
+> pack functionality and the new bulk-fsync functionality. This mode
+> is enabled when passing paths to update-index via the --stdin flag,
+> as is done by 'git stash'.
+>
+> There is some risk with this change, since under batch fsync, the object
+> files will not be available until the update-index is entirely complete.
+> This usage is unlikely, since any tool invoking update-index and
+> expecting to see objects would have to snoop the output of --verbose to
+> find out when update-index has actually processed a given path.
+> Additionally the index is locked for the duration of the update.
+>
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  builtin/update-index.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 187203e8bb5..b0689f2cdf6 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -5,6 +5,7 @@
+>   */
+>  #define USE_THE_INDEX_COMPATIBILITY_MACROS
+>  #include "cache.h"
+> +#include "bulk-checkin.h"
+>  #include "config.h"
+>  #include "lockfile.h"
+>  #include "quote.h"
+> @@ -1150,6 +1151,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  		struct strbuf unquoted = STRBUF_INIT;
+>  
+>  		setup_work_tree();
+> +		plug_bulk_checkin();
+>  		while (getline_fn(&buf, stdin) != EOF) {
+>  			char *p;
+>  			if (!nul_term_line && buf.buf[0] == '"') {
+> @@ -1164,6 +1166,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  				chmod_path(set_executable_bit, p);
+>  			free(p);
+>  		}
+> +		unplug_bulk_checkin(&lock_file);
+>  		strbuf_release(&unquoted);
+>  		strbuf_release(&buf);
 >  	}
->  
->  	if (!strcmp(var, "core.fsyncobjectfiles")) {
-> -		fsync_object_files = git_config_bool(var, value);
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		if (!strcasecmp(value, "batch"))
-> +			fsync_object_files = FSYNC_OBJECT_FILES_BATCH;
-> +		else
-> +			fsync_object_files = git_config_bool(var, value)
-> +				? FSYNC_OBJECT_FILES_ON : FSYNC_OBJECT_FILES_OFF;
->  		return 0;
-
-The original code used to allow the short-and-sweet valueless true
-
-	[core]
-		fsyncobjectfiles
-
-but it no longer does by calling it a nonbool error.  This breaks
-existing users' repositories that have been happily working, doesn't
-it?
-
-Perhaps
-
-	if (value && !strcmp(value, "batch"))
-		fsync_object_files = FSYNC_OBJECT_FILES_BATCH;
-	else if (git_config_bool(var, value))
-		fsync_object_files = FSYNC_OBJECT_FILES_ON;
-	else
-		fsync_object_files = FSYNC_OBJECT_FILES_OFF;
-
-> -/* Finalize a file on disk, and close it. */
-> -static void close_loose_object(int fd)
-> -{
-> -	if (fsync_object_files)
-> -		fsync_or_die(fd, "loose object file");
-> -	if (close(fd) != 0)
-> -		die_errno(_("error when closing loose object file"));
-> -}
-> -
->  /* Size of directory component, including the ending '/' */
->  static inline int directory_size(const char *filename)
->  {
-> @@ -1973,17 +1964,8 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
->  		die(_("confused by unstable object source data for %s"),
->  		    oid_to_hex(oid));
->  
-> -	close_loose_object(fd);
-> -
-> -	if (mtime) {
-> -		struct utimbuf utb;
-> -		utb.actime = mtime;
-> -		utb.modtime = mtime;
-> -		if (utime(tmp_file.buf, &utb) < 0)
-> -			warning_errno(_("failed utime() on %s"), tmp_file.buf);
-> -	}
-> -
-> -	return finalize_object_file(tmp_file.buf, filename.buf);
-> +	return fsync_and_close_loose_object_bulk_checkin(fd, tmp_file.buf,
-> +							 filename.buf, mtime);
->  }
-
-This block of code looked familiar and I was about to complain "why
-add it in one step and remove it in another?"
-
-But it is a different instance from the one that was added in one of
-the previous patches ;-).  
-
-> +int git_fsync(int fd, enum fsync_action action)
-> +{
-> +	if (action == FSYNC_WRITEOUT_ONLY) {
-> +#ifdef __APPLE__
-> +		/*
-> +		 * on Mac OS X, fsync just causes filesystem cache writeback but does not
-> +		 * flush hardware caches.
-> +		 */
-> +		return fsync(fd);
-> +#endif
-> +
-> +#ifdef HAVE_SYNC_FILE_RANGE
-> +		/*
-> +		 * On linux 2.6.17 and above, sync_file_range is the way to issue
-> +		 * a writeback without a hardware flush. An offset of 0 and size of 0
-> +		 * indicates writeout of the entire file and the wait flags ensure that all
-> +		 * dirty data is written to the disk (potentially in a disk-side cache)
-> +		 * before we continue.
-> +		 */
-> +
-> +		return sync_file_range(fd, 0, 0, SYNC_FILE_RANGE_WAIT_BEFORE |
-> +						 SYNC_FILE_RANGE_WRITE |
-> +						 SYNC_FILE_RANGE_WAIT_AFTER);
-> +#endif
-> +
-> +		errno = ENOSYS;
-> +		return -1;
-> +	}
-
-This allows the caller that can take advantage of writeout-only mode
-to naturally fall back on the full sync per each file if we cannot do
-a writeout-only sync.  OK.
-
-> +#ifdef __APPLE__
-> +	return fcntl(fd, F_FULLFSYNC);
-> +#else
-> +	return fsync(fd);
-> +#endif
-> +}
-
-If we are introducing "enum fsync_action", we should have some way
-to make it clear that we are covering all the possible values of
-"action".
-
-Switching on action, i.e.
-
-	switch (action) {
-	case FSYNC_WRITEOUT_ONLY:
-		...
-		break;
-	case FSYNC_HARDWARE_FLUSH:
-		...
-		break;
-	default:
-		BUG("unexpected git_fsync(%d) call", action);
-	}
-
-would be one way to do so.
-
-Thanks.
