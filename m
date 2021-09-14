@@ -2,115 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34247C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 11:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F3D5C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 11:47:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 154A960FBF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 11:33:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E57FF60F21
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 11:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbhINLe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 07:34:29 -0400
-Received: from mout.gmx.net ([212.227.15.15]:34319 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232079AbhINLeU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 07:34:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631619161;
-        bh=oAzeG6vdxzpoVmw12vn8kCMx6fxE0S0U8VDsBXV5UTU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=i4Jg24kZkDqjf3EZlP829jF+OHoTPtR/a63wGiYZTjv9b0z3o3N2Fy0f5W41qQvhd
-         JEvmkGPKTlfv3VJmuYp8Ktszew9c+o6m6yFtaDn0OpgR+LJlBEgfGWHZGVmEXSoadr
-         7lurCNdhyfT9xlV6khSenzmY1tiVtMdaXUoV7HjE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.31.53.103] ([89.1.214.165]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWics-1mO1CK3bSq-00X7BZ; Tue, 14
- Sep 2021 13:32:41 +0200
-Date:   Tue, 14 Sep 2021 13:32:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     git@vger.kernel.org
-cc:     git-contributors-summit@googlegroups.com
-Subject: =?UTF-8?Q?Dates_for_the_Virtual_Summit=2C_was_Re=3A_The_2?=
- =?UTF-8?Q?nd_Virtual_Git_Contributors=E2=80=99_Summit?=
-In-Reply-To: <nycvar.QRO.7.76.6.2109100149410.59@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2109141322060.59@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2109100149410.59@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232280AbhINLsU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 07:48:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232194AbhINLsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 07:48:19 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 507FBC061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 04:47:01 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id v24so13199216eda.3
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 04:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=X8DS1TTrI3z9AUV+5qQ055SEOlLEu+B7+oAtsCsTKEM=;
+        b=eFOdWblux6HVP2REmBgnR4TF6x57NtUb7kbkkjDtKl2ZDLkwQKLDivQob9i+DvelGI
+         qlXczxmFjvARLhXCvaeVsDnTmhKUUI4182IqElcvXPnbToigPV4nQo6V0HPqYhz0P67G
+         SQmE8PU/puDw8arhP5LHpx/hpNuufTHx6qIitF54ay6370w/SiXowp/hYg2LiqK9fQD9
+         eDiFzowAnncWH5znAi9+F0r+qP2BgOxK+Q8Hu3EqsL7E+X7fhlTIRGJv9BOiRobXnSh1
+         ofuAgQbvtv3VYHPhpPJXPYPZcDu2abv164QxoIEexsdbexc0ONxQWxaciry2DhkhdOQv
+         mH0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=X8DS1TTrI3z9AUV+5qQ055SEOlLEu+B7+oAtsCsTKEM=;
+        b=JtoDTaeuMNX2kdlqUftHNkUj/mUOSamnKLynX+KYUj182FrT60FsHXh7qbD6vod8ga
+         j3FiSbHXo6a3TIF4ijqM45dyz53uoMNWVW98FxK1qXOQprMPDfAkWZjKTJzEyIK0fPXj
+         mncirtE8EpDDpBrGas4MRqYV3xf1pOodrQ2Y8oV0V+hnyxJuHAMHoDKQz3Sr9Y8nnPsV
+         ZN/PJhcGIjSBr6S89hGlCNJH7ye/vRZkTLl0hJYWwDECkYSA6VKV2JmCneJJjFNv53Kj
+         xIbQtYmfIoucfFcEEW/mcZeGPGOiMDddZbHpER5GBpfvtVsxXlGzDSse2rYw+D2Hr2lA
+         VnSA==
+X-Gm-Message-State: AOAM532Yz53fGOJ8hIX+g1GCIv4vO9b6dUxOMxkTnD9FdbJSJQLlgJkk
+        SZ+RTm04DiNVmS9Dwx4ltTU=
+X-Google-Smtp-Source: ABdhPJydgpODp1aPsZF9IgCy6ctLVRdUSMFv6Bnq6al/CRHdXPud+1qSMc26fTDNjyUBODh5rHhL0g==
+X-Received: by 2002:a05:6402:54:: with SMTP id f20mr19456616edu.382.1631620019830;
+        Tue, 14 Sep 2021 04:46:59 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id w11sm5362726edl.12.2021.09.14.04.46.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Sep 2021 04:46:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v3 00/15] [RFC] Upstreaming the Scalar command
+Date:   Tue, 14 Sep 2021 12:59:56 +0200
+References: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
+ <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
+ <87r1dydp4m.fsf@evledraar.gmail.com> <87ilz44kdk.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2109131914080.55@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <nycvar.QRO.7.76.6.2109131914080.55@tvgsbejvaqbjf.bet>
+Message-ID: <87mtofnzv1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1207272072-1631619161=:59"
-X-Provags-ID: V03:K1:HEL5aRXocT6xMYy4iJpq9Q3W9n/u/MRAXLtwhIEUvAJpcIxF5fa
- fkyfUggfC0k3Uf02bRALVbRJcjbt0MukWFjcafk1X70EN83SCBMFRA3UO6fIUOUbF1GSNBD
- b5uOeFwO+43d5o5LdL/2s+KuETz3LBRDTNKa3RTTr+gk6PLJj/oieF8d/mykC7sSsCgcVmR
- sbm9rj1i5pqVcg8rqa/yA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P/QpYUsGuVk=:nGR8qy5hOSuzbQw1BMRpQA
- jGaXfP6c/f3OIBh/8Mu7deN4OTRb7WOU3+146HVfIyeK+AUa8lhlmBkrdC6TjGpOta1ORIYZj
- 1k7vtq7kT6sTBaxsp0VN520Wd+GbDF0pQTGX7YLARe0FefbfxMdsrdblh//t2h2vNXUpS5khA
- dA5avjhg9oTonZCEGaEQQ7M7Yw6Y1omfSjEX8+rc4feSxhhs/Bw80N6e3p7H08fvUJwJmj2V/
- 6QgUI3bE5IY+YcpJH0m/2/UpyZ76DSjMV/3Z4JiqMA08LDwu3sBmhLFp9vWdJMu+xJwatre/0
- NTLnwC5lwaQagNFwiz2OOivmpIDECTO+V4pUqVbXNZ8MUk5zHTzO303LJC1EgJkbkrac2UWs/
- /bU30RM7P4UI8DH1M1gFt+M93xBfAhxM/W+HV74m4N8f7SYY8AMeiPY08hMcZfB8v9X77xXP7
- LQVrNzDc0tNguls3fEqDG1QMYm3OoByhzQL/IlR5iTvv3tHB9d2VCg4z4wzVL1msQr+88flqF
- UtxeS/+ruj2xTSKYpVUYg3+mqxgdowafAP+hIWH9XTtgPY34ayj+qUSkWCkO0bmKAR1RvwRFW
- FM2UjGqmZ9f7nchSFcAiXfxrE+QMK0xU+jhKj84dXzAMRmWzjj7frOdD1xCEipogXAaMPSXic
- Eq+k/mWa2Hnnz27AYJO1VRPu7cCtVZ6A4Jc8B5TkscUazD28gPvSFlAmVHRvoQoBwc2PgmL8E
- 1pIAiIfhsDkegletyultA1fqa/bfF75vz15druwI0PI4IUbLrC3s4Y+2YJcX5LYB7CvwJMuL7
- /4hYpb53ggqQa9rzZ73cmGJsZZi3c+4U9rw4Hwx5k29Tf2Ghy8mT8IBS7YLiw8G2EsqDaYM1H
- p90GZdJ53C1RGQpggCYfI7A0ZYXIO77KJqltwPgw6Se5rtsDvhWuRF49+RDO2sM4QKzm85Meg
- MLpcUQ7uFPq9OO8tYMDxcQoZmIRzHNd6KsRrtJGxN/YHiO6PspvtfzkcOKlWAQNOh48WyRZXV
- icieb/ZoZ3pO35SxSDsW1qbdJnqISyOPCClyZ5WiMCdQErZ/9X0gominFVh0CTFkpOb1H96el
- Jlp2PxmqYSVyUI=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1207272072-1631619161=:59
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Sep 13 2021, Johannes Schindelin wrote:
 
-Team,
-
-On Fri, 10 Sep 2021, Johannes Schindelin wrote:
-
-> We haven=E2=80=99t had a technology-focused summit since March 2020, and=
- a lot
-> is going on that would be good to talk about. Let=E2=80=99s have another=
- Virtual
-> Summit.
+> Hi =C3=86var,
 >
-> Just like the Virtual Summit =E2=80=9819, we can use Zoom (thanks GitHub=
-, for
-> letting us use your company license!), spread it out over two days,
-> during the most timezone friendly range of  15:00-19:00 UTC/17:00-21:00
-> CEST/11am-3pm EST/8am-noon PST.
+> On Mon, 13 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>>
+>> On Thu, Sep 09 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> > On Wed, Sep 08 2021, Johannes Schindelin via GitGitGadget wrote:
+>> >
+>> >> Changes since v2:
+>> >>
+>> >>  * Adjusted the description of the list command in the manual page , =
+as
+>> >>    suggested by Bagas.
+>> >>  * Addressed two style nits in cmd_run().
+>> >>  * The documentation of git reconfigure -a was improved.
+>> >>
+>> >> Changes since v1:
+>> >>
+>> >>  * A couple typos were fixed
+>> >>  * The code parsing the output of ls-remote was made more readable
+>> >>  * The indentation used in scalar.txt now consistently uses tabs
+>> >>  * We no longer hard-code core.bare =3D false when registering with S=
+calar
+>> >
+>> > In the summary I had on v1->v2 points 1-3 are for v2->v3, respectively,
+>> > outstanding, addressed, outstanding:
+>> >
+>> >     https://lore.kernel.org/git/877dfupl7o.fsf@evledraar.gmail.com/
+>> >
+>> > In addition the discussion ending here:
+>> > https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109082112270.55@tvgsbej=
+vaqbjf.bet/
+>> >
+>> > For that point: I think it's fair enough not to properly handle the
+>> > cleanup case in "scalar clone", but perhaps add a note in the commit
+>> > message that unlike "git clone" this is known not to clean after itself
+>> > properly on ctrl+c?
+>>
+>> Seeing [1] about the planned re-roll I have the above a shot a few days
+>> ago, see the original discussion at [2] (indirectly linked above).
+>
+> There is a good reason why I did not engage in that tangent about
+> deviating from the established `contrib/*/Makefile` paradigm: I find it
+> particularly unrelated to what this here patch series is trying to
+> accomplish, and I cannot bring myself to be interested in the proposed
+> build system changes, either, because I do not see any benefit in the
+> changes, only downsides.
+>
+> I find the distraction unnecessary.
 
-I would like to thank the people who registered already (already 20 people
-so far, Bcc:ed!).
+Perhaps I'm reading too much between the lines here, so forgive any
+undue knee-jerk reaction.
 
-Since I will be taking time off for the remainder of September, and since
-I don't want to leave y'all gentle people hanging, I tallied up the
-available dates, and we got a winner: October 19th/20th 2021, 15:00-19:00
-UTC it is!
+But aside from any technical disagreement we may have I find this way of
+handling reviews quite disrespectful of other people's time.
 
-As announced earlier, it will be run Unconference style via Zoom, with
-October 20th being the "spill-over day".
+Sure, maybe I'm wrong, and maybe you either don't see any value in the
+proposed changes or maybe they're just bad suggestions.
 
-All of you who want to contribute to the Virtual Git Contributors' Summit
-but haven't registered yet, please do not hesitate to reach out to
-git-contributors-summit@googlegroups.com to get a link to the Google
-Spreadsheet (on which you can also propose topics).
+I still took the time to review and comment on a series you're
+submitting. I think the least you can do is to include some comment in a
+re-roll like:
 
-This is going to be fun!
+    Skimmed =C3=86var's proposal about an alternate build system
+    implementation, sorry, I just don't think it's worth it, going to
+    not change anything there.
 
-Ciao,
-Dscho
+Which would be fair enough, and would leave the ball in my court in
+terms of either dropping it, submitting any patch on top etc.
 
---8323328-1207272072-1631619161=:59--
+As opposed to just ignoring that whole thread, leaving both me wondering
+if it's even been seen (and sending a few reminders like the linked
+upthread), as well as others trying to track the state of the series.
+
+> Besides, the way I designed it, the code in `contrib/scalar/` intrudes as
+> little as possible on the core Git build system. The impact on the
+> top-level `Makefile` is quite minimal, which is just the way I firmly
+> believe it should be.
+>
+> In short: I do not want those intrusive changes to the top-level
+> `Makefile`, not in this patch series, and not as a follow-up, either.
+
+Communication grievances aside:
+
+ * Saying that we have an "established `contrib/*/Makefile` paradigm"
+   doesn't really follow in this case. Most of that isn't C code, and
+   the bits that are C code are not using libgit.a.
+
+   And as I've argued elsewhere I think that whole pattern was a mistake
+   in the first place, it makes inter-Makefile dependencies a pain to
+   manage, has resulted in bitrot of things like git-subtree.sh and
+   mw-to-git, all because we conflate whether we want to build/test
+   things with what we'd like in a default installation.
+
+ * Because of that any number of targets / workflows in the Makefile
+   aren't going to work by default, e.g. try checking it out and doing
+   "make TAGS".
+
+   That specific one happens to because we exclude contrib explicitly,
+   that could be fixed, but there's going to be any number of things
+   like that, but current and future ones.
+
+ * One target that seems missing (maybe I've somehow missed it) is any
+   support for installing the build command, its docs etc.
+
+ * I hacked a bit more on this today and came up with a not-quite-ready
+   change that both for the Makefile and Documentation/Makefile will
+   build scalar.c like any other top-level command, and we'll always get
+   a bin-wrapper/scalar, we'll only do something different at "install"
+   time.
+
+   This means that just like the "all:: $(FUZZ_OBJS)" we'll always build
+   a scalar.o, so that'll prevent others from e.g. breaking a library
+   function you rely on (which'll only be annoying caught in CI, or
+   integration or whatever).
+
+ * I think it's fair to say that whatever one thinks of my argument,
+   your [1] leaves the reader hanging about *why* you went for this
+   "make -C contrib/scalar/Makefile".
+
+   As summarized there you tried to have it completely separate, but
+   failed.
+
+   So now there's a bit of integration in the top-level Makefile
+   already. But why try in the first place? Just slavish conformance to
+   existing "contrib/" convention?
+
+   The dependency back on assets in subdirs there is deep, so surely
+   it's not to build this independently somehow.
+
+> We have much bigger fries to fry: namely, how to migrate the improvements
+> for large-scale operations from Scalar to core Git, so that all Git users
+> can benefit. Granted, it will take a lot effort, and it would be easier to
+> move around `Makefile` rules instead. But ultimately, the benefit of
+> allowing users to handle larger repositories with ease will be worth that
+> effort.
+
+It's your implementation that requires mostly moving around / copying
+Makefile rules, if you piggy-back on the existing Makefile rules you'll
+get most of the behavior you've duplicated for free without any moving
+or copying.
+
+But in any case, re the last bullet point above and your "[...]and not
+as a follow-up, either" comments it's not clear whether you're saying
+that you don't have time to work on this, or that you wouldn't want it
+at all in any shape or form, even if someone else did it.
+
+Which is not to say that I'm promising to do so even if that's the case,
+I do think the onus is on the person proposing the change, and to take
+productive feedback about things that are introducing unnecessary
+complexity, and won't saddle others with undue technical debt going
+forward.
+
+1. https://lore.kernel.org/git/b8c7d3f84508ae0fb300f47c726764f4cbf46be9.163=
+1129086.git.gitgitgadget@gmail.com/
