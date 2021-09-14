@@ -2,153 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D31AC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1422C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:33:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 848A6610A6
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 966706112D
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:33:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233135AbhINN2m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 09:28:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
+        id S233227AbhINNev (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 09:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233079AbhINN2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 09:28:39 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BFBBC061762
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:22 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id d21so12525759wra.12
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:22 -0700 (PDT)
+        with ESMTP id S233225AbhINNet (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 09:34:49 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BCFDC061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:33:32 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso18427485otu.0
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:33:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=Kc1IHHnCfBQX29JaNyynpZGGLYYFTmFsm2etSy+Dnpk=;
-        b=WUcCk4xIqazEbc0IylSR5vGt7ALixzxKLJSnba8pKxrnSVXA805VBmC6olaxSp+GRF
-         L2GJiZkBQY4pS6WtkgobObdaspAst8SmiUIVJzjBqJZ3o6y2aks0ayINR5lRA7T6z+hq
-         udOjbwBOHFPyMo4B3+wXiEztHeNCHqc3FnkLnDRaLWryIecgcU5BZLlyI4h+8fMAVZ2l
-         g71debE96JiOya9B8FOFLac3U8pSp7sDXdu1gTHkV9XRCY7OmXLIdTCZJY0AGfc+0tSG
-         12QdI1YsHDniTs4Olk7eUDhfUDlnm88wtTbhTL+rhYdhtSEHV3UMOcKSr4J1ZqRPyPYr
-         tCww==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=aboB+JOIG91AurB/qO9XdwuGqlnTRMwCGUw9KtsLpVA=;
+        b=QaY0LYlS3hMHfE1LPHYzSiwsuQ107vDUM/+F/IHskxOar/w5HVmdE+pZKvfhSVDJQc
+         XHeJ3j5E8mI5icq0JjtZHnxnQxkgBWJzuWK1d2Iu1zn42VX0q4K7MAgu7P2fhumiF9uC
+         g5pfyhlZbM4j0Ex2SRq4K7nyKP/YAr5r1zvBV9h2pMy2+Arj93Y7QhaUYW5fyeXMpbvJ
+         Jl01UJQONMhVImtc0JAFwcsIF5KwukUjdQ5OoSN7Nj6Kl1XkzJd3WhrCp3X6KN2CFw3Q
+         DVHRZvvXQtadW2vfRBpVcH13XRDrcCn82EBYKy+vxXmi8NezMl4nA4FB8i55d0UiCs6S
+         lINg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Kc1IHHnCfBQX29JaNyynpZGGLYYFTmFsm2etSy+Dnpk=;
-        b=2VfckM4ZDDwz9P6YsSnb3tnwKpfYZbPIeEJICnNO2pmMUrwC1BLwn0OcDuY4MSPrhG
-         orkSs8SS+lFAHoH92NzlfMT7wCJMLanMl2QUzlTKVj4r9I2sp+EMbRcGLMzp1bNX8p8C
-         COQZ6Q4lCNUaRge0D6kRbTL0W/I7YYRZidaskHixVTx9v8Zoca/yLkqIOA/kHqcP1281
-         s4TBLuB3QBfAzvwTh7maNo3j9s6/YbGJ+V3Pa2QCZCy4GwrBFCUnXVOXj7kPiQZsi+Iu
-         C1NWCNYPPfmsgXRwSY3D8PVq3KYzCz+YA7zgV7jlLoB0iClTdUlPSP4M0b7wXTZMIAsl
-         2BMg==
-X-Gm-Message-State: AOAM532RBFERRyGiVr64QK9sUtNh9Yp6JbBLIl0ROOIkO0gd5FQe18HS
-        eXHoCk4lziEsSF6M8UtV0SisjROd3I0=
-X-Google-Smtp-Source: ABdhPJyaAYpjKgta9hfAxu6nFVVqAPhgNYgkoLfNkiZsthVRFDD32h9lUKXqYzY7HJNUI1/ALOdi5g==
-X-Received: by 2002:adf:f6c7:: with SMTP id y7mr7219387wrp.44.1631626040697;
-        Tue, 14 Sep 2021 06:27:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y1sm1272134wmq.43.2021.09.14.06.27.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 06:27:20 -0700 (PDT)
-Message-Id: <bc9a4534f5bc6756ab2df869b55e390183c4ff30.1631626038.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
-References: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
-        <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 13:27:18 +0000
-Subject: [PATCH v2 2/2] documentation: add documentation for 'git version'
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=aboB+JOIG91AurB/qO9XdwuGqlnTRMwCGUw9KtsLpVA=;
+        b=1CUbM6YCL2UE6PG+OdKJTrbgbtRUgLhu03kwkFEEfLNYrn0t1LQo5A4ehPF46nb+iq
+         liJFChinOCt2BvFgU1z6VZz5CdG4pDDh5mTj+OAcz6nfLRiMKjfUCtxGN7kf4hZ2PqLr
+         MHuyRnZEAPrlsdw+DebiNXwD11bYiOPYRjPbqfRLvRtHojOPPV2IYYwcZOkKLudkwEcd
+         ScMHsMkid209jxrjIld8hDKGXu0U1WbqUBFqYWPG0SiChM6FN5bCBGi2YlRR2mO3JcPu
+         0Qwvc57RW67k0MEzS6BlGkHPWAI3lKP+84C74c/moTzl8sTUF6EW6JY6QTgYOD++R+Qe
+         HHkQ==
+X-Gm-Message-State: AOAM532WEN/AK27DqWGTSSGZXBMMrfxljcbIOoBfRNRj4EehDdyDcMOc
+        fyA8L6Q6Wi1Iaz2/7s6LlUOhxwotAINGxQ==
+X-Google-Smtp-Source: ABdhPJyvbMVDRYRbGEgmQIb20pijT07UF8kog+zMEWr8kOaBbXnIXRtWn4s1pQAge4pWwhZbaq5zQg==
+X-Received: by 2002:a9d:458a:: with SMTP id x10mr14843450ote.267.1631626411028;
+        Tue, 14 Sep 2021 06:33:31 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:69b3:ffa7:def5:d604? ([2600:1700:e72:80a0:69b3:ffa7:def5:d604])
+        by smtp.gmail.com with ESMTPSA id t9sm2447764oie.20.2021.09.14.06.33.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Sep 2021 06:33:30 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Sep 2021, #04; Mon, 13)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqtuinc3tx.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <88bb51c3-b5ab-77df-f9fb-b9252c2b0fa6@gmail.com>
+Date:   Tue, 14 Sep 2021 09:33:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Matthias =?UTF-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthias =?UTF-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
+In-Reply-To: <xmqqtuinc3tx.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
+On 9/13/2021 10:02 PM, Junio C Hamano wrote:
+...
+> * ds/add-rm-with-sparse-index (2021-09-12) 14 commits
+>  - advice: update message to suggest '--sparse'
+>  - mv: refuse to move sparse paths
+>  - rm: skip sparse paths with missing SKIP_WORKTREE
+>  - rm: add --sparse option
+>  - add: update --renormalize to skip sparse paths
+>  - add: update --chmod to skip sparse paths
+>  - add: implement the --sparse option
+>  - add: skip tracked paths outside sparse-checkout cone
+>  - add: fail when adding an untracked sparse file
+>  - dir: fix pattern matching on dirs
+>  - dir: select directories correctly
+>  - dir: extract directory-matching logic
+>  - t1092: behavior for adding sparse files
+>  - t3705: test that 'sparse_entry' is unstaged
+>  (this branch uses ds/mergies-with-sparse-index and ds/sparse-index-ignored-files.)
+> 
+>  "git add", "git mv", and "git rm" have been adjusted to work better
+>  with the sparse index.
 
-While 'git version' is probably the least complex git command,
-it is a non-experimental user-facing builtin command. As such
-it should have a help page.
+These changes apply more generally to the entire sparse-checkout
+feature. I can understand thinking it is only related to the
+sparse index because the tests follow the sparse index patterns.
+Those tests make sure that both full and sparse indexes are tested
+and have the same behavior.
 
-Both `git help` and `git version` can be called as options
-(`--help`/`--version`) that internally get converted to the
-corresponding command. Add a small paragraph to
-Documentation/git.txt describing how these two options
-interact with each other and link to this help page for the
-sub-options that `--version` can take. Well, currently there
-is only one sub-option, but that could potentially increase
-in future versions of Git.
+Perhaps this would be a good summary?
 
-Signed-off-by: Matthias Aßhauer <mha1993@live.de>
----
- Documentation/git-version.txt | 28 ++++++++++++++++++++++++++++
- Documentation/git.txt         |  4 ++++
- 2 files changed, 32 insertions(+)
- create mode 100644 Documentation/git-version.txt
+  "git add", "git mv", and "git rm" have been adjusted to avoid
+  updating paths outside of the sparse-checkout definition unless
+  the user specifies a "--sparse" option.
 
-diff --git a/Documentation/git-version.txt b/Documentation/git-version.txt
-new file mode 100644
-index 00000000000..80fa7754a6d
---- /dev/null
-+++ b/Documentation/git-version.txt
-@@ -0,0 +1,28 @@
-+git-version(1)
-+==============
-+
-+NAME
-+----
-+git-version - Display version information about Git
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git version' [--build-options]
-+
-+DESCRIPTION
-+-----------
-+With no options given, the version of 'git' is printed on the standard output.
-+
-+Note that `git --version` is identical to `git version` because the
-+former is internally converted into the latter.
-+
-+OPTIONS
-+-------
-+--build-options::
-+	Include additional information about how git was built for diagnostic
-+	purposes.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 6dd241ef838..95fe6f31b4f 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -41,6 +41,10 @@ OPTIONS
- -------
- --version::
- 	Prints the Git suite version that the 'git' program came from.
-++
-+This option is internaly converted to `git version ...` and accepts
-+the same options as the linkgit:git-version[1] command. If `--help` is
-+also given, it takes precedence over `--version`.
- 
- --help::
- 	Prints the synopsis and a list of the most commonly used
--- 
-gitgitgadget
+Thanks,
+-Stolee
