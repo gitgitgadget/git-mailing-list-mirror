@@ -2,106 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43195C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 18:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC493C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 18:59:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A2D061155
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 18:55:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B461161130
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 18:59:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231878AbhINS4X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 14:56:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47308 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231161AbhINS4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 14:56:23 -0400
-Received: (qmail 25089 invoked by uid 109); 14 Sep 2021 18:55:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 18:55:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26770 invoked by uid 111); 14 Sep 2021 18:55:04 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 14:55:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 14:55:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 8/8] builtin/repack.c: pass `--refs-snapshot` when
- writing bitmaps
-Message-ID: <YUDwB0W6IpWWcU81@coredump.intra.peff.net>
-References: <cover.1631331139.git.me@ttaylorr.com>
- <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
- <871r5v9z3i.fsf@evledraar.gmail.com>
- <87sfyb8ihg.fsf@evledraar.gmail.com>
- <YTzejKyYvqZu4v16@nand.local>
+        id S232375AbhINTAk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 15:00:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232272AbhINTAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 15:00:40 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7A7C061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 11:59:22 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id n18so8880763plp.7
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 11:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RVqaniXCEOE0nRJCXuGjNhw6e2yCXJ09xMMjvMW8/YQ=;
+        b=PqavO5ai/bp32LwfLGyp541bH+Y2ElVxDbgm/oMaEY5Xt3IWakbdNUurrEpT8KlodV
+         dS72kWxRRqt3R69Oo04xRTsVE996ygHOFeKpPO9s/r3uUHis/d/Tu3YWR1arhWYVU7S/
+         P/cUl/95kLGMTqw9+qkZ3J1EuuigHYKlcuFvMm9UCtGDqieGaUOAadhEckTD+9om/1XT
+         IJ7udcwFdKJ193JfmTlMgwKyDRwcxLg8iTIA5iTpl9Q1BkHuEXW1sKtxwnJucScwEZ0j
+         1Pl05YOA7vReOl3fxKcFTguzH8Bj+3p3Kyjl+EFIeo97NZCXCwsHg5uCWoaRNXJpNXvW
+         mmNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RVqaniXCEOE0nRJCXuGjNhw6e2yCXJ09xMMjvMW8/YQ=;
+        b=PAFtt7Rqw9Uf7eB83luMAIgv61aHFNohj5rg1QTUbzRh9RpmcKa1p0hXNvz32LBdGO
+         NBlDC4WqGYW9CIrjwntLkLbBxRCc2dQ1pNY2KnlSaBRR5R0QMU4DotEliTQgseMzzhQb
+         iVpuTqaUWwW74cJvv55cjcEUvnQYwin6BZKtKFDrLGKjpHn/Nx6VVlLbbz/AeYtHg7PT
+         b8IGAjAjU+hzIAwu5eCuC4220y5Jb7rZN7tY78RNMUVr6b33/zEkkbN0Q9C7hzUD+43k
+         oYP6n285StCaAvfqtBmCdcn446Oyng8pFgUYrrejX9Y5J+/xZVl7rPYCSTJEW+gM54se
+         V7dw==
+X-Gm-Message-State: AOAM531jH0TFafSLYjBS7KG8qdt6xcgf63WQXprOPvO4QbqbFldF2wry
+        gMFuiOKc/HaKJTsB3PLUXAmm6Vti7z9EiWitQkzn14eH
+X-Google-Smtp-Source: ABdhPJyxk3TUNzC0pnD6nXe6RGZBH7P7wA/yszi+0DFrpA57AXnBkXOyjeF7CNZ5fIhjBjR+v3qFCKXywwVi9SA+aOc=
+X-Received: by 2002:a17:902:a710:b029:12b:9b9f:c461 with SMTP id
+ w16-20020a170902a710b029012b9b9fc461mr16471615plq.59.1631645962233; Tue, 14
+ Sep 2021 11:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YTzejKyYvqZu4v16@nand.local>
+References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net> <YUDAUi627d6TVmUy@coredump.intra.peff.net>
+In-Reply-To: <YUDAUi627d6TVmUy@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 14 Sep 2021 20:59:09 +0200
+Message-ID: <CAN0heSoRLHzuv0S26YLnKWpiisshD_fiRmfL5ZMYxAkht-uXWg@mail.gmail.com>
+Subject: Re: [PATCH 4/9] serve: provide "receive" function for object-format capability
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 11, 2021 at 12:51:24PM -0400, Taylor Blau wrote:
+On Tue, 14 Sept 2021 at 17:33, Jeff King <peff@peff.net> wrote:
+> repository algorithm). Since the check_algorithm() function would now be
+> done to a single if() statement, I've just inlined it in its only
+> caller.
 
-> > >> +	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-> > >> +		oid_to_hex(oid));
-> > >
-> > > Just an idea: Maybe the file could be lines of "+\tOID\n" instead of
-> > > "+OID\n"? Lends itself more naturally to extension, use with the likes
-> > > of string_list_split() etc.
-> >
-> > Actually, even better a format like:
-> >
-> >     "OID[\t+]\n"
-> >
-> > Or
-> >
-> >     "OID[\tpreferred=1]\n"
-> 
-> Sure, but I admit that I'm a little torn on this suggestion. I don't
-> want to be naive and say that we're never going to change this format
-> and paint ourselves into a corner.
-> 
-> On the other hand, changing it does seem extremely unlikely to me, and
-> this tab-delimited thing feels like overkill compared to how simple the
-> '+' format is.
-> 
-> So, I don't know. It's certainly easy enough to change now before we
-> lock it in, so I guess we should.
+s/done/down/, I believe.
 
-I'm not sure I really see the point of making this infinitely
-extensible. This is mostly an internal interface between two Git
-programs. Sure, it's exposed to the user in the sense that they can use
---refs-snapshot themselves. But if some writer wants to add a "foo"
-flag, do they really want to be able to do it in a way that they're
-_syntactically_ compatible with the older versions of Git, yet have no
-clue if their option was actually recognized and accepted?
+> There should be no change of behavior here, except for two
+> broken-protocol cases:
 
-I.e., if we later add such a flag, then:
+FWIW, I agree with this.
 
-  +OID\tfoo
-  +\tOID\tfoo
-  OID\t+\tfoo
 
-does not seem to make a big difference. We will likely add a new
-command-line option to say "by the way, I am passing you some extra
-information" at which point the format can be whatever we like.
-
-And unless it is really complicated, I'd just as soon use a
-single-character marker again, because it's dead-simple to generate and
-parse (and again, this is an internal interface and not something we
-expect users to have to understand).
-
-Unless we think the "+" is too ugly or confusing, but I don't. The "-"
-prefix for pack-objects read_object_list_from_stdin() is similar and
-works just fine. For that matter, the --stdin-packs feature there works
-similarly. Everything more feels a bit like over-engineering at this
-point.
-
--Peff
+Martin
