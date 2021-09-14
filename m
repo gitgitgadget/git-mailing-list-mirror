@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 995EAC433FE
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A0EC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DDF960F26
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8E9E60F26
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233971AbhINOpf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 10:45:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
+        id S234919AbhINOpo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 10:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233908AbhINOon (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 10:44:43 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908BEC061148
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id x6so20595755wrv.13
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
+        with ESMTP id S234962AbhINOos (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 10:44:48 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF5CC06114B
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id b21-20020a1c8015000000b003049690d882so2286488wmd.5
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6iE+bMIqkngcQSCxet0E12DWukuDqNQkL7dWIME6eT0=;
-        b=J+pVAJccC6mjmz0ZJBE8uws0yF+8cLbxdNf737rRc8VMMkxPp+Cut8jkSmyehQGdqf
-         wdzD9EMMeSvKVABq3GK268kNUNplI5se9HuEsOnpWAcggkGFr7E4MMzVyXsC59XEEXyk
-         T+uq1cdjXy8zNKcIGzZOiDW+Pp4QlGXZqC1+Ngt+EPfCc+m3IJP5M5vMonbAW4J2Cvl1
-         A8DMHvNuotYg8iTgUfKfIYTPq6az1Np+y2XBUqMChKNu9mXJ0kT1tvqVYEWRH2vNMv+w
-         0lvo+bKJdB4/NqOHwAnRFaKmTL7IgvAzcw1IY7R2zOMLEusyiwYanzwCRR6jNrOFkRNA
-         IIJw==
+        bh=7umOn+lbKwQBhvrSkuyvzsamrsCLKijBkTg3WVv+4Q8=;
+        b=pJZYE+CKDL8+se0SThg/8qE24UWZfrCkRAsP4j/5aCAZjsQeV/4Ay2iVvuuX6nWA1A
+         veaGSeOKkZk4uzDJeZPK4hT5+CBTsPVe/YhM+DpuF35HbrLZonwmMQ8VEXjGVIt3lBmF
+         dWMF+CdP//TPsI0ClHQ2dmJDLuNHUlpQzh7pIjaOQlK9MSdQqXPVEmVdb/DZIHp/ip/f
+         Kc+gfYOKDVMoup3mi3uIdcAxe7+46NUtLSXhI8YEwOF9Goxl4t5poPBUdhXeUesSSY+x
+         KW0IfM1+jUHTmoozFLWjOj1rBLrZrXOy8j2VD2+hx7EyHwhS4exTNJVIcnMWmVSqnrPq
+         Jx4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6iE+bMIqkngcQSCxet0E12DWukuDqNQkL7dWIME6eT0=;
-        b=w+Q5my1yE80cz7giiKNhyKFaWZZh2m5a78/Scqx7X8c0eTxLlQAjN9gVpV7On1MyVR
-         YCB7gqlps1TLHVDdg1E3oaLM7Hkky3zWcwkX2uNIXJH/VJbvLOlYr+4f2/iTzOP6H7md
-         UcnnkcqeNWEvLM+BZCL+3lHmEc8s5OzdJb3ItXMOm9j+cBfryVDR8tLQX3gibiHpV65f
-         zCSxTerSLcBfdsdN1yYd3lQ/F5oX1D7YIDOqJgviTbG+hNc9hHAKvtbwdnqweoEAVlSv
-         g0Tx00+tT8ueHrNzmcj1BHdqhDjggHWvo7gIMTmwWoEqoCK7CsBPNK0iSsfoccFjnyEu
-         baNg==
-X-Gm-Message-State: AOAM532N7neK5lFoFMVdz6LQ/c3L0iABsmUP3CXrTCc6B4hSzYfX/ORC
-        7ngP+qW80Zd1pDni1Dsw0YBJf8cPoqI=
-X-Google-Smtp-Source: ABdhPJya0xSp6YUCfdKyJxa2EhIzE09fABFIlC0hQ+Xaq1lmrCoCdcMXlAqzqs3vD9jSzwknhyIEoQ==
-X-Received: by 2002:adf:8070:: with SMTP id 103mr19005878wrk.74.1631630364220;
-        Tue, 14 Sep 2021 07:39:24 -0700 (PDT)
+        bh=7umOn+lbKwQBhvrSkuyvzsamrsCLKijBkTg3WVv+4Q8=;
+        b=Xo2PEwAt2gyqBpbCY01p1HVqwy3WJbpJdryCwBgPmNoye8xvlXqhbQAqObCKblf2Zo
+         pgzSn8B8x9sOlrnJEVOLiDQc/EFdNeBum/EX369b2rwt689151tzXzEug4XYOoMfhzYS
+         FQitd+uWuGHj1Aul2QQVphaXW3rqcH9HDwZJWREaaoeqvyZW2TQOffwuS4qKpIM2y9tt
+         lL76C7Jlm6rMt/hXiBAy2Grb3lbuW/6/ZO1wRtcZkpYwMK3wTZBqppCyKjTQNNLDwRUi
+         2pPOCKq14emPXQdqFMDUn0HCAtMmyA3JXT5agRRerNWGWk4GHhvRqx/kvwiUK7PZGWpa
+         aY2w==
+X-Gm-Message-State: AOAM530WdKJpxSQQPP/9dtN4B3WlRJam83DSZr+hQ8HE63j7erMKw3zb
+        QhqfbTAD2N1IEeGH7I54W9pq4u93hzg=
+X-Google-Smtp-Source: ABdhPJz/hzi5HOQSvgGcEvMvBJEIFUh+p7bjjZV7FlOWsBCBxUtjYHRUVPHMFK0S1E+GXrrwW0dTuQ==
+X-Received: by 2002:a05:600c:2046:: with SMTP id p6mr2684777wmg.88.1631630365580;
+        Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k4sm9958016wrv.24.2021.09.14.07.39.23
+        by smtp.gmail.com with ESMTPSA id h18sm1360158wmq.23.2021.09.14.07.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 07:39:23 -0700 (PDT)
-Message-Id: <0acdaeb739669620d6e8ee59037ecd5ae52cf007.1631630356.git.gitgitgadget@gmail.com>
+        Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
+Message-Id: <ada242c7c8c1f530231f97e76c97fff18e368ff5.1631630356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
         <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 14:39:10 +0000
-Subject: [PATCH v4 09/15] scalar: teach 'clone' to support the --single-branch
- option
+Date:   Tue, 14 Sep 2021 14:39:12 +0000
+Subject: [PATCH v4 11/15] scalar: allow reconfiguring an existing enlistment
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,101 +81,200 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like `git clone`, the `scalar clone` command now also offers to
-restrict the clone to a single branch.
+This comes in handy during Scalar upgrades, or when config settings were
+messed up by mistake.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          |  9 +++++++--
- contrib/scalar/scalar.txt        | 12 +++++++++++-
- contrib/scalar/t/t9099-scalar.sh |  6 +++++-
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ contrib/scalar/scalar.c          | 79 +++++++++++++++++++++-----------
+ contrib/scalar/scalar.txt        |  8 ++++
+ contrib/scalar/t/t9099-scalar.sh |  8 ++++
+ 3 files changed, 67 insertions(+), 28 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index bf18003b297..7dd1f28948f 100644
+index 8a11f390251..1fff7eb7c12 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -333,12 +333,15 @@ static char *remote_default_branch(const char *url)
- static int cmd_clone(int argc, const char **argv)
- {
- 	const char *branch = NULL;
--	int full_clone = 0;
-+	int full_clone = 0, single_branch = 0;
- 	struct option clone_options[] = {
- 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
- 			   N_("branch to checkout after clone")),
- 		OPT_BOOL(0, "full-clone", &full_clone,
- 			 N_("when cloning, create full working directory")),
-+		OPT_BOOL(0, "single-branch", &single_branch,
-+			 N_("only download metadata for the branch that will "
-+			    "be checked out")),
- 		OPT_END(),
- 	};
- 	const char * const clone_usage[] = {
-@@ -409,7 +412,9 @@ static int cmd_clone(int argc, const char **argv)
+@@ -115,18 +115,20 @@ static int run_git(const char *arg, ...)
+ 	return res;
+ }
  
- 	if (set_config("remote.origin.url=%s", url) ||
- 	    set_config("remote.origin.fetch="
--		       "+refs/heads/*:refs/remotes/origin/*") ||
-+		       "+refs/heads/%s:refs/remotes/origin/%s",
-+		       single_branch ? branch : "*",
-+		       single_branch ? branch : "*") ||
- 	    set_config("remote.origin.promisor=true") ||
- 	    set_config("remote.origin.partialCloneFilter=blob:none")) {
- 		res = error(_("could not configure remote in '%s'"), dir);
+-static int set_recommended_config(void)
++static int set_recommended_config(int reconfigure)
+ {
+ 	struct {
+ 		const char *key;
+ 		const char *value;
++		int overwrite_on_reconfigure;
+ 	} config[] = {
+-		{ "am.keepCR", "true" },
+-		{ "core.FSCache", "true" },
+-		{ "core.multiPackIndex", "true" },
+-		{ "core.preloadIndex", "true" },
++		/* Required */
++		{ "am.keepCR", "true", 1 },
++		{ "core.FSCache", "true", 1 },
++		{ "core.multiPackIndex", "true", 1 },
++		{ "core.preloadIndex", "true", 1 },
+ #ifndef WIN32
+-		{ "core.untrackedCache", "true" },
++		{ "core.untrackedCache", "true", 1 },
+ #else
+ 		/*
+ 		 * Unfortunately, Scalar's Functional Tests demonstrated
+@@ -140,28 +142,29 @@ static int set_recommended_config(void)
+ 		 * Therefore, with a sad heart, we disable this very useful
+ 		 * feature on Windows.
+ 		 */
+-		{ "core.untrackedCache", "false" },
++		{ "core.untrackedCache", "false", 1 },
+ #endif
+-		{ "core.logAllRefUpdates", "true" },
+-		{ "credential.https://dev.azure.com.useHttpPath", "true" },
+-		{ "credential.validate", "false" }, /* GCM4W-only */
+-		{ "gc.auto", "0" },
+-		{ "gui.GCWarning", "false" },
+-		{ "index.threads", "true" },
+-		{ "index.version", "4" },
+-		{ "merge.stat", "false" },
+-		{ "merge.renames", "false" },
+-		{ "pack.useBitmaps", "false" },
+-		{ "pack.useSparse", "true" },
+-		{ "receive.autoGC", "false" },
+-		{ "reset.quiet", "true" },
+-		{ "feature.manyFiles", "false" },
+-		{ "feature.experimental", "false" },
+-		{ "fetch.unpackLimit", "1" },
+-		{ "fetch.writeCommitGraph", "false" },
++		{ "core.logAllRefUpdates", "true", 1 },
++		{ "credential.https://dev.azure.com.useHttpPath", "true", 1 },
++		{ "credential.validate", "false", 1 }, /* GCM4W-only */
++		{ "gc.auto", "0", 1 },
++		{ "gui.GCWarning", "false", 1 },
++		{ "index.threads", "true", 1 },
++		{ "index.version", "4", 1 },
++		{ "merge.stat", "false", 1 },
++		{ "merge.renames", "false", 1 },
++		{ "pack.useBitmaps", "false", 1 },
++		{ "pack.useSparse", "true", 1 },
++		{ "receive.autoGC", "false", 1 },
++		{ "reset.quiet", "true", 1 },
++		{ "feature.manyFiles", "false", 1 },
++		{ "feature.experimental", "false", 1 },
++		{ "fetch.unpackLimit", "1", 1 },
++		{ "fetch.writeCommitGraph", "false", 1 },
+ #ifdef WIN32
+-		{ "http.sslBackend", "schannel" },
++		{ "http.sslBackend", "schannel", 1 },
+ #endif
++		/* Optional */
+ 		{ "status.aheadBehind", "false" },
+ 		{ "commitGraph.generationVersion", "1" },
+ 		{ "core.autoCRLF", "false" },
+@@ -172,7 +175,8 @@ static int set_recommended_config(void)
+ 	char *value;
+ 
+ 	for (i = 0; config[i].key; i++) {
+-		if (git_config_get_string(config[i].key, &value)) {
++		if ((reconfigure && config[i].overwrite_on_reconfigure) ||
++		    git_config_get_string(config[i].key, &value)) {
+ 			trace2_data_string("scalar", the_repository, config[i].key, "created");
+ 			if (git_config_set_gently(config[i].key,
+ 						  config[i].value) < 0)
+@@ -237,7 +241,7 @@ static int register_dir(void)
+ 	int res = add_or_remove_enlistment(1);
+ 
+ 	if (!res)
+-		res = set_recommended_config();
++		res = set_recommended_config(0);
+ 
+ 	if (!res)
+ 		res = toggle_maintenance(1);
+@@ -425,7 +429,7 @@ static int cmd_clone(int argc, const char **argv)
+ 	    (res = run_git("sparse-checkout", "init", "--cone", NULL)))
+ 		goto cleanup;
+ 
+-	if (set_recommended_config())
++	if (set_recommended_config(0))
+ 		return error(_("could not configure '%s'"), dir);
+ 
+ 	if ((res = run_git("fetch", "--quiet", "origin", NULL))) {
+@@ -490,6 +494,24 @@ static int cmd_register(int argc, const char **argv)
+ 	return register_dir();
+ }
+ 
++static int cmd_reconfigure(int argc, const char **argv)
++{
++	struct option options[] = {
++		OPT_END(),
++	};
++	const char * const usage[] = {
++		N_("scalar reconfigure [<enlistment>]"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, NULL, options,
++			     usage, 0);
++
++	setup_enlistment_directory(argc, argv, usage, options, NULL);
++
++	return set_recommended_config(1);
++}
++
+ static int cmd_run(int argc, const char **argv)
+ {
+ 	struct option options[] = {
+@@ -626,6 +648,7 @@ static struct {
+ 	{ "register", cmd_register },
+ 	{ "unregister", cmd_unregister },
+ 	{ "run", cmd_run },
++	{ "reconfigure", cmd_reconfigure },
+ 	{ NULL, NULL},
+ };
+ 
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index d65fb5f1491..46999cf7c84 100644
+index f139a14445d..f4e4686e8c8 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -8,7 +8,7 @@ scalar - an opinionated repository management tool
- SYNOPSIS
- --------
- [verse]
--scalar clone [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
-+scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
- scalar list
+@@ -13,6 +13,7 @@ scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
-@@ -56,6 +56,16 @@ subdirectories outside your sparse-checkout by using `git ls-tree HEAD`.
- 	Instead of checking out the branch pointed to by the cloned
- 	repository's HEAD, check out the `<name>` branch instead.
+ scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
++scalar reconfigure <enlistment>
  
-+--[no-]single-branch::
-+	Clone only the history leading to the tip of a single branch, either
-+	specified by the `--branch` option or the primary branch remote's
-+	`HEAD` points at.
-++
-+Further fetches into the resulting repository will only update the
-+remote-tracking branch for the branch this option was used for the initial
-+cloning. If the HEAD at the remote did not point at any branch when
-+`--single-branch` clone was made, no remote-tracking branch is created.
+ DESCRIPTION
+ -----------
+@@ -116,6 +117,13 @@ opinionated default settings that make Git work more efficiently with
+ large repositories. As this task is run as part of `scalar clone`
+ automatically, explicit invocations of this task are rarely needed.
+ 
++Reconfigure
++~~~~~~~~~~~
 +
- --[no-]full-clone::
- 	A sparse-checkout is initialized by default. This behavior can be
- 	turned off via `--full-clone`.
++After a Scalar upgrade, or when the configuration of a Scalar enlistment
++was somehow corrupted or changed by mistake, this subcommand allows to
++reconfigure the enlistment.
++
+ SEE ALSO
+ --------
+ linkgit:git-clone[1], linkgit:git-maintenance[1].
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 295398f62cc..9a35ab4fde6 100755
+index 9a35ab4fde6..e6d74a06ca0 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -45,13 +45,17 @@ test_expect_success 'set up repository to clone' '
+@@ -65,4 +65,12 @@ test_expect_success 'scalar clone' '
+ 	)
+ '
  
- test_expect_success 'scalar clone' '
- 	second=$(git rev-parse --verify second:second.t) &&
--	scalar clone "file://$(pwd)" cloned &&
-+	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	(
- 		cd cloned/src &&
- 
- 		git config --get --global --fixed-value maintenance.repo \
- 			"$(pwd)" &&
- 
-+		git for-each-ref --format="%(refname)" refs/remotes/origin/ >actual &&
-+		echo "refs/remotes/origin/parallel" >expect &&
-+		test_cmp expect actual &&
++test_expect_success 'scalar reconfigure' '
++	git init one/src &&
++	scalar register one &&
++	git -C one/src config core.preloadIndex false &&
++	scalar reconfigure one &&
++	test true = "$(git -C one/src config core.preloadIndex)"
++'
 +
- 		test_path_is_missing 1/2 &&
- 		test_must_fail git rev-list --missing=print $second &&
- 		git rev-list $second &&
+ test_done
 -- 
 gitgitgadget
 
