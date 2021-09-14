@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3A9C433FE
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CA98C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EFB7610A2
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B85D610CE
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234633AbhINOpp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 10:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40484 "EHLO
+        id S234473AbhINOqA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 10:46:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234014AbhINOos (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 10:44:48 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E375C06114A
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id l18-20020a05600c4f1200b002f8cf606262so2307703wmq.1
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
+        with ESMTP id S235175AbhINOpT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 10:45:19 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78706C06114C
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:27 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id y132so9480428wmc.1
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ySiVVFtUbc/3RO5iQimxg9/Yh69Yg4UMoTm1ZkYtGEc=;
-        b=J9rN22nHMZ8hz2SLzFehigMED0yGWx9W/V6ranpjncCXe2miiZ19LWP+LNYOeRizk7
-         7eijpOPcskZJDg/wKsZrnO6eLfxpVBDpZM3WQkHq/GAT5jB0UQr7ZtoKNyLoYNCC6jRE
-         EqWdklPFFeSj0H1me6NuAcSG4/2iQrzIhoakdEG2GYPmXhVjdFSO5q0hmcR4qjlLfxjJ
-         dTFkyJ6u4fVCscZ2sTKrwPELkhxZB/7qzNoHMFAXQ3NIdHvUqh2Ug9xrsTq2F06DuCAt
-         +dCB18ejSNLVxDxtDBEpKFN8i4GRa+mtzFkdKxLDElUnmGvQgClhwWO5rZSWzs/VMi2h
-         9n5Q==
+        bh=J7uJSeDQcCrUJzr9pKt0D+//b7wikyF2AAgDl56z8es=;
+        b=FUPpEE0Eqoh+Xjkd2B2TUqxuZ5vC6JEgC3rcqyjgOl1ML1Egqhwssd6tUyRQyawrg8
+         i2Z3ZotTejNoXPlfGsb78dbZQGhrM3P7F3/hI4VK5B7KAmIoI+enXjXAHj40234yF9OU
+         zAQO4FxdPKo+CgtpMzCCYh6pHttt7sZCWjOSe6E7aRJbDPJBqou77p7RMxF6QXRqOHji
+         2lIiQKWrejmy+Dg44UXGyP4H9wcSAKwivkzQn0K6izkHqS/7huN1go4VIwBxO6BkwmF8
+         34lpfkYsBckvPE/IffYb4ZWtXp8A1jq0OGMmOKnW5oGkX7sPEcU8q4v0djzMwqJhCAOG
+         QNzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ySiVVFtUbc/3RO5iQimxg9/Yh69Yg4UMoTm1ZkYtGEc=;
-        b=8I91/pX5ISeNSXButUjzQGzhFLcbK7BP+f4Htbl+lVztjkQ1tsoIR58TOcHt1wiONH
-         Nkqv83SJjrRdIiVvHlO+4yl5C8Wev2/UbaUFdgyK+pdp4AWQqupBFjTA62FhPSn4bTNU
-         NtIR6Hq3Cu2i4iiDh5ZDXeAiVyW1uNcFU2ndF3TrbC4bWmnqdkOUWId+edHrBgKQQvuh
-         k9sy87eDcdupYlaD4urbDauxAWrdjIgByfd/8hNpLiNm2xLhynMXNW3DJQ8D55/ZrER6
-         Mg8ytlZs9ooD8eBoItBXF7BHZWjus9yHo5CXgCy/pyELakYtWruIazHrY4LsH8HQ8zJH
-         7bDQ==
-X-Gm-Message-State: AOAM532pNAxFKUdK423V/WaRu53GNheyyC15csiyTsap7oEED9rKIABV
-        XNw7oAxyN0Q49nYn3zoaA1jv0mIjm/U=
-X-Google-Smtp-Source: ABdhPJzC2+gGifwYUS9pLMCzsjishBvp6smP0FCLUsglvIAGnBSWdShD6wzOpd9yqIUKCPvXBx0Eww==
-X-Received: by 2002:a1c:a94a:: with SMTP id s71mr2586723wme.32.1631630364906;
-        Tue, 14 Sep 2021 07:39:24 -0700 (PDT)
+        bh=J7uJSeDQcCrUJzr9pKt0D+//b7wikyF2AAgDl56z8es=;
+        b=qqKfXsNAYDPtRRB+B2ctyZ73vOfFGYWUkiPtKa7nniVK2lEZNYXVJ3rDzhhuukFHyB
+         n6XdY7wMZytR0M7acJtyf22NfSO8hVrEnGTt5h4jTXXLaQ7ItpwNzyoL/BOwhrqQ+90C
+         1rJr3T/8mejzSKxojT6VElQ0WJ/tDSLsHtwim3sl+21x51Xa5hSRUm/TgnV2DWIW77Dz
+         xB2eQ5dYByXPpP8I9D3jrkcql4luA2P7iDaIS+FXPfrht++sqKeuT53EA1Tlu+FiRgfQ
+         uIh3eiUBAMKayJoOHqNU8ATWaLLYkm/ar4Ed+8nn7+yvvq6HmtGQUuGYnGegxu5lBgLu
+         YEJw==
+X-Gm-Message-State: AOAM533DeGIkxkvYN/40eNxU6rbTHR64OueGsLPm+cAoPmDinRl1jrJB
+        UVIXtNIWVN6gQAOnFksUy2EcTGpYjQQ=
+X-Google-Smtp-Source: ABdhPJwYmMNgUZDCxqza1kN4rRqNT6zQu+b8pZG0q61v2Krrqu8IPHZRzps/1LxaAdwysRt5IlBfVQ==
+X-Received: by 2002:a1c:a713:: with SMTP id q19mr2627341wme.42.1631630366107;
+        Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e2sm10732710wra.40.2021.09.14.07.39.24
+        by smtp.gmail.com with ESMTPSA id x5sm1002312wmk.32.2021.09.14.07.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 07:39:24 -0700 (PDT)
-Message-Id: <64e3403ac123f609a85c2d385b9d3d1547453779.1631630356.git.gitgitgadget@gmail.com>
+        Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
+Message-Id: <5c11117da51a6ab16689e1f4eac62da538f30779.1631630356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
         <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 14:39:11 +0000
-Subject: [PATCH v4 10/15] scalar: implement the `run` command
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 14 Sep 2021 14:39:13 +0000
+Subject: [PATCH v4 12/15] scalar: teach 'reconfigure' to optionally handle all
+ registered enlistments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,150 +75,157 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Note: this subcommand is provided primarily for backwards-compatibility,
-for existing Scalar uses. It is mostly just a shim for `git
-maintenance`, mapping task names from the way Scalar called them to the
-way Git calls them.
+After a Scalar upgrade, it can come in really handy if there is an easy
+way to reconfigure all Scalar enlistments. This new option offers this
+functionality.
 
-The reason why those names differ? The background maintenance was first
-implemented in Scalar, and when it was contributed as a patch series
-implementing the `git maintenance` command, reviewers suggested better
-names, those suggestions were accepted before the patches were
-integrated into core Git.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c   | 64 +++++++++++++++++++++++++++++++++++++++
- contrib/scalar/scalar.txt | 19 ++++++++++++
- 2 files changed, 83 insertions(+)
+ contrib/scalar/scalar.c          | 61 ++++++++++++++++++++++++++++++--
+ contrib/scalar/scalar.txt        |  9 +++--
+ contrib/scalar/t/t9099-scalar.sh |  3 ++
+ 3 files changed, 67 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 7dd1f28948f..8a11f390251 100644
+index 1fff7eb7c12..67fa5305225 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -490,6 +490,69 @@ static int cmd_register(int argc, const char **argv)
+@@ -494,22 +494,77 @@ static int cmd_register(int argc, const char **argv)
  	return register_dir();
  }
  
-+static int cmd_run(int argc, const char **argv)
++static int get_scalar_repos(const char *key, const char *value, void *data)
 +{
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+	struct {
-+		const char *arg, *task;
-+	} tasks[] = {
-+		{ "config", NULL },
-+		{ "commit-graph", "commit-graph" },
-+		{ "fetch", "prefetch" },
-+		{ "loose-objects", "loose-objects" },
-+		{ "pack-files", "incremental-repack" },
-+		{ NULL, NULL }
-+	};
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *usagestr[] = { NULL, NULL };
-+	int i;
++	struct string_list *list = data;
 +
-+	strbuf_addstr(&buf, N_("scalar run <task> [<enlistment>]\nTasks:\n"));
-+	for (i = 0; tasks[i].arg; i++)
-+		strbuf_addf(&buf, "\t%s\n", tasks[i].arg);
-+	usagestr[0] = buf.buf;
++	if (!strcmp(key, "scalar.repo"))
++		string_list_append(list, value);
 +
-+	argc = parse_options(argc, argv, NULL, options,
-+			     usagestr, 0);
-+
-+	if (!argc)
-+		usage_with_options(usagestr, options);
-+
-+	if (!strcmp("all", argv[0])) {
-+		i = -1;
-+	} else {
-+		for (i = 0; tasks[i].arg && strcmp(tasks[i].arg, argv[0]); i++)
-+			; /* keep looking for the task */
-+
-+		if (i > 0 && !tasks[i].arg) {
-+			error(_("no such task: '%s'"), argv[0]);
-+			usage_with_options(usagestr, options);
-+		}
-+	}
-+
-+	argc--;
-+	argv++;
-+	setup_enlistment_directory(argc, argv, usagestr, options, NULL);
-+	strbuf_release(&buf);
-+
-+	if (i == 0)
-+		return register_dir();
-+
-+	if (i > 0)
-+		return run_git("maintenance", "run",
-+			       "--task", tasks[i].task, NULL);
-+
-+	if (register_dir())
-+		return -1;
-+	for (i = 1; tasks[i].arg; i++)
-+		if (run_git("maintenance", "run",
-+			    "--task", tasks[i].task, NULL))
-+			return -1;
 +	return 0;
 +}
 +
- static int remove_deleted_enlistment(struct strbuf *path)
+ static int cmd_reconfigure(int argc, const char **argv)
  {
- 	int res = 0;
-@@ -562,6 +625,7 @@ static struct {
- 	{ "list", cmd_list },
- 	{ "register", cmd_register },
- 	{ "unregister", cmd_unregister },
-+	{ "run", cmd_run },
- 	{ NULL, NULL},
- };
++	int all = 0;
+ 	struct option options[] = {
++		OPT_BOOL('a', "all", &all,
++			 N_("reconfigure all registered enlistments")),
+ 		OPT_END(),
+ 	};
+ 	const char * const usage[] = {
+-		N_("scalar reconfigure [<enlistment>]"),
++		N_("scalar reconfigure [--all | <enlistment>]"),
+ 		NULL
+ 	};
++	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
++	int i, res = 0;
++	struct repository r = { NULL };
++	struct strbuf commondir = STRBUF_INIT, gitdir = STRBUF_INIT;
  
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			     usage, 0);
+ 
+-	setup_enlistment_directory(argc, argv, usage, options, NULL);
++	if (!all) {
++		setup_enlistment_directory(argc, argv, usage, options, NULL);
++
++		return set_recommended_config(1);
++	}
++
++	if (argc > 0)
++		usage_msg_opt(_("--all or <enlistment>, but not both"),
++			      usage, options);
++
++	git_config(get_scalar_repos, &scalar_repos);
+ 
+-	return set_recommended_config(1);
++	for (i = 0; i < scalar_repos.nr; i++) {
++		const char *dir = scalar_repos.items[i].string;
++
++		strbuf_reset(&commondir);
++		strbuf_reset(&gitdir);
++
++		if (chdir(dir) < 0) {
++			warning_errno(_("could not switch to '%s'"), dir);
++			res = -1;
++		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
++			warning_errno(_("git repository gone in '%s'"), dir);
++			res = -1;
++		} else {
++			git_config_clear();
++
++			the_repository = &r;
++			r.commondir = commondir.buf;
++			r.gitdir = gitdir.buf;
++
++			if (set_recommended_config(1) < 0)
++				res = -1;
++		}
++	}
++
++	string_list_clear(&scalar_repos, 1);
++	strbuf_release(&commondir);
++	strbuf_release(&gitdir);
++
++	return res;
+ }
+ 
+ static int cmd_run(int argc, const char **argv)
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 46999cf7c84..f139a14445d 100644
+index f4e4686e8c8..2fa96fcabc6 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -12,6 +12,7 @@ scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<e
- scalar list
+@@ -13,7 +13,7 @@ scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
-+scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
+ scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
+-scalar reconfigure <enlistment>
++scalar reconfigure [ --all | <enlistment> ]
  
  DESCRIPTION
  -----------
-@@ -97,6 +98,24 @@ unregister [<enlistment>]::
- 	Remove the specified repository from the list of repositories
- 	registered with Scalar and stop the scheduled background maintenance.
+@@ -32,8 +32,8 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
+ will be identical to the worktree.
  
-+Run
-+~~~
-+
-+scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]::
-+	Run the given maintenance task (or all tasks, if `all` was specified).
-+	Except for `all` and `config`, this subcommand simply hands off to
-+	linkgit:git-maintenance[1] (mapping `fetch` to `prefetch` and
-+	`pack-files` to `incremental-repack`).
-++
-+These tasks are run automatically as part of the scheduled maintenance,
-+as soon as the repository is registered with Scalar. It should therefore
-+not be necessary to run this subcommand manually.
-++
-+The `config` task is specific to Scalar and configures all those
-+opinionated default settings that make Git work more efficiently with
-+large repositories. As this task is run as part of `scalar clone`
-+automatically, explicit invocations of this task are rarely needed.
+ The `scalar` command implements various subcommands, and different options
+-depending on the subcommand. With the exception of `clone` and `list`, all
+-subcommands expect to be run in an enlistment.
++depending on the subcommand. With the exception of `clone`, `list` and
++`reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
+ COMMANDS
+ --------
+@@ -124,6 +124,9 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
+ was somehow corrupted or changed by mistake, this subcommand allows to
+ reconfigure the enlistment.
+ 
++With the `--all` option, all enlistments currently registered with Scalar
++will be reconfigured. Use this option after each Scalar upgrade.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1], linkgit:git-maintenance[1].
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index e6d74a06ca0..5fe7fabd0e5 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -70,6 +70,9 @@ test_expect_success 'scalar reconfigure' '
+ 	scalar register one &&
+ 	git -C one/src config core.preloadIndex false &&
+ 	scalar reconfigure one &&
++	test true = "$(git -C one/src config core.preloadIndex)" &&
++	git -C one/src config core.preloadIndex false &&
++	scalar reconfigure -a &&
+ 	test true = "$(git -C one/src config core.preloadIndex)"
+ '
+ 
 -- 
 gitgitgadget
 
