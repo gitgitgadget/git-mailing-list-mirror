@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19305C4332F
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11BB5C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEA88610CE
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8168603E8
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234736AbhINOqC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 10:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41612 "EHLO
+        id S234761AbhINOqD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 10:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235178AbhINOpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 10:45:19 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B552C06114E
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:28 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id k5-20020a05600c1c8500b002f76c42214bso2298467wms.3
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:28 -0700 (PDT)
+        with ESMTP id S235186AbhINOpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 10:45:20 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 182C6C061150
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:29 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id u16so20623202wrn.5
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DzWaDgTXC1omxOfvIpIv6ED7EgUWF84GI2Icdo7yhYA=;
-        b=Dzmos/u0FphbGRWAnqPnAUiu/Ec5P/JxMkkKpSJDaCTv48Bi0Ut5PVoDTt33Hpb1uk
-         59zD/EOax3COMMsPZeRvzG9T1e/2tGvpDpRsxY4+QhkABZ7sdy3QkdzvRkZ8AFvn8gZQ
-         LmG2ChoXgaV3dKVFlaN/TLLOz+a7zNwwkkoy6gkv3K5Ezi4kMm0I8ghiRHp92qZmVOh0
-         BSGaN1V5tHPQw+dJDjhu/wSkkjpB4gs8oK03LARZnZPXKWeI/xBBQi3Ooutwl3towGRv
-         N6A2ydPWOJVggro/0J73ztHKGeb12jSHIPnVolWED3MeL52rMIe5CXskC8df76LPEzbw
-         R5tQ==
+        bh=LhySsHfzZ3Pk6fo/CeRm0RMkRB5eXUuQvBWfa1uVkPg=;
+        b=EMPX1tTF/Ov+kwjwo2A/qPhqnlDW6ITBMR6POqnnzcKGXnzKSPZY6Oh08JCI+f1enW
+         zljTXFu7azceJk5uBT9LM1MUasPiXmKThqYTtGRkK8O53PpPnZtsz1uX0vLUdqq+WGY4
+         r/TDZj/PCRyY33tZQ7+DDj7msHWQOHBxbObnK1NmS5Jb3CGSThXQXVIXJ6MUFs+ZQzkk
+         s0dxMJwvbvC42e6S2FmeOucBo8+8kKYwFlaCgaSv5fVVn5yb2JijJIS2qKUzp3u2XU9N
+         xP+dLLY8PdewUIrq8DY2SrirgjFSMSqiS+rqLKiF9+lknquESyz1xMb24wKedtjidO0H
+         +3xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DzWaDgTXC1omxOfvIpIv6ED7EgUWF84GI2Icdo7yhYA=;
-        b=Q1b2CaGhxsd54F3Ps47/KEXQ/xgiVrpPTun3sz2zt1/RB5gMo1Cr22LCWIewTid+h7
-         w4CAuQREP6IsaOVUxUyJJvfAmBoTV/zMpzP7Qsh8i4E5pyfoi/CGGSqa8Yk0S5Gk5IP9
-         yaglGTZhWa1prkUEo0WMCOpgoccaQPJtZ9RwqA0L0Ah/NIWDkoM0M/Z1dP+Jv5ILu0BV
-         iOYLzr/x+0RR62ft1AWFxFQHrDcs4AUfLi601zZiN1c9Z5Z5Lfmb6qUDXlt0sU4ZW0Fz
-         X+Qu7yipMGfS9Mqr3gkETQwCktWHinzDTrkVcx+RmOCIBCDoO/eldSZerRBve75iAG+f
-         jhNA==
-X-Gm-Message-State: AOAM531jjfz5xnt4AbHkG/e6vSivuY6puogAiNby7sYtA7nM/vqZkuZZ
-        AYc60KUSEan9OybcE/dsEttMgo2JUA4=
-X-Google-Smtp-Source: ABdhPJz1TpQO4WiN2j88UROkvtZqyPSXpQeJNbkQDxvg30sjA7uneWh8qtrkqOpv/gzM1hAcSRNqEg==
-X-Received: by 2002:a05:600c:ac5:: with SMTP id c5mr2000323wmr.191.1631630367224;
+        bh=LhySsHfzZ3Pk6fo/CeRm0RMkRB5eXUuQvBWfa1uVkPg=;
+        b=FXwppQMEGgDq9tB3q3ANRLAxlJRZ6vm/RNptgUG1z/mXljXsLeTpyDgEL3Tz1GpGNM
+         qiUJi0mFSHWN5PY8+6yTiq6nVA9+v+Vs9xnS05BYvSVr9f9QlNeB3R/NCPBjxjTlnwlf
+         KVI+ROlej13bIuBGWJbbjvG9F8ZMz3D68IOEwlkT5mk6zGqL9zHMJx6oE05xmasKOhVj
+         8xCu0XxptCXXj7rLhq63vykBJ/dQfsUsyn9/+Pz5xD7ZdvTSA7feTlTN755R5A3iHtMw
+         9l8A2dEDbyobXrt5zz9To6g4ZVk+6djoCYBc9LckE5BuqKRNspU77IJsKnzIoxieBrOs
+         RT3A==
+X-Gm-Message-State: AOAM531nWWaOmqtHzwHzzU0v79HmTtU5PooFZEgAr7YRV42z7REF9Cit
+        1V/1N7mvHNL1ikTiA/bf6FtsBGUF6dc=
+X-Google-Smtp-Source: ABdhPJy+TtjJrqxnUIBBl00OYYWan5r/QM/COsDsfFeAn7/dM+oagED5954JNboCO6RujswkONbHPg==
+X-Received: by 2002:adf:d214:: with SMTP id j20mr19484898wrh.119.1631630367777;
         Tue, 14 Sep 2021 07:39:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y15sm1579327wmi.18.2021.09.14.07.39.26
+        by smtp.gmail.com with ESMTPSA id q7sm10559002wrc.55.2021.09.14.07.39.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
-Message-Id: <069957701204f311077c43af1fd4a42519ef758a.1631630356.git.gitgitgadget@gmail.com>
+        Tue, 14 Sep 2021 07:39:27 -0700 (PDT)
+Message-Id: <7539725bb4f1cf560b604d2b32a3682b4cdde46d.1631630356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
         <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 14:39:15 +0000
-Subject: [PATCH v4 14/15] scalar: implement the `version` command
+Date:   Tue, 14 Sep 2021 14:39:16 +0000
+Subject: [PATCH v4 15/15] scalar: accept -C and -c options before the
+ subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,91 +82,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The .NET version of Scalar has a `version` command. This was necessary
-because it was versioned independently of Git.
+The `git` executable has these two very useful options:
 
-Since Scalar is now tightly coupled with Git, it does not make sense for
-them to show different versions. Therefore, it shows the same output as
-`git version`. For backwards-compatibility with the .NET version,
-`scalar version` prints to `stderr`, though (`git version` prints to
-`stdout` instead).
+-C <directory>:
+	switch to the specified directory before performing any actions
+
+-c <key>=<value>:
+	temporarily configure this setting for the duration of the
+	specified scalar subcommand
+
+With this commit, we teach the `scalar` executable the same trick.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
+ contrib/scalar/scalar.txt | 10 ++++++++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 00bedb0bf66..728166aa97a 100644
+index 728166aa97a..76a77ca1ed0 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -9,6 +9,7 @@
- #include "run-command.h"
- #include "refs.h"
- #include "dir.h"
-+#include "help.h"
+@@ -806,6 +806,25 @@ int cmd_main(int argc, const char **argv)
+ 	struct strbuf scalar_usage = STRBUF_INIT;
+ 	int i;
  
- /*
-  * Remove the deepest subdirectory in the provided path string. Path must not
-@@ -362,6 +363,15 @@ static int delete_enlistment(struct strbuf *enlistment)
- 	return 0;
- }
++	while (argc > 1 && *argv[1] == '-') {
++		if (!strcmp(argv[1], "-C")) {
++			if (argc < 3)
++				die(_("-C requires a <directory>"));
++			if (chdir(argv[2]) < 0)
++				die_errno(_("could not change to '%s'"),
++					  argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else if (!strcmp(argv[1], "-c")) {
++			if (argc < 3)
++				die(_("-c requires a <key>=<value> argument"));
++			git_config_push_parameter(argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else
++			break;
++	}
++
+ 	if (argc > 1) {
+ 		argv++;
+ 		argc--;
+@@ -816,7 +835,8 @@ int cmd_main(int argc, const char **argv)
+ 	}
  
-+/*
-+ * Dummy implementation; Using `get_version_info()` would cause a link error
-+ * without this.
-+ */
-+void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
-+{
-+	die("not implemented");
-+}
-+
- static int cmd_clone(int argc, const char **argv)
- {
- 	const char *branch = NULL;
-@@ -748,6 +758,34 @@ static int cmd_delete(int argc, const char **argv)
- 	return res;
- }
+ 	strbuf_addstr(&scalar_usage,
+-		      N_("scalar <command> [<options>]\n\nCommands:\n"));
++		      N_("scalar [-C <directory>] [-c <key>=<value>] "
++			 "<command> [<options>]\n\nCommands:\n"));
+ 	for (i = 0; builtins[i].name; i++)
+ 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
  
-+static int cmd_version(int argc, const char **argv)
-+{
-+	int verbose = 0, build_options = 0;
-+	struct option options[] = {
-+		OPT__VERBOSE(&verbose, N_("include Git version")),
-+		OPT_BOOL(0, "build-options", &build_options,
-+			 N_("include Git's build options")),
-+		OPT_END(),
-+	};
-+	const char * const usage[] = {
-+		N_("scalar verbose [-v | --verbose] [--build-options]"),
-+		NULL
-+	};
-+	struct strbuf buf = STRBUF_INIT;
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index 6fc57707718..3a80f829edc 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
+ depending on the subcommand. With the exception of `clone`, `list` and
+ `reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
++The following options can be specified _before_ the subcommand:
 +
-+	argc = parse_options(argc, argv, NULL, options,
-+			     usage, 0);
++-C <directory>::
++	Before running the subcommand, change the working directory. This
++	option imitates the same option of linkgit:git[1].
 +
-+	if (argc != 0)
-+		usage_with_options(usage, options);
++-c <key>=<value>::
++	For the duration of running the specified subcommand, configure this
++	setting. This option imitates the same option of linkgit:git[1].
 +
-+	get_version_info(&buf, build_options);
-+	fprintf(stderr, "%s\n", buf.buf);
-+	strbuf_release(&buf);
-+
-+	return 0;
-+}
-+
- static struct {
- 	const char *name;
- 	int (*fn)(int, const char **);
-@@ -759,6 +797,7 @@ static struct {
- 	{ "run", cmd_run },
- 	{ "reconfigure", cmd_reconfigure },
- 	{ "delete", cmd_delete },
-+	{ "version", cmd_version },
- 	{ NULL, NULL},
- };
+ COMMANDS
+ --------
  
 -- 
 gitgitgadget
-
