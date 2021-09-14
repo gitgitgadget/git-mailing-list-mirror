@@ -2,161 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D656C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB6F4C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5C4F6113B
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:48:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C60F361185
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235294AbhINXtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 19:49:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhINXta (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 19:49:30 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A608CC061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id x2so905058ila.11
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tVtZOrmUMt/z5ALteZEDFy8qDJX7vK7JgaC1y+3SNNU=;
-        b=OwmZC6tmYlZ6i67GzTgMVkas34YhM5A7YIF4eTn3tTAoI2xv2de03nz42plNYoze2I
-         AitGmvBI+agxyOBvh67Dyu2k0teTWcMTCYLpNz1fqqrmfkpq2KXdwHi5vBSzz2+dDZ2B
-         rzwvYpiOHZD2HpO52QiaIEVBRcmXpBeHmldc0qOtlWJR8zgcoPxof5NuqqJWfH5yifgZ
-         Ub+r/I6z1LFrayFCXrh31i4c9IAho+z+mMqb3PXzOGsN1fmG6KHiG3R3jQf5UlDGhs1I
-         0f1ffJHHZ96tkLOcnuvO1bjhKEvYrkgehBdUIbaaGIjADKCH2GIyjdVYS4hYdby9e3Xp
-         UHyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tVtZOrmUMt/z5ALteZEDFy8qDJX7vK7JgaC1y+3SNNU=;
-        b=3ossgUgfwbFowgEOP/BfFtQgoGtaPGMf4d7qtMD+2i1MLNiQ9EgJJ5Ys0ylj5B8mSS
-         OR5Cza3C0p/vljfKwe4l3oCO9Avv5IUeBS5wwUsExGeLQwnyYzKMDhJu6Iww6qQg8yDv
-         ABe6Hj8nOW+jpH2eNnmHeGTDGI1H/A7QVXtqjvbmZrtkRjUbO5wSnAlWxk/8eomSR4qk
-         SjtOW3XmeV5x0ANcbDQl/19syWE+XknPmRNGBHZMhkdVeEhVN3yEt0kR0qSm9ZpGspxj
-         /Q5P54NWZFIUNiE+xQpxTS+KzFkIgzU6b2QEFgQxLAhTWCm7rLgU+ZvIU4h85cDPbvZp
-         xK4g==
-X-Gm-Message-State: AOAM533ym6plcfv5u8nLE/hiYYv6RuLkuWci4qTQu1CxZ1mm3v5IrpoH
-        7EilN/gnxfYQfY/GQumGLHDD4g==
-X-Google-Smtp-Source: ABdhPJxZ1BMeegD3ID6QpYaNxSzCl1gRHMueruqSh3GE1fmEYGFJh54qVFYbfH5ZmNjv03MINYnt5g==
-X-Received: by 2002:a05:6e02:1ba3:: with SMTP id n3mr8155522ili.253.1631663292046;
-        Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 9sm7717948ily.9.2021.09.14.16.48.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 16:48:11 -0700 (PDT)
-Date:   Tue, 14 Sep 2021 19:48:11 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs
- mode
-Message-ID: <YUE0u+T/CL8D5WV/@nand.local>
-References: <cover.1631331139.git.me@ttaylorr.com>
- <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
- <87ee9va0ie.fsf@evledraar.gmail.com>
- <YTzYYfBGqG87O5mN@nand.local>
- <YUDxzhAnzI5Anm6F@coredump.intra.peff.net>
+        id S235683AbhINXwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 19:52:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47560 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229491AbhINXwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 19:52:25 -0400
+Received: (qmail 28492 invoked by uid 109); 14 Sep 2021 23:51:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 23:51:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30602 invoked by uid 111); 14 Sep 2021 23:51:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 19:51:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Sep 2021 19:51:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2 0/11] limit memory allocations for v2 servers
+Message-ID: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
+References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUDxzhAnzI5Anm6F@coredump.intra.peff.net>
+In-Reply-To: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 03:02:38PM -0400, Jeff King wrote:
-> On Sat, Sep 11, 2021 at 12:25:05PM -0400, Taylor Blau wrote:
->
-> > > Before calling string_list_clear(). I.e. we didn't strdup(), but during
-> > > free() we pretend that we did, because we did, just not in
-> > > string_list_append().
-> >
-> > Good catch. It's kind of gross, but the result is:
-> >
-> > --- 8< ---
-> >
-> > diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-> > index 77488b6b7b..e6cab975e3 100644
-> > --- a/builtin/multi-pack-index.c
-> > +++ b/builtin/multi-pack-index.c
-> > @@ -64,7 +64,7 @@ static struct option *add_common_options(struct option *prev)
-> >
-> >  static void read_packs_from_stdin(struct string_list *to)
-> >  {
-> > -	struct strbuf buf = STRBUF_INIT;
-> > +	struct strbuf buf = STRBUF_INIT_NODUP;
->
-> Did you mean to use STRING_LIST_INIT_NODUP on the string-list
-> declaration?
+Here's a re-roll of my series to limit the memory a v2 server is willing
+to allocate on behalf of a client. See v1:
 
-Yeah, and I thought that I even mentioned it in [1], but I apparently
-sent the contents of my buffer before I saved it. So, I did notice it at
-the time, but failed to tell anybody about it!
+  https://lore.kernel.org/git/YUC%2F6n1hhUbMJiLw@coredump.intra.peff.net/
 
-[1]: https://lore.kernel.org/git/YTzZPti%2FasQwZC%2FD@nand.local/
+for an overview. The existing patches are mostly small fixups pointed
+out by reviewers (thanks!), but I did take Martin's TOO_MANY_PREFIXES
+suggestion in patch 7 (without the change to the name of the constant it
+seemed too clever to me, but with it it seems just the right amount of
+clever).
 
-> >  	while (strbuf_getline(&buf, stdin) != EOF) {
-> >  		string_list_append(to, strbuf_detach(&buf, NULL));
-> >  	}
-> > @@ -107,6 +107,11 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
-> >  		ret = write_midx_file_only(opts.object_dir, &packs,
-> >  					   opts.preferred_pack, opts.flags);
-> >
-> > +		/*
-> > +		 * pretend strings are duplicated to free the memory allocated
-> > +		 * by read_packs_from_stdin()
-> > +		 */
-> > +		packs.strdup_strings = 1;
-> >  		string_list_clear(&packs, 0);
-> >
-> >  		return ret;
->
-> I think the root of the problem here is the non-idiomatic use of
-> strbuf_getline(). The usual thing (and in fact the thing done by the
-> quite-similar code in read_packs_list_from_stdin() in pack-objects.c)
-> is not to detach, because strbuf_getline() will reset the buffer each
-> time. I.e.:
->
->   struct string_list to = STRING_LIST_INIT_DUP;
->   ...
->   struct strbuf buf = STRBUF
->   while (strbuf_getline(&buf, stdin) != EOF)
-> 	string_list_append(to, &buf);
+There are two new patches here:
 
-(Assuming that you meant `s/&buf/buf.buf/`, but otherwise this makes
-sense). There is no need to call strbuf_reset() inside the body of the
-loop, since strbuf_getline() calls it via strbuf_getwholeline().
+ - patch 8 explicitly documents the v2 ref-prefix "best effort" behavior
 
->   strbuf_release(&buf);
+ - patch 11 teaches ls-refs to reject bogus arguments, which violates
+   the spec (the current behavior caused a broken test to go unnoticed)
 
-...But we should still be careful to release the memory used by the
-strbuf at the end (which is safe to do, since the whole point is that we
-copy each buffer linewise into the string_list).
+Full range-diff is below the diffstat.
 
-> That avoids any clever string-list allocation games. The number of heap
-> allocations is about the same (one strbuf and N list items, versus N
-> strbufs and 0 list items). There's a little extra copying (from the
-> strbuf into the list items), but the strings themselves are more
-> efficiently allocated (strbuf may over-allocate, and we lock in
-> that choice forever by handing over the string).
->
-> Not that efficiency probably matters either way for this spot. I'd do it
-> this way because it's simple and idiomatic for our code base.
+  [01/11]: serve: rename is_command() to parse_command()
+  [02/11]: serve: return capability "value" from get_capability()
+  [03/11]: serve: add "receive" method for v2 capabilities table
+  [04/11]: serve: provide "receive" function for object-format capability
+  [05/11]: serve: provide "receive" function for session-id capability
+  [06/11]: serve: drop "keys" strvec
+  [07/11]: ls-refs: ignore very long ref-prefix counts
+  [08/11]: docs/protocol-v2: clarify some ls-refs ref-prefix details
+  [09/11]: serve: reject bogus v2 "command=ls-refs=foo"
+  [10/11]: serve: reject commands used as capabilities
+  [11/11]: ls-refs: reject unknown arguments
 
-More than anything, I'm persuaded by that (though I was quite partial to
-Eric's suggestion, which I found very clever).
+ Documentation/technical/protocol-v2.txt |   6 +-
+ ls-refs.c                               |  22 ++++-
+ serve.c                                 | 119 +++++++++++++-----------
+ t/t5701-git-serve.sh                    |  73 +++++++++++++++
+ 4 files changed, 162 insertions(+), 58 deletions(-)
 
-Thanks,
-Taylor
+ 1:  eb8e7b21a1 =  1:  eb8e7b21a1 serve: rename is_command() to parse_command()
+ 2:  8cc66cae41 =  2:  8cc66cae41 serve: return capability "value" from get_capability()
+ 3:  3343f9bb0a =  3:  3343f9bb0a serve: add "receive" method for v2 capabilities table
+ 4:  c4cc80fe7a !  4:  0319b69881 serve: provide "receive" function for object-format capability
+    @@ Commit message
+         all capabilities (because they might not have sent an object-format line
+         at all, and we still have to check that the default matches our
+         repository algorithm). Since the check_algorithm() function would now be
+    -    done to a single if() statement, I've just inlined it in its only
+    +    down to a single if() statement, I've just inlined it in its only
+         caller.
+     
+         There should be no change of behavior here, except for two
+ 5:  c8527ca5a7 =  5:  efe207c35c serve: provide "receive" function for session-id capability
+ 6:  250e4723ba !  6:  463aa7faa3 serve: drop "keys" strvec
+    @@ serve.c: static int process_request(void)
+      			else
+      				die("unknown capability '%s'", reader.line);
+      
+    -+
+    - 			/* Consume the peeked line */
+    - 			packet_reader_read(&reader);
+    - 			break;
+     @@ serve.c: static int process_request(void)
+      			 * If no command and no keys were given then the client
+      			 * wanted to terminate the connection.
+ 7:  1218d62247 !  7:  da2043f42f ls-refs: ignore very long ref-prefix counts
+    @@ ls-refs.c: static void ensure_config_read(void)
+      }
+      
+     +/*
+    -+ * The maximum number of "ref-prefix" lines we'll allow the client to send.
+    -+ * If they go beyond this, we'll avoid using the prefix feature entirely.
+    ++ * If we see this many or more "ref-prefix" lines from the client, we consider
+    ++ * it "too many" and will avoid using the prefix feature entirely.
+     + */
+    -+#define MAX_ALLOWED_PREFIXES 65536
+    ++#define TOO_MANY_PREFIXES 65536
+     +
+      /*
+       * Check if one of the prefixes is a prefix of the ref.
+       * If no prefixes were provided, all refs match.
+    -@@ ls-refs.c: static int ls_refs_config(const char *var, const char *value, void *data)
+    - int ls_refs(struct repository *r, struct packet_reader *request)
+    - {
+    - 	struct ls_refs_data data;
+    -+	int too_many_prefixes = 0;
+    - 
+    - 	memset(&data, 0, sizeof(data));
+    - 	strvec_init(&data.prefixes);
+     @@ ls-refs.c: int ls_refs(struct repository *r, struct packet_reader *request)
+      			data.peel = 1;
+      		else if (!strcmp("symrefs", arg))
+      			data.symrefs = 1;
+     -		else if (skip_prefix(arg, "ref-prefix ", &out))
+     -			strvec_push(&data.prefixes, out);
+     +		else if (skip_prefix(arg, "ref-prefix ", &out)) {
+    -+			if (too_many_prefixes) {
+    -+				/* ignore any further ones */
+    -+			} else if (data.prefixes.nr >= MAX_ALLOWED_PREFIXES) {
+    -+				strvec_clear(&data.prefixes);
+    -+				too_many_prefixes = 1;
+    -+			} else {
+    ++			if (data.prefixes.nr < TOO_MANY_PREFIXES)
+     +				strvec_push(&data.prefixes, out);
+    -+			}
+     +		}
+      		else if (!strcmp("unborn", arg))
+      			data.unborn = allow_unborn;
+      	}
+    + 
+    + 	if (request->status != PACKET_READ_FLUSH)
+    + 		die(_("expected flush after ls-refs arguments"));
+    + 
+    ++	/*
+    ++	 * If we saw too many prefixes, we must avoid using them at all; as
+    ++	 * soon as we have any prefix, they are meant to form a comprehensive
+    ++	 * list.
+    ++	 */
+    ++	if (data.prefixes.nr >= TOO_MANY_PREFIXES)
+    ++		strvec_clear(&data.prefixes);
+    ++
+    + 	send_possibly_unborn_head(&data);
+    + 	if (!data.prefixes.nr)
+    + 		strvec_push(&data.prefixes, "");
+     
+      ## t/t5701-git-serve.sh ##
+     @@ t/t5701-git-serve.sh: test_expect_success 'refs/heads prefix' '
+    @@ t/t5701-git-serve.sh: test_expect_success 'refs/heads prefix' '
+      
+     +test_expect_success 'ignore very large set of prefixes' '
+     +	# generate a large number of ref-prefixes that we expect
+    -+	# to match nothing; the value here exceeds MAX_ALLOWED_PREFIXES
+    ++	# to match nothing; the value here exceeds TOO_MANY_PREFIXES
+     +	# from ls-refs.c.
+     +	{
+     +		echo command=ls-refs &&
+     +		echo object-format=$(test_oid algo)
+     +		echo 0001 &&
+    -+		perl -le "print \"refs/heads/$_\" for (1..65536+1)" &&
+    ++		perl -le "print \"ref-prefix refs/heads/\$_\" for (1..65536)" &&
+     +		echo 0000
+     +	} |
+     +	test-tool pkt-line pack >in &&
+ -:  ---------- >  8:  ee540a4ef7 docs/protocol-v2: clarify some ls-refs ref-prefix details
+ 8:  b1567fdc82 =  9:  481c07cfac serve: reject bogus v2 "command=ls-refs=foo"
+ 9:  9786b9a11f = 10:  dff965c1d2 serve: reject commands used as capabilities
+ -:  ---------- > 11:  f7339f924b ls-refs: reject unknown arguments
