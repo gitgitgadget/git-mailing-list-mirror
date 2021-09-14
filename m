@@ -2,173 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FFC2C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C64C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:19:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A3EA610FB
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:18:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91A74610D1
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231594AbhINKTJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 06:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231578AbhINKTI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 06:19:08 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F90C061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:17:51 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id d21so11605945wra.12
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cCkCfmvovRXUfxQ79R/syLkfS8VYUJNcwWkQj0KnwpA=;
-        b=WwoKEM645aZ38zS8kizctGRXV7iUnX+KfCOJO51Au1x+3dHidKzR7kBTJglW5SzMXX
-         t8I0dCoXZ0oDnbcITwhOHiTWxsr9+4RXXKYGPlWA6tSnEXcQZX4NoKjZbKeIQFcLavO3
-         BY1TDqWY3bvOEp1KdnUXlXQi8/aKt1FHFSvPWk6dyoBQpTCL1Ju57mIQxIS++DJI/xD9
-         mRyRtJcrUeYmVuZp+lOpGEfP20uOQ84qp6OvQVw9KyD+xaKm4vjmG2MMNhQpZeHnaL1g
-         uwqebku2OVIncnpAk93rF/ozYV7zzT9mjgi9Xe5+lP2map13tA0PFh5hv69TLOh05Tiq
-         9nLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=cCkCfmvovRXUfxQ79R/syLkfS8VYUJNcwWkQj0KnwpA=;
-        b=3DCtbU9fCjXetD0VxCFZFVgpFQshKDXbLKB1Dpiv1OZwS+thMqzEr8lqGnRi4JZKlz
-         2gFLYyXWDJkHmAPnwdk9mkJOTxVKCXvqJu3SMw7HRHfai9BlgLF+r9JfN8W+oaLsmQcS
-         Y6+CQSlFenY3W4Z/DPgavniWt0Vv3K2E9vw/2PdJeIdeVtD1KMmFUn2vGVAAlv88GBIY
-         rnBo8K3C7N29SmB9WwNd2btv16eYJsecithLtGOipsSochufADD9/2MtUW4FXNVBA3qm
-         wGkBUc6vEny7TwuqLR6t24s+NXtbpf90awwQcHlbIhZzH2Eq7QIMFdxeNnI19EmTnNfU
-         nFAQ==
-X-Gm-Message-State: AOAM530Ppr6Ks1rrPmBHY7AKwFq3Ufn7qC+/jSPWakmBgxb4hwSnT9To
-        QLDYBRKHpDOtW3aeYRdNr7g=
-X-Google-Smtp-Source: ABdhPJxELsFgqlrbNXE1yH8ho2TOwf5wAuWTJE/hrT0O0G0TIO5n6HSwMbmQRpwsms2E4n/Z+4NmVg==
-X-Received: by 2002:adf:8b03:: with SMTP id n3mr17865478wra.439.1631614669867;
-        Tue, 14 Sep 2021 03:17:49 -0700 (PDT)
-Received: from [192.168.1.240] (46.107.7.51.dyn.plus.net. [51.7.107.46])
-        by smtp.gmail.com with ESMTPSA id s10sm10088508wrg.42.2021.09.14.03.17.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Sep 2021 03:17:49 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 11/11] rebase: dereference tags
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
- <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
- <951de6bb1992773cda60791c4b7a09867b5e0f19.1631546362.git.gitgitgadget@gmail.com>
- <xmqq5yv4ccc0.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <5ef402a4-3477-6227-e08c-041ed373313e@gmail.com>
-Date:   Tue, 14 Sep 2021 11:17:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S230508AbhINKUJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 06:20:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49265 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229969AbhINKUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 06:20:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631614718;
+        bh=0M0GXxKpceBRWW0gUzKLHiEXkNxTs3uoaLTj89ZTtts=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YAYlSL9GVcKlJjnT7Piq4pnMuCTHws+Nbxx2w0rXQsPbFTjTZx+xubhDt1xfclJiV
+         bSIAyK4O5BQ0gvEZMS3TXopTKSPBKEFxbtF3rRqH6PBRtyoVJTu9FHlSDFrk94yvPJ
+         U3hBuRO+fl9YkY2gat3XmAdSpScBJXIQamhfuvws=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.116.95] ([89.1.214.165]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDysm-1mZwsM0Avk-00A0f8; Tue, 14
+ Sep 2021 12:18:38 +0200
+Date:   Tue, 14 Sep 2021 12:18:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
+In-Reply-To: <YT+FzPT0RCP2PdNL@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2109141215140.55@tvgsbejvaqbjf.bet>
+References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de> <YSvsQcGNpCMZwS8o@nand.local> <xmqqeeaa6fey.fsf@gitster.g> <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de> <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net> <8bd13e99-208b-4c22-90e6-28227593e9c4@web.de>
+ <nycvar.QRO.7.76.6.2109131335260.55@tvgsbejvaqbjf.bet> <YT+FzPT0RCP2PdNL@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqq5yv4ccc0.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:A2CvK33b6HBFU+BY6p5MkwoEZd0WxUDJoEeXKCq2P8na5B1Uyve
+ 8UdyhQvuLdGmPQku7W63LKSjQoa3PmCUbcVWeXf7XZhjiPNrgY+mKVgDCtjwUuobw3dZ0oE
+ efn1yuhSMimP3wSiZ+FpEs3d0cR23jRXcDhiEqOKyzql8eK9StYB0ewwGXpwKmr39QoNZI7
+ b+Dnyjm8fIUue0qc5YqiA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7xF2cGfDmpY=:U4KX1A2WsghUgkuCRNb08M
+ l3V2Ef+GJy1vLv6+AGw5Wk//LI8U9+PJ+PM8SCd97yvp1qNxs8uHWv510NcUOl72hT5UhAUah
+ 4RnSv6BlnZZRRzY/ZrFkBEn3ZQTdbnGy8RUVgTc6ZzvE4kpTxk4e6SyIvju3YObMntpY7SQ6v
+ b2kIxl7p+3STIFQvJOoLHmUsZciPLk65c5dHYRonOkO5HHQPSYAY3cHcO3ao/oJrDmPoVvyRI
+ Gd9j/YcLcsyT+fllHu5ZiqLeTm6hri6GP1wChxgiZFP/8fsEjt8/GZ1Erkzk+eNrfgxZH7Wgn
+ ekkevXytAO90Lo9k0+gQtf2AjVGpZ8n2r5iSrRoRGoQ71oej1lYMVH0TlZYE8IVSTlceUO0mo
+ aH2840bzdLMaiWWY7OnJyNOXmKkEl74a6ILRxwBGpUWWf82zAdBGPjlIdArEer9HTLmNDcE1h
+ Mm7xWIWqmxog5HLM7GAQ4GrzcI9wat4O+rXKJaEtZvnCRc/uZUo1GPX8/SGpLrX/Y6aOYLSLA
+ MEwXoShQlwbkUsniPXBkDsqwgdigec3JGJtmYrJfginM8+JoN2Ce42CHxIZFaSAnssPTlIVJT
+ 8KtXMZq04sRkjmxirwYJTJqXbLDPYva92EwpPZ5T/+fpOjm0ifvoIH6oZBOuNum0Fw/6nVoNN
+ OMu5anPVMdnq/aE9JZZUvpV25GmyWeBIql/rmnmhsq0NkCUSQcMvBfy04v9b9wG0NwPtInxuC
+ 3lX6EPdUdE9ayGuqngYzCpTLfiSdNDQ9NmLaYIlUaSLVOjqd1ehrPZOx7iMrYD9+EMRRxHyXE
+ 5sgfmT9tt2RjHBEShVQ/v32TGd67ASjzWonLXpR0A5MMCuUJYAdMaQSh9JBsZPTP6FoNLBEog
+ 20Bl6NheFHEzLBUP+wHtPztX9dyJ1+K5uYXP81ijOyU592qkFhDkhRRZamLGoJGHDI2ZSgN+1
+ scPsNSnhNiDUsR2hCKhYpXrzAS7TETSkwAqS1Iwg/2iJj13Wa9GrJ7fm4Ee7m8qcTOsMomr1d
+ jnlGyYpE8JGh9NSxHX1E8cZXvyuXKMlr3T/F+Hpxum9I8SykNNvkiMU68Xgp9ZIrYINgMyjv0
+ B+zI8Kha0DsO+A=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Peff,
 
-On 13/09/2021 23:58, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Aborting a rebase stated with 'git rebase <upstream> <tag-object>'
->> should checkout the commit pointed to by <tag-object>. Instead it gives
-> 
-> I am not sure if "should checkout the commit pointed to by." is a
-> good description.  It does not seem to be sufficiently justified.
+On Mon, 13 Sep 2021, Jeff King wrote:
 
-My logic was that as we handle commits here it would make sense to 
-handle tags as well - I discovered that this did not work when I 
-happened to use an annotated tag as the <branch> argument to rebase the 
-commits pointed to by the tag and was surprised it did not work when we 
-happily accept tags for <upstream> and --onto.
+> On Mon, Sep 13, 2021 at 01:37:48PM +0200, Johannes Schindelin wrote:
+>
+> > > Good point.  So fspathcmp() and friends would need a repo parameter.=
+ :-|
+> >
+> > Yes, we will eventually have to pass `struct repository *r` into a _lo=
+t_
+> > of call chains. It'll be a disruptive change, yet if the submodule fol=
+ks
+> > truly want to aim for in-process recursive treatment of submodules, th=
+ere
+> > is no alternative.
+> >
+> > FWIW on Windows there are other potentially repository-specific settin=
+gs
+> > that are relevant in similar situations. For example, there is
+> > `core.symlinks`.
+>
+> Another approach is to stuff the appropriate globals into the repository
+> struct, and then "push" onto the global the_repository pointer, treating
+> it like a stack. And then low-level code is free to use that global
+> context, even if it wasn't passed in.
+>
+> That helps the primary use case of "now I need to do something in a
+> sub-module, but I'd like to do it in-process". But it's not without
+> challenges:
+>
+>   - code which acts at the boundary of a submodule and a superproject
+>     may be more awkward (since only one of them can be "the current
+>     repository" at a time).
+>
+>   - it's a challenge with threading (an obvious problem would be a
+>     multi-threaded grep which wanted to descend into a submodule). Using
+>     a thread-local global for the_repository might solve that.
+>
+> It's possible that this is a terrible direction to go, so I'm not
+> necessarily endorsing it, but just offering it as a possibility to think
+> about. The trickiest thing is that any devil would likely be in the
+> details, and we wouldn't know until proceeding for a while along that
+> path. Whereas passing around a context struct, while verbose and
+> annoying, is a well-understood construct.
 
-> Did we auto-peel in scripted version of "git rebase" and is this a
-> regression when the command was rewritten in C?
+I would not so far as to call it a terrible direction. It is definitely
+worth a thought or two.
 
-As far as I can tell we have never peeled tags here
+At the end of the day, I fear that it is too tricky in practice, though.
 
-> If that is not the case, this topic is perhaps slightly below
-> borderline "meh" to me.  The optional "first switch to this <branch>
-> before doing anything" command-line argument in
-> 
->      git rebase [--onto <there>] <upstream> [<branch>]
-> 
-> was meant to give a branch, and because we treat detached HEAD as
-> almost first-class citizen when dealing with branch-ish things, we
-> allowed
-> 
-> 	git rebase master my-topic^0
-> 
-> to try rebasing my-topic on detached HEAD without losing the
-> original.  In other words, you had to be explicit that you meant the
-> commit object, not a ref that points at it, to trigger this "rebase
-> detached" feature.  The same thing for tags.
-> 
-> 	git rebase master v12.3^0
-> 
-> would be a proper request to rebase the history leading to that
-> commit.  Without the peeling, it appears the user is asking to
-> update the ref that can be uniquely identified with "v12.3", but we
-> do not want to rebase a tag.
+Seeing as there seems to be some appetite for refactoring Git's code on
+this list, I am thinking that the `struct repository *r` direction might
+be the one to go for. And I mean like "move the globals into that struct"
+as opposed to introducing that stack you talked about. It would even be a
+refactoring where I would understand the motivation, and agree with it,
+too.
 
-I wrote this patch as I felt it was an artificial distinction to require 
-that <branch> is a branch-ish thing rather than a commit-ish thing. 
-Rebase already peels <upstream> and --onto so it feels inconsistent not 
-to do it for <branch>. I guess the counter argument to that is users may 
-be confused and start complaining that the tag itself is not rebased.
-
-> It would have been a different story if we had a problem when a tag
-> is given to "--onto <there>", but I do not think this topic is about
-> that case.
-
-No "--onto <tag>" works fine. We also accept a tag object for upstream 
-without requiring the user to peel it for us.
-
-> Having said that, even if we decide that we shouldn't accept the tag
-> object and require peeled form to avoid mistakes (instead of
-> silently peeling the tag ourselves), I do agree that
-> 
->>      error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD': trying to write non-commit object       710d743b2b9892457fdcc3970f397e6ec07447e0 to branch 'HEAD'
->>
-> 
-> is a bad error message for this.  It should be something like
-> 
-> 	error: cannot rebase a tag
-> 
-> perhaps.
-
-We could do that if we're worried that users would be confused by the 
-tag not being rebased if we started automatically peeling <branch>. (I'm 
-kind of leaning in that direction at the moment having read your email)
-
-Best Wishes
-
-Phillip
-
-> But if we auto-peeled in an old version, I do not mind this series
-> (but let's drop pointless "clean-up" that is not, like what was
-> pointed out by Réne).  In such a case, the first paragraph should
-> say, instead of "should checkout", that "we used to do X, but commit
-> Y broke us and now we die with an error message".
-> 
-> Thanks.
-> 
+Ciao,
+Dscho
