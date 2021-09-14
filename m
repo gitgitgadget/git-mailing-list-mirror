@@ -2,85 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 539A1C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 05:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9500C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 05:23:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36E8760F58
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 05:17:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FAC760F92
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 05:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239486AbhINFSn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 01:18:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239328AbhINFSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 01:18:42 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D105BC061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 22:17:25 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id b10so15339298ioq.9
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 22:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Fnc7E7MH8hWpGi00RH1HoqgSAwZ0Vuoa3Urk4Fg0uJA=;
-        b=s3hcA6sGJ24sUu4Bq5466Hpt1WZhe8AmOIl/wZpDMuLNUObofDQ55WePRA1UZWQX2y
-         pW0Lxfya7Vxo34fT/UliDGekTufZabv4EL01oUdWjTkW3rEXV2xQRYDAinDt6nTTHfTC
-         hQRZgvmr27rp10qOyoV6dmK/NbpA3VdnL0Bo82lgga8yNvqQEoVSQ+7Cb5FY7IIA1K8r
-         xp5jm4F8MrcDBizAWeOYKlmJLrPwcmHl1udQjE46DLiFPL0eM6NbhpyYxZC4mP/+0q8L
-         AsABdy2wREtvEDeERcLh3+ZN1+QsFxFItmVNxT6xYmMUNZSNrFOL/gJO5GL/l6xslF/O
-         CUWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Fnc7E7MH8hWpGi00RH1HoqgSAwZ0Vuoa3Urk4Fg0uJA=;
-        b=WQ/7beGkSmlV6UL8A2KMAtpruWSUq6t3xbkDOHhJAO8J4zUHKnTg9dAPvmD2cVViul
-         5Q+Yk+s+AzCJdRvxnxl77W7dePYYiLJO8ebGrEI0gdTmMkctY8SGrzo+Iguzior6l4cj
-         6Z4HtFjdjJLHJVlMK6EWIogH+rhTCo6f5dCR0LOmZqDDciDUU/5LCHQL6qhJZaEiRDVy
-         31ctmVh+i61ElRuUH/1JpXDQX1VnBqPL6tkSFC2Iu39wkKQIFUvc0da2htkGTEqS+i4E
-         Hv8hUlqi9RlW95h7G8bhCCgHCNUH3IgF+LQa7lX/HDdzbAJDmDr6ZJRDlUIaqUkPGvCq
-         GnJA==
-X-Gm-Message-State: AOAM533+aeSU5mc6EvFbkRHsWlorv2ORu5gkd8rtx9e0xkr3rpgT2qcL
-        0Nv8hIeh+gPfNlnntfnOWTAkjfItGjg/CRgy
-X-Google-Smtp-Source: ABdhPJyPWSz3eDhkju40Y0VzLCa6CY9drdxU8CYJ+qTv8iKDeSHQx24daNN9Nl87dQOxFauOcfc8vw==
-X-Received: by 2002:a05:6638:b10:: with SMTP id a16mr13346226jab.149.1631596645275;
-        Mon, 13 Sep 2021 22:17:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g19sm6467251ilb.84.2021.09.13.22.17.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 22:17:24 -0700 (PDT)
-Date:   Tue, 14 Sep 2021 01:17:24 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        id S239472AbhINFYj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 01:24:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46774 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239411AbhINFYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 01:24:38 -0400
+Received: (qmail 22791 invoked by uid 109); 14 Sep 2021 05:23:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 05:23:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19078 invoked by uid 111); 14 Sep 2021 05:23:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 01:23:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Sep 2021 01:23:16 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Subject: Re: [PATCH 4/4] t5326: test propagating hashcache values
-Message-ID: <YUAwZDLGTmRfswif@nand.local>
+Message-ID: <YUAxxPcd7RHC2AH+@coredump.intra.peff.net>
 References: <cover.1631049462.git.me@ttaylorr.com>
  <acf3ec60cb6f151a9f121d242f38fef6711cced4.1631049462.git.me@ttaylorr.com>
  <xmqqa6khi9ph.fsf@gitster.g>
  <YT/3BuDa7KfUN/38@nand.local>
  <xmqqpmtbc3o3.fsf@gitster.g>
- <YUAvBso+UsBTYizb@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUAvBso+UsBTYizb@nand.local>
+In-Reply-To: <xmqqpmtbc3o3.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 01:11:34AM -0400, Taylor Blau wrote:
-> On the tip of this branch, the results are:
->
-> [...]
+On Mon, Sep 13, 2021 at 07:05:32PM -0700, Junio C Hamano wrote:
 
-Eek, those tabs are horrific. I must have left my editor in paste mode
-when inserting them, sorry about that.
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+> > Alas, there they are. They are basically no different than having the
+> > name-hash for single pack bitmaps, it's just now we don't throw them
+> > away when generating a MIDX bitmap from a state where the repository
+> > already has a single-pack bitmap.
+> 
+> I actually wasn't expecting any CPU/time difference.
 
-Thanks,
-Taylor
+I was, for the same reason we saw an improvement there in ae4f07fbcc
+(pack-bitmap: implement optional name_hash cache, 2013-12-21): without a
+name-hash, we try a bunch of fruitless deltas before we find a decent
+one.
+
+> I hope that we are talking about the same name-hash, which is used
+> to sort the blobs so that when pack-objects try to find a good delta
+> base, the blobs from the same path will sit close to each other and
+> hopefully fit in the pack window.
+
+Yes, exactly. We spend less time finding the good ones if the likely
+candidates are close together. We may _also_ find better ones overall,
+depending on the number of candidates and the window size.
+
+The bitmap perf tests (neither p5310 nor its new midx cousin p5326)
+don't check the output size.
+
+> The effect I was hoping to see by not discarding the information was
+> that we find better delta base hence smaller deltas in the resulting
+> packfiles.
+
+If we add a size check like so[1]:
+
+diff --git a/t/perf/lib-bitmap.sh b/t/perf/lib-bitmap.sh
+index 63d3bc7cec..648cd5b13d 100644
+--- a/t/perf/lib-bitmap.sh
++++ b/t/perf/lib-bitmap.sh
+@@ -10,7 +10,11 @@ test_full_bitmap () {
+ 		{
+ 			echo HEAD &&
+ 			echo ^$have
+-		} | git pack-objects --revs --stdout >/dev/null
++		} | git pack-objects --revs --stdout >tmp.pack
++	'
++
++	test_size 'fetch size' '
++		wc -c <tmp.pack
+ 	'
+ 
+ 	test_perf 'pack to file (bitmap)' '
+
+then the results I get using linux.git are:
+
+Test                       origin/tb/multi-pack-bitmaps   origin/tb/midx-write-propagate-namehash
+-------------------------------------------------------------------------------------------------
+5326.4: simulated fetch    2.32(7.16+0.21)                2.00(3.79+0.18) -13.8%
+5326.5: fetch size         16.7M                          15.5M -7.1%
+
+so you can see that we spent about half as much CPU (ignore the
+wall-clock percentage; the interesting thing is the userspace time,
+because my machine has 8 cores). But we also shaved off a bit from the
+pack, so we really did manage to find better deltas, too.
+
+I see that Taylor just posted a very similar response, and independently
+did the exact same experiment I did. ;) I'll send this anyway, though,
+as my particular run showed slightly different results.
+
+-Peff
+
+[1] The other thing you'd want (and I presume Taylor was using for his
+    earlier timings) is:
+
+diff --git a/t/perf/p5326-multi-pack-bitmaps.sh b/t/perf/p5326-multi-pack-bitmaps.sh
+index 5845109ac7..a4ac7746a7 100755
+--- a/t/perf/p5326-multi-pack-bitmaps.sh
++++ b/t/perf/p5326-multi-pack-bitmaps.sh
+@@ -11,7 +11,7 @@ test_expect_success 'enable multi-pack index' '
+ '
+ 
+ test_perf 'setup multi-pack index' '
+-	git repack -ad &&
++	git repack -adb &&
+ 	git multi-pack-index write --bitmap
+ '
+ 
+
+since otherwise there is no pack bitmap for the midx to pull the
+name-hashes from.
