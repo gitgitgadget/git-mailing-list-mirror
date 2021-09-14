@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DAAC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63384C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:37:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4497060F21
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:33:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 430D960241
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234357AbhINPeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 11:34:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47030 "EHLO cloud.peff.net"
+        id S234274AbhINPiZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 11:38:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47032 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234274AbhINPeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 11:34:37 -0400
-Received: (qmail 24329 invoked by uid 109); 14 Sep 2021 15:33:19 -0000
+        id S233202AbhINPiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 11:38:25 -0400
+Received: (qmail 24340 invoked by uid 109); 14 Sep 2021 15:37:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 15:33:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 15:37:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24239 invoked by uid 111); 14 Sep 2021 15:33:18 -0000
+Received: (qmail 24284 invoked by uid 111); 14 Sep 2021 15:37:06 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 11:33:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 11:37:06 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 11:33:18 -0400
+Date:   Tue, 14 Sep 2021 11:37:06 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 6/9] serve: drop "keys" strvec
-Message-ID: <YUDAvjteb/JAtyNz@coredump.intra.peff.net>
+Subject: [PATCH 7/9] ls-refs: ignore very long ref-prefix counts
+Message-ID: <YUDBokYvEBnzwsIN@coredump.intra.peff.net>
 References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,66 +42,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We collect the set of capabilities the client sends us in a strvec.
-While this is usually small, there's no limit to the number of
-capabilities the client can send us (e.g., they could just send us
-"agent" pkt-lines over and over, and we'd keep adding them to the list).
+Because each "ref-prefix" capability from the client comes in its own
+pkt-line, there's no limit to the number of them that a misbehaving
+client may send. We read them all into a strvec, which means the client
+can waste arbitrary amounts of our memory by just sending us "ref-prefix
+foo" over and over.
 
-Since all code has been converted away from using this list, let's get
-rid of it. This avoids a potential attack where clients waste our
-memory.
+One possible solution is to just drop the connection when the limit is
+reached. If we set it high enough, then only misbehaving or malicious
+clients would hit it. But "high enough" is vague, and it's unfriendly if
+we guess wrong and a legitimate client hits this.
 
-Note that we do have to replace it with a flag, because some of the
-flush-packet logic checks whether we've seen any valid commands or keys.
+But we can do better. Since supporting the ref-prefix capability is
+optional anyway, the client has to further cull the response based on
+their own patterns. So we can simply ignore the patterns once we cross a
+certain threshold. Note that we have to ignore _all_ patterns, not just
+the ones past our limit (since otherwise we'd send too little data).
+
+The limit here is fairly arbitrary, and probably much higher than anyone
+would need in practice. It might be worth limiting it further, if only
+because we check it linearly (so with "m" local refs and "n" patterns,
+we do "m * n" string comparisons). But if we care about optimizing this,
+an even better solution may be a more advanced data structure anyway.
+
+I didn't bother making the limit configurable, since it's so high and
+since Git should behave correctly in either case. It wouldn't be too
+hard to do, but it makes both the code and documentation more complex.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- serve.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+We're perhaps bending "optional" a little here. The client does know if
+we said "yes, we support ref-prefix" and until now, that meant they
+could trust us to cull. But no version of Git has ever relied on that
+(we tell the transport code "if you can limit by these prefixes, go for
+it" but then just post-process the result).
 
-diff --git a/serve.c b/serve.c
-index 6bbf54cbbe..baa0a17502 100644
---- a/serve.c
-+++ b/serve.c
-@@ -239,7 +239,7 @@ static int process_request(void)
- {
- 	enum request_state state = PROCESS_REQUEST_KEYS;
- 	struct packet_reader reader;
--	struct strvec keys = STRVEC_INIT;
-+	int seen_capability_or_command = 0;
- 	struct protocol_capability *command = NULL;
- 
- 	packet_reader_init(&reader, 0, NULL, 0,
-@@ -263,10 +263,11 @@ static int process_request(void)
- 			/* collect request; a sequence of keys and values */
- 			if (parse_command(reader.line, &command) ||
- 			    receive_client_capability(reader.line))
--				strvec_push(&keys, reader.line);
-+				seen_capability_or_command = 1;
- 			else
- 				die("unknown capability '%s'", reader.line);
- 
-+
- 			/* Consume the peeked line */
- 			packet_reader_read(&reader);
- 			break;
-@@ -275,7 +276,7 @@ static int process_request(void)
- 			 * If no command and no keys were given then the client
- 			 * wanted to terminate the connection.
- 			 */
--			if (!keys.nr)
-+			if (!seen_capability_or_command)
- 				return 1;
- 
- 			/*
-@@ -309,7 +310,6 @@ static int process_request(void)
- 
- 	command->command(the_repository, &reader);
- 
--	strvec_clear(&keys);
- 	return 0;
+The other option is that we could just say "no, you're sending too many
+prefixes" and hangup. This seemed friendlier to me (though either way, I
+really find it quite unlikely anybody would legitimately hit this
+limit).
+
+ ls-refs.c            | 19 +++++++++++++++++--
+ t/t5701-git-serve.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 2 deletions(-)
+
+diff --git a/ls-refs.c b/ls-refs.c
+index a1a0250607..839fb0caa9 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -40,6 +40,12 @@ static void ensure_config_read(void)
+ 	config_read = 1;
  }
  
++/*
++ * The maximum number of "ref-prefix" lines we'll allow the client to send.
++ * If they go beyond this, we'll avoid using the prefix feature entirely.
++ */
++#define MAX_ALLOWED_PREFIXES 65536
++
+ /*
+  * Check if one of the prefixes is a prefix of the ref.
+  * If no prefixes were provided, all refs match.
+@@ -141,6 +147,7 @@ static int ls_refs_config(const char *var, const char *value, void *data)
+ int ls_refs(struct repository *r, struct packet_reader *request)
+ {
+ 	struct ls_refs_data data;
++	int too_many_prefixes = 0;
+ 
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
+@@ -156,8 +163,16 @@ int ls_refs(struct repository *r, struct packet_reader *request)
+ 			data.peel = 1;
+ 		else if (!strcmp("symrefs", arg))
+ 			data.symrefs = 1;
+-		else if (skip_prefix(arg, "ref-prefix ", &out))
+-			strvec_push(&data.prefixes, out);
++		else if (skip_prefix(arg, "ref-prefix ", &out)) {
++			if (too_many_prefixes) {
++				/* ignore any further ones */
++			} else if (data.prefixes.nr >= MAX_ALLOWED_PREFIXES) {
++				strvec_clear(&data.prefixes);
++				too_many_prefixes = 1;
++			} else {
++				strvec_push(&data.prefixes, out);
++			}
++		}
+ 		else if (!strcmp("unborn", arg))
+ 			data.unborn = allow_unborn;
+ 	}
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index 930721f053..b095bfa0ac 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -158,6 +158,37 @@ test_expect_success 'refs/heads prefix' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'ignore very large set of prefixes' '
++	# generate a large number of ref-prefixes that we expect
++	# to match nothing; the value here exceeds MAX_ALLOWED_PREFIXES
++	# from ls-refs.c.
++	{
++		echo command=ls-refs &&
++		echo object-format=$(test_oid algo)
++		echo 0001 &&
++		perl -le "print \"refs/heads/$_\" for (1..65536+1)" &&
++		echo 0000
++	} |
++	test-tool pkt-line pack >in &&
++
++	# and then confirm that we see unmatched prefixes anyway (i.e.,
++	# that the prefix was not applied).
++	cat >expect <<-EOF &&
++	$(git rev-parse HEAD) HEAD
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/main) refs/heads/main
++	$(git rev-parse refs/heads/release) refs/heads/release
++	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag
++	$(git rev-parse refs/tags/one) refs/tags/one
++	$(git rev-parse refs/tags/two) refs/tags/two
++	0000
++	EOF
++
++	test-tool serve-v2 --stateless-rpc <in >out &&
++	test-tool pkt-line unpack <out >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'peel parameter' '
+ 	test-tool pkt-line pack >in <<-EOF &&
+ 	command=ls-refs
 -- 
 2.33.0.887.g5b1f44e68d
 
