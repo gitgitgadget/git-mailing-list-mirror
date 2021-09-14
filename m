@@ -6,95 +6,66 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78661C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F7BC433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:37:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AA34610FB
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:29:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C653610A6
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbhINQa1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 12:30:27 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52343 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbhINQa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 12:30:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0242315C14D;
-        Tue, 14 Sep 2021 12:29:09 -0400 (EDT)
+        id S230056AbhINQjH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 12:39:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58062 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230265AbhINQiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 12:38:52 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACE9EEE4FF;
+        Tue, 14 Sep 2021 12:37:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ni+U8Eu1K3Www/uLk0l1Kg/LZGlf04KqCZCrwd
-        pmct8=; b=LmJpmTxcyJzpHpZpQ8n/s3vqSUyZp2Uzw1PUSZBekAK+5xgCyojlP/
-        EUR1M/vKgBFXR2cO1CpwKydrO3MqjelY9ZsGDpQ6Jmue6IzTESd/cbgYShT3sG/Z
-        dJMoC2VTQ89130H7K6eN8431I9iRI7oWdndwbf9CfcSlHKkfroJ34=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EEA8315C14C;
-        Tue, 14 Sep 2021 12:29:08 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=R894zY2BYMjL
+        73JeTxmUkOfvRENTPgwVl45ss+exvv4=; b=hL6hXN4SyaHz0Tzdg1Zb8BaY0d0b
+        FgUIVf9FfouwVLNX8d1vNw626bXwEoebOHRnKih/jBcPrNlHxjwbOEl3XDx+SZuX
+        0mDBo8yQvPSMn3AibYHK4HUwoNpgC0hS2224ryKrmxvWeulEyEhTPJy4V4gP49b2
+        eiocgRJL91PW2CE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5281EE4FE;
+        Tue, 14 Sep 2021 12:37:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3F0D915C14B;
-        Tue, 14 Sep 2021 12:29:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 335F1EE4FD;
+        Tue, 14 Sep 2021 12:37:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 11/11] rebase: dereference tags
-References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
-        <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
-        <951de6bb1992773cda60791c4b7a09867b5e0f19.1631546362.git.gitgitgadget@gmail.com>
-        <xmqq5yv4ccc0.fsf@gitster.g>
-        <5ef402a4-3477-6227-e08c-041ed373313e@gmail.com>
-        <8c78eac4-676b-7bd1-0282-d52eb20f87ce@gmail.com>
-Date:   Tue, 14 Sep 2021 09:29:04 -0700
-In-Reply-To: <8c78eac4-676b-7bd1-0282-d52eb20f87ce@gmail.com> (Phillip Wood's
-        message of "Tue, 14 Sep 2021 14:27:17 +0100")
-Message-ID: <xmqqbl4v3yun.fsf@gitster.g>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, bagasdotme@gmail.com,
+        johannes.schindelin@gmx.de
+Subject: Re: [PATCH v3 0/3] windows: allow building without NO_UNIX_SOCKETS
+References: <20210913085600.35506-1-carenas@gmail.com>
+        <20210914072600.11552-1-carenas@gmail.com>
+Date:   Tue, 14 Sep 2021 09:37:32 -0700
+In-Reply-To: <20210914072600.11552-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 14 Sep 2021 00:25:57 -0700")
+Message-ID: <xmqq7dfj3ygj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E15AF0FC-1578-11EC-91F0-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0F861E10-157A-11EC-99A8-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
->>> Did we auto-peel in scripted version of "git rebase" and is this a
->>> regression when the command was rewritten in C?
->> As far as I can tell we have never peeled tags here
->
-> That's a bit misleading. We have never peeled a tag given as <branch>
-> when we parse it. In the scripted version we just passed the tag oid 
-> along to rev-list, checkout and reset and they peeled it. So I think
-> this is actually a regression in the builtin rebase. I'll update the 
-> commit message to reflect that unless we feel that allowing a tag for
-> <branch> is a mistake and we should be erroring out to avoid the 
-> possible confusion of the tag not being rebased, only the commits it
-> points to.
+> Eventhough NO_UNIX_SOCKETS was specifically added to support Windows,
+> it might not be necessary in the future, because Windows added support
+> for Unix Sockets in late 2017.
 
-OK, so this is a regression fix.  That makes the change much simpler
-to sell.  I'd expect that the description would be along the lines
-of something like this, perhaps.
+Thanks.  I found that this round was a pleasant read.
 
-    A rebase started with 'git rebase <A> <B>' is conceptually to
-    first checkout <B> and run 'git rebase <A>' starting from that
-    state.  'git rebase --abort' in the middle of such a rebase
-    should take us back to the state we checked out <B>.
-
-    This used to work, even when <B> is a tag that points at a
-    commit, until Git X.Y.Z when the command was reimplemented in C.
-    The command now complains that the tag object itself cannot be
-    checked out, which may be technically correct but is not what
-    the user asked to do.
-
-    Fix this old regression by doing ....
-
-Thanks for digging (and fixing, of course).
-
+Will queue, and let's merge it down to 'next' soonish.
