@@ -6,145 +6,110 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAECCC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA19C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:34:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87422610A6
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3AC260E9B
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:34:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232547AbhINTXc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 15:23:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47360 "EHLO cloud.peff.net"
+        id S232113AbhINTfZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 15:35:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47374 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232638AbhINTXb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 15:23:31 -0400
-Received: (qmail 25337 invoked by uid 109); 14 Sep 2021 19:22:13 -0000
+        id S233489AbhINTfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 15:35:15 -0400
+Received: (qmail 25383 invoked by uid 109); 14 Sep 2021 19:33:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 19:22:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 19:33:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27239 invoked by uid 111); 14 Sep 2021 19:22:13 -0000
+Received: (qmail 27338 invoked by uid 111); 14 Sep 2021 19:33:56 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 15:22:13 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 15:33:56 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 15:22:12 -0400
+Date:   Tue, 14 Sep 2021 15:33:55 -0400
 From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 7/9] ls-refs: ignore very long ref-prefix counts
-Message-ID: <YUD2ZEqKSU/pMzws@coredump.intra.peff.net>
-References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
- <YUDBokYvEBnzwsIN@coredump.intra.peff.net>
- <CAN0heSp9RdFwSo+x5buHSCAOa0Kay7Wcs1tNKTDXWmkCM8Latw@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What should happen in credential-cache on recoverable error
+ without SPAWN option?
+Message-ID: <YUD5I/hwxpcyocEU@coredump.intra.peff.net>
+References: <20210913085600.35506-1-carenas@gmail.com>
+ <20210914072600.11552-1-carenas@gmail.com>
+ <20210914072600.11552-3-carenas@gmail.com>
+ <xmqqilz30yap.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSp9RdFwSo+x5buHSCAOa0Kay7Wcs1tNKTDXWmkCM8Latw@mail.gmail.com>
+In-Reply-To: <xmqqilz30yap.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 09:06:55PM +0200, Martin Ågren wrote:
+On Tue, Sep 14, 2021 at 12:09:18PM -0700, Junio C Hamano wrote:
 
-> > But we can do better. Since supporting the ref-prefix capability is
-> > optional anyway, the client has to further cull the response based on
-> > their own patterns. So we can simply ignore the patterns once we cross a
-> > certain threshold. Note that we have to ignore _all_ patterns, not just
-> > the ones past our limit (since otherwise we'd send too little data).
+> While reviewing Carlo's "credential-cache: check for windows
+> specific errors", I noticed this piece of code, that came from
+> 8ec6c8d7 (credential-cache: report more daemon connection errors,
+> 2012-01-09):
 > 
-> This all makes sense to me. At some point, we should be able to go "I
-> don't know what you're trying to do, but let me just ignore all this
-> craziness and instead try to give you a useful result sooner rather than
-> later".
+> 	if (send_request(socket, &buf) < 0) {
+> 		if (errno != ENOENT && errno != ECONNREFUSED)
+> 			die_errno("unable to connect to cache daemon");
+> 		if (flags & FLAG_SPAWN) {
+> 			spawn_daemon(socket);
+> 			if (send_request(socket, &buf) < 0)
+> 				die_errno("unable to connect to cache daemon");
+> 		}
+> 	}
 > 
-> I do wonder if we should document that the client can't trust us to
-> actually do all this culling. In general, I find that it's a matter of
-> hygiene for the client to do its own checks, but with this change they
-> actually *need* to do them. (Unless they know our limit and that they're
-> on the right side of it, but that kind of magic is even less hygienic.)
+> What would happen when we get a resumable error and then weren't
+> given the SPAWN flag?  It seems that do_cache() simply returns
+> without dying.  Shouldn't we get "unable to connect" in such a case?
 
-Perhaps we could say so more explicitly in the v2 protocol spec. I'll
-take a look.
+It's subtle, but I think we end up doing the right thing. Those errors
+aren't just "resumable"; they are "we do not have a daemon to talk to at
+all".
 
-> > +               else if (skip_prefix(arg, "ref-prefix ", &out)) {
-> > +                       if (too_many_prefixes) {
-> > +                               /* ignore any further ones */
-> > +                       } else if (data.prefixes.nr >= MAX_ALLOWED_PREFIXES) {
-> > +                               strvec_clear(&data.prefixes);
-> > +                               too_many_prefixes = 1;
-> > +                       } else {
-> > +                               strvec_push(&data.prefixes, out);
-> > +                       }
-> > +               }
-> 
-> Is it easier to reason about with something like this
-> (whitespace-damaged) on top?
+The "exit", "get", and "erase" operations do not pass the SPAWN flag.
+But if there is no daemon, they are all noops.
 
-You're the second person to complain about this if-else chain. I'll take
-the hint. ;)
+The "store" operation is the only one which uses SPAWN, and of course
+there we want to spin up a daemon so that we can put something in it.
 
-> diff --git a/ls-refs.c b/ls-refs.c
-> index 839fb0caa9..b3101ff361 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -147,7 +147,6 @@ static int ls_refs_config(const char *var, const
-> char *value, void *data)
->  int ls_refs(struct repository *r, struct packet_reader *request)
->  {
->         struct ls_refs_data data;
-> -       int too_many_prefixes = 0;
-> 
->         memset(&data, 0, sizeof(data));
->         strvec_init(&data.prefixes);
-> @@ -164,14 +163,8 @@ int ls_refs(struct repository *r, struct
-> packet_reader *request)
->                 else if (!strcmp("symrefs", arg))
->                         data.symrefs = 1;
->                 else if (skip_prefix(arg, "ref-prefix ", &out)) {
-> -                       if (too_many_prefixes) {
-> -                               /* ignore any further ones */
-> -                       } else if (data.prefixes.nr >= MAX_ALLOWED_PREFIXES) {
-> -                               strvec_clear(&data.prefixes);
-> -                               too_many_prefixes = 1;
-> -                       } else {
-> +                       if (data.prefixes.nr <= MAX_ALLOWED_PREFIXES)
->                                 strvec_push(&data.prefixes, out);
-> -                       }
->                 }
+It may be that SPAWN could have a better name to make this more clear.
 
-Hmm. At first I liked this, because it reduces the number of cases (and
-variables!). But there's something really subtle going on here. I
-thought at first it should be "<", but you are intentionally
-over-allocating by one entry to indicate the overflow. I.e., you've
-essentially stuffed the too_many_prefixes boolean into the count.
+> diff --git c/builtin/credential-cache.c w/builtin/credential-cache.c
+> index 78c02ad531..a41a17e58f 100644
+> --- c/builtin/credential-cache.c
+> +++ w/builtin/credential-cache.c
+> @@ -101,13 +101,11 @@ static void do_cache(const char *socket, const char *action, int timeout,
+>  	}
+>  
+>  	if (send_request(socket, &buf) < 0) {
+> -		if (connection_fatally_broken(errno))
+> +		if (connection_fatally_broken(errno) && !(flag & FLAG_SPAWN))
+> +			die_errno("unable to connect to cache daemon");
+> +		spawn_daemon(socket);
+> +		if (send_request(socket, &buf) < 0)
+>  			die_errno("unable to connect to cache daemon");
+> -		if (flags & FLAG_SPAWN) {
+> -			spawn_daemon(socket);
+> -			if (send_request(socket, &buf) < 0)
+> -				die_errno("unable to connect to cache daemon");
+> -		}
+>  	}
+>  	strbuf_release(&buf);
+>  }
 
-> @@ -180,6 +173,9 @@ int ls_refs(struct repository *r, struct
-> packet_reader *request)
->         if (request->status != PACKET_READ_FLUSH)
->                 die(_("expected flush after ls-refs arguments"));
-> 
-> +       if (data.prefixes.nr > MAX_ALLOWED_PREFIXES)
-> +               strvec_clear(&data.prefixes);
-> +
+If you do this, then I think we'll start producing spurious errors
+during normal use of the helper. Most interaction will generally start
+with a "get" request to the helpers. So if you don't have anything
+cached and the daemon stopped running, right now we just don't return a
+credential. With this we'd complain "unable to connect to daemon".
 
-This is far from the parser, but I think that's OK. I'd probably couple
-it with a comment explaining why we need to clear rather than using what
-we got.
-
-> Maybe even name the macro TOO_MANY_PREFIXES (and bump it by one)
-> to make the logic instead be
-> 
->         if (data.prefixes.nr < TOO_MANY_PREFIXES)
->                 strvec_push(&data.prefixes, out);
->  ...
->         if (data.prefixes.nr >= TOO_MANY_PREFIXES)
->                 strvec_clear(&data.prefixes);
-
-At first I thought this was just being cute, but it's an attempt to
-compensate for the off-by-one subtlety in the early check. I'll give it
-some thought. I kind of like it, but the fact that it took me a minute
-or three to be sure the code is correct makes me worried it's being too
-clever.
+And then of course we'd follow that up by asking for the credential and
+spinning up a daemon to store it. But that first request after the
+daemon times out will always say "unable to connect".
 
 -Peff
