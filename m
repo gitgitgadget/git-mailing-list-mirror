@@ -7,153 +7,138 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 337CDC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB50C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:31:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17B8E610FB
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:28:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C5D360E05
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 10:31:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbhINK3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 06:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37816 "EHLO
+        id S232031AbhINKdM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 06:33:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbhINK3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 06:29:13 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74CEC061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:27:55 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id u16so19352680wrn.5
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:27:55 -0700 (PDT)
+        with ESMTP id S231852AbhINKdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 06:33:01 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A0FC061766
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:31:44 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id q26so19355445wrc.7
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 03:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=s5MBWqGzxOi4H2+xMM0aSFO0A2BavpL662S8NkcS4hU=;
-        b=VS56ZbZDdqirWGQ1cHzvJCyjy304QHlmozrQ8jlIwxitiVmfXiFBhTBHTzIoLDTYHk
-         nXp7RbzCn7/70W5zosGF9RgsPHkIJa0TP48Q6OL0U1RclonMC5xySWlUqET8grimR1+q
-         La77x2mTkg0970uHWCFO6byM0Ff7h6S7ZgzsJ8jJxKlOsmiuMs23rS3BID8BVYuhxth3
-         ppQGskGoT5eUCrs6PFXxxz9TjoW4+51+ifDJClwoNT1mimSGBmbUEow0ZOXwsnt3UlYN
-         81tUiXDt+FTLtL638Q1FX+aiEQ/puh4wYfzgVdnn5Vok5fR2unFXoMV2mUc/4JFM5PCr
-         iK7g==
+        bh=PGPxaWLddDB1B+9MtX+BtCUHITwZCauA1k4RS88/Oqc=;
+        b=L5JnqLNhX6UBtyaYi9Dm/sNJ6tUPlkbwHL7/OFMcPgF0kAy1lJMyD06LyzxHo2uGS3
+         cIhrWPehTKDeMN0Eje95abiewBlqN69NMYK7KDiRSyUnbn3StEF8rG/fLDAEHJyypwB1
+         V41OuStB8bnLftiLfv7JX+PdxXhmEnSe/6+f+snrLtr1r7lzazaz6I7LRFcRedp2v9PO
+         eHUK8b0PqgVlEVr3YJ64tyvnCldP5I8bKxvUJ/H5xY5EvleDVHkQ0ll7/hSJYNpS5mKn
+         YzpJhfZWra0Dc/M9XJ4IZyokuSPX0/HrJXJnbzAuiIA/ED8ToZPNwGg/opNJJRS1k9rf
+         sZag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=s5MBWqGzxOi4H2+xMM0aSFO0A2BavpL662S8NkcS4hU=;
-        b=g3V8t/KgcQwjYDcl4EDfVm/87nonfedBbHqmECHNx0YPV50LsmlN5ubf78tBagZVt8
-         mR9+D5W2nBK0wGocPK1lde2q8LsU+f7KRPI4LizAxLGVXlaUS22urENnqHqGC/G75kVl
-         VXS7CXnQqG7x8PjGphBF1HzuuwOEh02c+NJ8gw9CzNSQH0HZ9egn/sG6mbJtlGrFEfyf
-         /YFsew0TekpHd7FfI7WNJyAYkZ+NnJ16DFiyGG1QzOOtU6ZLkQQ4e4fMsLUSO9QAKATo
-         M80vpo9k9Fo5Y9cPEqkiAxxy7X69HfMGcYvxepn5yOJ8hqW3VF523OiesyF4rTkuROs4
-         YXxA==
-X-Gm-Message-State: AOAM530ePQdjw8NRO6lUF1B2d6AlR5t0wVkHnYZaGNAg687zdyJFBcDP
-        4jyjTZzJQv56cl7306m/1+TcNAYNt60=
-X-Google-Smtp-Source: ABdhPJy4IAtF3dgQJRvH6phUKoH0jOmpg9Vla5vjW++HrUE4PjFdow/JWwY7WzQPKWGDmmdVL6Jqtw==
-X-Received: by 2002:adf:f7c2:: with SMTP id a2mr17632191wrq.58.1631615274288;
-        Tue, 14 Sep 2021 03:27:54 -0700 (PDT)
-Received: from [192.168.0.104] (abayonne-651-1-48-114.w92-156.abo.wanadoo.fr. [92.156.201.114])
-        by smtp.gmail.com with ESMTPSA id q7sm9956015wrc.55.2021.09.14.03.27.52
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=PGPxaWLddDB1B+9MtX+BtCUHITwZCauA1k4RS88/Oqc=;
+        b=uhcbNUYCsZIIAKga+MzBdAGB1EsDOuLsm+sChgdGHmLO8qT7KMOSf62LS8PaRYo9O2
+         127ZQyGxp9Zz2ILn2o+21fBxrlRNB3TpT+yhU/5/S2MbVDJ7MWBfldSR3KOQUF4Z7qjo
+         NEqcmjFy0KsmOkb4yPsbUWwX+UN+4fDArGNGMoFDR9FpRHS8AUVaZzyynVTYX89aOlBB
+         YDXfWlKY7WWo/FhmwOqsNKTY7BRD8EcqIPVMI0O9DveVNf53bC/gj0jVkw2mVKKTy4oA
+         SzFXTeF9CQqvkQKmhp+y420hu2lUCTueMmQtmJdA6wntBV01Rkj54yeuQZ7z3mwii40Q
+         qJdA==
+X-Gm-Message-State: AOAM530nzdTJxpwics+5a9PzzUxP7M8yltFA68iC8S6bttIvtX5z7pNs
+        9vsvltKE+PcOqyXfh+8LVL0=
+X-Google-Smtp-Source: ABdhPJwmWmrkLNx47BAHeK4KmquoXVPqq6olW+XGvb/PSBHvZaSaOIEXRtCocaDMU8sgmGkNWksWcA==
+X-Received: by 2002:adf:f890:: with SMTP id u16mr11352287wrp.388.1631615502756;
+        Tue, 14 Sep 2021 03:31:42 -0700 (PDT)
+Received: from [192.168.1.240] (46.107.7.51.dyn.plus.net. [51.7.107.46])
+        by smtp.gmail.com with ESMTPSA id y18sm10065792wrq.6.2021.09.14.03.31.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Sep 2021 03:27:53 -0700 (PDT)
-Subject: Re: [PATCH v1] git-clone.txt: add the --recursive option
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <20210913185941.6247-1-alban.gruin@gmail.com>
- <CAPig+cR=HUDgFctXzcigZ062c=QWYfGWUPuT7scc-xU_w3NT1w@mail.gmail.com>
- <26422bc7-f1d4-4959-ce30-b26d8fe61888@gmail.com>
- <CAPig+cRGzmN6tH-5DmtnbW2cMHSSQ2RS_6d=B0xJ7QWKtG6yug@mail.gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Message-ID: <d02c7f3b-221d-fbab-827a-a950bf28856c@gmail.com>
-Date:   Tue, 14 Sep 2021 12:27:44 +0200
+        Tue, 14 Sep 2021 03:31:42 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 08/11] rebase: remove redundant strbuf
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
+ <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
+ <ad3c4efc0272be8eee052a08731656a406f8f90b.1631546362.git.gitgitgadget@gmail.com>
+ <3c7c5560-2cae-a4cf-a298-6d77a3fb9226@web.de> <xmqqczpccd57.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <0c067b02-44e4-f719-42d9-7ceac5804e4a@gmail.com>
+Date:   Tue, 14 Sep 2021 11:31:41 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cRGzmN6tH-5DmtnbW2cMHSSQ2RS_6d=B0xJ7QWKtG6yug@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
+In-Reply-To: <xmqqczpccd57.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-
-Le 13/09/2021 à 23:57, Eric Sunshine a écrit :
-> On Mon, Sep 13, 2021 at 4:42 PM Alban Gruin <alban.gruin@gmail.com> wrote:
->> Le 13/09/2021 à 21:26, Eric Sunshine a écrit :
->>> On Mon, Sep 13, 2021 at 3:14 PM Alban Gruin <alban.gruin@gmail.com> wrote:
->>>> This adds the --recursive option, an alias of --recurse-submodule, to
->>>> git-clone's manual page.
+On 13/09/2021 23:40, Junio C Hamano wrote:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> Am 13.09.21 um 17:19 schrieb Phillip Wood via GitGitGadget:
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>>
->>> Considering that the `--recursive` option was intentionally removed
->>> from `git-clone.txt` by bb62e0a99f (clone: teach --recurse-submodules
->>> to optionally take a pathspec, 2017-03-17), it's not clear that this
->>> change helps the situation.
+>>> There is already an strbuf that can be reused for creating messages.
 >>
->> The patch you mention also hides --recursive from the option array, but
->> that was reverted with 5c387428f1 (parse-options: don't emit "ambiguous
->> option" for aliases, 2019-04-29).  The option should be re-hidden, or
->> even removed.
+>> Reminds me of a terrible joke from elementary school: In Peter's class
+>> everybody is called Klaus, except Franz -- his name is Michael.
+>>
+>> Why would we want to use the same variable for multiple purposes?  This
+>> makes the code harder to read.  And the allocation overhead for these
+>> few cases should be negligible.
+
+For better or worse reusing the same strbuf is a common pattern and when 
+I saw the code switch to using a different variable I wondered if it was 
+because the value of buf was being used later. It is also confusing to 
+free msg in a different place to all the other variables. rebase_cmd() 
+being so long does not help (msg is defined 763 lines before its first 
+use) as it makes it harder to see what is going on.
+
+>> The most important question: Is this patch really needed to support
+>> tags (the purpose of this series)?
+>>
+>>> msg is not freed if there is an error and there is a logic error where
+>>> we call strbuf_release(&msg) followed by strbuf_reset(&msg) and
+>>> strbuf_addf(&msg).
+>>
+>> strbuf_reset() after strbuf_release() is redundant but legal.
+
+It is confusing to the reader though, I spent time checking why the 
+strbuf_release() call was there before concluding it was a mistake.
+
+> All good points.
 > 
-> I don't quite follow. As far as I understand both by reading
-> 5c387428f1 and by testing, 5c387428f1 fixed tab-completion so it would
-> _not_ show `--recursive`.
+> I do not care too deeply either way, in the sense that it probably
+> is better for this function to have two variables (with at least one
+> of them having a meaningful name "msg" that tells readers what it is
+> about), if the original submission to rewrite "rebase" in C used a
+> single strbuf for both of these and given it a name (like "tmp")
+> that makes it clear that the buffer is merely a temporary area
+> without any longer term significance, I probably wouldn't have told
+> the submitter to rewrite it to use separate strbuf variables.
 > 
+> But if existing code already uses two variables, with at least one
+> of them having a meaningful name that tells what it is used for, I
+> see no reason why we want to rewrite it to use a single one.
 
-bb62e0a99f hid --recursive from `git clone -h' with PARSE_OPT_HIDDEN,
-but 5c387428f1 reverted that:
+In a short function where it is easy to see what happens between the 
+variable declaration and its use I'd agree but here everything is so 
+spread out I actually found the switch to a second variable confusing.
 
-$ git checkout 5c387428f1~
-$ make
-$ bin-wrappers/git clone -h
-...
-    -s, --shared          setup as shared repository
-    --recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
-    -j, --jobs <n>        number of submodules cloned in parallel
-...
+Best Wishes
 
-$ git checkout 5c387428f1
-$ make
-$ bin-wrappers/git clone -h
-...
-    --recursive[=<pathspec>]
-                          initialize submodules in the clone
-    --recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
-...
+Phillip
 
-The two options were then reordered by c28b036fe3 (clone: reorder
---recursive/--recurse-submodules, 2020-03-16), and this is where we are
-today:
-
-$ git clone -h
-...
-    --recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
-    --recursive[=<pathspec>]
-                          alias of --recurse-submodules
-...
-
-Junio did mention[0] that --recursive was no longer in the manual, but
-not that it was once hidden from the option list.
-
-> Anyhow, another approach which we've used elsewhere is to mention the
-> option in the documentation but indicate clearly that it's deprecated.
-> That way, people who run across the option in existing scripts or old
-> blogs can at least find out what it means. Something like:
+> Thanks.
 > 
->     --recurse-submodules[=<pathspec>]::
->         After the clone is created, initialize and clone submodules
->         within based on the provided pathspec.  If no pathspec is
->         provided, all submodules are initialized and cloned.
->         (`--recursive` is a deprecated synonym.)
-> 
-> I don't have an opinion as to whether or not we'd want to do that in this case.
-> 
-
-[0] https://lore.kernel.org/git/20200316212857.259093-3-gitster@pobox.com/
-
-Alban
-
