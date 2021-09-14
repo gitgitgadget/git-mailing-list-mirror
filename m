@@ -7,97 +7,83 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8BE5C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 04:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF3C7C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 04:13:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 989E860F58
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 04:03:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1AEC610A6
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 04:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232069AbhINEES (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 00:04:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34518 "EHLO
+        id S231571AbhINEPI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 00:15:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231824AbhINEER (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 00:04:17 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A70C061574
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 21:03:00 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id bi4so17128708oib.9
-        for <git@vger.kernel.org>; Mon, 13 Sep 2021 21:03:00 -0700 (PDT)
+        with ESMTP id S229478AbhINEPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 00:15:07 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAE8C061574
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 21:13:51 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id x10-20020a056830408a00b004f26cead745so16535295ott.10
+        for <git@vger.kernel.org>; Mon, 13 Sep 2021 21:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zLvVF99JM4wd0gLEF2/QbNY2UFgpEBjIrK/Q4MhG1V4=;
-        b=Kxg+3uqvFCf5D0jX8WhVAWI/L5MsjLtTwa2mVKzErWeiGcw5EtWLjVsOufuITGHSvm
-         NGZUopOZq9/9UcV/1qIgW75dZpy+txoZRA4Azj15f/ofQIaYQlyfIq0pGMclNnJ0PM4h
-         yNiqKJTRyH9Uz0x39WkQ8cfZq+r1JAzhTTof/F/CuLQoFEDAHfXzQ+gbojKgy7UEAP3E
-         i/9pm9uZA+WwH4Sxu3xc492D02GX2R4UiPzzng2/AQTvDlYPM7bznnyctTxkZYGEg3hk
-         5pvjA2Tm25u/bIqJS3C0H3DvWVtDcXP24Jp6tLjeHGtMzt1fzY5SBnN5V2woa6AJn1K0
-         wDBw==
+         :cc;
+        bh=S3morfb9mI3Um3Ku67np484+Wc1mfJwQIqWgJ9+VXVY=;
+        b=CMcY3Oo1QrZ07nfdGY2ty0hYOeldi6rlzM8N7HocjpEcXGiUuS8HL4gstn1hS23I4F
+         x8yAQ2TvZee+uMZZAbQ//vLJpFV4GtAKl8ZT6fyf85n6mDVFNZasixh0xFFDyR784HPa
+         zJPPHwGP1FDVDYITUk7gf0u6n3U2GvwM040xE8HW0hVAAA5rUZDu8IGsBI3vVgRi7UxM
+         m9nQfqBU7uOMpStPerk8WkxW9HAzDD99FiwUCEh3Kx6RL3nbwpy2tbLV3gHdz0mfoxS1
+         nSc5waZS9Qqvw82iP33YBdtMbUye0rlUpUSzc/KCKuYyzy1i7X3UPxsJUkEsjFi8h0Hr
+         lDpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zLvVF99JM4wd0gLEF2/QbNY2UFgpEBjIrK/Q4MhG1V4=;
-        b=g2fDZww+V/GZxNT2IkfDijiQhNWLCsVFrIX5slpuH4/pSPIqYmxS7xRBfhWWyrHhNy
-         cwLZoFruDzt5XRLoc1t/llG3yMst56LiUjdLw7oYRn8MTVG1dn0wmsrJGcECSUODJGpW
-         eovzqFRBlPRqFjVKawtwRRvlSnhb9ATZP3DpztqNr4SNRhqf+dAe1aGFIJvlc1R/lfRF
-         pE1IrlyPGmEk72Yf+bksLqh67Gb0xMbqZ59NOyhyqmfr2O0EUR95ywkEpiI8DcF2cn6t
-         uVXbYaV6oNzCmF7DFQdJZXVkqH7Tf+t4HbmXHvjfeyQAoIVMMs9ufIMw5T3j8vcjbqJY
-         BIxw==
-X-Gm-Message-State: AOAM530PWJzxDJZAfinlwCn9meILmXe2E5cFcmsW9lPLuTUHcPIgf3BS
-        zv7812WUiFy9Y1WhBmNqf9GWopc2odX7o+178X8=
-X-Google-Smtp-Source: ABdhPJxDuiwEmZyJg6qtZvDsETD8b393FZh7oLF6pwrgfsyzVubk1ae2VU29ezGVl6IGGwPQdn5mMzk4bREtdE92Gic=
-X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr10784086oib.39.1631592180101;
- Mon, 13 Sep 2021 21:03:00 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=S3morfb9mI3Um3Ku67np484+Wc1mfJwQIqWgJ9+VXVY=;
+        b=er6f+VgG/OBZOkUzbuvDW3BppBRuWK1ubvIKQPgejCfnkw47RIKY9YjwBkkqQ/K6cl
+         8Gjcy93tcf/c2TDjXuDQHgTbKGxACysN4as5G3WR150rZpwACtZRKyaMo/OgpD4YUNNN
+         er1i7hvJUnxj+/xxlAnhtgq9YFwiKl0tZV+yVNiz04EjgqDzcGUnO90JPH1Ry6OfG2bF
+         +9ST98Rupt3ea1LZGr612r6SCzCT1nStadW8ZqC55hUQpDy7dkQgJcM+X2wLgQciif3g
+         N1B06e5cYVESCVDlG/UoSyeLyFdCN9meBayanJMjHQKot/JpOKdG9vlQd3im3S2CmaHk
+         DKBw==
+X-Gm-Message-State: AOAM531skGd1rTzaH1ljjwkB8UVMntYd9KSfS5RGnWaAaM0lhF0ctaTi
+        k3M3NxbEKUq7Avmvxl8Ai0oTKWTApPEvfA4tnXLAtD/Wp0c=
+X-Google-Smtp-Source: ABdhPJwauVnoje75rD9rMPVBLNH07FzKgStZDehYMCtSNuV5QgrrkwQhwdtCCIRHun754xPtqLOeBZeAbjx7+cwLeQ8=
+X-Received: by 2002:a9d:609e:: with SMTP id m30mr12712040otj.174.1631592830407;
+ Mon, 13 Sep 2021 21:13:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1033.git.1631094563.gitgitgadget@gmail.com> <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
+References: <xmqqtuinc3tx.fsf@gitster.g>
+In-Reply-To: <xmqqtuinc3tx.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Sep 2021 21:02:48 -0700
-Message-ID: <CABPp-BHoJsrnUeRD-Ft7tO5MBhEcacWoMRmrZ6HReNXnjJKHew@mail.gmail.com>
-Subject: Re: [PATCH v2 00/11] rebase: dereference tags
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Date:   Mon, 13 Sep 2021 21:13:38 -0700
+Message-ID: <CABPp-BEC9_vuv0vEoPMVuk-p4Wyd8Me246GPT-qPAxgCaMpTQg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #04; Mon, 13)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 13, 2021 at 8:46 AM Phillip Wood via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Thanks to =C3=86var and Johannes for their comments.
->
->  * Changed "! test_cmp_rev" to "test_cmp_rev !" (suggested by =C3=86var)
->  * Fixed the quoting for the title of the "rebase --quit" tests.
->  * Reworked the last commit to handle the error case first (suggested by
->    =C3=86var)
->  * Tweaked the commit messages for patches 8 & 11
->  * Rebased onto 31e4a0db03 ("Merge branch 'ab/rebase-fatal-fatal-fix'",
->    2021-09-08) to avoid a merge conflict that upset gitgitgadget
->
-> Cover letter for V1:
->
-> Aborting a rebase stated with git rebase <upstream> <tag-object> should
-> checkout the commit pointed to by . Instead it gives
->
->     error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD': tr=
-ying to write non-commit object       710d743b2b9892457fdcc3970f397e6ec0744=
-7e0 to branch 'HEAD'
->
->
-> The fix for that is in the last patch, the rest of the patches are cleanu=
-ps
-> to t3407 and builtin/rebase.c
+On Mon, Sep 13, 2021 at 7:06 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-Might make sense to split this into 3 separate series (t3407 cleanups,
-builtin/rebase.c cleanups, and the handling of tag objects).  But
-anyway, reading over the 11 patches, the only issue I noticed was what
-appears to be a simple typo.
+> * en/remerge-diff (2021-08-31) 7 commits
+>  - doc/diff-options: explain the new --remerge-diff option
+>  - show, log: provide a --remerge-diff capability
+>  - tmp-objdir: new API for creating and removing primary object dirs
+>  - merge-ort: capture and print ll-merge warnings in our preferred fashion
+>  - ll-merge: add API for capturing warnings in a strbuf instead of stderr
+>  - merge-ort: add ability to record conflict messages in a file
+>  - merge-ort: mark a few more conflict messages as omittable
+>
+>  A new presentation for two-parent merge "--remerge-diff" can be
+>  used to show the difference between mechanical (and possibly
+>  conflicted) merge results and the recorded resolution.
+>
+>  What's the status of this one?
+
+Same as last time[1]: tested in the wild, high level ideas probed by
+you and I believe I answered them to your satisfaction, but only the
+diff-merges part of the code got reviews.
+
+[1] https://lore.kernel.org/git/CABPp-BGR3dfJE7TZ+jkjDdWyeXYowmJhtoFaQ8_Abn=ZROhB5Q@mail.gmail.com/
