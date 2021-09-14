@@ -2,108 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A57DDC433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31913C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:02:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A04C60EB6
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:02:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1640D60EB6
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 19:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230495AbhINTDl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 15:03:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbhINTDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 15:03:40 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38918C061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 12:02:23 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id 18so193036pfh.9
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 12:02:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mesbUHJlrYnKkHvYSwO5rBa+Rckhk2wGkL8lGrK0vtU=;
-        b=VfBcujcFt1/kVb7aGlmXRSELa6ZMBki4ZOrpyRw6sNsV4hNLhxkh6n13w/kk6B9Gxp
-         uaNwnfQ1ynKOkOGnnYCvO9yNugBAFeF40DhBDtYt3RxSbFBXGzVt6t8spLr4w+AwgtF3
-         bQo0o7IdbGVIG3+DXsWnOGW/l2ocdg4vIQ4hpS0DhWyoNpgMos6G6G0I5ayEGKabVqfA
-         7m8Cks0I3+l21u9pBgfvPKbhVO5FhQJIGtBD2crq6SqCa/xwKOBpn1U6N2T+mNMGGpy1
-         hcTRok+AuQp4SZ+Y0cRID2vdAVkH7Y/DM14zGtTHfyprEio4XdN/wSDxAucW9VHnvg8h
-         lSiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mesbUHJlrYnKkHvYSwO5rBa+Rckhk2wGkL8lGrK0vtU=;
-        b=KydMSixKaIi5jx1mTXLNVnm2dSoegI3vj1NQNhp5qzmEQF0oQx0v863F5AwLNGTDGb
-         hTdsDqBaolpYRfLz/xSco//W3lvfuv8Tb/bpz44tkcIk9PUqqMU1DO7zyx4eQGiIP6mZ
-         XgcRir7ERGkDtdqPep7tfeHW6THm/FeNOaRAMUMOkoW4cl+xT9dMMY8QxWVZbdlBLSCk
-         XyqmfYwZqKzEThZBDatz6BSkMof0yVYZPmcqGrmOBiNonZ6EHB927nISKfkttRdrOpcn
-         1G9WNyXwktTcnhQ4MmY3A1HzVcoREdjjmXp6RuLtDQKcw2WF5/q/MLIuBo0ohPKd7jpB
-         /TQA==
-X-Gm-Message-State: AOAM532pGJcx/JOje+WgXQ+6+BDba4r6V3dJo+N7g2uFUY/nrPeLZiMC
-        ZGfqxNpcCv9KZqhImb957bfEl83seiO1lu1bySc=
-X-Google-Smtp-Source: ABdhPJxFiswFioqbgMF5KCFhSfxnaOvzWq/F0wHdKNXEewsjO9tLwOfzI6nA/T6rN61hMBpAWO3erzcqmWPdyZJKL+I=
-X-Received: by 2002:a63:e510:: with SMTP id r16mr16855032pgh.34.1631646142733;
- Tue, 14 Sep 2021 12:02:22 -0700 (PDT)
+        id S232412AbhINTD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 15:03:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47330 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229658AbhINTD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 15:03:57 -0400
+Received: (qmail 25280 invoked by uid 109); 14 Sep 2021 19:02:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 19:02:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26990 invoked by uid 111); 14 Sep 2021 19:02:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 15:02:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Sep 2021 15:02:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs
+ mode
+Message-ID: <YUDxzhAnzI5Anm6F@coredump.intra.peff.net>
+References: <cover.1631331139.git.me@ttaylorr.com>
+ <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
+ <87ee9va0ie.fsf@evledraar.gmail.com>
+ <YTzYYfBGqG87O5mN@nand.local>
 MIME-Version: 1.0
-References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net> <YUDAtbHcbv6zNFxe@coredump.intra.peff.net>
-In-Reply-To: <YUDAtbHcbv6zNFxe@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 14 Sep 2021 21:02:10 +0200
-Message-ID: <CAN0heSrCibpcU0NXfZfJvb7puRVLPRz2qEbko6+SEh_BcKtgvA@mail.gmail.com>
-Subject: Re: [PATCH 5/9] serve: provide "receive" function for session-id capability
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YTzYYfBGqG87O5mN@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Sept 2021 at 17:34, Jeff King <peff@peff.net> wrote:
->
-> Rather than pulling the session-id string from the list of collected
-> capabilities, we can handle it as soon as we receive it. This gets us
-> closer to dropping the collected list entirely.
+On Sat, Sep 11, 2021 at 12:25:05PM -0400, Taylor Blau wrote:
 
-Looking good.
+> > Before calling string_list_clear(). I.e. we didn't strdup(), but during
+> > free() we pretend that we did, because we did, just not in
+> > string_list_append().
+> 
+> Good catch. It's kind of gross, but the result is:
+> 
+> --- 8< ---
+> 
+> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+> index 77488b6b7b..e6cab975e3 100644
+> --- a/builtin/multi-pack-index.c
+> +++ b/builtin/multi-pack-index.c
+> @@ -64,7 +64,7 @@ static struct option *add_common_options(struct option *prev)
+> 
+>  static void read_packs_from_stdin(struct string_list *to)
+>  {
+> -	struct strbuf buf = STRBUF_INIT;
+> +	struct strbuf buf = STRBUF_INIT_NODUP;
 
-> As this removes the last caller of the static has_capability(), we can
-> remove it, as well (and in fact we must to avoid -Wunused-function
-> complaining).
+Did you mean to use STRING_LIST_INIT_NODUP on the string-list
+declaration?
 
-> I had originally dropped has_capability() in a separate patch, to keep
-> this one more readable. That breaks bisectability, but only with
-> -Werror. I'm not sure where we should fall on that spectrum (I generally
-> bisect with -Wno-error just because warnings may come and go when
-> working with different compilers than what was normal at the time).
->
-> Not that big a deal either way for this patch, but I wonder if people
-> have opinions in general.
+>  	while (strbuf_getline(&buf, stdin) != EOF) {
+>  		string_list_append(to, strbuf_detach(&buf, NULL));
+>  	}
+> @@ -107,6 +107,11 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+>  		ret = write_midx_file_only(opts.object_dir, &packs,
+>  					   opts.preferred_pack, opts.flags);
+> 
+> +		/*
+> +		 * pretend strings are duplicated to free the memory allocated
+> +		 * by read_packs_from_stdin()
+> +		 */
+> +		packs.strdup_strings = 1;
+>  		string_list_clear(&packs, 0);
+> 
+>  		return ret;
 
-First of all, agreed about the "not that big a deal" part. Just a random
-thought: You could do the opposite of what Elijah sometimes does by
-first adding a "MAYBE_UNUSED" function, then actually using it. You'd
-add "MAYBE_UNUSED" here, then the next commit would drop the whole
-thing. It could be worth it if you're removing many many lines so that
-the "actual" change gets lost in the noise. But this patch isn't near
-any such threshold, IMHO (if there even is such a "threshold").
+I think the root of the problem here is the non-idiomatic use of
+strbuf_getline(). The usual thing (and in fact the thing done by the
+quite-similar code in read_packs_list_from_stdin() in pack-objects.c)
+is not to detach, because strbuf_getline() will reset the buffer each
+time. I.e.:
 
-> +static void session_id_receive(struct repository *r,
-> +                              const char *client_sid)
-> +{
-> +       if (!client_sid)
-> +               client_sid = "";
-> +       trace2_data_string("transfer", NULL, "client-sid", client_sid);
-> +}
+  struct string_list to = STRING_LIST_INIT_DUP;
+  ...
+  struct strbuf buf = STRBUF
+  while (strbuf_getline(&buf, stdin) != EOF)
+	string_list_append(to, &buf);
+  strbuf_release(&buf);
 
-Handling NULL. Nice. :)
+That avoids any clever string-list allocation games. The number of heap
+allocations is about the same (one strbuf and N list items, versus N
+strbufs and 0 list items). There's a little extra copying (from the
+strbuf into the list items), but the strings themselves are more
+efficiently allocated (strbuf may over-allocate, and we lock in
+that choice forever by handing over the string).
 
+Not that efficiency probably matters either way for this spot. I'd do it
+this way because it's simple and idiomatic for our code base.
 
-Martin
+-Peff
