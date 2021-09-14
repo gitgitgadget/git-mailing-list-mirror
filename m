@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D211DC433FE
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D31AC433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B309160F44
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 848A6610A6
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 13:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbhINN2l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 09:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51748 "EHLO
+        id S233135AbhINN2m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 09:28:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233055AbhINN2j (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233079AbhINN2j (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 14 Sep 2021 09:28:39 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909FAC061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:21 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id x6so20198561wrv.13
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:21 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BFBBC061762
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:22 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id d21so12525759wra.12
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 06:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=cwnC9KcIg95vK9hGJ5jXYpOHKhAgQYm7iiObevvzdmM=;
-        b=Z6yYwRW8MVmYU0v7RUsJDsjCyXoODQotedEKyI1Fx00zi5vjfI+9GwdX/+mjysewk+
-         6W+YO4uYaMKc7Zje1iOCYMKQHaBppwViIlfCKiA2leh7oUXqQ0Ye68EN2+CPgoFT64NT
-         YEppn9RxYQ225LIYmYP4iyCsGmo8grSLX2xjA8Kk/x5H5PeFrxHk6xHcMJPiWnftH/1t
-         3+z0Qzwhlzf2VXeHcc6Ed+MSb4B1Gt7DALICmrwR0MUmPyGPCVkwJ4tKTKrh5nulpUk9
-         EFLFmei4K0fDyrS2HRhqmwBU/KaNiey3OKQsR3UHQdBQfexDP76c3if86EDimkAanh+v
-         74Lg==
+        bh=Kc1IHHnCfBQX29JaNyynpZGGLYYFTmFsm2etSy+Dnpk=;
+        b=WUcCk4xIqazEbc0IylSR5vGt7ALixzxKLJSnba8pKxrnSVXA805VBmC6olaxSp+GRF
+         L2GJiZkBQY4pS6WtkgobObdaspAst8SmiUIVJzjBqJZ3o6y2aks0ayINR5lRA7T6z+hq
+         udOjbwBOHFPyMo4B3+wXiEztHeNCHqc3FnkLnDRaLWryIecgcU5BZLlyI4h+8fMAVZ2l
+         g71debE96JiOya9B8FOFLac3U8pSp7sDXdu1gTHkV9XRCY7OmXLIdTCZJY0AGfc+0tSG
+         12QdI1YsHDniTs4Olk7eUDhfUDlnm88wtTbhTL+rhYdhtSEHV3UMOcKSr4J1ZqRPyPYr
+         tCww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=cwnC9KcIg95vK9hGJ5jXYpOHKhAgQYm7iiObevvzdmM=;
-        b=x9Pfv8cejpKOljQvQ5cOAKw0vfdirenmSGG54i5P3PXcOC1gOD4pFaH28MMTCbkhs+
-         mM3zrT+ztMrf/hdyk8LUABQMMOAHQnO49T6b9W8NxWaFuboa/c/P7/HIuro/HtApvgHM
-         GLEa3+VyBdtB/ADJw+y9CifdLO+cFIPYnThkPiJoMJOIXDSNx0qpLPNKasFCsFCY0Sur
-         VSUl3pmanc6fc766OkuDQAmD7F5BVvg63y0OulM41MaftNPP3Y6Q8TCrnHRtVQfZwguV
-         4X3lSt6ibWsRZixV9nMzZxduWm1ckUorifYW4QyTH2DeK2NfHqPNbrjv1KNHAjzeeG4g
-         OOaw==
-X-Gm-Message-State: AOAM530bRWYx26ErNUNHxAoWWN+pVCCOc6miSbFRVeLjiLPsGuzJafJM
-        n9LQ2gzBNn2LflQ/qOfWUAa65YTdtPY=
-X-Google-Smtp-Source: ABdhPJy1Ty98UiC2fCa3EibdWWyF3Rc/DDXGFbE6i9S3OXAl4bSKSVf1YTPk9H0ELFNVm0pXroa7/w==
-X-Received: by 2002:a05:6000:236:: with SMTP id l22mr19229635wrz.386.1631626040156;
+        bh=Kc1IHHnCfBQX29JaNyynpZGGLYYFTmFsm2etSy+Dnpk=;
+        b=2VfckM4ZDDwz9P6YsSnb3tnwKpfYZbPIeEJICnNO2pmMUrwC1BLwn0OcDuY4MSPrhG
+         orkSs8SS+lFAHoH92NzlfMT7wCJMLanMl2QUzlTKVj4r9I2sp+EMbRcGLMzp1bNX8p8C
+         COQZ6Q4lCNUaRge0D6kRbTL0W/I7YYRZidaskHixVTx9v8Zoca/yLkqIOA/kHqcP1281
+         s4TBLuB3QBfAzvwTh7maNo3j9s6/YbGJ+V3Pa2QCZCy4GwrBFCUnXVOXj7kPiQZsi+Iu
+         C1NWCNYPPfmsgXRwSY3D8PVq3KYzCz+YA7zgV7jlLoB0iClTdUlPSP4M0b7wXTZMIAsl
+         2BMg==
+X-Gm-Message-State: AOAM532RBFERRyGiVr64QK9sUtNh9Yp6JbBLIl0ROOIkO0gd5FQe18HS
+        eXHoCk4lziEsSF6M8UtV0SisjROd3I0=
+X-Google-Smtp-Source: ABdhPJyaAYpjKgta9hfAxu6nFVVqAPhgNYgkoLfNkiZsthVRFDD32h9lUKXqYzY7HJNUI1/ALOdi5g==
+X-Received: by 2002:adf:f6c7:: with SMTP id y7mr7219387wrp.44.1631626040697;
         Tue, 14 Sep 2021 06:27:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a72sm1227665wme.5.2021.09.14.06.27.19
+        by smtp.gmail.com with ESMTPSA id y1sm1272134wmq.43.2021.09.14.06.27.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 06:27:19 -0700 (PDT)
-Message-Id: <c55360272d581b0629e337186482fd5a2f13f4a3.1631626038.git.gitgitgadget@gmail.com>
+        Tue, 14 Sep 2021 06:27:20 -0700 (PDT)
+Message-Id: <bc9a4534f5bc6756ab2df869b55e390183c4ff30.1631626038.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
 References: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
         <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Matthias=20A=C3=9Fhauer?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 13:27:17 +0000
-Subject: [PATCH v2 1/2] help: make sure local html page exists before calling
- external processes
+Date:   Tue, 14 Sep 2021 13:27:18 +0000
+Subject: [PATCH v2 2/2] documentation: add documentation for 'git version'
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,86 +81,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
 
-We check that git.html exists, regardless of the page the user wants to open.
-Checking whether the requested page exists instead gives us a smoother user
-experience in two use cases:
+While 'git version' is probably the least complex git command,
+it is a non-experimental user-facing builtin command. As such
+it should have a help page.
 
-1) The requested page doesn't exist
-
-When calling a git command and there is an error, most users reasonably expect
-git to produce an error message on the standard error stream, but in this case
-we pass the filepath to git web--browse which passes it on to a browser (or a
-helper program like xdg-open or start that should in turn open a browser)
-without any error and many GUI based browsers or helpers won't output such a
-message onto the standard error stream.
-
-Especially the helper programs tend to show the corresponding error message in
-a message box and wait for user input before exiting. This leaves users in
-interactive console sessions without an error message in their console,
-without a console prompt and without the help page they expected.
-
-2) git.html is missing for some reason, but the user asked for some other page
-
-We currently refuse to show any local html help page when we can't find
-git.html. Even if the requested help page exists. If we check for the requested
-page instead, we can show the user all available pages and only error out on
-those that don't exist.
+Both `git help` and `git version` can be called as options
+(`--help`/`--version`) that internally get converted to the
+corresponding command. Add a small paragraph to
+Documentation/git.txt describing how these two options
+interact with each other and link to this help page for the
+sub-options that `--version` can take. Well, currently there
+is only one sub-option, but that could potentially increase
+in future versions of Git.
 
 Signed-off-by: Matthias Aßhauer <mha1993@live.de>
 ---
- builtin/help.c  |  9 ++++++---
- t/t0012-help.sh | 16 ++++++++++++++++
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ Documentation/git-version.txt | 28 ++++++++++++++++++++++++++++
+ Documentation/git.txt         |  4 ++++
+ 2 files changed, 32 insertions(+)
+ create mode 100644 Documentation/git-version.txt
 
-diff --git a/builtin/help.c b/builtin/help.c
-index b7eec06c3de..7731659765c 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -467,11 +467,14 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
- 	if (!html_path)
- 		html_path = to_free = system_path(GIT_HTML_PATH);
- 
--	/* Check that we have a git documentation directory. */
-+	/*
-+	 * Check that the page we're looking for exists.
-+	 */
- 	if (!strstr(html_path, "://")) {
--		if (stat(mkpath("%s/git.html", html_path), &st)
-+		if (stat(mkpath("%s/%s.html", html_path, page), &st)
- 		    || !S_ISREG(st.st_mode))
--			die("'%s': not a documentation directory.", html_path);
-+			die("'%s/%s.html': documentation file not found.",
-+				html_path, page);
- 	}
- 
- 	strbuf_init(page_path, 0);
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 5679e29c624..913f34c8e9d 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -73,6 +73,22 @@ test_expect_success 'git help -g' '
- 	test_i18ngrep "^   tutorial   " help.output
- '
- 
-+test_expect_success 'git help fails for non-existing html pages' '
-+	configure_help &&
-+	mkdir html-empty &&
-+	test_must_fail git -c help.htmlpath=html-empty help status &&
-+	test_must_be_empty test-browser.log
-+'
+diff --git a/Documentation/git-version.txt b/Documentation/git-version.txt
+new file mode 100644
+index 00000000000..80fa7754a6d
+--- /dev/null
++++ b/Documentation/git-version.txt
+@@ -0,0 +1,28 @@
++git-version(1)
++==============
 +
-+test_expect_success 'git help succeeds without git.html' '
-+	configure_help &&
-+	mkdir html-with-docs &&
-+	touch html-with-docs/git-status.html &&
-+	git -c help.htmlpath=html-with-docs help status &&
-+	echo "html-with-docs/git-status.html" >expect &&
-+	test_cmp expect test-browser.log
-+'
++NAME
++----
++git-version - Display version information about Git
 +
- test_expect_success 'generate builtin list' '
- 	git --list-cmds=builtins >builtins
- '
++SYNOPSIS
++--------
++[verse]
++'git version' [--build-options]
++
++DESCRIPTION
++-----------
++With no options given, the version of 'git' is printed on the standard output.
++
++Note that `git --version` is identical to `git version` because the
++former is internally converted into the latter.
++
++OPTIONS
++-------
++--build-options::
++	Include additional information about how git was built for diagnostic
++	purposes.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 6dd241ef838..95fe6f31b4f 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -41,6 +41,10 @@ OPTIONS
+ -------
+ --version::
+ 	Prints the Git suite version that the 'git' program came from.
+++
++This option is internaly converted to `git version ...` and accepts
++the same options as the linkgit:git-version[1] command. If `--help` is
++also given, it takes precedence over `--version`.
+ 
+ --help::
+ 	Prints the synopsis and a list of the most commonly used
 -- 
 gitgitgadget
-
