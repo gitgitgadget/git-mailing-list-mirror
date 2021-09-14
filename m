@@ -2,138 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B273C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D656C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB76A61056
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:34:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5C4F6113B
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 23:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234285AbhINXfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 19:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53806 "EHLO
+        id S235294AbhINXtb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 19:49:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231435AbhINXfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 19:35:21 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D734C061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:34:03 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id m4so893338ilj.9
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:34:03 -0700 (PDT)
+        with ESMTP id S229491AbhINXta (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 19:49:30 -0400
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A608CC061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
+Received: by mail-il1-x12d.google.com with SMTP id x2so905058ila.11
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=kDqGQFWCS+jVyaDmrt1EuIAMLlC+m27q4amxiF6+fKM=;
-        b=ZKsU7Pqn/UhPXyvb0YPaFLUv2ZkPiY0NvuDmJnXAyINt8l+UcEO8U5iqmIXvcf6is4
-         qImrhIO7/+hEcDpqvf/N0gkKsWOR+7SAsRGcMgW4SRvva3CMYAS2HlDZc1yTNDJkmfRY
-         5OF17Pht/A9jMIJmM59G5oYsREHN3zRqgGsioJI2VaeROmwpValYmqyS6pSEcbkYuiTa
-         fjWdV8HBkeuJI7Q8vjFXb4TjvB2gIBm0ycxzdnrKqrHc3u0XSQOi2+p/qZWYEeXfZAnQ
-         OQymawBTTPEF1AkU7gyYFhJrWf1qklmfvKhoG0R2Jh3M4fmIUSWa8OEmnlCStGb5I1CD
-         yl6w==
+        bh=tVtZOrmUMt/z5ALteZEDFy8qDJX7vK7JgaC1y+3SNNU=;
+        b=OwmZC6tmYlZ6i67GzTgMVkas34YhM5A7YIF4eTn3tTAoI2xv2de03nz42plNYoze2I
+         AitGmvBI+agxyOBvh67Dyu2k0teTWcMTCYLpNz1fqqrmfkpq2KXdwHi5vBSzz2+dDZ2B
+         rzwvYpiOHZD2HpO52QiaIEVBRcmXpBeHmldc0qOtlWJR8zgcoPxof5NuqqJWfH5yifgZ
+         Ub+r/I6z1LFrayFCXrh31i4c9IAho+z+mMqb3PXzOGsN1fmG6KHiG3R3jQf5UlDGhs1I
+         0f1ffJHHZ96tkLOcnuvO1bjhKEvYrkgehBdUIbaaGIjADKCH2GIyjdVYS4hYdby9e3Xp
+         UHyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=kDqGQFWCS+jVyaDmrt1EuIAMLlC+m27q4amxiF6+fKM=;
-        b=dp0D69sbz4qSndO/5DwB4mj7OCl1ZhbTSGDvVQox+35KxQmvCwCkXQBJlRAHaznVKH
-         7UtsZLPiHo38Cg7hMKPNEAZsuPy4bMpoYnSGtA8B2YOzYMQy6UYMm54QsLV/O0EI2ZAh
-         DD3XylCdt3vDbFXJDPehcwEqO4FknGZ9BmFVyeOqALcXFt8H4En5x9NBgmDoQAb0Ey4g
-         D05a5fi2Y5ByUo84bRdrOTXJfEsIdF7/CHRQtubt3GugREdX7LRlYwjXLNGBfXCKC25z
-         KV2jci8rlVAzcuFAKveQSbGxizA4lhQltGTO7MLHH4QQLVEHWivgdHGNVjgDUZopu3VH
-         tmfg==
-X-Gm-Message-State: AOAM532DHOVpxOcmf0ApyzPHcSTEqmhaJktP/4DsbsZLGLpMVqms+axQ
-        2Ad8pNhEmYhnsIRmZR3rOLi/J65otLCRaIqV
-X-Google-Smtp-Source: ABdhPJxE1l0J8oji6CjpRnFxw79LFC/fntI9dH0kJoVf0jP2U3ADGRuyeKBdFn43lXwxMbOm/+Of0g==
-X-Received: by 2002:a92:de41:: with SMTP id e1mr10972222ilr.85.1631662442584;
-        Tue, 14 Sep 2021 16:34:02 -0700 (PDT)
+        bh=tVtZOrmUMt/z5ALteZEDFy8qDJX7vK7JgaC1y+3SNNU=;
+        b=3ossgUgfwbFowgEOP/BfFtQgoGtaPGMf4d7qtMD+2i1MLNiQ9EgJJ5Ys0ylj5B8mSS
+         OR5Cza3C0p/vljfKwe4l3oCO9Avv5IUeBS5wwUsExGeLQwnyYzKMDhJu6Iww6qQg8yDv
+         ABe6Hj8nOW+jpH2eNnmHeGTDGI1H/A7QVXtqjvbmZrtkRjUbO5wSnAlWxk/8eomSR4qk
+         SjtOW3XmeV5x0ANcbDQl/19syWE+XknPmRNGBHZMhkdVeEhVN3yEt0kR0qSm9ZpGspxj
+         /Q5P54NWZFIUNiE+xQpxTS+KzFkIgzU6b2QEFgQxLAhTWCm7rLgU+ZvIU4h85cDPbvZp
+         xK4g==
+X-Gm-Message-State: AOAM533ym6plcfv5u8nLE/hiYYv6RuLkuWci4qTQu1CxZ1mm3v5IrpoH
+        7EilN/gnxfYQfY/GQumGLHDD4g==
+X-Google-Smtp-Source: ABdhPJxZ1BMeegD3ID6QpYaNxSzCl1gRHMueruqSh3GE1fmEYGFJh54qVFYbfH5ZmNjv03MINYnt5g==
+X-Received: by 2002:a05:6e02:1ba3:: with SMTP id n3mr8155522ili.253.1631663292046;
+        Tue, 14 Sep 2021 16:48:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d10sm8036990ilu.54.2021.09.14.16.34.01
+        by smtp.gmail.com with ESMTPSA id 9sm7717948ily.9.2021.09.14.16.48.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 16:34:01 -0700 (PDT)
-Date:   Tue, 14 Sep 2021 19:34:00 -0400
+        Tue, 14 Sep 2021 16:48:11 -0700 (PDT)
+Date:   Tue, 14 Sep 2021 19:48:11 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 8/8] builtin/repack.c: pass `--refs-snapshot` when
- writing bitmaps
-Message-ID: <YUExaCwMwjfd5h7S@nand.local>
+Subject: Re: [PATCH 2/8] builtin/multi-pack-index.c: support --stdin-packs
+ mode
+Message-ID: <YUE0u+T/CL8D5WV/@nand.local>
 References: <cover.1631331139.git.me@ttaylorr.com>
- <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
- <871r5v9z3i.fsf@evledraar.gmail.com>
- <87sfyb8ihg.fsf@evledraar.gmail.com>
- <YTzejKyYvqZu4v16@nand.local>
- <YUDwB0W6IpWWcU81@coredump.intra.peff.net>
+ <2a16f11790b79ab452233b6f28acac607c0abd28.1631331139.git.me@ttaylorr.com>
+ <87ee9va0ie.fsf@evledraar.gmail.com>
+ <YTzYYfBGqG87O5mN@nand.local>
+ <YUDxzhAnzI5Anm6F@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUDwB0W6IpWWcU81@coredump.intra.peff.net>
+In-Reply-To: <YUDxzhAnzI5Anm6F@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 02:55:03PM -0400, Jeff King wrote:
-> On Sat, Sep 11, 2021 at 12:51:24PM -0400, Taylor Blau wrote:
+On Tue, Sep 14, 2021 at 03:02:38PM -0400, Jeff King wrote:
+> On Sat, Sep 11, 2021 at 12:25:05PM -0400, Taylor Blau wrote:
 >
-> > > >> +	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-> > > >> +		oid_to_hex(oid));
-> > > >
-> > > > Just an idea: Maybe the file could be lines of "+\tOID\n" instead of
-> > > > "+OID\n"? Lends itself more naturally to extension, use with the likes
-> > > > of string_list_split() etc.
-> > >
-> > > Actually, even better a format like:
-> > >
-> > >     "OID[\t+]\n"
-> > >
-> > > Or
-> > >
-> > >     "OID[\tpreferred=1]\n"
+> > > Before calling string_list_clear(). I.e. we didn't strdup(), but during
+> > > free() we pretend that we did, because we did, just not in
+> > > string_list_append().
 > >
-> > Sure, but I admit that I'm a little torn on this suggestion. I don't
-> > want to be naive and say that we're never going to change this format
-> > and paint ourselves into a corner.
+> > Good catch. It's kind of gross, but the result is:
 > >
-> > On the other hand, changing it does seem extremely unlikely to me, and
-> > this tab-delimited thing feels like overkill compared to how simple the
-> > '+' format is.
+> > --- 8< ---
 > >
-> > So, I don't know. It's certainly easy enough to change now before we
-> > lock it in, so I guess we should.
+> > diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+> > index 77488b6b7b..e6cab975e3 100644
+> > --- a/builtin/multi-pack-index.c
+> > +++ b/builtin/multi-pack-index.c
+> > @@ -64,7 +64,7 @@ static struct option *add_common_options(struct option *prev)
+> >
+> >  static void read_packs_from_stdin(struct string_list *to)
+> >  {
+> > -	struct strbuf buf = STRBUF_INIT;
+> > +	struct strbuf buf = STRBUF_INIT_NODUP;
 >
-> I'm not sure I really see the point of making this infinitely
-> extensible. This is mostly an internal interface between two Git
-> programs. Sure, it's exposed to the user in the sense that they can use
-> --refs-snapshot themselves. But if some writer wants to add a "foo"
-> flag, do they really want to be able to do it in a way that they're
-> _syntactically_ compatible with the older versions of Git, yet have no
-> clue if their option was actually recognized and accepted?
+> Did you mean to use STRING_LIST_INIT_NODUP on the string-list
+> declaration?
 
-I like this perspective, and tend to agree.
+Yeah, and I thought that I even mentioned it in [1], but I apparently
+sent the contents of my buffer before I saved it. So, I did notice it at
+the time, but failed to tell anybody about it!
 
-(I'm basically repeating what you're saying but) it seems to me that
-trying to make the interface of `--refs-snapshot` compatible across
-versions of Git is stretching what we consider to be our compatibility
-guarantee given that:
+[1]: https://lore.kernel.org/git/YTzZPti%2FasQwZC%2FD@nand.local/
 
-  - the interface is basically expected to be private between `repack`
-    and `multi-pack-index`, and
+> >  	while (strbuf_getline(&buf, stdin) != EOF) {
+> >  		string_list_append(to, strbuf_detach(&buf, NULL));
+> >  	}
+> > @@ -107,6 +107,11 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+> >  		ret = write_midx_file_only(opts.object_dir, &packs,
+> >  					   opts.preferred_pack, opts.flags);
+> >
+> > +		/*
+> > +		 * pretend strings are duplicated to free the memory allocated
+> > +		 * by read_packs_from_stdin()
+> > +		 */
+> > +		packs.strdup_strings = 1;
+> >  		string_list_clear(&packs, 0);
+> >
+> >  		return ret;
+>
+> I think the root of the problem here is the non-idiomatic use of
+> strbuf_getline(). The usual thing (and in fact the thing done by the
+> quite-similar code in read_packs_list_from_stdin() in pack-objects.c)
+> is not to detach, because strbuf_getline() will reset the buffer each
+> time. I.e.:
+>
+>   struct string_list to = STRING_LIST_INIT_DUP;
+>   ...
+>   struct strbuf buf = STRBUF
+>   while (strbuf_getline(&buf, stdin) != EOF)
+> 	string_list_append(to, &buf);
 
-  - an infinitely-extensible version of `--refs-snapshot` would still
-    have no way to tell the caller whether or not those new flags were
-    accepted
+(Assuming that you meant `s/&buf/buf.buf/`, but otherwise this makes
+sense). There is no need to call strbuf_reset() inside the body of the
+loop, since strbuf_getline() calls it via strbuf_getwholeline().
 
-So I tend to agree the existing format works fine and we shouldn't spend
-a ton of time trying to over-engineer a solution.
+>   strbuf_release(&buf);
 
-(FWIW, the `+` vs `-` thing is intentional; `--stdin-packs` uses `-` to
-_exclude_ packs, but `+` here means "this one is special" not "exclude
-this ref").
+...But we should still be careful to release the memory used by the
+strbuf at the end (which is safe to do, since the whole point is that we
+copy each buffer linewise into the string_list).
+
+> That avoids any clever string-list allocation games. The number of heap
+> allocations is about the same (one strbuf and N list items, versus N
+> strbufs and 0 list items). There's a little extra copying (from the
+> strbuf into the list items), but the strings themselves are more
+> efficiently allocated (strbuf may over-allocate, and we lock in
+> that choice forever by handing over the string).
+>
+> Not that efficiency probably matters either way for this spot. I'd do it
+> this way because it's simple and idiomatic for our code base.
+
+More than anything, I'm persuaded by that (though I was quite partial to
+Eric's suggestion, which I found very clever).
 
 Thanks,
 Taylor
