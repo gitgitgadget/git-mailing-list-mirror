@@ -2,112 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14887C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78661C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:29:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E97A660F36
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:37:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AA34610FB
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 16:29:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234426AbhINPjB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 11:39:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47040 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233202AbhINPjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 11:39:01 -0400
-Received: (qmail 24351 invoked by uid 109); 14 Sep 2021 15:37:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 15:37:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24292 invoked by uid 111); 14 Sep 2021 15:37:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 11:37:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 11:37:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 9/9] serve: reject commands used as capabilities
-Message-ID: <YUDBxrSw4CzZ+wc4@coredump.intra.peff.net>
-References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
+        id S229529AbhINQa1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 12:30:27 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52343 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229379AbhINQa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 12:30:26 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0242315C14D;
+        Tue, 14 Sep 2021 12:29:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ni+U8Eu1K3Www/uLk0l1Kg/LZGlf04KqCZCrwd
+        pmct8=; b=LmJpmTxcyJzpHpZpQ8n/s3vqSUyZp2Uzw1PUSZBekAK+5xgCyojlP/
+        EUR1M/vKgBFXR2cO1CpwKydrO3MqjelY9ZsGDpQ6Jmue6IzTESd/cbgYShT3sG/Z
+        dJMoC2VTQ89130H7K6eN8431I9iRI7oWdndwbf9CfcSlHKkfroJ34=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EEA8315C14C;
+        Tue, 14 Sep 2021 12:29:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3F0D915C14B;
+        Tue, 14 Sep 2021 12:29:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 11/11] rebase: dereference tags
+References: <pull.1033.git.1631094563.gitgitgadget@gmail.com>
+        <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
+        <951de6bb1992773cda60791c4b7a09867b5e0f19.1631546362.git.gitgitgadget@gmail.com>
+        <xmqq5yv4ccc0.fsf@gitster.g>
+        <5ef402a4-3477-6227-e08c-041ed373313e@gmail.com>
+        <8c78eac4-676b-7bd1-0282-d52eb20f87ce@gmail.com>
+Date:   Tue, 14 Sep 2021 09:29:04 -0700
+In-Reply-To: <8c78eac4-676b-7bd1-0282-d52eb20f87ce@gmail.com> (Phillip Wood's
+        message of "Tue, 14 Sep 2021 14:27:17 +0100")
+Message-ID: <xmqqbl4v3yun.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E15AF0FC-1578-11EC-91F0-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our table of v2 "capabilities" contains everything we might tell the
-client we support. But there are differences in how we expect the client
-to respond. Some of the entries are true capabilities (i.e., we expect
-the client to say "yes, I support this"), and some are ones we expect
-them to send as commands (with "command=ls-refs" or similar).
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-When we receive a capability used as a command, we complain about that.
-But when we receive a command used as a capability (e.g., just "ls-refs"
-in a pkt-line by itself), we silently ignore it.
+>>> Did we auto-peel in scripted version of "git rebase" and is this a
+>>> regression when the command was rewritten in C?
+>> As far as I can tell we have never peeled tags here
+>
+> That's a bit misleading. We have never peeled a tag given as <branch>
+> when we parse it. In the scripted version we just passed the tag oid 
+> along to rev-list, checkout and reset and they peeled it. So I think
+> this is actually a regression in the builtin rebase. I'll update the 
+> commit message to reflect that unless we feel that allowing a tag for
+> <branch> is a mistake and we should be erroring out to avoid the 
+> possible confusion of the tag not being rebased, only the commits it
+> points to.
 
-This isn't really hurting anything (clients shouldn't send it, and we'll
-ignore it), but we can tighten up the protocol to match what we expect
-to happen.
+OK, so this is a regression fix.  That makes the change much simpler
+to sell.  I'd expect that the description would be along the lines
+of something like this, perhaps.
 
-There are two new tests here. The first one checks a capability used as
-a command, which already passes. The second tests a command as a
-capability, which this patch fixes.
+    A rebase started with 'git rebase <A> <B>' is conceptually to
+    first checkout <B> and run 'git rebase <A>' starting from that
+    state.  'git rebase --abort' in the middle of such a rebase
+    should take us back to the state we checked out <B>.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- serve.c              |  2 +-
- t/t5701-git-serve.sh | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+    This used to work, even when <B> is a tag that points at a
+    commit, until Git X.Y.Z when the command was reimplemented in C.
+    The command now complains that the tag object itself cannot be
+    checked out, which may be technically correct but is not what
+    the user asked to do.
 
-diff --git a/serve.c b/serve.c
-index 123abbaa83..9149fbb2f2 100644
---- a/serve.c
-+++ b/serve.c
-@@ -201,7 +201,7 @@ static int receive_client_capability(const char *key)
- 	const char *value;
- 	const struct protocol_capability *c = get_capability(key, &value);
- 
--	if (!c || !c->advertise(the_repository, NULL))
-+	if (!c || c->command || !c->advertise(the_repository, NULL))
- 		return 0;
- 
- 	if (c->receive)
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index ebb41657ab..209122b747 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -72,6 +72,25 @@ test_expect_success 'request invalid command' '
- 	test_i18ngrep "invalid command" err
- '
- 
-+test_expect_success 'request capability as command' '
-+	test-tool pkt-line pack >in <<-\EOF &&
-+	command=agent
-+	0000
-+	EOF
-+	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
-+	grep invalid.command.*agent err
-+'
-+
-+test_expect_success 'request command as capability' '
-+	test-tool pkt-line pack >in <<-\EOF &&
-+	command=ls-refs
-+	fetch
-+	0000
-+	EOF
-+	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
-+	grep unknown.capability err
-+'
-+
- test_expect_success 'requested command is command=value' '
- 	test-tool pkt-line pack >in <<-\EOF &&
- 	command=ls-refs=whatever
--- 
-2.33.0.887.g5b1f44e68d
+    Fix this old regression by doing ....
+
+Thanks for digging (and fixing, of course).
+
