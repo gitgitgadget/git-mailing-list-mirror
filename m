@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE3E8C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE67C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:30:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8F4E61157
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:30:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3B866113B
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 15:30:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234721AbhINPbk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 11:31:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47008 "EHLO cloud.peff.net"
+        id S234682AbhINPcJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 11:32:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47012 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234724AbhINPbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 11:31:39 -0400
-Received: (qmail 24297 invoked by uid 109); 14 Sep 2021 15:30:21 -0000
+        id S234167AbhINPcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 11:32:08 -0400
+Received: (qmail 24303 invoked by uid 109); 14 Sep 2021 15:30:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 15:30:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Sep 2021 15:30:51 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24213 invoked by uid 111); 14 Sep 2021 15:30:20 -0000
+Received: (qmail 24223 invoked by uid 111); 14 Sep 2021 15:30:50 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 11:30:20 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Sep 2021 11:30:50 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Sep 2021 11:30:20 -0400
+Date:   Tue, 14 Sep 2021 11:30:50 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 1/9] serve: rename is_command() to parse_command()
-Message-ID: <YUDADFmF0K6xhX6E@coredump.intra.peff.net>
+Subject: [PATCH 2/9] serve: return capability "value" from get_capability()
+Message-ID: <YUDAKg0g9dLf5014@coredump.intra.peff.net>
 References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,41 +42,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The is_command() function not only tells us whether the pktline is a
-valid command string, but it also parses out the command (and complains
-if we see a duplicate). Let's rename it to make those extra functions
-a bit more obvious.
+When the client sends v2 capabilities, they may be simple, like:
+
+  foo
+
+or have a value like:
+
+  foo=bar
+
+(all of the current capabilities actually expect a value, but the
+protocol allows for boolean ones).
+
+We use get_capability() to make sure the client's pktline matches a
+capability. In doing so, we parse enough to see the "=" and the value
+(if any), but we immediately forget it. Nobody cares for now, because they end
+up parsing the values out later using has_capability(). But in
+preparation for changing that, let's pass back a pointer so the callers
+know what we found.
+
+Note that unlike has_capability(), we'll return NULL for a "simple"
+capability. Distinguishing these will be useful for some future patches.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Obviously not strictly necessary, but the name caused me a fair bit of
-confusion at first while touching this code.
+We get rid of has_capability() later, so the inconsistency in return
+types will go away.
 
- serve.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ serve.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/serve.c b/serve.c
-index 1817edc7f5..fd88b95343 100644
+index fd88b95343..78a4e83554 100644
 --- a/serve.c
 +++ b/serve.c
-@@ -163,7 +163,7 @@ static int is_valid_capability(const char *key)
- 	return c && c->advertise(the_repository, NULL);
+@@ -139,7 +139,7 @@ void protocol_v2_advertise_capabilities(void)
+ 	strbuf_release(&value);
  }
  
--static int is_command(const char *key, struct protocol_capability **command)
-+static int parse_command(const char *key, struct protocol_capability **command)
+-static struct protocol_capability *get_capability(const char *key)
++static struct protocol_capability *get_capability(const char *key, const char **value)
  {
+ 	int i;
+ 
+@@ -149,16 +149,25 @@ static struct protocol_capability *get_capability(const char *key)
+ 	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
+ 		struct protocol_capability *c = &capabilities[i];
+ 		const char *out;
+-		if (skip_prefix(key, c->name, &out) && (!*out || *out == '='))
++		if (!skip_prefix(key, c->name, &out))
++			continue;
++		if (!*out) {
++			*value = NULL;
+ 			return c;
++		}
++		if (*out++ == '=') {
++			*value = out;
++			return c;
++		}
+ 	}
+ 
+ 	return NULL;
+ }
+ 
+ static int is_valid_capability(const char *key)
+ {
+-	const struct protocol_capability *c = get_capability(key);
++	const char *value;
++	const struct protocol_capability *c = get_capability(key, &value);
+ 
+ 	return c && c->advertise(the_repository, NULL);
+ }
+@@ -168,7 +177,8 @@ static int parse_command(const char *key, struct protocol_capability **command)
  	const char *out;
  
-@@ -251,7 +251,7 @@ static int process_request(void)
- 			BUG("Should have already died when seeing EOF");
- 		case PACKET_READ_NORMAL:
- 			/* collect request; a sequence of keys and values */
--			if (is_command(reader.line, &command) ||
-+			if (parse_command(reader.line, &command) ||
- 			    is_valid_capability(reader.line))
- 				strvec_push(&keys, reader.line);
- 			else
+ 	if (skip_prefix(key, "command=", &out)) {
+-		struct protocol_capability *cmd = get_capability(out);
++		const char *value;
++		struct protocol_capability *cmd = get_capability(out, &value);
+ 
+ 		if (*command)
+ 			die("command '%s' requested after already requesting command '%s'",
 -- 
 2.33.0.887.g5b1f44e68d
 
