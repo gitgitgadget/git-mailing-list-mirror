@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A0EC433EF
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3A9C433FE
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8E9E60F26
-	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EFB7610A2
+	for <git@archiver.kernel.org>; Tue, 14 Sep 2021 14:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234919AbhINOpo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 10:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
+        id S234633AbhINOpp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 10:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234962AbhINOos (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234014AbhINOos (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 14 Sep 2021 10:44:48 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF5CC06114B
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E375C06114A
         for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id b21-20020a1c8015000000b003049690d882so2286488wmd.5
+Received: by mail-wm1-x32e.google.com with SMTP id l18-20020a05600c4f1200b002f8cf606262so2307703wmq.1
         for <git@vger.kernel.org>; Tue, 14 Sep 2021 07:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7umOn+lbKwQBhvrSkuyvzsamrsCLKijBkTg3WVv+4Q8=;
-        b=pJZYE+CKDL8+se0SThg/8qE24UWZfrCkRAsP4j/5aCAZjsQeV/4Ay2iVvuuX6nWA1A
-         veaGSeOKkZk4uzDJeZPK4hT5+CBTsPVe/YhM+DpuF35HbrLZonwmMQ8VEXjGVIt3lBmF
-         dWMF+CdP//TPsI0ClHQ2dmJDLuNHUlpQzh7pIjaOQlK9MSdQqXPVEmVdb/DZIHp/ip/f
-         Kc+gfYOKDVMoup3mi3uIdcAxe7+46NUtLSXhI8YEwOF9Goxl4t5poPBUdhXeUesSSY+x
-         KW0IfM1+jUHTmoozFLWjOj1rBLrZrXOy8j2VD2+hx7EyHwhS4exTNJVIcnMWmVSqnrPq
-         Jx4Q==
+        bh=ySiVVFtUbc/3RO5iQimxg9/Yh69Yg4UMoTm1ZkYtGEc=;
+        b=J9rN22nHMZ8hz2SLzFehigMED0yGWx9W/V6ranpjncCXe2miiZ19LWP+LNYOeRizk7
+         7eijpOPcskZJDg/wKsZrnO6eLfxpVBDpZM3WQkHq/GAT5jB0UQr7ZtoKNyLoYNCC6jRE
+         EqWdklPFFeSj0H1me6NuAcSG4/2iQrzIhoakdEG2GYPmXhVjdFSO5q0hmcR4qjlLfxjJ
+         dTFkyJ6u4fVCscZ2sTKrwPELkhxZB/7qzNoHMFAXQ3NIdHvUqh2Ug9xrsTq2F06DuCAt
+         +dCB18ejSNLVxDxtDBEpKFN8i4GRa+mtzFkdKxLDElUnmGvQgClhwWO5rZSWzs/VMi2h
+         9n5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7umOn+lbKwQBhvrSkuyvzsamrsCLKijBkTg3WVv+4Q8=;
-        b=Xo2PEwAt2gyqBpbCY01p1HVqwy3WJbpJdryCwBgPmNoye8xvlXqhbQAqObCKblf2Zo
-         pgzSn8B8x9sOlrnJEVOLiDQc/EFdNeBum/EX369b2rwt689151tzXzEug4XYOoMfhzYS
-         FQitd+uWuGHj1Aul2QQVphaXW3rqcH9HDwZJWREaaoeqvyZW2TQOffwuS4qKpIM2y9tt
-         lL76C7Jlm6rMt/hXiBAy2Grb3lbuW/6/ZO1wRtcZkpYwMK3wTZBqppCyKjTQNNLDwRUi
-         2pPOCKq14emPXQdqFMDUn0HCAtMmyA3JXT5agRRerNWGWk4GHhvRqx/kvwiUK7PZGWpa
-         aY2w==
-X-Gm-Message-State: AOAM530WdKJpxSQQPP/9dtN4B3WlRJam83DSZr+hQ8HE63j7erMKw3zb
-        QhqfbTAD2N1IEeGH7I54W9pq4u93hzg=
-X-Google-Smtp-Source: ABdhPJz/hzi5HOQSvgGcEvMvBJEIFUh+p7bjjZV7FlOWsBCBxUtjYHRUVPHMFK0S1E+GXrrwW0dTuQ==
-X-Received: by 2002:a05:600c:2046:: with SMTP id p6mr2684777wmg.88.1631630365580;
-        Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
+        bh=ySiVVFtUbc/3RO5iQimxg9/Yh69Yg4UMoTm1ZkYtGEc=;
+        b=8I91/pX5ISeNSXButUjzQGzhFLcbK7BP+f4Htbl+lVztjkQ1tsoIR58TOcHt1wiONH
+         Nkqv83SJjrRdIiVvHlO+4yl5C8Wev2/UbaUFdgyK+pdp4AWQqupBFjTA62FhPSn4bTNU
+         NtIR6Hq3Cu2i4iiDh5ZDXeAiVyW1uNcFU2ndF3TrbC4bWmnqdkOUWId+edHrBgKQQvuh
+         k9sy87eDcdupYlaD4urbDauxAWrdjIgByfd/8hNpLiNm2xLhynMXNW3DJQ8D55/ZrER6
+         Mg8ytlZs9ooD8eBoItBXF7BHZWjus9yHo5CXgCy/pyELakYtWruIazHrY4LsH8HQ8zJH
+         7bDQ==
+X-Gm-Message-State: AOAM532pNAxFKUdK423V/WaRu53GNheyyC15csiyTsap7oEED9rKIABV
+        XNw7oAxyN0Q49nYn3zoaA1jv0mIjm/U=
+X-Google-Smtp-Source: ABdhPJzC2+gGifwYUS9pLMCzsjishBvp6smP0FCLUsglvIAGnBSWdShD6wzOpd9yqIUKCPvXBx0Eww==
+X-Received: by 2002:a1c:a94a:: with SMTP id s71mr2586723wme.32.1631630364906;
+        Tue, 14 Sep 2021 07:39:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h18sm1360158wmq.23.2021.09.14.07.39.25
+        by smtp.gmail.com with ESMTPSA id e2sm10732710wra.40.2021.09.14.07.39.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 07:39:25 -0700 (PDT)
-Message-Id: <ada242c7c8c1f530231f97e76c97fff18e368ff5.1631630356.git.gitgitgadget@gmail.com>
+        Tue, 14 Sep 2021 07:39:24 -0700 (PDT)
+Message-Id: <64e3403ac123f609a85c2d385b9d3d1547453779.1631630356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
 References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
         <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Sep 2021 14:39:12 +0000
-Subject: [PATCH v4 11/15] scalar: allow reconfiguring an existing enlistment
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 14 Sep 2021 14:39:11 +0000
+Subject: [PATCH v4 10/15] scalar: implement the `run` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,207 +74,150 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-This comes in handy during Scalar upgrades, or when config settings were
-messed up by mistake.
+Note: this subcommand is provided primarily for backwards-compatibility,
+for existing Scalar uses. It is mostly just a shim for `git
+maintenance`, mapping task names from the way Scalar called them to the
+way Git calls them.
 
+The reason why those names differ? The background maintenance was first
+implemented in Scalar, and when it was contributed as a patch series
+implementing the `git maintenance` command, reviewers suggested better
+names, those suggestions were accepted before the patches were
+integrated into core Git.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 79 +++++++++++++++++++++-----------
- contrib/scalar/scalar.txt        |  8 ++++
- contrib/scalar/t/t9099-scalar.sh |  8 ++++
- 3 files changed, 67 insertions(+), 28 deletions(-)
+ contrib/scalar/scalar.c   | 64 +++++++++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.txt | 19 ++++++++++++
+ 2 files changed, 83 insertions(+)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 8a11f390251..1fff7eb7c12 100644
+index 7dd1f28948f..8a11f390251 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -115,18 +115,20 @@ static int run_git(const char *arg, ...)
- 	return res;
- }
- 
--static int set_recommended_config(void)
-+static int set_recommended_config(int reconfigure)
- {
- 	struct {
- 		const char *key;
- 		const char *value;
-+		int overwrite_on_reconfigure;
- 	} config[] = {
--		{ "am.keepCR", "true" },
--		{ "core.FSCache", "true" },
--		{ "core.multiPackIndex", "true" },
--		{ "core.preloadIndex", "true" },
-+		/* Required */
-+		{ "am.keepCR", "true", 1 },
-+		{ "core.FSCache", "true", 1 },
-+		{ "core.multiPackIndex", "true", 1 },
-+		{ "core.preloadIndex", "true", 1 },
- #ifndef WIN32
--		{ "core.untrackedCache", "true" },
-+		{ "core.untrackedCache", "true", 1 },
- #else
- 		/*
- 		 * Unfortunately, Scalar's Functional Tests demonstrated
-@@ -140,28 +142,29 @@ static int set_recommended_config(void)
- 		 * Therefore, with a sad heart, we disable this very useful
- 		 * feature on Windows.
- 		 */
--		{ "core.untrackedCache", "false" },
-+		{ "core.untrackedCache", "false", 1 },
- #endif
--		{ "core.logAllRefUpdates", "true" },
--		{ "credential.https://dev.azure.com.useHttpPath", "true" },
--		{ "credential.validate", "false" }, /* GCM4W-only */
--		{ "gc.auto", "0" },
--		{ "gui.GCWarning", "false" },
--		{ "index.threads", "true" },
--		{ "index.version", "4" },
--		{ "merge.stat", "false" },
--		{ "merge.renames", "false" },
--		{ "pack.useBitmaps", "false" },
--		{ "pack.useSparse", "true" },
--		{ "receive.autoGC", "false" },
--		{ "reset.quiet", "true" },
--		{ "feature.manyFiles", "false" },
--		{ "feature.experimental", "false" },
--		{ "fetch.unpackLimit", "1" },
--		{ "fetch.writeCommitGraph", "false" },
-+		{ "core.logAllRefUpdates", "true", 1 },
-+		{ "credential.https://dev.azure.com.useHttpPath", "true", 1 },
-+		{ "credential.validate", "false", 1 }, /* GCM4W-only */
-+		{ "gc.auto", "0", 1 },
-+		{ "gui.GCWarning", "false", 1 },
-+		{ "index.threads", "true", 1 },
-+		{ "index.version", "4", 1 },
-+		{ "merge.stat", "false", 1 },
-+		{ "merge.renames", "false", 1 },
-+		{ "pack.useBitmaps", "false", 1 },
-+		{ "pack.useSparse", "true", 1 },
-+		{ "receive.autoGC", "false", 1 },
-+		{ "reset.quiet", "true", 1 },
-+		{ "feature.manyFiles", "false", 1 },
-+		{ "feature.experimental", "false", 1 },
-+		{ "fetch.unpackLimit", "1", 1 },
-+		{ "fetch.writeCommitGraph", "false", 1 },
- #ifdef WIN32
--		{ "http.sslBackend", "schannel" },
-+		{ "http.sslBackend", "schannel", 1 },
- #endif
-+		/* Optional */
- 		{ "status.aheadBehind", "false" },
- 		{ "commitGraph.generationVersion", "1" },
- 		{ "core.autoCRLF", "false" },
-@@ -172,7 +175,8 @@ static int set_recommended_config(void)
- 	char *value;
- 
- 	for (i = 0; config[i].key; i++) {
--		if (git_config_get_string(config[i].key, &value)) {
-+		if ((reconfigure && config[i].overwrite_on_reconfigure) ||
-+		    git_config_get_string(config[i].key, &value)) {
- 			trace2_data_string("scalar", the_repository, config[i].key, "created");
- 			if (git_config_set_gently(config[i].key,
- 						  config[i].value) < 0)
-@@ -237,7 +241,7 @@ static int register_dir(void)
- 	int res = add_or_remove_enlistment(1);
- 
- 	if (!res)
--		res = set_recommended_config();
-+		res = set_recommended_config(0);
- 
- 	if (!res)
- 		res = toggle_maintenance(1);
-@@ -425,7 +429,7 @@ static int cmd_clone(int argc, const char **argv)
- 	    (res = run_git("sparse-checkout", "init", "--cone", NULL)))
- 		goto cleanup;
- 
--	if (set_recommended_config())
-+	if (set_recommended_config(0))
- 		return error(_("could not configure '%s'"), dir);
- 
- 	if ((res = run_git("fetch", "--quiet", "origin", NULL))) {
-@@ -490,6 +494,24 @@ static int cmd_register(int argc, const char **argv)
+@@ -490,6 +490,69 @@ static int cmd_register(int argc, const char **argv)
  	return register_dir();
  }
  
-+static int cmd_reconfigure(int argc, const char **argv)
++static int cmd_run(int argc, const char **argv)
 +{
 +	struct option options[] = {
 +		OPT_END(),
 +	};
-+	const char * const usage[] = {
-+		N_("scalar reconfigure [<enlistment>]"),
-+		NULL
++	struct {
++		const char *arg, *task;
++	} tasks[] = {
++		{ "config", NULL },
++		{ "commit-graph", "commit-graph" },
++		{ "fetch", "prefetch" },
++		{ "loose-objects", "loose-objects" },
++		{ "pack-files", "incremental-repack" },
++		{ NULL, NULL }
 +	};
++	struct strbuf buf = STRBUF_INIT;
++	const char *usagestr[] = { NULL, NULL };
++	int i;
++
++	strbuf_addstr(&buf, N_("scalar run <task> [<enlistment>]\nTasks:\n"));
++	for (i = 0; tasks[i].arg; i++)
++		strbuf_addf(&buf, "\t%s\n", tasks[i].arg);
++	usagestr[0] = buf.buf;
 +
 +	argc = parse_options(argc, argv, NULL, options,
-+			     usage, 0);
++			     usagestr, 0);
 +
-+	setup_enlistment_directory(argc, argv, usage, options, NULL);
++	if (!argc)
++		usage_with_options(usagestr, options);
 +
-+	return set_recommended_config(1);
++	if (!strcmp("all", argv[0])) {
++		i = -1;
++	} else {
++		for (i = 0; tasks[i].arg && strcmp(tasks[i].arg, argv[0]); i++)
++			; /* keep looking for the task */
++
++		if (i > 0 && !tasks[i].arg) {
++			error(_("no such task: '%s'"), argv[0]);
++			usage_with_options(usagestr, options);
++		}
++	}
++
++	argc--;
++	argv++;
++	setup_enlistment_directory(argc, argv, usagestr, options, NULL);
++	strbuf_release(&buf);
++
++	if (i == 0)
++		return register_dir();
++
++	if (i > 0)
++		return run_git("maintenance", "run",
++			       "--task", tasks[i].task, NULL);
++
++	if (register_dir())
++		return -1;
++	for (i = 1; tasks[i].arg; i++)
++		if (run_git("maintenance", "run",
++			    "--task", tasks[i].task, NULL))
++			return -1;
++	return 0;
 +}
 +
- static int cmd_run(int argc, const char **argv)
+ static int remove_deleted_enlistment(struct strbuf *path)
  {
- 	struct option options[] = {
-@@ -626,6 +648,7 @@ static struct {
+ 	int res = 0;
+@@ -562,6 +625,7 @@ static struct {
+ 	{ "list", cmd_list },
  	{ "register", cmd_register },
  	{ "unregister", cmd_unregister },
- 	{ "run", cmd_run },
-+	{ "reconfigure", cmd_reconfigure },
++	{ "run", cmd_run },
  	{ NULL, NULL},
  };
  
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index f139a14445d..f4e4686e8c8 100644
+index 46999cf7c84..f139a14445d 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -13,6 +13,7 @@ scalar list
+@@ -12,6 +12,7 @@ scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<e
+ scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
- scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
-+scalar reconfigure <enlistment>
++scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
  
  DESCRIPTION
  -----------
-@@ -116,6 +117,13 @@ opinionated default settings that make Git work more efficiently with
- large repositories. As this task is run as part of `scalar clone`
- automatically, explicit invocations of this task are rarely needed.
+@@ -97,6 +98,24 @@ unregister [<enlistment>]::
+ 	Remove the specified repository from the list of repositories
+ 	registered with Scalar and stop the scheduled background maintenance.
  
-+Reconfigure
-+~~~~~~~~~~~
++Run
++~~~
 +
-+After a Scalar upgrade, or when the configuration of a Scalar enlistment
-+was somehow corrupted or changed by mistake, this subcommand allows to
-+reconfigure the enlistment.
++scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]::
++	Run the given maintenance task (or all tasks, if `all` was specified).
++	Except for `all` and `config`, this subcommand simply hands off to
++	linkgit:git-maintenance[1] (mapping `fetch` to `prefetch` and
++	`pack-files` to `incremental-repack`).
+++
++These tasks are run automatically as part of the scheduled maintenance,
++as soon as the repository is registered with Scalar. It should therefore
++not be necessary to run this subcommand manually.
+++
++The `config` task is specific to Scalar and configures all those
++opinionated default settings that make Git work more efficiently with
++large repositories. As this task is run as part of `scalar clone`
++automatically, explicit invocations of this task are rarely needed.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1], linkgit:git-maintenance[1].
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 9a35ab4fde6..e6d74a06ca0 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -65,4 +65,12 @@ test_expect_success 'scalar clone' '
- 	)
- '
- 
-+test_expect_success 'scalar reconfigure' '
-+	git init one/src &&
-+	scalar register one &&
-+	git -C one/src config core.preloadIndex false &&
-+	scalar reconfigure one &&
-+	test true = "$(git -C one/src config core.preloadIndex)"
-+'
-+
- test_done
 -- 
 gitgitgadget
 
