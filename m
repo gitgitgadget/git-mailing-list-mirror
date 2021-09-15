@@ -2,95 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E73F0C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 04:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07EA5C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 04:32:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF3FF6103C
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 04:17:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEA7E60FA0
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 04:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbhIOETG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 00:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32992 "EHLO
+        id S230083AbhIOEdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 00:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbhIOETF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 00:19:05 -0400
+        with ESMTP id S229450AbhIOEdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 00:33:09 -0400
 Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AD1C061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 21:17:47 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id x2so1471864ila.11
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 21:17:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24150C061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 21:31:51 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id b15so1514795ils.10
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 21:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OTKtNCW2yGNvkQwMZZXvrtugcNHPJ9ycqx1jcxqo19s=;
-        b=H0uY+8cXQ2Qc9nF06gnOoKTf3Nzr914yTKG92uCi0at0tTlzFQr6mxiiDc7LZA4xDk
-         1osER79CULMplMni81fIeJ7CAMEDD+RiIBJQtE58JLb028MUEW1W59dIlSdSJ0Uu5gDc
-         GU8ZttDECzs7ivhHuUg5Yaqo0CVKgeDfV4MG9A1NKzT4J22y0el6ukrWWfNQIzYyGHpB
-         BItxL24NwOBG3IL6sI9nUdJhluUKHPu0QxVE4hWRgGqUE3b5E681nyhWd5dW/vkKwWTn
-         sBS/dc7l5CD/++Gut5khdO+Xv7zQ5jFNWKS7W2hYgTnFUSAp4KF/IQKNvzoB5PS5AbMJ
-         yiUw==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=np5hnsBNR5FDwP4Lp++bOZ88cmywfTQY03elNbBzU0M=;
+        b=OL8cBkLN4HTTvngwOPalyDAMNkDVPZSAlSPng86ESB2ahSMJIxxvB7O5FqRcX3LaJh
+         2DJR1F/I8BWjfKRXjuWlN7eLnKhygPkV9RWGqTLsfeOt+xTPm3l6qwP49N0TRweTu/j7
+         folwwr9FeKnuSgAxuvjTbgjauY76kxi9+X78CfNaJ6+agHBCohw9SeHlB9spSuiid3aI
+         JUyf6bpx4v4c/pdJkaBNa3zPTIx5w62kV8Ie/YjGmP+7h35J7yCz4A5ZJwNtIZrTVSAj
+         FISMiNuKk3VOCYxFLOLGP5v2qGGER+fKAi0vWrqNJiJG4DKaTu6r8foFA4TCjRk74ao3
+         rHeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OTKtNCW2yGNvkQwMZZXvrtugcNHPJ9ycqx1jcxqo19s=;
-        b=ki120rPMeyl5zOXnyzcLnsJrQVuiSJfr79nD7ybl1uQSmSuI6J9tZH3XFaxWWBWCZz
-         BaGZy3A7yTVZmk7m44EYw91ERm1jD5GiOg6N1vlS0LV3SdTybhK+B3UJaKN7ujjNSzLF
-         BcKqs404n9sFlMfX+uZs7avS5aTM1fElYqgR14UDea6yee2t8RjuRg9qDv3CxjXNMQFh
-         a+GnZ4yma+aOFfqKfhQQW64t3LLARf9QXI5/KvtQb5aAvFqk+4I+KQlpxhyxDoViKNuI
-         1yfKL1pd3aDMQf9Hjogg5WoOG3CxG4zjawHAQXTyThinGPshkJ+WZFOsYkuJXX0u+oXK
-         9fBQ==
-X-Gm-Message-State: AOAM532IviKhbQiTKI8UITdwXiSnlB35rU29XF/qbIF5+gRR6LKzHZbZ
-        n5Zo5ZK2o+FnAGzoRWSGolutvsH8V/Ik4UJd
-X-Google-Smtp-Source: ABdhPJxLvh1iI/8QkheauICYiZPOndOuscrP8dA59UT+ZzNBlLPzcXudYKNmVq/ASF7P8fg2drOeeA==
-X-Received: by 2002:a92:c145:: with SMTP id b5mr14195172ilh.203.1631679466895;
-        Tue, 14 Sep 2021 21:17:46 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=np5hnsBNR5FDwP4Lp++bOZ88cmywfTQY03elNbBzU0M=;
+        b=oQxMQ5VgXUA+qc5vqQEiTevJcp0UmPKVC6I3cMaFXTIIRvWUJeVSDDk8Li0DALoLt6
+         EULl+0ZRStbUYAHp0rxmfLhHecrGEpoI/bLF10ZvnOigmlF5kwA5rTTRFVMpKI96FBV6
+         ySfdwGNW3tKgpCVR5Fa4zLGh5NRTNSxRPFM5QY86K3k0RopDxVlu3r0Q+xS9NgVyET9W
+         gLvpYkR+znoNjDJ3XfOrLB8bivSajSvK/ObudJxvwLkLUC0BUs2oGWpJzU7R/6LGeMvb
+         LX62F5d+YIVkFNvXCK5xux8hVvm+nJ89+cQEV7qEIY12/l9wUJYVTqYXAqVskJ09QdwC
+         jL9g==
+X-Gm-Message-State: AOAM530SVol4XpkJTOyVf/h+yTTmEo/4tK3xl9bpjtT31P3IYGQdToH7
+        h1APiUBj5WxRpz47k+oCvbRWAA==
+X-Google-Smtp-Source: ABdhPJyfOCZ9TYqQy+oyllcEFRTarspnQXfM37lCz+TIzLPLeCQMfo34nlPn7Bt7qq/7Gdl8nhMYag==
+X-Received: by 2002:a92:d852:: with SMTP id h18mr15532598ilq.211.1631680310465;
+        Tue, 14 Sep 2021 21:31:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x21sm7602526ioh.55.2021.09.14.21.17.46
+        by smtp.gmail.com with ESMTPSA id a11sm8397815ilm.36.2021.09.14.21.31.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 21:17:46 -0700 (PDT)
-Date:   Wed, 15 Sep 2021 00:17:45 -0400
+        Tue, 14 Sep 2021 21:31:50 -0700 (PDT)
+Date:   Wed, 15 Sep 2021 00:31:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/11] limit memory allocations for v2 servers
-Message-ID: <YUFz6RqVaBunxJ7y@nand.local>
-References: <YUC/6n1hhUbMJiLw@coredump.intra.peff.net>
- <YUE1alo58cGyTw6/@coredump.intra.peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 8/8] builtin/repack.c: pass `--refs-snapshot` when
+ writing bitmaps
+Message-ID: <YUF3NXcjo2dWtPOR@nand.local>
+References: <cover.1631331139.git.me@ttaylorr.com>
+ <6a1c52181e8c8c9fe2f0e2d7fbeb1057f68c1f3d.1631331139.git.me@ttaylorr.com>
+ <871r5v9z3i.fsf@evledraar.gmail.com>
+ <87sfyb8ihg.fsf@evledraar.gmail.com>
+ <YTzejKyYvqZu4v16@nand.local>
+ <YUDwB0W6IpWWcU81@coredump.intra.peff.net>
+ <YUExaCwMwjfd5h7S@nand.local>
+ <87a6keoglz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a6keoglz.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 07:51:06PM -0400, Jeff King wrote:
-> Here's a re-roll of my series to limit the memory a v2 server is willing
-> to allocate on behalf of a client. See v1:
->
->   https://lore.kernel.org/git/YUC%2F6n1hhUbMJiLw@coredump.intra.peff.net/
->
-> for an overview. The existing patches are mostly small fixups pointed
-> out by reviewers (thanks!), but I did take Martin's TOO_MANY_PREFIXES
-> suggestion in patch 7 (without the change to the name of the constant it
-> seemed too clever to me, but with it it seems just the right amount of
-> clever).
+On Wed, Sep 15, 2021 at 01:56:00AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> The suggestion I had offhand was just meant as an offhand "interesting,
+> maybe easier like...", i.e. if you found it easier to split on \t, or
+> check the hash size in the loop or whatever.
 
-Thanks for this. The two new patches look good to me, and I took a light
-skim over the ones which were modified since v1. Everything I saw seemed
-very reasonable to me.
+:-). You did say "Just an idea", but I treated your suggestion as if you
+were concerned about being able to extend the format in the future.
 
-    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+> I agree that this doesn't matter and should just be left to whatever
+> you've got a taste for, thanks. This thread became more of a digression
+> than I thought...
+
+I think that all of the discussion was reasonable if I understood your
+original opinion more clearly ;). It may help (me, at least) to say more
+explicitly, "This may be easier like [...] but I don't have any concerns
+about functionality" or similar.
 
 Thanks,
 Taylor
