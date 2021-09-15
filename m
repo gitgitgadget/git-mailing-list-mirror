@@ -2,354 +2,332 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B1EC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B53D7C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:59:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D62E610A6
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:38:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D24C6103C
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbhIOSkF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 14:40:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33564 "EHLO
+        id S230300AbhIOTAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 15:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229466AbhIOSkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 14:40:05 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA3B1C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 11:38:45 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id i6so7127579edu.1
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 11:38:45 -0700 (PDT)
+        with ESMTP id S229479AbhIOTAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 15:00:44 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D5EC061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 11:59:25 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id y134-20020a25dc8c000000b0059f0301df0fso4798792ybe.21
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 11:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MRHVk2zBU22s3EeMZAT+DIG/SBqWWgFOEvq0go28E5o=;
-        b=QlZOMtbu5vPQ/cXziJhFB2JHFMPSbG4miSMQbhhCbQdIvb81oSGY9nqtuyFSbufVI3
-         8R+SiWsHgHD+yH60pCo6k+X6Lbr0/Gl4EG3xm6CHYwFdL3FxtDcQXMjfPM2hxaSIiVST
-         wKOYINlPYOew8rsOGluUDi75mh5n6LJ40rzJRK/5iia8IQEUkJCML8pbFRCQbFLhG5p3
-         fofeIqxSs9mJALe5mUaA28afyY5hLDiSwtSggYPrNU8QQJ4JTPd83zHPJg2ECosbH5iR
-         Rq0p/hymnnB+cmShPvPHibRYISIElAHOmdnOku1ctnDaRn+coHe6GH5oYwmzs208ulVD
-         8f4Q==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=iSR6zZo3Zh6etqOpUPDpMgjWLPaHSlSC7lIFKt+VED8=;
+        b=Yq6GQmqEvvP5xvVuzsFn69T9gvt/QaFKCwFdVkepixLJ1QS2xKJb2fx7lADrEWC/+X
+         hYUcDNYSLVHy6VSmA2ob3klysmz44iBXKfn6LKhuSi4xPYRP0sk4JeiqiBIt09f2cY0/
+         +ih0fwMPfI1cCiINT6Fk2f99G8ScabBm1P1NlhygTeHxKiYrdUUs7GPnIGiuxdN4AOtH
+         wI5RST8fsKglZjISZ6GLPMIVwPZrVzrjbphJhALU6/NNYwgmq5Qi97XWpl3pZrc2/LEt
+         b/DzQAgQv1cey6JgcA+XZsHBGQJrSg3Ojk5IiBAeV7b+cdx3ZI02uVexKAQMgW1dBf96
+         qdkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=MRHVk2zBU22s3EeMZAT+DIG/SBqWWgFOEvq0go28E5o=;
-        b=l8dcXvXpauH9UX1GDwLkMNPozKmxgTLGQaI3OcByP2ALc30TBzBrCVWpjnAVHMBTO8
-         Yllye5peiMJWBC9ZKhe7cr99kpq/ftVxNowTUdY+7dTkwNFrdJDrP87D2OuGtWQrsVmP
-         FFGOO1ugaJ8SQ2khCzFp6bztPdL3DgVHRy06YAyUWe4nH3c7tymtewLUqmUwHVQcumpJ
-         3/Kblc+XIUOqFvk7d1hE6H2IEwvYa1USu7NikfCQm8r6uZHfX50Rf0Y+KaUoSpqQCYZp
-         7xo+EmDwxPBHknp9Jyz5/gzzCQqlCz+f1Jz0c4+K5LtTY7CZpVKzQDHDVIvA74dyRm+9
-         CnOw==
-X-Gm-Message-State: AOAM533CKULmDkkt4bvMU45zQS5pcQ2/F7uYrl3Pv+uU11sFHNDorPwY
-        6p6Rgx6hEl/MZtC836RfRxLSUxx+2Ok=
-X-Google-Smtp-Source: ABdhPJztwzDSlP6LIq3cGLIqdXw8ec0obZIPuZSx5oy8UQE2mn5vXlZI6gKb61YY002u88AxXykxPw==
-X-Received: by 2002:a50:d713:: with SMTP id t19mr1578730edi.2.1631731123971;
-        Wed, 15 Sep 2021 11:38:43 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b3sm329513ejb.7.2021.09.15.11.38.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 11:38:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: Train station analogy, was Re: [PATCH v3 00/15] [RFC]
- Upstreaming the Scalar command
-Date:   Wed, 15 Sep 2021 19:51:04 +0200
-References: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
- <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
- <87r1dydp4m.fsf@evledraar.gmail.com> <87ilz44kdk.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2109131914080.55@tvgsbejvaqbjf.bet>
- <87mtofnzv1.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2109141432520.59@tvgsbejvaqbjf.bet>
- <xmqqilz32hhr.fsf@gitster.g> <87ilz3nhfg.fsf@evledraar.gmail.com>
- <5ae0c3fe-52a4-49b2-32c2-17feab2dd2d5@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <5ae0c3fe-52a4-49b2-32c2-17feab2dd2d5@gmail.com>
-Message-ID: <87k0jhn0p9.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=iSR6zZo3Zh6etqOpUPDpMgjWLPaHSlSC7lIFKt+VED8=;
+        b=tkD5wp2E5FMRgJP+BtGsRsPPiaBNd3GMSMJc6OI8w6OdKOcH2JrvO+OkCSienz6ig3
+         m992jB91Y9CFF/T1L8QQ4IIkEOU1Fs+DSVeCMa8A05mZsRPAAr+GbObdtRAIfOfQYpby
+         7ACEOdfI4yG6elBySYqa0Rc5ZKKzCrRmQEL+jwEXsa9J+lppkjxpUa2dKTr3/yvJlXMY
+         LvXz1JmTET1SIgDvl19FvL6AL6794oG7BWKWS3QMKtqI5d5UELYyeafTJfnSnvzbG1u0
+         VzFaHfm1tzbTmcC9ooRyUS9+o626kEFsW5S6lqlTt7ctkYbdHc2g1HLsOzI0RpKWJQjX
+         MxQg==
+X-Gm-Message-State: AOAM531Exkt5tqX3AJYxFBwcnmFIVoj3QTtTYRimoktJ/y6nOh2c/p8t
+        XkStdvnGsEGjfGwPui/RpgUMo0BOekddMoqwHpE+JJJyqzsn3vUJWMUnLV6v2GsLEvLVhMYb4pY
+        6FJiu7ER3YxXragPxCmte4hgVbBckLh54odmoLwF99PHfZqM2y8lXjOvw4+2gPlT/JP42A2pN9/
+        4t
+X-Google-Smtp-Source: ABdhPJyZtnS5s6Ier9NXaJGK09BknFiJym2Vg1EdTAMGSItwlKI0VcGDYcxqwuBo+6PD0Gju5igRvsFwsAg/ePbFWcnG
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:60e:: with SMTP id
+ d14mr1878776ybq.474.1631732364081; Wed, 15 Sep 2021 11:59:24 -0700 (PDT)
+Date:   Wed, 15 Sep 2021 11:59:19 -0700
+Message-Id: <20210915185920.346756-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
+Subject: [PATCH] submodule: extract path to submodule gitdir func
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We currently store each submodule gitdir in ".git/modules/<name>", but
+this has problems with some submodule naming schemes, as described in a
+comment in submodule_name_to_gitdir() in this patch.
 
-On Tue, Sep 14 2021, Derrick Stolee wrote:
+Extract the determination of the location of a submodule's gitdir into
+its own function submodule_name_to_gitdir(). For now, the problem
+remains unsolved, but this puts us in a better position for finding a
+solution.
 
-> On 9/14/2021 2:09 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Tue, Sep 14 2021, Junio C Hamano wrote:
->>=20
->>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>>
->>> At least to me, how this Makefile for Scalar should interact with
->>> the overall build process does not mesh well with the story about
->>> hwo direction to and history of the station are unrelated.  If we
->>> plan to start from contrib/ and eventually want to make it a part
->>> of the core Git (i.e. "git scalar <subcmd> ..." becomes just like
->>> "git bisect <subcmd> ..."), we would eventually need to see the
->>> recipe needed for including "bisect" and "scalar" work the same
->>> way, no?
->
-> We should definitely work to find a better way to describe our
-> vision for how _the ideas in Scalar_ can be adopted into Git proper.
->
-> Before this series, we were adding functionality to Git that allowed
-> Scalar to simplify to just a CLI that configures Git features. This
-> submission allows that CLI to be available via an opt-in compile flag.
-> This should allow more users to try out the ideas and perhaps we find
-> the things that really work for people (and almost more importantly,
-> the ideas that are _too_ opinionated).
+This was motivated, at $DAYJOB, by a part of Android's repo hierarchy
+[1]. In particular, there is a repo "build", and several repos of the
+form "build/<name>".
 
-Yeah that makes sense. I think it looks like a useful command & it's
-already useful to users.
+This is based on earlier work by Brandon Williams [2].
 
-I haven't been suggesting any changes to what gets installed here, FWIW
-I think we could be even more aggressive on that front, e.g. shipping it
-unconditionally in libexec, maybe with an optional switch for
-/usr/bin/scalar, or to ship "scalar" symlinked to "git" and have it
-route to the top-level scalar command depending on argv.
+[1] https://android.googlesource.com/platform/
+[2] https://lore.kernel.org/git/20180808223323.79989-2-bmwill@google.com/
 
-I dabbled in that a bit locally, FWIW it seems if anything even easier
-to do than the approaches we've discussed so far, but I wanted to focus
-on providing the same behavior in terms of build system maintenance.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ builtin/submodule--helper.c | 10 ++++-
+ dir.c                       |  2 +-
+ repository.c                |  3 +-
+ submodule.c                 | 77 ++++++++++++++++++++++++++-----------
+ submodule.h                 |  7 ++++
+ 5 files changed, 72 insertions(+), 27 deletions(-)
 
-> But the way I see Scalar being fully incorporated into Git is not as
-> a "git scalar <foo>" command or even having "scalar" be included by
-> default. Instead, perhaps a new builtin would need to be created and
-> its CLI would need to be presented and reviewed with significant
-> attention to long-term support in the Git project. Having Scalar as
-> a testing ground for these ideas seems like a positive way forward.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 4da9781b99..29ca0bedf6 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1704,18 +1704,24 @@ static int add_possible_reference_from_superproject(
+ 	 * standard layout with .git/(modules/<name>)+/objects
+ 	 */
+ 	if (strip_suffix(odb->path, "/objects", &len)) {
++		struct repository alternate;
+ 		char *sm_alternate;
+ 		struct strbuf sb = STRBUF_INIT;
+ 		struct strbuf err = STRBUF_INIT;
+ 		strbuf_add(&sb, odb->path, len);
+ 
++		repo_init(&alternate, sb.buf, NULL);
++
+ 		/*
+ 		 * We need to end the new path with '/' to mark it as a dir,
+ 		 * otherwise a submodule name containing '/' will be broken
+ 		 * as the last part of a missing submodule reference would
+ 		 * be taken as a file name.
+ 		 */
+-		strbuf_addf(&sb, "/modules/%s/", sas->submodule_name);
++		strbuf_reset(&sb);
++		submodule_name_to_gitdir(&sb, &alternate, sas->submodule_name);
++		strbuf_addch(&sb, '/');
++		repo_clear(&alternate);
+ 
+ 		sm_alternate = compute_alternate_path(sb.buf, &err);
+ 		if (sm_alternate) {
+@@ -1785,7 +1791,7 @@ static int clone_submodule(struct module_clone_data *clone_data)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 
+-	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), clone_data->name);
++	submodule_name_to_gitdir(&sb, the_repository, clone_data->name);
+ 	sm_gitdir = absolute_pathdup(sb.buf);
+ 	strbuf_reset(&sb);
+ 
+diff --git a/dir.c b/dir.c
+index 03c4d21267..5fe5d3a42e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -3633,7 +3633,7 @@ static void connect_wt_gitdir_in_nested(const char *sub_worktree,
+ 		strbuf_reset(&sub_wt);
+ 		strbuf_reset(&sub_gd);
+ 		strbuf_addf(&sub_wt, "%s/%s", sub_worktree, sub->path);
+-		strbuf_addf(&sub_gd, "%s/modules/%s", sub_gitdir, sub->name);
++		submodule_name_to_gitdir(&sub_gd, &subrepo, sub->name);
+ 
+ 		connect_work_tree_and_git_dir(sub_wt.buf, sub_gd.buf, 1);
+ 	}
+diff --git a/repository.c b/repository.c
+index b2bf44c6fa..710a3b4bf8 100644
+--- a/repository.c
++++ b/repository.c
+@@ -213,8 +213,7 @@ int repo_submodule_init(struct repository *subrepo,
+ 		 * submodule would not have a worktree.
+ 		 */
+ 		strbuf_reset(&gitdir);
+-		strbuf_repo_git_path(&gitdir, superproject,
+-				     "modules/%s", sub->name);
++		submodule_name_to_gitdir(&gitdir, superproject, sub->name);
+ 
+ 		if (repo_init(subrepo, gitdir.buf, NULL)) {
+ 			ret = -1;
+diff --git a/submodule.c b/submodule.c
+index 8e611fe1db..9382ddf0cc 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1819,14 +1819,16 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ 
+ void submodule_unset_core_worktree(const struct submodule *sub)
+ {
+-	char *config_path = xstrfmt("%s/modules/%s/config",
+-				    get_git_dir(), sub->name);
++	struct strbuf config_path = STRBUF_INIT;
+ 
+-	if (git_config_set_in_file_gently(config_path, "core.worktree", NULL))
++	submodule_name_to_gitdir(&config_path, the_repository, sub->name);
++	strbuf_addstr(&config_path, "/config");
++
++	if (git_config_set_in_file_gently(config_path.buf, "core.worktree", NULL))
+ 		warning(_("Could not unset core.worktree setting in submodule '%s'"),
+ 			  sub->path);
+ 
+-	free(config_path);
++	strbuf_release(&config_path);
+ }
+ 
+ static const char *get_super_prefix_or_empty(void)
+@@ -1922,20 +1924,22 @@ int submodule_move_head(const char *path,
+ 				absorb_git_dir_into_superproject(path,
+ 					ABSORB_GITDIR_RECURSE_SUBMODULES);
+ 		} else {
+-			char *gitdir = xstrfmt("%s/modules/%s",
+-				    get_git_dir(), sub->name);
+-			connect_work_tree_and_git_dir(path, gitdir, 0);
+-			free(gitdir);
++			struct strbuf gitdir = STRBUF_INIT;
++			submodule_name_to_gitdir(&gitdir, the_repository,
++						 sub->name);
++			connect_work_tree_and_git_dir(path, gitdir.buf, 0);
++			strbuf_release(&gitdir);
+ 
+ 			/* make sure the index is clean as well */
+ 			submodule_reset_index(path);
+ 		}
+ 
+ 		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
+-			char *gitdir = xstrfmt("%s/modules/%s",
+-				    get_git_dir(), sub->name);
+-			connect_work_tree_and_git_dir(path, gitdir, 1);
+-			free(gitdir);
++			struct strbuf gitdir = STRBUF_INIT;
++			submodule_name_to_gitdir(&gitdir, the_repository,
++						 sub->name);
++			connect_work_tree_and_git_dir(path, gitdir.buf, 1);
++			strbuf_release(&gitdir);
+ 		}
+ 	}
+ 
+@@ -2050,7 +2054,7 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+ static void relocate_single_git_dir_into_superproject(const char *path)
+ {
+ 	char *old_git_dir = NULL, *real_old_git_dir = NULL, *real_new_git_dir = NULL;
+-	char *new_git_dir;
++	struct strbuf new_gitdir = STRBUF_INIT;
+ 	const struct submodule *sub;
+ 
+ 	if (submodule_uses_worktrees(path))
+@@ -2068,14 +2072,13 @@ static void relocate_single_git_dir_into_superproject(const char *path)
+ 	if (!sub)
+ 		die(_("could not lookup name for submodule '%s'"), path);
+ 
+-	new_git_dir = git_pathdup("modules/%s", sub->name);
+-	if (validate_submodule_git_dir(new_git_dir, sub->name) < 0)
++	submodule_name_to_gitdir(&new_gitdir, the_repository, sub->name);
++	if (validate_submodule_git_dir(new_gitdir.buf, sub->name) < 0)
+ 		die(_("refusing to move '%s' into an existing git dir"),
+ 		    real_old_git_dir);
+-	if (safe_create_leading_directories_const(new_git_dir) < 0)
+-		die(_("could not create directory '%s'"), new_git_dir);
+-	real_new_git_dir = real_pathdup(new_git_dir, 1);
+-	free(new_git_dir);
++	if (safe_create_leading_directories_const(new_gitdir.buf) < 0)
++		die(_("could not create directory '%s'"), new_gitdir.buf);
++	real_new_git_dir = real_pathdup(new_gitdir.buf, 1);
+ 
+ 	fprintf(stderr, _("Migrating git directory of '%s%s' from\n'%s' to\n'%s'\n"),
+ 		get_super_prefix_or_empty(), path,
+@@ -2086,6 +2089,7 @@ static void relocate_single_git_dir_into_superproject(const char *path)
+ 	free(old_git_dir);
+ 	free(real_old_git_dir);
+ 	free(real_new_git_dir);
++	strbuf_release(&new_gitdir);
+ }
+ 
+ /*
+@@ -2105,6 +2109,7 @@ void absorb_git_dir_into_superproject(const char *path,
+ 	/* Not populated? */
+ 	if (!sub_git_dir) {
+ 		const struct submodule *sub;
++		struct strbuf sub_gitdir = STRBUF_INIT;
+ 
+ 		if (err_code == READ_GITFILE_ERR_STAT_FAILED) {
+ 			/* unpopulated as expected */
+@@ -2126,8 +2131,9 @@ void absorb_git_dir_into_superproject(const char *path,
+ 		sub = submodule_from_path(the_repository, null_oid(), path);
+ 		if (!sub)
+ 			die(_("could not lookup name for submodule '%s'"), path);
+-		connect_work_tree_and_git_dir(path,
+-			git_path("modules/%s", sub->name), 0);
++		submodule_name_to_gitdir(&sub_gitdir, the_repository, sub->name);
++		connect_work_tree_and_git_dir(path, sub_gitdir.buf, 0);
++		strbuf_release(&sub_gitdir);
+ 	} else {
+ 		/* Is it already absorbed into the superprojects git dir? */
+ 		char *real_sub_git_dir = real_pathdup(sub_git_dir, 1);
+@@ -2278,9 +2284,36 @@ int submodule_to_gitdir(struct strbuf *buf, const char *submodule)
+ 			goto cleanup;
+ 		}
+ 		strbuf_reset(buf);
+-		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
++		submodule_name_to_gitdir(buf, the_repository, sub->name);
+ 	}
+ 
+ cleanup:
+ 	return ret;
+ }
++
++void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
++			      const char *submodule_name)
++{
++	/*
++	 * NEEDSWORK: The current way of mapping a submodule's name to
++	 * its location in .git/modules/ has problems with some naming
++	 * schemes. For example, if a submodule is named "foo" and
++	 * another is named "foo/bar" (whether present in the same
++	 * superproject commit or not - the problem will arise if both
++	 * superproject commits have been checked out at any point in
++	 * time), or if two submodule names only have different cases in
++	 * a case-insensitive filesystem.
++	 *
++	 * There are several solutions, including encoding the path in
++	 * some way, introducing a submodule.<name>.gitdir config in
++	 * .git/config (not .gitmodules) that allows overriding what the
++	 * gitdir of a submodule would be (and teach Git, upon noticing
++	 * a clash, to automatically determine a non-clashing name and
++	 * to write such a config), or introducing a
++	 * submodule.<name>.gitdir config in .gitmodules that repo
++	 * administrators can explicitly set. Nothing has been decided,
++	 * so for now, just append the name at the end of the path.
++	 */
++	strbuf_repo_git_path(buf, r, "modules/");
++	strbuf_addstr(buf, submodule_name);
++}
+diff --git a/submodule.h b/submodule.h
+index 84640c49c1..c11e0807fc 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -124,6 +124,13 @@ int push_unpushed_submodules(struct repository *r,
+  */
+ int submodule_to_gitdir(struct strbuf *buf, const char *submodule);
+ 
++/*
++ * Given a submodule name, create a path to where the submodule's gitdir lives
++ * inside of the provided repository's 'modules' directory.
++ */
++void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
++			      const char *submodule_name);
++
+ /*
+  * Make sure that no submodule's git dir is nested in a sibling submodule's.
+  */
+-- 
+2.33.0.309.g3052b89438-goog
 
-*Nod*
-
-> This is a big reason why we think that contrib/ is a good place for
-> it to exist.
-
-Here's where you and Johannes lose me. There's some rationale in your
-minds for why sticking it in contrib is the obvious way to go. So far
-you've been describing how it'll look to users etc, how it's arranged in
-our source tree only matters to git.git developers.
-
-I think the actual reason is to carve in advance some subjective
-ownership/apartness or whatever for this thing, if that's the case I
-think documentation/commit messages would also work.
-
-I really don't care much if something lives in contrib or not in the
-abstract, but various integration around builds in Makefile makes that
-much easier in practice, and if "make install" looks the same...
-
->>> I am getting the impression that such a unified build process is
->>> =C3=86var wants to see at the end, I am not even sure if you do from
->>> the above "analogy".  Cool down a bit, perhaps?
->
-> I agree that the temperature of this thread has gotten a bit
-> heated. I think there is something valuable to be gained from
-> each perspective, but not in a way that either has presented it.
-
-Thanks, hopefully we can keep it jovial going forward. If you've got any
-(either on-list or off-list) feedback about how I can improve my side of
-that it would be most welcome.
-
->>> The following assumes that you share the goal of making "git
->>> scalar" just like "git bisect"---another first class citizen of
->>> Git toolbox, the user can choose to use it or the user may not
->>> have a need to interact with it, but it exists there by default
->>> and is not an opt-in add-on component.
->>>
->>> I would understand it if your plan is to convert to a unified
->>> build procedure at the very end of the upstreaming process, and
->>> not while you populate contrib/ with more and more scalar stuff,
->>> because the Makefile bits for the entire scalar, while not yet
->>> upstreamed, has already been written as a separate procedure and
->>> having to convert the whole thing upfront before you can start
->>> trickle parts would mean you need to (re)start the process.  And
->>> I would even be sympathetic if you felt it like a distraction.
->>>
->>> But at least I view it as a step that needs to happen sometime
->>> between now and at the end.  I do not yet have an opinion on
->>> which one is more pleasant, between (1) having to deal with a
->>> single Makefile that needs to be aware of two different locations
->>> *.[ch] lives in, and (2) having to deal with two Makefiles that
->>> duplicates definitions and risks them needlessly diverging.
->
-> Since we already need to modify the root Makefile, I think having
-> the root Makefile add the files from contrib/scalar from an
-> optional flag is a great way to reduce duplication across multiple
-> Makefiles while also maintaining the Scalar is compiled optionally.
->
-> One big goal is to minimize how often we need to update Scalar. I
-> can see things like adjusting the recommended config once per
-> release cycle based on which new features are available. I don't
-> really want to be spending time updating the Makefile to match a
-> contribution that was already carefully reviewed and tested. I
-> also don't want to put the burden of updating contrib/scalar upon
-> those contributors.
-
-I'd think not having large parts of t/Makefile & Makefile should ease
-that maintenance burden for you & others.
-
->> For what it's worth what I had on top of this is not (1) or (2), but a
->> (0): I.e. there isn't a contrib/scalar anymore, I moved:
->>=20
->>     contrib/scalar/scalar.c -> scalar>     contrib/scalar/scalar.txt -> =
-Documentation/scalar.txt
->>     contrib/scalar/t9099-scalar.sh -> t/t9099-scalar.sh
->>=20
->> We build, test, and otherwise check (e.g. "make check-docs") it by
->> default, what we don't do is install it unless you ask. You need to run:
->>=20
->>     # Or any other install* target
->>     make install install-doc INSTALL_SCALAR=3DYesPlease
->>=20
->> It could be be kept in contrib/scalar/ even with that sort of approach,
->> and it would still be simpler than the two-Makefile approach.
->
-> I think keeping it in contrib/scalar is best for now. But I do
-> agree that a single Makefile has benefits.
-
-I noted the "why contrib" above.
-
-> One early suggestion from a while back was to modify git.c to
-> handle the "scalar" executable as well as the "git" executable,
-> specifically to reduce duplication handling options such as
->
->   -c config.key=3Dvalue
->   -C worktree
->   --exec-path
->
-> and similar commands. While our duplication of the "-c" option
-> does add similar code in a second place, these other options
-> are less critical for Scalar, especially in its current version.
-> I think refactoring the code in git.c to cater to the "scalar"
-> executable is at least premature. If we want to pursue these
-> other options in the future, then that refactoring could happen
-> as a separate discussion after the rest of the build system and
-> CLI have been figured out.
-
-As noted above that seems like a sensible way forward, I hadn't noticed
-how much of git.c's setup was copied into scalar.c.
-
-It seems to me that it wouldn't be that hard, on the order of the
-existing setup code or less. I.e. just make "git.c" learn that it may be
-running some arbitrary command name, and do some options parsing, but
-and finally dispatch to a cmd_scalar(). IOW mostly like a built-in.
-
-> _Perhaps_ Johannes still had that level of integration in his
-> head when responding to the single-Makefile recommendations.
->
->> But just moving the code, tests and documentation where everything else
->> lives cuts down an all sorts of special cases, file globs in various
->> places (e.g. doc lints) will just work and won't need adjustment.
->>=20
->>> I also would understand it if the reason why you want to keep the
->>> top-level Makefile as intact as possible because you sense a high
->>> probability that scalar will stay in contrib/ and even turn out
->>> to be a failure.  Keeping the build procedure separated certainly
->>> will keep it easier to yank it out later.  But I do not think
->>> such a case is quite likely.
->>=20
->> For what it's worth the WIP patch(es) I have on top of it will probably
->> make such a thing even easier, not that removing it from the tree would
->> be much of a problem in either case. It's mostly a few lines added to
->> lists in various places in the Makfile.
->
-> Do you have a version of these patches available for adaptation
-> into this series? I'd like to take a look and see what it would
-> look like to squash them into this series. Forgive me if I just
-> missed the link. (I see the diff you posted earlier in this thread.)
-
-I've got it at
-https://github.com/avar/git/tree/avar-dscho/scalar-the-beginning-normalize-=
-Makefile
-
-Not very ML-ready, and soft-depends on some other Makefile cleanups I
-thought I'd do & still haven't untangled and submitted. Soft-depends as
-in this can easily be done on master, but some of the variable names
-etc. are quite confusing there.
-
-But you should be able to check it out, it'll build, test and install if
-you run "install" with "INSTALL_SCALAR=3DY".
-
-You may run into on everly eager new (but unrelated to this, I just
-merged it on top) Makefile assertion I'm experimenting with, just
-comment out the relevant line in the Makefile if that happens,
-i.e. something like this error:
-
-    Makefile:3608: *** "please sort and de-duplicate BUILT_INS_EXTRA!".  St=
-op.
-
->> If I were to clean this up properly most of the changes would be
->> teaching the Makefile that it can build N number of named top-level
->> "special" commands that get dropped into bin/, not just the "git" we
->> hardcode now.
->
-> This is an interesting idea for revamping how adjacent tools are
-> compiled and shipped with Git from contrib/ (or possibly elsewhere
-> if we decided to start including more things as "blessed helpers".
->
-> As a complete aside: I'm interested in using the sparse-checkout
-> feature as I work on the Git codebase, just to make sure I hit
-> pain points before any other user.
->
-> This is the best that I could do for my purposes:
->
-> $ git sparse-checkout list
-> .github
-> Documentation
-> builtin
-> compat
-> contrib/scalar
-> ewah
-> git-gui
-> gitk-git
-> gitk-gui
-> gitweb
-> mergetools
-> negotiator
-> perl
-> po
-> refs
-> sha1dc
-> sha256
-> t
-> templates
-> trace2
-> xdiff
->
-> And 'git status' reports that this includes 97% of the tracked
-> files. Perhaps there are ways to make this be smaller by having
-> make skip building things like git-gui if the directory doesn't
-> exist. Another idea would be to skip any logic around translating
-> messages if the 'po' directory is missing.
-
-For git-gui in particular NO_TCLTK=3DY should do it.
-
-> The reason I bring this up is that I'm interested in finding
-> ways to make our build system be streamlined a bit using the
-> presence of directories as a way to opt in/out of certain build
-> outputs. Since Scalar is being added as a new component, this is
-> a good opportunity to establish a pattern that works for this
-> effort, too.
-
-Sure, the hard part isn't that you can't grep out nonexisting files or
-directories when building where we now use a glob.
-
-It's that everything downstream of that, i.e. tests, installation
-etc. is going to have to work properly in the face of arbitrary parts of
-what the developer who tested the code expected going missing.
-
-Which is why we've generally carved out very specific things, usually
-along the boundaries of installed dependencies.
