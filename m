@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91407C433FE
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 20:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA497C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 20:36:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73E4061155
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 20:36:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A05AE61101
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 20:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231863AbhIOUhq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 16:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60088 "EHLO
+        id S231889AbhIOUhs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 16:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbhIOUho (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231792AbhIOUho (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 15 Sep 2021 16:37:44 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C34D6C0613C1
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E92C061768
         for <git@vger.kernel.org>; Wed, 15 Sep 2021 13:36:23 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id d207-20020a1c1dd8000000b00307e2d1ec1aso2936617wmd.5
+Received: by mail-wm1-x330.google.com with SMTP id e26so3181215wmk.2
         for <git@vger.kernel.org>; Wed, 15 Sep 2021 13:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hrvC+HIqL2XOQTHkljqsU9Y1itYKqJ4zzmtZdhx3Zas=;
-        b=RRtVTrQ1dSFAcA28vh9Utg7qGhzCpIEJCiR0sYmqrQNRyPT6M0o0d2gQJiyrWx6g64
-         a1GRp5XEUyRG5DVINug5v8Je4wx56bZrTtrDGRmcP+/baEqYXHoM9BcfylOuJsV9CO2L
-         KtULP54uD9qV6p74WpsdW8LNWYyUNwEPbZWcR9tOLbgETlSgSFq5lIsNytCRwH7ITwo2
-         1cYW6IvhoIfPxX3TithGvLZgMrTgvq8y/dO7tJbHuCOJbrF9QM7CyE4fByQiKiSCLSki
-         NoFkWq2Oxe9Hj2czz+xN9r6awdTV8PILYB0siMKxaJt0q+6Bsgjc6xW3txJQQ2HGrqXD
-         9ryQ==
+        bh=xH8KHPZqTUyNqvPLgX0jLXAWPh9eatde8fJJ9xbOwYY=;
+        b=UNOuTP8j7FIF/xvbaKr3m6UH1HSqqVcRxOzBQjhI77gSHxFkicr4NvHjBYW+afhN68
+         UlKzAp8V+eWfqz1h8VXuUxqZOq/hBHoKhSfiiawz7nQQwRf5FxzgM+Ilf3st0aKTmfwz
+         B6cu+SHpXOr5rOflMETy8LAbRBYLowo2Y67zmdLgLSSvL2VVTZY9Cp4EJSJL3wKsSsER
+         c03V+9QT4ycZvFOl67ReMXrIQSCFtXoUFlPzUT8Ol+EYUSBiuWRRfAqrS1hjsyGo53Cn
+         9mSt6D2rv8FIMIfxVxU3tQBumJWP78gElKOOvPBxuFMu1fA9AlImmxW/t8VQF1YqW3qA
+         nnpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hrvC+HIqL2XOQTHkljqsU9Y1itYKqJ4zzmtZdhx3Zas=;
-        b=OMo/oOEqtoum1EO3y7MFVVuTWDNlNaKHtE/vpCU8EXqxED+070sSse52ds4O+Ew409
-         ShRk94s2IUjzLEcDmE0V0Z1NB6Z3hxE00SO6CilS7QfHFJtixj2h6O2np+8U3VbuVNfQ
-         WlY62nawf7rRsXl+/cTH5Bm/IAWRsgEt6zV3Gdgq47LPMwC0A87IsOegVku35YyY+XdV
-         teuVRSjkpYGx3EU+Q11GL4Akn248I9mP8k4TGX8DCw7OGypC2nqPiG/DiivYoTmKu7TY
-         ygs/aCpa8L+uqIGM6beirURifh5f5HBV+A2bTIwEa3OFwFZkXISn11f4TnhHcKMnW1XO
-         9dQA==
-X-Gm-Message-State: AOAM532PEZMSjseOXd8bvP2bfJisdXhWhwoO/Nog9PDzNyMWMnmgDw59
-        Zk9r+d3OUhlyW1tJvKiLmRxaXGpaI/w=
-X-Google-Smtp-Source: ABdhPJxFYH/d/b4Jkfn77F0OJSM6l7zryvkmvFlKpL2iqx/kR1pD5iiwrifAisO7jorZIOmjAf8r8A==
-X-Received: by 2002:a7b:c385:: with SMTP id s5mr6341659wmj.149.1631738182413;
-        Wed, 15 Sep 2021 13:36:22 -0700 (PDT)
+        bh=xH8KHPZqTUyNqvPLgX0jLXAWPh9eatde8fJJ9xbOwYY=;
+        b=Yz8PM9gxon1/Pi/9W0J2U2UIpEa/9Ujr2Osgw/Fa6h6PhfxeCDO5ePTX0xDdLoJLzO
+         Nz1uRMwW29JKWv0kD58L1hK8MczokbM2ajRh7hx6md8TeV72iUDglJAhBL1LDV/XEhDo
+         5ytMrdgo5SYppQtq/CGKJVxQRjmS3eIx9XxJbdQ6b9SBO1rUPdNmQ0euBsT4wx+CW31p
+         LMq10kXSXYltwnKFgIAfJEw3PzFTcW2s0CFoAf3Y967iQbdmxRxJn79VVOYVjDvhstcI
+         CS89zCNvPOr3/XmgCa7hTFsOefH+cUk7RBrng55OkFhaCclkfCRXija6uv8srS8Vgjco
+         25Pg==
+X-Gm-Message-State: AOAM532+wwVq1oBkvjXPZySrIyCYeRfGAhs0Vrs5XUcfPoMMoKzMQppS
+        IKnpAw5z0L2jjVuz/YSgQmegbOs96NU=
+X-Google-Smtp-Source: ABdhPJxZlpwC21yNhjYzo0oix8EqYhFZM8GgIvdjFluX2E+YSp2Bnnlgbg4WbyCnjDtiSaL8AnmDsA==
+X-Received: by 2002:a1c:7e85:: with SMTP id z127mr1581341wmc.141.1631738181910;
+        Wed, 15 Sep 2021 13:36:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o24sm5108672wmm.11.2021.09.15.13.36.22
+        by smtp.gmail.com with ESMTPSA id l19sm816256wrc.16.2021.09.15.13.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 13:36:22 -0700 (PDT)
-Message-Id: <f97038a563d889d740a7e968fcbdfaadb41e2008.1631738177.git.gitgitgadget@gmail.com>
+        Wed, 15 Sep 2021 13:36:21 -0700 (PDT)
+Message-Id: <5eadf71929559968cafa18d03c3a623b1adff926.1631738177.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
 References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 15 Sep 2021 20:36:16 +0000
-Subject: [PATCH 6/7] run-command: create start_bg_command
+Date:   Wed, 15 Sep 2021 20:36:15 +0000
+Subject: [PATCH 5/7] simple-ipc/ipc-win32: add Windows ACL to named pipe
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,203 +75,189 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a variation of `run_command()` and `start_command()` to launch a command
-into the background and optionally wait for it to become "ready" before returning.
+Set an ACL on the named pipe to allow the well-known group EVERYONE
+to read and write to the IPC server's named pipe.  In the event that
+the daemon was started with elevation, allow non-elevated clients
+to communicate with the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- run-command.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++
- run-command.h |  48 ++++++++++++++++++++
- 2 files changed, 171 insertions(+)
+ compat/simple-ipc/ipc-win32.c | 140 +++++++++++++++++++++++++++++++---
+ 1 file changed, 129 insertions(+), 11 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 3e4e082e94d..fe75fd08f74 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1901,3 +1901,126 @@ void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir)
- 	}
- 	strvec_pushf(env_array, "%s=%s", GIT_DIR_ENVIRONMENT, new_git_dir);
- }
-+
-+enum start_bg_result start_bg_command(struct child_process *cmd,
-+				      start_bg_wait_cb *wait_cb,
-+				      void *cb_data,
-+				      unsigned int timeout_sec)
-+{
-+	enum start_bg_result sbgr = SBGR_ERROR;
-+	int ret;
-+	int wait_status;
-+	pid_t pid_seen;
-+	time_t time_limit;
-+
-+	/*
-+	 * Silently disallow child cleanup -- even if requested.
-+	 * The child process should persist in the background
-+	 * and possibly/probably after this process exits.  That
-+	 * is, don't kill the child during our atexit routine.
-+	 */
-+	cmd->clean_on_exit = 0;
-+
-+	ret = start_command(cmd);
-+	if (ret) {
-+		/*
-+		 * We assume that if `start_command()` fails, we
-+		 * either get a complete `trace2_child_start() /
-+		 * trace2_child_exit()` pair or it fails before the
-+		 * `trace2_child_start()` is emitted, so we do not
-+		 * need to worry about it here.
-+		 *
-+		 * We also assume that `start_command()` does not add
-+		 * us to the cleanup list.  And that it calls
-+		 * calls `child_process_clear()`.
-+		 */
-+		sbgr = SBGR_ERROR;
-+		goto done;
-+	}
-+
-+	time(&time_limit);
-+	time_limit += timeout_sec;
-+
-+wait:
-+	pid_seen = waitpid(cmd->pid, &wait_status, WNOHANG);
-+
-+	if (pid_seen == 0) {
-+		/*
-+		 * The child is currently running.  Ask the callback
-+		 * if the child is ready to do work or whether we
-+		 * should keep waiting for it to boot up.
-+		 */
-+		ret = (*wait_cb)(cb_data, cmd);
-+		if (!ret) {
-+			/*
-+			 * The child is running and "ready".
-+			 *
-+			 * NEEDSWORK: As we prepare to orphan (release to
-+			 * the background) this child, it is not appropriate
-+			 * to emit a `trace2_child_exit()` event.  Should we
-+			 * create a new event for this case?
-+			 */
-+			sbgr = SBGR_READY;
-+			goto done;
-+		} else if (ret > 0) {
-+			time_t now;
-+
-+			time(&now);
-+			if (now < time_limit)
-+				goto wait;
-+
-+			/*
-+			 * Our timeout has expired.  We don't try to
-+			 * kill the child, but rather let it continue
-+			 * (hopefully) trying to startup.
-+			 *
-+			 * NEEDSWORK: Like the "ready" case, should we
-+			 * log a custom child-something Trace2 event here?
-+			 */
-+			sbgr = SBGR_TIMEOUT;
-+			goto done;
-+		} else {
-+			/*
-+			 * The cb gave up on this child.
-+			 *
-+			 * NEEDSWORK: Like above, should we log a custom
-+			 * Trace2 child-something event here?
-+			 */
-+			sbgr = SBGR_CB_ERROR;
-+			goto done;
-+		}
-+	}
-+
-+	if (pid_seen == cmd->pid) {
-+		int child_code = -1;
-+
-+		/*
-+		 * The child started, but exited or was terminated
-+		 * before becoming "ready".
-+		 *
-+		 * We try to match the behavior of `wait_or_whine()`
-+		 * and convert the child's status to a return code for
-+		 * tracing purposes and emit the `trace2_child_exit()`
-+		 * event.
-+		 */
-+		if (WIFEXITED(wait_status))
-+			child_code = WEXITSTATUS(wait_status);
-+		else if (WIFSIGNALED(wait_status))
-+			child_code = WTERMSIG(wait_status) + 128;
-+		trace2_child_exit(cmd, child_code);
-+
-+		sbgr = SBGR_DIED;
-+		goto done;
-+	}
-+
-+	if (pid_seen < 0 && errno == EINTR)
-+		goto wait;
-+
-+	trace2_child_exit(cmd, -1);
-+	sbgr = SBGR_ERROR;
-+
-+done:
-+	child_process_clear(cmd);
-+	invalidate_lstat_cache();
-+	return sbgr;
-+}
-diff --git a/run-command.h b/run-command.h
-index af1296769f9..58065197d1b 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -496,4 +496,52 @@ int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
-  */
- void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir);
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+index 6c8a308de13..374ae2f81c7 100644
+--- a/compat/simple-ipc/ipc-win32.c
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -3,6 +3,8 @@
+ #include "strbuf.h"
+ #include "pkt-line.h"
+ #include "thread-utils.h"
++#include "accctrl.h"
++#include "aclapi.h"
  
-+/**
-+ * Possible return values for `start_bg_command()`.
+ #ifndef SUPPORTS_SIMPLE_IPC
+ /*
+@@ -591,11 +593,132 @@ finished:
+ 	return NULL;
+ }
+ 
++/*
++ * We need to build a Windows "SECURITY_ATTRIBUTES" object and use it
++ * to apply an ACL when we create the initial instance of the Named
++ * Pipe.  The construction is somewhat involved and consists of
++ * several sequential steps and intermediate objects.
++ *
++ * We use this structure to hold these intermediate pointers so that
++ * we can free them as a group.  (It is unclear from the docs whether
++ * some of these intermediate pointers can be freed before we are
++ * finished using the "lpSA" member.)
 + */
-+enum start_bg_result {
-+	/* child process is "ready" */
-+	SBGR_READY = 0,
-+
-+	/* child process could not be started */
-+	SBGR_ERROR,
-+
-+	/* callback error when testing for "ready" */
-+	SBGR_CB_ERROR,
-+
-+	/* timeout expired waiting for child to become "ready" */
-+	SBGR_TIMEOUT,
-+
-+	/* child process exited or was signalled before becomming "ready" */
-+	SBGR_DIED,
++struct my_sa_data
++{
++	PSID pEveryoneSID;
++	PACL pACL;
++	PSECURITY_DESCRIPTOR pSD;
++	LPSECURITY_ATTRIBUTES lpSA;
 +};
 +
-+/**
-+ * Callback used by `start_bg_command()` to ask whether the
-+ * child process is ready or needs more time to become ready.
-+ *
-+ * Returns 1 is child needs more time (subject to the requested timeout).
-+ * Returns 0 if child is ready.
-+ * Returns -1 on any error and cause `start_bg_command()` to also error out.
-+ */
-+typedef int(start_bg_wait_cb)(void *cb_data,
-+			      const struct child_process *cmd);
++static void init_sa(struct my_sa_data *d)
++{
++	memset(d, 0, sizeof(*d));
++}
 +
-+/**
-+ * Start a command in the background.  Wait long enough for the child to
-+ * become "ready".  Capture immediate errors (like failure to start) and
-+ * any immediate exit status (such as a shutdown/signal before the child
-+ * became "ready").
-+ *
-+ * This is a combination of `start_command()` and `finish_command()`, but
-+ * with a custom `wait_or_whine()` that allows the caller to define when
-+ * the child is "ready".
-+ *
-+ * The caller does not need to call `finish_command()`.
-+ */
-+enum start_bg_result start_bg_command(struct child_process *cmd,
-+				      start_bg_wait_cb *wait_cb,
-+				      void *cb_data,
-+				      unsigned int timeout_sec);
++static void release_sa(struct my_sa_data *d)
++{
++	if (d->pEveryoneSID)
++		FreeSid(d->pEveryoneSID);
++	if (d->pACL)
++		LocalFree(d->pACL);
++	if (d->pSD)
++		LocalFree(d->pSD);
++	if (d->lpSA)
++		LocalFree(d->lpSA);
 +
- #endif
++	memset(d, 0, sizeof(*d));
++}
++
++/*
++ * Create SECURITY_ATTRIBUTES to apply to the initial named pipe.  The
++ * creator of the first server instance gets to set the ACLs on it.
++ *
++ * We allow the well-known group `EVERYONE` to have read+write access
++ * to the named pipe so that clients can send queries to the daemon
++ * and receive the response.
++ *
++ * Normally, this is not necessary since the daemon is usually
++ * automatically started by a foreground command like `git status`,
++ * but in those cases where an elevated Git command started the daemon
++ * (such that the daemon itself runs with elevation), we need to add
++ * the ACL so that non-elevated commands can write to it.
++ *
++ * The following document was helpful:
++ * https://docs.microsoft.com/en-us/windows/win32/secauthz/creating-a-security-descriptor-for-a-new-object-in-c--
++ *
++ * Returns d->lpSA set to a SA or NULL.
++ */
++static LPSECURITY_ATTRIBUTES get_sa(struct my_sa_data *d)
++{
++	SID_IDENTIFIER_AUTHORITY sid_auth_world = SECURITY_WORLD_SID_AUTHORITY;
++#define NR_EA (1)
++	EXPLICIT_ACCESS ea[NR_EA];
++	DWORD dwResult;
++
++	if (!AllocateAndInitializeSid(&sid_auth_world, 1,
++				      SECURITY_WORLD_RID, 0,0,0,0,0,0,0,
++				      &d->pEveryoneSID)) {
++		DWORD gle = GetLastError();
++		trace2_data_intmax("ipc-debug", NULL, "alloc-world-sid/gle",
++				   (intmax_t)gle);
++		goto fail;
++	}
++
++	memset(ea, 0, NR_EA * sizeof(EXPLICIT_ACCESS));
++
++	ea[0].grfAccessPermissions = GENERIC_READ | GENERIC_WRITE;
++	ea[0].grfAccessMode = SET_ACCESS;
++	ea[0].grfInheritance = NO_INHERITANCE;
++	ea[0].Trustee.MultipleTrusteeOperation = NO_MULTIPLE_TRUSTEE;
++	ea[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
++	ea[0].Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
++	ea[0].Trustee.ptstrName = (LPTSTR)d->pEveryoneSID;
++
++	dwResult = SetEntriesInAcl(NR_EA, ea, NULL, &d->pACL);
++	if (dwResult != ERROR_SUCCESS) {
++		DWORD gle = GetLastError();
++		trace2_data_intmax("ipc-debug", NULL, "set-acl-entry/gle",
++				   (intmax_t)gle);
++		trace2_data_intmax("ipc-debug", NULL, "set-acl-entry/dw",
++				   (intmax_t)dwResult);
++		goto fail;
++	}
++
++	d->pSD = (PSECURITY_DESCRIPTOR)LocalAlloc(
++		LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
++	if (!InitializeSecurityDescriptor(d->pSD, SECURITY_DESCRIPTOR_REVISION)) {
++		DWORD gle = GetLastError();
++		trace2_data_intmax("ipc-debug", NULL, "init-sd/gle", (intmax_t)gle);
++		goto fail;
++	}
++
++	if (!SetSecurityDescriptorDacl(d->pSD, TRUE, d->pACL, FALSE)) {
++		DWORD gle = GetLastError();
++		trace2_data_intmax("ipc-debug", NULL, "set-sd-dacl/gle", (intmax_t)gle);
++		goto fail;
++	}
++
++	d->lpSA = (LPSECURITY_ATTRIBUTES)LocalAlloc(LPTR, sizeof(SECURITY_ATTRIBUTES));
++	d->lpSA->nLength = sizeof(SECURITY_ATTRIBUTES);
++	d->lpSA->lpSecurityDescriptor = d->pSD;
++	d->lpSA->bInheritHandle = FALSE;
++
++	return d->lpSA;
++
++fail:
++	release_sa(d);
++	return NULL;
++}
++
+ static HANDLE create_new_pipe(wchar_t *wpath, int is_first)
+ {
+ 	HANDLE hPipe;
+ 	DWORD dwOpenMode, dwPipeMode;
+-	LPSECURITY_ATTRIBUTES lpsa = NULL;
++	struct my_sa_data my_sa_data;
++
++	init_sa(&my_sa_data);
+ 
+ 	dwOpenMode = PIPE_ACCESS_INBOUND | PIPE_ACCESS_OUTBOUND |
+ 		FILE_FLAG_OVERLAPPED;
+@@ -611,20 +734,15 @@ static HANDLE create_new_pipe(wchar_t *wpath, int is_first)
+ 		 * set the ACL / Security Attributes on the named
+ 		 * pipe; subsequent instances inherit and cannot
+ 		 * change them.
+-		 *
+-		 * TODO Should we allow the application layer to
+-		 * specify security attributes, such as `LocalService`
+-		 * or `LocalSystem`, when we create the named pipe?
+-		 * This question is probably not important when the
+-		 * daemon is started by a foreground user process and
+-		 * only needs to talk to the current user, but may be
+-		 * if the daemon is run via the Control Panel as a
+-		 * System Service.
+ 		 */
++		get_sa(&my_sa_data);
+ 	}
+ 
+ 	hPipe = CreateNamedPipeW(wpath, dwOpenMode, dwPipeMode,
+-				 PIPE_UNLIMITED_INSTANCES, 1024, 1024, 0, lpsa);
++				 PIPE_UNLIMITED_INSTANCES, 1024, 1024, 0,
++				 my_sa_data.lpSA);
++
++	release_sa(&my_sa_data);
+ 
+ 	return hPipe;
+ }
 -- 
 gitgitgadget
 
