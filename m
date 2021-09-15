@@ -2,157 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE34C433FE
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9FA8C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:57:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 160356103E
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:56:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3F9F61216
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbhIOQ6F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 12:58:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55520 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhIOQ6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 12:58:05 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95503F5D33;
-        Wed, 15 Sep 2021 12:56:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k/CHATwM2/90isR9H6KZYX3aBL8wuod8TZKh1Z
-        IbBlA=; b=ASAOlGQpO3wLE9CJein8nFdo/q+DEBJXOWCeQqzEAAUDpOQ7VuaWaX
-        v/793jdFu79sQrdDkBMHUpobjWTmtUx7ztLNLshB5uX8uzM0OgCZxTPNdK/FmYcr
-        /3aPJaL6+C5OuvO4Qu0wcXPnC2gaWsdEqF8FdUfdh9nfEOSa9pYZQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C174F5D32;
-        Wed, 15 Sep 2021 12:56:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14A44F5D30;
-        Wed, 15 Sep 2021 12:56:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+        id S229630AbhIOQ6q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 12:58:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48176 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229465AbhIOQ6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 12:58:44 -0400
+Received: (qmail 32520 invoked by uid 109); 15 Sep 2021 16:57:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Sep 2021 16:57:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25477 invoked by uid 111); 15 Sep 2021 16:57:22 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Sep 2021 12:57:22 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Sep 2021 12:57:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 05/11] serve: provide "receive" function for
- session-id capability
+Subject: Re: [PATCH v2 03/11] serve: add "receive" method for v2 capabilities
+ table
+Message-ID: <YUIl8hhzi3aE1FA/@coredump.intra.peff.net>
 References: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
-        <YUE1gvovwj/X1wWV@coredump.intra.peff.net>
-Date:   Wed, 15 Sep 2021 09:56:44 -0700
-In-Reply-To: <YUE1gvovwj/X1wWV@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 14 Sep 2021 19:51:30 -0400")
-Message-ID: <xmqqh7elydyr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <YUE1fGZc1FuuyUNH@coredump.intra.peff.net>
+ <xmqqpmt9yeo7.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E881FD08-1645-11EC-B354-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpmt9yeo7.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 15, 2021 at 09:41:28AM -0700, Junio C Hamano wrote:
 
-> Rather than pulling the session-id string from the list of collected
-> capabilities, we can handle it as soon as we receive it. This gets us
-> closer to dropping the collected list entirely.
->
-> The behavior should be the same, with one exception. Previously if the
-> client sent us multiple session-id lines, we'd report only the first.
-> Now we'll pass each one along to trace2. This shouldn't matter in
-> practice, since clients shouldn't do that (and if they do, it's probably
-> sensible to log them all).
->
-> As this removes the last caller of the static has_capability(), we can
-> remove it, as well (and in fact we must to avoid -Wunused-function
-> complaining).
+> Jeff King <peff@peff.net> writes:
+> 
+> > +	/*
+> > +	 * Function called when a client requests the capability as a
+> > +	 * non-command. This may be NULL if the capability does nothing.
+> > +	 *
+> > +	 * For a capability of the form "foo=bar", the value string points to
+> > +	 * the content after the "=" (i.e., "bar"). For simple capabilities
+> > +	 * (just "foo"), it is NULL.
+> > +	 */
+> > +	void (*receive)(struct repository *r, const char *value);
+> 
+> What does "as a non-command" mean?  To put it another way, when a
+> client requests the capability as a command, what does the receive
+> method do differently?
 
-Nice.
+For each entry in this capability table, clients can say:
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  serve.c | 33 +++++++++------------------------
->  1 file changed, 9 insertions(+), 24 deletions(-)
->
-> diff --git a/serve.c b/serve.c
-> index f6ea2953eb..6bbf54cbbe 100644
-> --- a/serve.c
-> +++ b/serve.c
-> @@ -57,6 +57,14 @@ static int session_id_advertise(struct repository *r, struct strbuf *value)
->  	return 1;
->  }
->  
-> +static void session_id_receive(struct repository *r,
-> +			       const char *client_sid)
-> +{
-> +	if (!client_sid)
-> +		client_sid = "";
-> +	trace2_data_string("transfer", NULL, "client-sid", client_sid);
-> +}
-> +
->  struct protocol_capability {
->  	/*
->  	 * The name of the capability.  The server uses this name when
-> @@ -121,6 +129,7 @@ static struct protocol_capability capabilities[] = {
->  	{
->  		.name = "session-id",
->  		.advertise = session_id_advertise,
-> +		.receive = session_id_receive,
->  	},
->  	{
->  		.name = "object-info",
-> @@ -221,26 +230,6 @@ static int parse_command(const char *key, struct protocol_capability **command)
->  	return 0;
->  }
->  
-> -static int has_capability(const struct strvec *keys, const char *capability,
-> -			  const char **value)
-> -{
-> -	int i;
-> -	for (i = 0; i < keys->nr; i++) {
-> -		const char *out;
-> -		if (skip_prefix(keys->v[i], capability, &out) &&
-> -		    (!*out || *out == '=')) {
-> -			if (value) {
-> -				if (*out == '=')
-> -					out++;
-> -				*value = out;
-> -			}
-> -			return 1;
-> -		}
-> -	}
-> -
-> -	return 0;
-> -}
-> -
->  enum request_state {
->  	PROCESS_REQUEST_KEYS,
->  	PROCESS_REQUEST_DONE,
-> @@ -252,7 +241,6 @@ static int process_request(void)
->  	struct packet_reader reader;
->  	struct strvec keys = STRVEC_INIT;
->  	struct protocol_capability *command = NULL;
-> -	const char *client_sid;
->  
->  	packet_reader_init(&reader, 0, NULL, 0,
->  			   PACKET_READ_CHOMP_NEWLINE |
-> @@ -319,9 +307,6 @@ static int process_request(void)
->  		    the_repository->hash_algo->name,
->  		    hash_algos[client_hash_algo].name);
->  
-> -	if (has_capability(&keys, "session-id", &client_sid))
-> -		trace2_data_string("transfer", NULL, "client-sid", client_sid);
-> -
->  	command->command(the_repository, &reader);
->  
->  	strvec_clear(&keys);
+  command=foo
+
+or just:
+
+  foo
+
+The latter is a non-command. The "receive" function is not called at all
+if it is a "command". I think this is a bit more clear when read
+together with the existing function just above (which you can't see in
+the diff context):
+
+        /*
+         * Function called when a client requests the capability as a command.
+         * Will be provided a struct packet_reader 'request' which it should
+         * use to read the command specific part of the request.  Every command
+         * MUST read until a flush packet is seen before sending a response.
+         *
+         * This field should be NULL for capabilities which are not commands.
+         */
+        int (*command)(struct repository *r, struct packet_reader *request);
+
+I guess these could define "as a command", but I think it's pretty clear
+in the context.
+
+> >  static int parse_command(const char *key, struct protocol_capability **command)
+> > @@ -262,7 +277,7 @@ static int process_request(void)
+> >  		case PACKET_READ_NORMAL:
+> >  			/* collect request; a sequence of keys and values */
+> 
+> The comment tentatively gets slightly stale here, but that will be
+> corrected at the end, so it would be fine ;-)
+
+Hmm. I think it is not stale here, as we are still collecting the "keys"
+strvec. But it _does_ get stale by the end, when we stop doing so.
+
+I'm preparing a re-roll for the test issues Eric noted, so I'll drop
+that comment in the appropriate patch.
+
+-Peff
