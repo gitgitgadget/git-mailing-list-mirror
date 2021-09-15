@@ -2,339 +2,452 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B9C4C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 10:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E751C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 11:00:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B27161263
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 10:25:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E03D61244
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 11:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232204AbhIOK0o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 06:26:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231940AbhIOK0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 06:26:37 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6C81C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 03:25:15 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id w29so3032001wra.8
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 03:25:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=806KWJdi5XYIf5m2buOg+zSsRjY7OE/BSYg+G+xz6mI=;
-        b=C3Gt2MLYBy7uqvqby7Zymi4Wt7Cjy0Ma7HBNDwn5cQTRnkIE/t+QP/nr8G1N6TYGRP
-         V2KnYz+CuhnqfeRV1AeOVJzgSi+QVORkIIwNVG4m9uPp9o+a0FQU41g++bplUMcsbVjC
-         rGpHnfQ+7wVKkm9+avr6/yR5zYH8Ez7ETRhXYh/kK+G1Xxd+JNMjx9wFUt5e/VUThNwQ
-         kwDV+FUHWe9Lqopw7LlAozNrnMqK9AKpV3xG6/wdxiAGiWVB8I3rAZlOBnNckS10mza2
-         gtDo6Vhm4RtshnnO7aCNJD3PYbFgC/Ys7vmQUv/ysXUQtc7sg6brCYYCmfWfu64mZ1nB
-         f6nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=806KWJdi5XYIf5m2buOg+zSsRjY7OE/BSYg+G+xz6mI=;
-        b=cTA0JHj9sbNgWLvYK0gI4B12c1iYhwV4JYL31X5R48j1YvKolvZT4rvUfBT0gz554/
-         AzBC9YAhWbG1BBtvMxVRYxElqteMBSHmyZl2zW7brCT//9WtAH93is7TQl1Q1N+xPWKp
-         g+PJ8BnXNBb6j+YIj7ViO/X128grZtwD897qG9EwtiYzmLEz/E/q6OC0UYE6aywFk2Uw
-         ojC5PrhJkh9pKaPqtAvD8ajPaHT+U//wJPv0DEv3EPkzOWPXA22ZdY8fV4cXejSGiYQA
-         Z/Fta6CwPR2TlAfAl04dhj46aIUAjfdMEVdLbWCRN6Z4RT91Dn1dX1uLlAos9BQrPik4
-         863g==
-X-Gm-Message-State: AOAM531FmVBdAu2IPKvcMuND+GWYBXXsoLHjsZLu5/qNckRyfzzXs6pO
-        FN80lET+yYDXM+M5qYM1xCE=
-X-Google-Smtp-Source: ABdhPJzpOHgB4a+Y4/cTkMVjyAika0wuTswfMwJrMLxszGGwPQAvpIKxShcUtqBJFbJEtf4Ht7+vXw==
-X-Received: by 2002:a5d:4b0b:: with SMTP id v11mr4190299wrq.359.1631701514089;
-        Wed, 15 Sep 2021 03:25:14 -0700 (PDT)
-Received: from [192.168.1.201] (46.107.7.51.dyn.plus.net. [51.7.107.46])
-        by smtp.googlemail.com with ESMTPSA id f5sm3771370wmb.47.2021.09.15.03.25.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Sep 2021 03:25:13 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <pull.1036.v2.git.git.1631379829.gitgitgadget@gmail.com>
- <06e04c88dea3e15a90f0a11795b7a8eea3533bc8.1631379829.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <b6818661-ac6e-fbde-2cab-429c5550a0da@gmail.com>
-Date:   Wed, 15 Sep 2021 11:25:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S232970AbhIOLBZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 07:01:25 -0400
+Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:56361 "EHLO
+        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232313AbhIOLBV (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Sep 2021 07:01:21 -0400
+Received: from MTA-15-3.privateemail.com (MTA-15-1.privateemail.com [198.54.118.208])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id 638598008A
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:00:00 -0400 (EDT)
+Received: from mta-15.privateemail.com (localhost [127.0.0.1])
+        by mta-15.privateemail.com (Postfix) with ESMTP id 469F118001B0;
+        Wed, 15 Sep 2021 06:59:59 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.213])
+        by mta-15.privateemail.com (Postfix) with ESMTPA id C1CA718001BF;
+        Wed, 15 Sep 2021 06:59:58 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: [PATCH v4] pretty: colorize pattern matches in commit messages
+Date:   Wed, 15 Sep 2021 06:59:43 -0400
+Message-Id: <20210915105943.650308-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <06e04c88dea3e15a90f0a11795b7a8eea3533bc8.1631379829.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+The "git log" command limits its output to the commits that contain strings
+matched by a pattern when the "--grep=<pattern>" option is used, but unlike
+output from "git grep -e <pattern>", the matches are not highlighted,
+making them harder to spot.
 
-On 11/09/2021 18:03, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> [...] 
-> diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-> index 25c4b720e72..de9c6190b9c 100755
-> --- a/t/t6427-diff3-conflict-markers.sh
-> +++ b/t/t6427-diff3-conflict-markers.sh
-> @@ -211,4 +211,60 @@ test_expect_success 'rebase --apply describes fake ancestor base' '
->   	)
->   '
->   
-> +test_setup_zdiff3 () {
-> +	test_create_repo zdiff3 &&
-> +	(
-> +		cd zdiff3 &&
-> +
-> +		test_write_lines 1 2 3 4 5 6 7 8 9 >basic &&
-> +		test_write_lines 1 2 3 AA 4 5 BB 6 7 8 >middle-common &&
-> +		test_write_lines 1 2 3 4 5 6 7 8 9 >interesting &&
-> +
-> +		git add basic middle-common &&
+Teach the pretty-printer code to highlight matches from the
+"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
+options (to view the last one, you may have to ask for --pretty=fuller).
 
-interesting does not get committed
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+---
+v2: make the commit message whole (add the missing ingredients), rename
+    append_matched_line() to append_line_with_color(), use
+    colors[GREP_COLOR_MATCH_SELECTED] instead of
+    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
+    customized, don't copy strings to a buffer when not coloring in
+    append_line_with_color(), rename next_match() to grep_next_match(),
+    repurpose grep_next_match()/match_one_pattern() for use in
+    append_line_with_color() (allowing us to remove duplicated matching
+    code in append_line_with_color()), document how to customize the
+    feature and modify some of the tests to fit the feature better.
 
-> +		git commit -m base &&
+v3: fix a formatting issue with the added documentation.
 
-adding "base=$(git rev-parse --short HEAD^1)" here ...
+v4: add strbuf_add_with_color(), use the correct color code scheme in the
+    unit tests and add more unit tests.
+---
+ Documentation/git-log.txt |   8 +++
+ grep.c                    |  41 +++++++++-----
+ grep.h                    |   3 +
+ pretty.c                  | 113 ++++++++++++++++++++++++++++++++++----
+ t/t4202-log.sh            |  55 +++++++++++++++++++
+ 5 files changed, 193 insertions(+), 27 deletions(-)
 
-> +
-> +		git branch left &&
-> +		git branch right &&
-> +
-> +		git checkout left &&
-> +		test_write_lines 1 2 3 4 A B C D E 7 8 9 >basic &&
-> +		test_write_lines 1 2 3 CC 4 5 DD 6 7 8 >middle-common &&
-> +		test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >interesting &&
-> +		git add -u &&
-> +		git commit -m letters &&
-> +
-> +		git checkout right &&
-> +		test_write_lines 1 2 3 4 A X C Y E 7 8 9 >basic &&
-> +		test_write_lines 1 2 3 EE 4 5 FF 6 7 8 >middle-common &&
-> +		test_write_lines 1 2 3 4 A B C 5 6 G H I J 7 8 9 >interesting &&
-> +		git add -u &&
-> +		git commit -m permuted
-> +	)
-> +}
-> +
-> +test_expect_failure 'check zdiff3 markers' '
-> +	test_setup_zdiff3 &&
-> +	(
-> +		cd zdiff3 &&
-> +
-> +		git checkout left^0 &&
-> +
-> +		test_must_fail git -c merge.conflictstyle=zdiff3 merge -s recursive right^0 &&
-> +
-> +		test_write_lines 1 2 3 4 A "<<<<<<< HEAD" B C D "||||||| $(git rev-parse --short HEAD^1)" 5 6 ======= X C Y ">>>>>>> right^0" E 7 8 9 >expect &&
-
-... and then using $base rather than $(git rev-parse ...) would shorten 
-these lines. It might be clearer if they were split up something like 
-this as well
-	
-	test_write_lines \
-		1 2 3 4 A \
-		"<<<<<<< HEAD" B C D \
-		"||||||| $base" 5 6 ======= \
-		X C Y ">>>>>>> right^0"\
-		 E 7 8 9 >expect &&
-
-> +		test_cmp expect basic &&
-> +
-> +		test_write_lines 1 2 3 "<<<<<<< HEAD" CC "||||||| $(git rev-parse --short HEAD^1)" AA ======= EE ">>>>>>> right^0" 4 5 "<<<<<<< HEAD" DD "||||||| $(git rev-parse --short HEAD^1)" BB ======= FF ">>>>>>> right^0" 6 7 8 >expect &&
-> +		test_cmp expect middle-common &&
-> +
-> +		# Not passing this one yet.  For some reason, after extracting
-> +		# the common lines "A B C" and "G H I J", the remaining part
-> +		# is comparing "5 6" in the base to "5 6" on the left and
-> +		# "D E F" on the right.  And zdiff3 currently picks the side
-> +		# that matches the base as the merge result.  Weird.
-> +		test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >expect &&
-
-I might be about to make a fool of myself but I don't think this is 
-right for expect. 5 and 6 are deleted on the left so the two sides 
-should conflict. Manually comparing the result of merging with diff3 and 
-zdiff3 the zdiff3 result looked correct to me.
-
-I do wonder (though a brief try failed to trigger it) if there are cases 
-where the diff algorithm does something "clever" which means it does not 
-treat a common prefix or suffix as unchanged (see d2f82950a9 
-("Re(-re)*fix trim_common_tail()", 2007-12-20) for a related issue). We 
-could just trim the common prefix and suffix from the two sides 
-ourselves using xdl_recmatch().
-
-Best Wishes
-
-Phillip
-
-> +		test_cmp expect interesting
-> +	)
-> +'
-> +
->   test_done
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> index 609615db2cd..9977813a9d3 100644
-> --- a/xdiff-interface.c
-> +++ b/xdiff-interface.c
-> @@ -308,6 +308,8 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
->   			die("'%s' is not a boolean", var);
->   		if (!strcmp(value, "diff3"))
->   			git_xmerge_style = XDL_MERGE_DIFF3;
-> +		else if (!strcmp(value, "zdiff3"))
-> +			git_xmerge_style = XDL_MERGE_ZEALOUS_DIFF3;
->   		else if (!strcmp(value, "merge"))
->   			git_xmerge_style = 0;
->   		/*
-> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-> index 7a046051468..8629ae287c7 100644
-> --- a/xdiff/xdiff.h
-> +++ b/xdiff/xdiff.h
-> @@ -65,6 +65,7 @@ extern "C" {
->   
->   /* merge output styles */
->   #define XDL_MERGE_DIFF3 1
-> +#define XDL_MERGE_ZEALOUS_DIFF3 2
->   
->   typedef struct s_mmfile {
->   	char *ptr;
-> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> index 1659edb4539..df0c6041778 100644
-> --- a/xdiff/xmerge.c
-> +++ b/xdiff/xmerge.c
-> @@ -230,7 +230,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
->   	size += xdl_recs_copy(xe1, m->i1, m->chg1, needs_cr, 1,
->   			      dest ? dest + size : NULL);
->   
-> -	if (style == XDL_MERGE_DIFF3) {
-> +	if (style == XDL_MERGE_DIFF3 || style == XDL_MERGE_ZEALOUS_DIFF3) {
->   		/* Shared preimage */
->   		if (!dest) {
->   			size += marker_size + 1 + needs_cr + marker3_size;
-> @@ -327,7 +327,7 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
->    * lines. Try hard to show only these few lines as conflicting.
->    */
->   static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
-> -		xpparam_t const *xpp)
-> +				xpparam_t const *xpp, int style)
->   {
->   	for (; m; m = m->next) {
->   		mmfile_t t1, t2;
-> @@ -368,6 +368,42 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
->   			continue;
->   		}
->   		x = xscr;
-> +		if (style == XDL_MERGE_ZEALOUS_DIFF3) {
-> +			int advance1 = xscr->i1, advance2 = xscr->i2;
-> +
-> +			/*
-> +			 * Advance m->i1 and m->i2 so that conflict for sides
-> +			 * 1 and 2 start after common region.  Decrement
-> +			 * m->chg[12] since there are now fewer conflict lines
-> +			 * for those sides.
-> +			 */
-> +			m->i1 += advance1;
-> +			m->i2 += advance2;
-> +			m->chg1 -= advance1;
-> +			m->chg2 -= advance2;
-> +
-> +			/*
-> +			 * Splitting conflicts due to internal common regions
-> +			 * on the two sides would be inappropriate since we
-> +			 * are also showing the merge base and have no
-> +			 * reasonable way to split the merge base text.
-> +			 */
-> +			while (xscr->next)
-> +				xscr = xscr->next;
-> +
-> +			/*
-> +			 * Lower the number of conflict lines to not include
-> +			 * the final common lines, if any.  Do this by setting
-> +			 * number of conflict lines to
-> +			 *   (line offset for start of conflict in xscr) +
-> +			 *   (number of lines in the conflict in xscr)
-> +			 */
-> +			m->chg1 = (xscr->i1 - advance1) + (xscr->chg1);
-> +			m->chg2 = (xscr->i2 - advance2) + (xscr->chg2);
-> +			xdl_free_env(&xe);
-> +			xdl_free_script(x);
-> +			continue;
-> +		}
->   		m->i1 = xscr->i1 + i1;
->   		m->chg1 = xscr->chg1;
->   		m->i2 = xscr->i2 + i2;
-> @@ -419,6 +455,7 @@ static int lines_contain_alnum(xdfenv_t *xe, int i, int chg)
->   static void xdl_merge_two_conflicts(xdmerge_t *m)
->   {
->   	xdmerge_t *next_m = m->next;
-> +	m->chg0 = next_m->i0 + next_m->chg0 - m->i0;
->   	m->chg1 = next_m->i1 + next_m->chg1 - m->i1;
->   	m->chg2 = next_m->i2 + next_m->chg2 - m->i2;
->   	m->next = next_m->next;
-> @@ -430,12 +467,12 @@ static void xdl_merge_two_conflicts(xdmerge_t *m)
->    * it appears simpler -- because it takes up less (or as many) lines --
->    * if the lines are moved into the conflicts.
->    */
-> -static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m,
-> +static int xdl_simplify_non_conflicts(xdfenv_t *xe1, xdmerge_t *m, int style,
->   				      int simplify_if_no_alnum)
->   {
->   	int result = 0;
->   
-> -	if (!m)
-> +	if (!m || style == XDL_MERGE_ZEALOUS_DIFF3)
->   		return result;
->   	for (;;) {
->   		xdmerge_t *next_m = m->next;
-> @@ -482,6 +519,25 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
->   	int style = xmp->style;
->   	int favor = xmp->favor;
->   
-> +	/*
-> +	 * XDL_MERGE_DIFF3 does not attempt to refine conflicts by looking
-> +	 * at common areas of sides 1 & 2, because the base (side 0) does
-> +	 * not match and is being shown.  Similarly, simplification of
-> +	 * non-conflicts is also skipped due to the skipping of conflict
-> +	 * refinement.
-> +	 *
-> +	 * XDL_MERGE_ZEALOUS_DIFF3, on the other hand, will attempt to
-> +	 * refine conflicts looking for common areas of sides 1 & 2.
-> +	 * However, since the base is being shown and does not match,
-> +	 * it will only look for common areas at the beginning or end
-> +	 * of the conflict block.  Since XDL_MERGE_ZEALOUS_DIFF3's
-> +	 * conflict refinement is much more limited in this fashion, the
-> +	 * conflict simplification will be skipped.
-> +	 *
-> +	 * See xdl_refine_conflicts() and xdl_simplify_non_conflicts()
-> +	 * for more details, particularly looking for
-> +	 * XDL_MERGE_ZEALOUS_DIFF3.
-> +	 */
->   	if (style == XDL_MERGE_DIFF3) {
->   		/*
->   		 * "diff3 -m" output does not make sense for anything
-> @@ -604,8 +660,8 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
->   		changes = c;
->   	/* refine conflicts */
->   	if (XDL_MERGE_ZEALOUS <= level &&
-> -	    (xdl_refine_conflicts(xe1, xe2, changes, xpp) < 0 ||
-> -	     xdl_simplify_non_conflicts(xe1, changes,
-> +	    (xdl_refine_conflicts(xe1, xe2, changes, xpp, style) < 0 ||
-> +	     xdl_simplify_non_conflicts(xe1, changes, style,
->   					XDL_MERGE_ZEALOUS < level) < 0)) {
->   		xdl_cleanup_merge(changes);
->   		return -1;
-> 
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 0498e7bacb..c689f7d235 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -241,6 +241,14 @@ This setting can be disabled by the `--no-notes` option,
+ overridden by the `GIT_NOTES_DISPLAY_REF` environment variable,
+ and overridden by the `--notes=<ref>` option.
+ 
++color.grep.selected::
++	Determines the non matching text (background) color of selected lines,
++	when `--grep`, `--author` or `--committer` are used.
++
++color.grep.matchSelected::
++	Determines the matching text (foreground) color of selected lines, when
++	`--grep`, `--author` or `--committer` are used.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/grep.c b/grep.c
+index 424a39591b..6b036ee18a 100644
+--- a/grep.c
++++ b/grep.c
+@@ -956,18 +956,23 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 	const char *start = bol;
+ 
+ 	if ((p->token != GREP_PATTERN) &&
+-	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
++	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
++	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
+ 		return 0;
+ 
+ 	if (p->token == GREP_PATTERN_HEAD) {
+-		const char *field;
+-		size_t len;
+-		assert(p->field < ARRAY_SIZE(header_field));
+-		field = header_field[p->field].field;
+-		len = header_field[p->field].len;
+-		if (strncmp(bol, field, len))
+-			return 0;
+-		bol += len;
++		if (!(eflags & REG_NOTBOL)) {
++			const char *field;
++			size_t len;
++
++			assert(p->field < ARRAY_SIZE(header_field));
++			field = header_field[p->field].field;
++			len = header_field[p->field].len;
++			if (strncmp(bol, field, len))
++				return 0;
++			bol += len;
++		}
++
+ 		switch (p->field) {
+ 		case GREP_HEADER_AUTHOR:
+ 		case GREP_HEADER_COMMITTER:
+@@ -1159,21 +1164,26 @@ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
+ 	return 1;
+ }
+ 
+-static int next_match(struct grep_opt *opt, char *bol, char *eol,
+-		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
++int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags)
+ {
+ 	struct grep_pat *p;
+ 	int hit = 0;
+ 
+ 	pmatch->rm_so = pmatch->rm_eo = -1;
+ 	if (bol < eol) {
+-		for (p = opt->pattern_list; p; p = p->next) {
++		for (p = ((ctx == GREP_CONTEXT_HEAD)
++			   ? opt->header_list : opt->pattern_list);
++			  p; p = p->next) {
+ 			switch (p->token) {
+ 			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_HEAD:
+ 			case GREP_PATTERN_BODY:
+-				hit |= match_next_pattern(p, bol, eol, ctx,
+-							  pmatch, eflags);
++				if ((field == GREP_HEADER_FIELD_MAX) || (p->field == field))
++					hit |= match_next_pattern(p, bol, eol,
++								  ctx, pmatch,
++								  eflags);
+ 				break;
+ 			default:
+ 				break;
+@@ -1262,7 +1272,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 				line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		}
+ 		*eol = '\0';
+-		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
++		while (grep_next_match(opt, bol, eol, ctx, &match,
++				       GREP_HEADER_FIELD_MAX, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+diff --git a/grep.h b/grep.h
+index 72f82b1e30..d2943e29ea 100644
+--- a/grep.h
++++ b/grep.h
+@@ -177,6 +177,9 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
++int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags);
+ 
+ struct grep_source {
+ 	char *name;
+diff --git a/pretty.c b/pretty.c
+index 9631529c10..51f69f86af 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -431,15 +431,77 @@ const char *show_ident_date(const struct ident_split *ident,
+ 	return show_date(date, tz, mode);
+ }
+ 
++static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
++					 char *buf, size_t buflen)
++{
++	strbuf_add(sb, color, strlen(color));
++	strbuf_add(sb, buf, buflen);
++	if (strlen(color))
++		strbuf_add(sb, GIT_COLOR_RESET, strlen(GIT_COLOR_RESET));
++}
++
++static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
++				   const char *line, size_t linelen,
++				   int color, enum grep_context ctx,
++				   enum grep_header_field field)
++{
++	char *buf, *eol;
++	const char *line_color, *match_color;
++	regmatch_t match;
++	struct strbuf tmp_sb;
++	int eflags = 0;
++
++	if (!opt || !want_color(color) || opt->invert) {
++		strbuf_add(sb, line, linelen);
++		return;
++	}
++
++	if (ctx == GREP_CONTEXT_HEAD)
++		eflags = REG_NOTBOL;
++
++	strbuf_init(&tmp_sb, linelen + 1);
++	strbuf_add(&tmp_sb, line, linelen);
++
++	buf = tmp_sb.buf;
++	eol = buf + linelen;
++	line_color = opt->colors[GREP_COLOR_SELECTED];
++	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
++
++	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
++		if (match.rm_so == match.rm_eo)
++			break;
++
++		strbuf_grow(sb, strlen(line_color) + strlen(match_color) +
++			    (2 * strlen(GIT_COLOR_RESET)));
++		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
++		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
++				      match.rm_eo - match.rm_so);
++		buf += match.rm_eo;
++		eflags = REG_NOTBOL;
++	}
++
++	if (buf != line) {
++		strbuf_grow(sb, strlen(line_color) + strlen(GIT_COLOR_RESET));
++		strbuf_add_with_color(sb, line_color, buf, eol - buf);
++	} else {
++		strbuf_add(sb, buf, eol - buf);
++	}
++
++	strbuf_release(&tmp_sb);
++}
++
+ void pp_user_info(struct pretty_print_context *pp,
+ 		  const char *what, struct strbuf *sb,
+ 		  const char *line, const char *encoding)
+ {
++	struct strbuf id;
+ 	struct ident_split ident;
+ 	char *line_end;
+ 	const char *mailbuf, *namebuf;
+ 	size_t namelen, maillen;
+ 	int max_length = 78; /* per rfc2822 */
++	enum grep_header_field field = GREP_HEADER_FIELD_MAX;
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+ 
+ 	if (pp->fmt == CMIT_FMT_ONELINE)
+ 		return;
+@@ -496,9 +558,22 @@ void pp_user_info(struct pretty_print_context *pp,
+ 			strbuf_addch(sb, '\n');
+ 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
+ 	} else {
+-		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
+-			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
+-			    (int)namelen, namebuf, (int)maillen, mailbuf);
++		strbuf_init(&id, namelen + maillen + 4);
++
++		if (!strcmp(what, "Author"))
++			field = GREP_HEADER_AUTHOR;
++		else if (!strcmp(what, "Commit"))
++			field = GREP_HEADER_COMMITTER;
++
++		strbuf_addf(sb, "%s: %.*s", what,
++			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ");
++		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
++			    (int)maillen, mailbuf);
++
++		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
++				       GREP_CONTEXT_HEAD, field);
++		strbuf_addch(sb, '\n');
++		strbuf_release(&id);
+ 	}
+ 
+ 	switch (pp->fmt) {
+@@ -1935,8 +2010,9 @@ static int pp_utf8_width(const char *start, const char *end)
+ 	return width;
+ }
+ 
+-static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+-				 const char *line, int linelen)
++static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
++				 int color, int tabwidth, const char *line,
++				 int linelen)
+ {
+ 	const char *tab;
+ 
+@@ -1953,7 +2029,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+ 			break;
+ 
+ 		/* Output the data .. */
+-		strbuf_add(sb, line, tab - line);
++		append_line_with_color(sb, opt, line, tab - line, color,
++				       GREP_CONTEXT_BODY,
++				       GREP_HEADER_FIELD_MAX);
+ 
+ 		/* .. and the de-tabified tab */
+ 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
+@@ -1968,7 +2046,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+ 	 * worrying about width - there's nothing more to
+ 	 * align.
+ 	 */
+-	strbuf_add(sb, line, linelen);
++	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
++			       GREP_HEADER_FIELD_MAX);
+ }
+ 
+ /*
+@@ -1980,11 +2059,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
+ 			     struct strbuf *sb, int indent,
+ 			     const char *line, int linelen)
+ {
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
++
+ 	strbuf_addchars(sb, ' ', indent);
+ 	if (pp->expand_tabs_in_log)
+-		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
++		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
++				     line, linelen);
+ 	else
+-		strbuf_add(sb, line, linelen);
++		append_line_with_color(sb, opt, line, linelen, pp->color,
++				       GREP_CONTEXT_BODY,
++				       GREP_HEADER_FIELD_MAX);
+ }
+ 
+ static int is_mboxrd_from(const char *line, int len)
+@@ -2002,7 +2086,9 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		  struct strbuf *sb,
+ 		  int indent)
+ {
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+ 	int first = 1;
++
+ 	for (;;) {
+ 		const char *line = *msg_p;
+ 		int linelen = get_one_line(line);
+@@ -2023,14 +2109,17 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		if (indent)
+ 			pp_handle_indent(pp, sb, indent, line, linelen);
+ 		else if (pp->expand_tabs_in_log)
+-			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
+-					     line, linelen);
++			strbuf_add_tabexpand(sb, opt, pp->color,
++					     pp->expand_tabs_in_log, line,
++					     linelen);
+ 		else {
+ 			if (pp->fmt == CMIT_FMT_MBOXRD &&
+ 					is_mboxrd_from(line, linelen))
+ 				strbuf_addch(sb, '>');
+ 
+-			strbuf_add(sb, line, linelen);
++			append_line_with_color(sb, opt, line, linelen,
++					       pp->color, GREP_CONTEXT_BODY,
++					       GREP_HEADER_FIELD_MAX);
+ 		}
+ 		strbuf_addch(sb, '\n');
+ 	}
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 9dfead936b..943c00e338 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -449,6 +449,61 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
+ 	)
+ '
+ 
++cat > expect << EOF
++Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
++EOF
++
++test_expect_success 'log --author' '
++	git log -1 --color=always --author="A U" >log &&
++	grep Author log >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++Commit:     C O Mitter <committer@<BOLD;RED>example<RESET>.com>
++EOF
++
++test_expect_success 'log --committer' '
++	git log -1 --color=always --pretty=fuller --committer="example" >log &&
++	grep "Commit:" log >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++    <BOLD;RED>Sec<RESET>ond
++    <BOLD;RED>sec<RESET>ond
++EOF
++
++test_expect_success 'log -i --grep with color' '
++	git log --color=always -i --grep=sec >log &&
++	grep -i sec log >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect actual
++'
++cat > expect << EOF
++    <GREEN>th<RESET><BOLD;RED>ir<RESET><GREEN>d<RESET>
++EOF
++
++test_expect_success '-c color.grep.selected log --grep' '
++	git -c color.grep.selected="green" log --color=always --grep=ir >log &&
++	grep ir log >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++    <BLUE>i<RESET>n<BLUE>i<RESET>t<BLUE>i<RESET>al
++EOF
++
++test_expect_success '-c color.grep.matchSelected log --grep' '
++	git -c color.grep.matchSelected="blue" log --color=always --grep=i >log &&
++	grep al log >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect actual
++'
++
+ cat > expect <<EOF
+ * Second
+ * sixth
+-- 
+2.33.0
 
