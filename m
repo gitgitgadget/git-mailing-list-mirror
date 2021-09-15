@@ -2,197 +2,199 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7905CC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 15:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8784C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:17:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57D9361179
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 15:44:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C099860FED
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234405AbhIOPp5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 11:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49006 "EHLO
+        id S229518AbhIOQS5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 12:18:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234300AbhIOPp4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 11:45:56 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFFAC061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 08:44:37 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id q11so4577778wrr.9
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 08:44:37 -0700 (PDT)
+        with ESMTP id S229491AbhIOQSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 12:18:55 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19663C061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 09:17:35 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id g11so2807827qtk.5
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 09:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gsHcEUxsytmpN8EQknocxaAH1O1aIvD6d82RCytym8g=;
-        b=SCXB1Tmuh69wA3Ft2XwRRHczIlBGi4bHw+xkJ5QdDzsaZdwGjOCMMalEtdzaUYC+PE
-         sgTiKqtU09j9K2CG+bHd6sMeb8wx1Rmg7lk4kx/0U09W1eHjASDcHjzuAdfQD3HgRNxv
-         z1OHnwwIbO1vKKrhykjNAKj2vStXCVk7zgL0BoonE0yxqDltB9uVcPVMOkQQPnQr9i9Y
-         L8lUwxpfhL2yWxNJGogVgTI/Y+6TtMtak0Up9Nsf2cZMz8PjdivYVVH8P/JLY2zJnszg
-         dIgTk2swxubZ4apn0agCJlhu4jcCiDMMd8f+gKnGHnzG/E3X8P8upKC5PmnXaXiY8ZDK
-         wNHw==
+        bh=igrX2UievSW68f/J0keC8jG4lQuNNdNI6auPpnrTbzQ=;
+        b=pVLbuTCuegTLfZywnJ1pRMvh3VGtQvpRaID5e9E5Gf8U4u/kkBnq73L7POToB+7Ka+
+         AHS/nmujll1PhRlPRpm9VDvN6VdXo6/iZDRNq1BP38/eBRJDpjYqUx39hqmhisE6Pc2+
+         92xTHjtSy4VI8ZWX/wdqZFbIRwSTCYO21SLhZjdjOFn4MQl0X4slil+c1nr833W6RTEQ
+         WsrdpwOG9XsSTN/oCVKOqwvxDOJu3cdnB6FgQrNqqvLk31fHKGNzPJyjRg9MTJd/pdrK
+         5cQAmoFhHwVHhA9Jq8aVON2bL9X8mrnzc5Sy72WqJmzIjy7AVJlTnF4Kp6eSViE4SoCm
+         qeUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=gsHcEUxsytmpN8EQknocxaAH1O1aIvD6d82RCytym8g=;
-        b=qCwW1FA8C+NJSFasz+L7sMtH25IkMqdzUHv90Noe7P3fcB4e66zHFrz+BTJgNH/TkE
-         2KrzR2Zw3QDzmbID9daGSWIRI+ABC6r7Pt6AZEAWL97Rz9VhtL1O84fyRGbsVdUOHJtI
-         2AnLFGxkDDYhOqm/3SV6qKcKX9TnY54Vi7ReXsLOKgOVn8SVZ2N6LfIOlZ2ub8TMFJc8
-         o0qMQEuVtAQE8NgXgiISBRq2xeWt9ZBlxQhzsmGi7/NHIKcn2aAXARVcPY6OAowgAUKq
-         JBX0gXnwzIlhm2Y44OxFDwDdxeMXuSTZO9uci8ESKLSUovHPwSSWs9sPYF8qKmfyFUhs
-         kLqQ==
-X-Gm-Message-State: AOAM5331fVYfXqKEAcf8yvqobh0crai7mp1aXKuO26DGZv1ob7M3LQpy
-        6mzFzM5BQIzW1O+cj8CwXSk=
-X-Google-Smtp-Source: ABdhPJy0Bk7dNUWH9bqbImV7G22+Q8QXBq+W+pXbxWQRFDjoERhKzb0fKkwH6UXrZsr37egISc+wbw==
-X-Received: by 2002:a5d:6944:: with SMTP id r4mr734568wrw.186.1631720675671;
-        Wed, 15 Sep 2021 08:44:35 -0700 (PDT)
-Received: from [192.168.1.240] (46.107.7.51.dyn.plus.net. [51.7.107.46])
-        by smtp.gmail.com with ESMTPSA id o7sm268563wmc.46.2021.09.15.08.44.34
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=igrX2UievSW68f/J0keC8jG4lQuNNdNI6auPpnrTbzQ=;
+        b=u7KWRgI3Mje7vxDnx2+RUAu6FRu94r/2hY3t8lr48//eB/9YRIMUn/XcWaGksbVgkA
+         OHiATpoLwX9CnNLPnVbP0bHBO41nCnH+xXKTdiMbCDF6qDZffuW2YtyntS27UXG5ka3a
+         hZnOymnqAWgt97i/NxhxV1gXwDdET0YbUWfWWjwlZO3/jyXnbdhPZI5VqZWBaQnbn24L
+         G9costwvxJ7deu/g0Ns3GCRs4Yvv/ikYi89ocB6fP4FnQXi5Vd0sesZlvNEuABa78Vox
+         cMwOFWQaahZrqhzd+iHZECzWTaGJTuU5l+aWxL+r4UQNGhWo0AWRnyNjgiQuu1DKrBzN
+         qnEw==
+X-Gm-Message-State: AOAM533JFC6NrOqlQbPFBeeQrsIlB6yCvmU3v6I5KdzG/andMMT678xN
+        S/gxJxBiEKd4T8jgS5atljI=
+X-Google-Smtp-Source: ABdhPJzmfyRKzM6MtHSyu85ffMsYfZJnT3ERuujVuZiJZqoh66Iup4p3q6KU8hSwwZVZW8wxbNnbXQ==
+X-Received: by 2002:a05:622a:15d2:: with SMTP id d18mr602762qty.145.1631722654108;
+        Wed, 15 Sep 2021 09:17:34 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:8cdb:119:9f7e:3e24? ([2600:1700:e72:80a0:8cdb:119:9f7e:3e24])
+        by smtp.gmail.com with ESMTPSA id i67sm290731qkd.90.2021.09.15.09.17.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Sep 2021 08:44:35 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
+        Wed, 15 Sep 2021 09:17:33 -0700 (PDT)
+Subject: Re: [PATCH v2 01/14] t3705: test that 'sparse_entry' is unstaged
 To:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
- <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
- <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
- <c42d4051-59cd-094a-4570-32cf4d38ec27@gmail.com>
- <e7224105-83c6-7f12-f63a-474bd477583a@gmail.com>
- <408dc1d3-44b8-a955-4d7b-94f23fa8a6bc@gmail.com>
- <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <1311e9e9-6d10-40f8-2073-077313a94301@gmail.com>
-Date:   Wed, 15 Sep 2021 16:44:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        vdye@github.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+ <8aefce6254c0bcbbbca909a62d033c74c90f980b.1631453010.git.gitgitgadget@gmail.com>
+ <CABPp-BF9rhAK47KQUJtZ9yDTkJ-qoeZ0Q7T4ycLcLSgLoxkzTw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ba372f28-3b90-db30-72fd-0242c1c1c3b3@gmail.com>
+Date:   Wed, 15 Sep 2021 12:17:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+In-Reply-To: <CABPp-BF9rhAK47KQUJtZ9yDTkJ-qoeZ0Q7T4ycLcLSgLoxkzTw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
-
-On 09/09/2021 16:01, Elijah Newren wrote:
-> [...]
->> merge-ort.c:checkout() which is used by merge_switch_to_result() uses
->> unpack_trees() so it will pick up the global state and hopefully should
->> just work (cc'ing Elijah to check as I didn't look what happens when
->> there are conflicts).
-> 
-> Yep, merge-ort was designed to just piggy back on checkout code.  The
-> checkout() function was basically just code lifted from
-> builtin/checkout.c.  Using that code means that merges now also
-> benefit from all the special working tree handling that is encoded
-> into git-checkout -- whether that's parallel checkout, submodule
-> handling, tricky D/F switches or symlink handling, etc.  In contrast
-> to merge-recursive, it does not need hundreds and hundreds of lines of
-> special worktree updating code sprayed all over the codebase.
-> 
-> Conflicts are not special in this regard; merge-ort creates a tree
-> which has files that include conflict markers, and then merge-ort
-> calls checkout() to switch the working copy over to that tree.
-> 
-> The only issue conflicts present for merge-ort, is that AFTER it has
-> checked out that special tree with conflict markers, it then has to go
-> and touch up the index afterwards to replace the entries for
-> conflicted files with multiple higher order stages.  (You could say
-> that merge-recursive is "index-first", since its design focuses on the
-> index -- updating it first and then figuring out everything else like
-> updating the working tree with special code afterwards.  In contrast,
-> merge-ort ignores the index entirely until the very end -- after a new
-> merge tree is created and after the working tree is updated.)
-
-Thanks for explaining, it's a nice design feature that you can just reuse
-the checkout code to update the working copy with the merge result
-
->> merge-recursive.c:update_file_flags() does this
->> when updating the work tree
+On 9/15/2021 1:22 AM, Elijah Newren wrote:
+> On Sun, Sep 12, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >>
->>          if (S_ISGITLINK(contents->mode)) {
->>                   /*
->>                    * We may later decide to recursively descend into
->>                    * the submodule directory and update its index
->>                    * and/or work tree, but we do not do that now.
->>                    */
->>                   update_wd = 0;
->>                   goto update_index;
->>          }
+>> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->> so it looks like it does not update the submodule directory. Given
->> merge-ort is now the default perhaps it's time for rebase (and
->> cherry-pick/revert) to start reading the submodule config settings (we
->> parse the config before we know if we'll be using merge-ort so I don't
->> know how easy it would be to only parse the submodule settings if we are
->> using merge-ort).
+>> The tests in t3705-add-sparse-checkout.sh check to see how 'git add'
+>> behaves with paths outside the sparse-checkout definition. These
+>> currently check to see if a given warning is present but not that the
+>> index is not updated with the sparse entries. Add a new
+>> 'test_sparse_entry_unstaged' helper to be sure 'git add' is behaving
+>> correctly.
+>>
+>> We need to modify setup_sparse_entry to actually commit the sparse_entry
+>> file so it exists at HEAD but is not already staged in the index.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>  t/t3705-add-sparse-checkout.sh | 14 ++++++++++++++
+>>  1 file changed, 14 insertions(+)
+>>
+>> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+>> index 2b1fd0d0eef..af81b4b6846 100755
+>> --- a/t/t3705-add-sparse-checkout.sh
+>> +++ b/t/t3705-add-sparse-checkout.sh
+>> @@ -19,6 +19,7 @@ setup_sparse_entry () {
+>>         fi &&
+>>         git add sparse_entry &&
+>>         git update-index --skip-worktree sparse_entry &&
+>> +       git commit --allow-empty -m "ensure sparse_entry exists at HEAD" &&
+>>         SPARSE_ENTRY_BLOB=$(git rev-parse :sparse_entry)
+>>  }
+>>
+>> @@ -36,6 +37,11 @@ setup_gitignore () {
+>>         EOF
+>>  }
+>>
+>> +test_sparse_entry_unstaged () {
+>> +       git status --porcelain >actual &&
+>> +       ! grep "^M  sparse_entry\$" actual
 > 
-> I'd just parse any needed config in all cases.  The submodule settings
-> aren't going to hurt merge-recursive; it'll just ignore them.  (Or are
-> you worried about a mix-and-match of rebase calling both checkout and
-> merge code doing weird things, and you'd rather not have the checkout
-> bits update submodules if the merges won't?)
+> Is there a reason this is ^M rather than ^D?  Granted, both would be
+> bugs so I wouldn't expect either to appear, but the point of the check
+> is looking for likely errors.  Wouldn't the more likely error case for
+> a file not present in the working tree be that we stage the deletion
+> of the file?
 
-I'd rather just parse the config when we know submodules are going to be
-rebased, I think it's confusing if some bit work and others don't. I've
-tried the diff below locally, but t7402-submodule-rebase.sh does not show
-any change (I was hoping some text_expect_failure would be fixed) so I'm
-not sure if it's working or not and I ran out of time.
+You are right that we should be checking for deletions or adds
+_as well_ as modifications. The test_sparse_entry_unstaged helper
+is used in a variety of situations that typically would trigger
+a modification, but at least one instance in this test is a
+possible deletion.
 
-Best Wishes
+> 
+>> +}
+>> +
+>>  test_expect_success 'setup' "
+>>         cat >sparse_error_header <<-EOF &&
+>>         The following pathspecs didn't match any eligible path, but they do match index
+>> @@ -55,6 +61,7 @@ test_expect_success 'git add does not remove sparse entries' '
+>>         setup_sparse_entry &&
+>>         rm sparse_entry &&
+>>         test_must_fail git add sparse_entry 2>stderr &&
+>> +       test_sparse_entry_unstaged &&
 
-Phillip
+Here, sparse_entry could be staged as a deletion.
 
---- >8 ---
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index eed70168df..a35a9e3460 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -26,6 +26,7 @@
-  #include "rerere.h"
-  #include "branch.h"
-  #include "sequencer.h"
-+#include "submodule.h"
-  #include "rebase-interactive.h"
-  #include "reset.h"
-  
-@@ -1114,6 +1115,10 @@ static int rebase_config(const char *var, const char *value, void *data)
-                 return git_config_string(&opts->default_backend, var, value);
-         }
-  
-+       if (starts_with(var, "submodule.")) {
-+               return git_default_submodule_config(var, value, NULL);
-+       }
-+
-         return git_default_config(var, value, data);
-  }
-  
-@@ -1820,6 +1825,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-             getenv("GIT_TEST_MERGE_ALGORITHM"))
-                 options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
-  
-+       /* only the "ort" merge strategy handles submodules correctly */
-+       if (!is_merge(&options) ||
-+           (options.strategy && strcmp(options.strategy, "ort")))
-+               git_default_submodule_config("submodule.recurse", "false",
-+                                            NULL);
-+
-         switch (options.type) {
-         case REBASE_MERGE:
-         case REBASE_PRESERVE_MERGES:
-  
+>>         test_cmp error_and_hint stderr &&
+>>         test_sparse_entry_unchanged
+>>  '
+>> @@ -73,6 +80,7 @@ test_expect_success 'git add . does not remove sparse entries' '
+>>         rm sparse_entry &&
+>>         setup_gitignore &&
+>>         test_must_fail git add . 2>stderr &&
+>> +       test_sparse_entry_unstaged &&
+
+Deletion here.
+
+>>         cat sparse_error_header >expect &&
+>>         echo . >>expect &&
+>> @@ -88,6 +96,7 @@ do
+>>                 setup_sparse_entry &&
+>>                 echo modified >sparse_entry &&
+>>                 test_must_fail git add $opt sparse_entry 2>stderr &&
+>> +               test_sparse_entry_unstaged &&
+
+But here would be modified.
+
+>>                 test_cmp error_and_hint stderr &&
+>>                 test_sparse_entry_unchanged
+>>         '
+>> @@ -98,6 +107,7 @@ test_expect_success 'git add --refresh does not update sparse entries' '
+>>         git ls-files --debug sparse_entry | grep mtime >before &&
+>>         test-tool chmtime -60 sparse_entry &&
+>>         test_must_fail git add --refresh sparse_entry 2>stderr &&
+>> +       test_sparse_entry_unstaged &&
+
+Same here.
+
+>>         test_cmp error_and_hint stderr &&
+>>         git ls-files --debug sparse_entry | grep mtime >after &&
+>>         test_cmp before after
+>> @@ -106,6 +116,7 @@ test_expect_success 'git add --refresh does not update sparse entries' '
+>>  test_expect_success 'git add --chmod does not update sparse entries' '
+>>         setup_sparse_entry &&
+>>         test_must_fail git add --chmod=+x sparse_entry 2>stderr &&
+>> +       test_sparse_entry_unstaged &&
+
+Here it would be modified with a mode change.
+
+Using the pattern "^[MDARCU][M ] sparse_entry\$" seems to work while also
+covering these other cases.
+
+Thanks,
+-Stolee
