@@ -2,72 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B030EC433F5
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD72C433F5
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D7BE61209
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C23F861212
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237077AbhIOIMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 04:12:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56866 "EHLO
+        id S237031AbhIOIMj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 04:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237048AbhIOILh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237051AbhIOILh (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 15 Sep 2021 04:11:37 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A97C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 01:10:04 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id x5so1556735qtq.13
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DFE4C0613E1
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 01:10:03 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id g11so1393335qvd.2
         for <git@vger.kernel.org>; Wed, 15 Sep 2021 01:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=meQLh/fOvDEJEhDTGNwuyd4iAd78b+Ha5Rm3teYRLak=;
-        b=nQKfHDJH1qoX59GoKboM8SyTTEgtziLSz7oRylmi3l1kcpQdYUOr5fvRbyG3VJfxvl
-         9cS03eNqsNzEsJXZ3TDuY79dXFIw4lKhOkyzvXZ4jF+wQdIiAmDg078kvTds5rSJBwxG
-         OXF4xEn/oveyrymaX5K7vtWf1XWcQOx02Hbj4H461MnOT8h6WFOvlTWeFhw8aFuLvSA+
-         TNAN2OWqRZ4R0ee/n7SN/pMyZgc64X6hGAjxePwNq52I9upXfDHyZcvtL0R/RR03eR6i
-         AcDppX/Brmvt0mXmBEYnEodPDE+UWTUIVCJseu0N0wBRU/ZWdODvrXGqNJQIt/sGO25n
-         5z+w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=psPg7z1M8gP1gcvGygw1a+BNhXOHkeIpz0HlEwvCHP8=;
+        b=LlgUuZIBhrOngPtuBSpVBt1QO4eGR/FwMqFLACQj8J3qgh3EWFkGPhDnYEHaQ1I7h2
+         6Y86tYNyaBOx48ybBkdKjayRX70g/KfBLvOSx7nmP2KSciPpkB2sAcqFAqSBdIKCxN64
+         G2GGQr6YcZ6lGXYV6jebhOu1zvnJwvAIB1+i2U9zqCGvivTrAxGmReo2B4xBSlx4cWQj
+         Z1AFaViHBouZvmESvKwAbduedhyRv6QAKFAReveYrrdUAlSlbesK9cXgwgK7wRtZZWj+
+         mj9LITdA39PKyNLpDJHGuqrJzl7WbAJhCCGtbGjw4+G6kCfC32tArpjoz/A89AEjP9+R
+         AJGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=meQLh/fOvDEJEhDTGNwuyd4iAd78b+Ha5Rm3teYRLak=;
-        b=gYwvd9wJBD/xG6K2AWaLuNTJnXXpe6lumkx7tiPosk1KiRpd2Zu6e4PndW8tXsrV9t
-         tVvAqv7rs9dA3H6M5I5kjLCDM3WKLWF/1s2LdR9glVzuTSmnf4RAad5rMiVs79ihp0Px
-         3JY7qNniJdjg3ZWGEr9fJKdixj4REeVVIrhkWxA8WM884PwP2z3jzmoswcI+8OTNZHuT
-         dLui1zGKp8Y5hPfeIOSZoZCP04wuxk733AX12VqcTqKKsH+9/ZROBD587987/PlDGYE4
-         XRECGijErJ/FTVYn7CXYpb5ruYN4uN/JEikBZUUybyR1wpyPKGcpeaZzN9Dl7e0hpQoZ
-         gAzg==
-X-Gm-Message-State: AOAM5315hgMTQ/lDTrds+17tJ4KDiOyAqvU+QWHRG8YU40Vmx86IlYLA
-        MjJvKl80RG38kdn3IR8nVkHOt2RBsw4=
-X-Google-Smtp-Source: ABdhPJyP5OlLZI8O/0/voxvynzQdg8I1usXLXAO60RfjByIenhUe98LIT6RGNLEB0FlVPhVrIg1svg==
-X-Received: by 2002:ac8:5617:: with SMTP id 23mr8788010qtr.20.1631693402890;
-        Wed, 15 Sep 2021 01:10:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=psPg7z1M8gP1gcvGygw1a+BNhXOHkeIpz0HlEwvCHP8=;
+        b=GA4/CZn1Wjg9PoEP6kMmRN3wczj9K5/h2CvT3IrK/2j7/SEcV6vvNBZ06tiQ9vR5LZ
+         l5k68c5A1Oily7NW5OVwC6BBXDYRh9P3Yqswe9fLcJ0P6dn4bmQDctHCUl9eiVHAqZLE
+         g1p/H1J79rBfaTqUFlnfUcg3sd3BIYiNcpbOpG1Hsb7Q8aBeTLBZk7zX5hl6SueQZqZN
+         3FQk1G6GGk11gHYzZ7XwkOChWZj8AlPW5WEft9sdrK1mqf5iVwCO1CEDu4nQPCLYqsaE
+         v6BQe0ZzG/YpHTEaPaTnb4ykrwltGOcGiOiS8rBww6srr9cMdLDKgOyX/N6Bz+FQky1k
+         mlgQ==
+X-Gm-Message-State: AOAM532oCqe8toIP/fKc461uVqcqScCW9LKVXyJRdvAEIDzwLU8Z5wOJ
+        sVz1BYNoBrtlekr69uG/TaBLeg++8sc=
+X-Google-Smtp-Source: ABdhPJzy58kI6GP0taaczxA7LfacVsAc6RWMGdmTSeZ6s/PHjleZL1ci9r45Lo0DY2jHy7XP5WYiEw==
+X-Received: by 2002:a0c:90c4:: with SMTP id p62mr9717611qvp.50.1631693401803;
+        Wed, 15 Sep 2021 01:10:01 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id 20sm9661435qkn.31.2021.09.15.01.10.01
+        by smtp.gmail.com with ESMTPSA id 20sm9661435qkn.31.2021.09.15.01.10.00
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Sep 2021 01:10:02 -0700 (PDT)
+        Wed, 15 Sep 2021 01:10:01 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sam@vilain.net, avarab@gmail.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 1/3] git-cvsserver: use crypt correctly to compare password hashes
-Date:   Wed, 15 Sep 2021 01:09:46 -0700
-Message-Id: <20210915080948.11891-2-carenas@gmail.com>
+Subject: [PATCH 0/3] cvsserver: correctly validate pserver passwords
+Date:   Wed, 15 Sep 2021 01:09:45 -0700
+Message-Id: <20210915080948.11891-1-carenas@gmail.com>
 X-Mailer: git-send-email 2.33.0.481.g26d3bed244
-In-Reply-To: <20210915080948.11891-1-carenas@gmail.com>
-References: <20210915080948.11891-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,84 +73,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-c057bad370 (git-cvsserver: use a password file cvsserver pserver,
-2010-05-15) adds a way for `git cvsserver` to provide authenticated
-pserver accounts without having clear text passwords, but uses the
-username instead of the password to the call for crypt(3).
+The first patch should be applied by any user of git-cvsserver, and
+hashes for all pserver accounts updated; because the code originally
+was using the username instead of the password to validate accounts,
+and it might had even worked if the first 2 characters of the password
+where the same (ex: cvsuser/cvspassword).
 
-Correct that, and make sure the documentation correctly indicates how
-to obtain hashed passwords that could be used to populate this
-configuration, as well as correcting the hash that was used for the
-tests.
+The second one allows for successfully running t9400 in OpenBSD and
+will protect the code further from the possible use of an undef
+variable, and shows that support for better password hashes than DES
+is possible.
 
-This change will require that any user of this feature updates the
-hashes in their configuration, but has the advantage of using a more
-similar format than cvs uses, probably also easying any migration.
+Carlo Marcelo Arenas Belón (3):
+  git-cvsserver: use crypt correctly to compare password hashes
+  git-cvsserver: protect against NULL in crypt(3)
+  Documentation: cleanup git-cvsserver
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- Documentation/git-cvsserver.txt | 10 ++++------
- git-cvsserver.perl              |  2 +-
- t/t9400-git-cvsserver-server.sh |  4 +++-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ Documentation/git-cvsserver.txt | 27 +++++++++++++--------------
+ git-cvsserver.perl              |  7 ++++---
+ t/t9400-git-cvsserver-server.sh |  9 ++++++++-
+ 3 files changed, 25 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index f2e4a47ebe..4d13367c77 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -118,13 +118,11 @@ for example:
-    myuser:$1$BA)@$vbnMJMDym7tA32AamXrm./
- ------
- You can use the 'htpasswd' facility that comes with Apache to make these
--files, but Apache's MD5 crypt method differs from the one used by most C
--library's crypt() function, so don't use the -m option.
-+files, but only with the -d option (or -B if your system suports it).
- 
--Alternatively you can produce the password with perl's crypt() operator:
-------
--   perl -e 'my ($user, $pass) = @ARGV; printf "%s:%s\n", $user, crypt($user, $pass)' $USER password
-------
-+Preferably use the system specific utility that manages password hash
-+creation in your platform (e.g. mkpasswd in Linux, encrypt in OpenBSD or
-+pwhash in NetBSD) and paste it in the right location.
- 
- Then provide your password via the pserver method, for example:
- ------
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index ed035f32c2..4c93b5d099 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -222,7 +222,7 @@
-         open my $passwd, "<", $authdb or die $!;
-         while (<$passwd>) {
-             if (m{^\Q$user\E:(.*)}) {
--                if (crypt($user, descramble($password)) eq $1) {
-+                if (crypt(descramble($password), $1) eq $1) {
-                     $auth_ok = 1;
-                 }
-             };
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 2d29d486ee..59b40359c7 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -36,6 +36,8 @@ CVSWORK="$PWD/cvswork"
- CVS_SERVER=git-cvsserver
- export CVSROOT CVS_SERVER
- 
-+PWDHASH='lac2ItudM3.KM'
-+
- rm -rf "$CVSWORK" "$SERVERDIR"
- test_expect_success 'setup' '
-   git config push.default matching &&
-@@ -54,7 +56,7 @@ test_expect_success 'setup' '
-   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-   GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" &&
-   GIT_DIR="$SERVERDIR" git config gitcvs.authdb "$SERVERDIR/auth.db" &&
--  echo cvsuser:cvGVEarMLnhlA > "$SERVERDIR/auth.db"
-+  echo "cvsuser:$PWDHASH" >"$SERVERDIR/auth.db"
- '
- 
- # note that cvs doesn't accept absolute pathnames
 -- 
 2.33.0.481.g26d3bed244
 
