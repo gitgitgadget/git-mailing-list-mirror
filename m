@@ -7,27 +7,27 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDFFEC433F5
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ED35C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:35:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1C6960F38
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5687E60F92
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 18:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231421AbhIOSgu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 14:36:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48404 "EHLO cloud.peff.net"
+        id S231475AbhIOSg6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 14:36:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48426 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231221AbhIOSgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 14:36:45 -0400
-Received: (qmail 453 invoked by uid 109); 15 Sep 2021 18:35:25 -0000
+        id S231327AbhIOSgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 14:36:47 -0400
+Received: (qmail 473 invoked by uid 109); 15 Sep 2021 18:35:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Sep 2021 18:35:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Sep 2021 18:35:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26872 invoked by uid 111); 15 Sep 2021 18:35:23 -0000
+Received: (qmail 26880 invoked by uid 111); 15 Sep 2021 18:35:26 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Sep 2021 14:35:23 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Sep 2021 14:35:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Sep 2021 14:35:23 -0400
+Date:   Wed, 15 Sep 2021 14:35:26 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -35,9 +35,9 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v3 04/11] serve: provide "receive" function for object-format
+Subject: [PATCH v3 05/11] serve: provide "receive" function for session-id
  capability
-Message-ID: <YUI864c4ubcMQyOj@coredump.intra.peff.net>
+Message-ID: <YUI87iQT/h7zfVGU@coredump.intra.peff.net>
 References: <YUI8z5SiyvgrDBas@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -47,108 +47,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We get any "object-format" specified by the client by searching for it
-in the collected list of capabilities the client sent. We can instead
-just handle it as soon as they send it. This is slightly more efficient,
-and gets us one step closer to dropping that collected list.
+Rather than pulling the session-id string from the list of collected
+capabilities, we can handle it as soon as we receive it. This gets us
+closer to dropping the collected list entirely.
 
-Note that we do still have to do our final hash check after receiving
-all capabilities (because they might not have sent an object-format line
-at all, and we still have to check that the default matches our
-repository algorithm). Since the check_algorithm() function would now be
-down to a single if() statement, I've just inlined it in its only
-caller.
+The behavior should be the same, with one exception. Previously if the
+client sent us multiple session-id lines, we'd report only the first.
+Now we'll pass each one along to trace2. This shouldn't matter in
+practice, since clients shouldn't do that (and if they do, it's probably
+sensible to log them all).
 
-There should be no change of behavior here, except for two
-broken-protocol cases:
-
-  - if the client sends multiple conflicting object-format capabilities
-    (which they should not), we'll now choose the last one rather than
-    the first. We could also detect and complain about the duplicates
-    quite easily now, which we could not before, but I didn't do so
-    here.
-
-  - if the client sends a bogus "object-format" with no equals sign,
-    we'll now say so, rather than "unknown object format: ''"
+As this removes the last caller of the static has_capability(), we can
+remove it, as well (and in fact we must to avoid -Wunused-function
+complaining).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- serve.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ serve.c | 33 +++++++++------------------------
+ 1 file changed, 9 insertions(+), 24 deletions(-)
 
 diff --git a/serve.c b/serve.c
-index a161189984..f6ea2953eb 100644
+index f6ea2953eb..6bbf54cbbe 100644
 --- a/serve.c
 +++ b/serve.c
-@@ -10,6 +10,7 @@
- #include "upload-pack.h"
- 
- static int advertise_sid = -1;
-+static int client_hash_algo = GIT_HASH_SHA1;
- 
- static int always_advertise(struct repository *r,
- 			    struct strbuf *value)
-@@ -33,6 +34,17 @@ static int object_format_advertise(struct repository *r,
+@@ -57,6 +57,14 @@ static int session_id_advertise(struct repository *r, struct strbuf *value)
  	return 1;
  }
  
-+static void object_format_receive(struct repository *r,
-+				  const char *algo_name)
++static void session_id_receive(struct repository *r,
++			       const char *client_sid)
 +{
-+	if (!algo_name)
-+		die("object-format capability requires an argument");
-+
-+	client_hash_algo = hash_algo_by_name(algo_name);
-+	if (client_hash_algo == GIT_HASH_UNKNOWN)
-+		die("unknown object format '%s'", algo_name);
++	if (!client_sid)
++		client_sid = "";
++	trace2_data_string("transfer", NULL, "client-sid", client_sid);
 +}
 +
- static int session_id_advertise(struct repository *r, struct strbuf *value)
- {
- 	if (advertise_sid == -1 &&
-@@ -104,6 +116,7 @@ static struct protocol_capability capabilities[] = {
- 	{
- 		.name = "object-format",
- 		.advertise = object_format_advertise,
-+		.receive = object_format_receive,
- 	},
+ struct protocol_capability {
+ 	/*
+ 	 * The name of the capability.  The server uses this name when
+@@ -121,6 +129,7 @@ static struct protocol_capability capabilities[] = {
  	{
  		.name = "session-id",
-@@ -228,22 +241,6 @@ static int has_capability(const struct strvec *keys, const char *capability,
+ 		.advertise = session_id_advertise,
++		.receive = session_id_receive,
+ 	},
+ 	{
+ 		.name = "object-info",
+@@ -221,26 +230,6 @@ static int parse_command(const char *key, struct protocol_capability **command)
  	return 0;
  }
  
--static void check_algorithm(struct repository *r, struct strvec *keys)
+-static int has_capability(const struct strvec *keys, const char *capability,
+-			  const char **value)
 -{
--	int client = GIT_HASH_SHA1, server = hash_algo_by_ptr(r->hash_algo);
--	const char *algo_name;
--
--	if (has_capability(keys, "object-format", &algo_name)) {
--		client = hash_algo_by_name(algo_name);
--		if (client == GIT_HASH_UNKNOWN)
--			die("unknown object format '%s'", algo_name);
+-	int i;
+-	for (i = 0; i < keys->nr; i++) {
+-		const char *out;
+-		if (skip_prefix(keys->v[i], capability, &out) &&
+-		    (!*out || *out == '=')) {
+-			if (value) {
+-				if (*out == '=')
+-					out++;
+-				*value = out;
+-			}
+-			return 1;
+-		}
 -	}
 -
--	if (client != server)
--		die("mismatched object format: server %s; client %s\n",
--		    r->hash_algo->name, hash_algos[client].name);
+-	return 0;
 -}
 -
  enum request_state {
  	PROCESS_REQUEST_KEYS,
  	PROCESS_REQUEST_DONE,
-@@ -317,7 +314,10 @@ static int process_request(void)
- 	if (!command)
- 		die("no command requested");
+@@ -252,7 +241,6 @@ static int process_request(void)
+ 	struct packet_reader reader;
+ 	struct strvec keys = STRVEC_INIT;
+ 	struct protocol_capability *command = NULL;
+-	const char *client_sid;
  
--	check_algorithm(the_repository, &keys);
-+	if (client_hash_algo != hash_algo_by_ptr(the_repository->hash_algo))
-+		die("mismatched object format: server %s; client %s\n",
-+		    the_repository->hash_algo->name,
-+		    hash_algos[client_hash_algo].name);
+ 	packet_reader_init(&reader, 0, NULL, 0,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+@@ -319,9 +307,6 @@ static int process_request(void)
+ 		    the_repository->hash_algo->name,
+ 		    hash_algos[client_hash_algo].name);
  
- 	if (has_capability(&keys, "session-id", &client_sid))
- 		trace2_data_string("transfer", NULL, "client-sid", client_sid);
+-	if (has_capability(&keys, "session-id", &client_sid))
+-		trace2_data_string("transfer", NULL, "client-sid", client_sid);
+-
+ 	command->command(the_repository, &reader);
+ 
+ 	strvec_clear(&keys);
 -- 
 2.33.0.917.g33ebf6a5f6
 
