@@ -7,180 +7,118 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0011EC433F5
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E5EC433F5
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:01:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8E016121F
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:00:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6A1B61242
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230032AbhIORBx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 13:01:53 -0400
-Received: from mout01.posteo.de ([185.67.36.65]:45855 "EHLO mout01.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230024AbhIORBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 13:01:51 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout01.posteo.de (Postfix) with ESMTPS id C4959240027
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 19:00:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1631725229; bh=658/FDCpxdGerlnMJMddesdESAhzOISDHeTvLJRLf9c=;
-        h=Subject:To:Cc:From:Date:From;
-        b=QRopeS1P5+ZpVtrJ/sPTQLjk//f8KPvao1z0zZodSWJ+tho0N5xZcYAnz2gs6RNwM
-         XvjIJgsiMHNykSgji6v7xZi5aU6MTdeaI21nvcpW9OQfTPB5wNWeXvreP4dMAauSA8
-         GgTjXYVmjZHTkzKlGJVkB5cl0I5+8+zweLbMhjh0NpFXkLDUe4Z8Zr3OLNr64S3x8b
-         gnagfV7taMRjGduTh3iHKQaecQ84WKwgHQikBBHVqtJCHoRuVh3kAAgJ5/7jKqQrP1
-         OfEbhjEj7vKc0AEP/Acfu6Gki7XoTUkd0xQzRXa+kaRE8xPbqF4vZZKuQYjZOdX3VQ
-         nN9zei5bC87PA==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4H8mgH0Qjcz6tmH;
-        Wed, 15 Sep 2021 19:00:27 +0200 (CEST)
-Subject: Re: [PATCH] send-email: Avoid incorrect header propagation
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Drew DeVault <sir@cmpwn.com>, Simon Ser <contact@emersion.fr>,
-        xiaoqiang zhao <zxq_yx_007@163.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Ludwig <chrissicool@gmail.com>
-References: <20210830153001.29961-1-mhaeuser@posteo.de>
-From:   =?UTF-8?Q?Marvin_H=c3=a4user?= <mhaeuser@posteo.de>
-Message-ID: <0c753ae6-cc2c-2d70-c510-5370a0b4dcf9@posteo.de>
-Date:   Wed, 15 Sep 2021 17:00:26 +0000
+        id S229826AbhIORDB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 13:03:01 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61716 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229479AbhIORDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 13:03:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17A021500B5;
+        Wed, 15 Sep 2021 13:01:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mg+3IjG3QQrdxOGGBanBc8Hjj1xBrJt3/8AbNj
+        SafuQ=; b=HIQozCXNG0Hq2rqp+Yo9DgZd38uoZzfHrgv/tX+iurIbYjnYrcSW4B
+        1MyfFeRZFfxKZjGPXBx1bsY235lc6tMTu2sjIFty71prwbdjhc4+3EJol33ZEEkh
+        zVo7KHaH8yIAytIVOcQymU5nCVvucwnjpGGo1PbWVO2uiqyClT0NY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 111641500B4;
+        Wed, 15 Sep 2021 13:01:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 57B471500B3;
+        Wed, 15 Sep 2021 13:01:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 06/11] serve: drop "keys" strvec
+References: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
+        <YUE1hExkU9V12iZv@coredump.intra.peff.net>
+Date:   Wed, 15 Sep 2021 10:01:36 -0700
+In-Reply-To: <YUE1hExkU9V12iZv@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 14 Sep 2021 19:51:32 -0400")
+Message-ID: <xmqqczp9ydqn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210830153001.29961-1-mhaeuser@posteo.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: 974FFAE2-1646-11EC-AA27-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ping? :)
+Jeff King <peff@peff.net> writes:
 
-On 30/08/2021 17:30, Marvin Häuser wrote:
-> If multiple independent patches are sent with send-email, even if the
-> "In-Reply-To" and "References" headers are not managed by --thread or
-> --in-reply-to, their values may be propagated from prior patches to
-> subsequent patches with no such headers defined.
+> We collect the set of capabilities the client sends us in a strvec.
+> While this is usually small, there's no limit to the number of
+> capabilities the client can send us (e.g., they could just send us
+> "agent" pkt-lines over and over, and we'd keep adding them to the list).
 >
-> To mitigate this and potential future issues, make sure all global
-> patch-specific variables are always either handled by
-> command-specific code (e.g. threading), or are reset to their default
-> values for every iteration.
+> Since all code has been converted away from using this list, let's get
+> rid of it. This avoids a potential attack where clients waste our
+> memory.
+>
+> Note that we do have to replace it with a flag, because some of the
+> flush-packet logic checks whether we've seen any valid commands or keys.
 >
 > Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Marvin Häuser <mhaeuser@posteo.de>
 > ---
->   git-send-email.perl   | 26 ++++++++++++++++---------
->   t/t9001-send-email.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 62 insertions(+), 9 deletions(-)
+>  serve.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 25be2ebd2a..e411860b18 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1625,7 +1625,6 @@ sub send_message {
->   
->   $in_reply_to = $initial_in_reply_to;
->   $references = $initial_in_reply_to || '';
-> -$subject = $initial_subject;
->   $message_num = 0;
->   
->   # Prepares the email, prompts the user, sends it out
-> @@ -1648,6 +1647,7 @@ sub process_file {
->   	@xh = ();
->   	my $input_format = undef;
->   	my @header = ();
-> +	$subject = $initial_subject;
->   	$message = "";
->   	$message_num++;
->   	# First unfold multiline header fields
-> @@ -1854,15 +1854,23 @@ sub process_file {
->   	}
->   
->   	# set up for the next message
-> -	if ($thread && $message_was_sent &&
-> -		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
-> -		$message_num == 1)) {
-> -		$in_reply_to = $message_id;
-> -		if (length $references > 0) {
-> -			$references .= "\n $message_id";
-> -		} else {
-> -			$references = "$message_id";
-> +	if ($thread) {
-> +		if ($message_was_sent &&
-> +		  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
-> +		  $message_num == 1)) {
-> +			$in_reply_to = $message_id;
-> +			if (length $references > 0) {
-> +				$references .= "\n $message_id";
-> +			} else {
-> +				$references = "$message_id";
-> +			}
->   		}
-> +	} elsif (!defined $initial_in_reply_to) {
-> +		# --thread and --in-reply-to manage the "In-Reply-To" header and by
-> +		# extension the "References" header. If these commands are not used, reset
-> +		# the header values to their defaults.
-> +		$in_reply_to = undef;
-> +		$references = '';
->   	}
->   	$message_id = undef;
->   	$num_sent++;
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 3b7540050c..f95177af39 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -2167,6 +2167,51 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
->   	test_cmp expected-list actual-list
->   '
->   
-> +test_expect_success $PREREQ 'set up in-reply-to/references patches' '
-> +	cat >has-reply.patch <<-\EOF &&
-> +	From: A U Thor <author@example.com>
-> +	Subject: patch with in-reply-to
-> +	Message-ID: <patch.with.in.reply.to@example.com>
-> +	In-Reply-To: <replied.to@example.com>
-> +	References: <replied.to@example.com>
-> +
-> +	This is the body.
-> +	EOF
-> +	cat >no-reply.patch <<-\EOF
-> +	From: A U Thor <author@example.com>
-> +	Subject: patch without in-reply-to
-> +	Message-ID: <patch.without.in.reply.to@example.com>
-> +
-> +	This is the body.
-> +	EOF
-> +'
-> +
-> +test_expect_success $PREREQ 'patch reply headers correct with --no-thread' '
-> +	clean_fake_sendmail &&
-> +	git send-email \
-> +		--no-thread \
-> +		--to=nobody@example.com \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		has-reply.patch no-reply.patch &&
-> +	grep "In-Reply-To: <replied.to@example.com>" msgtxt1 &&
-> +	grep "References: <replied.to@example.com>" msgtxt1 &&
-> +	! grep replied.to@example.com msgtxt2
-> +'
-> +
-> +test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
-> +	clean_fake_sendmail &&
-> +	git send-email \
-> +		--no-thread \
-> +		--in-reply-to="<cmdline.reply@example.com>" \
-> +		--to=nobody@example.com \
-> +		--smtp-server="$(pwd)/fake.sendmail" \
-> +		has-reply.patch no-reply.patch &&
-> +	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt1 &&
-> +	grep "References: <cmdline.reply@example.com>" msgtxt1 &&
-> +	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt2 &&
-> +	grep "References: <cmdline.reply@example.com>" msgtxt2
-> +'
-> +
->   test_expect_success $PREREQ 'invoke hook' '
->   	mkdir -p .git/hooks &&
->   
+> diff --git a/serve.c b/serve.c
+> index 6bbf54cbbe..5ea6c915cb 100644
+> --- a/serve.c
+> +++ b/serve.c
+> @@ -239,7 +239,7 @@ static int process_request(void)
+>  {
+>  	enum request_state state = PROCESS_REQUEST_KEYS;
+>  	struct packet_reader reader;
+> -	struct strvec keys = STRVEC_INIT;
+> +	int seen_capability_or_command = 0;
+>  	struct protocol_capability *command = NULL;
+>  
+>  	packet_reader_init(&reader, 0, NULL, 0,
+> @@ -263,7 +263,7 @@ static int process_request(void)
+>  			/* collect request; a sequence of keys and values */
+>  			if (parse_command(reader.line, &command) ||
+>  			    receive_client_capability(reader.line))
+> -				strvec_push(&keys, reader.line);
+> +				seen_capability_or_command = 1;
 
+OK, we no longer "collect" request in the keys strvec, but I guess
+what receive_client_capability() does still counts as "collecting",
+so the "tentatively stale" comment is not wrong after all at the end
+(we have tentatively been collecting in two different places and one
+of them is dropped here).
+
+> @@ -275,7 +275,7 @@ static int process_request(void)
+>  			 * If no command and no keys were given then the client
+>  			 * wanted to terminate the connection.
+>  			 */
+> -			if (!keys.nr)
+> +			if (!seen_capability_or_command)
+>  				return 1;
+>  
+>  			/*
+> @@ -309,7 +309,6 @@ static int process_request(void)
+>  
+>  	command->command(the_repository, &reader);
+>  
+> -	strvec_clear(&keys);
+>  	return 0;
+>  }
+
+Nice.
