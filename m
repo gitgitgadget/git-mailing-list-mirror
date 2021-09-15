@@ -2,125 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C7FC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14BD4C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:54:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99A9760F13
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:41:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DAEC06103B
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237602AbhIOOnF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 10:43:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34578 "EHLO
+        id S235208AbhIOOzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 10:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233745AbhIOOnE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 10:43:04 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6ADFC061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:41:45 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id d11so2519631qtw.3
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:41:45 -0700 (PDT)
+        with ESMTP id S230499AbhIOOzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 10:55:47 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9909AC061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:54:28 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id o16-20020a9d2210000000b0051b1e56c98fso3875478ota.8
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kgxwoIUrUid/RiDiC7ZlLQWLzwcx+pk23GWi+3ATQAk=;
-        b=MkpO8AWoVJ+gMkhf5ZbNcfEHAIpsLIRoWe6gftDpUEd/AqDSkgP60e3+o6QmPpz6iM
-         mWND0cPMopCnK7ObjOwwQlWkLYbGw+NUa9u2byX+pRdCKliMDv89FofdedZqjrnSlvJZ
-         Ct8lvsUPRX8pt4vFiRXASA1ZWloTrIxhZf9U33EwkLWnwwF+lyujDs+nANc490/0FSN9
-         ojpCE1OFYtRYRpT5MX47ftESKCXsn24Ou9OPKV7cNZODoOfgRz5cF7d1QvxFRQL+1ZXK
-         28lfwEBKxQvNh11n2/McYX+38okeVBz0WjniuFHmvivdDyVsJ2dgV+Tz6MoSq5BS511S
-         pfcQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MbVKnVORY6WMj0mJ/nVPbJJdNlxbEPX66pTFuSJ/q4k=;
+        b=dGp9537KE6VJguGmy1ZYhMuSQ/hKQBZ8u2BLPPOhl6fZfJ0Rl5IshpHTtKhvR73x4v
+         iA7lPNLtfDqeCqtMx5rwrVOu9lMLTYQ1ei87jXJSjZ/M9Fbl8xDXnwGa7UjDcZEkUQeR
+         v1jZAv3/mySzG3IIv02KxMoWZZZMhE7kcLsbIGdYiPQJE6Ft+KFweuHp6WxHoI7oiJS9
+         MpybHE5JgSw2ypNg8fzEhUTI/b8iPtyrJTeNtjBEuWmynR2GD/TmjUBl9EyDxUvgGVwO
+         4sTWpgK27TgIMUgd7FqZmysE4zyBClMJHuP7EV4CNuI1JlsAaDzeSExH4kmh/XSdvx9G
+         Idgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kgxwoIUrUid/RiDiC7ZlLQWLzwcx+pk23GWi+3ATQAk=;
-        b=wBRH9O+ZPi7lubff6RwMvMUIp4dxC61SU2Xo3mDg+RgVzc1LZ8LIOnfsgQh9ZfjdMu
-         oG49cvC7lxHEItv41kV28kpkoJSWx+UzewL9uqmiamfOIkqBcy7vQzSXbMxFHjapqr9K
-         sk5V7yg0PWnOyK7BsvijaIrxbLMkLw9RBW5/Wa+aPWQ9sAVpA/ELYciYQDw4ykxi3eHu
-         fkHK+Mv8HfQPXflmRFdOeiWzh23pbYXIskA2m3HUig7+G8NpfIvRekjOJ2NW5NDt5iuC
-         SEVX8YIfRRbnBZMBDxXfVCei9GWy7aiimYKsVTXniKgq7jJMQx16/3pGXBDnS7OXzOLu
-         uBlA==
-X-Gm-Message-State: AOAM532X6cauRO3HbPy3/uVNW+/A8Bin+iVHLD1oFGtNkP8AQ4S5wnFE
-        EkyGeF5nVnugYjiODTyx8xs=
-X-Google-Smtp-Source: ABdhPJy7yvMW/Xn3ryMX+4EnBuoSx04gKLjw9Sx+uoJtVPUUPx17mO4l1sSfg6VZSL0SW2MvESTVaQ==
-X-Received: by 2002:ac8:4e0c:: with SMTP id c12mr144626qtw.173.1631716904863;
-        Wed, 15 Sep 2021 07:41:44 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:8cdb:119:9f7e:3e24? ([2600:1700:e72:80a0:8cdb:119:9f7e:3e24])
-        by smtp.gmail.com with ESMTPSA id e22sm95467qtm.10.2021.09.15.07.41.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Sep 2021 07:41:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MbVKnVORY6WMj0mJ/nVPbJJdNlxbEPX66pTFuSJ/q4k=;
+        b=BhJdmE8WhaOM2NbRQLsHC9fTXf9s6gLm/fxGdgLtya8HWrym/LRcdfOAphXGl/PMdC
+         Lzw8kqMaKF/7z2gECAbbMfTFBM1W7EuKZxA4wWNYwUxkcufAmHPaXKDgITxDCzHXyqyO
+         xI0CVfxA4Rky1gBOR0Q3KnUmiXEqi5Q0clEycOwmYvJrIGz3E+A1l4a4jVGCaaUBn2s2
+         8fHziNIakKg3a1YdXaBKlP8JJjKtk7PDtfmKiscWotwrWbvre+dtok+Dso4HNnfWOJvQ
+         hlG6rnWE1U24d7tcBKnG7XNdo3+zThtwTiLmnJsI6cyEFT2vZpc5ifx7cVYPqOsHu0+6
+         WOPA==
+X-Gm-Message-State: AOAM532oobU6mYhuX3PXAjQtLD5qJjrWCKt153/0gRv5itDM/Vga/ZCw
+        hhs8jA6UZIhaywHHP2NUlMWMeUt6bNQ681f3IrA=
+X-Google-Smtp-Source: ABdhPJz+sOOIOsuDIuh6U25ezmgwfKiiOdjVEhLehv57txHScYbT37tPL+UqK+N5Umy2EavWBrnfs6g3ju2pZ9cb0L8=
+X-Received: by 2002:a9d:7204:: with SMTP id u4mr291653otj.276.1631717667884;
+ Wed, 15 Sep 2021 07:54:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com> <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
+In-Reply-To: <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 15 Sep 2021 07:54:16 -0700
+Message-ID: <CABPp-BFitDu8UFkH5Syd3w7_e4sT5nJCJ_6N5sn3a+Acv6B4aQ@mail.gmail.com>
 Subject: Re: [PATCH v2 04/14] dir: select directories correctly
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        matheus.bernardino@usp.br, vdye@github.com,
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>, vdye@github.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
- <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
- <87h7ep5t5t.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3262acae-3ae1-7309-a1dd-b2e1472391a2@gmail.com>
-Date:   Wed, 15 Sep 2021 10:41:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <87h7ep5t5t.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/12/2021 6:21 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Sun, Sep 12 2021, Derrick Stolee via GitGitGadget wrote:
-> 
->> +	/*
->> +	 * Use 'alloc' as an indicator that the string has not been
->> +	 * initialized, in case the parent is the root directory.
->> +	 */
->> +	if (!path_parent->alloc) {
-> 
-> This isn't wrong, but seems to be way too cozy with the internal
-> implementation details of strbuf. For what it's worth I renamed it to
-> "alloc2" and found that this would be only the 3rd bit of code out of
-> strbuf.[ch] that cares about that member.
+On Sun, Sep 12, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> When matching a path against a list of patterns, the ones that require a
+> directory match previously did not work when a filename is specified.
+> This was fine when all pattern-matching was done within methods such as
+> unpack_trees() that check a directory before recursing into the
+> contained files. However, other commands will start matching individual
+> files against pattern lists without that recursive approach.
+>
+> We modify path_matches_dir_pattern() to take a strbuf 'path_parent' that
+> is used to store the parent directory of 'pathname' between multiple
+> pattern matching tests. This is loaded lazily, only on the first pattern
+> it finds that has the PATTERN_FLAG_MUSTBEDIR flag.
+>
+> If we find that a path has a parent directory, we start by checking to
+> see if that parent directory matches the pattern. If so, then we do not
+> need to query the index for the type (which can be expensive). If we
+> find that the parent does not match, then we still must check the type
+> from the index for the given pathname.
+>
+> Note that this does not affect cone mode pattern matching, but instead
+> the more general -- and slower -- full pattern set. Thus, this does not
+> affect the sparse index.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  dir.c | 34 ++++++++++++++++++++++++++++++++--
+>  1 file changed, 32 insertions(+), 2 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 652135df896..fe5ee87bb5f 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1305,10 +1305,38 @@ int match_pathname(const char *pathname, int pathlen,
+>
+>  static int path_matches_dir_pattern(const char *pathname,
+>                                     int pathlen,
+> +                                   struct strbuf *path_parent,
+>                                     int *dtype,
+>                                     struct path_pattern *pattern,
+>                                     struct index_state *istate)
+>  {
+> +       /*
+> +        * Use 'alloc' as an indicator that the string has not been
+> +        * initialized, in case the parent is the root directory.
+> +        */
+> +       if (!path_parent->alloc) {
+> +               char *slash;
+> +               strbuf_addstr(path_parent, pathname);
+> +               slash = find_last_dir_sep(path_parent->buf);
+> +
+> +               if (slash)
+> +                       *slash = '\0';
 
-I can understand not wanting to poke into the internals.
+Are you breaking strbuf invariants here?  path_parent->len will not be
+corrected by this string manipulation.  Perhaps replace this if-else
+block with
 
->> +		char *slash;
->> +		strbuf_addstr(path_parent, pathname);
-> 
-> So is "pathname" ever the empty string? If not we could check the
-> length?
+    strbuf_setlen(path_parent, slash ? slash - path_parent->buf : 0)
 
-We are given 'pathlen' as a parameter, so this should just use
-strbuf_add() instead.
-
-> Or probably better: ...
-> 
->> @@ -1331,6 +1359,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
->>  {
->>  	struct path_pattern *res = NULL; /* undecided */
->>  	int i;
->> +	struct strbuf path_parent = STRBUF_INIT;
-> 
-> Just malloc + strbuf_init() this in the above function and have a
-> "struct strbuf *" initialized to NULL here? Then we can use a much more
-> idiomatic "is it NULL?" to check if it's initialized.
- 
-That makes sense. Can do.
-
-Thanks,
--Stolee
+> +               else
+> +                       strbuf_setlen(path_parent, 0);
+> +       }
+> +
+> +       /*
+> +        * If the parent directory matches the pattern, then we do not
+> +        * need to check for dtype.
+> +        */
+> +       if (path_parent->len &&
+> +           match_pathname(path_parent->buf, path_parent->len,
+> +                          pattern->base,
+> +                          pattern->baselen ? pattern->baselen - 1 : 0,
+> +                          pattern->pattern, pattern->nowildcardlen,
+> +                          pattern->patternlen, pattern->flags))
+> +               return 1;
+> +
+>         *dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+>         if (*dtype != DT_DIR)
+>                 return 0;
+> @@ -1331,6 +1359,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+>  {
+>         struct path_pattern *res = NULL; /* undecided */
+>         int i;
+> +       struct strbuf path_parent = STRBUF_INIT;
+>
+>         if (!pl->nr)
+>                 return NULL;    /* undefined */
+> @@ -1340,8 +1369,8 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+>                 const char *exclude = pattern->pattern;
+>                 int prefix = pattern->nowildcardlen;
+>
+> -               if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
+> -                   !path_matches_dir_pattern(pathname, pathlen,
+> +               if (pattern->flags & PATTERN_FLAG_MUSTBEDIR &&
+> +                   !path_matches_dir_pattern(pathname, pathlen, &path_parent,
+>                                               dtype, pattern, istate))
+>                         continue;
+>
+> @@ -1367,6 +1396,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+>                         break;
+>                 }
+>         }
+> +       strbuf_release(&path_parent);
+>         return res;
+>  }
+>
+> --
+> gitgitgadget
