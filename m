@@ -2,123 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E94F1C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 07:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B030EC433F5
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CED7060F25
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 07:35:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D7BE61209
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 08:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231532AbhIOHgk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 03:36:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
+        id S237077AbhIOIMS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 04:12:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231482AbhIOHgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 03:36:37 -0400
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 117C9C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 00:35:19 -0700 (PDT)
-Received: by mail-vs1-xe2e.google.com with SMTP id f18so1869410vsp.2
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 00:35:19 -0700 (PDT)
+        with ESMTP id S237048AbhIOILh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 04:11:37 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A97C061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 01:10:04 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id x5so1556735qtq.13
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 01:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x9UDlRtqvQ0kFS7AbFOCxQIe7uVxCM0tjQorEKX7GeM=;
-        b=RDa7CekcEeEodrTRlrC9eSltH/NuGhUd1rK9bY7I7kxr1B96flAN3yBlNXXGqvsmgP
-         zs0bMunuj2ZssANAXQdHyhUHKtHCkJfSZYOGXZn5deMRDLgUKWif4a1hcA4jUCGXut9b
-         ooqe15DUu9VuciHGcMqX1QaZO8WW3snTPGVzYYiim1eOCf2B7Y/NiSEplw6Tzh7NaXVP
-         OF3343dha0hfcZOSjFqiNoJZ/UgvjcEAeUR7DTUWC3tWb6hUsDhpxM3q58qURQ1BVqEm
-         sOEG5QFF2c2RCAO02KHbtWnWtd9Gj3M6XyUZX55pmOh1E4QDut3jZQltcKnrGdb59dhZ
-         lBMQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=meQLh/fOvDEJEhDTGNwuyd4iAd78b+Ha5Rm3teYRLak=;
+        b=nQKfHDJH1qoX59GoKboM8SyTTEgtziLSz7oRylmi3l1kcpQdYUOr5fvRbyG3VJfxvl
+         9cS03eNqsNzEsJXZ3TDuY79dXFIw4lKhOkyzvXZ4jF+wQdIiAmDg078kvTds5rSJBwxG
+         OXF4xEn/oveyrymaX5K7vtWf1XWcQOx02Hbj4H461MnOT8h6WFOvlTWeFhw8aFuLvSA+
+         TNAN2OWqRZ4R0ee/n7SN/pMyZgc64X6hGAjxePwNq52I9upXfDHyZcvtL0R/RR03eR6i
+         AcDppX/Brmvt0mXmBEYnEodPDE+UWTUIVCJseu0N0wBRU/ZWdODvrXGqNJQIt/sGO25n
+         5z+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x9UDlRtqvQ0kFS7AbFOCxQIe7uVxCM0tjQorEKX7GeM=;
-        b=aJm4wT1VgwJySdV/RykjOuUKALLjHobgr22/pvpaHqkYy+yxB/KaQrdCiYGvhM4cN6
-         0OkeP1/GUZVrzcIOjCUxrFjJ38wUmXlYGBTPJViVKUNaOB0LLdiaxG6Rnm3M2DXq2Tid
-         SsKdaGZC+/t8nkczLivrOOn/uZ8j+YJlEdaHp5Z6A9OL2MoEyyd+14pqc4UOYKqbxQY2
-         ez3qv5lAiUQZoeuCT69oovTRZz/nMPJDr56pNZWpDyIOd7GkNC3ENL2sALcrknhTy1BH
-         AN/Jols5qyPeoeK4eHOGEKMi1roTyy5vL+qO+D3xUUfkEpVpeSGrcUXlfI1qfPS7c0xK
-         /yhw==
-X-Gm-Message-State: AOAM533eipJ2eBqwimcFsVhvHFwPID0pas9jvcQjGT82eozok1FScsrT
-        QDBPoFgZYfEo5IN0/QQ9vxeGfiWAQsFsHP8meo0K5g==
-X-Google-Smtp-Source: ABdhPJyYfB8/eipofrK0CBa8gUcfcS61vEWFyPIsvRS3SUf5vmqmsUAym3Q9eBPZydD5KG1CtE3UHpcm858/fkkYI+E=
-X-Received: by 2002:a05:6102:322f:: with SMTP id x15mr2232049vsf.32.1631691318095;
- Wed, 15 Sep 2021 00:35:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=meQLh/fOvDEJEhDTGNwuyd4iAd78b+Ha5Rm3teYRLak=;
+        b=gYwvd9wJBD/xG6K2AWaLuNTJnXXpe6lumkx7tiPosk1KiRpd2Zu6e4PndW8tXsrV9t
+         tVvAqv7rs9dA3H6M5I5kjLCDM3WKLWF/1s2LdR9glVzuTSmnf4RAad5rMiVs79ihp0Px
+         3JY7qNniJdjg3ZWGEr9fJKdixj4REeVVIrhkWxA8WM884PwP2z3jzmoswcI+8OTNZHuT
+         dLui1zGKp8Y5hPfeIOSZoZCP04wuxk733AX12VqcTqKKsH+9/ZROBD587987/PlDGYE4
+         XRECGijErJ/FTVYn7CXYpb5ruYN4uN/JEikBZUUybyR1wpyPKGcpeaZzN9Dl7e0hpQoZ
+         gAzg==
+X-Gm-Message-State: AOAM5315hgMTQ/lDTrds+17tJ4KDiOyAqvU+QWHRG8YU40Vmx86IlYLA
+        MjJvKl80RG38kdn3IR8nVkHOt2RBsw4=
+X-Google-Smtp-Source: ABdhPJyP5OlLZI8O/0/voxvynzQdg8I1usXLXAO60RfjByIenhUe98LIT6RGNLEB0FlVPhVrIg1svg==
+X-Received: by 2002:ac8:5617:: with SMTP id 23mr8788010qtr.20.1631693402890;
+        Wed, 15 Sep 2021 01:10:02 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id 20sm9661435qkn.31.2021.09.15.01.10.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Sep 2021 01:10:02 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sam@vilain.net, avarab@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH 1/3] git-cvsserver: use crypt correctly to compare password hashes
+Date:   Wed, 15 Sep 2021 01:09:46 -0700
+Message-Id: <20210915080948.11891-2-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.481.g26d3bed244
+In-Reply-To: <20210915080948.11891-1-carenas@gmail.com>
+References: <20210915080948.11891-1-carenas@gmail.com>
 MIME-Version: 1.0
-References: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
- <20210826222439.3915402-1-jonathantanmy@google.com> <YUElL3RI0VTnjE5C@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <YUElL3RI0VTnjE5C@chooglen-macbookpro.roam.corp.google.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 15 Sep 2021 09:35:06 +0200
-Message-ID: <CAFQ2z_ML_g6DTiG92srq8UCCu_D8bi6z1mP_znt24TJagVfi2g@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
-To:     Glen Choo <chooglen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 15, 2021 at 12:41 AM Glen Choo <chooglen@google.com> wrote:
-> In the current state of affairs, the files ref store and the packed ref
-> store seem to behave as a single logical ref database. An example of
-> this (that I care about in particular) is in refs/files-backend.c where
-> the files backend validates oids using the_repository's odb.
-> refs/packed-backend.c doesn't do any such validation, and presumably
-> just relies on the correctness of refs/files-backend.c. I assume that
-> this also explains why some functions in refs_be_packed are stubs.
+c057bad370 (git-cvsserver: use a password file cvsserver pserver,
+2010-05-15) adds a way for `git cvsserver` to provide authenticated
+pserver accounts without having clear text passwords, but uses the
+username instead of the password to the call for crypt(3).
 
-The loose/packed storage is implemented in terms of files backend (the
-public entry point) that defers to a packed backend in some cases. The
-latter is implemented as a ref backend, but for no good reason.
+Correct that, and make sure the documentation correctly indicates how
+to obtain hashed passwords that could be used to populate this
+configuration, as well as correcting the hash that was used for the
+tests.
 
-> The answer to whether or not a ref store should refer to a certain
-> object store seems unresolved because a ref store is trying to do two
-> separate things. Perhaps it is reasonable to associate a ref database
-> with an object store (so that it can validate its refs), but we would
-> prefer to dissociate the physical ref storage layer from the object
-> store. (I'm paraphrasing Johnathan Nieder here, this isn't an original
-> thought).
->
-> Perhaps this is a question we want to resolve when considering reftable
-> and other ref databases.
+This change will require that any user of this feature updates the
+hashes in their configuration, but has the advantage of using a more
+similar format than cvs uses, probably also easying any migration.
 
-Work on reftable shows that there are more egregious breaks of
-abstraction boundaries. For example, there are still parts of the code
-that equate
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ Documentation/git-cvsserver.txt | 10 ++++------
+ git-cvsserver.perl              |  2 +-
+ t/t9400-git-cvsserver-server.sh |  4 +++-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-  (file under .git/ =3D=3D ref)
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index f2e4a47ebe..4d13367c77 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -118,13 +118,11 @@ for example:
+    myuser:$1$BA)@$vbnMJMDym7tA32AamXrm./
+ ------
+ You can use the 'htpasswd' facility that comes with Apache to make these
+-files, but Apache's MD5 crypt method differs from the one used by most C
+-library's crypt() function, so don't use the -m option.
++files, but only with the -d option (or -B if your system suports it).
+ 
+-Alternatively you can produce the password with perl's crypt() operator:
+------
+-   perl -e 'my ($user, $pass) = @ARGV; printf "%s:%s\n", $user, crypt($user, $pass)' $USER password
+------
++Preferably use the system specific utility that manages password hash
++creation in your platform (e.g. mkpasswd in Linux, encrypt in OpenBSD or
++pwhash in NetBSD) and paste it in the right location.
+ 
+ Then provide your password via the pserver method, for example:
+ ------
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index ed035f32c2..4c93b5d099 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -222,7 +222,7 @@
+         open my $passwd, "<", $authdb or die $!;
+         while (<$passwd>) {
+             if (m{^\Q$user\E:(.*)}) {
+-                if (crypt($user, descramble($password)) eq $1) {
++                if (crypt(descramble($password), $1) eq $1) {
+                     $auth_ok = 1;
+                 }
+             };
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 2d29d486ee..59b40359c7 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -36,6 +36,8 @@ CVSWORK="$PWD/cvswork"
+ CVS_SERVER=git-cvsserver
+ export CVSROOT CVS_SERVER
+ 
++PWDHASH='lac2ItudM3.KM'
++
+ rm -rf "$CVSWORK" "$SERVERDIR"
+ test_expect_success 'setup' '
+   git config push.default matching &&
+@@ -54,7 +56,7 @@ test_expect_success 'setup' '
+   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+   GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" &&
+   GIT_DIR="$SERVERDIR" git config gitcvs.authdb "$SERVERDIR/auth.db" &&
+-  echo cvsuser:cvGVEarMLnhlA > "$SERVERDIR/auth.db"
++  echo "cvsuser:$PWDHASH" >"$SERVERDIR/auth.db"
+ '
+ 
+ # note that cvs doesn't accept absolute pathnames
+-- 
+2.33.0.481.g26d3bed244
 
-you can find a good part of them if you run GIT_TEST_REFTABLE=3D1 with
-the reftable support switched on. Another place where API contracts
-are unclear is resolving symrefs: on first sight, you'd think that a
-ref backend should just provide storage for a refname =3D> {symref,
-commit SHA-1, tag + commit SHA-1} mapping. However, in some places it
-is currently necessary for the ref backend to resolve symrefs. You can
-find these places by grepping for refs_resolve_ref_unsafe() in the
-files backend.
-
-I think Jonathan is right, but I also think that teasing apart the ref
-backend and the ODB is premature until the ref backend itself is a
-strongly enforced abstraction boundary.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
