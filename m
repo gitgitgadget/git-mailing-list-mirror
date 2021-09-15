@@ -2,78 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 407FBC433F5
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 19:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56880C433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 19:32:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 259DC610FF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 19:29:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33E0D61178
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 19:32:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231331AbhIOTam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 15:30:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60061 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbhIOTam (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 15:30:42 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 45715E6EBB;
-        Wed, 15 Sep 2021 15:29:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z+MBqzStGpacGpmRSBMsdIXzTCETYIDqjmciyR
-        sVRVs=; b=m1/TGBDdAoVHPs+EqveXR87a6MfZAS6Oj7YCMBBiYedm7eHt54yadS
-        0rXlUwJBDH1HcC++JlbqZ/Sd/o61rr6A1i4R/16PyS4XLdoR51jeH8JfsTndvSKl
-        v9MPS2KoQvR3V4fPt26hEqXT2HQJQU9Z+aQFOKqxYT+xd+ORUXU0o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C3B4E6EBA;
-        Wed, 15 Sep 2021 15:29:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A3C67E6EB9;
-        Wed, 15 Sep 2021 15:29:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com
-Subject: Re: [PATCH v2 0/8] repack: introduce `--write-midx`
-References: <cover.1631331139.git.me@ttaylorr.com>
-        <cover.1631730270.git.me@ttaylorr.com> <xmqqmtodwsnz.fsf@gitster.g>
-Date:   Wed, 15 Sep 2021 12:29:20 -0700
-In-Reply-To: <xmqqmtodwsnz.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        15 Sep 2021 12:22:08 -0700")
-Message-ID: <xmqqilz1wsbz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231439AbhIOTdr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 15:33:47 -0400
+Received: from lug-owl.de ([188.68.32.151]:33794 "EHLO lug-owl.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230230AbhIOTdr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 15:33:47 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Sep 2021 15:33:46 EDT
+Received: by lug-owl.de (Postfix, from userid 1001)
+        id 71B1641F01; Wed, 15 Sep 2021 21:26:47 +0200 (CEST)
+Date:   Wed, 15 Sep 2021 21:26:47 +0200
+From:   Jan-Benedict Glaw <jbglaw@lug-owl.de>
+To:     git@vger.kernel.org
+Subject: [PATCH RFC] gitweb: Handle non-ASCII email addresses
+Message-ID: <20210915192647.6fnk7ktwldz7uubf@lug-owl.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A421FC8-165B-11EC-BDED-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="pvov7mazveufrv4e"
+Content-Disposition: inline
+X-Operating-System: Linux chamaeleon 5.8.0-0.bpo.2-amd64
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear
+ warfare test the bombastical terror of flooding the spy listeners explosion
+ sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare
+ test the bombastical terror of flooding the spy listeners explosion sex
+ drugs and rock'n'roll
+X-message-flag: Please send plain text messages only. Do not send HTML
+ emails. Thank you.
+User-Agent: NeoMutt/20170113 (1.7.2)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> But if it is the case, I'd step back a bit and further question if
-> "else if" is a good construct to use here.  We'd return if .m passes
-> midx_contains_pack() check, and another check based on .to_include
-> gives us an orthogonal chance to return early, so two "if" statement
-> that are independent sitting next to each other may have avoided
-> such a bug from the beginning, perhaps?
+--pvov7mazveufrv4e
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OK, I went back and checked your response to a review in an earlier
-round.  If .m and .to_include cannot be turned on at the same time,
-then I think "else if" would express the intention more clearly.
+Hi!
 
-But if we go that route, the whole "if ... else if" may deserve a
-comment that explains why .m and .to_include are fundamentally and
-inherently mutually exclusive.  In other words, is it possible if
-future enhancement may want to pass both .m and .to_include to allow
-the code path to check both conditions and return early?
+I accidentally had a bad user.email setting ("jbglaw@=C5=82ug-owl.de"
+instead of "jbglaw@lug-owl.de") and this leads to incomplete HTML
+being generated by gitweb, along with an error message:
 
-Thanks.
+index.cgi: Wide character in subroutine entry at /usr/share/gitweb/index.cg=
+i line 2208.
+
+This patch may fix it, but I'm NOT a Perl guy:
+
+--- a/gitweb/gitweb.perl	2021-09-15 20:23:13.788195846 +0200
++++ b/gitweb/gitweb.perl	2021-09-15 20:24:19.911806868 +0200
+@@ -2193,7 +2193,7 @@
+ 	my $size =3D shift;
+ 	$avatar_cache{$email} ||=3D
+ 		"//www.gravatar.com/avatar/" .
+-			md5_hex($email) . "?s=3D";
++			md5_hex(utf8::is_utf8($email)? Encode::encode_utf8($email): $email) . "=
+?s=3D";
+ 	return $avatar_cache{$email} . $size;
+ }
+
+
+Comments?
+
+Thanks,
+  Jan-Benedict
+
+--=20
+
+--pvov7mazveufrv4e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQQlDTvPcScNjKREqWEdvV51g5nhuwUCYUJI8wAKCRAdvV51g5nh
+u3SOAKCJkb1Nyr6W6o5eI7a+DIbMW/TMLwCfZpNQrwLFAuQ+cI4P+IdgZu+N0TM=
+=ZKIg
+-----END PGP SIGNATURE-----
+
+--pvov7mazveufrv4e--
