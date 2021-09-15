@@ -2,147 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B7D3C433F5
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 11:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA7FC433FE
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 12:27:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DA7A61214
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 11:22:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 769156108F
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 12:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232704AbhIOLXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 07:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44412 "EHLO
+        id S237644AbhIOM2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 08:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232586AbhIOLXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 07:23:21 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC4E1C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 04:22:02 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id b21-20020a1c8015000000b003049690d882so4494422wmd.5
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 04:22:02 -0700 (PDT)
+        with ESMTP id S237525AbhIOM2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 08:28:47 -0400
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F63C061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 05:27:28 -0700 (PDT)
+Received: by mail-vs1-xe32.google.com with SMTP id n17so1892683vsr.10
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 05:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9Fqh25/6cUwnbkUyAMw9pztWkyqDdih2+idBcP1t+5s=;
-        b=eiTRduig3NEHUtAH9NaSH5puvOfOgTFQSj7sam3oNGerh7JXrMts5ncIBCb1N5PMx6
-         9LWM9cj1/bqJUbndm2wRb9VYnYZ16ls7kATqgGRayTpskNja50KbbTrOHao2G7RhP/2n
-         J38LGd+bqX8rxEjPCxgW2eTPvHape1lBp+zD6cChfk9BSksLw2wXCqdrVqK8vJS/RqXL
-         iSaM7JRnkwjQVtAX67sHvAC19OJBUProO7qpfAB0qEsgQW+LgE0MZOJYhW+AteX0Ybm6
-         Q0UiMd/EcDExKOTLDeX6gdvqx0EyPSaxTchyhDOfx+nDWgFZlQGnQk6ZdrYLlEqM9cyU
-         Is3g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+wwFPKS6P+1H66Oq6PMYUuI8rurPmvrbkcKlCx7oiR0=;
+        b=ODQhTtom8YWEu4QtJCjD/iyfnoWHgMdn0S8Mw2cb12bANqdi9SMZCFI1GkqFNDqAxA
+         Oze8B2C1kkQwI3Tx657py0FuzQl/Yy0iTMExDECw9Kw7a/bpUdP2q0leck3FMxEwg1l6
+         xHvj4PJKmiKicpV+sKgnoZaluzl6ZnPa131zPI5tDC0R11oZ5KWNJB5Ectv+x9p5qC/k
+         TU4MY6wn9/gDuGfAYJseQgOcda8JEIREP99lojtooVnUnvtXbjzANmySlijnL3GS76UX
+         pz0y4Af5TnoJTZ3MB7UUN2XBnALEr6twnMvT+aQONlHY2a06G8U9DyI7hdutxxIdqQSH
+         Ksrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:reply-to:subject:from:to:cc:references
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=9Fqh25/6cUwnbkUyAMw9pztWkyqDdih2+idBcP1t+5s=;
-        b=OtjozIvtPfWq41F6TIhniF11iyFg4Psy+QKBi3Qjt5IHWL/LcMoPJoA3aRdnPJv+Ei
-         ZGRzDzZ39yqttOSOaMFLsMiNkKxo5oAlmiqe6L5IvkuoG5UXo4JRD6uT4qh8eUWckquq
-         SnGeGJgXmZTrSX7UaqzH9sNHWWJLJvrTMGga5bwQhjOvM1YIglOMbSIJUpNDe/StWO9I
-         6mcfVhYRUemVStPKY8OAFgYd9andzMfSFwgflDyrDUroQQspM4IUAPCVV0e+wcfT8VVa
-         xVPUrPVglQBDYRsThLKJh197iqpeNWm1E5hRQ1ApfTD2tqZqvHKfrW4LRR8U1U0MI4/t
-         eUyg==
-X-Gm-Message-State: AOAM532jyUc4eVkxh8fEx/CiD9uvLZCmKtj1ubXJTaSD4HA5WivTnfsV
-        UXIGLSy/erkO2D5P8cWbcc4=
-X-Google-Smtp-Source: ABdhPJwYr4lpVd50wXck6kmwx5izZPiq3qru/s1bLf3btC24zyuUTZ7oenNxJD1+6pcpDjDTVIrQ8A==
-X-Received: by 2002:a1c:7217:: with SMTP id n23mr3952829wmc.63.1631704921470;
-        Wed, 15 Sep 2021 04:22:01 -0700 (PDT)
-Received: from [192.168.1.240] (46.107.7.51.dyn.plus.net. [51.7.107.46])
-        by smtp.gmail.com with ESMTPSA id z7sm16667158wre.72.2021.09.15.04.22.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Sep 2021 04:22:00 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <pull.1036.v2.git.git.1631379829.gitgitgadget@gmail.com>
- <06e04c88dea3e15a90f0a11795b7a8eea3533bc8.1631379829.git.gitgitgadget@gmail.com>
- <b6818661-ac6e-fbde-2cab-429c5550a0da@gmail.com>
-Message-ID: <2290b657-3c67-0ab8-5c25-cc57feac301c@gmail.com>
-Date:   Wed, 15 Sep 2021 12:21:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+wwFPKS6P+1H66Oq6PMYUuI8rurPmvrbkcKlCx7oiR0=;
+        b=746dJ7hIZphpQufp1RHAzW0yP6XUt5ro+l+jvANl8etzdv4M6tepXhvBkrpzXHag86
+         eIuIigXLFJg38vwazQhb1JGBX1PbWhjqaeOjiGxL/qaOnu5LOZRJvwLG0NiWPnMwjcpv
+         1RZ+Q90yTUnp4HuSmjP2V546oVxePD7jzWmnIiQKE4lM3xoG6ZxVHtdZYnoIbL9ydha7
+         kJ48S+M/imdNkBIe3X36Nkq0ZtL48wcaoESxa4gu75kfaGiapb8k4mMrGsmgmdgfP/3v
+         Kj1jcdWM4ksL3lj+sD5whG9RYOAPxcrW0JcJjX/SX6ZqQFjP1DTn/WvTpwVRQ+Lnwuiu
+         ZKlw==
+X-Gm-Message-State: AOAM530AFFIkUsMdLwVLikdrF5R/0DQ3/cHcd0h2NqUZe12skRcT+tbh
+        wE3DSz6WwEkxT+DKPcw+MplGa4WCMSQYcDrBANYGnM8XSU/ZrIKtvXc=
+X-Google-Smtp-Source: ABdhPJwVGqf1QyFsDAuAQh0RZ7muDj8xwitzHmFanfCRgpj2J6YHCh7Kg3u9peIVsgOTBUotJRWPry5KcnfwCK2GgIA=
+X-Received: by 2002:a05:6102:116f:: with SMTP id k15mr2961768vsg.43.1631708847256;
+ Wed, 15 Sep 2021 05:27:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <b6818661-ac6e-fbde-2cab-429c5550a0da@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net> <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
+ <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
+ <YTTARcEvpXWSDfYW@coredump.intra.peff.net> <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
+ <YTeo/dCFfpAIfo3K@coredump.intra.peff.net> <CAOLTT8Ru-Zhmo5j=jNjWexrahT0qAO5zEMW09XT00-TCca-SkA@mail.gmail.com>
+ <YTtrF8C0mmT6kBJT@coredump.intra.peff.net>
+In-Reply-To: <YTtrF8C0mmT6kBJT@coredump.intra.peff.net>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 15 Sep 2021 20:27:15 +0800
+Message-ID: <CAOLTT8RPzutEQxbr9cu=ze7rgPKvG6Ghu4b2Bi47eStY1TqGzQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/09/2021 11:25, Phillip Wood wrote:
-> I do wonder (though a brief try failed to trigger it) if there are cases 
-> where the diff algorithm does something "clever" which means it does not 
-> treat a common prefix or suffix as unchanged (see d2f82950a9 
-> ("Re(-re)*fix trim_common_tail()", 2007-12-20) for a related issue). We 
-> could just trim the common prefix and suffix from the two sides 
-> ourselves using xdl_recmatch().
+Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B49=E6=9C=8810=E6=97=A5=E5=91=
+=A8=E4=BA=94 =E4=B8=8B=E5=8D=8810:26=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Sep 09, 2021 at 10:45:15PM +0800, ZheNing Hu wrote:
+>
+> > @@ -2735,6 +2723,7 @@ void pretty_print_ref(const char *name, const
+> > struct object_id *oid,
+> >
+> >         ref_item =3D new_ref_array_item(name, oid);
+> >         ref_item->kind =3D ref_kind_from_refname(name);
+> > +       read_ref_full(name, 0, NULL, &ref_item->flag);
+> >         if (format_ref_array_item(ref_item, format, &output, &err))
+> >                 die("%s", err.buf);
+> >         fwrite(output.buf, 1, output.len, stdout);
+>
+> IMHO this is the wrong place to do it, since the caller may already have
+> the flags (and looking up the ref again is a non-trivial cost).
+>
 
-Here is an evil test case that shows this problem (diff on top of your patch)
+Well, but not doing this means that we have to pass the flag from the
+pretty_print_ref() call stack.
 
+> The caller in builtin/tag.c should switch to using read_ref_full() and
+> pass in the flags.
+>
 
-diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-index de9c6190b9..836843c6b0 100755
---- a/t/t6427-diff3-conflict-markers.sh
-+++ b/t/t6427-diff3-conflict-markers.sh
-@@ -219,8 +219,9 @@ test_setup_zdiff3 () {
-                 test_write_lines 1 2 3 4 5 6 7 8 9 >basic &&
-                 test_write_lines 1 2 3 AA 4 5 BB 6 7 8 >middle-common &&
-                 test_write_lines 1 2 3 4 5 6 7 8 9 >interesting &&
-+               test_write_lines 1 2 3 4 5 6 7 8 9 >evil &&
-  
--               git add basic middle-common &&
-+               git add basic middle-common interesting evil &&
-                 git commit -m base &&
-  
-                 git branch left &&
-@@ -230,19 +231,21 @@ test_setup_zdiff3 () {
-                 test_write_lines 1 2 3 4 A B C D E 7 8 9 >basic &&
-                 test_write_lines 1 2 3 CC 4 5 DD 6 7 8 >middle-common &&
-                 test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >interesting &&
-+               test_write_lines 1 2 3 4 X A B C 7 8 9 >evil &&
-                 git add -u &&
-                 git commit -m letters &&
-  
-                 git checkout right &&
-                 test_write_lines 1 2 3 4 A X C Y E 7 8 9 >basic &&
-                 test_write_lines 1 2 3 EE 4 5 FF 6 7 8 >middle-common &&
-                 test_write_lines 1 2 3 4 A B C 5 6 G H I J 7 8 9 >interesting &&
-+               test_write_lines 1 2 3 4 Y A B C B C 7 8 9 >evil &&
-                 git add -u &&
-                 git commit -m permuted
-         )
-  }
-  
--test_expect_failure 'check zdiff3 markers' '
-+test_expect_success 'check zdiff3 markers' '
-         test_setup_zdiff3 &&
-         (
-                 cd zdiff3 &&
-@@ -251,6 +254,14 @@ test_expect_failure 'check zdiff3 markers' '
-  
-                 test_must_fail git -c merge.conflictstyle=zdiff3 merge -s recursive right^0 &&
-  
-+               test_write_lines \
-+                       1 2 3 4 \
-+                       "<<<<<<< HEAD" X A \
-+                       "||||||| $(git rev-parse --short HEAD^1)" 5 6 ======= \
-+                       Y A B C ">>>>>>> right^0" \
-+                       B C 7 8 9 >expect &&
-+               test_cmp expect evil &&
-+
-                 test_write_lines 1 2 3 4 A "<<<<<<< HEAD" B C D "||||||| $(git rev-parse --short HEAD^1)" 5 6 ======= X C Y ">>>>>>> right^0" E 7 8 9 >expect &&
-                 test_cmp expect basic &&
-  
+Agree.
+
+> The caller in builtin/verify-tag.c _probably_ should resolve the ref in
+> the same way and pass in that full refname and flags. I do worry that
+> this may be a compatibility problem, but the current behavior seems so
+> broken to me.
+>
+
+Yeah.
+
+> > >   - I suspect people may be relying on the current behavior. The
+> > >     original was added to be able to compare the internal tagname to =
+the
+> > >     refname. I.e., that:
+> > >
+> > >       git tag -v --format=3D'%(refname) %(tag)' foo
+> > >
+> > >     would show "foo foo". Now that _should_ be "%(refname:strip=3D2)"=
+, I
+> > >     think, but we'd probably be breaking scripts. OTOH, it really fee=
+ls
+> > >     like _not_ handing over a real, fully-qualified refname to the
+> > >     ref-filter code will mean other things are broken (e.g.,
+> > >     ATOM_UPSTREAM is assuming we have a fully-qualified ref).
+> > >
+> >
+> > This is indeed a sad thing: A bug becomes a feature.
+> >
+> > >     I think a backwards-compatible way of fixing it would be to have
+> > >     this call hand over the full refname to the ref-filter code, but
+> > >     tell it that %(refname) should default to strip=3D2. And then any=
+body
+> > >     who wants the full name can use %(refname:strip=3D0).
+> > >
+> >
+> > Doesn't this make things more complicated? Those callers of git for-eac=
+h-ref,
+> > wouldn't our changes like this destroy them?
+>
+> My proposal was that we'd have a specific flag in ref-filter to say
+> "default refname:strip to this value". And then _only_ "tag --verify"
+> would set that (to "2"), leaving for-each-ref, etc unaffected.
+>
+
+Indeed this may be a feasible solution. I will try to do this first.
+
+> So yes, it's complicated. And it must be explained to the user that
+> "%(refname)" behaves slightly differently with "git tag --verify", but
+> that is unavoidable if we do not want to break scripts (it _already_
+> behaves slightly differently, and we just never told anyone).
+>
+> The other option is to declare the current behavior a bug and fix it. I
+> am quite tempted by that route, given the inconsistency with other
+> formatters, including even "git tag --list --format=3D%(refname)"!
+
+I don't know, I think both fix methods are okay.
+
+>
+> -Peff
+
+Thanks.
+--
+ZheNing Hu
