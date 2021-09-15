@@ -2,184 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14BD4C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7905CC433EF
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 15:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAEC06103B
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 14:54:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57D9361179
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 15:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235208AbhIOOzr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 10:55:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
+        id S234405AbhIOPp5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 11:45:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230499AbhIOOzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 10:55:47 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9909AC061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:54:28 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id o16-20020a9d2210000000b0051b1e56c98fso3875478ota.8
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 07:54:28 -0700 (PDT)
+        with ESMTP id S234300AbhIOPp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 11:45:56 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFFAC061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 08:44:37 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id q11so4577778wrr.9
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 08:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MbVKnVORY6WMj0mJ/nVPbJJdNlxbEPX66pTFuSJ/q4k=;
-        b=dGp9537KE6VJguGmy1ZYhMuSQ/hKQBZ8u2BLPPOhl6fZfJ0Rl5IshpHTtKhvR73x4v
-         iA7lPNLtfDqeCqtMx5rwrVOu9lMLTYQ1ei87jXJSjZ/M9Fbl8xDXnwGa7UjDcZEkUQeR
-         v1jZAv3/mySzG3IIv02KxMoWZZZMhE7kcLsbIGdYiPQJE6Ft+KFweuHp6WxHoI7oiJS9
-         MpybHE5JgSw2ypNg8fzEhUTI/b8iPtyrJTeNtjBEuWmynR2GD/TmjUBl9EyDxUvgGVwO
-         4sTWpgK27TgIMUgd7FqZmysE4zyBClMJHuP7EV4CNuI1JlsAaDzeSExH4kmh/XSdvx9G
-         Idgg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gsHcEUxsytmpN8EQknocxaAH1O1aIvD6d82RCytym8g=;
+        b=SCXB1Tmuh69wA3Ft2XwRRHczIlBGi4bHw+xkJ5QdDzsaZdwGjOCMMalEtdzaUYC+PE
+         sgTiKqtU09j9K2CG+bHd6sMeb8wx1Rmg7lk4kx/0U09W1eHjASDcHjzuAdfQD3HgRNxv
+         z1OHnwwIbO1vKKrhykjNAKj2vStXCVk7zgL0BoonE0yxqDltB9uVcPVMOkQQPnQr9i9Y
+         L8lUwxpfhL2yWxNJGogVgTI/Y+6TtMtak0Up9Nsf2cZMz8PjdivYVVH8P/JLY2zJnszg
+         dIgTk2swxubZ4apn0agCJlhu4jcCiDMMd8f+gKnGHnzG/E3X8P8upKC5PmnXaXiY8ZDK
+         wNHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MbVKnVORY6WMj0mJ/nVPbJJdNlxbEPX66pTFuSJ/q4k=;
-        b=BhJdmE8WhaOM2NbRQLsHC9fTXf9s6gLm/fxGdgLtya8HWrym/LRcdfOAphXGl/PMdC
-         Lzw8kqMaKF/7z2gECAbbMfTFBM1W7EuKZxA4wWNYwUxkcufAmHPaXKDgITxDCzHXyqyO
-         xI0CVfxA4Rky1gBOR0Q3KnUmiXEqi5Q0clEycOwmYvJrIGz3E+A1l4a4jVGCaaUBn2s2
-         8fHziNIakKg3a1YdXaBKlP8JJjKtk7PDtfmKiscWotwrWbvre+dtok+Dso4HNnfWOJvQ
-         hlG6rnWE1U24d7tcBKnG7XNdo3+zThtwTiLmnJsI6cyEFT2vZpc5ifx7cVYPqOsHu0+6
-         WOPA==
-X-Gm-Message-State: AOAM532oobU6mYhuX3PXAjQtLD5qJjrWCKt153/0gRv5itDM/Vga/ZCw
-        hhs8jA6UZIhaywHHP2NUlMWMeUt6bNQ681f3IrA=
-X-Google-Smtp-Source: ABdhPJz+sOOIOsuDIuh6U25ezmgwfKiiOdjVEhLehv57txHScYbT37tPL+UqK+N5Umy2EavWBrnfs6g3ju2pZ9cb0L8=
-X-Received: by 2002:a9d:7204:: with SMTP id u4mr291653otj.276.1631717667884;
- Wed, 15 Sep 2021 07:54:27 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=gsHcEUxsytmpN8EQknocxaAH1O1aIvD6d82RCytym8g=;
+        b=qCwW1FA8C+NJSFasz+L7sMtH25IkMqdzUHv90Noe7P3fcB4e66zHFrz+BTJgNH/TkE
+         2KrzR2Zw3QDzmbID9daGSWIRI+ABC6r7Pt6AZEAWL97Rz9VhtL1O84fyRGbsVdUOHJtI
+         2AnLFGxkDDYhOqm/3SV6qKcKX9TnY54Vi7ReXsLOKgOVn8SVZ2N6LfIOlZ2ub8TMFJc8
+         o0qMQEuVtAQE8NgXgiISBRq2xeWt9ZBlxQhzsmGi7/NHIKcn2aAXARVcPY6OAowgAUKq
+         JBX0gXnwzIlhm2Y44OxFDwDdxeMXuSTZO9uci8ESKLSUovHPwSSWs9sPYF8qKmfyFUhs
+         kLqQ==
+X-Gm-Message-State: AOAM5331fVYfXqKEAcf8yvqobh0crai7mp1aXKuO26DGZv1ob7M3LQpy
+        6mzFzM5BQIzW1O+cj8CwXSk=
+X-Google-Smtp-Source: ABdhPJy0Bk7dNUWH9bqbImV7G22+Q8QXBq+W+pXbxWQRFDjoERhKzb0fKkwH6UXrZsr37egISc+wbw==
+X-Received: by 2002:a5d:6944:: with SMTP id r4mr734568wrw.186.1631720675671;
+        Wed, 15 Sep 2021 08:44:35 -0700 (PDT)
+Received: from [192.168.1.240] (46.107.7.51.dyn.plus.net. [51.7.107.46])
+        by smtp.gmail.com with ESMTPSA id o7sm268563wmc.46.2021.09.15.08.44.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Sep 2021 08:44:35 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/5] rebase -i: don't fork git checkout
+To:     Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.1034.git.1631108472.gitgitgadget@gmail.com>
+ <39ad40c9297531a2d42b7263a1d41b1ecbc23c0a.1631108472.git.gitgitgadget@gmail.com>
+ <f05dc55f-a7e4-b8f7-7b0c-5000bf48f803@gmail.com>
+ <c42d4051-59cd-094a-4570-32cf4d38ec27@gmail.com>
+ <e7224105-83c6-7f12-f63a-474bd477583a@gmail.com>
+ <408dc1d3-44b8-a955-4d7b-94f23fa8a6bc@gmail.com>
+ <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <1311e9e9-6d10-40f8-2073-077313a94301@gmail.com>
+Date:   Wed, 15 Sep 2021 16:44:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com> <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
-In-Reply-To: <723de4e42582afbe841ed96470fc02db44b24b5e.1631453010.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 15 Sep 2021 07:54:16 -0700
-Message-ID: <CABPp-BFitDu8UFkH5Syd3w7_e4sT5nJCJ_6N5sn3a+Acv6B4aQ@mail.gmail.com>
-Subject: Re: [PATCH v2 04/14] dir: select directories correctly
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CABPp-BEbY0BqkBP4r-6XpGk46J+Y+W8+7cVZXQg5fuJXYOntDQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 12, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> When matching a path against a list of patterns, the ones that require a
-> directory match previously did not work when a filename is specified.
-> This was fine when all pattern-matching was done within methods such as
-> unpack_trees() that check a directory before recursing into the
-> contained files. However, other commands will start matching individual
-> files against pattern lists without that recursive approach.
->
-> We modify path_matches_dir_pattern() to take a strbuf 'path_parent' that
-> is used to store the parent directory of 'pathname' between multiple
-> pattern matching tests. This is loaded lazily, only on the first pattern
-> it finds that has the PATTERN_FLAG_MUSTBEDIR flag.
->
-> If we find that a path has a parent directory, we start by checking to
-> see if that parent directory matches the pattern. If so, then we do not
-> need to query the index for the type (which can be expensive). If we
-> find that the parent does not match, then we still must check the type
-> from the index for the given pathname.
->
-> Note that this does not affect cone mode pattern matching, but instead
-> the more general -- and slower -- full pattern set. Thus, this does not
-> affect the sparse index.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  dir.c | 34 ++++++++++++++++++++++++++++++++--
->  1 file changed, 32 insertions(+), 2 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index 652135df896..fe5ee87bb5f 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1305,10 +1305,38 @@ int match_pathname(const char *pathname, int pathlen,
->
->  static int path_matches_dir_pattern(const char *pathname,
->                                     int pathlen,
-> +                                   struct strbuf *path_parent,
->                                     int *dtype,
->                                     struct path_pattern *pattern,
->                                     struct index_state *istate)
->  {
-> +       /*
-> +        * Use 'alloc' as an indicator that the string has not been
-> +        * initialized, in case the parent is the root directory.
-> +        */
-> +       if (!path_parent->alloc) {
-> +               char *slash;
-> +               strbuf_addstr(path_parent, pathname);
-> +               slash = find_last_dir_sep(path_parent->buf);
-> +
-> +               if (slash)
-> +                       *slash = '\0';
+Hi Elijah
 
-Are you breaking strbuf invariants here?  path_parent->len will not be
-corrected by this string manipulation.  Perhaps replace this if-else
-block with
+On 09/09/2021 16:01, Elijah Newren wrote:
+> [...]
+>> merge-ort.c:checkout() which is used by merge_switch_to_result() uses
+>> unpack_trees() so it will pick up the global state and hopefully should
+>> just work (cc'ing Elijah to check as I didn't look what happens when
+>> there are conflicts).
+> 
+> Yep, merge-ort was designed to just piggy back on checkout code.  The
+> checkout() function was basically just code lifted from
+> builtin/checkout.c.  Using that code means that merges now also
+> benefit from all the special working tree handling that is encoded
+> into git-checkout -- whether that's parallel checkout, submodule
+> handling, tricky D/F switches or symlink handling, etc.  In contrast
+> to merge-recursive, it does not need hundreds and hundreds of lines of
+> special worktree updating code sprayed all over the codebase.
+> 
+> Conflicts are not special in this regard; merge-ort creates a tree
+> which has files that include conflict markers, and then merge-ort
+> calls checkout() to switch the working copy over to that tree.
+> 
+> The only issue conflicts present for merge-ort, is that AFTER it has
+> checked out that special tree with conflict markers, it then has to go
+> and touch up the index afterwards to replace the entries for
+> conflicted files with multiple higher order stages.  (You could say
+> that merge-recursive is "index-first", since its design focuses on the
+> index -- updating it first and then figuring out everything else like
+> updating the working tree with special code afterwards.  In contrast,
+> merge-ort ignores the index entirely until the very end -- after a new
+> merge tree is created and after the working tree is updated.)
 
-    strbuf_setlen(path_parent, slash ? slash - path_parent->buf : 0)
+Thanks for explaining, it's a nice design feature that you can just reuse
+the checkout code to update the working copy with the merge result
 
-> +               else
-> +                       strbuf_setlen(path_parent, 0);
-> +       }
-> +
-> +       /*
-> +        * If the parent directory matches the pattern, then we do not
-> +        * need to check for dtype.
-> +        */
-> +       if (path_parent->len &&
-> +           match_pathname(path_parent->buf, path_parent->len,
-> +                          pattern->base,
-> +                          pattern->baselen ? pattern->baselen - 1 : 0,
-> +                          pattern->pattern, pattern->nowildcardlen,
-> +                          pattern->patternlen, pattern->flags))
-> +               return 1;
-> +
->         *dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
->         if (*dtype != DT_DIR)
->                 return 0;
-> @@ -1331,6 +1359,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
->  {
->         struct path_pattern *res = NULL; /* undecided */
->         int i;
-> +       struct strbuf path_parent = STRBUF_INIT;
->
->         if (!pl->nr)
->                 return NULL;    /* undefined */
-> @@ -1340,8 +1369,8 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
->                 const char *exclude = pattern->pattern;
->                 int prefix = pattern->nowildcardlen;
->
-> -               if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
-> -                   !path_matches_dir_pattern(pathname, pathlen,
-> +               if (pattern->flags & PATTERN_FLAG_MUSTBEDIR &&
-> +                   !path_matches_dir_pattern(pathname, pathlen, &path_parent,
->                                               dtype, pattern, istate))
->                         continue;
->
-> @@ -1367,6 +1396,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
->                         break;
->                 }
->         }
-> +       strbuf_release(&path_parent);
->         return res;
->  }
->
-> --
-> gitgitgadget
+>> merge-recursive.c:update_file_flags() does this
+>> when updating the work tree
+>>
+>>          if (S_ISGITLINK(contents->mode)) {
+>>                   /*
+>>                    * We may later decide to recursively descend into
+>>                    * the submodule directory and update its index
+>>                    * and/or work tree, but we do not do that now.
+>>                    */
+>>                   update_wd = 0;
+>>                   goto update_index;
+>>          }
+>>
+>> so it looks like it does not update the submodule directory. Given
+>> merge-ort is now the default perhaps it's time for rebase (and
+>> cherry-pick/revert) to start reading the submodule config settings (we
+>> parse the config before we know if we'll be using merge-ort so I don't
+>> know how easy it would be to only parse the submodule settings if we are
+>> using merge-ort).
+> 
+> I'd just parse any needed config in all cases.  The submodule settings
+> aren't going to hurt merge-recursive; it'll just ignore them.  (Or are
+> you worried about a mix-and-match of rebase calling both checkout and
+> merge code doing weird things, and you'd rather not have the checkout
+> bits update submodules if the merges won't?)
+
+I'd rather just parse the config when we know submodules are going to be
+rebased, I think it's confusing if some bit work and others don't. I've
+tried the diff below locally, but t7402-submodule-rebase.sh does not show
+any change (I was hoping some text_expect_failure would be fixed) so I'm
+not sure if it's working or not and I ran out of time.
+
+Best Wishes
+
+Phillip
+
+--- >8 ---
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index eed70168df..a35a9e3460 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -26,6 +26,7 @@
+  #include "rerere.h"
+  #include "branch.h"
+  #include "sequencer.h"
++#include "submodule.h"
+  #include "rebase-interactive.h"
+  #include "reset.h"
+  
+@@ -1114,6 +1115,10 @@ static int rebase_config(const char *var, const char *value, void *data)
+                 return git_config_string(&opts->default_backend, var, value);
+         }
+  
++       if (starts_with(var, "submodule.")) {
++               return git_default_submodule_config(var, value, NULL);
++       }
++
+         return git_default_config(var, value, data);
+  }
+  
+@@ -1820,6 +1825,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+             getenv("GIT_TEST_MERGE_ALGORITHM"))
+                 options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
+  
++       /* only the "ort" merge strategy handles submodules correctly */
++       if (!is_merge(&options) ||
++           (options.strategy && strcmp(options.strategy, "ort")))
++               git_default_submodule_config("submodule.recurse", "false",
++                                            NULL);
++
+         switch (options.type) {
+         case REBASE_MERGE:
+         case REBASE_PRESERVE_MERGES:
+  
