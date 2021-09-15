@@ -2,337 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6082DC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0011EC433F5
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:00:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4746561242
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 16:59:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8E016121F
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 17:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbhIORAt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 13:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhIORAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 13:00:48 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77F1AC061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 09:59:29 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id 6so5034138oiy.8
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 09:59:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WX15rv2UKXdyoDa8EtR5tzvgM/7stuoR+w4Re21amtQ=;
-        b=cm+iNFAgFgRCFCLcNk8wPyFt34mrxWGgS3lNWWhrwKiPPlqxI/Zo1OPK9fN8FRnzwO
-         z90zsjlUIqsJL+gItfWPAwugPUMaoFHy0MJQYCSIAeS7wz7uNgVPHdwo7zwXHJVEscDu
-         OJ6VMvZ682O/jiZ0IXOhaCW5CwTrsQWGNbOb6/EyaqxijARFVNwOEoz+18VfLWD4UBGz
-         lgGNU8wU8OIxrwf8/wFtiM5spnDzx6OQTGA+QKJOwUX6uN5iYPZfwv0cLIzdZXEfN6Eh
-         th6XquaDod4VIWecy/f2GEHo8DOe+U/63f6Wj9/YbpLny1LwT7c3LLj6oOkNZRfaiTEp
-         /h4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WX15rv2UKXdyoDa8EtR5tzvgM/7stuoR+w4Re21amtQ=;
-        b=kKEP+ba2i384SYL2DRY7dXJqVf2B1gaAB1NV5EjwTC+gbKlicmtKbJlQIg2jp1Fhsx
-         h3KbXnPdN8yMT0vII3V2I3siHJPlgddI49qbMme/F7aR4SQyPnNrwMB4pkCPuZFlZKOX
-         xNBDQUiE3/g5HlTQxcM0Z44XZ0LLpnWdjDnqxwH1FF5y4ot8uVd2CWkCLEG9fvlrywG3
-         b4r1aHKxL+Txz8xqp+6FaAZxhbLjOF3RKvPc3V6Ftdcl+p4akwK+OYxCXBu17SNeXgNZ
-         C/J150IQbRMnXWcRGDbwuaOpcG6V4pSXPvsBockdU1f52PNFL4xZeL1dbUr2/SMcp6W2
-         bb2g==
-X-Gm-Message-State: AOAM531+n3m+UcqPKvwBZlLQXFtFrboOUCj5mru0UZ/4liXLBNOihBXk
-        cK/ht9i1eb4Lb+F5wlSyvWIU0Pv916hXg0bEpeE=
-X-Google-Smtp-Source: ABdhPJyXmFt+xVFHtl/V/tINQI0IXt18cg9xhR1fJVlvVuh+EBPNQZ3w1mAmKsYVCIg6XgIgzx2tBV84h1t6pTMmOtA=
-X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr501364oiw.31.1631725168714;
- Wed, 15 Sep 2021 09:59:28 -0700 (PDT)
+        id S230032AbhIORBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 13:01:53 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:45855 "EHLO mout01.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230024AbhIORBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 13:01:51 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id C4959240027
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 19:00:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1631725229; bh=658/FDCpxdGerlnMJMddesdESAhzOISDHeTvLJRLf9c=;
+        h=Subject:To:Cc:From:Date:From;
+        b=QRopeS1P5+ZpVtrJ/sPTQLjk//f8KPvao1z0zZodSWJ+tho0N5xZcYAnz2gs6RNwM
+         XvjIJgsiMHNykSgji6v7xZi5aU6MTdeaI21nvcpW9OQfTPB5wNWeXvreP4dMAauSA8
+         GgTjXYVmjZHTkzKlGJVkB5cl0I5+8+zweLbMhjh0NpFXkLDUe4Z8Zr3OLNr64S3x8b
+         gnagfV7taMRjGduTh3iHKQaecQ84WKwgHQikBBHVqtJCHoRuVh3kAAgJ5/7jKqQrP1
+         OfEbhjEj7vKc0AEP/Acfu6Gki7XoTUkd0xQzRXa+kaRE8xPbqF4vZZKuQYjZOdX3VQ
+         nN9zei5bC87PA==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4H8mgH0Qjcz6tmH;
+        Wed, 15 Sep 2021 19:00:27 +0200 (CEST)
+Subject: Re: [PATCH] send-email: Avoid incorrect header propagation
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Drew DeVault <sir@cmpwn.com>, Simon Ser <contact@emersion.fr>,
+        xiaoqiang zhao <zxq_yx_007@163.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Christian Ludwig <chrissicool@gmail.com>
+References: <20210830153001.29961-1-mhaeuser@posteo.de>
+From:   =?UTF-8?Q?Marvin_H=c3=a4user?= <mhaeuser@posteo.de>
+Message-ID: <0c753ae6-cc2c-2d70-c510-5370a0b4dcf9@posteo.de>
+Date:   Wed, 15 Sep 2021 17:00:26 +0000
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com> <944ae2cffa8ff175cd1cee0b3a25060ec5599973.1631453010.git.gitgitgadget@gmail.com>
-In-Reply-To: <944ae2cffa8ff175cd1cee0b3a25060ec5599973.1631453010.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 15 Sep 2021 09:59:16 -0700
-Message-ID: <CABPp-BFvCpfq66oJoxgABJy3LP=VNDwtd3YkTwV-nEQjXm2_Bg@mail.gmail.com>
-Subject: Re: [PATCH v2 08/14] add: implement the --sparse option
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210830153001.29961-1-mhaeuser@posteo.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 12, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Ping? :)
+
+On 30/08/2021 17:30, Marvin Häuser wrote:
+> If multiple independent patches are sent with send-email, even if the
+> "In-Reply-To" and "References" headers are not managed by --thread or
+> --in-reply-to, their values may be propagated from prior patches to
+> subsequent patches with no such headers defined.
 >
-> From: Derrick Stolee <dstolee@microsoft.com>
+> To mitigate this and potential future issues, make sure all global
+> patch-specific variables are always either handled by
+> command-specific code (e.g. threading), or are reset to their default
+> values for every iteration.
 >
-> We previously modified 'git add' to refuse updating index entries
-> outside of the sparse-checkout cone. This is justified to prevent users
-> from accidentally getting into a confusing state when Git removes those
-> files from the working tree at some later point.
->
-> Unfortunately, this caused some workflows that were previously possible
-> to become impossible, especially around merge conflicts outside of the
-> sparse-checkout cone. These were documented in tests within t1092.
->
-> We now re-enable these workflows using a new '--sparse' option to 'git
-> add'. This allows users to signal "Yes, I do know what I'm doing with
-> these files," and accept the consequences of the files leaving the
-> worktree later.
->
-> We delay updating the advice message until implementing a similar option
-> in 'git rm' and 'git mv'.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Marvin Häuser <mhaeuser@posteo.de>
 > ---
->  Documentation/git-add.txt                |  9 +++++++-
->  builtin/add.c                            | 12 +++++++----
->  t/t1092-sparse-checkout-compatibility.sh | 27 ++++++++----------------
->  t/t3705-add-sparse-checkout.sh           | 17 ++++++++++++++-
->  4 files changed, 41 insertions(+), 24 deletions(-)
+>   git-send-email.perl   | 26 ++++++++++++++++---------
+>   t/t9001-send-email.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 62 insertions(+), 9 deletions(-)
 >
-> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-> index be5e3ac54b8..bb79016d2ca 100644
-> --- a/Documentation/git-add.txt
-> +++ b/Documentation/git-add.txt
-> @@ -9,7 +9,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
-> -         [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
-> +         [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--sparse]
->           [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
->           [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
->           [--] [<pathspec>...]
-> @@ -79,6 +79,13 @@ in linkgit:gitglossary[7].
->  --force::
->         Allow adding otherwise ignored files.
->
-> +--sparse::
-> +       Allow updating index entries outside of the sparse-checkout cone.
-> +       Normally, `git add` refuses to update index entries whose paths do
-> +       not fit within the sparse-checkout cone, since those files might
-> +       be removed from the working tree without warning. See
-> +       linkgit:git-sparse-checkout[1] for more.
-
-for more ...?  details?  I find the last sentence incomplete.
-
-Following that track for a moment and thinking out loud, I wonder if
-we want more details somewhere in the sparse-checkout docs about this
-issue and if so, if we should point to that specific part of that
-page.  The 'reapply' section of the sparse-checkout page kind of
-touches on the topic of the worktree not exactly matching sparsity
-patterns (due to other commands), but focuses on unsparsifying files
-due to conflicts and kind of ignores the re-sparsification that
-happens in other commands after the working copy matches the index.
-(Such a documentation improvement could come after your series, as I
-said, I'm just thinking out loud.)
-
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 25be2ebd2a..e411860b18 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1625,7 +1625,6 @@ sub send_message {
+>   
+>   $in_reply_to = $initial_in_reply_to;
+>   $references = $initial_in_reply_to || '';
+> -$subject = $initial_subject;
+>   $message_num = 0;
+>   
+>   # Prepares the email, prompts the user, sends it out
+> @@ -1648,6 +1647,7 @@ sub process_file {
+>   	@xh = ();
+>   	my $input_format = undef;
+>   	my @header = ();
+> +	$subject = $initial_subject;
+>   	$message = "";
+>   	$message_num++;
+>   	# First unfold multiline header fields
+> @@ -1854,15 +1854,23 @@ sub process_file {
+>   	}
+>   
+>   	# set up for the next message
+> -	if ($thread && $message_was_sent &&
+> -		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
+> -		$message_num == 1)) {
+> -		$in_reply_to = $message_id;
+> -		if (length $references > 0) {
+> -			$references .= "\n $message_id";
+> -		} else {
+> -			$references = "$message_id";
+> +	if ($thread) {
+> +		if ($message_was_sent &&
+> +		  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
+> +		  $message_num == 1)) {
+> +			$in_reply_to = $message_id;
+> +			if (length $references > 0) {
+> +				$references .= "\n $message_id";
+> +			} else {
+> +				$references = "$message_id";
+> +			}
+>   		}
+> +	} elsif (!defined $initial_in_reply_to) {
+> +		# --thread and --in-reply-to manage the "In-Reply-To" header and by
+> +		# extension the "References" header. If these commands are not used, reset
+> +		# the header values to their defaults.
+> +		$in_reply_to = undef;
+> +		$references = '';
+>   	}
+>   	$message_id = undef;
+>   	$num_sent++;
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 3b7540050c..f95177af39 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -2167,6 +2167,51 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+>   	test_cmp expected-list actual-list
+>   '
+>   
+> +test_expect_success $PREREQ 'set up in-reply-to/references patches' '
+> +	cat >has-reply.patch <<-\EOF &&
+> +	From: A U Thor <author@example.com>
+> +	Subject: patch with in-reply-to
+> +	Message-ID: <patch.with.in.reply.to@example.com>
+> +	In-Reply-To: <replied.to@example.com>
+> +	References: <replied.to@example.com>
 > +
->  -i::
->  --interactive::
->         Add modified contents in the working tree interactively to
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 09c3fad6321..f8e3930608d 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -30,6 +30,7 @@ static int patch_interactive, add_interactive, edit_interactive;
->  static int take_worktree_changes;
->  static int add_renormalize;
->  static int pathspec_file_nul;
-> +static int include_sparse;
->  static const char *pathspec_from_file;
->  static int legacy_stash_p; /* support for the scripted `git stash` */
->
-> @@ -46,7 +47,7 @@ static int chmod_pathspec(struct pathspec *pathspec, char flip, int show_only)
->                 struct cache_entry *ce = active_cache[i];
->                 int err;
->
-> -               if (ce_skip_worktree(ce))
-> +               if (!include_sparse && ce_skip_worktree(ce))
->                         continue;
->
->                 if (pathspec && !ce_path_match(&the_index, ce, pathspec, NULL))
-> @@ -95,7 +96,7 @@ static void update_callback(struct diff_queue_struct *q,
->                 struct diff_filepair *p = q->queue[i];
->                 const char *path = p->one->path;
->
-> -               if (!path_in_sparse_checkout(path, &the_index))
-> +               if (!include_sparse && !path_in_sparse_checkout(path, &the_index))
->                         continue;
->
->                 switch (fix_unmerged_status(p, data)) {
-> @@ -383,6 +384,7 @@ static struct option builtin_add_options[] = {
->         OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
->         OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
->         OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
-> +       OPT_BOOL(0, "sparse", &include_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
->         OPT_STRING(0, "chmod", &chmod_arg, "(+|-)x",
->                    N_("override the executable bit of the listed files")),
->         OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
-> @@ -461,7 +463,8 @@ static int add_files(struct dir_struct *dir, int flags)
->         }
->
->         for (i = 0; i < dir->nr; i++) {
-> -               if (!path_in_sparse_checkout(dir->entries[i]->name, &the_index)) {
-> +               if (!include_sparse &&
-> +                   !path_in_sparse_checkout(dir->entries[i]->name, &the_index)) {
->                         string_list_append(&matched_sparse_paths,
->                                            dir->entries[i]->name);
->                         continue;
-> @@ -646,7 +649,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->                         if (seen[i])
->                                 continue;
->
-> -                       if (matches_skip_worktree(&pathspec, i, &skip_worktree_seen)) {
-> +                       if (!include_sparse &&
-> +                           matches_skip_worktree(&pathspec, i, &skip_worktree_seen)) {
->                                 string_list_append(&only_match_skip_worktree,
->                                                    pathspec.items[i].original);
->                                 continue;
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 0fdc5c7098c..7d64d9deb22 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -343,11 +343,7 @@ test_expect_success 'commit including unstaged changes' '
->         test_all_match git status --porcelain=v2
->  '
->
-> -# NEEDSWORK: Now that 'git add folder1/new' fails, the changes being
-> -# attempted here fail for the sparse-checkout and sparse-index repos.
-> -# We must enable a way for adding files outside the sparse-checkout
-> -# done, even if it is by an optional flag.
-> -test_expect_failure 'status/add: outside sparse cone' '
-> +test_expect_success 'status/add: outside sparse cone' '
->         init_repos &&
->
->         # folder1 is at HEAD, but outside the sparse cone
-> @@ -375,15 +371,16 @@ test_expect_failure 'status/add: outside sparse cone' '
->         test_sparse_match test_must_fail git add folder1/new &&
->         test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
->         test_sparse_unstaged folder1/new &&
-> +       test_sparse_match git add --sparse folder1/a &&
-> +       test_sparse_match git add --sparse folder1/new &&
->
-> -       # NEEDSWORK: behavior begins to deviate here.
-> -       test_all_match git add . &&
-> +       test_all_match git add --sparse . &&
->         test_all_match git status --porcelain=v2 &&
->         test_all_match git commit -m folder1/new &&
->         test_all_match git rev-parse HEAD^{tree} &&
->
->         run_on_all ../edit-contents folder1/newer &&
-> -       test_all_match git add folder1/ &&
-> +       test_all_match git add --sparse folder1/ &&
->         test_all_match git status --porcelain=v2 &&
->         test_all_match git commit -m folder1/newer &&
->         test_all_match git rev-parse HEAD^{tree}
-> @@ -527,12 +524,7 @@ test_expect_success 'merge, cherry-pick, and rebase' '
->         done
->  '
->
-> -# NEEDSWORK: This test is documenting current behavior, but that
-> -# behavior can be confusing to users so there is desire to change it.
-> -# Right now, users might be using this flow to work through conflicts,
-> -# so any solution should present advice to users who try this sequence
-> -# of commands to follow whatever new method we create.
-> -test_expect_failure 'merge with conflict outside cone' '
-> +test_expect_success 'merge with conflict outside cone' '
-
-Based on the comments on the next hunk, I also wonder if this hunk
-doesn't belong in the previous commit...
-
->         init_repos &&
->
->         test_all_match git checkout -b merge-tip merge-left &&
-> @@ -555,9 +547,6 @@ test_expect_failure 'merge with conflict outside cone' '
->         # 3. Rename the file to another sparse filename and
->         #    accept conflict markers as resolved content.
->         run_on_all mv folder2/a folder2/z &&
-> -       # NEEDSWORK: This mode now fails, because folder2/z is
-> -       # outside of the sparse-checkout cone and does not match an
-> -       # existing index entry with the SKIP_WORKTREE bit cleared.
->         test_sparse_match test_must_fail git add folder2 &&
->         test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
->         test_sparse_unstaged folder2/z &&
-
-Is this hunk in the wrong commit?  You added a --sparse flag to the
-git add a few lines below in the previous commit, so it seems the
-NEEDSWORK comment should have been removed at the same time.
-
-> @@ -569,7 +558,7 @@ test_expect_failure 'merge with conflict outside cone' '
->         test_all_match git rev-parse HEAD^{tree}
->  '
->
-> -test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
-> +test_expect_success 'cherry-pick/rebase with conflict outside cone' '
->         init_repos &&
->
->         for OPERATION in cherry-pick rebase
-> @@ -592,6 +581,7 @@ test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
->                 test_sparse_match test_must_fail git add folder1/a &&
->                 test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
->                 test_sparse_unstaged folder1/a &&
-> +               test_all_match git add --sparse folder1/a &&
->                 test_all_match git status --porcelain=v2 &&
->
->                 # 3. Rename the file to another sparse filename and
-> @@ -603,6 +593,7 @@ test_expect_failure 'cherry-pick/rebase with conflict outside cone' '
->                 test_sparse_match test_must_fail git add folder2 &&
->                 test_i18ngrep "Disable or modify the sparsity rules" sparse-checkout-err &&
->                 test_sparse_unstaged folder2/z &&
-> +               test_all_match git add --sparse folder2 &&
->                 test_all_match git status --porcelain=v2 &&
->
->                 test_all_match git $OPERATION --continue &&
-> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-> index 678be1acbf9..0f7e03b5326 100755
-> --- a/t/t3705-add-sparse-checkout.sh
-> +++ b/t/t3705-add-sparse-checkout.sh
-> @@ -167,7 +167,13 @@ test_expect_success 'git add fails outside of sparse-checkout definition' '
->
->         git update-index --no-skip-worktree sparse_entry &&
->         test_must_fail git add sparse_entry &&
-> -       test_sparse_entry_unstaged
-> +       test_sparse_entry_unstaged &&
+> +	This is the body.
+> +	EOF
+> +	cat >no-reply.patch <<-\EOF
+> +	From: A U Thor <author@example.com>
+> +	Subject: patch without in-reply-to
+> +	Message-ID: <patch.without.in.reply.to@example.com>
 > +
-> +       # Avoid munging CRLFs to avoid an error message
-> +       git -c core.autocrlf=input add --sparse sparse_entry 2>stderr &&
-> +       test_must_be_empty stderr &&
-> +       test-tool read-cache --table >actual &&
-> +       grep "^100644 blob.*sparse_entry\$" actual
-
-Does this CRLF anti-munging belong in a separate commit somewhere?  I
-was surprised to see it, and it's not clear to me how it relates to
-the other changes.  Am I missing something?
-
->  '
->
->  test_expect_success 'add obeys advice.updateSparsePath' '
-> @@ -178,4 +184,13 @@ test_expect_success 'add obeys advice.updateSparsePath' '
->
->  '
->
-> +test_expect_success 'add allows sparse entries with --sparse' '
-> +       git sparse-checkout set a &&
-> +       echo modified >sparse_entry &&
-> +       test_must_fail git add sparse_entry &&
-> +       test_sparse_entry_unchanged &&
-> +       git add --sparse sparse_entry 2>stderr &&
-> +       test_must_be_empty stderr
+> +	This is the body.
+> +	EOF
 > +'
 > +
->  test_done
-> --
-> gitgitgadget
+> +test_expect_success $PREREQ 'patch reply headers correct with --no-thread' '
+> +	clean_fake_sendmail &&
+> +	git send-email \
+> +		--no-thread \
+> +		--to=nobody@example.com \
+> +		--smtp-server="$(pwd)/fake.sendmail" \
+> +		has-reply.patch no-reply.patch &&
+> +	grep "In-Reply-To: <replied.to@example.com>" msgtxt1 &&
+> +	grep "References: <replied.to@example.com>" msgtxt1 &&
+> +	! grep replied.to@example.com msgtxt2
+> +'
+> +
+> +test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
+> +	clean_fake_sendmail &&
+> +	git send-email \
+> +		--no-thread \
+> +		--in-reply-to="<cmdline.reply@example.com>" \
+> +		--to=nobody@example.com \
+> +		--smtp-server="$(pwd)/fake.sendmail" \
+> +		has-reply.patch no-reply.patch &&
+> +	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt1 &&
+> +	grep "References: <cmdline.reply@example.com>" msgtxt1 &&
+> +	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt2 &&
+> +	grep "References: <cmdline.reply@example.com>" msgtxt2
+> +'
+> +
+>   test_expect_success $PREREQ 'invoke hook' '
+>   	mkdir -p .git/hooks &&
+>   
+
