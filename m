@@ -5,71 +5,73 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86011C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 00:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E542C433F5
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 00:42:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6071561212
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 00:30:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62F0160F25
+	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 00:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236174AbhIOAbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Sep 2021 20:31:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38066 "EHLO
+        id S231378AbhIOAnQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Sep 2021 20:43:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236175AbhIOAbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Sep 2021 20:31:36 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A02C061574
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 17:30:17 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id c22so1483051edn.12
-        for <git@vger.kernel.org>; Tue, 14 Sep 2021 17:30:17 -0700 (PDT)
+        with ESMTP id S229991AbhIOAnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Sep 2021 20:43:15 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF25C061574
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 17:41:57 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id i21so2367698ejd.2
+        for <git@vger.kernel.org>; Tue, 14 Sep 2021 17:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=3hTELvOSGsl1zXGiioQY4RzlJ1kZIH/2wQ7EVMSbRrQ=;
-        b=LEgWlauSrYYqadx0JRXNMAP64kOJ6nbgogYZ4ewv8a21VO+3JZX1lElUf5bvaJcRUC
-         rdKo+dxU3Q9ehOl3+3QV34XVtLAI4wQuLNuTBXwZfPYeSczEkfRfbLm2NSa5hNzXNwE9
-         grIE8Cho7Srdi/6I5f8zFqxVBrKmmgp0PfSAbK2n9Ih7BFzPLvlSaQz6gT8nL+ztgNCQ
-         +b2LMHmBjg7WaKRErPRTbRN2CRbMMIGXuu+3j7uoCPisWOMIEJu2+0B1SRUUq9gRvnHB
-         ySJjLm4m4nt1Eadw8jSTSwsNfUjCq4ismu1rBclmgu573/sPupbFRhsG2e8uqjp1dnaQ
-         LF2g==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=kYuuGVaYZ9TIpX7KbgylIzz1qBmnYccIzc27k3Lu8NQ=;
+        b=GkeCvH1MQ1MoUean9mgWbekbpQr5GBg9m56tIW+Wi5nKFH+TYqttevxZflCcbuM6n7
+         eISu2RNhgmHmg5VexVxWnQjAZzX83CtviQvs3PFbz0hG+40x3dbZ9qMLh3PdaFgAErLg
+         G2ybX2D3dl0SfxlyEtL0cKpTypbj3VGvEAXmWfRoCKwlgX6/qOuG+Ll8pUHJ9gt7p62D
+         d6fCNyWe6dVrDhHuAoaICON6zkUtazWEVL43iCJL3YzpjlUjib7jH758mFmzaZ1tF1e3
+         ogvwQSNx80P6cD0V5hllr2xQoHfvXNpT9aNg59dqHZ6hTbP+t5CgO8X+nOS3hmm2DQYT
+         sD1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=3hTELvOSGsl1zXGiioQY4RzlJ1kZIH/2wQ7EVMSbRrQ=;
-        b=IwsO8chmIy0N4AS9Kv+nXRCrq37oKRDdLKsHzhmi6DR80P/9EXgORLKsu46QAKVqTE
-         gbB/0glmjghS1oAMMcm0ZqtDzlpJadxgxW8UyDfcy3EhbwTcdqVwWnKUaO4oibKh/MpD
-         dRiIl/ps2q0lexucjxyfE4glSIqDoZ18n1SvxvMxjbDxxrEjatsbxdeaE0d889jLZqjD
-         IyRk3RjOdFWUsVLqcYyhSWapZ1pTT/S5dvhhol+Z8U6oVk3Sb7NKGxPnZLEM6SjomVpx
-         LaUwscNMLOkzgag65Mrr2fl7TcIvtMu6frlp4KYqyvd3jYjVSGdk3whS7BC4L20SLC2d
-         Z0bg==
-X-Gm-Message-State: AOAM532Hx2IIxkfBzc1Nhj6JCzhgEmsu9hkrksK9zuABlmFjVJccMG91
-        dd747FHMpcebr2YzgH/Sa5QtyfrX1BM=
-X-Google-Smtp-Source: ABdhPJyvCJ64Lrh/qailrL7mlcZl1lYQHbb7qCI5NJfsjjV8yvjVLFFkBrrwe9Mol4zT8fj/ADePyw==
-X-Received: by 2002:aa7:c988:: with SMTP id c8mr16096500edt.105.1631665815696;
-        Tue, 14 Sep 2021 17:30:15 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=kYuuGVaYZ9TIpX7KbgylIzz1qBmnYccIzc27k3Lu8NQ=;
+        b=PQw1IE+ePuXST6jiLg8NjiZUhhSuok+Lgs5kD6d3BsZsjUkmsNIsodetCdOpkcdgQF
+         SR8erkISEFgVG7XvA58oryy3VH5k19DnI7S7GVCFL+JMn/KnLGx2kbVrY+EKGhLxfWL3
+         YW/A0/pmB3Ko47n83pb1XYqM6tidy6dTJn8vpqSS8R8Qu+MV+ueoMKBA524+5ttbuQkB
+         0SnSkRJuipPezxJPwDvVNbaS95QDWP263xPxZiD0QTFmi3g6Dv0OlINqZdcCgVQmdTE1
+         sJ8zaEsNDUfEczn0FolnBFnWdBWaE1iEy0EAcFDDkoiZTSPvt6GUfPDaM4ykF3kOvJkT
+         4eiw==
+X-Gm-Message-State: AOAM533ODRQjDBN7TqwIySxXuYw1FKxPOl3BET7U/of99r3vPqUQsZuc
+        LwY+4oaFHN69zw+dmp6Lv4g=
+X-Google-Smtp-Source: ABdhPJwamw8iw3jI+ifWZu3OGuQbWg2PyjeqYELygATm204nNfKglXNOBruOUPWJWcCbNxAo1v/aTg==
+X-Received: by 2002:a17:906:2691:: with SMTP id t17mr21419618ejc.522.1631666516146;
+        Tue, 14 Sep 2021 17:41:56 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b13sm6189772edu.27.2021.09.14.17.30.15
+        by smtp.gmail.com with ESMTPSA id k6sm6134199edv.77.2021.09.14.17.41.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 17:30:15 -0700 (PDT)
+        Tue, 14 Sep 2021 17:41:55 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 09/11] serve: reject bogus v2 "command=ls-refs=foo"
-Date:   Wed, 15 Sep 2021 02:27:35 +0200
+Subject: Re: [PATCH v2 03/11] serve: add "receive" method for v2
+ capabilities table
+Date:   Wed, 15 Sep 2021 02:31:28 +0200
 References: <YUE1alo58cGyTw6/@coredump.intra.peff.net>
- <YUE1ym1dALRQLztq@coredump.intra.peff.net>
+ <YUE1fGZc1FuuyUNH@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUE1ym1dALRQLztq@coredump.intra.peff.net>
-Message-ID: <87wnnin0ix.fsf@evledraar.gmail.com>
+In-reply-to: <YUE1fGZc1FuuyUNH@coredump.intra.peff.net>
+Message-ID: <87sfy6mzzg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -77,67 +79,70 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Sep 14 2021, Jeff King wrote:
 
-> When we see a line from the client like "command=ls-refs", we parse
-> everything after the equals sign as a capability, which we check against
-> our capabilities table. If we don't recognize the command (e.g.,
-> "command=foo"), we'll reject it. But we use the same parser that checks
-> for regular capabilities like "object-format=sha256". And so we'll
-> accept "ls-refs=foo", even though everything after the equals is bogus,
-> and simply ignored.
->
-> This isn't really hurting anything, but the request does violate the
-> spec. Let's tighten it up to prevent any surprising behavior.
-
-Doesn't need a re-roll, but just for my own sanity:
-
-By violating the spec you mean it doesn't coform to the "key" in the
-"Capability Advertisement" section of protocol-v2.txt, one might skim
-this and think values with "=" in them are OK, but a command=WHATEVER
-has a WHATEVER as a "key", not a "value", that's for other parts of the
-dialog.
-
-But you could also have meant that it violates the spec because there's
-no such command as "ls-refs=whatever", just like there isn't "foobar",
-but I don't think that's what you mean...
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  serve.c              |  2 +-
->  t/t5701-git-serve.sh | 10 ++++++++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/serve.c b/serve.c
-> index 5ea6c915cb..63ee1be7ff 100644
-> --- a/serve.c
-> +++ b/serve.c
-> @@ -220,7 +220,7 @@ static int parse_command(const char *key, struct protocol_capability **command)
->  		if (*command)
->  			die("command '%s' requested after already requesting command '%s'",
->  			    out, (*command)->name);
-> -		if (!cmd || !cmd->advertise(the_repository, NULL) || !cmd->command)
-> +		if (!cmd || !cmd->advertise(the_repository, NULL) || !cmd->command || value)
->  			die("invalid command '%s'", out);
->  
->  		*command = cmd;
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index 3bc96ebcde..ab15078bc0 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -72,6 +72,16 @@ test_expect_success 'request invalid command' '
->  	test_i18ngrep "invalid command" err
->  '
->  
-> +test_expect_success 'requested command is command=value' '
-> +	test-tool pkt-line pack >in <<-\EOF &&
-> +	command=ls-refs=whatever
-> +	object-format=$(test_oid algo)
-> +	0000
-> +	EOF
-> +	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
-> +	grep invalid.command.*ls-refs=whatever err
-> +'
+> -static int is_valid_capability(const char *key)
+> +static int receive_client_capability(const char *key)
+>  {
+>  	const char *value;
+>  	const struct protocol_capability *c =3D get_capability(key, &value);
+>=20=20
+> -	return c && c->advertise(the_repository, NULL);
+> +	if (!c || !c->advertise(the_repository, NULL))
+> +		return 0;
 > +
->  test_expect_success 'wrong object-format' '
->  	test-tool pkt-line pack >in <<-EOF &&
->  	command=fetch
+> +	if (c->receive)
+> +		c->receive(the_repository, value);
+> +	return 1;
+>  }
+>=20=20
+
+I haven't actually run this yet (and need to zZzZ soon), but AFAICT at
+the end of this series you leave the existing advertise semantics of
+advertise() be (which is fine). I have this unsubmitted patch locally
+which you may or may not want to work into this.
+
+I considered splitting up the advertise() method as well, i.e. we could
+have a new "is_advertised" boolean callback, and then a
+"capability_string" or whatever. "server-option" and "object-info" never
+add anything, so they could leave that as NULL.
+
+But it's probably not worth it, just food for thought...
+
+-- >8 -- serve: document that "advertise" is called in two modes
+
+If we're being called with a non-NULL argument we're sending out the
+advertisement line, but if it's NULL we're actually in the middle of a
+request.
+
+So you can use the check for NULL to emit your own "die" on "return
+0", like "wtf, I said I don't support command xyz, why are you calling
+it?", as opposed to the default "invalid command '%s'".
+
+Maybe nobody cares, and we can't assume that we're going from an
+advertisement to a command for the same request anyway (can
+we?). I.e. are we serving multiple clients?
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+---
+ serve.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/serve.c b/serve.c
+index aa8209f147e..b187ce26911 100644
+--- a/serve.c
++++ b/serve.c
+@@ -55,6 +55,12 @@ struct protocol_capability {
+ 	 * Optionally a value can be specified by adding it to 'value'.
+ 	 * If a value is added to 'value', the server will advertise this
+ 	 * capability as "<name>=3D<value>" instead of "<name>".
++	 *
++	 * When called with a NULL value we're past the advertisement
++	 * itself, and are checking during a request whether we
++	 * support this command. This can be checked and used used to
++	 * e.g. emit a die("we support this, but don't have it
++	 * enabled!") error.
+ 	 */
+ 	int (*advertise)(struct repository *r, struct strbuf *value);
+=20
+--=20
+2.33.0.1013.ge8323766266
 
