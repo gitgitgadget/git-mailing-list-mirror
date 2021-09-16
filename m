@@ -2,123 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42049C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5FE5C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:39:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C51F6113E
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:20:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6AAD60F70
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232311AbhIPEVh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 00:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234271AbhIPEVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 00:21:33 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE00C0613D9
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 21:19:49 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id b8so5290169ilh.12
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 21:19:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=MJQRlT1A3ApEfBfo0jXsLAh5lyR++1J/hmkHDI4j/2Q=;
-        b=SKvlufvjKr9Jme4w8THCSdRqKQFrLc2zSul1iu1XRfZ2q5IsuMkWZTP+9mIFJk+DoQ
-         1jP7Msuia7TlXbB6svVBfwQXtJdtRSqkE0+SqTASC47u8vlQ2ZKkczLYJPNQRvuwjFeu
-         5ElpcYC4HqzTeTKz01qSrLYvRnSIVEb4jPZn6sLr7cD2UMhwKExfvbrh2V4MqMXjKRf7
-         v1d3Ra1vbUfPkLZOXrTUglhM/X7eVHNowAoRkjjGnKd/0534QkwbeTwMzpOOjQ50jqzQ
-         7ZrQTl8Nef1WZVwdpFcjfhLXGhkYm8UttegrH3b7DqkQZ4Ld94N4sLeK44xert4txYTj
-         Aj6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MJQRlT1A3ApEfBfo0jXsLAh5lyR++1J/hmkHDI4j/2Q=;
-        b=lv96VceFF2pcKaKFU0dCiRZOaYDDWHYmMeypXCx99wlIWhUvTStYoxe2Nlj0At5yay
-         8UWDakySyJMvr2nPlFyLPXnR83E4qJOA23IDoQ6ExIp0E+/gudpslw/oALV6xWfrviTq
-         205ERDRJLT/5LxE7ZWQEWVnNPQQmL2/Ot4ZypeKtag22/6XzncRlzwopGEcF7Hlf+G1E
-         i6N+BBJ55UH6yzL0+cpYQG8NnGTcWIzEj23ES68BOLpKRSBOJO8Ac55+aHsUpt5tdjVy
-         DpE/0X3bRHvSXlDXRukrrp6SneZfqo8lt+EBnDhPnxuOvgFHB/bdUINLY9HvFgCY2bWh
-         0BDQ==
-X-Gm-Message-State: AOAM530vc0T0NGeMuLgR9sxeOOXZ9DW2sC1O51aSUfoi1FgNTXWY3REw
-        vZg8UVVt3fxaJuQsVg2SckNxrg==
-X-Google-Smtp-Source: ABdhPJw6NKkKDeshvQYZuxuXZDdXFZMb+mYz94sLYfHKdRfHh+08qa/PjyDIyJRPKjrqzwB6ArS1pQ==
-X-Received: by 2002:a92:c744:: with SMTP id y4mr2436557ilp.288.1631765988416;
-        Wed, 15 Sep 2021 21:19:48 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p15sm1036196iop.15.2021.09.15.21.19.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 21:19:47 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 00:19:42 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/7] trace2: fix memory leak of thread name
-Message-ID: <YULF3hoaDxA9ENdO@nand.local>
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <5f557caee004f22cee33e8753063f0315459d7e1.1631738177.git.gitgitgadget@gmail.com>
- <xmqqa6kdwo24.fsf@gitster.g>
+        id S234242AbhIPElH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 00:41:07 -0400
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:42103 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229521AbhIPElG (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Sep 2021 00:41:06 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.west.internal (Postfix) with ESMTP id B66143200A9D;
+        Thu, 16 Sep 2021 00:39:45 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 16 Sep 2021 00:39:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=uXQIvjHn1KetyVXYXq3mLkRnlZQ
+        11WAVjqeZa16DGBA=; b=YRvS6+hmMzZLuhYT6HdfCcEOZfGoXMrP9SC2eYaDNHB
+        /8D94wJW2i9EHu1c8Kycfub/HYzr0y8h1eB9jk04kRPf4sKjQV5WcsX4Yo3hViUG
+        vt/oiWSiKJhA6XWMRRzdA3DdqUx5Z+l02pNFvk0q9Qw7yKEojQg8WYUIOb7uYKRn
+        D75Y1HNjWrzgwhDN3gB6eivNBDisjvg77/Vrfga/V5tbhbjbu62H47EW8yxnT5jV
+        iycZ32Aun3Cs3K1w2rQJqUQSZC28E9lBA/JRfUTpFwhfJCcWihnDh8wUlxYTHFLv
+        Bov3Q/WyU3FQPZlRnUh8LOezUtg9OASkS/B3jgyJzyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=uXQIvj
+        Hn1KetyVXYXq3mLkRnlZQ11WAVjqeZa16DGBA=; b=p41DZBKC3egLkNcxTKOv3O
+        N4cV/AfKhFzOrlLzWGufBo/dpuh4G2tKSr3/vfBVX0m1pWhlG88ljUVBN6/3lg4F
+        DAO/jrTAE29e2mwbzQ8NDZ+VV5cEs26kNpxa1Vmo9Qv+c55jebz5riV7GZJzy5AL
+        fS2SmWkcA+9VB9JnfRV+sHBQRc67HFivLY2tRCG7sbTND5mRY/z4OvwUvuwS6Eln
+        NJRY9LC4RmtIHpjMvDpF+9NIU/5VG8NBTjftznhSo+2xIq/YqoIfaQmEpRegXSZU
+        UrQoMHPByFgM52RKpmdjsEpT0ZdbF3ORLrACoPZ37jpGiZbNa9TaZy3DuL1xoNZg
+        ==
+X-ME-Sender: <xms:kMpCYVWWGoKUjI4CsPEt1nQZMy-mw6wMUuzWMrW2MiLepsPlwpWCUg>
+    <xme:kMpCYVl8tNxTSOhPt4uW6Dg1bkuUVIgQEa8Y4UPpYRX_v9-hXzdHEJbMrglKl8ten
+    FHc6a99xtOYwDeV1A>
+X-ME-Received: <xmr:kMpCYRZA_ecBP8WtI0qSka9OKAuHBO0js5QRGQOmr9bj1oDsd0AAlAijKgIbx8WzkC2bYrlcKVGtWvAh4QhH9naprmnLGAYqjRf_5Tq8O6WjNjXjb1aa-WU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudehfedgkeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtro
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueegleetledthfegffeuhfefieekudejhf
+    ekjeeiueehgeeufeejfeffgeffleetnecuffhomhgrihhnpehgihhthhhusgdrtghomhen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:kMpCYYV5k7t-c9GgBp4oHH4CMTghlkmMjOD0ajjTN0wGjsyvjmmF6A>
+    <xmx:kMpCYfn_1_VlmSQr7nHcQ0-xdRLQiHUd10nDkWfm3HzSuG5EDBiACw>
+    <xmx:kMpCYVdPZCVqQZ66xRUKXpmFXLX-vbXWiI2iMxJUTsKppD14GRfA-w>
+    <xmx:kcpCYXtQDA0MT8PfjBU09Z-VhZ1WJAxhJBvLWtHKxupVlsEvbn3QsA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Sep 2021 00:39:44 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2ef22f47 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 16 Sep 2021 04:39:39 +0000 (UTC)
+Date:   Thu, 16 Sep 2021 06:39:37 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t1400: avoid SIGPIPE race condition on fifo
+Message-ID: <YULKiXOpiRmHBNiy@ncase>
+References: <1e9e62a2c5f74db91aaded83783076c28b757836.1630659922.git.ps@pks.im>
+ <YUIptJNN5DxrkydV@coredump.intra.peff.net>
+ <YUIsZCTqm56KfilP@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Ag8HdL9hmieMeCfc"
 Content-Disposition: inline
-In-Reply-To: <xmqqa6kdwo24.fsf@gitster.g>
+In-Reply-To: <YUIsZCTqm56KfilP@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 15, 2021 at 02:01:39PM -0700, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Jeff Hostetler <jeffhost@microsoft.com>
-> >
-> > Do not leak the thread name (contained within the thread context) when
-> > a thread terminates.
-> >
-> > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> > ---
-> >  trace2/tr2_tls.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-> > index 067c23755fb..7da94aba522 100644
-> > --- a/trace2/tr2_tls.c
-> > +++ b/trace2/tr2_tls.c
-> > @@ -95,6 +95,7 @@ void tr2tls_unset_self(void)
-> >
-> >  	pthread_setspecific(tr2tls_key, NULL);
-> >
-> > +	strbuf_release(&ctx->thread_name);
-> >  	free(ctx->array_us_start);
-> >  	free(ctx);
-> >  }
->
-> So the idea is create allocates a new instance, and unset is to
-> release the resource held by it?
->
-> This is not a problem in _this_ patch but more about the base code
-> that is being fixed here, but using strbuf as thread_name member
-> sends a strong signal that it is designed to be inexpensive to
-> change thread_name after a context is created by create_self.  If
-> it is not the case, the member should be "const char *", which may
-> be computed using a temporary strbuf in create_self() and taken from
-> the strbuf with strbuf_detach(), I would think.
 
-It looks like we do not change the contents of the thread_name buffer
-anywhere. I assume that we store the strbuf in struct tr2tls_thread_ctx
-because we do some string formatting in tr2tls_create_self().
+--Ag8HdL9hmieMeCfc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But there we could easily say ctx->thread_name = strbuf_release(&buf).
+On Wed, Sep 15, 2021 at 01:24:52PM -0400, Jeff King wrote:
+> On Wed, Sep 15, 2021 at 01:13:25PM -0400, Jeff King wrote:
+>=20
+> > I think this test may be racy. I saw a strange failure from it in CI:
+> >=20
+> >   https://github.com/peff/git/runs/3605506649?check_suite_focus=3Dtrue#=
+step:5:6734
+> >=20
+> > I can't reproduce the problem locally with "--stress", but the failure
+> > there is on macOS (and likewise, a nearby run failed with a timeout just
+> > for macOS, which could be caused by a racy deadlock).
+>=20
+> Ah, I just wasn't trying hard enough. Using --run=3D1,190 lets it run a
+> lot more tightly, and I got a failure pretty quickly. Here's the fix (on
+> top of ps/update-ref-batch-flush).
+>=20
+> -- >8 --
+> Subject: [PATCH] t1400: avoid SIGPIPE race condition on fifo
+>=20
+> t1400.190 sometimes fails or even hangs because of the way it uses
+> fifos. Our goal is to interactively read and write lines from
+> update-ref, so we have two fifos, in and out. We open a descriptor
+> connected to "in" and redirect output to that, so that update-ref does
+> not see EOF as it would if we opened and closed it for each "echo" call.
+>=20
+> But we don't do the same for the output. This leads to a race where our
+> "read response <out" has not yet opened the fifo, but update-ref tries
+> to write to it and gets SIGPIPE. This can result in the test failing, or
+> worse, hanging as we wait forever for somebody to write to the pipe.
+>=20
+> This is the same proble we fixed in 4783e7ea83 (t0008: avoid SIGPIPE
 
-More concerning to me is that we use signed integers to keep track of nr
-and alloc of array_us_start. But both of these are separate issues and
-don't need to be dealt with here.
+Type: "proble" -> "problem".
 
-Thanks,
-Taylor
+> race condition on fifo, 2013-07-12), and we can fix it the same way, by
+> opening a second long-running descriptor.
+>=20
+> Before this patch, running:
+>=20
+>   ./t1400-update-ref.sh --run=3D1,190 --stress
+>=20
+> failed or hung within a few dozen iterations. After it, I ran it for
+> several hundred without problems.
+>=20
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t1400-update-ref.sh | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index 1e754e258f..0d4f73acaa 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -1603,19 +1603,21 @@ test_expect_success PIPE 'transaction flushes sta=
+tus updates' '
+>  	(git update-ref --stdin <in >out &) &&
+> =20
+>  	exec 9>in &&
+> +	exec 8<out &&
+>  	test_when_finished "exec 9>&-" &&
+> +	test_when_finished "exec 8<&-" &&
+> =20
+>  	echo "start" >&9 &&
+>  	echo "start: ok" >expected &&
+> -	read line <out &&
+> +	read line <&8 &&
+>  	echo "$line" >actual &&
+>  	test_cmp expected actual &&
+> =20
+>  	echo "create refs/heads/flush $A" >&9 &&
+> =20
+>  	echo prepare >&9 &&
+>  	echo "prepare: ok" >expected &&
+> -	read line <out &&
+> +	read line <&8 &&
+>  	echo "$line" >actual &&
+>  	test_cmp expected actual &&
+> =20
+> @@ -1625,7 +1627,7 @@ test_expect_success PIPE 'transaction flushes statu=
+s updates' '
+> =20
+>  	echo commit >&9 &&
+>  	echo "commit: ok" >expected &&
+> -	read line <out &&
+> +	read line <&8 &&
+>  	echo "$line" >actual &&
+>  	test_cmp expected actual
+>  '
+> --=20
+> 2.33.0.917.g33ebf6a5f6
+>=20
+
+Thanks a lot for digging and fixing my test. The patch looks good to me.
+
+Patrick
+
+--Ag8HdL9hmieMeCfc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmFCyogACgkQVbJhu7ck
+PpRznhAAiAeTBJh1AdK/34WzMx+rFQRn+dDcHVkoukN71b4s9cK4VcXMLziCoJDp
+l1WOF3hEioPev4I5xaMu86FNWdiLhsmnbGICH+b7gDoHwIsyIckPxDGetvaiPLAD
+SNSZ4DUGWyCAm8Voeu9g76ggSPYwbL5AJZW5kbJ2oVu16O8o+n9SvF5whcU47T/s
+RVIVFuE4baXUIDTDRAE13OrO406zRDQ1s2VDofmdsc3RV1RtuDEBaZlHqsSJMSwM
+k4vNO3GrnxyCPKyudLcEBb5uyMT+w+ZbIA1/ByE7NijiMluWcMrKWO1DA36RLW8S
+K/Q3f2t65WcI2ZURoN6I0XykkCEL8iHil/47CkpP8I+E4Nolzsu3RnA62MEBpA4y
+Ix7o3zNS/3/xaBBFK18D/baNhTVm8BdXN0WLxkAzqLcrpFzRZyQG2TD2HHR/TRPF
+eRPLXKPnJ7BcYYVu9EbBiLyKhDz/qQmAWTosfMtgO5BgtPPTGpzDwNeQht7C8hld
+6r4P1SD4H9JaQ+LvmiC8/8Zee3odkSDJ2tGze4RqMMF/G+Ckh1BEN4KxovsRZIL6
+4200ax1RnjgBMTiTfWI1LmrsAPby8Db02IfjJK/pSp3uh1zXeXTevAHF7fC4yJUG
+xtXbip60iysYZXbDj2w1/Yec2OsnL558cx08KPuueZkGPhMZeJU=
+=XuXM
+-----END PGP SIGNATURE-----
+
+--Ag8HdL9hmieMeCfc--
