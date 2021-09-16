@@ -2,124 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ECECC433FE
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02159C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:13:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6056C61207
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:03:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E30C760EE2
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239898AbhIPTEw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 15:04:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346442AbhIPTEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 15:04:23 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5BCC0C6CBB
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 11:37:15 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id u15so11008387wru.6
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 11:37:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=1W+Gs52s2A2GXwFshhEzcrig4K83erzWSnFdO+ZDpFc=;
-        b=NDRXR3l8ubvBXcKQmVKt8KxeYbLzO4p00bDUzVzmNwHXcE4DUXPN8oB4RSF8D6I1U7
-         GdXZZi36nhYrCsOKYDfUNMB/c4aot6Amc1iMrEQwnV7+ivb8DCsSv3m1+M00LGISJUB0
-         GajKY+q/nbtAFtw6+KaFVHuiow/xVB2iI5REv1N3vPIHCUQsymCLLqiTDF/9t9nEOxfd
-         +ezsYJ7m14eZ/E8dB4+eMZEd21RD5dAmj1Bg+aLem68r2KhX0A0/9VxLoWoozCg65zpU
-         lGG3PdMc+hEnDxQohzv/aCCAQ6lJXlSR2RJJQDdeP4kpONCMbv/Zz3AVM+sGGKsVROUN
-         cbCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=1W+Gs52s2A2GXwFshhEzcrig4K83erzWSnFdO+ZDpFc=;
-        b=P0yPPwOMOfRz4BOnywmgkw1F8sk2AFfBlGApRrkL/1kWd6ojuuAqFHrMpF9LQGO2SP
-         CHGuiphtOGtgw/lwmPFD2yEdaFwdh7YUulJOkJkU2/zXLXBH9NPxlMUFBC+W4QqY1kEt
-         FagC1ZEQfkokZE6qGi1XJkvKaFF4DbJrTeYLkTpfnIZxvacU+dU70khLgXY/A6elbsyS
-         UHUjdaQYDo+goWjeksf0qcdNHzfa9fVqaCPA2ILAxsnrPP/qEWZQ+vfX6z8QHEHK62LH
-         v/2i5SQneNofdVRpzb98Mp3qX9317yPzYqCp4ce0g+R9L94dUh5NKgXb4l/veth1Acq5
-         IbPw==
-X-Gm-Message-State: AOAM531pUKYyEOvbjcy5ReEWNNg61DLTWvJe62wL+xfWwDZew7/9YOm9
-        4Dkjh0pTyLo56yHlfxaA/30=
-X-Google-Smtp-Source: ABdhPJxsmhe/ey+Gg1ARaaMcahJ2kQefKnOeHy7PHm9ok/+dOFcyKjy/EuKLow3t5yhM20lA6kEszA==
-X-Received: by 2002:adf:f911:: with SMTP id b17mr7781445wrr.412.1631817433746;
-        Thu, 16 Sep 2021 11:37:13 -0700 (PDT)
-Received: from szeder.dev (94-21-37-152.pool.digikabel.hu. [94.21.37.152])
-        by smtp.gmail.com with ESMTPSA id i1sm3982454wrb.93.2021.09.16.11.37.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 11:37:13 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 20:37:11 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S233960AbhIPTOb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:14:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62422 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233536AbhIPTOb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:14:31 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E498D768B;
+        Thu, 16 Sep 2021 15:13:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=LO75q942q2nV
+        YbAioGlS7r6LilwadrUX+kgl1eDx50I=; b=GLobgXj6EyzLoKvXgtYxvTCxIZ6p
+        Y2Na4cQbdST9w7IV0l1admhCDwNrm54DS0od4Y53NEtAvMl/xgWQh0nYrD/XOzff
+        6nxLZpXHUgXLGDVfou3U83Upj/VVUHCcXbmEo6hIWoWY54OSr8aKnYseHMfZhxAf
+        Vqimrs3CweqMmgY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96E55D7689;
+        Thu, 16 Sep 2021 15:13:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 22253D7688;
+        Thu, 16 Sep 2021 15:13:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 18/25] progress.c: emit progress on first signal, show
- "stalled"
-Message-ID: <20210916183711.GE76263@szeder.dev>
-References: <YNKWsTsQgB2Ijxu7@nand.local>
- <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
- <patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/7] trace2: fix memory leak of thread name
+References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
+        <5f557caee004f22cee33e8753063f0315459d7e1.1631738177.git.gitgitgadget@gmail.com>
+        <87fsu5m649.fsf@evledraar.gmail.com> <YULZbQgxuyw8iJ/R@nand.local>
+        <87ilz1gd24.fsf@evledraar.gmail.com>
+Date:   Thu, 16 Sep 2021 12:13:08 -0700
+In-Reply-To: <87ilz1gd24.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 16 Sep 2021 10:01:24 +0200")
+Message-ID: <xmqqr1dotjuj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com>
+X-Pobox-Relay-ID: 20FEFFE6-1722-11EC-9C57-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 07:48:18PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Ever since the progress.c code was added in 96a02f8f6d2 (common
-> progress display support, 2007-04-18) we have been driven purely by
-> calls to the display() function (via the public display_progress()),
-> or via stop_progress(). Even though we got a signal and invoked
-> progress_interval() that function would not actually emit progress
-> output for us.
-> 
-> Thus in cases like "git gc" we don't emit any "Enumerating Objects"
-> output until we get past the setup code, and start enumerating
-> objects, we'll now (at least on my laptop) show output earlier, and
-> emit a "stalled" message before we start the count.
-> 
-> But more generally, this is a first step towards never showing a
-> hanging progress bar from the user's perspective. If we're truly
-> taking a very long time with one item we can show some spinner that we
-> update every time we get a signal. We don't right now, and only
-> special-case the most common case of hanging before we get to the
-> first item.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  progress.c                  |  7 +++++
->  t/t0500-progress-display.sh | 63 ++++++++++++++++++++++++++++++++++---
->  2 files changed, 66 insertions(+), 4 deletions(-)
-> 
-> diff --git a/progress.c b/progress.c
-> index 6c4038df791..35847d3a7f2 100644
-> --- a/progress.c
-> +++ b/progress.c
-> @@ -255,6 +255,13 @@ void display_progress(struct progress *progress, uint64_t n)
->  static void progress_interval(int signum)
->  {
->  	progress_update = 1;
-> +
-> +	if (global_progress->last_value != -1)
-> +		return;
-> +
-> +	display(global_progress, 0, _(", stalled."), 0);
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-We have a few progress lines that are updated from multiple threads,
-and to prevent concurrency issues those threads call display() while
-holding a mutex.  This call without synchronization causes undefined
-behavior.
+> Indeed, to be clear it was just general advice about queue-on-top.
+>
+> But to clarify what I was getting at here: If we just came up with the
+> same diff I'd have assumed Jeff just hadn't need the change in "next",
+> but since he clearly has I was confused by it being here.
+>
+> I.e. it doesn't *seem* like anything in the rest of the series depends
+> on it, so why have it here at all since the bug is being fixed anyway?
 
+I'd imagine that it was there just for the same reason series from
+some people (yours included) tend to bloat, either over iterations
+or from day one, by including "this is not necessary for the end
+goal of this topic at all, but since I noticed it, I am including
+this fix, which should be obvious enough" unrelated fix.
+
+Here is a lesson to be learned.
