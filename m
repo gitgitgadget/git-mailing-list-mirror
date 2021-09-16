@@ -2,135 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA72AC433FE
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C271C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:52:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A45796120C
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:45:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 573EE60F4A
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239232AbhIPVq0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 17:46:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49498 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234847AbhIPVqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 17:46:24 -0400
-Received: (qmail 8461 invoked by uid 109); 16 Sep 2021 21:45:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Sep 2021 21:45:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9399 invoked by uid 111); 16 Sep 2021 21:45:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Sep 2021 17:45:02 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 16 Sep 2021 17:45:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
-Message-ID: <YUO63qy2/5wibY4/@coredump.intra.peff.net>
-References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
- <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
- <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
- <YTTARcEvpXWSDfYW@coredump.intra.peff.net>
- <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
- <YTeo/dCFfpAIfo3K@coredump.intra.peff.net>
- <CAOLTT8Ru-Zhmo5j=jNjWexrahT0qAO5zEMW09XT00-TCca-SkA@mail.gmail.com>
- <YTtrF8C0mmT6kBJT@coredump.intra.peff.net>
- <CAOLTT8RPzutEQxbr9cu=ze7rgPKvG6Ghu4b2Bi47eStY1TqGzQ@mail.gmail.com>
- <CAOLTT8SYxUbfG7YvAs03nwRdee8JfNPUYCCpKcFoAgBjB2oqLw@mail.gmail.com>
+        id S237745AbhIPVxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 17:53:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55746 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234142AbhIPVxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 17:53:44 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE7ECF05A0;
+        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+kRPmPcO00lmceGSIpG68EbMQoUqD2xnxd9Hli
+        LqJtM=; b=kyzRbLI020dvfndbKypb+Y44c6j6I2PD0x6Gu4s49byU2lez7sTFGy
+        T6s2liiEye8MDdnx8wTL3i8sOCZgrbWVpwF7CdLVmfawJQBmyiOily+34Ke9sJTr
+        UDqK16UHODW2QeXo+EN9yN5b2kJAZI9liQ0kDeC1j1o2FV0DyvTaQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B57AAF059F;
+        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38DB9F059D;
+        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Wesley Schwengle <wesley@schwengle.net>
+Cc:     git@vger.kernel.org, me@ttaylorr.com
+Subject: Re: Possible git bug
+References: <c7949156-a7e5-085f-4779-82d0538a4d72@schwengle.net>
+        <20210916124709.2824551-1-wesley@schwengle.net>
+        <xmqqzgsctu10.fsf@gitster.g>
+        <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net>
+Date:   Thu, 16 Sep 2021 14:52:21 -0700
+In-Reply-To: <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net> (Wesley
+        Schwengle's message of "Thu, 16 Sep 2021 15:39:04 -0400")
+Message-ID: <xmqqmtocrxwq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOLTT8SYxUbfG7YvAs03nwRdee8JfNPUYCCpKcFoAgBjB2oqLw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5F15783A-1738-11EC-917D-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 15, 2021 at 10:23:43PM +0800, ZheNing Hu wrote:
+Wesley Schwengle <wesley@schwengle.net> writes:
 
-> ZheNing Hu <adlternative@gmail.com> 于2021年9月15日周三 下午8:27写道：
-> >
-> > > So yes, it's complicated. And it must be explained to the user that
-> > > "%(refname)" behaves slightly differently with "git tag --verify", but
-> > > that is unavoidable if we do not want to break scripts (it _already_
-> > > behaves slightly differently, and we just never told anyone).
-> > >
-> 
-> $ git tag --verify --format='verify: %(refname) %(symref)' annotated symref
-> verify: annotated
-> verify: symref
-> $ git tag --verify --format='verify: %(refname) %(symref)'
-> refs/tags/annotated refs/tags/symref
-> error: tag 'refs/tags/annotated' not found.
-> error: tag 'refs/tags/symref' not found.
+> I feel like it is a bad default, it caught me by surprise.
 
-This is expected. When you provide a tag name on the command line of
-"git tag" it is assumed to be a non-qualified name in refs/tags/ (and
-ditto for git-branch and refs/heads/). It is tempting to try to be
-friendly and accept fully-qualified refs there, but it would create
-ambiguities (e.g., you could really have refs/tags/refs/tags/foo as a
-ref).
+I tend to agree.  It seems that d44e7126 (pull: support rebased
+upstream + fetch + pull --rebase, 2009-07-19) started it, probably
+by mistake, which was partially corrected by ad8261d2 (rebase: use
+reflog to find common base with upstream, 2013-12-09).
 
-I think we can ignore that for our purposes here, though. It's a
-question of input from the command-line, and we focus on just the output
-that we produce.
+The thread that contains
 
-> $ git verify-tag --format='verify: %(refname) %(symref)' annotated
-> symref
-> verify: annotated
-> verify: symref
-> $ git verify-tag --format='verify: %(refname) %(symref)'
-> refs/tags/annotated refs/tags/symref
-> verify: refs/tags/annotated
-> verify: refs/tags/symref
-> 
-> As we can see, there is a slight difference between git tag --verify and
-> git verify-tag: git tag --verify can not handle refs' fullname refs/tags/*
-> (because read_ref_full() | read_ref() can't handle them). So, as a standard,
-> which characteristics should we keep?
+  https://lore.kernel.org/git/xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com/
 
-Whereas are you notice here, verify-tag takes any name (which could be
-fully qualified), and uses it as-is. In fact, it might not even be a ref
-at all! You can say "git verify-tag c06b72d02" if you want to. And as a
-plumbing tool, we should make sure this continues to work. For example,
-careful scripts may resolve a ref into an object, and want to continue
-talking about that object without worrying about the ref being changed
-simultaneously.
+seems to have resulted in the design of the current behaviour, where 
+the discussion refers to an even older discussion thread:
 
-But it also creates a weirdness for "git verify-tag --format". We do not
-necessarily even have a ref to show. So IMHO the feature is somewhat
-mis-designed in the first place. But we should probably continue to
-support it as best we can.
+https://lore.kernel.org/git/d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk/
 
-The best I can come up with is:
+	Side note: I am kind-of surprised that I contributed the
+	core computation of the fork-point logic, even though I
+	wasn't buying it is a good feature back then.
 
-  - when we resolve the name, if it was a ref, we should record that.
-    I think this is hard to do now. It would probably require
-    get_oid_with_context() learning to report on the results it got from
-    dwim_ref().
+In any case, updating the documentation to refer to the configuraion
+variable that tweaks the default for --fork-point would be a good
+near-term thing to do, but in the longer term, I think it may make
+sense to fix this "surprise" and transition the default over time,
+i.e.
 
-  - if we have a refname, then feed it to pretty_print_ref() as a
-    fully-qualified name. And pass whatever "default lstrip=2" magic we
-    come up with for "git tag --verify". That would mean that "git
-    verify-tag --format=%(refname) v2.33.0" would behave the same before
-    and after.
+ (1) when "git rebase" is run without --[no-]fork-point from the
+     command line, and without rebase.forkpoint configuration
+     variable in effect, give a warning that says we'll change the
+     default to 'false' and the users who want to can use the
+     configuration variable to force it to 'true'.  Update the
+     documentation to say the special casing of "If <upstream> is
+     not specified, --fork-point option is assumed" will be changed
+     in the future.
 
-  - if we didn't get a refname, then...I guess continue to pass the name
-    the user gave us into pretty_print_ref()? That would keep "git
-    verify-tag --format=%(refname) c06b72d02" working as it does today.
+     Ship such a version of Git and wait for several development
+     cycles.
 
-The alternative is to do none of those things, and just document that
-"verify-tag" is weird:
 
-  - its %(refname) reports whatever you gave it, whether it is a ref or
-    not
+ (2) flip the default and remove the warning.  Update the
+     documentation.
 
-  - some advanced format placeholders like %(symref) may not work if you
-    don't pass a fully-qualified ref
+> As for the patch. The reason why --fork-point is default I do not
+> know, but how to disable it isn't documented and I think it should. It
+> is hidden in the source code and the release notes of 2.31.0. It
+> should be more visible. Which is the reason I submitted the patch.
 
--Peff
+Certainly.
+
+"git config --help" is the only end-user facing place the reference
+from the configuration variable to the command line option is found.
+We should also have a backreference from the command line option to
+the configuration variable.
+
+
