@@ -7,139 +7,94 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D41C1C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8CEC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:44:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B271E611CA
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:41:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E2A8611EE
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241231AbhIPWnL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 18:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48182 "EHLO
+        id S234051AbhIPWpq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 18:45:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241174AbhIPWnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 18:43:09 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CC7C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:41:48 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id bq5so24792640lfb.9
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:41:48 -0700 (PDT)
+        with ESMTP id S229471AbhIPWpp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 18:45:45 -0400
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939FBC061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:44:24 -0700 (PDT)
+Received: by mail-vs1-xe36.google.com with SMTP id c28so7617753vsh.11
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HuV4QuDws3vx7pMhEBc+AYPU1Lwm/1j/RmYl/+qUBks=;
-        b=LoE9FqcON13gK3PS1YveNcrF0eeBgiN3smQhkEaETUwcZMC/K9Ef+CTdYjF9unBx73
-         D/KOu3bcE1OMzMqUZnHSNvPZ0xAnFnHp3YF+aGi6daQPSczRSrPBBs1ogKWDcmSjszQ4
-         N+CNGKSDapxIc9xpfjxheBhSCxAYyIaXRMOs+KbAfkKJeUwKcE1ti+9MjYikfL3tDYle
-         EWhtvOt3Y73V4kR3vjCI5rB9AZjU7EPiCnZE0cE3zwu/dp5hEvx8S7NT5uVNjaMPK8yT
-         oEMkb6kdCDjM8lwWqOxxnENQEilwKyt83saNXWPP+Dydgn88/iHMurq0PK59b+k0qBEK
-         /DDQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3BH7/b3oTxsYdNo2iy+xeYAF741qqawn4FLOfxq6cLc=;
+        b=cDcUz9TE8X2valGFlW2ctIhCVkI4mHplcB/CKLMvA5YLbMHHt4vGKizFHEErOdWopH
+         ZafN45a4yOsUMQPqhD4+6TuuSqftpiSk1w9ZXKdhoQ6vxIwvG85XXEFPS0RR67+58s27
+         tp30+bH7BtUQ8bBg47/PwGs0z67Y19BMvh8AwS2GK2Ije2Ge7m5jPaXoHMfcrPtveEnB
+         31WIRH92oO8Iss4hBsAvZMxX57kV70BKVaSxVUM8AzhFTfoDSF6HXqUxGhSyyy30cvNE
+         KNmYAEFu2F+u7ukWSrcBH0v5IfsMA+msPaSm7tjy4a6YPQ15z4jX/tG5uDmiLdkdSnju
+         sqsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=HuV4QuDws3vx7pMhEBc+AYPU1Lwm/1j/RmYl/+qUBks=;
-        b=OmTJXB1/vPAg/WzNiY2L23nc2B3LhrR+/T49lvSXpQXWRhXHuHXFGWo/da8J7aQWLz
-         ZulIDaAFUrJjpiZkbGtidVEQ9t3Q+3/idJZvofgr5NVzBurJTmMZoAPCAikq8SAzMDYp
-         6unSuBy6JmMpCerypGe7HZ5qWCQ+X8TbBHSWfuDvAV0ypqUkPPzbA7bMMknZHSBqj8sz
-         BQOz7akeKgJVtDnuL4uArS3k2ddw7su7GLzNLazWyL8+pxMfnJq4QcZj+MD51lCjAvYI
-         ZGGi3yIH/aqDpoCg60FBc2YyPaQd62dUy7VYdAMkTMwfHFM1rgXwEO5KU4WYYY9h/xZ6
-         sncg==
-X-Gm-Message-State: AOAM532abfa254Ykwuuyi8zliyHI/vhCVS01x1N3iMgHqLk1H/l6okpH
-        vjyn0KUkqrEE5Yz7f/oyCduO34juRuU=
-X-Google-Smtp-Source: ABdhPJxr0c56VZB9j00bUwIbMV46FjTd0fi+I+y+cB5QncjbCvoBM9Of83qmr4XEAYWRQ1hMpD8bgA==
-X-Received: by 2002:a05:651c:1190:: with SMTP id w16mr6769682ljo.327.1631832106367;
-        Thu, 16 Sep 2021 15:41:46 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id k19sm491223lji.3.2021.09.16.15.41.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 15:41:45 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
-References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
-        <87pmtjkwsj.fsf@osv.gnss.ru> <87sfy497ed.fsf@osv.gnss.ru>
-        <xmqqy27wrzmj.fsf@gitster.g>
-Date:   Fri, 17 Sep 2021 01:41:44 +0300
-In-Reply-To: <xmqqy27wrzmj.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        16 Sep 2021 14:15:16 -0700")
-Message-ID: <874kaki1nb.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3BH7/b3oTxsYdNo2iy+xeYAF741qqawn4FLOfxq6cLc=;
+        b=bWDxdRFfFwn+t8WPvk69MSBhrRfqzv6GqznCnc6RL+G1ADN+F460N+z1lxab7nnGqb
+         3X6hy7LtQ95waObvqnPYrDR9XbiuP89DCAoIh3vUXy87N33SXEDxmkjVLsEEW5UecVzk
+         /1pNHm+PI6tbpS7zxweqNjJjldn6VtCpp2Wl5UdGTXA8VP10AZXZCHBw00EDU0f7coeQ
+         raH9lLEx9+GJxXGmfY4JJBjlqbiKNb7GEQuv2RAxw2Hz5fgs2zxtNPGd1875AHUNH0UW
+         58Jl2vrB0ZNefNNeXfEcqHFMcdMs7iGHvIf6mollVFn1f51cHmk3bYGB7q5cYiT/tcsy
+         j1ng==
+X-Gm-Message-State: AOAM533VLXUyt37MHAe36K8xQpqUCbgFN5JLcbbF4T90D1ALndrv/bGY
+        9zGQcSPvSIevHMxv9tb7nJgF9dR+fOsetWSWik7PPkVx
+X-Google-Smtp-Source: ABdhPJzRqwnSd0YTi3hd6wPpNLRtai86ALpuhimQuKmtEegnd33ZuS9mzM7h6vE1U98fwiRQiuOLpyFdSowijP2Tl8M=
+X-Received: by 2002:a05:6102:518:: with SMTP id l24mr6326678vsa.57.1631832263668;
+ Thu, 16 Sep 2021 15:44:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210915080948.11891-1-carenas@gmail.com> <20210915080948.11891-3-carenas@gmail.com>
+ <xmqqczp8rx1c.fsf@gitster.g>
+In-Reply-To: <xmqqczp8rx1c.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 16 Sep 2021 15:44:10 -0700
+Message-ID: <CAPUEspjqD5zy8TLuFA96usU7FYi=0wF84y7NgOVFqegtxL9zbw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] git-cvsserver: protect against NULL in crypt(3)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sam@vilain.net, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Sergey Organov <sorganov@gmail.com> writes:
+On Thu, Sep 16, 2021 at 3:11 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> I'm afraid this issue is left up in the air after application of the
->> fix-up patch, as usage of --cc in the diff-index is still undocumented.
+> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 >
-> Yeah, I do think documentation update is needed, but being buried by
-> other topics I haven't had a chance to revisit the way how --cc is
-> described in the wider context in order to make an intellgent
-> suggestion on how to present it in the context of "diff-index".
-
-I tend to believe yet another description of --cc is needed for
-diff-index, separate from the current one. Just saying.
-
+> > -                if (crypt(descramble($password), $1) eq $1) {
+> > -                    $auth_ok =3D 1;
+> > +                my $hash =3D crypt(descramble($password), $1);
+> > +                if (defined $hash) {
+> > +                    $auth_ok =3D 1 if $hash eq $1;
+> >                  }
 >
->> I.e., the fix-up just restores the historical status quo that has a
->> problem by itself.
+> It is not wrong per-se to separate the two checks into two separate
+> parts of the conditional, but because we check for definedness only
+> because comparison of it with $1 makes sense only when it is
+> defined, writing it either like this,
 >
-> I do agree "show -p" on merge is an oddball that trips new people,
-> because it does not imply the "do present the changes for merges"
-> bit unlike "show -c/--cc" do, and from that point of view, the
-> generalization --diff-merges tried to bring us was a good thing.
-
-I'm not sure I follow. What "show -p" has to do with "diff-index --cc"?
-
-My only point here is that usage of *--cc* in *diff-index* is entirely
-undocumneted, and that needs to be somehow resolved.
-
+>                 if (defined $hash and $hash eq $1) {
+>                         $auth_ok =3D 1;
+>                 }
 >
-> But "-c/--cc" are explicit enough in what they want to do.  It does
-> want to present the changes to compare a single end state with
-> possibly more than one starting state (e.g. a merge) and not
-> requiring an explicit "-m" is quite natural.
+> or even like this,
+>
+>                 $auth_ok =3D (defined $hash and $hash eq $1);
+>
+> may be easier to read, no?
 
-Doesn't seem to be relevant for "diff-index --cc" lacking documentation,
-but -m and -c and --cc are rather *mutually exclusive*. I.e., they all
-set different formats for output of diffs for merges, so "--cc -m" ==
-"-m", and "-m --cc" == "--cc", i.e., the latest overrides the format to
-be used. Therefore "requiring explicit -m for -cc" simply doesn't make
-sense.
+yes, let's go with the earlier; I was trying to mimic the original
+code, but agree on a second read that it looks confusing.
+assuming there are no more comments, would you want a reroll?
 
-> Even more, when it compares the end state with only one starting state
-> (e.g. showing a single parent commit), there is only one pairwise
-> result to "combine", so it is also natural that it ends up showing the
-> same output as "-p". So I do not quite see the behaviour of
-> "diff*/show --cc" as a problem, though.
-
-I don't see it as a problem as well, so whom you are arguing with?
-
-The only problem in this particular case I see is that "diff-index --cc"
-is undocumented (and untested), and this has nothing to do with
-log/diff/show, unless I miss your point.
-
-> IOW, the use pattern in gitk is more than just "historical status
-> quo", but is quite sensible, I would have to say.
-
-"diff-index --cc" in gitk is a bug, as according to Git documentation
-"diff-index" does not accept "--cc", period.
-
-gitk trying to make sense of what is neither documented, nor tested, nor
-guaranteed is the problem, but I was talking even not about that
-problem, but rather about the cause of this: some undocumented
-processing of "git diff-index --cc".
-
-Thanks,
--- Sergey Organov
+Carlo
