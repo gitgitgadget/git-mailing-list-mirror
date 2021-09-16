@@ -2,124 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C7AC433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33FFCC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89D9461279
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:30:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B6B661056
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239026AbhIPUcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 16:32:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60594 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239043AbhIPUcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 16:32:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BEA78EFC58;
-        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=V3+tQX3Lbbnd
-        PjnmkdUxBVVse9FPi71ZM70HAhuKRGE=; b=ZLXaXtgCfLlQMxpyrqhVJiL5YNj9
-        VzhZy53WcujYsUnGUhQsyQzPfTmXNlYGQ5/UI3YX22mt21qcIrIGOOgIZ8XasMsS
-        u4gAZiQp6Ehogbldk4rhTco23qPBk8TQldQkmb7ImXqN0EqzcFfL/KOjWDbKPinE
-        Qa3XiAqZHHjwuvE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B53A3EFC57;
-        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3350EEFC54;
-        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
-        bedhanger@gmx.de
-Subject: Re: [PATCH 2/2] request-pull: mark translatable strings
-References: <20210916113516.76445-1-bagasdotme@gmail.com>
-        <20210916113516.76445-3-bagasdotme@gmail.com>
-        <YUNKIj44AlW0tkXk@danh.dev>
-Date:   Thu, 16 Sep 2021 13:30:50 -0700
-In-Reply-To: <YUNKIj44AlW0tkXk@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-        "Thu, 16 Sep 2021 20:44:18 +0700")
-Message-ID: <xmqqbl4stg91.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239200AbhIPUmF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 16:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234327AbhIPUmE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 16:42:04 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF36C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 13:40:43 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id p80so2911540iod.10
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 13:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ZyzEr+f08nxYpwTvGj72xLjxYc5k6g7ncBRqbTQ/A0k=;
+        b=ZDvWLdYUF1ktHmSNYzRJJfibaDpYUI3X5DO6oEkYYqNjGtaPXTbP+SeReV5Or1Pg4c
+         zjkYal6V879SCJB1BPVSESYsCeO+vsBjGQZF9QWZWlnajWhuL1g0iWum17uik3EJnuqM
+         tRFhDDSLWBipqGONCgW3nlBZ2b1q3s0ke794lWjVqIeOgKsA0DLm+xtkHQuRxBRR43GQ
+         9dfLVvlmJ/iWX/dbcLbqQmExsXor04LBlP2LjVTt0KftM6i7mtPWAQBTs9U3wVQGwtPn
+         jdvSaFfdzV+iWQxWnL/H7hNMaxyJZb4B1jOnXpSGkQ3oR48LcfBGoh1JkIEgNxUHwo/8
+         9icg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZyzEr+f08nxYpwTvGj72xLjxYc5k6g7ncBRqbTQ/A0k=;
+        b=FXH6iUu+iespTIuFpH4lRoN+2jGYwQYNbObd0v5AH06iUlm/wVGab8IYQ7o6mglCrC
+         vaLNn47qiDkHOPlpvhvypK6Hbi9rFNA2xGYtlMgmIh/neWYjwMGNi+pVHbPSTpukZHbz
+         UxEvDhcxCiaIwZKPhQppvO5FaJv5ZcakmlIJ8E1id00v35mc2LnF7arUG48zQTqpZ3JI
+         +0haX2hMoPVbmjjpTIljeiIInzsDLbTBpJO7p2tTyEbudqn7GYKrBJ1gKuhzZc7gaMal
+         TyjtvyizhNEy0FI/tt7mBSBS2BUdRlPV7Eveb2jeMY62FAxxVMrXiqdX1Ab+A2gIHcZl
+         paHg==
+X-Gm-Message-State: AOAM531A5BXBk+BXDykoZbdIciWemVBz5inYQKI5Z7kLrg6RlqODHCCx
+        sXzAQ218FmfX8wNJ93xZq5IuL2WsgtHV8rfe
+X-Google-Smtp-Source: ABdhPJw6EoG0uE5PmxH8apoDP6XmyM0VC+U5vjkC0aLcsGkwHiyiuPGF4N0gu9ehVPuKq19cCD/YmQ==
+X-Received: by 2002:a05:6638:408f:: with SMTP id m15mr5953955jam.94.1631824843086;
+        Thu, 16 Sep 2021 13:40:43 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x13sm2432944ilq.18.2021.09.16.13.40.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 13:40:42 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 16:40:41 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v6 05/22] rev-list tests: test for behavior with invalid
+ object types
+Message-ID: <YUOryeVj1WNk1Sqd@nand.local>
+References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
+ <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+ <patch-v6-05.22-82db40ebf8a-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FBCF5CBA-172C-11EC-BBBC-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v6-05.22-82db40ebf8a-20210907T104559Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+On Tue, Sep 07, 2021 at 12:58:00PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Fix a blindspot in the tests for the "rev-list --disk-usage" feature
+> added in 16950f8384a (rev-list: add --disk-usage option for
+> calculating disk usage, 2021-02-09) to test for what happens when it's
+> asked to calculate the disk usage of invalid object types.
 
-> I would argue request-pull message shouldn't be translated.
+I'm not sure that I agree this is a blindspot, or at least one worth
+testing. Is the goal to add tests to every Git command that might have
+to do something with a corrupt object and make sure that it is handled
+correctly?
+
+I'm not sure that doing so would be useful, or at the very least that it
+would be worth the effort. That's not to say I'm not interested in
+having tests fail when we don't handle corrupt objects correctly, but
+more to say that I think there are so many parts of Git that might touch
+a corrupt object that trying to test all of them seems like a losing
+battle.
+
+Assuming that this is a useful direction, though...
+
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t6115-rev-list-du.sh | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
-> The person who creates the request may prefer to use a different
-> language, let's say French, for day-to-day work.
+> diff --git a/t/t6115-rev-list-du.sh b/t/t6115-rev-list-du.sh
+> index b4aef32b713..edb2ed55846 100755
+> --- a/t/t6115-rev-list-du.sh
+> +++ b/t/t6115-rev-list-du.sh
+> @@ -48,4 +48,15 @@ check_du HEAD
+>  check_du --objects HEAD
+>  check_du --objects HEAD^..HEAD
 >
-> However, the recipients may not understand French, and prefer to
-> receive English message.
->
-> And this change break their workflow badly.
+> +test_expect_success 'setup garbage repository' '
+> +	git clone --bare . garbage.git &&
 
-[jc: devil's advocate hat on]
+Since this is cloned within the working directory, should we bother to
+clean this up to avoid munging with future tests?
 
-While that may be true, it would be a nice-to-have if we had an
-option to help developers who usually work in $French when they
-contribute to a project where $French is the official tongue (assign
-any value other than English to variable $French).
+> +	garbage_oid=$(git -C garbage.git hash-object -t garbage -w --stdin --literally <one.t) &&
+> +	git -C garbage.git rev-list --objects --all --disk-usage &&
+> +
+> +	# Manually create a ref because "update-ref", "tag" etc. have
+> +	# no corresponding --literally option.
+> +	echo $garbage_oid >garbage.git/refs/tags/garbage-tag &&
+> +	test_must_fail git -C garbage.git rev-list --objects --all --disk-usage
 
-[jc: devil's advocate hat off]
+See also my earlier comment about this being much more readable in a
+sub-shell.
 
-I haven't done or seen any official survey, but I would not be
-surprised if English were used as the official project language by
-the majority of projects that accept pull request messages.
-
-In that sense, the output that gets translated for the user's usual
-locale by default, like the patch in question does, is misdesigned.
-The consequence of the design is that among those who do not usually
-run in C or en_XX locale, the number of people who will be forced to
-say
-
-	LANG=3DC LC_ALL=3DC git request-pull ...
-
-to override their usual local in order to send the untranslated
-message to their project that do not want translated requests would
-be far greater than those who can just say
-
-	git request-pull ...
-
-to send a message in local language to a local project.
-
-So a good middle ground may be
-
- - allow translation, like these patches attempt
-
- - introduce the command line option "--l10n=3D<value>" and
-   the requestpull.l10n configuration variable that gives the
-   default for the option:
-
-   - when it is set to 'true', end-user's local taken from the
-     environment is used as the target for translation.
-
-   - when it is set to 'false', translation is turned off.
-
-   - when it is set to any other value, the locale is set to the
-     value of that variable (imagine a Japanese developer
-     contributing to a German project).
-
-perhaps?   I dunno.
+Thanks,
+Taylor
