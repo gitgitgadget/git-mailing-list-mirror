@@ -2,128 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3666C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 859AFC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:44:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DE0861185
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:09:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CA1860F38
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239914AbhIPNLH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 09:11:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:23185 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239837AbhIPNLG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Sep 2021 09:11:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1631797785;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=+8QYEjsql1eKwq1U/yWwm1fvgbkO6To3MTFvyCk1vxo=;
-        b=LW7RxA4K7IDRtsQ6FOKf4xWRjACjrexIwsahv2eWAHRC1JOydcTwsYl6fKoXLt943j9/qJ
-        /OGBW7Me7FVPXXSCCj4R8Rlm2HnrbwIBmqNIOMWmSyE4Ymt5RE4Ubq1Sx/C0QUctWd4BVr
-        zgDoSyOBM1th571cIOXu3COAHFckyt0=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-316-38ptPYWAMnug5BdqDa_Fdg-1; Thu, 16 Sep 2021 09:09:44 -0400
-X-MC-Unique: 38ptPYWAMnug5BdqDa_Fdg-1
-Received: by mail-ed1-f72.google.com with SMTP id h15-20020aa7de0f000000b003d02f9592d6so5342266edv.17
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 06:09:44 -0700 (PDT)
+        id S240364AbhIPNpw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 09:45:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240373AbhIPNpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 09:45:50 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D16BC0613D5
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id y8so5906902pfa.7
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=hr1nuto5NQUgUCdHcIn53+ejy2Ug1i0woHKZ6iAQiPY=;
+        b=RSfDv7doUIgrCSS2kehDyqFryONpSOg2Ps6oCmtc/zns7TnOnsQBwSEdnOBP1yw4C1
+         kVVA41xzvNyJ6wYRfaoqpb492JJpRt+L4m2IRW11mVVLPi5D+9P2kz+trQelooyVBDv9
+         q9G3ILoj8UFjkRf2vMGuythkAzkTvWiN7/Vl4Ljh2qn/jGfFBeXWnTtK95dHAtja3IFW
+         qNlt7StOhry0s+tshdrPtMJ/oVz8Ptta9y7kJAxz/XYJA1F+WiyZ3iJwQ7b26k41FbwL
+         6I1UeaOMhAUQg0YO/eSjPr09RRMKNgNKqpKGE+Fmilllc3Aa6pdAyLs7EpJBtPLNHKmP
+         CL9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+8QYEjsql1eKwq1U/yWwm1fvgbkO6To3MTFvyCk1vxo=;
-        b=G21FCuIKDXeFfva2RhwYwkOqUjKG9hqRk5C1WvjM9OQkqL7vdGxcHcN4i0agvkHLqU
-         i+kHLfD7eeHduAxrAFcKQVzlko2cLCAjxK9/CQmpg/Jb7FHB1asyVkzF6LkTxxjG/2OS
-         MF0sJoWwLhgwLmdVPSMFBbzDOCUrnZemYKklObRjyYOcEZvYmj9z1wqU5aw6LS1tU/kg
-         K0091Df1WNRubdfzBv09ouo3wCgfu1PexnRfvf6afrxGXqaBiwAMsf+8DNj0XdIF3HHS
-         u/gPfAFs/18Vlwfw3rGIG8tKGLkjzWZs4OXaz9ThZEjuqYL3TLu387KFn+F3cYQZfY8I
-         8CWg==
-X-Gm-Message-State: AOAM530iYzqlkfd3TXFDN3qxXAAVNW0lglPR2RiddvwLJiip7p6s2QOH
-        Y+7w+0YRbR6mwWZQM2PTv8tkDZcwbSDmVvcNb0yRk1x0q4vOSB6jA3dy7xoitfXKgoqyK0XGni9
-        Oi7WFcyg9fZ7J
-X-Received: by 2002:aa7:db4d:: with SMTP id n13mr6467234edt.398.1631797783171;
-        Thu, 16 Sep 2021 06:09:43 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwAjLh+tJ+wCZ+Kkq7fb64mA45DKjt+AL6Mt2f9dvtHYUj5swyn/SrK6vxPZXkqgj0SsCgkPQ==
-X-Received: by 2002:aa7:db4d:: with SMTP id n13mr6467211edt.398.1631797782956;
-        Thu, 16 Sep 2021 06:09:42 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a? ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
-        by smtp.gmail.com with ESMTPSA id a5sm1446460edm.37.2021.09.16.06.09.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Sep 2021 06:09:42 -0700 (PDT)
-Subject: Re: [PATCH 1/2] request-pull: simplify "remote or HEAD" variable in
- warning messages
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ryan Anderson <ryan@michonline.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=hr1nuto5NQUgUCdHcIn53+ejy2Ug1i0woHKZ6iAQiPY=;
+        b=SdLH+h3zIfYy26I5FlC9zJcSSPxfMmLdjPEkJ7XUaGnrtX91MCKIecB4ZqUZnKUiBf
+         XWIgw6O3fguJdhL/yyNvhYw/9+Lq9vO7ACNWsFDIT6Z05V3X7rG2d8FWFPWKGlWhYvO2
+         zkyvjVsqLnxeMZH780OqnISYRTk61FtGNQx3lapxpSTQ17C8hiSdCH9MN3sTuVhXzNC4
+         OpMrq4BZhi5w/zsoruaLWXlprUoDO46NG3PxB7gCedbBL2Rb/xemaL2iYOhRHH+OtXTr
+         GvvcT5dmZ0sD4mtqB39iY85b1/xOwMSkUZkJQ6BLw+Yd/soQ2QuHFUlKhEAezIGspqGy
+         IaHQ==
+X-Gm-Message-State: AOAM53289itMHcHtFtSUXeROdNPwmkIwIxgwldELI4Z2iuDZfmd/3i99
+        NsewWVBlIbi9z6rtatdJ6F4=
+X-Google-Smtp-Source: ABdhPJwmaB7VgCpEzp/NelX/u4FLxVovsPWUCX4WZWFBPlB/EqnlysilDL/20Kvs8C04DDM7v2OlsA==
+X-Received: by 2002:a63:b50d:: with SMTP id y13mr5053775pge.286.1631799861397;
+        Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:a175:897f:beb8:2ff7:699a])
+        by smtp.gmail.com with ESMTPSA id gk3sm8023137pjb.37.2021.09.16.06.44.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 20:44:18 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
+        bedhanger@gmx.de
+Subject: Re: [PATCH 2/2] request-pull: mark translatable strings
+Message-ID: <YUNKIj44AlW0tkXk@danh.dev>
 References: <20210916113516.76445-1-bagasdotme@gmail.com>
- <20210916113516.76445-2-bagasdotme@gmail.com>
-From:   Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <02a3f76e-cb59-e4c7-21f2-3772be3cad09@redhat.com>
-Date:   Thu, 16 Sep 2021 15:09:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ <20210916113516.76445-3-bagasdotme@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210916113516.76445-2-bagasdotme@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210916113516.76445-3-bagasdotme@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/09/21 13:35, Bagas Sanjaya wrote:
-> In order for waring message "Are you sure you pushed 'remote or HEAD'
-                ^^^^^^
+Beside the problems pointed out by Ævar:
 
-warning
+On 2021-09-16 18:35:17+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> Mark user-faced strings as translatable (including PR message output).
 
-Otherwise,
+I would argue request-pull message shouldn't be translated.
 
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+The person who creates the request may prefer to use a different
+language, let's say French, for day-to-day work.
 
-> there?" to be translatable, replace ${remote:-HEAD} (variable access
-> with defaults) in the message by referring it as $remote_or_head.
-> 
-> Cc: Ryan Anderson <ryan@michonline.com>
-> Cc: pbonzini@redhat.com
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->   git-request-pull.sh | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index 2d0e44656c..9e1d2be9eb 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -116,15 +116,17 @@ set fnord $(git ls-remote "$url" | @@PERL@@ -e "$find_matching_ref" "${remote:-H
->   remote_sha1=$2
->   ref=$3
->   
-> +remote_or_head=${remote:-HEAD}
-> +
->   if test -z "$ref"
->   then
->   	echo "warn: No match for commit $headrev found at $url" >&2
-> -	echo "warn: Are you sure you pushed '${remote:-HEAD}' there?" >&2
-> +	echo "warn: Are you sure you pushed '$remote_or_head' there?" >&2
->   	status=1
->   elif test "$local_sha1" != "$remote_sha1"
->   then
->   	echo "warn: $head found at $url but points to a different object" >&2
-> -	echo "warn: Are you sure you pushed '${remote:-HEAD}' there?" >&2
-> +	echo "warn: Are you sure you pushed '$remote_or_head' there?" >&2
->   	status=1
->   fi
->   
-> 
+However, the recipients may not understand French, and prefer to
+receive English message.
 
+And this change break their workflow badly.
+
+> @@ -138,19 +138,22 @@ fi
+>  
+>  url=$(git ls-remote --get-url "$url")
+>  
+> -git show -s --format='The following changes since commit %H:
+> +git show -s --format="
+> +$(gettext 'The following changes since commit %H:
+>  
+>    %s (%ci)
+>  
+>  are available in the Git repository at:
+> -' $merge_base &&
+> +')
+
+Hence, I think this message shouldn't be translated.
+
+> +" $merge_base &&
+>  echo "  $url $pretty_remote" &&
+> -git show -s --format='
+> +git show -s --format="
+> +$(gettext '
+>  for you to fetch changes up to %H:
+>  
+>    %s (%ci)
+
+And neither should this message.
+
+>  
+> -----------------------------------------------------------------' $headrev &&
+> +----------------------------------------------------------------')" $headrev &&
+>  
+>  if test $(git cat-file -t "$head") = tag
+>  then
+> @@ -162,7 +165,7 @@ fi &&
+>  
+>  if test -n "$branch_name"
+>  then
+> -	echo "(from the branch description for $branch_name local branch)"
+> +	echo "$(eval_gettext "(from the branch description for \$branch_name local branch)")"
+>  	echo
+>  	git config "branch.$branch_name.description"
+>  	echo "----------------------------------------------------------------"
+
+Ditto.
+
+-- 
+Danh
