@@ -2,118 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2128C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C91C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:40:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9111C60F6E
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:39:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C95E160F6E
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232836AbhIPTkf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 15:40:35 -0400
-Received: from lxh-heta-043.node.capitar.com ([159.69.137.90]:42966 "EHLO
-        lxh-heta-043.node.capitar.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230452AbhIPTke (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Sep 2021 15:40:34 -0400
-Received: from lxh-heta-043.node.capitar.com (localhost [127.0.0.1])
-        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPS id 516EE348A8;
-        Thu, 16 Sep 2021 21:39:12 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTP id 7212F3473C;
-        Thu, 16 Sep 2021 21:39:11 +0200 (CEST)
-Received: from lxh-heta-043.node.capitar.com ([127.0.0.1])
-        by localhost (eur-mail-proxy-p02.zt.capitar.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id dBZ1it_FWOPV; Thu, 16 Sep 2021 21:39:11 +0200 (CEST)
-Received: from [192.168.0.42] (unknown [186.189.145.201])
-        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPSA id C3610347E3;
-        Thu, 16 Sep 2021 21:39:08 +0200 (CEST)
-Subject: Re: Possible git bug
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-References: <c7949156-a7e5-085f-4779-82d0538a4d72@schwengle.net>
- <20210916124709.2824551-1-wesley@schwengle.net> <xmqqzgsctu10.fsf@gitster.g>
-From:   Wesley Schwengle <wesley@schwengle.net>
-Message-ID: <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net>
-Date:   Thu, 16 Sep 2021 15:39:04 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S233696AbhIPTl6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:41:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230452AbhIPTl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:41:58 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B74DC061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:40:37 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id d11so3869804ilc.8
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:40:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=wCIdYT7VjiVtRZglBPr42pYUk1zDO8KyT9C3HB7l6Z8=;
+        b=hqlRSXPpTB6HfNgJ7jQAhL0r/PmopRvHSD0Sk0z067Rm97IIeg3yrHv3eT4pGme+rb
+         cuH47r5PJYjFKwfIB3i2XFWEYJEKDD8UU8endHwgaP78TZln8TE0n9+Xms4mlj1HivhU
+         ahwBMhpwb62SD+GmRHd5XqL7GSWKoDRqMRZbpRLWlU71B/QGUFJ/0HQ3h+39MusTQETe
+         wuYNAPI/O6xjLIfbogdMRz2XA28KcWL96a710G4uURYWyHdkEexruefLrcFPQd1AAoMe
+         31B5RUQOETLYmRU5t0gRhl/elb2g+wgxL2+gkmEj2jpHZB9ALjxfpOhsagzZmCf2zS2A
+         ps4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=wCIdYT7VjiVtRZglBPr42pYUk1zDO8KyT9C3HB7l6Z8=;
+        b=yeloqE0JRDpjHMEb2RY0nR7nSezEJMn4S2GshkURokiDsuIIA5/2mE8FmQTt3T7A64
+         /q6+Hcq53lWVklrNQukQ0WEUHDD2D5zZXlwh8JnIePJBRThcLXqbI5fU+WEArV9BWOlj
+         jL9Zi8LnT3e8CDQJw5bxYo6jgh5IH3tJXkMgpsGojox2fSXPoXNFEduQpsh+o2G9mlpS
+         DDcnAkQFJp2eWGOVJ3IHhktc/CexFq7s01bw/XS58SVYl6r7K1P2MgHiw8D65q51lQ+d
+         E1QcVYPZtw5j2jWp5cOIZrz8AkrzD0uo5CvDouaISu2N4gHuHNCiD+UUYSXwgRM7+Xhi
+         FxyA==
+X-Gm-Message-State: AOAM530NpNdItB3fUt4Oao9Ca+/o/EFaL/aoP1ZSAssObAKfx0PC7Gri
+        W4rPnR9Dor/FCY3m8sTUzZs6rg==
+X-Google-Smtp-Source: ABdhPJwuo6sO8LrxoeXZeBe5Do+WRe0AF2cLTm4cX01KXhfwbJTJYolU/5+AyQDZIToAb17EysE6gw==
+X-Received: by 2002:a05:6e02:1a8d:: with SMTP id k13mr4881780ilv.70.1631821236632;
+        Thu, 16 Sep 2021 12:40:36 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a15sm2260107ila.34.2021.09.16.12.40.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 12:40:36 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 15:40:35 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v6 01/22] fsck tests: refactor one test to use a sub-repo
+Message-ID: <YUOds4kcHRgMk5nC@nand.local>
+References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
+ <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+ <patch-v6-01.22-ebe89f65354-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqzgsctu10.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.3 cv=U7vs8tju c=1 sm=1 tr=0
-        a=WkljmVdYkabdwxfqvArNOQ==:117 a=NgX6OPfPqt74TpVTvcPRng==:17
-        a=IkcTkHD0fZMA:10 a=7QKq2e-ADPsA:10 a=-POwkhUqAAAA:8
-        a=WT8wj7CcPzrvMoH3DZgA:9 a=QEXdDO2ut3YA:10 a=5NxO59_FqQjEf5CpAN6O:22
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v6-01.22-ebe89f65354-20210907T104559Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/16/21 11:33 AM, Junio C Hamano wrote:
+On Tue, Sep 07, 2021 at 12:57:56PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Refactor one of the fsck tests to use a throwaway repository. It's a
+> pervasive pattern in t1450-fsck.sh to spend a lot of effort on the
+> teardown of a tests so we're not leaving corrupt content for the next
+> test.
 
->> We are on a branch, we merge it into another branch.
->> We undo the merge because reasons.
->> Now we git rebase, without the upstream, because we've set it.
->> Fork-point is used now, because we haven't specified an upstream, but
->> we did set it and git merge-base decides, oh, we had those commits in
->> master but these where dropped so we drop them in this branch as well.
-> 
-> If you feel "It doesn't make sense to me", either
-> 
->   - the behaviour does not make sense because it is simply buggy, in
->     which case, adding a sentence to the documentation and explaining
->     how not to use it is missing the point---don't you rather want it
->     to behave in a way that makes sense to you instead?
-> 
-> or
-> 
->   - it appears as nonsense to you only because your understanding of
->     the behaviour is faulty but the feature is working correctly and
->     is not a bug, in which case, adding a sentence to the
->     documentation and explaining how not to use it is missing the
->     point---don't you rather want the existing documentation extended
->     to help you and other users to understand the behaviour better
->     first?
-> 
-> Between "buggy behaviour" and "bad documentation of a well-designed
-> behaviour", I offhand do not know which side "--fork-point" is for
-> this particular case, but I've always felt that it is a bad
-> heuristic that should be used with care, and my gut feeling is it
-> might be the third possibility: "bad heuristic that sometimes
-> misbehave badly and that is unfixable".  If that is the case,
-> perhaps the documentation should tell readers the unreliable nature
-> of the option and warn them to double check the result before
-> teaching them how to turn it off permanently.
+OK. I seem to recall you advocating against this pattern elsewhere[1], but
+this is a good example of why it can sometimes make writing tests much
+easier when not having to reason about what leaks out of running a test.
 
-I feel like it is a bad default, it caught me by surprise. Especially 
-because in the reproduction path I wanted to explicit in my rebase 
-action and this caused different behavior. After this was pointed out I 
-read the man page because I thought `git rebase' and `git rebase master' 
-was the same thing if that was configured as an upstream. It took me a 
-while to figure this out, because I kept typing `git rebase' instead of 
-`git rebase master' when quickly trying to find out why it wasn't 
-behaving like it did earlier.
+[1]: https://lore.kernel.org/git/87zgsnj0q0.fsf@evledraar.gmail.com/,
+although after re-reading it it looks like you were more focused on the
+unnecessary "rm -fr repo" there and not the "git init +
+test_when_finished rm -fr" pattern.
 
-I'm clueless about "buggy behavior", "bad documentation of a well 
-designed feature" or "bad heuristic that sometimes misbehave badly and 
-that is unfixable". To me `git rebase' with a configured upstream should 
-behave the same as `git rebase @{u}'. Only when adding --fork-point it 
-should behave as it does currently. I'm not sure when I would want to 
-use it, but I'm thinking people want it, otherwise it wouldn't be a default.
+> -test_expect_success 'object with bad sha1' '
+> -	sha=$(echo blob | git hash-object -w --stdin) &&
+> -	old=$(test_oid_to_path "$sha") &&
+> -	new=$(dirname $old)/$(test_oid ff_2) &&
+> -	sha="$(dirname $new)$(basename $new)" &&
+> -	mv .git/objects/$old .git/objects/$new &&
+> -	test_when_finished "remove_object $sha" &&
+> -	git update-index --add --cacheinfo 100644 $sha foo &&
+> -	test_when_finished "git read-tree -u --reset HEAD" &&
+> -	tree=$(git write-tree) &&
+> -	test_when_finished "remove_object $tree" &&
+> -	cmt=$(echo bogus | git commit-tree $tree) &&
+> -	test_when_finished "remove_object $cmt" &&
+> -	git update-ref refs/heads/bogus $cmt &&
+> -	test_when_finished "git update-ref -d refs/heads/bogus" &&
+> -
+> -	test_must_fail git fsck 2>out &&
+> -	test_i18ngrep "$sha.*corrupt" out
+> +test_expect_success 'object with hash mismatch' '
+> +	git init --bare hash-mismatch &&
+> +	(
+> +		cd hash-mismatch &&
+> +		oid=$(echo blob | git hash-object -w --stdin) &&
+> +		old=$(test_oid_to_path "$oid") &&
+> +		new=$(dirname $old)/$(test_oid ff_2) &&
+> +		oid="$(dirname $new)$(basename $new)" &&
+> +		mv objects/$old objects/$new &&
+> +		git update-index --add --cacheinfo 100644 $oid foo &&
+> +		tree=$(git write-tree) &&
+> +		cmt=$(echo bogus | git commit-tree $tree) &&
+> +		git update-ref refs/heads/bogus $cmt &&
+> +		test_must_fail git fsck 2>out &&
+> +		test_i18ngrep "$oid.*corrupt" out
+> +	)
+>  '
 
-As for the patch. The reason why --fork-point is default I do not know, 
-but how to disable it isn't documented and I think it should. It is 
-hidden in the source code and the release notes of 2.31.0. It should be 
-more visible. Which is the reason I submitted the patch.
+This all looks fine to me. The translation is s/sha/oid and removing all
+of the now-unnecessary test_when_finished calls.
 
-Cheers,
-Wesley
+But the test_i18ngrep (which isn't new) could probably also stand to get
+cleaned up and converted to a normal grep.
 
--- 
-Wesley Schwengle
-E: wesley@schwengle.net
+Thanks,
+Taylor
