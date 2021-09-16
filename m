@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E2CC43219
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BC5BC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD73B61108
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1052E61108
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235760AbhIPTzu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 15:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37852 "EHLO
+        id S235767AbhIPTzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:55:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235479AbhIPTzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 15:55:48 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD06C061574
+        with ESMTP id S235708AbhIPTzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:55:49 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE9D7C061574
         for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:27 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id q11so11321548wrr.9
+Received: by mail-wr1-x42e.google.com with SMTP id d21so11292193wra.12
         for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wlmdQYlGnREvvhpH9kpcy1hpYBzeAs+xecwc7gpHNgs=;
-        b=Kt9k6JhlTZpeLuZUz2u9VljFa1wwcL62lwVI7VrPBXLfkcwRYC6UtTx8FlwukUFBwr
-         7md76Q8ZZFBmDXxJSIfas0lTTTAN9aJLQVOIJFUTlHTRPo6Dm+1PZBZ4PNlkTsZ4zkWF
-         owbQuX6UNEkLZMI352cDF9GDGebKXzKV9XbOPMS14NgX+teBDFiQNqxtPy32HjBbOcCC
-         pq362EjlLNaV4X9Rj8EnDFGlhChZ2Ga+3kuDwFMUTkRokNPrc1WCjDN4X3F0OjjKj9rq
-         T384zchmS2skY9P9PJohmwlG8BumQhPNGbe0+4bGjpDug/5toygxL0gPV+dfJ39+Xiyq
-         nsmw==
+        bh=D6GgmCOQrrqIQQRUUSAtCw+OT7RRq2cUlU9egIhAxmQ=;
+        b=CJjSB/OOmFZ1vc6KWGO+cOXESbLuUwu9TpcTTb/7CmNH/FII2NYGMEEX35fbrSsRkQ
+         HvzXeeCvdDQjtmFrPJf6k+rTeKmfwLagdnHPJIRisPQfGTtuONmMysQDjz4WAuk85I7f
+         uQjpNw3hL7F2ev6DsaSwUl8B7uYRHxOYmoDmB9MFiFCkABOp98G/7w2KuHXOrRf5z/e5
+         EtDRL1EqmZ0LeUtgFFlc8mrWiwgfd9XFdkcyBm3EQVArh4B+vRrHolweVBvLViVaGvGX
+         hVnNPVTKx4rYICXLS5+hI0uvEBJjmpvFCFgZdXHPsug+j0Sc1mF5k2yc8buuMJ8IIeoU
+         o2/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wlmdQYlGnREvvhpH9kpcy1hpYBzeAs+xecwc7gpHNgs=;
-        b=BStlpHWNbW+QDUF8WHazgzPg2UOJygauN+mbu+zcLXiPhBg9qO/ghi+gJpOwcL5uzz
-         sjztmJXqhBKexXqrWzEvJAhFAG6e3SHGFijxeQo2B4x5SRGmA/MgvNt9fK8m+ov2FmEu
-         iG2v3KID33ueGpyXpHpYr8sBRuZdHCslMS40edGNLP8EiwA7+D8WcHPQ736p45V0PyQh
-         SYBZrhK0jInl+yM/L6FfjxzgAqI4T1T0zRraQakHJoBIwG1jcOmTX4HqynOoCYZF1YTC
-         n6rVTe/u3a+z1Bo7RYz8B1dAvcQpoOGFSK7b6OcuBHHrMfGjjSN/LE5JanzL7qEAmjTs
-         XXlg==
-X-Gm-Message-State: AOAM531EQOtsuo5XmOoBQmRyrK7ZgxZejv+XNGuj8sSzKCrU0e8WfaMd
-        2F4kLBDGEjESlj2ZXw98RxJnmN0JXFI=
-X-Google-Smtp-Source: ABdhPJwoctLAz0veeLONC32R/LQHR0B//L4Q/L0ZCSxscmyM+cBgcazF+8EoRK6fixZxGv17OIYlXA==
-X-Received: by 2002:a5d:4f06:: with SMTP id c6mr7980187wru.384.1631822066012;
+        bh=D6GgmCOQrrqIQQRUUSAtCw+OT7RRq2cUlU9egIhAxmQ=;
+        b=bgU57Z/lpdwjmuKvT4jan80Xos71rfp+xIgyY61XnAb7QGZo2CEqxvkxGVjCzf5rID
+         zCsGXoMiQg/VeiNG/T5UsQ4nMHlb+6Lhii5lTligSSyhq5oiB++BqnKP7CSg3xie9MbW
+         rehHCYOuYGRXivpIwB70x+GH82sQlOz/ZMbEH8+O7ef65K4h3rwFUMJpCILorc/8rU1t
+         LElw1MR/w2Th+N2IuNEwQUDUWWJaObAAMBfkU7KcH+ERtiqvUJr8KqxMPesw1A93K+Hm
+         xKu4Wct3RhZVEXbcON3I1YgPXUgEUsQje7TCRn7EJV0+i7Ijp7QNUs0Eisnn0yAijsto
+         jqNQ==
+X-Gm-Message-State: AOAM531SGWvtYQj+xIsgQpze35rFDL8Kr7LEwailNo9c3psbMePmDVp9
+        h0mKjZYXL3tiWaEkeC8zNqk9YKiRAtQ=
+X-Google-Smtp-Source: ABdhPJxDqhJ1QInUpnPyAVtk5RyXjepnatvwCm9NE1XPf2gf4TDNguo+GRuG4Y0vYvAb+cUPUfrXHw==
+X-Received: by 2002:a5d:59ad:: with SMTP id p13mr7908754wrr.253.1631822066562;
         Thu, 16 Sep 2021 12:54:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10sm4511506wrd.51.2021.09.16.12.54.25
+        by smtp.gmail.com with ESMTPSA id l15sm7728432wms.38.2021.09.16.12.54.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 12:54:25 -0700 (PDT)
-Message-Id: <b584f133d280e002a1c05860168c275abb184119.1631822063.git.gitgitgadget@gmail.com>
+        Thu, 16 Sep 2021 12:54:26 -0700 (PDT)
+Message-Id: <f1266c99adfc45a0570f08682b93ca43a3b7e4e4.1631822063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.git.1631822063.gitgitgadget@gmail.com>
 References: <pull.1041.git.1631822063.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Sep 2021 19:54:20 +0000
-Subject: [PATCH 2/5] fsmonitor-ipc: create client routines for
- git-fsmonitor--daemon
+Date:   Thu, 16 Sep 2021 19:54:21 +0000
+Subject: [PATCH 3/5] fsmonitor: config settings are repository-specific
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,269 +75,515 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create fsmonitor_ipc__*() client routines to spawn the built-in file
-system monitor daemon and send it an IPC request using the `Simple
-IPC` API.
+Move FSMonitor config settings to a new `struct fsmonitor_settings`
+structure.  Add a lazily-loaded pointer to `struct repo_settings`.
+Create `fsm_settings__get_*()` getters to lazily look up fsmonitor-
+related config settings.
 
-Stub in empty fsmonitor_ipc__*() functions for unsupported platforms.
+Get rid of the `core_fsmonitor` global variable, and add support for
+the new `core.useBuiltinFSMonitor` config setting.  Move config code
+to lookup the existing `core.fsmonitor` value to `fsmonitor-settings.[ch]`.
+
+The `core_fsmonitor` global variable was used to store the pathname to
+the FSMonitor hook and it was used as a boolean to see if FSMonitor
+was enabled.  This dual usage will lead to confusion when we add
+support for a builtin FSMonitor based on IPC, since the builtin
+FSMonitor doesn't need the hook pathname.
+
+Replace the boolean usage with an `enum fsmonitor_mode` to represent
+the state of FSMonitor.  And only set the pathname when in HOOK mode.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile        |   1 +
- fsmonitor-ipc.c | 176 ++++++++++++++++++++++++++++++++++++++++++++++++
- fsmonitor-ipc.h |  48 +++++++++++++
- 3 files changed, 225 insertions(+)
- create mode 100644 fsmonitor-ipc.c
- create mode 100644 fsmonitor-ipc.h
+ Makefile               |  1 +
+ builtin/update-index.c | 19 +++++++--
+ cache.h                |  1 -
+ config.c               | 14 ------
+ config.h               |  1 -
+ environment.c          |  1 -
+ fsmonitor-settings.c   | 97 ++++++++++++++++++++++++++++++++++++++++++
+ fsmonitor-settings.h   | 21 +++++++++
+ fsmonitor.c            | 63 ++++++++++++++++-----------
+ fsmonitor.h            | 18 ++++++--
+ repo-settings.c        |  2 +
+ repository.h           |  3 ++
+ t/README               |  4 +-
+ 13 files changed, 194 insertions(+), 51 deletions(-)
+ create mode 100644 fsmonitor-settings.c
+ create mode 100644 fsmonitor-settings.h
 
 diff --git a/Makefile b/Makefile
-index 429c276058d..79e72ca9977 100644
+index 79e72ca9977..8b5d241df72 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -901,6 +901,7 @@ LIB_OBJS += fetch-pack.o
- LIB_OBJS += fmt-merge-msg.o
+@@ -902,6 +902,7 @@ LIB_OBJS += fmt-merge-msg.o
  LIB_OBJS += fsck.o
  LIB_OBJS += fsmonitor.o
-+LIB_OBJS += fsmonitor-ipc.o
+ LIB_OBJS += fsmonitor-ipc.o
++LIB_OBJS += fsmonitor-settings.o
  LIB_OBJS += gettext.o
  LIB_OBJS += gpg-interface.o
  LIB_OBJS += graph.o
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 187203e8bb5..79db3ff37e2 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1214,14 +1214,25 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (fsmonitor > 0) {
+-		if (git_config_get_fsmonitor() == 0)
++		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++
++		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
++			warning(_("core.useBuiltinFSMonitor is unset; "
++				"set it if you really want to enable the "
++				"builtin fsmonitor"));
+ 			warning(_("core.fsmonitor is unset; "
+-				"set it if you really want to "
+-				"enable fsmonitor"));
++				"set it if you really want to enable the "
++				"hook-based fsmonitor"));
++		}
+ 		add_fsmonitor(&the_index);
+ 		report(_("fsmonitor enabled"));
+ 	} else if (!fsmonitor) {
+-		if (git_config_get_fsmonitor() == 1)
++		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++		if (fsm_mode == FSMONITOR_MODE_IPC)
++			warning(_("core.useBuiltinFSMonitor is set; "
++				"remove it if you really want to "
++				"disable fsmonitor"));
++		if (fsm_mode == FSMONITOR_MODE_HOOK)
+ 			warning(_("core.fsmonitor is set; "
+ 				"remove it if you really want to "
+ 				"disable fsmonitor"));
+diff --git a/cache.h b/cache.h
+index d23de693680..fa83dc2aa84 100644
+--- a/cache.h
++++ b/cache.h
+@@ -990,7 +990,6 @@ extern int core_preload_index;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+ extern int protect_ntfs;
+-extern const char *core_fsmonitor;
+ 
+ extern int core_apply_sparse_checkout;
+ extern int core_sparse_checkout_cone;
+diff --git a/config.c b/config.c
+index cb4a8058bff..7389ddf18f6 100644
+--- a/config.c
++++ b/config.c
+@@ -2517,20 +2517,6 @@ int git_config_get_max_percent_split_change(void)
+ 	return -1; /* default value */
+ }
+ 
+-int git_config_get_fsmonitor(void)
+-{
+-	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
+-		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
+-
+-	if (core_fsmonitor && !*core_fsmonitor)
+-		core_fsmonitor = NULL;
+-
+-	if (core_fsmonitor)
+-		return 1;
+-
+-	return 0;
+-}
+-
+ int git_config_get_index_threads(int *dest)
+ {
+ 	int is_bool, val;
+diff --git a/config.h b/config.h
+index a2200f31115..110c426b082 100644
+--- a/config.h
++++ b/config.h
+@@ -609,7 +609,6 @@ int git_config_get_index_threads(int *dest);
+ int git_config_get_untracked_cache(void);
+ int git_config_get_split_index(void);
+ int git_config_get_max_percent_split_change(void);
+-int git_config_get_fsmonitor(void);
+ 
+ /* This dies if the configured or default date is in the future */
+ int git_config_get_expiry(const char *key, const char **output);
+diff --git a/environment.c b/environment.c
+index d6b22ede7ea..e6b66315284 100644
+--- a/environment.c
++++ b/environment.c
+@@ -84,7 +84,6 @@ int protect_hfs = PROTECT_HFS_DEFAULT;
+ #define PROTECT_NTFS_DEFAULT 1
+ #endif
+ int protect_ntfs = PROTECT_NTFS_DEFAULT;
+-const char *core_fsmonitor;
+ 
+ /*
+  * The character that begins a commented line in user-editable file
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
 new file mode 100644
-index 00000000000..ccc32d2a17e
+index 00000000000..2770266f5ee
 --- /dev/null
-+++ b/fsmonitor-ipc.c
-@@ -0,0 +1,176 @@
++++ b/fsmonitor-settings.c
+@@ -0,0 +1,97 @@
 +#include "cache.h"
-+#include "fsmonitor.h"
-+#include "simple-ipc.h"
-+#include "fsmonitor-ipc.h"
-+#include "run-command.h"
-+#include "strbuf.h"
-+#include "trace2.h"
-+
-+#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+
-+int fsmonitor_ipc__is_supported(void)
-+{
-+	return 1;
-+}
-+
-+GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-+
-+enum ipc_active_state fsmonitor_ipc__get_state(void)
-+{
-+	return ipc_get_active_state(fsmonitor_ipc__get_path());
-+}
-+
-+static int spawn_daemon(void)
-+{
-+	const char *args[] = { "fsmonitor--daemon", "start", NULL };
-+
-+	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
-+				    "fsmonitor");
-+}
-+
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer)
-+{
-+	int ret = -1;
-+	int tried_to_spawn = 0;
-+	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
-+	struct ipc_client_connection *connection = NULL;
-+	struct ipc_client_connect_options options
-+		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
-+	const char *tok = since_token ? since_token : "";
-+	size_t tok_len = since_token ? strlen(since_token) : 0;
-+
-+	options.wait_if_busy = 1;
-+	options.wait_if_not_found = 0;
-+
-+	trace2_region_enter("fsm_client", "query", NULL);
-+	trace2_data_string("fsm_client", NULL, "query/command", tok);
-+
-+try_again:
-+	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-+				       &connection);
-+
-+	switch (state) {
-+	case IPC_STATE__LISTENING:
-+		ret = ipc_client_send_command_to_connection(
-+			connection, tok, tok_len, answer);
-+		ipc_client_close_connection(connection);
-+
-+		trace2_data_intmax("fsm_client", NULL,
-+				   "query/response-length", answer->len);
-+
-+		if (fsmonitor_is_trivial_response(answer))
-+			trace2_data_intmax("fsm_client", NULL,
-+					   "query/trivial-response", 1);
-+
-+		goto done;
-+
-+	case IPC_STATE__NOT_LISTENING:
-+	case IPC_STATE__PATH_NOT_FOUND:
-+		if (tried_to_spawn)
-+			goto done;
-+
-+		tried_to_spawn++;
-+		if (spawn_daemon())
-+			goto done;
-+
-+		/*
-+		 * Try again, but this time give the daemon a chance to
-+		 * actually create the pipe/socket.
-+		 *
-+		 * Granted, the daemon just started so it can't possibly have
-+		 * any FS cached yet, so we'll always get a trivial answer.
-+		 * BUT the answer should include a new token that can serve
-+		 * as the basis for subsequent requests.
-+		 */
-+		options.wait_if_not_found = 1;
-+		goto try_again;
-+
-+	case IPC_STATE__INVALID_PATH:
-+		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
-+			    fsmonitor_ipc__get_path());
-+		goto done;
-+
-+	case IPC_STATE__OTHER_ERROR:
-+	default:
-+		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
-+			    fsmonitor_ipc__get_path());
-+		goto done;
-+	}
-+
-+done:
-+	trace2_region_leave("fsm_client", "query", NULL);
-+
-+	return ret;
-+}
-+
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer)
-+{
-+	struct ipc_client_connection *connection = NULL;
-+	struct ipc_client_connect_options options
-+		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
-+	int ret;
-+	enum ipc_active_state state;
-+	const char *c = command ? command : "";
-+	size_t c_len = command ? strlen(command) : 0;
-+
-+	strbuf_reset(answer);
-+
-+	options.wait_if_busy = 1;
-+	options.wait_if_not_found = 0;
-+
-+	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-+				       &connection);
-+	if (state != IPC_STATE__LISTENING) {
-+		die("fsmonitor--daemon is not running");
-+		return -1;
-+	}
-+
-+	ret = ipc_client_send_command_to_connection(connection, c, c_len,
-+						    answer);
-+	ipc_client_close_connection(connection);
-+
-+	if (ret == -1) {
-+		die("could not send '%s' command to fsmonitor--daemon", c);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+#else
++#include "config.h"
++#include "repository.h"
++#include "fsmonitor-settings.h"
 +
 +/*
-+ * A trivial implementation of the fsmonitor_ipc__ API for unsupported
-+ * platforms.
++ * We keep this structure defintion private and have getters
++ * for all fields so that we can lazy load it as needed.
 + */
++struct fsmonitor_settings {
++	enum fsmonitor_mode mode;
++	char *hook_path;
++};
 +
-+int fsmonitor_ipc__is_supported(void)
++void fsm_settings__set_ipc(struct repository *r)
 +{
++	struct fsmonitor_settings *s = r->settings.fsmonitor;
++
++	s->mode = FSMONITOR_MODE_IPC;
++}
++
++void fsm_settings__set_hook(struct repository *r, const char *path)
++{
++	struct fsmonitor_settings *s = r->settings.fsmonitor;
++
++	s->mode = FSMONITOR_MODE_HOOK;
++	s->hook_path = strdup(path);
++}
++
++void fsm_settings__set_disabled(struct repository *r)
++{
++	struct fsmonitor_settings *s = r->settings.fsmonitor;
++
++	s->mode = FSMONITOR_MODE_DISABLED;
++	FREE_AND_NULL(s->hook_path);
++}
++
++static int check_for_ipc(struct repository *r)
++{
++	int value;
++
++	if (!repo_config_get_bool(r, "core.usebuiltinfsmonitor", &value) &&
++	    value) {
++		fsm_settings__set_ipc(r);
++		return 1;
++	}
++
 +	return 0;
 +}
 +
-+const char *fsmonitor_ipc__get_path(void)
++static int check_for_hook(struct repository *r)
 +{
-+	return NULL;
++	const char *const_str;
++
++	if (repo_config_get_pathname(r, "core.fsmonitor", &const_str))
++		const_str = getenv("GIT_TEST_FSMONITOR");
++
++	if (const_str && *const_str) {
++		fsm_settings__set_hook(r, const_str);
++		return 1;
++	}
++
++	return 0;
 +}
 +
-+enum ipc_active_state fsmonitor_ipc__get_state(void)
++static void lookup_fsmonitor_settings(struct repository *r)
 +{
-+	return IPC_STATE__OTHER_ERROR;
++	struct fsmonitor_settings *s;
++
++	CALLOC_ARRAY(s, 1);
++
++	r->settings.fsmonitor = s;
++
++	if (check_for_ipc(r))
++		return;
++
++	if (check_for_hook(r))
++		return;
++
++	fsm_settings__set_disabled(r);
 +}
 +
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer)
++enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
 +{
-+	return -1;
++	if (!r->settings.fsmonitor)
++		lookup_fsmonitor_settings(r);
++
++	return r->settings.fsmonitor->mode;
 +}
 +
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer)
++const char *fsm_settings__get_hook_path(struct repository *r)
 +{
-+	return -1;
-+}
++	if (!r->settings.fsmonitor)
++		lookup_fsmonitor_settings(r);
 +
-+#endif
-diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
++	return r->settings.fsmonitor->hook_path;
++}
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
 new file mode 100644
-index 00000000000..b6a7067c3af
+index 00000000000..50b29234616
 --- /dev/null
-+++ b/fsmonitor-ipc.h
-@@ -0,0 +1,48 @@
-+#ifndef FSMONITOR_IPC_H
-+#define FSMONITOR_IPC_H
++++ b/fsmonitor-settings.h
+@@ -0,0 +1,21 @@
++#ifndef FSMONITOR_SETTINGS_H
++#define FSMONITOR_SETTINGS_H
 +
-+#include "simple-ipc.h"
++struct repository;
 +
-+/*
-+ * Returns true if built-in file system monitor daemon is defined
-+ * for this platform.
-+ */
-+int fsmonitor_ipc__is_supported(void);
++enum fsmonitor_mode {
++	FSMONITOR_MODE_DISABLED = 0,
++	FSMONITOR_MODE_HOOK = 1, /* core.fsmonitor */
++	FSMONITOR_MODE_IPC = 2,  /* core.useBuiltinFSMonitor */
++};
 +
-+/*
-+ * Returns the pathname to the IPC named pipe or Unix domain socket
-+ * where a `git-fsmonitor--daemon` process will listen.  This is a
-+ * per-worktree value.
-+ *
-+ * Returns NULL if the daemon is not supported on this platform.
-+ */
-+const char *fsmonitor_ipc__get_path(void);
++void fsm_settings__set_ipc(struct repository *r);
++void fsm_settings__set_hook(struct repository *r, const char *path);
++void fsm_settings__set_disabled(struct repository *r);
 +
-+/*
-+ * Try to determine whether there is a `git-fsmonitor--daemon` process
-+ * listening on the IPC pipe/socket.
-+ */
-+enum ipc_active_state fsmonitor_ipc__get_state(void);
++enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
++const char *fsm_settings__get_hook_path(struct repository *r);
 +
-+/*
-+ * Connect to a `git-fsmonitor--daemon` process via simple-ipc
-+ * and ask for the set of changed files since the given token.
-+ *
-+ * Spawn a daemon process in the background if necessary.
-+ *
-+ * Returns -1 on error; 0 on success.
-+ */
-+int fsmonitor_ipc__send_query(const char *since_token,
-+			      struct strbuf *answer);
++struct fsmonitor_settings;
 +
-+/*
-+ * Connect to a `git-fsmonitor--daemon` process via simple-ipc and
-+ * send a command verb.  If no daemon is available, we DO NOT try to
-+ * start one.
-+ *
-+ * Returns -1 on error; 0 on success.
-+ */
-+int fsmonitor_ipc__send_command(const char *command,
-+				struct strbuf *answer);
++#endif /* FSMONITOR_SETTINGS_H */
+diff --git a/fsmonitor.c b/fsmonitor.c
+index ec4c46407c5..63174630c0e 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -3,6 +3,7 @@
+ #include "dir.h"
+ #include "ewah/ewok.h"
+ #include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+ 
+@@ -148,15 +149,18 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
+ /*
+  * Call the query-fsmonitor hook passing the last update token of the saved results.
+  */
+-static int query_fsmonitor(int version, const char *last_update, struct strbuf *query_result)
++static int query_fsmonitor_hook(struct repository *r,
++				int version,
++				const char *last_update,
++				struct strbuf *query_result)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int result;
+ 
+-	if (!core_fsmonitor)
++	if (fsm_settings__get_mode(r) != FSMONITOR_MODE_HOOK)
+ 		return -1;
+ 
+-	strvec_push(&cp.args, core_fsmonitor);
++	strvec_push(&cp.args, fsm_settings__get_hook_path(r));
+ 	strvec_pushf(&cp.args, "%d", version);
+ 	strvec_pushf(&cp.args, "%s", last_update);
+ 	cp.use_shell = 1;
+@@ -238,17 +242,28 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	struct strbuf last_update_token = STRBUF_INIT;
+ 	char *buf;
+ 	unsigned int i;
++	struct repository *r = istate->repo ? istate->repo : the_repository;
++	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
+ 
+-	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
++	if (fsm_mode <= FSMONITOR_MODE_DISABLED ||
++	    istate->fsmonitor_has_run_once)
+ 		return;
+ 
+-	hook_version = fsmonitor_hook_version();
+-
+ 	istate->fsmonitor_has_run_once = 1;
+ 
+ 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
 +
-+#endif /* FSMONITOR_IPC_H */
++	if (fsm_mode == FSMONITOR_MODE_IPC) {
++		/* TODO */
++		return;
++	}
++
++	assert(fsm_mode == FSMONITOR_MODE_HOOK);
++
++	hook_version = fsmonitor_hook_version();
++
+ 	/*
+-	 * This could be racy so save the date/time now and query_fsmonitor
++	 * This could be racy so save the date/time now and query_fsmonitor_hook
+ 	 * should be inclusive to ensure we don't miss potential changes.
+ 	 */
+ 	last_update = getnanotime();
+@@ -256,13 +271,14 @@ void refresh_fsmonitor(struct index_state *istate)
+ 		strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
+ 
+ 	/*
+-	 * If we have a last update token, call query_fsmonitor for the set of
++	 * If we have a last update token, call query_fsmonitor_hook for the set of
+ 	 * changes since that token, else assume everything is possibly dirty
+ 	 * and check it all.
+ 	 */
+ 	if (istate->fsmonitor_last_update) {
+ 		if (hook_version == -1 || hook_version == HOOK_INTERFACE_VERSION2) {
+-			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION2,
++			query_success = !query_fsmonitor_hook(
++				r, HOOK_INTERFACE_VERSION2,
+ 				istate->fsmonitor_last_update, &query_result);
+ 
+ 			if (query_success) {
+@@ -292,13 +308,17 @@ void refresh_fsmonitor(struct index_state *istate)
+ 		}
+ 
+ 		if (hook_version == HOOK_INTERFACE_VERSION1) {
+-			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION1,
++			query_success = !query_fsmonitor_hook(
++				r, HOOK_INTERFACE_VERSION1,
+ 				istate->fsmonitor_last_update, &query_result);
+ 		}
+ 
+-		trace_performance_since(last_update, "fsmonitor process '%s'", core_fsmonitor);
+-		trace_printf_key(&trace_fsmonitor, "fsmonitor process '%s' returned %s",
+-			core_fsmonitor, query_success ? "success" : "failure");
++		trace_performance_since(last_update, "fsmonitor process '%s'",
++					fsm_settings__get_hook_path(r));
++		trace_printf_key(&trace_fsmonitor,
++				 "fsmonitor process '%s' returned %s",
++				 fsm_settings__get_hook_path(r),
++				 query_success ? "success" : "failure");
+ 	}
+ 
+ 	/*
+@@ -434,7 +454,8 @@ void remove_fsmonitor(struct index_state *istate)
+ void tweak_fsmonitor(struct index_state *istate)
+ {
+ 	unsigned int i;
+-	int fsmonitor_enabled = git_config_get_fsmonitor();
++	struct repository *r = istate->repo ? istate->repo : the_repository;
++	int fsmonitor_enabled = (fsm_settings__get_mode(r) > FSMONITOR_MODE_DISABLED);
+ 
+ 	if (istate->fsmonitor_dirty) {
+ 		if (fsmonitor_enabled) {
+@@ -454,16 +475,8 @@ void tweak_fsmonitor(struct index_state *istate)
+ 		istate->fsmonitor_dirty = NULL;
+ 	}
+ 
+-	switch (fsmonitor_enabled) {
+-	case -1: /* keep: do nothing */
+-		break;
+-	case 0: /* false */
+-		remove_fsmonitor(istate);
+-		break;
+-	case 1: /* true */
++	if (fsmonitor_enabled)
+ 		add_fsmonitor(istate);
+-		break;
+-	default: /* unknown value: do nothing */
+-		break;
+-	}
++	else
++		remove_fsmonitor(istate);
+ }
+diff --git a/fsmonitor.h b/fsmonitor.h
+index f20d72631d7..f9201411aa7 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -3,6 +3,7 @@
+ 
+ #include "cache.h"
+ #include "dir.h"
++#include "fsmonitor-settings.h"
+ 
+ extern struct trace_key trace_fsmonitor;
+ 
+@@ -57,7 +58,11 @@ int fsmonitor_is_trivial_response(const struct strbuf *query_result);
+  */
+ static inline int is_fsmonitor_refreshed(const struct index_state *istate)
+ {
+-	return !core_fsmonitor || istate->fsmonitor_has_run_once;
++	struct repository *r = istate->repo ? istate->repo : the_repository;
++	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++
++	return fsm_mode <= FSMONITOR_MODE_DISABLED ||
++		istate->fsmonitor_has_run_once;
+ }
+ 
+ /*
+@@ -67,7 +72,11 @@ static inline int is_fsmonitor_refreshed(const struct index_state *istate)
+  */
+ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
+ {
+-	if (core_fsmonitor && !(ce->ce_flags & CE_FSMONITOR_VALID)) {
++	struct repository *r = istate->repo ? istate->repo : the_repository;
++	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++
++	if (fsm_mode > FSMONITOR_MODE_DISABLED &&
++	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
+ 		istate->cache_changed = 1;
+ 		ce->ce_flags |= CE_FSMONITOR_VALID;
+ 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
+@@ -83,7 +92,10 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
+  */
+ static inline void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
+ {
+-	if (core_fsmonitor) {
++	struct repository *r = istate->repo ? istate->repo : the_repository;
++	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++
++	if (fsm_mode > FSMONITOR_MODE_DISABLED) {
+ 		ce->ce_flags &= ~CE_FSMONITOR_VALID;
+ 		untracked_cache_invalidate_path(istate, ce->name, 1);
+ 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
+diff --git a/repo-settings.c b/repo-settings.c
+index 0cfe8b787db..e69dad1e776 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -26,6 +26,8 @@ void prepare_repo_settings(struct repository *r)
+ 	UPDATE_DEFAULT_BOOL(r->settings.commit_graph_read_changed_paths, 1);
+ 	UPDATE_DEFAULT_BOOL(r->settings.gc_write_commit_graph, 1);
+ 
++	r->settings.fsmonitor = NULL; /* lazy loaded */
++
+ 	if (!repo_config_get_int(r, "index.version", &value))
+ 		r->settings.index_version = value;
+ 	if (!repo_config_get_maybe_bool(r, "core.untrackedcache", &value)) {
+diff --git a/repository.h b/repository.h
+index 3740c93bc0f..fdc0a818b83 100644
+--- a/repository.h
++++ b/repository.h
+@@ -4,6 +4,7 @@
+ #include "path.h"
+ 
+ struct config_set;
++struct fsmonitor_settings;
+ struct git_hash_algo;
+ struct index_state;
+ struct lock_file;
+@@ -35,6 +36,8 @@ struct repo_settings {
+ 	int gc_write_commit_graph;
+ 	int fetch_write_commit_graph;
+ 
++	struct fsmonitor_settings *fsmonitor; /* lazy loaded */
++
+ 	int index_version;
+ 	enum untracked_cache_setting core_untracked_cache;
+ 
+diff --git a/t/README b/t/README
+index 9e701223020..7be3662e038 100644
+--- a/t/README
++++ b/t/README
+@@ -398,8 +398,8 @@ every 'git commit-graph write', as if the `--changed-paths` option was
+ passed in.
+ 
+ GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
+-code path for utilizing a file system monitor to speed up detecting
+-new or changed files.
++code path for utilizing a (hook based) file system monitor to speed up
++detecting new or changed files.
+ 
+ GIT_TEST_INDEX_VERSION=<n> exercises the index read/write code path
+ for the index version specified.  Can be set to any valid version
 -- 
 gitgitgadget
 
