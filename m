@@ -7,81 +7,84 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5765CC433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70AF3C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B0CE611CA
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 566D260FC0
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345995AbhIPSsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 14:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49410 "EHLO
+        id S233890AbhIPStQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 14:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241440AbhIPSse (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 14:48:34 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046A1C10D651
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:24:37 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id h14-20020a62b40e0000b02903131bc4a1acso5429231pfn.4
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:24:36 -0700 (PDT)
+        with ESMTP id S1348443AbhIPStH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 14:49:07 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43086C094ACF
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:26:12 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 41-20020a17090a0fac00b00195a5a61ab8so5412923pjz.3
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=VXoKfmTd9qzEPpVoKtz2+2oTiD9zx54UdGNa/29Dqz8=;
-        b=Ko5cSdEXxpcOkK41fwYzJrMmSwu3U1tunu3IcX6579jFUIqqTZ1tbp4SFc2Bbt8FQY
-         uf2HJt/VOfDQ+dt2ACREG8XJkIq5kydrpqyAMUGc+40prtAbMG3rAUyG+/ORpgGiQ0KH
-         pvZJLkdGXIuK6bCuE6LCvQbQaUM5uRlJwjwGC6KbNbMij6u9KGSeoAzjlgtbcFzPa7/J
-         ojZtUHD8DJRIBFeXOdpbdLj0t5H9GJuIZwYs/o0RBUOndKeSfAWAeUC3FtHla+tE3K/o
-         tcd3iBfR0DneOje7HHvI95trGnXrnl+tBBOu3+P9eQsjUcmfc3iq9toAUXU4dFCGOgi2
-         kt+Q==
+        bh=o/AY/65x9ZEzjDWufGzXKy7v8OAUoDkzPtjN0fwapPE=;
+        b=CaW1sf0IytCIntA1u//6H1BMtHWcmqnZCVn3pe1yDUW8l6YIlGFHw4X4E8LjD6HdNf
+         P55Nddayyn5DPzulW750XtD7GnY31/EO12otn+qF1UEd2j02sFNNDoGbknjsgpgKf85i
+         ft8SOWw1PA60NytAaE+lDT8z4x6OXE9VUNCxB3SZz2QISu63PCCt3evKKqPIIk5FaAKt
+         B8GXXVe/+dhNkGuZHUIfzqPFlWPkd3YIJQ+j6tKeCr6WhZ7vlmoREAh9lcS+iDgfG+8q
+         eaomoJCFZc8zIRb+1GW1BhwBThuw/RrRjt96NrbxwTYCAZB0p5QE6U7xbOqvwGuTWzCl
+         ENtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=VXoKfmTd9qzEPpVoKtz2+2oTiD9zx54UdGNa/29Dqz8=;
-        b=HpN8A4ZZmO6pJ6t2bsiqVhkDe6iPa9gLJvOPLQWILrmKipEF0buopc6L1MF2zwMoRp
-         9iIPssYM96pbp5VYfZm8nOPvZFP05VYpuQg7/84YfD5ApKVAXdD+fI9whvLjXCj14Z8Z
-         LtGAxLu4vGxYou/plZ1ZaJqSU1SGUMCmwsv+xyda06uPRQEpjKKlm6OhJLPGwWKGMwFh
-         wScVA8nawGTn9Y/IG405iH3h7AqmYvJ6M1lqnhi5U9Et0YK9MDAQpEbH8OJr5vfCslF6
-         cf2WkEnKrX3Yyqotg77o8Tz/fz/I0nIvh2hfMOOE8PkU8YKxoUR8rkvDACQLgPAV0aG8
-         ifiA==
-X-Gm-Message-State: AOAM532uCwZkKBh9/x0b7cF966TdgWBlnMqh0ZLPCeyPgztvrgzjrGTh
-        8mWHEL94/G1QWRzuH+5FavgwIxRUHu+z9o8D8kIv
-X-Google-Smtp-Source: ABdhPJz6ICyQe0CnKfJUIVjUePSslcZ9zmtj0RXWg3OOazDGarCJtLwiskID9FMDFhz6uHZtiM6yJsxULZ92JD1fL2Ln
+        bh=o/AY/65x9ZEzjDWufGzXKy7v8OAUoDkzPtjN0fwapPE=;
+        b=4Pz0PH1xOThw0/bKpLBoCi21ockc7FmqIcFpFhFFvRMjV5migxB5jk9qZb8DMfiyDE
+         N2a/OJaRge6PmsizHVOO5/iNEKY9PBT4SYfknAO3a/5+FP7IqdYIZGWC1wMzvYs+Znlf
+         lJRpQQIVH+Wlft1NRU359u/skyf+4chkvAWL5UpBC/Laruht9zrWPgy1KBVMJp9NCGKE
+         MPzO9Nn+GKsaUhVTdsya+ilxFZnatQnDPCDSHrALksfI5L8pvaAH8hpv2gzVVz36Vxxz
+         v/IsPthX6whN78zhzYivP9VHSn9YguME2NddFsZCpzr/sHh+sKBI5tL81P0LrgzrXpIf
+         JVpQ==
+X-Gm-Message-State: AOAM530kynkxvTDnf53BacCGdhxGQFlXWguq4YynJ02MzICe8vzhoZSm
+        Cf3ZUk2OPtx0ol81Fi8UuMsvIbCP7ovCcL3btz7Y
+X-Google-Smtp-Source: ABdhPJx135B85NxVL2w//e64nocYCdlEpkBVep/LK49r4n1MWq7AQYkXdp2+D926RMzoDU3HgZXLRYdnx2PmSdKvsxRs
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:184a:: with SMTP id
- 10mr5919010pgy.149.1631813076469; Thu, 16 Sep 2021 10:24:36 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 10:24:32 -0700
-In-Reply-To: <YUElL3RI0VTnjE5C@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <20210916172432.1073546-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:97b2:0:b0:439:14a9:2bf5 with
+ SMTP id d18-20020aa797b2000000b0043914a92bf5mr6152461pfq.45.1631813171751;
+ Thu, 16 Sep 2021 10:26:11 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 10:26:09 -0700
+In-Reply-To: <CAFQ2z_ML_g6DTiG92srq8UCCu_D8bi6z1mP_znt24TJagVfi2g@mail.gmail.com>
+Message-Id: <20210916172609.1074157-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YUElL3RI0VTnjE5C@chooglen-macbookpro.roam.corp.google.com>
+References: <CAFQ2z_ML_g6DTiG92srq8UCCu_D8bi6z1mP_znt24TJagVfi2g@mail.gmail.com>
 X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
 Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     jonathantanmy@google.com, hanwen@google.com, git@vger.kernel.org
+To:     hanwen@google.com
+Cc:     chooglen@google.com, jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The answer to whether or not a ref store should refer to a certain
-> object store seems unresolved because a ref store is trying to do two
-> separate things. Perhaps it is reasonable to associate a ref database
-> with an object store (so that it can validate its refs), but we would
-> prefer to dissociate the physical ref storage layer from the object
-> store. (I'm paraphrasing Johnathan Nieder here, this isn't an original
-> thought).
+> On Wed, Sep 15, 2021 at 12:41 AM Glen Choo <chooglen@google.com> wrote:
+> > In the current state of affairs, the files ref store and the packed ref
+> > store seem to behave as a single logical ref database. An example of
+> > this (that I care about in particular) is in refs/files-backend.c where
+> > the files backend validates oids using the_repository's odb.
+> > refs/packed-backend.c doesn't do any such validation, and presumably
+> > just relies on the correctness of refs/files-backend.c. I assume that
+> > this also explains why some functions in refs_be_packed are stubs.
 > 
-> Perhaps this is a question we want to resolve when considering reftable
-> and other ref databases.
+> The loose/packed storage is implemented in terms of files backend (the
+> public entry point) that defers to a packed backend in some cases. The
+> latter is implemented as a ref backend, but for no good reason.
 
-Either adding an explicit dependency on an object store to a ref store
-or dissociating it would be an improvement over what we have now, which
-is an implicit dependency on the_repository's object store. Of the two,
-I also prefer dissociating it. In practice, if I remember correctly, the
-part that checks object existence during ref writing is the last
-dependency, so if we can eliminate that without a convoluted design, I
-think it's worth dissociating.
+Yes, the packed backend doesn't need to be a ref backend.
+
+> I think Jonathan is right, but I also think that teasing apart the ref
+> backend and the ODB is premature until the ref backend itself is a
+> strongly enforced abstraction boundary.
+
+I think both efforts can proceed independently.
