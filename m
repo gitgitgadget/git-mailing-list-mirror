@@ -2,67 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45914C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A99FAC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:31:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22EB76103B
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:16:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90DFD61130
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240890AbhIPWSC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 18:18:02 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64578 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240827AbhIPWSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 18:18:01 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69A5C150A79;
-        Thu, 16 Sep 2021 18:16:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gmyouv7XGPcJjgOQ6UUk23+le2XuGdB6ZgjNzL
-        LMFeg=; b=JIJ/jkrjp3EOzvcEIN9t/DBrIr3FlrsyegKQxdw3W2ZUjy7FBjNZNg
-        ng7sEooGHszg/CmXJbCDajOC9exuTl5Ggy0ybQG/J6XOkNXymvbVENECOMQM0RDC
-        kOQ7RU2KMh8pTKHeeM+dVvsKmyuRQIsBWUjriAqCSqRczdAOEY6Ak=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6165E150A78;
-        Thu, 16 Sep 2021 18:16:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 61C0B150A76;
-        Thu, 16 Sep 2021 18:16:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com
-Subject: Re: [PATCH v2 0/8] repack: introduce `--write-midx`
-References: <cover.1631331139.git.me@ttaylorr.com>
-        <cover.1631730270.git.me@ttaylorr.com> <xmqqmtodwsnz.fsf@gitster.g>
-        <xmqqilz1wsbz.fsf@gitster.g> <YUJjUIEmIFTH0+jq@nand.local>
-Date:   Thu, 16 Sep 2021 15:16:35 -0700
-In-Reply-To: <YUJjUIEmIFTH0+jq@nand.local> (Taylor Blau's message of "Wed, 15
-        Sep 2021 17:19:12 -0400")
-Message-ID: <xmqq8rzwrwsc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S241063AbhIPWcW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 18:32:22 -0400
+Received: from lxh-heta-043.node.capitar.com ([159.69.137.90]:61412 "EHLO
+        lxh-heta-043.node.capitar.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241081AbhIPWcR (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Sep 2021 18:32:17 -0400
+Received: from lxh-heta-043.node.capitar.com (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPS id 97C5E1B13F;
+        Fri, 17 Sep 2021 00:30:53 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTP id 9ACDA1B3AE;
+        Fri, 17 Sep 2021 00:30:52 +0200 (CEST)
+Received: from lxh-heta-043.node.capitar.com ([127.0.0.1])
+        by localhost (eur-mail-proxy-p02.zt.capitar.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id P9EuX93OsgLz; Fri, 17 Sep 2021 00:30:52 +0200 (CEST)
+Received: from [192.168.0.42] (unknown [186.189.145.201])
+        by eur-mail-proxy-p02.zt.capitar.com (Postfix) with ESMTPSA id ACABA1B2CA;
+        Fri, 17 Sep 2021 00:30:50 +0200 (CEST)
+Subject: Re: Possible git bug
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com
+References: <c7949156-a7e5-085f-4779-82d0538a4d72@schwengle.net>
+ <20210916124709.2824551-1-wesley@schwengle.net> <xmqqzgsctu10.fsf@gitster.g>
+ <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net>
+ <xmqqmtocrxwq.fsf@gitster.g>
+From:   Wesley Schwengle <wesley@schwengle.net>
+Message-ID: <4d17d26a-d945-3875-beed-e23ae6281f54@schwengle.net>
+Date:   Thu, 16 Sep 2021 18:30:46 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C26E2B54-173B-11EC-BE95-98D80D944F46-77302942!pb-smtp21.pobox.com
+In-Reply-To: <xmqqmtocrxwq.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.3 cv=LbpCFQXi c=1 sm=1 tr=0
+        a=WkljmVdYkabdwxfqvArNOQ==:117 a=NgX6OPfPqt74TpVTvcPRng==:17
+        a=IkcTkHD0fZMA:10 a=7QKq2e-ADPsA:10 a=-POwkhUqAAAA:8
+        a=vmGHGI2Ywfn13iqCYa0A:9 a=QEXdDO2ut3YA:10 a=5NxO59_FqQjEf5CpAN6O:22
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 9/16/21 5:52 PM, Junio C Hamano wrote:
+> Wesley Schwengle <wesley@schwengle.net> writes:
 
-> I think all of this is non-obvious enough that it warrants being written
-> down in a comment. Here's a replacement for that first patch that should
-> apply without conflict. But if you'd rather have a reroll or anything
-> else, I'm happy to do that, too.
+>> As for the patch. The reason why --fork-point is default I do not
+>> know, but how to disable it isn't documented and I think it should. It
+>> is hidden in the source code and the release notes of 2.31.0. It
+>> should be more visible. Which is the reason I submitted the patch.
+> 
+> Certainly.
+> 
+ > In any case, updating the documentation to refer to the configuraion
+ > variable that tweaks the default for --fork-point would be a good
+ > near-term thing to do, but in the longer term, I think it may make
+ > sense to fix this "surprise" and transition the default over time,
+ > i.e.
+ >
+ > "git config --help" is the only end-user facing place the reference
+ > from the configuration variable to the command line option is found.
+ > We should also have a backreference from the command line option to
+ > the configuration variable.
 
-Thanks; will replace.  The comment reads well.
+A simple reference in the documentation would be a good first step and 
+the change of the default can than happen over multiple iterations/versions.
 
+Cheers,
+Wesley
+
+-- 
+Wesley Schwengle
+E: wesley@schwengle.net
