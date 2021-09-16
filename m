@@ -2,275 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0941C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6930BC433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:51:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ADE56124B
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:42:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5007A61251
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:51:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232992AbhIPToM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 15:44:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35046 "EHLO
+        id S235352AbhIPTw3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:52:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbhIPToL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 15:44:11 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56357C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:42:50 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id w29so11266236wra.8
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:42:50 -0700 (PDT)
+        with ESMTP id S235423AbhIPTw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:52:27 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BFC1C061768
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:51:06 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id p80so2752614iod.10
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ENxojK9cTSWUZtQWEbG4jPSYPOV1kA/U7MgTrYBdGdk=;
-        b=B1+uOVKiSZ5I67MDy7X73bvI9pfWTbgPjScPykZWTCug1WynR7dRrCSEzRDEn8D2rR
-         a7yO5+riMdCQM9aLbIeL60q2pHr29EI/xqbtRvnQ4RtH2NzHeDLbxwjDv7mXl7sO7EWH
-         kZS/+cGmbuKZPPn8xQMEXnpgm/bgMit0kienx3a0EILmtDJm9HB46fYwBLxq4TKexAHa
-         Sd5RPrFFv9USlbOum4mH2/0YOf7YlF73Ftybennre+uS7/qv9fO+C6UqyjAFkcHF/1zB
-         qfyDpizhy/lGMCaYPw+h6YYCTF2VTIttSm/DscjtwcWLrWhiRnPmtvOZHrBn5QBoC5qH
-         1t+A==
+        bh=e1+GCHPy39VIROvsoDLKsaIBihcji9KXoDPbCBkVjS8=;
+        b=XIHIulj8LlQ8fYGpA2KCa58f8EiqLSpUyAksgdzn+Camgrj6ZCfYiGsIrZPAiap0pg
+         fecUvvokpljNC3AFrPiwPpe3trzqypwC3nn9bbZshmYIUbD8A9s7MPsAc8A7VkaksYUO
+         o/VouRUdLYi1wtk/ir6YebIOJYVLI8UrfudIcI4beWL+0QeSLEAZctlHwiPJ3X4ukylr
+         KV9l11pEp3RsBWJ6fqsYcl0XlGrG7WPIeuY5HdguIdy4YYSiTXJ2Myj/m+DN2+fDpczM
+         GGiOrFrUop6Am+6qgTrFDmnsBepplqPqvdO8fQQRHCMJAZqxjKPouO4K4bwMfH7ATjXd
+         /+Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=ENxojK9cTSWUZtQWEbG4jPSYPOV1kA/U7MgTrYBdGdk=;
-        b=E9kVj1v6vekjd0sWCOZMUqQTTl1EYjaYAAHNjnGJJH6sw1pXTlSS9EPiW+K3O36NYE
-         40o3He+D+TfITYpi0YIgTWFwctw/sDduadjEUnVcK7sMSbrveDMf5cj3umF8wHYzaR8J
-         2/e7R2iz2s/VfXjWp36XBMa4I+IsqL2IsYyI/G0s8wtLDoN14CqfQtc87vq+iBBSWaH2
-         e1850H0ei5jtnk8GBOWh/zvcKGXRWCRs4VAqlaeX7brNEGNJgP+lRN/K0PXwTfPD1d4T
-         ckBgmfY9hCCDsf1ntbQk8UQNJ3Ou810G96zi9U/sADF0qX65KuUk429capT4Agrjrh8+
-         cNCg==
-X-Gm-Message-State: AOAM531wuMVSo3Ts1K5/0djQwI63hVMfVf5v4yA3wQ99ETR+MaWhAYT3
-        cFxYjK6S0qRx2grSq0Oy+P2i+50RgMk=
-X-Google-Smtp-Source: ABdhPJyVLKGRzEu1/A9jPxPRbUqev3ybriUDXu8zr6na7N2sOwkOdlDyCGJoFswadT1nFxw16drYjQ==
-X-Received: by 2002:a5d:4f91:: with SMTP id d17mr8029454wru.285.1631821368968;
-        Thu, 16 Sep 2021 12:42:48 -0700 (PDT)
-Received: from szeder.dev (94-21-37-152.pool.digikabel.hu. [94.21.37.152])
-        by smtp.gmail.com with ESMTPSA id g9sm9056377wmg.21.2021.09.16.12.42.48
+        bh=e1+GCHPy39VIROvsoDLKsaIBihcji9KXoDPbCBkVjS8=;
+        b=hyufnoRYVnN5UbuTB0JMKjgQ5Vg6jieWK3T1pVf6lpkLB2PJMkZsGcDccjZfcmc3N5
+         Y+KykZOoUanl2WlBPsoh0gJSVBYveknfXlMrgxldhsCEsYSWc3eHfdPjjTHscLki4m+Y
+         XSBuPO42yvICfBldT0KDan3Jwrv7S1jXrizcY/PFCSJrSdvaP3+3l4j2nwhSu9m/Dken
+         3Ul71vvqxSfDL+q7qWKDmTEkekoNAK7m0K/a7i4pFk8604cXmBcKezXpuys2nGcPzOqd
+         2w42ZbxLdYyDv5NloJ9ithi0tQWcB25IQ83JOehh9b0zoGV08OdSKBGmyO/Y+BkuJWoo
+         zTeQ==
+X-Gm-Message-State: AOAM530/tFiU43/D2xubEBnrg95VMvXZq4Wh40i4+SVEyDhmmD/jLzjK
+        EVVaQjqOMoNfJ8fDfqphliQWKw==
+X-Google-Smtp-Source: ABdhPJwLNVeJjxps+nqhRJD61pDNyxBiA6rc4wkOr4gCMUhG1m90oyj2ptpYslBYiJUXlpZafIpQZg==
+X-Received: by 2002:a6b:ec0b:: with SMTP id c11mr5649067ioh.207.1631821865655;
+        Thu, 16 Sep 2021 12:51:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h1sm2056702iow.12.2021.09.16.12.51.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 12:42:48 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 21:42:43 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        Thu, 16 Sep 2021 12:51:05 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 15:51:04 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 13/25] progress.[ch]: move the "struct progress" to the
- header
-Message-ID: <20210916194243.GA2118053@szeder.dev>
-References: <YNKWsTsQgB2Ijxu7@nand.local>
- <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
- <patch-13.25-f2e84e3a3f2-20210623T155626Z-avarab@gmail.com>
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v6 02/22] fsck tests: add test for fsck-ing an unknown
+ type
+Message-ID: <YUOgKKRf9ZpMzNaS@nand.local>
+References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
+ <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+ <patch-v6-02.22-9072eef3be3-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-13.25-f2e84e3a3f2-20210623T155626Z-avarab@gmail.com>
+In-Reply-To: <patch-v6-02.22-9072eef3be3-20210907T104559Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 07:48:13PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Move the definition of the "struct progress" to the progress.h
-> header. Even though its contents are meant to be "private" this
-> pattern has resulted in forward declarations of it in various places,
-> as other functions have a need to pass it around.
-> 
-> Let's just define it in the header instead. 
-
-This is not a good excuse to move the definition of 'struct progress'
-to the header file.  Defining a struct in a C source file and
-declaring it in header files is C's well-established way to create
-an opaque data type and to hide implementation details, so there is
-nothing wrong with those forward declarations, and keeping 'struct
-progress' private to 'progress.c' is a good thing.
-
-Having said that, we can simply remove all those forward declarations
-without moving the definition of 'struct progress' to 'progress.h',
-and still successfully build git.  The reason is that in 'cache.h':
-
-  struct index_state {
-    [...]
-    struct progress *progress;
-    [...]
-  };
-
-does count as a forward declaration of 'struct progress', and
-'cache.h' is the first header included in just about all our C source
-files, rendering the other forward declaration unnecessary.
-
-
-> It's part of our own
-> internal code, so we're not at much risk of someone tweaking the
-> internal fields manually. While doing that rename the "TP_IDX_MAX"
-> macro to the more clearly namespaced "PROGRESS_THROUGHPUT_IDX_MAX".
-> 
+On Tue, Sep 07, 2021 at 12:57:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Fix a blindspot in the fsck tests by checking what we do when we
+> encounter an unknown "garbage" type produced with hash-object's
+> --literally option.
+>
+> This behavior needs to be improved, which'll be done in subsequent
+> patches, but for now let's test for the current behavior.
+>
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->  cache.h             |  1 -
->  csum-file.h         |  2 --
->  pack.h              |  1 -
->  parallel-checkout.h |  1 -
->  progress.c          | 29 +----------------------------
->  progress.h          | 28 +++++++++++++++++++++++++++-
->  reachable.h         |  1 -
->  7 files changed, 28 insertions(+), 35 deletions(-)
-> 
-> diff --git a/cache.h b/cache.h
-> index ba04ff8bd36..7e03a181f68 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -308,7 +308,6 @@ static inline unsigned int canon_mode(unsigned int mode)
->  
->  struct split_index;
->  struct untracked_cache;
-> -struct progress;
->  struct pattern_list;
->  
->  struct index_state {
-> diff --git a/csum-file.h b/csum-file.h
-> index 3044bd19ab6..3de0de653e8 100644
-> --- a/csum-file.h
-> +++ b/csum-file.h
-> @@ -3,8 +3,6 @@
->  
->  #include "hash.h"
->  
-> -struct progress;
-> -
->  /* A SHA1-protected file */
->  struct hashfile {
->  	int fd;
-> diff --git a/pack.h b/pack.h
-> index fa139545262..8df04f4937a 100644
-> --- a/pack.h
-> +++ b/pack.h
-> @@ -77,7 +77,6 @@ struct pack_idx_entry {
->  };
->  
->  
-> -struct progress;
->  /* Note, the data argument could be NULL if object type is blob */
->  typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned long, void*, int*);
->  
-> diff --git a/parallel-checkout.h b/parallel-checkout.h
-> index 80f539bcb77..193f76398d6 100644
-> --- a/parallel-checkout.h
-> +++ b/parallel-checkout.h
-> @@ -5,7 +5,6 @@
->  
->  struct cache_entry;
->  struct checkout;
-> -struct progress;
->  
->  /****************************************************************
->   * Users of parallel checkout
-> diff --git a/progress.c b/progress.c
-> index e1b50ef7882..aff9af9ee8b 100644
-> --- a/progress.c
-> +++ b/progress.c
-> @@ -17,33 +17,6 @@
->  #include "utf8.h"
->  #include "config.h"
->  
-> -#define TP_IDX_MAX      8
-> -
-> -struct throughput {
-> -	off_t curr_total;
-> -	off_t prev_total;
-> -	uint64_t prev_ns;
-> -	unsigned int avg_bytes;
-> -	unsigned int avg_misecs;
-> -	unsigned int last_bytes[TP_IDX_MAX];
-> -	unsigned int last_misecs[TP_IDX_MAX];
-> -	unsigned int idx;
-> -	struct strbuf display;
-> -};
-> -
-> -struct progress {
-> -	const char *title;
-> -	uint64_t last_value;
-> -	uint64_t total;
-> -	unsigned last_percent;
-> -	unsigned delay;
-> -	struct throughput *throughput;
-> -	uint64_t start_ns;
-> -	struct strbuf counters_sb;
-> -	int title_len;
-> -	int split;
-> -};
-> -
->  static volatile sig_atomic_t progress_update;
->  static struct progress *global_progress;
->  
-> @@ -194,7 +167,7 @@ void display_throughput(struct progress *progress, uint64_t total)
->  	tp->avg_misecs -= tp->last_misecs[tp->idx];
->  	tp->last_bytes[tp->idx] = count;
->  	tp->last_misecs[tp->idx] = misecs;
-> -	tp->idx = (tp->idx + 1) % TP_IDX_MAX;
-> +	tp->idx = (tp->idx + 1) % PROGRESS_THROUGHPUT_IDX_MAX;
->  
->  	throughput_string(&tp->display, total, rate);
->  	if (progress->last_value != -1 && progress_update)
-> diff --git a/progress.h b/progress.h
-> index f1913acf73f..4fb2b483d36 100644
-> --- a/progress.h
-> +++ b/progress.h
-> @@ -1,7 +1,33 @@
->  #ifndef PROGRESS_H
->  #define PROGRESS_H
-> +#include "strbuf.h"
->  
-> -struct progress;
-> +#define PROGRESS_THROUGHPUT_IDX_MAX      8
-> +
-> +struct throughput {
-> +	off_t curr_total;
-> +	off_t prev_total;
-> +	uint64_t prev_ns;
-> +	unsigned int avg_bytes;
-> +	unsigned int avg_misecs;
-> +	unsigned int last_bytes[PROGRESS_THROUGHPUT_IDX_MAX];
-> +	unsigned int last_misecs[PROGRESS_THROUGHPUT_IDX_MAX];
-> +	unsigned int idx;
-> +	struct strbuf display;
-> +};
-> +
-> +struct progress {
-> +	const char *title;
-> +	uint64_t last_value;
-> +	uint64_t total;
-> +	unsigned last_percent;
-> +	unsigned delay;
-> +	struct throughput *throughput;
-> +	uint64_t start_ns;
-> +	struct strbuf counters_sb;
-> +	int title_len;
-> +	int split;
-> +};
->  
->  #ifdef GIT_TEST_PROGRESS_ONLY
->  
-> diff --git a/reachable.h b/reachable.h
-> index 5df932ad8f5..7e1ddddbc63 100644
-> --- a/reachable.h
-> +++ b/reachable.h
-> @@ -1,7 +1,6 @@
->  #ifndef REACHEABLE_H
->  #define REACHEABLE_H
->  
-> -struct progress;
->  struct rev_info;
->  
->  int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
-> -- 
-> 2.32.0.599.g3967b4fa4ac
-> 
+>  t/t1450-fsck.sh | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index 7becab5ba1e..f10d6f7b7e8 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -863,4 +863,16 @@ test_expect_success 'detect corrupt index file in fsck' '
+>  	test_i18ngrep "bad index file" errors
+>  '
+>
+> +test_expect_success 'fsck hard errors on an invalid object type' '
+> +	git init --bare garbage-type &&
+
+I wondered whether it was really possible to not cover this, since I
+figured such a test may have just been hiding elsewhere. But we really
+do seem to be lacking coverage. So, adding this test is good.
+
+> +	empty_blob=$(git -C garbage-type hash-object --stdin -w -t blob </dev/null) &&
+> +	garbage_blob=$(git -C garbage-type hash-object --stdin -w -t garbage --literally </dev/null) &&
+
+I'm nitpicking, but I find the -C garbage-type pattern less than ideal
+for two reasons:
+
+  - It makes every line longer (since "-C garbage type" is wider than an
+    8-wide tab, even indenting this in a subshell would take up fewer
+    characters visually)
+
+  - It pollutes the current directory with things like "err.expect" and
+    "err.actual" that have nothing to do with the current directory (and
+    much more to do with the garbage-type repository within it).
+
+So I don't care, really, but it may be better to just put all of this in
+a subshell.
+
+Thanks,
+Taylor
