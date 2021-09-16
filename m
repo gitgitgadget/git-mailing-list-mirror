@@ -2,133 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADBB8C433FE
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE50C4332F
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 17:03:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C79261212
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:50:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4460B611C4
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 17:03:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240329AbhIPPwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 11:52:07 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53683 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240260AbhIPPv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 11:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631807400;
-        bh=NqVVwzeNWwEQk/AH9IAdroOp0Zewk+TH9OlgrOa/d6k=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=g0JiMKjsxv+7t975Uxx7FMptmex2oLUzPZJetuPKZr2DlSyfUznIeFvRfSDA9RvsA
-         GxiUhFM5epDdPunCK2QsF+Ll+02twmrfCHQW3mvH78w+ZomKoBFqEmFZFSqP7Qs54B
-         M9pB9YEbSMB9D/w0gTOx0jhN3MbIBtKEhP8M9XCw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from homer.fritz.box ([185.221.149.64]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5GE1-1ms9GP20rV-0119As; Thu, 16
- Sep 2021 17:50:00 +0200
-Message-ID: <b14d79e49e3abe3fdf00cf18bb8c992b4575c5cc.camel@gmx.de>
-Subject: Re: data loss when doing ls-remote and piped to command
-From:   Mike Galbraith <efault@gmx.de>
-To:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Tobias Ulmer <tu@emlix.com>, Junio C Hamano <gitster@pobox.com>,
-        linux-kernel@vger.kernel.org
-Date:   Thu, 16 Sep 2021 17:49:59 +0200
-In-Reply-To: <2677927.DK6gFqPMyL@devpool47>
-References: <6786526.72e2EbofS7@devpool47> <2279155.Qy0YqsFniq@devpool47>
-         <85a103f6-8b3c-2f21-cc0f-04f517c0c9a1@emlix.com>
-         <2677927.DK6gFqPMyL@devpool47>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.41.2 
-MIME-Version: 1.0
+        id S1344325AbhIPRFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 13:05:02 -0400
+Received: from mail-mw2nam10on2108.outbound.protection.outlook.com ([40.107.94.108]:22656
+        "EHLO NAM10-MW2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1347781AbhIPRAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 13:00:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YVokB15hUe0XztDiUdeu++1kP6svOgnjvVAKbggKVRJHOu+LjzMsQnUTw9A0yLXkaxpCui2R+J8OSkdAmzncow8l82uExXFvWUKCdFXpY6OUi8p0cq48dedpQUQivb7xusrqzIe91zPFTM2QWW9TWWGXh/JGAeNcACjYoYNmHXZd3fk5txjU6AX5+EEKcjcAzMmgju/5C2ehR50pXcN9Pot9LQRsQR+0RLuT+mwp+ceaSLbWme8kf4X6YatvZ82m6Rr1GIuxCwt9NxNPHAlOaY7Hc+SHAAiOCckluq+XNu3ZLDvyHvKomaIH+eXgAfwalAL7+31NOOEnQvK47dbZug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=WBBtW3NjtHIkCl9+ddK+2FNcC4M/C9QoF2fe4wAeoxk=;
+ b=ZaEz+bIWzF3Y9pgtVw1KZ0fnvIDgQNwBFMT0bOY5bL+FE39zpdKY2tB/KN9bsAMkjm5l0J/kjn5H29yzFaGQzuUEcWWaqb9/4/Th9gfnwMYRgTpXpfX8tCBfkorSNGHnLnY1MDdUMsbVg2C2qKkLY0FnAHCwvUG0xprObnranPRXQIZkqZ4fsE1YU9hHOTrqqydWEhGKhe84JBwRg3dTfI30LsaqAh9rwnd5MOpp4jwnZppYIEe9CFQ/N38LVk+fbio4yrHEBMFCQtQE8TBSqaKrT8l62eWjYPkLXP5tQeCi9xsbtF6ijTeb5CW5vw+MAKA/gzUZVoYd+t6kLUce1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=spideroak-inc.com; dmarc=pass action=none
+ header.from=spideroak-inc.com; dkim=pass header.d=spideroak-inc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=spideroak.onmicrosoft.com; s=selector2-spideroak-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WBBtW3NjtHIkCl9+ddK+2FNcC4M/C9QoF2fe4wAeoxk=;
+ b=GN7GbEoTzToqCRMZYISoYkuBxy7s24ePVvgqrEJ6gzw5DocGU2tD0QdSG993356g/kA4OFra2cib0Iyq5L/T/gLQi7mLdBxJIXBoUJeO93pf70AdnP0yonHS3112k+XgM+c93eAb/0dQcaBEkq8balmpMChvatZxpR4XLe4PCrY=
+Received: from SA1PR17MB4610.namprd17.prod.outlook.com (2603:10b6:806:195::13)
+ by SA1PR17MB4738.namprd17.prod.outlook.com (2603:10b6:806:199::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4523.14; Thu, 16 Sep
+ 2021 16:59:12 +0000
+Received: from SA1PR17MB4610.namprd17.prod.outlook.com
+ ([fe80::14bc:3528:b59e:1433]) by SA1PR17MB4610.namprd17.prod.outlook.com
+ ([fe80::14bc:3528:b59e:1433%8]) with mapi id 15.20.4523.016; Thu, 16 Sep 2021
+ 16:59:12 +0000
+From:   Geoffrey Knopf <gknopf@spideroak-inc.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Feature Request: Submodule Warning When Cloning Repos
+Thread-Topic: Feature Request: Submodule Warning When Cloning Repos
+Thread-Index: AQHXqxsv1imrcd7+P0OTcC7c31iEGQ==
+Date:   Thu, 16 Sep 2021 16:59:12 +0000
+Message-ID: <SA1PR17MB46101CC190E4CDDD00F2AD2C9BDC9@SA1PR17MB4610.namprd17.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+suggested_attachment_session_id: f6262b6f-157a-51bb-1c0e-5de3ec02f8c1
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=spideroak-inc.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e9d83b07-2cbb-4c20-ea8d-08d979334f2b
+x-ms-traffictypediagnostic: SA1PR17MB4738:
+x-microsoft-antispam-prvs: <SA1PR17MB47389F352239A36067F0C8BF9BDC9@SA1PR17MB4738.namprd17.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: FUN6VFrGbQwJ+36xrc4bRokhjPXMSM3Na/Q1TwnWN68/RWQnvrkTUCQq36FN3XgbTXq4k+i3CLNy1KjKa0wxNMrJgqjjjfx3VYVjIZyY6IUlXfS/qd3ufL1EaRQyNwMPR2ZCArL+hfxjarAQjhm5yspzcQmTRvHGeTnpAlY+dC3/OzxXuVrNA0Rd0UQDDKzm7h+s+/BF+OANFuoEWBVsDgBh6Z1aYqgXV6RVRV2jAuPQIJxNo6IrwmKp6a4Tbi/ayNMizIhF3iiuG9NVMvMmu9dAM/dyhasZgofQWfKTqVNjLq7RqKM7moGFU1MWUwMzTulNV7z8k6xZze1sMxOonfZe9xtoL/Z3+cjXkPj5DSXm6SolKiuwSWQrIfDCpzpNnP87wGJuFPUZx2hsjNKNkU7jG6xo1VtW2LqOoETtUBX8tAybvuGKRlxXkOShC14iXWpoG9sK+Du19ZxkExE07InEV57YztriHAaFX8wuVuupOvfMQP4NtA8kV0msj/omDFhgCt8WJFs/80GaDxyHcc9pqoEMGt48AM0RsPAwgJscHgJCABLM+8aTbBVR/uoXj6Ih1HPN3XWPWWYwBVNCAvjp/i8jjX+4mqdtvrLUdj0mdxm1T0mDByxg3YN7HdHcKaENd3kWmpJDlNR3YuDYExH038m3UAUuHGvI2rR3Agqt+klm6nPT4ulnr+sFK/cDaabuIL0lU8BlQyTRfHXKxg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR17MB4610.namprd17.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(136003)(396003)(39830400003)(366004)(376002)(38070700005)(66946007)(4744005)(64756008)(66556008)(66476007)(33656002)(66446008)(6916009)(9686003)(76116006)(83380400001)(26005)(38100700002)(122000001)(2906002)(186003)(6506007)(55016002)(7696005)(316002)(52536014)(478600001)(8936002)(86362001)(71200400001)(8676002)(5660300002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ZOltirrBfI0FZi0gMGsgGXccm8bEAyXW3loysZnt1aEojKi2JXa3HbGicw?=
+ =?iso-8859-1?Q?Xxv6vXhW52xEYYDSBzIvizTUOw2dIJTlNk0o2eZXFhYKSI3klsIrNwgFdT?=
+ =?iso-8859-1?Q?K6mV/oHbEECGtibPuHzCzj+OHv+Qh9tAfeeGWPGVMZYa/0JM8YGs598UDg?=
+ =?iso-8859-1?Q?WvxyrRhd0k7dIKmhXkpMCTFLPxOlIEMcnp23BI959lDPIQ9ZI3RTtkxLGg?=
+ =?iso-8859-1?Q?HEYrPRf5sfbbKxJN3SXvxhkRCGLNEUmCzC3HR2vIIxHJyUypu4rKi5vDBJ?=
+ =?iso-8859-1?Q?Qx6ktBMRtksrmTG/UfNPyDdOv/g6nzkM33WFe/DlYNHMtEGodVbkymSHa3?=
+ =?iso-8859-1?Q?i6mgbQCP5SHlDh7MvKPYB4EcadR+fxBPshQJBCnDMIkhbgj0epQ+rSzyJy?=
+ =?iso-8859-1?Q?Qp/mUBb+3yggYypO1HE66tJDnBzBs6nzszlKyNAAXL02q1+EAzaFKoc7og?=
+ =?iso-8859-1?Q?oMKcoflqfjGNyDBmcZS5XjoHOYqiaMF2nY+i2x9mZbL+0oqdz2tSMiAnD6?=
+ =?iso-8859-1?Q?5pTrdgxvURLDUeyRnZW/GtMWzXmYP5S1BJwAJRobeFlRx5X8jHDfzMazn7?=
+ =?iso-8859-1?Q?0jXvTloi+L5ENQmYeB0pYadB1OD5b2E0MpgUcH9reKgVCuVpjglKNFkVS8?=
+ =?iso-8859-1?Q?IsPEArSOXOdxP4mVgsb0Okl5jeKsfLnWR26d4v6ZElXHumO0yrO33gsO0z?=
+ =?iso-8859-1?Q?8EKvVWmFsnQresgitOOasvdleOdzseJw2lvjWd8UPkgagiGU1yWmufvDg2?=
+ =?iso-8859-1?Q?wnOgW2Xpoj5uEpA+Y9dri1Dw42cCeDMgiEOYrztciUR4z9EQZaIX5xNvdL?=
+ =?iso-8859-1?Q?VlBGMQk4yl3gHhIcfkH6/XIyx/0ffMRCsyUZzRpHo1KGykUeq8sHykQG9Z?=
+ =?iso-8859-1?Q?QALon87W5cD+wLW3yXQO/b8xBXs+83PHIqjJ40SFnLmNyZbDziw0bEjktG?=
+ =?iso-8859-1?Q?w69r321jkgptGN9KAfiRnou2NtoOHkOWu1NUOJmOq0X1kuYXoGCqgGjLCP?=
+ =?iso-8859-1?Q?UL/CCTQkOM8L8XMthor8E97Tqlws/c/ux0H28NiiRfXzC0PAOXpMOloDt9?=
+ =?iso-8859-1?Q?DJ4f0sW0fpqKfBCCGW3+5yTCrpciYn2Cybt2UNjDXVbL0/9yt/41QXW+ZN?=
+ =?iso-8859-1?Q?ive5oOKu9DDiLU/QB+E9YZPkTpJ2tG9zeuZzAnkEAOSKfzDH7jpExIb24m?=
+ =?iso-8859-1?Q?M+TzhbPuwwkM8QDyYTMTmTJkOvOehuxFnLFCmbSaK770BGk9kdJ+gxwMzC?=
+ =?iso-8859-1?Q?48RgrASy+O4P57E5lzibxM+FgnOnLCu0XPTlMZfAmCVT0M5TwlpVen1bIk?=
+ =?iso-8859-1?Q?fth62TTlRuaSyNcK9TdcWp4IY81OoZdQn3d+y7a6xiolnvkkPew/Q5Ea12?=
+ =?iso-8859-1?Q?HNcdLr3rf7?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zjb95XSYmLriFpx4k9d48zBomGRzo4W1Dxm6ED4bwUcICm/rtFS
- czgPSnlJ4tsxdnUog5ZG9/aWPVpAuGYE/LH/jhWI9jcN5zvEASQ8vqa0pspfuM7tw8rm3Cr
- Uzt0q1r6QnDg1azxS3A7v8T6uaMXk0zpS3V+sXs/HVlWe5oJNoX8xByhCmWbszEBPSLcvw5
- K+ZPX4WLA/Cu4ZWUSdxvA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5l5HbZwJxpU=:GKFoQbq7FgUVIanhTs1VGP
- AWai0zr4lJMJp+xS1zat4NAvoj4vTf3Jk8zOJb6n2uNyp9H76phPuOvE7MiUfsNJZ+0nwlZiI
- cBN/qy23GKuKV+5joQ9zo5qlPYqEpGnu4/yGnwjivRq1ZvdAd/Vz8yV4OP0nkba9A3MFtksnS
- roVtbfV2OwQXdH7NVHNIPhW3bc1TPhM6fzCYchcOPD/r0pJbY+0trpa4nDohYEOcqzheXuuXT
- C+inJPzh1M2uu9wIjAVB38oyLvhH0SFSmwue2XaVR4XVMeMvvO/VC70XpoiJ/fJCu9j9g8njU
- oUzS+ZWjtXqvxdna/ZScXJIUKQH1xUcbZN7/8uQp9ChTj8uq+uJoUhnxfs4QC+JpiR+34CUkB
- KGZPL34GiRrLTkj8Q6cb0eT11UgIAwVxES0r9tHhDJqFKLAGln536YjOBtcy/QD4ALGFx6DU6
- iw6AXaEOpEPrezy7eJqwsjR6oH6obpU+G94ZO6crmtDwb34YHRweNbnaEPPEPR+ZzVCDLzLLe
- jBryg9eYCFzVeyow1uRJ4MxvoNcbGLP8Y/0Xlby6Y1bMOk93HR7d1j23UTNjMCNoOewnA5z7d
- HLClfvrTJZVqeOyI7WL/TJtZbuXo42DMcuKEYu24235PTpOHbwx/ikJIpWFh6XXA45wkmjwip
- raES7ygfsqGSWsq8vKbRiMRd5FGCMjmoEaeq9tRvYfVxo3J5CKODXEZVbQFd2hR91LPQM738u
- 3Rwa+eIXn/u2FRId3m94SJ6p+94M2kMP6Wuw/GmzNl3ulOBR7mk75VSWpa93oLNaMvRlhgucs
- xuoIhp4DYy64vxLtytl1aexUI5V4SNCM2uiQj6LGbJ1864JkNyRixIffkCU1bIdlN1JZZj8h3
- 5W0aDgcuktu299WX4GI/a6+hqNhHwkLHhn7SY9RuhGKbhALpQr+2XFPkcT65jliAFOkoxvKqo
- IeFT9Bo3sD3YJPQu7/KzEP9rjNRH73yv3xan6HDDyPlHwFh6Bkp/JiOx+I3A4AJ1etgzDta6z
- US6ji5yT7i9Zc9CsIk8s661qjfm8xMBQADNU+8tXSbjV/d5NinRwHUd2i5V7v9+Sai9Q4Hulf
- T+29SxldoE+hwk=
+MIME-Version: 1.0
+X-OriginatorOrg: spideroak-inc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR17MB4610.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9d83b07-2cbb-4c20-ea8d-08d979334f2b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2021 16:59:12.6006
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f8920c0f-48a7-4213-900c-6b853968daef
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: QcfRBpakUYgVuUowV/HVYAOfRYjiQAtNdsxVYg9jrvuTAciiW1ck4d6s9MBpF8m6q4zBw/3eHQdSTc3zvHTJKCeTAKhOQlGnNckrt24UWGI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR17MB4738
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2021-09-16 at 14:17 +0200, Rolf Eike Beer wrote:
-> Am Donnerstag, 16. September 2021, 12:12:48 CEST schrieb Tobias Ulmer:
-> > On 16/09/2021 08:38, Rolf Eike Beer wrote:
-> > ...
-> >
-> > > The redirection seems to be an important part of it. I now did:
-> > >
-> > > git ... 2>&1 | sha256sum
-> >
-> > I've tried to reproduce this since yesterday, but couldn't until now:
-> >
-> > 2>&1 made all the difference, took less than a minute.
-> >
-> > Different repo, different machine, but also running Tumbleweed
-> > 5.14.1-1-default, git 2.33.0
-> >
-> > while [ "`git --git-dir=3D$PWD/in/linux/.git ls-remote origin 2>&1 | t=
-ee
-> > failed.out | sha1sum`" =3D "7fa299e589bacdc908395730beff542b0fc684eb=
-=C2=A0 -"
-> > ]; do echo -n .; done
-> > ..........
-> >
-> > failed.out has multiple lines like this:
-> >
-> > --8<--
-> > 4e77f7f1261f65cff06918bc5e66d02a418fc842=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 refs/tags/v3.10.18^{}
-> > f7b8df0cc81cf82a4ac6834225bddbe46a340455a4a5d52f29d08d923ce8d232b0b497=
-da674d
-> > d2c refs/tags/v3.18
-> > b2776bf7149bddd1f4161f14f79520f17fc1d71d=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 refs/tags/v3.18^{}
-> > --8<--
-> >
-> >
-> > Running the same on Archlinux (5.13.13-arch1-1, 2.33.0) doesn't show t=
-he
-> > problem.
-> > This may well turn out not to be git, but a kernel issue.
->
-> Linus,
->
-> since you have been hacking around in pipe.c recently, I fear this isn't
-> entirely impossible. Have you any idea?
->
-> For easier reference, the complete thread is at:
->
-> https://public-inbox.org/git/85a103f6-8b3c-2f21-cc0f-04f517c0c9a1@emlix.=
-com/T/
->
-
-I use git-daemon (2.33) and reference clones for my local pile of
-kernel trees (74), so out of curiosity, modified the above ls-remote
-loop to fit one of them, and tried to reproduce with both master.today
-(ff1ffd71) and SUSE's stable branch (where Tumbleweed gets source,
-currently at 5.14.4).  Both kernels failed to reproduce given a few
-minutes each (zzzz) to do so.  I'm running Leap-15.3 vs Tumbleweed, but
-that shouldn't matter.
-
-	-Mike
+Problem:=0A=
+Easy to forget to clone submodules.=0A=
+=0A=
+Existing Solutions:=0A=
+Always clone repos that have submodules with the "--recurse-submodules" opt=
+ion.=0A=
+Manually look inside the git ".submodules" file to see if there are any sub=
+modules and initialize and update them.=0A=
+=0A=
+Request:=0A=
+When performing a clone, warn the user if there are any submodules that hav=
+e not been cloned.=0A=
+Recommend that the user try the "--recurse-submodules" option next time or =
+initialize and update the submodules.=
