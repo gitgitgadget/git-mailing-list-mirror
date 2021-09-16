@@ -2,95 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBF0C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78461C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:05:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A9E061074
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:58:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A06F60F6E
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240086AbhIPV72 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 17:59:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38108 "EHLO
+        id S240714AbhIPWHC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 18:07:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234142AbhIPV71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 17:59:27 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1FFC061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:58:06 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id v16so8178416ilg.3
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:58:06 -0700 (PDT)
+        with ESMTP id S240687AbhIPWHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 18:07:01 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 899F6C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:05:40 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id b5-20020a6541c5000000b002661347cfbcso6448085pgq.1
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=inNnqeiO2t8ZOqolY7TXx25F7OApLvsJ+II0Kv1FbxE=;
-        b=OT3GW9lsB7onVzTiKzVjWla9dYa+XGCSROE60DLDMq867C6d71M3NN+A72nc0hkyY7
-         cHG0PXL6YuNUqz3IzvNwutX/xx34q/eYtafEHCpn/HID/kKqtHGiuxCQmI+yNaxaeVFJ
-         Krbt9pltIy4JLQIchx2sW60l3EyDyhugaSq8lcjDLXdINz2GQtfANcz2JwEATnzYvkwC
-         8v9Oq3VEMxialVwL96so2EpfMMMPkYM/55xsvCbXDlNcOfqzYHDd/jzdtU+sYj+kohxM
-         3gFtyN5XLKIbJNHdU9y+KBU1uJB/J5+HZ38uZDLVFUh5D0WpL+c090pWvuoVIi6MgvaW
-         D8Bg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Z5ZMaG5qruBAvaMqmUQfJbk2EHWPLlsAbCdbw9P6BPk=;
+        b=eI1FaWzfjHGtxQze7Ze6Lo0HVm9OZbu36ElA3eK/1j1K0bmAsuw2njwl+r1O5zaaU2
+         ca5UlsnFhBhhAAj+hibJl+71VsK/t3zUzIIb8ZF9YDg3Mo1EYAWjRW8garkCZJTTRY7z
+         5fWIpGw2+SYxX1nwnm0ZI7UO4J+Cnz2IZZ1gam3PZFUGb+uGccQ2q0p1juNN2cYmsjCy
+         Y5Y2BoQEv3//GjM/CGLh5UyTuqABsKf8Iko3SBVf5oB1UgX5X8VPyy5Fb0OI0CNAHxWv
+         xB3/mPP0CWw7FOJq+Etau0qDx3RaYY41Qywx/H/OYqNj08noiWrK20nvoJdzLDIRqYZT
+         xnsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=inNnqeiO2t8ZOqolY7TXx25F7OApLvsJ+II0Kv1FbxE=;
-        b=x8wI278264SYzHlw6t15ig7t71U5ijPWr1ihe3dDlpLTVTCJJUJXSrvFu8goStYCtA
-         e6+VnIiocyLYKWFDU+Cf28Ez7x/rUjAyAnxT0ORLV4Op6zdcguoabBLdkPR+ByOWCZys
-         5pX24zbJdbdhUYCCbYqzg1xSLE4Z53VTRBZrMIzFIamj3+yS5BjRLDwp1IAcgLt2ltQ6
-         YFBgWBM/HY7fL4ZF6NYcwae+HqOJAueFgV1D28lJNqop5dTunU5oLLLFxFsOEmrJfvd/
-         aUNJiSF2+RJPYhki8+mNcJ8AnmcuLv2zTOz+wuBlPvaoWbknvaOVi2dPlsLNOs636gxg
-         LW9A==
-X-Gm-Message-State: AOAM532u59AYSrtiucBj5hU7HH6cybtDxBExh8TxD6o95gqYiSwT4xaK
-        fi8ZpNC9gPHDSoYnAqWmGlDRWg==
-X-Google-Smtp-Source: ABdhPJw8xaE4sDnI6PK41JApQdJEm32K5pRLETWYVXLkkfr3L2+oTYq6+YVV5LptWRc6gDrBh6eI3g==
-X-Received: by 2002:a05:6e02:1906:: with SMTP id w6mr5667611ilu.295.1631829486362;
-        Thu, 16 Sep 2021 14:58:06 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x5sm2386911ilo.11.2021.09.16.14.58.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 14:58:06 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 17:58:05 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 13/22] object-file.c: split up ternary in
- parse_loose_header()
-Message-ID: <YUO97RoOzY639hYW@nand.local>
-References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
- <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
- <patch-v6-13.22-90489d9e6ec-20210907T104559Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v6-13.22-90489d9e6ec-20210907T104559Z-avarab@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Z5ZMaG5qruBAvaMqmUQfJbk2EHWPLlsAbCdbw9P6BPk=;
+        b=KT+BuF2UQKRgkJ4wipOL/4p/Bx/ieRc435DGWKbm0JB3CsVuS124sF61VNtFemqqHa
+         EqqCP4z4T9vXCFwm9jwEwI1lv7CRhfN3YOh+OWs/jwgcR16h8yDY4VEwL39mZPTLOS+3
+         fn+lBj74fLL5juafz1snT3fePgrb7epGP8d2qpoGIj8fnu4O00IM8Sdct5zJFK9lqEg/
+         aKF8WVp6P4iEWeDFVRmO4aG8oNYNkLSnLEVvsfGN9y+FRXwYwd2dDID2wDASm5iSBQ0Z
+         /19DvkYaEDFritV1iL3TVzEzkDWdroo97Z9I+qZ+P1glb1mZv22CDsGyw4fmB7xAVFda
+         PU5w==
+X-Gm-Message-State: AOAM5333Ozz+Uq3MIlQp8FqA5sD8aeL1RuWpCuzYAbez92xuVI3ySP8u
+        miUETVYQuW5J7iP8eSko50qB1zT6gwqTEZr5b6Kd
+X-Google-Smtp-Source: ABdhPJwZnf6HLdni0RQtg3xyid+XmNiTKhjySePjQ7GRU86NN7AYFEUjMFn92XuoGVjmqXwZCsNaZO6hOelQR1/eDeqk
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:100b:: with SMTP id
+ gm11mr233464pjb.0.1631829939749; Thu, 16 Sep 2021 15:05:39 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 15:05:36 -0700
+In-Reply-To: <xmqqilz0rxpm.fsf@gitster.g>
+Message-Id: <20210916220536.1107783-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqilz0rxpm.fsf@gitster.g>
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, hanwen@google.com, chooglen@google.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 12:58:08PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> This minor formatting change serves to make a subsequent patch easier
-> to read.
+> > Yes, the packed backend doesn't need to be a ref backend.
+> 
+> Sorry, I do not follow.  Do you mean we cannot have a version of Git
+> that offers say a read-only access to the repository without any
+> loose refs, with the default ref backend being the packed one?
+> 
+> Or do you mean that we can ignore such a hypothetical use case and
+> could reimplement the files backend that can also understand the
+> $GIT_DIR/packed-refs file directly without "deferring to another ref
+> backend which is 'packed'"?
 
-Hmm. I'm not sure if I agree.
-
-As far as I can tell from reading the subsequent patch, this is designed
-to make it easier to add a comment above "return type" that pertains
-just to the case when !*hdr.
-
-I think it would have been fine to go from the ternary to this style
-with the comment in a single patch. But I also think it would have been
-fine to add the comment above the ternary and instead start it off by
-saying "when !*hdr, ...".
-
-Thanks,
-Taylor
+I meant the latter - more specifically, the files backend could defer to
+functions that are not necessarily inside a struct ref_storage_be.
