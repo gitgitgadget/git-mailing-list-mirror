@@ -2,116 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C271C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29E04C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:56:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 573EE60F4A
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:52:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D91C60F25
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237745AbhIPVxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 17:53:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55746 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234142AbhIPVxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 17:53:44 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE7ECF05A0;
-        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+kRPmPcO00lmceGSIpG68EbMQoUqD2xnxd9Hli
-        LqJtM=; b=kyzRbLI020dvfndbKypb+Y44c6j6I2PD0x6Gu4s49byU2lez7sTFGy
-        T6s2liiEye8MDdnx8wTL3i8sOCZgrbWVpwF7CdLVmfawJQBmyiOily+34Ke9sJTr
-        UDqK16UHODW2QeXo+EN9yN5b2kJAZI9liQ0kDeC1j1o2FV0DyvTaQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B57AAF059F;
-        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38DB9F059D;
-        Thu, 16 Sep 2021 17:52:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wesley Schwengle <wesley@schwengle.net>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: Possible git bug
-References: <c7949156-a7e5-085f-4779-82d0538a4d72@schwengle.net>
-        <20210916124709.2824551-1-wesley@schwengle.net>
-        <xmqqzgsctu10.fsf@gitster.g>
-        <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net>
-Date:   Thu, 16 Sep 2021 14:52:21 -0700
-In-Reply-To: <3b4270f9-6139-7007-301b-8a084f4336cf@schwengle.net> (Wesley
-        Schwengle's message of "Thu, 16 Sep 2021 15:39:04 -0400")
-Message-ID: <xmqqmtocrxwq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239927AbhIPV6B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 17:58:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49508 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234142AbhIPV6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 17:58:00 -0400
+Received: (qmail 8489 invoked by uid 109); 16 Sep 2021 21:56:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Sep 2021 21:56:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9477 invoked by uid 111); 16 Sep 2021 21:56:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Sep 2021 17:56:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Sep 2021 17:56:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v6 08/22] object-file.c: don't set "typep" when returning
+ non-zero
+Message-ID: <YUO9lrYloKGXILSA@coredump.intra.peff.net>
+References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
+ <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+ <patch-v6-08.22-38e4266772d-20210907T104559Z-avarab@gmail.com>
+ <YUO3OjbnpqwEWeDv@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5F15783A-1738-11EC-917D-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YUO3OjbnpqwEWeDv@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wesley Schwengle <wesley@schwengle.net> writes:
+On Thu, Sep 16, 2021 at 05:29:30PM -0400, Taylor Blau wrote:
 
-> I feel like it is a bad default, it caught me by surprise.
+> On Tue, Sep 07, 2021 at 12:58:03PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > When the loose_object_info() function returns an error stop faking up
+> > the "oi->typep" to OBJ_BAD. Let the return value of the function
+> > itself suffice. This code cleanup simplifies subsequent changes.
+> 
+> The obvious danger (which you mention) is that somebody is relying on
+> what typep points to, and is reading it even if we returned non-zero
+> from whatever called this function.
+> 
+> Hopefully nobody is, but this change makes me a little uncomfortable
+> nonetheless, since there are so many potential callers (even though this
+> function has only one caller, it doesn't take long before the number of
+> indirect callers explodes).
+> 
+> So it would be nice if we could do without it, but you claim that it
+> simplifies changes that happen later on. So let's continue to see if we
+> really do need it...
 
-I tend to agree.  It seems that d44e7126 (pull: support rebased
-upstream + fetch + pull --rebase, 2009-07-19) started it, probably
-by mistake, which was partially corrected by ad8261d2 (rebase: use
-reflog to find common base with upstream, 2013-12-09).
+I'm actually reasonable comfortable with this patch. If we return an
+error from the *_object_info() functions, then I think all bets are off
+on what is in the resulting object_info struct. E.g., we'd already leave
+sizep uninitialized in such a case.
 
-The thread that contains
+It feels like oi->typep may be a little bit special because we conflate
+"error" and "type" in the return from oid_object_info(). But
+oid_object_info_extended() does not do that, and the innards of
+oid_object_info() do the right thing.
 
-  https://lore.kernel.org/git/xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com/
+Of course we _have_ been setting typep in this way for a while, so it's
+worth making sure nobody is depending on. Notably packed_object_info()
+does not behave in this way; if it hits an error, typep may be left
+unset. So any oid_object_info_extended() callers depending on this were
+already potentially buggy. I'd be OK with a quick sweep of the hits of
+"git grep typep" here.
 
-seems to have resulted in the design of the current behaviour, where 
-the discussion refers to an even older discussion thread:
+I just did that, and all the sites look pretty reasonable (they call
+oid_object_info_extended() and bail as soon as they see that it fails).
 
-https://lore.kernel.org/git/d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk/
-
-	Side note: I am kind-of surprised that I contributed the
-	core computation of the fork-point logic, even though I
-	wasn't buying it is a good feature back then.
-
-In any case, updating the documentation to refer to the configuraion
-variable that tweaks the default for --fork-point would be a good
-near-term thing to do, but in the longer term, I think it may make
-sense to fix this "surprise" and transition the default over time,
-i.e.
-
- (1) when "git rebase" is run without --[no-]fork-point from the
-     command line, and without rebase.forkpoint configuration
-     variable in effect, give a warning that says we'll change the
-     default to 'false' and the users who want to can use the
-     configuration variable to force it to 'true'.  Update the
-     documentation to say the special casing of "If <upstream> is
-     not specified, --fork-point option is assumed" will be changed
-     in the future.
-
-     Ship such a version of Git and wait for several development
-     cycles.
-
-
- (2) flip the default and remove the warning.  Update the
-     documentation.
-
-> As for the patch. The reason why --fork-point is default I do not
-> know, but how to disable it isn't documented and I think it should. It
-> is hidden in the source code and the release notes of 2.31.0. It
-> should be more visible. Which is the reason I submitted the patch.
-
-Certainly.
-
-"git config --help" is the only end-user facing place the reference
-from the configuration variable to the command line option is found.
-We should also have a backreference from the command line option to
-the configuration variable.
-
-
+-Peff
