@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B0F5C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2916C433EF
 	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34F2861164
+	by mail.kernel.org (Postfix) with ESMTP id B853E61164
 	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 19:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235801AbhIPTzy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 15:55:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37860 "EHLO
+        id S235853AbhIPTz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:55:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235725AbhIPTzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 15:55:49 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 805D4C061756
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:28 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id v20-20020a1cf714000000b002e71f4d2026so6348494wmh.1
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:28 -0700 (PDT)
+        with ESMTP id S235746AbhIPTzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:55:50 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6F4C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:29 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id y132so5644487wmc.1
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 12:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OPR/cD4g5iSikjECMnICO/QPaQt/LlN2JVqikY/G/54=;
-        b=U16H2MZddLyPc7ccgKxjeIE14uCSLCPKqcyqDOVyixzWXo0j+RfhDbgJGqfupRAyuf
-         /B6k0QkdOSDCR48DNK+kUTj1SN/IBSyczGIb+NcZQiBMaG8NZ+xICYtU29ABVj0kGkoW
-         voAZKmNZk1+P6fsL04Au86LgGjL5VUNhFW2HlUb/1QaUBIzJthhRoVGnVAb7rmEm1vNn
-         vVvhEwKfGs6i27H6XyjWM09UfjGUd4UAsiiWGDIaNJanHedfsAwaPsU+df5amgDBqFxO
-         FFI+CQPa52ResVsS9gxs8Nqh3LJqsnxVDPpzXJevfPgR6RkuzSRkPK4tovTj46oDbkvp
-         ZyHw==
+        bh=rgNztFjSIfkFrumoWBCPgDcO19sT/SrE7dYPYozTBh8=;
+        b=glTGV7L1uaAZ/YR1aGyrGERKPuJKZeKk1solSkr4fEiywE3BQYYczoNFd0SyVi0M0K
+         xmRA3uS3Jft35i3pAPmhT0iwAz3Ci26vxepET3r3GH2QEXBS33To2SxTHUbgfycljDWO
+         w+SaDzx0XY8EAarhgG2xWcM8gmYOA/+5uhARUw9RkkI8EE53uMDpFu2l81VnfuNs9It/
+         qge/tmZLIG54BWWOYMHiyfgdWaB1TnGgq9qTTv9A61lhjH95ob70d0WS27X5WaJCpwb8
+         UcvcF1t939yormSh9WnqIefvVCl9KVIfwAThSmyoAwMHgVJ6pkcD8vnUYuqfzWVzQvZq
+         nTyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OPR/cD4g5iSikjECMnICO/QPaQt/LlN2JVqikY/G/54=;
-        b=vlnc4o9r20ay8ilyqN63VGBeTPJTMEV8NdFecIz/X1Wk23WdnI53iMTLC3E1mQKO+U
-         ZkLmx5RJHFKse+0lupGnxykuk1sYjhHAS0tqfgtzcRJmbDImxLNQgmV2jgNEETiR5Y0p
-         GBP3Rxp9ohqXnjU80Mo0eA7HgD2usQ/Akshx9V+m2BYtvVbDQj3ySYV4+Q0k+LCVkA5V
-         k1J5H3AtvZEYDTVTZy17a+cy/4VyC87RVNQ0u9YEdMEd0fTxNM7ExgIqnz1eGk20d5Fo
-         Mt3/jnaWHUapwGsPnJKyIToTnSRNtJEIPOHMcztUxWTAhewQ6oSPdrMoSfYzFAL1m2PX
-         6VhA==
-X-Gm-Message-State: AOAM531s+Fa67ZRAeNW3omzJZiKfcWlfDGxt1kCdf0jemfl9GyE+ygXT
-        iIF4HgpEHBgfTu3nDyH++o2/TNZSIRQ=
-X-Google-Smtp-Source: ABdhPJxL9F+OWMbAdkGPGkNOzd9MksGs6DffI1G2gu4GEmEMTi5SpLJDOCcstCbaLrHgG8jDz4ljkQ==
-X-Received: by 2002:a05:600c:d3:: with SMTP id u19mr11724220wmm.142.1631822067137;
+        bh=rgNztFjSIfkFrumoWBCPgDcO19sT/SrE7dYPYozTBh8=;
+        b=xUT647kGDEFjxe2hAa+Lqzfnzur4u+BhqQ5sTnJa0WSilsbi11BB40hnSr7KPp+6s/
+         LiTC7XqpyQ27JzfoYNtt6K1yK8xPfl5jVYxdg9sDuLfXHzvlQ/qf5Qi3KR/HXsia2z3D
+         wq2Tw7sivDGPEJYkH4tPImXWJQiTl3WkZJx5lwsMaWinF7hEFCV5qw4NZJLLwcMONyEn
+         VcU62jOXOf6WiT+Cd4D7r2wOdiDzVsESq3lAyY+Vh8Mt7aa3GowI4776Mm5OArrr1MAR
+         4WduUd/O9RL5WCvJeE7EXx203izB022HwBIhezxyDJgExn3kfB8cgn21IERMqO36BF8l
+         vbEw==
+X-Gm-Message-State: AOAM532Ya2hKie4rY+IE0jED+mAntkfaqBHasQbJQxNrmE1s4nJKhOWf
+        y3VYXHO5PLv296MClWoKf8CVdyRtgfE=
+X-Google-Smtp-Source: ABdhPJwTmw3QnpJ+OZZ9hlNXH+j3hCZTOq/5cQ/oA/n9ZgcqZoBypRzHpfkdz55TBWWm2yAmKiZiaQ==
+X-Received: by 2002:a7b:cb97:: with SMTP id m23mr5698648wmi.70.1631822067747;
         Thu, 16 Sep 2021 12:54:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d70sm4222948wmd.3.2021.09.16.12.54.26
+        by smtp.gmail.com with ESMTPSA id y6sm4247811wrp.46.2021.09.16.12.54.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 12:54:26 -0700 (PDT)
-Message-Id: <f2e5da9e5c622d9142baafee47c3e1cdffbef666.1631822063.git.gitgitgadget@gmail.com>
+        Thu, 16 Sep 2021 12:54:27 -0700 (PDT)
+Message-Id: <fb5251e47ae6c8132d4a5a3c01bdfc33525f625d.1631822063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.git.1631822063.gitgitgadget@gmail.com>
 References: <pull.1041.git.1631822063.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Sep 2021 19:54:22 +0000
-Subject: [PATCH 4/5] fsmonitor: use IPC to query the builtin FSMonitor daemon
+Date:   Thu, 16 Sep 2021 19:54:23 +0000
+Subject: [PATCH 5/5] fsmonitor: update fsmonitor config documentation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,73 +75,144 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Use simple IPC to directly communicate with the new builtin file
-system monitor daemon when `core.useBuiltinFSMonitor` is set.
+Update references to `core.fsmonitor` and `core.fsmonitorHookVersion` and
+pointers to `Watchman` to mention the new `core.useBuiltinFSMonitor`
+value.
 
-The `core.fsmonitor` setting has already been defined as a HOOK
-pathname.  Historically, this has been set to a HOOK script that will
-talk with Watchman.  For compatibility reasons, we do not want to
-overload that definition (and cause problems if users have multiple
-versions of Git installed).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ Documentation/config/core.txt      | 56 ++++++++++++++++++++++--------
+ Documentation/git-update-index.txt | 27 +++++++-------
+ Documentation/githooks.txt         |  3 +-
+ 3 files changed, 59 insertions(+), 27 deletions(-)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 63174630c0e..695fb0ce4e7 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -254,8 +254,37 @@ void refresh_fsmonitor(struct index_state *istate)
- 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c04f62a54a1..4f6e519bc02 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -62,22 +62,50 @@ core.protectNTFS::
+ 	Defaults to `true` on Windows, and `false` elsewhere.
  
- 	if (fsm_mode == FSMONITOR_MODE_IPC) {
--		/* TODO */
--		return;
-+		query_success = !fsmonitor_ipc__send_query(
-+			istate->fsmonitor_last_update ?
-+			istate->fsmonitor_last_update : "builtin:fake",
-+			&query_result);
-+		if (query_success) {
-+			/*
-+			 * The response contains a series of nul terminated
-+			 * strings.  The first is the new token.
-+			 *
-+			 * Use `char *buf` as an interlude to trick the CI
-+			 * static analysis to let us use `strbuf_addstr()`
-+			 * here (and only copy the token) rather than
-+			 * `strbuf_addbuf()`.
-+			 */
-+			buf = query_result.buf;
-+			strbuf_addstr(&last_update_token, buf);
-+			bol = last_update_token.len + 1;
-+		} else {
-+			/*
-+			 * The builtin daemon is not available on this
-+			 * platform -OR- we failed to get a response.
-+			 *
-+			 * Generate a fake token (rather than a V1
-+			 * timestamp) for the index extension.  (If
-+			 * they switch back to the hook API, we don't
-+			 * want ambiguous state.)
-+			 */
-+			strbuf_addstr(&last_update_token, "builtin:fake");
-+		}
+ core.fsmonitor::
+-	If set, the value of this variable is used as a command which
+-	will identify all files that may have changed since the
+-	requested date/time. This information is used to speed up git by
+-	avoiding unnecessary processing of files that have not changed.
+-	See the "fsmonitor-watchman" section of linkgit:githooks[5].
++	If set, this variable contains the pathname of the "fsmonitor"
++	hook command.
+++
++This hook command is used to identify all files that may have changed
++since the requested date/time. This information is used to speed up
++git by avoiding unnecessary scanning of files that have not changed.
+++
++See the "fsmonitor-watchman" section of linkgit:githooks[5].
+++
++Note: The value of this config setting is ignored if the
++built-in file system monitor is enabled (see `core.useBuiltinFSMonitor`).
+ 
+ core.fsmonitorHookVersion::
+-	Sets the version of hook that is to be used when calling fsmonitor.
+-	There are currently versions 1 and 2. When this is not set,
+-	version 2 will be tried first and if it fails then version 1
+-	will be tried. Version 1 uses a timestamp as input to determine
+-	which files have changes since that time but some monitors
+-	like watchman have race conditions when used with a timestamp.
+-	Version 2 uses an opaque string so that the monitor can return
+-	something that can be used to determine what files have changed
+-	without race conditions.
++	Sets the protocol version to be used when invoking the
++	"fsmonitor" hook.
+++
++There are currently versions 1 and 2. When this is not set,
++version 2 will be tried first and if it fails then version 1
++will be tried. Version 1 uses a timestamp as input to determine
++which files have changes since that time but some monitors
++like Watchman have race conditions when used with a timestamp.
++Version 2 uses an opaque string so that the monitor can return
++something that can be used to determine what files have changed
++without race conditions.
+++
++Note: The value of this config setting is ignored if the
++built-in file system monitor is enabled (see `core.useBuiltinFSMonitor`).
 +
-+		goto apply_results;
- 	}
++core.useBuiltinFSMonitor::
++	If set to true, enable the built-in file system monitor
++	daemon for this working directory (linkgit:git-fsmonitor--daemon[1]).
+++
++Like hook-based file system monitors, the built-in file system monitor
++can speed up Git commands that need to refresh the Git index
++(e.g. `git status`) in a working directory with many files.  The
++built-in monitor eliminates the need to install and maintain an
++external third-party tool.
+++
++The built-in file system monitor is currently available only on a
++limited set of supported platforms.  Currently, this includes Windows
++and MacOS.
+++
++Note: if this config setting is set to `true`, the values of
++`core.fsmonitor` and `core.fsmonitorHookVersion` are ignored.
  
- 	assert(fsm_mode == FSMONITOR_MODE_HOOK);
-@@ -321,6 +350,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 				 query_success ? "success" : "failure");
- 	}
+ core.trustctime::
+ 	If false, the ctime differences between the index and the
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 2853f168d97..c7c31b3fcf9 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -498,7 +498,9 @@ FILE SYSTEM MONITOR
+ This feature is intended to speed up git operations for repos that have
+ large working directories.
  
-+apply_results:
- 	/*
- 	 * The response from FSMonitor (excluding the header token) is
- 	 * either:
+-It enables git to work together with a file system monitor (see the
++It enables git to work together with a file system monitor (see
++linkgit:git-fsmonitor--daemon[1]
++and the
+ "fsmonitor-watchman" section of linkgit:githooks[5]) that can
+ inform it as to what files have been modified. This enables git to avoid
+ having to lstat() every file to find modified files.
+@@ -508,17 +510,18 @@ performance by avoiding the cost of scanning the entire working directory
+ looking for new files.
+ 
+ If you want to enable (or disable) this feature, it is easier to use
+-the `core.fsmonitor` configuration variable (see
+-linkgit:git-config[1]) than using the `--fsmonitor` option to
+-`git update-index` in each repository, especially if you want to do so
+-across all repositories you use, because you can set the configuration
+-variable in your `$HOME/.gitconfig` just once and have it affect all
+-repositories you touch.
+-
+-When the `core.fsmonitor` configuration variable is changed, the
+-file system monitor is added to or removed from the index the next time
+-a command reads the index. When `--[no-]fsmonitor` are used, the file
+-system monitor is immediately added to or removed from the index.
++the `core.fsmonitor` or `core.useBuiltinFSMonitor` configuration
++variable (see linkgit:git-config[1]) than using the `--fsmonitor`
++option to `git update-index` in each repository, especially if you
++want to do so across all repositories you use, because you can set the
++configuration variable in your `$HOME/.gitconfig` just once and have
++it affect all repositories you touch.
++
++When the `core.fsmonitor` or `core.useBuiltinFSMonitor` configuration
++variable is changed, the file system monitor is added to or removed
++from the index the next time a command reads the index. When
++`--[no-]fsmonitor` are used, the file system monitor is immediately
++added to or removed from the index.
+ 
+ CONFIGURATION
+ -------------
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b51959ff941..b7d5e926f7b 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -593,7 +593,8 @@ fsmonitor-watchman
+ 
+ This hook is invoked when the configuration option `core.fsmonitor` is
+ set to `.git/hooks/fsmonitor-watchman` or `.git/hooks/fsmonitor-watchmanv2`
+-depending on the version of the hook to use.
++depending on the version of the hook to use, unless overridden via
++`core.useBuiltinFSMonitor` (see linkgit:git-config[1]).
+ 
+ Version 1 takes two arguments, a version (1) and the time in elapsed
+ nanoseconds since midnight, January 1, 1970.
 -- 
 gitgitgadget
-
