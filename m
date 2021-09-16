@@ -2,108 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 277A0C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 23:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3485C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 02:37:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 110EC610A6
-	for <git@archiver.kernel.org>; Wed, 15 Sep 2021 23:12:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93EF76103E
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 02:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232776AbhIOXNa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Sep 2021 19:13:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57491 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232465AbhIOXNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Sep 2021 19:13:30 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 094DCE87E2;
-        Wed, 15 Sep 2021 19:12:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4jjDAaZmg6RHztXeGMEGUrM0H5C0ExwhxQwKaa
-        fY8wY=; b=NKk1HXj/Eif74JiiRlu3IgIOs1l9UBoKvfqovWguop9tGLnpTa04Qt
-        ahkOewKFxsZqfL5R61fc5lvAh1LcNduGMiXYbwmKUdEiUGoSADmB4g847+1DeRog
-        nMC77NahHy/XCDCftDH+K60xW1mcA9dx1jPxuMh1qSP6yV3mziSn0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0F87E87E1;
-        Wed, 15 Sep 2021 19:12:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B376E87E0;
-        Wed, 15 Sep 2021 19:12:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v3 6/6] core.fsyncobjectfiles: enable batch mode for
- testing
-References: <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com>
-        <pull.1076.v3.git.git.1631590725.gitgitgadget@gmail.com>
-        <55a40fc8fd59df6180c8a87d93fcc9a232ff8d0a.1631590725.git.gitgitgadget@gmail.com>
-        <xmqqtuilyfls.fsf@gitster.g>
-        <CANQDOdc8F7a3ZeTDpUWrt8uUntnX4jHYxyj96SPwH-P=kMrneg@mail.gmail.com>
-Date:   Wed, 15 Sep 2021 16:12:08 -0700
-In-Reply-To: <CANQDOdc8F7a3ZeTDpUWrt8uUntnX4jHYxyj96SPwH-P=kMrneg@mail.gmail.com>
-        (Neeraj Singh's message of "Wed, 15 Sep 2021 15:43:38 -0700")
-Message-ID: <xmqqy27xv3g7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233903AbhIPCjI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Sep 2021 22:39:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55924 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233825AbhIPCjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Sep 2021 22:39:08 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D830C061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 19:37:48 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id 2so4354931qtw.1
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 19:37:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F7SW/DWHLpm+ZbMctCqStDWFQteRsGPFQ3IKpThFiIY=;
+        b=kg0zBKhymOyUGqgj4O7IVyY+CaQ0LjsPemvbOfOlhQbKuzA1zyGBjnUzWFRbg5IRM2
+         A32fpfcMYXZQ+Myiz+j6J7AIqEoIhUnAyp9BMFMJURAliB1eX2Eo08hX8fjtHhZIFZt/
+         JfENEZmWgnnfWvGgFdXByfiI0pxbKe3S0ZhP9B+ZNSD4MrZ/i7Fx8PpvUgfOzFZqmbXR
+         PUUhjRFp9EsSsS4b07246D9o2Yg85hR6vJPl86VIEivL55OScpx14FMODxRX4dwIPpU+
+         B7ez5UImYvwsK9iF4UHJigxCflBHBKVxyIO/MgqVh4Tgoh3BkDZHogyH8rPYeHjeNKY+
+         pJcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F7SW/DWHLpm+ZbMctCqStDWFQteRsGPFQ3IKpThFiIY=;
+        b=IknwjZRU7hDQEFB6WS4O4fSJl33zlsU3CHGplwzZp5vbtNhJDzQ3hcYvPGfWK3IXPy
+         zW6yiOX3aC9LhCK1bBgkUjGYLJMnRa/fmXK95F+XVFpNj2wYAPhXDc/HfEo9rXcp1cTO
+         qvaMyx/fIPdD1PY6XCSVDXzkup9c5VUdtAvi4WlYo6Ofwpx30pStz/cvuPuLZ4EOVJI3
+         HumLMmyHdKcStFPC4x7XoxF3Mqtsz9BS3WYecyDHKu4sJ5JQDZwhx220A9cwcOLlyrqA
+         sp78PCD6EjRKb2N/F4pbWMSrdF/wWEyYsFJOkqjavWPqQrYy9Aj4EaZcNxzEu9ljp/Dz
+         Czag==
+X-Gm-Message-State: AOAM5337AuPflNgiGhLXS2mrq3Js7oYQS1M3Q0s8p3c5TVS1wWaUYxZh
+        JEUfc8cqwRq/lZFqLWkpUE1ealfFFB8=
+X-Google-Smtp-Source: ABdhPJx8Hqq5HIUhLOpPigTJbe8qSIkqJenl7VGwprlSGbpB5JKx0R0UB/7W/1oPEjALycCqsCgljA==
+X-Received: by 2002:ac8:5805:: with SMTP id g5mr3092007qtg.360.1631759867209;
+        Wed, 15 Sep 2021 19:37:47 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id w20sm1498753qkj.116.2021.09.15.19.37.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Sep 2021 19:37:46 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com
+Subject: [PATCH 0/2] t0000: truly leak free
+Date:   Wed, 15 Sep 2021 19:37:04 -0700
+Message-Id: <20210916023706.55760-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.481.g26d3bed244
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A083DD2-167A-11EC-ADE5-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Neeraj Singh <nksingh85@gmail.com> writes:
+While looking at the leaks reported by our new CI job, noticed there
+was a hidden one when running t0000 in macOS.
 
-> This commit is mainly to ensure that we get coverage of batch mode on all
-> platforms in the CI infrastructure.  I don't believe it should be included in
-> mainline git without significantly more discussion and experimentation.
+The first patch fixex that leak, and the second one fixes the reason
+why it was hidden.
 
-Am I incorrect to say that only just a handful of code paths can
-take advantage of the bulk checkin "plugging-unplugging" feature to
-begin with, so running _all_ the existing tests that cover
-everything with this core.fsyncobjectfiles=batch setting is rather
-pointless?
+  [PATCH 1/2] tree-diff: fix leak when not HAVE_ALLOCA
+  [PATCH 2/2] t0000: avoid masking git exit value through pipes
 
-If so, perhaps instead of 6/6, you should identify key code paths
-that would be affected by this feature (perhaps "git add" is one of
-them), and either write a new test script dedicated for this feature
-or piggy-back on existing test scripts that already tests the code
-paths and adding new test pieces there that exercise this new feature.
-
-If it is a good idea to run all the tests with core.fsyncobjectfiles
-set to batch, however, it probalby is easiest to invent a new
-environment variable GIT_TEST_FORCE_CORE_FSYNCOBJECTFILES and have
-it honored as the default when it is set, and add a NEW CI job that
-exports the environment with the value "batch".  Other people
-(including the ones from Microsoft, I think) are much more familiar
-than I am on how to make this kind of thing work in GitHub Actions.
-
-> Do you think that feature.experimental is a good place to put this right away,
-
-I think feature.experimental should be used for something that we
-hope would benefit "everybody", not "most of the users".  This is a
-promise to our testers, who opt into "early preview" of upcoming
-features should not be subjected to "this may or may not give better
-experiences depending on your workflow".  They may already be
-enjoying and even relying on other experimental features by opting
-in, and we should strive not to add a reason for them to turn the
-feature.experimental bit off by saying "this new experimental feature
-that recently joined does not work for my use case."
-
+Carlo
 
