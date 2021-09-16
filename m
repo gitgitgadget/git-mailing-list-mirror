@@ -2,140 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 859AFC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5763C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 14:10:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CA1860F38
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 13:44:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6BB360238
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 14:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240364AbhIPNpw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 09:45:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240373AbhIPNpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 09:45:50 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D16BC0613D5
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id y8so5906902pfa.7
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hr1nuto5NQUgUCdHcIn53+ejy2Ug1i0woHKZ6iAQiPY=;
-        b=RSfDv7doUIgrCSS2kehDyqFryONpSOg2Ps6oCmtc/zns7TnOnsQBwSEdnOBP1yw4C1
-         kVVA41xzvNyJ6wYRfaoqpb492JJpRt+L4m2IRW11mVVLPi5D+9P2kz+trQelooyVBDv9
-         q9G3ILoj8UFjkRf2vMGuythkAzkTvWiN7/Vl4Ljh2qn/jGfFBeXWnTtK95dHAtja3IFW
-         qNlt7StOhry0s+tshdrPtMJ/oVz8Ptta9y7kJAxz/XYJA1F+WiyZ3iJwQ7b26k41FbwL
-         6I1UeaOMhAUQg0YO/eSjPr09RRMKNgNKqpKGE+Fmilllc3Aa6pdAyLs7EpJBtPLNHKmP
-         CL9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=hr1nuto5NQUgUCdHcIn53+ejy2Ug1i0woHKZ6iAQiPY=;
-        b=SdLH+h3zIfYy26I5FlC9zJcSSPxfMmLdjPEkJ7XUaGnrtX91MCKIecB4ZqUZnKUiBf
-         XWIgw6O3fguJdhL/yyNvhYw/9+Lq9vO7ACNWsFDIT6Z05V3X7rG2d8FWFPWKGlWhYvO2
-         zkyvjVsqLnxeMZH780OqnISYRTk61FtGNQx3lapxpSTQ17C8hiSdCH9MN3sTuVhXzNC4
-         OpMrq4BZhi5w/zsoruaLWXlprUoDO46NG3PxB7gCedbBL2Rb/xemaL2iYOhRHH+OtXTr
-         GvvcT5dmZ0sD4mtqB39iY85b1/xOwMSkUZkJQ6BLw+Yd/soQ2QuHFUlKhEAezIGspqGy
-         IaHQ==
-X-Gm-Message-State: AOAM53289itMHcHtFtSUXeROdNPwmkIwIxgwldELI4Z2iuDZfmd/3i99
-        NsewWVBlIbi9z6rtatdJ6F4=
-X-Google-Smtp-Source: ABdhPJwmaB7VgCpEzp/NelX/u4FLxVovsPWUCX4WZWFBPlB/EqnlysilDL/20Kvs8C04DDM7v2OlsA==
-X-Received: by 2002:a63:b50d:: with SMTP id y13mr5053775pge.286.1631799861397;
-        Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:a175:897f:beb8:2ff7:699a])
-        by smtp.gmail.com with ESMTPSA id gk3sm8023137pjb.37.2021.09.16.06.44.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 06:44:21 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 20:44:18 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
-        bedhanger@gmx.de
-Subject: Re: [PATCH 2/2] request-pull: mark translatable strings
-Message-ID: <YUNKIj44AlW0tkXk@danh.dev>
-References: <20210916113516.76445-1-bagasdotme@gmail.com>
- <20210916113516.76445-3-bagasdotme@gmail.com>
+        id S238475AbhIPOLa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 10:11:30 -0400
+Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:46314 "EHLO
+        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238469AbhIPOL3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Sep 2021 10:11:29 -0400
+Received: from MTA-12-3.privateemail.com (mta-12-1.privateemail.com [198.54.122.106])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id 1963A813FE
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:10:05 -0400 (EDT)
+Received: from mta-12.privateemail.com (localhost [127.0.0.1])
+        by mta-12.privateemail.com (Postfix) with ESMTP id E5A2518001AE;
+        Thu, 16 Sep 2021 10:10:03 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.243])
+        by mta-12.privateemail.com (Postfix) with ESMTPA id 706951800186;
+        Thu, 16 Sep 2021 10:10:03 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: [PATCH v5 1/2] grep: refactor next_match() and match_one_pattern() for external use
+Date:   Thu, 16 Sep 2021 10:09:42 -0400
+Message-Id: <20210916140943.2442184-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210916113516.76445-3-bagasdotme@gmail.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beside the problems pointed out by Ævar:
+These changes are made in preparation of, the colorization support for the
+"git log" subcommands that, rely on regex functionality (i.e. "--author",
+"--committer" and "--grep"). These changes are necessary primarily because
+the format of "bol" differs in the context that I require to use
+match_one_pattern() in and because next_match() doesn't handle the case of
+"ctx == GREP_CONTEXT_HEAD" at all. So, teach each function how to handle
+the new cases.
 
-On 2021-09-16 18:35:17+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
-> Mark user-faced strings as translatable (including PR message output).
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+---
+v5: separate grep changes from pretty changes.
+---
+ grep.c | 53 ++++++++++++++++++++++++++++++++++++-----------------
+ grep.h |  3 +++
+ 2 files changed, 39 insertions(+), 17 deletions(-)
 
-I would argue request-pull message shouldn't be translated.
-
-The person who creates the request may prefer to use a different
-language, let's say French, for day-to-day work.
-
-However, the recipients may not understand French, and prefer to
-receive English message.
-
-And this change break their workflow badly.
-
-> @@ -138,19 +138,22 @@ fi
->  
->  url=$(git ls-remote --get-url "$url")
->  
-> -git show -s --format='The following changes since commit %H:
-> +git show -s --format="
-> +$(gettext 'The following changes since commit %H:
->  
->    %s (%ci)
->  
->  are available in the Git repository at:
-> -' $merge_base &&
-> +')
-
-Hence, I think this message shouldn't be translated.
-
-> +" $merge_base &&
->  echo "  $url $pretty_remote" &&
-> -git show -s --format='
-> +git show -s --format="
-> +$(gettext '
->  for you to fetch changes up to %H:
->  
->    %s (%ci)
-
-And neither should this message.
-
->  
-> -----------------------------------------------------------------' $headrev &&
-> +----------------------------------------------------------------')" $headrev &&
->  
->  if test $(git cat-file -t "$head") = tag
->  then
-> @@ -162,7 +165,7 @@ fi &&
->  
->  if test -n "$branch_name"
->  then
-> -	echo "(from the branch description for $branch_name local branch)"
-> +	echo "$(eval_gettext "(from the branch description for \$branch_name local branch)")"
->  	echo
->  	git config "branch.$branch_name.description"
->  	echo "----------------------------------------------------------------"
-
-Ditto.
-
+diff --git a/grep.c b/grep.c
+index 424a39591b..e77c8643d2 100644
+--- a/grep.c
++++ b/grep.c
+@@ -951,31 +951,38 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 			     enum grep_context ctx,
+ 			     regmatch_t *pmatch, int eflags)
+ {
++	const char *field;
++	size_t len;
+ 	int hit = 0;
+ 	int saved_ch = 0;
+ 	const char *start = bol;
++	const char *end = eol;
+ 
+ 	if ((p->token != GREP_PATTERN) &&
+-	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
++	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
++	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
+ 		return 0;
+ 
+ 	if (p->token == GREP_PATTERN_HEAD) {
+-		const char *field;
+-		size_t len;
+-		assert(p->field < ARRAY_SIZE(header_field));
+-		field = header_field[p->field].field;
+-		len = header_field[p->field].len;
+-		if (strncmp(bol, field, len))
+-			return 0;
+-		bol += len;
+ 		switch (p->field) {
+ 		case GREP_HEADER_AUTHOR:
+ 		case GREP_HEADER_COMMITTER:
+ 			saved_ch = strip_timestamp(bol, &eol);
++			if (eol == end)
++				goto again;
+ 			break;
+ 		default:
+ 			break;
+ 		}
++
++		assert(p->field < ARRAY_SIZE(header_field));
++		field = header_field[p->field].field;
++		len = header_field[p->field].len;
++
++		if (strncmp(bol, field, len))
++			goto restore;
++
++		bol += len;
+ 	}
+ 
+  again:
+@@ -1021,12 +1028,17 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 				goto again;
+ 		}
+ 	}
+-	if (p->token == GREP_PATTERN_HEAD && saved_ch)
+-		*eol = saved_ch;
++
+ 	if (hit) {
+ 		pmatch[0].rm_so += bol - start;
+ 		pmatch[0].rm_eo += bol - start;
+ 	}
++
++restore:
++	if (p->token == GREP_PATTERN_HEAD && saved_ch)
++		*eol = saved_ch;
++
++
+ 	return hit;
+ }
+ 
+@@ -1159,21 +1171,27 @@ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
+ 	return 1;
+ }
+ 
+-static int next_match(struct grep_opt *opt, char *bol, char *eol,
+-		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
++int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags)
+ {
+ 	struct grep_pat *p;
+ 	int hit = 0;
+ 
+ 	pmatch->rm_so = pmatch->rm_eo = -1;
+ 	if (bol < eol) {
+-		for (p = opt->pattern_list; p; p = p->next) {
++		for (p = ((ctx == GREP_CONTEXT_HEAD)
++			   ? opt->header_list : opt->pattern_list);
++			  p; p = p->next) {
+ 			switch (p->token) {
+ 			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_HEAD:
+ 			case GREP_PATTERN_BODY:
+-				hit |= match_next_pattern(p, bol, eol, ctx,
+-							  pmatch, eflags);
++				if ((field == GREP_HEADER_FIELD_MAX) ||
++				    (p->field == field))
++					hit |= match_next_pattern(p, bol, eol,
++								  ctx, pmatch,
++								  eflags);
+ 				break;
+ 			default:
+ 				break;
+@@ -1262,7 +1280,8 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 				line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		}
+ 		*eol = '\0';
+-		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
++		while (grep_next_match(opt, bol, eol, ctx, &match,
++				       GREP_HEADER_FIELD_MAX, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+diff --git a/grep.h b/grep.h
+index 72f82b1e30..d2943e29ea 100644
+--- a/grep.h
++++ b/grep.h
+@@ -177,6 +177,9 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
++int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags);
+ 
+ struct grep_source {
+ 	char *name;
 -- 
-Danh
+2.33.0
+
