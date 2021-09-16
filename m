@@ -2,99 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8CEC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DCD6C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:45:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E2A8611EE
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:44:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AF22611CA
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 22:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234051AbhIPWpq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 18:45:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbhIPWpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 18:45:45 -0400
-Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939FBC061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:44:24 -0700 (PDT)
-Received: by mail-vs1-xe36.google.com with SMTP id c28so7617753vsh.11
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 15:44:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3BH7/b3oTxsYdNo2iy+xeYAF741qqawn4FLOfxq6cLc=;
-        b=cDcUz9TE8X2valGFlW2ctIhCVkI4mHplcB/CKLMvA5YLbMHHt4vGKizFHEErOdWopH
-         ZafN45a4yOsUMQPqhD4+6TuuSqftpiSk1w9ZXKdhoQ6vxIwvG85XXEFPS0RR67+58s27
-         tp30+bH7BtUQ8bBg47/PwGs0z67Y19BMvh8AwS2GK2Ije2Ge7m5jPaXoHMfcrPtveEnB
-         31WIRH92oO8Iss4hBsAvZMxX57kV70BKVaSxVUM8AzhFTfoDSF6HXqUxGhSyyy30cvNE
-         KNmYAEFu2F+u7ukWSrcBH0v5IfsMA+msPaSm7tjy4a6YPQ15z4jX/tG5uDmiLdkdSnju
-         sqsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3BH7/b3oTxsYdNo2iy+xeYAF741qqawn4FLOfxq6cLc=;
-        b=bWDxdRFfFwn+t8WPvk69MSBhrRfqzv6GqznCnc6RL+G1ADN+F460N+z1lxab7nnGqb
-         3X6hy7LtQ95waObvqnPYrDR9XbiuP89DCAoIh3vUXy87N33SXEDxmkjVLsEEW5UecVzk
-         /1pNHm+PI6tbpS7zxweqNjJjldn6VtCpp2Wl5UdGTXA8VP10AZXZCHBw00EDU0f7coeQ
-         raH9lLEx9+GJxXGmfY4JJBjlqbiKNb7GEQuv2RAxw2Hz5fgs2zxtNPGd1875AHUNH0UW
-         58Jl2vrB0ZNefNNeXfEcqHFMcdMs7iGHvIf6mollVFn1f51cHmk3bYGB7q5cYiT/tcsy
-         j1ng==
-X-Gm-Message-State: AOAM533VLXUyt37MHAe36K8xQpqUCbgFN5JLcbbF4T90D1ALndrv/bGY
-        9zGQcSPvSIevHMxv9tb7nJgF9dR+fOsetWSWik7PPkVx
-X-Google-Smtp-Source: ABdhPJzRqwnSd0YTi3hd6wPpNLRtai86ALpuhimQuKmtEegnd33ZuS9mzM7h6vE1U98fwiRQiuOLpyFdSowijP2Tl8M=
-X-Received: by 2002:a05:6102:518:: with SMTP id l24mr6326678vsa.57.1631832263668;
- Thu, 16 Sep 2021 15:44:23 -0700 (PDT)
+        id S234122AbhIPWq4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 18:46:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49566 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234282AbhIPWq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 18:46:56 -0400
+Received: (qmail 8763 invoked by uid 109); 16 Sep 2021 22:45:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Sep 2021 22:45:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10076 invoked by uid 111); 16 Sep 2021 22:45:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Sep 2021 18:45:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Sep 2021 18:45:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH v2 6/7] p5326: generate pack bitmaps before writing the
+ MIDX bitmap
+Message-ID: <YUPJDf7u8Nn5als3@coredump.intra.peff.net>
+References: <cover.1631049462.git.me@ttaylorr.com>
+ <cover.1631657157.git.me@ttaylorr.com>
+ <040bb40548017bae807c1d349fa078c21ac46725.1631657157.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <20210915080948.11891-1-carenas@gmail.com> <20210915080948.11891-3-carenas@gmail.com>
- <xmqqczp8rx1c.fsf@gitster.g>
-In-Reply-To: <xmqqczp8rx1c.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 16 Sep 2021 15:44:10 -0700
-Message-ID: <CAPUEspjqD5zy8TLuFA96usU7FYi=0wF84y7NgOVFqegtxL9zbw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] git-cvsserver: protect against NULL in crypt(3)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sam@vilain.net, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <040bb40548017bae807c1d349fa078c21ac46725.1631657157.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 16, 2021 at 3:11 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->
-> > -                if (crypt(descramble($password), $1) eq $1) {
-> > -                    $auth_ok =3D 1;
-> > +                my $hash =3D crypt(descramble($password), $1);
-> > +                if (defined $hash) {
-> > +                    $auth_ok =3D 1 if $hash eq $1;
-> >                  }
->
-> It is not wrong per-se to separate the two checks into two separate
-> parts of the conditional, but because we check for definedness only
-> because comparison of it with $1 makes sense only when it is
-> defined, writing it either like this,
->
->                 if (defined $hash and $hash eq $1) {
->                         $auth_ok =3D 1;
->                 }
->
-> or even like this,
->
->                 $auth_ok =3D (defined $hash and $hash eq $1);
->
-> may be easier to read, no?
+On Tue, Sep 14, 2021 at 06:06:14PM -0400, Taylor Blau wrote:
 
-yes, let's go with the earlier; I was trying to mimic the original
-code, but agree on a second read that it looks confusing.
-assuming there are no more comments, would you want a reroll?
+> To help test the performance of permuting the contents of the hash-cache
+> when generating a MIDX bitmap, we need a bitmap which has its hash-cache
+> populated.
+> 
+> And since multi-pack bitmaps don't add *new* values to the hash-cache,
+> we have to rely on a single-pack bitmap to generate those values for us.
+> 
+> Therefore, generate a pack bitmap before the MIDX one in order to ensure
+> that the MIDX bitmap has entries in its hash-cache.
 
-Carlo
+Makes sense. This is a little more contrived of a setup than the
+original, but an utterly realistic one. If you are using midx bitmaps,
+you are probably interspersing them with occasional full pack bitmaps.
+
+It might be interesting to also do:
+
+  rm -f .git/objects/pack/pack-*.bitmap
+
+after generating the midx bitmap. That would confirm the further timing
+tests are using the midx bitmap, and not ever "cheating" by looking at
+the pack one (having poked in this direction before, I know that this
+all works, so it would be a future-proofing thing).
+
+> diff --git a/t/perf/p5326-multi-pack-bitmaps.sh b/t/perf/p5326-multi-pack-bitmaps.sh
+> index a9c5499537..38557859b7 100755
+> --- a/t/perf/p5326-multi-pack-bitmaps.sh
+> +++ b/t/perf/p5326-multi-pack-bitmaps.sh
+> @@ -13,7 +13,7 @@ test_expect_success 'create tags' '
+>  '
+>  
+>  test_perf 'setup multi-pack index' '
+> -	git repack -ad &&
+> +	git repack -adb &&
+>  	git multi-pack-index write --bitmap
+>  '
+
+This sort-of existed before your series, but I think is a bit "worse"
+now: we are timing both "repack" and "multi-pack-index" write together.
+So:
+
+  - the timing for the midx write that we are interested in timing will
+    be diluted by the much-bigger full-repack
+
+  - we'll actually do _three_ full repacks (the default
+    GIT_PERF_REPEAT_COUNT for the "run" script), since it's inside a
+    test_perf()
+
+So:
+
+  test_expect_success 'start with bitmapped pack' '
+	git repack -adb
+  '
+
+  test_perf 'setup multi-pack index' '
+	git multi-pack-index write --bitmap
+  '
+
+would run faster and give us more interesting timings. Possibly you'd
+want to drop the midx and its bitmaps as part of that test_perf, too.
+The first run will be using the pack bitmap, and the others will use the
+midx. I doubt it makes much difference either way, though.
+
+And of course if you want to take my earlier suggestion, then it's easy
+to add:
+
+  test_expect_success 'drop pack bitmap' '
+	rm -f .git/objects/pack/pack-*.bitmap
+  '
+
+afterwards; you wouldn't want to do it inside the test_perf() call
+because of the repeat-count.
+
+-Peff
