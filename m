@@ -2,96 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D4E1C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C7AC433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:30:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5643860EC0
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:01:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89D9461279
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 20:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236188AbhIPUDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 16:03:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234838AbhIPUDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 16:03:03 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90E5C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 13:01:42 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id b15so7819558ils.10
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 13:01:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=25vEwCbr8Q7YRJsEBZRihx5H4XTtDyT10xgNDzVEwPc=;
-        b=GaAeCGnbkG4+ta2UHI+MT8htdIylHQ2vs5Avg+q8HwwIBdK4aCgXcxzXbJr5ks/Ly8
-         xgvg3LmwWm5Icb2wbkvD2oEEsaNxE8+lgVH4NsipBu9CtlpLrBIXRpq85qPS3mTif/SN
-         EjP18CK5/5VzRE42eOaAtC9CJda9D9SflXGZitJiE7vpfTuZnizbzdeT+q5CcoJjpUvR
-         HUvEO3RwwVb+sqjljKUDEYPeG5PtAO7i4X+t/Hf3KVRCiT4+1QsAC1HXdGZgPFsCEo5w
-         syRmjQsUHDwX+/QaPslRTdoJq7w5SJmb61uexBxn6SUTXI8VtQ5eelsTCubmqs6R2q7J
-         5Z7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=25vEwCbr8Q7YRJsEBZRihx5H4XTtDyT10xgNDzVEwPc=;
-        b=fGo77Ko/3X+j2r2g8AsPeUBb108Lktzexzn4SMs6ie+G0Mwz03b2CwWs0UZ2sHdHay
-         4wjODcZlo5FAuv+CVOKcj+ZbC2BrcWGPDcKPSGVqZc3uKBv0WCcASEbM8yaCpEOdWZMO
-         M6RVgR3vZ/xN76OBZMg7nYN/NXvoqba1SAazVWrJfj9G3s+sDU+OMZXFvzn4Fog7pbv2
-         yxlgV2qbOzZX3OBcmgaNkndMfbxma54CaguPIjnIjpXjx+P/lh1YJoP9Y1PdLiTSWpoB
-         sQ/ajY3N9RTMK/jKLVBL2MtFOajWWjMOhVcMrMMnwDP9702OHOaBUjEBVgiDcsNjsGKD
-         /5dg==
-X-Gm-Message-State: AOAM531tEO0n8TqItQy8uGpQ5qJb3nfrEmzOC5zc0F/KpQtlgNcqZdCR
-        fq+mv3NUlxrcN3IUKvC4wvscDg==
-X-Google-Smtp-Source: ABdhPJwS+ai8vbgI/eFFPJeiM5eUm9F8bF2k3GFeWCbHBYAvREr8pP+NV+5NFkegxoFgGAFw34ZPVw==
-X-Received: by 2002:a92:d491:: with SMTP id p17mr5358594ilg.107.1631822502269;
-        Thu, 16 Sep 2021 13:01:42 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a21sm2238769iot.43.2021.09.16.13.01.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 13:01:41 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 16:01:41 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 03/22] cat-file tests: test for missing object with -t
- and -s
-Message-ID: <YUOipZRE8tu+n8H6@nand.local>
-References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
- <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
- <patch-v6-03.22-d442a309178-20210907T104559Z-avarab@gmail.com>
- <YUOhqnj7vwr00Qap@nand.local>
+        id S239026AbhIPUcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 16:32:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60594 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239043AbhIPUcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 16:32:13 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BEA78EFC58;
+        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=V3+tQX3Lbbnd
+        PjnmkdUxBVVse9FPi71ZM70HAhuKRGE=; b=ZLXaXtgCfLlQMxpyrqhVJiL5YNj9
+        VzhZy53WcujYsUnGUhQsyQzPfTmXNlYGQ5/UI3YX22mt21qcIrIGOOgIZ8XasMsS
+        u4gAZiQp6Ehogbldk4rhTco23qPBk8TQldQkmb7ImXqN0EqzcFfL/KOjWDbKPinE
+        Qa3XiAqZHHjwuvE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B53A3EFC57;
+        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3350EEFC54;
+        Thu, 16 Sep 2021 16:30:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
+        bedhanger@gmx.de
+Subject: Re: [PATCH 2/2] request-pull: mark translatable strings
+References: <20210916113516.76445-1-bagasdotme@gmail.com>
+        <20210916113516.76445-3-bagasdotme@gmail.com>
+        <YUNKIj44AlW0tkXk@danh.dev>
+Date:   Thu, 16 Sep 2021 13:30:50 -0700
+In-Reply-To: <YUNKIj44AlW0tkXk@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+        "Thu, 16 Sep 2021 20:44:18 +0700")
+Message-ID: <xmqqbl4stg91.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YUOhqnj7vwr00Qap@nand.local>
+X-Pobox-Relay-ID: FBCF5CBA-172C-11EC-BBBC-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 16, 2021 at 03:57:30PM -0400, Taylor Blau wrote:
-> On Tue, Sep 07, 2021 at 12:57:58PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > Test for what happens when the -t and -s flags are asked to operate on
-> > a missing object, this extends tests added in 3e370f9faf0 (t1006: add
-> > tests for git cat-file --allow-unknown-type, 2015-05-03). The -t and
-> > -s flags are the only ones that can be combined with
-> > --allow-unknown-type, so let's test with and without that flag.
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
+
+> I would argue request-pull message shouldn't be translated.
 >
-> I'm a little skeptical to have tests for all four pairs of `-t` or `-s`
-> and "with `--allow-unknown-type` and without `--allow-unknown-type`".
+> The person who creates the request may prefer to use a different
+> language, let's say French, for day-to-day work.
+>
+> However, the recipients may not understand French, and prefer to
+> receive English message.
+>
+> And this change break their workflow badly.
 
-Ah. Reading the next patch makes me feel even more certain of this
-advice. Consider squashing this and the next patch with my suggestion
-to use a loop below?
+[jc: devil's advocate hat on]
 
-Thanks,
-Taylor
+While that may be true, it would be a nice-to-have if we had an
+option to help developers who usually work in $French when they
+contribute to a project where $French is the official tongue (assign
+any value other than English to variable $French).
+
+[jc: devil's advocate hat off]
+
+I haven't done or seen any official survey, but I would not be
+surprised if English were used as the official project language by
+the majority of projects that accept pull request messages.
+
+In that sense, the output that gets translated for the user's usual
+locale by default, like the patch in question does, is misdesigned.
+The consequence of the design is that among those who do not usually
+run in C or en_XX locale, the number of people who will be forced to
+say
+
+	LANG=3DC LC_ALL=3DC git request-pull ...
+
+to override their usual local in order to send the untranslated
+message to their project that do not want translated requests would
+be far greater than those who can just say
+
+	git request-pull ...
+
+to send a message in local language to a local project.
+
+So a good middle ground may be
+
+ - allow translation, like these patches attempt
+
+ - introduce the command line option "--l10n=3D<value>" and
+   the requestpull.l10n configuration variable that gives the
+   default for the option:
+
+   - when it is set to 'true', end-user's local taken from the
+     environment is used as the target for translation.
+
+   - when it is set to 'false', translation is turned off.
+
+   - when it is set to any other value, the locale is set to the
+     value of that variable (imagine a Japanese developer
+     contributing to a German project).
+
+perhaps?   I dunno.
