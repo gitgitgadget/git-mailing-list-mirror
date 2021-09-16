@@ -2,89 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70AF3C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6029FC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:59:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 566D260FC0
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:47:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34054611C8
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 18:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233890AbhIPStQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 14:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50422 "EHLO
+        id S1345304AbhIPTBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 15:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348443AbhIPStH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 14:49:07 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43086C094ACF
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:26:12 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id 41-20020a17090a0fac00b00195a5a61ab8so5412923pjz.3
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 10:26:12 -0700 (PDT)
+        with ESMTP id S1344655AbhIPTBF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 15:01:05 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA001C0F26CE
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 11:30:42 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id f62-20020a1c1f41000000b0030b42643f72so224015wmf.3
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 11:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=o/AY/65x9ZEzjDWufGzXKy7v8OAUoDkzPtjN0fwapPE=;
-        b=CaW1sf0IytCIntA1u//6H1BMtHWcmqnZCVn3pe1yDUW8l6YIlGFHw4X4E8LjD6HdNf
-         P55Nddayyn5DPzulW750XtD7GnY31/EO12otn+qF1UEd2j02sFNNDoGbknjsgpgKf85i
-         ft8SOWw1PA60NytAaE+lDT8z4x6OXE9VUNCxB3SZz2QISu63PCCt3evKKqPIIk5FaAKt
-         B8GXXVe/+dhNkGuZHUIfzqPFlWPkd3YIJQ+j6tKeCr6WhZ7vlmoREAh9lcS+iDgfG+8q
-         eaomoJCFZc8zIRb+1GW1BhwBThuw/RrRjt96NrbxwTYCAZB0p5QE6U7xbOqvwGuTWzCl
-         ENtA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4hVnjC4Iwesp3+zpqTFJ4S8K3qfRNeZzAu88rS5shkM=;
+        b=O5VYOFOXe0p+WQCpqmHBvGT0BNAfrR6gra+kNjhuYb0wm11bSPWBIoxtzo+nEbV2qG
+         eNcP9yBLjs/6roFgTRI917ijTJp9f0v/24N7qLzbcGvhkM2GzRED/IemhcgZ7+u6378b
+         pip35ZlayRxjxNLyjQ/SvOR85h30Z44VM/WHVXozgD4/Mo1cdpcMipiPMJbxjwVZ30jz
+         xviUoFMpM8y+uWe5UVH8zmw9NWJOiicRhXuV00+BZioZa9c1TCMl1YGx0EnZ/gEiJs59
+         cu8u7K5abYw/pPVsRIi5hKYMXQUgXZpqyVxMGE4Cv74UekGU43MarTco2TEaE2ArDBRH
+         pEPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=o/AY/65x9ZEzjDWufGzXKy7v8OAUoDkzPtjN0fwapPE=;
-        b=4Pz0PH1xOThw0/bKpLBoCi21ockc7FmqIcFpFhFFvRMjV5migxB5jk9qZb8DMfiyDE
-         N2a/OJaRge6PmsizHVOO5/iNEKY9PBT4SYfknAO3a/5+FP7IqdYIZGWC1wMzvYs+Znlf
-         lJRpQQIVH+Wlft1NRU359u/skyf+4chkvAWL5UpBC/Laruht9zrWPgy1KBVMJp9NCGKE
-         MPzO9Nn+GKsaUhVTdsya+ilxFZnatQnDPCDSHrALksfI5L8pvaAH8hpv2gzVVz36Vxxz
-         v/IsPthX6whN78zhzYivP9VHSn9YguME2NddFsZCpzr/sHh+sKBI5tL81P0LrgzrXpIf
-         JVpQ==
-X-Gm-Message-State: AOAM530kynkxvTDnf53BacCGdhxGQFlXWguq4YynJ02MzICe8vzhoZSm
-        Cf3ZUk2OPtx0ol81Fi8UuMsvIbCP7ovCcL3btz7Y
-X-Google-Smtp-Source: ABdhPJx135B85NxVL2w//e64nocYCdlEpkBVep/LK49r4n1MWq7AQYkXdp2+D926RMzoDU3HgZXLRYdnx2PmSdKvsxRs
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:97b2:0:b0:439:14a9:2bf5 with
- SMTP id d18-20020aa797b2000000b0043914a92bf5mr6152461pfq.45.1631813171751;
- Thu, 16 Sep 2021 10:26:11 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 10:26:09 -0700
-In-Reply-To: <CAFQ2z_ML_g6DTiG92srq8UCCu_D8bi6z1mP_znt24TJagVfi2g@mail.gmail.com>
-Message-Id: <20210916172609.1074157-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAFQ2z_ML_g6DTiG92srq8UCCu_D8bi6z1mP_znt24TJagVfi2g@mail.gmail.com>
-X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
-Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     hanwen@google.com
-Cc:     chooglen@google.com, jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4hVnjC4Iwesp3+zpqTFJ4S8K3qfRNeZzAu88rS5shkM=;
+        b=KopxAXhjjNe4fBcMvlUd2CIclL0t70sRgoqM3VP9dyGA2vEW7q9RJQDC9Uasyrqg8H
+         5kXyxcXgiaCHpRc2lpodyMqazavNg22KkMt9LGax9rOoSHNmmXQoWisCf0TaoN98MVR0
+         AeMRSiElHQou0zBo5rmNuQaPbygFMyKjTacfJ9VcFaCSEiXokBWHUD4voUbU2RYenny5
+         aqU6h+DFZPa7V0rOHIkcE9qNwf2LEukBCIIbtXbh13sSVH8LWT7WeauiERKWnn+Abx1s
+         Sy9RYtAdu1EJxaBT9nyyBUHP1vK8dNwGoEy8lhrbh9Bh7GQ8Wq/bovpopUjOvz8UPEBf
+         Hrbg==
+X-Gm-Message-State: AOAM533vT+So97wmmIChuqRrl2he/31JAF075CKn/q9HuYUMQ/WJ2kep
+        vYPJkMUUAyCGNIP3uO2JpwxEgrV1v3DxZw==
+X-Google-Smtp-Source: ABdhPJzseuDAUJgS9kgoLsR+uCHJ1+1pyvPqUboYflFX+tzD63DjmPdodeayR5oXsyW6JnGAZLxUZw==
+X-Received: by 2002:a1c:488:: with SMTP id 130mr6363909wme.156.1631817041263;
+        Thu, 16 Sep 2021 11:30:41 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j98sm4365700wrj.88.2021.09.16.11.30.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 11:30:40 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/5] wrapper.c: add x{un,}setenv(), and use xsetenv() in environment.c
+Date:   Thu, 16 Sep 2021 20:30:32 +0200
+Message-Id: <patch-v2-1.5-49706b26642-20210916T182918Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1092.g44c994ea1be
+In-Reply-To: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com>
+References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, Sep 15, 2021 at 12:41 AM Glen Choo <chooglen@google.com> wrote:
-> > In the current state of affairs, the files ref store and the packed ref
-> > store seem to behave as a single logical ref database. An example of
-> > this (that I care about in particular) is in refs/files-backend.c where
-> > the files backend validates oids using the_repository's odb.
-> > refs/packed-backend.c doesn't do any such validation, and presumably
-> > just relies on the correctness of refs/files-backend.c. I assume that
-> > this also explains why some functions in refs_be_packed are stubs.
-> 
-> The loose/packed storage is implemented in terms of files backend (the
-> public entry point) that defers to a packed backend in some cases. The
-> latter is implemented as a ref backend, but for no good reason.
+Add fatal wrappers for setenv() and unsetenv(). In d7ac12b25d3 (Add
+set_git_dir() function, 2007-08-01) we started checking its return
+value, and since 48988c4d0c3 (set_git_dir: die when setenv() fails,
+2018-03-30) we've had set_git_dir_1() die if we couldn't set it.
 
-Yes, the packed backend doesn't need to be a ref backend.
+Let's provide a wrapper for both, this will be useful in many other
+places, a subsequent patch will make another use of xsetenv().
 
-> I think Jonathan is right, but I also think that teasing apart the ref
-> backend and the ODB is premature until the ref backend itself is a
-> strongly enforced abstraction boundary.
+The checking of the return value here is over-eager according to
+setenv(3) and POSIX. It's documented as returning just -1 or 0, so
+perhaps we should be checking -1 explicitly.
 
-I think both efforts can proceed independently.
+Let's just instead die on any non-zero, if our C library is so broken
+as to return something else than -1 on error (and perhaps not set
+errno?) the worst we'll do is die with a nonsensical errno value, but
+we'll want to die in either case.
+
+We could make these return "void" (as far as I can tell there's no
+other x*() wrappers that needed to make that decision before),
+i.e. our "return 0" is only to indicate that we didn't error, which we
+would have died on. Let's return "int" instead to be consistent with
+the C library function signatures, including for any future code that
+expects a pointer to a setenv()-like function.
+
+1. https://pubs.opengroup.org/onlinepubs/009604499/functions/setenv.html
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ environment.c     |  3 +--
+ git-compat-util.h |  2 ++
+ wrapper.c         | 18 ++++++++++++++++++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/environment.c b/environment.c
+index d6b22ede7ea..7d8a949285c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -330,8 +330,7 @@ char *get_graft_file(struct repository *r)
+ 
+ static void set_git_dir_1(const char *path)
+ {
+-	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+-		die(_("could not set GIT_DIR to '%s'"), path);
++	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+ 	setup_git_env(path);
+ }
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index b46605300ab..0b0c0305165 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -875,6 +875,8 @@ void *xmemdupz(const void *data, size_t len);
+ char *xstrndup(const char *str, size_t len);
+ void *xrealloc(void *ptr, size_t size);
+ void *xcalloc(size_t nmemb, size_t size);
++int xsetenv(const char *name, const char *value, int overwrite);
++int xunsetenv(const char *name);
+ void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ const char *mmap_os_err(void);
+ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+diff --git a/wrapper.c b/wrapper.c
+index 7c6586af321..f784904fd67 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -145,6 +145,24 @@ void *xcalloc(size_t nmemb, size_t size)
+ 	return ret;
+ }
+ 
++int xsetenv(const char *name, const char *value, int overwrite)
++{
++	if (!name)
++		die("xsetenv() got a NULL name, setenv() would return EINVAL");
++	if (setenv(name, value, overwrite))
++		die_errno("setenv(%s, '%s', %d) failed", name, value, overwrite);
++	return 0;
++}
++
++int xunsetenv(const char *name)
++{
++	if (!name)
++		die("xunsetenv() got a NULL name, xunsetenv() would return EINVAL");
++	if (!unsetenv(name))
++		die_errno("unsetenv(%s) failed", name);
++	return 0;
++}
++
+ /*
+  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
+  * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
+-- 
+2.33.0.1092.g44c994ea1be
+
