@@ -2,179 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F799C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 11:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77391C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 11:40:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2028B613A8
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 11:36:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D4F860296
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 11:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238024AbhIPLhl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 07:37:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35822 "EHLO
+        id S238026AbhIPLli (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 07:41:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238043AbhIPLhl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 07:37:41 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA45EC0613C1
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 04:36:20 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id 17so5884656pgp.4
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 04:36:20 -0700 (PDT)
+        with ESMTP id S234632AbhIPLli (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 07:41:38 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1586BC061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 04:40:18 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id q23so3533300pfs.9
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 04:40:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=80qoBYplBwkAIz37B61a+xtLnciKKclTzvBS/XlxAnI=;
-        b=ladKC/8E160JJc8lbH+T2JD0HZ2RL2V+2uEHNsF7mGJa3C01FHeNQHWJ34RAzcFJk6
-         TWRkUPTzzybcVWNCkszC46enBZ0WMmbYzgNRGNb8l55zRSjbJS3x+1hLgfu+PudK0Z72
-         SBhnMyFYdd0XzVgbPYDtC9rKHtifrMfZ2b0XDVHT2oE4wchAcr9SHWvL7c8foDqeBN8S
-         poNboPdTOdR3TbST1dSvRnQe1JJd2m75NP2v8sNkAiCchNVEdQZAsMUeMkSz9rhe/NIc
-         vNqauh0buLBa29u797VhzJ6jqO+vP7biXipM+n5S6bD09xv4RSj67yC7fOfiualmou7X
-         gGdw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VzD/o8EHXjHJHYsp98yV2D2GEfjz5Ljv41N4ym0tyzk=;
+        b=SKV6wDHc+vJbDvH93qr66a2GC6bfzUY00f1tTRSKIHxSxGJsEFoMf0Ta7ip5cVcF1f
+         Cyy434sSW4+vwAHgiUdyW0h3v5O9URpmHNRMo6DHM/zyANSqtVCZxDwrZ+EdeVd2tuxC
+         Ne16jBPS6hg9Ke4qet4H9r5Re8JI6AYpfBhtOBh+uQVKBsfWRgLHqOO/28aNKOk56DrS
+         AUsSgSZuiJMJmdyhfN76eyIh9wfmO8grbBV8l+0WXt27YJLUxvkk0wCI2O6PxmTF4jTw
+         /RnfODsTjKX+3KEJeLnD69hOXz8nmlQmFjfpEXuFYtgqxnBKTlTXrSDUKv50uLFSw77G
+         YlRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=80qoBYplBwkAIz37B61a+xtLnciKKclTzvBS/XlxAnI=;
-        b=ZHT+bS48gHXz5nBryb8J2BVOdCmmSxsykpMFvCzuaXDpGeBkPT+oVJthqYG1cu5UVH
-         0oT6gK1Szffwow0apcgqmKKLvAmzNyfx0kyZfWilVJdjJogsJnbNT2+MCd5UhdeLGqU5
-         iITrNzfqeWUsL9JgDzUK9s8QJ9ZCPpJw5MEkTmBaFzi/7deNFx5H8fUqivp/ENkvjXns
-         wEFtqrIdkflVnE5Tw4GLxr29opTysEiOP7j27SHqWteEurT3cEC5hw6YwGbPYQS2xyBs
-         3jODtkur6mo0CgpUo148ih9GhLNZLu1NT7linGZju/6aCwxpI/6WdtpiwQdeVoufcu/K
-         lqbw==
-X-Gm-Message-State: AOAM532L80+DUt2xyyqL/HEC+K+wN5M6MVK3kTP3G37tNj6H0POcNcXX
-        2UDXjAHjkDqSpCKa9JBDiV0URWPVijjRpQ==
-X-Google-Smtp-Source: ABdhPJymHuEdiw3FD0FMk6zlmc9WdZjHzm8EpbGyPU+ajf6GT7kN9dTwI0LDYHcu7X5JDtmpinlg4w==
-X-Received: by 2002:a63:e057:: with SMTP id n23mr4607982pgj.183.1631792180108;
-        Thu, 16 Sep 2021 04:36:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VzD/o8EHXjHJHYsp98yV2D2GEfjz5Ljv41N4ym0tyzk=;
+        b=KjgEVcMfc+OCkcFFk4qAkyPHc/zLNqCNwLm3Chv5apLZBcLUcHunUAL6L3mv3xdagr
+         nrsLLxdLBAI+tXnyPYof7TPEwSEvTBeIQXAVd3UdQkBDWF3wTSY5mkAzOlCJR6rrYdXP
+         6MV4xCEL5ytiCAvmqaWOMD0olot0DjuzsVQYVl7RbbicxGMVww5gi64MPGOBiWlbOcTb
+         D/Psk0ktNncqpLhaR+aVEctII+UJ19y4zR8OZ2MTzXhr3KNsHpdzsYoNy/pch7caszU9
+         Ks5A4Xe80mk0VE/wok6zuI3p39Q+p8hE5IVF+fNd49Gk+eAgeUBpHqSd2QeGyJYZ1ctS
+         DSUA==
+X-Gm-Message-State: AOAM531jEup3y7gPnQ2zdoquVv2zjQ0TIgGm9/EbXjIpFMPkOZ8nvYOH
+        P5ZjGyiBbrtC06uSnqzux7IGT23TyXZWHg==
+X-Google-Smtp-Source: ABdhPJxK40ymw+L9+PAaH5my6xvtLAV9Gf8+D0CeAuF5w1+xM1Tbw59khTakrOac4LRxPjvlMad6ZQ==
+X-Received: by 2002:a62:7e0c:0:b0:43d:fc6a:59d6 with SMTP id z12-20020a627e0c000000b0043dfc6a59d6mr4700821pfc.34.1631792417400;
+        Thu, 16 Sep 2021 04:40:17 -0700 (PDT)
 Received: from ubuntu.mate (subs03-180-214-233-91.three.co.id. [180.214.233.91])
-        by smtp.gmail.com with ESMTPSA id d5sm2501188pjs.53.2021.09.16.04.36.18
+        by smtp.gmail.com with ESMTPSA id y8sm3086622pfe.162.2021.09.16.04.40.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 04:36:19 -0700 (PDT)
+        Thu, 16 Sep 2021 04:40:17 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
-        bedhanger@gmx.de
-Subject: [PATCH 2/2] request-pull: mark translatable strings
-Date:   Thu, 16 Sep 2021 18:35:17 +0700
-Message-Id: <20210916113516.76445-3-bagasdotme@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH] difftool: word spacing fix
+Date:   Thu, 16 Sep 2021 18:39:35 +0700
+Message-Id: <20210916113934.77097-1-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210916113516.76445-1-bagasdotme@gmail.com>
-References: <20210916113516.76445-1-bagasdotme@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark user-faced strings as translatable (including PR message output).
+  - s/non - zero/non-zero/
+  - add space between diff formats/mode and option parentheses
 
-Cc: Ryan Anderson <ryan@michonline.com>
-Cc: vmiklos@frugalware.org 
-Cc: bedhanger@gmx.de
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- git-request-pull.sh | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ builtin/difftool.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 9e1d2be9eb..8aa3a3f342 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -40,7 +40,7 @@ test -n "$base" && test -n "$url" || usage
- baserev=$(git rev-parse --verify --quiet "$base"^0)
- if test -z "$baserev"
- then
--    die "fatal: Not a valid revision: $base"
-+    die "$(eval_gettext "fatal: Not a valid revision: \$base")"
- fi
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 6a9242a803..ad9187761e 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -410,9 +410,9 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		const char *src_path, *dst_path;
  
- #
-@@ -58,12 +58,12 @@ head=${head:-$(git show-ref --heads --tags "$local" | cut -d' ' -f2)}
- head=${head:-$(git rev-parse --quiet --verify "$local")}
+ 		if (starts_with(info.buf, "::"))
+-			die(N_("combined diff formats('-c' and '--cc') are "
++			die(N_("combined diff formats ('-c' and '--cc') are "
+ 			       "not supported in\n"
+-			       "directory diff mode('-d' and '--dir-diff')."));
++			       "directory diff mode ('-d' and '--dir-diff')."));
  
- # None of the above? Bad.
--test -z "$head" && die "fatal: Not a valid revision: $local"
-+test -z "$head" && die "$(eval_gettext "fatal: Not a valid revision: \$local")"
- 
- # This also verifies that the resulting head is unique:
- # "git show-ref" could have shown multiple matching refs..
- headrev=$(git rev-parse --verify --quiet "$head"^0)
--test -z "$headrev" && die "fatal: Ambiguous revision: $local"
-+test -z "$headrev" && die "$(eval_gettext "fatal: Ambiguous revision: \$local")"
- 
- local_sha1=$(git rev-parse --verify --quiet "$head")
- 
-@@ -76,7 +76,7 @@ then
- fi
- 
- merge_base=$(git merge-base $baserev $headrev) ||
--die "fatal: No commits in common between $base and $head"
-+die "$(eval_gettext "fatal: No commits in common between \$base and \$head")"
- 
- # $head is the refname from the command line.
- # Find a ref with the same name as $head that exists at the remote
-@@ -120,13 +120,13 @@ remote_or_head=${remote:-HEAD}
- 
- if test -z "$ref"
- then
--	echo "warn: No match for commit $headrev found at $url" >&2
--	echo "warn: Are you sure you pushed '$remote_or_head' there?" >&2
-+	echo "$(eval_gettext "warn: No match for commit \$headrev found at \$url")" >&2
-+	echo "$(eval_gettext "warn: Are you sure you pushed '\$remote_or_head' there?")" >&2
- 	status=1
- elif test "$local_sha1" != "$remote_sha1"
- then
--	echo "warn: $head found at $url but points to a different object" >&2
--	echo "warn: Are you sure you pushed '$remote_or_head' there?" >&2
-+	echo "$(eval_gettext "warn: \$head found at \$url but points to a different object")" >&2
-+	echo "$(eval_gettext "warn: Are you sure you pushed '\$remote_or_head' there?")" >&2
- 	status=1
- fi
- 
-@@ -138,19 +138,22 @@ fi
- 
- url=$(git ls-remote --get-url "$url")
- 
--git show -s --format='The following changes since commit %H:
-+git show -s --format="
-+$(gettext 'The following changes since commit %H:
- 
-   %s (%ci)
- 
- are available in the Git repository at:
--' $merge_base &&
-+')
-+" $merge_base &&
- echo "  $url $pretty_remote" &&
--git show -s --format='
-+git show -s --format="
-+$(gettext '
- for you to fetch changes up to %H:
- 
-   %s (%ci)
- 
------------------------------------------------------------------' $headrev &&
-+----------------------------------------------------------------')" $headrev &&
- 
- if test $(git cat-file -t "$head") = tag
- then
-@@ -162,7 +165,7 @@ fi &&
- 
- if test -n "$branch_name"
- then
--	echo "(from the branch description for $branch_name local branch)"
-+	echo "$(eval_gettext "(from the branch description for \$branch_name local branch)")"
- 	echo
- 	git config "branch.$branch_name.description"
- 	echo "----------------------------------------------------------------"
+ 		if (parse_index_info(info.buf, &lmode, &rmode, &loid, &roid,
+ 				     &status))
+@@ -713,7 +713,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 			    "`--tool`")),
+ 		OPT_BOOL(0, "trust-exit-code", &trust_exit_code,
+ 			 N_("make 'git-difftool' exit when an invoked diff "
+-			    "tool returns a non - zero exit code")),
++			    "tool returns a non-zero exit code")),
+ 		OPT_STRING('x', "extcmd", &extcmd, N_("command"),
+ 			   N_("specify a custom command for viewing diffs")),
+ 		OPT_ARGUMENT("no-index", &no_index, N_("passed to `diff`")),
+
+base-commit: 4c719308ce59dc70e606f910f40801f2c6051b24
 -- 
 2.25.1
 
