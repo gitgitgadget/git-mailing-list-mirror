@@ -7,130 +7,104 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B54F3C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 09:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 993C2C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 09:50:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A08D60EE5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 09:30:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B080611C4
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 09:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235621AbhIPJb0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 05:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34808 "EHLO
+        id S236157AbhIPJvc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 05:51:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235481AbhIPJb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 05:31:26 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C80DAC061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 02:30:05 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id v5so14217696edc.2
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 02:30:05 -0700 (PDT)
+        with ESMTP id S235304AbhIPJv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 05:51:26 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F65C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 02:50:05 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id b18so14949440lfb.1
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 02:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=S+ab3QbDVVZZckC0WVwH+cdjIbto09d5zi2B09LRsy0=;
-        b=oP++e8fwsfSRatbTRWBwMhg6IlyYLaGOt2Rz73WD2aXbegPFlq5R6aKZckSi/QGZF0
-         RPpN/z87aX5WNZO+WG/5HPUDf9AqYcUsX6Cde6tmgzBIIOdoQfY8PIvwc/JQn5FuGJ+F
-         vfvBnY3pfTlh2QudMNTe0sIfhvyeS2n//vbVQTEaluniDMjF/I3z4IurY5zZGov5GhzX
-         pgQrXbQ8zJVuYWCNstRNRauS/wYCWAMj/FihJix4W7Uszht9S+qj6ZMofBQypGP5PQML
-         4DrhjRR1DDoks/ZOkHZPHPcehyJtshgNJPB5f4mgZtohSV5Fk2zzn9dhNfO+XA0jrlPE
-         Oceg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=JndR8XQqjTLqmEDS1ou8TAEknGTh/PoTmczPo6z0bj0=;
+        b=WO0tHDZLgIJ0WEZXEwjBT/KkTyN3iMXuVlgw4FF66ClxPnRjw5IJGKleTqO9XYpiVu
+         /B5yQ0bzto4HAAM7I1L4al3CSDFwCeornEExN79uOxdLn7/X80j4pb32Wt/mLYUHEG8H
+         BEFc761hoLV5vvtGNSNBUgQzxSqiuI1cE/CZcZA33T5m/fbLepSqTghbngSwgkllB2H9
+         yhAeeBLhTphk0YoIyQwkbKm+Pu2/VxLykmNk1cattsoYupPgKf7ubs5HjLGfAeSC9drZ
+         qTAEivv1QjddqAoWzdi5JkXURmFIBH+qoKKwU4SQlk819D6Lg47OlJHcn+oIe8b4CYma
+         R4rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=S+ab3QbDVVZZckC0WVwH+cdjIbto09d5zi2B09LRsy0=;
-        b=GlttPIdhgSwnk2sEtw1qyjuUfoiOvuAnTY+eS8lAFJZDzv0I6Ur1o5hRMOP1rNBZ7C
-         5ZuyST8otrqnUXa7yCRDtHcJfXdIuzwL9I3D5jjLzPL9R5Q2gUuqrZEiSAMhaPH81au0
-         eykonidNsQWPqOK5wO6dv96Tg2bBXqRhje2QH3YLjschhP7eZ3nz3zO+rHn4/30X1lMO
-         TwxcUpnUrevGeoQZdD1VEHe/lJu2GTheIgD55PQJsvuz2Fs7k6Ol0A6Gd7w2I9+8qYuv
-         C3AkqSXbncxyDTgqGB2kk1oaguAg2JTD9s9cQjBgGe8pMVkJNfbJDZDA//4doCiK48Yu
-         AACQ==
-X-Gm-Message-State: AOAM533JTcScelR83jn62J+F/uQ9yQBknjCG72vHTbmPJ55LPV7f0zl3
-        UybFTcNtazIJsOzirda1e/k=
-X-Google-Smtp-Source: ABdhPJzq3/XJciabui8rnzQn7aeImPsrEkb1mfNnq9GLuQHLaMW0nHmBcOKX/jJG5cwva7ZgvS0VvQ==
-X-Received: by 2002:aa7:d895:: with SMTP id u21mr5365739edq.300.1631784603508;
-        Thu, 16 Sep 2021 02:30:03 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cb10sm1132104edb.18.2021.09.16.02.30.02
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=JndR8XQqjTLqmEDS1ou8TAEknGTh/PoTmczPo6z0bj0=;
+        b=rGljfIWR8Xm/MQIDEcKCpj3vzxopEtmgwAYZ6CgyjOmmMj1ZZVbkpf9lfXHBcZZOWi
+         pspRheVDWKmCo8h08JCyP1bVMQH2VbsKzAvMKnqqpN6GBKI0dmfb1rh0G4n3M+wlieuG
+         N9Womrfl0DfFzqL5mCqaGjUnqVpUTxGFuso52gmgNULTtA4k+JNtWKGqMUUL4E0D2X0P
+         VrokJglj0TTHABVAulDoL0oIoP0QJEJM+G7ctB7vDvmetwJ3TZ6mKBwpNyPHWbgqJjIx
+         mpbiodvgrZLXZ4es6qWe1W5WKUyAQQ+d52QS+yeg9iMz5jpCd8A9dq5VzreI1AdtLXQD
+         cvaQ==
+X-Gm-Message-State: AOAM53380eJGyfNsHEdwBNJDPOFU5oUCwvY5Mtv7dGpekGq0Yd0pILU0
+        bCsZbJc9N/4yVcTgVo0pOO+tj6ccbo4=
+X-Google-Smtp-Source: ABdhPJyVlYBk9zdn45w8vY2RWxxqdO43xtjqKmFxpuKedkWDR3N/vI6Ek6M5EF8EQvwjK0mTG/B7zg==
+X-Received: by 2002:a05:6512:16a9:: with SMTP id bu41mr3432412lfb.41.1631785803839;
+        Thu, 16 Sep 2021 02:50:03 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id b17sm298505ljj.35.2021.09.16.02.50.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 02:30:02 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Thu, 16 Sep 2021 02:50:03 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Paul Eggert <eggert@cs.ucla.edu>,
-        Andreas Gruenbacher <agruen@gnu.org>,
-        Gwyneth Morgan <gwymor@tilde.club>
-Subject: Re: [PATCH 2/2] diff: --quote-path-with-sp
-Date:   Thu, 16 Sep 2021 11:06:42 +0200
-References: <20210915223316.1653443-1-gitster@pobox.com>
- <20210915223316.1653443-3-gitster@pobox.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210915223316.1653443-3-gitster@pobox.com>
-Message-ID: <87ee9ohnqd.fsf@evledraar.gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Paul Mackerras <paulus@ozlabs.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
+        <87pmtjkwsj.fsf@osv.gnss.ru>
+Date:   Thu, 16 Sep 2021 12:50:02 +0300
+In-Reply-To: <87pmtjkwsj.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        08 Sep 2021 16:43:24 +0300")
+Message-ID: <87sfy497ed.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sergey Organov <sorganov@gmail.com> writes:
 
-On Wed, Sep 15 2021, Junio C Hamano wrote:
-
-[CC-ing Andreas Gruenbacher who's currently active in GNU patch
-development, and Paul Eggert at his current address, in case he's
-curious about this blast from the past.
-
-Both: The full context for this proposed change in Git is at
-https://lore.kernel.org/git/20210915223316.1653443-1-gitster@pobox.com/]
-
-> Long time ago, we had a discussion with GNU patch/diff maintainer
-> and agreed that pathnames with certain "difficult" bytes needs to be
-> quoted to ensure the resulting patch is machine parseable in an
-> unambiguous way [*1*].  Recently, we saw a report that found that
-> GNU patch is unhappy with our diff output for a path with SP in it
-> [*2*].
-
-It would also be good to mention 4f6fbcdcf96 (Functions to quote and
-unquote pathnames in C-style., 2005-10-14) here, which is what came out
-of the [*1*] discussion you're citing, and that also link to the later:
-
-    https://lore.kernel.org/git/7vll0wvb2a.fsf@assigned-by-dhcp.cox.net/
-
-Where you quote a message of Paul Eggert's that didn't make it into the
-archive, but which AFAICT accurately summarizes the behavior in
-4f6fbcdcf96.
-
-Whereas the [*1*] you linked to is still the early proposal of handling
-UTF-8 specially (not quoting it), which doesn't appear to be what either
-GNU patch or Git went for in the end (both fully quote some fairly
-vanilla (also in latin1) UTF-8 when I tested it).
-
-It's still not clear to me if what was agreed upon was accurately
-implemented by Git at the time, but that GNU patch had a bug vis-a-vis
-the desired discussed behavior, if the bug is Git's, or both etc. Does a
-fix still need to be made in GNU patch?
-
-There's also a mention of busybox's interaction with this behavior in
-https://lore.kernel.org/git/YUK7Bl9uzNE1YErg@tilde.club/; has anyone
-(you or Gwyneth) sent them an FYI about this in case they'd like to
-adjust the behavior of their patch tool?
-
-> Teach "git diff" and friends the "--quote-path-with-sp" option, that
-> encloses a pathname with SP in it inside a pair of double-quotes,
-> even though there is otherwise no byte in the pathname that need to
-> be encoded in the octal.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> As an earlier parts of t/t3902 (outside the patch context) shows,
-> output from "ls-files", "ls-tree", and "diff --name-only" all follow
-> the same rule to decide paths with what bytes in them need quoting
-> and how they are quoted.
+>> Sergey Organov <sorganov@gmail.com> writes:
+>>
+>>> Here is a patch that fixes diff-index to accept --cc again:
+>>
+>> Sorry for the delay; I did not notice there was a patch buried in a
+>> discussion thread.
+>>
+>> We might later need to do this suppression in more codepaths if we
+>> find more regressions, but let's have one fix at a time.
 >
-> This experimental option deliberately refrains from touching these
-> output and affects ONLY the paths that appear in the patch header,
-> i.e. "diff --git", "--- a/path" and "+++ b/path" lines, that GNU
-> patch may care.  This is to minimize potential damage this change
-> may cause to tools and scripts the users have been relying on.
->
->  *1* https://lore.kernel.org/git/87ek6s0w34.fsf@penguin.cs.ucla.edu/
->  *2* https://lore.kernel.org/git/YR9Iaj%2FFqAyCMade@tilde.club/
-> [...patch omitted...]
+> I'm pretty positive there should be nothing left. This commit was
+> diff-index specific, and doesn't affect anything else. Nowhere in entire
+> series the semantics of --cc itself has been changed, it has been only
+> disabled as particular option in diff-index command-line parsing.
+> Overall, this is pretty local change.
+
+I'm afraid this issue is left up in the air after application of the
+fix-up patch, as usage of --cc in the diff-index is still undocumented.
+I.e., the fix-up just restores the historical status quo that has a
+problem by itself.
+
+As current documentation of --cc elsewhere does not seem to be even
+suitable for diff-index, I don't feel like providing corresponding patch
+for the documentation, even less so as I still have no idea if current
+behavior is intended or accidental, and if it's the latter, do we need
+to keep or somehow fix it? Anybody?
+
+Thanks,
+-- Sergey Organov
