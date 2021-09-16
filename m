@@ -2,99 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D208CC433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C70FC433F5
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:29:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF07061164
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:21:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC4C26120D
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240487AbhIPVW4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 17:22:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51262 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234249AbhIPVWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 17:22:51 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FFBE150447;
-        Thu, 16 Sep 2021 17:21:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4GAB7zZ1IsSpsfG7xUq5SsvQpyU6gWcrd7d6nB
-        WmWKA=; b=I9rTenoeoGwkKkwikB9x1UAaEyaGH2d8eaJ5QDsyDINV7gg2EOW6eS
-        n6QHnHvrk9M3UFwfY6f8S44y7fahvED4cy4IKiix1iWOideSheGluB58/1lqCmsw
-        XUixvgA0Q80itVMkDAT+wMfahT6QBDPDYVdeglaUJLdkYK9M/Y1aU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2793B150446;
-        Thu, 16 Sep 2021 17:21:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6092C150445;
-        Thu, 16 Sep 2021 17:21:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     wesley@schwengle.net
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH] Document `rebase.forkpoint` in rebase man page
-References: <c7949156-a7e5-085f-4779-82d0538a4d72@schwengle.net>
-        <20210916124709.2824551-1-wesley@schwengle.net>
-        <20210916124709.2824551-2-wesley@schwengle.net>
-        <xmqqv930ttkr.fsf@gitster.g>
-Date:   Thu, 16 Sep 2021 14:21:25 -0700
-In-Reply-To: <xmqqv930ttkr.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        16 Sep 2021 08:43:00 -0700")
-Message-ID: <xmqqtuikrzca.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237304AbhIPVay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 17:30:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231830AbhIPVay (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 17:30:54 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDFCC061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:29:33 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id m4so8061777ilj.9
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:29:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=I85Z9Q0tTCC3a5uqDOsVOdviZPmVDf2+B+6TFjyhxJE=;
+        b=2gioejJfx48unGmY8oSotBOQ1TAUpxTclX5Ol9DmD8bO6VL26jlVngzQVqTwL+Oolx
+         N2iQAfJSAyMyZOyoG9bcObIeVx3TOnBv5/3ORVvIOlXLMfX+7d87x1ABlj0n/7XXPL62
+         rnaGpiVKULDlc3yj5tUK9ndWSeZszjwt4XBEgGrL4QDXZYHnlq7T1OtqDeXVySkwDSq4
+         YNq+Pl7a7326CXa0Gb7ox/njQ/5d8nO993/mn3BwvKJTnZwYZG3u7TF/EvjYxpid4zRz
+         laOPYMmSE3tvHToFc6dUECDt6YWNtoANrlCjK05xDK7lWMpabY1ixbiRNQASaeVHtAns
+         wf6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=I85Z9Q0tTCC3a5uqDOsVOdviZPmVDf2+B+6TFjyhxJE=;
+        b=rOrD9k8LW2Jc338y7j7wTKmqlIljCKSEA+rPy1y8Uw926ZkTDvjAqkMOtacO3Mx05r
+         kagyrsG332sTKFNaONvfc6l3Mt3B38vbiYl0elzGNr7imQGaOPs9gFy8BZ6xxc9rVUza
+         EfV9QZ9tLNgQ4kJuk1oi86oW+6BQMXd0WraPpR9bATaRqJ4p+jmc5gJhJQE9wHkx2m+I
+         QXD6CUiQsfN2JTBLa2WGVYtGIvGe1PK58VZFbAJs5OEe1gEQIhhLIGBDzwdaNTMBJjvF
+         FRq8Df78X46BQ26hIcuv3aqxV7cXlMqiPiTal1duHslMywaablftoNxTrODFUNAGN25a
+         Ngkw==
+X-Gm-Message-State: AOAM533ZA65IaL3iLDPwd6uxx4oUElxF0BvbLKgSJyP/qx/x427HkFUa
+        1rcQBxJDwIBfEMN1FadPNTCLTQ==
+X-Google-Smtp-Source: ABdhPJyE9SJ0bYFmK/jr4V+dneGb2xrrRVa2T91mLgwHprlx2zz1Cy+AhIQpW7Xxi87FLw9qM30YEQ==
+X-Received: by 2002:a92:c9c9:: with SMTP id k9mr5411308ilq.82.1631827772633;
+        Thu, 16 Sep 2021 14:29:32 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id e22sm2211354iob.52.2021.09.16.14.29.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 14:29:32 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 17:29:30 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v6 08/22] object-file.c: don't set "typep" when returning
+ non-zero
+Message-ID: <YUO3OjbnpqwEWeDv@nand.local>
+References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
+ <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+ <patch-v6-08.22-38e4266772d-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D8391F4-1734-11EC-ADD7-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v6-08.22-38e4266772d-20210907T104559Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Sep 07, 2021 at 12:58:03PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> When the loose_object_info() function returns an error stop faking up
+> the "oi->typep" to OBJ_BAD. Let the return value of the function
+> itself suffice. This code cleanup simplifies subsequent changes.
 
-> wesley@schwengle.net writes:
->
->> From: Wesley Schwengle <wesley@opperschaap.net>
->>
->> The option exists and the rebase behaviour tricked me into thinking
->> there was a bug with git. This will tell people how they can tweak the
->> default behavior.
->
-> This tells readers about almost nothing but your frustration.
->
-> We, or anybody who will be reading "git log" in 6 months to improve
-> the system, will not need to hear it.  Instead we need to understand
->
-> what the real problem is, what was wrong in the behaviour, or what
-> the expected behaviour was and why the use of the feature was
-> inappropriate in the particular case, without which it is impossible
-> to understand why this sentence was added when a future developer
-> and documenter tries to improve upon this text.
+The obvious danger (which you mention) is that somebody is relying on
+what typep points to, and is reading it even if we returned non-zero
+from whatever called this function.
 
-I misspke a bit here.  While hearing only your frustration and
-nothing else won't help us much, we do need to understand what
-caused your frustration, to avoid frustrating the next user the same
-way.  All of the "Instead we need to understand ..." are about that.
+Hopefully nobody is, but this change makes me a little uncomfortable
+nonetheless, since there are so many potential callers (even though this
+function has only one caller, it doesn't take long before the number of
+indirect callers explodes).
 
-> We often do:
->
->   "See also `rebase.forkpoint` in linkgit:git-config[1]."
->
-> (for example, there is a reference to linkgit:githooks[5] in the
-> same page).
+So it would be nice if we could do without it, but you claim that it
+simplifies changes that happen later on. So let's continue to see if we
+really do need it...
 
-One reason why you didn't find how to tweak the forkpoint feature,
-other than giving a command line option to countermand it, is
-because this link pointing at the list of configurations, where the
-variable is already described, was missing in the doucmentation for
-the "rebase" command.
-
-Thanks.
+Thanks,
+Taylor
