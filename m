@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6DDDC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 10:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 408C0C433FE
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 10:33:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEF1A6120E
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 10:33:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2215D61108
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 10:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236631AbhIPKef (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 06:34:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49186 "EHLO
+        id S236679AbhIPKej (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 06:34:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236567AbhIPKed (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 06:34:33 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA068C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 03:33:13 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id j1so4217856pjv.3
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 03:33:13 -0700 (PDT)
+        with ESMTP id S236647AbhIPKeh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 06:34:37 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1736C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 03:33:17 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id u18so5794855pgf.0
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 03:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dm16lt3N3la3Rsj8BnLp3eWLyTCyeeHI76VyVOgUN78=;
-        b=OAP1eZbKvLKujTVg+NJtGS5u4iopfwqfngQTQkt3g85TI+LXdjmGokDOj2Ovr6RcUC
-         bzmxRO4GKlYLOiDPhg4c4DVMl1jDWmcBz8eC3J7ap/qo/IM961JzsMTzJggOn9SghbBy
-         0cLCFauX84on9HfBzO7FXdrWNH0DWHCyZGUK5hewAp+Zz2bHCbNsLORs8Sdn0iGwaEJi
-         E9DNquFMRBt0O3XQrM3dTFfYBslSR9whafp3yA61dt+Cn9jXtwntukMJIDLDkurt64wz
-         4CAHCBxjNkb9KdPg0wNkE1Fa6jtAu+9Xd9AK4BtI/nEInIOgg2ICsb/HA5d4PJUcKZB5
-         emSg==
+        bh=jnkkddKqtqWYsXo+82ptvtqq+qtAQ70WTJ2ehwv2NG8=;
+        b=dO6SdbbV78UNMNnWnGT7f1eIxm3kG2t5I65HGSmt0yDBk27MdoNmMAqE1DNns3hHUx
+         k4DNmyKpanFRKYYdRzQSZNhSlodyNDdXrbPggLSB6phHRp/pWjrH3R6sPzGkL8ajoaJQ
+         2lrOrvOZgawv6BfKuamGbOBRa0iKxIW1tAo5xL5Na7LD2A4A2RItJCQXMwutOs5udpBy
+         tYvaOfqvQbTSejFYC12dxNA1IUj449qS5tU/Cj2O9UtQa6P9ShtJT2j/de6ed3l5OzQh
+         YlRb5rEOMkIKEIiuachKqXyrUHPJNEHi3iA98kSeXhQ5UI7dN0E+aKd0QgLek2iNNbS+
+         QyFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dm16lt3N3la3Rsj8BnLp3eWLyTCyeeHI76VyVOgUN78=;
-        b=DvSf+5ww1rpeqAaGNbw50LWEMO5MnAZhx1TlEi0u5v7X048RfwMVRITePlSbh+3JPn
-         fMXWRrxlbwQSr65eFtrOue08+7t/g9FQPW3Hm6HNNJ8xfM1uZwrvos1uaoSt0YPLb58/
-         r5IWU30bxRIaH8HoxXjaQkSJdANbuG6dQw9Idu7N5uFtGNd2bo+ggDpWLZ7UfdCJC3/7
-         ePeiN9wleRq6CSGM8EivEG/hYTcWOkVSgNmDMAktKeQ/Xyd/zFb+UVFC74WcnZUV5tro
-         Yb+b/qqyzbiRW/KatO0kvx213FpJuQF5Li9KIUtofVPJCr5QKvXe/IDtqicQ7iHciSJi
-         HuEA==
-X-Gm-Message-State: AOAM533Tw1f0rvbUB/aAmAVCycWgJZmj8AMjJJcbLD1bO00VI95YIHy1
-        gU7j4tRIXsgddTe3vFCaU7M=
-X-Google-Smtp-Source: ABdhPJxxXE7zlCi2YaKys/j36xYKg+uXLKXxi11mYi43s+zvnSY5R82rv6BH05XCIRqlx+i59Jw7ng==
-X-Received: by 2002:a17:902:6ac4:b0:13c:856f:9511 with SMTP id i4-20020a1709026ac400b0013c856f9511mr4240182plt.23.1631788393406;
-        Thu, 16 Sep 2021 03:33:13 -0700 (PDT)
+        bh=jnkkddKqtqWYsXo+82ptvtqq+qtAQ70WTJ2ehwv2NG8=;
+        b=zmuwQEvGmmhr4P9SE6aP4v45XEqmlFnFWMApJxEpEztYCfuL1fLBTWH+AqqIn5RUm5
+         kvLEDxi091iwUwYCYUo+CGU9wlCO2g6UOqnrqfWuVbpBKNnbtmwvaS81PMui2FCqz0tY
+         drCXHpANN1GbC/eRYmCYrQfHriwIzWAl1SfYmBotkKHyrxeaIozv9j49DraZuCUAZDjX
+         UIHBBpzRflgBU7KjBeKGfzHI1yOnYR1ATj6ussTeeUWz97J7Nt/JNDzKaqHz1UUMfyQw
+         7OmK9PfDbQv/jGQOouDGlJGU3JglFeo1A+WegN8QEKDzrvBghjqIQ8vVr1nk5mXp6qFe
+         Ex3g==
+X-Gm-Message-State: AOAM530O0QbkQJ7A6LBl6l00k+g7FB5FGZojaIxy6qoZwz5FV8HdWhKB
+        7YjpslbLRqX+4GIqgkPhthy1OBIsKhA=
+X-Google-Smtp-Source: ABdhPJw7iIV2C3Qgue52FQSWnhi+hJr7G7LeZDnlmA8PIVxWJSE7fGocgYVS8bvHHcAeFd48FJu95w==
+X-Received: by 2002:aa7:8893:0:b0:416:4ed7:e4c4 with SMTP id z19-20020aa78893000000b004164ed7e4c4mr4452001pfe.83.1631788397274;
+        Thu, 16 Sep 2021 03:33:17 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.121.182])
-        by smtp.gmail.com with ESMTPSA id c199sm2642605pfb.152.2021.09.16.03.33.10
+        by smtp.gmail.com with ESMTPSA id c199sm2642605pfb.152.2021.09.16.03.33.13
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Sep 2021 03:33:13 -0700 (PDT)
+        Thu, 16 Sep 2021 03:33:17 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     raykar.ath@gmail.com
 Cc:     avarab@gmail.com, christian.couder@gmail.com,
         emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
         jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
         periperidip@gmail.com
-Subject: [PATCH v2 3/8] submodule--helper: rename helpers for update-clone
-Date:   Thu, 16 Sep 2021 16:02:36 +0530
-Message-Id: <20210916103241.62376-4-raykar.ath@gmail.com>
+Subject: [PATCH v2 4/8] submodule--helper: refactor get_submodule_displaypath()
+Date:   Thu, 16 Sep 2021 16:02:37 +0530
+Message-Id: <20210916103241.62376-5-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210916103241.62376-1-raykar.ath@gmail.com>
 References: <20210907115932.36068-1-raykar.ath@gmail.com>
@@ -75,63 +75,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `update-clone` subcommand helpers that perform the parallel clone
-and printing to stdout for shell script consumption, are renamed.
+We create a function called `do_get_submodule_displaypath()` that
+generates the display path required by several submodule functions, and
+takes a custom superprefix parameter, instead of reading it from the
+environment.
 
-This lets us use the names `update_submodules()` and
-`update_submodule()` for the helpers in the next patch, when we create
-an `update` subcommand that does a full conversion.
-
-We will get rid of these helpers in a cleanup patch at the end of this
-series, when the `update-clone` command is no longer useful to us.
+We then redefine the existing `get_submodule_displaypath()` function
+as a call to this new function, where the superprefix is obtained from
+the environment.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <periperidip@gmail.com>
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 ---
- builtin/submodule--helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/submodule--helper.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f6c4fc349b..b0336b0377 100644
+index b0336b0377..10de01a1f7 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2499,7 +2499,7 @@ static int do_run_update_procedure(struct update_data *ud)
- 	return run_update_command(ud, subforce);
- }
- 
--static void update_submodule(struct update_clone_data *ucd)
-+static void update_clone_submodule(struct update_clone_data *ucd)
- {
- 	fprintf(stdout, "dummy %s %d\t%s\n",
- 		oid_to_hex(&ucd->oid),
-@@ -2507,7 +2507,7 @@ static void update_submodule(struct update_clone_data *ucd)
- 		ucd->sub->path);
- }
- 
--static int update_submodules(struct submodule_update_clone *suc)
-+static int update_clone_submodules(struct submodule_update_clone *suc)
- {
- 	int i;
- 
-@@ -2528,7 +2528,7 @@ static int update_submodules(struct submodule_update_clone *suc)
- 		return 1;
- 
- 	for (i = 0; i < suc->update_clone_nr; i++)
--		update_submodule(&suc->update_clone[i]);
-+		update_clone_submodule(&suc->update_clone[i]);
- 
+@@ -269,11 +269,8 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
  	return 0;
  }
-@@ -2593,7 +2593,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
  
--	return update_submodules(&suc);
-+	return update_clone_submodules(&suc);
+-/* the result should be freed by the caller. */
+-static char *get_submodule_displaypath(const char *path, const char *prefix)
++static char *do_get_submodule_displaypath(const char *path, const char *prefix, const char *super_prefix)
+ {
+-	const char *super_prefix = get_super_prefix();
+-
+ 	if (prefix && super_prefix) {
+ 		BUG("cannot have prefix '%s' and superprefix '%s'",
+ 		    prefix, super_prefix);
+@@ -289,6 +286,13 @@ static char *get_submodule_displaypath(const char *path, const char *prefix)
+ 	}
  }
  
- static int run_update_procedure(int argc, const char **argv, const char *prefix)
++/* the result should be freed by the caller. */
++static char *get_submodule_displaypath(const char *path, const char *prefix)
++{
++	const char *super_prefix = get_super_prefix();
++	return do_get_submodule_displaypath(path, prefix, super_prefix);
++}
++
+ static char *compute_rev_name(const char *sub_path, const char* object_id)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
 -- 
 2.32.0
 
