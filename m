@@ -2,142 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 486B1C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADBB8C433FE
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:50:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29E5C6120E
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:48:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C79261212
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 15:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240060AbhIPPtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 11:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239213AbhIPPtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 11:49:40 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6AF4C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 08:48:19 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id h17so18550632edj.6
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 08:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=k+oTmiJUcDFqH69qOYJES0s8qeQ/hlewz6WLWpFYwno=;
-        b=kSR1n5tN/OQWRMv9FVN7/UFlWaUWY2MwSYhfLat3Cza/W97vRTYCcfeBrJU1vt5J0t
-         gpGHmhjmhUFzlg4bbMK1lGgUcWVVVbcj3UZpWmPRV18Ag83QnNYe8lGcl5O3EIKrssKg
-         8gfEv/vUrY/PrZKWYlNHGiqNja/bT6jiuQQmrQunwHNEPI1mGmgpV6W+LU0c/I0aDq9o
-         xk1CaU4ZqZteYF7OV6mrClq+qQUamQSZHRtrXWyBBOY8czCybYvns+XS6VulmuxmI5zP
-         QngI/3EqHxM9wrCQEJhRryOfpoHx75piHohfxLUCKesIEjUUbGmgGtYwsWs094S2jK27
-         3YSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=k+oTmiJUcDFqH69qOYJES0s8qeQ/hlewz6WLWpFYwno=;
-        b=5YAG9zwcabVVfuq66X8sMAtzzRa+QZdT5yUykN5EnRmr4Pjw+O6I+4JP04X+Mgs+Ln
-         l5eWTi8YdTMcjTp3US5deVFzKz1kG7AvSAsw04WqJ31n3TVjB3+KWe3G+x4JqKu3sRiH
-         Z7bp75W9IDybMdSTMLZb7WCuMcjkzWBTM+CfCq8Eo1GgBS+iF2mPr/cPrn/fKB4tKjwI
-         VA+cwQhTI7q0Sl4bnT9i0vHE2/rh+wNXFenyyhaZdPDmPd+zngvu3u4oCyF4TVmLCNx6
-         Pa5oYqGobh5h4Xx6eFchWPo3EfMrTMfZZZtxl8/DCuq+Zls+FgkOwC+YcZxuScejiVjA
-         /now==
-X-Gm-Message-State: AOAM530y1z9HdLF8mazB51Q8Xc+BGSGNEDQCXA/e93jsnfN/0mNuLRd7
-        lSzIj0cAYbsSArSCxkBDmDE=
-X-Google-Smtp-Source: ABdhPJxNAkeid6qXlfdmlCAFKc6vxTPnh0hdIzsHABePYQBCck8ex5u4wFXtpxWis9Faj3eBj3r+jg==
-X-Received: by 2002:aa7:cb0f:: with SMTP id s15mr7303157edt.190.1631807296981;
-        Thu, 16 Sep 2021 08:48:16 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id c10sm1303515eje.37.2021.09.16.08.48.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 08:48:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/7] trace2: fix memory leak of thread name
-Date:   Thu, 16 Sep 2021 17:47:57 +0200
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <5f557caee004f22cee33e8753063f0315459d7e1.1631738177.git.gitgitgadget@gmail.com>
- <87fsu5m649.fsf@evledraar.gmail.com> <YULZbQgxuyw8iJ/R@nand.local>
- <87ilz1gd24.fsf@evledraar.gmail.com>
- <285a279f-85c4-06df-04cf-b998e4accbe5@jeffhostetler.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <285a279f-85c4-06df-04cf-b998e4accbe5@jeffhostetler.com>
-Message-ID: <87o88sfrnk.fsf@evledraar.gmail.com>
+        id S240329AbhIPPwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 11:52:07 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53683 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240260AbhIPPv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 11:51:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1631807400;
+        bh=NqVVwzeNWwEQk/AH9IAdroOp0Zewk+TH9OlgrOa/d6k=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=g0JiMKjsxv+7t975Uxx7FMptmex2oLUzPZJetuPKZr2DlSyfUznIeFvRfSDA9RvsA
+         GxiUhFM5epDdPunCK2QsF+Ll+02twmrfCHQW3mvH78w+ZomKoBFqEmFZFSqP7Qs54B
+         M9pB9YEbSMB9D/w0gTOx0jhN3MbIBtKEhP8M9XCw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from homer.fritz.box ([185.221.149.64]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5GE1-1ms9GP20rV-0119As; Thu, 16
+ Sep 2021 17:50:00 +0200
+Message-ID: <b14d79e49e3abe3fdf00cf18bb8c992b4575c5cc.camel@gmx.de>
+Subject: Re: data loss when doing ls-remote and piped to command
+From:   Mike Galbraith <efault@gmx.de>
+To:     Rolf Eike Beer <eb@emlix.com>, git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Tobias Ulmer <tu@emlix.com>, Junio C Hamano <gitster@pobox.com>,
+        linux-kernel@vger.kernel.org
+Date:   Thu, 16 Sep 2021 17:49:59 +0200
+In-Reply-To: <2677927.DK6gFqPMyL@devpool47>
+References: <6786526.72e2EbofS7@devpool47> <2279155.Qy0YqsFniq@devpool47>
+         <85a103f6-8b3c-2f21-cc0f-04f517c0c9a1@emlix.com>
+         <2677927.DK6gFqPMyL@devpool47>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.41.2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:zjb95XSYmLriFpx4k9d48zBomGRzo4W1Dxm6ED4bwUcICm/rtFS
+ czgPSnlJ4tsxdnUog5ZG9/aWPVpAuGYE/LH/jhWI9jcN5zvEASQ8vqa0pspfuM7tw8rm3Cr
+ Uzt0q1r6QnDg1azxS3A7v8T6uaMXk0zpS3V+sXs/HVlWe5oJNoX8xByhCmWbszEBPSLcvw5
+ K+ZPX4WLA/Cu4ZWUSdxvA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5l5HbZwJxpU=:GKFoQbq7FgUVIanhTs1VGP
+ AWai0zr4lJMJp+xS1zat4NAvoj4vTf3Jk8zOJb6n2uNyp9H76phPuOvE7MiUfsNJZ+0nwlZiI
+ cBN/qy23GKuKV+5joQ9zo5qlPYqEpGnu4/yGnwjivRq1ZvdAd/Vz8yV4OP0nkba9A3MFtksnS
+ roVtbfV2OwQXdH7NVHNIPhW3bc1TPhM6fzCYchcOPD/r0pJbY+0trpa4nDohYEOcqzheXuuXT
+ C+inJPzh1M2uu9wIjAVB38oyLvhH0SFSmwue2XaVR4XVMeMvvO/VC70XpoiJ/fJCu9j9g8njU
+ oUzS+ZWjtXqvxdna/ZScXJIUKQH1xUcbZN7/8uQp9ChTj8uq+uJoUhnxfs4QC+JpiR+34CUkB
+ KGZPL34GiRrLTkj8Q6cb0eT11UgIAwVxES0r9tHhDJqFKLAGln536YjOBtcy/QD4ALGFx6DU6
+ iw6AXaEOpEPrezy7eJqwsjR6oH6obpU+G94ZO6crmtDwb34YHRweNbnaEPPEPR+ZzVCDLzLLe
+ jBryg9eYCFzVeyow1uRJ4MxvoNcbGLP8Y/0Xlby6Y1bMOk93HR7d1j23UTNjMCNoOewnA5z7d
+ HLClfvrTJZVqeOyI7WL/TJtZbuXo42DMcuKEYu24235PTpOHbwx/ikJIpWFh6XXA45wkmjwip
+ raES7ygfsqGSWsq8vKbRiMRd5FGCMjmoEaeq9tRvYfVxo3J5CKODXEZVbQFd2hR91LPQM738u
+ 3Rwa+eIXn/u2FRId3m94SJ6p+94M2kMP6Wuw/GmzNl3ulOBR7mk75VSWpa93oLNaMvRlhgucs
+ xuoIhp4DYy64vxLtytl1aexUI5V4SNCM2uiQj6LGbJ1864JkNyRixIffkCU1bIdlN1JZZj8h3
+ 5W0aDgcuktu299WX4GI/a6+hqNhHwkLHhn7SY9RuhGKbhALpQr+2XFPkcT65jliAFOkoxvKqo
+ IeFT9Bo3sD3YJPQu7/KzEP9rjNRH73yv3xan6HDDyPlHwFh6Bkp/JiOx+I3A4AJ1etgzDta6z
+ US6ji5yT7i9Zc9CsIk8s661qjfm8xMBQADNU+8tXSbjV/d5NinRwHUd2i5V7v9+Sai9Q4Hulf
+ T+29SxldoE+hwk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Sep 16 2021, Jeff Hostetler wrote:
-
-> On 9/16/21 4:01 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Sep 16 2021, Taylor Blau wrote:
->>=20
->>> On Thu, Sep 16, 2021 at 07:35:59AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->>>> So I think this patch can be dropped from this series, since it's exact
->>>> duplicate of my 48f68715b14 (tr2: stop leaking "thread_name" memory,
->>>> 2021-08-27) in ab/tr2-leaks-and-fixes, currently in "next" and marked
->>>> for a merge with master.
->>>
->>> I agree it can be dropped.
->>>
->>>> When submitting a series that depends on another one it's best to reba=
-se
->>>> it on top of it & indicate it as such in the cover letter, Junio can
->>>> queue such a series on top of another one.
->>>>
->>>> In this case I'm still not sure why this fix is here, i.e. surely
->>>> nothing later in the series absolutely needs this stray memory leak
->>>> fix...
->>>
->>> But there's no need for Jeff to depend on your branch, since (as you
->>> mentioned) this cleanup isn't relevant for anything else in this series,
->>> which is a sort of grab-bag of miscellaneous clean-ups.
->> Indeed, to be clear it was just general advice about queue-on-top.
->> But to clarify what I was getting at here: If we just came up with
->> the
->> same diff I'd have assumed Jeff just hadn't need the change in "next",
->> but since he clearly has I was confused by it being here.
->> I.e. it doesn't *seem* like anything in the rest of the series
->> depends
->> on it, so why have it here at all since the bug is being fixed anyway?
->> Or if it does depend on it in some subtle way I've missed, perhaps it
->> does need to be queued on top of ab/tr2-leaks-and-fixes, and the
->> relevant commit/subtle dependency needs to be called out in a commit
->> message.
->> Or maybe Jeff had just come up with this independently, noticed it
->> just
->> before submission and just updated the CL, not the patch or series
->> itself :)
->>=20
+On Thu, 2021-09-16 at 14:17 +0200, Rolf Eike Beer wrote:
+> Am Donnerstag, 16. September 2021, 12:12:48 CEST schrieb Tobias Ulmer:
+> > On 16/09/2021 08:38, Rolf Eike Beer wrote:
+> > ...
+> >
+> > > The redirection seems to be an important part of it. I now did:
+> > >
+> > > git ... 2>&1 | sha256sum
+> >
+> > I've tried to reproduce this since yesterday, but couldn't until now:
+> >
+> > 2>&1 made all the difference, took less than a minute.
+> >
+> > Different repo, different machine, but also running Tumbleweed
+> > 5.14.1-1-default, git 2.33.0
+> >
+> > while [ "`git --git-dir=3D$PWD/in/linux/.git ls-remote origin 2>&1 | t=
+ee
+> > failed.out | sha1sum`" =3D "7fa299e589bacdc908395730beff542b0fc684eb=
+=C2=A0 -"
+> > ]; do echo -n .; done
+> > ..........
+> >
+> > failed.out has multiple lines like this:
+> >
+> > --8<--
+> > 4e77f7f1261f65cff06918bc5e66d02a418fc842=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 refs/tags/v3.10.18^{}
+> > f7b8df0cc81cf82a4ac6834225bddbe46a340455a4a5d52f29d08d923ce8d232b0b497=
+da674d
+> > d2c refs/tags/v3.18
+> > b2776bf7149bddd1f4161f14f79520f17fc1d71d=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 refs/tags/v3.18^{}
+> > --8<--
+> >
+> >
+> > Running the same on Archlinux (5.13.13-arch1-1, 2.33.0) doesn't show t=
+he
+> > problem.
+> > This may well turn out not to be git, but a kernel issue.
 >
-> I'll drop this commit since your version is already queued up
-> and headed to master.  I've been carrying it in my dev branch
-> for a while and was using it to make leak reporting a little
-> quieter.
+> Linus,
 >
-> And yes, I just noticed that yours had advanced when I wrote the
-> cover letter and ACKd it rather than dropping it.
+> since you have been hacking around in pipe.c recently, I fear this isn't
+> entirely impossible. Have you any idea?
 >
-> And no, nothing in the rest of the whole FSMonitor series depends
-> on this, so I can leave my series based upon master rather than
-> your branch.
+> For easier reference, the complete thread is at:
 >
-> Thanks
-> Jeff
+> https://public-inbox.org/git/85a103f6-8b3c-2f21-cc0f-04f517c0c9a1@emlix.=
+com/T/
+>
 
-Sounds good, thanks for clarifying.
+I use git-daemon (2.33) and reference clones for my local pile of
+kernel trees (74), so out of curiosity, modified the above ls-remote
+loop to fit one of them, and tried to reproduce with both master.today
+(ff1ffd71) and SUSE's stable branch (where Tumbleweed gets source,
+currently at 5.14.4).  Both kernels failed to reproduce given a few
+minutes each (zzzz) to do so.  I'm running Leap-15.3 vs Tumbleweed, but
+that shouldn't matter.
 
-In any case by the time you'll re-roll this (or soon thereafter) Junio
-will probably have merged it down anyway.
+	-Mike
