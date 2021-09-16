@@ -2,98 +2,199 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80EA8C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF929C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 05:06:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4AE33611CE
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 04:58:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88BE160E90
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 05:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230432AbhIPFAJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 01:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58470 "EHLO
+        id S234324AbhIPFIS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 01:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbhIPFAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 01:00:08 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A076C061574
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 21:58:48 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id d11so1484762ilc.8
-        for <git@vger.kernel.org>; Wed, 15 Sep 2021 21:58:48 -0700 (PDT)
+        with ESMTP id S231951AbhIPFIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 01:08:17 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF21C061574
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 22:06:57 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id n24so6394217ion.10
+        for <git@vger.kernel.org>; Wed, 15 Sep 2021 22:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=K136exbC9JOpOWxQ/HkYQuEn9jgQR9eCpgQYGqlQxrk=;
-        b=gCu70x4mjJAJ99YlERe0ZsL2HwHymLIbvaa2KTmqFgtCEeus1X6wGpsDvtuu1PBl9K
-         ++EYrZC+EvsAXecW9AGpeYmtLEVWvxvVCdTCQKrmfYZ6CymmSl5cgbpB47Buk01g6l59
-         uvRa7SKbPjoS4P4edjO9rCs8R0lf+K0VesyZM6BGMHSNKVZ85qErV+oOKCP8KEU2NMPp
-         3lukwzrRQKewAl/N/BYIElEI/zzOCLVr5irz1vqbIZH26rWDp/sGlQqr/DC/SZ3PIH99
-         ctwH6bLSgcCLQ9/pz9CkuQ9tVR0nSgXXNmamGVXnmli0x26nIaJdNVcGzLUjmhMsw5GD
-         Ehcw==
+        bh=jGg5nNrf7EiYtLQaDJxAXAfwrXI2JWoeDTnpDJmm0I8=;
+        b=V9svdCwjHBZZ6ZvsrM8IJ3EfRmM6HjG3jt+wURgXnPRjhJqQnMLnW4/RI5BvU7ivJ8
+         giaD6BpmkqPB7xccNuwq+IwiALMc+qlKc2mAoL8ksQTBv4pF0APlONGRkJNGTIPFD6DQ
+         R5641aJ8/hYu8DtW3EBDTCJuMxok2NeM+zTsOWEeoybH4DrxY1B+Pdh0xxrT1GaaVl8A
+         IKArE0HFYBd/o5OXRXstcjffyFscDPPo1OmocSw9uIVmdE5312A6qLWfP77RUTFT5+3G
+         VyEIpi0EsVeTQY1uOFW6THIRKtpXfYBfgQk27T3o7TvUhUykLLS4v47PQFPKLORB+Lbw
+         acrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=K136exbC9JOpOWxQ/HkYQuEn9jgQR9eCpgQYGqlQxrk=;
-        b=Ew1d9XVl/F8Q6+k8bZN4d/0bWC0JM9uTdxb8Gnj+UJjtKwUiFsuWViHG2wQyI5rkst
-         2VUX9klj36vQi0jPrRdGHeUZhl+mSV5p1ReVmLOtHzFAiVrF+hIdXLjNnut2c/kW8iQC
-         DfhTMnyRJ391QxReiC8cxCN9qm7zjADpHU31rlCOJnSUBjLedfcT6A1WNUkZyyKfkks3
-         q+pXrVyu0LDDLOJ0HCdTOoNst5+ULtEhEk9TMZOxUEM4+DAsffD7IrBLBM+ekYDS+r+X
-         Q4ypUAtNRnXhXikVo8gdruw+casKxJz/UI9J2q151+ApeUkdh6S+dfe+sh1pTHWlY76y
-         ICxA==
-X-Gm-Message-State: AOAM531oi0AkGxYaY4Akrb5Zj5/ya1f5c10ndEJmhHdPJ8vbWKk056Hc
-        5aAlPVZ24fAv11wqDi6we2RSXg==
-X-Google-Smtp-Source: ABdhPJzBKlk/8HXh5k+uGDt8wD3RgTB8VQCudeX8PWUxnUIRZhEEuVyLo5Eud7OA9X0szkTErx1Gig==
-X-Received: by 2002:a92:d2c7:: with SMTP id w7mr2577858ilg.71.1631768327603;
-        Wed, 15 Sep 2021 21:58:47 -0700 (PDT)
+        bh=jGg5nNrf7EiYtLQaDJxAXAfwrXI2JWoeDTnpDJmm0I8=;
+        b=xgz1JAMi/hLN9W/JJE8P30RrZ/O30HEmA9dYaLvwQFMvlKTA2rYOCE0BfmKnpBfROd
+         //BidCc57oSq50CNyDL8MequD4X3OxWYfkrNaAeWoFAuJVCWSvEMT3GEYIuy5An4pdVh
+         IqDbN+beHspoxMEuOkuSyOwuVuV/WcdS6Ygi4z2aQqT+WtCP3qWqOl9ITFIOLcVdrTbQ
+         pODgN1bd6s/jD8OLU2SyDMEqCpRePTYde3Gh4WHwb06ilpC24jl6NIwYZmb39iQwUTEv
+         KF0UY7/dJ3MPUJf5iiJXt+yz5uDoW3GoZwnrAb0Pcz7w3Y9a5ySBeoWk4fvTA+99LHk4
+         c6rQ==
+X-Gm-Message-State: AOAM530xsZQ5m5rC0EP+8TISzcvZA6ymFRe1uRMyAcUqs6BxFYjO2PSd
+        PcVeS0hShItDbUkfAHAAKsJWp0B7YupsubLk
+X-Google-Smtp-Source: ABdhPJwihFjfoV44piS5ktO0Pjptg85xAjpdf3uUEcNaxV+HMB6DHr1mLK+ZgFOVBRd4JymiWf+zMA==
+X-Received: by 2002:a6b:e90c:: with SMTP id u12mr2804567iof.95.1631768817267;
+        Wed, 15 Sep 2021 22:06:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c3sm213147ils.61.2021.09.15.21.58.47
+        by smtp.gmail.com with ESMTPSA id w18sm1107312ilg.13.2021.09.15.22.06.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 21:58:47 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 00:58:46 -0400
+        Wed, 15 Sep 2021 22:06:57 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 01:06:56 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 6/7] run-command: create start_bg_command
-Message-ID: <YULPBmIYJLv654kz@nand.local>
+Subject: Re: [PATCH 7/7] t/helper/simple-ipc: convert test-simple-ipc to use
+ start_bg_command
+Message-ID: <YULQ8DJFKlrOml8Z@nand.local>
 References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <f97038a563d889d740a7e968fcbdfaadb41e2008.1631738177.git.gitgitgadget@gmail.com>
- <YULNs166fGOfVUVy@nand.local>
+ <57f29feaadb4a732892cd193b2a1d3c838f09421.1631738177.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YULNs166fGOfVUVy@nand.local>
+In-Reply-To: <57f29feaadb4a732892cd193b2a1d3c838f09421.1631738177.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 16, 2021 at 12:53:07AM -0400, Taylor Blau wrote:
-> > +/**
-> > + * Callback used by `start_bg_command()` to ask whether the
-> > + * child process is ready or needs more time to become ready.
-> > + *
-> > + * Returns 1 is child needs more time (subject to the requested timeout).
-> > + * Returns 0 if child is ready.
-> > + * Returns -1 on any error and cause `start_bg_command()` to also error out.
-> > + */
-> > +typedef int(start_bg_wait_cb)(void *cb_data,
-> > +			      const struct child_process *cmd);
+On Wed, Sep 15, 2021 at 08:36:17PM +0000, Jeff Hostetler via GitGitGadget wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> Nitpicking, but typically I would assume that the "extra" void pointer
-> is the last argument in a callback. It definitely does not matter,
-> though.
+> Convert test helper to use `start_bg_command()` when spawning a server
+> daemon in the background rather than blocks of platform-specific code.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/helper/test-simple-ipc.c | 193 ++++++++-----------------------------
+>  1 file changed, 40 insertions(+), 153 deletions(-)
+>
+> diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+> index 91345180750..59a950f3b00 100644
+> --- a/t/helper/test-simple-ipc.c
+> +++ b/t/helper/test-simple-ipc.c
+> @@ -9,6 +9,7 @@
+>  #include "parse-options.h"
+>  #include "thread-utils.h"
+>  #include "strvec.h"
+> +#include "run-command.h"
+>
+>  #ifndef SUPPORTS_SIMPLE_IPC
+>  int cmd__simple_ipc(int argc, const char **argv)
+> @@ -274,178 +275,64 @@ static int daemon__run_server(void)
+>  	return ret;
+>  }
+>
+> -#ifndef GIT_WINDOWS_NATIVE
+> -/*
+> - * This is adapted from `daemonize()`.  Use `fork()` to directly create and
+> - * run the daemon in a child process.
+> - */
+> -static int spawn_server(pid_t *pid)
+> -{
+> -	struct ipc_server_opts opts = {
+> -		.nr_threads = cl_args.nr_threads,
+> -	};
+> +static start_bg_wait_cb bg_wait_cb;
 
-Looking at the last patch (which adds the first implementation of one of
-these callbacks) it appears that this cb_data pointer is unused. I
-assume that it is used in later patches which aren't in this topic?
+This whole patch is delightful to read, as the new implementation is so
+much cleaner as a result of the earlier work in this series.
 
-If so, then it may help future readers to indicate as much in the patch
-message. Perhaps "the cb_data argument in the start_bg_wait_cb callback
-is unused in this series, but will be useful in later patches".
+Am I correct in assuming that this is to encourage a compiler error if
+bg_wait_cb does not satisfy the type of start_bg_wait_cb? If so, then I
+think we are already getting that by trying to pass bg_wait_cb to
+start_bg_command().
+
+E.g., applying this (intentionally broken) diff on top:
+
+--- 8< ---
+
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+index 59a950f3b0..3aed787206 100644
+--- a/t/helper/test-simple-ipc.c
++++ b/t/helper/test-simple-ipc.c
+@@ -275,9 +275,7 @@ static int daemon__run_server(void)
+ 	return ret;
+ }
+
+-static start_bg_wait_cb bg_wait_cb;
+-
+-static int bg_wait_cb(void *cb_data, const struct child_process *cp)
++static int bg_wait_cb(const void *cb_data, const struct child_process *cp)
+ {
+ 	int s = ipc_get_active_state(cl_args.path);
+
+--- >8 ---
+
+and then compiling still warns of a mismatched type when calling
+start_bg_command().
+
+> -	*pid = fork();
+> -
+> -	switch (*pid) {
+> -	case 0:
+> -		if (setsid() == -1)
+> -			error_errno(_("setsid failed"));
+> -		close(0);
+> -		close(1);
+> -		close(2);
+> -		sanitize_stdfds();
+> +static int bg_wait_cb(void *cb_data, const struct child_process *cp)
+> +{
+> +	int s = ipc_get_active_state(cl_args.path);
+>
+> -		return ipc_server_run(cl_args.path, &opts, test_app_cb,
+> -				      (void*)&my_app_data);
+> +	switch (s) {
+> +	case IPC_STATE__LISTENING:
+> +		/* child is "ready" */
+> +		return 0;
+>
+> -	case -1:
+> -		return error_errno(_("could not spawn daemon in the background"));
+> +	case IPC_STATE__NOT_LISTENING:
+> +	case IPC_STATE__PATH_NOT_FOUND:
+> +		/* give child more time */
+> +		return 1;
+>
+>  	default:
+
+I'm always a little hesitant to have default cases when switch over enum
+types, since it suppresses the warning when there's a new value of that
+type. But we already have a similar default in client__probe_server().
+
+> -		else if (pid_seen == pid_child) {
+> -			/*
+> -			 * The new child daemon process shutdown while
+> -			 * it was starting up, so it is not listening
+> -			 * on the socket.
+> -			 *
+> -			 * Try to ping the socket in the odd chance
+> -			 * that another daemon started (or was already
+> -			 * running) while our child was starting.
+> -			 *
+> -			 * Again, we don't care who services the socket.
+> -			 */
+> -			s = ipc_get_active_state(cl_args.path);
+> -			if (s == IPC_STATE__LISTENING)
+> -				return 0;
+> +	default:
+
+Ditto.
 
 Thanks,
 Taylor
