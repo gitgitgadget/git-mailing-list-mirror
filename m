@@ -2,99 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92FB3C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA72AC433FE
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7143560F26
-	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A45796120C
+	for <git@archiver.kernel.org>; Thu, 16 Sep 2021 21:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234138AbhIPVlC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 17:41:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231255AbhIPVlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 17:41:02 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25CB6C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:39:41 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id m4so8085523ilj.9
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 14:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=fUqpuGu6i8tVKLlyr95fr8Q9ciTIm4hzvAU6k+yGUdo=;
-        b=jNS2zN/40LjJL0RHORERs8UW0vgQekgxQMJHauQYrtCnX75b9dTaSI5Z0rddX/jpY1
-         ujpKwtwb30C3KahmOLOH3Zhm2iVfmkCnotbw5nx7wI6tSZwrTWOyO73vCf031gHbtA3j
-         rQ9COmUe8f5rxQbjs0zDZ9FA/97Dt0YZ9G3oKIh62A5hr0poyLue1DlWUM1yxGsBrakB
-         J7grAX3yByBWGkFP4JNY7preNLl5/kEZe1a3a0KK66AOpOxJIn9GJGL2e4ZkQRBMTtLL
-         mdsh6PiJi+rTzLRLKDgecUhcW/RXP/VusbFEh7foc0ZCG3ubtY/E23TyyGb5uhL4Gl35
-         oBFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=fUqpuGu6i8tVKLlyr95fr8Q9ciTIm4hzvAU6k+yGUdo=;
-        b=anyZgxWT4bmoj1rqDbvYBql8dRutPGNoLhU0tSzO6+JBEXKydvxed7CLUatgrZY7km
-         EFjK/ZcRcvdiHasuYQ+xoDvBe4NOrkDy0IVN/OOY6xUr80q1R1txWNU32dWaGOQF82La
-         uLbrUOy13jC1jWpY0KMrMGJz5SLLhviuhZs+xUeAidhLXre8kyWfqhHLZi9N1N9BlM1e
-         SIy0KK72hhZ0+0vzxJjR9l+wkcKPxNjq1d/Hf00WVeLx8rUoB7fuyOAB1BNQhzA15XDT
-         yK6A0DwtV6PB5/CI+Bgikp2LFKz3D89Bgsrpf1KCMDNCn06p/70BJukK4kHfBCFCFxTK
-         +TUA==
-X-Gm-Message-State: AOAM533IQa3jTFkWs+O0UNavALHzQSJaDlVZPDok5JH4nwG/1ur1yMVE
-        t8kCwBwAT8aXIEs4EVO9iNaaUA==
-X-Google-Smtp-Source: ABdhPJxUYmmpehN1dzSKrq0k9jJndtPStOIR1Z/6THCWd39XgADeKHpsAd3IyO3ZzhCyQ7oPY5H13Q==
-X-Received: by 2002:a05:6e02:eb2:: with SMTP id u18mr5523359ilj.138.1631828380538;
-        Thu, 16 Sep 2021 14:39:40 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t14sm2390138ilu.67.2021.09.16.14.39.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 14:39:40 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 17:39:39 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 10/22] object-file.c: make
- parse_loose_header_extended() public
-Message-ID: <YUO5m9gukagBGiF3@nand.local>
-References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
- <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
- <patch-v6-10.22-b15ad53414b-20210907T104559Z-avarab@gmail.com>
+        id S239232AbhIPVq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 17:46:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49498 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234847AbhIPVqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 17:46:24 -0400
+Received: (qmail 8461 invoked by uid 109); 16 Sep 2021 21:45:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Sep 2021 21:45:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9399 invoked by uid 111); 16 Sep 2021 21:45:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Sep 2021 17:45:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Sep 2021 17:45:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
+Message-ID: <YUO63qy2/5wibY4/@coredump.intra.peff.net>
+References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
+ <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
+ <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
+ <YTTARcEvpXWSDfYW@coredump.intra.peff.net>
+ <CAOLTT8QbdNBSY95bCa+UNJBqsJEEHbnaKfZLzvN2Qzd-Np8Lqg@mail.gmail.com>
+ <YTeo/dCFfpAIfo3K@coredump.intra.peff.net>
+ <CAOLTT8Ru-Zhmo5j=jNjWexrahT0qAO5zEMW09XT00-TCca-SkA@mail.gmail.com>
+ <YTtrF8C0mmT6kBJT@coredump.intra.peff.net>
+ <CAOLTT8RPzutEQxbr9cu=ze7rgPKvG6Ghu4b2Bi47eStY1TqGzQ@mail.gmail.com>
+ <CAOLTT8SYxUbfG7YvAs03nwRdee8JfNPUYCCpKcFoAgBjB2oqLw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v6-10.22-b15ad53414b-20210907T104559Z-avarab@gmail.com>
+In-Reply-To: <CAOLTT8SYxUbfG7YvAs03nwRdee8JfNPUYCCpKcFoAgBjB2oqLw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 12:58:05PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Make the parse_loose_header_extended() function public and remove the
-> parse_loose_header() wrapper. The only direct user of it outside of
-> object-file.c itself was in streaming.c, that caller can simply pass
-> the required "struct object-info *" instead.
->
-> This change is being done in preparation for teaching
-> read_loose_object() to accept a flag to pass to
-> parse_loose_header(). It isn't strictly necessary for that change, we
-> could simply use parse_loose_header_extended() there, but will leave
-> the API in a better end state.
+On Wed, Sep 15, 2021 at 10:23:43PM +0800, ZheNing Hu wrote:
 
-All seems reasonable. I agree that this is not a necessary step, but at
-least the clean-up is self contained and an easy enough read.
+> ZheNing Hu <adlternative@gmail.com> 于2021年9月15日周三 下午8:27写道：
+> >
+> > > So yes, it's complicated. And it must be explained to the user that
+> > > "%(refname)" behaves slightly differently with "git tag --verify", but
+> > > that is unavoidable if we do not want to break scripts (it _already_
+> > > behaves slightly differently, and we just never told anyone).
+> > >
+> 
+> $ git tag --verify --format='verify: %(refname) %(symref)' annotated symref
+> verify: annotated
+> verify: symref
+> $ git tag --verify --format='verify: %(refname) %(symref)'
+> refs/tags/annotated refs/tags/symref
+> error: tag 'refs/tags/annotated' not found.
+> error: tag 'refs/tags/symref' not found.
 
-The flag that read_loose_object() is going to start passing to
-parse_loose_header() is left a bit vague, but I'll continue reading to
-figure out what it is.
+This is expected. When you provide a tag name on the command line of
+"git tag" it is assumed to be a non-qualified name in refs/tags/ (and
+ditto for git-branch and refs/heads/). It is tempting to try to be
+friendly and accept fully-qualified refs there, but it would create
+ambiguities (e.g., you could really have refs/tags/refs/tags/foo as a
+ref).
 
-Thanks,
-Taylor
+I think we can ignore that for our purposes here, though. It's a
+question of input from the command-line, and we focus on just the output
+that we produce.
+
+> $ git verify-tag --format='verify: %(refname) %(symref)' annotated
+> symref
+> verify: annotated
+> verify: symref
+> $ git verify-tag --format='verify: %(refname) %(symref)'
+> refs/tags/annotated refs/tags/symref
+> verify: refs/tags/annotated
+> verify: refs/tags/symref
+> 
+> As we can see, there is a slight difference between git tag --verify and
+> git verify-tag: git tag --verify can not handle refs' fullname refs/tags/*
+> (because read_ref_full() | read_ref() can't handle them). So, as a standard,
+> which characteristics should we keep?
+
+Whereas are you notice here, verify-tag takes any name (which could be
+fully qualified), and uses it as-is. In fact, it might not even be a ref
+at all! You can say "git verify-tag c06b72d02" if you want to. And as a
+plumbing tool, we should make sure this continues to work. For example,
+careful scripts may resolve a ref into an object, and want to continue
+talking about that object without worrying about the ref being changed
+simultaneously.
+
+But it also creates a weirdness for "git verify-tag --format". We do not
+necessarily even have a ref to show. So IMHO the feature is somewhat
+mis-designed in the first place. But we should probably continue to
+support it as best we can.
+
+The best I can come up with is:
+
+  - when we resolve the name, if it was a ref, we should record that.
+    I think this is hard to do now. It would probably require
+    get_oid_with_context() learning to report on the results it got from
+    dwim_ref().
+
+  - if we have a refname, then feed it to pretty_print_ref() as a
+    fully-qualified name. And pass whatever "default lstrip=2" magic we
+    come up with for "git tag --verify". That would mean that "git
+    verify-tag --format=%(refname) v2.33.0" would behave the same before
+    and after.
+
+  - if we didn't get a refname, then...I guess continue to pass the name
+    the user gave us into pretty_print_ref()? That would keep "git
+    verify-tag --format=%(refname) c06b72d02" working as it does today.
+
+The alternative is to do none of those things, and just document that
+"verify-tag" is weird:
+
+  - its %(refname) reports whatever you gave it, whether it is a ref or
+    not
+
+  - some advanced format placeholders like %(symref) may not work if you
+    don't pass a fully-qualified ref
+
+-Peff
