@@ -2,109 +2,249 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38EE7C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 07:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA76DC433F5
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 07:10:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 126C460EE2
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 07:08:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A25E560ED7
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 07:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233224AbhIQHKB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 03:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48086 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230051AbhIQHKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 03:10:00 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F95C061574
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 00:08:38 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id bq5so29110517lfb.9
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 00:08:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZI3Oo/KXhK8dnWCfWUeyWSxh95FT2b/n1nPrtEnvbSE=;
-        b=PJg4/2K9NMYqAhwBxdP2bbB6Y9pAP/mTvtf2JboRGR+DmtG9dyulBc9O+bvef1GqZS
-         zXEKqBzvBviRvbafmtQZ9ikf3WMJivEOouLnJ1NYZCj7UjKbUmLqRvNGJ1X988EzH/43
-         DhdCC52n67HsdunvUPIfrQyuB/Mpj2Zr6xqaSUDhczZks5l4ZxRlo+05DEM7O8DRbl9K
-         I119haM3JqBn97j3YvWEU6Azc7ekQAMDEjTLG7mJNaveGhZD7hTcRxfhuPY1Q2+hdhZO
-         VLrVyDwlOT/Dwq4fUhLm2Os1fy63oBecmHo9yJpDqoMxddxAkG46silgs0n1zu36NNPR
-         WlbA==
+        id S238187AbhIQHLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 03:11:52 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:37565 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230051AbhIQHLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 03:11:46 -0400
+Received: by mail-ed1-f49.google.com with SMTP id g21so26384016edw.4
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 00:10:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=ZI3Oo/KXhK8dnWCfWUeyWSxh95FT2b/n1nPrtEnvbSE=;
-        b=3PedNIxPX6/yiuGid2K0Y4EtOMb4+WNO9j3M219Gnumlz+xZwDt3ZZvCVErfYDdxPz
-         lxFTam4aG+Zgilf8PF8SZ4uU0RqE0wxClE9Z7Mea6soFxemToSWAVAvAUv9fr5ritb+q
-         pJJ6b632CLCSH6f44r0M/nSk9UwH6vDHAmS8mXYOb+Rv+UGk4y2f5HaK7nS7u2023hfA
-         fzvarBF1O1oq+FrudG11AuqxEotHiEQvf7z08T9LrsxWc3x90/4fn+mkacjoOJTerPNq
-         gkcB0t+xF/VgP4IgjZR4oM4cJ9MSmjLkSwrZbdvYLM6UBCg53O5XHTExnImBsIPJTgHh
-         yA7w==
-X-Gm-Message-State: AOAM532iAhOTZzx9G965O6NHglbbADUZtnjshgO6fKuqZSfyF20FmV7O
-        NYn6zx+inLUNupf7hVCUTc6bIuyFB2U=
-X-Google-Smtp-Source: ABdhPJwd4dE5Q+gdTsM1QNmPEHbKQU2mVga+HM43A1C+408915RJx4I5cVOcQkhThr1f7zDCpa+BEw==
-X-Received: by 2002:a05:651c:3dd:: with SMTP id f29mr8269239ljp.69.1631862516308;
-        Fri, 17 Sep 2021 00:08:36 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m10sm453776lfr.272.2021.09.17.00.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Sep 2021 00:08:35 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
-References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-        <87h7f4tf0b.fsf@osv.gnss.ru> <xmqqy288b64q.fsf@gitster.g>
-        <87pmtjkwsj.fsf@osv.gnss.ru> <87sfy497ed.fsf@osv.gnss.ru>
-        <xmqqy27wrzmj.fsf@gitster.g> <874kaki1nb.fsf@osv.gnss.ru>
-        <xmqqzgscqgmv.fsf@gitster.g>
-Date:   Fri, 17 Sep 2021 10:08:34 +0300
-In-Reply-To: <xmqqzgscqgmv.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        16 Sep 2021 15:50:48 -0700")
-Message-ID: <87bl4rk7bh.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z6DlhooSohuiDdXE3coev9lZkvTKQH6p1/lZTI225KU=;
+        b=Vkq4uX71K6NlDEEyn7E6X3MbnRLJGdtMlFzZJgLbjM1XagunXB4YiQb5Z2Se/RvP4J
+         fRRfuRvRKJxA+qW2J7tUeczMSbh74xbvpj78P/oH9xY/p+UJfeyG/zQyYUfvJHCn8pmh
+         H4WKkcl1xIQSzd2aq/vtnyCrs7iLRQrDf3cCN87FKqSS+W/zqHG3//u7AqKDkEiP0/Zv
+         jmXOY1oOJhFjCLPFvAZzatSH9LUHEZz7KSDxrdfAdCQkNtpE//IR4LXT+F9y3jfvyCyw
+         3KHyhzvZd5KdDh/HDRNZmJYpwataO1sOxfuNMiKAcQrRPCONHZy6gxK2Qm0ejr4L9lET
+         j2ZA==
+X-Gm-Message-State: AOAM530WrbLBc+pOUO05ln/DkJZmN/vhny+N0/XBTvgpV0WZw+yg+Zew
+        zPK/TLaFLiB/yplFRiuvmnXtY5Jacv9/rVVry+o=
+X-Google-Smtp-Source: ABdhPJz4Mxgs7g6TbSvozwaD2E71KvCuHYibCiQwKZ5VTF5oykjTqtw0A/ZPF/6eGa5D/2mJHCepAUTtt3J9KKJJMTE=
+X-Received: by 2002:a17:907:990d:: with SMTP id ka13mr10497793ejc.392.1631862623729;
+ Fri, 17 Sep 2021 00:10:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210916140943.2442184-1-someguy@effective-light.com> <20210916140943.2442184-2-someguy@effective-light.com>
+In-Reply-To: <20210916140943.2442184-2-someguy@effective-light.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 17 Sep 2021 03:10:12 -0400
+Message-ID: <CAPig+cRfFZ=GAevJ0b9oBGTR8P3MnSg+R43ujSP0dZJL08riqA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] pretty: colorize pattern matches in commit messages
+To:     Hamza Mahfooz <someguy@effective-light.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 16, 2021 at 10:10 AM Hamza Mahfooz
+<someguy@effective-light.com> wrote:
+> [...]
+> Teach the pretty-printer code to highlight matches from the
+> "--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
+> options (to view the last one, you may have to ask for --pretty=fuller).
+> [...]
+> Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> I'm not sure I follow. What "show -p" has to do with "diff-index --cc"?
->>
->> My only point here is that usage of *--cc* in *diff-index* is entirely
->> undocumneted, and that needs to be somehow resolved.
->
-> It was a response to your "historical status quo that is a problem."
-> I do not think there is any problem with "diff-index --cc" (except
-> for it wants a better documentation---but that we already agree) but
+A few relatively superficial comments below...
 
-Ah, now I see, but it's exactly lack of documentation (and tests) that I
-was referring to as the "problem of the historical status quo" on the
-Git side, so I was somewhat confused by your original response.
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> @@ -241,6 +241,14 @@ This setting can be disabled by the `--no-notes` option,
+> +color.grep.selected::
+> +       Determines the non matching text (background) color of selected lines,
+> +       when `--grep`, `--author` or `--committer` are used.
+> +
+> +color.grep.matchSelected::
+> +       Determines the matching text (foreground) color of selected lines, when
+> +       `--grep`, `--author` or `--committer` are used.
 
-Also, it's still unclear, even if not very essential, what exactly that
-"status quo" is when seen from the point of view of gitk. Does gitk
-actually utilize *particular output* of "diff-index --cc" for better, or
-gitk would be just as happy if it were synonym for "diff-index -p", or
-even if it'd be just as happy if --cc were silently consumed by
-diff-index?
+Should these be documented instead in Documentation/config/color.txt
+as entries in the table under `color.grep.<slot>`?
 
-> I wanted to give you some credit for having worked on "--diff-merges",
-> an effort to generalize things in a related area.
+> diff --git a/pretty.c b/pretty.c
+> @@ -431,15 +431,74 @@ const char *show_ident_date(const struct ident_split *ident,
+> +static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
+> +                                        char *buf, size_t buflen)
+> +{
+> +       strbuf_add(sb, color, strlen(color));
 
-Thanks for that! More to follow )
+There is no need to call strlen() here; instead use strbuf_addstr():
 
-Thanks,
--- Sergey Organov
+    strbuf_addstr(sb, color);
+
+> +       strbuf_add(sb, buf, buflen);
+> +       if (strlen(color))
+> +               strbuf_add(sb, GIT_COLOR_RESET, strlen(GIT_COLOR_RESET));
+
+Likewise, no need for strlen() in the conditional or when adding the
+RESET color:
+
+    if (*color)
+        strbuf_addstr(sb, GIT_COLOR_RESET);
+
+> +}
+> +
+> +static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
+> +                                  const char *line, size_t linelen,
+> +                                  int color, enum grep_context ctx,
+> +                                  enum grep_header_field field)
+> +{
+> +       strbuf_init(&tmp_sb, linelen + 1);
+
+What is the +1 for? Is that to account for the NUL byte at the end of
+the string? If so, there's no need to do so manually since strbuf will
+take that into account itself.
+
+> +       strbuf_add(&tmp_sb, line, linelen);
+> +
+> +       buf = tmp_sb.buf;
+> +       eol = buf + linelen;
+
+`buf` and `eol` seem like an accident waiting to happen...
+
+> +       line_color = opt->colors[GREP_COLOR_SELECTED];
+> +       match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
+> +
+> +       while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
+> +               if (match.rm_so == match.rm_eo)
+> +                       break;
+> +
+> +               strbuf_grow(sb, strlen(line_color) + strlen(match_color) +
+> +                           (2 * strlen(GIT_COLOR_RESET)));
+
+... because strbuf_grow() may reallocate the underlying buffer, which
+means that `buf` and `eol` will end up pointing at freed memory, which
+will be accessed by the next call to grep_next_match().
+
+I also wonder if these manual calls to strbuf_grow() and the "hint"
+passed to strbuf_init() are actually helping considering that strbuf
+should do a pretty good job of managing its underlying buffer growth
+without this sort of micromanagement. Have you done performance
+testing which indicates that such manual management is beneficial (and
+that this isn't a case of premature optimization)?
+
+> +               strbuf_add_with_color(sb, line_color, buf, match.rm_so);
+> +               strbuf_add_with_color(sb, match_color, buf + match.rm_so,
+> +                                     match.rm_eo - match.rm_so);
+> +               buf += match.rm_eo;
+> +               eflags = REG_NOTBOL;
+> +       }
+> +
+> +       if (buf != line) {
+> +               strbuf_grow(sb, strlen(line_color) + strlen(GIT_COLOR_RESET));
+> +               strbuf_add_with_color(sb, line_color, buf, eol - buf);
+> +       } else {
+> +               strbuf_add(sb, buf, eol - buf);
+> +       }
+
+I'm confused by this. How can `buf` ever equal `line` considering that
+the above code does:
+
+    strbuf_add(&tmp_sb, line, linelen);
+    ...
+    buf = tmp_sb.buf;
+
+so that the strbuf contains a _copy_ of `line`, and `buf` is pointing
+into the strbuf.
+
+> +       strbuf_release(&tmp_sb);
+> +}
+> +
+>  void pp_user_info(struct pretty_print_context *pp,
+>                   const char *what, struct strbuf *sb,
+>                   const char *line, const char *encoding)
+>  {
+> +       struct strbuf id;
+> +       enum grep_header_field field = GREP_HEADER_FIELD_MAX;
+> +       struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+
+These new variables only ever seem to be used...
+
+>         if (pp->fmt == CMIT_FMT_ONELINE)
+>                 return;
+> @@ -496,9 +555,22 @@ void pp_user_info(struct pretty_print_context *pp,
+>                         strbuf_addch(sb, '\n');
+>                 strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
+>         } else {
+> -               strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
+> -                           (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
+> -                           (int)namelen, namebuf, (int)maillen, mailbuf);
+
+... within this block, so they should be declared here rather than in
+the outer block in order to reduce their scope.
+
+> +               strbuf_init(&id, namelen + maillen + 4);
+
+Again, I wonder if this micromanagement of strbuf allocation is a case
+of premature optimization.
+
+> +               if (!strcmp(what, "Author"))
+> +                       field = GREP_HEADER_AUTHOR;
+> +               else if (!strcmp(what, "Commit"))
+> +                       field = GREP_HEADER_COMMITTER;
+> +
+> +               strbuf_addf(sb, "%s: %.*s", what,
+> +                           (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ");
+
+It's subjective, but this may be overly clever and unnecessarily
+compact. The slightly more verbose:
+
+    strbuf_addf(sb, "%s: ", what);
+    if (pp->fmt == CMIT_FMT_FULLER)
+        strbuf_addchars(sb, ' ', 4);
+
+is easier to understand at-a-glance, as is this equivalent:
+
+    strbuf_addf(sb, "%s: ", what);
+    if (pp->fmt == CMIT_FMT_FULLER)
+        strbuf_addstr(sb, "    ");
+
+> +               strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
+> +                           (int)maillen, mailbuf);
+> +
+> +               append_line_with_color(sb, opt, id.buf, id.len, pp->color,
+> +                                      GREP_CONTEXT_HEAD, field);
+> +               strbuf_addch(sb, '\n');
+> +               strbuf_release(&id);
+>         }
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> @@ -449,6 +449,61 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
+> +cat > expect << EOF
+> +Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
+> +EOF
+> +
+> +test_expect_success 'log --author' '
+> +       git log -1 --color=always --author="A U" >log &&
+> +       grep Author log >actual.raw &&
+> +       test_decode_color <actual.raw >actual &&
+> +       test_cmp expect actual
+> +'
+
+I realize that you're mirroring how this is done in a few existing
+tests in this script, but these days we like to place all code,
+including creation of the `expect` file, inside the test body. Also,
+style guidelines state that there shouldn't be any whitespace
+following the `>` and `<<` operators. Finally, since no variables need
+to be interpolated into the here-doc content, we use `\EOF` instead of
+`EOF`, and since we want to indent the here-doc content inside the
+test body, we use `-\EOF`. So:
+
+    test_expect_success 'log --author' '
+        cat >expect <<-\EOF
+        Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
+        EOF
+        ...
