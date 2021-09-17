@@ -2,119 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 250EBC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 02:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A878AC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 03:37:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 020F860232
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 02:45:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E84560F92
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 03:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238421AbhIQCqk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Sep 2021 22:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45532 "EHLO
+        id S244033AbhIQDit (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Sep 2021 23:38:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbhIQCqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Sep 2021 22:46:39 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B07C3C061574
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 19:45:18 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id h20so8707452ilj.13
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 19:45:18 -0700 (PDT)
+        with ESMTP id S242037AbhIQDis (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Sep 2021 23:38:48 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29452C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 20:37:27 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id a20so8835271ilq.7
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 20:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ABAEEpT69bZRoDx+z76JtpLA4TjgY7b63Kca0vDYVQs=;
-        b=I8HagYtnkcSm5pCMpSYtv6w3sO4N6PpEDyHWIf3uTbnS+59IkDfBOwqSMlI98N+Rhs
-         s7OBwNe0Khwslwoeq4j72uFeSA+3SKIWewqFNXYN1ycd7uS5/cKXxF05L1ADu+2kDRLG
-         NOI/WEBX5wxCaJylcz63bDe9rrKADXxWVrhzsT/Lm5mNLCFQnaJ7Nuo7yQb+kryXuaw9
-         5lZ22CLJf74pvLYz3yGOCpmQtx+EalYaQFDGMd4g1imuJagkS3wjfey2Dcr2VHidJGeg
-         qwnoYC4GN86bu5QM/t/Hz2dgWZ9+i8c4GTwb4VlH3jOqm14NZbul1QmK5dogOgrSNcN6
-         v6lQ==
+        bh=sBz/ch2b2R70Jrm/PcM7Awml8SJXTEMc0v2BIOayIx4=;
+        b=y/8c7BrcGnIM/h59NIYZXv8JFD02/zmzhSlFhIz3p+C9UGecHnmhsF7VLDsIbXKsH/
+         dHNH1Ft18/kv3u3htWwYNe0QlKTyUbE4TTB/JWhpw0ygLCjPy2vb9RNl50xcZY0OCqpN
+         +jAKYjtwlGrwQcJIAhKkLrm1b/+WswqtyNtzbgtx1sQsAjSWoHsO4bPapOxulxLqIISH
+         /nuIWyzHDHXYgFDrf88RJ9dKOu5slI1jEyNItsSeX7XBKu3/fBUKHHdQFYPiG4pieof0
+         Ws133rR3VReXWKmWHAyqxLKUF2XWlQswNiZjQgMBRT0QuDv6zvwaVF03NMD2AHDU9kpo
+         8FxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=ABAEEpT69bZRoDx+z76JtpLA4TjgY7b63Kca0vDYVQs=;
-        b=kw6rON5xomvVR7krfgA2GObbAUFJoYZLDu1fTkpevpYPeLo+UciZS9Suj3dO2OA7n7
-         lDNffzoL6/NqEBUPiXTnur4WxvBBhdJQ+dbgs5s/P+Go/ZvroALWJqmD3VLzINm0acG6
-         az6sjwa7NqGgt8CothzE3p7RWB0T1hbTEf2s/U5eU9M3+QPDXUDs9NcR0UxAhhw4AZ7C
-         KPXOdnQW0FlQUN8vgd73Hb5uEJsW2lvDJWY0zCMOok3a2xIo5q79omhKiWmVhfdW+egT
-         4eIcELJjEcqKCEI7eI5rKsJJ+w/AYKdf2PDj5sdUPJJROCnv3BMYAu6w658tqC61IOM/
-         7jDg==
-X-Gm-Message-State: AOAM531z2okUNHEZMdpRfH2Aq450bse6YOICJg90T+ZRBpyIljj7XrmY
-        ijG8sQWpjANEpCwV/YoslK+x4w==
-X-Google-Smtp-Source: ABdhPJzf3x5zqh5APSVfxWbnfL4TTbErWFLcjxSV9nMGbDMLIIv34kNw7XoDOuuPVb98SDFRXYzW6w==
-X-Received: by 2002:a92:b702:: with SMTP id k2mr6554988ili.150.1631846718131;
-        Thu, 16 Sep 2021 19:45:18 -0700 (PDT)
+        bh=sBz/ch2b2R70Jrm/PcM7Awml8SJXTEMc0v2BIOayIx4=;
+        b=r2tzP72sDxh/HGSvDyC1qp3H0RoI+sMzUB2vuab4km5rFJcgV3vCaoax7dRxS8r1vb
+         8L8qV6dB/mWmL2j1YwchjH89S/T2NQ1fLjC62KKQrROukIqMMwRLpRNgT0zsf5VIf/CO
+         ECsKuUo5WMMxI/PslRS34YOx/4mtfK22CoIRsnaoL4B8E19ePmfuAM8ZR1mhOGnUdPr8
+         RACapg97O/LyiwLIp0vd+tLu8D6EGebbwbHTu7MDPktXBjV2gUKdRcUBSxSAg3UKwmBS
+         T7OcY5A599rPUKybbRL7XPlo2R8zyQebU/FYlcOy+s+oyA3dv2HoNsmZuNwxh5CKimxc
+         KqqQ==
+X-Gm-Message-State: AOAM532mDUJIce58QznRE7ebJG/lTO/ouBgDLA0ByDeyKg87v+RNAfXx
+        IorHzSZwZvUA6tfw1my07uFeZw==
+X-Google-Smtp-Source: ABdhPJzarNiRuaUCl9YC4bxx5MxPSn2L9pXa636trJQsoKuAD7YtStlZEnSTkSXhGBwWTgyvGA5IDg==
+X-Received: by 2002:a05:6e02:f13:: with SMTP id x19mr6515939ilj.216.1631849846533;
+        Thu, 16 Sep 2021 20:37:26 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f17sm2810639ilq.44.2021.09.16.19.45.17
+        by smtp.gmail.com with ESMTPSA id s10sm2798703iom.40.2021.09.16.20.37.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 19:45:17 -0700 (PDT)
-Date:   Thu, 16 Sep 2021 22:45:17 -0400
+        Thu, 16 Sep 2021 20:37:26 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 23:37:20 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 18/22] object-file.c: use "enum" return type for
- unpack_loose_header()
-Message-ID: <YUQBPXPdCxumPWhL@nand.local>
+Subject: Re: [PATCH v6 19/22] fsck: don't hard die on invalid object types
+Message-ID: <YUQNcPAs35WhJHKo@nand.local>
 References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
  <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
- <patch-v6-18.22-1b7173a5b5b-20210907T104559Z-avarab@gmail.com>
+ <patch-v6-19.22-ad1614dbb8d-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v6-18.22-1b7173a5b5b-20210907T104559Z-avarab@gmail.com>
+In-Reply-To: <patch-v6-19.22-ad1614dbb8d-20210907T104559Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 12:58:13PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> In the preceding commits we changed and documented
-> unpack_loose_header() from return any negative value or zero, to only
-> -2, -1 or 0. Let's instead add an "enum unpack_loose_header_result"
-> type and use it, and have the compiler assert that we're exhaustively
-> covering all return values. This gets rid of the need for having a
-> "default" BUG() case in loose_object_info().
+On Tue, Sep 07, 2021 at 12:58:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Change the error fsck emits on invalid object types, such as:
 >
-> I'm on the fence about whether this is more readable or worth it, but
-> since it was suggested in [1] to do this let's go for it.
+>     $ git hash-object --stdin -w -t garbage --literally </dev/null
+>     <OID>
+>
+> >From the very ungraceful error of:
+>
+>     $ git fsck
+>     fatal: invalid object type
+>     $
+>
+> To:
+>
+>     $ git fsck
+>     error: hash mismatch for <OID_PATH> (expected <OID>)
+>     error: <OID>: object corrupt or missing: <OID_PATH>
+>     [ the rest of the fsck output here, i.e. it didn't hard die ]
 
-:-). The first hunk is quite a long line, but I think that only suggests
-the enum has a long name. I also can't think of anything shorter, so I
-think what you have is just fine.
+Great. I don't love the second error (since it doesn't really give the
+user any new information when read after the first) but that's fsck's
+fault, and not your patch's.
 
-I do think that this is an improvement in readability, and for what it's
-worth I am a fan of the previous two changes as well.
+> To do this we need to pass down the "OBJECT_INFO_ALLOW_UNKNOWN_TYPE"
+> flag from read_loose_object() through to parse_loose_header(). Since
+> the read_loose_object() function is only used in builtin/fsck.c we can
+> simply change it. See f6371f92104 (sha1_file: add read_loose_object()
+> function, 2017-01-13) for the introduction of read_loose_object().
+>
+> Why are we complaining about a "hash mismatch" for an object of a type
+> we don't know about? We shouldn't. This is the bare minimal change
+> needed to not make fsck hard die on a repository that's been corrupted
+> in this manner. In subsequent commits we'll teach fsck to recognize
+> this particular type of corruption and emit a better error message.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/fsck.c  |  3 ++-
+>  object-file.c   | 11 ++++++++---
+>  object-store.h  |  3 ++-
+>  t/t1450-fsck.sh | 14 +++++++-------
+>  4 files changed, 19 insertions(+), 12 deletions(-)
+>
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index b42b6fe21f7..082dadd5629 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -601,7 +601,8 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
+>  	void *contents;
+>  	int eaten;
+>
+> -	if (read_loose_object(path, oid, &type, &size, &contents) < 0) {
+> +	if (read_loose_object(path, oid, &type, &size, &contents,
+> +			      OBJECT_INFO_ALLOW_UNKNOWN_TYPE) < 0) {
+>  		errors_found |= ERROR_OBJECT;
+>  		error(_("%s: object corrupt or missing: %s"),
+>  		      oid_to_hex(oid), path);
+> diff --git a/object-file.c b/object-file.c
+> index 9484c7ce2be..0e6937fad73 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2562,7 +2562,8 @@ int read_loose_object(const char *path,
+>  		      const struct object_id *expected_oid,
+>  		      enum object_type *type,
+>  		      unsigned long *size,
+> -		      void **contents)
+> +		      void **contents,
+> +		      unsigned int oi_flags)
+>  {
+>  	int ret = -1;
+>  	void *map = NULL;
+> @@ -2570,6 +2571,7 @@ int read_loose_object(const char *path,
+>  	git_zstream stream;
+>  	char hdr[MAX_HEADER_LEN];
+>  	struct object_info oi = OBJECT_INFO_INIT;
+> +	int allow_unknown = oi_flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
+>  	oi.typep = type;
+>  	oi.sizep = size;
+>
+> @@ -2592,8 +2594,11 @@ int read_loose_object(const char *path,
+>  		git_inflate_end(&stream);
+>  		goto out;
+>  	}
+> -	if (*type < 0)
+> -		die(_("invalid object type"));
+> +	if (!allow_unknown && *type < 0) {
+> +		error(_("header for %s declares an unknown type"), path);
+> +		git_inflate_end(&stream);
+> +		goto out;
+> +	}
 
-As a workflow comment, I would have perhaps done these conversions a
-little earlier, maybe in these steps:
+Hmm. I'm not sure that I new test for this error (which may be
+uninteresting, in which case it is fine to skip).
+>
+> -test_expect_success 'fsck hard errors on an invalid object type' '
+> +test_expect_success 'fsck error and recovery on invalid object type' '
+>  	git init --bare garbage-type &&
+>  	empty_blob=$(git -C garbage-type hash-object --stdin -w -t blob </dev/null) &&
+>  	garbage_blob=$(git -C garbage-type hash-object --stdin -w -t garbage --literally </dev/null) &&
+> -	cat >err.expect <<-\EOF &&
+> -	fatal: invalid object type
+> -	EOF
+> -	test_must_fail git -C garbage-type fsck >out.actual 2>err.actual &&
+> -	test_cmp err.expect err.actual &&
+> -	test_must_be_empty out.actual
+> +	test_must_fail git -C garbage-type fsck >out 2>err &&
+> +	grep -e "^error" -e "^fatal" err >errors &&
+> +	test_line_count = 2 errors &&
+> +	grep "error: hash mismatch for" err &&
+> +	grep "$garbage_blob: object corrupt or missing:" err &&
+> +	grep "dangling blob $empty_blob" out
+>  '
 
-  - First a patch to introduce unpack_loose_header_result with just OK
-    and BAD, and then converted all callers that return negative numbers
-    to return BAD (and all others to return OK).
-
-  - Then a second patch to convert some of the BAD returns into
-    BAD_TOO_LONG.
-
-That gets things done in two patches, instead of three, at the cost of a
-slightly more complicated first patch. But I think you also get some
-more insight into why we're making the change in the first place instead
-of having to read through a couple of commits to get there.
-
-In any case, what you have is certainly fine, and I don't think that one
-approach is any better or worse than the other. Just mentioning it in
-case it's something may try in the future.
-
-This patch looks good.
+Great.
 
 Thanks,
 Taylor
