@@ -2,222 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C1FC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 19:19:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50643C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 19:22:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FCF261260
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 19:19:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 332FC60F3A
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 19:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241158AbhIQTVC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 15:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46832 "EHLO
+        id S242755AbhIQTXm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 15:23:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbhIQTVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 15:21:01 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3C5C061574
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 12:19:38 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id f22so20732400qkm.5
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 12:19:38 -0700 (PDT)
+        with ESMTP id S231864AbhIQTXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 15:23:42 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 796EDC061574
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 12:22:19 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id h17so33836428edj.6
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 12:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c1cNLKnchj9S7z4JdOCdFz5QT02ZG5MjW5efccI7koo=;
-        b=LsU/KFE8/ZSnjFdHpRe6S8pGDdjcV665ptbOuEkZhi2DyXSvTT9G1GcvsyH3cVdi7S
-         oPHU3zIn7vuZPCaqfHriPcx/t8tcA+f6LiObUBCY1Yup3F6kWa/U70tC9QuwxhgOs/4U
-         2ICvxZJsREHCeiOhs5eppckpUiOoPafH0CXJTZbsztnGEs0yfcw1iMOH96yQ400mpNRl
-         m4W/EcsOaHcY02h2AMV09AObz1SrK/sfh34Lf4f5rhJt69UoyMB7YTQuJ2wS6DyZAkfV
-         Ax8SJFtzHY//CS7guUzDduqiRm40RTbYZyy0nmlonKedQneR1z5klrzTXZ9/VpXQBQyc
-         2ntA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pVSXSsE4fk9m1Ur6wvFBnpy74RNWJycIOKwohtxU9xk=;
+        b=oxo0rkpWWJmuxlOtxchu1nl+5KUqEml+PqUu2UobpD4KEnXeXcaT3I76YBY1tibzzD
+         kJHTT+sqsuwF6Amy5Ppfh/HY8W6p6XPGBuKForCa3WCXh3ysd5DkWZbsqC3lDNjhosSr
+         CVdfPrFmrRSs51lMGKldnYNLu+RwK7yI0ycfrRrQXGre6OL1oz9yd9lZFb6TswyDV+iu
+         MbNovq74+XsL2X4CpqfWPID6O3t2qqUCY0MYMp8eH9x88v9gA1zdcO/8QUP4aVpCr5ty
+         rHUn5HE2diCBbe8OMUnoNpq53OvlPqBGWt/+EO+yWSy9Y6AcJ4vp4pYg/jko+6o9sUga
+         guGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c1cNLKnchj9S7z4JdOCdFz5QT02ZG5MjW5efccI7koo=;
-        b=QscbQeB+hj8f2IEKE4ddJouA8o+YGr3hAchk+joBPKhxpQSpzBgb7oRQSt+fF64gdY
-         ZP/J53DkNetu7jTxOFsFLJDULZPzAXIamKdFKlBEropjNFBO6fSgbcMlY52bfnTanA8l
-         hvVUYHRtU14f1U2JOFDl3rB5IjJxwY9yBzijC4ThVldBJiZfqEwHG1gFN17h5ehApYvi
-         6xEoumw8pXZVZAp94MuNfG5HFPnIS5cKoAL13ks6nVWauifMUQE+GQaa4a7ImaKJG6oh
-         kn6nk8DSxU9UhZ2PjTlI+bac7TCt06H4J/AEP/H0wI7zdV4p8J1yWl/cKj3d5uYPGF8s
-         OiIg==
-X-Gm-Message-State: AOAM533Fq3L/ZyCjgayKuc72niq1NG4p5gmpBu4DI2X+JWSDpmJ1TwSh
-        pxX9kKC/q7bZLW2KxScToRDPnMt2DZ8=
-X-Google-Smtp-Source: ABdhPJxUbcA/mB5Jb5PHG23dG4BpFUrRS/gVAWjCRnDCtfL8LyHTyjb5K+2/+fKOdYNXdyqmxqWqqA==
-X-Received: by 2002:a37:2788:: with SMTP id n130mr12235881qkn.143.1631906377565;
-        Fri, 17 Sep 2021 12:19:37 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id q18sm4557401qtx.73.2021.09.17.12.19.36
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Sep 2021 12:19:37 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     dev+git@drbeat.li,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] unicode: update the width tables to Unicode 14
-Date:   Fri, 17 Sep 2021 12:19:20 -0700
-Message-Id: <20210917191920.55944-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.911.gbe391d4e11
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=pVSXSsE4fk9m1Ur6wvFBnpy74RNWJycIOKwohtxU9xk=;
+        b=u82QoMnhP5XuVhR7M/OLW8K9I2q7j54tXXSfyGYEz2/dcmOZ4fS8yMfrokJDs7zoYz
+         7CDdux+zAK8q3mmkCrpfZbTLZllu17zcD9sKwKNQko95SSWMKxb71BAATvoVwm9NEgsG
+         3QaECI+j3KGEW2LBwijlJacoFrO/luV2sdENSthds0k72ClWyuXNVD7908MjIgsI3Hxc
+         UC/V3HQyW+rdJzvdsYeNmFT1a71mjLKiDT+58ttu6u+StcHr7AuzAe50tiigwW9KbtTu
+         /I27jH6fV/mbrQygEsNLEe+Ni5rkKq8oGoIqjC5MUSPWzx7iQTqNV1egD/sGPiY8h2bU
+         xwpw==
+X-Gm-Message-State: AOAM530s346ObDlcr2LKAjeRlAMNPDdDkzR2s3QM/u5lDDzmrhtfIdj9
+        xXofoDQg3FatMTqBwz5v5E8=
+X-Google-Smtp-Source: ABdhPJzHye+SuADf+TLtlNDIgPDb3puG1ipKtSzX0RgqaLzPu0y8uHGB3PgSJRg0SVrVJjnsRRhvPw==
+X-Received: by 2002:a17:906:24c1:: with SMTP id f1mr14135512ejb.314.1631906537984;
+        Fri, 17 Sep 2021 12:22:17 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s3sm2742060ejm.49.2021.09.17.12.22.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Sep 2021 12:22:17 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/5] wrapper.c: add x{un,}setenv(), and use xsetenv()
+ in environment.c
+Date:   Fri, 17 Sep 2021 21:18:50 +0200
+References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com>
+ <patch-v2-1.5-49706b26642-20210916T182918Z-avarab@gmail.com>
+ <xmqq35q3i1hi.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqq35q3i1hi.fsf@gitster.g>
+Message-ID: <87czp7dn2u.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Released[0] after a long beta period and including several additional
-zero/double width characters.
 
-[0] https://home.unicode.org/announcing-the-unicode-standard-version-14-0/
----
- unicode-width.h | 44 +++++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+On Fri, Sep 17 2021, Junio C Hamano wrote:
 
-diff --git a/unicode-width.h b/unicode-width.h
-index b50e686bae..97c851b27d 100644
---- a/unicode-width.h
-+++ b/unicode-width.h
-@@ -26,7 +26,9 @@ static const struct interval zero_width[] = {
- { 0x0825, 0x0827 },
- { 0x0829, 0x082D },
- { 0x0859, 0x085B },
--{ 0x08D3, 0x0902 },
-+{ 0x0890, 0x0891 },
-+{ 0x0898, 0x089F },
-+{ 0x08CA, 0x0902 },
- { 0x093A, 0x093A },
- { 0x093C, 0x093C },
- { 0x0941, 0x0948 },
-@@ -66,6 +68,7 @@ static const struct interval zero_width[] = {
- { 0x0BCD, 0x0BCD },
- { 0x0C00, 0x0C00 },
- { 0x0C04, 0x0C04 },
-+{ 0x0C3C, 0x0C3C },
- { 0x0C3E, 0x0C40 },
- { 0x0C46, 0x0C48 },
- { 0x0C4A, 0x0C4D },
-@@ -116,7 +119,7 @@ static const struct interval zero_width[] = {
- { 0x1160, 0x11FF },
- { 0x135D, 0x135F },
- { 0x1712, 0x1714 },
--{ 0x1732, 0x1734 },
-+{ 0x1732, 0x1733 },
- { 0x1752, 0x1753 },
- { 0x1772, 0x1773 },
- { 0x17B4, 0x17B5 },
-@@ -124,7 +127,7 @@ static const struct interval zero_width[] = {
- { 0x17C6, 0x17C6 },
- { 0x17C9, 0x17D3 },
- { 0x17DD, 0x17DD },
--{ 0x180B, 0x180E },
-+{ 0x180B, 0x180F },
- { 0x1885, 0x1886 },
- { 0x18A9, 0x18A9 },
- { 0x1920, 0x1922 },
-@@ -140,7 +143,7 @@ static const struct interval zero_width[] = {
- { 0x1A65, 0x1A6C },
- { 0x1A73, 0x1A7C },
- { 0x1A7F, 0x1A7F },
--{ 0x1AB0, 0x1AC0 },
-+{ 0x1AB0, 0x1ACE },
- { 0x1B00, 0x1B03 },
- { 0x1B34, 0x1B34 },
- { 0x1B36, 0x1B3A },
-@@ -163,8 +166,7 @@ static const struct interval zero_width[] = {
- { 0x1CED, 0x1CED },
- { 0x1CF4, 0x1CF4 },
- { 0x1CF8, 0x1CF9 },
--{ 0x1DC0, 0x1DF9 },
--{ 0x1DFB, 0x1DFF },
-+{ 0x1DC0, 0x1DFF },
- { 0x200B, 0x200F },
- { 0x202A, 0x202E },
- { 0x2060, 0x2064 },
-@@ -227,12 +229,16 @@ static const struct interval zero_width[] = {
- { 0x10D24, 0x10D27 },
- { 0x10EAB, 0x10EAC },
- { 0x10F46, 0x10F50 },
-+{ 0x10F82, 0x10F85 },
- { 0x11001, 0x11001 },
- { 0x11038, 0x11046 },
-+{ 0x11070, 0x11070 },
-+{ 0x11073, 0x11074 },
- { 0x1107F, 0x11081 },
- { 0x110B3, 0x110B6 },
- { 0x110B9, 0x110BA },
- { 0x110BD, 0x110BD },
-+{ 0x110C2, 0x110C2 },
- { 0x110CD, 0x110CD },
- { 0x11100, 0x11102 },
- { 0x11127, 0x1112B },
-@@ -315,6 +321,8 @@ static const struct interval zero_width[] = {
- { 0x16FE4, 0x16FE4 },
- { 0x1BC9D, 0x1BC9E },
- { 0x1BCA0, 0x1BCA3 },
-+{ 0x1CF00, 0x1CF2D },
-+{ 0x1CF30, 0x1CF46 },
- { 0x1D167, 0x1D169 },
- { 0x1D173, 0x1D182 },
- { 0x1D185, 0x1D18B },
-@@ -332,6 +340,7 @@ static const struct interval zero_width[] = {
- { 0x1E023, 0x1E024 },
- { 0x1E026, 0x1E02A },
- { 0x1E130, 0x1E136 },
-+{ 0x1E2AE, 0x1E2AE },
- { 0x1E2EC, 0x1E2EF },
- { 0x1E8D0, 0x1E8D6 },
- { 0x1E944, 0x1E94A },
-@@ -404,7 +413,10 @@ static const struct interval double_width[] = {
- { 0x17000, 0x187F7 },
- { 0x18800, 0x18CD5 },
- { 0x18D00, 0x18D08 },
--{ 0x1B000, 0x1B11E },
-+{ 0x1AFF0, 0x1AFF3 },
-+{ 0x1AFF5, 0x1AFFB },
-+{ 0x1AFFD, 0x1AFFE },
-+{ 0x1B000, 0x1B122 },
- { 0x1B150, 0x1B152 },
- { 0x1B164, 0x1B167 },
- { 0x1B170, 0x1B2FB },
-@@ -439,21 +451,23 @@ static const struct interval double_width[] = {
- { 0x1F6CC, 0x1F6CC },
- { 0x1F6D0, 0x1F6D2 },
- { 0x1F6D5, 0x1F6D7 },
-+{ 0x1F6DD, 0x1F6DF },
- { 0x1F6EB, 0x1F6EC },
- { 0x1F6F4, 0x1F6FC },
- { 0x1F7E0, 0x1F7EB },
-+{ 0x1F7F0, 0x1F7F0 },
- { 0x1F90C, 0x1F93A },
- { 0x1F93C, 0x1F945 },
--{ 0x1F947, 0x1F978 },
--{ 0x1F97A, 0x1F9CB },
--{ 0x1F9CD, 0x1F9FF },
-+{ 0x1F947, 0x1F9FF },
- { 0x1FA70, 0x1FA74 },
--{ 0x1FA78, 0x1FA7A },
-+{ 0x1FA78, 0x1FA7C },
- { 0x1FA80, 0x1FA86 },
--{ 0x1FA90, 0x1FAA8 },
--{ 0x1FAB0, 0x1FAB6 },
--{ 0x1FAC0, 0x1FAC2 },
--{ 0x1FAD0, 0x1FAD6 },
-+{ 0x1FA90, 0x1FAAC },
-+{ 0x1FAB0, 0x1FABA },
-+{ 0x1FAC0, 0x1FAC5 },
-+{ 0x1FAD0, 0x1FAD9 },
-+{ 0x1FAE0, 0x1FAE7 },
-+{ 0x1FAF0, 0x1FAF6 },
- { 0x20000, 0x2FFFD },
- { 0x30000, 0x3FFFD }
- };
--- 
-2.33.0.911.gbe391d4e11
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> -	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+>> -		die(_("could not set GIT_DIR to '%s'"), path);
+>> +	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+>> ...
+>> +int xsetenv(const char *name, const char *value, int overwrite)
+>> +{
+>> +	if (!name)
+>> +		die("xsetenv() got a NULL name, setenv() would return EINVAL");
+>> +	if (setenv(name, value, overwrite))
+>> +		die_errno("setenv(%s, '%s', %d) failed", name, value, overwrite);
+>> +	return 0;
+>> +}
+>> +
+>> +int xunsetenv(const char *name)
+>> +{
+>> +	if (!name)
+>> +		die("xunsetenv() got a NULL name, xunsetenv() would return EINVAL");
+>> +	if (!unsetenv(name))
+>> +		die_errno("unsetenv(%s) failed", name);
+>> +	return 0;
+>> +}
+>
+> None of the existing callers have the "NULL name gets shown a
+> special error".  If we would get EINVAL and die anyway, there is any
+> need to add such an extra check that is always performed, no?
+>
+> As there seems no justification for it in the proposed log message,
+> I'd have to say this is another "I'd do so while we are at it even
+> though it has no reason to be there to support this topic" change.
+>
+> With explanation, perhaps these addtions would make sense.  If you
+> wanted to protect the printf-like die_errno() from name=3D=3DNULL, the
+> cost of the check should be borne by the error codepath.
+>
+> IOW,
+>
+>     if (!unsetenv(name))
+> 	die_errno(_("unsetenv(%s) failed"), name ? name : "<NULL given>");
+>
+> or something along that line, perhaps?  That won't need extra
+> justification, as we are not adding a mysterious feature that gives
+> a NULL name any special error status.
 
+Sure, I didn't think much about it when writing it.
+
+I'd think skipping the translation would be fine here, but sure, will
+include it. On second thought just a:
+
+    die_errno(_("unsetenv(%s) failed"), name);
+
+Should be fine. I.e. this is an internal-only function, we're
+exceedingly unlikely to end up with a xsetenv(NULL, ...).
+
+Even if we did I'd think the undefined behavior is OK here. In practice
+modern C libraries are forgiving about it (e.g. glibc formatting it as
+"(null)"), and if not we were about to die anyway...
+
+But unless you explicitly Ack that undefined behavior bit I'll use your
+version in a re-roll. Thanks.
