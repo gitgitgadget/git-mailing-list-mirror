@@ -2,147 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18C0DC43219
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B8A7C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F128760F93
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 466016056B
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244606AbhIQEJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 00:09:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35070 "EHLO
+        id S244608AbhIQEJa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 00:09:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238324AbhIQEHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 00:07:36 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C02C0613DE
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:06:03 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id d11so4988685ilc.8
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:06:03 -0700 (PDT)
+        with ESMTP id S244571AbhIQEJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 00:09:27 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACD8BC061756
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id s20so1973699ioa.4
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Rc88FGBQWHay47vfcAqOYLzDFkXhR7OMSXZQiQ4vkLM=;
-        b=uEr6sm17QAQKTqCGxtdoytGb8bKIbfHvQ0bC1dFWZVwimHpZSkh1HgGeqjzI7RSfaS
-         wbIqNEazoFOEQmfT/zm1kHhNenOg2Yap6b04tNNrwVgcwb6FJUOPuYaq9vRcH+A8WQ1n
-         OlK8BHJk5Mfrt69KTED9hQmnULTLQWhW7UKqFsOQVeEaXKqIf9Zzb2GIcfxVlOIE52qc
-         MduIlKFT9ohEMQmGs/khxPAWJzgOQW5Ei2GKt8cxkZBt21UdScHHRQRdkeZWsXXOuiLG
-         yNdd9UNxwNk7+g1abNyYxUz64VRek+OjOVBZOfQrjjYOYe+rojJ+Z6kKOs6CJEq9nqxk
-         h/iA==
+        bh=pr1A3WBvdmSfXm17/lZlZMaIlM85VkX1k7/5+/pxP8s=;
+        b=qewtkbOknboeIDYMvGbdi3JtEymDBu9pvpy/rpc+em9Ofp0qEvaYtdSYMA+Cbo4WVI
+         lso4a0CGunK43H9K5uwBTv5AhKeJCwy4bz9P3HfjFoTI8H3yYOazB7YcLHu6BDUlrevF
+         SP/I3AR9FU4N8/bWJ1PUOen99/KdJQBUEtYL4Zp5aUN4FqocyKxyDRrTl8vYVijdXkC0
+         /dmrG3rseRBbxqvB9n/Xgd+Yxs3y6i0xmRJtIEonfRDO02D8vKrGHsxVC1J4v6Q4GIes
+         lqd5UD/IILlsKFeHc2Gng81Tm+Tkv8pWlIggC/2JIXkLea0rBH/SYFRGFP2uS16A6t+U
+         unPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=Rc88FGBQWHay47vfcAqOYLzDFkXhR7OMSXZQiQ4vkLM=;
-        b=ilCrYXi9ENtH/edhsooeSZIGvRIdsozaYOyOY4Ns1JoJLV3GxikZaABK8qzM+isNOW
-         bQA1u97T64TaExNc5bapQB8tTCNMaZHC+eUlMPIlRJwa3dQh5NOo2NMpkej4T4qNM4j7
-         iMDOPCoqDMZawgM5RojnebBfYfbKQsOW5GHwXzWaU5ZU8n7OsG85pK/Y91fOzkDFkp8g
-         m2m3Oz3dW4bw9hC5D1fJS1cEbB3i0QGFCAfo0olBGdKbz/cSXaonjVLngBFfA+0uB1wS
-         4NRCcJf4Kto0I53OBkpwrqmAZ0APZ7MG+7E6XCE+JKlWTJvXNMzwnrw19le0QVGxmHhZ
-         DZzw==
-X-Gm-Message-State: AOAM5333ZTEV6xdKEUAIrC5rGpHHMHGuLeWwTixeII2juXcNZwDcJKXq
-        TXy5MgQW5wiXSp89AA6E36vpZg==
-X-Google-Smtp-Source: ABdhPJwrWlSrq56QavvGPK7WmyUv9n4Udh/YkiXjKqaR/JRv18Xf2PkuK9OgIKItreH12+RsbHUcvg==
-X-Received: by 2002:a92:de0e:: with SMTP id x14mr6513636ilm.259.1631851562985;
-        Thu, 16 Sep 2021 21:06:02 -0700 (PDT)
+        bh=pr1A3WBvdmSfXm17/lZlZMaIlM85VkX1k7/5+/pxP8s=;
+        b=FXhUm+Q1YkTdF1eAqpvwBD4nG6I8sCjoGqflIgV3HL8gUgBQZWJYGspaxKY/Di6TQE
+         KxQfRxWLuA62pX4JZtmm7u+khpERHmnYdPOs4UXCJY7/2ehEurCfKedGqQCMgKkbkQrc
+         VHAjgBW+7Slor5cI4n+aPVKm6wthAz2363jH1k0dp+5wZtbcjbpSgIlEO2Henl1dNuTb
+         tF9/77YXPOoQnZMM/LlgdBpvAmvZNopn+RRQmrf3OmUKmaimdxVm6uQrwnwYc+cyTUSj
+         oXsqeIaJtX/gw+E+AOzzltPjHb5JStTAm0Y7tSus7RjOo0FJ1omLOkniV7/X/tWA/++m
+         ZrXA==
+X-Gm-Message-State: AOAM532k/+ICJaMttHUBwbpYcphiyQkrkw0ZtZQJLh/kCdUNtePjeSiA
+        ngRSd15X5kYZcZQsdrRWt0H2rg==
+X-Google-Smtp-Source: ABdhPJyKPdZd2NTyPcCN1rG3cIUjjCnwI1GXrpjvyOTtCPEgN5jLsBJj8tb8hZrDDk0SzbXbLKEytw==
+X-Received: by 2002:a05:6638:41a2:: with SMTP id az34mr6987545jab.4.1631851685165;
+        Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r16sm2938696ilj.77.2021.09.16.21.06.02
+        by smtp.gmail.com with ESMTPSA id c1sm2934215iot.44.2021.09.16.21.08.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 21:06:02 -0700 (PDT)
-Date:   Fri, 17 Sep 2021 00:06:02 -0400
+        Thu, 16 Sep 2021 21:08:04 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 00:08:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 22/22] fsck: report invalid object type-path
- combinations
-Message-ID: <YUQUKvM3yjx9yDQI@nand.local>
+Subject: Re: [PATCH v6 00/22] fsck: lib-ify object-file.c & better fsck
+ "invalid object" error reporting
+Message-ID: <YUQUpCeFmQ1eSn7R@nand.local>
 References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
  <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
- <patch-v6-22.22-804673a17b0-20210907T104559Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v6-22.22-804673a17b0-20210907T104559Z-avarab@gmail.com>
+In-Reply-To: <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 12:58:17PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Improve the error that's emitted in cases where we find a loose object
-> we parse, but which isn't at the location we expect it to be.
+On Tue, Sep 07, 2021 at 12:57:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> This improves fsck error reporting, see the examples in the commit
+> messages of 19/22, 21/22 and 22/22. To get there I've lib-ified more
+> thigs in object-file.c and the general object APIs, i.e. now we'll
+> return error codes instead of calling die() in these cases.
 >
-> Before this change we'd prefix the error with a not-a-OID derived from
-> the path at which the object was found, due to an emergent behavior in
-> how we'd end up with an "OID" in these codepaths.
->
-> Now we'll instead say what object we hashed, and what path it was
-> found at. Before this patch series e.g.:
->
->     $ git hash-object --stdin -w -t blob </dev/null
->     e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
->     $ mv objects/e6/ objects/e7
->
-> Would emit ("[...]" used to abbreviate the OIDs):
->
->     git fsck
->     error: hash mismatch for ./objects/e7/9d[...] (expected e79d[...])
->     error: e79d[...]: object corrupt or missing: ./objects/e7/9d[...]
->
-> Now we'll instead emit:
->
->     error: e69d[...]: hash-path mismatch, found at: ./objects/e7/9d[...]
+> This series has been in "needs review" state for a while. This re-roll
+> is mainly to bump it for the list's attention, but while I was at it I
+> addressed point from Jonathan Tan raised in a previous round: use an
+> enum instead of int for the unpack_loose_header() return value.
 
-Lovely!
+I took a thorough look through this series, and left a handful of minor
+comments. I didn't spot any glaring issues, and think that this series
+is in pretty good shape.
 
-> @@ -603,20 +603,25 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
->  	struct strbuf sb = STRBUF_INIT;
->  	unsigned int oi_flags = OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
->  	struct object_info oi;
-> +	struct object_id real_oid = *null_oid();
->  	int found = 0;
->  	oi.type_name = &sb;
->  	oi.sizep = &size;
->  	oi.typep = &type;
->
-> -	if (read_loose_object(path, oid, &contents, &oi, oi_flags) < 0) {
-> +	if (read_loose_object(path, oid, &real_oid, &contents, &oi, oi_flags) < 0) {
->  		found |= ERROR_OBJECT;
-> -		error(_("%s: object corrupt or missing: %s"),
-> -		      oid_to_hex(oid), path);
-> +		if (!oideq(&real_oid, oid))
-> +			error(_("%s: hash-path mismatch, found at: %s"),
-> +			      oid_to_hex(&real_oid), path);
-> +		else
-> +			error(_("%s: object corrupt or missing: %s"),
-> +			      oid_to_hex(oid), path);
+I do admit there were quite a large number of patches to get to the
+couple of changes at the end. I left some thoughts throughout for places
+that I would have combined things / presented them in a different order
+or similar.
 
-Nice; this is the important part that this patch is changing, and the
-logic is very nice. Before it read "anytime read_loose_object fails,
-it's an error" to "it's still an error, but we can handle the case where
-the real OID and the one we expected were different separately from
-generic corruption".
-
->  	}
->  	if (type < 0) {
->  		found |= ERROR_OBJECT;
->  		error(_("%s: object is of unknown type '%s': %s"),
-> -		      oid_to_hex(oid), sb.buf, path);
-> +		      oid_to_hex(&real_oid), sb.buf, path);
-
-Could go either way on this hunk, but I think that I err slightly on
-your side now that we have access to the "real_oid".
-
-The rest of the code and test changes in this patch look good to me.
+I don't think you should spend much time changing the structure now that
+it's been looked at with close eyes, but just some idle thoughts for
+other large series you might send in the future.
 
 Thanks,
 Taylor
