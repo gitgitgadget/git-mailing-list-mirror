@@ -2,102 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8CFC433F5
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 16:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B66A5C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 16:41:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78B17610A6
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 16:37:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8840C610A6
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 16:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244135AbhIQQjR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 12:39:17 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59190 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237698AbhIQQjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 12:39:12 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20F7A15FD7A;
-        Fri, 17 Sep 2021 12:37:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xWqqjmUuUEKU91GxGxuHzB5ZmPzi4j8yAQH06Z
-        xwzQ0=; b=BytIDxUWjDH6XFTYtt+TxFcdGqFamwdJiy2vw+TfRqaUI4EzqYbeSC
-        1vgDX90MtZyn84YOzFfRgKgFUQpnWg9w/u2MWezRWxw73T7u5fx5i6EZZoywKtXc
-        Jn04zwalWnM8ItDtf7m9i5BkPsUH28aC9227S14Mnh0X8xCDvwRpA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 190CC15FD79;
-        Fri, 17 Sep 2021 12:37:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7D6F015FD77;
-        Fri, 17 Sep 2021 12:37:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Ryan Anderson <ryan@michonline.com>, vmiklos@frugalware.org,
-        bedhanger@gmx.de
-Subject: Re: [PATCH 2/2] request-pull: mark translatable strings
-References: <20210916113516.76445-1-bagasdotme@gmail.com>
-        <20210916113516.76445-3-bagasdotme@gmail.com>
-        <YUNKIj44AlW0tkXk@danh.dev> <xmqqbl4stg91.fsf@gitster.g>
-        <187b4b89-e037-6103-08f4-870ce8f1e4fd@gmail.com>
-Date:   Fri, 17 Sep 2021 09:37:46 -0700
-In-Reply-To: <187b4b89-e037-6103-08f4-870ce8f1e4fd@gmail.com> (Bagas Sanjaya's
-        message of "Fri, 17 Sep 2021 14:41:56 +0700")
-Message-ID: <xmqq7dffi2ed.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237633AbhIQQmZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 12:42:25 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:48727 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236237AbhIQQmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 12:42:24 -0400
+X-Greylist: delayed 16968 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Sep 2021 12:42:23 EDT
+Received: from [84.163.74.149] (helo=[192.168.2.202])
+        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <project@mfriebe.de>)
+        id 1mRCV1-0006Wi-Pi
+        for git@vger.kernel.org; Fri, 17 Sep 2021 13:57:47 +0200
+From:   Martin Friebe <project@mfriebe.de>
+Subject: More on fork-point
+To:     Git List <git@vger.kernel.org>
+Message-ID: <8d74ce27-e3bf-792e-b767-c660a3cfc9e1@mfriebe.de>
+Date:   Fri, 17 Sep 2021 13:58:11 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 97494BC6-17D5-11EC-8465-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Following the current conversation on fork-point, I found 2 
+documentation bits that I wanted to bring up for discussion
 
-> On 17/09/21 03.30, Junio C Hamano wrote:
->> So a good middle ground may be
->>   - allow translation, like these patches attempt
->>   - introduce the command line option "--l10n=<value>" and
->>     the requestpull.l10n configuration variable that gives the
->>     default for the option:
->>     - when it is set to 'true', end-user's local taken from the
->>       environment is used as the target for translation.
->>     - when it is set to 'false', translation is turned off.
->>     - when it is set to any other value, the locale is set to the
->>       value of that variable (imagine a Japanese developer
->>       contributing to a German project).
->> perhaps?   I dunno.
->> 
->
-> I'm leaning towards second option.
+1)
+https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
+> (it includes B0, which is not what you wrote; it is a commit the other 
+> side discarded when it moved its tip from B0 to B1).
 
-I didn't give that many options for there to exist the second one,
-though ;-)
+This sentence makes 2 separate statements
+A)  "not what you wrote": You only want to rebase commits you wrote 
+yourself, but not commits the other side wrote
+B)  "the other side discarded": That can apply to commits written 
+originally by the other side, or originally written by you.
 
-> However, I proposed that --l10n and corresponding config
-> requestpull.l10n just take locale value set, and defaults to English 
-> (en_US or C) if empty.
+In the context of the doc, it is easy to read "B" as "discarded commits, 
+that the other side had written".
+Leaving it unclear, what would happen if the other side, discard commits 
+(from their branch) that you wrote in your branch.
 
-I do not quite see merit in that tweak over what I outlined before,
-though.
+Also the example graph in the doc, shows that the commits discarded by 
+the other side, where commits written by the other side.
 
-But all of the above depends on the assumption that it is a good use
-of our engineering bandwidth to make request-pull localizable, and
-more importantly if the "C locale is much more appropriate than the
-local one when it comes to request-pull" is important enough to make
-it behave quite differently from other subcommands in our toolbox.
+In the "Potential git bug" thread, this is what happens.
+- A commit is made to branch foo
+- the other side (branch master) includes that commit (which you wrote)
+   git switch master
+   git merge foo
+- the other side drops/discards this commit
+   git reset --hard HEAD^
 
-To put it differently, my "I dunno" above still stands---I am not
-sure if that is a _good_ middle ground, even though it is a middle
-ground.
+So now "master" has dropped a commit you wrote.
+When you "rebase --fork-point" do you want
+a) commits you wrote (and only you wrote)
+b) exclude commits discarded by the other side, even though they where 
+yours originally?
 
-Thanks.
+Should removing/undoing  a merge mean:
+- The merge should be prevented in future
+- The merge is undone now, and may be done again in future.
+
+Depending on this the behaviour of --fork-point may have to be adjusted.
+
+Also, if the other side "master" was a remote branch. And my work was 
+merged and then removed (on the remote), then what will happen?
+Will by git repo be aware that the commit was "rejected"? Will it depend 
+if I pulled while it was part of the other branch, so that I then had to 
+"git reset" my local master to follow the forced push?
+
+------------
+Btw, something else I have not tested, but what should happen if:
+
+X -> A -> A1 -> A2 -> A3
+        \ -> B1 -> B2 -> A2 -> B3
+
+"A2" was cherry picked into the "B" branch.
+The "A" branch is rewritten to be
+A1 -> A3
+
+X ->  A1 -> A3
+      \ -> A ->  B1 -> B2 -> A2 -> B3
+
+fork-point would mean that B1..B3 will be replayed.
+But should A2 be included in a fork-point rebase of B onta A?
+
+This does matter, when reading the "rebase" docs. See the quote below, 
+which contains "which commits have been introduced by <branch>."
+"A2" was not introduced by my branch.
+
+=====================
+2)
+https://git-scm.com/docs/git-rebase#Documentation/git-rebase.txt---no-fork-point
+> Use reflog to find a better common ancestor between <upstream> and 
+> <branch> when calculating which commits have been introduced by <branch>.
+And then, only at the end of the paragraph
+> If your branch was based on <upstream> but <upstream> was rewound and 
+> your branch contains commits which were dropped, this option can be 
+> used with |--keep-base| in order to drop those commits from your branch.
+
+Imho the part that "dropped commits from the other side, will not be 
+re-introduced" is the key statement. Maybe that should move up?
+But more important, why should this statement be limited to the context 
+of keep-base"?
+Maybe it should be
+
+     If your branch was based on <upstream> but <upstream> was rewound 
+and your branch contains commits which were dropped, this option will 
+exclude those commits from being replayed. This
+  can be used with |--keep-base| .
+
+I am aware that is basically a summary of the "merge point" 
+documentation (and hence a repeat). But the repeat is already in the 
+"rebase" documentation.
+
+
