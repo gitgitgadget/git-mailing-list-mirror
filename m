@@ -2,129 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D399C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 06:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 930F8C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 06:31:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47EE361019
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 06:00:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6712C60F38
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 06:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244935AbhIQGCF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 02:02:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60798 "EHLO
+        id S233965AbhIQGdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 02:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244928AbhIQGB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 02:01:59 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0234FC061764
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 23:00:38 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id c22so25725840edn.12
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 23:00:37 -0700 (PDT)
+        with ESMTP id S232934AbhIQGdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 02:33:19 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07ED5C061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 23:31:58 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id f21so5526787plb.4
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 23:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xWd6VVDeP2sMO4nh1nzGkCXF9SrZgxrd9lQqYZt9zVk=;
-        b=Gj1TT7hvIVWfVzLphWMvkc9kMkSvtiKa3RH8W21wBQsjxuG1Tk0MwQmu/l+Q35MuZv
-         UQ1uXjnmbqODNEbmK7e+ExqVuaOsSGLAJokHaAFwGEcXzjz5LUNnuo5ctey5Dbo/YHE9
-         F4FnNBQvFwlrXKAq2olrnD4lGoJXKd2N4G5+P4LNpfmcpGw9T5aKSNJlzm51/OrvxK7q
-         51+uagYcCASIi1h1vVXAEcxXzJ7o8D3rKfsMoq7dDVkcDAjblEtC6HLLnqQARt/4PU/U
-         1VQV71h4EJ6usmCSe5vY1YIAiaINNpFvm6sxB7iAemJ4ncSCu6Jd+S88VrankHRr0gVf
-         BHuw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jZm/xqguNmDg7/S9Vd8GCtXmKTTUA8KU+lk/ca04VlM=;
+        b=qey9koXxdSByWnVtcuWRxPsBGFhfMbSKLROR8yrM4ipUWn1pEBRpd80P4bzAVvXLLl
+         BicZCwvm7iIPBrPakYkn4khzwRqoEMpr3uGFpU/7O8b6xm0ErRFeGze19Kojoikozn7t
+         IOHgE49ZFOCGvO8wqjgZ9UPLwxzGyRvKfpIhCkZBKp4JuoVc6ZFQMElm6xk3UJ260Qyq
+         pW5buleTXhJpGjdKJ+4n0HnRdORM8+ovZkzu21h6nGJiq22kIqdBrsXAHIKcuOoRc+ia
+         pz2uTHLPn6xWyd9ETkHvYtHD61neMp3zJ4r5hanKZ7YWXbNGKHyGUP4xqweNfgOk3Hfq
+         A1HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=xWd6VVDeP2sMO4nh1nzGkCXF9SrZgxrd9lQqYZt9zVk=;
-        b=w+ThVcObkNxlSFlWSvDqB6qSSbf6wO4bHBo5SnBcqjNiHkJMmwp5cCRQJmx0cbxsaX
-         A5doQdvRxI1XjUyuIYHPTRKABYt+mYCBSmfYbwbp0mGWjgr9+p8MKXHpxTqCSM1jhh/U
-         CWJMduQ4PMaUEc51hbrCrhrlpJkgqAHYOH2qb08Jdwkq+OtcZNxjC+ljUaRpN/QowwHU
-         mDzrPHGzRMQjqSlNWE99OiLuKIet0SCkfiWWSYrscmXZro+zeboNLYqVB1Qj4rutGpeG
-         dlQtHq9/w7rchQHJF8tb9sgPsVW8H+vORIjS8oCLlvPvaRhXv4t9k+JLb6XCtZokMSWk
-         EqxQ==
-X-Gm-Message-State: AOAM5308JNEnUWZ0njJVes636RxwFCDJyad8t6mH91aIbwmGJW9nLb3c
-        aQCXPo5Zw5fbDxLcjcvws30=
-X-Google-Smtp-Source: ABdhPJwYrCsyGftSIWFlsuGRVT3vrlzkD8pvayIbVxHvLVoNFMdTMOgN23r6Ucptl4CFhkSauMeZuw==
-X-Received: by 2002:a17:906:7792:: with SMTP id s18mr9977783ejm.492.1631858436496;
-        Thu, 16 Sep 2021 23:00:36 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o3sm1890663eju.123.2021.09.16.23.00.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 23:00:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 11/25] pack-bitmap-write.c: add a missing stop_progress()
-Date:   Fri, 17 Sep 2021 07:56:48 +0200
-References: <YNKWsTsQgB2Ijxu7@nand.local>
- <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
- <patch-11.25-7f5b71fe1be-20210623T155626Z-avarab@gmail.com>
- <20210917051448.GB2118053@szeder.dev>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210917051448.GB2118053@szeder.dev>
-Message-ID: <8735q3g2rg.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jZm/xqguNmDg7/S9Vd8GCtXmKTTUA8KU+lk/ca04VlM=;
+        b=xvaHi+a87jxOOtjuKJ4V4qjvcM6yCwD0+X9QS4Unh5UqhU4+atEud0ObHAJ+tu+Tlh
+         H7eX+Y5GTyDAsHImrcpH54cWNLRy2NDKvjNEos2+p5B8EdqL9dikhAnwmMeLr7CD1YhZ
+         uFq0zWliefiJZMHYmYdcX56vD/deO70helfSm8UpDODNybPpkt26+7wg/eDUhsI+EQBd
+         NMTaHnsd7emP33lIljRRZnG0WlCHd4CuXvpvT5VhBxwHYKXNITjXBVqIwiRffQ+cmPeV
+         XqxH+8XqWi2JK25kiiaeTzaHelAfjjqkbdYxOVSxJjX0DYOw61YiIHdDi6QmBWxbdRpt
+         pGdw==
+X-Gm-Message-State: AOAM532gPEK9ggX9WUiuuHAQXIQ53T26VLGsq/kDQ5pzcwx/whXd4YpY
+        z4NMBHf43EXoVT9+K4wxCUshhWpqL3HDig==
+X-Google-Smtp-Source: ABdhPJxQ99SIQxb1j3edKvlR3sjS+p+zFPMrmU8BGyKwGwBK4hC7klTFHc/SQqqu6693zahErplheA==
+X-Received: by 2002:a17:90b:17d0:: with SMTP id me16mr10513901pjb.49.1631860317406;
+        Thu, 16 Sep 2021 23:31:57 -0700 (PDT)
+Received: from [192.168.43.80] (subs09b-223-255-225-237.three.co.id. [223.255.225.237])
+        by smtp.gmail.com with ESMTPSA id a20sm9143517pjh.46.2021.09.16.23.31.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Sep 2021 23:31:57 -0700 (PDT)
+Subject: Re: [PATCH 1/5] fsmonitor: enhance existing comments
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.git.1631822063.gitgitgadget@gmail.com>
+ <6be687ba39d49f56a0729d3197ecbf3a64041357.1631822063.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <2b7f0885-bb76-d695-941d-3160a8d62ccc@gmail.com>
+Date:   Fri, 17 Sep 2021 13:31:54 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6be687ba39d49f56a0729d3197ecbf3a64041357.1631822063.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 17/09/21 02.54, Jeff Hostetler via GitGitGadget wrote:
+> -		/* If we're going to check every file, ensure we save the results */
+> +		/*
+> +		 * If we're going to check every file, ensure we save
+> +		 * the results.
+> +		 */
 
-On Fri, Sep 17 2021, SZEDER G=C3=A1bor wrote:
+Why did you split the comment above?
 
-> On Wed, Jun 23, 2021 at 07:48:11PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> Fix a bug that's been here since 7cc8f971085 (pack-objects: implement
->> bitmap writing, 2013-12-21), we did not call stop_progress() if we
->> reached the early exit in this function. This will matter in a
->> subsequent commit where we BUG(...) out if this happens, and matters
->> now e.g. because we don't have a corresponding "region_end" for the
->> progress trace2 event.
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  pack-bitmap-write.c | 1 +
->>  1 file changed, 1 insertion(+)
->>=20
->> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
->> index 88d9e696a54..6e110e41ea4 100644
->> --- a/pack-bitmap-write.c
->> +++ b/pack-bitmap-write.c
->> @@ -550,6 +550,7 @@ void bitmap_writer_select_commits(struct commit **in=
-dexed_commits,
->>  	if (indexed_commits_nr < 100) {
->>  		for (i =3D 0; i < indexed_commits_nr; ++i)
->>  			push_bitmapped_commit(indexed_commits[i]);
->> +		stop_progress(&writer.progress);
->>  		return;
->>  	}
->
-> When I found this bug I fixed it differently: with your patch there
-
-Is that patch on-list somewhere or something you have locally?
-
-> are no display() calls at all between start_progress() and this new
-> stop_progress(), indicating that a stop_progress() is not missing but
-> rather the start_progress is in the wrong place:
-
-*Nod*, I'll see about fixing it differenty depending on the above / any
-other comments.
-
-Note that while this comment is current to
-https://lore.kernel.org/git/patch-7.8-eb63b4ba6a-20210722T125012Z-avarab@gm=
-ail.com/
-as well, as noted in
-https://lore.kernel.org/git/877dffg37n.fsf@evledraar.gmail.com/ you've
-had several comments on the 25 patch series not currently queued in
-"seen".
-
-Still very useful as I'd had some of it planned for after that 8-patch
-series, just noting it for context.
+-- 
+An old man doll... just what I always wanted! - Clara
