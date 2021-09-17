@@ -8,60 +8,59 @@ X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62956C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 22:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC5CC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 22:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41B1060F48
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 22:55:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B733960F6B
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 22:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232883AbhIQW4i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 18:56:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38458 "EHLO
+        id S241011AbhIQW4l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 18:56:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232598AbhIQW4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 18:56:37 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8D7C061574
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 15:55:15 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id e18-20020a656792000000b00268773b02d1so8853266pgr.13
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 15:55:15 -0700 (PDT)
+        with ESMTP id S233166AbhIQW4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 18:56:40 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17620C061574
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 15:55:18 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id bi14-20020a05620a318e00b00432f0915dd6so15290468qkb.6
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 15:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=qyXDZecfTNf3blO9pXvt4Ou3sKtlt7J4dkf3/gJJXrs=;
-        b=UzreurtWYvbnPVHHslbA6b95WtKrsxRHRoUaX5x/LLbt1cMq8tqVhhyDO36yzBEjZQ
-         NqJun0TLqv15x0oFHjpBHqyHHtgDUPrfaVIcCVC/qh0eTr1mip7fCXfuYJbm3x+O5PEj
-         DsbFYSKyrDT2meEczvxXHVWpzeauo5QoTYDMngTWfqgZRL5I1XzrjrfcXd3Qv8jJ/PIA
-         lRAIpF/KtVXjmkqUqX+oCQSPpaDl1TYdp6eaAKgI7l19k03kGQvFOPkVMmGqUCgjKrCO
-         2CM+ah3Lho01Zwd1r+P2auMn7Qge9wGHZguMynq8U3OWtVQGr0gwHb9lHWpZEZf4dKg2
-         gp1A==
+        bh=4fxB2XIL1ZHFgU/RXDqhdfCDSd3gH6+YoOzl2ySGjkw=;
+        b=ZgmxSdq8QrbqlcdbVIwcegC+MSasbX01GzFeu12x5CBAHCtOJw/Sf1YQYjX109Aw9b
+         pMhaYzw6sXW0XXFjGThuhMOFieKvp7ERb1qis72LOkKbjlpYBEQwvcL7Wj8JnNO9+q0Z
+         Z4tLXW/WEk+Nq7lqDYcqBZQGsLwYHcLT167ZHnWR+aJCs/iaLFhVgRLCk6GYb5egfTs9
+         pLGC1Nwz5zVGN4OuLE/jskPVFy6J6sF9AFEoYlvL8vACX09Iwro6cLxYJoRFoL8b8vvS
+         N7QdRgtxxQnHpPdb53VHOh+N1VzeuAc3vMqjGt2qWq1k8PllLtO5fA/UPM0Vz9kUYtSB
+         h8wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=qyXDZecfTNf3blO9pXvt4Ou3sKtlt7J4dkf3/gJJXrs=;
-        b=sKSss37bBvObRXjeI5HYwoblpbixjGT94L8a3aUuUaIaxYFlj8X3JtSCeChJj6VF9p
-         Xko2yGhr1vY5ahpVxNpk+jVRbqbf+nZrdazek9Uip7sqbZoKe895nA4hJ2XTBxwUQ6lV
-         3dkAfTX7M3Rk+zdLNSdwy3k37nndBS/39Kjht1wffuqT6YfwEBGe5UxhZPB3euGkm0Zp
-         4W9HqJW/R3SYqEdoKwjesriYNx1/c/9gf70bLa3hrObOI1GaFHPHLWvg7+zIGx8CdkuZ
-         orHnPSdxbvrSWrT9cBeUB0OVRDejYuO/I1zvsiH7Tai60Y2zyhoM3aPI7VIThYjOR05b
-         F2Gw==
-X-Gm-Message-State: AOAM532rbmKpy1FNtqSVJ53wCGxpAKp+ZyRvSYZ/IaL+1YmYZlkDuMc2
-        10NuwoUpa5VlmapodnXhBqlbQWKM52+ncjqkAbgttghmP1dmc5Ff7mvqHoEmjRx/rUcbP/L4mwi
-        i/R7F3HTwMCHaaRyFVbcV/oBBBRUlTe0Ll16KwsTEp8KBYvDMwMX3vA4I+OLg9+E=
-X-Google-Smtp-Source: ABdhPJz+SAucCbvd2et8lsxi5OxLkfiFX0htPvDEyDzWHwzSYGwxq4Jy/MNYLJv3lvYuvuLLFxFIUnHvCLZGGw==
+        bh=4fxB2XIL1ZHFgU/RXDqhdfCDSd3gH6+YoOzl2ySGjkw=;
+        b=AFQ869HwnwHlGaFY4UF0F6w+RmLaJmBsNkw/izynE43WcmCho0F3iZelctfck/vwj6
+         zAKj6JThbVyGPryKalN+TYn363F/WI5CxjIQBRPgjp1A2y/2oEYUO1FuF+o3q8Ofe3oO
+         u73foTIUeVm4PpbE8izhATR5j1Qn05QTurmby7JpfYH7OlhX3oo09gRjDQObWwj4cqmM
+         3pImvt7Mioj1qKnxixgE8q3nKiylF4GtGoFsVnSG+5SWSlRgqiEwmDrT7t3h4Pb0rc07
+         F96wJ2z++F5DrgGdUSGU/8zwfuR5FGDK1BqdH0UcAuGOLN5/HbczmHrLEKbMtYE3UwS+
+         l80A==
+X-Gm-Message-State: AOAM531zj+EskQUzGsCjFOsP+iYgTSj3SMomVppdmyos8N9bLIygWcBL
+        PQ9+ht2iPYRQKX4aDa5+Xa+J5gGjhT4WfZszPyM5Z2/UMHO9ilbtSrJPklBqrbotmFuhGtJpqrN
+        R66wvRyNltt6CXqaFbSi0O5HaAAXYSX5ef8kMg8rJ47qbm/QkrNgA7HVLD1vQYM0=
+X-Google-Smtp-Source: ABdhPJwVN6ax+pH5uqdfZ2SwPbELIbBcBR13p5zBFjx29o3d2SadttYaRsFdM2VykQogCSpWmzkoz87ZVsnDqw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:a38b:b0:138:d329:27ac with SMTP
- id x11-20020a170902a38b00b00138d32927acmr11559924pla.7.1631919314355; Fri, 17
- Sep 2021 15:55:14 -0700 (PDT)
-Date:   Fri, 17 Sep 2021 15:54:57 -0700
+ (user=chooglen job=sendgmr) by 2002:a05:6214:56a:: with SMTP id
+ cj10mr13877690qvb.60.1631919317287; Fri, 17 Sep 2021 15:55:17 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 15:54:58 -0700
 In-Reply-To: <20210917225459.68086-1-chooglen@google.com>
-Message-Id: <20210917225459.68086-2-chooglen@google.com>
+Message-Id: <20210917225459.68086-3-chooglen@google.com>
 Mime-Version: 1.0
 References: <20210913181221.42635-1-chooglen@google.com> <20210917225459.68086-1-chooglen@google.com>
 X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
-Subject: [PATCH v2 1/3] fsck: verify commit graph when implicitly enabled
+Subject: [PATCH v2 2/3] fsck: verify multi-pack-index when implictly enabled
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>
@@ -70,97 +69,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-the_repository->settings is the preferred way to get certain
-settings (such as "core.commitGraph") because it gets default values
-from prepare_repo_settings(). However, cmd_fsck() reads the config
-directly via git_config_get_bool(), which bypasses these default values.
-This causes fsck to ignore the commit graph if "core.commitgraph" is not
-explicitly set in the config. This worked fine until commit-graph was
-enabled by default in 31b1de6a09 (commit-graph: turn on commit-graph by
-default, 2019-08-13).
+Like the previous commit, the_repository->settings.core_multi_pack_index
+is preferable to reading "core.multiPackIndex" from the config because
+prepare_repo_settings() sets a default value for
+the_repository->settings. This worked fine until core.multiPackIndex was
+enabled by default in 18e449f86b (midx: enable core.multiPackIndex by
+default, 2020-09-25).
 
-Replace git_config_get_bool("core.commitgraph") in fsck with the
-equivalent call to the_repository->settings.core_commit_graph.
-
-The expected behavior is that fsck respects the config value when it is
-set, but uses the default value when it is unset. For example, for
-core.commitGraph, there are three cases:
-
-- Config value is set to true -> enabled
-- Config value is set to false -> disabled
-- Config value is unset -> enabled
-
-As such, tests cover all three cases.
+Replace git_config_get_bool("core.multiPackIndex") in fsck with the
+equivalent call to the_repository->settings.multi_pack_index.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/fsck.c          |  3 ++-
- t/t5318-commit-graph.sh | 24 +++++++++++++++++++++++-
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ builtin/fsck.c              | 2 +-
+ t/t5319-multi-pack-index.sh | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index b42b6fe21f..1c4e485b66 100644
+index 1c4e485b66..5bbe8068ec 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -803,6 +803,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 		fsck_enable_object_names(&fsck_walk_options);
+@@ -925,7 +925,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
  
- 	git_config(git_fsck_config, &fsck_obj_options);
-+	prepare_repo_settings(the_repository);
+-	if (!git_config_get_bool("core.multipackindex", &i) && i) {
++	if (the_repository->settings.core_multi_pack_index) {
+ 		struct child_process midx_verify = CHILD_PROCESS_INIT;
+ 		const char *midx_argv[] = { "multi-pack-index", "verify", NULL, NULL, NULL };
  
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
-@@ -908,7 +909,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 
- 	check_connectivity();
- 
--	if (!git_config_get_bool("core.commitgraph", &i) && i) {
-+	if (the_repository->settings.core_commit_graph) {
- 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
- 		const char *verify_argv[] = { "commit-graph", "verify", NULL, NULL, NULL };
- 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index af88f805aa..42e785cb6e 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -674,7 +674,7 @@ test_expect_success 'detect incorrect chunk count' '
- 		$GRAPH_CHUNK_LOOKUP_OFFSET
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 3d4d9f10c3..704db122b1 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -407,7 +407,9 @@ test_expect_success 'verify incorrect offset' '
+ test_expect_success 'git-fsck incorrect offset' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\377" $objdir \
+ 		"incorrect object offset" \
+-		"git -c core.multipackindex=true fsck"
++		"git -c core.multipackindex=true fsck" &&
++		test_must_fail git fsck &&
++		git -c core.multipackindex=false fsck
  '
  
--test_expect_success 'git fsck (checks commit-graph)' '
-+test_expect_success 'git fsck (checks commit-graph when config set to true)' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git fsck &&
- 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
-@@ -683,6 +683,28 @@ test_expect_success 'git fsck (checks commit-graph)' '
- 	test_must_fail git fsck
- '
- 
-+test_expect_success 'git fsck (ignores commit-graph when config set to false)' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git fsck &&
-+	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
-+		"incorrect checksum" &&
-+	cp commit-graph-pre-write-test $objdir/info/commit-graph &&
-+	test_config core.commitGraph false &&
-+	git fsck
-+'
-+
-+test_expect_success 'git fsck (checks commit-graph when config unset)' '
-+	test_when_finished "git config core.commitGraph true" &&
-+
-+	cd "$TRASH_DIRECTORY/full" &&
-+	git fsck &&
-+	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
-+		"incorrect checksum" &&
-+	test_unconfig core.commitGraph &&
-+	cp commit-graph-pre-write-test $objdir/info/commit-graph &&
-+	test_must_fail git fsck
-+'
-+
- test_expect_success 'setup non-the_repository tests' '
- 	rm -rf repo &&
- 	git init repo &&
+ test_expect_success 'corrupt MIDX is not reused' '
 -- 
 2.33.0.464.g1972c5931b-goog
 
