@@ -2,103 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B8A7C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25713C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:14:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 466016056B
-	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:08:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09395610E5
+	for <git@archiver.kernel.org>; Fri, 17 Sep 2021 04:14:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244608AbhIQEJa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 00:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
+        id S244161AbhIQEQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 00:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244571AbhIQEJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 00:09:27 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACD8BC061756
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id s20so1973699ioa.4
-        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
+        with ESMTP id S229694AbhIQEQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 00:16:04 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738CDC061574
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:14:43 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id b15so8899287ils.10
+        for <git@vger.kernel.org>; Thu, 16 Sep 2021 21:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=pr1A3WBvdmSfXm17/lZlZMaIlM85VkX1k7/5+/pxP8s=;
-        b=qewtkbOknboeIDYMvGbdi3JtEymDBu9pvpy/rpc+em9Ofp0qEvaYtdSYMA+Cbo4WVI
-         lso4a0CGunK43H9K5uwBTv5AhKeJCwy4bz9P3HfjFoTI8H3yYOazB7YcLHu6BDUlrevF
-         SP/I3AR9FU4N8/bWJ1PUOen99/KdJQBUEtYL4Zp5aUN4FqocyKxyDRrTl8vYVijdXkC0
-         /dmrG3rseRBbxqvB9n/Xgd+Yxs3y6i0xmRJtIEonfRDO02D8vKrGHsxVC1J4v6Q4GIes
-         lqd5UD/IILlsKFeHc2Gng81Tm+Tkv8pWlIggC/2JIXkLea0rBH/SYFRGFP2uS16A6t+U
-         unPw==
+         :content-disposition:in-reply-to;
+        bh=NcPWhVxpmbbPetdA+YgyMEs4O7AUDHm5qSJRHYQ2V0Q=;
+        b=ldz0g7tWz7VSALAqYCyPe3FT5wS+rjo+flwcE1ajgYH2WRrbyYXW3UpKamiP9UaJ0r
+         KTamPydx9SiUMaOJI9i9iMGPzdUeejI+qg2JCGvtDR5NfU1M8tA/1VPWp+xuUkU1cLJX
+         pq+AW44eZWWOV4lfo+qXQmgd0sVrEAgNpgk8fLFM76BG3o3j2Vk8edDq5VpbpmuR9U4t
+         L30W8CbYDHSytfw5VlE+EO6GKiuUztUzYeyPqP7JJ57Slo42j+ariNQA1tEOewOrneI/
+         /ca05czIAXnEnYIfc+k23evC8fcLwZ6e8IzoKOKTsl07kTQHrq6QtT4Jor3mQvSiw1ri
+         MmKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=pr1A3WBvdmSfXm17/lZlZMaIlM85VkX1k7/5+/pxP8s=;
-        b=FXhUm+Q1YkTdF1eAqpvwBD4nG6I8sCjoGqflIgV3HL8gUgBQZWJYGspaxKY/Di6TQE
-         KxQfRxWLuA62pX4JZtmm7u+khpERHmnYdPOs4UXCJY7/2ehEurCfKedGqQCMgKkbkQrc
-         VHAjgBW+7Slor5cI4n+aPVKm6wthAz2363jH1k0dp+5wZtbcjbpSgIlEO2Henl1dNuTb
-         tF9/77YXPOoQnZMM/LlgdBpvAmvZNopn+RRQmrf3OmUKmaimdxVm6uQrwnwYc+cyTUSj
-         oXsqeIaJtX/gw+E+AOzzltPjHb5JStTAm0Y7tSus7RjOo0FJ1omLOkniV7/X/tWA/++m
-         ZrXA==
-X-Gm-Message-State: AOAM532k/+ICJaMttHUBwbpYcphiyQkrkw0ZtZQJLh/kCdUNtePjeSiA
-        ngRSd15X5kYZcZQsdrRWt0H2rg==
-X-Google-Smtp-Source: ABdhPJyKPdZd2NTyPcCN1rG3cIUjjCnwI1GXrpjvyOTtCPEgN5jLsBJj8tb8hZrDDk0SzbXbLKEytw==
-X-Received: by 2002:a05:6638:41a2:: with SMTP id az34mr6987545jab.4.1631851685165;
-        Thu, 16 Sep 2021 21:08:05 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=NcPWhVxpmbbPetdA+YgyMEs4O7AUDHm5qSJRHYQ2V0Q=;
+        b=BcOwlTQza1Sp8SJJyrzd6m5bbdAjTtqJ/iQAaDlo2lOeifJXCyimB7UfonTIr5vFdZ
+         MQAB3KoUsk6nSNWWotxfOCh9UgnjYlY26ioTuvxM2HGx/myUv1StZn7hkU3VnnfTadR3
+         HcTCnpO6iis30nldv4+4z9NWrX+nz/Y1Le0BswXL63RyvUJRkA0Kcv6onKy7CtKvcf9b
+         L4CrL136zvzMf2RdKzl3/5yiaL6qxmxNniqXVfvRoxp4nHmNAadxcInLMfzJSlwfWoRe
+         6VH2ZmxKXLRpSK9Y/XwdVR250GIoCA2Qpntp3bVe2a9Eku1Zq8fYWA50arKPZXvWT5Qy
+         QDjA==
+X-Gm-Message-State: AOAM533EaLVfKUTWFQs8XfAmzLhz++/Td96bcFLofVpUl00zK3wvf20i
+        E+GlJBa5eTPmY/XSyL3CpcQGmA==
+X-Google-Smtp-Source: ABdhPJyHNlXKtRQchcNOqJUSIK3zkpKQxIksl6vUNjKHvVH5aGB22hURJ44QAgTUSgCk/HlVBblMSA==
+X-Received: by 2002:a05:6e02:1ca9:: with SMTP id x9mr6380916ill.164.1631852082272;
+        Thu, 16 Sep 2021 21:14:42 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c1sm2934215iot.44.2021.09.16.21.08.04
+        by smtp.gmail.com with ESMTPSA id l15sm2656244iow.4.2021.09.16.21.14.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Sep 2021 21:08:04 -0700 (PDT)
-Date:   Fri, 17 Sep 2021 00:08:04 -0400
+        Thu, 16 Sep 2021 21:14:41 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 00:14:41 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v6 00/22] fsck: lib-ify object-file.c & better fsck
- "invalid object" error reporting
-Message-ID: <YUQUpCeFmQ1eSn7R@nand.local>
-References: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
- <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH v2 4/7] p5326: create missing 'perf-tag' tag
+Message-ID: <YUQWMWiVDyDz9qRV@nand.local>
+References: <cover.1631049462.git.me@ttaylorr.com>
+ <cover.1631657157.git.me@ttaylorr.com>
+ <a8c6e845adf559a96e37c973fea16da8a42e7cba.1631657157.git.me@ttaylorr.com>
+ <YUPHBv3d5p67NAnJ@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com>
+In-Reply-To: <YUPHBv3d5p67NAnJ@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 12:57:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> This improves fsck error reporting, see the examples in the commit
-> messages of 19/22, 21/22 and 22/22. To get there I've lib-ified more
-> thigs in object-file.c and the general object APIs, i.e. now we'll
-> return error codes instead of calling die() in these cases.
+On Thu, Sep 16, 2021 at 06:36:54PM -0400, Jeff King wrote:
+> On Tue, Sep 14, 2021 at 06:06:09PM -0400, Taylor Blau wrote:
 >
-> This series has been in "needs review" state for a while. This re-roll
-> is mainly to bump it for the list's attention, but while I was at it I
-> addressed point from Jonathan Tan raised in a previous round: use an
-> enum instead of int for the unpack_loose_header() return value.
+> > Some of the tests in test_full_bitmap rely on having a tag named
+> > perf-tag in place. We could create it in test_full_bitmap(), but we want
+> > to have it in place before the repack starts.
+>
+> I wondered how p5326 ever could have worked without this.
+>
+> [...]
+>
+> Knowing the history of the midx-bitmap series, I'm almost certain what
+> happened is that it got rebased, and you probably _did_ see a textual
+> conflict, which you resolved correctly, moving the perf-tag test into
+> lib-bitmap.sh But you missed the semantic conflict that p5326 also
+> needed to add in the setup step.
 
-I took a thorough look through this series, and left a handful of minor
-comments. I didn't spot any glaring issues, and think that this series
-is in pretty good shape.
-
-I do admit there were quite a large number of patches to get to the
-couple of changes at the end. I left some thoughts throughout for places
-that I would have combined things / presented them in a different order
-or similar.
-
-I don't think you should spend much time changing the structure now that
-it's been looked at with close eyes, but just some idle thoughts for
-other large series you might send in the future.
+Sounds about right :-).
 
 Thanks,
 Taylor
