@@ -2,142 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DF11C433EF
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 22:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D146AC433F5
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 22:35:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46E8360F4A
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 22:06:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5258610A4
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 22:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240287AbhIRWIM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 18:08:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
+        id S240404AbhIRWhN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 18:37:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238545AbhIRWIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Sep 2021 18:08:11 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AC5C061574
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 15:06:47 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id w206so7652520oiw.4
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 15:06:47 -0700 (PDT)
+        with ESMTP id S232125AbhIRWhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 18:37:12 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD29C061574
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 15:35:48 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id b6so14393801ilv.0
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 15:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dm5i0u94HTTdks7bFisrSXKS5pNXSGc1d56PVkuMSFY=;
-        b=aqG4DwIkeezf6eXm6nRbBir+ctrjaIKkgAKe1z799H88WhVeRFoW3CP6pNlMqqp5m+
-         kGOeO0DHSxz8albx2L1JP1ThbVr/gDQB90dZ8ta8ScWc28J+HUz/Ey+tWRyTYMMIo7ml
-         ZKsrYhSZoPFEO/2og2a5rfYiAJsyBwR8d2GoH7cbAoVACL2zebZ0xfuQYpsOUlHiZrBm
-         9wFHr+rVsph7/Ie4KU9lug/42KBUvDIhDJJlQJvz0M6dXuxPLECspOMVJ46V/5hfpVNP
-         +qKOtYjFdSSxyWurg5CNVfaEqlIwETj6W9elOF4n66lPBnLHXdRTrXpbvk0Qcopjkwo2
-         V/Ow==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KAjaXfnblvqe7qUGDND123wDp+79LUAHzCMf7/3XnM4=;
+        b=FctRkZKSyejWFeTE3HxNmILLc0ChwuEVmO1G/dgtwdvXjXdt7vAqLqEw29XvPdMuY8
+         T0nV7pPhW/Jsg8AI45AZeesS82nfAJF5rdbeL5lujfJJVe6kPgnvsvASlZURnv1XyQTp
+         fxP1/hBxQsCHAUfwlstoZO5UtK8jXArdW1H4R5sHRwrt6eT9Y7Dy1S7h/lpdIhdCuaHI
+         4TZf0KC4VRLhNv4hyJacPtDWQKtVWPBNZkLDK1pdkWeUPMiCMb8EdYdZtjubzVQrDdof
+         iLXOXmHD3c99qWEvhgU/S9fZMmlQZxvElHgeYXt/9qfsrxLCKbfqoJLZSAZsvPfb/ty1
+         XOPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dm5i0u94HTTdks7bFisrSXKS5pNXSGc1d56PVkuMSFY=;
-        b=LZwWCl7YAQ/rD2zsJXo9Kw8o4sCldUPTVRGOJwzWhgQ60Ha7HkIHKrEfDEiuHu0GBJ
-         5dDPlGfuW3NITHr7A2a3q9QALNHWUJnwahLK27ypsSBw2qNgyJkYSvjI4/oGqIzdXGhg
-         AU86X027izuSqaPfb6zPl8oPjx5UNt3kcFZRKzWYprXucuaXjm/ZtS3k0a8Rq4l3W+jA
-         Dn/2ENMuFNXuEChCOgPnGIXDWGMxW+lkxe6gQNL6kFreLB848TChF3M3M12q9bpXWTm2
-         /9xD1LiC3tx+d5OiQoohm68Tmy2EbL29JhxI56gyV5TUBm4YbaQYCbDc2ir2Ux7kYUOP
-         M/Ig==
-X-Gm-Message-State: AOAM5308ZLjO+xapdy2xREOX0wY1eC1rUs2KVbYi7EHX/KoksUVAiDeN
-        QZiCJxSolS/AYmOkYYjlLMSX13XrU0FW7H7Hyrc=
-X-Google-Smtp-Source: ABdhPJy3sOa8nXXLiWhWVRFfbyK/OxRb0ui6exDipXISSVrLhRpaURQA7f3ESJLaxUWZPxFgcHrVN+id/JMbAnibW/0=
-X-Received: by 2002:a05:6808:1a29:: with SMTP id bk41mr280920oib.167.1632002806896;
- Sat, 18 Sep 2021 15:06:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KAjaXfnblvqe7qUGDND123wDp+79LUAHzCMf7/3XnM4=;
+        b=N3ghsVjehI4DpDiQHqpQxoO3tjUNdlzWXRmg8kb/0KlGqqZMT27i7MM7svPKh7cUKu
+         Wask30r045bGT5fUjkjovObvrb/fjwBNRi9mMvFnlZwBTofJ556+CjuDk6Jxzer+e7OG
+         nBhnFof+ZDZErxMgRUv/IAcgB8w26KhRBzU1n6I3OQuIzZvd9XvFWGVzDt3oGpj3Mg2I
+         DGR6phlV1YhdS3S5M7SsnRWzeBG+SQPuOiOFRGk+N26nB8zcvZUvV5bkZ5RrpO6OixXh
+         5iDlJJnLujXytHRkf+cgHURXPJI5i4qWgCIjAaZ3aGa3t8NZ9fN6NXCEzmJldxSTyHk9
+         Qxfg==
+X-Gm-Message-State: AOAM5338CegbwoosyToJuOfETq7yEEjJ6gQI31f52ozsEDHcmVb853t7
+        A7jDmbmzU99S1gwOJw+LeUcweg==
+X-Google-Smtp-Source: ABdhPJzW5ujE/Yx01FTWf79mi0tSWsBpdgX9hry2hlVClowyNhDCEteiUQUo3Lr1/u7i4BTcgFueQg==
+X-Received: by 2002:a05:6e02:eaf:: with SMTP id u15mr12780988ilj.313.1632004547368;
+        Sat, 18 Sep 2021 15:35:47 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c20sm5851682ili.42.2021.09.18.15.35.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Sep 2021 15:35:46 -0700 (PDT)
+Date:   Sat, 18 Sep 2021 18:35:46 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Andrzej Hunt <andrzej@ahunt.org>
+Subject: Re: [PATCH] connect: also update offset for features without values
+Message-ID: <YUZpwi2HhflICd4Z@nand.local>
+References: <pull.1091.git.git.1631970872884.gitgitgadget@gmail.com>
+ <YUYLXKN8U9AMa5ke@nand.local>
+ <YUZinXsGdL19l/tQ@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <pull.1036.v2.git.git.1631379829.gitgitgadget@gmail.com> <06e04c88dea3e15a90f0a11795b7a8eea3533bc8.1631379829.git.gitgitgadget@gmail.com>
- <b6818661-ac6e-fbde-2cab-429c5550a0da@gmail.com> <2290b657-3c67-0ab8-5c25-cc57feac301c@gmail.com>
-In-Reply-To: <2290b657-3c67-0ab8-5c25-cc57feac301c@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 18 Sep 2021 15:06:35 -0700
-Message-ID: <CABPp-BHXUNTuYPdCzfKhkvr23W3PODzti84bed6uEP5q+sj0TQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Sergey Organov <sorganov@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YUZinXsGdL19l/tQ@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 15, 2021 at 4:22 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Sat, Sep 18, 2021 at 06:05:17PM -0400, Jeff King wrote:
+> On Sat, Sep 18, 2021 at 11:53:00AM -0400, Taylor Blau wrote:
 >
-> On 15/09/2021 11:25, Phillip Wood wrote:
-> > I do wonder (though a brief try failed to trigger it) if there are cases
-> > where the diff algorithm does something "clever" which means it does not
-> > treat a common prefix or suffix as unchanged (see d2f82950a9
-> > ("Re(-re)*fix trim_common_tail()", 2007-12-20) for a related issue). We
-> > could just trim the common prefix and suffix from the two sides
-> > ourselves using xdl_recmatch().
+> > > +test_expect_success 'bogus symref in v0 capabilities' '
+> > > +	test_commit foo &&
+> > > +	oid=$(git rev-parse HEAD) &&
+> > > +	{
+> > > +		printf "%s HEAD\0symref object-format=%s\n" "$oid" "$GIT_DEFAULT_HASH" |
+> > > +			test-tool pkt-line pack-raw-stdin &&
+> >
+> > I'm actually really happy with this modification to add the non-empty
+> > object-format after the broken "symref" part, since it ensures that your
+> > offset calculation is right (and that we can continue to parse features
+> > with or without values after a value-less one).
 >
-> Here is an evil test case that shows this problem (diff on top of your patch)
->
->
-> diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-> index de9c6190b9..836843c6b0 100755
-> --- a/t/t6427-diff3-conflict-markers.sh
-> +++ b/t/t6427-diff3-conflict-markers.sh
-> @@ -219,8 +219,9 @@ test_setup_zdiff3 () {
->                  test_write_lines 1 2 3 4 5 6 7 8 9 >basic &&
->                  test_write_lines 1 2 3 AA 4 5 BB 6 7 8 >middle-common &&
->                  test_write_lines 1 2 3 4 5 6 7 8 9 >interesting &&
-> +               test_write_lines 1 2 3 4 5 6 7 8 9 >evil &&
->
-> -               git add basic middle-common &&
-> +               git add basic middle-common interesting evil &&
->                  git commit -m base &&
->
->                  git branch left &&
-> @@ -230,19 +231,21 @@ test_setup_zdiff3 () {
->                  test_write_lines 1 2 3 4 A B C D E 7 8 9 >basic &&
->                  test_write_lines 1 2 3 CC 4 5 DD 6 7 8 >middle-common &&
->                  test_write_lines 1 2 3 4 A B C D E F G H I J 7 8 9 >interesting &&
-> +               test_write_lines 1 2 3 4 X A B C 7 8 9 >evil &&
->                  git add -u &&
->                  git commit -m letters &&
->
->                  git checkout right &&
->                  test_write_lines 1 2 3 4 A X C Y E 7 8 9 >basic &&
->                  test_write_lines 1 2 3 EE 4 5 FF 6 7 8 >middle-common &&
->                  test_write_lines 1 2 3 4 A B C 5 6 G H I J 7 8 9 >interesting &&
-> +               test_write_lines 1 2 3 4 Y A B C B C 7 8 9 >evil &&
->                  git add -u &&
->                  git commit -m permuted
->          )
->   }
->
-> -test_expect_failure 'check zdiff3 markers' '
-> +test_expect_success 'check zdiff3 markers' '
+> I don't think it quite does that, though. If I understand the parsing
+> code correctly, it walks through the list looking for entries for a
+> _particular_ capability. I.e., it will look for any "symref" entries,
+> advancing the offset counter. And then separately it will start again
+> looking for any object-format entries, with a brand-new offset counter
+> starting at 0.
 
-...except your new testcase makes it fail.
+Ah; you're absolutely right. We call next_server_feature_value from
+annotate_refs_with_symref_info() and server_supports_hash(), each of
+which initializes their own offset from zero.
 
->          test_setup_zdiff3 &&
->          (
->                  cd zdiff3 &&
-> @@ -251,6 +254,14 @@ test_expect_failure 'check zdiff3 markers' '
+> So if you want to confirm that the parsing continues after the
+> unexpected entry, you'd want a second symref entry, and then to make
+> sure it was correctly parsed.  Perhaps something like this:
 >
->                  test_must_fail git -c merge.conflictstyle=zdiff3 merge -s recursive right^0 &&
->
-> +               test_write_lines \
-> +                       1 2 3 4 \
-> +                       "<<<<<<< HEAD" X A \
-> +                       "||||||| $(git rev-parse --short HEAD^1)" 5 6 ======= \
-> +                       Y A B C ">>>>>>> right^0" \
-> +                       B C 7 8 9 >expect &&
-> +               test_cmp expect evil &&
-> +
+> [...]
 
-Yeah, this is an interesting testcase, and I agree with the 'expect'
-choice you wrote, but the current code doesn't produce it.  I'll
-update the patches and send out another round, and then do you want to
-try your xdl_recmatch() magic to fix this testcase?
+Yeah, I agree that would exercise it, and I also agree that it isn't
+hugely important. But this patch does make an effort to handle that
+case, so it's probably worth testing.
+
+Thanks,
+Taylor
