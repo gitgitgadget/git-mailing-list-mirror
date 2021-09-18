@@ -2,172 +2,243 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8978BC433EF
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 04:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAC8C433EF
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 04:53:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A1FD61244
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 04:30:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F2816103B
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 04:53:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236941AbhIREcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 00:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54986 "EHLO
+        id S236725AbhIREyq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 00:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231951AbhIREcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Sep 2021 00:32:15 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52EAEC061574
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 21:30:52 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id m11so14764942ioo.6
-        for <git@vger.kernel.org>; Fri, 17 Sep 2021 21:30:52 -0700 (PDT)
+        with ESMTP id S231534AbhIREyq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 00:54:46 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06EFFC061574
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 21:53:23 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id j66so16866506oih.12
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 21:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=RZv6WZ5vzuXwlLFIDZ+o3h69vnLd304T7FdKxP2p5b4=;
-        b=49rJl2ya1A9x/Btj90p9hzngELqv9N4a4UlTQs6K5xs7n2MBWtJqzr3kreHxcuAS3+
-         3+8vblZouIZSHyf7A+XD/TPpt4+tWfgpz9KJF61GhalP73gSdzAJKsIrUv47hL931CWG
-         6/ByWb4MKlylDeCrYZV0BsVvFWrS34/1NL5mN7XKIA/MoWWMc5MN4LkvsTZ7ADlhts9R
-         zv/CHPN8BRBXp5TQDGWvPBhqdwa/MdSQw8szUBmymFryVkg68ruH08UP/rPqly2sIa+z
-         BmP3ILx9/E5FFGAV6FMrZaoSDD0hw5ISzerRQKD7bcNaABLtbrQF7cCOH+1r2jvdlq2N
-         hk3g==
+        bh=qTPIr9wvlHo3r124lOgWW72m7YFlZnU25ldyUugC57A=;
+        b=j88mt70HjfXiLXTRA9rcA0kvoFJeJC6f6/7p7noqxspc8oErJXnN0ZH2Fvz7Afkhrl
+         lzDiDDQO24GqmwY7MDB38Cyr1RvV9pVk5tM8yzAzIkLNDy1PHRwg2nJEHOIb9t+4Pky2
+         K6LaY+NEF2LfUkAXrsR7f9F9ycvUeXs3c//nV/otySREA+dQljY7Gg7/FocvQpv/of+C
+         2rxLKToaLffaZ0UVGOxWYek69PR/cXrxiAfGHuVlemKLMnI143hVoXqXy3/UVLe3r0A3
+         9cVyDqPjh8RtsImJ99nJtQhHEtZ+G8DOup6stGRqqKiCeMzvEYSzE8LEiBRQQ4trhJTK
+         vuTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=RZv6WZ5vzuXwlLFIDZ+o3h69vnLd304T7FdKxP2p5b4=;
-        b=GL/PnhfoV5B1MZevOor2q0/UrBlYD+6LY/Ti0G12tCBPFTulRmq4ePFrhyfl9aPB5t
-         8bQcp8I3rr7Ye3u+YLJeoZALCi1Z0VShctHa7/ZkWWmhUK0b7d1hC2sgYeQbTAWGNkk+
-         +QIRag8fGEcPK2np4SyjqXS+7ePaCi/kMSL+plGCzETtJ1G1PiaqqqxwuP0uaDg1b0IV
-         vChuKiWRUmEd9Y6JvpZWxoaSvpvjJr+OxB+jSnzZ8gqe331lEKVazViozWOJ9IuMfaPQ
-         JD+NH+UVmrwKK3hS0q0b79cEGmJZhQ1SozzMHElFFqHr4JuW2mTc9YeGksNqxeAeT14+
-         IhXg==
-X-Gm-Message-State: AOAM532cDGkSEh5OO18Nag+R2HRdYih2XILLQsTv6YFXZpAbZS685rPS
-        sx6ecTXXUgCY/98OaUX+5NB75Q==
-X-Google-Smtp-Source: ABdhPJzCi4eG0Qjjkc+S8B+ok0PHTFtPj0DK9pfSb9W3lkLATpZOa9tmbVJIMNj9leMBVDJ3gSazFg==
-X-Received: by 2002:a5d:9693:: with SMTP id m19mr11274356ion.181.1631939451697;
-        Fri, 17 Sep 2021 21:30:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g23sm4621101ioc.8.2021.09.17.21.30.50
+        bh=qTPIr9wvlHo3r124lOgWW72m7YFlZnU25ldyUugC57A=;
+        b=71HyWFYKZjv4uO9iy7nWqKcYVq5j1NBjFN6SZBECYoEJxhbHA5RZ+DD8LpwMopSTut
+         83OzMEjErPT00maE47H6pYysVexJUzvORGqARmEB4wnuYsDMLjTxXv0HElfRxiQZ2l42
+         LP1dlUrFBYCxMDFnueCjSWO+YmLxQh6herUy8gdPjlkUWlSL/omNc/nzavKcDdMNN2Px
+         xIEB8rjPVyz7EMkOTho2HLog+KluxCIrPKzWm5J4TI/JvtTzxe2SoUzDMrDQ+OUl9nbp
+         Mdo7T/nCWNZFHa1woEtaEjMu8WQ8YeLlYDFA3dNmTCUgwKGztNVSWoAP4AqkT5HNejH/
+         tAdA==
+X-Gm-Message-State: AOAM533jHI9BORgu8ZDXg7Ph3Gm9RccwaFoZKR/rzobFhGgGeYyb7h1W
+        MvHf2X/3XbQuNVi+vDx073A=
+X-Google-Smtp-Source: ABdhPJwBPI5HRs8K0LPuODHr+dt9voZCuTg4+DP6NlvbkkOWNfFbnxM2g6sUZ/SCd57y746OhnHtEg==
+X-Received: by 2002:a05:6808:1283:: with SMTP id a3mr6390791oiw.99.1631940802274;
+        Fri, 17 Sep 2021 21:53:22 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id a10sm1942599oil.30.2021.09.17.21.53.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Sep 2021 21:30:50 -0700 (PDT)
-Date:   Sat, 18 Sep 2021 00:30:49 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 3/5] commit-graph: use parse_options_concat()
-Message-ID: <YUVreesWdRmBYl1C@nand.local>
-References: <87r1lhb6z7.fsf@evledraar.gmail.com>
- <20210215184118.11306-4-avarab@gmail.com>
- <YCrCt8sEFJSPE+28@nand.local>
- <87czx1awwg.fsf@evledraar.gmail.com>
- <20210917211337.GC2118053@szeder.dev>
- <YUUQzswYL5x74Tps@coredump.intra.peff.net>
+        Fri, 17 Sep 2021 21:53:21 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 21:53:19 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, gitmailinglist.bentolor@xoxy.net,
+        git@vger.kernel.org
+Subject: Re: Should `@` be really a valid git tag name?
+Message-ID: <YUVwvw+T3C/QXQ52@carlos-mbp.lan>
+References: <0c68d628-e093-1cbd-e3bd-38a827545418@gmx.net>
+ <CAPUEspjbiNtffXatzNUUFYyZKRjcqetOTVqQX+MgZf_AJq9hnA@mail.gmail.com>
+ <xmqq4kaihqjj.fsf@gitster.g>
+ <YUUM5VqTEtjhnfjj@coredump.intra.peff.net>
+ <YUUdjNDkL7Uy5erG@carlos-mbp.lan>
+ <xmqqr1dmg5uq.fsf@gitster.g>
+ <CAPUEspg3982Wk7vdO-vFimvyApzYwUtsryZdLt1=sLfrrYngyg@mail.gmail.com>
+ <xmqqh7eig25r.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YUUQzswYL5x74Tps@coredump.intra.peff.net>
+In-Reply-To: <xmqqh7eig25r.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 17, 2021 at 06:03:58PM -0400, Jeff King wrote:
-> > I'm inclined to think that '--progress' should rather be removed from
-> > the common 'git commit-graph' options; luckily it's not too late,
-> > because it hasn't been released yet.
->
-> I wasn't following this series closely, but having seen your fix below,
-> I'm inclined to agree with you. Just because we _can_ allow options
-> before or after sub-commands does not necessarily make it a good idea.
->
-I agree. Suppose we had a "git commit-graph remove" sub-command that
-removed the commit-graph file (ignoring that there are probably better
-hypothetical examples than this ;)). It's not obvious what --progress
-means in the context of that mode.
+On Fri, Sep 17, 2021 at 05:25:52PM -0700, Junio C Hamano wrote:
+> 
+> I think it is OK to forbid at the higher level Porcelain, while
+> still allowing read access, but keep the door open for plumbing,
+> just like Peff suggested.
 
-Here's a patch that does what you and Gábor are suggesting as an
-alternative. Unfortunately, we can't do the same for the
-multi-pack-index command, since the analogous change there is 60ca94769c
-(builtin/multi-pack-index.c: split sub-commands, 2021-03-30), which was
-released in 2.32.
+I still think it would be better to forbid it fully (at least longterm)
+and while I am not advocating for (neither against) the feature that
+required a character to be reserved, I think it is good to have a way
+to reserve more characters if needed, and so this might help as a POC.
 
-Anyway, as promised:
+The patch could use a better message, and covers all porcelain points
+I am aware of (branch, tag, checkout and switch), but leaves push/pull
+intentionally open.
 
---- 8< ---
+I think preventing push might be worth adding, but I am concerned it
+might be too intrusive; I coded a warning for tag, but I frankly suspect
+no one really HAS a tag like this that they really want to keep, and the
+reported problem behaves better with the new code (local/remote tag can
+be removed normally):
 
-Subject: [PATCH] builtin/commit-graph.c: don't accept common --[no-]progress
+  $ git log --oneline
+  813e919 (HEAD -> master, tag: a, tag: @@, tag: @1, tag: 1@, origin/master, @) HEAD
+  d52caf3 (tag: z, tag: foo, tag: bar, tag: @) init
+  $ git tag -d @
+  Deleted tag '@' (was d52caf3)
+  $ git push origin :@
+  To origin
+   - [deleted]         @
 
-In 84e4484f12 (commit-graph: use parse_options_concat(), 2021-08-23) we
-unified common options of commit-graph's subcommands into a single
-"common_opts" array.
+Carlo
+----- >8 -----
+Subject: [RFC PATCH] refs: mark "@" as an invalid refname in the porcelain
 
-But 84e4484f12 introduced a behavior change which is to accept the
-"--[no-]progress" option before any sub-commands, e.g.,
+9ba89f484e (Add new @ shortcut for HEAD, 2013-09-02) declares "@"
+as an invalid refname, but only blocked it as a full refname and
+not when a component of one, leaving a loophole that was tested
+in t3204.11, even if ambiguous.
 
-    git commit-graph --progress write ...
+Remove the check and instead add it at the porcelain level, so
+users will be blocked of creating tags or branches named "@", but
+still allowed to delete or rename them in a consistent way.
 
-Prior to that commit, the above would error out with "unknown option".
+To help transition, add a warning if "@" is used as a branch, so
+that check could be removed and implemente properly in the future.
 
-There are two issues with this behavior change. First is that the
-top-level --[no-]progress is not always respected. This is because
-isatty(2) is performed in the sub-commands, which unconditionally
-overwrites any --[no-]progress that was given at the top-level.
-
-But the second issue is that the existing sub-commands of commit-graph
-only happen to both have a sensible interpretation of what `--progress`
-or `--no-progress` means. If we ever added a sub-command which didn't
-have a notion of progress, we would be forced to ignore the top-level
-`--[no-]progress` altogether.
-
-Since we haven't released a version of Git that supports --[no-]progress
-as a top-level option for `git commit-graph`, let's remove it.
-
-Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- builtin/commit-graph.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ branch.c                              | 7 +++++++
+ builtin/branch.c                      | 3 +++
+ builtin/checkout.c                    | 5 ++++-
+ builtin/tag.c                         | 3 +++
+ refs.c                                | 8 --------
+ t/t3204-branch-name-interpretation.sh | 8 ++++----
+ 6 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 21fc6e934b..067587a0fd 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -50,8 +50,6 @@ static struct option common_opts[] = {
- 	OPT_STRING(0, "object-dir", &opts.obj_dir,
- 		   N_("dir"),
- 		   N_("the object directory to store the graph")),
--	OPT_BOOL(0, "progress", &opts.progress,
--		 N_("force progress reporting")),
- 	OPT_END()
- };
-
-@@ -95,6 +93,8 @@ static int graph_verify(int argc, const char **argv)
- 	static struct option builtin_commit_graph_verify_options[] = {
- 		OPT_BOOL(0, "shallow", &opts.shallow,
- 			 N_("if the commit-graph is split, only verify the tip file")),
-+		OPT_BOOL(0, "progress", &opts.progress,
-+			 N_("force progress reporting")),
- 		OPT_END(),
- 	};
- 	struct option *options = add_common_options(builtin_commit_graph_verify_options);
-@@ -246,6 +246,8 @@ static int graph_write(int argc, const char **argv)
- 		OPT_CALLBACK_F(0, "max-new-filters", &write_opts.max_new_filters,
- 			NULL, N_("maximum number of changed-path Bloom filters to compute"),
- 			0, write_option_max_new_filters),
-+		OPT_BOOL(0, "progress", &opts.progress,
-+			 N_("force progress reporting")),
- 		OPT_END(),
- 	};
- 	struct option *options = add_common_options(builtin_commit_graph_write_options);
---
-2.33.0.96.g73915697e6
+diff --git a/branch.c b/branch.c
+index 7a88a4861e..a577a3ddc1 100644
+--- a/branch.c
++++ b/branch.c
+@@ -185,6 +185,13 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+  */
+ int validate_branchname(const char *name, struct strbuf *ref)
+ {
++	/*
++	 * since 9ba89f484e (Add new @ shortcut for HEAD, 2013-09-02)
++	 * "@" is no longer a valid reference.
++	 */
++	if (!strcmp(name, "@"))
++		die(_("'@' is an ambiguous refname"));
++
+ 	if (strbuf_check_branch_ref(ref, name))
+ 		die(_("'%s' is not a valid branch name."), name);
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b23b1d1752..7a5a10ad82 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -857,6 +857,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+ 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
+ 
++		if (!strcmp(argv[0], "@"))
++			die(_("'@' is ambiguous"));
++
+ 		create_branch(the_repository,
+ 			      argv[0], (argc == 2) ? argv[1] : head,
+ 			      force, 0, reflog, quiet, track);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b5d477919a..bc92a2c723 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1151,8 +1151,11 @@ static void setup_new_branch_info_and_source_tree(
+ 	setup_branch_path(new_branch_info);
+ 
+ 	if (!check_refname_format(new_branch_info->path, 0) &&
+-	    !read_ref(new_branch_info->path, &branch_rev))
++	    !read_ref(new_branch_info->path, &branch_rev)) {
+ 		oidcpy(rev, &branch_rev);
++		if (!strcmp(new_branch_info->name, "@"))
++			warning("ambiguous name, rename this branch ASAP");
++	}
+ 	else {
+ 		free((char *)new_branch_info->path);
+ 		new_branch_info->path = NULL; /* not an existing branch */
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 82fcfc0982..357efc37f8 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -608,6 +608,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	else
+ 		die(_("Invalid cleanup mode %s"), cleanup_arg);
+ 
++	if (!strcmp(tag, "@"))
++		die(_("'@' is ambiguous"));
++
+ 	create_reflog_msg(&object, &reflog_msg);
+ 
+ 	if (create_tag_object) {
+diff --git a/refs.c b/refs.c
+index 8b9f7c3a80..6b5d869bf5 100644
+--- a/refs.c
++++ b/refs.c
+@@ -167,14 +167,6 @@ static int check_or_sanitize_refname(const char *refname, int flags,
+ {
+ 	int component_len, component_count = 0;
+ 
+-	if (!strcmp(refname, "@")) {
+-		/* Refname is a single character '@'. */
+-		if (sanitized)
+-			strbuf_addch(sanitized, '-');
+-		else
+-			return -1;
+-	}
+-
+ 	while (1) {
+ 		if (sanitized && sanitized->len)
+ 			strbuf_complete(sanitized, '/');
+diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
+index 993a6b5eff..862a5dff8e 100755
+--- a/t/t3204-branch-name-interpretation.sh
++++ b/t/t3204-branch-name-interpretation.sh
+@@ -110,11 +110,11 @@ test_expect_success 'disallow deleting remote branch via @{-1}' '
+ 
+ # The thing we are testing here is that "@" is the real branch refs/heads/@,
+ # and not refs/heads/HEAD. These tests should not imply that refs/heads/@ is a
+-# sane thing, but it _is_ technically allowed for now. If we disallow it, these
+-# can be switched to test_must_fail.
++# sane thing, and should go away once "@" is correctly marked as an invalid
++# refname
+ test_expect_success 'create branch named "@"' '
+-	git branch -f @ one &&
+-	expect_branch refs/heads/@ one
++	test_must_fail git branch -f @ one 2>err &&
++	grep "fatal: '\''@'\'' is ambiguous" err
+ '
+ 
+ test_expect_success 'delete branch named "@"' '
+-- 
+2.33.0.911.gbe391d4e11
 
