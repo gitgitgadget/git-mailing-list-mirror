@@ -2,199 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90678C433F5
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 19:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36608C433EF
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 20:06:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7657660F70
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 19:31:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08871604DA
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 20:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238328AbhIRTdR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 15:33:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53666 "EHLO
+        id S231830AbhIRUIK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 16:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236332AbhIRTdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Sep 2021 15:33:15 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2BBC061574
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 12:31:51 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id t1so13191029pgv.3
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 12:31:51 -0700 (PDT)
+        with ESMTP id S230051AbhIRUIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 16:08:09 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87E3C061574
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 13:06:45 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id e16so1008652qte.13
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 13:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qnqOkI31GeLljbB4WqZ/drBHY/AOebIdt+UdoPHqAJw=;
-        b=E18carW9TKkXrYR0DCXMt8z0gVJJxBCjfyZwt4aRFVBOwdV9cf1H+olmDSOKI6lSMr
-         hRUfbEBBvqw94aqTb9/1nQ01Fg9hzWtbjh6IQ2dkTsykqGwEeLWMEzIL7indfukGTNwP
-         cxFjshG+fmT8YQiSKdKNQKQUJMmfS9CIX/ZcXouRMP5/zpWkvhef4+UVfsS1Oa84vUYV
-         NnLqiyanD7xwa2Ccye7vlI7LEs1AaEwNvcAuJB3U2LIFVoIJKSr0CFii/q1oyhZR1bgz
-         Lc4sVI6CkrgpOQfVjAGL+W7IrZEeg90NnrcTEPtEQxeaKTPq4CaBBx351fcNxFhTisc/
-         hTog==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=XJS3fENGFvMlxN/1wN711zDleS2+EerzkwfzIPkaAX8=;
+        b=BCrlWw/GDhQ4YQInZLsxsZpAkbweL6x3fTuoqmdyxOHeM2f8GZveTGXAFvzGu/QmxF
+         DULye82rv7L23DzO2OhRCWv3u887Dedys0P4hNPIX8LlvBbcYo4QMilDsWHoZ4+Y180z
+         8ZlFci3o5j4AYAzsybKTvS/EeNW23/P7Te73EiN0Uth7OiozkW/87fqxc7//9n89xfL1
+         LUPZW4O8+38YSy2vAiQbVrq8tp37jGFFmlk9JXgxWvsAVP31EcLcWPakBFF5dVOG1fjl
+         oczlpxeW4lDCEWCvE7zzNoVQb1Rqs7p4k5aGM5rWRrdaLaxk91AGGA/uM12p5ZsVqRfT
+         z+Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qnqOkI31GeLljbB4WqZ/drBHY/AOebIdt+UdoPHqAJw=;
-        b=GgbpnrifPJZpyDz2HI42i5+1Aq3KeZxo7mFSzVpyaE+uJGAdMeZt4AxLYJ/dw+YMGX
-         PCo6XajfQnj48iE5I0TQXPthzSR5Zb3zqPLom1AIHWesItUyzd2R5znJH1NAO2IWPq58
-         /pT0a/GDB8W4GC9TQG7JEj6D/yQwDS3irTLrE9mBPrM9W4ArW576I44cGP5dIyFKJ4J1
-         pZGP0tLe7rKuVSTyM/tAbugTUUQQ1PZHUdBZatmeL02kabkdW8srtc04SDHGR51w+3rE
-         6ph6BwrFIRmRTnQgds7uqGAX4nICsa8U8LElUdHUhv79AXxGxKbcnWKy7H/AMdVfAnk1
-         17eA==
-X-Gm-Message-State: AOAM531gU6oQuGr39ynTS4JJQXTgRB53WWcPDWzD82UbrvX23latqdK2
-        xz3HqO6F4RSJI3ZKySE5i2rSRizjMyA=
-X-Google-Smtp-Source: ABdhPJzo4WipOa5REJRCuIWa3GZ77rDx7Ec0c5inBFpS0bFACNZVuqqpEmml0rOPJAUy0HYhAfx+Pg==
-X-Received: by 2002:a63:5914:: with SMTP id n20mr15831268pgb.164.1631993510669;
-        Sat, 18 Sep 2021 12:31:50 -0700 (PDT)
-Received: from localhost.localdomain ([49.204.135.121])
-        by smtp.gmail.com with ESMTPSA id j6sm9861979pgh.17.2021.09.18.12.31.48
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=XJS3fENGFvMlxN/1wN711zDleS2+EerzkwfzIPkaAX8=;
+        b=fLYtZWtavM/88lHad54h1OhfjsTr/EQh4dJK0ELhB91bsukW7Tz9mywbAhr1TQWuVx
+         CQhu1XzlcAjrI8oLCNFlm1HjiT+MNxe1GB+Ycgd2rYZj6fR5anZJ3KYkGef7A1//I/5f
+         W+qbIjgtr71Asy2yRK076/2UkvQ4g4eMnQ2C+upYoksWZhrQJv0tPzJ2LD9bhEUEf1bZ
+         2UnbzKu+qBo9AKs+5xoldEmx7NsUlxEnSY1245Ix58aRt2MwmplVYR3F/P06KiN1oa1q
+         uDNDW1qvCSryx9M5YItsG3rAwCQL3/UFkvQmYviJxHSe6gf7P9hQj5BWwASLsAhgWiBv
+         5blQ==
+X-Gm-Message-State: AOAM531O3b7Npcq7LgKSnQbvMUVkCWtTN3tDqBnLJm90g1RNyhAzuD/L
+        W1JSMUqb/sZHU6AeZT4hReA=
+X-Google-Smtp-Source: ABdhPJway/WsH7FJ5dOY28zgaT0biLkBI5rLaAtO0G5r+3fEK2tt7K/Ut/Wph8AmW9JKLGd4w0evKw==
+X-Received: by 2002:ac8:4717:: with SMTP id f23mr16461259qtp.253.1631995603402;
+        Sat, 18 Sep 2021 13:06:43 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id x83sm7681439qkb.118.2021.09.18.13.06.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Sep 2021 12:31:50 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
-Subject: [PATCH v2 1/1] submodule--helper: fix incorrect newlines in an error message
-Date:   Sun, 19 Sep 2021 01:01:16 +0530
-Message-Id: <20210918193116.310575-2-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.32.0.385.gc00617bc03.dirty
-In-Reply-To: <20210918193116.310575-1-kaartic.sivaraam@gmail.com>
-References: <20210805192803.679948-1-kaartic.sivaraam@gmail.com>
- <20210918193116.310575-1-kaartic.sivaraam@gmail.com>
+        Sat, 18 Sep 2021 13:06:43 -0700 (PDT)
+Date:   Sat, 18 Sep 2021 13:06:40 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
+Subject: Re: [PATCH 1/2] log: UNLEAK rev to silence a large number of leaks
+Message-ID: <YUZG0D5ayEWd7MLP@carlos-mbp.lan>
+References: <pull.1092.git.git.1631972978.gitgitgadget@gmail.com>
+ <6d54bc264e2f9ce519f32c0673167a00bab55573.1631972978.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6d54bc264e2f9ce519f32c0673167a00bab55573.1631972978.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A refactoring[1] done as part of the recent conversion of
-'git submodule add' to builtin, changed the error message
-shown when a Git directory already exists locally for a submodule
-name. Before the refactoring, the error used to appear like so:
+My equivalent version for these fixes is obviously more verbose but IMHO
+not that ugly (and as safe)
 
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):
-    origin        /me/git-repos-for-test/sub
-  If you want to reuse this local git directory instead of cloning again from
-    /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or you are unsure what this means choose another name with the '--name' option.
-  ---  END OF OUTPUT  ---
+It avoids the need to UNLEAK early by changing the program flow also for
+the early return so the cleanup could be centralized in one single
+function.
 
-After the refactoring the error started appearing like so:
+Both, the cmdline and mailmap arrays (and the objects they accumulate)
+are cleaned in a "reusable" way.
 
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):  origin     /me/git-repos-for-test/sub
-  fatal: If you want to reuse this local git directory instead of cloning again from
-  /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or if you are unsure what this means, choose another name with the '--name' option.
+Note that the cleaning of the "name" in the cmdline item throws a warning
+as shown below which I intentionally didn't fix, as it would seem that
+either the use of const there or the need to strdup is wrong.  So hope
+someone that knows this code better could chime in.
 
-  ---  END OF OUTPUT  ---
+Carlo
+------ >8 ------
+Subject: [PATCH] builtin/log: leaks from `git show` in t0000
 
-As one could observe the remote information is printed along with the
-first line rather than on its own line. Also, there's an additional
-newline following output.
+obviously not ready, since the following will need to be corrected:
 
-Make the error message consistent with the error message that used to be
-printed before the refactoring.
+  revision.c:1496:8: warning: passing 'const char *' to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                  free(info->rev[i].name);
+                       ^~~~~~~~~~~~~~~~~
 
-This also moves the 'fatal:' prefix that appears in the middle of the
-error message to the first line as it would more appropriate to have
-it in the first line. The output after the change would look like:
-
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  fatal: A git directory for 'subm' is found locally with remote(s):
-    origin        /me/git-repos-for-test/sub
-  If you want to reuse this local git directory instead of cloning again from
-    /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or you are unsure what this means choose another name with the '--name' option.
-  ---  END OF OUTPUT  ---
-
-[1]: https://lore.kernel.org/git/20210710074801.19917-5-raykar.ath@gmail.com/#t
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- builtin/submodule--helper.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ builtin/log.c |  8 ++++++--
+ revision.c    | 20 ++++++++++++++++++++
+ revision.h    |  5 +++++
+ 3 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 414fcb63ea..236da214c6 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2775,7 +2775,7 @@ struct add_data {
- };
- #define ADD_DATA_INIT { .depth = -1 }
+diff --git a/builtin/log.c b/builtin/log.c
+index f75d87e8d7..1b1c1f53f4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -645,8 +645,10 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	opt.tweak = show_setup_revisions_tweak;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt);
  
--static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
-+static void show_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
- {
- 	struct child_process cp_remote = CHILD_PROCESS_INIT;
- 	struct strbuf sb_remote_out = STRBUF_INIT;
-@@ -2791,7 +2791,7 @@ static void show_fetch_remotes(FILE *output, const char *sm_name, const char *gi
- 		while ((next_line = strchr(line, '\n')) != NULL) {
- 			size_t len = next_line - line;
- 			if (strip_suffix_mem(line, &len, " (fetch)"))
--				fprintf(output, "  %.*s\n", (int)len, line);
-+				strbuf_addf(msg, "  %.*s\n", (int)len, line);
- 			line = next_line + 1;
+-	if (!rev.no_walk)
+-		return cmd_log_walk(&rev);
++	if (!rev.no_walk) {
++		ret = cmd_log_walk(&rev);
++		goto done;
++	}
+ 
+ 	count = rev.pending.nr;
+ 	objects = rev.pending.objects;
+@@ -702,6 +704,8 @@ int cmd_show(int argc, const char **argv, const char *prefix)
  		}
  	}
-@@ -2823,20 +2823,28 @@ static int add_submodule(const struct add_data *add_data)
+ 	free(objects);
++done:
++	repo_clear_revisions(&rev);
+ 	return ret;
+ }
  
- 		if (is_directory(submod_gitdir_path)) {
- 			if (!add_data->force) {
--				fprintf(stderr, _("A git directory for '%s' is found "
--						  "locally with remote(s):"),
--					add_data->sm_name);
--				show_fetch_remotes(stderr, add_data->sm_name,
-+				struct strbuf msg = STRBUF_INIT;
-+				char *die_msg;
+diff --git a/revision.c b/revision.c
+index 0dabb5a0bc..ce62192dd8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1487,6 +1487,18 @@ static void add_rev_cmdline(struct rev_info *revs,
+ 	info->nr++;
+ }
+ 
++static void clear_rev_cmdline(struct rev_info *revs)
++{
++	struct rev_cmdline_info *info = &revs->cmdline;
++	size_t i, nr = info->nr;
 +
-+				strbuf_addf(&msg, _("A git directory for '%s' is found "
-+						    "locally with remote(s):\n"),
-+					    add_data->sm_name);
++	for (i = 0; i < nr; i++)
++		free(info->rev[i].name);
 +
-+				show_fetch_remotes(&msg, add_data->sm_name,
- 						   submod_gitdir_path);
- 				free(submod_gitdir_path);
--				die(_("If you want to reuse this local git "
--				      "directory instead of cloning again from\n"
--				      "  %s\n"
--				      "use the '--force' option. If the local git "
--				      "directory is not the correct repo\n"
--				      "or if you are unsure what this means, choose "
--				      "another name with the '--name' option.\n"),
--				    add_data->realrepo);
++	FREE_AND_NULL(info->rev);
++	info->nr = info->alloc = 0;
++}
 +
-+				strbuf_addf(&msg, _("If you want to reuse this local git "
-+						    "directory instead of cloning again from\n"
-+						    "  %s\n"
-+						    "use the '--force' option. If the local git "
-+						    "directory is not the correct repo\n"
-+						    "or you are unsure what this means choose "
-+						    "another name with the '--name' option."),
-+					    add_data->realrepo);
+ static void add_rev_cmdline_list(struct rev_info *revs,
+ 				 struct commit_list *commit_list,
+ 				 int whence,
+@@ -1845,6 +1857,14 @@ void repo_init_revisions(struct repository *r,
+ 	init_display_notes(&revs->notes_opt);
+ }
+ 
++void repo_clear_revisions(struct rev_info *revs)
++{
++	if (revs->mailmap)
++		clear_mailmap(revs->mailmap);
++	FREE_AND_NULL(revs->mailmap);
++	clear_rev_cmdline(revs);
++}
 +
-+				die_msg = strbuf_detach(&msg, NULL);
-+				die("%s", die_msg);
- 			} else {
- 				printf(_("Reactivating local git directory for "
- 					 "submodule '%s'\n"), add_data->sm_name);
+ static void add_pending_commit_list(struct rev_info *revs,
+ 				    struct commit_list *commit_list,
+ 				    unsigned int flags)
+diff --git a/revision.h b/revision.h
+index 0c65a760ee..f695c41cee 100644
+--- a/revision.h
++++ b/revision.h
+@@ -358,6 +358,11 @@ void repo_init_revisions(struct repository *r,
+ 			 struct rev_info *revs,
+ 			 const char *prefix);
+ 
++/*
++ * Free all structures dynamically allocated for the provided rev_info
++ */
++void repo_clear_revisions(struct rev_info *revs);
++
+ /**
+  * Parse revision information, filling in the `rev_info` structure, and
+  * removing the used arguments from the argument list. Returns the number
 -- 
-2.32.0.385.gc00617bc03.dirty
+2.33.0.911.gbe391d4e11
 
