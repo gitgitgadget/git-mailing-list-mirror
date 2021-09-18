@@ -2,110 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F89C433F5
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 12:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B45C433F5
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 13:14:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 698BC60FA0
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 12:23:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 726A761350
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 13:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232419AbhIRMYf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 08:24:35 -0400
-Received: from gourmet.spamgourmet.com ([216.75.62.102]:35709 "EHLO
-        gourmet8.spamgourmet.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S230470AbhIRMYe (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 18 Sep 2021 08:24:34 -0400
-Received: from spamgourmet by gourmet7.spamgourmet.com with local (Exim 4.94.2)
-        (envelope-from <test.bentolor@xoxy.net>)
-        id 1mRZN8-0004ww-KF
-        for git@vger.kernel.org; Sat, 18 Sep 2021 12:23:10 +0000
-Received: from mout.gmx.net ([212.227.15.19])
-        by gourmet7.spamgourmet.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <test.bentolor@xoxy.net>)
-        id 1mRZN8-0004wZ-1a; Sat, 18 Sep 2021 12:23:10 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631967788;
-        bh=3odZG+VWiamPDCQxQm2q9glfnxovTWDIhdFkTouBQQQ=;
-        h=X-UI-Sender-Class:From:Subject:Reply-To:To:Cc:Date;
-        b=JagzPj1CjXNiWdIRYXf9pUYjbuybg23aJHge7wm7zfLjsPxMI+xY5NQ+1tWuhG/7F
-         DAsB2WKzwfne81LKXsGtnf3LBIgLZrutPlE9vLL56H6frBAgszw2eJiuFIL4UwEhBR
-         z067o+gm3ItnoaebGxzilgP2RmRga5sHnOP8SPiI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.8.8] ([92.117.171.27]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MlNpH-1nAHlx0J1Z-00lpu8; Sat, 18
- Sep 2021 14:23:08 +0200
-From:   test.bentolor@xoxy.net
-Subject: Test der CC
-Reply-To:  test.bentolor@xoxy.net
-To:     git@vger.kernel.org
-Cc:     vger.git@vger.kernel.org
-Message-ID: <01d71649-456a-a4ff-e34d-3340bdc4ff42@gmx.net>
-Date:   Sat, 18 Sep 2021 14:23:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S235477AbhIRNQA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 09:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56536 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229476AbhIRNP7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 09:15:59 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D67C061574
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 06:14:35 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id d6so19743397wrc.11
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 06:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=gYJuGw4HM08xeRhi8FGun5b1r8mpPZXbCPCDHW7FUUI=;
+        b=bh/hrNUMPzbyquoP3Fl0aN8aIz1NdCEN5y9Hbnr42QSlXALg7bGYormVIrE79ijyV6
+         rty+kal2pNfNAh24gI298dpRY8FMMrQlYa8rSFP0Ejtzm5N4sgwRqMCSDBCj0OR1hTVg
+         qwlMa/U5b6AFZfVbPRM2RKLGNLGGFH9WWfvX+So/D6W7N7FV2IlljbMpkvm0phgISsHb
+         sxafMwQya1oTwGAmow7Y4Qbo6h7LUeZaeOCtg7ZapOaFHLO3iSeIJ7/gEH7HltryQ6uC
+         jjbOL+4I2VlCF/WSBgku7wbSJGHZPGR6S26YXDs3KOMRPRk7ZJPiAEPM+FbSNHrqZNhw
+         +w7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gYJuGw4HM08xeRhi8FGun5b1r8mpPZXbCPCDHW7FUUI=;
+        b=rz87EbzbHTOgCgassWrkm+QFCzejm+GWu6HcidiVyw7DBZ7bfcSAjaGIdMugwDEzGe
+         D8kej8bhQ6su0+Rv4EvkITm4x+m/l+/nqNClWcTnMd7wC0aQApNy8nQDj0d3l1UnAwvp
+         rx0e7yWwXUpHFw+HJqwbag8JkG//h878r6HZ7UnUgnsvo1SpzOqxAJ3fxNRLg800vexQ
+         PBrkwmbxhKFxAgBB/hktQmpHzzQQsjk5KjkHGzk1NuHrvYL93z3byKLmwRfVDiDzfTaa
+         p8SN4gzqiTshuUgpXtQ4SffDiF9tKH5M2+OHEO9T3IidqApZZUawe4PFhA0DhdX2Ikp3
+         WABg==
+X-Gm-Message-State: AOAM533XO0oLvx3pm4eynxBKa4bLmYkAZVTyYTOCjvU1BotNhv0ROqHC
+        x942SDtuc+Tf7ZW4f4PRcg4U8alUd9s=
+X-Google-Smtp-Source: ABdhPJzaekbHe8d7tHfOVM/bIEIDdpikP65M56Wr8tEPZUwWVnICjPgmLNTkP5Zdr1tGKbestru3SA==
+X-Received: by 2002:a5d:6392:: with SMTP id p18mr17584378wru.372.1631970873554;
+        Sat, 18 Sep 2021 06:14:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h18sm9943556wmq.23.2021.09.18.06.14.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Sep 2021 06:14:33 -0700 (PDT)
+Message-Id: <pull.1091.git.git.1631970872884.gitgitgadget@gmail.com>
+From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 18 Sep 2021 13:14:32 +0000
+Subject: [PATCH] connect: also update offset for features without values
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:i5mwXZRDyeqs+8VNJbkj4eAGQVOzYOvzHoT/3dh/t5y5CK2PNv1
- pxc4rwQAKULrq4Cp18cCYofnXQtmtKISmXuYx+wSZ9qrSYiV7zTjM3ftJQbs9sCEunRb9s7
- MaV6ba6DJ+Rbk+6nN2B9LzoaFT0mURyvWuyAe3ouZFGunkYnggW89yaw4HrTNjqiPMs9gBH
- 2H5BxC72KRqqxyuTlVXwA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OXIjvawOVWE=:jgbfSYA+1K1Usygwe2yZkH
- UeTYJmjxiMDFU4nqms2CsfEheNJqqI0grCbL+VJp+sB0K6cyZR4hzd6HZVrCNstV1ww1NbUVR
- VURyrBJ5vnfe8aaHV60vwe8eCIYBrF0fMa264DimEH7C6/6oZS/NssssX2koTXdsQXm5eRUZg
- 6rdE1n0zarlO+ZEAjzhKrkcMvwyrrmQVSvxxG9VECuzA9aJ/GvnYXxnP7ut48OhmdP/3GUiO5
- 7Nioe91DExSi3yqpKgWSg+xRXqvbg4E4B+7g67HOeTV1Lq6LMm4dTr0Hg8TmLd/3bwbjEypTG
- FKBXYjnhASdrZc9d6pwWc6XsBuUQd3NvmMeHTOlqBNsmnEKTNzt2eICFov9c2R1THXucrCxIv
- yPyWaiVO49ZjotgtpbOqKGuDaz2s24v7NOU5+eJajp+c9dwq0xgVTk1FJRSMbOy/0hZWofVz0
- /EVE+pNkJOU+2fLb4PAnVnbkx6sAYmgg5tpOXHe0uKIyl41fa3/yRx5ZnQ14946d34EMrto3H
- 9gB0WHKoGaFOOsTIBf3TMjJgbKvRT4dlo6f5FTyAxtFFVApyKUU3m6lKxPj8u5eKNmNuw5TWx
- Mu/N+v/TQVnA6aVCwoSw5SATLfjijtwek28g5Ud/1ZucA9eBoiaprlOXCmTEkuTbt+awAlmwW
- 0vqEcwCnCnUTZWKVL6vBGeKVyIhcRvLRVIAY0GErOD3k1wkJJnhUA47Q3uxhgmMlS74HLY8Io
- lgeut2FjdhT0R3WzTKzH6h37fRdGH3dsP+/w3CpUuDZUy0+D7w/FQsI0Y0aIqPEt0TcjifvGD
- je1gIs5+7xUvSPv1GhzRqzR711o3dWc0EVePINip5BJNPw0REtXqYRB2QD3CB9QAwpLYcXe2C
- zBmGXeULij11THK7wFwxgFxTl4wYCT/110oGXe8atnu+DlZ2I8HUHct6OAIb2QWD7f8Ns1U+I
- eY9GRpzJhE2ZujrLQXLJ/MvI2LvWRYy/tRpCfNKHq+qj+1u1ePz3jsXfDSQCC7rajmivfdRvr
- WtI2AcnIjDbYaozA80B9+4V6ZHPVcoB5Qe5lv/SGgjXc6qSVD90y7eB8hkvE4OsmkbsbT/osm
- UPgG/ioRjpeAcw=
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <andrzej@ahunt.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Andrzej Hunt <andrzej@ahunt.org>
 
+parse_feature_value() does not update offset if the feature being
+searched for does not specify a value. A loop that uses
+parse_feature_value() to find a feature which was specified without a
+value therefore might never exit (such loops will typically use
+next_server_feature_value() as opposed to parse_feature_value() itself).
+This usually isn't an issue: there's no point in using
+next_server_feature_value() to search for repeated instances of the same
+capability unless that capability typically specifies a value - but a
+broken server could send a response that omits the value for a feature
+even when we are expecting a value.
 
-    They can include slash / for hierarchical (directory) grouping, but
-no slash-separated component can begin with a dot . or end with the
-sequence .lock.
+Therefore we add an offset update calculation for the no-value case,
+which helps ensure that loops using next_server_feature_value() will
+always terminate.
 
-    They must contain at least one /. This enforces the presence of a
-category like heads/, tags/ etc. but the actual names are not
-restricted. If the --allow-onelevel option is used, this rule is waived.
+next_server_feature_value(), and the offset calculation, were first
+added in 2.28 in:
+  2c6a403d96 (connect: add function to parse multiple v1 capability values, 2020-05-25)
 
-    They cannot have two consecutive dots .. anywhere.
+Thanks to Peff for authoring the test.
 
-    They cannot have ASCII control characters (i.e. bytes whose values
-are lower than \040, or \177 DEL), space, tilde ~, caret ^, or colon :
-anywhere.
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
+---
+    connect: also update offset for features without values
+    
+    This is a small patch to avoid an infinite loop which can occur when a
+    broken server forgets to include a value when specifying symref in the
+    capabilities list.
+    
+    Thanks to Peff for writing the test.
+    
+    Note: I modified the test by adding and object-format=... to the
+    injected server response, because the oid that we're using is the
+    default hash (which will be e.g. sha256 for some CI jobs), but our
+    protocol handler assumes sha1 unless a different hash has been
+    explicitly specified. I'm open to alternative suggestions.
+    
+    ATB,
+    
+    Andrzej
 
-    They cannot have question-mark ?, asterisk *, or open bracket [
-anywhere. See the --refspec-pattern option below for an exception to
-this rule.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1091%2Fahunt%2Fconnectloop-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1091/ahunt/connectloop-v1
+Pull-Request: https://github.com/git/git/pull/1091
 
-    They cannot begin or end with a slash / or contain multiple
-consecutive slashes (see the --normalize option below for an exception
-to this rule)
+ connect.c                      |  2 ++
+ t/t5704-protocol-violations.sh | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
 
-    They cannot end with a dot ..
+diff --git a/connect.c b/connect.c
+index aff13a270e6..eaf7d6d2618 100644
+--- a/connect.c
++++ b/connect.c
+@@ -557,6 +557,8 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 			if (!*value || isspace(*value)) {
+ 				if (lenp)
+ 					*lenp = 0;
++				if (offset)
++					*offset = found + len - feature_list;
+ 				return value;
+ 			}
+ 			/* feature with a value (e.g., "agent=git/1.2.3") */
+diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
+index 5c941949b98..34538cebf01 100755
+--- a/t/t5704-protocol-violations.sh
++++ b/t/t5704-protocol-violations.sh
+@@ -32,4 +32,17 @@ test_expect_success 'extra delim packet in v2 fetch args' '
+ 	test_i18ngrep "expected flush after fetch arguments" err
+ '
+ 
++test_expect_success 'bogus symref in v0 capabilities' '
++	test_commit foo &&
++	oid=$(git rev-parse HEAD) &&
++	{
++		printf "%s HEAD\0symref object-format=%s\n" "$oid" "$GIT_DEFAULT_HASH" |
++			test-tool pkt-line pack-raw-stdin &&
++		printf "0000"
++	} >input &&
++	git ls-remote --upload-pack="cat input ;:" . >actual &&
++	printf "%s\tHEAD\n" "$oid" >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 
-    They cannot contain a sequence @{.
-
-    They cannot be the single character @.
-
-    They cannot contain a \.
-
-
+base-commit: 186eaaae567db501179c0af0bf89b34cbea02c26
+-- 
+gitgitgadget
