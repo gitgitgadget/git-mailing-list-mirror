@@ -2,95 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60A9CC433F5
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 06:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B16A1C433F5
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 07:03:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38E7A611C8
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 06:33:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E90C60EE0
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 07:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237101AbhIRGfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 02:35:09 -0400
-Received: from mout.gmx.net ([212.227.17.20]:47039 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229476AbhIRGfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Sep 2021 02:35:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1631946819;
-        bh=RnpfFmJKZ+V6UBKtrnzi9iy3Rg2pAScBEx5Sxcf24A4=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=U/kMCv8gexE+q7UKulPR6gQoxI69cFfYu2X+o6/W3EOpTIZ0LXXNCRPpqU+YcRAhF
-         wAAhTROfLPRCf8+t2VLHLgVOH4TKpZcnxj1c4CXusw/vGLvWLwZh69NTkVdBTVkBRY
-         BLVFkKKsHBIm0r9+Z9Sx3ZrFyP8jNdAdWb64xK8k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from homer.fritz.box ([185.191.216.59]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFKGP-1mgeLq2ucr-00FlFV; Sat, 18
- Sep 2021 08:33:39 +0200
-Message-ID: <9bd95c0ad91bd490adf2b6e57495411a0f72fe50.camel@gmx.de>
-Subject: Re: data loss when doing ls-remote and piped to command
-From:   Mike Galbraith <efault@gmx.de>
-To:     Rolf Eike Beer <eb@emlix.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git List Mailing <git@vger.kernel.org>,
-        Tobias Ulmer <tu@emlix.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Date:   Sat, 18 Sep 2021 08:33:38 +0200
-In-Reply-To: <2722184.bRktqFsmb4@devpool47>
-References: <6786526.72e2EbofS7@devpool47>
-         <CAHk-=wgyk0mwYcMRC8HakzoAKL2Y3gwzD433tqKYYhV+r1PLnA@mail.gmail.com>
-         <xmqq7dfgtfpt.fsf@gitster.g> <2722184.bRktqFsmb4@devpool47>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.41.2 
+        id S241297AbhIRHEx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 03:04:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237490AbhIRHEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 03:04:53 -0400
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C4B1C061574
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 00:03:30 -0700 (PDT)
+Received: by mail-ua1-x929.google.com with SMTP id f24so7520914uav.8
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 00:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qYBstQGa0zzjBeBtH7e5172TkYyNjcRwNDfTGqDaEVg=;
+        b=Q3Wc2wmn3cd0CgarwRl+g9M8JHWdi9QQ0qWVCCJChNjqizWk0sscYHJ+Zuj2EFtOK6
+         ex7nUceQNEFOZ8fVQ5begIF+1IoSY/F7/U8EiVKcvzDku7rXKEfmMCYCTbIrXizDu1+/
+         hdg1cqurAZvxLSqNcsjAGxLzU3frQsAb2vhr3E7F0pMJCVE5Tab7M3yFJE2ALqtdte0E
+         dMRQBMQBoU3R9KJAlplh1RNIh6AZY3Rikc0tJ+l6ggkq/OAy+DJFNAZOVwWc5Eg+R5o6
+         xozkt03XhDI8dMvZ6C0f+wtsY/j7wOZ1kaSbiseA8oHEu1lCc3gNvFSRCy4OX1jUH8tJ
+         HYWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qYBstQGa0zzjBeBtH7e5172TkYyNjcRwNDfTGqDaEVg=;
+        b=T5VfglKIuDaa8aM9zi5yn3405mqVJeDq6R/yaRK8JJQGowOP7J0/CfVzqWGeMPYSWe
+         EQy1W43PrqUj42myZMaLjH2YeGGgsRfkQiXt1UukXR+0irSgx4nuKhnAmUi3s06yxIB+
+         anOVGRwjV+DzeaXG2t6UjVeTW/kiKB10V3+ZwNf/0ApER2+Q0rhlYg3pB4Z2SI4ttCxz
+         cV7wA++eVO8XnSJZRf7G4SAXJ4pkSpiRJTnveKMaFt79sa6nlYruLU4F5CSgCG2AnaMu
+         cJjpAoUDSF0bRKXtjVyvik/a912f9jIsSTLhlz5iDsHb3G6kgFvmkQxoKoceayS/Syp3
+         41yw==
+X-Gm-Message-State: AOAM533WTIwshOHdZ7ooCPPTewaxZkOYKhVJ+ufMK5o8NYdXMRLXx+v7
+        jajc1jQhEoW34fyQbrVNknJjFnD0X8598b9hEnA=
+X-Google-Smtp-Source: ABdhPJzh4GRpZVMlcPQmNZdz7wWesFTrB63USzeh1W3y4313M5Goz/TNAJU30QKL4QVcTTi1+Fb4T+u7o2ORK49xskE=
+X-Received: by 2002:ab0:3d13:: with SMTP id f19mr7566847uax.140.1631948609203;
+ Sat, 18 Sep 2021 00:03:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:D+OqzmU9Yf2Wd93LvHRaZwCa/Q+J42EDYyKg7wE0/8nmmHYR2oS
- 1MTQLJIwc1wMDMPZWotJupCDDmmsRq07fjer1FjJ5ORxCrR3ijsouNEW3uGc3/gW+VGoZIr
- xCnwc9KzV2v1xSFhamRGq5TB374IdKiD7uQgy9LylwsfZm4PIlGYKgPm3TBYF8aXp5/VDZ6
- nhjgEsJ6q+flT4M+wUd0w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6siFrffE2AA=:CQGYv4WyYAGxTpd1cx6kno
- G8hG0emZRcPeqWQTPC5e5a+k3hAhkste9/P7i11OD7kBt0Od+ksnf5GWNFv82TGmUzBZvmxBP
- dnpy147022QeVSxmbam2r3lcPlrbgzV4AnQXhZLRwNSbjlaQ5dgfGpOUwgcBCopnuXPIYTnh7
- K/BbS+KDnB8wD2pfCLnH7LnSaSIx0oNQpNXonnOnBTjZLCLDVNSOvQle1zhzvduIUyMxqD4NQ
- AdoB4DD0EiaIc498gXk+ot2s7IoK9yU9zNsKB6Bn7inSp0vVSpSvLKlu8gMe7+22aOKMQVhul
- FyjJg9sD+LLsNHrnwm5Olb03m8ZSxnwO+505Y2vx464bwMiUAwlAvgNURMt+2cZs0vGLA2jRn
- 4o42FIip6tbVIhmWz3I9lUkJ4Uq+8RV5WLiJBtAk/8uSYG50lOWYs/j7EpHUlNcCSSoVkWCNZ
- D0ou20w4slr9vYE0opOlfhmctXlU5V1FeW592QU2rs9YHq34IpojmPyRdX2HKATlIqk9BYYzT
- 53xOvjGpmTdfcSSUkLyMHtb/fFAIOF+CVTiV/IZUHqnXnH4QmdNocyiedixtlyThjsCKCkM6p
- qQPecqBeCy/RiYLrcmb1hnL/E03OAtGW9V1HBJ3Zqozqsn4+ECfXiTHDBdunNFfFprVvm7+I6
- UPqkaH02gDIURyNRD+60Ao9UfUGEqkKO4OC48VhK7DiXOOQKgZM8heakZI+W/tzyoMJZ+oSYs
- 0Pp8DHuSEab7E1BnTS/VfePMaU7589bev/E45KDdllPD12MyFwAx/u9XWmz/jW4jAZZ2Kiyl9
- 131ad99iEniLwp8KZTZ/DJipsLvj5720OMZIGO2V5W7Op2ePc+oaGgfCUxxQfu/78z2KuGw+y
- hgmEUtnHZXj5JN1k0qsVbKmBuoQ6fzqzNI67/Zr2l6s4GneWJXZhWc9OHvqM4OaXHnb2EXmC5
- PHfRPSHLg3enOQcFByaeIJnRbEV+WWfxAQi7BS61Qh8IP36lE0LYeubKt6rQv26HrlZkqNjBn
- I0yDkEiZwsXIjsIkOWvsiOkv47d8U3VI8Hhc+0XdMmx29JGNkYIywD++TiCe1sIXLbXnf/hMR
- P2H7oAmFHHM3gM=
+References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
+ <7de207828caa9e50906f39b955e39e9de2c1768f.1631738177.git.gitgitgadget@gmail.com>
+ <xmqq5yv1wnuc.fsf@gitster.g> <93ebf97b-1282-8f39-6894-90e0ea2dc851@jeffhostetler.com>
+In-Reply-To: <93ebf97b-1282-8f39-6894-90e0ea2dc851@jeffhostetler.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 18 Sep 2021 00:03:18 -0700
+Message-ID: <CAPUEspioONCavBOhn6S4qkZ8tUk0ssuL3-JZG9RvUbJAHd10Pg@mail.gmail.com>
+Subject: Re: [PATCH 3/7] simple-ipc: move definition of ipc_active_state
+ outside of ifdef
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2021-09-17 at 08:59 +0200, Rolf Eike Beer wrote:
+On Fri, Sep 17, 2021 at 11:39 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
 >
-> What you need is a _fast_ git server. kernel.org or github.com seem to b=
-e too
-> slow for this if you don't sit somewhere in their datacenter. Use someth=
-ing in
-> your local network, a Xeon E5 with lot's of RAM and connected with 1GBit=
-/s
-> Ethernet in my case.
+> Maybe.  I'll make a note to ask @dscho when he gets back from vacation.
 
-Even faster: what's coming across that wire should be a constant (is?),
-variable is only delivery/consumption jitter.  If there's really really
-a pipe problem lurking, you should also be able to trigger by saving
-the data once, and just catting it, letting interrupts etc provide
-jitter.  Which stdout is left of '|' in a script shouldn't matter one
-whit to the interpreter/kernel conversation, they're all the same.
+I am actually more worried about GGG introducing a typo in my flawless
+commit message.
 
-That said, if I had a reproducer I was confident pointed to the kernel,
-I'd try to bisect.. boring as hell, but highly effective.
-
-	-Mike
+Carlo
