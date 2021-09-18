@@ -2,82 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E7EDC433EF
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 00:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD67C433EF
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 00:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29B2A60F8F
-	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 00:26:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78B4A61076
+	for <git@archiver.kernel.org>; Sat, 18 Sep 2021 00:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243089AbhIRA2N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Sep 2021 20:28:13 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58878 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbhIRA2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Sep 2021 20:28:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E6BD162557;
-        Fri, 17 Sep 2021 20:26:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nGDHmJ+ckHOv
-        40CjkFMtwfaCKodOqh7v4lfBaTl4xNw=; b=lOCbBTwQdBpVj4tcUXf0NbxHyQKj
-        JUFvv3w/F5VBeeULAQKeHmQlDeGGEF77+sNbm0XF7+lftP+CI/796KvMzpnrIFCK
-        ETFM7ZeRG6jn1eSBrneGdrZ/O6KOpW9UPPqSlVOvUDxyuW33e70bE/dFGHoC1nrd
-        +j8T2uDE+VUnYsY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 357F0162555;
-        Fri, 17 Sep 2021 20:26:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 93C5F162522;
-        Fri, 17 Sep 2021 20:26:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, dev+git@drbeat.li
-Subject: Re: [PATCH] unicode: update the width tables to Unicode 14
-References: <20210917191920.55944-1-carenas@gmail.com>
-        <xmqqee9ngda5.fsf@gitster.g> <YUUcJ2+S1V2iI4Xs@carlos-mbp.lan>
-Date:   Fri, 17 Sep 2021 17:26:43 -0700
-In-Reply-To: <YUUcJ2+S1V2iI4Xs@carlos-mbp.lan> ("Carlo Marcelo Arenas
- =?utf-8?Q?Bel=C3=B3n=22's?=
-        message of "Fri, 17 Sep 2021 15:52:23 -0700")
-Message-ID: <xmqqczp6g24c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234487AbhIRAwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Sep 2021 20:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229890AbhIRAwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Sep 2021 20:52:25 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5C1C061574
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 17:51:02 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id v16so12164736ilg.3
+        for <git@vger.kernel.org>; Fri, 17 Sep 2021 17:51:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=v5MztG2L6xVwvQfM/kTam9WUpHX4MLGPrTIaFGFZ170=;
+        b=WtkjM6EV2ENVO+UCtFOYb6HcDyQhwH+Z9kr4sJz3MmwlPU1sbpdR7T1QcLVTTVCif8
+         ne2AkrWGkQwNz+MSzX5kmH/RCkqFvnHsgHPM8723mbUyBq8dXt1LfDVJMUjtnhBW3j8s
+         UlKhfYIEJSlJSQ7ylXeFutrIDKitNqRvAa+A1tk/ywy1uB9Y1X+e9HaTMYgBcbTqS1b+
+         Mcp5y8tphKFF+AkrjEMopJeBsIv864WOJrNrSRnH4/5EW3V/xTudBQ32NVYFXgT4DkEH
+         ZU2KDVLShy/4Dn+hEvu4w1cTM4vK7YyddUHZdrVVHotsvqDi+MLOh5vj3vKkAwyDJvEC
+         M+lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=v5MztG2L6xVwvQfM/kTam9WUpHX4MLGPrTIaFGFZ170=;
+        b=FXaNCypS9f6xnbLjt8YJyXgnO3WoXYO5b/1pnaa0rFVoKctXksLWMdIa6lg2+TV1MA
+         UnKjQ9Kgj10tXIVpn0XzIxbA9xtG+zW+Rwx1PQi01imoT55669aaaxF5Kq3cSZIgqXsK
+         wtMQzkPbsUdZ8b+53KjEUQFa2/w7KhxGi3/sIWhpI/x4J6Lgm/qf8jLhBnydbk2r1Wt3
+         sTq8ZlYWO5mo6Wsjm3OMX1o6Y24yIpFpg7jrFFUEpdHb7/4TMDQ73oJl2je5Pf/MSUNe
+         ID73O1JUls9y+j6KHwhWAFwf4X27Eii6wngJOLcBLo2+T9umPO+SSVtGP/XJvHeiww/Q
+         YJfg==
+X-Gm-Message-State: AOAM532UiC00lpw2DmTqAIpTWHpXxmFTCJF5HynUCDriRHP6RshaFdLb
+        AO5KXvHQVgFe3N+PoNiEiLLEHxUQZWFtvLA9
+X-Google-Smtp-Source: ABdhPJy2tBVgWifq6DM08pRuMS/Vp94xzaJ1Gn63XPtaxPq4j662aaRShkcJglKnu2Hm+vfkG7T93A==
+X-Received: by 2002:a92:b703:: with SMTP id k3mr9828765ili.95.1631926261622;
+        Fri, 17 Sep 2021 17:51:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i8sm2564645ioi.29.2021.09.17.17.51.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Sep 2021 17:51:01 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 20:51:00 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: What's cooking in git.git (Sep 2021, #05; Fri, 17)
+Message-ID: <YUU39FVrAwwZbVqu@nand.local>
+References: <xmqqlf3ug3q7.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1A4CDC22-1817-11EC-9755-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqlf3ug3q7.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+On Fri, Sep 17, 2021 at 04:52:00PM -0700, Junio C Hamano wrote:
+> * tb/repack-write-midx (2021-09-16) 8 commits
+> [...]
+>  Will merge to 'next'?
 
-> On Fri, Sep 17, 2021 at 01:25:38PM -0700, Junio C Hamano wrote:
->> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->>=20
->> > Released[0] after a long beta period and including several additiona=
-l
->> > zero/double width characters.
->> >
->> > [0] https://home.unicode.org/announcing-the-unicode-standard-version=
--14-0/
->> > ---
->>=20
->> Thanks---missing sign-off is deliberate and waiting for something
->> else to happen?
->
-> Apologies, I corrected it locally and then sent the wrong patch :(
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+I think this and the below topic are both ready to go, although...
 
-Thanks, will queue.
+> * tb/midx-write-propagate-namehash (2021-09-14) 7 commits
+> [...]
+>  Will merge to 'next'?
+
+...this one has received more attention than the other. And Peff said
+that v3 of this series looked good to him [1].
+
+So I think tb/midx-write-propagate-namehash would be ready to go. I
+certainly stand by tb/repack-write-midx, but I would like a few others
+to review it before merging it down.
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/YUUS4Mrh85KPucmi@coredump.intra.peff.net/
