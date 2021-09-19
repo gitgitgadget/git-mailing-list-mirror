@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57069C4332F
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 01:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B38B6C433EF
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 02:02:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34BE9610A8
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 01:57:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A149610A8
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 02:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240852AbhISB7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Sep 2021 21:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51926 "EHLO
+        id S240863AbhISCEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Sep 2021 22:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235288AbhISB7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Sep 2021 21:59:01 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84D3C061574
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 18:57:36 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id ay33so30357487qkb.10
-        for <git@vger.kernel.org>; Sat, 18 Sep 2021 18:57:36 -0700 (PDT)
+        with ESMTP id S230377AbhISCED (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Sep 2021 22:04:03 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F4BC061574
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 19:02:39 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id e16so1449243qte.13
+        for <git@vger.kernel.org>; Sat, 18 Sep 2021 19:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CN2JF8fbiQSU8jbyNDRSCwbS8i3O+VfBt+qUz5Xl3Ig=;
-        b=qCwcHj6vf/i7Q9q0c1QDteQ13A0nCCJ1cSlPEFcB4FSvJnbUhieofwejBglW655GLl
-         cr1BJOKdpab+KftTGWNSKPkOqm1r6UxpIsGnVTBUnseRKXhFGy7NjIJLkSITQbLY1nt7
-         8gnENfuJFrhS/HjDb29q0JNCBBHzWtEsMpYDt0DOk9vACbP47EIfqzMBzJgkNe17FRpW
-         8W6tgRhqQAt5ERgwNvklzn/c46Ou0Km6Qo/z3FFoSVJ/MfeUeoL49TgVRH1F2wdt5rni
-         OhFAmxSOEqNteeOC/oB/FZLhFcQIm/O/xVT6SBoCJ0/Ub+xFYEUtL2MJVeRHkOwDktbF
-         9RAw==
+        bh=/fmNZvqEx/ATHrDO4Oi5QIlPQDtEIpsJtRuO0oEHQCA=;
+        b=PkZfL3V0ZuxWMd0kzObYMyBip1hn9UR3TVKNkPGUqnfv00jqb/HT5X5iI8AMvcq/Az
+         1hdkOhsk+nteAylvjuW5lntFVnHLSFnNl2I6dh1hkLEUg+P02RDgKA+7aQQTfQBqV7To
+         XmUy3SZxcOHzFGNs478Hr9KZg9oeK0mLtHBtTzmOhOOARkByO+HCu2VFL5eYFvZY9bwx
+         +7lgr7GRWNjmFrlKuxtUc+PDHnozzgYtqDxNdIwJ7jqMlJYp/Fm7s0SXDB2+Y3mrzhNW
+         Mutp1oFIayL0VFnuXHe4jujIB8xGCuw+Sqogti8L/jqUVeYDtVCieqUwt/tb9urx/Raf
+         Mhwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CN2JF8fbiQSU8jbyNDRSCwbS8i3O+VfBt+qUz5Xl3Ig=;
-        b=y7x0jwZrb+tBgY2L32GjLNyobVXrgU4Unh6VRwyV4XpedtapmTpWRfC1VIpiSfq6aI
-         f812mlK7jBG9nHfLMSZ5RsFP4JPZ5P3oxIojACIrjJBmtYyV4w41eGuUZTD09G7lC8V1
-         7umURZANcsS9n3I9nHDAMpMLXHjNueE/KQfLV0Tf+XPy/nyHInzyDXP0Pkqj8Yq7mj5H
-         xgl0UecJ32R8ePbn65V5CHNYhaWo7JsU5LlOWFlQpXoFVZcFN0W5PzaG40gYc6WWR/8R
-         5+Q3Sqn4SU79Wt9bCzjzSHVzPZ5RE3cTVLk6Fi3dG7Nx0ya0nV9v9yCWjRSpmW9dXsrc
-         50aw==
-X-Gm-Message-State: AOAM530g/kjDyEIRau1ryAemoHIZV/K/vRPdyFJ25cJ6Ljc63Z4uE3Be
-        Q2ptFZza0XZgsLf9I3VQW+OR5woQeO0=
-X-Google-Smtp-Source: ABdhPJzOMCy0hYJ3VF3FRue9oYTOaGk58UVmYfzWOHfHLaauBoY6Svb+peT2C/YrrUmhG0IjJr4QhA==
-X-Received: by 2002:a37:a605:: with SMTP id p5mr3815609qke.442.1632016656075;
-        Sat, 18 Sep 2021 18:57:36 -0700 (PDT)
+        bh=/fmNZvqEx/ATHrDO4Oi5QIlPQDtEIpsJtRuO0oEHQCA=;
+        b=MteB8K40Xh/gKnFiOCm8V9QHnX2LXb9DMY/X0uft02sLXR50/4e0TmAifvA4trrn8g
+         q+2jFjFD6Bfy/GeCQSeML8gG6AnQqBkuVHyTN2NS7hDl75bw13zZviivbX0zXYUQgu57
+         0d3vAupfAxapNpuq++MgvSwp+IwXhepSzadel5poW64TbwoR6LSpfjP3mJIuSbsuNIc2
+         HzVtfTPOZ+tHIy+jPvS/H83aDDCLRQ8b0A5YYqq+rpfH0hqpZebhdxqYOcDo0yI89MYe
+         xJT+eYWG1KbQXeZVzuPgV2AoZo4fNepjBbpHZo2j1B97nPhPE6H8HHLfJM8D+qR85M9k
+         TqEg==
+X-Gm-Message-State: AOAM53337Mk+hgwNDQZ6inZNjfHqF8U7zrcyTRKi8cxyj+xtYG8YURQz
+        NRF3OrwYEsweo6Jq0mL+ikM=
+X-Google-Smtp-Source: ABdhPJyXdz3CUSy1y/VIe99avKZ8iUxREdLup5rd/z0QHkbyoW7tCntT8s1pRk0XhXsYl4oAYcHCbA==
+X-Received: by 2002:a05:622a:84:: with SMTP id o4mr16978088qtw.174.1632016958126;
+        Sat, 18 Sep 2021 19:02:38 -0700 (PDT)
 Received: from sarawiggum.attlocal.net ([2600:1700:5d80:a320:4412:822d:c222:aea8])
-        by smtp.gmail.com with ESMTPSA id k10sm6759062qth.44.2021.09.18.18.57.34
+        by smtp.gmail.com with ESMTPSA id c4sm8617191qkf.122.2021.09.18.19.02.36
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Sep 2021 18:57:35 -0700 (PDT)
+        Sat, 18 Sep 2021 19:02:37 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -63,12 +63,12 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Alan Blotz <work@blotz.org>,
         =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 4/4] difftool: fix symlink-file writing in dir-diff mode
-Date:   Sat, 18 Sep 2021 18:57:29 -0700
-Message-Id: <20210919015729.98323-4-davvid@gmail.com>
+Subject: [PATCH v2 4/4] difftool: fix symlink-file writing in dir-diff mode
+Date:   Sat, 18 Sep 2021 19:02:35 -0700
+Message-Id: <20210919020235.98799-1-davvid@gmail.com>
 X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20210919015729.98323-1-davvid@gmail.com>
-References: <20210919015729.98323-1-davvid@gmail.com>
+In-Reply-To: <20210919015729.98323-4-davvid@gmail.com>
+References: <20210919015729.98323-4-davvid@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -109,9 +109,14 @@ Reported-by: Alan Blotz <work@blotz.org>
 Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
+
+Please drop the previous patch.
+v2 removes a spurious extra newline that was added after the new test.
+No changes otherwise.
+
  builtin/difftool.c  |  2 ++
- t/t7800-difftool.sh | 70 +++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 70 insertions(+), 2 deletions(-)
+ t/t7800-difftool.sh | 69 +++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 69 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
 index 2014a2bb9e..4cf454eca4 100644
@@ -132,7 +137,7 @@ index 2014a2bb9e..4cf454eca4 100644
  		}
  	}
 diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 3863afcaac..97077f34a5 100755
+index 3863afcaac..d9f6d15183 100755
 --- a/t/t7800-difftool.sh
 +++ b/t/t7800-difftool.sh
 @@ -683,7 +683,6 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
@@ -151,7 +156,7 @@ index 3863afcaac..97077f34a5 100755
  		c
  
  	EOF
-@@ -732,6 +730,74 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+@@ -732,6 +730,73 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
  	test_cmp expect actual
  '
  
@@ -221,7 +226,6 @@ index 3863afcaac..97077f34a5 100755
 +		test_cmp expect actual
 +	)
 +'
-+
 +
  test_expect_success 'add -N and difftool -d' '
  	test_when_finished git reset --hard &&
