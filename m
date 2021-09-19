@@ -2,99 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70943C433EF
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BE7EC433EF
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 09:00:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49B5460FF2
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:53:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BA13610A8
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 09:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237087AbhISIya (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 04:54:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233210AbhISIy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 04:54:29 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B37C061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:53:03 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id g1so53761174lfj.12
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:53:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BH1w5f4NyFu/epeWNfz3iLoc48U9eDPOn0noIbdvxxM=;
-        b=FRjZ5COFq/NTTC9liigOam1m599REsmoeJy2WuYGL3/rdYbFXCVcdFYaCcpfNyTo37
-         hIPO4ykjdUwu7d9ZZX275qP8ULNCnV/YWEoD3KmHmqtgagDdX6qBZeKfJ0I838j56oRW
-         K8qH2Omw7F3pDVob0j7OSVLijOTudPhOqtcxwLzPKVxJ/NyaFtanwg01eoIDNZWlT14k
-         qXjV/QYOCcdxMZ8jLcDkIzxEt5ZrgyjkJLsMbGLxK+ebNXcvI8cg9WBpjiSEwR3e0yVm
-         dS8XkuoHCYaATWCV/Yw2WhVBz1wr236FQPBNqCbZDhQaLvXLA56dliVwjyjXlHYtiXbo
-         EM0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=BH1w5f4NyFu/epeWNfz3iLoc48U9eDPOn0noIbdvxxM=;
-        b=ZQL57CookNKu98tuF9DMFE+Y/YxDp+bWt9/GdgdCjgGP0Qilz4RKqKTXSV45rf16xv
-         ooIx+NeyQAjKoRKsdvavOR4cmme+rnS60juXaaKi95lvFVQVUZucRYd3J8cVcVAkrnQX
-         CiNL6+q9koVKP+k0lk/7/LNrKLtHYrDpazEDNU5ejCrWnCkk7fPVcanXTjDsOANPdjId
-         RnKuhvt0VqD/3sNTAJX2Jt0WaaPi5UlqgvbcNwDeTMGusRJlK6eJR28iuoQVrKXl0Cq5
-         UDS1rUnMIuxagrnMgldhjL6Jdx80YJg1KhHs3gb76jJqggr86bfPr1gKT44PPVl3xauw
-         epRw==
-X-Gm-Message-State: AOAM532IOI1Y5H0vPNbKkptQzMgQcvxGWnif6toEt1Ox+lsuJHtLIJcQ
-        7E6hcXFRSZuuglZemNI0GKCuaTNZ4pk=
-X-Google-Smtp-Source: ABdhPJxcInksy6NIO5mRLbQIwSLapI0/AzN+LN3qSzUXhwwHDyPGxvfstNPd14YnI1lMLvNSV29lcg==
-X-Received: by 2002:a05:6512:1584:: with SMTP id bp4mr15125419lfb.188.1632041581379;
-        Sun, 19 Sep 2021 01:53:01 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id s9sm1280800ljp.34.2021.09.19.01.53.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Sep 2021 01:53:00 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: LANGUAGE instead of LANG respected in git?
-References: <8ed06f91-2efc-1816-aa82-beac8e174549@gmail.com>
-Date:   Sun, 19 Sep 2021 11:53:00 +0300
-In-Reply-To: <8ed06f91-2efc-1816-aa82-beac8e174549@gmail.com> (Bagas Sanjaya's
-        message of "Sun, 19 Sep 2021 12:04:04 +0700")
-Message-ID: <87pmt5c5g3.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S237142AbhISJBh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 05:01:37 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:35364 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233210AbhISJBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 05:01:36 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4HC1qC6vh1z5tlB;
+        Sun, 19 Sep 2021 11:00:07 +0200 (CEST)
+Subject: Re: [PATCH 3/4] difftool: use a strbuf to create the tmpdir path
+To:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alan Blotz <work@blotz.org>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20210919015729.98323-1-davvid@gmail.com>
+ <20210919015729.98323-3-davvid@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <8dfd0683-e019-a45c-30a4-d49ea627e36d@kdbg.org>
+Date:   Sun, 19 Sep 2021 11:00:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20210919015729.98323-3-davvid@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Am 19.09.21 um 03:57 schrieb David Aguilar:
+> Use a strbuf to create the buffer used for the dir-diff tmpdir.
+> Strip trailing slashes "/" from the value read from TMPDIR to avoid
+> double-slashes in the calculated paths.
+> 
+> Add a unit test to ensure that double-slashes are not present.
 
-> Hi,
->
-> Supposed that I would like to display `git help` in French
-> (`fr_FR.UTF-8`) language. I ran `LANGUAGE="fr_FR.UTF-8" git help`, and
-> indeed the help is displayed in French. But when I instead ran
-> `LANG="fr_FR.UTF-8" git help`, the help is in English instead of
-> French.
->
-> It seems like Git use LANGUAGE to display localized messages instead
-> of LANG (like many other tools do). Why?
+I wonder why it is necessary to strip trailing slashes? You even go so
+far as to add a test case, but then bury the change in a commit with a
+title that is about a completely different topic.
 
-You probably have LC_ALL set in your environment. Neither LANG nor
-LC_MESSAGES overrides that, while LANGUAGE does.
+So, which one of the two changes is the "while at it, do that, too" change?
 
-quote from here:
+> @@ -360,11 +359,17 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>  
+>  	/* Setup temp directories */
+>  	tmp = getenv("TMPDIR");
+> -	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
+> -	if (!mkdtemp(tmpdir))
+> -		return error("could not create '%s'", tmpdir);
+> -	strbuf_addf(&ldir, "%s/left/", tmpdir);
+> -	strbuf_addf(&rdir, "%s/right/", tmpdir);
+> +	strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
+> +	/* Remove trailing slashes when $TMPDIR ends in '/'. */
+> +	while (tmpdir.len > 0 && tmpdir.buf[tmpdir.len - 1] == '/') {
 
-https://www.gnu.org/software/gettext/manual/html_node/Locale-Environment-Variables.html#Locale-Environment-Variables
+This should most likely be is_dir_sep(tmpdir.buf[tmpdir.len - 1]).
 
-"Some systems, unfortunately, set LC_ALL in /etc/profile or in similar
-initialization files. As a user, you therefore have to unset this
-variable if you want to set LANG and optionally some of the other LC_xxx
-variables."
-
-HTH,
--- Sergey Organov
+-- Hannes
