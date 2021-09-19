@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BC96C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C4EC433F5
 	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:47:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54D05611C3
+	by mail.kernel.org (Postfix) with ESMTP id 468CB611C8
 	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237120AbhISIsw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 04:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
+        id S237084AbhISIst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 04:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237067AbhISIsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 04:48:50 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA847C061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:24 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u18so21209020wrg.5
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:24 -0700 (PDT)
+        with ESMTP id S237067AbhISIss (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 04:48:48 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED99C061574
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:23 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id a194-20020a1c98cb000000b0030b41ac389fso5152853wme.2
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dIAOOKqV80LUBbkULEqtI0O3L2Wh0rj6xzKUtZXAEIg=;
-        b=aIcFTSNRxLCJcpYJPFJZARWzMeYKDf0vyva4kjhFHNzIj1tABKm3B6DT4l8J2E3skK
-         sTWo8nfoj20y6HTTGxutCN0S1n9KZvpbZu5z2j0IR0y4RF1OhLeNQcF34nFe6swg/2im
-         gb3hPrePEKHi73fj69tLfwNiEtoJDR81jabbta7weGXoLun9AGo2LraZb8BcanStCRpJ
-         29acEY7CkQ5+EskZ3wvupfkBaIjOoMPd3YskFYZmbNlR9QNshOub8GBDq4hyhCWH14gj
-         WM+de1VOy4ONjvacLSjt4EB/YEVyjvAWGFvZzYZo2Fk20/ZC+rsgFRbLzz1hUEHjFoJi
-         xSRA==
+        bh=tBRv2Wd7MFvbmedcRMPTTnl++Ea0U8Yv5UhhZajFYVo=;
+        b=EvIaU39854ad7QuvHksLIrBnqMf4x28SUeIoagftrz6qS8H9l7CQbirENo9HYG5GlZ
+         jYa7vflSE1X4IcIfgVL/XJrIHg8yyKlUfsSsocvTNHIVRwPFlh8Zk0DSnJlvnip2wEuW
+         4+nA/LTHAg8xFvB5DG0SNnu+HfvRkGJXrzTUP0Kr0uF0WZ1OkrWrmeNfR2C1bpI0dUfu
+         iD2w/jh/vZqKWVM2cOfnpVGGF0xt05LadBaSFiHLebB/40xZGGnVbO/hTU5sfsFROz8f
+         6Q8NTh3zliIOaVhW5rqaO0s0eCODuG4jW7zJ0W7AwEfmJmKnMom8l3PP+napixJlYiZq
+         c3pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dIAOOKqV80LUBbkULEqtI0O3L2Wh0rj6xzKUtZXAEIg=;
-        b=f3XWuV7RmoOJk8EQG7gIs+L4PDwLvz8Fv6K7jIrZQTa2WjAVbe/ZVsnP6WNS08BkjO
-         PGM2yYLDdU/QS5DQARGCuE1+w8aGCGqKCIVfkDl7i1YwRWAVhfERY7VxNCa42133adH+
-         pbIoUPUo/Mw9/pN4NlcbaBfSJgdPkm5gKoSiEmX0hinYZCfFxVl2kViJW3uzxYA3Hfpw
-         fQt170sK+GJV71RUy05dREHZwjSuV8FT4rxE8re1ykoEQEp5gkxXqO6072VKPriSM15N
-         1tTHTWcgzULBXBEGVOSdu/c3BzVJjWfU/I3k/ZLCQpStmCZEbj1kkKuu5Taph1aiAb18
-         yjQg==
-X-Gm-Message-State: AOAM532jUOCqUYWwsaSFEOf/DrCP7cVuyrYIxSoqnQ2eWII3jCwde54F
-        prsCvDyjbl+TLMRk0SWEeDt09LWIBTOLNg==
-X-Google-Smtp-Source: ABdhPJxgQ5brG4CgeojWvbEPNTYYobYIfF9P9aLLPi1uXgarKP/E7pU4cwOHYgfgGolJ+H+fl93p7g==
-X-Received: by 2002:adf:e390:: with SMTP id e16mr21753579wrm.217.1632041243113;
-        Sun, 19 Sep 2021 01:47:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i67sm7884497wmi.41.2021.09.19.01.47.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=tBRv2Wd7MFvbmedcRMPTTnl++Ea0U8Yv5UhhZajFYVo=;
+        b=1PFaf25KqX4V4FTySX63HV5CsVAYs1+w9tzMZrBg8P4ZVNUbADSrPzwM8TsjkJ+iRi
+         isUQwPqNGfAAckEkt0FbSpAwAaWFo83C/0IM9SEp5l2riRBZidGxqThtvr/z/tCyclGq
+         dF/fH0uql6pmn2areTWBDjj5JB9KWX+wM5O7VP3gRcUXByyECku+YNJEZ0t+SwRqVhfk
+         XHBy7LlRI1WGP4opztsaN+KO7VPMY5SKWDP07arN12rj87iyvldNmUm070zg7oFUT+SA
+         c3Ybky3CDQF29obnCCNLtPPo8rAh814uIdFaZGuzFlIcsmZPUMq+F3vaTJBdHR39iwHX
+         Oxbg==
+X-Gm-Message-State: AOAM533EedRYoAosByp5i9NHC2nptO8picUmUgYyYZBjY0B2Yjpk4W4q
+        qWhfJ2PXfEkRZcZ4TFTiyLzehWFFsyeQmQ==
+X-Google-Smtp-Source: ABdhPJx40JXdyx/NRyS3y1R3Rg/SnnewFVB6thkePd3Ha4sgEVzjOLUR5DQFxko7FKmmBb1pTaRoHA==
+X-Received: by 2002:a7b:c414:: with SMTP id k20mr18694481wmi.146.1632041242195;
         Sun, 19 Sep 2021 01:47:22 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i67sm7884497wmi.41.2021.09.19.01.47.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Sep 2021 01:47:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/5] environment.c: remove test-specific "ignore_untracked..." variable
-Date:   Sun, 19 Sep 2021 10:47:16 +0200
-Message-Id: <patch-v3-2.5-ece340af764-20210919T084703Z-avarab@gmail.com>
+Subject: [PATCH v3 1/5] wrapper.c: add x{un,}setenv(), and use xsetenv() in environment.c
+Date:   Sun, 19 Sep 2021 10:47:15 +0200
+Message-Id: <patch-v3-1.5-4b320edc933-20210919T084703Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1092.g44c994ea1be
 In-Reply-To: <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
 References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com> <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
@@ -78,109 +78,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of the global ignore_untracked_cache_config variable added in
-dae6c322fa1 (test-dump-untracked-cache: don't modify the untracked
-cache, 2016-01-27) we can make use of the new facility to set config
-via environment variables added in d8d77153eaf (config: allow
-specifying config entries via envvar pairs, 2021-01-12).
+Add fatal wrappers for setenv() and unsetenv(). In d7ac12b25d3 (Add
+set_git_dir() function, 2007-08-01) we started checking its return
+value, and since 48988c4d0c3 (set_git_dir: die when setenv() fails,
+2018-03-30) we've had set_git_dir_1() die if we couldn't set it.
 
-It's arguably a bit hacky to use setenv() and getenv() to pass
-messages between the same program, but since the test helpers are not
-the main intended audience of repo-settings.c I think it's better than
-hardcoding the test-only special-case in prepare_repo_settings().
+Let's provide a wrapper for both, this will be useful in many other
+places, a subsequent patch will make another use of xsetenv().
 
-This uses the xsetenv() wrapper added in the preceding commit, if we
-don't set these in the environment we'll fail in
-t7063-status-untracked-cache.sh, but let's fail earlier anyway if that
-were to happen.
+The checking of the return value here is over-eager according to
+setenv(3) and POSIX. It's documented as returning just -1 or 0, so
+perhaps we should be checking -1 explicitly.
 
-This breaks any parent process that's potentially using the
-GIT_CONFIG_* and GIT_CONFIG_PARAMETERS mechanism to pass one-shot
-config setting down to a git subprocess, but in this case we don't
-care about the general case of such potential parents. This process
-neither spawns other "git" processes, nor is it interested in other
-configuration. We might want to pick up other test modes here, but
-those will be passed via GIT_TEST_* environment variables.
+Let's just instead die on any non-zero, if our C library is so broken
+as to return something else than -1 on error (and perhaps not set
+errno?) the worst we'll do is die with a nonsensical errno value, but
+we'll want to die in either case.
+
+We could make these return "void" (as far as I can tell there's no
+other x*() wrappers that needed to make that decision before),
+i.e. our "return 0" is only to indicate that we didn't error, which we
+would have died on. Let's return "int" instead to be consistent with
+the C library function signatures, including for any future code that
+expects a pointer to a setenv()-like function.
+
+I think it would be OK skip the NULL check of the "name" here for the
+calls to die_errno(). Almost all of our setenv() callers are taking a
+constant string hardcoded in the source as the first argument, and for
+the rest we can probably assume they've done the NULL check
+themselves. Even if they didn't, modern C libraries are forgiving
+about it (e.g. glibc formatting it as "(null)"), on those that aren't,
+well, we were about to die anyway. But let's include the check anyway
+for good measure.
+
+1. https://pubs.opengroup.org/onlinepubs/009604499/functions/setenv.html
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- cache.h                              | 7 -------
- environment.c                        | 7 -------
- repo-settings.c                      | 7 +------
- t/helper/test-dump-untracked-cache.c | 6 ++++--
- 4 files changed, 5 insertions(+), 22 deletions(-)
+ environment.c     |  3 +--
+ git-compat-util.h |  2 ++
+ wrapper.c         | 15 +++++++++++++++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index d23de693680..8e60fdd2a12 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1719,13 +1719,6 @@ int update_server_info(int);
- const char *get_log_output_encoding(void);
- const char *get_commit_output_encoding(void);
- 
--/*
-- * This is a hack for test programs like test-dump-untracked-cache to
-- * ensure that they do not modify the untracked cache when reading it.
-- * Do not use it otherwise!
-- */
--extern int ignore_untracked_cache_config;
--
- int committer_ident_sufficiently_given(void);
- int author_ident_sufficiently_given(void);
- 
 diff --git a/environment.c b/environment.c
-index 7d8a949285c..d73dd0c42f7 100644
+index d6b22ede7ea..7d8a949285c 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -96,13 +96,6 @@ int auto_comment_line_char;
- /* Parallel index stat data preload? */
- int core_preload_index = 1;
+@@ -330,8 +330,7 @@ char *get_graft_file(struct repository *r)
  
--/*
-- * This is a hack for test programs like test-dump-untracked-cache to
-- * ensure that they do not modify the untracked cache when reading it.
-- * Do not use it otherwise!
-- */
--int ignore_untracked_cache_config;
--
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
+ static void set_git_dir_1(const char *path)
+ {
+-	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+-		die(_("could not set GIT_DIR to '%s'"), path);
++	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+ 	setup_git_env(path);
+ }
  
-diff --git a/repo-settings.c b/repo-settings.c
-index 0cfe8b787db..b0df8b93b86 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -70,12 +70,7 @@ void prepare_repo_settings(struct repository *r)
- 	if (!repo_config_get_bool(r, "feature.experimental", &value) && value)
- 		UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_SKIPPING);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index b46605300ab..0b0c0305165 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -875,6 +875,8 @@ void *xmemdupz(const void *data, size_t len);
+ char *xstrndup(const char *str, size_t len);
+ void *xrealloc(void *ptr, size_t size);
+ void *xcalloc(size_t nmemb, size_t size);
++int xsetenv(const char *name, const char *value, int overwrite);
++int xunsetenv(const char *name);
+ void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ const char *mmap_os_err(void);
+ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+diff --git a/wrapper.c b/wrapper.c
+index 7c6586af321..95f989260cd 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -145,6 +145,21 @@ void *xcalloc(size_t nmemb, size_t size)
+ 	return ret;
+ }
  
--	/* Hack for test programs like test-dump-untracked-cache */
--	if (ignore_untracked_cache_config)
--		r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
--	else
--		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
--
-+	UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
- 	UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_DEFAULT);
- 
- 	/*
-diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index cf0f2c7228e..99010614f6d 100644
---- a/t/helper/test-dump-untracked-cache.c
-+++ b/t/helper/test-dump-untracked-cache.c
-@@ -45,8 +45,10 @@ int cmd__dump_untracked_cache(int ac, const char **av)
- 	struct untracked_cache *uc;
- 	struct strbuf base = STRBUF_INIT;
- 
--	/* Hack to avoid modifying the untracked cache when we read it */
--	ignore_untracked_cache_config = 1;
-+	/* Set core.untrackedCache=keep before setup_git_directory() */
-+	xsetenv("GIT_CONFIG_COUNT", "1", 1);
-+	xsetenv("GIT_CONFIG_KEY_0", "core.untrackedCache", 1);
-+	xsetenv("GIT_CONFIG_VALUE_0", "keep", 1);
- 
- 	setup_git_directory();
- 	if (read_cache() < 0)
++int xsetenv(const char *name, const char *value, int overwrite)
++{
++	if (setenv(name, value, overwrite))
++		die_errno("setenv(%s, '%s', %d) failed", name ? name : "(null)",
++			  value, overwrite);
++	return 0;
++}
++
++int xunsetenv(const char *name)
++{
++	if (!unsetenv(name))
++		die_errno("unsetenv(%s) failed", name ? name : "(null)");
++	return 0;
++}
++
+ /*
+  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
+  * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
 -- 
 2.33.0.1092.g44c994ea1be
 
