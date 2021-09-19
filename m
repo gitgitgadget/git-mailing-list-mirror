@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2074C433F5
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85866C433FE
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 807E761004
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68FEB610A8
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232723AbhISUkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S232756AbhISUkM (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 19 Sep 2021 16:40:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40122 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbhISUkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 16:40:06 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC52C061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id q23so12213751pfs.9
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
+        with ESMTP id S232583AbhISUkH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 16:40:07 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BF7C061760
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:42 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id w19so14240131pfn.12
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PbORzrPvah9Q0qeI6VS/qrHYVQXRSUckjv7sgXkLIAw=;
-        b=DtOqyWIAkTbcAdC8HDZmLXIi2utcGGEcxxlzDJUPqLS2Eu01/fToqHMSI5f5MRR0Gc
-         DnQuwmIobx+TRWYw9SH0aeOYF9Mgc+624d9LpdbE9hAWpV/bSXdLwHYQN9RbtcVr0gvB
-         Vp7qF5ypWkvoADoa1nByObMKr7hy/cWKPAwxaUX7XnGWKIaIRSdHPkQGhSx8OauYUqc1
-         qVmHhMoLMXXtza6s6fqX0YBcfOKRjuzXQnGAj7wpaD+1VZiC6Z3gda83aatl+zB2PozU
-         ZpVqzhNGNwXaPMccmMsF1nd3rpseP3AyFvt+h//SDSMSAMOS4Pn0Fmum8cQE8l0LOxfN
-         lh9w==
+        bh=UFDb/BP+3/q+0WP3dWQCJ/UF8FZA9JYJ5URPYvu11eM=;
+        b=RrAlp4Yl9H4nf8jScXw6Bc0XR6RTWMQxUtpJcn2dR+PFupmZFKahswqkYIKNvD7AXV
+         iccwQe3WBqWbYGxG/AjhHvv3hLXjABHInTTPE1f3YPSCTNKnLHcpHtzkRB6oB+2RpWJ4
+         ZjCmjCYnI1pztlZIK2+CxPl5Z0n6y4Q4D+T4eZ7QiygMaG0TQULSIQ2tdLHX7XoFmkXS
+         R4Z+nh3+1976Mzrm9psyNc1/3Zd1Wk6awXuKCevuyM0eHWAzrVqr/pXzqcZifSwHTN/G
+         J36dQGUjg6SIsUVN8Fh5Y76XBbXjeqVahYrJMnztvXgiZgpSw5Oq44rMlrIN22/opWdo
+         cVWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PbORzrPvah9Q0qeI6VS/qrHYVQXRSUckjv7sgXkLIAw=;
-        b=k08FvkPSoUMgwxR2CSIvdOmy7vzjKBZUMT4xq8RHZWhfPkUNSkagGLPcwrUhvds1Y9
-         +ELC18eVCgkDhjSZyEZ/5P+8sNUs3UnPPomKlJeYnrKsKQwrN1t4awUsfMV8QDBwobpA
-         d5wrwfJguALAge50yTUsAvzPpvnM35kAQ+0KIkZJEL/u0/JBq77BrIpWymUI8fOX1SjO
-         zo+MzISqkQubLnfWSst43IrDalydUR5QkNaHBkmqvC8+zC5ydDqQz5KmVUUs012g7xon
-         7emMqicKejFXD4EBIocOfqp+uDkKCFA0wgur6jDCB88TjK9AGPSFqDUq/7iT605mPxry
-         dNzg==
-X-Gm-Message-State: AOAM532Lsa/4ZgO0w6e2EIUE5zHeD036D2HTUVmXA70uZQ0+cmoGpyoY
-        ykhDP8/a7+GoRgV8l4CIVYA=
-X-Google-Smtp-Source: ABdhPJxgT8rMbHz6inuRmQ14F27K5HrruOWYYZVUG7kFLY/niFy6WKHsaBa/fXAZlT8dHxxnDi/Xzg==
-X-Received: by 2002:aa7:9841:0:b0:439:c4cb:fe9a with SMTP id n1-20020aa79841000000b00439c4cbfe9amr21876726pfq.13.1632083920114;
-        Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
+        bh=UFDb/BP+3/q+0WP3dWQCJ/UF8FZA9JYJ5URPYvu11eM=;
+        b=MfWfsXI8T5qLAzGA/cM6hRFt7YMRO7tI0aCZ6nubcr+XNMjJUpgLZ4lrw9uM44L3wr
+         UXpem9/0WgyZDAOAtCrPbtyRnuwO1CRUazBHuUp/8UX5lJN+wBHiVwgrnB7EufJqFo+X
+         jkmnrJ/h1YPHW7WUEVNMhzbf/LYtAdLkI0c/S2CWwDfWmshj5NJgMJM2xunyBwEZ3qsc
+         fM/sFhA/PwpFy698wIJTBhpou4tmz/wYw56p8tRiiUI3J7ez7sIn8xEM5rBhjCNXq1nD
+         F8+wLuchEHkNfMs6QBtGrXhj5mLnaX6KKHl4KniZdh7IdYF0iPCZC6jDPMCo1+MXAtmb
+         55lA==
+X-Gm-Message-State: AOAM530FAOpLlsCDa7CZhh2vA4RXX/yUrTqEWxfWVfHICvL4cY6Gnax5
+        Mi9b82Z+O50UU6JEH9qOkyM=
+X-Google-Smtp-Source: ABdhPJx/gdg2zNEtPdFyp3akajYDdUcP1jATAD9pq6ZHhaGOGDFWbCnBz0ZX3biZVLZUUXDaq847Wg==
+X-Received: by 2002:aa7:9467:0:b0:43e:10a2:5409 with SMTP id t7-20020aa79467000000b0043e10a25409mr21760108pfq.12.1632083921574;
+        Sun, 19 Sep 2021 13:38:41 -0700 (PDT)
 Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id v4sm12132073pff.11.2021.09.19.13.38.38
+        by smtp.gmail.com with ESMTPSA id v4sm12132073pff.11.2021.09.19.13.38.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Sep 2021 13:38:39 -0700 (PDT)
+        Sun, 19 Sep 2021 13:38:41 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -65,9 +65,9 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 2/3] difftool: use a strbuf to create a tmpdir path without repeated slashes
-Date:   Sun, 19 Sep 2021 13:38:31 -0700
-Message-Id: <20210919203832.91207-3-davvid@gmail.com>
+Subject: [PATCH v4 3/3] difftool: add a missing space to the run_dir_diff() comments
+Date:   Sun, 19 Sep 2021 13:38:32 -0700
+Message-Id: <20210919203832.91207-4-davvid@gmail.com>
 X-Mailer: git-send-email 2.33.0.720.g5b0b3ce580
 In-Reply-To: <20210919203832.91207-1-davvid@gmail.com>
 References: <20210919203832.91207-1-davvid@gmail.com>
@@ -77,122 +77,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The paths generated by difftool are passed to user-facing diff tools.
-Using paths with repeated slashes in them is a cosmetic blemish that
-is exposed to users and can be avoided.
-
-Use a strbuf to create the buffer used for the dir-diff tmpdir.
-Strip trailing slashes from the value read from TMPDIR to avoid
-repeated slashes in the generated paths.
-
-Add a unit test to ensure that repeated slashes are not present.
-
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- builtin/difftool.c  | 28 +++++++++++++++-------------
- t/t7800-difftool.sh |  7 +++++++
- 2 files changed, 22 insertions(+), 13 deletions(-)
+ builtin/difftool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 21e055d13a..daa438be09 100644
+index daa438be09..e225974a2b 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -252,11 +252,10 @@ static void changed_files(struct hashmap *result, const char *index_path,
- 	strbuf_release(&buf);
- }
- 
--static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
-+static NORETURN void exit_cleanup(struct strbuf *buf, int exit_code)
- {
--	struct strbuf buf = STRBUF_INIT;
--	strbuf_addstr(&buf, tmpdir);
--	remove_dir_recursively(&buf, 0);
-+	remove_dir_recursively(buf, 0);
-+	strbuf_release(buf);
- 	if (exit_code)
- 		warning(_("failed: %d"), exit_code);
- 	exit(exit_code);
-@@ -333,11 +332,11 @@ static int checkout_path(unsigned mode, struct object_id *oid,
- static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 			struct child_process *child)
- {
--	char tmpdir[PATH_MAX];
- 	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
- 	struct strbuf rpath = STRBUF_INIT, buf = STRBUF_INIT;
- 	struct strbuf ldir = STRBUF_INIT, rdir = STRBUF_INIT;
- 	struct strbuf wtdir = STRBUF_INIT;
-+	struct strbuf tmpdir = STRBUF_INIT;
- 	char *lbase_dir, *rbase_dir;
- 	size_t ldir_len, rdir_len, wtdir_len;
- 	const char *workdir, *tmp;
-@@ -360,11 +359,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 
- 	/* Setup temp directories */
- 	tmp = getenv("TMPDIR");
--	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
--	if (!mkdtemp(tmpdir))
--		return error("could not create '%s'", tmpdir);
--	strbuf_addf(&ldir, "%s/left/", tmpdir);
--	strbuf_addf(&rdir, "%s/right/", tmpdir);
-+	strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
-+	strbuf_trim_trailing_dir_sep(&tmpdir);
-+	strbuf_addstr(&tmpdir, "/git-difftool.XXXXXX");
-+	if (!mkdtemp(tmpdir.buf))
-+		return error("could not create '%s'", tmpdir.buf);
-+	strbuf_addf(&ldir, "%s/left/", tmpdir.buf);
-+	strbuf_addf(&rdir, "%s/right/", tmpdir.buf);
- 	strbuf_addstr(&wtdir, workdir);
- 	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
- 		strbuf_addch(&wtdir, '/');
-@@ -614,7 +615,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 		if (!indices_loaded) {
- 			struct lock_file lock = LOCK_INIT;
- 			strbuf_reset(&buf);
--			strbuf_addf(&buf, "%s/wtindex", tmpdir);
-+			strbuf_addf(&buf, "%s/wtindex", tmpdir.buf);
- 			if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
- 			    write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
- 				ret = error("could not write %s", buf.buf);
-@@ -644,11 +645,11 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+@@ -549,7 +549,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
  	}
  
- 	if (err) {
--		warning(_("temporary files exist in '%s'."), tmpdir);
-+		warning(_("temporary files exist in '%s'."), tmpdir.buf);
- 		warning(_("you may want to cleanup or recover these."));
- 		exit(1);
- 	} else
--		exit_cleanup(tmpdir, rc);
-+		exit_cleanup(&tmpdir, rc);
- 
- finish:
- 	if (fp)
-@@ -660,6 +661,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	strbuf_release(&rdir);
- 	strbuf_release(&wtdir);
- 	strbuf_release(&buf);
-+	strbuf_release(&tmpdir);
- 
- 	return ret;
- }
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 07a52fb8e1..0670b617b4 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -453,6 +453,13 @@ run_dir_diff_test 'difftool --dir-diff' '
- 	grep "^file$" output
- '
- 
-+run_dir_diff_test 'difftool --dir-diff avoids repeated slashes in TMPDIR' '
-+	TMPDIR="${TMPDIR:-/tmp}////" \
-+		git difftool --dir-diff $symlinks --extcmd echo branch >output &&
-+	grep -v // output >actual &&
-+	test_line_count = 1 actual
-+'
-+
- run_dir_diff_test 'difftool --dir-diff ignores --prompt' '
- 	git difftool --dir-diff $symlinks --prompt --extcmd ls branch >output &&
- 	grep "^sub$" output &&
+ 	/*
+-	 * Symbolic links require special treatment.The standard "git diff"
++	 * Symbolic links require special treatment. The standard "git diff"
+ 	 * shows only the link itself, not the contents of the link target.
+ 	 * This loop replicates that behavior.
+ 	 */
 -- 
 2.33.0.720.g5b0b3ce580
 
