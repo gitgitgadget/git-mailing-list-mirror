@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 998F4C4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9171EC433FE
 	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:47:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DABE61212
+	by mail.kernel.org (Postfix) with ESMTP id 6ACD561205
 	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 08:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237198AbhISIsy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 04:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55368 "EHLO
+        id S237105AbhISIsx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 04:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237085AbhISIsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 04:48:50 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F6DC061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:25 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id z184-20020a1c7ec1000000b003065f0bc631so13293233wmc.0
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:25 -0700 (PDT)
+        with ESMTP id S237122AbhISIsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 04:48:52 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B261C06175F
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:27 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id w17so14779746wrv.10
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 01:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mM3Z+oAJuUsvBxBGmGKvCeF23cGlFiPbMicsHB83nM8=;
-        b=nT5KgkuTmmh2CzyLaxUCEhgTVCkHQEEZ4XdNCwsgC49FfZlxRPxjdQjbmaj9nCZyA+
-         TrlzKJAZCuuLcVpAEg8oUJsVizutAHfGxqLt1FLYyAxVamKXZu6LJMN4k9wrd4RW47ft
-         mm4Avht4DnWMsXbfzumymE4fAnonPX/JNoNlXTYxHN7h0d/B+NIheYcl5es+r8ed1+0G
-         KtmtNhX+bo+VVd7yZrKpCC7KdNlu9w51noUvyYP/tBeC6Hul5KfbZ7x5UwvLphNBzM+G
-         SLEo5+GWob/8FLdLN/wCQEtp2QkmEgKsMW28heEG/OrWNlr8hbKf5o4HL3qRzmOVn5LM
-         Mmsw==
+        bh=xaMRck/fVTgjoYKcOJXmBfZ48IvAEWbU9E+uPrk5qS0=;
+        b=YefICJlPg83eoOA2z9RNRwd3zK/WbKrSU2CDB01rbfGV1PGNaOiGE1hg4AmEDz7kVZ
+         fBTNwZw8Ym36zXNO1ugewaEPhA+6nQptiugDH+9MR2hzBULegGH9GvTO3CmgQVxsCqCd
+         VQGBZZkw3Nev0sjSCmzfN5KRAwhecjtlZIADjQpPoMk/NjSTK9MRT/4we0XrWjvUVZgr
+         cXh2EEvLpGr4zd/85w+NAcLT/GnTb+lH14AVSQJg0J+5Y3RpuLpEiOuEcoJ/ucFteXaG
+         DlJM/cTdXKpAvyqswGT0y+PeYpzMVHR8JaovedKcDsf8yMExdDLTvbDogzs3QOgrwFVy
+         bRYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mM3Z+oAJuUsvBxBGmGKvCeF23cGlFiPbMicsHB83nM8=;
-        b=lh6GD02arQ8U576e/QH8l6X8GTdCfWgtEx0jN3DaLYL8xzpzECwpHbLhFTYB+Btf1N
-         SZca5zM7r/L18q3Tu3xktm3E7CvioEzZ14Ry74nYYZHKu7yVweUpBtJ4RZO0qzsoWB/5
-         RB96s8jHTfswXEROUniNmZqgsLuwLH10LLwoV0wkc7AW5mdby/nrwAuuGO3ZvTDNvmCZ
-         qrfK2v8AyeMjpulO3IRBi2Uj1+//OfstCpGveL9zupp3o62phnqaW8OKLArtpYYoy+d9
-         7vCaJ5pNS6OM81V1iJAyPdVnYQB5SJiFyLBTSf1d+jaJR2mkclIUBeitefNAAL+0t4W4
-         AUwg==
-X-Gm-Message-State: AOAM531ZDgu3tz2r/OBsJ81gkwL0Url/T88koSOo4pVXR2IIyoK8tOsx
-        m8f98FJ3mw4dQ4QWoip71EIa1dUBMkXEEQ==
-X-Google-Smtp-Source: ABdhPJwzNgCUGu566XMuYfZQJgejbjt6rw1+MnH5pCwgvf3P31J4gTnocOjqC3Db+CVd6RLR0hE5HQ==
-X-Received: by 2002:a05:600c:211a:: with SMTP id u26mr23815813wml.190.1632041244116;
-        Sun, 19 Sep 2021 01:47:24 -0700 (PDT)
+        bh=xaMRck/fVTgjoYKcOJXmBfZ48IvAEWbU9E+uPrk5qS0=;
+        b=bQE+rtf//p7/xCI5Jpqm8/4iPimGbtjaVtgeDGNkkt5s8MgIIrFX8Xku7v77kJHB5P
+         zcglmCt6hs1wicrIKTWeQ0rWG92NZJVX/DJOdXPpa+cFfvNxTCl7+ZbsibE/zegKB3NT
+         wiW4iJgbh+AP80pu4005DTYLE+YAWU7kpbaQFDenfjAj5W2/zUqea6WJcjXcgdL/fSmY
+         YdoFuzSoPSe4IvOt5puERSivaU5/Kcwm4XZLdBUUh/D01OH8dpMks4skJh+YLejYxPAH
+         9cHJi6HNnJEfZQKBC2m1ogAyljjGgb7Gk4l0u3eKHId1SbnG91IVOmQ2p2Q3fMYs0M1i
+         PfVQ==
+X-Gm-Message-State: AOAM533x4gdJQA1bWivARLSCxvOI70SAv0BMIPtKbYUJ686e2TxXTWto
+        v/GhTlso3NralGLu3S1pWs7Et8t9a6/waQ==
+X-Google-Smtp-Source: ABdhPJw3mzwtnT0TyhaAeLed8HA2ytVopeQ2eCW4pTh2uwiL3Mx+x382/7zrHldoOoPQx0YcqRX8cA==
+X-Received: by 2002:a05:6000:18a4:: with SMTP id b4mr15463512wri.96.1632041245803;
+        Sun, 19 Sep 2021 01:47:25 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i67sm7884497wmi.41.2021.09.19.01.47.23
+        by smtp.gmail.com with ESMTPSA id i67sm7884497wmi.41.2021.09.19.01.47.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Sep 2021 01:47:23 -0700 (PDT)
+        Sun, 19 Sep 2021 01:47:25 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/5] read-cache & fetch-negotiator: check "enum" values in switch()
-Date:   Sun, 19 Sep 2021 10:47:17 +0200
-Message-Id: <patch-v3-3.5-d837d905825-20210919T084703Z-avarab@gmail.com>
+Subject: [PATCH v3 5/5] repository.h: don't use a mix of int and bitfields
+Date:   Sun, 19 Sep 2021 10:47:19 +0200
+Message-Id: <patch-v3-5.5-3cc033b8864-20210919T084703Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1092.g44c994ea1be
 In-Reply-To: <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
 References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com> <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
@@ -78,74 +78,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change tweak_untracked_cache() in "read-cache.c" to use a switch() to
-have the compiler assert that we checked all possible values in the
-"enum untracked_cache_setting" type, and likewise remove the "default"
-case in fetch_negotiator_init() in favor of checking for
-"FETCH_NEGOTIATION_UNSET" and "FETCH_NEGOTIATION_NONE".
+Change the bitfield added in 58300f47432 (sparse-index: add
+index.sparse config option, 2021-03-30) and 3964fc2aae7 (sparse-index:
+add guard to ensure full index, 2021-03-30) to just use an "int"
+boolean instead.
 
-As will be discussed in a subsequent we'll only ever have either of
-these set to FETCH_NEGOTIATION_NONE, FETCH_NEGOTIATION_UNSET and
-UNTRACKED_CACHE_UNSET within the prepare_repo_settings() function
-itself. In preparation for fixing that code let's add a BUG() here to
-mark this as unreachable code.
+It might be smart to optimize the space here in the future, but by
+consistently using an "int" we can take its address and pass it to
+repo_cfg_bool(), and therefore don't need to handle "sparse_index" as
+a special-case when reading the "index.sparse" setting.
 
-See ad0fb659993 (repo-settings: parse core.untrackedCache, 2019-08-13)
-for when the "unset" and "keep" handling for core.untrackedCache was
-consolidated, and aaf633c2ad1 (repo-settings: create
-feature.experimental setting, 2019-08-13) for the addition of the
-"default" pattern in "fetch-negotiator.c".
+There's no corresponding config for "command_requires_full_index", but
+let's change it too for consistency and to prevent future bugs
+creeping in due to one of these being "unsigned".
+
+Using "int" consistently also prevents subtle bugs or undesired
+control flow creeping in here. Before the preceding commit the
+initialization of "command_requires_full_index" in
+prepare_repo_settings() did nothing, i.e. this:
+
+    r->settings.command_requires_full_index = 1
+
+Was redundant to the earlier memset() to -1. Likewise for
+"sparse_index" added in 58300f47432 (sparse-index: add index.sparse
+config option, 2021-03-30) the code and comment added there was
+misleading, we weren't initializing it to off, but re-initializing it
+from "1" to "0", and then finally checking the config, and perhaps
+setting it to "1" again. I.e. we could have applied this patch before
+the preceding commit:
+
+	+	assert(r->settings.command_requires_full_index == 1);
+	 	r->settings.command_requires_full_index = 1;
+
+	 	/*
+	 	 * Initialize this as off.
+	 	 */
+	+	assert(r->settings.sparse_index == 1);
+	 	r->settings.sparse_index = 0;
+	 	if (!repo_config_get_bool(r, "index.sparse", &value) && value)
+	 		r->settings.sparse_index = 1;
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fetch-negotiator.c |  4 +++-
- read-cache.c       | 15 ++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ repo-settings.c | 8 +-------
+ repository.h    | 5 ++---
+ 2 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/fetch-negotiator.c b/fetch-negotiator.c
-index 57ed5784e14..237f92b8696 100644
---- a/fetch-negotiator.c
-+++ b/fetch-negotiator.c
-@@ -19,8 +19,10 @@ void fetch_negotiator_init(struct repository *r,
- 		return;
+diff --git a/repo-settings.c b/repo-settings.c
+index 46b9d56aeac..b93e91a212e 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -45,6 +45,7 @@ void prepare_repo_settings(struct repository *r)
+ 	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commit_graph, 0);
+ 	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
+ 	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1);
++	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
  
- 	case FETCH_NEGOTIATION_DEFAULT:
--	default:
- 		default_negotiator_init(negotiator);
- 		return;
-+	case FETCH_NEGOTIATION_NONE:
-+	case FETCH_NEGOTIATION_UNSET:
-+		BUG("FETCH_NEGOTIATION_UNSET only in prepare_repo_settings()");
- 	}
- }
-diff --git a/read-cache.c b/read-cache.c
-index 9048ef9e905..6918dc3d8b2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1944,13 +1944,18 @@ static void tweak_untracked_cache(struct index_state *istate)
- 
- 	prepare_repo_settings(r);
- 
--	if (r->settings.core_untracked_cache  == UNTRACKED_CACHE_REMOVE) {
-+	switch (r->settings.core_untracked_cache) {
-+	case UNTRACKED_CACHE_REMOVE:
- 		remove_untracked_cache(istate);
--		return;
--	}
+ 	/*
+ 	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
+@@ -90,11 +91,4 @@ void prepare_repo_settings(struct repository *r)
+ 	 * removed.
+ 	 */
+ 	r->settings.command_requires_full_index = 1;
 -
--	if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
-+		break;
-+	case UNTRACKED_CACHE_WRITE:
- 		add_untracked_cache(istate);
-+		break;
-+	case UNTRACKED_CACHE_KEEP:
-+		break;
-+	case UNTRACKED_CACHE_UNSET:
-+		BUG("UNTRACKED_CACHE_UNSET only in prepare_repo_settings()");
-+	}
+-	/*
+-	 * Initialize this as off.
+-	 */
+-	r->settings.sparse_index = 0;
+-	if (!repo_config_get_bool(r, "index.sparse", &value) && value)
+-		r->settings.sparse_index = 1;
  }
+diff --git a/repository.h b/repository.h
+index bf36744e0a7..02599ae2c98 100644
+--- a/repository.h
++++ b/repository.h
+@@ -31,6 +31,8 @@ struct repo_settings {
+ 	int commit_graph_read_changed_paths;
+ 	int gc_write_commit_graph;
+ 	int fetch_write_commit_graph;
++	int command_requires_full_index;
++	int sparse_index;
  
- static void tweak_split_index(struct index_state *istate)
+ 	int index_version;
+ 	enum untracked_cache_setting core_untracked_cache;
+@@ -39,9 +41,6 @@ struct repo_settings {
+ 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
+ 
+ 	int core_multi_pack_index;
+-
+-	unsigned command_requires_full_index:1,
+-		 sparse_index:1;
+ };
+ 
+ struct repository {
 -- 
 2.33.0.1092.g44c994ea1be
 
