@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE854C433FE
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2074C433F5
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5DF3610A8
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 807E761004
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232554AbhISUkF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 16:40:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
+        id S232723AbhISUkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 16:40:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbhISUkE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 16:40:04 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFAEC061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:39 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id g184so15294754pgc.6
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:39 -0700 (PDT)
+        with ESMTP id S229930AbhISUkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 16:40:06 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC52C061574
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id q23so12213751pfs.9
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DBniU2FLIGXk1NXiNbM5epJCe+cKShMfg0VuR3+nUFs=;
-        b=qnoeGjUQGJ7Hiwfc1GnITiG1tlhdIgshZqu6vWQvlWUDPVbP5/oQbrm/j5ZDK/sLzB
-         P+5NaemNl25++D7dimcQjd7qxD9LTMh0CbnwXxmvlY9ZTKsMSFJgXOH3TMsLS0LYfa1k
-         XHINb6fzRhSde/6RrcHbCYskJs3cSXuaaUmKeWJyRr8qIbFZuRHNRq20qCHQkq19xtfS
-         p5guNbxPP5cHkvLpuUWeA3sq/HNH6CTgw8wmZLlBOZELGXLldV0gKNRlEy1PfS/QCSSU
-         zTaDle4GxRG0q5N/zi8+yeMq2JRzj6RKi0n7Y8PgxaHnypdt0h7XaOCSphzd6/FtLi1x
-         1Yvg==
+        bh=PbORzrPvah9Q0qeI6VS/qrHYVQXRSUckjv7sgXkLIAw=;
+        b=DtOqyWIAkTbcAdC8HDZmLXIi2utcGGEcxxlzDJUPqLS2Eu01/fToqHMSI5f5MRR0Gc
+         DnQuwmIobx+TRWYw9SH0aeOYF9Mgc+624d9LpdbE9hAWpV/bSXdLwHYQN9RbtcVr0gvB
+         Vp7qF5ypWkvoADoa1nByObMKr7hy/cWKPAwxaUX7XnGWKIaIRSdHPkQGhSx8OauYUqc1
+         qVmHhMoLMXXtza6s6fqX0YBcfOKRjuzXQnGAj7wpaD+1VZiC6Z3gda83aatl+zB2PozU
+         ZpVqzhNGNwXaPMccmMsF1nd3rpseP3AyFvt+h//SDSMSAMOS4Pn0Fmum8cQE8l0LOxfN
+         lh9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DBniU2FLIGXk1NXiNbM5epJCe+cKShMfg0VuR3+nUFs=;
-        b=RIocWPhd8pwxbZLLD8qq/QkFnjEW9UbtHL5iqWDbLSBW3/IZehzCMuibTegdqtzKtC
-         I1yDc/e6KEqMilmmNKhBRBfdVSz8bX/TgcraBxFQ608O12gAzy2L2qQvdatXW9SIyQ6Q
-         d0bGuzgS73sWu1Jgzn3hB2UDBKZQlFHxb5IPA/VNTKYS7vI2KA1dJui0NTGr4fuPzldW
-         baGQxHDNCccRnwp3cPjV/ZgaoyWKsYN0THA/sMz95ABRAjACL7pe7gKYaHVw9542gv5o
-         Uvz9BsNPsueZ2riTT3oEigEEz2i9njtCOfKX3wxt914vW9hoOs5qJK9KQQLHQozI3iJG
-         8hIw==
-X-Gm-Message-State: AOAM533XJi/7vKSQdVRcTSGW6XzbXFPumExRMmjhcS8R0v7LVkIlY40+
-        bojLnHC1AVIzZWBZUfOBOqc=
-X-Google-Smtp-Source: ABdhPJyvq26mxKVZnjSh+u/GCAWVIleP546ZFQBgBZ0Ntxv8VxEBY4iftQSvdmFLOJdK7J7m0FmAKQ==
-X-Received: by 2002:a65:5643:: with SMTP id m3mr20224490pgs.224.1632083918722;
-        Sun, 19 Sep 2021 13:38:38 -0700 (PDT)
+        bh=PbORzrPvah9Q0qeI6VS/qrHYVQXRSUckjv7sgXkLIAw=;
+        b=k08FvkPSoUMgwxR2CSIvdOmy7vzjKBZUMT4xq8RHZWhfPkUNSkagGLPcwrUhvds1Y9
+         +ELC18eVCgkDhjSZyEZ/5P+8sNUs3UnPPomKlJeYnrKsKQwrN1t4awUsfMV8QDBwobpA
+         d5wrwfJguALAge50yTUsAvzPpvnM35kAQ+0KIkZJEL/u0/JBq77BrIpWymUI8fOX1SjO
+         zo+MzISqkQubLnfWSst43IrDalydUR5QkNaHBkmqvC8+zC5ydDqQz5KmVUUs012g7xon
+         7emMqicKejFXD4EBIocOfqp+uDkKCFA0wgur6jDCB88TjK9AGPSFqDUq/7iT605mPxry
+         dNzg==
+X-Gm-Message-State: AOAM532Lsa/4ZgO0w6e2EIUE5zHeD036D2HTUVmXA70uZQ0+cmoGpyoY
+        ykhDP8/a7+GoRgV8l4CIVYA=
+X-Google-Smtp-Source: ABdhPJxgT8rMbHz6inuRmQ14F27K5HrruOWYYZVUG7kFLY/niFy6WKHsaBa/fXAZlT8dHxxnDi/Xzg==
+X-Received: by 2002:aa7:9841:0:b0:439:c4cb:fe9a with SMTP id n1-20020aa79841000000b00439c4cbfe9amr21876726pfq.13.1632083920114;
+        Sun, 19 Sep 2021 13:38:40 -0700 (PDT)
 Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id v4sm12132073pff.11.2021.09.19.13.38.37
+        by smtp.gmail.com with ESMTPSA id v4sm12132073pff.11.2021.09.19.13.38.38
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Sep 2021 13:38:38 -0700 (PDT)
+        Sun, 19 Sep 2021 13:38:39 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -65,167 +65,134 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 1/3] difftool: fix symlink-file writing in dir-diff mode
-Date:   Sun, 19 Sep 2021 13:38:30 -0700
-Message-Id: <20210919203832.91207-2-davvid@gmail.com>
+Subject: [PATCH v4 2/3] difftool: use a strbuf to create a tmpdir path without repeated slashes
+Date:   Sun, 19 Sep 2021 13:38:31 -0700
+Message-Id: <20210919203832.91207-3-davvid@gmail.com>
 X-Mailer: git-send-email 2.33.0.720.g5b0b3ce580
 In-Reply-To: <20210919203832.91207-1-davvid@gmail.com>
 References: <20210919203832.91207-1-davvid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The difftool dir-diff mode handles symlinks by replacing them with their
-readlink(2) values. This allows diff tools to see changes to symlinks
-as if they were regular text diffs with the old and new path values.
-This is analogous to what "git diff" displays when symlinks change.
+The paths generated by difftool are passed to user-facing diff tools.
+Using paths with repeated slashes in them is a cosmetic blemish that
+is exposed to users and can be avoided.
 
-The temporary diff directories that are created initially contain
-symlinks because they get checked-out using a temporary index that
-retains the original symlinks as checked-in to the repository.
+Use a strbuf to create the buffer used for the dir-diff tmpdir.
+Strip trailing slashes from the value read from TMPDIR to avoid
+repeated slashes in the generated paths.
 
-A bug was introduced when difftool was rewritten in C that made
-difftool write the readlink(2) contents into the pointed-to file rather
-than the symlink itself. The write was going through the symlink and
-writing to its target rather than writing to the symlink path itself.
+Add a unit test to ensure that repeated slashes are not present.
 
-Replace symlinks with raw text files by unlinking the symlink path
-before writing the readlink(2) content into them.
-
-When 18ec800512eb0634a0bf5e86b36ed156fbee73f3 added handling for
-modified symlinks this bug got recorded in the test suite. The tests
-included the pointed-to symlink target paths. These paths were being
-reported because difftool was erroneously writing to them, but they
-should have never been reported nor written.
-
-Correct the modified-symlinks test cases by removing the target files
-from the expected output.
-
-Add a test to ensure that symlinks are written with the readlink(2)
-values and that the target files contain their original content.
-
-Reported-by: Alan Blotz <work@blotz.org>
-Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- builtin/difftool.c  |  2 ++
- t/t7800-difftool.sh | 68 +++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 68 insertions(+), 2 deletions(-)
+ builtin/difftool.c  | 28 +++++++++++++++-------------
+ t/t7800-difftool.sh |  7 +++++++
+ 2 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index bb9fe7245a..21e055d13a 100644
+index 21e055d13a..daa438be09 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -557,11 +557,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 		if (*entry->left) {
- 			add_path(&ldir, ldir_len, entry->path);
- 			ensure_leading_directories(ldir.buf);
-+			unlink(ldir.buf);
- 			write_file(ldir.buf, "%s", entry->left);
- 		}
- 		if (*entry->right) {
- 			add_path(&rdir, rdir_len, entry->path);
- 			ensure_leading_directories(rdir.buf);
-+			unlink(rdir.buf);
- 			write_file(rdir.buf, "%s", entry->right);
- 		}
+@@ -252,11 +252,10 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 	strbuf_release(&buf);
+ }
+ 
+-static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
++static NORETURN void exit_cleanup(struct strbuf *buf, int exit_code)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-	strbuf_addstr(&buf, tmpdir);
+-	remove_dir_recursively(&buf, 0);
++	remove_dir_recursively(buf, 0);
++	strbuf_release(buf);
+ 	if (exit_code)
+ 		warning(_("failed: %d"), exit_code);
+ 	exit(exit_code);
+@@ -333,11 +332,11 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 			struct child_process *child)
+ {
+-	char tmpdir[PATH_MAX];
+ 	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
+ 	struct strbuf rpath = STRBUF_INIT, buf = STRBUF_INIT;
+ 	struct strbuf ldir = STRBUF_INIT, rdir = STRBUF_INIT;
+ 	struct strbuf wtdir = STRBUF_INIT;
++	struct strbuf tmpdir = STRBUF_INIT;
+ 	char *lbase_dir, *rbase_dir;
+ 	size_t ldir_len, rdir_len, wtdir_len;
+ 	const char *workdir, *tmp;
+@@ -360,11 +359,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 
+ 	/* Setup temp directories */
+ 	tmp = getenv("TMPDIR");
+-	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
+-	if (!mkdtemp(tmpdir))
+-		return error("could not create '%s'", tmpdir);
+-	strbuf_addf(&ldir, "%s/left/", tmpdir);
+-	strbuf_addf(&rdir, "%s/right/", tmpdir);
++	strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
++	strbuf_trim_trailing_dir_sep(&tmpdir);
++	strbuf_addstr(&tmpdir, "/git-difftool.XXXXXX");
++	if (!mkdtemp(tmpdir.buf))
++		return error("could not create '%s'", tmpdir.buf);
++	strbuf_addf(&ldir, "%s/left/", tmpdir.buf);
++	strbuf_addf(&rdir, "%s/right/", tmpdir.buf);
+ 	strbuf_addstr(&wtdir, workdir);
+ 	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
+ 		strbuf_addch(&wtdir, '/');
+@@ -614,7 +615,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		if (!indices_loaded) {
+ 			struct lock_file lock = LOCK_INIT;
+ 			strbuf_reset(&buf);
+-			strbuf_addf(&buf, "%s/wtindex", tmpdir);
++			strbuf_addf(&buf, "%s/wtindex", tmpdir.buf);
+ 			if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
+ 			    write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
+ 				ret = error("could not write %s", buf.buf);
+@@ -644,11 +645,11 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
  	}
+ 
+ 	if (err) {
+-		warning(_("temporary files exist in '%s'."), tmpdir);
++		warning(_("temporary files exist in '%s'."), tmpdir.buf);
+ 		warning(_("you may want to cleanup or recover these."));
+ 		exit(1);
+ 	} else
+-		exit_cleanup(tmpdir, rc);
++		exit_cleanup(&tmpdir, rc);
+ 
+ finish:
+ 	if (fp)
+@@ -660,6 +661,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	strbuf_release(&rdir);
+ 	strbuf_release(&wtdir);
+ 	strbuf_release(&buf);
++	strbuf_release(&tmpdir);
+ 
+ 	return ret;
+ }
 diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a173f564bc..07a52fb8e1 100755
+index 07a52fb8e1..0670b617b4 100755
 --- a/t/t7800-difftool.sh
 +++ b/t/t7800-difftool.sh
-@@ -674,7 +674,6 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
- 	rm c &&
- 	ln -s d c &&
- 	cat >expect <<-EOF &&
--		b
- 		c
- 
- 		c
-@@ -710,7 +709,6 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
- 	# Deleted symlinks
- 	rm -f c &&
- 	cat >expect <<-EOF &&
--		b
- 		c
- 
- 	EOF
-@@ -723,6 +721,72 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
- 	test_cmp expect actual
+@@ -453,6 +453,13 @@ run_dir_diff_test 'difftool --dir-diff' '
+ 	grep "^file$" output
  '
  
-+test_expect_success SYMLINKS 'difftool --dir-diff writes symlinks as raw text' '
-+	# Start out on a branch called "branch-init".
-+	git init -b branch-init symlink-files &&
-+	(
-+		cd ./symlink-files &&
-+
-+		# This test ensures that symlinks are written as raw text.
-+		# The "cat" tools output link and file contents.
-+		git config difftool.cat-left-link.cmd "cat \"\$LOCAL/link\"" &&
-+		git config difftool.cat-left-a.cmd "cat \"\$LOCAL/file-a\"" &&
-+		git config difftool.cat-right-link.cmd "cat \"\$REMOTE/link\"" &&
-+		git config difftool.cat-right-b.cmd "cat \"\$REMOTE/file-b\"" &&
-+
-+		# Record the empty initial state so that we can come back here
-+		# later and not have to consider the any cases where difftool
-+		# will create symlinks back into the worktree.
-+		test_tick &&
-+		git commit --allow-empty -m init &&
-+
-+		# Create a file called "file-a" with a symlink pointing to it.
-+		git switch -c branch-a &&
-+		echo a >file-a &&
-+		ln -s file-a link &&
-+		git add file-a link &&
-+		test_tick &&
-+		git commit -m link-to-file-a &&
-+
-+		# Create a file called "file-b" and point the symlink to it.
-+		git switch -c branch-b &&
-+		echo b >file-b &&
-+		rm link &&
-+		ln -s file-b link &&
-+		git add file-b link &&
-+		git rm file-a &&
-+		test_tick &&
-+		git commit -m link-to-file-b &&
-+
-+		# Checkout the initial branch so that the --symlinks behavior is
-+		# not activated. The two directories should be completely
-+		# independent with no symlinks pointing back here.
-+		git switch branch-init &&
-+
-+		# The left link must be "file-a" and "file-a" must contain "a".
-+		echo file-a >expect &&
-+		git difftool --symlinks --dir-diff --tool cat-left-link \
-+			branch-a branch-b >actual &&
-+		test_cmp expect actual &&
-+
-+		echo a >expect &&
-+		git difftool --symlinks --dir-diff --tool cat-left-a \
-+			branch-a branch-b >actual &&
-+		test_cmp expect actual &&
-+
-+		# The right link must be "file-b" and "file-b" must contain "b".
-+		echo file-b >expect &&
-+		git difftool --symlinks --dir-diff --tool cat-right-link \
-+			branch-a branch-b >actual &&
-+		test_cmp expect actual &&
-+
-+		echo b >expect &&
-+		git difftool --symlinks --dir-diff --tool cat-right-b \
-+			branch-a branch-b >actual &&
-+		test_cmp expect actual
-+	)
++run_dir_diff_test 'difftool --dir-diff avoids repeated slashes in TMPDIR' '
++	TMPDIR="${TMPDIR:-/tmp}////" \
++		git difftool --dir-diff $symlinks --extcmd echo branch >output &&
++	grep -v // output >actual &&
++	test_line_count = 1 actual
 +'
 +
- test_expect_success 'add -N and difftool -d' '
- 	test_when_finished git reset --hard &&
- 
+ run_dir_diff_test 'difftool --dir-diff ignores --prompt' '
+ 	git difftool --dir-diff $symlinks --prompt --extcmd ls branch >output &&
+ 	grep "^sub$" output &&
 -- 
 2.33.0.720.g5b0b3ce580
 
