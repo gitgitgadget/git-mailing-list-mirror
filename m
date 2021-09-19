@@ -2,88 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F0E8C433F5
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C368EC433F5
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 21:22:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C810610A8
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 20:41:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 954816101C
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 21:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbhISUm1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 16:42:27 -0400
-Received: from mail2.pdinc.us ([67.90.184.28]:34878 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229557AbhISUm1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 16:42:27 -0400
-X-Greylist: delayed 873 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Sep 2021 16:42:26 EDT
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 18JKQQxJ016092
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 16:26:27 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 18JKQQxJ016092
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1632083187; bh=w5HhDZ19EJKsOoKE+UvSt5uK4MAgeHAL5bBIyIg4814=;
-        h=From:To:Subject:Date:From;
-        b=Shxqoj8e8fZt90qkuc/nNpLKJrSsjqe/PHBvweAO1PdD+lNhTRJxqJ/6fLcDMH6Hk
-         qnfingHLdUJteKP+dNslNjUVxY46/cLm8Y9Cr24XCm8dB4wtMv4PyYs7N6Ql+CRFta
-         1Kb2NJazDce8oV0cXmpkGys+w2tA02ANy6XNyAcfTcax4Kj+dXrAsZ6iwrKb8Aa+8z
-         OSqRox6bzjOqh/1cIR3ESJnPXaX2DZIFpP2karv2XSgcZ4wbyq7rRM10OkTKAH2eIO
-         jYEBlSp7gh8l9mi+oTtpjA1XJQ16naHVV8ztX5JTjswsQvH4H7FiblDudcZ7NFbLWs
-         7TfJ9zzPLdaog==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Subject: nice to have, just sharing - cannot pull with rebase: You have unstaged changes
-Date:   Sun, 19 Sep 2021 16:26:25 -0400
-Organization: PD Inc
-Message-ID: <375601d7ad94$9eccb5a0$dc6620e0$@pdinc.us>
+        id S231997AbhISVXb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 17:23:31 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57515 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229790AbhISVXa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 17:23:30 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7204413FE07;
+        Sun, 19 Sep 2021 17:22:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=s8IUX8t3A6UQxk3wMCr040t0t
+        xhxs4oXOfOiLHIIs64=; b=Lu+ChGDWJQllBjA7jgiCNw/4S9DxY0e2d7EIQA0El
+        nfmffC4h1PbeUWfzlGbCiK/L8hDJUWaEaAhLu+HvV+SBh3Th124ujehPeeBUN73X
+        EQRAvos9/0ha+4NXcNhk23DI/ShcyriXeoJ4AWlYoYX6S1xCY4DAjNyxH82gXQ9T
+        eQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A8C713FE06;
+        Sun, 19 Sep 2021 17:22:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D142713FE04;
+        Sun, 19 Sep 2021 17:22:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH/RFC] range-diff: make output format more useful for
+ "rebase --onto"
+References: <xmqqv92yg5y6.fsf@gitster.g> <87r1dmcooj.fsf@evledraar.gmail.com>
+Date:   Sun, 19 Sep 2021 14:22:00 -0700
+Message-ID: <xmqqr1dkdzwn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A14AEF56-198F-11EC-8BBF-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdetlDFJ7udNxqy6RY+Cb4NG28GuBw==
-Content-Language: en-us
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It would be nice if it did the fetch to discover the Current branch =
-master is up to date before failing with You have unstaged changes.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-If someone does it, send me a bill for a nice dinner - bounty offered. I =
-wish I had more time.
+> As for the proposed output, I'm a bit negative on it, so first, if we'r=
+e
+> trying to note that two commits are the same wouldn't it be much better
+> to just omit the second SHA-1? I.e. consider this variation of your
+> proposed output;
+>
+>      1 =3D 1 a05f02b1d9 a05102bfd9 : t/helper/test-bitmap.c: add  ...
+>
+> You might eyeball that for a while before discovering that I switched
+> the "f" and "1" around, i.e. the SHA-1s look /almost/ the same. Isn't
+> this better? (or we could use "++++++++++" to not overlead any meaning
+> "----------" has):
+>
+>      1 =3D 1 a05f02b1d9 ---------- : t/helper/test-bitmap.c: add  ...
 
-$ git pull -r
-error: cannot pull with rebase: You have unstaged changes.
-error: please commit or stash them.
+It will not serve my purpose at all.  Assuming that the first one
+are the equivalent and the later ones are different, the point of
+changing the format is to allow an easy cut-and-paste after "git
+rebase --onto" to create:
 
-$ git stash
-Saved working directory and index state WIP on master: 2134bc6 corrected =
-acronym: ACCIDENT: Assessment, Compliance, Correlation, and Incident =
-response for the DoD ENTerprise
+    $ git rebase --onto a05f02b1d9 a05102bfd9
 
-$ git pull -r
-Current branch master is up to date.
+and it is useless to show dashes, as I do not think this would work:
 
-$ git stash pop
-On branch master
-Your branch is ahead of 'origin/master' by 1 commit.
-  (use "git push" to publish your local commits)
+    $ git rebase --onto a05f02b1d9 ----------
 
---
-Jason Pyeron  | Architect
-PD Inc        | Certified SBA 8(a)
-10 w 24th St  | Certified SBA HUBZone
-Baltimore, MD | CAGE Code: 1WVR6
-=20
-.mil: jason.j.pyeron.ctr@mail.mil
-.com: jpyeron@pdinc.us
-tel : 202-741-9397
-
-
-
+;-)
