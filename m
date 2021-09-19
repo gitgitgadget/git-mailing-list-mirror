@@ -4,73 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C45CC433F5
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 21:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F2CC433F5
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 23:47:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0020D61041
-	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 21:39:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9730061019
+	for <git@archiver.kernel.org>; Sun, 19 Sep 2021 23:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232862AbhISVkz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 17:40:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53180 "EHLO
+        id S233584AbhISXst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Sep 2021 19:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbhISVkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 17:40:55 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA394C061574
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 14:39:29 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id t4so9790815plo.0
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 14:39:29 -0700 (PDT)
+        with ESMTP id S229517AbhISXss (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Sep 2021 19:48:48 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD3AC061574
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 16:47:22 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id v24so53861659eda.3
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 16:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Dol0SwXJ/mESzMBlD4QsKzHnCHutscdg/mg7bUMFgpc=;
-        b=mqqcgwXYFcWCZgJQ1THPduZMcMzBTlysIR/TdPP1JAbC3zuxa3ZU/WQDakREO3fvqX
-         2/t4aCh+Xk/gbTsgKWPoJ8X7bAvLw4a5/lKP15a1mYKk9Bc99Sg0Zgsd92I2CHNubATg
-         +04I33rknk/oiWn4nuQ1UdJvBMq5FrlSjga9/o13OgvOvtWiY77Ov7mFq5subdzGozhp
-         4zwFoHc08Qge+aJ7WltDh+mzeWjTWlrVr4AHKZ8ORr7FIhLXqz8AykrdPcF7WfXFDrzf
-         PxlLESId/m588evrMw33zajwfg8v2u2ySW7HstVdttnaC5rFASAQn9q7mTZ1XdXkLWYP
-         BjFA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Eqbc2n2lVh3vlNMzeEoisD9x/hd158VtPeonxIHMBnE=;
+        b=kBdXtc9EGeyHFCFXGE2oxOqxY7UZgheXHuRBVT2buLppg6KmPdsYK/tdHE5Sfgw3iz
+         fweXNUgkGEhZE7Ai6rPs1EJ1kAFPwwW2AHZ/MrOVN6+/6iavFurzb+rbXn8mO8lpjBeW
+         Mzz2A4aeByt0t0wvlvZKgzDAzyuVQx9TEx/F0vn2kZgFpdwj7Y8StPoY6tv1ZhglASVk
+         fYuQ0BzqgO5++LFjyhf28K2cdsv/OGSqdUKCoC9YTmk8vbS5boDjDckHb2s/5UlgmjXV
+         xcLl2+WH8++FAIoyoY3vtSEmg25Am/3jvIfDNysa3We7m1DnZHra6x1O5tzbzx/6ShQI
+         s/fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Dol0SwXJ/mESzMBlD4QsKzHnCHutscdg/mg7bUMFgpc=;
-        b=Y6IOm+LH6RAETo6Bf41sxSPzNRpNuBnUHimOm84P8bgI9oZMbmyEnpMPTF59MjuY2l
-         IWLnei8dOp0yEv3rXO9kOvbZjfGnZyIDGr8M0H9UguIYozzHOSFO/KlEdwklFU/eT8FC
-         ak2GFNwDqu2ZAzSQjQMdk4rQyw8ennfcH30+Tcp322lLts0f2xg26GwPuwfXWAMdHXhX
-         d0jDfLoiCah4nOacyHpnkPJE1t4cmp28DcoChl/6cwXMjVBtOVt6SUA31ppKtCCxN2px
-         fjqv7VfGoj5+qyN5FMNGc5vxjpp5CfGFU240OdIqwaMRz0G1/JJ5sEl51SO1fGF8uv3a
-         UeRg==
-X-Gm-Message-State: AOAM531SgbGOGEPQP0BjT2HIjnsi4B5lbyz8rrfesW4LYesQv/FrcH52
-        CPqQUYLk/NMaGF7toE8qnp8a0eOgvvj2XSMhhuZ+7Oj194U=
-X-Google-Smtp-Source: ABdhPJwM9hwS1AgJvA40slcsFDwpE7SNM/xIuyPkPvM/CJR6G8yFUHcd6hq4OIxSGVDfYB27xVDKaQZZNs/NIYcLqNE=
-X-Received: by 2002:a17:90a:bb13:: with SMTP id u19mr34170905pjr.42.1632087568748;
- Sun, 19 Sep 2021 14:39:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Eqbc2n2lVh3vlNMzeEoisD9x/hd158VtPeonxIHMBnE=;
+        b=rFwU4S8jpjz8rc9iVLKPA4LxDsn8/QWjTtxyciUmmaWoAtGSEWn/45B4q4MhGwS3rR
+         QtFrNo9DEWdLaXMLhr8PLN8a4eU0q2F+WG8/b1iQ2MIW8wgJmXRBx/9mc85cIVyAE4VS
+         O03dR5WDqPcEUcR+1siMLy8C7cyDjotLxG/USEkPMoiK5VtEtkiJzTiLs6MgBfcN7lWS
+         4ED614VS+8551Li4g+egtRW2dPHlat8Hpo+6Rxe1H5yY+QSD9/tlfqB8HaicdycGQKJZ
+         n4YFv8hOVZZTaTDAueItcP1ARcVpJCBBxsCClag6VW54FjOtGVJGRwQPFLFn23X/SydE
+         ECXg==
+X-Gm-Message-State: AOAM530BpdEvBxzfIM4ZG8xQrGOK3tFACqH55Sgyq67DCNJDDKMwwLUb
+        lK+RFtgZuHn4uEIHUQEMqHzdgrzJti4TGw==
+X-Google-Smtp-Source: ABdhPJyZ0qe3cxcvVPBhvqnHrmMEvaYWEtHhaVo5O2JPJ/SwExPRhCZX5rDg1l4mOstTcDjpTxKD+A==
+X-Received: by 2002:a17:906:f15:: with SMTP id z21mr25409935eji.177.1632095240813;
+        Sun, 19 Sep 2021 16:47:20 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bj21sm5382347ejb.42.2021.09.19.16.47.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Sep 2021 16:47:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Trimming 'deadheads' (TREESAME 2nd parent) from revision walks?
+Date:   Mon, 20 Sep 2021 01:44:23 +0200
+References: <01fe28d8-2887-bc42-c91b-c3237b5186a7@iee.email>
+ <YUeImAqA0SZAdA2R@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YUeImAqA0SZAdA2R@coredump.intra.peff.net>
+Message-ID: <87k0jcb01k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Ariel Man <arielman22@gmail.com>
-Date:   Mon, 20 Sep 2021 00:39:18 +0300
-Message-ID: <CANgfOPtz9JqCs-7z1DJnOqxnsGiQS6BBPD6tKTWnTpC0K3qZ9Q@mail.gmail.com>
-Subject: =?UTF-8?Q?Question_about_git_merge_=2Ds_ort_command=E2=80=8F=E2=80=8F?=
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-following the below thread, led me to do some tests:
-https://stackoverflow.com/a/69114710/11705021
 
-One of the test can be seen here, in the last example in my question:
-https://stackoverflow.com/questions/69150777/git-mv-doesnt-work-as-expected-wrong-files-location
+On Sun, Sep 19 2021, Jeff King wrote:
 
-I wanted to get confirmation for my case:
-Does `git merge -s ort` command, doesn't know to detect new folder
-location when merging it? It did worked for folders and files
-renaming, and new files under existing folders (as describe here:
-https://stackoverflow.com/a/52227201/6309)
+> On Sat, Sep 18, 2021 at 03:18:47PM +0100, Philip Oakley wrote:
+>
+>> Is there a method within `git rev-list` to trim side branch merges where
+>> the merge's tree is identical to the first parent's commit-tree?
+>> [...]
+>> From my reading of the `rev-list` manual this is similar to the <paths>
+>> TREESAME capability, but without specifying any paths (maybe just `.` ?).
+>
+> Yes, I'd just do "git log ." for this. I don't think there's another way
+> to trigger simplification. In try_to_simplify_commit(), we bail early
+> unless revs->prune is set, and that is set only by the presence of
+> pathspecs or by --simplify-by-decoration.
+>
+>> * Is there a proper term for the treesame condition of the commit-tree
+>> (as recorded in the commit object)?
+>
+> In a one-parent commit, I'd just call it an empty commit. For a merge,
+> it is really I'd probably call it an "ours" merge, since one obvious way
+> to get there is with "git merge -s ours" (of course you can also just
+> resolve all conflicts in favor of one parent). I don't know of another
+> name (besides treesame, of course, but that generally implies a
+> particular scope of interest given by a pathspec).
 
-Ariel
+Isn't it a "theirs" merge, not "ours"? Per the description Philip has:
+
+    In the Git-for Windows repository, the previous releases are
+    'deadheaded' by merging with the upstream git, and simply taking the
+    upstream's tree unconditionally[...]
+
+I.e. if you're taking your tree unconditionally it's -s ours, but -s
+theirs for theirs. Except of course for the small matter of us not
+having a "-s theirs" yet.
+
+I had a WIP patch a while ago for a "-s theirs -X N", for what sounds
+like a similar use-case:
+https://lore.kernel.org/git/87sh7sdtc1.fsf@evledraar.gmail.com/
