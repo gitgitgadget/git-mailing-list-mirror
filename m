@@ -2,87 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33121C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 02:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6205C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 05:41:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1165660F25
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 02:25:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FB1E61019
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 05:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234074AbhITCZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Sep 2021 22:25:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62159 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234052AbhITCZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Sep 2021 22:25:08 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E86E167704;
-        Sun, 19 Sep 2021 22:23:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F/SS/zxomCCAkCpcwLsTm2Nc7dGsUKgXTO08JR
-        hYrQc=; b=BsajaAqMCJUMadyixOPMNF1ofg2cSIpyGZ9PLJjtL6XC0rXqyJzIKC
-        MdComYyXkdp2VJR74Xqv7OEk8mlRhy0iH/lWLiZ5wUFwLv9afyRBPD2uwoW451lU
-        NwGE5gmYOmVvL9CWmW18TON8BZye3CNgW1eAavNIJ7o++y6Ct38+s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 588E6167703;
-        Sun, 19 Sep 2021 22:23:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD8DD167702;
-        Sun, 19 Sep 2021 22:23:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Aaron Gray <aaronngray.lists@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git diff --git-ignore
-References: <CANkmNDf5KVn7Afj9xtvMGC0Ua7G6O3EOjBRtAfBOKOnaYgqVXA@mail.gmail.com>
-Date:   Sun, 19 Sep 2021 19:23:38 -0700
-In-Reply-To: <CANkmNDf5KVn7Afj9xtvMGC0Ua7G6O3EOjBRtAfBOKOnaYgqVXA@mail.gmail.com>
-        (Aaron Gray's message of "Mon, 20 Sep 2021 00:50:56 +0100")
-Message-ID: <xmqq4kagdlxx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232673AbhITFmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 01:42:18 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:41624 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231250AbhITFmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 01:42:17 -0400
+Received: by mail-ed1-f49.google.com with SMTP id co2so10015432edb.8
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 22:40:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xWaeD3VN5QNN+XLYNnglLnnfHQ5Jq1zw859t0HIog0s=;
+        b=UEz1vBuFKlMsMBn9CRHRn4KcgvnK31BTbqPWjax7xE7yNkiNK3rATM6or86W7CdXOY
+         sUivX3rpEQtbHqJaaHPeNSVXBrvsYYVg47LV4Or4wBpGrDzy/DTHZ5m037y3JfEUqZjU
+         UhwEwvP3TkUsSUbBIuT42OIfUNA7yCXocUX4ha0bfNDBs2dCgn8xn80I9cHCH7J2T8T8
+         fREpfi8sm9OaUHkFcQA52eItr4qb4uLeC/DYg6CLqj2j7Hp9Z12+iiZjqrBV0qHN+/ZZ
+         Ievi9tlRDKNIUoPnwG3zExZUQjZC5xi5jbYl51bagwhtAXMX11CKXBGWJd6BnfjzLDvB
+         WjcA==
+X-Gm-Message-State: AOAM533tGXlITaY1sgFoduga4jwVcEFW6/nolQdHwiUwrTk7exSMYQgH
+        YwagoWlJepJgK3/OFA9PLZcmOGshrSbJVn/rfvQ=
+X-Google-Smtp-Source: ABdhPJygNqv4Ux0oEQVBZbMTEHxQDol8d71bwfNXXspqPpKdAoClHHyZTYHU8Bm32RG433op2BdCqDtYt5RAGU/2Y+E=
+X-Received: by 2002:a50:9d09:: with SMTP id v9mr17061948ede.370.1632116449370;
+ Sun, 19 Sep 2021 22:40:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C47E6C1C-19B9-11EC-815D-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <20210919203832.91207-1-davvid@gmail.com> <20210919203832.91207-3-davvid@gmail.com>
+In-Reply-To: <20210919203832.91207-3-davvid@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 20 Sep 2021 01:40:38 -0400
+Message-ID: <CAPig+cTBfP5_czsPiALcF3tODJmNfXvNkTjqVFRbHCS535d-ng@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] difftool: use a strbuf to create a tmpdir path
+ without repeated slashes
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Alan Blotz <work@blotz.org>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aaron Gray <aaronngray.lists@gmail.com> writes:
+On Sun, Sep 19, 2021 at 4:38 PM David Aguilar <davvid@gmail.com> wrote:
+> difftool: use a strbuf to create a tmpdir path without repeated slashes
+>
+> The paths generated by difftool are passed to user-facing diff tools.
+> Using paths with repeated slashes in them is a cosmetic blemish that
+> is exposed to users and can be avoided.
+>
+> Use a strbuf to create the buffer used for the dir-diff tmpdir.
+> Strip trailing slashes from the value read from TMPDIR to avoid
+> repeated slashes in the generated paths.
 
-> Is it possible to add a --git-ignore flag to git diff so I only see
-> the diffs for what I really want to be looking at, and not what I
-> don't ;)
+Mentioning strbuf in the commit message misleads the reviewer into
+thinking that it somehow merits extra attention and close scrutiny. In
+fact, the opposite is true: strbuf is just an implementation detail;
+there is no reason to mention it in the commit message at all. The
+commit message's emphasis on strbuf distracts the reader from the real
+purpose of this change, which is to fix a cosmetic issue (and maybe a
+real issue on Windows in which double-slash can have significance?).
+So, perhaps:
 
-How does your --git-ignore option exactly guess differences for
-which paths to show and which paths to exclude?  How do you tell the
-"git diff --git-ignore" command which paths are what you really want
-to be looking at?
+    difftool: fold out repeated slashes from TMPDIR
 
-If it is by magic, good luck writing such a feature ;-)
+    Paths generated by difftool are passed to user-facing diff tools.
+    Supplying paths with repeated slashes is a cosmetic blemish that
+    is exposed to users and can be avoided. Therefore, strip trailing
+    slashes from the value of TMPDIR to avoid repeated slashes in the
+    generated paths.
 
-If it is like "I only am interested in changes in src/ directory and
-the top-level Makefile", then perhaps using pathspec is what you
-want.  E.g.
+> Add a unit test to ensure that repeated slashes are not present.
 
-    $ git diff -- src/ Makefile
-    $ git diff --cached -- src/ Makefile
-    $ git diff master topic -- src/ Makefile
-    $ git diff master...topic -- src/ Makefile
+Unless there is something unusual or tricky about the new test that
+requires extra explanation in the commit message, there is little
+reason to mention that you're adding a new test, so I'd probably drop
+this line, as well. After all, the patch easily speaks for itself, and
+a reviewer can see at a glance that you're adding a new test.
 
-Modern Git even allows you to include negative elements to the
-pathspec, e.g.
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> @@ -252,11 +252,10 @@ static void changed_files(struct hashmap *result, const char *index_path,
+> -static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
+> +static NORETURN void exit_cleanup(struct strbuf *buf, int exit_code)
+>  {
+> -       struct strbuf buf = STRBUF_INIT;
+> -       strbuf_addstr(&buf, tmpdir);
+> -       remove_dir_recursively(&buf, 0);
+> +       remove_dir_recursively(buf, 0);
+> +       strbuf_release(buf);
+>         if (exit_code)
+>                 warning(_("failed: %d"), exit_code);
+>         exit(exit_code);
 
-    $ git diff src/ ':(exclude)*.h'
+It feels wrong to be releasing the caller-supplied strbuf; this change
+makes it harder to reason about ownership. Normally, the entity which
+allocates a resource should be the one to release it. More on this
+below...
 
-would tell us "show only changes in the src/ directory, but do not
-bother with changes to the dot-h files".
+> @@ -333,11 +332,11 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+> +       struct strbuf tmpdir = STRBUF_INIT;
+> +       strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
+> +       strbuf_trim_trailing_dir_sep(&tmpdir);
+> +       strbuf_addstr(&tmpdir, "/git-difftool.XXXXXX");
+> +       if (!mkdtemp(tmpdir.buf))
+> +               return error("could not create '%s'", tmpdir.buf);
 
-HTH
+Leaking the `tmpdir` strbuf here. You'd want:
+
+    if (!mkdtemp(tmpdir.buf)) {
+        error("could not create '%s'", tmpdir.buf);
+        strbuf_release(&tmpdir);
+        return -1;
+    }
+
+> @@ -644,11 +645,11 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>         if (err) {
+> -               warning(_("temporary files exist in '%s'."), tmpdir);
+> +               warning(_("temporary files exist in '%s'."), tmpdir.buf);
+>                 warning(_("you may want to cleanup or recover these."));
+>                 exit(1);
+>         } else
+> -               exit_cleanup(tmpdir, rc);
+> +               exit_cleanup(&tmpdir, rc);
+
+... [continued from above]
+
+Both branches in this conditional terminate the program either
+directly by `exit(1)` or indirectly through `exit_cleanup(...)`. Yet
+only the `exit_cleanup(...)` branch releases the strbuf (because you
+updated `exit_cleanup()` above to do so); the other branch just leaks
+the strbuf. This is inconsistent.
+
+Since we're exiting anyhow, and since `exit_cleanup()` was already
+leaking its own strbuf even before this patch, and since it feels
+somewhat dirty to have `exit_cleanup()` responsible for releasing a
+resource it didn't allocate, it may make sense just to maintain the
+status-quo and just leak the strbuf before exiting. That is, don't
+make any changes to `exit_cleanup()`, and let both of these branches
+leak the strbuf.
+
+On the other hand, if you really do want to release the strbuf, then
+it would be more consistent for both branches in this conditional to
+do so, not just one. That is, add a strbuf_release() to the `then`
+arm.
+
+>  finish:
+>         if (fp)
+> @@ -660,6 +661,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>         strbuf_release(&rdir);
+>         strbuf_release(&wtdir);
+>         strbuf_release(&buf);
+> +       strbuf_release(&tmpdir);
+
+Correctly releasing the strbuf. Good.
