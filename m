@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB8BC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3A38C433FE
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:58:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 948CA6112D
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D90CC61050
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231714AbhIUC7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40810 "EHLO
+        id S231932AbhIUC7d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:59:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349407AbhIUC0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 22:26:31 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5069CC1E3267
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:04:30 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id w29so32591983wra.8
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:04:30 -0700 (PDT)
+        with ESMTP id S1349420AbhIUC0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 22:26:32 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE955C1E3270
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:04:33 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id d6so32432727wrc.11
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FtinolxSUiJS6loBlInPlbZmLZzLVWrH8sAer83veO4=;
-        b=gjX61m3Mx07p/0utDW3MQsu9xANGSB8zFKM/e0TTZ2gW5VzH9DNn+6iezhtDwcXwPp
-         Ncoiy5QqUUX2+0YYPEaLnoh9ym1Wmbowntzq/n0jlB5Cp3OU3jIvak3nPNpLYwV3VRS4
-         EBWMQ3HFhICy//7k2GUdvqpKSiHdieBgQttHzDXmCEmjn7rlCnNKigI/+JEgtDCySNIk
-         2SbV7uZ50UbJJeh6GNUAYaYGsFo5G+wZ8i/F3cBpFOrq4F8lIgceJ2Isdlewxcowkp1w
-         mrZjLnq0rA9qEJunluVkSleG+k0QEf0IpqxEB7CPjkldubZt+it38Q/a4Rkt44Fi6fKE
-         hmMA==
+        bh=rNBSjKdlf9tK7aWr3iQt2IEQ+I7orn/LbCkM+36hWyk=;
+        b=j3G4LiU81ulgp/b8Fp9wRxkvTLRYcl6pOvhXzx2q6EYmVoQN5pp4gwkxPeX5vky5h0
+         UvpZTmTUUx65JTdPYYQyG6Y0+PFOpnYAv5sPZ2T/HOcNjmmad7BpLxd5xVhmV02fhHcp
+         3LCaz1o84pcLqMKOtSoUVRmWo9q5JHWExUxqR3gG9jVKSvf7JmWVN0ow6FAsw+Am7kxO
+         cnuOrsk0cUByvdi8LKh9yQenRuXZKY13m2Zl1P3Gk4V0cq8hjVWCWhxa77MYIwoZ+qTN
+         lT/Ym2pLkEHAkUfmauH8HGqZCvwESNl+uVklWfdlSO80bAedz1JP6YkZ/WD0WddmdrIY
+         0gNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FtinolxSUiJS6loBlInPlbZmLZzLVWrH8sAer83veO4=;
-        b=yK6YyRkyeafun1CGZsuMi07tjefzUz3dZvCyuby6w2iNUxpDo4dV1evcsB690OTpjf
-         wsHaVl8zOiwK6gifx1mJjrEyl8xYNjGiY+JQgKlS5ELP2PVgz3InZJKgI1NM978013kw
-         mNe6hMlLv5h4EvPHXK0nq5jfng1BXL8SBYnEZsCC6p+ley2BMPKkwB6icaOCruRqMhwE
-         aghQJGc3fTMv12MfoHqayY+H3SuUnjx8XyNEawdru2NP5LOfju80nT3NHSa8AWjxwVTo
-         53VGvOjcx+H84zA0+zxVRR7iO9LP13v9Nh3/KN1480NbBJJMVpdnUuN25fNA5rcpwosE
-         Y10w==
-X-Gm-Message-State: AOAM530xZOlMHT2/ozX7bi5SWAYx/tukFZ9iRaNZDpZeLcQ/6kJBYad/
-        PoLg0mB5sWjjZPSPcnK137h5HQa54k5jvg==
-X-Google-Smtp-Source: ABdhPJzkEIJiJY1+SWD6PWlsK4NbLm093el3w2tk4LTHkm7/OnMydoTx3nQcdzytV+ziflANkyuHSw==
-X-Received: by 2002:adf:f1c4:: with SMTP id z4mr30456413wro.418.1632164668642;
-        Mon, 20 Sep 2021 12:04:28 -0700 (PDT)
+        bh=rNBSjKdlf9tK7aWr3iQt2IEQ+I7orn/LbCkM+36hWyk=;
+        b=WTZg3nevOZq8p+Vu4Ymat3KVNGkNrcuDSQOnBghnU41LHgww4+JWEUmoX06TKyItyw
+         5EkaRhhuZHPj3WiCthKak5ImX4ZsOwGFLDeUs/UDQttTVmVJjjbhZI2isVmWdW0g9PFt
+         iTD9Lv3cddie1C6DrKKvcfwseUGwbzjTVgzSECFYV2lR0X/6qFMUlp0X878Tkyko8ca9
+         84UGoBLfSVx5nibFApdVd+7wM/Y0YOO9DkhHKX7uoODWGliWxh42UR4RXWjusI4cSwbC
+         FIQiuLtz2bC/0ITXxJBwdUL6XOToHI9b+667mDsfg90MQjO0jtOCcvvr3Mgfn+NXqKko
+         FG3Q==
+X-Gm-Message-State: AOAM530jQi9eDb31pbWVPg5Q6V0o9weZwjtlcx2n7GLqXwK1bvatCx//
+        cjo3KfiP9OMyXTusekvvceeiw91ugvhUVA==
+X-Google-Smtp-Source: ABdhPJw2rHUmjS7Tke6CPORNq+gGNznZLxA6PrcX8o3a0o4/uVk6q50pHnuDKS8R0ZS1WX+/JOyr0g==
+X-Received: by 2002:a5d:5351:: with SMTP id t17mr30979220wrv.405.1632164672090;
+        Mon, 20 Sep 2021 12:04:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o19sm8157772wrg.60.2021.09.20.12.04.27
+        by smtp.gmail.com with ESMTPSA id o19sm8157772wrg.60.2021.09.20.12.04.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 12:04:28 -0700 (PDT)
+        Mon, 20 Sep 2021 12:04:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 03/17] fsck tests: test current hash/type mismatch behavior
-Date:   Mon, 20 Sep 2021 21:04:07 +0200
-Message-Id: <patch-v7-03.17-1e40a4235e9-20210920T190305Z-avarab@gmail.com>
+Subject: [PATCH v7 07/17] cat-file tests: add corrupt loose object test
+Date:   Mon, 20 Sep 2021 21:04:11 +0200
+Message-Id: <patch-v7-07.17-20bd81c1af0-20210920T190305Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1098.g29a6526ae47
 In-Reply-To: <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com>
 References: <cover-v6-00.22-00000000000-20210907T104558Z-avarab@gmail.com> <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com>
@@ -78,51 +78,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If fsck we move an object around between .git/objects/?? directories
-to simulate a hash mismatch "git fsck" will currently hard die() in
-object-file.c. This behavior will be fixed in subsequent commits, but
-let's test for it as-is for now.
+Fix a blindspot in the tests for "cat-file" (and by proxy, the guts of
+object-file.c) by testing that when we can't decode a loose object
+with zlib we'll emit an error from zlib.c.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1450-fsck.sh | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ t/t1006-cat-file.sh | 52 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index f8edd15abf8..175ed304637 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -69,6 +69,30 @@ test_expect_success 'object with hash mismatch' '
- 	)
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index af59613250b..8bbc34efb0c 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -426,6 +426,58 @@ test_expect_success "Size of large broken object is correct when type is large"
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'object with hash and type mismatch' '
-+	git init --bare hash-type-mismatch &&
++test_expect_success 'cat-file -t and -s on corrupt loose object' '
++	git init --bare corrupt-loose.git &&
 +	(
-+		cd hash-type-mismatch &&
++		cd corrupt-loose.git &&
 +
-+		oid=$(echo blob | git hash-object -w --stdin -t garbage --literally) &&
-+		old=$(test_oid_to_path "$oid") &&
-+		new=$(dirname $old)/$(test_oid ff_2) &&
-+		oid="$(dirname $new)$(basename $new)" &&
++		# Setup and create the empty blob and its path
++		empty_path=$(git rev-parse --git-path objects/$(test_oid_to_path "$EMPTY_BLOB")) &&
++		git hash-object -w --stdin </dev/null &&
 +
-+		mv objects/$old objects/$new &&
-+		git update-index --add --cacheinfo 100644 $oid foo &&
-+		tree=$(git write-tree) &&
-+		cmt=$(echo bogus | git commit-tree $tree) &&
-+		git update-ref refs/heads/bogus $cmt &&
++		# Create another blob and its path
++		echo other >other.blob &&
++		other_blob=$(git hash-object -w --stdin <other.blob) &&
++		other_path=$(git rev-parse --git-path objects/$(test_oid_to_path "$other_blob")) &&
 +
-+		cat >expect <<-\EOF &&
-+		fatal: invalid object type
++		# Before the swap the size is 0
++		cat >out.expect <<-EOF &&
++		0
 +		EOF
-+		test_must_fail git fsck 2>actual &&
-+		test_cmp expect actual
++		git cat-file -s "$EMPTY_BLOB" >out.actual 2>err.actual &&
++		test_must_be_empty err.actual &&
++		test_cmp out.expect out.actual &&
++
++		# Swap the two to corrupt the repository
++		mv -f "$other_path" "$empty_path" &&
++		test_must_fail git fsck 2>err.fsck &&
++		grep "hash mismatch" err.fsck &&
++
++		# confirm that cat-file is reading the new swapped-in
++		# blob...
++		cat >out.expect <<-EOF &&
++		blob
++		EOF
++		git cat-file -t "$EMPTY_BLOB" >out.actual 2>err.actual &&
++		test_must_be_empty err.actual &&
++		test_cmp out.expect out.actual &&
++
++		# ... since it has a different size now.
++		cat >out.expect <<-EOF &&
++		6
++		EOF
++		git cat-file -s "$EMPTY_BLOB" >out.actual 2>err.actual &&
++		test_must_be_empty err.actual &&
++		test_cmp out.expect out.actual &&
++
++		# So far "cat-file" has been happy to spew the found
++		# content out as-is. Try to make it zlib-invalid.
++		mv -f other.blob "$empty_path" &&
++		test_must_fail git fsck 2>err.fsck &&
++		grep "^error: inflate: data stream error (" err.fsck
 +	)
 +'
 +
- test_expect_success 'branch pointing to non-commit' '
- 	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
- 	test_when_finished "git update-ref -d refs/heads/invalid" &&
+ # Tests for git cat-file --follow-symlinks
+ test_expect_success 'prep for symlink tests' '
+ 	echo_without_newline "$hello_content" >morx &&
 -- 
 2.33.0.1098.g29a6526ae47
 
