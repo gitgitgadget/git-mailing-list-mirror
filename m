@@ -2,154 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C803C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43C4AC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 145786115B
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:29:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28F5660F38
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236032AbhITQbQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 12:31:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
+        id S238115AbhITQnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 12:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235528AbhITQbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 12:31:15 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FFAC061760
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:29:48 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id p2so25544684oif.1
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:29:48 -0700 (PDT)
+        with ESMTP id S229561AbhITQno (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 12:43:44 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2785BC061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:42:17 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id m11so22990332ioo.6
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sXzDVETUljdXu4RCvMtU3A/XOU+1lswsXo8mRjR2/hs=;
-        b=WHGNe+pM0/PBDS6SX1ANA9Pum8iP53yNIXwoV6RBFJYwhDt9Ze1spCcrNpwtRVHB8a
-         QBsIQnwFbUle+uai8xiopBS9+HqNt3lS608AYYiCcnep/Rtx0EbyDEj6h+vRBSl1aKae
-         dT+E1HMLwCmzeuMY8lkZIMeaYV44soyv8L8jNLYzCoRHUxdBeB7SH2Y5YcTYED49bb2m
-         ExOCEDw3xWfQy/nhA1MC24skkjdlJbvZ/+J6W9KGVDe551j4/o33YOqFgAL6xPlgZf1I
-         3s0fuHC4hLlLrP6g/UhLgg316MlsNIWaTsn0+3TEx+xU11vlPWDFALw3kaaDzOS1rJMa
-         vrng==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b8dNjunK0BbUYN4IDfnBKjydoUSr2T3LheWaNxXWgk0=;
+        b=DFmGmDgA/+vIUEjK2F97VEKVjQ+nCo1DPXUtRddQLDXRJQLlrFgzDHID+ZAQ0blNds
+         jevvPMRjd3P719+8o27fgUDkCDN53h/nvX+tFLKW7oZOFvMuF2NUOtrPGWe8ds5sTC9S
+         W6Ymqn6sfkA1dlJagsNWlUEL+e5YRZ+eP7YB18BZv2spWnAlcF89msZ2s58ESOu+2KRA
+         LrwHGDVSAMZKhv2MdSTdIl8075Jq+RseBZE+96Az7qcA2AdBgKUB2H0Y1uYuRGxnEbr/
+         rSQFsxxoPnXAMpwTfvpxMlQV/pjr1F/IjIGqca5WQ0EeOZzIEYvybzWuSwqUlxdIiaEf
+         EWsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sXzDVETUljdXu4RCvMtU3A/XOU+1lswsXo8mRjR2/hs=;
-        b=o6CafpaH6+//9kHcoEPJPL4/pMXTBqNXsx1N8FSVec47YiuV3gR6wx9JX7L1DKQp2u
-         43qyJL0lR9h7MDPHDDCmPvB/3YGg13EBWkHxISXT1k0O0qDmvOm+qZeSmHZLUovgDb2Q
-         qw33CH1++Kjcj27y4hvuepnHl2prG3HPZWlZofM1+qrNvprlP1bkX94iW5AYsZ+pmAsg
-         j7PFlzhcoFkYlpj+JWBjiHxgippEkIjyjjyQ/MEOQn7n/JbEOZaSJpXW/ftHCY6s/ELO
-         Ugs1yvcyiKo6eCk4xrQ/CYxslEMQ0pN+YaMdDN5pVdsjO3DAsAKmF/WEyzdDBPsIRfI0
-         2J9A==
-X-Gm-Message-State: AOAM532J2bWQfwgL5Bes+5UpD9FH4Me5V1rTPzbdoA/5WZM26tcwpYjK
-        aMj0Z36KL3xnRodSDh4tqtiE0zDRF91GfF9Xad4LfmgRWfq/YQ==
-X-Google-Smtp-Source: ABdhPJzLMK9kAUFvMVvpF+6CsTTN1I4bDEdI18dQeEIfmy8nFFGc5fL2ai2pLXKoBwNVxGTpr7wuuFCf970AQQTurTE=
-X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr23727167oib.39.1632155388069;
- Mon, 20 Sep 2021 09:29:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b8dNjunK0BbUYN4IDfnBKjydoUSr2T3LheWaNxXWgk0=;
+        b=wRAZhvizZaNarM5S2JTBDar1ajTsfTTEln7bVv+6ElgdueopBf8Ieo7k9XM+jzbliR
+         JkDeoiK7EOCfLVxwmnNev4AZq9F28KbxnL/c62UE4H1jj4LfX4lKWLc1ABPzTae1tmso
+         HAzV3C0kMI/RnUIrYcymT5e/BkDHXUcgOkOwpvZmA4q4joIc+tvNa9BRJFRKUOZROwPA
+         esuK9xkG7tgWSd7TBjEAbczS5tQOt/sD5JwUdYScSWqGcCAFYuwr5Mc1+jcgt5rcx2CN
+         wNZsjiNqnJzYg17c1RX4HXUqD3hl5C8KchRwAJ8CzLChGdqqYDJ9539/IjteGaE2VpYe
+         0jbg==
+X-Gm-Message-State: AOAM531R9erWpFfqQitWg3xpQQ8732nEz3sXAY1wrhxMAR6dYu89PcJS
+        TyD0kXYLntUR0419aQzNZjp6fA==
+X-Google-Smtp-Source: ABdhPJxNzj59mtB5j51QlH1J4rl6DYDVzfO77Icmt90FiY8cCmXSjtkpYCe+8VEx3/TU+06ClG4wEw==
+X-Received: by 2002:a6b:7104:: with SMTP id q4mr11190023iog.29.1632156136540;
+        Mon, 20 Sep 2021 09:42:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id p14sm9365427ilc.78.2021.09.20.09.42.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 09:42:16 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 12:42:15 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Calbabreaker <calbabreaker@gmail.com>, git@vger.kernel.org
+Subject: Re: Memory leak with sparse-checkout
+Message-ID: <YUi55/3L9nizTVyA@nand.local>
+References: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
+ <YUiuWSXO1P3JwerH@nand.local>
+ <8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com>
 MIME-Version: 1.0
-References: <pull.1036.git.1632006923.gitgitgadget@gmail.com>
- <6ea23d165cf1f9433831cb4a01abf6f483a8bc29.1632006924.git.gitgitgadget@gmail.com>
- <05be2442-d4e7-6007-a3ed-5f49f1b3d806@iee.email> <f5b88c2f-b265-9342-4227-886049ad7bce@iee.email>
-In-Reply-To: <f5b88c2f-b265-9342-4227-886049ad7bce@iee.email>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Sep 2021 09:29:36 -0700
-Message-ID: <CABPp-BEVDs4rRGV3WzeK929CwhefhwwyodSs6=5iP0-dt3cUKg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] Documentation: call out commands that nuke untracked files/directories
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 19, 2021 at 6:36 AM Philip Oakley <philipoakley@iee.email> wrote:
+On Mon, Sep 20, 2021 at 12:29:36PM -0400, Derrick Stolee wrote:
+> > So I think the problem really is that we need to drop existing patterns
+> > when re-initializing the sparse-checkout in cone mode. We could try to
+> > recognize that existing patterns may already constitute a cone (and/or
+> > create a cone that covers the existing patterns).
+> >
+> > But I think the easiest thing (if a little unfriendly) would be to just
+> > drop them and start afresh when re-initializing the sparse-checkout in
+> > cone mode.
 >
-> On 19/09/2021 11:52, Philip Oakley wrote:
-> > truly minor nit.
-> > On 19/09/2021 00:15, Elijah Newren via GitGitGadget wrote:
-> >> From: Elijah Newren <newren@gmail.com>
-> >>
-> >> Some commands have traditionally also removed untracked files (or
-> >> directories) that were in the way of a tracked file we needed.  Document
-> >> these cases.
-> >>
-> >> Signed-off-by: Elijah Newren <newren@gmail.com>
-> >> ---
-> >>  Documentation/git-checkout.txt  | 5 +++--
-> >>  Documentation/git-read-tree.txt | 5 +++--
-> >>  Documentation/git-reset.txt     | 3 ++-
-> >>  3 files changed, 8 insertions(+), 5 deletions(-)
-> >>
-> >> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> >> index b1a6fe44997..d473c9bf387 100644
-> >> --- a/Documentation/git-checkout.txt
-> >> +++ b/Documentation/git-checkout.txt
-> >> @@ -118,8 +118,9 @@ OPTIONS
-> >>  -f::
-> >>  --force::
-> >>      When switching branches, proceed even if the index or the
-> >> -    working tree differs from `HEAD`.  This is used to throw away
-> >> -    local changes.
-> >> +    working tree differs from `HEAD`, and even if there are untracked
-> >> +    files in the way.  This is used to throw away local changes and
-> > double space after full stop?
-
-Note that the original also had a double space after full stop
-(looking at the previous sentence).
-
-> >> +    any untracked files or directories that are in the way.
-> >>  +
-> >>  When checking out paths from the index, do not fail upon unmerged
-> >>  entries; instead, unmerged entries are ignored.
-> >> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-> >> index 5fa8bab64c2..4731ec3283f 100644
-> >> --- a/Documentation/git-read-tree.txt
-> >> +++ b/Documentation/git-read-tree.txt
-> >> @@ -39,8 +39,9 @@ OPTIONS
-> >>
-> >>  --reset::
-> >>      Same as -m, except that unmerged entries are discarded instead
-> >> -    of failing. When used with `-u`, updates leading to loss of
-> >> -    working tree changes will not abort the operation.
-> >> +    of failing.  When used with `-u`, updates leading to loss of
-> > Is the single space to double space change desired?
-> > I had the impression that the project had decided on single spaces, but
-> > I can't see anything in SubmittingPatches or CodingGuidelines. I don't
-> > think there are DocumentationGuidelines.
-
-Double space is better as per Junio's declaration here:
-https://lore.kernel.org/git/xmqqftchkext.fsf@gitster.c.googlers.com/
-
-However, it's so minor that I wouldn't normally bother to change it
-specifically.  In this case, I originally was tweaking the sentence
-before as well, and when modifying both sentences I just naturally put
-two spaces after the full stop between them.  But then I re-read and
-decided to reword and ended up restoring the original first sentence
-and didn't even notice that resulted in a change of spacing at the end
-of the sentence.
-
-> I may have been mistaken about any project decision. I had a look around
-> the archives and only came up with a 2008 post [1] by Junio that, at the
-> time, was looking for two spaces after the full stop.
+> This isn't sufficient, as a user can modify their .git/info/sparse-checkout
+> file whenever they want, so we should fix this bug regardless. We could add
+> a "Your existing patterns are not in cone mode" error.
 >
-> It's not clear if we consider the man pages to be 'typeset' such that a
-> single space would be the norm, or mono-spaced 'typewriter' style (two
-> spaces). There's much commentary in the Wikipedia article [2].
->
-> So still minor.
+> It might still be a good idea to let "git sparse-checkout init --cone"
+> overwrite the sparse-checkout file _if the file is not already in cone
+> mode_.
 
-Yes, the double space is "more correct" in the sources as per Junio's
-declaration in the link I provided above, but I agree it's pretty
-minor.
+I'm not sure how helpful such an error message might be to a user in
+this scenario without extra information. After seeing just "this isn't a
+cone", it's not clear what they should do other than drop their
+sparse-checkout configuration and start over.
 
-> [1] https://lore.kernel.org/git/7vfxtu3fku.fsf@gitster.siamese.dyndns.org/
-> [2] https://en.wikipedia.org/wiki/Sentence_spacing
+It would be nice to have an intermediate step between seeing realizing
+that the existing patterns don't form a cone and dropping them.
+
+Perhaps we could include an error message and say something like:
+
+    warning: your sparse-checkout patterns do not from a cone
+       hint: to reinitialize your sparse-checkout configuration
+       hint: try running:
+       hint:
+       hint:   git sparse-checkout init --cone --reinitialize
+
+Where `--reinitialize` means to drop existing patterns. I suppose it
+could be the default when transitioning from non-cone to cone mode, but
+that would defeat the purpose of the warning.
+
+We would probably want to perform this check both during initialization,
+and when adding patterns in cone mode. It may also be worthwhile to
+check the validity of the cone before running 'list' or 'reapply', too.
+
+Thanks,
+Taylor
