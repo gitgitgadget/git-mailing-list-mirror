@@ -7,100 +7,112 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02FEBC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12207C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:52:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C694E610A3
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:48:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9CDA61168
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240782AbhITOuK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 10:50:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56344 "EHLO
+        id S241004AbhITOyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 10:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240821AbhITOuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 10:50:09 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7064CC061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:48:41 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id q26-20020a4adc5a000000b002918a69c8eeso5924529oov.13
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:48:41 -0700 (PDT)
+        with ESMTP id S240848AbhITOyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 10:54:17 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1304C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:52:50 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id m21so43278692qkm.13
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=dOcRMPrZE95pl9I89SKIRFQPpVIeadDYmBvQ7qHfZ+8=;
-        b=RhbpfMtRZZ9svKLsj1axL4B64sj3cgHkzKZHl7DxEHJqq8VaGsPcH4xb8c5SZDdXWu
-         /nwjnmiwXsnD45PlvBOq3exBSCUtMSiY4ZGy/63ziJtBnQt2mQ5UE3HBFNbi/MiNXoUh
-         qze4wMxWxphCms2djt7hgFrpcDCkBr9VA0qfxunizU1W6BwzvizaGhw9fL1W3yAqKFof
-         ZKCxV0CI1v1uJj1BAOQBlSN3wYCUn7jqnTadSVMr11cSqt+uqqdwd5D3c8bliCaM6zOZ
-         j4FEviWdtCN2i55I2LBPc8M6lP+48LGwAum7aVgV2vS+8FRIgkSR/779uAQIq3PTARRP
-         hbZQ==
+        bh=+a/uzk1G7EjcePz7qxzORBHak2b1YQiDpuE8TEppCyw=;
+        b=jAOGynAI6h4Lz9JyYNJYf/BriEHsx8L4AUxANI81IXsgBL+R9oiw7PZBLI5PhXzHf0
+         eKavHONn6Jdva9I2VXudAnlaayIkHV2kdfltwUjAFdqsb8tIbHaDOdazG2MAPzKucPJh
+         kCTNDkZhAQS5qBN1P+DB7r9YJ2P/smwettY/zyOxKAruljxSam1KPdcduxFJUBKbz2nM
+         HCUfyrdKoaqeMMjw+q1FwOrBTMuFQa3S8yP/1Qy48ICHUC9r9uuaSl8/bur0bBoq2mSC
+         PxJBxnHkSE6qL6eL7Y4twZiGueVbaOqFmj1XeJ9tFOHdymaIoztHiBi1G+JNRN9xP3ao
+         LmYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dOcRMPrZE95pl9I89SKIRFQPpVIeadDYmBvQ7qHfZ+8=;
-        b=xaGnCG5mptsRWDGR4W+6pFotqlkUzBBbQZOHV1xoa+z1P+GiiKCrQQFsKn81TWU5hD
-         y9s5hAfeAra2xhii37UaXUjDYccDBXg5dXR5zZ9V4RZ56TJU7D7a+18L/mAgFIHCJmfU
-         2G9zhtodfBXX208MBu3f1Vxz1cbpwsPXaPV/J9MN+39CKjEeaADOxBkQ2c2ictoGW5yK
-         7IHbnjglUmqxqgwCw31tS9OQLOxcamFs9HijvWfOqU8zTwspz2tepPuh5InBQRtPSvgY
-         fVbT0THWCOsjaIdlo8gVHUXtwCQMZPOYG3DrwTUT5my8uDtGutBebrhqctU6wUvXh0jN
-         /p2g==
-X-Gm-Message-State: AOAM530DkjIAPGSUezNLOIJRMXY3n7Jop3ASXdypji6+y80iHenqprrN
-        5TFbLzqkLpFu1Y8zRPWoaiZUxPbeeFeod8MZcChYAQc8gMnCHg==
-X-Google-Smtp-Source: ABdhPJzLgWHdrptMUzbH24PzQPyDSOjqOO+lMMSN4wtj5A2mMrbjKEKRJD1RMp0rx4hj/NFAPVJoEYXzozOSJbkaJxo=
-X-Received: by 2002:a05:6820:555:: with SMTP id n21mr20225061ooj.56.1632149320648;
- Mon, 20 Sep 2021 07:48:40 -0700 (PDT)
+        bh=+a/uzk1G7EjcePz7qxzORBHak2b1YQiDpuE8TEppCyw=;
+        b=DH+tCWKyajDQjzbK+ZseliSnLWogE/7wlZru9IYTfDKnjR0jEr2fgBzE/+svexBnWT
+         9bXJk/92hmf3pN96Aym1LrlqLa/St7VZ5ZQu0A9HCY6zTgWnzcTTHq+2GR6Dja9qhzH4
+         GItr/Fu+giGSx/h0o5AMsv2CMG/Lt3o1a/bbqPAHIkecJgy223WDLQ11qLIfZXGAT48J
+         F5z9yqiu1WrAwnJiiI1HXoRYZFU1uHB1pzyq7qTDewby60NITSsg1MMz035SbS36Wf9G
+         4pme58np2QJtPzkUZnmxDa1FitHOavnYVADTTQJRIhbR+DLFYPNhsLmU+AjOceMauzuk
+         pqag==
+X-Gm-Message-State: AOAM530THzXEBUXsUxD9wq8ahitrHFp1KYBdaLEggC1bguB4CtddapwT
+        AttFsXhuLapqGGwCFcXlKMP0dZ+BL5vpmhxm7vY=
+X-Google-Smtp-Source: ABdhPJx+zDv+eg0rN1QXdU3P37X+BbQSnutKPLOpAYPRdYns94c+aW/zUJer5QBA8y0ZyUZxHqn9hP0D76EEe142ht4=
+X-Received: by 2002:a25:b5ce:: with SMTP id d14mr31519085ybg.415.1632149569812;
+ Mon, 20 Sep 2021 07:52:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1036.git.1632006923.gitgitgadget@gmail.com>
- <b634136a74b37a6f73bc3038f79031e040423883.1632006923.git.gitgitgadget@gmail.com>
- <871r5kd6dg.fsf@evledraar.gmail.com>
-In-Reply-To: <871r5kd6dg.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Sep 2021 07:48:28 -0700
-Message-ID: <CABPp-BEqiYKAqP1QvMB1rqqQjiP7Yn0tbhaHb7OdVfcpaE3hjw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] t2500: add various tests for nuking untracked files
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>
+References: <YTGLLQCvlnT17jo8@nand.local> <YUYPgF6tRQ5ERYWL@nand.local> <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com>
+In-Reply-To: <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 20 Sep 2021 16:52:38 +0200
+Message-ID: <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
+Subject: Re: Git in Outreachy?
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <ttaylorr@github.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 19, 2021 at 6:47 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Mon, Sep 20, 2021 at 9:45 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
-> On Sat, Sep 18 2021, Elijah Newren via GitGitGadget wrote:
+> Taylor Blau <me@ttaylorr.com> =E4=BA=8E2021=E5=B9=B49=E6=9C=8819=E6=97=A5=
+=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=8812:10=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > [+everybody from upthread to cc]
+> >
+> > On Thu, Sep 02, 2021 at 10:40:45PM -0400, Taylor Blau wrote:
+> > > Are we interested in participating in the December 2021 round of
+> > > Outreachy? September 3rd (tomorrow at 4pm UTC) is the initial communi=
+ty
+> > > application deadline.
+> >
+> > The project deadline of September 23rd is fast approaching, and we do
+> > not have any proposed projects or signed-up mentors.
+> >
+> > If you are interested in mentoring, the time to sign-up and propose a
+> > project is definitely ASAP :-). You can do so by clicking "Submit a
+> > project proposal" at:
+> >
+> >     https://www.outreachy.org/communities/cfp/git/
 >
-> > +     test_create_repo reset_$1 &&
->
-> s/test_create_repo/git init/ these days (also for the rest).
+> I haven't thought of any good projects for the time being,
+> Christian, any ideas?
 
-Ah, from your f0d4d398e2 ("test-lib: split up and deprecate
-test_create_repo()", 2021-05-10).  Interesting history; I'll
-switchover to git init.
+I already suggested the following project upthread:
 
-> > +             mkdir foo.t &&
-> > +             echo precious >foo.t/file &&
-> > +             cp foo.t/file expect &&
-> > +
-> > +             test_must_fail git reset --merge work 2>error &&
-> > +             test_cmp expect foo.t/file &&
-> > +             grep "Updating.*foo.t.*would lose untracked files" error
->
-> The test is ambiguous about whether we complain about foo.t/file, or
-> foo.t, if there was foo.t{file,file-two} would we complain just once or
-> twice?
->
-> I think it's just the directory, but probably worthwhile for the test to
-> make the distinction. If it's a "a/sub/dir/file" do we complain about
-> "a/" or "a/sub/dir/" ?
+> > About project ideas, maybe continuing Hariom Verma's GSoC 2020 "Unify
+> > ref-filter formats with other \-\-pretty formats" project could be and
+> > idea, though maybe it could interact too much with ZheNing Hu
+> > continuing his GSoC 2021 "Use ref-filter formats in `git cat-file`"
+> > project.
 
-Yeah, I'll switch it to grep "Updating .foo.t. would lose untracked files" =
-error
+and you replied:
 
-to make it clearer (where I'm using '.' instead of attempting to
-escape single quote characters appropriately).
+> If the project idea is related to Hariom or my GSoC project, I think I ca=
+n
+> provide a lot of help. :)  I can help them as a mentor.
+
+so I am ok to co-mentor this project with you.
+
+If you are still ok, I will submit it.
+
+I will also prepare soon a page with a few micro-projects. Of course
+more micro-project and regular project ideas are very welcome!
