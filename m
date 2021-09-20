@@ -2,117 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12207C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7BE5C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:03:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9CDA61168
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 14:52:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D0A861077
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241004AbhITOyT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 10:54:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57420 "EHLO
+        id S240962AbhITPEb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 11:04:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240848AbhITOyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 10:54:17 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1304C061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:52:50 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id m21so43278692qkm.13
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 07:52:50 -0700 (PDT)
+        with ESMTP id S235244AbhITPE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 11:04:28 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CFF3C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:03:01 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id p80so15936813iod.10
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+a/uzk1G7EjcePz7qxzORBHak2b1YQiDpuE8TEppCyw=;
-        b=jAOGynAI6h4Lz9JyYNJYf/BriEHsx8L4AUxANI81IXsgBL+R9oiw7PZBLI5PhXzHf0
-         eKavHONn6Jdva9I2VXudAnlaayIkHV2kdfltwUjAFdqsb8tIbHaDOdazG2MAPzKucPJh
-         kCTNDkZhAQS5qBN1P+DB7r9YJ2P/smwettY/zyOxKAruljxSam1KPdcduxFJUBKbz2nM
-         HCUfyrdKoaqeMMjw+q1FwOrBTMuFQa3S8yP/1Qy48ICHUC9r9uuaSl8/bur0bBoq2mSC
-         PxJBxnHkSE6qL6eL7Y4twZiGueVbaOqFmj1XeJ9tFOHdymaIoztHiBi1G+JNRN9xP3ao
-         LmYQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/jqutGxCbF2wCRJBmX26qNp4tC5x6+nO0HFdTMd9T9E=;
+        b=lg160SVDIeoxe0kTxEzvvS4AdJ4r3jDsfqM3CsbuhdNZGfYpZbPTc80dIdWTPgxKoN
+         CGrqyb76WzwRahVYX0RzSWLWZjtt3VQsingKZKszekGElFmCyg9J0FoEs7EEWMaBhmJw
+         FQbLosKBulBt5OUEcBAiTnZHM5Y64tLzCOKRDdFRg09ME0Rr1/1ZZK+ktc6HrZVVO0Sa
+         3Jb/EjCYbpdzkHi/HFN9TzkbiD+0C8N36ffMXm0dkbBlSjWTpjRgVRGT16KurL78+jHF
+         gFrIs5MsIpvt1MQrZDCdthm7wPk4hUq5/sk6oHiN0tNJBFfFhVYUGw7+DPa8cROFiTmN
+         5WZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+a/uzk1G7EjcePz7qxzORBHak2b1YQiDpuE8TEppCyw=;
-        b=DH+tCWKyajDQjzbK+ZseliSnLWogE/7wlZru9IYTfDKnjR0jEr2fgBzE/+svexBnWT
-         9bXJk/92hmf3pN96Aym1LrlqLa/St7VZ5ZQu0A9HCY6zTgWnzcTTHq+2GR6Dja9qhzH4
-         GItr/Fu+giGSx/h0o5AMsv2CMG/Lt3o1a/bbqPAHIkecJgy223WDLQ11qLIfZXGAT48J
-         F5z9yqiu1WrAwnJiiI1HXoRYZFU1uHB1pzyq7qTDewby60NITSsg1MMz035SbS36Wf9G
-         4pme58np2QJtPzkUZnmxDa1FitHOavnYVADTTQJRIhbR+DLFYPNhsLmU+AjOceMauzuk
-         pqag==
-X-Gm-Message-State: AOAM530THzXEBUXsUxD9wq8ahitrHFp1KYBdaLEggC1bguB4CtddapwT
-        AttFsXhuLapqGGwCFcXlKMP0dZ+BL5vpmhxm7vY=
-X-Google-Smtp-Source: ABdhPJx+zDv+eg0rN1QXdU3P37X+BbQSnutKPLOpAYPRdYns94c+aW/zUJer5QBA8y0ZyUZxHqn9hP0D76EEe142ht4=
-X-Received: by 2002:a25:b5ce:: with SMTP id d14mr31519085ybg.415.1632149569812;
- Mon, 20 Sep 2021 07:52:49 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/jqutGxCbF2wCRJBmX26qNp4tC5x6+nO0HFdTMd9T9E=;
+        b=GIF8HnbnPOPPuPtPz0q6SGFLWsaIDLKsIBmAtfWoxzOkiQ3NVaRNr1VEAyYB2zLkcd
+         As9oqLQEubeAjKDAZ7E2DL/Jr6Pe3wC3aPHb3R8e69ZoUBI3Q6+kNFnKjTi/nWZIeD1F
+         H7YIPFCY4fGmh+Kof6HJwZ98mmZo+YuOjqjWPl1v3lUsCGZQ0ozmBSlsADh3gIQ6GQEY
+         qF3WprMQFIiAlwMcyYDFpzo2FAuMRKE50Dtju3XsZ8PX7STihmyq02KgYIDVHDCrI1Lv
+         /z6o/XgyuyErseEFUsBvt+Xvro3ZHG9baPAJ2IJIreB2dbVED6oBOGkUcddqtDIAScy8
+         KEpg==
+X-Gm-Message-State: AOAM530Ux/2kB+0SYvXZj3jE2R5pIBF1KWm0yL14/2CAvZdkNn+U2gpb
+        FeQAWIie+wlEXMkmuACBTOvmNw==
+X-Google-Smtp-Source: ABdhPJwi4gzpJMZCgBFvD0nz3JuaJB8dkkHFHrlYQB0vs9btENiHZuZcjmQyoyOKni338wgzuZmLpg==
+X-Received: by 2002:a5d:9256:: with SMTP id e22mr19166311iol.152.1632150180930;
+        Mon, 20 Sep 2021 08:03:00 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x9sm1077417ilg.76.2021.09.20.08.03.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 08:03:00 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 11:02:59 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        szeder.dev@gmail.com, avarab@gmail.com, dstolee@microsoft.com
+Subject: Re: [PATCH 1/1] builtin/commit-graph.c: don't accept common
+ --[no-]progress
+Message-ID: <YUiiozypuNk1Qx91@nand.local>
+References: <cover.1631980949.git.me@ttaylorr.com>
+ <e41e65ddf77c596a7926e75bfc15f21c075d0f03.1631980949.git.me@ttaylorr.com>
+ <088241fc-4070-95ea-b5eb-01c7771ee3af@gmail.com>
 MIME-Version: 1.0
-References: <YTGLLQCvlnT17jo8@nand.local> <YUYPgF6tRQ5ERYWL@nand.local> <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com>
-In-Reply-To: <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 20 Sep 2021 16:52:38 +0200
-Message-ID: <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <ttaylorr@github.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <088241fc-4070-95ea-b5eb-01c7771ee3af@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 9:45 AM ZheNing Hu <adlternative@gmail.com> wrote:
+On Mon, Sep 20, 2021 at 08:46:32AM -0400, Derrick Stolee wrote:
+> On 9/18/2021 12:02 PM, Taylor Blau wrote:
+> > Since we haven't released a version of Git that supports --[no-]progress
+> > as a top-level option for `git commit-graph`, let's remove it.
 >
-> Taylor Blau <me@ttaylorr.com> =E4=BA=8E2021=E5=B9=B49=E6=9C=8819=E6=97=A5=
-=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=8812:10=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > [+everybody from upthread to cc]
-> >
-> > On Thu, Sep 02, 2021 at 10:40:45PM -0400, Taylor Blau wrote:
-> > > Are we interested in participating in the December 2021 round of
-> > > Outreachy? September 3rd (tomorrow at 4pm UTC) is the initial communi=
-ty
-> > > application deadline.
-> >
-> > The project deadline of September 23rd is fast approaching, and we do
-> > not have any proposed projects or signed-up mentors.
-> >
-> > If you are interested in mentoring, the time to sign-up and propose a
-> > project is definitely ASAP :-). You can do so by clicking "Submit a
-> > project proposal" at:
-> >
-> >     https://www.outreachy.org/communities/cfp/git/
->
-> I haven't thought of any good projects for the time being,
-> Christian, any ideas?
+> I agree that is the best way to respond right now. Moving it to
+> top-level will need more work.
 
-I already suggested the following project upthread:
+SZEDER posted a patch in [1] which would allow us to define a top-level
+`--[no-]progress` option for the commit-graph builtin. (I'm assuming
+that you meant the builtin when you said "top-level", and not git
+itself).
 
-> > About project ideas, maybe continuing Hariom Verma's GSoC 2020 "Unify
-> > ref-filter formats with other \-\-pretty formats" project could be and
-> > idea, though maybe it could interact too much with ZheNing Hu
-> > continuing his GSoC 2021 "Use ref-filter formats in `git cat-file`"
-> > project.
+But see some of his commentary above the patch in [1] about why we may
+want to avoid applying something like his patch, in particular:
 
-and you replied:
+  In general, even when all subcommands of a git command understand a
+  particular --option, that does not mean that it's a good idea to teach
+  that option to that git command.  E.g. what if we later add another
+  subcommand for which that --option doesn't make any sense?  And from
+  the quoted discussion above it seems that teaching 'git commit-graph'
+  the '--progress' option was not intentional at all.
 
-> If the project idea is related to Hariom or my GSoC project, I think I ca=
-n
-> provide a lot of help. :)  I can help them as a mentor.
+This patch has the added advantage that we can always "go back" to
+SZEDER's approach and make `--[no-]progress` work as an option to `git
+commit-graph`. But doing this buys us some time to make sure that is the
+approach we want to take.
 
-so I am ok to co-mentor this project with you.
+Thanks,
+Taylor
 
-If you are still ok, I will submit it.
-
-I will also prepare soon a page with a few micro-projects. Of course
-more micro-project and regular project ideas are very welcome!
+[1]: https://lore.kernel.org/git/20210917211337.GC2118053@szeder.dev/
