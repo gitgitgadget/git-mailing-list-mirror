@@ -2,153 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D3CFC433FE
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 081B7C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08D5961264
+	by mail.kernel.org (Postfix) with ESMTP id E0D0D61264
 	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347619AbhIUCV0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:21:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51354 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234537AbhIUBoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:44:55 -0400
-Received: (qmail 2924 invoked by uid 109); 21 Sep 2021 01:43:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:43:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26088 invoked by uid 111); 21 Sep 2021 01:43:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:43:26 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 20 Sep 2021 21:43:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] grep: mark "haystack" buffers as const
-Message-ID: <YUk4vnMQHApY99Lb@coredump.intra.peff.net>
-References: <YUk3zwuse56v76ze@coredump.intra.peff.net>
+        id S1347633AbhIUCV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:21:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235187AbhIUBqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:46:11 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE99C05BD38
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:20:27 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id r75so6425129iod.7
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rxZSN/uopjDIwCOpss3sQLlGHBLslerRHV9SpYIGP6g=;
+        b=K2sPsJ0L2xRBWDZVCBuwzcEAIg/KFYPasBLF6nDAsFQnqlrRYz52UOOFpA8xuO1CvF
+         M1lqOxoU5V3xej2MNmYLp00vvyeukQCOBRVAexzd2bjzeRw6o3khWIZyVBDynEb4JkSZ
+         fcKqOnURbMHaWEbbyyF5WwFjMQ7Po8dZgomegWwnOHKOTacO51fnH5xYXJBBy0anfakl
+         6weay36FBdfn60YtB9EKfQOON15iuqqWwg/5oCpShUog3YU6qirTcWpxU2EwWVcP9nVL
+         0hnHB1rlfCq9uTYaA8+s6Vgqo8WjkEtxGZTY42mlRcRaFKeMqRwLslYhZamPXPeaGIgH
+         kCRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rxZSN/uopjDIwCOpss3sQLlGHBLslerRHV9SpYIGP6g=;
+        b=ytKnBP0iawLj4l9kwrSwWB3zy7YrvUKudwkAFu9X79eYaQa0gQyWWKGjDb4rZ9776O
+         RazSSZ1chdVeCzXPfiqgVGlZ6mRYp8zSEe5HKY5kGz8mEWin42mMpwIBX5AGL5E66Ydm
+         lvH/iylgiLV0nVJIP54voZfKuIzF6sglD2Q9mBaznZ75Agww/9HhIP+z6/RG4YTTNzkz
+         U1ddbTh1jU4nS15ahnoBsSawiXyYk67sqkTqDK81sgHZ3yRRYU5i8JCOwyfwNA5n/pgh
+         i9QCtW3qRMyF218FWkZYzwPZF7729U8a0tILJ/cKUblSNpbTCF8y5/5x9tgoQz4Kzvb8
+         bFkg==
+X-Gm-Message-State: AOAM531MROBgu5Qmhm+FaWSuzNVcVDFf9pyqSKi0rv9M/ytrvM/SabCq
+        sy7ko+lrnzV3tAib9VLg53cg5mglYcYL0w==
+X-Google-Smtp-Source: ABdhPJzufo786PlZC1UgzjARcItW1dUAhWbofAJ1B4quSY9bzbEomge3WfiX996agCyHveAiioeCgQ==
+X-Received: by 2002:a05:6638:25cd:: with SMTP id u13mr20659009jat.114.1632172827139;
+        Mon, 20 Sep 2021 14:20:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g28sm4084965iox.32.2021.09.20.14.20.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 14:20:26 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 17:20:24 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Calbabreaker <calbabreaker@gmail.com>, git@vger.kernel.org
+Subject: Re: Memory leak with sparse-checkout
+Message-ID: <YUj7GN/qWhw67jyk@nand.local>
+References: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
+ <YUiuWSXO1P3JwerH@nand.local>
+ <8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com>
+ <YUi55/3L9nizTVyA@nand.local>
+ <b082f98b-eb49-7cc4-9f75-fe1ec480bd61@gmail.com>
+ <b7ee5ff5-dfff-8d3f-36f6-b30daf2d71ec@gmail.com>
+ <YUjcMu7Z094eaFRA@nand.local>
+ <427c6d86-f123-035e-b0e6-4a21598ed111@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUk3zwuse56v76ze@coredump.intra.peff.net>
+In-Reply-To: <427c6d86-f123-035e-b0e6-4a21598ed111@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we're grepping in a buffer, we don't need to modify it. So we can
-take "const char *" buffers, rather than "char *". This can avoid some
-awkward casts in our callers.
+On Mon, Sep 20, 2021 at 04:56:47PM -0400, Derrick Stolee wrote:
+> >> I double-checked this to see how to fix this, and the 'list' subcommand
+> >> already notices that the patterns are not in cone mode and reverts its
+> >> behavior to writing all of the sparse-checkout file to stdout. It also
+> >> writes warnings over stderr before that.
+> >>
+> >> There might not be anything pressing to do here.
+> >
+> > Hmm. I think we'd probably want the same behavior for init and any other
+> > commands which could potentially overwrite the contents of the
+> > sparse-checkout file.
+>
+> Could you elaborate on what you mean by "the same behavior"?
+>
+> Do you mean that "git sparse-checkout add X" should act as if cone mode
+> is not enabled if the existing patterns are not cone-mode patterns?
+>
+> What exactly do you mean about "init" changing behavior here?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This step should be quite safe, because we're not changing any behavior,
-and the compiler will alert us if we missed any spots.
+No, I was referring to your suggestion from [1] to add a warning from
+"git sparse-checkout init --cone" when there are existing patterns which
+are not in cone-mode.
 
-There may be further cleanup possible that the compiler doesn't tell us
-about (i.e., other callers which have "char *" but could themselves
-tighten to "const char *"), since that implicit conversion is OK without
-a cast.
+> > Those may already call list routines internally, in which case I agree
+> > that this is already taken care of. But if not, then I think we should
+> > match list's behavior in the new locations, too.
+>
+> "list" interprets the 'struct pattern_list' in two different ways,
+> depending on the use_cone_patterns member. They are static methods in
+> the builtin code, not used by anything else.
 
- grep.c   | 12 ++++++++----
- grep.h   |  3 ++-
- pretty.c |  6 +++---
- 3 files changed, 13 insertions(+), 8 deletions(-)
+Ah, bummer. I was hoping that they'd be used internally by init so that
+it would automatically emit a warning in the case where a user's
+existing patterns are not in cone mode.
 
-diff --git a/grep.c b/grep.c
-index 3b372ec29d..2cb65d191f 100644
---- a/grep.c
-+++ b/grep.c
-@@ -908,7 +908,8 @@ static void show_name(struct grep_opt *opt, const char *name)
- 	opt->output(opt, opt->null_following_name ? "\0" : "\n", 1);
- }
- 
--static int patmatch(struct grep_pat *p, char *line, char *eol,
-+static int patmatch(struct grep_pat *p,
-+		    const char *line, const char *eol,
- 		    regmatch_t *match, int eflags)
- {
- 	int hit;
-@@ -943,7 +944,8 @@ static struct {
- 	{ "reflog ", 7 },
- };
- 
--static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
-+static int match_one_pattern(struct grep_pat *p,
-+			     const char *bol, const char *eol,
- 			     enum grep_context ctx,
- 			     regmatch_t *pmatch, int eflags)
- {
-@@ -1141,7 +1143,8 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
- 	return hit;
- }
- 
--static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
-+static int match_next_pattern(struct grep_pat *p,
-+			      const char *bol, const char *eol,
- 			      enum grep_context ctx,
- 			      regmatch_t *pmatch, int eflags)
- {
-@@ -1162,7 +1165,8 @@ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
- 	return 1;
- }
- 
--int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
-+int grep_next_match(struct grep_opt *opt,
-+		    const char *bol, const char *eol,
- 		    enum grep_context ctx, regmatch_t *pmatch,
- 		    enum grep_header_field field, int eflags)
- {
-diff --git a/grep.h b/grep.h
-index b82e5de982..a1880899ba 100644
---- a/grep.h
-+++ b/grep.h
-@@ -190,7 +190,8 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
- void compile_grep_patterns(struct grep_opt *opt);
- void free_grep_patterns(struct grep_opt *opt);
- int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
--int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
-+int grep_next_match(struct grep_opt *opt,
-+		    const char *bol, const char *eol,
- 		    enum grep_context ctx, regmatch_t *pmatch,
- 		    enum grep_header_field field, int eflags);
- 
-diff --git a/pretty.c b/pretty.c
-index 943a2d2ee2..be4efd9364 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -432,7 +432,7 @@ const char *show_ident_date(const struct ident_split *ident,
- }
- 
- static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
--					 char *buf, size_t buflen)
-+					 const char *buf, size_t buflen)
- {
- 	strbuf_addstr(sb, color);
- 	strbuf_add(sb, buf, buflen);
-@@ -445,7 +445,7 @@ static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
- 				   int color, enum grep_context ctx,
- 				   enum grep_header_field field)
- {
--	char *buf, *eol;
-+	const char *buf, *eol;
- 	const char *line_color, *match_color;
- 	regmatch_t match;
- 	int eflags = 0;
-@@ -455,7 +455,7 @@ static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
- 		return;
- 	}
- 
--	buf = (char *)line;
-+	buf = line;
- 	eol = buf + linelen;
- 
- 	line_color = opt->colors[GREP_COLOR_SELECTED];
--- 
-2.33.0.1023.gc687d0d3c8
+Apologies for any confusion.
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com/
