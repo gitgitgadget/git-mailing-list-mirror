@@ -7,85 +7,126 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF97AC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DFD4C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0875610A3
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:15:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6689D610CE
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236587AbhITPQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 11:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34442 "EHLO
+        id S234075AbhITPWj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 11:22:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbhITPQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 11:16:54 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C98BC061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:15:28 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id t4so43798501qkb.9
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:15:27 -0700 (PDT)
+        with ESMTP id S232933AbhITPWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 11:22:38 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AF3C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:21:11 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so5202569otx.3
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H/MMQSJQB/xytJTh5Q50+nwhusuCL/pls7c/6HFgsi4=;
-        b=Tg6kX1aZ1iyOiUG0ZtJ7/qClFyhgpRHyCwrTszY4Z1J7FZ+CrgxN6gfFRcIFCQS4r9
-         Hd7sY2jMk6wgw4sh7EpjCGv6LoRwFrqH70iKUKii+Xaf+7G72gMpG32sbSWH+/VmpM2z
-         UasnexUZok/ZVmjGASVBCOJR6BV3mpD1pYzecjzsj9f3oFukAeCP6X5HwfOslOT5lkLq
-         2ppaAURiOgwNIHrdK3jO1erY3OkN05vganYcxPo+Q+bVhwJpaaJ0dmbULR0K64gZbg4y
-         CcGcOQ5Ik32R3PbdQ5gxzxy5mk1q9qmzwALzgpHEcWwLu+QzfSWHEJZnPKdFJEVyNuS7
-         GMNg==
+         :cc:content-transfer-encoding;
+        bh=Jt1Dn3Q/bnftI0jqhpP9eG0owCtBSFCnlbQ7tL1fIQo=;
+        b=TpdIrDpywXPN9R+erKme0X1H4r7DkUEloS78U+G7rBeooBDowuZaJ3cab8mPv0KVx9
+         ZvAkTGbGh/kkt1fNU0RTfuHFQeRVyRIIgl1CmZdNxiyGUIlmqjqw+5Z/V975/ZaCL4rk
+         IUTM9YvsJw39DLoxJu3AvZUQscTOCOVMSyHjqjI1Q3Y7axg1FTLBGRCVDLJwloFRMab9
+         Z/TY39++pZraHdwizmi8+9hd00p4i1LD3KI8iUX5GS03WIqOP0mww++MdwPDsn6EgGZL
+         h4aLuOh0JedDChdRv7mQ51HQtEXyiMNi+p00zlVfbO3kalJNiuR+c0ftSqZphTAGmPgF
+         79pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H/MMQSJQB/xytJTh5Q50+nwhusuCL/pls7c/6HFgsi4=;
-        b=RFzULY9NOVBIBc93McQ8EMrzeYcXhc1Ke5oo7/8jiKBbVw+tSmmA9Vrbo7BGTIFqJL
-         PPW038HnvbS8pK2J7X0VpdLOfQbCASJYqZY7OCw8PtPZAcsRwu/Ho7V/rxFJfbUxVnv8
-         M5pPqNdLEO9FQXypZf2c5uxnYnuhLxb54eXMr6okfqM4sik+A/fxv7JH3Jx2KpRmtrhc
-         UUQjxaie5W3lLRuYSDhWIuUiHWobLVhe9LPvFxJFHJvLqTVNMWHWFiwQH0QujVDPV7tA
-         gwVHS8HkOwpL2qcSprNkvfQkkokIEMGRZ8UIG2yUA/MWzSuYzqAiwwFhK7RE8vq3S+AP
-         zfgA==
-X-Gm-Message-State: AOAM531Dv99RqniN9FGDDsNede5pdbU+UgSGGtxio3BEqxqH5UTjFcrN
-        jr2Jchtq2rmeHwp00Prd1B6osn/qxr5KpOMcCSnwvalSz1M=
-X-Google-Smtp-Source: ABdhPJxUQife1xWcblu88br30pmpPupluaWfxvHlApokLxvY+bytRJGmfpvfKxNKB7++yLzJ6TDUAwbiGysYUu+hxMI=
-X-Received: by 2002:a25:6902:: with SMTP id e2mr34621233ybc.526.1632150926643;
- Mon, 20 Sep 2021 08:15:26 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Jt1Dn3Q/bnftI0jqhpP9eG0owCtBSFCnlbQ7tL1fIQo=;
+        b=3YvgS4VndIAaixMIV14WooWbgzFDpa5XNx5PU44GNvX9fTopMQdEqDYDeONRLFGQTI
+         kS/XNrrBveNLYBQBmpz5nY79ZaD9mF0/PkwRNZqVkVBGHSdgr0Dr0ibbuk01bOEsKId/
+         qE7xPv+lPQypGUBEfJlqs+2ODhfKNSkbrMUenh9WWK5L2dklaXEtV7dNAfObbUc+GLOi
+         4tctyAn6yjK90cVj/NZ0UqeFHSpiyJc38ZJ2/yIF8JfEWNwRBvdX6nmKbqkWFF2k7RoR
+         ljhKz2klrWM11VCptUJFke4R42ioqncD8g5YOW0DGVCEhnOs/KoKdZnfW4gLFrDQKaRD
+         rhUA==
+X-Gm-Message-State: AOAM531EXxzWaYl4MuiKlO5x235RWzpRJd3JIenZRWeFS7+NwpdrGWiU
+        xPdRrBbnRbuyrZxJgnt/rRZLNYgrjxxivtPYISkG9T2MuAM=
+X-Google-Smtp-Source: ABdhPJx3hkEVsmb01SCCQ4f6vukef1jH5Qqc+6IWhKBSwaUHyeJGshaF8S0WHFTuvseGzm4pYEw7JOirrPTZp1eJNoQ=
+X-Received: by 2002:a9d:609e:: with SMTP id m30mr21239348otj.174.1632151271167;
+ Mon, 20 Sep 2021 08:21:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <YTGLLQCvlnT17jo8@nand.local> <YUYPgF6tRQ5ERYWL@nand.local>
- <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com> <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
-In-Reply-To: <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 20 Sep 2021 17:15:14 +0200
-Message-ID: <CAP8UFD2SsZyckX0tpCN-16BJ_mX6iHgd+VNSvfr-kirq2knVyg@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <ttaylorr@github.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+References: <pull.1036.git.1632006923.gitgitgadget@gmail.com>
+ <45bd05a945f034d03555f04a1ba85835482dc591.1632006923.git.gitgitgadget@gmail.com>
+ <87wnncbrm4.fsf@evledraar.gmail.com>
+In-Reply-To: <87wnncbrm4.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Sep 2021 08:20:59 -0700
+Message-ID: <CABPp-BFiKuTi_uSmWXc4FF-zYzODhtVdv8AQbz_--bz6XZjp6A@mail.gmail.com>
+Subject: Re: [PATCH 2/6] Split unpack_trees 'reset' flag into two for
+ untracked handling
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 4:52 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Sun, Sep 19, 2021 at 6:51 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Sat, Sep 18 2021, Elijah Newren via GitGitGadget wrote:
+>
+> > -     opts.reset =3D reset;
+> > +     opts.reset_keep_untracked =3D reset;
+> >       opts.fn =3D twoway_merge;
+> > +     /* Setup opts.dir so that ignored files in the way get overwritte=
+n */
+> > +     opts.dir =3D xcalloc(1, sizeof(*opts.dir));
+> > +     opts.dir->flags |=3D DIR_SHOW_IGNORED;
+> > +     setup_standard_excludes(opts.dir);
+>
+> Is the "opts.dir" free'd later somehow?
 
-> I will also prepare soon a page with a few micro-projects. Of course
-> more micro-project and regular project ideas are very welcome!
+No, much like other callsites that set this up (e.g.
+builtin/checkout.c), there isn't a place that frees it.  In copying
+how they worked, I also copied their bugs.  ;-)
 
-So here is the page:
+I'm tempted to move this code into setup_unpack_trees_porcelain() and
+then free it in clear_unpack_trees_porcelain()...though not all
+callers make use of those functions.  Hmm...
 
-https://git.github.io/Outreachy-23-Microprojects/
+> >       opts.head_idx =3D -1;
+> >       opts.update =3D worktree;
+> >       opts.skip_unmerged =3D !worktree;
+> > -     opts.reset =3D 1;
+> > +     if (o->force)
+> > +             opts.reset_nuke_untracked =3D 1;
+> > +     else
+> > +             opts.reset_keep_untracked =3D 1;
+>
+> In both cases opts.reset_keep_untracked is set to 1, I assume it's a
+> mistake
 
-It's very similar as last year's page
-(https://git.github.io/Outreachy-21-Microprojects/). The differences
-are:
+No, it only sets opts.reset_keep_untracked to 1 when o->force is
+false.  If o->force is true, it instead sets opts.reset_nuke_untracked
+to 1.  There's no mistake there.
 
-- added new "Replace a run_command*() call by direct calls to C functions" idea
-- removed "Unify the meaning of -dirty between diff and describe" idea
-as it looks a bit complex for a micro-project (though I can add it
-back if someone disagree with this opinion).
+> >       opts.merge =3D 1;
+> >       opts.fn =3D oneway_merge;
+> >       opts.verbose_update =3D o->show_progress;
+> >       opts.src_index =3D &the_index;
+> >       opts.dst_index =3D &the_index;
+> > +     if (o->overwrite_ignore) {
+> > +             opts.dir =3D xcalloc(1, sizeof(*opts.dir));
+>
+> ditto potential leak.
+>
+> > +             opts.dir =3D xcalloc(1, sizeof(*opts.dir));
+> > +             opts.dir->flags |=3D DIR_SHOW_IGNORED;
+> > +             setup_standard_excludes(opts.dir);
+> > +     }
+>
+>
+> ditto (also more omitted).
+
+Yep.
