@@ -2,169 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6205C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 05:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5679DC433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 06:06:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FB1E61019
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 05:41:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3903F61052
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 06:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232673AbhITFmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 01:42:18 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:41624 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231250AbhITFmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 01:42:17 -0400
-Received: by mail-ed1-f49.google.com with SMTP id co2so10015432edb.8
-        for <git@vger.kernel.org>; Sun, 19 Sep 2021 22:40:51 -0700 (PDT)
+        id S233267AbhITGHq convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 20 Sep 2021 02:07:46 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:39661 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233199AbhITGHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 02:07:40 -0400
+Received: by mail-ed1-f43.google.com with SMTP id h17so56850363edj.6
+        for <git@vger.kernel.org>; Sun, 19 Sep 2021 23:06:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xWaeD3VN5QNN+XLYNnglLnnfHQ5Jq1zw859t0HIog0s=;
-        b=UEz1vBuFKlMsMBn9CRHRn4KcgvnK31BTbqPWjax7xE7yNkiNK3rATM6or86W7CdXOY
-         sUivX3rpEQtbHqJaaHPeNSVXBrvsYYVg47LV4Or4wBpGrDzy/DTHZ5m037y3JfEUqZjU
-         UhwEwvP3TkUsSUbBIuT42OIfUNA7yCXocUX4ha0bfNDBs2dCgn8xn80I9cHCH7J2T8T8
-         fREpfi8sm9OaUHkFcQA52eItr4qb4uLeC/DYg6CLqj2j7Hp9Z12+iiZjqrBV0qHN+/ZZ
-         Ievi9tlRDKNIUoPnwG3zExZUQjZC5xi5jbYl51bagwhtAXMX11CKXBGWJd6BnfjzLDvB
-         WjcA==
-X-Gm-Message-State: AOAM533tGXlITaY1sgFoduga4jwVcEFW6/nolQdHwiUwrTk7exSMYQgH
-        YwagoWlJepJgK3/OFA9PLZcmOGshrSbJVn/rfvQ=
-X-Google-Smtp-Source: ABdhPJygNqv4Ux0oEQVBZbMTEHxQDol8d71bwfNXXspqPpKdAoClHHyZTYHU8Bm32RG433op2BdCqDtYt5RAGU/2Y+E=
-X-Received: by 2002:a50:9d09:: with SMTP id v9mr17061948ede.370.1632116449370;
- Sun, 19 Sep 2021 22:40:49 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9fpxwc2GON4cEF0woWYXfPsrjX6UAjpVc5jZnAphAe0=;
+        b=ob3Nr9N9bZq1wvs/udZsyUlwCvUDLn+Aje8bNA18KqnMp26Jopdg0vwXkAVPLdShh9
+         AB/B4Le5UyxbTdijria35cMdECFF5fTxvyOa2J4Xbfx+uOEesNikXC6V9RF4qo3cOTVV
+         vzHKAsbs/CYP2xP7bIrOib12yYCSqpFuXjNojjUHbfTPnyniPR0/wiexTl15wNG1Jr/9
+         HGScVw4y4G0lNfQChKZjO9XlO6Q51zomAvzqLRQLQgBLW9/Q6IcsBVDg6b1HFtXOIScW
+         TEHE8Szi4wpCOoX4tK5nDlN2l+O/R8BvjMlFrbjba0NAu19j2mMB3Wm365Yro6vnZf4d
+         j3nw==
+X-Gm-Message-State: AOAM530ZsdAQm29MzE+R2bO1LHG2wnE5mO6C44KiDkm9JulebGngAsHT
+        aE+GZkYbmlKvvUcNSLmDoDIA/BFuldMc2S4habo=
+X-Google-Smtp-Source: ABdhPJyRFx7m8wzuQdvlFHo8+6W1uz6BFazQE3XdhP7hgeHhl96VHJKj6PdqDrvs36t2CL4SZYIi+QgW7HhG+sgHsdo=
+X-Received: by 2002:a17:906:15cf:: with SMTP id l15mr26565603ejd.568.1632117972610;
+ Sun, 19 Sep 2021 23:06:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210919203832.91207-1-davvid@gmail.com> <20210919203832.91207-3-davvid@gmail.com>
-In-Reply-To: <20210919203832.91207-3-davvid@gmail.com>
+References: <pull.1092.git.git.1631972978.gitgitgadget@gmail.com>
+ <6d54bc264e2f9ce519f32c0673167a00bab55573.1631972978.git.gitgitgadget@gmail.com>
+ <YUZG0D5ayEWd7MLP@carlos-mbp.lan> <87o88obkb1.fsf@evledraar.gmail.com> <YUes7yxKHKW7cXcl@carlos-mbp.lan>
+In-Reply-To: <YUes7yxKHKW7cXcl@carlos-mbp.lan>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Sep 2021 01:40:38 -0400
-Message-ID: <CAPig+cTBfP5_czsPiALcF3tODJmNfXvNkTjqVFRbHCS535d-ng@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] difftool: use a strbuf to create a tmpdir path
- without repeated slashes
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Alan Blotz <work@blotz.org>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
+Date:   Mon, 20 Sep 2021 02:06:01 -0400
+Message-ID: <CAPig+cT-ajKsoj19ChPnkNByf-6P-vX=SG0NmgYt8CXyNH8y-w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] log: UNLEAK rev to silence a large number of leaks
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 19, 2021 at 4:38 PM David Aguilar <davvid@gmail.com> wrote:
-> difftool: use a strbuf to create a tmpdir path without repeated slashes
+On Sun, Sep 19, 2021 at 5:34 PM Carlo Marcelo Arenas Belón
+<carenas@gmail.com> wrote:
+> Subject: [PATCH] revision: remove dup() of name in add_rev_cmdline()
 >
-> The paths generated by difftool are passed to user-facing diff tools.
-> Using paths with repeated slashes in them is a cosmetic blemish that
-> is exposed to users and can be avoided.
+> df835d3a0c (add_rev_cmdline(): make a copy of the name argument,
+> 2013-05-25) adds it, probably introducing a leak.
 >
-> Use a strbuf to create the buffer used for the dir-diff tmpdir.
-> Strip trailing slashes from the value read from TMPDIR to avoid
-> repeated slashes in the generated paths.
+> All names we will ever get will either come from the commandline
+> or be pointers to a static buffer in hex.c, so it is safe not to
+> xstrdup and clean them up (just like the struct object *item).
 
-Mentioning strbuf in the commit message misleads the reviewer into
-thinking that it somehow merits extra attention and close scrutiny. In
-fact, the opposite is true: strbuf is just an implementation detail;
-there is no reason to mention it in the commit message at all. The
-commit message's emphasis on strbuf distracts the reader from the real
-purpose of this change, which is to fix a cosmetic issue (and maybe a
-real issue on Windows in which double-slash can have significance?).
-So, perhaps:
+I haven't been following this thread closely, but the mention of the
+static buffer in hex.c invalidates the premise of this patch, as far
+as I can tell. The "static buffer" is actually a ring of four buffers
+which oid_to_hex() uses, one after another, into which it formats an
+OID as hex. This allows a caller to format up to -- and only up to --
+four OIDs without worrying about allocating its own memory for the hex
+result. Beyond four, the caller can't use oid_to_hex() without doing
+some sort of memory management itself, whether that be duplicating the
+result of oid_to_hex() or by allocating its own buffers and calling
+oid_to_hex_r() instead.
 
-    difftool: fold out repeated slashes from TMPDIR
+In this particular case, one of the callers of add_rev_cmdline() is
+add_rev_cmdline_list(), which does this:
 
-    Paths generated by difftool are passed to user-facing diff tools.
-    Supplying paths with repeated slashes is a cosmetic blemish that
-    is exposed to users and can be avoided. Therefore, strip trailing
-    slashes from the value of TMPDIR to avoid repeated slashes in the
-    generated paths.
-
-> Add a unit test to ensure that repeated slashes are not present.
-
-Unless there is something unusual or tricky about the new test that
-requires extra explanation in the commit message, there is little
-reason to mention that you're adding a new test, so I'd probably drop
-this line, as well. After all, the patch easily speaks for itself, and
-a reviewer can see at a glance that you're adding a new test.
-
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> @@ -252,11 +252,10 @@ static void changed_files(struct hashmap *result, const char *index_path,
-> -static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
-> +static NORETURN void exit_cleanup(struct strbuf *buf, int exit_code)
->  {
-> -       struct strbuf buf = STRBUF_INIT;
-> -       strbuf_addstr(&buf, tmpdir);
-> -       remove_dir_recursively(&buf, 0);
-> +       remove_dir_recursively(buf, 0);
-> +       strbuf_release(buf);
->         if (exit_code)
->                 warning(_("failed: %d"), exit_code);
->         exit(exit_code);
-
-It feels wrong to be releasing the caller-supplied strbuf; this change
-makes it harder to reason about ownership. Normally, the entity which
-allocates a resource should be the one to release it. More on this
-below...
-
-> @@ -333,11 +332,11 @@ static int checkout_path(unsigned mode, struct object_id *oid,
-> +       struct strbuf tmpdir = STRBUF_INIT;
-> +       strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
-> +       strbuf_trim_trailing_dir_sep(&tmpdir);
-> +       strbuf_addstr(&tmpdir, "/git-difftool.XXXXXX");
-> +       if (!mkdtemp(tmpdir.buf))
-> +               return error("could not create '%s'", tmpdir.buf);
-
-Leaking the `tmpdir` strbuf here. You'd want:
-
-    if (!mkdtemp(tmpdir.buf)) {
-        error("could not create '%s'", tmpdir.buf);
-        strbuf_release(&tmpdir);
-        return -1;
+    while (commit_list) {
+        ...
+        add_rev_cmdline(..., oid_to_hex(...), ...);
+        ...
     }
 
-> @@ -644,11 +645,11 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->         if (err) {
-> -               warning(_("temporary files exist in '%s'."), tmpdir);
-> +               warning(_("temporary files exist in '%s'."), tmpdir.buf);
->                 warning(_("you may want to cleanup or recover these."));
->                 exit(1);
->         } else
-> -               exit_cleanup(tmpdir, rc);
-> +               exit_cleanup(&tmpdir, rc);
+which may call add_rev_cmdline() any number of times, quite possibly
+more than four.
 
-... [continued from above]
+Therefore (if I'm reading this correctly), it is absolutely correct
+for add_rev_cmdline() to be duplicating that string to ensure that the
+hexified OID value remains valid, and incorrect for this patch to be
+removing the call to xstrdup().
 
-Both branches in this conditional terminate the program either
-directly by `exit(1)` or indirectly through `exit_cleanup(...)`. Yet
-only the `exit_cleanup(...)` branch releases the strbuf (because you
-updated `exit_cleanup()` above to do so); the other branch just leaks
-the strbuf. This is inconsistent.
-
-Since we're exiting anyhow, and since `exit_cleanup()` was already
-leaking its own strbuf even before this patch, and since it feels
-somewhat dirty to have `exit_cleanup()` responsible for releasing a
-resource it didn't allocate, it may make sense just to maintain the
-status-quo and just leak the strbuf before exiting. That is, don't
-make any changes to `exit_cleanup()`, and let both of these branches
-leak the strbuf.
-
-On the other hand, if you really do want to release the strbuf, then
-it would be more consistent for both branches in this conditional to
-do so, not just one. That is, add a strbuf_release() to the `then`
-arm.
-
->  finish:
->         if (fp)
-> @@ -660,6 +661,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->         strbuf_release(&rdir);
->         strbuf_release(&wtdir);
->         strbuf_release(&buf);
-> +       strbuf_release(&tmpdir);
-
-Correctly releasing the strbuf. Good.
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+> diff --git a/revision.c b/revision.c
+> @@ -1481,7 +1480,7 @@ static void add_rev_cmdline(struct rev_info *revs,
+>         info->rev[nr].item = item;
+> -       info->rev[nr].name = xstrdup(name);
+> +       info->rev[nr].name = name;
+>         info->rev[nr].whence = whence;
+> @@ -1490,10 +1489,6 @@ static void add_rev_cmdline(struct rev_info *revs,
+>  static void clear_rev_cmdline(struct rev_info *revs)
+>  {
+>         struct rev_cmdline_info *info = &revs->cmdline;
+> -       size_t i, nr = info->nr;
+> -
+> -       for (i = 0; i < nr; i++)
+> -               free(info->rev[i].name);
+>
+>         FREE_AND_NULL(info->rev);
