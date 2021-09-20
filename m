@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C9BC4167E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3357FC4727C
 	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0D7A61355
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:21:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1938D6124C
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348033AbhIUCWs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:22:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
+        id S1348115AbhIUCWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:22:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236931AbhIUBvy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:51:54 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFE6C0386C4
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:41 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u18so32248661wrg.5
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:41 -0700 (PDT)
+        with ESMTP id S236940AbhIUBvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:51:55 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55DDC0386C7
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:43 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id w29so33983740wra.8
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QAW3l7E2VC5xfPBAYoUUmqk4sQJhfNBZ2Uvg11ooxjE=;
-        b=bDAzdp9BmQmck2FJzIzxn5QFTAfWByIU2gDoQw5WwnrsUi2iup1ewHsscSgpwC88Lz
-         mzLTn69HnJOE+Cq4xca4y66wffHeo1ACIxcUKVUxwXcOyGNP63bkRhF0XRmOFk3Kaw+I
-         lD+o/SeSPE+29B6RZqclWg+0Zixk0M7Qs413glmvk/bJ6/odjMhCVYwcHoOGn8ldms4S
-         dnnZdXDk339bSVxgso/7j3BppM/JZZIVHleEM6TmUUiejvB1TTPuXtt+wUzwj/him85L
-         yp6rXR5sDiqDq7PjAXMGzC2ZlNRaC2FquCAmp5Av7YxyEcyWEuV9o6M8vlwsVxnLB7aP
-         tLHA==
+        bh=FVXQq1j43TFhFUc+YP1fgFv6CFKstbnD0H9uw1sPm9E=;
+        b=OK7l5anXvxsBeTKuSv8Ave5vLKiTmzZJCAkrJrrlZvdtgxPdIVnUlSJJw9Ixtmz6TK
+         7g5r8cYtWNzuIn91NLxtkUOncLMp3B2xIg68+GRvWXPzOckdNTssmb/YagnEmMcaQCmx
+         A8qVIMQ0ABqHSLWDMGhkbZuJ225CquqG95qOnPI2SNeISzPh+6qOj1xf6VFoiu/sypdN
+         Zjhy84uutcjx8OXST0RcIcWt0dQtDCXU6HhnUYYk+cRIB76dBtMNKSLWTx7JZ/F1X81b
+         W7+447S0fjBW418xeQGslTqNx4mCfvtIOWMAbT8M0lWmKcuwEbASbjCBUuXAZFoUQyQZ
+         kyTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QAW3l7E2VC5xfPBAYoUUmqk4sQJhfNBZ2Uvg11ooxjE=;
-        b=MwMI6pqqE06lTp0LH8B+QMlsxiki/XmGLPzVdwKd7h4zdFipDEMfqSsL457iXX9NNw
-         6S2lMzLtFNwApsDWJpT44L5NW//9U/pLq+dQAdXwjx4xCV6DX0Jgt7Y4rXeutAoFeYZQ
-         MDnzfmIO+R6kmex+o5EkzgVWHi1UPJJRTP/hNEGqeJqX5B5VQvFZVnJjdAVMHqjTZPuC
-         nECIZEC/w01JWljq2Wd/iavcGFjgcFu6LNqOwXPxM6Jv7WW0l+nEhu7YjqMoeGCiFxHf
-         5Kyx3sUbaiTx8j/TmTx7oIGkz56/Xl2z+KuaLHQe/bgpavx6hamn6flvPpojv7uKQg28
-         7jKg==
-X-Gm-Message-State: AOAM533oPGkKwNY+60UpcVGGcrhHJJMMhlgHmSTsuFhWF6j9qyk93w2Z
-        jvqlx5ervXQCR1k2apu+pp+ZWwal63W+yA==
-X-Google-Smtp-Source: ABdhPJxK1f8oT0qiP2hPpAYymLr9b0Lzfc8e99MEWbP3hjWbW/Jr7DqUGvZC4QAjdntFMIl1pbMHDw==
-X-Received: by 2002:a05:600c:1c9e:: with SMTP id k30mr1381412wms.74.1632179379990;
-        Mon, 20 Sep 2021 16:09:39 -0700 (PDT)
+        bh=FVXQq1j43TFhFUc+YP1fgFv6CFKstbnD0H9uw1sPm9E=;
+        b=Pax5UMvOjPrezeQUIbUp2Ge0lEilnmcYwuyYe02ygtcVwpfXDpgXKuIEI6TXwpXDXO
+         moPNxUGm8N1UprJiUHe0bEOqTMyASx39hip305T0eJ4RtTEb/Dtd/ZNb4rSM7WglPIeM
+         0+gTMgEZ6bC+MjANr/w8oOcGGWMpAI6jDilsjVEE0brNvLaMrqEMtQbbTYuBgZeGHGwH
+         iGMv0zygl6X6EpmKcitFLJqt7tSGWYv6qXXcJDkdstBZ2xN88Z8q9EvTpVe5chXi0hk1
+         sm2mpa6XzSmD6p8yrXPhgqWDbgI3WDfGoG6K3eAcuhHwWem883ITSCUIGAe+lTyGpedy
+         zuoQ==
+X-Gm-Message-State: AOAM530fzH5uwg7kZ8ogs0Ca/JQfmVkPRLh/yGjS94u3h6ZR/rSMf3ez
+        r/B5ubUslOvghnECvdo8AL7RF1e5hAopwA==
+X-Google-Smtp-Source: ABdhPJziKmaOt8xz1wN3OIIRx54MdpIh/1c4yg4h6jhiweB/7bkFBhQ/X4/2HYISmCpmWHKFvYDuEw==
+X-Received: by 2002:a1c:ed10:: with SMTP id l16mr1415514wmh.8.1632179382217;
+        Mon, 20 Sep 2021 16:09:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8sm10409154wru.30.2021.09.20.16.09.39
+        by smtp.gmail.com with ESMTPSA id c8sm10409154wru.30.2021.09.20.16.09.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 16:09:39 -0700 (PDT)
+        Mon, 20 Sep 2021 16:09:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/8] progress.c: move signal handler functions lower
-Date:   Tue, 21 Sep 2021 01:09:24 +0200
-Message-Id: <patch-v2-3.8-f1b8bf1dbde-20210920T225701Z-avarab@gmail.com>
+Subject: [PATCH v2 6/8] progress.c: add temporary variable from progress struct
+Date:   Tue, 21 Sep 2021 01:09:27 +0200
+Message-Id: <patch-v2-6.8-d4e9ff1de73-20210920T225701Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1098.gf02a64c1a2d
 In-Reply-To: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
 References: <cover-0.8-0000000000-20210722T125012Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
@@ -77,125 +77,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the signal handler functions to just before the
-start_progress_delay() where they'll be referenced, instead of having
-them at the top of the file.
+Add a temporary "progress" variable for the dereferenced p_progress
+pointer to a "struct progress *". Before 98a13647408 (trace2: log
+progress time and throughput, 2020-05-12) we didn't dereference
+"p_progress" in this function, now that we do it's easier to read the
+code if we work with a "progress" struct pointer like everywhere else,
+instead of a pointer to a pointer.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- progress.c | 92 ++++++++++++++++++++++++++++--------------------------
- 1 file changed, 48 insertions(+), 44 deletions(-)
+ progress.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/progress.c b/progress.c
-index 680c6a8bf93..893cb0fe56f 100644
+index 1fade5808de..1ab7d19deb8 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -53,50 +53,6 @@ static volatile sig_atomic_t progress_update;
-  */
- int progress_testing;
- uint64_t progress_test_ns = 0;
--void progress_test_force_update(void)
--{
--	progress_update = 1;
--}
--
--
--static void progress_interval(int signum)
--{
--	progress_update = 1;
--}
--
--static void set_progress_signal(void)
--{
--	struct sigaction sa;
--	struct itimerval v;
--
--	if (progress_testing)
--		return;
--
--	progress_update = 0;
--
--	memset(&sa, 0, sizeof(sa));
--	sa.sa_handler = progress_interval;
--	sigemptyset(&sa.sa_mask);
--	sa.sa_flags = SA_RESTART;
--	sigaction(SIGALRM, &sa, NULL);
--
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
--}
--
--static void clear_progress_signal(void)
--{
--	struct itimerval v = {{0,},};
--
--	if (progress_testing)
--		return;
--
--	setitimer(ITIMER_REAL, &v, NULL);
--	signal(SIGALRM, SIG_IGN);
--	progress_update = 0;
--}
+@@ -331,15 +331,16 @@ void stop_progress(struct progress **p_progress)
+ 	finish_if_sparse(*p_progress);
  
- static int is_foreground_fd(int fd)
- {
-@@ -249,6 +205,54 @@ void display_progress(struct progress *progress, uint64_t n)
- 		display(progress, n, NULL);
- }
+ 	if (*p_progress) {
++		struct progress *progress = *p_progress;
+ 		trace2_data_intmax("progress", the_repository, "total_objects",
+ 				   (*p_progress)->total);
  
-+static void progress_interval(int signum)
-+{
-+	progress_update = 1;
-+}
-+
-+/*
-+ * The progress_test_force_update() function is intended for testing
-+ * the progress output, i.e. exclusively for 'test-tool progress'.
-+ */
-+void progress_test_force_update(void)
-+{
-+	progress_update = 1;
-+}
-+
-+static void set_progress_signal(void)
-+{
-+	struct sigaction sa;
-+	struct itimerval v;
-+
-+	if (progress_testing)
-+		return;
-+
-+	progress_update = 0;
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler = progress_interval;
-+	sigemptyset(&sa.sa_mask);
-+	sa.sa_flags = SA_RESTART;
-+	sigaction(SIGALRM, &sa, NULL);
-+
-+	v.it_interval.tv_sec = 1;
-+	v.it_interval.tv_usec = 0;
-+	v.it_value = v.it_interval;
-+	setitimer(ITIMER_REAL, &v, NULL);
-+}
-+
-+static void clear_progress_signal(void)
-+{
-+	struct itimerval v = {{0,},};
-+
-+	if (progress_testing)
-+		return;
-+
-+	setitimer(ITIMER_REAL, &v, NULL);
-+	signal(SIGALRM, SIG_IGN);
-+	progress_update = 0;
-+}
-+
- static struct progress *start_progress_delay(const char *title, uint64_t total,
- 					     unsigned delay, unsigned sparse)
- {
+ 		if ((*p_progress)->throughput)
+ 			trace2_data_intmax("progress", the_repository,
+ 					   "total_bytes",
+-					   (*p_progress)->throughput->curr_total);
++					   progress->throughput->curr_total);
+ 
+-		trace2_region_leave("progress", (*p_progress)->title, the_repository);
++		trace2_region_leave("progress", progress->title, the_repository);
+ 	}
+ 
+ 	stop_progress_msg(p_progress, _("done"));
 -- 
 2.33.0.1098.gf02a64c1a2d
 
