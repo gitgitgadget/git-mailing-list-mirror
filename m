@@ -2,214 +2,285 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 783D3C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF6DAC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F34460F9D
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 951E560F9D
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347661AbhIUCVa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32928 "EHLO
+        id S1347668AbhIUCVb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:21:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235982AbhIUBsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:48:39 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10068C065F2B
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:39:16 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id 194so22756328qkj.11
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:39:16 -0700 (PDT)
+        with ESMTP id S229895AbhIUBsl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:48:41 -0400
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C206C065F2C
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:39:29 -0700 (PDT)
+Received: by mail-il1-x12c.google.com with SMTP id x2so5902530ilm.2
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 14:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=8x234IHeMfepZ2yCWtp8Y1YT97xUXGxoFcDzA2eTFOk=;
-        b=kvr22kAmBXHK6iHpejoaOc0rWqCemYXbdZtN4FjjX+4jD4Rb2iC44sH9byqOPhdwzz
-         PzdbIn5jfu/ycB3s2TxNDzS66VucG09gCqbJBaqsAQz96M1Epdv9E3ZboYpKsnL6stWE
-         0nwSeDDh5oJhqFPrF3TwauBVyaxVEnGJjeY4H9mMTVQBy8B1ZFxpx8l3OJkIjeFUCKCi
-         Gmbst8xovD4/7BWTSzmLiiIT+AvI3eFRdJ/0abBAnBcpmkBUy0cRdPacTjBIk0uz0sCY
-         DC2sOxDLiiRka6DFs65nSO0NdMqyn0ZUvr5TcIE3RagmFOH2moVQLMw2ZUpmnlUksz8D
-         Dd6A==
+         :content-disposition:in-reply-to;
+        bh=7FeeQulfmweYQxehk4SjQyY14gBNqgJ+f6LrwZTLKEs=;
+        b=pcKGEtsJEU95zzc3YQqrP/V063MWFKmXYSoEH0IE4xNo4mu0bFFSa2IPRv+UxeyaUL
+         wPdi6uABhwmgzRVGK0yqcJFZDjl4JJdI/Wy/FY8A9y9MCoC2si81nKSJam9HnDUdM4TT
+         2NJ0QWi8CXLSOisfPzFzlNEmrLoa2OF+aDM6pSwe15VfkkrMS6kLExia/fhBQpUsh+Y8
+         ZgSFkUR4bSrgCBBpkBW1Z/HdezDORCNLoSqgp3GmHSiYba7Ew4X9zZ58cSOk7ND01Bg2
+         WQKB3bnBoWH5STKGHrpMmg6IvAMSwiSB75YMho2WwKKYsTGGwPuIQyeE12f35tz87+f7
+         D1Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=8x234IHeMfepZ2yCWtp8Y1YT97xUXGxoFcDzA2eTFOk=;
-        b=k5e7yFjK0YTxnGGLuUTBebjXT+CO3A6w+ka1rvPoj6CXmU7hMJyLrTtrv6Wl+EV+YS
-         RCo2tdAyQdBom2aMMP2sdwTEhLf+4CFjSq2zSiH9W25a7eEI0pMPQsBG123HI44CF4Uc
-         ch1nNixApB4X7vJHw15wagNzxrMKfLSLO5omiQ0vE67tOfks0ItRpsQ8ysK5fgv/tJYe
-         TciHm75YOMLpU+Youi70frb5v8mb575vd5mS84KqefOYUODQMBjie1JoIE5/XfOEzLso
-         3HWwtEIBpAM3lwEiYeIz8Q7HIEnopYzRmFrz3ZUGx9DBfwnjhCYxasu9f6ADJ/fTWbcv
-         kRvw==
-X-Gm-Message-State: AOAM531EUsSq1cEMn8d3WNRFLfWme7SPu/ncF+u3u3C/E/XhB0/I3mzy
-        AMDrB8+SqIW3RJoI41HI3Dn4/fBg9dY=
-X-Google-Smtp-Source: ABdhPJzCX+M+kvleU6VfO3fc2DyP06/bBgPySBIwUIR40BugIFqKu5dIIask2NIB+rxsDmUa9d5rfA==
-X-Received: by 2002:a05:620a:2298:: with SMTP id o24mr26997826qkh.235.1632173955126;
-        Mon, 20 Sep 2021 14:39:15 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id t6sm4628358qta.68.2021.09.20.14.39.13
+         :mime-version:content-disposition:in-reply-to;
+        bh=7FeeQulfmweYQxehk4SjQyY14gBNqgJ+f6LrwZTLKEs=;
+        b=jpHzYN7Ig4Xk7wJGiOMGyLs05IN9PA7p5PHls9DWvztXEmDgbIERguBmIukl0AcbSk
+         aRR6rbjHAl/ZjxhZuybmR7Xk+tMLqlIpW/Ps+PKbWzbKnsQi2j9iHyjzgiWu9562TxEA
+         CzADYlOA7YbCRxIvydgWLgsN8P3ZK28CP2VwswgC4QInwESzT9GcT23DOIEccxn8W6lB
+         J8k0LxZn8qTgJmP0sOE+h/fr/w3MwvoEa51OZta7u5Ms5ZeaEQ97jgb5THbGv298UtcO
+         dNU8zGBzBthN7QFX3PM61EDqXV8T+wPHHfQKezFn76Zil0B5R8CCOs0EbqD4baOcqXIG
+         esYw==
+X-Gm-Message-State: AOAM533H0U15G/zszc0SQ4ccfuymw8e3dytQe9L/EC3pM3OsaFI2T5BN
+        V1Cwug1UfG322hEg+Nqiae4VCg==
+X-Google-Smtp-Source: ABdhPJz7X6K/z+u+F+56T0w9bBQG+JC9oUCvEq7aDJMj+9LL8BYUc1C13L8DoPxhAQLBFIbsM8k2cA==
+X-Received: by 2002:a05:6e02:156a:: with SMTP id k10mr19164665ilu.317.1632173968703;
+        Mon, 20 Sep 2021 14:39:28 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u12sm10463736ill.33.2021.09.20.14.39.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 14:39:14 -0700 (PDT)
-Date:   Mon, 20 Sep 2021 14:39:12 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 1/2] log: UNLEAK rev to silence a large number of leaks
-Message-ID: <YUj/gFRh6pwrZalY@carlos-mbp.lan>
-References: <pull.1092.git.git.1631972978.gitgitgadget@gmail.com>
- <6d54bc264e2f9ce519f32c0673167a00bab55573.1631972978.git.gitgitgadget@gmail.com>
- <YUZG0D5ayEWd7MLP@carlos-mbp.lan>
- <87o88obkb1.fsf@evledraar.gmail.com>
- <YUes7yxKHKW7cXcl@carlos-mbp.lan>
- <CAPig+cT-ajKsoj19ChPnkNByf-6P-vX=SG0NmgYt8CXyNH8y-w@mail.gmail.com>
+        Mon, 20 Sep 2021 14:39:28 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 17:39:19 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        szeder.dev@gmail.com, avarab@gmail.com, dstolee@microsoft.com
+Subject: Re: [PATCH 0/1] commit-graph: drop top-level --[no-]progress
+Message-ID: <YUj/h3xucy4JR7B1@nand.local>
+References: <cover.1631980949.git.me@ttaylorr.com>
+ <xmqqr1dj9c0b.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cT-ajKsoj19ChPnkNByf-6P-vX=SG0NmgYt8CXyNH8y-w@mail.gmail.com>
+In-Reply-To: <xmqqr1dj9c0b.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 02:06:01AM -0400, Eric Sunshine wrote:
-> On Sun, Sep 19, 2021 at 5:34 PM Carlo Marcelo Arenas Belón
-> <carenas@gmail.com> wrote:
-> > Subject: [PATCH] revision: remove dup() of name in add_rev_cmdline()
-> >
-> > df835d3a0c (add_rev_cmdline(): make a copy of the name argument,
-> > 2013-05-25) adds it, probably introducing a leak.
-> >
-> > All names we will ever get will either come from the commandline
-> > or be pointers to a static buffer in hex.c, so it is safe not to
-> > xstrdup and clean them up (just like the struct object *item).
-> 
-> I haven't been following this thread closely, but the mention of the
-> static buffer in hex.c invalidates the premise of this patch, as far
-> as I can tell. The "static buffer" is actually a ring of four buffers
-> which oid_to_hex() uses, one after another, into which it formats an
-> OID as hex. This allows a caller to format up to -- and only up to --
-> four OIDs without worrying about allocating its own memory for the hex
-> result. Beyond four, the caller can't use oid_to_hex() without doing
-> some sort of memory management itself, whether that be duplicating the
-> result of oid_to_hex() or by allocating its own buffers and calling
-> oid_to_hex_r() instead.
+On Mon, Sep 20, 2021 at 02:24:04PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > An open question is whether the same should be done for the multi-pack-index
+> > command, whose top-level support for `--[no-]progress` was released in v2.32.0
+> > with 60ca94769c (builtin/multi-pack-index.c: split sub-commands, 2021-03-30).
+>
+> We do not mind too much about "breaking backward compatibility" by
+> removing the mistaken "git multi-pack-index --progress cmd", I would
+> say.  It's not like people would type it once every day and removing
+> the "support" will break their finger-memory.
 
-Thanks; this then explains why as I was suspecting add_rev_cmdline_list()
-was indeed buggy, and might had even triggered the workaround of doing the
-strdup.
+OK; if we don't mind then we could do something like the following on
+top. But if we're OK to remove the top-level `--progress` option from
+the commit-graph and multi-pack-index builtins at any time, then both
+patches become far less urgent.
 
-> Therefore (if I'm reading this correctly), it is absolutely correct
-> for add_rev_cmdline() to be duplicating that string to ensure that the
-> hexified OID value remains valid, and incorrect for this patch to be
-> removing the call to xstrdup().
+Thanks,
+Taylor
 
-Indeed, but the values that are being strdup were never used anyway, so
-I suspect the original code might had just put it as a logical default.
+--- >8 ---
 
-We might do better instead as shown in the following patch (again, second
-hunk not relevant for the current code); I suspect if we were to land this,
-the last hunks probably should be done first in an independent patch, as
-well.
+Subject: [PATCH] builtin/multi-pack-index.c: disable top-level --[no-]progress
 
-Carlo
--------- >8 --------
-Subject: [PATCH] revision: remove xstrdup() of name in add_rev_cmdline()
+In a similar spirit as the previous patch, let sub-commands which
+support showing or hiding a progress meter handle parsing the
+`--progress` or `--no-progress` option, but do not expose it as an
+option to the top-level `multi-pack-index` builtin.
 
-a765499a08 (revision.c: treat A...B merge bases as if manually
-specified, 2013-05-13) adds calls to this function in a loop,
-abusing oid_to_hex (at that time called sha1_to_hex).
-
-df835d3a0c (add_rev_cmdline(): make a copy of the name argument,
-2013-05-25) adds the strdup, introducing a leak.
-
-All names we will ever get should come from the commandline or be
-constant values, so it is safe not to xstrdup and clean them up.
-
-Just like the struct object *item, that is referenced in the same
-struct, name isn't owned or managed so correct both issues by making
-sure all entries are indeed constant or valid global pointers (from
-the real command line) and remove the leak.
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- revision.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ Documentation/git-multi-pack-index.txt |  6 ++---
+ builtin/multi-pack-index.c             | 31 +++++++++++++++++++++-----
+ t/t5319-multi-pack-index.sh            | 12 +++++-----
+ 3 files changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index ce62192dd8..829af28658 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1468,7 +1468,6 @@ static int limit_list(struct rev_info *revs)
- 
- /*
-  * Add an entry to refs->cmdline with the specified information.
-- * *name is copied.
-  */
- static void add_rev_cmdline(struct rev_info *revs,
- 			    struct object *item,
-@@ -1481,7 +1480,7 @@ static void add_rev_cmdline(struct rev_info *revs,
- 
- 	ALLOC_GROW(info->rev, nr + 1, info->alloc);
- 	info->rev[nr].item = item;
--	info->rev[nr].name = xstrdup(name);
-+	info->rev[nr].name = name;
- 	info->rev[nr].whence = whence;
- 	info->rev[nr].flags = flags;
- 	info->nr++;
-@@ -1490,10 +1489,6 @@ static void add_rev_cmdline(struct rev_info *revs,
- static void clear_rev_cmdline(struct rev_info *revs)
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index ffd601bc17..5ba4bd5166 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -9,8 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
+ SYNOPSIS
+ --------
+ [verse]
+-'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress]
+-	[--preferred-pack=<pack>] <subcommand>
++'git multi-pack-index' [--object-dir=<dir>] <sub-command>
+
+ DESCRIPTION
+ -----------
+@@ -26,7 +25,8 @@ OPTIONS
+
+ --[no-]progress::
+ 	Turn progress on/off explicitly. If neither is specified, progress is
+-	shown if standard error is connected to a terminal.
++	shown if standard error is connected to a terminal. Supported by
++	sub-commands `write`, `verify`, `expire`, and `repack.
+
+ The following subcommands are available:
+
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 649aa5f9ab..5f11a3067d 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -52,7 +52,6 @@ static struct opts_multi_pack_index {
+ static struct option common_opts[] = {
+ 	OPT_FILENAME(0, "object-dir", &opts.object_dir,
+ 	  N_("object directory containing set of packfile and pack-index pairs")),
+-	OPT_BIT(0, "progress", &opts.flags, N_("force progress reporting"), MIDX_PROGRESS),
+ 	OPT_END(),
+ };
+
+@@ -68,6 +67,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+ 		OPT_STRING(0, "preferred-pack", &opts.preferred_pack,
+ 			   N_("preferred-pack"),
+ 			   N_("pack for reuse when computing a multi-pack bitmap")),
++		OPT_BIT(0, "progress", &opts.flags,
++			N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_END(),
+ 	};
+
+@@ -75,6 +76,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+
+ 	trace2_cmd_mode(argv[0]);
+
++	if (isatty(2))
++		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_write_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+@@ -90,10 +93,18 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
+
+ static int cmd_multi_pack_index_verify(int argc, const char **argv)
  {
- 	struct rev_cmdline_info *info = &revs->cmdline;
--	size_t i, nr = info->nr;
--
--	for (i = 0; i < nr; i++)
--		free(info->rev[i].name);
- 
- 	FREE_AND_NULL(info->rev);
- 	info->nr = info->alloc = 0;
-@@ -1504,10 +1499,10 @@ static void add_rev_cmdline_list(struct rev_info *revs,
- 				 int whence,
- 				 unsigned flags)
+-	struct option *options = common_opts;
++	struct option *options;
++	static struct option builtin_multi_pack_index_verify_options[] = {
++		OPT_BIT(0, "progress", &opts.flags,
++			N_("force progress reporting"), MIDX_PROGRESS),
++		OPT_END(),
++	};
++	options = add_common_options(builtin_multi_pack_index_verify_options);
+
+ 	trace2_cmd_mode(argv[0]);
+
++	if (isatty(2))
++		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_verify_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+@@ -106,10 +117,18 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
+
+ static int cmd_multi_pack_index_expire(int argc, const char **argv)
  {
-+	static const char *synthetic = ".synthetic";
- 	while (commit_list) {
- 		struct object *object = &commit_list->item->object;
--		add_rev_cmdline(revs, object, oid_to_hex(&object->oid),
--				whence, flags);
-+		add_rev_cmdline(revs, object, synthetic, whence, flags);
- 		commit_list = commit_list->next;
- 	}
- }
-@@ -1753,7 +1748,7 @@ struct add_alternate_refs_data {
- static void add_one_alternate_ref(const struct object_id *oid,
- 				  void *vdata)
- {
--	const char *name = ".alternate";
-+	static const char *name = ".alternate";
- 	struct add_alternate_refs_data *data = vdata;
- 	struct object *obj;
- 
-@@ -1940,7 +1935,7 @@ static int handle_dotdot_1(const char *arg, char *dotdot,
- 			   struct object_context *a_oc,
- 			   struct object_context *b_oc)
- {
--	const char *a_name, *b_name;
-+	static const char *a_name, *b_name;
- 	struct object_id a_oid, b_oid;
- 	struct object *a_obj, *b_obj;
- 	unsigned int a_flags, b_flags;
--- 
-2.33.0.911.gbe391d4e11
+-	struct option *options = common_opts;
++	struct option *options;
++	static struct option builtin_multi_pack_index_expire_options[] = {
++		OPT_BIT(0, "progress", &opts.flags,
++			N_("force progress reporting"), MIDX_PROGRESS),
++		OPT_END(),
++	};
++	options = add_common_options(builtin_multi_pack_index_expire_options);
+
+ 	trace2_cmd_mode(argv[0]);
+
++	if (isatty(2))
++		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options, builtin_multi_pack_index_expire_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+@@ -126,6 +145,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ 	static struct option builtin_multi_pack_index_repack_options[] = {
+ 		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
+ 		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
++		OPT_BIT(0, "progress", &opts.flags,
++		  N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_END(),
+ 	};
+
+@@ -133,6 +154,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+
+ 	trace2_cmd_mode(argv[0]);
+
++	if (isatty(2))
++		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+ 			     builtin_multi_pack_index_repack_usage,
+@@ -154,8 +177,6 @@ int cmd_multi_pack_index(int argc, const char **argv,
+
+ 	git_config(git_default_config, NULL);
+
+-	if (isatty(2))
+-		opts.flags |= MIDX_PROGRESS;
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_multi_pack_index_options,
+ 			     builtin_multi_pack_index_usage,
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 3d4d9f10c3..86b7de2281 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -174,12 +174,12 @@ test_expect_success 'write progress off for redirected stderr' '
+ '
+
+ test_expect_success 'write force progress on for stderr' '
+-	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress write 2>err &&
++	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir write --progress 2>err &&
+ 	test_file_not_empty err
+ '
+
+ test_expect_success 'write with the --no-progress option' '
+-	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
++	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir write --no-progress 2>err &&
+ 	test_line_count = 0 err
+ '
+
+@@ -429,12 +429,12 @@ test_expect_success 'repack progress off for redirected stderr' '
+ '
+
+ test_expect_success 'repack force progress on for stderr' '
+-	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
++	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack --progress 2>err &&
+ 	test_file_not_empty err
+ '
+
+ test_expect_success 'repack with the --no-progress option' '
+-	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
++	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack --no-progress 2>err &&
+ 	test_line_count = 0 err
+ '
+
+@@ -618,7 +618,7 @@ test_expect_success 'expire progress off for redirected stderr' '
+ test_expect_success 'expire force progress on for stderr' '
+ 	(
+ 		cd dup &&
+-		GIT_PROGRESS_DELAY=0 git multi-pack-index --progress expire 2>err &&
++		GIT_PROGRESS_DELAY=0 git multi-pack-index expire --progress 2>err &&
+ 		test_file_not_empty err
+ 	)
+ '
+@@ -626,7 +626,7 @@ test_expect_success 'expire force progress on for stderr' '
+ test_expect_success 'expire with the --no-progress option' '
+ 	(
+ 		cd dup &&
+-		GIT_PROGRESS_DELAY=0 git multi-pack-index --no-progress expire 2>err &&
++		GIT_PROGRESS_DELAY=0 git multi-pack-index expire --no-progress 2>err &&
+ 		test_line_count = 0 err
+ 	)
+ '
+--
+2.33.0.96.g73915697e6
 
