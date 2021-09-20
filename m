@@ -2,147 +2,273 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1B5C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A8E5C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:05:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 236F260F58
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:53:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 651CE6115C
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242119AbhITPy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 11:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43466 "EHLO
+        id S237842AbhITQGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 12:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231184AbhITPyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 11:54:25 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F573C061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id y18so22814011ioc.1
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
+        with ESMTP id S232262AbhITQGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 12:06:47 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9480BC061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:05:20 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id w206so13757655oiw.4
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FgGHeyOaV2H54sv/o+eZB7wW+fHtrhCg8ybF6phI5uA=;
-        b=ywAOkPWZ4y1W5Qz1bwtUczBKbUorJ7mjetIMZOUPkjt5kgchbUoB+WC5XLOUeu60Zk
-         NU5f0GYr9c8v8wN8wUSogDgqgA/PCVLTHx+iYOwWt6lzDOhjnJXXaAFM3AKkJqw7ZoRq
-         Tr1iMPvL0W4ot8r+ba9NeOEd3BF8egvfzgwA3nHE2lNhB8eZN3GQYX5TAIFwUEkFIGxU
-         PhoKlAv69JowlYDN+rsYnQ8Qak1AQuP0HDXjXVpy1yonz2j/EWSsdihAgtSlUF3Ha1YG
-         B53BNcnz+nr3ycfPFr9eoHG5T5OqZPLsxaLmCGS1Ite+OOeTm+mNzkBnRDCnGfGQkIgS
-         mEkg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+V3QSUOG2icyoee3q4JgdvfwOa1lKNt0ZvValxZmXPk=;
+        b=ga5p5r2SQehVgf2Vd0nwmI+h5nyNmibIa9h+kCGMM2YW9Yyfu+LkPLlyIhFg46VB2Q
+         VlrMYOYzelzNa6TNN52OreoCzgyGivKuAumEad/KrVu13LUL9Myq8KyyQn0D2fCGVavk
+         5cSY5G2tn4/10et2fiXpYTGJlolFty7t2KTKcSMaA3f6xfi1gWdpaMADoT7ziE+83BbA
+         TTRF3s0NnnT2mnKGXImRxBwDPJo7PqOIyvC55rVLyZOuDXnFrd5GdKnMjaEexc8kvqjX
+         NQVSI8BwAJcZJluOljAwsAlVXVzQFdr+TsZD1Z31gQvcJQfR2/9YXyEghk+NZS3fWqrG
+         in+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FgGHeyOaV2H54sv/o+eZB7wW+fHtrhCg8ybF6phI5uA=;
-        b=eIVT9E7+N2OalR3osouyXqffyBVNJPkiKUaXOUrZUsiXayD+ZphzQxpN2ho7GNHJpt
-         oNH96Qk3361O7HczITO/6tx/wa/NmyfhKMpC4pKLvvcrxFsDWFPEJDT7JB7SmqelcA/y
-         4ZOHWCjYYR74YNhrJ2HPiiMksB8KjKnoTqGXQZK4R5KFyxEQJp5Cyd15dSCQTF65wBgf
-         X9XC1P3lb2PWY36kg6e5fzspto+iGeemCjSwjyuU853RugvRtTUGlX3MZmWTG94eAYMV
-         OCvrxN3Ntt4GfC15278HdyDtyNKv5QQeIGa5CNXhj5cKdCuoNyraJ42GUq/jU5WPGUKc
-         h2QA==
-X-Gm-Message-State: AOAM5326Un9h9Txio53/FZ5sh/RgIIi0asUbgrUE3S1TC9AUDHd9+kth
-        7ZQxBXQ7fDNyaeJ5TMpQY2p+YE+4FHPjDQ==
-X-Google-Smtp-Source: ABdhPJxKd4Dj7/Gf1scQDpG2HFAq5QWXNNUBLEdCY6lZ6cPlBa/4tT9yjpmyRpEEaXGl4nCFxc9H/g==
-X-Received: by 2002:a05:6638:339e:: with SMTP id h30mr13598171jav.148.1632153178063;
-        Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m5sm9182599ila.10.2021.09.20.08.52.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 08:52:57 -0700 (PDT)
-Date:   Mon, 20 Sep 2021 11:52:57 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Calbabreaker <calbabreaker@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Memory leak with sparse-checkout
-Message-ID: <YUiuWSXO1P3JwerH@nand.local>
-References: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+V3QSUOG2icyoee3q4JgdvfwOa1lKNt0ZvValxZmXPk=;
+        b=Cp7P277nvNixKhA6cGhW+S0h7gk+5qQoWNU+E9Pl+28NDWFBJwDgmB4sSXlXh18Itb
+         gOJHJLGEzPwEpHJ2i8G09rffeVdAcGIRcdZUCpJJJvu+tcXiWR5yvmNnn3lbQq0RtX3v
+         qIKGr+iazXgmNSk7AuaMDB6BwXlZw5jVsOzNpSzCf7TWdLOTAaUlrek/N4DvEqgHaQRK
+         JHx8PlpNDYK6ceUwgj/hPNeHmShA1s7qSvAD3ubBeQ9Yf9tJKoq/MAYafO1HLKrPOw2b
+         UMIThUzABin9iE3K7/0TaIN+LIyYBEUGg0lJ0Vwrvp03B5WaqMtlssxYAcQZddUmeMVU
+         /Kug==
+X-Gm-Message-State: AOAM533rCgKibm0XwDLviGhyMKhBv8pLzj71CCUz8ZCB3ELMw/SVIrdc
+        McWKvzYhrNMWpfOLpX5wCyk6svFtYEMKge/Nbz8=
+X-Google-Smtp-Source: ABdhPJxw/UV5sHbsDsMUCu3gRcICRS080lY58QSiH0fvuI57ZbRgnR1jKeLmTsQ/xCHq2cMD0QGFww+rW24VgyScv4k=
+X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr23635785oib.39.1632153919786;
+ Mon, 20 Sep 2021 09:05:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
+References: <pull.1036.git.1632006923.gitgitgadget@gmail.com>
+ <45bd05a945f034d03555f04a1ba85835482dc591.1632006923.git.gitgitgadget@gmail.com>
+ <acef3628-9542-d777-2534-577de9707e15@gmail.com>
+In-Reply-To: <acef3628-9542-d777-2534-577de9707e15@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Sep 2021 09:05:07 -0700
+Message-ID: <CABPp-BGnWeFiJ11x8j1J+yjgVB9r858S47y40h8cFQYF4TR1HA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] Split unpack_trees 'reset' flag into two for
+ untracked handling
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 09:45:14PM +0930, Calbabreaker wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
+On Mon, Sep 20, 2021 at 3:19 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> This was ran:
+> On 19/09/2021 00:15, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Traditionally, unpack_trees_options->reset was used to signal that it
+> > was okay to delete any untracked files in the way.  This was used by
+> > `git read-tree --reset`, but then started appearing in other places as
+> > well.  However, many of the other uses should not be deleting untracked
+> > files in the way.  Split this into two separate fields:
+> >     reset_nuke_untracked
+> >     reset_keep_untracked
+> > and, since many code paths in unpack_trees need to be followed for both
+> > of these flags, introduce a third one for convenience:
+> >     reset_either
+> > which is simply an or-ing of the other two.
 >
-> git clone https://github.com/Calbabreaker/piano --sparse
-> cd piano
-> git sparse-checkout add any_text
-> git checkout deploy-frontend
-> git sparse-checkout init --cone
-> git sparse-checkout add any_text
+> See [1] for an alternative approach that used an enum instead of adding
+> mutually exclusive flags.
 
-Thanks for the reproduction. An even simpler one may be (inside of any
-repository):
+Oh, interesting.  Any reason you didn't pursue that old series further?
 
-    git sparse-checkout init
-    git sparse-checkout add dir
-    git sparse-checkout init --cone
-    git sparse-checkout add dir
+> > Modify existing callers so that
+> >     read-tree --reset
+>
+> it would be nice if read-tree callers could choose whether they want to
+> remove untracked files or not - that could always be added later. This
+> patch changes the behavior of 'git read-tree -m -u' (and other commands)
+> so that they will overwrite ignored files - I'm in favor of that change
+> but it would be good to spell out the change in the commit message.
 
-The problem occurs because we keep existing entries when adding to the
-sparse-checkout list, and cone-mode patterns do not mix with
-non cone-mode patterns.
+Those commands made no distinction between untracked and ignored files
+previously, and overwrote all of them.  This patch changes those
+commands so that they stop overwriting untracked files, unless those
+files are ignored.  So, there's no change in behavior for ignored
+files, only for non-ignored untracked files.
 
-So after the first init and "add dir", your sparse-checkout file looks
-like:
+Your suggestion to point out the behavior relative to ignored files in
+the commit message, though, is probably a good idea.  I should mention
+that ignored files will continue to be removed by these commands.
 
-  /*
-  !/*/
-  dir
+> >     reset --hard
+> >     checkout --force
+>
+> I often use checkout --force to clear unwanted changes when I'm
+> switching branches, I'd prefer it if it did not remove untracked files.
 
-but then when we convert to cone-mode and try and add "dir" (which in
-cone-mode we'll convert to "/dir/"), we run into trouble when adding the
-existing "dir" entry. That's because add_patterns_cone_mode() calls
-insert_recursive_pattern() on every entry in the existing list,
-including "dir".
+I originally started down that path to see what it looked like, but
+Junio weighed in and explicitly called out checkout --force as being a
+command that should remove untracked files in the way.  See
+https://lore.kernel.org/git/xmqqr1e2ejs9.fsf@gitster.g/.  Seems you
+also felt that way previously, at
+https://lore.kernel.org/git/d4c36a24-b40c-a6ca-7a05-572ab93a0101@gmail.com/
+-- any reason for your change of opinion?
 
-So when we call insert_recursive_pattern() with any pattern list and
-path containing "dir", we first insert "dir" into the list, and then:
+> > continue using reset_nuke_untracked, but so that other callers,
+> > including
+> >     am
+> >     checkout without --force
+> >     stash  (though currently dead code; reset always had a value of 0)
+> >     numerous callers from rebase/sequencer to reset_head()
+> > will use the new reset_keep_untracked field.
+>
+> This is great. In the discussion around [1] there is a mention of 'git
+> checkout <pathspec>' which also overwrites untracked files. It does not
+> use unpack_trees() so is arguably outside the scope of what you're doing
+> here but it might be worth mentioning.
 
-  char *slash = strrchr(e->pattern, '/');
-  char *oldpattern = e->pattern;
+Oh, that's interesting.  Yeah, that's worth mentioning and perhaps digging into.
 
-  if (slash == e->pattern)
-    break;
-  // trim off a slash, repeat
+>
+> > [...]
+> > diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+> > index 485e7b04794..8b94e1aa261 100644
+> > --- a/builtin/read-tree.c
+> > +++ b/builtin/read-tree.c
+> > @@ -133,7 +133,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+> >                        N_("3-way merge if no file level merging required")),
+> >               OPT_BOOL(0, "aggressive", &opts.aggressive,
+> >                        N_("3-way merge in presence of adds and removes")),
+> > -             OPT_BOOL(0, "reset", &opts.reset,
+> > +             OPT_BOOL(0, "reset", &opts.reset_keep_untracked,
+> >                        N_("same as -m, but discard unmerged entries")),
+> >               { OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+> >                 N_("read the tree into the index under <subdirectory>/"),
+> > @@ -162,6 +162,11 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+> >       opts.head_idx = -1;
+> >       opts.src_index = &the_index;
+> >       opts.dst_index = &the_index;
+> > +     if (opts.reset_keep_untracked) {
+> > +             opts.dir = xcalloc(1, sizeof(*opts.dir));
+> > +             opts.dir->flags |= DIR_SHOW_IGNORED;
+> > +             setup_standard_excludes(opts.dir);
+> > +     }
+>
+> Does this clobber any excludes added by --exclude-per-directory?
 
-except slash is NULL because "dir" doesn't contain a slash. And that
-explains the problem you're seeing, because (a) we'll stay in that while
-loop forever, and (b) because each iteration allocates memory to
-accommodate the new pattern, so we'll eventually run out of memory.
+Oh, um...I've basically implemented a --exclude-standard and assumed
+it was passed, ignoring whatever setting of opts.dir was already set
+up by exclude-per-directory.  Oops.
 
-The wrong thing to do would be to handle this case by changing the
-conditional to "if (!slash || slash == e->pattern)", because we can't
-blindly carry forward some patterns which look like cone-mode patterns,
-since together the list of sparse-checkout entries may not represent a
-cone.
+> > diff --git a/builtin/reset.c b/builtin/reset.c
+> > index 43e855cb887..ba39c4882a6 100644
+> > --- a/builtin/reset.c
+> > +++ b/builtin/reset.c
+> > @@ -10,6 +10,7 @@
+> >   #define USE_THE_INDEX_COMPATIBILITY_MACROS
+> >   #include "builtin.h"
+> >   #include "config.h"
+> > +#include "dir.h"
+> >   #include "lockfile.h"
+> >   #include "tag.h"
+> >   #include "object.h"
+> > @@ -70,9 +71,19 @@ static int reset_index(const char *ref, const struct object_id *oid, int reset_t
+> >               break;
+> >       case HARD:
+> >               opts.update = 1;
+> > -             /* fallthrough */
+> > +             opts.reset_nuke_untracked = 1;
+> > +             break;
+> > +     case MIXED:
+> > +             opts.reset_keep_untracked = 1; /* but opts.update=0, so untracked left alone */
+> > +             break;
+> >       default:
+> > -             opts.reset = 1;
+> > +             BUG("invalid reset_type passed to reset_index");
+>
+> There is no case SOFT: but in that case we don't call reset_index() so
+> we're OK.
+>
+> > diff --git a/reset.c b/reset.c
+> > index 79310ae071b..0880c76aef9 100644
+> > --- a/reset.c
+> > +++ b/reset.c
+> > @@ -1,5 +1,6 @@
+> >   #include "git-compat-util.h"
+> >   #include "cache-tree.h"
+> > +#include "dir.h"
+> >   #include "lockfile.h"
+> >   #include "refs.h"
+> >   #include "reset.h"
+> > @@ -57,8 +58,12 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+> >       unpack_tree_opts.update = 1;
+> >       unpack_tree_opts.merge = 1;
+> >       init_checkout_metadata(&unpack_tree_opts.meta, switch_to_branch, oid, NULL);
+> > -     if (!detach_head)
+> > -             unpack_tree_opts.reset = 1;
+>
+> Unrelated to this patch but this looks dodgy to me. For 'git rebase
+> <upstream> <branch>' where <branch> is ahead of <upstream> we skip the
+> rebase and use reset_head() to checkout <branch> without 'detach_head'
+> set. I think this should be checking 'reset_hard' instead of 'detach_head'
+>
+> > diff --git a/unpack-trees.c b/unpack-trees.c
+> > index 5786645f315..d952eebe96a 100644
+> > --- a/unpack-trees.c
+> > +++ b/unpack-trees.c
+> > @@ -301,7 +301,7 @@ static int check_submodule_move_head(const struct cache_entry *ce,
+> >       if (!sub)
+> >               return 0;
+> >
+> > -     if (o->reset)
+> > +     if (o->reset_nuke_untracked)
+> >               flags |= SUBMODULE_MOVE_HEAD_FORCE;
+> >
+> >       if (submodule_move_head(ce->name, old_id, new_id, flags))
+> > @@ -1696,6 +1696,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+> >       if (len > MAX_UNPACK_TREES)
+> >               die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+> >
+> > +     if (o->reset_nuke_untracked && o->reset_keep_untracked)
+> > +             BUG("reset_nuke_untracked and reset_keep_untracked are incompatible");
+> > +
+> > +     o->reset_either = 0;
+> > +     if (o->reset_nuke_untracked || o->reset_keep_untracked)
+> > +             o->reset_either = 1;
+>
+> <bikeshed>
+> o->reset_either = o->reset_nuke_untracked | o->reset_keep_untracked
+> </bikeshed>
 
-(An example here is if we added /foo/bar/baz/* without the corresponding
-/foo/, !/foo/*, and so on).
+Goes away entirely if we adopt your enum suggestion.
 
-So I think the problem really is that we need to drop existing patterns
-when re-initializing the sparse-checkout in cone mode. We could try to
-recognize that existing patterns may already constitute a cone (and/or
-create a cone that covers the existing patterns).
+> > diff --git a/unpack-trees.h b/unpack-trees.h
+> > index 2d88b19dca7..c419bf8b1f9 100644
+> > --- a/unpack-trees.h
+> > +++ b/unpack-trees.h
+> > @@ -46,7 +46,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+> >   void clear_unpack_trees_porcelain(struct unpack_trees_options *opts);
+> >
+> >   struct unpack_trees_options {
+> > -     unsigned int reset,
+> > +     unsigned int reset_nuke_untracked,
+> > +                  reset_keep_untracked,
+> > +                  reset_either, /* internal use only */
+>
+> I think I prefer the enum approach in [1] but I'm biased and I'm not
+> sure it's worth getting excited about. Thanks for working on this it
+> will be great to have git stop overwriting untracked files so often.
 
-But I think the easiest thing (if a little unfriendly) would be to just
-drop them and start afresh when re-initializing the sparse-checkout in
-cone mode.
-
-I'm adding Stolee to the CC to see if he thinks that would be sensible
-behavior or not.
-
-Thanks,
-Taylor
+I think the enum approach makes sense; I'll try it out.
