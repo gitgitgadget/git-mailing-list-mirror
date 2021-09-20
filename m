@@ -2,139 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63204C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00073C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:43:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 340F461050
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D563760F6D
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbhIUB1i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 21:27:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51332 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229829AbhIUBZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:25:37 -0400
-Received: (qmail 2881 invoked by uid 109); 21 Sep 2021 01:24:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:24:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25964 invoked by uid 111); 21 Sep 2021 01:24:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:24:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 20 Sep 2021 21:24:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/2] pretty: colorize pattern matches in commit
- messages
-Message-ID: <YUk0OEXg36QXrkDm@coredump.intra.peff.net>
-References: <20210921003050.641393-1-someguy@effective-light.com>
- <20210921003050.641393-2-someguy@effective-light.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210921003050.641393-2-someguy@effective-light.com>
+        id S229845AbhIUBpS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 21:45:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232342AbhIUBj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:39:28 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49802C03D77C
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:50:58 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id u6-20020ad449a6000000b003798010ad14so193238513qvx.10
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 12:50:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=6WLZkpFwdzpj+dWZawLUytRsghV4uEmgxPnhxzHkgO0=;
+        b=jtBFw7kqRfEtJ9X03RVaGyPYS8pDn+qfIavlZTY4ykoBz0WjqrgsQ1/PVL0ogoNACN
+         goX1QP0+npuRvTjcfECblwrRlO2SULVMmHO+XU8u6KtAx7IdvBOJbDRaTZfpuxyKWfHQ
+         0z03loNdtFSRwzK6YyDq2gHud1HdPdIg0GPiLXTgDuc2uJ1WxoKIGUr/5HnrDjhmXinY
+         pjr7NPkmiAE3gceVoJ7IOuskbhhL3rgkXh3pPbqrsPLqIuBaTzoEp3wzqxha8mbK5sEu
+         ojDDKvQBvdoDjg9WoNKeTnb0SvX3yWLdcKoSaQGY3IZoXwKrCtH3gLvqChb/scKGYCsA
+         8SjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=6WLZkpFwdzpj+dWZawLUytRsghV4uEmgxPnhxzHkgO0=;
+        b=b2INjMXbExHgnESRjqYhUPZqYPIn9T9rBm+qMy9o/h/mmvlPWNKfMT0wHA4vKU/oUS
+         5o/1lOIQc2zK6uIH0sbaKj3FEVLUJJSBr2WpFSBUUydxF6CHQrdyWgVF8+2N7ljq+wjv
+         fplsb7OI57l1ZlXxE8V+W/c4Mlm/KCEYuITeIYA3V938KhWpoF/QkRrS2RO8EZ4i3Ort
+         VfNf5WocBbfNo7ZZld/3pJ6lhpWDSA3Ud1kLiaiH+y788NVHRkIl9obd9ApdVQtKN6vF
+         taR5KeUok7gkEICV2O3rhf2XZJLPh7f+uC0HtUQTgVIESzORdgtDBHVFVXS8wz7drcEd
+         ENHA==
+X-Gm-Message-State: AOAM533osr59UWJHLQY9mj2S40TsDDb9NZLXYoeLmKA8SJ7HZVgr/lMa
+        wrQKCkXPzStT8rAMNwWYqXwV+G5I4t7+/jQWYYkZ
+X-Google-Smtp-Source: ABdhPJxcKZ9Hc+K0P6kwN83OQ9/ywPWdU1PFA3mbw2rmxB0Dv3Sxnhtpua1XxTKSlPPd/xZ8rHV6Hm62lwnf0GwKu2L8
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:40d:: with SMTP id
+ z13mr26973940qvx.38.1632167457397; Mon, 20 Sep 2021 12:50:57 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 12:50:54 -0700
+In-Reply-To: <YUjbKt0Hw0ieHcaN@coredump.intra.peff.net>
+Message-Id: <20210920195054.66688-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <YUjbKt0Hw0ieHcaN@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: Re: [PATCH] clone: handle unborn branch in bare repos
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 08:30:50PM -0400, Hamza Mahfooz wrote:
+> So I don't think this is some clever or subtle behavior, but just a bug
+> in 4f37d45706 (clone: respect remote unborn HEAD, 2021-02-05).
 
-> Teach the pretty-printer code to highlight matches from the
-> "--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-> options (to view the last one, you may have to ask for --pretty=fuller).
-> 
-> Also, it must be noted that we are effectively greping the content twice,
-> however it only slows down "git log --author=^H" on this repository by
-> around 1-2% (compared to v2.33.0), so it should be a small enough slow
-> down to justify the addition of the feature.
+[snip]
 
-This might or might not be related, but one thing I noticed is that your
-earlier patch causes us to grep a lot more lines than we mean to (even
-if we are looking for "author" lines, it greps every header line). That
-might contribute to the slowdown. Likewise, it calls strip_timestamp()
-on every line, even if it does not start with "author").
+> But the unborn case has
+> an additional side effect of calling create_symref(), and we want that
+> to happen whether we are bare or not.
 
-> +static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
-> +					 char *buf, size_t buflen)
-> +{
-> +	strbuf_addstr(sb, color);
-> +	strbuf_add(sb, buf, buflen);
-> +	if (*color)
-> +		strbuf_addstr(sb, GIT_COLOR_RESET);
-> +}
+Thanks for the analysis. Indeed, I missed the fact that we need the
+create_symref() side effect whether the repository is bare or not.
 
-You could take "buf" as a "const char *" here. That doesn't matter too
-much for now, but see below.
-
-> +static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-> +				   const char *line, size_t linelen,
-> +				   int color, enum grep_context ctx,
-> +				   enum grep_header_field field)
-> +{
-> +	char *buf, *eol;
-> +	const char *line_color, *match_color;
-> +	regmatch_t match;
-> +	int eflags = 0;
-> +
-> +	if (!opt || !want_color(color) || opt->invert) {
-> +		strbuf_add(sb, line, linelen);
-> +		return;
-> +	}
-> +
-> +	buf = (char *)line;
-> +	eol = buf + linelen;
-
-OK, so we got rid of the copy of "line", which is nice. But we are
-casting away const-ness, which is a potential red flag (is somebody
-going to modify this string, even though we promised our caller we would
-not?). We'd probably want a comment to explain why we are doing so, and
-why it is OK (e.g., if somebody in the call stack modifies it
-temporarily).
-
-More on this in a moment.
-
-> +	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-> +		if (match.rm_so == match.rm_eo)
-> +			break;
-> +
-> +		strbuf_grow(sb, strlen(line_color) + strlen(match_color) +
-> +			    (2 * strlen(GIT_COLOR_RESET)));
-> +		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
-> +		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
-> +				      match.rm_eo - match.rm_so);
-
-As Eric mentioned, these strbuf_grow() calls can go away. The whole
-point of strbuf is that we do not have to clutter the code with manual
-size computations, because it will do the right thing automatically.
-
-Sometimes you can get extra performance by pre-sizing the strbuf, but:
-
-  1. I'd be surprised if we did in this case. We're writing into a
-     strbuf that will receive the whole per-commit output, so any growth
-     cost due to a couple of short strings here would be amortized
-     anyway.
-
-  2. The computation here doesn't represent the needed growth anyway.
-     When we call strbuf_add_with_color(), it's going to add not just
-     the colors but all of the data for the line itself.
-
-So at best it's doing nothing, and at worst it is making the code harder
-to understand.
-
-> +	if (eflags) {
-> +		strbuf_grow(sb, strlen(line_color) + strlen(GIT_COLOR_RESET));
-> +		strbuf_add_with_color(sb, line_color, buf, eol - buf);
-> +	} else
-> +		strbuf_add(sb, buf, eol - buf);
-> +}
-
-Ditto here (we grow for the colors, but also end up adding "eol - buf"
-bytes).
-
--Peff
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
