@@ -2,351 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02747C433FE
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 00:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 951A0C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 00:55:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D569760F43
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 00:32:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76A4B61211
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 00:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233343AbhIUAeZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 20:34:25 -0400
-Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:55501 "EHLO
-        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236770AbhIUAcY (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Sep 2021 20:32:24 -0400
-Received: from MTA-09-4.privateemail.com (mta-09-1.privateemail.com [198.54.122.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id C1CDB80069
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 20:30:56 -0400 (EDT)
-Received: from mta-09.privateemail.com (localhost [127.0.0.1])
-        by mta-09.privateemail.com (Postfix) with ESMTP id 0FFB418000B7;
-        Mon, 20 Sep 2021 20:30:55 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.242])
-        by mta-09.privateemail.com (Postfix) with ESMTPA id 9377018000B0;
-        Mon, 20 Sep 2021 20:30:54 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v6 2/2] pretty: colorize pattern matches in commit messages
-Date:   Mon, 20 Sep 2021 20:30:50 -0400
-Message-Id: <20210921003050.641393-2-someguy@effective-light.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210921003050.641393-1-someguy@effective-light.com>
-References: <20210921003050.641393-1-someguy@effective-light.com>
-MIME-Version: 1.0
+        id S233944AbhIUA4n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 20:56:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48612 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235734AbhIUAyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 20:54:43 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0186C1030BC
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:57:40 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id u18so30383392wrg.5
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:57:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=98adKlZeSP1FGR/EWOmc2K2ZkC83WpcGpjkimPim25Q=;
+        b=NAtyMriIPazZS2ns9INIacHPLKUCDpGxtoCsUe2g7VU1Mi+fyIF5ssjkpO92T3B/BD
+         lySrbHYHkURVcozCibxw+O8JVstIhtfg2ZJFI+As8G2vfyqmFB2CqzbLRTExH63MwQTn
+         WZB51IjmsUYINsOJ6+8AGGlFF7M9L78QN/t7nBByQZ4LeW23D3RqXCl9GSWCpkDtb78X
+         SYyohXwfFZmj0GbhrBH+O0MovlmUMfCK4FaXefdSOMeK4orCADNSFSu43u8RihS39Sq7
+         8QhN9QCF430aI4hXkskeO+tXKdb+fNzNdQ6o8InC6HTcNeJTqTllyoNbC5A6c+Zt4GqX
+         LMow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=98adKlZeSP1FGR/EWOmc2K2ZkC83WpcGpjkimPim25Q=;
+        b=scf0W69IeFAgCK2BVtDpHjWoiykR9Q+QArhQ7lYcfCQh7J57WrbDYj1Jl0sVv8nzyc
+         t7vusQb3aqXh/yNUbpK/dlZ/YIxnOLbZw9Y4IVo4NCQTgCgwp4lCQrXiub8KTS/1tadf
+         027ZGmpzYvkmsYHm4hppxGh7vq35fbgoStkvjLwcgoZ2jZYsBFcj2nMhQi21vWrMZ+Xp
+         haB3mopRFyF8fDlYwpIWe3VPKzBiwyZle8CGyyRUBBlphfAnijAKC1/VDoQJHB4+13Ra
+         0zRivNUc6AaE15WYvg0d/91omZJpMsw+FFyZ3/FZIcIrmWX32vLr4rKz2dN+cVgKSftc
+         08+A==
+X-Gm-Message-State: AOAM530A6AnV6m5Qafi3ycfUn6abE0qkMc8c/0xAtf3hmoFL4gcCMkod
+        Y3z2QLyYP5CbjkT2UAmVzcMpe1lAHas=
+X-Google-Smtp-Source: ABdhPJzsQ4RgfW60jGAtwXhZPs7m5BmKzg8O9M9h9w6lYd3jsVCjej4cghXySSJjr4vSSXJ3vLyGZg==
+X-Received: by 2002:a05:600c:4a16:: with SMTP id c22mr339137wmp.72.1632160659329;
+        Mon, 20 Sep 2021 10:57:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b187sm219663wmd.33.2021.09.20.10.57.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 10:57:39 -0700 (PDT)
+Message-Id: <pull.1043.git.1632160658.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 20 Sep 2021 17:57:35 +0000
+Subject: [PATCH 0/3] Sparse checkout: fix mixed-mode pattern issues
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, calbabreaker@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git log" command limits its output to the commits that contain strings
-matched by a pattern when the "--grep=<pattern>" option is used, but unlike
-output from "git grep -e <pattern>", the matches are not highlighted,
-making them harder to spot.
+This fixes a memory leak reported in [1], but also fixes some behavior
+concerns around the sparse-checkout command when the sparse-checkout file
+does not use cone mode patterns, but cone mode is enabled.
 
-Teach the pretty-printer code to highlight matches from the
-"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-options (to view the last one, you may have to ask for --pretty=fuller).
+[1]
+https://lore.kernel.org/git/CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com/
 
-Also, it must be noted that we are effectively greping the content twice,
-however it only slows down "git log --author=^H" on this repository by
-around 1-2% (compared to v2.33.0), so it should be a small enough slow
-down to justify the addition of the feature.
+ 1. The first patch fixes the OOM as recommended by Taylor.
+ 2. The second patch changes the behavior of 'git sparse-checkout init
+    --cone' to overwrite the sparse-checkout file if the patterns are not in
+    cone mode.
+ 3. The third patch causes 'git sparse-checkout add' to fail if cone mode is
+    enabled but the existing patterns are not in cone mode. This also
+    requires strengthening our pattern filtering to require the first
+    character be a slash ('/'), which should have been there from the start.
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
-v2: make the commit message whole (add the missing ingredients), rename
-    append_matched_line() to append_line_with_color(), use
-    colors[GREP_COLOR_MATCH_SELECTED] instead of
-    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
-    customized, don't copy strings to a buffer when not coloring in
-    append_line_with_color(), rename next_match() to grep_next_match(),
-    repurpose grep_next_match()/match_one_pattern() for use in
-    append_line_with_color() (allowing us to remove duplicated matching
-    code in append_line_with_color()), document how to customize the
-    feature and modify some of the tests to fit the feature better.
+Thanks, -Stolee
 
-v3: fix a formatting issue with the added documentation.
+Derrick Stolee (3):
+  sparse-checkout: fix OOM error with mixed patterns
+  sparse-checkout: clear patterns when switching modes
+  sparse-checkout: refuse to add to bad patterns
 
-v4: add strbuf_add_with_color(), use the correct color code scheme in the
-    unit tests and add more unit tests.
+ builtin/sparse-checkout.c          | 18 +++++++++++++++---
+ dir.c                              |  2 +-
+ t/t1091-sparse-checkout-builtin.sh | 22 ++++++++++++++++++++--
+ 3 files changed, 36 insertions(+), 6 deletions(-)
 
-v5: separate grep changes from pretty changes and add some performance
-    analysis in the commit message.
 
-v6: put the documentation in the correct place, cleanup pretty.c and
-    format the unit tests according to the current convention.
----
- Documentation/config/color.txt |   7 ++-
- pretty.c                       | 107 +++++++++++++++++++++++++++++----
- t/t4202-log.sh                 |  51 ++++++++++++++++
- 3 files changed, 151 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index e05d520a86..91d9a9da32 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -104,9 +104,12 @@ color.grep.<slot>::
- `matchContext`;;
- 	matching text in context lines
- `matchSelected`;;
--	matching text in selected lines
-+	matching text in selected lines. Also, used to customize the following
-+	linkgit:git-log[1] subcommands: `--grep`, `--author` and `--committer`.
- `selected`;;
--	non-matching text in selected lines
-+	non-matching text in selected lines. Also, used to customize the
-+	following linkgit:git-log[1] subcommands: `--grep`, `--author` and
-+	`--committer`.
- `separator`;;
- 	separators between fields on a line (`:`, `-`, and `=`)
- 	and between hunks (`--`)
-diff --git a/pretty.c b/pretty.c
-index 73b5ead509..943a2d2ee2 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,6 +431,56 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
-+					 char *buf, size_t buflen)
-+{
-+	strbuf_addstr(sb, color);
-+	strbuf_add(sb, buf, buflen);
-+	if (*color)
-+		strbuf_addstr(sb, GIT_COLOR_RESET);
-+}
-+
-+static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-+				   const char *line, size_t linelen,
-+				   int color, enum grep_context ctx,
-+				   enum grep_header_field field)
-+{
-+	char *buf, *eol;
-+	const char *line_color, *match_color;
-+	regmatch_t match;
-+	int eflags = 0;
-+
-+	if (!opt || !want_color(color) || opt->invert) {
-+		strbuf_add(sb, line, linelen);
-+		return;
-+	}
-+
-+	buf = (char *)line;
-+	eol = buf + linelen;
-+
-+	line_color = opt->colors[GREP_COLOR_SELECTED];
-+	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
-+
-+	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_grow(sb, strlen(line_color) + strlen(match_color) +
-+			    (2 * strlen(GIT_COLOR_RESET)));
-+		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
-+		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
-+				      match.rm_eo - match.rm_so);
-+		buf += match.rm_eo;
-+		eflags = REG_NOTBOL;
-+	}
-+
-+	if (eflags) {
-+		strbuf_grow(sb, strlen(line_color) + strlen(GIT_COLOR_RESET));
-+		strbuf_add_with_color(sb, line_color, buf, eol - buf);
-+	} else
-+		strbuf_add(sb, buf, eol - buf);
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
-@@ -496,9 +546,28 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		struct strbuf id;
-+		enum grep_header_field field = GREP_HEADER_FIELD_MAX;
-+		struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
-+		strbuf_init(&id, namelen + maillen + 4);
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: ", what);
-+		if (pp->fmt == CMIT_FMT_FULLER)
-+			strbuf_addchars(sb, ' ', 4);
-+
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
-+				       GREP_CONTEXT_HEAD, field);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1939,8 +2008,9 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
-+				 int color, int tabwidth, const char *line,
-+				 int linelen)
- {
- 	const char *tab;
- 
-@@ -1957,7 +2027,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_line_with_color(sb, opt, line, tab - line, color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1972,7 +2044,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
- 	 */
--	strbuf_add(sb, line, linelen);
-+	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
-+			       GREP_HEADER_FIELD_MAX);
- }
- 
- /*
-@@ -1984,11 +2057,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
-+				     line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_line_with_color(sb, opt, line, linelen, pp->color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2006,7 +2084,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2027,14 +2107,17 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
--					     line, linelen);
-+			strbuf_add_tabexpand(sb, opt, pp->color,
-+					     pp->expand_tabs_in_log, line,
-+					     linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_line_with_color(sb, opt, line, linelen,
-+					       pp->color, GREP_CONTEXT_BODY,
-+					       GREP_HEADER_FIELD_MAX);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9dfead936b..3d240bba57 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -449,6 +449,57 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
- 	)
- '
- 
-+test_expect_success 'log --author' '
-+	cat >expect <<-\EOF &&
-+	Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
-+	EOF
-+	git log -1 --color=always --author="A U" >log &&
-+	grep Author log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --committer' '
-+	cat >expect <<-\EOF &&
-+	Commit:     C O Mitter <committer@<BOLD;RED>example<RESET>.com>
-+	EOF
-+	git log -1 --color=always --pretty=fuller --committer="example" >log &&
-+	grep "Commit:" log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log -i --grep with color' '
-+	cat >expect <<-\EOF &&
-+	    <BOLD;RED>Sec<RESET>ond
-+	    <BOLD;RED>sec<RESET>ond
-+	EOF
-+	git log --color=always -i --grep=^sec >log &&
-+	grep -i sec log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.selected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <GREEN>th<RESET><BOLD;RED>ir<RESET><GREEN>d<RESET>
-+	EOF
-+	git -c color.grep.selected="green" log --color=always --grep=ir >log &&
-+	grep ir log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.matchSelected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <BLUE>i<RESET>n<BLUE>i<RESET>t<BLUE>i<RESET>al
-+	EOF
-+	git -c color.grep.matchSelected="blue" log --color=always --grep=i >log &&
-+	grep al log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
+base-commit: 4c719308ce59dc70e606f910f40801f2c6051b24
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1043%2Fderrickstolee%2Fsparse-checkout-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1043/derrickstolee/sparse-checkout-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1043
 -- 
-2.33.0
-
+gitgitgadget
