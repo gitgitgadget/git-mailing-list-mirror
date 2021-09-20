@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEDCCC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 23:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 831F0C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 23:37:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8AC061159
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 23:37:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AC3E60F48
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 23:37:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243207AbhITXiz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 19:38:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60706 "EHLO
+        id S244041AbhITXjC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 19:39:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbhITXgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 19:36:53 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD686C0EFE40
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:45:46 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id d21so31976262wra.12
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:45:46 -0700 (PDT)
+        with ESMTP id S238967AbhITXhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 19:37:02 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BB7C0EFE41
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:45:47 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id x6so31998178wrv.13
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 10:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+Lk/tCvJ2GLavDDUgLiOQCJkKvagb00pcWxmfnFgwgQ=;
-        b=lv0NqZqGYk0FN07uPhaqY5UtMMdiYPDZaE88Ci7WIyOdij/DPbLpglVHzOLAcWB9Wt
-         0qhWMVeD7CvNVMySiCEpN4Sg9gYAz33Gp9WeQKJEUi4jl0dNV3bjryFy6W29p3ZSjtBL
-         AYqlyhNbT7B0wplDL2a/UOemMqmG05wFWvEEf5eF99brCucu6nF2f46RCgpZWQCDUmOj
-         LmuTxvt44sbBgxmAtAhdU8UxnuhbcPEkaUdbJ1o8EEkSozhHgsWnOMdKPcaqtfwJLfwX
-         ccfeKF6XGdE3u30YkuWzg4gT53Ra7clQxpNsGAOGJ29ydLX4XLwoW03Gz8bAC2UiYAtv
-         F56Q==
+        bh=S+9e4DSe77dvVgiDAcpgdRbCJzwJrdluslPwAilivOc=;
+        b=HJQ1PXDHwhY1PzL6FWcVZk4dLWMjdbqYtonPiPwOWaZxJmNLG92DzZc8+kZp1Jdf6W
+         2D0HUzXT2de1nRK8wd5B7CQjUrtOQbPH+v+XQFwqVUrXWLscqiYUFxani5nRGZSPpyUJ
+         r8+Glfa26aQsgt0XlJqPwLRbGi7eE41oIAAfivdEh9YB5qNp+QV3yPd3L32R3BYqLf1f
+         mT0LqvesYOa+Y1AysU1qySsk81w1J5jHQkLAaydXG9PazQ2tUYky+JEIsSf9Q9UvoBGI
+         /Es9irJimEsksHTD/Jo9a2li59m5f9mutLgHxPvut8F3sq7MAgt142vNnXeIaW6gtBCr
+         DVhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+Lk/tCvJ2GLavDDUgLiOQCJkKvagb00pcWxmfnFgwgQ=;
-        b=hcARsqggZwFIDs4LAROsePTQlEMxvV0SJu2xOamBMqmWLjR9dE88kSYQIgZv+dZNrk
-         sTwxPRhIZlSl4wXSpeqFIOdSjgpyw+arXkbLQZQT15EDjKTcC6gKnvRXsC5eLNEWKzon
-         rXq/5J1kp29zzjXO7I1QhUVSV8vCytQSspJisX01wkmBqvQAdAU165XHHmvN5BXKUlzg
-         f7lmSv4aZEG9zf51MmkAev6rFtAzgk/cRWSQ/IRl2+Bt8ZaGRySXTzEUsneRDE3kmGha
-         6gMTj7rK2dXbTwYgMXKTHvllm0kS4z/cIgHWGu1w9g21jHWd1iXJGDUFrNmq+KJ1dxrO
-         KQ3w==
-X-Gm-Message-State: AOAM533xnv7d44+qiNK7OppYaXH10znVUy23eq1MZlvFbYAicRJMEXtQ
-        oTNvUvYlq5Vvs6UmIiXBZrrt97O/jWE=
-X-Google-Smtp-Source: ABdhPJwAaQXx+/yXuEnwg/osdUFeGt85q0csvAVmO3KAZfFzGNKjpyjijWHi/ELlNc71WaKu+KpcgQ==
-X-Received: by 2002:a1c:7201:: with SMTP id n1mr258990wmc.19.1632159945530;
-        Mon, 20 Sep 2021 10:45:45 -0700 (PDT)
+        bh=S+9e4DSe77dvVgiDAcpgdRbCJzwJrdluslPwAilivOc=;
+        b=w3Vt6gaSl8oijQcLJ6+kYS8710eZODXWt6swqMzUbqJGajLl8mKv+UgzjEQhWRQzSl
+         BrkPN018BM1TF78N1SI5x14yTZlybLEJCCJoy3Tgw56pJa9sowTH9JxBPXE9Ltkg0Bk7
+         70eHHdnB7Si42hEftX46p+EJ2sNacIV3pnu5kgIvox+7lgc24VDWBs1e8gnW1FoTLT6t
+         MgcYs0cyt5FT6mr9QawMwAGX5BVF1henYTy6m4EIIRe8Lxnq2hAZ1QHiU8JnYlDdMmZK
+         0ffagfMo5OppUUBdDTXBozjsiMIudv+lnRZYmGYVH5wkmRUZNEBjeAt7hgRUl0gopk29
+         4KvQ==
+X-Gm-Message-State: AOAM530P3jER8w5mxGEOChY/DOTmpIJj2Og8Lpf/yTLmBqpcplhQLF9w
+        uICjaVtAbBERrr2bpgb8n6uvwPx5Ee4=
+X-Google-Smtp-Source: ABdhPJwu29SBF2Piz52fUa4a126gBjUEuDqB3QjN/x+XqAhdzGMCpUyAA4co1iFlWt0J8JYXBgalVw==
+X-Received: by 2002:adf:d1c4:: with SMTP id b4mr27401066wrd.233.1632159946197;
+        Mon, 20 Sep 2021 10:45:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5sm196460wmp.26.2021.09.20.10.45.45
+        by smtp.gmail.com with ESMTPSA id i27sm172387wmb.40.2021.09.20.10.45.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 20 Sep 2021 10:45:45 -0700 (PDT)
-Message-Id: <131beda1bc32d61b1063a51210048feb26755bb2.1632159937.git.gitgitgadget@gmail.com>
+Message-Id: <837a93148936d3138be47bff78069373342ce3d8.1632159937.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
 References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
         <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Sep 2021 17:45:33 +0000
-Subject: [PATCH v3 10/14] add: update --renormalize to skip sparse paths
+Date:   Mon, 20 Sep 2021 17:45:34 +0000
+Subject: [PATCH v3 11/14] rm: add --sparse option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,63 +79,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-We added checks for path_in_sparse_checkout() to portions of 'git add'
-that add warnings and prevent stagins a modification, but we skipped the
---renormalize mode. Update renormalize_tracked_files() to ignore cache
-entries whose path is outside of the sparse-checkout cone (unless
---sparse is provided). Add a test in t3705.
+As we did previously in 'git add', add a '--sparse' option to 'git rm'
+that allows modifying paths outside of the sparse-checkout definition.
+The existing checks in 'git rm' are restricted to tracked files that
+have the SKIP_WORKTREE bit in the current index. Future changes will
+cause 'git rm' to reject removing paths outside of the sparse-checkout
+definition, even if they are untracked or do not have the SKIP_WORKTREE
+bit.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/add.c                  |  4 +++-
- t/t3705-add-sparse-checkout.sh | 12 +++++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ Documentation/git-rm.txt      |  6 ++++++
+ builtin/rm.c                  |  8 ++++++--
+ t/t3602-rm-sparse-checkout.sh | 12 ++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index f87b8134b67..f8f0dfa4046 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -154,7 +154,9 @@ static int renormalize_tracked_files(const struct pathspec *pathspec, int flags)
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 26e9b284704..81bc23f3cdb 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -72,6 +72,12 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+ --ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
+ 
++--sparse::
++	Allow updating index entries outside of the sparse-checkout cone.
++	Normally, `git rm` refuses to update index entries whose paths do
++	not fit within the sparse-checkout cone. See
++	linkgit:git-sparse-checkout[1] for more.
++
+ -q::
+ --quiet::
+ 	`git rm` normally outputs one line (in the form of an `rm` command)
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 8a24c715e02..4208f3f9a5f 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -237,6 +237,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 
+ static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
+ static int ignore_unmatch = 0, pathspec_file_nul;
++static int include_sparse;
+ static char *pathspec_from_file;
+ 
+ static struct option builtin_rm_options[] = {
+@@ -247,6 +248,7 @@ static struct option builtin_rm_options[] = {
+ 	OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive removal")),
+ 	OPT_BOOL( 0 , "ignore-unmatch", &ignore_unmatch,
+ 				N_("exit with a zero status even if nothing matched")),
++	OPT_BOOL(0, "sparse", &include_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
+ 	OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+ 	OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+ 	OPT_END(),
+@@ -298,7 +300,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	ensure_full_index(&the_index);
  	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
- 
+ 		const struct cache_entry *ce = active_cache[i];
 -		if (ce_skip_worktree(ce))
-+		if (!include_sparse &&
-+		    (ce_skip_worktree(ce) ||
-+		     !path_in_sparse_checkout(ce->name, &the_index)))
++
++		if (!include_sparse && ce_skip_worktree(ce))
  			continue;
- 		if (ce_stage(ce))
- 			continue; /* do not touch unmerged paths */
-diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-index 9347705ad1c..10969efc23e 100755
---- a/t/t3705-add-sparse-checkout.sh
-+++ b/t/t3705-add-sparse-checkout.sh
-@@ -172,6 +172,9 @@ test_expect_success 'git add fails outside of sparse-checkout definition' '
- 	test_must_fail git add --chmod=+x sparse_entry &&
- 	test_sparse_entry_unstaged &&
- 
-+	test_must_fail git add --renormalize sparse_entry &&
-+	test_sparse_entry_unstaged &&
-+
- 	# Avoid munging CRLFs to avoid an error message
- 	git -c core.autocrlf=input add --sparse sparse_entry 2>stderr &&
- 	test_must_be_empty stderr &&
-@@ -181,7 +184,14 @@ test_expect_success 'git add fails outside of sparse-checkout definition' '
- 	git add --sparse --chmod=+x sparse_entry 2>stderr &&
- 	test_must_be_empty stderr &&
- 	test-tool read-cache --table >actual &&
--	grep "^100755 blob.*sparse_entry\$" actual
-+	grep "^100755 blob.*sparse_entry\$" actual &&
-+
-+	git reset &&
-+
-+	# This will print a message over stderr on Windows.
-+	git add --sparse --renormalize sparse_entry &&
-+	git status --porcelain >actual &&
-+	grep "^M  sparse_entry\$" actual
+ 		if (!ce_path_match(&the_index, ce, &pathspec, seen))
+ 			continue;
+@@ -322,7 +325,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 				seen_any = 1;
+ 			else if (ignore_unmatch)
+ 				continue;
+-			else if (matches_skip_worktree(&pathspec, i, &skip_worktree_seen))
++			else if (!include_sparse &&
++				 matches_skip_worktree(&pathspec, i, &skip_worktree_seen))
+ 				string_list_append(&only_match_skip_worktree, original);
+ 			else
+ 				die(_("pathspec '%s' did not match any files"), original);
+diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
+index e9e9a15c74c..493c8f636b8 100755
+--- a/t/t3602-rm-sparse-checkout.sh
++++ b/t/t3602-rm-sparse-checkout.sh
+@@ -43,6 +43,18 @@ test_expect_success 'recursive rm does not remove sparse entries' '
+ 	test_cmp expected actual
  '
  
- test_expect_success 'add obeys advice.updateSparsePath' '
++test_expect_success 'recursive rm --sparse removes sparse entries' '
++	git reset --hard &&
++	git sparse-checkout set "sub/dir" &&
++	git rm --sparse -r sub &&
++	git status --porcelain -uno >actual &&
++	cat >expected <<-\EOF &&
++	D  sub/d
++	D  sub/dir/e
++	EOF
++	test_cmp expected actual
++'
++
+ test_expect_success 'rm obeys advice.updateSparsePath' '
+ 	git reset --hard &&
+ 	git sparse-checkout set a &&
 -- 
 gitgitgadget
 
