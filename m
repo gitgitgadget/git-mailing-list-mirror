@@ -2,111 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9367AC433F5
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 11:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F0AC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 12:15:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F11F61077
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 11:40:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF05F6108E
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 12:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237010AbhITLlv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 07:41:51 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:62649 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232528AbhITLlu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 07:41:50 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mSHeo-0004iC-6o; Mon, 20 Sep 2021 12:40:22 +0100
-Subject: Re: Trimming 'deadheads' (TREESAME 2nd parent) from revision walks?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-References: <01fe28d8-2887-bc42-c91b-c3237b5186a7@iee.email>
- <YUeImAqA0SZAdA2R@coredump.intra.peff.net>
- <87k0jcb01k.fsf@evledraar.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <88dfc31a-187c-6609-0df6-d6b970b1a136@iee.email>
-Date:   Mon, 20 Sep 2021 12:40:21 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S233599AbhITMQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 08:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48006 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233217AbhITMQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 08:16:54 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17EF0C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 05:15:28 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id t10so60685290lfd.8
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 05:15:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=JNi+PxUlcBTxhDNaPrhg9evTg+Cw5covteG/A57Bf90=;
+        b=ikjE4pvLEoAxV27/Ju6hz6yfj3/G1kSkAyXFrcaFukS4el4EMPbe/gtCZYZuuCAria
+         lW1j3kVXxo0kc+n0WHMX0do5CyGXrMqPvx6tg6WTSCwgaBSYewK+68uER+S4TX/rA080
+         hKk49jmCeWlGfR6MNMBt225N14aYftI2wLYw9xRR9lHlEiK7AUkOnQKl8XxnP2GO7wcY
+         RPUuUOohhQGBya6DZOGdCiVNfLLu6sDmH/pYTeJJQrDapn1tdzOf4BjmCq31U2jbr90D
+         O6fF3a3UniJb1ppuJv9VuGXL9fd4OMe/3lkn7vYXVB+9XZPpLtd5yKg019v48xpoSgtQ
+         Y8Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=JNi+PxUlcBTxhDNaPrhg9evTg+Cw5covteG/A57Bf90=;
+        b=4jnuaYBCUNFRX7QEaqt+C+MVHpzXRj+DnZ/VZPZeM5yQ+BPcYqJeilVYy0eoLOyQQ7
+         ddcmLeXM/HJVCn0dcA3msLm0oaXoVV4ujLVJYIm/jFjofObKrgNXuOYiq3zp5fReV1V1
+         cQFiz+ezy8+or7psb96YudNOsGgg7EI+ZyYrXVDUITWWKGXIJiA/0/9wfc5Xhr5L0Pax
+         MpSZvHo0sES/KVgiXHOvJLCdgzsnfIbUBBUzgoAC1DpUza0/uh4J5FzqTUVhNiCCkx7K
+         tsAV+dHxlHlP+H9Ad0PFPm7J2MPllfN8Ezv0RZsnOW4omvfsr2ClgKOHVvBWEX0LA5wL
+         +seA==
+X-Gm-Message-State: AOAM532JWwFX3irHQeJDqG1aWeAlqKai2V8K1X2sCzZqYixYkOD+yhlX
+        M01X1WYRWgFo7LqS9/ealBPGqKv+D/sAz1JP7FA6JOm9D3AwhQ==
+X-Google-Smtp-Source: ABdhPJyQ3pM1q2tYNxQPUtEoRPzLQ8BUbiFIeTCyBhVrvK/f+ApiM/Vy06bEWHAtwm20/Mn7b8/7pSXqCE3JOg3AAOE=
+X-Received: by 2002:a19:f00d:: with SMTP id p13mr19636135lfc.239.1632140125963;
+ Mon, 20 Sep 2021 05:15:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87k0jcb01k.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+From:   Calbabreaker <calbabreaker@gmail.com>
+Date:   Mon, 20 Sep 2021 21:45:14 +0930
+Message-ID: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
+Subject: Memory leak with sparse-checkout
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/09/2021 00:44, Ævar Arnfjörð Bjarmason wrote:
-> On Sun, Sep 19 2021, Jeff King wrote:
->
->> On Sat, Sep 18, 2021 at 03:18:47PM +0100, Philip Oakley wrote:
->>
->>> Is there a method within `git rev-list` to trim side branch merges where
->>> the merge's tree is identical to the first parent's commit-tree?
->>> [...]
->>> From my reading of the `rev-list` manual this is similar to the <paths>
->>> TREESAME capability, but without specifying any paths (maybe just `.` ?).
->> Yes, I'd just do "git log ." for this. I don't think there's another way
->> to trigger simplification. In try_to_simplify_commit(), we bail early
->> unless revs->prune is set, and that is set only by the presence of
->> pathspecs or by --simplify-by-decoration.
->>
->>> * Is there a proper term for the treesame condition of the commit-tree
->>> (as recorded in the commit object)?
->> In a one-parent commit, I'd just call it an empty commit. For a merge,
->> it is really I'd probably call it an "ours" merge, since one obvious way
->> to get there is with "git merge -s ours" (of course you can also just
->> resolve all conflicts in favor of one parent). I don't know of another
->> name (besides treesame, of course, but that generally implies a
->> particular scope of interest given by a pathspec).
-> Isn't it a "theirs" merge, not "ours"? Per the description Philip has:
->
->     In the Git-for Windows repository, the previous releases are
->     'deadheaded' by merging with the upstream git, and simply taking the
->     upstream's tree unconditionally[...]
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-In that sense, yes. From the gfw branch's perspective, the merge is 100%
-that of git/master. It provides an 'out-of-line' commit onto which the
-gfw patches can be rebased.
-It's almost identical to a ball-of-mud progressive (incremental) merge,
-but neatly refactored.
->
-> I.e. if you're taking your tree unconditionally it's -s ours, but -s
-> theirs for theirs. Except of course for the small matter of us not
-> having a "-s theirs" yet.
+This was ran:
 
-There used to be a `theirs` strategy but (IIRC) it was removed by Linus
-years ago (before I discovered git and it's ability to distribute
-control..).
+git clone https://github.com/Calbabreaker/piano --sparse
+cd piano
+git sparse-checkout add any_text
+git checkout deploy-frontend
+git sparse-checkout init --cone
+git sparse-checkout add any_text
 
-One thing that catches me, and I think others, is how the 'strategies'
-work. IIUC a merge will look at each line in the diff, and accept any
-change on either side that has no conflicts within the context zone.
-It's only when there are changes from both sides that the selection
-strategy kicks in. But it is difficult to describe, so it's easy to be
-confused.
+Basically clone any repository with --sparse, add anything to
+sparse-checkout list
+then checkout to another branch, init the sparse-checkout with --cone and add
+anything to it again.
 
-It doesn't look like this type of rebasing workflow for a
-multi-platform/product scenarios was considered at the time. [1-4]
+What did you expect to happen? (Expected behavior)
 
-Either way, having a few clues (where to look in the code) to including
-a `--deadhead` history simplification is useful.
->
-> I had a WIP patch a while ago for a "-s theirs -X N", for what sounds
-> like a similar use-case:
-> https://lore.kernel.org/git/87sh7sdtc1.fsf@evledraar.gmail.com/
+Nothing at all except for the sparse-checkout list to be updated.
 
-[1]
-https://stackoverflow.com/questions/173919/is-there-a-theirs-version-of-git-merge-s-ours
-[2]
-https://lore.kernel.org/git/alpine.DEB.1.00.0807290123300.2725@eeepc-johanness/
-[3] https://lore.kernel.org/git/7vtzen7bul.fsf@gitster.siamese.dyndns.org/
-[4]
-https://lore.kernel.org/git/xmqqmv5je412.fsf_-_@gitster.mtv.corp.google.com/
+What happened instead? (Actual behavior)
+
+A massive memory leak using all the RAM with one of the cpu cores
+being at 100% usage.
+
+[System Info]
+git version:
+git version 2.33.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.63-1-MANJARO #1 SMP PREEMPT Wed Sep 8 14:13:59 UTC 2021 x86_64
+compiler info: gnuc: 11.1
+libc info: glibc: 2.33
+$SHELL (typically, interactive shell): /usr/bin/zsh
