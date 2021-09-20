@@ -2,95 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B598DC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C70C1C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:13:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98BA961177
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:07:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEC2F60F58
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 16:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238429AbhITQIu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 12:08:50 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61513 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238707AbhITQIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 12:08:50 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3A0E5146F1F;
-        Mon, 20 Sep 2021 12:07:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=plfbVVqX3XkP4S0miuYdp09Eb7Ogeup3VePJst
-        ta9sM=; b=HmvVNOXofamiHuXZ4Qs4lYpW3KbiFWI2jD5cTr6xqnky7Cyia1rTjO
-        NJ6fHEjRcH95zDFfnjtIINoLskkVkerab8vzws2rLmAWBTuoMHXmDY7JF74CRbE2
-        X5uGepExtI7S7L9X09zZJ1LiO7lLhsMyAOfoJ6aq0MMIS3yssLgcc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 320AB146F1E;
-        Mon, 20 Sep 2021 12:07:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7AC5A146F1D;
-        Mon, 20 Sep 2021 12:07:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     wesley@schwengle.net
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH] Document `rebase.forkpoint` in rebase man page
-References: <xmqqtuikrzca.fsf@gitster.g>
-        <20210916224603.2912887-1-wesley@schwengle.net>
-        <20210916224603.2912887-2-wesley@schwengle.net>
-Date:   Mon, 20 Sep 2021 09:07:18 -0700
-In-Reply-To: <20210916224603.2912887-2-wesley@schwengle.net>
-        (wesley@schwengle.net's message of "Thu, 16 Sep 2021 18:46:03 -0400")
-Message-ID: <xmqqv92vcjt5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242956AbhITQOt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 12:14:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242662AbhITQOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 12:14:03 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084DFC0613E6
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:12:17 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id y201so10684049oie.3
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 09:12:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SIcUAgG3eV8Hhy92PrcGt4cxihTlTObR+mne7YNjK3Q=;
+        b=goO7JnrCDD0HyukfzzUssqbed5EkZMBNFIsj3RR+5d3jiUB/alebzzCgKoStujz3IP
+         wrX/2w/D6JJBM7kvVheI5zpzuAdasyaYRYgOrkb8QhplFCgt3sGa1qPKSJn5JV1Fzx9/
+         bThSptJoS2aA0Sq0GFcnbwNdrPQ48lFq/pRmz6+hpeFjxSOOIC4le+TWDWCxJlvfoT6s
+         MY9jKOBTde9kiooMIyUNS99AMcVpsWYArE7iH/wwZQz6Zc7Io40cWrcPArFyo9+UMjaa
+         OvewJVbhqewJVuYG5grrraXWwkXjXzb0ZiaC3wlpQgRrtfCosPysO7NJsdS1yXzHoQOY
+         hchQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SIcUAgG3eV8Hhy92PrcGt4cxihTlTObR+mne7YNjK3Q=;
+        b=Z9baIqzXD514t8GZqfDTrvfccKTLRdWZv8gTFqtjGUuKZkwF5PiA3dNmWZvfkAvqFd
+         +hQ3GWfidc/17rWJuhSY198wpAL2bPzvUlkLgY9qOrBW5qOsmVeNlnTLUmJSzstL9pQk
+         fZnSHYiNGN9/WBbnYkbQf1y/lCM/uYOWk84veYyDqavTjjsFT4lsIfYpEK+2/KW7TNWB
+         AMiJr0hweqv+VMHURqoFRQq6goUAg27mJ+pzWofvr8Fu4Xr18/LRUY2Q9Ci1Kw7F1GD1
+         Xr2T7EtGXWTWTDkXDd3KOmcAnDzF3RX4s9c9M2/nBP0iawouOR3NQ9PU+JAXnlWQ66TZ
+         OA4Q==
+X-Gm-Message-State: AOAM530cyzzOZOcWhIB0mZzVHhSE0Gk+QSeV5NbMJy5YRujlYKXz0z2y
+        YFNlfkrQDkQuK0WOAqclVlgvJ86Z3L4crgaX+FkAxL4UsIc=
+X-Google-Smtp-Source: ABdhPJx4lJ30kmruDKE6tHfdBXr5xbqe5EKj19ZLhQS3zY2feOwQ/VbB3rnoyCf2kTi/FgykojsdCHW7+OrcQ1d4ftw=
+X-Received: by 2002:a05:6808:1113:: with SMTP id e19mr1908104oih.31.1632154336266;
+ Mon, 20 Sep 2021 09:12:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D58B2CDE-1A2C-11EC-B506-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+References: <pull.1036.git.1632006923.gitgitgadget@gmail.com>
+ <01bf850bb0f0796564e9363d7faeb792a594f684.1632006924.git.gitgitgadget@gmail.com>
+ <87sfy0brk5.fsf@evledraar.gmail.com>
+In-Reply-To: <87sfy0brk5.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Sep 2021 09:12:04 -0700
+Message-ID: <CABPp-BEk5zQNwzUdFR=iG6d-d5u8pUEgLuiF7+hs7HT7p5BCqQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] unpack-trees: avoid nuking untracked dir in way of
+ locally deleted file
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-wesley@schwengle.net writes:
-
-> From: Wesley Schwengle <wesley@opperschaap.net>
+On Sun, Sep 19, 2021 at 6:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> The configuration option `rebase.forkpoint' is only mentioned in the man
-> page of git-config(1). Since it is a configuration for rebase, mention
-> it in the documentation of rebase at the --fork-point/--no-fork-point
-> section. This will help users set a preferred default for their
-> workflow.
 >
-> Signed-off-by: Wesley Schwengle <wesley@opperschaap.net>
-> ---
->  Documentation/git-rebase.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> On Sat, Sep 18 2021, Elijah Newren via GitGitGadget wrote:
 >
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 506345cb0e..c116dbf4bb 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -446,7 +446,8 @@ When --fork-point is active, 'fork_point' will be used instead of
->  ends up being empty, the <upstream> will be used as a fallback.
->  +
->  If <upstream> is given on the command line, then the default is
-> -`--no-fork-point`, otherwise the default is `--fork-point`.
-> +`--no-fork-point`, otherwise the default is `--fork-point`. See also
-> +`rebase.forkpoint` in linkgit:git-config[1].
->  +
->  If your branch was based on <upstream> but <upstream> was rewound and
->  your branch contains commits which were dropped, this option can be used
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  t/t2500-untracked-overwriting.sh | 2 +-
+> >  unpack-trees.c                   | 4 ++++
+> >  2 files changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/t/t2500-untracked-overwriting.sh b/t/t2500-untracked-overw=
+riting.sh
+> > index 017946a494f..d4d9dc928aa 100755
+> > --- a/t/t2500-untracked-overwriting.sh
+> > +++ b/t/t2500-untracked-overwriting.sh
+> > @@ -218,7 +218,7 @@ test_expect_success 'git am --abort and untracked d=
+ir vs. unmerged file' '
+> >       )
+> >  '
+> >
+> > -test_expect_failure 'git am --skip and untracked dir vs deleted file' =
+'
+> > +test_expect_success 'git am --skip and untracked dir vs deleted file' =
+'
+> >       test_setup_sequencing am_skip_and_untracked &&
+> >       (
+> >               cd sequencing_am_skip_and_untracked &&
+> > diff --git a/unpack-trees.c b/unpack-trees.c
+> > index 3b3d1c0ff40..858595a13f1 100644
+> > --- a/unpack-trees.c
+> > +++ b/unpack-trees.c
+> > @@ -2395,7 +2395,11 @@ static int deleted_entry(const struct cache_entr=
+y *ce,
+> >               if (verify_absent(ce, ERROR_WOULD_LOSE_UNTRACKED_REMOVED,=
+ o))
+> >                       return -1;
+> >               return 0;
+> > +     } else {
+> > +             if (verify_absent_if_directory(ce, ERROR_WOULD_LOSE_UNTRA=
+CKED_REMOVED, o))
+> > +                     return -1;
+> >       }
+>
+> Maybe just "else if" ?
 
-I still think "the variable gives the default, otherwise the
-presence of <upstream> on the command line affects which one is used
-as the default" presentation order is better, but the above is a
-strict improvement over the current message, so let's take it.
+Yeah, that makes sense.
 
-Thanks.
+> [...]
+
+That's kind of misleading.  ;-)  You trimmed out a single line here,
+and in particular one that only contained a trailing curly brace.
+Thus, your "trimming" here actually made things longer.
+
+>
+> > +
+>
+> Stray whitespace change
+
+No, the whitespace addition was after making the if-block above it
+more complex with the extra else block.  That if-block is now
+approximately 2/3 of the length of the function, and is the part that
+is relevant to the comment above it.  Since the code that follows the
+if-block is separate from the comment above and the if-block became
+more complex, it felt natural to add a bit of spacing.  So, it wasn't
+stray, but intentional and related to the changes above.
