@@ -2,188 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 528ABC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3093EC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:57:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3839B611ED
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F32061050
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348182AbhIUCXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32950 "EHLO
+        id S230397AbhIUC7W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:59:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237140AbhIUBwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:52:45 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE86C0363F1
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:24:36 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id c22so67185073edn.12
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:24:36 -0700 (PDT)
+        with ESMTP id S1348865AbhIUCYy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 22:24:54 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799AEC1DF511
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 11:52:22 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id y197so9854010iof.11
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 11:52:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8iYGFIkoB5Pygzwqo24Qu7XNy8ww7Gy0GAxE7NIZaSY=;
-        b=QQkAlzqbClR0ZGnaEnIY1q+IdQTwZPpuB0uW8Nu+mZcbnub3WCxoY2BUJNV+dMkwGO
-         bc0PMj9TeDTYxDGrxwJqe92C4xdYAAJdCaFs8u5gj9UfAmphALHaygRbdJ7cQeH3JrTK
-         N+HNbjGbTPAKvbODJ2j3vovDpSnaIwp9eoDRpgtKpLzYb4stLl8top8YqhDxwzJaLQBp
-         lExIjraPWHEd5iuWBHOMonP9o2Xdc1qJRr603MDQBKr1hHqNx+cUkiwn9GvgyhvcEKdy
-         ofuHa/jm4luJ/BeZgnr7WhX/S19tIxR5RJ4di1lSAhCywNg2cuUo2Vsp4/k0EPQcaXoG
-         cS6g==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LYExE8wZJqOyXWcpHtFMOFXHLKBWor3VlzgHxW1Y++E=;
+        b=8APxBSXdrDcu950I6AkBK36UDeeoQBuweTOYgYYFDwStQs1AZGeaageLMjXwX0VVHe
+         haopeyFeENcAqn58jem0KiNGakuTwYnyNSrTnMqYM7QkEQr04oF7O95nSYCS0CmSVxm/
+         ZCj4EvQk5YqZARY2a3JxpBUoWT9D2hKqsYuF/06OzvjyAHIZXFzopSnXQDesKJGpuhnu
+         ASAKav8bSA03e8uLtmu1V90H5Z9+dLtDztdHk6+C2PHd7Zg2dsxidpV0T9Y6WaQKGUfB
+         6jiJfSpbiJI1Gf6KcTxRE123hEfGKbq91JJrwH8sbnMeMcTGaN/foNW0cwY9ooA6qQB0
+         3BCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=8iYGFIkoB5Pygzwqo24Qu7XNy8ww7Gy0GAxE7NIZaSY=;
-        b=inwoyHNeNkp3FrDW6730bKPEie697gMPrTo0kED63ZjcBfQ0HkR8+a5POrDZQFOLe7
-         B+ookVtuqDb+qGy+Zz/+5rrSXG6TI4KeLLnyWimsNHer7Tk8/hJN2PNSLYxs1aVsZ5f9
-         8DFtJO7Xh8+bakRJ4Xbu+yKkGH9wHXeODfmq0UKZ737XVPy06lXN2A+l74fIeNWlbXrI
-         YYX4lfoAJzUMDDpXL9pJwaSvm6UdItx9bT55Q2MjroHcxfF/zHA0Nddlizp/zdB7vMaX
-         4LxnE33sP4p5OFMbu9NI8ZSXBju82kY3/ufEPTODEHvR6f/MDoDBhX6S0OGynBlTJEZ2
-         iSzQ==
-X-Gm-Message-State: AOAM531sY0yn8/Z4ktJbleR/TZCMFTd+OmX63e+us+FEwdsYlrPP3JpV
-        x1Zq9Lq+soRyzGgi75TdjbP7v/g5rkpjxg==
-X-Google-Smtp-Source: ABdhPJwyilOTrT9OuTfHzzmf5boOjraozw6M762AHz0t4uZA0DHA85+YUD/agzKcGczrprKQrAOYXw==
-X-Received: by 2002:a05:6402:484:: with SMTP id k4mr31496168edv.303.1632180275284;
-        Mon, 20 Sep 2021 16:24:35 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s26sm7643549edt.41.2021.09.20.16.24.34
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LYExE8wZJqOyXWcpHtFMOFXHLKBWor3VlzgHxW1Y++E=;
+        b=5VDkdXvo2tHLQc7Mcac7ccj8NRbmnkpv8bPlPdmxQFnoksI3CfklV8SUEmbLPYOLbM
+         i7Q8VdSD0/jQlLvR20p9N76pm3OJ2ZAGqjgCBd6H0w3v3wn1nHkl8Lj6S5xtHn+b+BLv
+         3Bw+dpeD+N1gUnX2508SSsjr3yumAeUFkBMjjSnkiKg0KVvnzHdW5ju535AhXal//8TF
+         FCHolXqmfjCWDRoWblWb4VD2JRR6t0wQNCIYdKFFuhCLUCOA8ALQOgepIVMZe9RnNn7W
+         0ReYCp6GtHBZ5vyA3C46C97kEd+esMnHJM8Mcrs04UuyC4a2eWnSxuZHh+bIZdhIsG2L
+         AGgg==
+X-Gm-Message-State: AOAM532wo9QAoumrzK3foh6wTK74ajqOTvmgF0tWwuXsEBxWaVCxHjG4
+        DQLWCpFnscFLIXyIpt3bajY69g==
+X-Google-Smtp-Source: ABdhPJxxUtUkmTodWoxwsGtBNmZ5AbcVEArR1ZHkCv66OjHc3l6kT6xwtmqdR8pwmEh9Hmgmmt2krg==
+X-Received: by 2002:a02:711e:: with SMTP id n30mr20785564jac.3.1632163941874;
+        Mon, 20 Sep 2021 11:52:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 67sm874555iou.4.2021.09.20.11.52.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 16:24:34 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/5] wrapper.c: add x{un,}setenv(), and use xsetenv()
- in environment.c
-Date:   Tue, 21 Sep 2021 01:17:35 +0200
-References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com>
- <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
- <patch-v3-1.5-4b320edc933-20210919T084703Z-avarab@gmail.com>
- <YUkC7RIDR7pQWsPh@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUkC7RIDR7pQWsPh@nand.local>
-Message-ID: <87y27qakzx.fsf@evledraar.gmail.com>
+        Mon, 20 Sep 2021 11:52:21 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 14:52:20 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        calbabreaker@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 2/3] sparse-checkout: clear patterns when switching modes
+Message-ID: <YUjYZNqvvxVRctJQ@nand.local>
+References: <pull.1043.git.1632160658.gitgitgadget@gmail.com>
+ <450b90dad57c42e37a4edc52dac88caf98021fc6.1632160658.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <450b90dad57c42e37a4edc52dac88caf98021fc6.1632160658.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Sep 20 2021, Taylor Blau wrote:
-
-> On Sun, Sep 19, 2021 at 10:47:15AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> Add fatal wrappers for setenv() and unsetenv(). In d7ac12b25d3 (Add
->> set_git_dir() function, 2007-08-01) we started checking its return
->> value, and since 48988c4d0c3 (set_git_dir: die when setenv() fails,
->> 2018-03-30) we've had set_git_dir_1() die if we couldn't set it.
->>
->> Let's provide a wrapper for both, this will be useful in many other
->> places, a subsequent patch will make another use of xsetenv().
+On Mon, Sep 20, 2021 at 05:57:37PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Makes sense.
+> Previously, when a user runs 'git sparse-checkout init --cone', the
+> existing patterns would remain, even if the patterns were not in cone
+> mode. This causes confusion as to how the patterns should work when
+> later 'git sparse-checkout add' commands append to the pattern list.
 >
->> We could make these return "void" (as far as I can tell there's no
->> other x*() wrappers that needed to make that decision before),
->> i.e. our "return 0" is only to indicate that we didn't error, which we
->> would have died on. Let's return "int" instead to be consistent with
->> the C library function signatures, including for any future code that
->> expects a pointer to a setenv()-like function.
+> In fact, the way these patterns were modified was not even a strict
+> appending of patterns, but mutating and reordering patterns because of
+> how the paths were interpreted and rewritten.
 >
-> This may be a little over-clever ;). It is cute, but returning an int
-> makes xsetenv a drop-in replacement for setenv. Which is nice, but it
-> makes it all too-easy to take code like:
+> As a first step, we shall start overwriting the pattern set completely
+> when switching to cone mode, unless the existing patterns already match
+> cone mode patterns. The 'use_cone_patterns' member is set to false if
+> the patterns fail to parse using cone mode restrictions.
 >
->   if (setenv(...) < 0)
->     die(_("..."));
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/sparse-checkout.c          | 13 +++++++++++--
+>  t/t1091-sparse-checkout-builtin.sh |  9 ++++++++-
+>  2 files changed, 19 insertions(+), 3 deletions(-)
 >
-> and replace it with
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index b45fd97a98b..fe76c3eedda 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -348,8 +348,17 @@ static int sparse_checkout_init(int argc, const char **argv)
 >
->   if (xsetenv(...) < 0)
->
-> which makes the whole conditional redundant, since the wrappers are
-> guaranteed not to return an error.
->
-> In other words, I like the idea that s/setenv/x&/ causes a compile-time
-> error, and returning an int from these wrappers prevents that from
-> happening.
->
-> This may be a little too-theoretical, and you're certainly free to
-> disagree, just my $0.02.
+>  	/* If we already have a sparse-checkout file, use it. */
+>  	if (res >= 0) {
+> -		free(sparse_filename);
+> -		return update_working_directory(NULL);
+> +		if (pl.use_cone_patterns || !init_opts.cone_mode) {
 
-I'm fine with doing that in principle, I couldn't find any "x*()"
-wrappers with different signatures. Yes, having the compiler complain
-because you used a "void" return value would be nice.
+I traced through this code beginning with sparse_checkout_init() and
+right before the check on pl.use_cone_patterns, and I couldn't find
+anywhere that this variable is set to a non-zero value. Could you let me
+know if I'm missing something, or is the left-hand side of this or
+redundant?
 
-I did have some vague notion that this might interact badly with
-something in compat, i.e. if setenv() or unsetenv() was a fallback, but
-I can't think now of why that wouldn't work...
+I guess what this check wants to be saying is "if the existing
+sparse-checkout was in cone mode or we are transitioning to cone mode,
+then quit now".
 
->> I think it would be OK skip the NULL check of the "name" here for the
->> calls to die_errno(). Almost all of our setenv() callers are taking a
->> constant string hardcoded in the source as the first argument, and for
->> the rest we can probably assume they've done the NULL check
->> themselves. Even if they didn't, modern C libraries are forgiving
->> about it (e.g. glibc formatting it as "(null)"), on those that aren't,
->> well, we were about to die anyway. But let's include the check anyway
->> for good measure.
+> +			free(sparse_filename);
+> +			return update_working_directory(NULL);
+> +		}
+> +
+> +		/*
+> +		 * At this point, note that if res >= 0 but pl.use_cone_patterns
+> +		 * is false, then we want to override the patterns with the
+> +		 * initial set of cone mode patterns.
+> +		 */
+> +		clear_pattern_list(&pl);
+
+...or otherwise, we are transitioning into cone mode from a non-cone
+mode state?
+
+If so, this may be somewhat surprising to users who have their patterns
+cleared after re-initializing. I guess the command is called "init", but
+it may be friendlier to have a `--reinitialize` option or similar which
+indicates the user's preference to obliterate existing patterns if
+necessary.
+
+See my message at [1] for some more details about a possible suggestion
+there.
+
+>  	}
 >
-> This I think is a good call. I agree in practice that most times we'd be
-> just fine to pass null to printf() (as we have seen from 88617d11f9
-> (multi-pack-index: fix potential segfault without sub-command,
-> 2021-07-19) ;)). But there's no reason to rely on risky assumptions when
-> it's easy to avoid doing so.
+>  	if (get_oid("HEAD", &oid)) {
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index a429d2cc671..af0acd32bd9 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -108,7 +108,14 @@ test_expect_success 'switching to cone mode with non-cone mode patterns' '
+>  	git -C bad-patterns sparse-checkout init &&
+>  	git -C bad-patterns sparse-checkout add dir &&
+>  	git -C bad-patterns config core.sparseCheckoutCone true &&
+> -	git -C bad-patterns sparse-checkout add dir
+> +	git -C bad-patterns sparse-checkout add dir &&
+> +
+> +	git -C bad-patterns sparse-checkout init --cone &&
+> +	cat >expect <<-\EOF &&
+> +	/*
+> +	!/*/
+> +	EOF
+> +	test_cmp expect bad-patterns/.git/info/sparse-checkout
 
-*nod*
 
->> diff --git a/wrapper.c b/wrapper.c
->> index 7c6586af321..95f989260cd 100644
->> --- a/wrapper.c
->> +++ b/wrapper.c
->> @@ -145,6 +145,21 @@ void *xcalloc(size_t nmemb, size_t size)
->>  	return ret;
->>  }
->>
->> +int xsetenv(const char *name, const char *value, int overwrite)
->> +{
->> +	if (setenv(name, value, overwrite))
->> +		die_errno("setenv(%s, '%s', %d) failed", name ? name : "(null)",
->> +			  value, overwrite);
->> +	return 0;
->> +}
->> +
->> +int xunsetenv(const char *name)
->> +{
->> +	if (!unsetenv(name))
->> +		die_errno("unsetenv(%s) failed", name ? name : "(null)");
->> +	return 0;
->> +}
->> +
->
-> For what it's worth, I find these new messages a little wordy. Maybe
-> we should just sticky "could not (un)set %s"?
+Makes sense that we have to look at the contents of
+$GIT_DIR/info/sparse-checkout directly here to see the explicit '/*' and
+'!/*/' patterns.
 
-Sure, will change it.
+Thanks,
+Taylor
 
-I think I may have wanted to include the "overwrite" in the setenv() in
-some way though, so you'd know if it failed because the libc call
-"really" failed, v.s. we just had an existing value in the environment
-and didn't set "overwrite".
-
-But reading the docs again that won't work, since it'll succeed if it
-can't write that key, i.e. the caller with overwrite=3D0 needs to
-follow-up with a getenv() to see if their value or someone else's was
-set (or more probably, they don't care, which is why they used
-overwrite=3D0).
-
-So it doesn't matter either way for xsetenv(), will make it less chatty.
+[1]: https://lore.kernel.org/git/YUi55%2F3L9nizTVyA@nand.local/
