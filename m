@@ -2,116 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF04C28B2E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BCE9C28CAE
 	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04B756124C
+	by mail.kernel.org (Postfix) with ESMTP id 5EED76128A
 	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348094AbhIUCWw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 22:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33440 "EHLO
+        id S1348237AbhIUCXF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:23:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236944AbhIUBvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:51:55 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1290AC0386C6
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:43 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id q26so33952967wrc.7
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:09:42 -0700 (PDT)
+        with ESMTP id S237553AbhIUB4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:56:24 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C81EC0DBABD
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:35:20 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id v5so66265365edc.2
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 16:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nWArdbesqrtoFzdFuzsNBHMZqO+dxCaMAkuhy7POVic=;
-        b=hz7qvYPH2a6brtPTkRBtKFbppw9nE8WFizAyTMzWmaJ6vKqfFGv8uhICOzWh/UmHmB
-         GmfOLVe7+601Jy0r019xLM/igF6l1IKOES30BH36A7XNkwDT8ZNvmUum0JNMQuWoQY1p
-         GNp5rsM8hCWxKBkyXhrjjFO9ODJPD3FMFJvlCfbSzJfsZCCtjGvkarpNZKqo6psa2Dms
-         GEKljogjtvKIDF1JWV1mxMxB5VIxlgxz1gSZ7ZegAFiXJtEJb4KnRa8lBDzktUepV5Er
-         6G0EoSj4kqe0Gfp+Z3g3/TlAnvDb9DhcMyBoleJbGZy6Ndv/hwMY15yEmJm/S1gbUclR
-         jX5w==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=PKvI3/7O7S5mOsVB3trkhZWQ/OXtgnVEyFeg7ug2x7Q=;
+        b=GetguOrqmtZAtAeHph80p6tcM9Gwpgsm0fyJLLH/GID3+BPm1+5Xr0tgHr5S806xdR
+         QL+KWk7N+O8VJajWrBPumGjXZS0na0v9a6J7quF+ODNo3K6q8HStFi5VxD5+M/ZfQPwA
+         edcF6BLikhtuzASnvwsi9KVaVj3y3KtYcElzEeAeFVjUPcAV3i1p59t+bzKaD18iYphv
+         cEaC1nwLV5fuBJvc9DbgqLMsA6HX3wa4f2S0iWWWUByOSEqRS0e91Kgq5FyVKaaQUjNZ
+         o5qeo2P7+UvkzkzhwTHxMWO7G9682Z+0d2ITtEx/NTfqmdBnpNwOtzxxoTq+DYrg2rX4
+         u5gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nWArdbesqrtoFzdFuzsNBHMZqO+dxCaMAkuhy7POVic=;
-        b=WlpJ/OUtwsYNy7P14GHGLJ2/jvdMpDIAsr+CC5Xya9ILZjmS7m60c2jSMaMdcYFV8N
-         8VudixjXUEZ89JbOwuG02uT262p528UHdruFxiwThvLunAAw82oXtyZ9jJS6cRDAsKzL
-         c6HtbwIWe2c93oudTNOUlTWPrFnOwEXsCNkWdQwCoc417GC8B+5QVlBmyT8ZggjS9cKm
-         Evl74d+0LJF8i5pKoYqgV3EhE1FOzg3+qw7UHATGQgvJxtrgVwuia9Ie5EndsnjoEhpV
-         f7Su7hAK0pwuoZMaciJfimaUa42oUYCvGsY7JIOfyShM2bplFceZAs8zIczrqKLijlen
-         Rquw==
-X-Gm-Message-State: AOAM532HV2dhdEhAwGW9fuLacgQHD5MhIwWQBZQYSbY6DkE9YpMJJLC8
-        JQck6jQoxKepTVuYLpkh9DdFcsisSUMhQA==
-X-Google-Smtp-Source: ABdhPJyCoI4WXxuGMqtuF+dM6Jy5hS6qpbKCg6i5/eTGZkOIOrb+OpOwfWesyHeoV0CHPDS2wxebKQ==
-X-Received: by 2002:a05:600c:3b89:: with SMTP id n9mr1392118wms.186.1632179381458;
-        Mon, 20 Sep 2021 16:09:41 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8sm10409154wru.30.2021.09.20.16.09.40
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=PKvI3/7O7S5mOsVB3trkhZWQ/OXtgnVEyFeg7ug2x7Q=;
+        b=eOLkfyyAg7M7pD/ZpZc0miqZ6RV/LywLLq3h2EQ5mGTVcKvHXKxeKt09SxhlUb1VyG
+         pH2K8BA6MejOGqIAYUz3n7sclU+1NGCJSMejVNYESd2RPfiaKAZSyxkhEMLp1mGe4HJx
+         lU3kzrN3HGRFmPVdPq7JGOPy8pyBYWKBelZ10F1Vo3/i6tgFh3g0pt2IrM8/RJnRQZrU
+         LUmX0uHTd05OaBtpdD+0FiWnMLXYJ0+e7/Ttp8YFeYEy5oBiEgfyfO0DlsBiEDgZqQUR
+         uKHWZ48PGvhwTISQhiExpCPTf4ep6JUkJ4AaTxlBTBpJUZRhgrjY7CC5nUUFkKfVi8PY
+         wdKg==
+X-Gm-Message-State: AOAM531C/6mBC6tn/LL1cc9mlGZAbR9y0LE6wxcGXLYRAWtW1zsO+v+n
+        lJvGNwty/FLCRfYkQ2ylOKsdjKSZIX6uzg==
+X-Google-Smtp-Source: ABdhPJw8Ubw2pLS3qGE04j6ugdcGwg1ZyQiECqwMAMTiOGyI6KgEgyfrikazUdKdoi8mQhH0sCa3ZA==
+X-Received: by 2002:a17:906:8151:: with SMTP id z17mr30858260ejw.468.1632180918583;
+        Mon, 20 Sep 2021 16:35:18 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e28sm7570499edc.93.2021.09.20.16.35.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 16:09:40 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 5/8] progress.c: stop eagerly fflush(stderr) when not a terminal
-Date:   Tue, 21 Sep 2021 01:09:26 +0200
-Message-Id: <patch-v2-5.8-250e50667c2-20210920T225701Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1098.gf02a64c1a2d
-In-Reply-To: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
-References: <cover-0.8-0000000000-20210722T125012Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+        Mon, 20 Sep 2021 16:35:18 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 3/5] read-cache & fetch-negotiator: check "enum"
+ values in switch()
+Date:   Tue, 21 Sep 2021 01:33:20 +0200
+References: <cover-v2-0.5-00000000000-20210916T182918Z-avarab@gmail.com>
+ <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
+ <patch-v3-3.5-d837d905825-20210919T084703Z-avarab@gmail.com>
+ <YUkH1LSa1WcFDmvr@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YUkH1LSa1WcFDmvr@nand.local>
+Message-ID: <87pmt2aki2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's the clear intention of the combination of 137a0d0ef56 (Flush
-progress message buffer in display()., 2007-11-19) and
-85cb8906f0e (progress: no progress in background, 2015-04-13) to call
-fflush(stderr) when we have a stderr in the foreground, but we ended
-up always calling fflush(stderr) seemingly by omission. Let's not.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- progress.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On Mon, Sep 20 2021, Taylor Blau wrote:
 
-diff --git a/progress.c b/progress.c
-index 7fcc513717a..1fade5808de 100644
---- a/progress.c
-+++ b/progress.c
-@@ -91,7 +91,8 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 	}
- 
- 	if (show_update) {
--		if (is_foreground_fd(fileno(stderr)) || done) {
-+		int stderr_is_foreground_fd = is_foreground_fd(fileno(stderr));
-+		if (stderr_is_foreground_fd || done) {
- 			const char *eol = done ? done : "\r";
- 			size_t clear_len = counters_sb->len < last_count_len ?
- 					last_count_len - counters_sb->len + 1 :
-@@ -115,7 +116,8 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 				fprintf(stderr, "%s: %s%*s", progress->title,
- 					counters_sb->buf, (int) clear_len, eol);
- 			}
--			fflush(stderr);
-+			if (stderr_is_foreground_fd)
-+				fflush(stderr);
- 		}
- 		progress_update = 0;
- 	}
--- 
-2.33.0.1098.gf02a64c1a2d
+> On Sun, Sep 19, 2021 at 10:47:17AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Change tweak_untracked_cache() in "read-cache.c" to use a switch() to
+>> have the compiler assert that we checked all possible values in the
+>> "enum untracked_cache_setting" type, and likewise remove the "default"
+>> case in fetch_negotiator_init() in favor of checking for
+>> "FETCH_NEGOTIATION_UNSET" and "FETCH_NEGOTIATION_NONE".
+>>
+>> As will be discussed in a subsequent we'll only ever have either of
+>
+> s/subsequent/& patch/ ?
+
+Thanks.
+
+>> these set to FETCH_NEGOTIATION_NONE, FETCH_NEGOTIATION_UNSET and
+>> UNTRACKED_CACHE_UNSET within the prepare_repo_settings() function
+>> itself. In preparation for fixing that code let's add a BUG() here to
+>> mark this as unreachable code.
+>>
+>> See ad0fb659993 (repo-settings: parse core.untrackedCache, 2019-08-13)
+>> for when the "unset" and "keep" handling for core.untrackedCache was
+>> consolidated, and aaf633c2ad1 (repo-settings: create
+>> feature.experimental setting, 2019-08-13) for the addition of the
+>> "default" pattern in "fetch-negotiator.c".
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  fetch-negotiator.c |  4 +++-
+>>  read-cache.c       | 15 ++++++++++-----
+>>  2 files changed, 13 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/fetch-negotiator.c b/fetch-negotiator.c
+>> index 57ed5784e14..237f92b8696 100644
+>> --- a/fetch-negotiator.c
+>> +++ b/fetch-negotiator.c
+>> @@ -19,8 +19,10 @@ void fetch_negotiator_init(struct repository *r,
+>>  		return;
+>>
+>>  	case FETCH_NEGOTIATION_DEFAULT:
+>> -	default:
+>>  		default_negotiator_init(negotiator);
+>>  		return;
+>> +	case FETCH_NEGOTIATION_NONE:
+>> +	case FETCH_NEGOTIATION_UNSET:
+>> +		BUG("FETCH_NEGOTIATION_UNSET only in prepare_repo_settings()");
+>
+> I was briefly confused why this BUG message mentioned
+> FETCH_NEGOTIATION_UNSET, since we only support FETCH_NEGOTIATION_DEFAULT
+> here.
+>
+> But then I realized that it said "only in prepare_repo_settings()", and
+> we're in fetch_negotiator_init(). So this makes sense to me.
+>
+> Other than the small typo in the patch message, this looks good to me.
+
+I guess I'll also mention NONE here, so:
+
+    BUG("FETCH_NEGOTIATION_{NONE,UNSET} only in prepare_repo_settings()");
+
+Or elaborate a bit:
+
+    BUG("FETCH_NEGOTIATION_{NONE,UNSET} used outside of prepare_repo_settin=
+gs()!");
+
+In any case this lives for just one commit, and is just here to
+demonstrate the transition we're in.
 
