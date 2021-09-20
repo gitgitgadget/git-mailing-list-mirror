@@ -2,87 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CB29C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1B5C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:53:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6132F60EE2
-	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:51:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 236F260F58
+	for <git@archiver.kernel.org>; Mon, 20 Sep 2021 15:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242032AbhITPxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 11:53:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58922 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238500AbhITPxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 11:53:04 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39BB7ED6E6;
-        Mon, 20 Sep 2021 11:51:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4kFEYPXhEmcZ
-        +8hUmuWhQ7sSrTOeRX8f8KHCerN1vMo=; b=E9lYSVv+F/E7Oado35eC2tu5Tstl
-        HmR6CeDTobajamM0X7tnJQXZMHywVSfPALHyubXFMTLWA40vq2PPITEX4yJvDkO0
-        WCU3KuuMg2n0dva52u4CHjM/qG9CkAa2FmxcldYWidfOP5RV56NrWHb54K6eJUEF
-        DzqDHZotFTY7dUs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30581ED6E5;
-        Mon, 20 Sep 2021 11:51:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DD52ED6E4;
-        Mon, 20 Sep 2021 11:51:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 3/7] simple-ipc: move definition of ipc_active_state
- outside of ifdef
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
-        <7de207828caa9e50906f39b955e39e9de2c1768f.1631738177.git.gitgitgadget@gmail.com>
-        <xmqq5yv1wnuc.fsf@gitster.g>
-        <93ebf97b-1282-8f39-6894-90e0ea2dc851@jeffhostetler.com>
-Date:   Mon, 20 Sep 2021 08:51:35 -0700
-In-Reply-To: <93ebf97b-1282-8f39-6894-90e0ea2dc851@jeffhostetler.com> (Jeff
-        Hostetler's message of "Fri, 17 Sep 2021 12:58:31 -0400")
-Message-ID: <xmqqzgs7ckjc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242119AbhITPy0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 11:54:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231184AbhITPyZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 11:54:25 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F573C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id y18so22814011ioc.1
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FgGHeyOaV2H54sv/o+eZB7wW+fHtrhCg8ybF6phI5uA=;
+        b=ywAOkPWZ4y1W5Qz1bwtUczBKbUorJ7mjetIMZOUPkjt5kgchbUoB+WC5XLOUeu60Zk
+         NU5f0GYr9c8v8wN8wUSogDgqgA/PCVLTHx+iYOwWt6lzDOhjnJXXaAFM3AKkJqw7ZoRq
+         Tr1iMPvL0W4ot8r+ba9NeOEd3BF8egvfzgwA3nHE2lNhB8eZN3GQYX5TAIFwUEkFIGxU
+         PhoKlAv69JowlYDN+rsYnQ8Qak1AQuP0HDXjXVpy1yonz2j/EWSsdihAgtSlUF3Ha1YG
+         B53BNcnz+nr3ycfPFr9eoHG5T5OqZPLsxaLmCGS1Ite+OOeTm+mNzkBnRDCnGfGQkIgS
+         mEkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FgGHeyOaV2H54sv/o+eZB7wW+fHtrhCg8ybF6phI5uA=;
+        b=eIVT9E7+N2OalR3osouyXqffyBVNJPkiKUaXOUrZUsiXayD+ZphzQxpN2ho7GNHJpt
+         oNH96Qk3361O7HczITO/6tx/wa/NmyfhKMpC4pKLvvcrxFsDWFPEJDT7JB7SmqelcA/y
+         4ZOHWCjYYR74YNhrJ2HPiiMksB8KjKnoTqGXQZK4R5KFyxEQJp5Cyd15dSCQTF65wBgf
+         X9XC1P3lb2PWY36kg6e5fzspto+iGeemCjSwjyuU853RugvRtTUGlX3MZmWTG94eAYMV
+         OCvrxN3Ntt4GfC15278HdyDtyNKv5QQeIGa5CNXhj5cKdCuoNyraJ42GUq/jU5WPGUKc
+         h2QA==
+X-Gm-Message-State: AOAM5326Un9h9Txio53/FZ5sh/RgIIi0asUbgrUE3S1TC9AUDHd9+kth
+        7ZQxBXQ7fDNyaeJ5TMpQY2p+YE+4FHPjDQ==
+X-Google-Smtp-Source: ABdhPJxKd4Dj7/Gf1scQDpG2HFAq5QWXNNUBLEdCY6lZ6cPlBa/4tT9yjpmyRpEEaXGl4nCFxc9H/g==
+X-Received: by 2002:a05:6638:339e:: with SMTP id h30mr13598171jav.148.1632153178063;
+        Mon, 20 Sep 2021 08:52:58 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m5sm9182599ila.10.2021.09.20.08.52.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 08:52:57 -0700 (PDT)
+Date:   Mon, 20 Sep 2021 11:52:57 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Calbabreaker <calbabreaker@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Memory leak with sparse-checkout
+Message-ID: <YUiuWSXO1P3JwerH@nand.local>
+References: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A2EBECAC-1A2A-11EC-BBA3-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
-
-> On 9/15/21 5:06 PM, Junio C Hamano wrote:
->> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>=20
->>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>
->>> From: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
->>>
->>> Move the declartion of the `enum ipc_active_state` type outside of
->>> the SUPPORTS_SIMPLE_IPC ifdef.
->> The second one is not an in-body header since there is already a
->> blank line that signals the end of in-body headers after the first
->> one.
->> This _may_ be a bug in GGG, perhaps?
+On Mon, Sep 20, 2021 at 09:45:14PM +0930, Calbabreaker wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
 >
-> Maybe.  I'll make a note to ask @dscho when he gets back from vacation.
+> This was ran:
 >
-> Credit for the commit should go to Carlo.  I just added it to the serie=
-s
-> with his "From:" line and it looks like GGG added an extra one before
-> it.
+> git clone https://github.com/Calbabreaker/piano --sparse
+> cd piano
+> git sparse-checkout add any_text
+> git checkout deploy-frontend
+> git sparse-checkout init --cone
+> git sparse-checkout add any_text
 
-Thanks for a clarification.  I'll tweak the authorship when queuing.
+Thanks for the reproduction. An even simpler one may be (inside of any
+repository):
+
+    git sparse-checkout init
+    git sparse-checkout add dir
+    git sparse-checkout init --cone
+    git sparse-checkout add dir
+
+The problem occurs because we keep existing entries when adding to the
+sparse-checkout list, and cone-mode patterns do not mix with
+non cone-mode patterns.
+
+So after the first init and "add dir", your sparse-checkout file looks
+like:
+
+  /*
+  !/*/
+  dir
+
+but then when we convert to cone-mode and try and add "dir" (which in
+cone-mode we'll convert to "/dir/"), we run into trouble when adding the
+existing "dir" entry. That's because add_patterns_cone_mode() calls
+insert_recursive_pattern() on every entry in the existing list,
+including "dir".
+
+So when we call insert_recursive_pattern() with any pattern list and
+path containing "dir", we first insert "dir" into the list, and then:
+
+  char *slash = strrchr(e->pattern, '/');
+  char *oldpattern = e->pattern;
+
+  if (slash == e->pattern)
+    break;
+  // trim off a slash, repeat
+
+except slash is NULL because "dir" doesn't contain a slash. And that
+explains the problem you're seeing, because (a) we'll stay in that while
+loop forever, and (b) because each iteration allocates memory to
+accommodate the new pattern, so we'll eventually run out of memory.
+
+The wrong thing to do would be to handle this case by changing the
+conditional to "if (!slash || slash == e->pattern)", because we can't
+blindly carry forward some patterns which look like cone-mode patterns,
+since together the list of sparse-checkout entries may not represent a
+cone.
+
+(An example here is if we added /foo/bar/baz/* without the corresponding
+/foo/, !/foo/*, and so on).
+
+So I think the problem really is that we need to drop existing patterns
+when re-initializing the sparse-checkout in cone mode. We could try to
+recognize that existing patterns may already constitute a cone (and/or
+create a cone that covers the existing patterns).
+
+But I think the easiest thing (if a little unfriendly) would be to just
+drop them and start afresh when re-initializing the sparse-checkout in
+cone mode.
+
+I'm adding Stolee to the CC to see if he thinks that would be sensible
+behavior or not.
+
+Thanks,
+Taylor
