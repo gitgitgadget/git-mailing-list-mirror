@@ -2,124 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30F93C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 17:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEA4FC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 17:58:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BC7C611ED
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 17:50:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82E6461166
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 17:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231781AbhIURvt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 13:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55288 "EHLO
+        id S231736AbhIUR7w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 13:59:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbhIURvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 13:51:48 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259E7C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 10:50:20 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id q205so5572601iod.8
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 10:50:20 -0700 (PDT)
+        with ESMTP id S231180AbhIUR7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 13:59:52 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F71C061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 10:58:23 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id s18-20020a05620a255200b00433885d4fa7so721693qko.4
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 10:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jOgbMuWNosqQy0cTPS2WwylfbrFsjHM4im3IHZTFvLw=;
-        b=FY7YTRHBJldEruPgtnKTb+pxZxThBZwf+Rpgi7CYf77xG2Jv0nhNZCF9rpWA44Rjfx
-         805hKQ8H/MW5RtbTbYf9Lwv9fL/S2vwgmthSwCl4HzqvlKcmcOqtpe7nI98an0KERmIW
-         Ut1BUPtBldZxkr8G2uooCdt43SmgnFn+eAY9MqJ0ns4lp/HTPFChBnCZoDl6lOmY8Nrh
-         MwaUZFoj/tyz7c2k8ccDreGv8Mh8hBH6ZNoluckOGn8ItXPmHGv/mDmJrhaT8GLOrGyW
-         Em5NNB6v0q526WssJYdIF2ftdWYlUA/lFXq2zq3kO49BaqhsalVmaEcIb6olFvAfXtYI
-         1CBQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=IcLWVND36dcZ2nA/mXFdjFxHOBp5rhkoEAig2Pfc8iU=;
+        b=s9ww4L4dISf3S7QcwVhMEi/kglzas/3XcXZnML6ZHdwEoyUhsthLERXmY5mXFuH1VH
+         eniBcJ+nd+0Symnd12ixn5ECXVvxe4xdOgg/kVHq8urbGtEUMm1xZG8+RwtrIMxjGZ/I
+         MenygG7AiT/1G77fO/zg6AubcJ+iu2xbWP8q6JyVjdbj+l0nQ3+xVCnH+b4qtggLob1S
+         mmbreyDbiSyChyHUHtD/zk8bVAi7blRNdbwPn08wuCy4rbqzyqCluLie0+RIllaUVxU6
+         aLegyrjSEZ0rE08UwJhnBgmqDE0UqEvOPN1PPCMjgCohmNgWAD94A7AeimoDhY8ZaGtY
+         cKHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jOgbMuWNosqQy0cTPS2WwylfbrFsjHM4im3IHZTFvLw=;
-        b=NQOIEPrCAKFzlwH3eRcEJ8ssN6HqT2DrEcoxadgGy01j3MIyjtOexiavQ1c3+1Z8Gt
-         2fbCAl3Lovf10KUsBlX0cpK2MobRJo54nq1wqAFPVZfnunNt8jWdSe04ZS7M8arpNqXw
-         saGGICy1YVscWtx+tiMXq/qCQEIdcmlos+N+bzZ3kh47oxtY02ktBAZifaLYltUJDxP+
-         W5qOIi4gw7h1PVM98lANLU+yA9UY/83q0U7cYk53P1Lco1qgCt9Cw+ASh6wDDmfP1IHi
-         Eel5jHNoZDfr7j2bCe58lUgevpxnSXS9fnNWA2KDK7M6tZ+u49Jmd3jqJTo5+WneR9tC
-         lsdg==
-X-Gm-Message-State: AOAM533/xF7aiM6Ga7seFNLaEUavqjfnBI5Idp7MGc1ROBeY2a03lbnB
-        lv6mQ+SOdldzOE2zwtrJegt98+0giNBUtA==
-X-Google-Smtp-Source: ABdhPJzWbXVJwNPqXTA/DdP5nmipMcqE0whwKV6i2HPqxf6amjQq1oKWssGZIlrQotBtpl+hGlqbYQ==
-X-Received: by 2002:a05:6602:2e0c:: with SMTP id o12mr1059070iow.59.1632246619457;
-        Tue, 21 Sep 2021 10:50:19 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 12sm5388978ilq.23.2021.09.21.10.50.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 10:50:19 -0700 (PDT)
-Date:   Tue, 21 Sep 2021 13:50:18 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        vdye@github.com, stolee@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] t/perf/run: fix bin-wrappers computation
-Message-ID: <YUobWlgSjZDGYSvK@nand.local>
-References: <pull.1044.git.1632239172735.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1044.git.1632239172735.gitgitgadget@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=IcLWVND36dcZ2nA/mXFdjFxHOBp5rhkoEAig2Pfc8iU=;
+        b=5YnrYK2LKdKIAS11f8L4MNNgWSk0Et6tJ4Ckpl7j/VvYOFePtc3KCIZ9Z0US6YRNSY
+         5J3qQMD+cxWYeLc81wgudlUi1QhSXh28kEk1MaPCxRoCOEcUG6GID4yWLzetBnFZIV8t
+         oloB9TEAuBh7k9g9FqLbDraZ9/4Tkehri29X9S2exqeUfVtMCUPQoLA/munT3uTAVUVc
+         apcQfhkhjHdKAjlS59ba9iw8I0fRhgWZarekdw/99I7dudOrqrK+0ZhgoPKhhQcfh6Ys
+         bJ5KvldaX8vXt/BiepOauLgSrO+5213ZONoN3FR5V9koeU1KpC7A9c4f6rUVWPLhb/8P
+         Q7VA==
+X-Gm-Message-State: AOAM533kSlRapCP9WU8x0HWGO4e5uizOgRMl+pqkMvBOYxgKbTwQR3TT
+        g/YPxChSt2PRa65Skq5t7Lw1WFUWuKWcBA==
+X-Google-Smtp-Source: ABdhPJwWxTtV9bus+FjViK0HrEYzGxoQ4jjDoODbhdRjI7Wx7x0qLljtNGJlYiqeB9esemGMwlDJbJWrCxCW1w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:ad4:5629:: with SMTP id
+ cb9mr32735413qvb.53.1632247102725; Tue, 21 Sep 2021 10:58:22 -0700 (PDT)
+Date:   Tue, 21 Sep 2021 10:58:21 -0700
+In-Reply-To: <00f94ddf-7019-a5e0-8fd5-a88a4b1cc5c3@gmail.com>
+Message-Id: <kl6ltuidlsjm.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20210913194816.51182-1-chooglen@google.com> <20210920223226.25877-1-chooglen@google.com>
+ <00f94ddf-7019-a5e0-8fd5-a88a4b1cc5c3@gmail.com>
+Subject: Re: [PATCH v2] MyFirstContribution: Document --range-diff option when
+ writing v2
+From:   Glen Choo <chooglen@google.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 03:46:12PM +0000, Derrick Stolee via GitGitGadget wrote:
-> This is critical to successfully computing performance of commands that
-> execute subcommands. The bin-wrappers ensure that the --exec-path is set
-> correctly.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-Just sanity-checking everything you said: with this bug, we'll set
-mydir_abs_wrappers to "/bin-wrappers", then realize that directory
-doesn't exist, and fall back to GIT_TEST_INSTALLED=$mydir_abs. Putting
-'set -x' at the top of t/perf/run, we can see the relevant section:
-
-  + mydir=build/73cd7d9420bb7d75207e8149521db375c789a81c
-  + cd build/73cd7d9420bb7d75207e8149521db375c789a81c
-  + pwd
-  + mydir_abs=/home/ttaylorr/src/git/t/perf/build/73cd7d9420bb7d75207e8149521db375c789a81c
-  + mydir_abs_wrappers=/bin-wrappers
-  + test -d /bin-wrappers
-  + GIT_TEST_INSTALLED=/home/ttaylorr/src/git/t/perf/build/73cd7d9420bb7d75207e8149521db375c789a81c
-  + export GIT_TEST_INSTALLED
-
-OK. But the real problem is in t/test-lib.sh where we read
-"$GIT_TEST_INSTALLED". There we ask for the `--exec-path`, which appears
-to be wrong, at least in my setup. Printing out the $GIT_EXEC_PATH and
-$GIT_TEST_INSTALLED, I get:
-
-  /home/ttaylorr/local/git/ds.sparse-checkout/libexec/git-core,
-  /home/ttaylorr/src/git/t/perf/build/73cd7d9420bb7d75207e8149521db375c789a81c
-
-where the former is the branch I happen to have checked out, and the
-latter is the revision that I asked to run performance tests on via
-t/perf/run.
-
-So I think we'll run the right top-level Git command since the latter
-path ends up first in our $PATH, but the exec path is definitely wrong.
-
-> diff --git a/t/perf/run b/t/perf/run
-> index d19dec258a2..55219aa4056 100755
-> --- a/t/perf/run
-> +++ b/t/perf/run
-> @@ -74,7 +74,7 @@ set_git_test_installed () {
->  	mydir=$1
+>> +We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
+>> +mark the tip of our v1 branch for easy reference:
+>>   
+>> -When you're ready with the next iteration of your patch, the process is fairly
+>> -similar.
+>> +----
+>> +$ git checkout psuh
+>> +$ git branch psuh-v1
+>> +----
+>>   
 >
->  	mydir_abs=$(cd $mydir && pwd)
-> -	mydir_abs_wrappers="$mydir_abs_wrappers/bin-wrappers"
-> +	mydir_abs_wrappers="$mydir_abs/bin-wrappers"
+> Alternatively we can branch off psuh-v2 from the original psuh:
+> ----
+> $ git checkout psuh
+> $ git checkout -b psuh-v2
+> ----
+>
+> The original psuh thus become v1. To easily identify it, we can run:
+> ----
+> $ git checkout psuh
+> $ git branch -M psuh-v1
+> ----
+>
+I proposed to reuse the topic branch at the suggestion of Junio.
 
-This fix looks obviously right to me (and gives me the expected output
-from above when I apply it locally).
+ I do not think it is a good suggestion at all to use a new topic
+ branch, especially a one that forked from the tip of the original
+ submission, and work on that branch to produce the new round.  It
+ would be much better to create a topic branch or a lightweight tag
+ "psuh-v1" that points at the old tip and keep working on the same
+ branch.  But that is a separate story.
 
-Thanks,
-Taylor
+Your suggested workflow is acutally fairly similar to the one I actually
+use. To keep this doc clear though, I think that we should probably
+propose just one workflow.
+
+> For completeness, we can say "Make your changes with `git rebase -i`. 
+> Actions that you have to select in the todo editor of rebase depend on 
+> reviewers' comments. For example, if they asked to squash a commit into 
+> previous one, say `pick` on the latter and `squash` on the former."
+>
+I hesitate to add a "rebase -i" tutorial because this document doesn't
+contain similar tutorials/explanations for any 'regular' Git workflow
+commands; the explanations are generally focused on mailing
+list-specific commands like "send-email" and "format-patch".
+
+It seems unlikely to me that an aspiring contributor to Git would be
+unfamiliar with "rebase -i". It's not the most simple command, but it is
+common. In fact, because it is not so simple, it seems unlikely that we
+would do it justice in this document. For those who need it, additional
+reading on "rebase -i" can be left as an exercise to the reader.
+
+>> +The `-v2` parameter tells `format-patch` to output "v2" patches. For instance,
+>
+> More accurately, `-v 2` marks the patchset as second iteration of it.
+>
+Good point. I was stuggling with how to word this paragraph. I'll work
+that wording into this line.
