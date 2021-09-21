@@ -2,162 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20250C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 05:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9BF6C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 05:39:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E11E760F26
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 05:34:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CEAA60F94
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 05:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbhIUFfb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 01:35:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55364 "EHLO
+        id S229568AbhIUFlX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 01:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhIUFfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 01:35:30 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3BF9C061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 22:34:02 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id q23so16308627pfs.9
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 22:34:02 -0700 (PDT)
+        with ESMTP id S229441AbhIUFlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 01:41:23 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34110C061574
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 22:39:55 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g8so69991669edt.7
+        for <git@vger.kernel.org>; Mon, 20 Sep 2021 22:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=yNITUkrEjQz3JYlRvvMcFwBLKZSGSRNPDDjqcoxcauk=;
-        b=GkbPFQDZ0j0TBynlvDxaeNWYr3b4uDrKNfVWCtV8ZUX8KW5utiBPQtK2m9Gz92rH9i
-         TvdR+UV375fQwFzKIRuGNKrSSCmV0ONmj9IF0IqOKYxQQnKZpS8ei70/mlbPz5IIrPCA
-         HHIyMNgi7eYrJldcqN4eNUpKWHK8rdug2FBZSV0LXF9eYAR+o92JgYcSoUuehA7gH4a8
-         PYZIdHeIIxr98X2Z7r+zBRZNk7IC4cqQmngr/ifZcSu+lRysEeRp4Ip+fl7IGPchhSvK
-         18aPLCkDNFHiEws5APCsXWVUlHiVu0LKOb4zES2R0z+wirG91naUwJRvcGGesLb+55Wl
-         0hnA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oN5IZBe4vn2l4e2WkfYqSXXqa/ZysbeXAF9eC7JtlXU=;
+        b=nJrXmf/ckah+0gTUzVdTSLf8yuvMUyZ5NzXI2yURTYB7AtzaQxlUyBJI4S71WXAVvY
+         iJheAVzl5lx2cwqGL8rnUbGYONuv4VofCZ2cnYluWxpigq7MiupNXfXCVj75hpW5N7nc
+         PP8Bb609E/2S8FV9MEjUBmHkYOlpd++F74PtwKKEwj4hcsFlPctb+goG5VAx/07yFa43
+         YTTv+1BYzeRPrE/lZds+4pTQlCk2rDRcxa2uebC13H/8iLN1i+spPEBrulAzlNMpzilY
+         CgWOWmy+fmcKbW3XDpq7OmI8AkPqqVu2vaaruJi4NdbBbBP4kmMqhDKW7YBw5UOZ6vTp
+         09JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yNITUkrEjQz3JYlRvvMcFwBLKZSGSRNPDDjqcoxcauk=;
-        b=IrZURV9hzBC9WdBxMytjTQm5r/MX+fPtqpJp5cyLSloMi65pzxanFYgmvA7GLCFZfS
-         GcIMp8goaxJSKzq03dYP9HLqlQme0iWKqALNBTLf/ArGgaKnva1d84acsv/trVKrCeZS
-         mGcG++kKTkBhrFCJ61M5nKzFL73pmuddEoe0+Qw9wbA0py96xNZ9zSCSbr08pcz0xydf
-         28RjKrK051IZks2Qtfe8erQ4io4CD/BSbk+ug78wacDhMiKCH/s58sASavmfWNK4G6aE
-         tNaIP7JURm9K4KZG7jg3ca1265IFfWsJl4NeAjlFEf7g9nzFIvJgImmrN7jYX5MWrIQN
-         AD9A==
-X-Gm-Message-State: AOAM532gH1KUl5ShfyuD+sefDDDUJ38iHz88/g4KJRAE/2RvKdhl4pwo
-        baWPwXl8r2hBJpnis9S6MNWzn/1VtmY0ww==
-X-Google-Smtp-Source: ABdhPJyuP+WcCClhrzNTbN3+HBO8tefVsYwleyq2M00OU6RPUEZDaVyLLJ4jp2x4PgUtEQl+xC/Pcw==
-X-Received: by 2002:aa7:9a51:0:b0:43d:f0b0:532a with SMTP id x17-20020aa79a51000000b0043df0b0532amr28628152pfj.76.1632202442166;
-        Mon, 20 Sep 2021 22:34:02 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-3.three.co.id. [180.214.233.3])
-        by smtp.gmail.com with ESMTPSA id gp11sm1103164pjb.2.2021.09.20.22.34.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Sep 2021 22:34:01 -0700 (PDT)
-Subject: Re: [PATCH v2] MyFirstContribution: Document --range-diff option when
- writing v2
-To:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
-References: <20210913194816.51182-1-chooglen@google.com>
- <20210920223226.25877-1-chooglen@google.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <00f94ddf-7019-a5e0-8fd5-a88a4b1cc5c3@gmail.com>
-Date:   Tue, 21 Sep 2021 12:33:59 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oN5IZBe4vn2l4e2WkfYqSXXqa/ZysbeXAF9eC7JtlXU=;
+        b=t926d/Uc6URmDg2TyCPQqsL1wxs+66en/Cyq7UNo9R3ldRXwhW7Jihipo0ZZMZpc1g
+         lBb80Lx+5ShlthoycM42mQmLsLRX22ltOZVvjD+C8k+iKDnb7EyHMOkRw1hwQP/hI+ua
+         DAX5gM4QBQit5zsLS+zsSpz2Cc0Z8i/VNw9sNYLGbTgcKo0+PUXXsCqB3kFfBF4G0ZB1
+         sNxvQ06IGRR1SUvVOhAltlu5LbIFKRNPJ+34MaLicyajv9UPZnlijin7IVl1X354nI9J
+         bPg+OW8pCAYzIeVx4Uf4pr41TfcrCEs1Z4VzbAeguAgiS2cqcdUveshAM8VWQQr6BPco
+         TlRA==
+X-Gm-Message-State: AOAM532Wx4aZOxnrutUxvJ6bRES1UJmfk2ko3qMmkh8MXnv3cyaCXxeR
+        6HM0YmabIFGwVWJTdRs36pvyqmA+THDy4ymrLZU=
+X-Google-Smtp-Source: ABdhPJzPKfAZsNhmRGb+AZJkepFZENEj6B4MvHfnitutsGHuiL4Ps++BgLWRsn6dMkTFrwYoNJRbsA/eDO/AoIji+74=
+X-Received: by 2002:a17:906:781:: with SMTP id l1mr33317248ejc.289.1632202793336;
+ Mon, 20 Sep 2021 22:39:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210920223226.25877-1-chooglen@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <YTGLLQCvlnT17jo8@nand.local> <YUYPgF6tRQ5ERYWL@nand.local>
+ <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com> <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
+In-Reply-To: <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 21 Sep 2021 13:39:42 +0800
+Message-ID: <CAOLTT8S8TxuTmddGp2WGoPtTc3gwGXzizBfVzKd87otRw7Dpiw@mail.gmail.com>
+Subject: Re: Git in Outreachy?
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <ttaylorr@github.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/09/21 05.32, Glen Choo wrote:
-> -Skip ahead to <<reviewing,Responding to Reviews>> for information on how to
-> -handle comments from reviewers. Continue this section when your topic branch is
-> -shaped the way you want it to look for your patchset v2.
-> +This section will focus on how to send a v2 of your patchset. To learn what
-> +should go into v2, skip ahead to <<reviewing,Responding to Reviews>> for
-> +information on how to handle comments from reviewers.
-> +
-> +We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
-> +mark the tip of our v1 branch for easy reference:
->   
-> -When you're ready with the next iteration of your patch, the process is fairly
-> -similar.
-> +----
-> +$ git checkout psuh
-> +$ git branch psuh-v1
-> +----
->   
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B49=E6=9C=
+=8820=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=8810:52=E5=86=99=E9=81=93=
+=EF=BC=9A
+>
+> On Mon, Sep 20, 2021 at 9:45 AM ZheNing Hu <adlternative@gmail.com> wrote=
+:
+> >
+> > Taylor Blau <me@ttaylorr.com> =E4=BA=8E2021=E5=B9=B49=E6=9C=8819=E6=97=
+=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=8812:10=E5=86=99=E9=81=93=EF=BC=9A
+> > >
+> > > [+everybody from upthread to cc]
+> > >
+> > > On Thu, Sep 02, 2021 at 10:40:45PM -0400, Taylor Blau wrote:
+> > > > Are we interested in participating in the December 2021 round of
+> > > > Outreachy? September 3rd (tomorrow at 4pm UTC) is the initial commu=
+nity
+> > > > application deadline.
+> > >
+> > > The project deadline of September 23rd is fast approaching, and we do
+> > > not have any proposed projects or signed-up mentors.
+> > >
+> > > If you are interested in mentoring, the time to sign-up and propose a
+> > > project is definitely ASAP :-). You can do so by clicking "Submit a
+> > > project proposal" at:
+> > >
+> > >     https://www.outreachy.org/communities/cfp/git/
+> >
+> > I haven't thought of any good projects for the time being,
+> > Christian, any ideas?
+>
+> I already suggested the following project upthread:
+>
+> > > About project ideas, maybe continuing Hariom Verma's GSoC 2020 "Unify
+> > > ref-filter formats with other \-\-pretty formats" project could be an=
+d
+> > > idea, though maybe it could interact too much with ZheNing Hu
+> > > continuing his GSoC 2021 "Use ref-filter formats in `git cat-file`"
+> > > project.
+>
+> and you replied:
+>
+> > If the project idea is related to Hariom or my GSoC project, I think I =
+can
+> > provide a lot of help. :)  I can help them as a mentor.
+>
+> so I am ok to co-mentor this project with you.
+>
+> If you are still ok, I will submit it.
+>
 
-Alternatively we can branch off psuh-v2 from the original psuh:
-----
-$ git checkout psuh
-$ git checkout -b psuh-v2
-----
+Yeah, I am ok. grateful.
 
-The original psuh thus become v1. To easily identify it, we can run:
-----
-$ git checkout psuh
-$ git branch -M psuh-v1
-----
+> I will also prepare soon a page with a few micro-projects. Of course
+> more micro-project and regular project ideas are very welcome!
 
-> -First, generate your v2 patches again:
-> +Make your changes with `git rebase -i`. Once you're ready with the next
-> +iteration of your patch, the process is fairly similar to before. Generate your
-> +patches again, but with some new flags:
->   
+I am still looking at the code in ref-filter.c these two days, I deeply
+doubt whether we can add a --no-sort option to git for-each-ref,
 
-For completeness, we can say "Make your changes with `git rebase -i`. 
-Actions that you have to select in the todo editor of rebase depend on 
-reviewers' comments. For example, if they asked to squash a commit into 
-previous one, say `pick` on the latter and `squash` on the former."
+Inspired by Peff's experimental patches [1], I think the --no-sort option
+may improve the performance of ref-filter by avoiding the execution
+of ref_array_sort().
 
->   ----
-> -$ git format-patch -v2 --cover-letter -o psuh/ master..psuh
-> +$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
->   ----
->   
-> -This will add your v2 patches, all named like `v2-000n-my-commit-subject.patch`,
-> -to the `psuh/` directory. You may notice that they are sitting alongside the v1
-> -patches; that's fine, but be careful when you are ready to send them.
-> +The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
-> +range-diff between `psuh-v1` and `psuh` (see linkgit:git-range-diff[1]). This
-> +helps tell reviewers about the differences between your v1 and v2 patches.
-> +
-> +The `-v2` parameter tells `format-patch` to output "v2" patches. For instance,
-> +you may notice that your v2 patches, are all named like
-> +`v2-000n-my-commit-subject.patch`. `-v2` will also format your patches by
-> +prefixing them with "[PATCH V2]" instead of "[PATCH]", and your range-diff will
-> +be prefaced with "Range-diff against v1".
-> +
+I don't know if this can be regarded as a micro-project.
 
-More accurately, `-v 2` marks the patchset as second iteration of it.
+This may require the help of this patch of mine: [2]
+which use list api for ref_sorting. This may can help eliminate unnecessary
+sorting.
 
-> +Afer you run this command, `format-patch` will output the patches to the `psuh/`
-> +directory, alongside the v1 patches. Using a single directory makes it easy to
-> +refer to the old v1 patches while proofreading the v2 patches, but you will need
-> +to be careful to send out only the v2 patches. We will use a pattern like
-> +"psuh/v2-*.patch" ("psuh/*.patch" would match v1 and v2 patches).
->   
->   Edit your cover letter again. Now is a good time to mention what's different
->   between your last version and now, if it's something significant. You do not
-> @@ -1082,7 +1101,7 @@ to the command:
->   ----
->   $ git send-email --to=target@example.com
->   		 --in-reply-to="<foo.12345.author@example.com>"
-> -		 psuh/v2*
-> +		 psuh/v2-*.patch
->   ----
->   
->   [[single-patch]]
-> 
+[1] https://lore.kernel.org/git/YTTC2IUO1ZmTOEoR@coredump.intra.peff.net/
+[2] https://lore.kernel.org/git/pull.1025.git.1629882532.gitgitgadget@gmail=
+.com/
 
-
--- 
-An old man doll... just what I always wanted! - Clara
+Thanks.
+--
+ZheNing Hu
