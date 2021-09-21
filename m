@@ -2,115 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 155FEC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7276AC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:58:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F08AF60F48
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B77861166
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234241AbhIUP6K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 11:58:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56904 "EHLO
+        id S234328AbhIUQAG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 12:00:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234194AbhIUP6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 11:58:09 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16D7C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:56:40 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id v24so76152794eda.3
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:56:40 -0700 (PDT)
+        with ESMTP id S234155AbhIUQAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 12:00:05 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8FAC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:58:37 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id j11-20020a9d190b000000b00546fac94456so12487695ota.6
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=QTXS1XrB+jGXzC81oS8Tjyer40eeZG1HBLpur1cQBRI=;
-        b=mQvIK1khoCYnW7eDpiBIcKgIvHZf0VSGTTWMx/P/c/QeeJnmfhjocoHJkcdDSH555G
-         pRwEfrcX4/T8l/j2OwB/llhBcCVWz0R9GYvpBgtZuMaQRagWlybcWOcuvdMmIcCN+LBM
-         zXuKQRDKmH/DsRgM3pka1+r+XL6evawnEHmn8tbL5jpzpWPcANNlbKirmkfwSkdca8AJ
-         BFWXt2wxGnUJm/wDWRb51MMa8N9h7EjFqLqDjm0vcMueYPYcAPsiN3FFMjvaH4JSeTG3
-         iU9oY7CDqrOJd7SDWQVkwyJULLk0TiN0HAF5iITI1mhL/E693OWUbklcOAVLY3vyQV1a
-         u8rQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=C3gNtPmfmu21K320rGsPt0FwFyuE8EMazlPeSXAvUhE=;
+        b=np6LBJ+nkOfqHhImih7a/FWBYvFDmjvWo2MlnB4idtDFWb1O4RmbdMiLkPHLF9up7M
+         hPa7OiAJtRSnszKqHBsmlRhEyF6Bl4GDvBnNgdyRfZM35rhYw9WLJ5ZekXsIznFtXF30
+         Kf+rUxwg9YxuBH0o8DwkWcFaYX0YJA/ukjwr9lvyk00qO1khRJGQv0IeThykmfQsXXHW
+         ZbIa+FFHg2yVka+zlo4b6DiNKV1DKOGKbRETzURPOH3nmK3aZdpqWCcWlrSwWnsxnRHX
+         Rq9fFoFj9KJIkiTWjN9EDslwOC6wSGgVQE4Kd8sT8V8+37SyVArnflDfSzEoIUnok8f2
+         ONNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=QTXS1XrB+jGXzC81oS8Tjyer40eeZG1HBLpur1cQBRI=;
-        b=5dhFdKtcNCLHUJOjQhA8lfl7id6EtwBvEibCWnY2H7v7YLdSYQQ+rL1pYotTbUQ9ja
-         NKoAxlPTCyPFMldE5AAapkDbeGXQp1dlRrHgaMh7p79aFKbm40Z+4s/KtTYo13mGs/HX
-         dXfxYTP1yuMXga9vspzf3tZonDapRUSznbN1bgo0XQacP+Egya0FBUaH8ftmGg2n/W9e
-         6CRo/B0ukIU6nBxrx1CwDKlOpkBOhaQGOUTJqaAZMZYnUmvvWnsb+TwnEDvk06jw/N5F
-         PwaeAjdQ2xZ0G46lkAW9Ejm3nauQ8zsQR2A+VP4z/YYeg/IOhqvrRcFPPXQ38a8pstf1
-         IDqA==
-X-Gm-Message-State: AOAM533cmB/ddLLLy8znw/6VfLuxNHHdbAUEm/bWhb5e4rbh0h0c9AL9
-        ZEnAqdumOrOOtzIueb3c7MwJ9ltkfp/QtA==
-X-Google-Smtp-Source: ABdhPJzMSRFmCV7j1lfr9vhccSkmeUvRU5xqJpIQLO1BgnefgGFKnU5c4OUz6l922Vw20FcAyxkeNg==
-X-Received: by 2002:a17:907:2cc6:: with SMTP id hg6mr35933439ejc.449.1632239687200;
-        Tue, 21 Sep 2021 08:54:47 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l2sm74944edc.23.2021.09.21.08.54.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 08:54:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Hamza Mahfooz <someguy@effective-light.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=C3gNtPmfmu21K320rGsPt0FwFyuE8EMazlPeSXAvUhE=;
+        b=FEj5WT1k3SgcgYSD3WaDfr1F/NoTpHci23BcKTemuJ3DdG6Xux8lQE9cD23AJ84lSS
+         mtfxI7Nqa9Z2ctdadFkZlC8MX8FweHHwRo32f3qaA5XJz5UWgd+NzYDoDYHtIOAFHegY
+         pJgzcjxa21CRtNICQTAIo+MhWyi9wxsqFgbXmkJVPAlC20Sk+qMobFZiRTaynHG9I2gY
+         gAX5kuiv0ZOl4hzVDOTd/VsOB2L+6w6kPixbq1eEwY7wcJub5XYauY/M6Uz7YXoMYjoo
+         N6zBzRVjJt27v8JhcX4GCLBE1aISyKfkzhRctSw/Nm4+jQ6bpzwerijp6swoI6ya6915
+         4I1A==
+X-Gm-Message-State: AOAM5311JJZyVegijvsZRBGTsV/Ubvge1WKXTWlf9kNyJkJndYwF5yc1
+        ocO6+mJ+r5ec+azU9KJrRVNWfyjsejgikQ==
+X-Google-Smtp-Source: ABdhPJzzwLui0X5IANmDR4Er18+IFX5XsWJo8xh7Fe2jlR/EZ8tRD+6VWCn1e3uwuCBsbOu69GLZ6A==
+X-Received: by 2002:a9d:7194:: with SMTP id o20mr13276561otj.381.1632239916364;
+        Tue, 21 Sep 2021 08:58:36 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:ace4:98aa:c023:6ae9? ([2600:1700:e72:80a0:ace4:98aa:c023:6ae9])
+        by smtp.gmail.com with ESMTPSA id y12sm756549otu.11.2021.09.21.08.58.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Sep 2021 08:58:35 -0700 (PDT)
+Subject: Re: [PATCH v4 0/5] repo-settings.c: refactor for clarity, get rid of
+ hacks etc.
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 6/5] grep.c: mark eol/bol and derived as "const char *
- const"
-Date:   Tue, 21 Sep 2021 17:17:57 +0200
-References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
- <patch-1.1-c317e6e125e-20210921T124416Z-avarab@gmail.com>
- <YUnx7gt0KQNRlhuZ@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUnx7gt0KQNRlhuZ@coredump.intra.peff.net>
-Message-ID: <874kadapq1.fsf@evledraar.gmail.com>
+References: <cover-v3-0.5-00000000000-20210919T084703Z-avarab@gmail.com>
+ <cover-v4-0.5-00000000000-20210921T131003Z-avarab@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d852d412-4d6a-505f-2c4c-52e81ab4e3f4@gmail.com>
+Date:   Tue, 21 Sep 2021 11:58:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <cover-v4-0.5-00000000000-20210921T131003Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 9/21/2021 9:12 AM, Ævar Arnfjörð Bjarmason wrote:
+> A hopefully final re-roll addressing Taylor's v3 review, except for
+> the suggestion (that I read as) perhaps retaining the test-only code,
+> which I've decided not to do per
+> http://lore.kernel.org/git/87tuieakms.fsf@evledraar.gmail.com
+> 
+> The x(un)setenv() now returns void, and the error messages are less
+> chatty, I also improved a BUG() message in 4/5 that we end up deleting
+> in 5/5 anyway, so it doesn't matter for the end-state, just for
+> understanding the patches.
+> 
+> Ævar Arnfjörð Bjarmason (5):
+>   wrapper.c: add x{un,}setenv(), and use xsetenv() in environment.c
+>   environment.c: remove test-specific "ignore_untracked..." variable
+>   read-cache & fetch-negotiator: check "enum" values in switch()
+>   repo-settings.c: simplify the setup
+>   repository.h: don't use a mix of int and bitfields
 
-On Tue, Sep 21 2021, Jeff King wrote:
+This version looks good to me.
 
-> On Tue, Sep 21, 2021 at 02:45:16PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> I think that generally git's codebase could use going beyond just
->> "const char *" when a "const char * const" would suffice, for some
->> reason we seem to mostly use it for the static usage variables.
->
-> I didn't dig up the references in the list archive, but I feel like
-> we've had this discussion long ago. One of the reasons not to do so is
-> that it pollutes the function's interface with internal details.[...]
-
-Are there cases in my conversion where the caller has to do anything
-special that they didn't before? These are also all static functions, so
-it's all internal details exported to nobody.
-
-> The caller does not care whether the function is going to modify the
-> pointer itself, because it is passed by value.
-
-Sure, it's for increased clarity of reading te function in question, not
-its although in one case we pass a ** so you can see what exactly we
-modify both from the callers and function perspective.
-
-> You could apply the same logic that we should be passing "const int",
-> and so on.
-
-Sure, in general I think churn like that isn't worth it, and "const char
-*" is usually good enough, even if it could be "const char * const" or
-whatever.
-
-I think it makes senes in this specific case where you need to read one
-function after another with "bol" and "eol" variables, with some
-treating their copy as immutable, others not etc. Particularly if we'd
-convert it to some other style (e.g. str/len) we can see if an entire
-chain of functions can all be safely changed over.
-
+Thanks,
+-Stolee
