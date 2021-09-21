@@ -2,119 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C7E0C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA2ACC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:18:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D791661100
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B301261107
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbhIUBSr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 21:18:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51322 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229920AbhIUBQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:16:47 -0400
-Received: (qmail 2866 invoked by uid 109); 21 Sep 2021 01:15:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:15:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25929 invoked by uid 111); 21 Sep 2021 01:15:18 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:15:18 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 20 Sep 2021 21:15:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 1/2] grep: refactor next_match() and
- match_one_pattern() for external use
-Message-ID: <YUkyJjaTfDcjakIe@coredump.intra.peff.net>
-References: <20210921003050.641393-1-someguy@effective-light.com>
+        id S229709AbhIUBUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 21:20:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55698 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229474AbhIUBSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:18:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C8FCAF0F80;
+        Mon, 20 Sep 2021 21:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IbuCetPBMz/ly7tvcGIEksaA5EdFkHxxkKJc7/
+        4KLbk=; b=lOd+WKF3PpQxTwl93ZAycqSVVdim3D0YMJld+fruBRYdVyHv6WOL4f
+        W7hiPQC0EbbrnLlsRdtL0Exa3eRyUrxXhrBqhtc3n/yzbiLF3RJLJgW7Ce/Q2Ap4
+        6Ex+mdYX4PUh6sPUcCFLN8KRnOn+zfBP3tM40pdVY4Q55DuVOHcEs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1F1FF0F7F;
+        Mon, 20 Sep 2021 21:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3910DF0F7E;
+        Mon, 20 Sep 2021 21:16:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2021, #06; Mon, 20)
+References: <xmqq1r5iaj9j.fsf@gitster.g>
+Date:   Mon, 20 Sep 2021 18:16:36 -0700
+In-Reply-To: <xmqq1r5iaj9j.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        20 Sep 2021 17:02:00 -0700")
+Message-ID: <xmqqwnna918r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210921003050.641393-1-someguy@effective-light.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91494CD4-1A79-11EC-81FB-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 08:30:49PM -0400, Hamza Mahfooz wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/grep.c b/grep.c
-> index 424a39591b..2901233865 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -956,26 +956,34 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
->  	const char *start = bol;
->  
->  	if ((p->token != GREP_PATTERN) &&
-> -	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
-> +	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
-> +	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
->  		return 0;
->  
->  	if (p->token == GREP_PATTERN_HEAD) {
->  		const char *field;
->  		size_t len;
-> -		assert(p->field < ARRAY_SIZE(header_field));
-> -		field = header_field[p->field].field;
-> -		len = header_field[p->field].len;
-> -		if (strncmp(bol, field, len))
-> -			return 0;
-> -		bol += len;
-> +		const char *end = eol;
-> +
->  		switch (p->field) {
->  		case GREP_HEADER_AUTHOR:
->  		case GREP_HEADER_COMMITTER:
->  			saved_ch = strip_timestamp(bol, &eol);
-> +			if (eol == end)
-> +				goto again;
+> The seventh batch is out.
 
-I'm not sure if this part is right. If we didn't strip any timestamp,
-then we jump to the "again" label, where we actually try to match the
-pattern.
+By the way, I'll be mostly offline tomorrow (HR has been bugging me
+about my accumulated vacation time, which is nearing the cap), so
+please do not expect a quick response time until Wednesday.
 
-But that means we skip the part you deleted above, which got moved down
-here:
+Thanks.
 
->  			break;
->  		default:
->  			break;
->  		}
-> +
-> +		assert(p->field < ARRAY_SIZE(header_field));
-> +		field = header_field[p->field].field;
-> +		len = header_field[p->field].len;
-> +
-> +		if (strncmp(bol, field, len))
-> +			goto restore;
-> +
-> +		bol += len;
->  	}
 
-And so we do not check that we have the right field at all. And as a
-result, we may return nonsense results. For example, try this in
-git.git:
 
-  git log -1 --author=junio 1462b67bc893fc845d28e2748c20357cb16a5ce3
-
-It currently returns no results, because the match is case-sensitive (so
-it does not match "Junio" in the author field). But with your patch, it
-prints t hat commit (1462b67bc), because it matches a line buried in the
-mergetag header ("tag post183-for-junio").
-
-That pattern is how I actually stumbled across it, but an even more
-obvious version is:
-
-  git log --author=commit
-
-Currently that returns one result (somebody who has the word "commit" in
-their email address). But after your patch, it returns a ton of tag
-merges (because they all have "type commit" in their mergetag headers).
-
--Peff
