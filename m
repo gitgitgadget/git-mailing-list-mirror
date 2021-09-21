@@ -2,110 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA366C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 23:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBB57C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 23:25:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1CB360F48
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 23:06:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90B18611CE
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 23:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbhIUXIC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 19:08:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
+        id S230083AbhIUX1P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 19:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhIUXIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 19:08:01 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD47BC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 16:06:32 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id h17so2466877edj.6
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 16:06:32 -0700 (PDT)
+        with ESMTP id S229794AbhIUX1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 19:27:15 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2005CC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 16:25:46 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id p12-20020ad4496c000000b0037a535cb8b2so6912679qvy.15
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 16:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=1qqTDPn5M4FIkdbVw/fxWHIsthETtiYf9aku2pJV2yc=;
-        b=pXYyRZtUGSYDhOMlF6bOQWTFLjVrPEsvai74aEUaA7707oy0wl/Acz0cZAr/2VSE66
-         ERJmQQWc3Cqwx4G7JUOvdYsYMtzOuFKGSIiPc4H/9YaXEMwQkf0iOW/e9h7p7oVxHVPA
-         WEWcz4UJuxo88NWOHeujUmhB6zLb6iU/yZ16d1a0A1uGZBaJfBalQgOBjjpnVyIMqBbQ
-         Xi7M3v4dmogJ+GjUZTzWLZ2YRoi93gKiB0tcYdZz+DwblechAHbVg0zhK8wd1Bb7U2IG
-         ft/Iy0akttrWA/5N3/QXgbQaRRfoDilEVVMp4iknBB3FgYxITbSRb0s5pb1/q5wnmY7P
-         UxQw==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=0JrrrinbbrYe9656QjePLbTRR0FTuZfwQgqc/6p155I=;
+        b=KWv+VLWzearmudOoGKlZ4lrR6UKRo4ndgsmtkG5v1PpAp9ARvD4tGNYE7ooQi0O465
+         PR+atVOUtUWINU4kQgsZA3TdsnaZYiz/mzbmcaYrGunGBW0mkxrf9JCyB2iNSK6xXHuX
+         eWxZv1epDMR+4fWgRSgT0A0Um1e81d2LUuXf06vwHXOeTO0wxA4NWyedyt0DddmNwWMM
+         UsY1skv8+fHSA4cRMzcTkvGMDBDEcfaj/2d/paJpGgRcCai/wOXc8s1zESDK2qkDr8tb
+         bSUEYPbHneUcwsXsMDKJIdiQmEW210Fnuf9oIQSV0By0HD8dBKH/rl53UMx+4KZtkgvF
+         UDWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=1qqTDPn5M4FIkdbVw/fxWHIsthETtiYf9aku2pJV2yc=;
-        b=Dt6JZikL3/hlapVtCsfZHwijWl2alI1MjRQdlZf/A/iLlsl/y11gMdyS6Ts55McRJX
-         jqu3/0XGLk0Z5TrW9F3zSdmomfQ6e+It/TFIr25lGaHPlRGCmVLccj1TWSbo/1ACaLc5
-         ne324GcsmRVJPtlAlsEJfSMRc1CyddxI8sV1v2Dxl1SlAZ7IoV8HUHC9/+LyDnqrDQwb
-         x4Jz6HoPcOItE1MIdaQBrW4jEtKvKxf0c8WZeRmAtEzXCGHJHv3JTGdnYQ+07Ojlct8H
-         Yoxn/jW10SVQ0+5TTkcQULzWE+4K8t9I/usXEkuyADzzUe0IznMrqSJKuLrFKmy8KSen
-         9Jog==
-X-Gm-Message-State: AOAM531yRrsrH8Zu1nwO6o1uE4/nsxQC0EA5gKPH6Hs1P5ki0CJ84QBy
-        7xOwtdFedJXV3e3hAvKIJOgmW29y9fIv6Q==
-X-Google-Smtp-Source: ABdhPJxJbBo7c2X1wY9X6R6tStYOEItyFH4LNp52ln/Jn+/LA2ofSINoMEd5FemIqXpK6VnA5M6YRQ==
-X-Received: by 2002:a50:d0d1:: with SMTP id g17mr39292211edf.96.1632265590740;
-        Tue, 21 Sep 2021 16:06:30 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cn8sm146147edb.77.2021.09.21.16.06.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 16:06:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        Andrzej Hunt <andrzej@ahunt.org>
-Subject: Re: [PATCH 0/2] Squash leaks in t0000
-Date:   Wed, 22 Sep 2021 01:01:55 +0200
-References: <pull.1092.git.git.1631972978.gitgitgadget@gmail.com>
- <xmqq4kafcesa.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqq4kafcesa.fsf@gitster.g>
-Message-ID: <87r1dh8r62.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=0JrrrinbbrYe9656QjePLbTRR0FTuZfwQgqc/6p155I=;
+        b=rjMTpuOQNgiTW+ooxQQ+sRi6E1nXEcYfUGQHnruGA01i3MnJrkU958F19jueFlnFf4
+         HhYKZxqgyxMuHagl+fZGbPbKjzgxQ2QtPj5YH2KFd0vzxhVIT28Z8x9Sha8thWTs4/em
+         9rTwEiG3VaHPr3ax57WwO9u4l1oOGHvFTcia6HSxVjz94PKbBfId6M0LAEx2g4bJ6PA3
+         iJT8hrM5GGo8APbV4QPBB2Dj/hayWXQ8wXzMOB5Z/9UtwYvEP69tygpCKFJiV2Lxo1Im
+         x2w4hKnIB+DZ3jOqiucii4CBkRsTQWpq5XIpbAodo7P+ol+E5DHfAidWbXG6/KWwIJYj
+         mK3w==
+X-Gm-Message-State: AOAM533ETcg5d57CiEw5BK914oM5LQ81TqibQI2Tmh3H0jIKXYtM5LSE
+        Jak5lT6WrrG7HKVOMX88lGa2dUR8AE3La7Z9yN4roGyh6F0GETBo5Os2MB5OsW1b2NXBDzwFuE2
+        5BU5awrOdiIoE0XwLguGvYop9LSFLloMKcaelElqrLNZmbjNXEBoJeigUoWc0XJg=
+X-Google-Smtp-Source: ABdhPJzK38GmJEuYge3hHcfPM62qCTb2bNiI9GxvsWw6K4BRftdBLk1ReT7AdSpNNYyPApZFUDw9+RycVlc6Rw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a25:7108:: with SMTP id
+ m8mr38820314ybc.246.1632266745076; Tue, 21 Sep 2021 16:25:45 -0700 (PDT)
+Date:   Tue, 21 Sep 2021 16:25:27 -0700
+Message-Id: <20210921232529.81811-1-chooglen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: [RFC PATCH 0/2] branch: implement in-process --recurse-submodules
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+These patches are an attempt to implement git branch
+--recurse-submodules in-process. This is part of the general submodule
+UX improvements discussed in [1]. Specifically, this is the use case
+discussed in the section titled "Create Mode (git switch -c / git
+checkout -b)", but without checking out the newly created branch.
 
-On Mon, Sep 20 2021, Junio C Hamano wrote:
+Doing this in-process allows "git switch -c" and "git checkout -b" to
+reuse create_branch(), instead of relying on a child process to create
+the branch. create_branch() nominally takes a struct repository *
+parameter, but there is some hidden reliance on the_repository and
+global state.
 
-> "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> Carlo points out that t0000 currently doesn't pass with leak-checking
->> enabled in:
->> https://public-inbox.org/git/CAPUEsphMUNYRACmK-nksotP1RrMn09mNGFdEHLLuNEWH4AcU7Q@mail.gmail.com/T/#m7e40220195d98aee4be7e8593d30094b88a6ee71
->>
->> Here's a series that I've sat on for a while, which adds some UNLEAK's to
->> "fix" this situation - see the individual patches for a justification of why
->> an UNLEAK seems appropriate.
->
-> It seems that discussion on 1/2 seemed to be heading in an
-> improvement but has petered out?  
->
-> I think the simplest fix in these two patches are worth taking, even
-> if we plan to further improve either by refining the granularity of
-> UNLEAK application or by introducing repo_clear_revisions() as Carlo
-> mentions (which is a preferred way to do this if we can manage it),
-> on top.
+Broadly speaking, I'd like to know how we should approach
+"--recurse-submodules", particularly when we are implementing [1]. I'm
+sending these patches as an RFC because I think this is somewhat
+indicative of submodule issues.
 
-I think per Andrzej's own [1] it's best to not pick up this series.
+In this patchset, branching works slightly differently between the
+superproject and submodule (skip ahead for specifics). There are two
+very obvious alternatives that can address this:
 
-I've got a lot of memory leak fixes queued up locally, I'm just waiting
-on the SANITIZE=leak CI mode to land on master so I can add new tests to
-the whitelist as I fix the memory leaks, that includes "real" fixes for
-the ones Andrzej's added "UNLEAK()"'s for here.
+* A: only implement --recurse-submodules behavior after we are able to
+  eliminate any kind of dependence on the_repository/global state that
+  shouldn't be shared.
+* B: implement --recurse-submodules as child processes, which won't be
+  bothered by global state.
 
-Hence my meniton of this sort of thing being counter-productive[2],
-i.e. I'd need to monkeypatch revert this on top just to make sure I was
-still finding leaks that are hidden by these new UNLEAK() (which hide
-some really common ones).
+My cursory thoughts on the matter are that A seems like a good direction
+for code health, but it seems difficult to do in practice. B seems
+hacky, but it might be a good stopgap while we work on A.
 
-1. https://lore.kernel.org/git/05754f9c-cd58-30f5-e2d3-58b9221d2770@ahunt.org/
-2. https://lore.kernel.org/git/87a6k8daeu.fsf@evledraar.gmail.com/
+Obviously these aren't the only options and this isn't the end of the
+discussion, so I'd appreciate any thoughts on the matter :)
+
+Changes:
+* refactor the refs.h functions to accept struct repository * where
+  reasonable.
+* add two new functions to refs.h that accept struct
+  repository *, repo_ref_transaction_commit() and
+  repo_ref_transaction_prepare().
+* change ref_transaction_commit() and ref_transaction_prepare() to be
+  thin wrappers of their repo_ counterparts.
+* use repo_ref_transaction_commit() in create_branch()
+* add a create_branches() function to builtin/branch.c that recursively
+  creates branches in submodules
+
+What doesn't work (marked with NEEDSWORK):
+* branch tracking is disabled for submodules because remotes.c only
+  holds state for a single repository
+* similarly, bare repository checking does not work as expected because
+  environment.c only holds state for a single repository
+
+What is questionable (specific to these patches, not
+--recurse-submodules in general):
+* files-backend.c only uses the_repository to validate the oid being
+  used and it is the only ref backend that does so. Instead of passing
+  struct repository * through more places in refs.h, we might be able to
+  eliminate this check altogether. This is discussed briefly in [2].
+* create_branches() implements its own submodule iterating, which is
+  similar to that of ls-files, but wholly different from
+  submodule--helper.c.
+
+[1] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
+[2] https://lore.kernel.org/git/20210916172432.1073546-1-jonathantanmy@google.com/
+
+Glen Choo (2):
+  refs: pass struct repository *r through to write_ref_to_lockfile()
+  branch: add --recurse-submodules option for branch creation
+
+ branch.c                  | 26 +++++++++------
+ branch.h                  |  4 +--
+ builtin/branch.c          | 69 ++++++++++++++++++++++++++++++++++++---
+ builtin/checkout.c        |  4 +--
+ refs.c                    | 21 ++++++------
+ refs.h                    | 18 +++++++---
+ refs/debug.c              | 14 ++++----
+ refs/files-backend.c      | 30 ++++++++---------
+ refs/packed-backend.c     |  7 ++--
+ refs/refs-internal.h      |  7 ++--
+ t/helper/test-ref-store.c |  2 +-
+ t/t3200-branch.sh         | 58 ++++++++++++++++++++++++++++++++
+ 12 files changed, 199 insertions(+), 61 deletions(-)
+
+-- 
+2.33.0.464.g1972c5931b-goog
+
