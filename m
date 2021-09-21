@@ -2,363 +2,260 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 579B6C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 18:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F39AEC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 18:41:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AFC261184
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 18:39:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2AD061186
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 18:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233350AbhIUSky (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 14:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbhIUSkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 14:40:53 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F6DAC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 11:39:24 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id dj4so100271edb.5
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 11:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=AXvM5eM+Lyio4VW9zhmWfvovrR2kMfZG6h6DmG8M06s=;
-        b=XPkwI3CxOrTXMlBxb0YWMAdHBiGSZ346BeWLhuNRoEvtxTaGX5RXQ+1rCCRHrYvjKz
-         92iRlKOAxGgCevYwumxxMiXa/XvmtfJrmy/E/QbH4mrJFDxebgiAZGiYfpHCHcxJIdS5
-         0500j8j0DWtEZCgN9BSzF//v/UbDIYZZezWB3KtTmyXEcAWTQCU5BwojcYhKSr7oSULZ
-         L5Kn9GLELJ4o9erQT9JBcf2nNCDTOZfESDNNiVTTvfdTyFcaIsb0ykGTD748UO80pn1/
-         c5kpOt4Gr7clO9Leq8OegQhz2c9w5fE38Iw93D30IkfRI1PURxOvGrN4MybwHUeZsd0p
-         piyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=AXvM5eM+Lyio4VW9zhmWfvovrR2kMfZG6h6DmG8M06s=;
-        b=XUf3lLGg2YkqpW+baEeDkvZ6QaoVJ/5e1pnx33I1puF1MNCrt6IdaN5x5pvvl5y5Vm
-         XBqIHrUL/9LRclrwC2eL1ePYe3pNT39+F/uiW4gGUdSLAxwjShLVy8zRWwHVFnHVENHO
-         GAvjYDWHe1vxFGUel/4wdPcLv7ft+VyWmILNalUy+0GlW++B2cvzbMEjPxzaDbyEfdxM
-         EiVzCdSWK/tKS2uCeOh+wpjTeZreJUI/1NtbzTUurOxFDA4auheSVSomB6dfChEdXoof
-         y7k8dg8P4Iay22EiQkTgyRhCPHTyeze1T4cXUzOnMGsK7SeQ3d1A5t4vVRt3SQX1Dm2N
-         i+DQ==
-X-Gm-Message-State: AOAM532twhF+xeIZJIDvxZyuCzklUFMKwdMZgcVEq4k4ULV2Iwfg2AJW
-        uJHCZD9pO25i86zAWZ0KFJY=
-X-Google-Smtp-Source: ABdhPJzUUcyGyoOcnnGPFvnxQ7qrhaB3xLTxhFTqMh8mGHYRIJOKgAbYovDyyIgqpLwakE3R/XX4kQ==
-X-Received: by 2002:a05:6402:299:: with SMTP id l25mr36920670edv.343.1632249562607;
-        Tue, 21 Sep 2021 11:39:22 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dj8sm9005152edb.53.2021.09.21.11.39.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 11:39:22 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net, szeder.dev@gmail.com, dstolee@microsoft.com
-Subject: Re: [PATCH 0/1] commit-graph: drop top-level --[no-]progress
-Date:   Tue, 21 Sep 2021 20:19:47 +0200
-References: <cover.1631980949.git.me@ttaylorr.com>
- <xmqqr1dj9c0b.fsf@gitster.g> <YUj/h3xucy4JR7B1@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUj/h3xucy4JR7B1@nand.local>
-Message-ID: <87zgs593ja.fsf@evledraar.gmail.com>
+        id S233454AbhIUSmp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 14:42:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51964 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233372AbhIUSmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 14:42:45 -0400
+Received: (qmail 6349 invoked by uid 109); 21 Sep 2021 18:41:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 18:41:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3254 invoked by uid 111); 21 Sep 2021 18:41:15 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Sep 2021 14:41:15 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 21 Sep 2021 14:41:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Daniel Stenberg <daniel@haxx.se>
+Subject: [PATCH] http: match headers case-insensitively when redacting
+Message-ID: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When HTTP/2 is in use, we fail to correctly redact "Authorization" (and
+other) headers in our GIT_TRACE_CURL output.
 
-On Mon, Sep 20 2021, Taylor Blau wrote:
+We get the headers in our CURLOPT_DEBUGFUNCTION callback, curl_trace().
+It passes them along to curl_dump_header(), which in turn checks
+redact_sensitive_header(). We see the headers as a text buffer like:
 
-> On Mon, Sep 20, 2021 at 02:24:04PM -0700, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->>
->> > An open question is whether the same should be done for the multi-pack-index
->> > command, whose top-level support for `--[no-]progress` was released in v2.32.0
->> > with 60ca94769c (builtin/multi-pack-index.c: split sub-commands, 2021-03-30).
->>
->> We do not mind too much about "breaking backward compatibility" by
->> removing the mistaken "git multi-pack-index --progress cmd", I would
->> say.  It's not like people would type it once every day and removing
->> the "support" will break their finger-memory.
->
-> OK; if we don't mind then we could do something like the following on
-> top. But if we're OK to remove the top-level `--progress` option from
-> the commit-graph and multi-pack-index builtins at any time, then both
-> patches become far less urgent.
+  Host: ...
+  Authorization: Basic ...
 
-I think just taking both this and your commit-graph patches is the right
-thing to do at this point. I.e. we almost entirely take:
+After breaking it into lines, we match each header using skip_prefix().
+This is case-insensitive, even though HTTP headers are case-insensitive.
+This has worked reliably in the past because these headers are generated
+by curl itself, which is predictable in what it sends.
 
-    git [git-opts] <cmd> [cmd-opts]
+But when HTTP/2 is in use, instead we get a lower-case "authorization:"
+header, and we fail to match it. The fix is simple: we should match with
+skip_iprefix().
 
-Or:
+Testing is more complicated, though. We do have a test for the redacting
+feature, but we don't hit the problem case because our test Apache setup
+does not understand HTTP/2. You can reproduce the issue by applying this
+on top of the test change in this patch:
 
-    git [git-opts] <cmd> <subcmd> [subcmd-opts]
+	diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+	index afa91e38b0..19267c7107 100644
+	--- a/t/lib-httpd/apache.conf
+	+++ b/t/lib-httpd/apache.conf
+	@@ -29,6 +29,9 @@ ErrorLog error.log
+	 	LoadModule setenvif_module modules/mod_setenvif.so
+	 </IfModule>
 
-And almost never:
+	+LoadModule http2_module modules/mod_http2.so
+	+Protocols h2c
+	+
+	 <IfVersion < 2.4>
+	 LockFile accept.lock
+	 </IfVersion>
+	@@ -64,8 +67,8 @@ LockFile accept.lock
+	 <IfModule !mod_access_compat.c>
+	 	LoadModule access_compat_module modules/mod_access_compat.so
+	 </IfModule>
+	-<IfModule !mod_mpm_prefork.c>
+	-	LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+	+<IfModule !mod_mpm_event.c>
+	+	LoadModule mpm_event_module modules/mod_mpm_event.so
+	 </IfModule>
+	 <IfModule !mod_unixd.c>
+	 	LoadModule unixd_module modules/mod_unixd.so
+	diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+	index 1c2a444ae7..ff74f0ae8a 100755
+	--- a/t/t5551-http-fetch-smart.sh
+	+++ b/t/t5551-http-fetch-smart.sh
+	@@ -24,6 +24,10 @@ test_expect_success 'create http-accessible bare repository' '
+	 	git push public main:main
+	 '
 
-    git [git-opts] <cmd> [global-subcmd-opts] <subcmd> [subcmd-opts]
+	+test_expect_success 'prefer http/2' '
+	+	git config --global http.version HTTP/2
+	+'
+	+
+	 setup_askpass_helper
 
-A notable exception is the --object-dir (I think I found out from
-Derrick at some point why that was even needed v.s. the top-level
---git-dir, but I can't remember).
+	 test_expect_success 'clone http repository' '
 
-I think that fixing th commit-graph regression I introduced is an
-obvious thing to do at this point, and likewise with multi-pack-index I
-think it's young enough that we can just change it and not live with the
-wart forever.
+but this has a few issues:
 
-And as a general thing, we really should be marking all new built-ins as
-having an experimental interface for the first N releases, to catch and
-correct these sorts of issues.
+  - it's not necessarily portable. The http2 apache module might not be
+    available on all systems. Further, the http2 module isn't compatible
+    with the prefork mpm, so we have to switch to something else. But we
+    don't necessarily know what's available. It would be nice if we
+    could have conditional config, but IfModule only tells us if a
+    module is already loaded, not whether it is available at all.
 
-But just as a *general* comment on where our UI should and shouldn't be
-headed, I find your [1] an entirely unconvincing reply to [2]. I.e.:
+    This might be a non-issue. The http tests are already optional, and
+    modern-enough systems may just have both of these. But...
 
-    [...] the [...] issue is that the existing sub-commands of
-    commit-graph only happen to both have a sensible interpretation of
-    what `--progress` or `--no-progress` means. If we ever added a
-    sub-command which didn't have a notion of progress, we would be
-    forced to ignore the top-level `--[no-]progress` altogether.
+  - if we do this, then we'd no longer be testing HTTP/1.1 at all. I'm
+    not sure how much that matters since it's all handled by curl under
+    the hood, but I'd worry that some detail leaks through. We'd
+    probably want two scripts running similar tests, one with HTTP/2 and
+    one with HTTP/1.1.
 
-I'd think if anything that's an argument for pursuing the
-[global-subcmd-opts] for these sorts of options, i.e.:
+  - speaking of which, a later test fails with the patch above! The
+    problem is that it is making sure we used a chunked
+    transfer-encoding by looking for that header in the trace. But
+    HTTP/2 doesn't support that, as it has its own streaming mechanisms
+    (the overall operation works fine; we just don't see the header in
+    the trace).
 
- * We're not talking about a --find option or something that's likely to
-   have different meanings.
+On top of that, we also need the test change that this patch _does_ do:
+grepping the trace file case-insensitively. Otherwise the test continues
+to pass even over HTTP/2, because it sees _both_ forms of the header
+(redacted and unredacted), as we upgrade from HTTP/1.1 to HTTP/2. So our
+double grep:
 
-   If using a [global-subcmd-opts] pattern means that we can't have some
-   command have a --progress that means something entirely
-   different. Then that to me seems like an obvious argument for the
-   opposite point, i.e. that oddity should name its option something
-   else, just as we're spared the confusion of not having --exec-path or
-   whatever behave differently per-command.
+	# Ensure that there is no "Basic" followed by a base64 string, but that
+	# the auth details are redacted
+	! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
+	grep "Authorization: Basic <redacted>" trace
 
- * I really don't see how for an option like --progress that we've got
-   en established pattern working the same way across the board, why
-   it's an issue that something accepts a --progress and doesn't do
-   anything with it yet, or ever.
+gets confused. It sees the "<redacted>" one from the pre-upgrade
+HTTP/1.1 request, but fails to see the unredacted HTTP/2 one, because it
+does not match the lower-case "authorization". Even without the rest of
+the test changes, we can still make this test more robust by matching
+case-insensitively. That will future-proof the test for a day when
+HTTP/2 is finally enabled by default, and doesn't hurt in the meantime.
 
-   We don't insist on our config system being configured to the command
-   or subcommand level, I don't see why in terms of implementation or
-   ease of user understanding why it would be desirable to treat this
-   differently.
+And finally, there's one other way to demonstrate the issue (and how I
+actually found it originally). Looking at GIT_TRACE_CURL output against
+github.com, you'll see the unredacted output, even if you didn't set
+http.version. That's because setting it is only necessary for curl to
+send the extra headers in its HTTP/1.1 request that say "Hey, I speak
+HTTP/2; upgrade if you do, too". But for a production site speaking
+https, the server advertises via ALPN, a TLS extension, that it supports
+HTTP/2, and the client can immediately start using it.
 
-   I.e. not everything's a --progress or core.pager, but some things
-   are, and having those things be closer to global than not is useful.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ http.c                      |  6 +++---
+ t/t5551-http-fetch-smart.sh | 24 ++++++++++++------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-Anyway, as I noted let's take both of these patches now. I just wrote
-this out mainly for my own future reference. I am interesting in
-extending parse_options() and the config system into something that
-allows you to all-at-once define commands and subcommands and have
-what's now a bunch of duplicated and subtly different code done for you
-automatically.
-
-In that scenario I don't see why in terms of both commands and config
-why we wouldn't define things in terms of "levels" and always understand
-certain things at certain levels, and pass them down. E.g. --exec-path
-and --object-format at the first, maybe --progress or
---output-format=json at the second (between a command and subcommand)
-level etc.
-
-1. https://lore.kernel.org/git/e41e65ddf77c596a7926e75bfc15f21c075d0f03.1631980949.git.me@ttaylorr.com/
-2. https://lore.kernel.org/git/87zgsad6mn.fsf@evledraar.gmail.com/
-
-
-> --- >8 ---
->
-> Subject: [PATCH] builtin/multi-pack-index.c: disable top-level --[no-]progress
->
-> In a similar spirit as the previous patch, let sub-commands which
-> support showing or hiding a progress meter handle parsing the
-> `--progress` or `--no-progress` option, but do not expose it as an
-> option to the top-level `multi-pack-index` builtin.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  Documentation/git-multi-pack-index.txt |  6 ++---
->  builtin/multi-pack-index.c             | 31 +++++++++++++++++++++-----
->  t/t5319-multi-pack-index.sh            | 12 +++++-----
->  3 files changed, 35 insertions(+), 14 deletions(-)
->
-> diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-> index ffd601bc17..5ba4bd5166 100644
-> --- a/Documentation/git-multi-pack-index.txt
-> +++ b/Documentation/git-multi-pack-index.txt
-> @@ -9,8 +9,7 @@ git-multi-pack-index - Write and verify multi-pack-indexes
->  SYNOPSIS
->  --------
->  [verse]
-> -'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress]
-> -	[--preferred-pack=<pack>] <subcommand>
-> +'git multi-pack-index' [--object-dir=<dir>] <sub-command>
->
->  DESCRIPTION
->  -----------
-> @@ -26,7 +25,8 @@ OPTIONS
->
->  --[no-]progress::
->  	Turn progress on/off explicitly. If neither is specified, progress is
-> -	shown if standard error is connected to a terminal.
-> +	shown if standard error is connected to a terminal. Supported by
-> +	sub-commands `write`, `verify`, `expire`, and `repack.
->
->  The following subcommands are available:
->
-> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-> index 649aa5f9ab..5f11a3067d 100644
-> --- a/builtin/multi-pack-index.c
-> +++ b/builtin/multi-pack-index.c
-> @@ -52,7 +52,6 @@ static struct opts_multi_pack_index {
->  static struct option common_opts[] = {
->  	OPT_FILENAME(0, "object-dir", &opts.object_dir,
->  	  N_("object directory containing set of packfile and pack-index pairs")),
-> -	OPT_BIT(0, "progress", &opts.flags, N_("force progress reporting"), MIDX_PROGRESS),
->  	OPT_END(),
->  };
->
-> @@ -68,6 +67,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
->  		OPT_STRING(0, "preferred-pack", &opts.preferred_pack,
->  			   N_("preferred-pack"),
->  			   N_("pack for reuse when computing a multi-pack bitmap")),
-> +		OPT_BIT(0, "progress", &opts.flags,
-> +			N_("force progress reporting"), MIDX_PROGRESS),
->  		OPT_END(),
->  	};
->
-> @@ -75,6 +76,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
->
->  	trace2_cmd_mode(argv[0]);
->
-> +	if (isatty(2))
-> +		opts.flags |= MIDX_PROGRESS;
->  	argc = parse_options(argc, argv, NULL,
->  			     options, builtin_multi_pack_index_write_usage,
->  			     PARSE_OPT_KEEP_UNKNOWN);
-> @@ -90,10 +93,18 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
->
->  static int cmd_multi_pack_index_verify(int argc, const char **argv)
->  {
-> -	struct option *options = common_opts;
-> +	struct option *options;
-> +	static struct option builtin_multi_pack_index_verify_options[] = {
-> +		OPT_BIT(0, "progress", &opts.flags,
-> +			N_("force progress reporting"), MIDX_PROGRESS),
-> +		OPT_END(),
-> +	};
-> +	options = add_common_options(builtin_multi_pack_index_verify_options);
->
->  	trace2_cmd_mode(argv[0]);
->
-> +	if (isatty(2))
-> +		opts.flags |= MIDX_PROGRESS;
->  	argc = parse_options(argc, argv, NULL,
->  			     options, builtin_multi_pack_index_verify_usage,
->  			     PARSE_OPT_KEEP_UNKNOWN);
-> @@ -106,10 +117,18 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
->
->  static int cmd_multi_pack_index_expire(int argc, const char **argv)
->  {
-> -	struct option *options = common_opts;
-> +	struct option *options;
-> +	static struct option builtin_multi_pack_index_expire_options[] = {
-> +		OPT_BIT(0, "progress", &opts.flags,
-> +			N_("force progress reporting"), MIDX_PROGRESS),
-> +		OPT_END(),
-> +	};
-> +	options = add_common_options(builtin_multi_pack_index_expire_options);
->
->  	trace2_cmd_mode(argv[0]);
->
-> +	if (isatty(2))
-> +		opts.flags |= MIDX_PROGRESS;
->  	argc = parse_options(argc, argv, NULL,
->  			     options, builtin_multi_pack_index_expire_usage,
->  			     PARSE_OPT_KEEP_UNKNOWN);
-> @@ -126,6 +145,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
->  	static struct option builtin_multi_pack_index_repack_options[] = {
->  		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
->  		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
-> +		OPT_BIT(0, "progress", &opts.flags,
-> +		  N_("force progress reporting"), MIDX_PROGRESS),
->  		OPT_END(),
->  	};
->
-> @@ -133,6 +154,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
->
->  	trace2_cmd_mode(argv[0]);
->
-> +	if (isatty(2))
-> +		opts.flags |= MIDX_PROGRESS;
->  	argc = parse_options(argc, argv, NULL,
->  			     options,
->  			     builtin_multi_pack_index_repack_usage,
-> @@ -154,8 +177,6 @@ int cmd_multi_pack_index(int argc, const char **argv,
->
->  	git_config(git_default_config, NULL);
->
-> -	if (isatty(2))
-> -		opts.flags |= MIDX_PROGRESS;
->  	argc = parse_options(argc, argv, prefix,
->  			     builtin_multi_pack_index_options,
->  			     builtin_multi_pack_index_usage,
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> index 3d4d9f10c3..86b7de2281 100755
-> --- a/t/t5319-multi-pack-index.sh
-> +++ b/t/t5319-multi-pack-index.sh
-> @@ -174,12 +174,12 @@ test_expect_success 'write progress off for redirected stderr' '
->  '
->
->  test_expect_success 'write force progress on for stderr' '
-> -	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress write 2>err &&
-> +	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir write --progress 2>err &&
->  	test_file_not_empty err
->  '
->
->  test_expect_success 'write with the --no-progress option' '
-> -	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
-> +	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir write --no-progress 2>err &&
->  	test_line_count = 0 err
->  '
->
-> @@ -429,12 +429,12 @@ test_expect_success 'repack progress off for redirected stderr' '
->  '
->
->  test_expect_success 'repack force progress on for stderr' '
-> -	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
-> +	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack --progress 2>err &&
->  	test_file_not_empty err
->  '
->
->  test_expect_success 'repack with the --no-progress option' '
-> -	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
-> +	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack --no-progress 2>err &&
->  	test_line_count = 0 err
->  '
->
-> @@ -618,7 +618,7 @@ test_expect_success 'expire progress off for redirected stderr' '
->  test_expect_success 'expire force progress on for stderr' '
->  	(
->  		cd dup &&
-> -		GIT_PROGRESS_DELAY=0 git multi-pack-index --progress expire 2>err &&
-> +		GIT_PROGRESS_DELAY=0 git multi-pack-index expire --progress 2>err &&
->  		test_file_not_empty err
->  	)
->  '
-> @@ -626,7 +626,7 @@ test_expect_success 'expire force progress on for stderr' '
->  test_expect_success 'expire with the --no-progress option' '
->  	(
->  		cd dup &&
-> -		GIT_PROGRESS_DELAY=0 git multi-pack-index --no-progress expire 2>err &&
-> +		GIT_PROGRESS_DELAY=0 git multi-pack-index expire --no-progress 2>err &&
->  		test_line_count = 0 err
->  	)
->  '
-
+diff --git a/http.c b/http.c
+index a0f169d2fe..4f6a32165f 100644
+--- a/http.c
++++ b/http.c
+@@ -550,8 +550,8 @@ static void redact_sensitive_header(struct strbuf *header)
+ 	const char *sensitive_header;
+ 
+ 	if (trace_curl_redact &&
+-	    (skip_prefix(header->buf, "Authorization:", &sensitive_header) ||
+-	     skip_prefix(header->buf, "Proxy-Authorization:", &sensitive_header))) {
++	    (skip_iprefix(header->buf, "Authorization:", &sensitive_header) ||
++	     skip_iprefix(header->buf, "Proxy-Authorization:", &sensitive_header))) {
+ 		/* The first token is the type, which is OK to log */
+ 		while (isspace(*sensitive_header))
+ 			sensitive_header++;
+@@ -561,7 +561,7 @@ static void redact_sensitive_header(struct strbuf *header)
+ 		strbuf_setlen(header,  sensitive_header - header->buf);
+ 		strbuf_addstr(header, " <redacted>");
+ 	} else if (trace_curl_redact &&
+-		   skip_prefix(header->buf, "Cookie:", &sensitive_header)) {
++		   skip_iprefix(header->buf, "Cookie:", &sensitive_header)) {
+ 		struct strbuf redacted_header = STRBUF_INIT;
+ 		const char *cookie;
+ 
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 4f87d90c5b..4e54226162 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -196,8 +196,8 @@ test_expect_success 'GIT_TRACE_CURL redacts auth details' '
+ 
+ 	# Ensure that there is no "Basic" followed by a base64 string, but that
+ 	# the auth details are redacted
+-	! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
+-	grep "Authorization: Basic <redacted>" trace
++	! grep -i "Authorization: Basic [0-9a-zA-Z+/]" trace &&
++	grep -i "Authorization: Basic <redacted>" trace
+ '
+ 
+ test_expect_success 'GIT_CURL_VERBOSE redacts auth details' '
+@@ -208,8 +208,8 @@ test_expect_success 'GIT_CURL_VERBOSE redacts auth details' '
+ 
+ 	# Ensure that there is no "Basic" followed by a base64 string, but that
+ 	# the auth details are redacted
+-	! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
+-	grep "Authorization: Basic <redacted>" trace
++	! grep -i "Authorization: Basic [0-9a-zA-Z+/]" trace &&
++	grep -i "Authorization: Basic <redacted>" trace
+ '
+ 
+ test_expect_success 'GIT_TRACE_CURL does not redact auth details if GIT_TRACE_REDACT=0' '
+@@ -219,7 +219,7 @@ test_expect_success 'GIT_TRACE_CURL does not redact auth details if GIT_TRACE_RE
+ 		git clone --bare "$HTTPD_URL/auth/smart/repo.git" redact-auth &&
+ 	expect_askpass both user@host &&
+ 
+-	grep "Authorization: Basic [0-9a-zA-Z+/]" trace
++	grep -i "Authorization: Basic [0-9a-zA-Z+/]" trace
+ '
+ 
+ test_expect_success 'disable dumb http on server' '
+@@ -474,10 +474,10 @@ test_expect_success 'cookies are redacted by default' '
+ 	GIT_TRACE_CURL=true \
+ 		git -c "http.cookieFile=$(pwd)/cookies" clone \
+ 		$HTTPD_URL/smart/repo.git clone 2>err &&
+-	grep "Cookie:.*Foo=<redacted>" err &&
+-	grep "Cookie:.*Bar=<redacted>" err &&
+-	! grep "Cookie:.*Foo=1" err &&
+-	! grep "Cookie:.*Bar=2" err
++	grep -i "Cookie:.*Foo=<redacted>" err &&
++	grep -i "Cookie:.*Bar=<redacted>" err &&
++	! grep -i "Cookie:.*Foo=1" err &&
++	! grep -i "Cookie:.*Bar=2" err
+ '
+ 
+ test_expect_success 'empty values of cookies are also redacted' '
+@@ -486,7 +486,7 @@ test_expect_success 'empty values of cookies are also redacted' '
+ 	GIT_TRACE_CURL=true \
+ 		git -c "http.cookieFile=$(pwd)/cookies" clone \
+ 		$HTTPD_URL/smart/repo.git clone 2>err &&
+-	grep "Cookie:.*Foo=<redacted>" err
++	grep -i "Cookie:.*Foo=<redacted>" err
+ '
+ 
+ test_expect_success 'GIT_TRACE_REDACT=0 disables cookie redaction' '
+@@ -496,8 +496,8 @@ test_expect_success 'GIT_TRACE_REDACT=0 disables cookie redaction' '
+ 	GIT_TRACE_REDACT=0 GIT_TRACE_CURL=true \
+ 		git -c "http.cookieFile=$(pwd)/cookies" clone \
+ 		$HTTPD_URL/smart/repo.git clone 2>err &&
+-	grep "Cookie:.*Foo=1" err &&
+-	grep "Cookie:.*Bar=2" err
++	grep -i "Cookie:.*Foo=1" err &&
++	grep -i "Cookie:.*Bar=2" err
+ '
+ 
+ test_expect_success 'GIT_TRACE_CURL_NO_DATA prevents data from being traced' '
+-- 
+2.33.0.1029.g2347ba282e
