@@ -2,105 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DEAFC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15DD0C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:46:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5723D60F56
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:39:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0D3760E08
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 15:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234084AbhIUPlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 11:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52828 "EHLO
+        id S234133AbhIUPro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 11:47:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233860AbhIUPlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 11:41:11 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B4ACC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:39:43 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id t4so56220060qkb.9
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:39:43 -0700 (PDT)
+        with ESMTP id S231373AbhIUPrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 11:47:43 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1331FC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:46:15 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id u15so40544518wru.6
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 08:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cNug/qjfzzIz+ZOuE1k7JMz9DvT+dAWMX3T0HayEStg=;
-        b=cx6MC5dAeRNHc/lWeTKW8DL8rk9KYMhQ3Gq1BXfna5cXCsVWn32HYyPrOJDuv3m4Uo
-         XBUJ0Z7gEpWSXqvSeap3bqwS2qZqyPUDUyJHfBcBZ7QcEz7gxfiYTYocD+RrloQl/Zdx
-         rlMvFbfqDrHD6+i1ePo6gVW+wbt+aBED0zOjULbT1camnd8ljYtmF60O/h7g/W1XvX0Z
-         eTXrR1iEwPTnQ6GOqX5FL3YIQNxj2cbGAwl6/ZA+Bv5wFb9AlxNq85teXZeHVka5Vtpz
-         jvgLOeaa6g/HKxP61fls2QFy1h3+x0LEjBsHL+AF9KB465e5Xgtw5QeqLWSh9vE7NlNA
-         3usA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=0yjoR8J97Sd79M1jceEuHzhGEfz/u6As4HVyC+bBZjs=;
+        b=e7T48S3wIpqGhxG8hqE/8smL077g5jLKmwP0KR/wuN1ObrLH++rSfOVUXRJjtdBlra
+         nprR6zHAhRCJo26Aam1Dp3Z9XoaHe7UXXtKtGCBateJdde/v+nRSEMX9npnH19RutCUX
+         wjVhof5hPpIo8ZBeYPdOMqSECSuKKEbRaUl7Rhsu9ATaqIFFXW9y0tn32dDZBzGetQrK
+         pTgFCaWmQQ4pBTCgolAlxXrtsJmlXoiCAs7oR4jJGU2tIJAebNTme6EnfTOnS1rq3XxS
+         p9Gm2Wc0euzYPVpk/g/yATqKHPLGdpbjUHyVF/6h6HeGqwaHAPONAVKWdi1Nw6tscx7N
+         wVPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cNug/qjfzzIz+ZOuE1k7JMz9DvT+dAWMX3T0HayEStg=;
-        b=FN81PvJEK/NK0SzTu5xjs7PngciEeqVyUzCBP9uY75V4QiFAyHoZ4JtbOKN5kQP+qM
-         rtUSHXApzEdSfv3NN80XL5tsaLiLGyrtW587DdkjRmq9DpJukmD/SToFVexanQUFfCM4
-         UYfu4JXIII2iBOwwl7grLtGQxTV6vPIzBCnFXt5SAzpMj4GCuv+/2IXgdVZVDO6Mpn9Q
-         fmS7m4SrGDqw9+wpvkfbzScuvdFbRT6nffZWn3bnhpOiYNsbi2lzooGkGD/TbrMoN2ct
-         I3/tTZwtkEWZ3rjzoFohnsRiHXRyinMYZoBW1Y4Ox6I5KoqCqrKpWPTIE9bnB4mIb3z/
-         BAVw==
-X-Gm-Message-State: AOAM533I1IO3jfoSHhZylr3FWdaZEJ+oPIp1Oxaj1umoPThy3CWXvpjA
-        UhcF41XOZClR8p02ibM7IOc/HjW/t8/5jiLe4MorUxL27iU=
-X-Google-Smtp-Source: ABdhPJzMWlKcx6bdbynnN7I9B8yLCLnHptAV7mOPi7c7Lklr7+Mxxh7KeHWtL1KIkRnPo6dup08pASodm7YUM3kwbms=
-X-Received: by 2002:a25:2256:: with SMTP id i83mr39594850ybi.269.1632238782191;
- Tue, 21 Sep 2021 08:39:42 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=0yjoR8J97Sd79M1jceEuHzhGEfz/u6As4HVyC+bBZjs=;
+        b=R7Nu3FYGMYNWsGGskNeUypnZALoHWCcLpx4IJf/A4UZeSSd3UuCJhKc2S91cse3wt5
+         Z1fgeUAVRzDBwz5llcxAw55h54wmQ6oy+v65HZilynGuex6uMC5vtCV84n94iDDqT+/o
+         4MKRcS+S5OrELXFu3bKIibVosjzXe3nA2Vw8HU6vJSWRX4ioTejZMLmunFjHNV2+SqE0
+         5Kq8KFmcHa/sNI8n8P1A5KtGA2HGLbp+ipziiyNCrLMoF3B0LSFtNrXhDgK7eq7rlFOz
+         lWIzU1I2vm/vjxku2/tjVzg2W8x6sPM5sODevLqsqVzWXiIhks6Xalf12asLv1AaHAc4
+         vW3A==
+X-Gm-Message-State: AOAM531vL56Jubd//t2feJkp4EMqP461xJJmCqlc/bfoFANyT/kKg9kI
+        o0cuCaVl59YKTZQsbPH6jBNqMPxKquI=
+X-Google-Smtp-Source: ABdhPJwero17ydnetgiU2BBCSW9whW68HJDriLKIYGDdSxGaZ5rIR19jlV1UIMi6C3dPvm2itZWOpA==
+X-Received: by 2002:a1c:1f15:: with SMTP id f21mr5475094wmf.106.1632239173696;
+        Tue, 21 Sep 2021 08:46:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o13sm22871318wri.53.2021.09.21.08.46.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Sep 2021 08:46:13 -0700 (PDT)
+Message-Id: <pull.1044.git.1632239172735.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 21 Sep 2021 15:46:12 +0000
+Subject: [PATCH] t/perf/run: fix bin-wrappers computation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <YTGLLQCvlnT17jo8@nand.local> <YUYPgF6tRQ5ERYWL@nand.local>
- <CAOLTT8SbS9-grLnn2TOL6XdR3yMkd=YrUnq=FLCo6r03Fqbg9A@mail.gmail.com>
- <CAP8UFD37tQdbcgsMJPYE7KaO1ajwznFRUrG=9=S1WNNM-YZsqw@mail.gmail.com>
- <CAP8UFD2SsZyckX0tpCN-16BJ_mX6iHgd+VNSvfr-kirq2knVyg@mail.gmail.com> <CAOLTT8SACMz_Tct_W+_kh_cG2ELcg7c2sQ=S2si3zpiwDcZSLg@mail.gmail.com>
-In-Reply-To: <CAOLTT8SACMz_Tct_W+_kh_cG2ELcg7c2sQ=S2si3zpiwDcZSLg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 21 Sep 2021 17:39:31 +0200
-Message-ID: <CAP8UFD01CNqK+-M1nnHU05WP3kW7pdXvjcgJFg1GopAt8ucQ-g@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <ttaylorr@github.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, vdye@github.com,
+        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 7:41 AM ZheNing Hu <adlternative@gmail.com> wrote:
->
-> Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B49=E6=
-=9C=8820=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=8811:15=E5=86=99=E9=81=
-=93=EF=BC=9A
-> >
-> > On Mon, Sep 20, 2021 at 4:52 PM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> >
-> > > I will also prepare soon a page with a few micro-projects. Of course
-> > > more micro-project and regular project ideas are very welcome!
-> >
-> > So here is the page:
-> >
-> > https://git.github.io/Outreachy-23-Microprojects/
-> >
->
-> s/Outreachy-23-Microprojects/Outreachy-22-Microprojects/
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I think the number is not linked to the year but rather to the number
-of Outreachy rounds since the beginning.
+The GIT_TEST_INSTALLED was moved from perf-lib.sh to run in df0f5021
+(perf-lib.sh: remove GIT_TEST_INSTALLED from perf-lib.sh, 2019-05-07)
+and that included a change to how it inspected the existence of a
+bin-wrappers directory. However, that included a typo that made the
+match of bin-wrappers never work. Specifically, the assignment was
 
-Last year's Winter round was round 21 and there has been a Summer
-round we didn't participate in, so I think the Winter 2021-2022 is
-round 23.
+	mydir_abs_wrappers="$mydir_abs_wrappers/bin-wrappers"
 
-But yeah, it might be clearer to rename all the Outreachy files with
-names like Outreachy-Winter-21-22-Microprojects to avoid such
-confusion, as I think the round number is not used much anymore by
-anyone.
+which uses the same variable before it is initialized. By changing it to
+
+	mydir_abs_wrappers="$mydir_abs/bin-wrappers"
+
+We can correctly use the bin-wrappers directory.
+
+This is critical to successfully computing performance of commands that
+execute subcommands. The bin-wrappers ensure that the --exec-path is set
+correctly.
+
+Reported-by: Victoria Dye <vdye@github.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    t/perf/run: fix bin-wrappers computation
+    
+    Found this while we were testing sparse index improvements to 'git
+    stash', which uses a lot of subcommands.
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1044%2Fderrickstolee%2Fperf-run-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1044/derrickstolee/perf-run-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1044
+
+ t/perf/run | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/perf/run b/t/perf/run
+index d19dec258a2..55219aa4056 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -74,7 +74,7 @@ set_git_test_installed () {
+ 	mydir=$1
+ 
+ 	mydir_abs=$(cd $mydir && pwd)
+-	mydir_abs_wrappers="$mydir_abs_wrappers/bin-wrappers"
++	mydir_abs_wrappers="$mydir_abs/bin-wrappers"
+ 	if test -d "$mydir_abs_wrappers"
+ 	then
+ 		GIT_TEST_INSTALLED=$mydir_abs_wrappers
+
+base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
+-- 
+gitgitgadget
