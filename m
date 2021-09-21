@@ -8,61 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26267C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 11:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EEFFC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 11:17:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 017F761156
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 11:15:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D734E60ED5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 11:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232312AbhIULQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 07:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
+        id S232351AbhIULTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 07:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232276AbhIULQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 07:16:41 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43AA5C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 04:15:13 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id a7so4485365plm.1
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 04:15:13 -0700 (PDT)
+        with ESMTP id S232311AbhIULTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 07:19:11 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081E5C061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 04:17:43 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id j14so5993094plx.4
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 04:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rB/1THhUmb5xFTv4rqJKcmcWTAxwDeI4pSoidc+2gw4=;
-        b=FDTm7SgJGhVYLv40A+5CcZeMqTae1sif+GJ65eU6Bld8SBAFuQ32P+i05w9hs5SfJs
-         uOVOipYfVwHIncL2RsZzGCNZ+3i2wShqw+fSFfmapYuO4EKF1143roQCSfMRFkm6vfI/
-         1auFTwk1vXQEHS9IbGVp73i11lfcHL4qTklE0cMJ4r0rtiALo5oW/o+hyi3yhvKKni13
-         +jdYnxPatg9akfYqdD7EKk8UUgZmV3mdesZFp1iErtcRE0hWkCZNyV9xVFRD7yYcSO1j
-         d1dzCvUJwmQHjC4h3dlwG/ArtPAFpWUUImETbl8/vztS+rRhE+E+uTryCRO7zP83SiXO
-         BYkA==
+        bh=I++FkWNtGNM5ERq0D5mTw6CTdEV5m5aHl5HLEfa8ZOc=;
+        b=nZm28BINR6edTfau8ztoiS7AgcD1BTQi/cetkXSDjcGAQJ28nxPnY31Z13J4FeBHhy
+         mosppimBVbPvdO1VVLH46fBvU1SB2aA+pnAXwMauc9x29H+iRUsvjFSIIdhYCUm/n9iH
+         mjHkN5oKdsnOAXrMb6RWb65G5M/sQH50QzUvvP9IfPlOgFp+50P9s1dHsJ+oYy6IFMTa
+         IqarbE+oHlSiyuYmSXRvQusER8tg90zQde4DUxFOyvmS1DZUwMy6WUbvgLYWvcnqxAdX
+         XCt9OZEZpZfnuY/6CwGauqi1owKV0rUKfRHshU3GUzrnhqjGEaDm+IN2gZyEZ7gjmXKs
+         xkWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rB/1THhUmb5xFTv4rqJKcmcWTAxwDeI4pSoidc+2gw4=;
-        b=HqhJCMpwmXOs5dAR4vVj/W1k2qbEVomBkOcpqAhw6KNLVKJ5Vc0YioNLa2wTVSaIAf
-         xY8Zad/n29xIR5TV7R7FasJ8nezRLARNNC6+qWGIRAbah2toEy/R02kdaaFaGDUsmev/
-         msUt6nZVtxhlmqX01RsHQRQs/OPK5FE/28CYA8mg4AqmNW6lM0kEokBnY5ACWaqdZf2g
-         MHujTBByHKMP/jyBJZjc0rSz23nW2t4/XddYBthbiubQcbCq5axQz16SzQlgAo5j7wzI
-         gLbQXeMox7smLTHQxWxpRQFU5F5XNkKy7qv0n2dBgoQmEVQ/Zuns7mTcAdCTQWi6qew5
-         b8FA==
-X-Gm-Message-State: AOAM531gGN8IdxItUqW02IFLOc7iqbxvgUEGuy9HzTKRYxBXPfiCjoEL
-        WUH+kEox2RfgTtZj/D6kuG1ZjzANbr34cQ==
-X-Google-Smtp-Source: ABdhPJyRqwE5qqLIOQ8NW24pzh42cuutOFNflC1Uu+OT4hmksbPdXH1c67nkv0l/uyjd5B+SUZaNHw==
-X-Received: by 2002:a17:903:120e:b0:138:d732:3b01 with SMTP id l14-20020a170903120e00b00138d7323b01mr26867275plh.21.1632222912528;
-        Tue, 21 Sep 2021 04:15:12 -0700 (PDT)
+        bh=I++FkWNtGNM5ERq0D5mTw6CTdEV5m5aHl5HLEfa8ZOc=;
+        b=VzRKODMvMhH1gLQbNS42GBDUXeCYYqDaYQhrrxQyGAc5ex6oGPsUjiPbYQus++bvk2
+         sQzfdqPoAtVTXYuJICnieMJR28PcJIknvoqVUW45qS4iTJ4M8/yxrsqhwYj+CgDrN/B0
+         gu5tG+KU+jVpwrUFLVht4uQFfBSz8MbTZqelQSnBECdNOMbvNMEooEF3vDiyiiw76vzi
+         3DOmuDBi9TVyZPgvdLfdCDfZIU+ypzRB8VyQqPWb4YsHkInyyNCcnt/m7pKZaKIOwZki
+         rrUOwe4YfjQCTmOHbHU0Lhu8xlxtQoW3Xk0uYhlDzfsU4Yw1g/xzCtqeEB1Dhc6/R9Ql
+         e+Xw==
+X-Gm-Message-State: AOAM533w8zydnbaqLv1Hqz/03okKVrKjfb+/bTuHPB751MtuXiFNkuvW
+        Mj+XAFbmbFNssDf0TAMalZKSuiWPHh7V3Q==
+X-Google-Smtp-Source: ABdhPJyATNiPluo5R5PUysbrYIRaHJykpiviVnrKfhSvmOSRmSNU7EAxa+4Z8FMhvOvEV70ugUN/yQ==
+X-Received: by 2002:a17:90a:1a19:: with SMTP id 25mr4706484pjk.34.1632223062404;
+        Tue, 21 Sep 2021 04:17:42 -0700 (PDT)
 Received: from ubuntu.mate (subs28-116-206-12-33.three.co.id. [116.206.12.33])
-        by smtp.gmail.com with ESMTPSA id c199sm17373397pfb.152.2021.09.21.04.15.10
+        by smtp.gmail.com with ESMTPSA id s15sm16291481pfu.67.2021.09.21.04.17.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 04:15:12 -0700 (PDT)
+        Tue, 21 Sep 2021 04:17:42 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        liu.denton@gmail.com, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v2] ls-files: use imperative mood for -X and -z option description
-Date:   Tue, 21 Sep 2021 18:13:05 +0700
-Message-Id: <20210921111304.887605-1-bagasdotme@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v2] difftool: fix word spacing in the usage strings
+Date:   Tue, 21 Sep 2021 18:17:13 +0700
+Message-Id: <20210921111712.894245-1-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -70,64 +72,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Usage description for -X and -z options use descriptive instead of
-imperative mood. Edit it for consistency with other options.
+Remove spaces in `non - zero` and add a space between the diff
+format/mode and option parentheses in difftool's usage strings.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
 
 Changes since v1 [1]:
-  - Add missing "the" article in -z description (suggested by Taylor
-    Blau)
+  - Touch up commit message to imperative tone (suggested by David
+    Aguilar)
 
 Range-diff against v1 [1]:
-1:  eee9d91fc1 ! 1:  9f02334bdf ls-files: use imperative mood for -X and -z option description
-    @@ Commit message
-         ls-files: use imperative mood for -X and -z option description
+1:  d27159f7c9 ! 1:  18d5034c80 difftool: word spacing fix
+    @@ Metadata
+     Author: Bagas Sanjaya <bagasdotme@gmail.com>
      
-         Usage description for -X and -z options use descriptive instead of
-    -    imperative mood. Change it for consistency with other options.
-    +    imperative mood. Edit it for consistency with other options.
+      ## Commit message ##
+    -    difftool: word spacing fix
+    +    difftool: fix word spacing in the usage strings
+     
+    -    Two grammar fixes related to word spacing:
+    -
+    -      - delete space in `non - zero`
+    -      - add space between diff formats/mode and option parentheses
+    +    Remove spaces in `non - zero` and add a space between the diff
+    +    format/mode and option parentheses in difftool's usage strings.
      
          Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
      
-    @@ builtin/ls-files.c: int cmd_ls_files(int argc, const char **argv, const char *cm
-      		/* Think twice before adding "--nul" synonym to this */
-      		OPT_SET_INT('z', NULL, &line_terminator,
-     -			N_("paths are separated with NUL character"), '\0'),
-    -+			N_("separate paths with NUL character"), '\0'),
-    ++			N_("separate paths with the NUL character"), '\0'),
-      		OPT_BOOL('t', NULL, &show_tag,
-      			N_("identify the file status with tags")),
-      		OPT_BOOL('v', NULL, &show_valid_bit,
+[1]:
+https://lore.kernel.org/git/c536bd3a-d1ae-a617-c284-dabc9f8c1c0f@gmail.com/T/#t
 
-[1]: https://lore.kernel.org/git/xmqqee9javtd.fsf@gitster.g/T/#t
+ builtin/difftool.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- builtin/ls-files.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 29a26ad8ae..e6d415e077 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -614,7 +614,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	struct option builtin_ls_files_options[] = {
- 		/* Think twice before adding "--nul" synonym to this */
- 		OPT_SET_INT('z', NULL, &line_terminator,
--			N_("paths are separated with NUL character"), '\0'),
-+			N_("separate paths with the NUL character"), '\0'),
- 		OPT_BOOL('t', NULL, &show_tag,
- 			N_("identify the file status with tags")),
- 		OPT_BOOL('v', NULL, &show_valid_bit,
-@@ -651,7 +651,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 			N_("skip files matching pattern"),
- 			PARSE_OPT_NONEG, option_parse_exclude),
- 		OPT_CALLBACK_F('X', "exclude-from", &dir, N_("file"),
--			N_("exclude patterns are read from <file>"),
-+			N_("read exclude patterns from <file>"),
- 			PARSE_OPT_NONEG, option_parse_exclude_from),
- 		OPT_STRING(0, "exclude-per-directory", &dir.exclude_per_dir, N_("file"),
- 			N_("read additional per-directory exclude patterns in <file>")),
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 6a9242a803..ad9187761e 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -410,9 +410,9 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		const char *src_path, *dst_path;
+ 
+ 		if (starts_with(info.buf, "::"))
+-			die(N_("combined diff formats('-c' and '--cc') are "
++			die(N_("combined diff formats ('-c' and '--cc') are "
+ 			       "not supported in\n"
+-			       "directory diff mode('-d' and '--dir-diff')."));
++			       "directory diff mode ('-d' and '--dir-diff')."));
+ 
+ 		if (parse_index_info(info.buf, &lmode, &rmode, &loid, &roid,
+ 				     &status))
+@@ -713,7 +713,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 			    "`--tool`")),
+ 		OPT_BOOL(0, "trust-exit-code", &trust_exit_code,
+ 			 N_("make 'git-difftool' exit when an invoked diff "
+-			    "tool returns a non - zero exit code")),
++			    "tool returns a non-zero exit code")),
+ 		OPT_STRING('x', "extcmd", &extcmd, N_("command"),
+ 			   N_("specify a custom command for viewing diffs")),
+ 		OPT_ARGUMENT("no-index", &no_index, N_("passed to `diff`")),
 
 base-commit: 4c719308ce59dc70e606f910f40801f2c6051b24
 -- 
