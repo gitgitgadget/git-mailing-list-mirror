@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3316EC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D3CFC433FE
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1638A60F6D
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08D5961264
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 02:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235074AbhIUBqB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 21:46:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51346 "EHLO cloud.peff.net"
+        id S1347619AbhIUCV0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 22:21:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51354 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231855AbhIUBm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:42:58 -0400
-Received: (qmail 2912 invoked by uid 109); 21 Sep 2021 01:41:29 -0000
+        id S234537AbhIUBoz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:44:55 -0400
+Received: (qmail 2924 invoked by uid 109); 21 Sep 2021 01:43:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:41:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:43:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26077 invoked by uid 111); 21 Sep 2021 01:41:28 -0000
+Received: (qmail 26088 invoked by uid 111); 21 Sep 2021 01:43:26 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:41:28 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:43:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 20 Sep 2021 21:41:27 -0400
+Date:   Mon, 20 Sep 2021 21:43:26 -0400
 From:   Jeff King <peff@peff.net>
 To:     Hamza Mahfooz <someguy@effective-light.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] grep: stop modifying buffer in strip_timestamp
-Message-ID: <YUk4R040RBc0aBIF@coredump.intra.peff.net>
+Subject: [PATCH 2/2] grep: mark "haystack" buffers as const
+Message-ID: <YUk4vnMQHApY99Lb@coredump.intra.peff.net>
 References: <YUk3zwuse56v76ze@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,95 +42,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When grepping for headers in commit objects, we receive individual
-lines (e.g., "author Name <email> 1234 -0000"), and then strip off the
-timestamp to do our match. We do so by writing a NUL byte over the
-whitespace separator, and then remembering to restore it later.
-
-We had to do it this way when this was added back in a4d7d2c6db (log
---author/--committer: really match only with name part, 2008-09-04),
-because we fed the result directly to regexec(), which expects a
-NUL-terminated string. But since b7d36ffca0 (regex: use regexec_buf(),
-2016-09-21), we have a function which can match on part of a buffer.
-
-So instead of modifying the string, we can instead just move the "eol"
-pointer, and the rest of the code will do the right thing. This will let
-the next patch make more use of "const" in grep functions.
+When we're grepping in a buffer, we don't need to modify it. So we can
+take "const char *" buffers, rather than "char *". This can avoid some
+awkward casts in our callers.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I think this is fairly safe. It would fail subtly if somebody _did_ rely
-on the NUL, but we just call into patmatch(), which calls functions
-which handle the length-delimited buffer.
+This step should be quite safe, because we're not changing any behavior,
+and the compiler will alert us if we missed any spots.
 
- grep.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+There may be further cleanup possible that the compiler doesn't tell us
+about (i.e., other callers which have "char *" but could themselves
+tighten to "const char *"), since that implicit conversion is OK without
+a cast.
+
+ grep.c   | 12 ++++++++----
+ grep.h   |  3 ++-
+ pretty.c |  6 +++---
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 35708ce973..3b372ec29d 100644
+index 3b372ec29d..2cb65d191f 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -922,20 +922,16 @@ static int patmatch(struct grep_pat *p, char *line, char *eol,
- 	return hit;
+@@ -908,7 +908,8 @@ static void show_name(struct grep_opt *opt, const char *name)
+ 	opt->output(opt, opt->null_following_name ? "\0" : "\n", 1);
  }
  
--static int strip_timestamp(char *bol, char **eol_p)
-+static void strip_timestamp(char *bol, char **eol_p)
+-static int patmatch(struct grep_pat *p, char *line, char *eol,
++static int patmatch(struct grep_pat *p,
++		    const char *line, const char *eol,
+ 		    regmatch_t *match, int eflags)
  {
- 	char *eol = *eol_p;
--	int ch;
+ 	int hit;
+@@ -943,7 +944,8 @@ static struct {
+ 	{ "reflog ", 7 },
+ };
  
- 	while (bol < --eol) {
- 		if (*eol != '>')
- 			continue;
- 		*eol_p = ++eol;
--		ch = *eol;
--		*eol = '\0';
--		return ch;
-+		break;
- 	}
--	return 0;
- }
- 
- static struct {
-@@ -952,7 +948,6 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+-static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
++static int match_one_pattern(struct grep_pat *p,
++			     const char *bol, const char *eol,
+ 			     enum grep_context ctx,
  			     regmatch_t *pmatch, int eflags)
  {
- 	int hit = 0;
--	int saved_ch = 0;
- 	const char *start = bol;
- 
- 	if ((p->token != GREP_PATTERN) &&
-@@ -968,7 +963,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 		switch (p->field) {
- 		case GREP_HEADER_AUTHOR:
- 		case GREP_HEADER_COMMITTER:
--			saved_ch = strip_timestamp(bol, &eol);
-+			strip_timestamp(bol, &eol);
- 			if (eol == end)
- 				goto again;
- 			break;
-@@ -981,7 +976,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 		len = header_field[p->field].len;
- 
- 		if (strncmp(bol, field, len))
--			goto restore;
-+			return 0;
- 
- 		bol += len;
- 	}
-@@ -1035,11 +1030,6 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 		pmatch[0].rm_eo += bol - start;
- 	}
- 
--restore:
--	if (p->token == GREP_PATTERN_HEAD && saved_ch)
--		*eol = saved_ch;
--
--
+@@ -1141,7 +1143,8 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
  	return hit;
  }
  
+-static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
++static int match_next_pattern(struct grep_pat *p,
++			      const char *bol, const char *eol,
+ 			      enum grep_context ctx,
+ 			      regmatch_t *pmatch, int eflags)
+ {
+@@ -1162,7 +1165,8 @@ static int match_next_pattern(struct grep_pat *p, char *bol, char *eol,
+ 	return 1;
+ }
+ 
+-int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
+ 		    enum grep_context ctx, regmatch_t *pmatch,
+ 		    enum grep_header_field field, int eflags)
+ {
+diff --git a/grep.h b/grep.h
+index b82e5de982..a1880899ba 100644
+--- a/grep.h
++++ b/grep.h
+@@ -190,7 +190,8 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size);
+-int grep_next_match(struct grep_opt *opt, char *bol, char *eol,
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
+ 		    enum grep_context ctx, regmatch_t *pmatch,
+ 		    enum grep_header_field field, int eflags);
+ 
+diff --git a/pretty.c b/pretty.c
+index 943a2d2ee2..be4efd9364 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -432,7 +432,7 @@ const char *show_ident_date(const struct ident_split *ident,
+ }
+ 
+ static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
+-					 char *buf, size_t buflen)
++					 const char *buf, size_t buflen)
+ {
+ 	strbuf_addstr(sb, color);
+ 	strbuf_add(sb, buf, buflen);
+@@ -445,7 +445,7 @@ static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
+ 				   int color, enum grep_context ctx,
+ 				   enum grep_header_field field)
+ {
+-	char *buf, *eol;
++	const char *buf, *eol;
+ 	const char *line_color, *match_color;
+ 	regmatch_t match;
+ 	int eflags = 0;
+@@ -455,7 +455,7 @@ static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
+ 		return;
+ 	}
+ 
+-	buf = (char *)line;
++	buf = line;
+ 	eol = buf + linelen;
+ 
+ 	line_color = opt->colors[GREP_COLOR_SELECTED];
 -- 
 2.33.0.1023.gc687d0d3c8
-
