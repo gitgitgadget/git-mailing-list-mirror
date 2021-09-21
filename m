@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83E15C4332F
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7034C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6552B6109E
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8A936109E
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbhIUWmQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 18:42:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37770 "EHLO
+        id S232441AbhIUWmT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 18:42:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbhIUWmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 18:42:15 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2E3DC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:46 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id d6so1034811wrc.11
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:46 -0700 (PDT)
+        with ESMTP id S232339AbhIUWmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 18:42:17 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4376DC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:48 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id d6so1034933wrc.11
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Spl6bv4gDZERDD6jQZXTrRHh05/jBVi6l0NZTv70ytQ=;
-        b=UJaO+ba8KSa085VM3vkU5p/R+y45F510VgGgdfVHSbVJ4e2Vfg3kcnPlHXZ8no2637
-         1wacn6jB4Ty8HwlgudzOwec+5/AnOOPYIyzehHdl5oQ82s2SQlZ2yjofQ7t6EHWEPgIY
-         Ru0F3LwVGQByEnd8dRSRKAWEwnPmSNxwfG7WdHc+lWpBJCe1vfNvnJMfNBPAglxjPcre
-         qrs0mLq0CJL35Uukfrcp3DW7sUcpuXD7GKRfoqPybTX8PXKcVeS5CmmFcF2mQ+hWIfe4
-         NO9R2WYUJBGN9CB8sSk5o9i6fASSGSBE7VR0kaz40ZLavESPOsQGzKnUKy8q1yMSoEWn
-         JRmw==
+        bh=WMK/5xqLGLWuWgsb6dd2S+NkuHDDkfyvFyR2HMjcSbU=;
+        b=YF3XtDa4Mzp3fHit9dje/5q6/eCDRk7MEnRtXkC+W3XFi3mE9hiFj/AHjfOBWz7vlr
+         xPXGp7rhzdOdYeQbE5Lm5l5JDgS56sounukpscB3oZea7KMb50Lj9q/e4+1X9mh+Gi+6
+         3ids1LnurP8xOXzVe7JE60wL1e5HFZ1Yj9vtC/uVhYooZWrVTK+KjwpEBd0isUx0AUqs
+         0QkHIOK7U/aehyG0xgqqlGQwt/NxvsZhTvBe8lcII8z77oDZk98UpY7et67P7XpwI1N4
+         w/JxVynND13s1uLdx612v3idn3LBToc5alzhi4gR1YwsFVspH8EHnSPVwNrN+bokX8oA
+         1TCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Spl6bv4gDZERDD6jQZXTrRHh05/jBVi6l0NZTv70ytQ=;
-        b=HAe7+9EOpLx4ik6oIsgBZzVtk0uyVeg4ps66KsXCIIAIx38V0j7Os9m8TczP0Mc8Ll
-         7lKYZoOY2cb+ieWIdn/0ab0QFE8piaLsvZ6BAS7lx9cFv/1VQdPhciv3t1+fS/15lOpf
-         4ZEmk2NxQHWEAMi93iXHh1qjw7/Zd82FuqtZUUBEGe6znSe39ece5mB12Du4kBwiAqoY
-         utZKO3auLLGVk3ZlORaVJRFQ0zCKHxa1kbgpYggEQuqp3lWteIEaIZY2f9JlcvrMxC9G
-         Ry1WfvouBGxJOmp7nTqN08FHHVPKH/4fS3H4FtU2MDWD32S4IhupkPJkb9I46zYHwbcv
-         uUsw==
-X-Gm-Message-State: AOAM532N6Tp8qsi5alvEPMLQEN2NpyUPYQ0Qqz0sZoBrPDqcgRkffS47
-        9NGQ4vHTXrTy06a4vRfGM6IhgtRybZeyHA==
-X-Google-Smtp-Source: ABdhPJxpu3oOxxiaSbXdE7tN8XvhnRAuqsvbMUmwDBQT7CFohDE31oNYriLxy3wGU77U5fy6jSmYVQ==
-X-Received: by 2002:a5d:64e2:: with SMTP id g2mr34828653wri.20.1632264044878;
-        Tue, 21 Sep 2021 15:40:44 -0700 (PDT)
+        bh=WMK/5xqLGLWuWgsb6dd2S+NkuHDDkfyvFyR2HMjcSbU=;
+        b=LAQFtaY1+foGE9btTekU9EC8XNm5vaUKCmQS3AzIDzKZ931JWVW/w+hIfwGgIRBlNM
+         XSkFeWw8LQSxgL7cb6v1hqqOaZnnKvP/j7IbapJ8FJ1Lhr2oZrlXcZ6NcCLW2jGNbivq
+         kE3y/uaN3UYmTxj4eZAm/bWjVU89MxnAhYChxNp473FpLJaUicjtjtmOMkp2TLEnaQh9
+         VZn/2l3PziyUc8FA4h/4+i041nluY2VqX7axvl7Mf3rVfhM5pHvbEYNXf7F/Q4dPDmct
+         I3PcfYpcZfh8YiI/uJjbn/JEjDTVhG2IqJtmGMOi30uDSL7VEbhW0k1H0Ynotz7/dWwn
+         wzrw==
+X-Gm-Message-State: AOAM533y2GAd9WmP9ZyArIjwIOtWJWyb5jyFSBUP7xqrZICOAk+Zun81
+        j0TKlxSCiBK5Re/r4tFM3qIt00sfy/W2vQ==
+X-Google-Smtp-Source: ABdhPJzlPxAQmZynUx7hxEL5/uZjFKISqWmMFWlcFUljahnYvflTJGE3JPbvdcsqiWOTIy+pfvKQOw==
+X-Received: by 2002:adf:f48b:: with SMTP id l11mr37759864wro.254.1632264046562;
+        Tue, 21 Sep 2021 15:40:46 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l7sm3846121wmp.48.2021.09.21.15.40.43
+        by smtp.gmail.com with ESMTPSA id l7sm3846121wmp.48.2021.09.21.15.40.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 15:40:43 -0700 (PDT)
+        Tue, 21 Sep 2021 15:40:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/9] help: correct usage & behavior of "git help --guides"
-Date:   Wed, 22 Sep 2021 00:40:32 +0200
-Message-Id: <patch-v3-2.9-e24ab59bc94-20210921T223223Z-avarab@gmail.com>
+Subject: [PATCH v3 3/9] help tests: add test for --config output
+Date:   Wed, 22 Sep 2021 00:40:33 +0200
+Message-Id: <patch-v3-3.9-6a8965e1b5b-20210921T223223Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1098.gf02a64c1a2d
 In-Reply-To: <cover-v3-0.9-00000000000-20210921T223223Z-avarab@gmail.com>
 References: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20210921T223223Z-avarab@gmail.com>
@@ -79,110 +79,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in 65f98358c0c (builtin/help.c: add --guide option,
-2013-04-02) and a133737b809 (doc: include --guide option description
-for "git help", 2013-04-02) which introduced the --guide option, it
-cannot be combined with e.g. <command>.
+Add a missing test for checking what the --config output added in
+ac68a93fd2 (help: add --config to list all available config,
+2018-05-26) looks like. We should not be emitting anything except
+config variables and the brief usage information at the end here.
 
-Change the command and the "SYNOPSIS" section to reflect that desired
-behavior. Now that we assert this in code we don't need to
-exhaustively describe the previous confusing behavior in the
-documentation either, instead of silently ignoring the provided
-argument we'll now error out.
+The second test regexp here might not match three-level variables in
+general, as their second level could contain ".", but in this case
+we're always emitting what we extract from the documentation, so it's
+all strings like:
 
-The "We're done. Ignore any remaining args" comment added in
-15f7d494380 (builtin/help.c: split "-a" processing into two,
-2013-04-02) can now be removed, it's obvious that we're asserting the
-behavior with the check of "argc".
+    foo.<name>.bar
 
-The "--config" option is still missing from the synopsis, it will be
-added in a subsequent commit where we'll fix bugs in its
-implementation.
+If we did introduce something like variable example content here we'd
+like this to break, since we'd then be likely to break the
+git-completion.bash.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-help.txt |  6 +++---
- builtin/help.c             | 11 +++++++----
- t/t0012-help.sh            |  4 ++++
- 3 files changed, 14 insertions(+), 7 deletions(-)
+ t/t0012-help.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index 568a0b606f3..cb8e3d4da9e 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -8,8 +8,9 @@ git-help - Display help information about Git
- SYNOPSIS
- --------
- [verse]
--'git help' [-a|--all [--[no-]verbose]] [-g|--guides]
-+'git help' [-a|--all [--[no-]verbose]]
- 	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
-+'git help' [-g|--guides]
- 
- DESCRIPTION
- -----------
-@@ -58,8 +59,7 @@ OPTIONS
- 
- -g::
- --guides::
--	Prints a list of the Git concept guides on the standard output. This
--	option overrides any given command or guide name.
-+	Prints a list of the Git concept guides on the standard output.
- 
- -i::
- --info::
-diff --git a/builtin/help.c b/builtin/help.c
-index 44ea2798cda..51b18c291d8 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -59,8 +59,9 @@ static struct option builtin_help_options[] = {
- };
- 
- static const char * const builtin_help_usage[] = {
--	N_("git help [-a|--all] [-g|--guides] [--[no-]verbose]]\n"
-+	N_("git help [-a|--all] [--[no-]verbose]]\n"
- 	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
-+	N_("git help [-g|--guides]"),
- 	NULL
- };
- 
-@@ -552,6 +553,11 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 			builtin_help_usage, 0);
- 	parsed_help_format = help_format;
- 
-+	/* Options that take no further arguments */
-+	if (argc && show_guides)
-+		usage_msg_opt(_("--guides cannot be combined with other options"),
-+			      builtin_help_usage, builtin_help_options);
-+
- 	if (show_all) {
- 		git_config(git_help_config, NULL);
- 		if (verbose) {
-@@ -582,9 +588,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	if (show_all || show_guides) {
- 		printf("%s\n", _(git_more_info_string));
--		/*
--		* We're done. Ignore any remaining args
--		*/
- 		return 0;
- 	}
- 
 diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 5679e29c624..0525ec3ee58 100755
+index 0525ec3ee58..63c4adb99be 100755
 --- a/t/t0012-help.sh
 +++ b/t/t0012-help.sh
-@@ -34,6 +34,10 @@ test_expect_success 'basic help commands' '
- 	git help -a >/dev/null
+@@ -77,6 +77,19 @@ test_expect_success 'git help -g' '
+ 	test_i18ngrep "^   tutorial   " help.output
  '
  
-+test_expect_success 'invalid usage' '
-+	test_expect_code 129 git help -g add
++test_expect_success 'git help -c' '
++	git help -c >help.output &&
++	cat >expect <<-\EOF &&
++
++	'\''git help config'\'' for more information
++	EOF
++	grep -v -E \
++		-e "^[^.]+\.[^.]+$" \
++		-e "^[^.]+\.[^.]+\.[^.]+$" \
++		help.output >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success "works for commands and guides by default" '
- 	configure_help &&
- 	git help status &&
+ test_expect_success 'generate builtin list' '
+ 	git --list-cmds=builtins >builtins
+ '
 -- 
 2.33.0.1098.gf02a64c1a2d
 
