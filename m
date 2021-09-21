@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 506C0C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 13:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07879C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 13:30:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A1486115B
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 13:30:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E34056109E
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 13:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233055AbhIUNb7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 09:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50522 "EHLO
+        id S233001AbhIUNcH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 09:32:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232953AbhIUNbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 09:31:51 -0400
+        with ESMTP id S233054AbhIUNb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 09:31:58 -0400
 Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B7FC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 06:30:22 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id q26so39154829wrc.7
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 06:30:22 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFA44C061757
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 06:30:29 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id t7so5960626wrw.13
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 06:30:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IBd5PU15YHAHVdHf62x54aa16G3NCIhGQ2tbmtxgXqc=;
-        b=Ydb3jiOwbo9+Brary8AmBCM1GLNhbmu+SrGFm9u/nxp800knqL9iJFvyEe/mcgepG0
-         2i5dc6KhZenH58OsDXGl0TecjR/h6T46MWmC7fRbx/QRelYLRdSqtWlpprn4XS9bqGup
-         eTVeKJdUkt68RXq6AcvG/U8TrVne27/F0xFMyvb8omjKwH/r8SvNGMedOiT+t6FosK7F
-         80NFQ0RV0dBxvVIDK4gWutZVDA1coHBQXafUhjezbC6fkttKIDZcHdhx8DskModDyf+k
-         fmbb2WKyBCeIukEtSxdPd3Gb6jYN2A/4z6QtSd3o0ChwSe7HfsT2mOfzWo/ma5BMyDH1
-         ILSA==
+        bh=jXFFp/4BRhJsSl2lPH0LGRPfODuF4czq9vf4Mlu0+B8=;
+        b=I9kmO7LtfjzQkOvvn6DzGWqh3ol78YhXTYzLTfHN6QB1INDrrRYd61JQkT9+qyOmkD
+         uFexp1fqrpCJTbmbw07XphpNFN5C9YITRcyxaVC08IiQxuCMzuplYfsq6EUtueb8LH4Q
+         5rDFq1ouejb62ptkngexETExryK2t+SBDhkUNFBq6QjyURF9/4g+XO2xkw5C6mbzz1P2
+         5jWce7tO5mRge1GFpQlmNjX9ij1xu0Ymn+4qZf7n1/VgF1B1g765Ng37yM7PzuI9tS+H
+         D3zkHhkk41dmDJBj3vSyUDFlnMLxWlkblbVebMphyEbRR/pMoSmZxuR5CiBc0AnvVANG
+         QBJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IBd5PU15YHAHVdHf62x54aa16G3NCIhGQ2tbmtxgXqc=;
-        b=i6sYfgIXLXM7MxfsDDb6WXs1yPFaHQZA66zBoE6zvmoXJ+4cLvAh0h/dcRTKL6tfg1
-         NgnmcVQQGTb/li4z/o1ilpzeDfP8ZxTt2in9EZuROFtb56jEKvTGJKBZtbGj8Wl8mhmG
-         8kvT/64OadGx/aCxavWziVESaf9PtKJOfYJ8ObkexOArLQD2JfVIGOFZFPgjrx7GTFJw
-         JRZEK+uZ7HkXuIymOfvi4xenxAWAKIhINrBIUoNV14e7m7hgxGZbbWQCtvDbBOUTE/ES
-         T7yeOiUMvIQy61HwZGtmkHMcURfCGnYgcPwKptiDrJAjhWWnxSZx0VwBdcqZ983V/vic
-         hZnA==
-X-Gm-Message-State: AOAM530cISpndjT/G8AmOpday21PQ0tBSr9urKAPCJ7fhd1jJexssQVM
-        PcUTaJ/v7SjlbhzcRsolMUa3Z/cVNEpXYQ==
-X-Google-Smtp-Source: ABdhPJyM2Awnjfy9jfMBg6/0nqQuL+W318I5pvA/la9XvAsXtI6GCFMjyHpGoHe4tCYD/UjV1lZc8A==
-X-Received: by 2002:a7b:c142:: with SMTP id z2mr4859057wmi.10.1632231020693;
-        Tue, 21 Sep 2021 06:30:20 -0700 (PDT)
+        bh=jXFFp/4BRhJsSl2lPH0LGRPfODuF4czq9vf4Mlu0+B8=;
+        b=uJ4+Xyh9/aC7A3SX5FoXBkRMMErpToLuYCTW2+02EfHqWWjTVeLTFq122OGxXeniEJ
+         eeVG6ZQA82xJH/fdoEIkhYU3uXm5jb4p1s8qyIIU2jTFQdr6QPLT5WugTsO/y4PNlSXX
+         ToEqddh1XM7p8du3WjjzI9ZMNAI3e4GGZe/UKXBd4lBnofSUGAMN0H83+d4jxQFAaI4V
+         LyeSwwpM9YPkR+x7P8jQPC0m5ff4+JAv1WMSmfLQxzwNqBW7w6IDBhb1ujPLvzQta0Yu
+         bwRONSHNi8OZqNpiQL1vnd9VYu+JXXGxlPy0U+r+wybmvouGSd/HzHQdXuYzUYqL0ww+
+         dRlg==
+X-Gm-Message-State: AOAM532jutKSZ6X8JwudaMxkcCXClgDmGBbSgdZE1pMyBx+5UrZKb4N9
+        ptVQpyOMt1zydxZ/5rtB3YRJve0lDUU8Jg==
+X-Google-Smtp-Source: ABdhPJyvYHFxVq6IRDu5Ha4yBjPqlmoZfbIKcRrgIelNXUsuMtCvmDVMGggwros/B6umH/TvvaazGA==
+X-Received: by 2002:a05:6000:105:: with SMTP id o5mr34752215wrx.413.1632231017607;
+        Tue, 21 Sep 2021 06:30:17 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 135sm2926891wma.32.2021.09.21.06.30.19
+        by smtp.gmail.com with ESMTPSA id 135sm2926891wma.32.2021.09.21.06.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 06:30:19 -0700 (PDT)
+        Tue, 21 Sep 2021 06:30:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 4/4] parse-options: properly align continued usage output
-Date:   Tue, 21 Sep 2021 15:30:11 +0200
-Message-Id: <patch-v5-4.4-9f7f3f8b4ed-20210921T132350Z-avarab@gmail.com>
+Subject: [PATCH v5 1/4] parse-options API users: align usage output in C-strings
+Date:   Tue, 21 Sep 2021 15:30:08 +0200
+Message-Id: <patch-v5-1.4-352662be92d-20210921T132350Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1098.gf02a64c1a2d
 In-Reply-To: <cover-v5-0.4-00000000000-20210921T132350Z-avarab@gmail.com>
 References: <cover-v4-0.4-00000000000-20210912T235347Z-avarab@gmail.com> <cover-v5-0.4-00000000000-20210921T132350Z-avarab@gmail.com>
@@ -77,172 +77,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some commands such as "git stash" emit continued options output with
-e.g. "git stash -h", because usage_with_options_internal() prefixes
-with its own whitespace the resulting output wasn't properly
-aligned. Let's account for the added whitespace, which properly aligns
-the output.
+In preparation for having continued usage lines properly aligned in
+"git <cmd> -h" output, let's have the "[" on the second such lines
+align with the "[" on the first line.
 
-The "git stash" command has usage output with a N_() translation that
-legitimately stretches across multiple lines;
+In some cases this makes the output worse, because e.g. the "git
+ls-remote -h" output had been aligned to account for the extra
+whitespace that the usage_with_options_internal() function in
+parse-options.c would add.
+
+In other cases such as builtin/stash.c (not changed here), we were
+aligned in the C strings, but since that didn't account for the extra
+padding in usage_with_options_internal() it would come out looking
+misaligned, e.g. code like this:
 
 	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
-           [...]
 
-We'd like to have that output aligned with the length of the initial
-"git stash " output, but since usage_with_options_internal() adds its
-own whitespace prefixing we fell short, before this change we'd emit:
+Would emit:
 
-    $ git stash -h
-    usage: git stash list [<options>]
-       or: git stash show [<options>] [<stash>]
-       [...]
-       or: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-              [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-              [...]
+   or: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
+          [-u|--include-untracked] [-a|--all] [-m|--message <message>]
 
-Now we'll properly emit aligned output.  I.e. the last four lines
-above will instead be (a whitespace-only change to the above):
+Let's change all the usage arrays which use such continued usage
+output via "\n"-embedding to be like builtin/stash.c.
 
-       [...]
-       or: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-                     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-                     [...]
-
-We could also go for an approach where we have the caller support no
-padding of their own, i.e. (same as the first example, except for the
-padding on the second line):
-
-	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
-	   "[-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
-           [...]
-
-But to do that we'll need to find the length of "git stash". We can
-discover that from the "cmd" in the "struct cmd_struct", but there
-might be cases with sub-commands or "git" itself taking arguments that
-would make that non-trivial.
-
-Even if it were I still think this approach is better, because this way
-we'll get the same legible alignment in the C code. The fact that
-usage_with_options_internal() is adding its own prefix padding is an
-implementation detail that callers shouldn't need to worry about.
-
-Implementation notes:
-
-We could skip the string_list_split() with a strchr(str, '\n') check,
-but we'd then need to duplicate our state machine for strings that do
-and don't contain a "\n". It's simpler to just always split into a
-"struct string_list", even though the common case is that that "struct
-string_list" will contain only one element. This is not
-performance-sensitive code.
-
-This change is relatively more complex since I've accounted for making
-it future-proof for RTL translation support. Later in
-usage_with_options_internal() we have some existing padding code
-dating back to d7a38c54a6c (parse-options: be able to generate usages
-automatically, 2007-10-15) which isn't RTL-safe, but that code would
-be easy to fix. Let's not introduce new RTL translation problems here.
+This makes the output worse temporarily, but in a subsequent change
+I'll improve the usage_with_options_internal() to take this into
+account, at which point all of the strings being changed here will
+emit prettier output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- parse-options.c | 76 +++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 64 insertions(+), 12 deletions(-)
+ builtin/ls-remote.c   | 4 ++--
+ builtin/show-branch.c | 6 +++---
+ builtin/stash.c       | 2 +-
+ builtin/tag.c         | 4 ++--
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 2abff136a17..75f0a6c81c5 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -917,25 +917,77 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
- 	FILE *outfile = err ? stderr : stdout;
- 	int need_newline;
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index f4fd823af83..318949c3d75 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -7,8 +7,8 @@
  
-+	const char *usage_prefix = _("usage: %s");
-+	/*
-+	 * The translation could be anything, but we can count on
-+	 * msgfmt(1)'s --check option to have asserted that "%s" is in
-+	 * the translation. So compute the length of the "usage: "
-+	 * part. We are assuming that the translator wasn't overly
-+	 * clever and used e.g. "%1$s" instead of "%s", there's only
-+	 * one "%s" in "usage_prefix" above, so there's no reason to
-+	 * do so even with a RTL language.
-+	 */
-+	size_t usage_len = strlen(usage_prefix) - strlen("%s");
-+	/*
-+	 * TRANSLATORS: the colon here should align with the
-+	 * one in "usage: %s" translation.
-+	 */
-+	const char *or_prefix = _("   or: %s");
-+	/*
-+	 * TRANSLATORS: You should only need to translate this format
-+	 * string if your language is a RTL language (e.g. Arabic,
-+	 * Hebrew etc.), not if it's a LTR language (e.g. German,
-+	 * Russian, Chinese etc.).
-+	 *
-+	 * When a translated usage string has an embedded "\n" it's
-+	 * because options have wrapped to the next line. The line
-+	 * after the "\n" will then be padded to align with the
-+	 * command name, such as N_("git cmd [opt]\n<8
-+	 * spaces>[opt2]"), where the 8 spaces are the same length as
-+	 * "git cmd ".
-+	 *
-+	 * This format string prints out that already-translated
-+	 * line. The "%*s" is whitespace padding to account for the
-+	 * padding at the start of the line that we add in this
-+	 * function. The "%s" is a line in the (hopefully already
-+	 * translated) N_() usage string, which contained embedded
-+	 * newlines before we split it up.
-+	 */
-+	const char *usage_continued = _("%*s%s");
-+	const char *prefix = usage_prefix;
-+	int saw_empty_line = 0;
-+
- 	if (!usagestr)
- 		return PARSE_OPT_HELP;
+ static const char * const ls_remote_usage[] = {
+ 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+-	   "                     [-q | --quiet] [--exit-code] [--get-url]\n"
+-	   "                     [--symref] [<repository> [<refs>...]]"),
++	   "              [-q | --quiet] [--exit-code] [--get-url]\n"
++	   "              [--symref] [<repository> [<refs>...]]"),
+ 	NULL
+ };
  
- 	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
- 		fprintf(outfile, "cat <<\\EOF\n");
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index bea4bbf4680..082449293b5 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -11,9 +11,9 @@
  
--	fprintf_ln(outfile, _("usage: %s"), _(*usagestr++));
--	while (*usagestr && **usagestr)
--		/*
--		 * TRANSLATORS: the colon here should align with the
--		 * one in "usage: %s" translation.
--		 */
--		fprintf_ln(outfile, _("   or: %s"), _(*usagestr++));
- 	while (*usagestr) {
--		if (**usagestr)
--			fprintf_ln(outfile, _("    %s"), _(*usagestr));
--		else
--			fputc('\n', outfile);
--		usagestr++;
-+		const char *str = _(*usagestr++);
-+		struct string_list list = STRING_LIST_INIT_DUP;
-+		unsigned int j;
-+
-+		if (!saw_empty_line && !*str)
-+			saw_empty_line = 1;
-+
-+		string_list_split(&list, str, '\n', -1);
-+		for (j = 0; j < list.nr; j++) {
-+			const char *line = list.items[j].string;
-+
-+			if (saw_empty_line && *line)
-+				fprintf_ln(outfile, _("    %s"), line);
-+			else if (saw_empty_line)
-+				fputc('\n', outfile);
-+			else if (!j)
-+				fprintf_ln(outfile, prefix, line);
-+			else
-+				fprintf_ln(outfile, usage_continued,
-+					   (int)usage_len, "", line);
-+		}
-+		string_list_clear(&list, 0);
-+
-+		prefix = or_prefix;
- 	}
+ static const char* show_branch_usage[] = {
+     N_("git show-branch [-a | --all] [-r | --remotes] [--topo-order | --date-order]\n"
+-       "		[--current] [--color[=<when>] | --no-color] [--sparse]\n"
+-       "		[--more=<n> | --list | --independent | --merge-base]\n"
+-       "		[--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
++       "                [--current] [--color[=<when>] | --no-color] [--sparse]\n"
++       "                [--more=<n> | --list | --independent | --merge-base]\n"
++       "                [--no-name | --sha1-name] [--topics] [(<rev> | <glob>)...]"),
+     N_("git show-branch (-g | --reflog)[=<n>[,<base>]] [--list] [<ref>]"),
+     NULL
+ };
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 8f42360ca91..45b19007d7c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -85,7 +85,7 @@ static const char * const git_stash_push_usage[] = {
  
- 	need_newline = 1;
+ static const char * const git_stash_save_usage[] = {
+ 	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
++	   "               [-u|--include-untracked] [-a|--all] [<message>]"),
+ 	NULL
+ };
+ 
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 065b6bf093e..6535ed27ee9 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -23,10 +23,10 @@
+ 
+ static const char * const git_tag_usage[] = {
+ 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
+-		"\t\t<tagname> [<head>]"),
++	   "        <tagname> [<head>]"),
+ 	N_("git tag -d <tagname>..."),
+ 	N_("git tag -l [-n[<num>]] [--contains <commit>] [--no-contains <commit>] [--points-at <object>]\n"
+-		"\t\t[--format=<format>] [--merged <commit>] [--no-merged <commit>] [<pattern>...]"),
++	   "        [--format=<format>] [--merged <commit>] [--no-merged <commit>] [<pattern>...]"),
+ 	N_("git tag -v [--format=<format>] <tagname>..."),
+ 	NULL
+ };
 -- 
 2.33.0.1098.gf02a64c1a2d
 
