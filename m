@@ -2,141 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F13C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A84C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:13:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 197E461242
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:09:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D96AD60F70
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235280AbhIUVKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 17:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234167AbhIUVKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 17:10:38 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E591C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:09:09 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id dj4so1489410edb.5
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:09:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=aPFC5qBCRbMMbaqthcLYpR2Vvy5j2SElDVkRtXLlvYA=;
-        b=fMG17lToVsCLxiRK7aOdJ3x1eJ9zF06QmgRgb+vCQozq2PyYiSHxL1QaHvwEpO2mTH
-         srY+jncRslyBqQJ9jrun/H8RGSNJPWE5Wkq3ysodQj3/PVA6EShx0pm6SBVOGM81Mwfi
-         yNXX/Yu6dkmWeE0oRLlspVcxjb9/rzQ/Cum9jaE9tZ6ajlxnF2soSJscREb8PV6gMLiP
-         +my2WjDpNjzUXGdyftdoRT0MYfuh9ZYBjkB6q8nDf2CU/LroJ4biAa6XWeZCbBgM8oaZ
-         cGS+4c/+8NHhWfFlL177Tg3SL0zH+p/Ftnk+coYZuidzLKWgU7ig0ZeSi2j0LVKcS4kv
-         lBTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=aPFC5qBCRbMMbaqthcLYpR2Vvy5j2SElDVkRtXLlvYA=;
-        b=ovjls8+MpKgImgOgUahlxD+fQf0mjGMBePEujPbVUbQnrQG8OEWy4hT1Eu1t0ePvVl
-         H1dD6r4Ti0UfQxu/8jvcHZ1oQZn6ZOrtMT+lk4RuAeTl2TlThEevRQ69ze16XBkQo2uA
-         yjAtwYXTDThk14UYVDcdPdaiiozn24U/l7ksdqqjcxHYqSU5ORmHO7TTzgwpWhlhEK23
-         kjJoY6Uu+5yYViq6WQdyXM5xFLcO2UWuFxB5G3//gsZ85/rf4Caoj6yU90pN0uavhN3b
-         iBEXqIVAacc9apMbcsveNr6ZYE844GgydiWa1fmwF5I4FSAjZJP7IyegsA5Ehged6BFP
-         MbMw==
-X-Gm-Message-State: AOAM531aJ2/SqMmATaVcOC+KfHjCqLR4k/XBbb91KwY317LX4Mdt5a83
-        fAgPoi8ucLwpM76R10kfb4I=
-X-Google-Smtp-Source: ABdhPJybqjhMxLa+g0yC63Gh1JPoeYCXRc4mGuFufVrdQoCoLsrEFGwdjZm22hqa+nxpwHXntHYIfQ==
-X-Received: by 2002:a05:6402:42d5:: with SMTP id i21mr37809486edc.14.1632258547769;
-        Tue, 21 Sep 2021 14:09:07 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k16sm44409edr.33.2021.09.21.14.09.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 14:09:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
+        id S234895AbhIUVPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 17:15:05 -0400
+Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:43833 "EHLO
+        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234412AbhIUVPE (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 Sep 2021 17:15:04 -0400
+Received: from MTA-10-3.privateemail.com (mta-10-1.privateemail.com [68.65.122.30])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id AB65281904
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 17:13:31 -0400 (EDT)
+Received: from mta-10.privateemail.com (localhost [127.0.0.1])
+        by mta-10.privateemail.com (Postfix) with ESMTP id 9708F1800220;
+        Tue, 21 Sep 2021 17:13:28 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.237])
+        by mta-10.privateemail.com (Postfix) with ESMTPA id F265518003F2;
+        Tue, 21 Sep 2021 17:13:27 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Hamza Mahfooz <someguy@effective-light.com>
-Subject: Re: [PATCH 1/5] grep: stop modifying buffer in strip_timestamp
-Date:   Tue, 21 Sep 2021 23:02:31 +0200
-References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
- <YUlVsLkFGRfRqpKG@coredump.intra.peff.net>
- <CAPUEsphSyZB-vtubjYhN_5Gy3Zv0HQ=fH=+G8kMYzJyrOLXPxQ@mail.gmail.com>
- <CAPig+cQnC1LLPtuC0qVX7EQ_ki4pev6scRox3utA45XeLHfGig@mail.gmail.com>
- <YUlw6V7AL8l6mbSh@coredump.intra.peff.net>
- <YUl+w8Tn3jqfLqt2@carlos-mbp.lan>
- <7d791c04-d122-1eb9-a84c-939294817395@web.de>
- <YUnrI10DXLElenKZ@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUnrI10DXLElenKZ@coredump.intra.peff.net>
-Message-ID: <87v92t8wlp.fsf@evledraar.gmail.com>
+Subject: [PATCH v7 1/2] grep: refactor next_match() and match_one_pattern() for external use
+Date:   Tue, 21 Sep 2021 17:13:23 -0400
+Message-Id: <20210921211324.1426938-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+These changes are made in preparation of, the colorization support for the
+"git log" subcommands that, rely on regex functionality (i.e. "--author",
+"--committer" and "--grep"). These changes are necessary primarily because
+match_one_pattern() expects header lines to be prefixed, however, in
+pretty, the prefixes are stripped from the lines because the name-email
+pairs needs to go through additional parsing, before they can be printed
+and because next_match() doesn't handle the case of
+"ctx == GREP_CONTEXT_HEAD" at all. So, teach next_match() how to handle the
+new case, move header_field[] so it can be used by pretty to reappend
+relevant prefixes and teach match_one_pattern() how to handle subsequent
+header line match attempts.
 
-On Tue, Sep 21 2021, Jeff King wrote:
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+---
+v5: separate grep changes from pretty changes.
 
-> On Tue, Sep 21, 2021 at 09:37:23AM +0200, Ren=C3=A9 Scharfe wrote:
->
->> > @@ -965,9 +953,12 @@ static int match_one_pattern(struct grep_pat *p, =
-char *bol, char *eol,
->> >  		bol +=3D len;
->> >  		switch (p->field) {
->> >  		case GREP_HEADER_AUTHOR:
->> > -		case GREP_HEADER_COMMITTER:
->> > -			strip_timestamp(bol, &eol);
->> > +		case GREP_HEADER_COMMITTER: {
->> > +			char *em =3D memrchr(bol, '>', eol - bol);
->> > +			if (em)
->> > +				eol =3D em + 1;
->>=20
->> The old code documents the intent via the function name.  The new one
->> goes into the nitty-gritty without further explanation, which I find
->> harder to read.
->
-> Agreed. I do think the conversion is functionally correct, but it
-> doesn't strike me as worth the change.
+v6: rescope some variables.
 
-As far as some general improvement in thish area it seems to me that
-this whole subthread is losing the forest for the trees.
+v7: export header_field[] and allow for subsequent matches on header lines
+    in match_one_pattern().
+---
+ grep.c | 53 ++++++++++++++++++++++++++++-------------------------
+ grep.h | 13 +++++++++++++
+ 2 files changed, 41 insertions(+), 25 deletions(-)
 
-We're operating a buffer that has "\n"'s in it, and then we loop and
-split it up one line at a time, often just to match author OR
-committer.
+diff --git a/grep.c b/grep.c
+index 14fe8a0fd2..f4126011c5 100644
+--- a/grep.c
++++ b/grep.c
+@@ -935,15 +935,6 @@ static void strip_timestamp(const char *bol, const char **eol_p)
+ 	}
+ }
+ 
+-static struct {
+-	const char *field;
+-	size_t len;
+-} header_field[] = {
+-	{ "author ", 7 },
+-	{ "committer ", 10 },
+-	{ "reflog ", 7 },
+-};
+-
+ static int match_one_pattern(struct grep_pat *p,
+ 			     const char *bol, const char *eol,
+ 			     enum grep_context ctx,
+@@ -953,18 +944,23 @@ static int match_one_pattern(struct grep_pat *p,
+ 	const char *start = bol;
+ 
+ 	if ((p->token != GREP_PATTERN) &&
+-	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
++	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
++	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
+ 		return 0;
+ 
+ 	if (p->token == GREP_PATTERN_HEAD) {
+-		const char *field;
+-		size_t len;
+-		assert(p->field < ARRAY_SIZE(header_field));
+-		field = header_field[p->field].field;
+-		len = header_field[p->field].len;
+-		if (strncmp(bol, field, len))
+-			return 0;
+-		bol += len;
++		if (!(eflags & REG_NOTBOL)) {
++			const char *field;
++			size_t len;
++
++			assert(p->field < ARRAY_SIZE(grep_header_fields));
++			field = grep_header_fields[p->field].field;
++			len = grep_header_fields[p->field].len;
++			if (strncmp(bol, field, len))
++				return 0;
++			bol += len;
++		}
++
+ 		switch (p->field) {
+ 		case GREP_HEADER_AUTHOR:
+ 		case GREP_HEADER_COMMITTER:
+@@ -1158,22 +1154,28 @@ static int match_next_pattern(struct grep_pat *p,
+ 	return 1;
+ }
+ 
+-static int next_match(struct grep_opt *opt,
+-		      const char *bol, const char *eol,
+-		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags)
+ {
+ 	struct grep_pat *p;
+ 	int hit = 0;
+ 
+ 	pmatch->rm_so = pmatch->rm_eo = -1;
+ 	if (bol < eol) {
+-		for (p = opt->pattern_list; p; p = p->next) {
++		for (p = ((ctx == GREP_CONTEXT_HEAD)
++			   ? opt->header_list : opt->pattern_list);
++			  p; p = p->next) {
+ 			switch (p->token) {
+ 			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_HEAD:
+ 			case GREP_PATTERN_BODY:
+-				hit |= match_next_pattern(p, bol, eol, ctx,
+-							  pmatch, eflags);
++				if ((field == GREP_HEADER_FIELD_MAX) ||
++				    (p->field == field))
++					hit |= match_next_pattern(p, bol, eol,
++								  ctx, pmatch,
++								  eflags);
+ 				break;
+ 			default:
+ 				break;
+@@ -1261,7 +1263,8 @@ static void show_line(struct grep_opt *opt,
+ 			else if (sign == '=')
+ 				line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		}
+-		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
++		while (grep_next_match(opt, bol, eol, ctx, &match,
++				       GREP_HEADER_FIELD_MAX, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+diff --git a/grep.h b/grep.h
+index 3cb8a83ae8..4847c37280 100644
+--- a/grep.h
++++ b/grep.h
+@@ -23,6 +23,15 @@ typedef int pcre2_general_context;
+ #include "thread-utils.h"
+ #include "userdiff.h"
+ 
++static const struct {
++	const char *field;
++	size_t len;
++} grep_header_fields[] = {
++	{ "author ", 7 },
++	{ "committer ", 10 },
++	{ "reflog ", 7 },
++};
++
+ struct repository;
+ 
+ enum grep_pat_token {
+@@ -190,6 +199,10 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size);
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags);
+ 
+ struct grep_source {
+ 	char *name;
+-- 
+2.33.0
 
-We then have things like commit_rewrite_person() in revision.c that's
-preparing a "fake" commit just for grep.c's use, just for it to strip
-those headers down again.
-
-A real improvement in this area IMO would be trying to bridge the gap
-between parse_commit_buffer() and grep.c's match_one_pattern().
-
-I.e. we've even parsed this once before in commit.c's
-parse_commit_date() by the time it gets to grep.c, now we're just doing
-it again.
-
-It probably makes sense to split up that commit.c code into something
-that can give you structured output, i.e. headers with types and
-start/end points for interesting data, then in grep.c we won't need a
-strip_anything(), or strrchr() or memrchr() or whatever.
-
-It would also be a lot faster for grepping if we could offload more of
-this work to the regex engine, particularly if we've got a more capable
-engine like PCREv2.
-
-In many cases we're splitting lines ourselves, when we could have the
-engine work in a multi-line mode, or translate the user's --author match
-into something that can match the raw commit header. So have an implicit
-/^author /m anchor if we're matching author headers, instead of having
-grep.c string-twiddle that around one line at a time.
-
-Just my 0.02.
