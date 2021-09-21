@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB5F4C4332F
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A27C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:42:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D060161050
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:40:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06B1661050
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 22:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233725AbhIUWm1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 18:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37848 "EHLO
+        id S232476AbhIUWoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 18:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234670AbhIUWmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 18:42:25 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17433C061575
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:56 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id t8so1175781wrq.4
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:56 -0700 (PDT)
+        with ESMTP id S234107AbhIUWmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 18:42:24 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D278CC061767
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:54 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id u18so1165328wrg.5
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 15:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D6gSCAofFwqEn3MwV0bA+1+330h16rCZX8cQ3IZFGgw=;
-        b=Io4JaMmWLF3tp5OgFqKE62+KycWxBP0YYRkhiNSfqx2PcCOtWmz/o4qdh9ZWJc077x
-         4V9Xdeo8jTniH5F7W0/NeA73t6m6V7DGtuZbz/w1mjo54xah9qLenf+su6dzpQRct97F
-         t+vvFAJ5YGoUG7ux5nt7wBr4QhjKoIhXvYjuiEiBLigewW1GvN39oQX+Lo2W36MPM3GB
-         57GkIBm/K/w58qxNtigfEHvgzGmhOt89nnKDkCHQKYymx6ckH7DksHe/X7nCof6TH5B4
-         Ly0CJsQoV4C2G/JOnKlL224qgd9n9nnURAsd6SRurwEI/njc7mgLsPvuwkFCHWg9vp47
-         /9pw==
+        bh=ZvFFpNy1tHfbYNQEtmtpgxpae+O50v7T4EA8vkF5QYU=;
+        b=fmFhbfQKGINXseBxykDrXlxTFTE9DBncgPEjnXg4A3aGbZ0jCyJuLdI8nhZaB/xhxM
+         aIxj9BTqIw1LHJ4nRzJnwHJA9RumlGXZ6alsNN9K5RyosBRDZL6IBWnd6UVygzKKt0Av
+         +mp80E47wPJ0sKfUfBTm9YdixmAWxz8rniD4OaSQEL1ATlGd6T7womZNSvPNiBSSVqRm
+         byH7pEnSIB8yG9LkXihoUWQxqQljaRisldLxfR9WiJT0DjRLV8NG2v/EC2HYoosPLbRw
+         jAW0QrpN/iVtFnhKkmCVgvXzfxJmBsFXzaW8R2N0KW4jLA2qpexgykpxoWI4+b5eDtH7
+         vzDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D6gSCAofFwqEn3MwV0bA+1+330h16rCZX8cQ3IZFGgw=;
-        b=B3gndyHfxaEOOSsh6i9JkiSxp13NSdbGQ/GDKk2hIbWuiA2w7m0jwhMSHxP5ZOHAAp
-         VYcLPcqLXUQ4OPxtssxdshQ+PD0MeoZUr3DWjEuaOh75+2Rsl1sbvfMvA3xPFEcZde+p
-         n3/QmudVxUng0D5I64dnxoinrINNVNJOKVLKvA2/ajHRigJQAspntYW75AjijoBQ/QOC
-         DEog8NXMe9wWMEmOQp/UR3h5Yzv+/qcFjAEz07IrXG1lX76AmBb8TcauzXkx4FcclirR
-         EOy6/Mt1ikA25Pm2RADPTM/A8SS2gg1Cd71U27i7WICis4gSRTwXHegXzQfaX6KkqtPX
-         GvLQ==
-X-Gm-Message-State: AOAM5309hg5nJ255Uzrx6huEQwaXSm+TuEMHLytdPygLbiWtRg3FpWk1
-        cFE1juhqZEhd+EgwxraX6xlN5XpSOzwh0g==
-X-Google-Smtp-Source: ABdhPJwJ+qmCbWUaLbqC7XeQI0NnJ97pLOFZPyN7pSiGdQbglbdOqy/Prr2SwjSLEb4GMut35y2IZw==
-X-Received: by 2002:a05:600c:1553:: with SMTP id f19mr7106547wmg.66.1632264054284;
-        Tue, 21 Sep 2021 15:40:54 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l7sm3846121wmp.48.2021.09.21.15.40.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=ZvFFpNy1tHfbYNQEtmtpgxpae+O50v7T4EA8vkF5QYU=;
+        b=UNjsxfWB7owuxw0Y+qfFIElyzW4efEBOh28wEAU5HJcK4dv82ATi0EHiuFoxKEsoDm
+         tWOzBxIIa68pIgLn48dSC//zQ/qEgHkHHG6tWb8xFTreng3DxXyf1qdSBKnx0QturzWU
+         BoZSqV1EtWTpBLsEzT256jTltVyD5SHaKobX7IUXC/apMWl2qMdQvQZFpOIoMROonXAV
+         RuuK8OhsfnjUZnyG7pM0Jc92Sn4tX1OlV4M8nuPGRCN0haUz/t6ZnRdJX9zMyWjtkvuo
+         bLtSLJspoJg1Aj6ahossq/Q9J3XMPTxgCN6GpWQgFeq7kRbJQ3qIHQLGKFWMz0iiDR9a
+         Rcwg==
+X-Gm-Message-State: AOAM530tledObaN2r5hZSOkJ71CR4wj6jniqWV+1KOXg20zB/Rni/fnX
+        3H9u2J+ozACemsFcbzHlUHeFBoXr8+y6+A==
+X-Google-Smtp-Source: ABdhPJxNJYNbWgmXmRpKMNJECqTKodLIxgzMretbWRGyEloq6npAqOasH+cXbTww6nnjxGFmnN4oQw==
+X-Received: by 2002:a5d:60c8:: with SMTP id x8mr37377843wrt.293.1632264053068;
         Tue, 21 Sep 2021 15:40:53 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l7sm3846121wmp.48.2021.09.21.15.40.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Sep 2021 15:40:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 9/9] help: move column config discovery to help.c library
-Date:   Wed, 22 Sep 2021 00:40:39 +0200
-Message-Id: <patch-v3-9.9-29ee7cf375b-20210921T223223Z-avarab@gmail.com>
+Subject: [PATCH v3 8/9] help / completion: make "git help" do the hard work
+Date:   Wed, 22 Sep 2021 00:40:38 +0200
+Message-Id: <patch-v3-8.9-836e19f8612-20210921T223223Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1098.gf02a64c1a2d
 In-Reply-To: <cover-v3-0.9-00000000000-20210921T223223Z-avarab@gmail.com>
 References: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20210921T223223Z-avarab@gmail.com>
@@ -79,116 +79,260 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a git_config() call was added in dbfae689690 (help: reuse
-print_columns() for help -a, 2012-04-13) to read the column config
-we'd always use the resulting "colopts" variable.
+The "help" builtin has been able to emit configuration variables since
+e17ca926371 (completion: drop the hard coded list of config vars,
+2018-05-26), but it hasn't produced exactly the format the completion
+script wanted. Let's do that.
 
-Then in 63eae83f8f3 (help: add "-a --verbose" to list all commands
-with synopsis, 2018-05-20) we started only using the "colopts" config
-under "--all" if "--no-verbose" was also given, but the "git_config()"
-call was not moved inside the "verbose" branch of the code.
+We got partway there in 2675ea1cc0f (completion: use 'sort -u' to
+deduplicate config variable names, 2019-08-13) and
+d9438873c4d (completion: deduplicate configuration sections,
+2019-08-13), but after both we still needed some sorting,
+de-duplicating and awk post-processing of the list.
 
-This change effectively does that, we'll only call list_commands()
-under "--all --no-verbose", so let's have it look up the config it
-needs. See 26c7d067832 (help -a: improve and make --verbose default, 2018-09-29) for another case in help.c where we look up config.
+We can instead simply do the relevant parsing ourselves (we were doing
+most of it already), and call string_list_remove_duplicates() after
+already sorting the list, so the caller doesn't need to invoke "sort
+-u". The "--config-for-completion" output is the same as before after
+being passed through "sort -u".
 
-The get_colopts() function is named for consistency with the existing
-get_alias() function added in 26c7d067832.
+Then add a new "--config-sections-for-completion" option. Under that
+output we'll emit config sections like "alias" (instead of "alias." in
+the --config-for-completion output).
+
+We need to be careful to leave the "--config-for-completion" option
+compatible with users git, but are still running a shell with an older
+git-completion.bash. If we e.g. changed the option name they'd see
+messages about git-completion.bash being unable to find the
+"--config-for-completion" option.
+
+Such backwards compatibility isn't something we should bend over
+backwards for, it's only helping users who:
+
+ * Upgrade git
+ * Are in an old shell
+ * The git-completion.bash in that shell hasn't cached the old
+   "--config-for-completion" output already.
+
+But since it's easy in this case to retain compatibility, let's do it,
+the older versions of git-completion.bash won't care that the input
+they get doesn't change after a "sort -u".
+
+While we're at it let's make "--config-for-completion" die if there's
+anything left over in "argc", and do the same in the new
+"--config-sections-for-completion" option.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/help.c |  7 +------
- help.c         | 16 ++++++++++++++--
- help.h         |  2 +-
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ builtin/help.c                         | 54 +++++++++++++++++++-------
+ contrib/completion/git-completion.bash | 21 +++++-----
+ t/t0012-help.sh                        | 17 ++++++--
+ 3 files changed, 65 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/help.c b/builtin/help.c
-index 9a255a9aee6..0a40d8cf094 100644
+index 6a022d9803e..9a255a9aee6 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -7,7 +7,6 @@
- #include "exec-cmd.h"
- #include "parse-options.h"
- #include "run-command.h"
--#include "column.h"
- #include "config-list.h"
- #include "help.h"
- #include "alias.h"
-@@ -50,7 +49,6 @@ static enum help_action {
+@@ -34,11 +34,18 @@ enum help_format {
+ 	HELP_FORMAT_WEB
+ };
+ 
++enum show_config_type {
++	SHOW_CONFIG_HUMAN,
++	SHOW_CONFIG_VARS,
++	SHOW_CONFIG_SECTIONS,
++};
++
+ static enum help_action {
+ 	HELP_ACTION_ALL = 1,
+ 	HELP_ACTION_GUIDES,
+ 	HELP_ACTION_CONFIG,
+ 	HELP_ACTION_CONFIG_FOR_COMPLETION,
++	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
+ } cmd_mode;
  
  static const char *html_path;
- static int verbose = 1;
--static unsigned int colopts;
- static enum help_format help_format = HELP_FORMAT_NONE;
- static int exclude_guides;
- static struct option builtin_help_options[] = {
-@@ -384,8 +382,6 @@ static int add_man_viewer_info(const char *var, const char *value)
+@@ -63,6 +70,8 @@ static struct option builtin_help_options[] = {
+ 		    HELP_ACTION_CONFIG),
+ 	OPT_CMDMODE_F(0, "config-for-completion", &cmd_mode, "",
+ 		    HELP_ACTION_CONFIG_FOR_COMPLETION, PARSE_OPT_HIDDEN),
++	OPT_CMDMODE_F(0, "config-sections-for-completion", &cmd_mode, "",
++		    HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION, PARSE_OPT_HIDDEN),
  
- static int git_help_config(const char *var, const char *value, void *cb)
+ 	OPT_END(),
+ };
+@@ -82,7 +91,7 @@ struct slot_expansion {
+ 	int found;
+ };
+ 
+-static void list_config_help(int for_human)
++static void list_config_help(enum show_config_type type)
  {
--	if (starts_with(var, "column."))
--		return git_column_config(var, value, "help", &colopts);
- 	if (!strcmp(var, "help.format")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -595,7 +591,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	struct slot_expansion slot_expansions[] = {
+ 		{ "advice", "*", list_config_advices },
+@@ -100,6 +109,8 @@ static void list_config_help(int for_human)
+ 	const char **p;
+ 	struct slot_expansion *e;
+ 	struct string_list keys = STRING_LIST_INIT_DUP;
++	struct string_list keys_uniq = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
+ 	int i;
  
- 	switch (cmd_mode) {
- 	case HELP_ACTION_ALL:
--		git_config(git_help_config, NULL);
- 		if (verbose) {
- 			setup_pager();
- 			list_all_cmds_help();
-@@ -603,7 +598,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	for (p = config_name_list; *p; p++) {
+@@ -130,34 +141,46 @@ static void list_config_help(int for_human)
+ 	for (i = 0; i < keys.nr; i++) {
+ 		const char *var = keys.items[i].string;
+ 		const char *wildcard, *tag, *cut;
++		const char *dot = NULL;
++		struct strbuf sb = STRBUF_INIT;
+ 
+-		if (for_human) {
++		switch (type) {
++		case SHOW_CONFIG_HUMAN:
+ 			puts(var);
+ 			continue;
++		case SHOW_CONFIG_SECTIONS:
++			dot = strchr(var, '.');
++			break;
++		case SHOW_CONFIG_VARS:
++			break;
  		}
- 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
- 		load_command_list("git-", &main_cmds, &other_cmds);
--		list_commands(colopts, &main_cmds, &other_cmds);
-+		list_commands(&main_cmds, &other_cmds);
- 		printf("%s\n", _(git_more_info_string));
- 		break;
- 	case HELP_ACTION_GUIDES:
-diff --git a/help.c b/help.c
-index be2fa642415..973e47cdc30 100644
---- a/help.c
-+++ b/help.c
-@@ -293,9 +293,21 @@ void load_command_list(const char *prefix,
- 	exclude_cmds(other_cmds, main_cmds);
+-
+ 		wildcard = strchr(var, '*');
+ 		tag = strchr(var, '<');
+ 
+-		if (!wildcard && !tag) {
+-			puts(var);
++		if (!dot && !wildcard && !tag) {
++			string_list_append(&keys_uniq, var);
+ 			continue;
+ 		}
+ 
+-		if (wildcard && !tag)
++		if (dot)
++			cut = dot;
++		else if (wildcard && !tag)
+ 			cut = wildcard;
+ 		else if (!wildcard && tag)
+ 			cut = tag;
+ 		else
+ 			cut = wildcard < tag ? wildcard : tag;
+ 
+-		/*
+-		 * We may produce duplicates, but that's up to
+-		 * git-completion.bash to handle
+-		 */
+-		printf("%.*s\n", (int)(cut - var), var);
++		strbuf_add(&sb, var, cut - var);
++		string_list_append(&keys_uniq, sb.buf);
++		strbuf_release(&sb);
++
+ 	}
+ 	string_list_clear(&keys, 0);
++	string_list_remove_duplicates(&keys_uniq, 0);
++	for_each_string_list_item(item, &keys_uniq)
++		puts(item->string);
++	string_list_clear(&keys_uniq, 0);
  }
  
--void list_commands(unsigned int colopts,
--		   struct cmdnames *main_cmds, struct cmdnames *other_cmds)
-+static int get_colopts(const char *var, const char *value, void *data)
+ static enum help_format parse_help_format(const char *format)
+@@ -589,12 +612,17 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		printf("%s\n", _(git_more_info_string));
+ 		return 0;
+ 	case HELP_ACTION_CONFIG_FOR_COMPLETION:
+-		list_config_help(0);
++		no_extra_argc(argc);
++		list_config_help(SHOW_CONFIG_VARS);
++		return 0;
++	case HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION:
++		no_extra_argc(argc);
++		list_config_help(SHOW_CONFIG_SECTIONS);
+ 		return 0;
+ 	case HELP_ACTION_CONFIG:
+ 		no_extra_argc(argc);
+ 		setup_pager();
+-		list_config_help(1);
++		list_config_help(SHOW_CONFIG_HUMAN);
+ 		printf("\n%s\n", _("'git help config' for more information"));
+ 		return 0;
+ 	}
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 8108eda1e86..b9f63701930 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2503,7 +2503,14 @@ __git_config_vars=
+ __git_compute_config_vars ()
  {
-+	unsigned int *colopts = data;
-+
-+	if (starts_with(var, "column."))
-+		return git_column_config(var, value, "help", colopts);
-+
-+	return 0;
+ 	test -n "$__git_config_vars" ||
+-	__git_config_vars="$(git help --config-for-completion | sort -u)"
++	__git_config_vars="$(git help --config-for-completion)"
 +}
 +
-+void list_commands(struct cmdnames *main_cmds, struct cmdnames *other_cmds)
++__git_config_sections=
++__git_compute_config_sections ()
 +{
-+	unsigned int colopts = 0;
-+	git_config(get_colopts, &colopts);
-+
- 	if (main_cmds->cnt) {
- 		const char *exec_path = git_exec_path();
- 		printf_ln(_("available git commands in '%s'"), exec_path);
-diff --git a/help.h b/help.h
-index 5871e93ba2d..9d383f1a0b2 100644
---- a/help.h
-+++ b/help.h
-@@ -37,7 +37,7 @@ void add_cmdname(struct cmdnames *cmds, const char *name, int len);
- /* Here we require that excludes is a sorted list. */
- void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
- int is_in_cmdlist(struct cmdnames *cmds, const char *name);
--void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
-+void list_commands(struct cmdnames *main_cmds, struct cmdnames *other_cmds);
- void get_version_info(struct strbuf *buf, int show_build_options);
++	test -n "$__git_config_sections" ||
++	__git_config_sections="$(git help --config-sections-for-completion)"
+ }
  
- /*
+ # Completes possible values of various configuration variables.
+@@ -2717,16 +2724,8 @@ __git_complete_config_variable_name ()
+ 		__gitcomp "$__git_config_vars" "" "$cur_" "$sfx"
+ 		;;
+ 	*)
+-		__git_compute_config_vars
+-		__gitcomp "$(echo "$__git_config_vars" |
+-				awk -F . '{
+-					sections[$1] = 1
+-				}
+-				END {
+-					for (s in sections)
+-						print s "."
+-				}
+-				')" "" "$cur_"
++		__git_compute_config_sections
++		__gitcomp "$__git_config_sections" "" "$cur_" "."
+ 		;;
+ 	esac
+ }
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 25bbaf0d586..60d713021f9 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -42,7 +42,8 @@ test_expect_success 'invalid usage' '
+ 	test_expect_code 129 git help -a -g &&
+ 
+ 	test_expect_code 129 git help -g -c &&
+-	test_expect_code 0 git help --config-for-completion add
++	test_expect_code 129 git help --config-for-completion add &&
++	test_expect_code 129 git help --config-sections-for-completion add
+ '
+ 
+ test_expect_success "works for commands and guides by default" '
+@@ -106,11 +107,21 @@ test_expect_success 'git help --config-for-completion' '
+ 	     sort -u >human.munged &&
+ 
+ 	git help --config-for-completion >vars &&
+-	sort -u <vars >vars.new &&
+-	mv vars.new vars &&
+ 	test_cmp human.munged vars
+ '
+ 
++test_expect_success 'git help --config-sections-for-completion' '
++	git help -c >human &&
++	grep -E \
++	     -e "^[^.]+\.[^.]+$" \
++	     -e "^[^.]+\.[^.]+\.[^.]+$" human |
++	     sed -e "s/\..*//" |
++	     sort -u >human.munged &&
++
++	git help --config-sections-for-completion >sections &&
++	test_cmp human.munged sections
++'
++
+ test_expect_success 'generate builtin list' '
+ 	git --list-cmds=builtins >builtins
+ '
 -- 
 2.33.0.1098.gf02a64c1a2d
 
