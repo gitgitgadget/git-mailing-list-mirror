@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 724ACC433FE
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 10:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56BCDC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 10:24:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F07660E54
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 10:24:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3466C6109E
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 10:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbhIUKZu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 06:25:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        id S231882AbhIUKZw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 06:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231713AbhIUKZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 06:25:44 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D659C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 03:24:16 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id t7so4321702wrw.13
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 03:24:16 -0700 (PDT)
+        with ESMTP id S231782AbhIUKZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 06:25:47 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A267C061768
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 03:24:17 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id t8so37589751wrq.4
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 03:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=2qd5TUzrI4IQm2to1klhkL7Kkut0E/FdcBRuFM/3FmY=;
-        b=pfFbzgM77TUi9pldPkrvqlT8rl9fyi5QbUApWkhbyMl/bNcLlItaz8fJZqWQvjisz8
-         txHxpjTmnUz8bHkAsJ2PMty9uqg9yv81aknkS+Om7xpDF9w2q4YvVFIswEUXr+2FWkAY
-         e82lR/lhdwAahX+lyBaB8HXlZ3sZD8Oxw/Kk/9yutcY8OZ2CSuxkFj9JI6QIIG+vbZFr
-         tKkdwPUOM9ClvhQmTrIRgOsCKHcakM6diiAvZ6gWF5dd+5WWBhXNb4nu6e94d7a64K8P
-         Z40QhD7xrvsFz52dy6lMp0BdPOMfY1Smt6mwd8TdqUftrmufQVB/Yo+CHTjCuq1TWmgb
-         8Wzg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=o8Zaf1nThnc5LF1zdesE20+QA3iC6u4UKAc14B35Afw=;
+        b=AhsfTpQF0vhVqybjwOQBek95QULPEVJ3RC6MET87YnhE6M0IUNCassmpMZyohLDhrt
+         +prqz0lMfp/3zpPKMLjzNMSAfOjkL9jTYB14Om5Tz1Z1axnhvDm3pkWoUyHPIBeTgR2T
+         KURNicJQDnV3ql0MX0FSWiQHHvBZSDc1SNjoXhm7BTyTElY38nqt5kyPltPtM2CHHlV+
+         Tfhm6tDE5w5xswGH4NiG0jRUV+jLvnqddRelx2n4wDo5SOQdn306mBEtRueKYhO+trOT
+         7mS0/7FRMCHG8BCS4KZ3S51g8zuqQH/OBKKHd1mU3agc3LfpHFXWL47zrSUvny2FUrjy
+         Sedw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=2qd5TUzrI4IQm2to1klhkL7Kkut0E/FdcBRuFM/3FmY=;
-        b=OtIvZCa5hCiiDeRU2uPhgf9+YNi0sjvaZsg4Oxt/J6s+qqRoMxSvaR+UpiwqPb6TTT
-         FfqWnUpbI8bcIKRa++4VJM3fnVtjNyXvFeEk2FciOa4hEX1JsU2Q1oQFiSKFpT9DNDBM
-         rYddKHAmA+2KDWqbSS6UyBjCDuP+9kDLNuNLk39BIfUOMK1fzYZnW77QJr9KIbXHZ95c
-         dODXVk0e2vKKIWLtm5yGM8xlnSRGZtRXgsqO8sFWg041DUFB4wkwJUePEncg6W/6UKJK
-         AaSnD+Brmgz0MuMCJYQ8QawxnszKs+QRdPsm6dpRVAqsoulWVzjdvAv1WXarn388cPmS
-         FoYw==
-X-Gm-Message-State: AOAM532J0xiLxbALpI0zsVGCbHYDZqICFyo7WtxkW7+/uOlRD7VxPvj/
-        WZgGvk3j6h6H9z4EUNZYpAmPvgGZ9bs=
-X-Google-Smtp-Source: ABdhPJwKPrV85AARE9jrA8DoEH0LdcMWhuN5bBc5PzXytsUAHvfxD61F2+1WP6ExlUFnLNnq3caITw==
-X-Received: by 2002:a1c:c913:: with SMTP id f19mr3768452wmb.86.1632219854723;
-        Tue, 21 Sep 2021 03:24:14 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=o8Zaf1nThnc5LF1zdesE20+QA3iC6u4UKAc14B35Afw=;
+        b=5aXffgdphioXRVkH2hrbyga2Z8zXuXETOp+ksKmcYRIiMyNy/83SO20gYi/usYZeo8
+         Nn+CoeaeQFXeZZBwRXx/lbvVwOg094gHr6c2mbRgLGAnofblOsYT5gkS7S3myq6STzuU
+         7PYpN9moXTr8op0/vwiq+oM6KEKE6PsVY4U2JZnqiDr/HpDky8K7KUIYWX4qP49+8aEk
+         JF4UAapCfp05GYNRShA7VoKsZVIwCwq++ry6t7bduJMQpzNUvnFYuRangwKvRo5XVPnm
+         KqaQ6Bx74xv9BaD/z3Emz2kg7T6em75JK+AIYx+B9+xgzXhZ3zMPh3Qyek3LmnlRnDSL
+         wmEg==
+X-Gm-Message-State: AOAM531V7QA/yw6LbWdX5qQ5Op+fz+Of2tQgLD1GiLL+R3JcAhhd08H8
+        QQZW5cHD7BW5iqhb4Q8ks6OaE07tXqQ=
+X-Google-Smtp-Source: ABdhPJyjZ5EOisoBojqLK5Arvo8MfCr0PPxS8psLVXtvLnIMrrRViys3krswmgphEHIj10ThiDSUbw==
+X-Received: by 2002:a05:600c:350f:: with SMTP id h15mr3648354wmq.123.1632219855353;
+        Tue, 21 Sep 2021 03:24:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9sm2322816wmc.19.2021.09.21.03.24.14
+        by smtp.gmail.com with ESMTPSA id k22sm19986819wrd.59.2021.09.21.03.24.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 03:24:14 -0700 (PDT)
-Message-Id: <d3af62c746c18dd3124d1ec165d51a7aa627ab07.1632219848.git.gitgitgadget@gmail.com>
+        Tue, 21 Sep 2021 03:24:15 -0700 (PDT)
+Message-Id: <4eedd3ae76614df5ac450a0cd901b05ea2e85c6d.1632219848.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1033.v3.git.1632219848.gitgitgadget@gmail.com>
 References: <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com>
         <pull.1033.v3.git.1632219848.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 21 Sep 2021 10:24:05 +0000
-Subject: [PATCH v3 08/10] rebase: use our standard error return value
-MIME-Version: 1.0
+Date:   Tue, 21 Sep 2021 10:24:06 +0000
+Subject: [PATCH v3 09/10] rebase: use lookup_commit_reference_by_name()
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
@@ -82,95 +82,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Git uses −1 to signal an error. The builtin rebase converts these to
-+1 all over the place using !! (presumably because the in the scripted
-version an error was signalled by +1). This is confusing and clutters
-the code, we only need to convert the value when the function returns.
+peel_committish() appears to have been copied from the scripted rebase
+but it duplicates the functionality of
+lookup_commit_reference_by_name() so lets use that instead.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ builtin/rebase.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 6138009d6e4..444e169ef74 100644
+index 444e169ef74..0ace9e0a8ec 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1574,7 +1574,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("could not move back to %s"),
- 			    oid_to_hex(&options.orig_head));
- 		remove_branch_state(the_repository, 0);
--		ret = !!finish_rebase(&options);
-+		ret = finish_rebase(&options);
- 		goto cleanup;
- 	}
- 	case ACTION_QUIT: {
-@@ -1583,11 +1583,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			struct replay_opts replay = REPLAY_OPTS_INIT;
- 
- 			replay.action = REPLAY_INTERACTIVE_REBASE;
--			ret = !!sequencer_remove_state(&replay);
-+			ret = sequencer_remove_state(&replay);
- 		} else {
- 			strbuf_reset(&buf);
- 			strbuf_addstr(&buf, options.state_dir);
--			ret = !!remove_dir_recursively(&buf, 0);
-+			ret = remove_dir_recursively(&buf, 0);
- 			if (ret)
- 				error(_("could not remove '%s'"),
- 				       options.state_dir);
-@@ -1959,7 +1959,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	if (require_clean_work_tree(the_repository, "rebase",
- 				    _("Please commit or stash them."), 1, 1)) {
--		ret = 1;
-+		ret = -1;
- 		goto cleanup;
- 	}
- 
-@@ -1994,7 +1994,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 					       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
- 					       NULL, buf.buf,
- 					       DEFAULT_REFLOG_ACTION) < 0) {
--					ret = !!error(_("could not switch to "
-+					ret = error(_("could not switch to "
- 							"%s"),
- 						      options.switch_to);
- 					goto cleanup;
-@@ -2009,7 +2009,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			else
- 				printf(_("Current branch %s is up to date.\n"),
- 				       branch_name);
--			ret = !!finish_rebase(&options);
-+			ret = finish_rebase(&options);
- 			goto cleanup;
- 		} else if (!(options.flags & REBASE_NO_QUIET))
- 			; /* be quiet */
-@@ -2087,7 +2087,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf,
- 			   DEFAULT_REFLOG_ACTION);
- 		strbuf_release(&msg);
--		ret = !!finish_rebase(&options);
-+		ret = finish_rebase(&options);
- 		goto cleanup;
- 	}
- 
-@@ -2101,7 +2101,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	options.revisions = revisions.buf;
- 
- run_rebase:
--	ret = !!run_specific_rebase(&options, action);
-+	ret = run_specific_rebase(&options, action);
- 
- cleanup:
- 	strbuf_release(&buf);
-@@ -2112,5 +2112,5 @@ cleanup:
- 	free(options.strategy);
- 	strbuf_release(&options.git_format_patch_opt);
- 	free(squash_onto_name);
--	return ret;
-+	return !!ret;
+@@ -762,17 +762,6 @@ static int finish_rebase(struct rebase_options *opts)
+ 	return ret;
  }
+ 
+-static struct commit *peel_committish(const char *name)
+-{
+-	struct object *obj;
+-	struct object_id oid;
+-
+-	if (get_oid(name, &oid))
+-		return NULL;
+-	obj = parse_object(the_repository, &oid);
+-	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
+-}
+-
+ static void add_var(struct strbuf *buf, const char *name, const char *value)
+ {
+ 	if (!value)
+@@ -1845,7 +1834,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			if (!strcmp(options.upstream_name, "-"))
+ 				options.upstream_name = "@{-1}";
+ 		}
+-		options.upstream = peel_committish(options.upstream_name);
++		options.upstream =
++			lookup_commit_reference_by_name(options.upstream_name);
+ 		if (!options.upstream)
+ 			die(_("invalid upstream '%s'"), options.upstream_name);
+ 		options.upstream_arg = options.upstream_name;
+@@ -1888,7 +1878,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.onto = lookup_commit_or_die(&merge_base,
+ 						    options.onto_name);
+ 	} else {
+-		options.onto = peel_committish(options.onto_name);
++		options.onto =
++			lookup_commit_reference_by_name(options.onto_name);
+ 		if (!options.onto)
+ 			die(_("Does not point to a valid commit '%s'"),
+ 				options.onto_name);
 -- 
 gitgitgadget
 
