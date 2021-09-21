@@ -2,96 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7138BC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 04:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 258CAC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 04:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C5BA604AC
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 04:30:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04D7F610A0
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 04:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231289AbhIUEcL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 00:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230523AbhIUEcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 00:32:10 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57107C061574
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 21:30:42 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id y197so11514979iof.11
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 21:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=faDQWuAmEPKPJpp21H3rftOWfRd1YOrLH4EM3wgyvPg=;
-        b=SS3DgIoRsYOBvGZ45HM6xQftODAN2P2k50DIgUIM7UnWXlaKrMQwDxTA17UBXOKRdc
-         oK5fxkCZkgqOw2hvZnMCixLJ/ECSE5Fkj3R6h0F1G7mr7yrOq85t+rThvndden4xu/5J
-         LH6wfmnTbeKxmprr6EIFkSZSBR7GB08WlIHxntmny/47+6eUUaTlkcgdTbHuNBvGS75v
-         wqCuBtwB3gpOnFt7uJV5UvTIXMn4w+cHuENty6XirgsCf0UlshkndL065NeP3gExx4W4
-         jMNS7tYMdbLbyuc6bgBtZZS9nZYSVMYr5ml/IXNF++/7hm++1gXfaQYN4em/l6O+0Nmq
-         /npw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=faDQWuAmEPKPJpp21H3rftOWfRd1YOrLH4EM3wgyvPg=;
-        b=1buEllIqfrkn4dzx1YkV59mRHKn9wNrw1K0GxIaKpjo4OWgHjH4W22OCevauvfXqMT
-         o2JC2PfiVF3gfJtSjCan0R2cP1DHQij3nkqEIiYbSfwJ/lfgMG/zhAfNGLivS5Pc1mWD
-         suCs7cbv24mvCsQzKJS8pb05hNJy46ZFSvBSIji3aK12FWcEK5jY+6FBsz1JfUwBypRq
-         WV1WfZGDqZUw4ZQ8jCIlEAyKMfJ9VgyO6BvuvLj1fEC7P90VAum/nw0WsSxWNm70VDZm
-         WwU1tpx9Z2ywoZgqJ9d8q70/sGqI7QEZfjpIWK5vpsHS7V0YhGBReP11RbZVvOKPTRxc
-         AVtg==
-X-Gm-Message-State: AOAM531Pd47DKU8eOBJ2R5nmKu6XV3ShY9F4fj42fgqsaYM+sql1MYVc
-        N+bgiYOV3GzuucoHEvTZALtwQBxZFGdKGg==
-X-Google-Smtp-Source: ABdhPJyfyalK0sJ0LD7LeQtp7U58yczmo44tlgY/J89fCqX0f0oE3NiXNd42WYuH3mMltLCiz6mXmQ==
-X-Received: by 2002:a6b:ef10:: with SMTP id k16mr17543847ioh.210.1632198641745;
-        Mon, 20 Sep 2021 21:30:41 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k14sm9674098ili.35.2021.09.20.21.30.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Sep 2021 21:30:41 -0700 (PDT)
-Date:   Tue, 21 Sep 2021 00:30:40 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
+        id S229772AbhIUEnf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 00:43:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51458 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229556AbhIUEne (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 00:43:34 -0400
+Received: (qmail 3498 invoked by uid 109); 21 Sep 2021 04:42:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 04:42:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28252 invoked by uid 111); 21 Sep 2021 04:42:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Sep 2021 00:42:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 21 Sep 2021 00:42:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, Hamza Mahfooz <someguy@effective-light.com>
-Subject: Re: [PATCH 0/5] const-correctness in grep.c
-Message-ID: <YUlf8HyBWC7aDF8n@nand.local>
+Subject: Re: [PATCH 2/5] grep: stop modifying buffer in show_line()
+Message-ID: <YUlinQ7hPokFLgfm@coredump.intra.peff.net>
 References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
+ <YUlV+RPMHGGfk25d@coredump.intra.peff.net>
+ <YUleFU4QrKb28bDz@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
+In-Reply-To: <YUleFU4QrKb28bDz@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 20, 2021 at 11:45:42PM -0400, Jeff King wrote:
-> While discussing [1], I noticed that the grep code mostly takes
-> non-const buffers, even though it is conceptually a read-only operation
-> to search in them. The culprit is a handful of spots that temporarily
-> tie off NUL-terminated strings by overwriting a byte of the buffer and
-> then restoring it. But I think we no longer need to do so these days,
-> now that we have a regexec_buf() that can take a ptr/size pair.
+On Tue, Sep 21, 2021 at 12:22:45AM -0400, Taylor Blau wrote:
 
-This all looks very reasonable to me. I appreciated the way you broke up
-each spot that unnecessarily modified a buffer into its own patch with
-its own explanation.
+> On Mon, Sep 20, 2021 at 11:48:09PM -0400, Jeff King wrote:
+> > When showing lines via grep (or looking for funcnames), we call
+> > show_line() on a multi-line buffer. It finds the end of line and marks
+> > it with a NUL. However, we don't need to do so, as the resulting line is
+> > only used along with its "eol" marker:
+> >
+> >  - we pass both to next_match(), which takes care to look at only the
+> >    bytes we specified
+> 
+> Thinking aloud, next_match() calls match_next_pattern() which takes eol
+> as non-const and passes it to match_one_pattern(). And that calls
+> strip_timestamp(), which would be non-const, were it not the previous
+> patch. So I think this conversion is safe.
 
-I looked through each of the three spots you mentioned with a close eye
-and concurred with your reasoning. (To the extent it was possible, I
-tried to ignore most of your commentary until I had generated my own
-understanding while searching through my copy of grep.c).
+To be a little nit-picky: this move would be OK even without the change
+to strip_timestamp(). The question is whether any of those sub-calls
+actually looks past the "eol" pointer we give it.
 
-Thanks for an enjoyable set of patches to read.
+I didn't dig all the way down through the complete call-stack in an
+exhaustive way. But after having looked at the related functions when
+changing their const-ness elsewhere in the series, they'd have to be
+ignoring the "eol" parameter for it to be a problem. The irony, of
+course, is that they did ignore this parameter at one point! Because
+they'd all eventually end in regexec(), which would happily read past
+our "eol".
 
-    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+So really, all of this is predicated on those sub-functions behaving
+sensibly. I think they do. But if we found that they didn't, I'd much
+rather know that and fix them than live with this "this NUL may or may
+not be important" state forever.
 
-> [1] https://lore.kernel.org/git/YUk3zwuse56v76ze@coredump.intra.peff.net/
+> >  - we pass the line to output_color() without its matching eol marker.
+> >    However, we do use the "match" struct we got from next_match() to
+> >    tell it how many bytes to look at (which can never exceed the string
+> >    we passed it
+> 
+> Yep, makes sense. The patch looks good and matches your description
+> here.
 
-Thanks,
-Taylor
+Thanks for looking it over (my nitpick aside). :)
+
+-Peff
