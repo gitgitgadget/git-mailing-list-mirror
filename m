@@ -2,120 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF452C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3316EC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF9CF61107
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1638A60F6D
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 01:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234973AbhIUBpp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Sep 2021 21:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230015AbhIUBlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Sep 2021 21:41:24 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74ABAC04F368
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 13:56:50 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id a20so20244755ilq.7
-        for <git@vger.kernel.org>; Mon, 20 Sep 2021 13:56:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wrT6YLcvtAmrOlS54Q1gMZ2Qmg6XlL89F8hs/Qk7ApY=;
-        b=K4SXAlhzgJB/MGRJEDDBn5KVnYgm2FwNmThkIInyK/QOeJFBYgqtWtzKJGtIT2nWjL
-         oox7qiWfNkyY+eB/2kkfEbWX98Wpzr/ce4X7M/gcGYscChJesvq6ULvoIt089nb+br44
-         HtuKz5d/cIVm/YMHo67LdMGFVCqqT1vwpXrtxAGQ1ttVGsBoffLWnje0HFNIwV06fdzo
-         AmETy2MrYO8ya5NHu6RP/KEtmwCshBZ82xOOZ9tEZcE/XUmB6Jwnwq8Aif5tXwccY2qF
-         oNHRDjZhxcsTO015wwQuGHEZXIk1i9pNAULTz7WEzw9ihkqtrZn2YVcBYXzYXguDrjAF
-         daDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wrT6YLcvtAmrOlS54Q1gMZ2Qmg6XlL89F8hs/Qk7ApY=;
-        b=dVmgVPePdyz1m1JeLiEnzRKyXPA/fTy82WuotUg0J7hWfQVU5tNdLsS6MwgIl+oQlw
-         vanqtO1SLnp6h2iplTR1j0IEJLKPaJHKLiVlQYhEq7yxaY8RLn9fstIpvBd2Y+pmfCfX
-         pK3fZrNCcSyzj2uFn5iF82NFeegbJ5VO8Ag0i+j/X6WvnD3j8wYqFgmQ+jbqUDJW8UX7
-         Dge5U2i28z9zDp1fcVDJMLgXMloZyNfTesaitScrMcBJiDNrbvQrn4LfReE+HCc1/DWP
-         ZwX55JHItoqfThSBM7+UyM4xPl+jpwiIXCZvzLnG0BSeXIPo2J3w6p1nYCTNUKssjFfx
-         CRGQ==
-X-Gm-Message-State: AOAM533hC0zYjInOt3ad7apaiR0EjZkmwwW/aeqAf26XPXj7+YWmQGtw
-        rLHhjOAEB/pQK/NvI3Puw0xP+Lf+mIa5Tg==
-X-Google-Smtp-Source: ABdhPJzGyu8WU0BpNH3d5Om36MptNX2mCmI/d9lryE8xNLJwVVAA5AXz8sLi2gbkQntpzN4HhdGbdw==
-X-Received: by 2002:a92:130e:: with SMTP id 14mr18899556ilt.129.1632171409349;
-        Mon, 20 Sep 2021 13:56:49 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:3dd4:10d2:c651:2ba0? ([2600:1700:e72:80a0:3dd4:10d2:c651:2ba0])
-        by smtp.gmail.com with ESMTPSA id e10sm8728315ili.53.2021.09.20.13.56.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Sep 2021 13:56:48 -0700 (PDT)
-Subject: Re: Memory leak with sparse-checkout
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Calbabreaker <calbabreaker@gmail.com>, git@vger.kernel.org
-References: <CAKRwm5a9PyqffEC5N__urSpNcZ-d5vz9GBM2Ei16eGS25B=-FQ@mail.gmail.com>
- <YUiuWSXO1P3JwerH@nand.local>
- <8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com>
- <YUi55/3L9nizTVyA@nand.local>
- <b082f98b-eb49-7cc4-9f75-fe1ec480bd61@gmail.com>
- <b7ee5ff5-dfff-8d3f-36f6-b30daf2d71ec@gmail.com>
- <YUjcMu7Z094eaFRA@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <427c6d86-f123-035e-b0e6-4a21598ed111@gmail.com>
-Date:   Mon, 20 Sep 2021 16:56:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S235074AbhIUBqB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Sep 2021 21:46:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51346 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231855AbhIUBm6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Sep 2021 21:42:58 -0400
+Received: (qmail 2912 invoked by uid 109); 21 Sep 2021 01:41:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 01:41:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26077 invoked by uid 111); 21 Sep 2021 01:41:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Sep 2021 21:41:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 20 Sep 2021 21:41:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Hamza Mahfooz <someguy@effective-light.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] grep: stop modifying buffer in strip_timestamp
+Message-ID: <YUk4R040RBc0aBIF@coredump.intra.peff.net>
+References: <YUk3zwuse56v76ze@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <YUjcMu7Z094eaFRA@nand.local>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <YUk3zwuse56v76ze@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/20/2021 3:08 PM, Taylor Blau wrote:
-> On Mon, Sep 20, 2021 at 01:27:25PM -0400, Derrick Stolee wrote:
->> On 9/20/2021 1:25 PM, Derrick Stolee wrote:
->>> On 9/20/2021 12:42 PM, Taylor Blau wrote:
->>>> We would probably want to perform this check both during initialization,
->>>> and when adding patterns in cone mode. It may also be worthwhile to
->>>> check the validity of the cone before running 'list' or 'reapply', too.
->>>
->>> 'list' definitely seems like a good idea, since it is expecting different
->>> output than the literal patterns when cone mode is enabled.
->>
->> I double-checked this to see how to fix this, and the 'list' subcommand
->> already notices that the patterns are not in cone mode and reverts its
->> behavior to writing all of the sparse-checkout file to stdout. It also
->> writes warnings over stderr before that.
->>
->> There might not be anything pressing to do here.
-> 
-> Hmm. I think we'd probably want the same behavior for init and any other
-> commands which could potentially overwrite the contents of the
-> sparse-checkout file.
+When grepping for headers in commit objects, we receive individual
+lines (e.g., "author Name <email> 1234 -0000"), and then strip off the
+timestamp to do our match. We do so by writing a NUL byte over the
+whitespace separator, and then remembering to restore it later.
 
-Could you elaborate on what you mean by "the same behavior"?
+We had to do it this way when this was added back in a4d7d2c6db (log
+--author/--committer: really match only with name part, 2008-09-04),
+because we fed the result directly to regexec(), which expects a
+NUL-terminated string. But since b7d36ffca0 (regex: use regexec_buf(),
+2016-09-21), we have a function which can match on part of a buffer.
 
-Do you mean that "git sparse-checkout add X" should act as if cone mode
-is not enabled if the existing patterns are not cone-mode patterns?
+So instead of modifying the string, we can instead just move the "eol"
+pointer, and the rest of the code will do the right thing. This will let
+the next patch make more use of "const" in grep functions.
 
-What exactly do you mean about "init" changing behavior here?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I think this is fairly safe. It would fail subtly if somebody _did_ rely
+on the NUL, but we just call into patmatch(), which calls functions
+which handle the length-delimited buffer.
+
+ grep.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 35708ce973..3b372ec29d 100644
+--- a/grep.c
++++ b/grep.c
+@@ -922,20 +922,16 @@ static int patmatch(struct grep_pat *p, char *line, char *eol,
+ 	return hit;
+ }
  
-> Those may already call list routines internally, in which case I agree
-> that this is already taken care of. But if not, then I think we should
-> match list's behavior in the new locations, too.
+-static int strip_timestamp(char *bol, char **eol_p)
++static void strip_timestamp(char *bol, char **eol_p)
+ {
+ 	char *eol = *eol_p;
+-	int ch;
+ 
+ 	while (bol < --eol) {
+ 		if (*eol != '>')
+ 			continue;
+ 		*eol_p = ++eol;
+-		ch = *eol;
+-		*eol = '\0';
+-		return ch;
++		break;
+ 	}
+-	return 0;
+ }
+ 
+ static struct {
+@@ -952,7 +948,6 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 			     regmatch_t *pmatch, int eflags)
+ {
+ 	int hit = 0;
+-	int saved_ch = 0;
+ 	const char *start = bol;
+ 
+ 	if ((p->token != GREP_PATTERN) &&
+@@ -968,7 +963,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 		switch (p->field) {
+ 		case GREP_HEADER_AUTHOR:
+ 		case GREP_HEADER_COMMITTER:
+-			saved_ch = strip_timestamp(bol, &eol);
++			strip_timestamp(bol, &eol);
+ 			if (eol == end)
+ 				goto again;
+ 			break;
+@@ -981,7 +976,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 		len = header_field[p->field].len;
+ 
+ 		if (strncmp(bol, field, len))
+-			goto restore;
++			return 0;
+ 
+ 		bol += len;
+ 	}
+@@ -1035,11 +1030,6 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 		pmatch[0].rm_eo += bol - start;
+ 	}
+ 
+-restore:
+-	if (p->token == GREP_PATTERN_HEAD && saved_ch)
+-		*eol = saved_ch;
+-
+-
+ 	return hit;
+ }
+ 
+-- 
+2.33.0.1023.gc687d0d3c8
 
-"list" interprets the 'struct pattern_list' in two different ways,
-depending on the use_cone_patterns member. They are static methods in
-the builtin code, not used by anything else.
-
-Thanks,
--Stolee
