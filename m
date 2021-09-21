@@ -2,81 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3C4C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 14:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3BF6C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 14:24:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B0FF61159
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 14:20:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90BD660F9E
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 14:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233506AbhIUOVh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 10:21:37 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:41484 "EHLO smtp.hosts.co.uk"
+        id S233151AbhIUO0F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 10:26:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51718 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233519AbhIUOVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 10:21:37 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mSgcx-0002Pg-9o; Tue, 21 Sep 2021 15:20:07 +0100
-Subject: Re: [PATCH v2 2/5] help: correct usage & behavior of "git help
- --guides"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <cover-0.6-00000000000-20210908T151949Z-avarab@gmail.com>
- <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
- <patch-v2-2.5-039639a0dd3-20210910T112545Z-avarab@gmail.com>
- <2493437c-01c5-ddcc-6a61-666f87e70f20@iee.email>
- <8c72d383-4ae2-b96c-6886-7c36153d8991@iee.email>
- <878rzq9gun.fsf@evledraar.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <bdfb51f8-1d85-d122-122f-90cde2a1cf17@iee.email>
-Date:   Tue, 21 Sep 2021 15:20:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S229577AbhIUO0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 10:26:04 -0400
+Received: (qmail 5672 invoked by uid 109); 21 Sep 2021 14:24:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Sep 2021 14:24:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 899 invoked by uid 111); 21 Sep 2021 14:24:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Sep 2021 10:24:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 21 Sep 2021 10:24:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: Re: [PATCH 1/5] grep: stop modifying buffer in strip_timestamp
+Message-ID: <YUnrI10DXLElenKZ@coredump.intra.peff.net>
+References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
+ <YUlVsLkFGRfRqpKG@coredump.intra.peff.net>
+ <CAPUEsphSyZB-vtubjYhN_5Gy3Zv0HQ=fH=+G8kMYzJyrOLXPxQ@mail.gmail.com>
+ <CAPig+cQnC1LLPtuC0qVX7EQ_ki4pev6scRox3utA45XeLHfGig@mail.gmail.com>
+ <YUlw6V7AL8l6mbSh@coredump.intra.peff.net>
+ <YUl+w8Tn3jqfLqt2@carlos-mbp.lan>
+ <7d791c04-d122-1eb9-a84c-939294817395@web.de>
 MIME-Version: 1.0
-In-Reply-To: <878rzq9gun.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <7d791c04-d122-1eb9-a84c-939294817395@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/09/2021 14:49, Ævar Arnfjörð Bjarmason wrote:
->>> Further, shouldn't we mention this (git help -c) on the git config man
->>> page, e.g. "A list all available configuration variables can be
->>> generated by `git help -c`." 
->> Still feel this one would be useful (but may be out of scope of this series)
-> We already have such a mention in the documentation, it pre-dates this
-> series. I.e.:
->     
->     -c::
->     --config::
->             List all available configuration variables. This is a short
->             summary of the list in linkgit:git-config[1].
->     
-> The "short summary" there is quite the understatement, but that wording
-> was added in , 3ac68a93fd2 (help: add --config to list all available
-> config, 2018-05-26) so it wasn't some mistake with the option drifting
-> out of sync with an earlier implementation.
->
-> I think what Nguyễn meant here was "much shorte than 'git help config'".
-I was just saying the 'git help config' should point to the `git help
---config` command (extra `--`)
+On Tue, Sep 21, 2021 at 09:37:23AM +0200, René Scharfe wrote:
 
-I then realised I ought to propose a patch, which is now in `next`
-ae578de926 (doc: config, tell readers of `git help --config`, 2021-09-13),
+> > @@ -965,9 +953,12 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+> >  		bol += len;
+> >  		switch (p->field) {
+> >  		case GREP_HEADER_AUTHOR:
+> > -		case GREP_HEADER_COMMITTER:
+> > -			strip_timestamp(bol, &eol);
+> > +		case GREP_HEADER_COMMITTER: {
+> > +			char *em = memrchr(bol, '>', eol - bol);
+> > +			if (em)
+> > +				eol = em + 1;
+> 
+> The old code documents the intent via the function name.  The new one
+> goes into the nitty-gritty without further explanation, which I find
+> harder to read.
 
-I should have added the wider cc list.
-https://lore.kernel.org/git/20210913212305.1832-1-philipoakley@iee.email/
+Agreed. I do think the conversion is functionally correct, but it
+doesn't strike me as worth the change.
 
-Philip
-
+-Peff
