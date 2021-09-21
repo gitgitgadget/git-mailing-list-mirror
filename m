@@ -2,153 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8DE0C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6778C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:26:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0D4F60F13
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:20:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F91E60FE8
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 21:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbhIUVWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 17:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47378 "EHLO
+        id S235051AbhIUV1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 17:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbhIUVWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 17:22:16 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04A0C061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:20:47 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id 134so448846iou.12
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:20:47 -0700 (PDT)
+        with ESMTP id S234385AbhIUV10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 17:27:26 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA2DC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:25:57 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id r75so533302iod.7
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 14:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Kq4Egq99patHf5Iddl73YeeacUr6EpI6vXouSSVlgnQ=;
-        b=hjry335ARWbWLr58tvUEs2AwvdMbUFbczvupf59uUSb4jFS02UZslsuPTxHN7O8KOj
-         XB7TcBcIpeMq3xd/hBCTqOws0PXR+Czk0es58X2OiAbz23kwrvv8z/6/uoo8K9+S57TN
-         1NnHuHfp7n1LyaN5bXy8+c9QaBD0BjL2OazoNrcx/G/XOlo9JeTISIPajcFBxNioZFW1
-         WxeMnvN82ad5BMgtn7X9ZJnNYGYpQkFHd2XbTeG0rR6zphH4UvGlnWu7IxFwRjKG/FpL
-         DVmjRLe+6ZMhhaCrI3xAJLByEliriGVAIWoXZv/MkwAQpAbuFhuc9RxfgHO4P/2VbeZY
-         Yj4g==
+        bh=C+1dd5GiwwhShURTAGHwlYC0Hzx18Prmhj2ggFIkTp0=;
+        b=6dqdzz7b+ek0marXG/W26uKUM8EuxwNGkTjBB3py7ueoRyGvXYzOfSSyAUBHauXXta
+         H5DNTJd78F99XgQkvdZtssWCUgfQLcW0KmFsPBejfDLYbBgpqqGpYyu2s5KE7qHttIu3
+         ePbBQsKgDaEFbz81AtzspReoK91jor/2yaBuIfbB0XCrsagQqQgQxi8maoD6iLmpqTzv
+         dY8Zeol4UyYdYefiU2z0ucc5mhYCb73euUJih7dkoSYOWLMffDvbRETc3qaTK79LxNVS
+         ImeLFdQgHGqW4WmKvfwI3K3e45BBs9EDA9bXNeIB+AgbGLJas3jmE7WEvxiqXNSs1faO
+         VR6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Kq4Egq99patHf5Iddl73YeeacUr6EpI6vXouSSVlgnQ=;
-        b=vVuacP9FaZ1PNabtD4zxe62i8ex3aYqe4A3+Mu4pKbDVNp7Df6Y697p+btHH07MFaZ
-         livqkv+xmZG28dx4QFwUz2DKuWnajXeAiIXeuwy3WbPd+SGyjHru+mXlxflDPl4PkTKi
-         Dgzrgcvno2HINh512fhTyN9ChUqVhp3a4MKpRtKjxU6zZnkUKgpdPZr5STSI9s0Cm+jF
-         bRqRl+NOk5wTg7KumG92HdQLXWHhaogcDicWdI35sw+3one2l5cB2Omky9XpDXsV1F76
-         R0BRewPQp+eSSszF+ll796E06IC7jorVqMr7fHE0SS83a6fuULqR1p+gQzfVn76IZ7u7
-         cmcg==
-X-Gm-Message-State: AOAM530xYbSTgaVWrsXgQEBZ7rph42VEbdsFgNKt3PcqCJhStlF+2ngU
-        TtSSt5BxTqdt5Qj5jodRcg9yLjphhd1Ndw==
-X-Google-Smtp-Source: ABdhPJxHnR1NB2sEGE0UqB/X4Zjlzj6aabvp1VPtN9ty2LMYrjzequabW5kQjBf4lukqIxtV5RAfZQ==
-X-Received: by 2002:a6b:be02:: with SMTP id o2mr1689727iof.103.1632259247146;
-        Tue, 21 Sep 2021 14:20:47 -0700 (PDT)
+        bh=C+1dd5GiwwhShURTAGHwlYC0Hzx18Prmhj2ggFIkTp0=;
+        b=loJH0Hgf8pL4cZcC7tUVXcQrcFgxW/6MxtHc/TABB6DgLjs9EpZpbonhYsvcpMMMo6
+         ozP92vfaS3E/RkAt4lU5y8BMH/znRtdxr7IuPeIY3lIBRQwLG6uwFRhCFPbZR+kba4mY
+         H8O4I92/6w2/KwOXNIik6wPUey51N3uRGgC2TUhxTEhCnSxCVt7K/1GFkNADNagWxOcS
+         bnh60XgDcS+FyTBqzV8toSkVs51WQcvJrotgSxfj5veKqbqbIR+IX4cNYzD5Y0hHn4g3
+         XigYHeI0eCkpJGxNLy+cF1D6aSfUIHu0op2hserQRbcuyQpmluogr0Qkhm35nu0thzuV
+         VniA==
+X-Gm-Message-State: AOAM531PrWuS38cllZutL5NOOtNMPT+2OaSxBguPCYSbJuZgjia0iuJG
+        QBKRxhW5mAhmap22zkNMIDi5Dg==
+X-Google-Smtp-Source: ABdhPJyuafvRCg3HJGxTqAVrfiDTucFjdJWz3I1MGpp9uoAeNfiupRdIG1Gv8ele+Q4TIkK43c+lRg==
+X-Received: by 2002:a5e:d711:: with SMTP id v17mr1751831iom.93.1632259556631;
+        Tue, 21 Sep 2021 14:25:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o3sm100006iou.20.2021.09.21.14.20.46
+        by smtp.gmail.com with ESMTPSA id o5sm42418ilk.88.2021.09.21.14.25.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 14:20:46 -0700 (PDT)
-Date:   Tue, 21 Sep 2021 17:20:45 -0400
+        Tue, 21 Sep 2021 14:25:56 -0700 (PDT)
+Date:   Tue, 21 Sep 2021 17:25:55 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH] http: match headers case-insensitively when redacting
-Message-ID: <YUpMreNwBDSygFSf@nand.local>
-References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
+To:     Taylor Blau <ttaylorr@github.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: Git in Outreachy?
+Message-ID: <YUpN4zrZmyxoTb4l@nand.local>
+References: <YTGLLQCvlnT17jo8@nand.local>
+ <YUYPgF6tRQ5ERYWL@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
+In-Reply-To: <YUYPgF6tRQ5ERYWL@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 02:41:15PM -0400, Jeff King wrote:
-> When HTTP/2 is in use, we fail to correctly redact "Authorization" (and
-> other) headers in our GIT_TRACE_CURL output.
+On Sat, Sep 18, 2021 at 12:10:40PM -0400, Taylor Blau wrote:
+> On Thu, Sep 02, 2021 at 10:40:45PM -0400, Taylor Blau wrote:
+> > Are we interested in participating in the December 2021 round of
+> > Outreachy? September 3rd (tomorrow at 4pm UTC) is the initial community
+> > application deadline.
 >
-> We get the headers in our CURLOPT_DEBUGFUNCTION callback, curl_trace().
-> It passes them along to curl_dump_header(), which in turn checks
-> redact_sensitive_header(). We see the headers as a text buffer like:
->
->   Host: ...
->   Authorization: Basic ...
->
-> After breaking it into lines, we match each header using skip_prefix().
-> This is case-insensitive, even though HTTP headers are case-insensitive.
-> This has worked reliably in the past because these headers are generated
-> by curl itself, which is predictable in what it sends.
->
-> But when HTTP/2 is in use, instead we get a lower-case "authorization:"
-> header, and we fail to match it. The fix is simple: we should match with
-> skip_iprefix().
->
-> Testing is more complicated, though. We do have a test for the redacting
-> feature, but we don't hit the problem case because our test Apache setup
-> does not understand HTTP/2. You can reproduce the issue by applying this
-> on top of the test change in this patch:
->
-> [...]
->
-> but this has a few issues:
+> The project deadline of September 23rd is fast approaching, and we do
+> not have any proposed projects or signed-up mentors.
 
-I'd be fine with assuming that the http2 module is available everywhere,
-but only because the tests are optional in the first place. I agree that
-we'd want to run our suite of HTTP-related tests in both HTTP/2 and
-HTTP/1.1 mode.
+It looks like the deadline was extended to September 29th at 4pm UTC. So
+we have a little less than an extra week. The below link is still the
+right place to submit proposals:
 
-But that doesn't mean we have to reconfigure our Apache server midway
-through the test, since HTTP/2 servers should keep the HTTP/1.1
-conversation going if the client doesn't reply with 'Connection:
-upgrade; Upgrade: h2c'. At least, I think that's the case based on my
-fairly rudimentary understanding of HTTP/2 ;).
-
->   - speaking of which, a later test fails with the patch above! The
->     problem is that it is making sure we used a chunked
->     transfer-encoding by looking for that header in the trace. But
->     HTTP/2 doesn't support that, as it has its own streaming mechanisms
->     (the overall operation works fine; we just don't see the header in
->     the trace)
-
-Yeah, presumably we'd want to have a few protocol-specific tests.
-
-> On top of that, we also need the test change that this patch _does_ do:
-> grepping the trace file case-insensitively. Otherwise the test continues
-> to pass even over HTTP/2, because it sees _both_ forms of the header
-> (redacted and unredacted), as we upgrade from HTTP/1.1 to HTTP/2. So our
-> double grep:
->
-> 	# Ensure that there is no "Basic" followed by a base64 string, but that
-> 	# the auth details are redacted
-> 	! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
-> 	grep "Authorization: Basic <redacted>" trace
->
-> gets confused. It sees the "<redacted>" one from the pre-upgrade
-> HTTP/1.1 request, but fails to see the unredacted HTTP/2 one, because it
-> does not match the lower-case "authorization". Even without the rest of
-> the test changes, we can still make this test more robust by matching
-> case-insensitively. That will future-proof the test for a day when
-> HTTP/2 is finally enabled by default, and doesn't hurt in the meantime.
-
-Yeah. We could probably rewrite this test as:
-
-    grep '^[Aa]uthorization:' trace >headers &&
-    ! grep 'Basic [0-9a-zA-Z+/]$' headers &&
-    grep 'Basic <redacted>$' headers
-
-which I even think is a little clearer to read (but I could equally
-understand how other readers find the existing version easier to grok).
-
-Anyway, all of these musings could just as easily be ignored in the
-meantime. It's certainly neat to see HTTP/2 more often in the wild :).
-
-This patch looks obviously correct to me.
+    https://www.outreachy.org/communities/cfp/git/
 
 Thanks,
 Taylor
