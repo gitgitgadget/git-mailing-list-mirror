@@ -2,160 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DB10C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D31C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:41:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A6361156
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:38:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36BB16120A
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbhIUHjb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 03:39:31 -0400
-Received: from mout.web.de ([212.227.15.14]:46255 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230172AbhIUHjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 03:39:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1632209845;
-        bh=o+rLBNdvSNT1CEpVMwLshXd6ocsWDbRbumn/Pvv3e/8=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=lkZGVwvQcpki4lzlkz6rpgy17xH6GcwXYUAFhQAtTJWvP4/2bYatDG9gkHGdz77KN
-         M1uN+BWo6ce1fEFm8JUGK3rgXJCju2m9gr4qrj4rKz8qew1SGEIscp+SPDTm0hgbYI
-         fQ59kaX3Aj+WX0bcKCizPV1md8dAEhmMT+3gtoH4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0M6DjG-1mms503F74-00yBt2; Tue, 21 Sep 2021 09:37:24 +0200
-Subject: Re: [PATCH 1/5] grep: stop modifying buffer in strip_timestamp
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Hamza Mahfooz <someguy@effective-light.com>
-References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
- <YUlVsLkFGRfRqpKG@coredump.intra.peff.net>
- <CAPUEsphSyZB-vtubjYhN_5Gy3Zv0HQ=fH=+G8kMYzJyrOLXPxQ@mail.gmail.com>
- <CAPig+cQnC1LLPtuC0qVX7EQ_ki4pev6scRox3utA45XeLHfGig@mail.gmail.com>
- <YUlw6V7AL8l6mbSh@coredump.intra.peff.net> <YUl+w8Tn3jqfLqt2@carlos-mbp.lan>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <7d791c04-d122-1eb9-a84c-939294817395@web.de>
-Date:   Tue, 21 Sep 2021 09:37:23 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S230334AbhIUHm5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 03:42:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56062 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230351AbhIUHmz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 03:42:55 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE16BC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id p12-20020a17090adf8c00b0019c959bc795so1906481pjv.1
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cLFYlvtTCzE6IcBPpYTzi/SAg5xCirNj2SnbMw6G/yI=;
+        b=Ar3Z/Jeqz4Ruh7Jnresf5oP39AWtOecpE0MkT7mM2AARn5TBYWRm4nOviWcIQlOV+l
+         JwiBDj7SR/GAIO6jyrTlSKKVpWlu9wnQW0ZuVOt90v8oGGTxdGtM6eMvZhD4znMQR9ZI
+         qdEHdPf4usRCZKoJRmiJMSihpK7QshOTC72JjVu56C0VSV6LtRTMQyl4VQKUa5/mBPz0
+         6677Owd3x5t0RxomqO9BN4idH7a0gde4taX+DUIaXiJir9Ao+UymlxiRsKDu5Eupad/O
+         3AS0KrLha7uGw7i789FiVb24HCeNawUu/5gRZF/QJ/4NYHIH9tcSmmVhacvRnvrtgyyc
+         YALw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cLFYlvtTCzE6IcBPpYTzi/SAg5xCirNj2SnbMw6G/yI=;
+        b=t1LQZxk9v54eSUG+7ppGwOnHx49Y0zF/2tacW5A/3CxEbQYLjUHzsuM1YY08q7JTqZ
+         OxNMAW+Iz/Bqd/CHdl3netZ50I//GcfKlAVuQt94f5l6BReRXEFJ2mDQVVVvb+3kHfBx
+         vS6kLOGzZvDn980O6fxBTQfuRUtMhwBZwKRy5Pu410NqQ3XQjdi/kwIiKQUr64hv4kHL
+         a2b0e0t+doRZrUtyJ36vMaH3/XG4CCSpuWM662yxj2m0t5MFsZE0KzlwDcFf6xbGw7+s
+         5Lfjis2ihka3qOf20R7ZLbDEj9P6/q+MLQciMjXmPPIltUlnafdoHfVXpJNSVX1+4sXV
+         lh+Q==
+X-Gm-Message-State: AOAM533ppGERbYR/YejVMLuoAs/jJqbqvuTNzZ34H7n85oKhZGVQXR94
+        HC0bXD36OnQdCvrzttcushU=
+X-Google-Smtp-Source: ABdhPJwLXsGx76mFN7cEDyxlQv/iQXh1jXR4cTJvjvnsFL5EDjozjgdH1pcqPieViSn/m2w/9jx0aA==
+X-Received: by 2002:a17:90b:3508:: with SMTP id ls8mr3721216pjb.240.1632210087188;
+        Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-68.three.co.id. [180.214.233.68])
+        by smtp.gmail.com with ESMTPSA id u6sm3570051pgc.68.2021.09.21.00.41.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Sep 2021 00:41:26 -0700 (PDT)
+Subject: Re: [PATCH RESEND] difftool: word spacing fix
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20210920121627.905359-1-bagasdotme@gmail.com>
+ <CAJDDKr4LfTC8h00NCLSu5J=oBTX3LWshrOXMQ7_iBi4RNie9sA@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <c536bd3a-d1ae-a617-c284-dabc9f8c1c0f@gmail.com>
+Date:   Tue, 21 Sep 2021 14:41:23 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <YUl+w8Tn3jqfLqt2@carlos-mbp.lan>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAJDDKr4LfTC8h00NCLSu5J=oBTX3LWshrOXMQ7_iBi4RNie9sA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:j0JYmPGWwHlCgLOmH8+8T+bVRWpHavFQ40e31IZ8swww/z3MTnN
- 5TU7c0mLiK5FObpkNNiXajny53n7rs3JB7Ji93r55bNRbwCNMUqM8il9Dc++BDIWrGB6mQp
- COrzyj5hz9TwO6BO1wFKK4Xh8BgFCLh+b+TjgoxpUmSYTvc2S4Sk8jP0T1M6SgswA/bNoWY
- 1h1nrpl3k5fLIS12Lsb3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BzuGY4F8eY4=:FL06mOaa6DHGh+dFlDw05m
- sX6TA9B5sNNlNvUZsO0l/6TEHUIGWRFIwA+tysFrDU8yQcaezPYnrFe2IxqS4ybrdY7adhXxh
- Ve7QhKOn1qCAdMEEipMzV7NPbidXeEsIqOP06yclyMRFoz7ZpDC29TjAA29fXqGn4bROD4NEN
- wie4XYy30ovBoUc2pH+YPndGIYoZUnHuqd1n2Agwd3aOVYYuYNgpyMs/I+698boFUrTfw4wf+
- YAx5o1wxR+gw6oYiQaAmRuUAvhVsko3G3feJnkXhWEKwrgYBWfsLDYySnxYg31cQFK9LBAu75
- ayu4sTLCDVo/nZeCLqnRr77VFSXPZURZ+vPyCZS3p3obj3k3WWQ0iuZ07faZ98EaKST7mTLPP
- ee+hcTn7WFwIpI2/TflDMRw5aLPYoMQnw+uU++9qsLoN3PZL+v7lDkLiWFXWw9DlEdGtj1kS0
- 77auxCF6KINTlYzZ6/fGpGpUTXehGUkdzPHgBlK0dWbI1EzwS0H+wwp8k9EGIBqlkcf1tNV7X
- ExynclmBei+z9GamrWbJKxkIM+ETRhDWK5IMeJI4yPYhFs4JaOiZt1l0psJsolP7ldZXtOYDc
- EFso4tpDiDc2KKFY4VktgBaUdwDRxJWZpKINlGXJ+FFH7CVoZH0ULKEFIqUo51vYIW6XaMQL6
- jldrY3zQBN2aMTEiMJqd9yJc1qxIthna+lj6QnrjbI2zSPrdmcJPG6Hj8sywwc50j4LkZ2jQO
- hgjIry5ug81+II44c3diy5UI3QLWbJdyqQ+/QlSTqmnVa2nAS38dhd/GYauF67s70iFlphJrb
- eMQvIdtWWL2dMnC49ta0ZfKS0jpavfXfyD3j/7sZMwJttpARWSaetwfwdHENIyI1hAgt1+lsa
- JwS0QSkT/Kk24vRXdJmLcy8ohiFm3rJ0yeqCiu+PDVEMaURoX0sCu5UTH1nFjFm/QmOXBcWxh
- Qsut55k9RcRehTmvzAOzVuLJB5JuZvpuSJOgtcGrQsWg6jfSyaeVxzibesXVau53m4HUcXn0A
- YCWgwHoQx4gYvFAg0m2sn/twkOju3XHfGfl3j/KIsdKX8Q72M+PPlHfeBvE4lOSwpA==
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.09.21 um 08:42 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
-> On Tue, Sep 21, 2021 at 01:43:05AM -0400, Jeff King wrote:
->>
->> So yeah, I'm sure it could be rewritten around memrchr() or something,
->> but I doubt it would be much shorter, and the chance of introducing an
->> off-by-one seems non-trivial. :)
->
-> Considering I am writing it, it is most likely warranted ;)
->
-> but it doesn't look that bad IMHO
->
-> Carlo
->
-> PS. I tested it in macOS with the compatibility layer that will be neede=
-d
+On 21/09/21 04.26, David Aguilar wrote:
+> But!.. and this is a big but... the po/ translations would be broken
+> by this change.
+> 
+> I'm unfamiliar with the policy about changes that affect translations,
+> but in general this seems like a situation where we can make things
+> easier for the translation team by not leaving behind further work.
+> 
+> My gut feeling is that this patch would be easier to accept if it also
+> updated the po/ translations to fix these typofixes.
+> 
+> Question for this list -- would that be a separate patch or not? To me
+> it seems like it'd all be one patch so that git is never in an
+> in-between state.
+> 
 
-Right; memrchr is a GNU extension.  We'd need a compat/ implementation to
-be able to use it.
+I think you should see po/README for details.
 
-> ------ 8> -------
-> Subject: [PATCH] grep: retire strip_timestamp()
->
-> After recent changes, the name is no longer valid, as the function
-> doesn't strip anything.
+In other words: we can change translatable strings here as we want, and 
+it's the responsibility of l10n teams to update translations to stay up 
+to date.
 
-It still does; the input string slice between bol and eol contains a
-trailing timestamp and the output slice doesn't.
+> The following commands show a few places of interest that should also
+> be updated.
+> 
+> $ git grep 'combined diff formats('
+> $ git grep 'tool returns a non - zero'
 
->
-> Having the code in the main function also helps with readability
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  grep.c | 19 +++++--------------
->  1 file changed, 5 insertions(+), 14 deletions(-)
->
-> diff --git a/grep.c b/grep.c
-> index 5b1f2da4d3..56fd86a7d8 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -922,18 +922,6 @@ static int patmatch(struct grep_pat *p, char *line,=
- char *eol,
->  	return hit;
->  }
->
-> -static void strip_timestamp(char *bol, char **eol_p)
-> -{
-> -	char *eol =3D *eol_p;
-> -
-> -	while (bol < --eol) {
-> -		if (*eol !=3D '>')
-> -			continue;
-> -		*eol_p =3D ++eol;
-> -		break;
-> -	}
-> -}
-> -
->  static struct {
->  	const char *field;
->  	size_t len;
-> @@ -965,9 +953,12 @@ static int match_one_pattern(struct grep_pat *p, ch=
-ar *bol, char *eol,
->  		bol +=3D len;
->  		switch (p->field) {
->  		case GREP_HEADER_AUTHOR:
-> -		case GREP_HEADER_COMMITTER:
-> -			strip_timestamp(bol, &eol);
-> +		case GREP_HEADER_COMMITTER: {
-> +			char *em =3D memrchr(bol, '>', eol - bol);
-> +			if (em)
-> +				eol =3D em + 1;
+I git-grep-ed that, and nothing outside po/ matched.
 
-The old code documents the intent via the function name.  The new one
-goes into the nitty-gritty without further explanation, which I find
-harder to read.
-
->  			break;
-> +		}
->  		default:
->  			break;
->  		}
->
-
+-- 
+An old man doll... just what I always wanted! - Clara
