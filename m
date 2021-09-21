@@ -2,110 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D31C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC7F5C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 09:04:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36BB16120A
-	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 07:41:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D9F160EE4
+	for <git@archiver.kernel.org>; Tue, 21 Sep 2021 09:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230334AbhIUHm5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Sep 2021 03:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56062 "EHLO
+        id S231263AbhIUJF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Sep 2021 05:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbhIUHmz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Sep 2021 03:42:55 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE16BC061574
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id p12-20020a17090adf8c00b0019c959bc795so1906481pjv.1
-        for <git@vger.kernel.org>; Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
+        with ESMTP id S229533AbhIUJF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Sep 2021 05:05:27 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446EFC061574
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 02:03:59 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id bx4so27200662edb.4
+        for <git@vger.kernel.org>; Tue, 21 Sep 2021 02:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cLFYlvtTCzE6IcBPpYTzi/SAg5xCirNj2SnbMw6G/yI=;
-        b=Ar3Z/Jeqz4Ruh7Jnresf5oP39AWtOecpE0MkT7mM2AARn5TBYWRm4nOviWcIQlOV+l
-         JwiBDj7SR/GAIO6jyrTlSKKVpWlu9wnQW0ZuVOt90v8oGGTxdGtM6eMvZhD4znMQR9ZI
-         qdEHdPf4usRCZKoJRmiJMSihpK7QshOTC72JjVu56C0VSV6LtRTMQyl4VQKUa5/mBPz0
-         6677Owd3x5t0RxomqO9BN4idH7a0gde4taX+DUIaXiJir9Ao+UymlxiRsKDu5Eupad/O
-         3AS0KrLha7uGw7i789FiVb24HCeNawUu/5gRZF/QJ/4NYHIH9tcSmmVhacvRnvrtgyyc
-         YALw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=2HCibjNFPO5xyEaNLIUvm2UuRoLe4NbjV5gAVdhnaXk=;
+        b=IeUUsBid/koqvq5vu1s9JPr+D2lAl6SU61W4RCteMgrEyVvALehJ5o9dpI53GPAVxW
+         NI5Pub+59IInSKwGrcTzOgDh/WxZpNEBPfs9n7XFspuIZi+DYgh6dFUj6OEgkfWWwl14
+         isptnDyJrNO1Km1kV01WuI4xduw5TzY3c3PO3DhxfsIdIGXgTq6bJ458ioaaOgs0oYL7
+         PamFUN5uORzSkpH9HifK9UrUk9M23jDFzA5nwqjg6K+TTV1TZ5jcZueLTIJTjEWwQ/VV
+         qtW2QykdVnjGlXRAdcuowrMwkQ6sFM/1iFK8AY007XyKt+riyHaLqdHV2nqbr1vkSziN
+         5e4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cLFYlvtTCzE6IcBPpYTzi/SAg5xCirNj2SnbMw6G/yI=;
-        b=t1LQZxk9v54eSUG+7ppGwOnHx49Y0zF/2tacW5A/3CxEbQYLjUHzsuM1YY08q7JTqZ
-         OxNMAW+Iz/Bqd/CHdl3netZ50I//GcfKlAVuQt94f5l6BReRXEFJ2mDQVVVvb+3kHfBx
-         vS6kLOGzZvDn980O6fxBTQfuRUtMhwBZwKRy5Pu410NqQ3XQjdi/kwIiKQUr64hv4kHL
-         a2b0e0t+doRZrUtyJ36vMaH3/XG4CCSpuWM662yxj2m0t5MFsZE0KzlwDcFf6xbGw7+s
-         5Lfjis2ihka3qOf20R7ZLbDEj9P6/q+MLQciMjXmPPIltUlnafdoHfVXpJNSVX1+4sXV
-         lh+Q==
-X-Gm-Message-State: AOAM533ppGERbYR/YejVMLuoAs/jJqbqvuTNzZ34H7n85oKhZGVQXR94
-        HC0bXD36OnQdCvrzttcushU=
-X-Google-Smtp-Source: ABdhPJwLXsGx76mFN7cEDyxlQv/iQXh1jXR4cTJvjvnsFL5EDjozjgdH1pcqPieViSn/m2w/9jx0aA==
-X-Received: by 2002:a17:90b:3508:: with SMTP id ls8mr3721216pjb.240.1632210087188;
-        Tue, 21 Sep 2021 00:41:27 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-68.three.co.id. [180.214.233.68])
-        by smtp.gmail.com with ESMTPSA id u6sm3570051pgc.68.2021.09.21.00.41.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Sep 2021 00:41:26 -0700 (PDT)
-Subject: Re: [PATCH RESEND] difftool: word spacing fix
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20210920121627.905359-1-bagasdotme@gmail.com>
- <CAJDDKr4LfTC8h00NCLSu5J=oBTX3LWshrOXMQ7_iBi4RNie9sA@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <c536bd3a-d1ae-a617-c284-dabc9f8c1c0f@gmail.com>
-Date:   Tue, 21 Sep 2021 14:41:23 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=2HCibjNFPO5xyEaNLIUvm2UuRoLe4NbjV5gAVdhnaXk=;
+        b=ZnZyXMObqTwikobZoFlFBreLeVeD6yWOICipvM90vBQUQdQ+pdvAwd/Zmlw2vJVEtg
+         1+RkBUF/+7GXKjhh1jNbOf2v7kVbS8gxHZpjIEvnsHPxwpUOWCnI9Tdg9uBfRuzMK1sQ
+         UFBVejhRLNv+0bzijlurn/RdS4ojXfGlZjHlXVqXrLtGTx6R721GA4XGgZzO5vxlJNpe
+         S+ioTiqrmdyxn/f1riwpMdezUiX3AslqKE564ycgQB55kbDPzE5Z8UZChd1mfOInZTq4
+         O4ZiyCvMxATOAXsCpGZkj6GDgcAQlr0s3aePEm+08HDV0gPMEYyhkIBh0u+fY6eAsGCK
+         McyQ==
+X-Gm-Message-State: AOAM530kPs/zfqcdPlgKwRd4GCWocyMx5yFGI2gh7fJazMtzrtWdGH0g
+        pLLbN5S4LPkpxbnYcRXyEAsCpr6lgJO5wQ==
+X-Google-Smtp-Source: ABdhPJy3Da7vMjJpRiNRwghtvQCOeMr5lMCIkL1j46hN7ANUoNBVBqdHJDN/QanPMehPuB9xm59a9g==
+X-Received: by 2002:a17:906:5855:: with SMTP id h21mr32654932ejs.230.1632215037737;
+        Tue, 21 Sep 2021 02:03:57 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ku7sm3956730ejc.90.2021.09.21.02.03.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Sep 2021 02:03:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: cb/pedantic-build-for-developers, POSIX-but-not-C99 and
+ -Wno-pedantic-ms-format
+Date:   Tue, 21 Sep 2021 10:44:02 +0200
+References: <xmqq1r5iaj9j.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqq1r5iaj9j.fsf@gitster.g>
+Message-ID: <87lf3q9u6b.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAJDDKr4LfTC8h00NCLSu5J=oBTX3LWshrOXMQ7_iBi4RNie9sA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/09/21 04.26, David Aguilar wrote:
-> But!.. and this is a big but... the po/ translations would be broken
-> by this change.
-> 
-> I'm unfamiliar with the policy about changes that affect translations,
-> but in general this seems like a situation where we can make things
-> easier for the translation team by not leaving behind further work.
-> 
-> My gut feeling is that this patch would be easier to accept if it also
-> updated the po/ translations to fix these typofixes.
-> 
-> Question for this list -- would that be a separate patch or not? To me
-> it seems like it'd all be one patch so that git is never in an
-> in-between state.
-> 
 
-I think you should see po/README for details.
+On Mon, Sep 20 2021, Junio C Hamano wrote:
 
-In other words: we can change translatable strings here as we want, and 
-it's the responsibility of l10n teams to update translations to stay up 
-to date.
+> * cb/pedantic-build-for-developers (2021-09-03) 3 commits
+>   (merged to 'next' on 2021-09-10 at b8df102019)
+>  + developer: enable pedantic by default
+>  + win32: allow building with pedantic mode enabled
+>  + gettext: remove optional non-standard parens in N_() definition
+>
+>  Update the build procedure to use the "-pedantic" build when
+>  DEVELOPER makefile macro is in effect.
 
-> The following commands show a few places of interest that should also
-> be updated.
-> 
-> $ git grep 'combined diff formats('
-> $ git grep 'tool returns a non - zero'
+With -pedantic one of my WIP branches started erroring on:
 
-I git-grep-ed that, and nothing outside po/ matched.
+    error: ISO C does not support %n$ operand number formats [-Werror=format=]
 
--- 
-An old man doll... just what I always wanted! - Clara
+I.e. complaining about "%m$" instead of "%" in printf formats, it's easy
+enough to fix in my case, it's just something I used to de-duplicate a
+rather complex format, this makes it C(89|99)-compliant:
+    
+    -       strbuf_addf(&fmt, "%%s%%s%%s-%%0%1$lud.%%0%1$lud-%%s-%%s-%%s",
+    -                   (unsigned long)tmp.len);
+    +       strbuf_addf(&fmt, "%%s%%s%%s-%%0%lud.%%0%lud-%%s-%%s-%%s",
+    +                   (unsigned long)tmp.len, (unsigned long)tmp.len);
+
+But in general, do we view -pedantic as an implicit endorsement that we
+should be using less POSIX and more standard C than we otherwise would?
+
+I may be wrong, but I believe that construct is widely portable, we
+don't use it in the main source, but in the po/ files (so anything that
+uses git + gettext tests for this already):
+
+    git grep '%\d+\$' -- po
