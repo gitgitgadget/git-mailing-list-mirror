@@ -2,148 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB78C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E60AC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:30:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24B0960F3A
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:14:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2343761211
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238258AbhIVWPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 18:15:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53074 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238256AbhIVWPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 18:15:35 -0400
-Received: (qmail 12560 invoked by uid 109); 22 Sep 2021 22:14:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 22:14:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19680 invoked by uid 111); 22 Sep 2021 22:14:04 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 18:14:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Sep 2021 18:14:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH v2] http: match headers case-insensitively when redacting
-Message-ID: <YUuqrNXdgUR5thl5@coredump.intra.peff.net>
-References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
- <xmqq8rzo770h.fsf@gitster.g>
- <YUuNXOb5blV7iN6P@coredump.intra.peff.net>
- <xmqqk0j85o6c.fsf@gitster.g>
- <YUudqYmzy9N3e0Bk@coredump.intra.peff.net>
- <xmqqbl4k5lsu.fsf@gitster.g>
- <YUuqKeXRYuXjXy1+@coredump.intra.peff.net>
+        id S238320AbhIVWbd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 18:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56010 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238340AbhIVWbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 18:31:32 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864E7C061756
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:30:01 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id w8so4320945pgf.5
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:30:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9sMhkdsLX4+K8elsAp6LnlTuNuXzwS6ux9r7n1178OY=;
+        b=G+zzWb+6pYJKy7d0BanAdDj6OIU6rShpLSqjB77Z3YzzF6eUB6Bt/yac38oiFJtwTE
+         0733oVbKqea3vR/fqXjSGNyagb+p3uuPD0yLYEvfAKuD5dlms7iha1zq0Pa2at4amrqp
+         jxy9jS46zy9upxj52Xi6owjYi4JrDUC/WMJvtIsDZagmEmIiW0zPL73IzLiAdYHVz7Ec
+         LblFwwIxBfs9Hj3KZ/OiCKRj73HEsoF+8nRXQel/7W8FBQFxMiEgFqKw2zBWrX60svjH
+         xmvHf+GvVvAl3A0ht/FINeXZ7uoN6jwLAD6HR/1dROD2rRh3Q/gW19jShwFvYsUrruEg
+         EoJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=9sMhkdsLX4+K8elsAp6LnlTuNuXzwS6ux9r7n1178OY=;
+        b=a/q+InEmpHyVNjJKG6m9lT3KlXCAzLZ67MDuuOVQykucwZaSbTUFzoWP91Vn7M654C
+         FxmXBuuvdEA9u8SvcVE1L6QGlJWD4STK82XI6Xda+oe1EllYiwevFjYDvQ70ZOmRrs+9
+         20x52AaogYTrRtpVMA5lkB9ynJuzLWuRNuy5lDFB6UY78D8ciEoyUyxEZRUs4cGYk1ZQ
+         tTzdoKUZL0gHiyyC0YOQSbxDEVaHhmrHEKkQZnwLULVb0Bvh1SEsMlAfJpYrpeNxhe9S
+         kMwQXiaZQRgwCn/+yEb66D0p/W7rgkRXpZupOIT8gK7IQ6vTz8j5O3Gqwyf8ebWvxV+v
+         cxsw==
+X-Gm-Message-State: AOAM530RFVsAzhH2zVhNsMeRTK0CYNU0JGyef/IwWfke8LfWYfRePhuK
+        S+rUtrIAIfvuSXHR/+8J9BOdsw==
+X-Google-Smtp-Source: ABdhPJwthPln7AbY9O0vtIMXS01q/mcvUmVLZaZTc4Xs+NsL8zHub7di+FtKuAhnU3rCD2aRIY02Zw==
+X-Received: by 2002:a65:6487:: with SMTP id e7mr1155480pgv.27.1632349800797;
+        Wed, 22 Sep 2021 15:30:00 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:3477:59f2:e961:3ce])
+        by smtp.gmail.com with ESMTPSA id u12sm4507017pjr.2.2021.09.22.15.29.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 15:30:00 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 15:29:53 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v2 2/8] builtin/multi-pack-index.c: support
+ `--stdin-packs` mode
+Message-ID: <YUuuYW3RktlDzskH@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        gitster@pobox.com, avarab@gmail.com
+References: <cover.1631331139.git.me@ttaylorr.com>
+ <cover.1631730270.git.me@ttaylorr.com>
+ <59556e554565120929549239f1aee5a76d80ac8d.1631730270.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YUuqKeXRYuXjXy1+@coredump.intra.peff.net>
+In-Reply-To: <59556e554565120929549239f1aee5a76d80ac8d.1631730270.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 06:11:54PM -0400, Jeff King wrote:
+Thanks for the series! I have a couple of questions:
 
-> Well, I did it anyway. :) Here's the updated patch. I think it explains
-> things more clearly by showing the example output from our discussion
-> (and reframes the text around it to explain it more). I'll send a
-> range-diff in a moment.
 
-Here's the range-diff. I split it out because the commit message is
-already so long and full of sample diffs and output that I thought it
-would get hard to tell what was range-diff and what was actual diff. :)
+On 2021.09.15 14:24, Taylor Blau wrote:
+> To power a new `--write-midx` mode, `git repack` will want to write a
+> multi-pack index containing a certain set of packs in the repository.
+> 
+> This new option will be used by `git repack` to write a MIDX which
+> contains only the packs which will survive after the repack (that is, it
+> will exclude any packs which are about to be deleted).
+> 
+> This patch effectively exposes the function implemented in the previous
+> commit via the `git multi-pack-index` builtin. An alternative approach
+> would have been to call that function from the `git repack` builtin
+> directly, but this introduces awkward problems around closing and
+> reopening the object store, so the MIDX will be written out-of-process.
 
-1:  faa6e6d28e ! 1:  ea064beb32 http: match headers case-insensitively when redacting
-    @@ Commit message
-           Authorization: Basic ...
-     
-         After breaking it into lines, we match each header using skip_prefix().
-    -    This is case-insensitive, even though HTTP headers are case-insensitive.
-    +    This is case-sensitive, even though HTTP headers are case-insensitive.
-         This has worked reliably in the past because these headers are generated
-         by curl itself, which is predictable in what it sends.
-     
-    @@ Commit message
-             (the overall operation works fine; we just don't see the header in
-             the trace).
-     
-    -    On top of that, we also need the test change that this patch _does_ do:
-    -    grepping the trace file case-insensitively. Otherwise the test continues
-    -    to pass even over HTTP/2, because it sees _both_ forms of the header
-    -    (redacted and unredacted), as we upgrade from HTTP/1.1 to HTTP/2. So our
-    -    double grep:
-    +    Furthermore, even with the changes above, this test still does not
-    +    detect the current failure, because we see _both_ HTTP/1.1 and HTTP/2
-    +    requests, which confuse it. Quoting only the interesting bits from the
-    +    resulting trace file, we first see:
-    +
-    +      => Send header: GET /auth/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
-    +      => Send header: Connection: Upgrade, HTTP2-Settings
-    +      => Send header: Upgrade: h2c
-    +      => Send header: HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA
-    +
-    +      <= Recv header: HTTP/1.1 401 Unauthorized
-    +      <= Recv header: Date: Wed, 22 Sep 2021 20:03:32 GMT
-    +      <= Recv header: Server: Apache/2.4.49 (Debian)
-    +      <= Recv header: WWW-Authenticate: Basic realm="git-auth"
-    +
-    +    So the client asks for HTTP/2, but Apache does not do the upgrade for
-    +    the 401 response. Then the client repeats with credentials:
-    +
-    +      => Send header: GET /auth/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
-    +      => Send header: Authorization: Basic <redacted>
-    +      => Send header: Connection: Upgrade, HTTP2-Settings
-    +      => Send header: Upgrade: h2c
-    +      => Send header: HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA
-    +
-    +      <= Recv header: HTTP/1.1 101 Switching Protocols
-    +      <= Recv header: Upgrade: h2c
-    +      <= Recv header: Connection: Upgrade
-    +      <= Recv header: HTTP/2 200
-    +      <= Recv header: content-type: application/x-git-upload-pack-advertisement
-    +
-    +    So the client does properly redact there, because we're speaking
-    +    HTTP/1.1, and the server indicates it can do the upgrade. And then the
-    +    client will make further requests using HTTP/2:
-    +
-    +      => Send header: POST /auth/smart/repo.git/git-upload-pack HTTP/2
-    +      => Send header: authorization: Basic dXNlckBob3N0OnBhc3NAaG9zdA==
-    +      => Send header: content-type: application/x-git-upload-pack-request
-    +
-    +    And there we can see that the credential is _not_ redacted. This part of
-    +    the test is what gets confused:
-     
-                 # Ensure that there is no "Basic" followed by a base64 string, but that
-                 # the auth details are redacted
-                 ! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
-                 grep "Authorization: Basic <redacted>" trace
-     
-    -    gets confused. It sees the "<redacted>" one from the pre-upgrade
-    -    HTTP/1.1 request, but fails to see the unredacted HTTP/2 one, because it
-    -    does not match the lower-case "authorization". Even without the rest of
-    -    the test changes, we can still make this test more robust by matching
-    -    case-insensitively. That will future-proof the test for a day when
-    -    HTTP/2 is finally enabled by default, and doesn't hurt in the meantime.
-    +    The first grep does not match the un-redacted HTTP/2 header, because
-    +    it insists on an uppercase "A". And the second one does find the
-    +    HTTP/1.1 header. So as far as the test is concerned, everything is OK,
-    +    but it failed to notice the un-redacted lines.
-    +
-    +    We can make this test (and the other related ones) more robust by adding
-    +    "-i" to grep case-insensitively. This isn't really doing anything for
-    +    now, since we're not actually speaking HTTP/2, but it future-proofs the
-    +    tests for a day when we do (either we add explicit HTTP/2 test support,
-    +    or it's eventually enabled by default by our Apache+curl test setup).
-    +    And it doesn't hurt in the meantime for the tests to be more careful.
-    +
-    +    The change to use "grep -i", coupled with the changes to use HTTP/2
-    +    shown above, causes the test to fail with the current code, and pass
-    +    after this patch is applied.
-     
-         And finally, there's one other way to demonstrate the issue (and how I
-         actually found it originally). Looking at GIT_TRACE_CURL output against
+Could you elaborate a bit on the "awkward problems" here? I'm afraid I'm
+missing the context here.
+
+
+> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+> index 73c0113b48..047647b5f2 100644
+> --- a/builtin/multi-pack-index.c
+> +++ b/builtin/multi-pack-index.c
+> @@ -47,6 +47,7 @@ static struct opts_multi_pack_index {
+>  	const char *preferred_pack;
+>  	unsigned long batch_size;
+>  	unsigned flags;
+> +	int stdin_packs;
+>  } opts;
+>  
+>  static struct option common_opts[] = {
+> @@ -61,6 +62,16 @@ static struct option *add_common_options(struct option *prev)
+>  	return parse_options_concat(common_opts, prev);
+>  }
+>  
+> +static void read_packs_from_stdin(struct string_list *to)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	while (strbuf_getline(&buf, stdin) != EOF)
+> +		string_list_append(to, buf.buf);
+> +	string_list_sort(to);
+> +
+> +	strbuf_release(&buf);
+> +}
+> +
+
+I'm presuming that the packfile list is going to be generated
+automatically, but what happens if that becomes corrupt somehow, and we
+skip a packfile that should have been included? Will that cause
+incorrect behavior, or will we just miss out on some of the bitmap
+performance benefits?
