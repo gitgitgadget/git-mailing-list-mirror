@@ -2,142 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB02FC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F1A7C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:52:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89FB6610A0
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28B8860F4C
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238288AbhIVWlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 18:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58232 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhIVWlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 18:41:10 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F336C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:39:40 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id q8-20020aa79828000000b0043d5595dad4so2578701pfl.13
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=9YAjKQ47RYk4oBp7wVuvvgSprI8fuBtDPuF2Gs5kfWA=;
-        b=KvD7AYc9nPX2iOFZIuRZZsaR2ikwGBLOWbxiTQKarOz12Vo6ofew7DHQC4i1fz/hI/
-         BYt3tBs419GgMyc72UOSOYit2iaEowcHY5vYyKjQlPrhV2EhdCOf6d2sAE/J8QL6+smS
-         BfdXYrqUn2uOxUqsjr4BHGQ8fDMkGudGa1thHJDHzQFGKXOwVwPsFSAVK2DJYUNrve67
-         fj/t0gQk449r0mLYd7TD5Wd4D8HDPVIeLcBdgubb/nRa0nSebC1sE85klJuZhHfA9LQA
-         ul7VLBRww1wvZD7uP+lVLPkkdhf1NVlJ0ICEsGvD4/PfoBZghts89tV1iGLgIP5PJwVm
-         EW1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=9YAjKQ47RYk4oBp7wVuvvgSprI8fuBtDPuF2Gs5kfWA=;
-        b=DlY0+ILcvsOl59wt23TjymhUGWcmMT9umJB+EL2otAKl+zPARICXyrpys5Z04X/QdG
-         COQzZmCG8gu0KobIFfIm4vrdmIq/i05A5nlsR+WVWtEYoVn0qqJ/xvInEJELyKy8b0Nl
-         eNI3Pes/m/U/WTi0zQciMl5KMvbuAbBQCBJEJyq+8MOOh6KgJwYtP0sC30eFjbM9zg8F
-         zZG/synhspF0F5h76cbcFOOa/d8a+GG7DCWwswja6CYUy1xWBtOsgUjoL9D47R630dXj
-         G05EFIGFRc/wYYIxFKUlRQkNACqGXQ7GEgCD3ajCwAkWe17DxjvHmgAtX9xNH9HDxIyL
-         +YgA==
-X-Gm-Message-State: AOAM533EcycpXNAp3QJDb/91CTzrCIQS2FSl+Cnb58GvUgcR1dV3GXg+
-        dH0/byyS5FdGrRY2JSDRb3BSXEHt381nZzrUsKhi
-X-Google-Smtp-Source: ABdhPJxN9N6n76kQcA41yDQQgfnY018PgkilOIoCTXAL0s46OVWLqJm1nBczKjdJrQ6uRhxv7VmXzHINM3q8a6f1wK6Y
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:9a0e:0:b0:44a:3ae2:825c with
- SMTP id w14-20020aa79a0e000000b0044a3ae2825cmr1089098pfj.28.1632350379882;
- Wed, 22 Sep 2021 15:39:39 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 15:39:35 -0700
-In-Reply-To: <83dfdb8b125efe970659eeea1e5e88b09546c81e.1631730270.git.me@ttaylorr.com>
-Message-Id: <20210922223936.2606010-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <83dfdb8b125efe970659eeea1e5e88b09546c81e.1631730270.git.me@ttaylorr.com>
-X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
-Subject: Re: [PATCH v2 6/8] builtin/repack.c: support writing a MIDX while repacking
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     me@ttaylorr.com
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
-        avarab@gmail.com, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S238337AbhIVWyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 18:54:00 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59146 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238356AbhIVWxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 18:53:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 10AB91594A0;
+        Wed, 22 Sep 2021 18:52:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CcD4nSAInNA1s/tDPPHtM1Saup1QGnwYBJUYGl
+        /5+tg=; b=bmSscxmMvjBGBKbwSVz2UDXdHY0DK0oq28R+4NkNq9Sbm1skYCCzNu
+        zCtqgDjW2L5m2ewgTBVPjWWLNLai3v5AUdgbUN3ZVc7D+gyyatzm7J9sJIM8aGb3
+        aVg44SV44fa+I7Xuk9ZbO3S2CB1QDCF+jzqQZyz3qnQt/DxoNLfDQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0895D15949F;
+        Wed, 22 Sep 2021 18:52:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C80615949E;
+        Wed, 22 Sep 2021 18:52:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
+        stolee@gmail.com, vdye@github.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 01/14] t3705: test that 'sparse_entry' is unstaged
+References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+        <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+        <ea940f10a7cd26c6be3693b5a800afb7d6f752f2.1632159937.git.gitgitgadget@gmail.com>
+Date:   Wed, 22 Sep 2021 15:52:11 -0700
+In-Reply-To: <ea940f10a7cd26c6be3693b5a800afb7d6f752f2.1632159937.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 20 Sep 2021
+        17:45:24 +0000")
+Message-ID: <xmqq7df85ilg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B97ECF4C-1BF7-11EC-8692-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -683,22 +755,41 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  	}
->  	/* End of pack replacement. */
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The tests in t3705-add-sparse-checkout.sh check to see how 'git add'
+> behaves with paths outside the sparse-checkout definition. These
+> currently check to see if a given warning is present but not that the
+> index is not updated with the sparse entries. Add a new
+> 'test_sparse_entry_unstaged' helper to be sure 'git add' is behaving
+> correctly.
+>
+> We need to modify setup_sparse_entry to actually commit the sparse_entry
+> file so it exists at HEAD and as an entry in the index, but its exact
+> contents are not staged in the index.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t3705-add-sparse-checkout.sh | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+> index 2b1fd0d0eef..e202a2ff74a 100755
+> --- a/t/t3705-add-sparse-checkout.sh
+> +++ b/t/t3705-add-sparse-checkout.sh
+> @@ -19,6 +19,7 @@ setup_sparse_entry () {
+>  	fi &&
+>  	git add sparse_entry &&
+>  	git update-index --skip-worktree sparse_entry &&
+> +	git commit --allow-empty -m "ensure sparse_entry exists at HEAD" &&
+>  	SPARSE_ENTRY_BLOB=$(git rev-parse :sparse_entry)
+>  }
 >  
-> +	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
-> +		const int hexsz = the_hash_algo->hexsz;
-> +		string_list_sort(&names);
-> +		for_each_string_list_item(item, &existing_packs) {
-> +			char *sha1;
-> +			size_t len = strlen(item->string);
-> +			if (len < hexsz)
-> +				continue;
-> +			sha1 = item->string + len - hexsz;
-> +			item->util = (void*)(intptr_t)!string_list_has_string(&names, sha1);
-
-OK, here is the tricky part. They are marked for deletion here...
-
-> +		}
-> +	}
-> +
-> +	if (write_midx) {
-> +		struct string_list include = STRING_LIST_INIT_NODUP;
-> +		midx_included_packs(&include, &existing_packs,
-> +				    &existing_kept_packs, &names, geometry);
-
-...the mark for deletion is taken into account during the execution of
-midx_included_packs() (as can be seen by looking at that function)...
-
-> +
-> +		ret = write_midx_included_packs(&include,
-> +						show_progress, write_bitmaps > 0);
-> +
-> +		string_list_clear(&include, 0);
-> +
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
->  	reprepare_packed_git(the_repository);
+> @@ -36,6 +37,11 @@ setup_gitignore () {
+>  	EOF
+>  }
 >  
->  	if (delete_redundant) {
->  		int opts = 0;
-> -		if (pack_everything & ALL_INTO_ONE) {
-> -			const int hexsz = the_hash_algo->hexsz;
-> -			string_list_sort(&names);
-> -			for_each_string_list_item(item, &existing_packs) {
-> -				char *sha1;
-> -				size_t len = strlen(item->string);
-> -				if (len < hexsz)
-> -					continue;
-> -				sha1 = item->string + len - hexsz;
-> -				if (!string_list_has_string(&names, sha1))
-> -					remove_redundant_pack(packdir, item->string);
-> -			}
-> +		for_each_string_list_item(item, &existing_packs) {
-> +			if (!item->util)
-> +				continue;
+> +test_sparse_entry_unstaged () {
+> +	git status --porcelain >actual &&
+> +	! grep "^[MDARCU][M ] sparse_entry\$" actual
 
-...and the marks are also used here. I was at first confused about why
-the functionality of midx_included_packs() depended on whether redundant
-packs were marked for deletion - if they are redundant, shouldn't they
-never be taken into account (regardless of whether we actually delete
-them)? But I guess it makes sense as an overall design point that we
-pass all packs that are to remain (so if they will be deleted, exclude
-them, and if they will not be, include them).
+Does this say "we do not want any difference from the index, be it
+modification, deletion, addtion, etc."?
 
-I think a comment "mark this pack for deletion" at the point we write
-the mark (so, where the cast to intptr_t is) is worthwhile. Other than
-that, this patch looks good to me.
+Just wondering if there were a reason why the pattern is more
+complex than "^[^ ][M ]" (i.e. anything but "unmodified since the
+index"), not necessarily suggesting to spell the test differently.
 
-I (and the others in our review club) only managed to reach this patch.
-I hope to get to the other 2 by the end of the week.
+Thanks.
