@@ -2,239 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FDA9C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FFF8C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:28:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 692E06120F
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:56:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37D266127A
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236959AbhIVR5g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 13:57:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49272 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236837AbhIVR5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 13:57:35 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CFBC061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 10:56:05 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id x27so15217399lfu.5
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 10:56:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XDKjIvKef5F9MmQ0PKTG+MiOfneXIFYFtTp67YDEp58=;
-        b=cJVn/dhLE50HajeDhkEbcj/v4Ld9IwturM9ETvPS83Vzb2F/qwKEHcUjItxYqi9X1Q
-         z2cYCu+1/pJmoIB/bwlC0X0c+PcllRdFVMNhEV2zdPvJAI2NC6vf1a2+tpGW6Wmh5ShP
-         pkd9JzZFcvYBAFfi8kf5kRutOaWgIIkHhziMdm4c3bGmyFq6mB/jFVLzT9AvNXK83B5B
-         yOFMLrhY3bvbZcnvaZMNWfOku6IfsxAziryCFWdkOvkqZiIPby/6c/VQ6LZpWSAM7gty
-         kyzpl8yaKwIq+w5r8t2CnLduFaeVy+aVEZYb2CBJUA2zs6d6h/AlK/ZmUf7EF2XTUPMZ
-         rMzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XDKjIvKef5F9MmQ0PKTG+MiOfneXIFYFtTp67YDEp58=;
-        b=5jfRWE5pwI1KneaRlZjgde4RiZCuIDqkWm07qdBTdP1QNmHJcrDaNIZbpFuZCq86xm
-         6EmLNrphxHTCQfAVcoK+1L0ZkpUPUNEpvv4BTita8qB5h9rKengZGJX1BBj1/pWZSMTR
-         ZSxn0fLcbVt6h3zxS3aXvP5DiRsf3cIaWIw+OU+grKFEKqo4fIgP+np8EY5cuVIlHadb
-         R+3o61mXYbpUgjq6q+66TZjVmkYPyjpsHUYuBJoKfIh2ywLglBlr+CJTsvER+nYUi5Db
-         sI6MvFAuLEw5Wim0vj4qG3uYivd8AS0n4GAozD5Fhk+uGOFQsGJT+rA3yVPI6OrjhvI9
-         Fqug==
-X-Gm-Message-State: AOAM533mtZ/AUp/2MkBcv0Vsf1gVJfmVoDWjm2MggF3qsWnMbZ+HSMst
-        o2axZjWVNYw54WM2/4yQTPZQTsBDx4zl3WqYBMM=
-X-Google-Smtp-Source: ABdhPJxja9Ck14a/lXo9/3IMgsYekZx3N6i/WCjiUCmoUBCeUUGO+3eLwgWrqNK6YI04UrLcceXSco/M1AWmyHP0PiU=
-X-Received: by 2002:a2e:9296:: with SMTP id d22mr547281ljh.413.1632333363537;
- Wed, 22 Sep 2021 10:56:03 -0700 (PDT)
+        id S237071AbhIVSaN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 14:30:13 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61336 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236973AbhIVSaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 14:30:12 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 76291159CD7;
+        Wed, 22 Sep 2021 14:28:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=H8RH9w/lLii7p1whsfzR474F1jRsPPA1ddmLL9
+        R6UoY=; b=LPQqck57Rrccz4NfKmC1M7RbysgeYkZlNIoFYHi3hcVHycIjAK84Ej
+        GhtjVWKTdolGjOmJC/clXvT/5Lbo+K73zhcsOr1kt7l26HehlISFP0I5eATpmRiM
+        V5qVRtItRU2oz/fXGf7aGyZ8zf6pZmdyjDhi2lSAQT4/ZUV6C5Csk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A6BA159CD6;
+        Wed, 22 Sep 2021 14:28:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8658159CD3;
+        Wed, 22 Sep 2021 14:28:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
+ with DEVOPTS=pedantic
+References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
+        <xmqqmto48ufz.fsf@gitster.g>
+        <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
+Date:   Wed, 22 Sep 2021 11:28:38 -0700
+In-Reply-To: <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 22 Sep 2021 13:04:54 -0400")
+Message-ID: <xmqqzgs479d5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1076.v3.git.git.1631590725.gitgitgadget@gmail.com>
- <pull.1076.v4.git.git.1632176111.gitgitgadget@gmail.com> <afb0028e79648c1f7be8d77df5c6d675bd27d983.1632176111.git.gitgitgadget@gmail.com>
- <87a6k58or9.fsf@evledraar.gmail.com> <CANQDOdc3R0H_DS9eqh9vK7JA6=2LsB6q9mANgMgrtbOwp7Fvwg@mail.gmail.com>
- <87wnn974gx.fsf@evledraar.gmail.com>
-In-Reply-To: <87wnn974gx.fsf@evledraar.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 22 Sep 2021 10:55:52 -0700
-Message-ID: <CANQDOdfQZLp--W7d4iuDO6n5YxMM6CxmbbFjfOSLN1=-Li9w-g@mail.gmail.com>
-Subject: Re: [PATCH v4 5/6] core.fsyncobjectfiles: tests for batch mode
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E8660A48-1BD2-11EC-B378-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 7:02 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Sep 21 2021, Neeraj Singh wrote:
->
-> > On Tue, Sep 21, 2021 at 4:58 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-> >>
-> >> On Mon, Sep 20 2021, Neeraj Singh via GitGitGadget wrote:
-> >>
-> >> > From: Neeraj Singh <neerajsi@microsoft.com>
-> >> >
-> >> > Add test cases to exercise batch mode for 'git add'
-> >> > and 'git stash'. These tests ensure that the added
-> >> > data winds up in the object database.
-> >> >
-> >> > I verified the tests by introducing an incorrect rename
-> >> > in do_sync_and_rename.
-> >> >
-> >> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
-> >> > ---
-> >> >  t/lib-unique-files.sh | 34 ++++++++++++++++++++++++++++++++++
-> >> >  t/t3700-add.sh        | 11 +++++++++++
-> >> >  t/t3903-stash.sh      | 14 ++++++++++++++
-> >> >  3 files changed, 59 insertions(+)
-> >> >  create mode 100644 t/lib-unique-files.sh
-> >> >
-> >> > diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
-> >> > new file mode 100644
-> >> > index 00000000000..a8a25eba61d
-> >> > --- /dev/null
-> >> > +++ b/t/lib-unique-files.sh
-> >> > @@ -0,0 +1,34 @@
-> >> > +# Helper to create files with unique contents
-> >> > +
-> >> > +test_create_unique_files_base__=3D$(date -u)
-> >> > +test_create_unique_files_counter__=3D0
-> >> > +
-> >> > +# Create multiple files with unique contents. Takes the number of
-> >> > +# directories, the number of files in each directory, and the base
-> >> > +# directory.
-> >> > +#
-> >> > +# test_create_unique_files 2 3 . -- Creates 2 directories with 3 fi=
-les
-> >> > +#                                each in the specified directory, a=
-ll
-> >> > +#                                with unique contents.
-> >> > +
-> >> > +test_create_unique_files() {
-> >> > +     test "$#" -ne 3 && BUG "3 param"
-> >> > +
-> >> > +     local dirs=3D$1
-> >> > +     local files=3D$2
-> >> > +     local basedir=3D$3
-> >> > +
-> >> > +     rm -rf $basedir >/dev/null
-> >>
-> >> Why the >/dev/null? It's not a "-rfv", and any errors would go to
-> >> stderr.
-> >
-> > Will fix. Clearly I don't know UNIX very well.
-> >
-> >>
-> >> > +             mkdir -p "$dir" > /dev/null
-> >>
-> >> Ditto.
-> >
-> > Will fix.
-> >
-> >>
-> >> > +             for j in $(test_seq $files)
-> >> > +             do
-> >> > +                     test_create_unique_files_counter__=3D$((test_c=
-reate_unique_files_counter__ + 1))
-> >> > +                     echo "$test_create_unique_files_base__.$test_c=
-reate_unique_files_counter__"  >"$dir/file$j.txt"
-> >>
-> >> Would be much more readable if we these variables were shorter.
-> >>
-> >> But actually, why are we trying to create files as a function of "date
-> >> -u" at all? This is all in the trash directory, which is rm -rf'd bewe=
-en
-> >> runs, why aren't names created with test_seq or whatever OK? I.e. just
-> >> 1.txt, 2.txt....
-> >>
-> >
-> > The uniqueness is in the contents of the file.  I wanted to make sure t=
-hat
-> > we are really creating new objects and not reusing old ones.  Is the sc=
-ope
-> > of the "trash repo" small enough that I can be guaranteed that a new on=
-e
-> > is created before my test since the last time I tried adding something =
-to
-> > the ODB?
-> >
-> >> > +test_expect_success 'stash with core.fsyncobjectfiles=3Dbatch' "
-> >> > +     test_create_unique_files 2 4 fsync-files &&
-> >> > +     git -c core.fsyncobjectfiles=3Dbatch stash push -u -- ./fsync-=
-files/ &&
-> >> > +     rm -f fsynced_files &&
-> >> > +
-> >> > +     # The files were untracked, so use the third parent,
-> >> > +     # which contains the untracked files
-> >> > +     git ls-tree -r stash^3 -- ./fsync-files/ > fsynced_files &&
-> >> > +     test_line_count =3D 8 fsynced_files &&
-> >> > +     cat fsynced_files | awk '{print \$3}' | xargs -n1 git cat-file=
- -e
-> >> > +"
-> >> > +
-> >> > +
-> >> >  test_expect_success 'stash -c stash.useBuiltin=3Dfalse warning ' '
-> >> >       expected=3D"stash.useBuiltin support has been removed" &&
-> >>
-> >> We really prefer our tests to create the same data each time if
-> >> possible, but as noted with the "date -u" comment above you're
-> >> explicitly bypassing that, but I still can't see why...
-> >
-> > I'm trying to make sure we get new object contents. Is there a better
-> > way to achieve what I want without the risk of finding that the content=
-s
-> > are already in the database from a previous test run?
->
-> You can just do something like:
->
-> test_expect_success 'setup data' '
->         test_commit A &&
->         test_commit B
-> '
->
-> Which will create files A.t, B.t etc, or create them via:
->
->     obj=3D$(echo foo | git hash-object -w --stdin)
->
-> etc.
->
-> I.e. the uniqueness you're doing here seems to assume that tests are
-> re-using the same object store across runs, but we create a new trash
-> directory for each one, if you run the test with "-d" you can see it
-> being left behind for inspection. This is already ensured for the test.
->
-> The only potential caveat I can imagine is that some filesystem like say
-> btrfs-like that does some COW or object de-duplication would behave
-> differently, but other than that...
+Jeff King <peff@peff.net> writes:
 
-It looks like the same repo is reused for each test_expect_success
-line in the top-level t*.sh script.
-So for test_create_unique_files to be maximally useful, it should have
-some state that is different for
-each invocation.  How about I use the test_tick mechanism to produce
-this uniqueness?  It wouldn't
-be globally unique like the date method, but it should be good enough
-if the repo is recycled every time
-test-lib is reinitialized.
+>> I wonder if the attached (with clean-up to remove the tracing cruft)
+>> would show us a better direction.  It feeds a single line
+>> 
+>> 	int dummy_for_dep_check;
+>> 
+>> C "program" from the standard input of the compiler to tackle the
+>> "you are not supposed to be compiling an empty compilation unit"
+>> problem in a more direct way.
+>
+> That feels a bit like we're playing a game of chicken with the compiler
+> in terms of what it may complain about. For example, sparse will
+> complain:
+>
+>   foo.c:1:5: warning: symbol 'dummy_for_dep_check' was not declared. Should it be static?
+>
+> Might compilers ever learn to warn of the same thing?
 
-I'm changing lib-unique-files to use test_tick and to be a little more
-readable as you suggested. Please
-let me know if you have any other suggestions.
+Certainly.  That is the reason why I said "direction", not
+"solution", and I do not think it is beyond our capability to come
+up with a minimal "C program" that would be lint clean to make it
+as a part of the "solution".
+
+For example, would sparse or compilers complain about this?
+
+    extern int incr(int); int incr(int i) { return i + 1; }
+
+> So I'd argue we should go even simpler, like:
+>
+> diff --git a/Makefile b/Makefile
+> index 3628d14f16..4597a126d0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1277,7 +1277,7 @@ COMPUTE_HEADER_DEPENDENCIES = auto
+>  endif
+>  
+>  ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
+> -dep_check = $(shell $(CC) $(ALL_CFLAGS) \
+> +dep_check = $(shell $(CC) \
+>  	-c -MF /dev/null -MQ /dev/null -MMD -MP \
+>  	-x c /dev/null -o /dev/null 2>&1; \
+>  	echo $$?)
+
+I am all for this simplification.  It takes us back to the state
+before 1816bf26 (Makefile: Improve compiler header dependency check,
+2011-08-30).  But I think that is more or less orthogonal to the
+"you are not supposed to feed an empty compilation unit" issue.
+
+> I'm also tempted by a hunk like this. Then we can set the REQUIRE flag
+> in a CI job (or locally for git devs who know they have gcc) and notice
+> an unexpected breakage in the auto test.
+>
+> @@ -1295,6 +1295,9 @@ ifneq ($(COMPUTE_HEADER_DEPENDENCIES),no)
+>  $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
+>  (not "$(COMPUTE_HEADER_DEPENDENCIES)"))
+>  endif
+> +ifdef REQUIRE_COMPUTE_HEADER_DEPENDENCIES
+> +$(error computed header dependencies required, but auto-check did not find them)
+> +endif
+>  endif
+
+Yup, I like that, too.
