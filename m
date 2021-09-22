@@ -2,95 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B3CC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB8AC433FE
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:44:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DCD16109E
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:43:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29D2461153
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237076AbhIVSpF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 14:45:05 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62502 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbhIVSpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 14:45:05 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97F36157B9C;
-        Wed, 22 Sep 2021 14:43:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ckYPvBfchqxy
-        HaJLmgmCu4a64Vc+T7HRs2turnnDYJg=; b=QgbfliAj20szZt3dAuTRsxyfIGq7
-        ANY8UhHO0h4iUZf7wixVUgV7eoxeCyhS0gGFLv8XiqvwbXOpqcZciuiXmemqn/Sn
-        E688u3XiTVI2Y+HtNtMnib4xOKbUseBLeZl/LutEatmnN0TR5WdhCJW3oMWoQNr4
-        Vzp9nk3GejmeGBI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91448157B9B;
-        Wed, 22 Sep 2021 14:43:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EAC77157B95;
-        Wed, 22 Sep 2021 14:43:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Alan Blotz <work@blotz.org>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 0/3] difftool dir-diff symlink bug fix and cleanup
- patches
-References: <20210919203832.91207-1-davvid@gmail.com>
-        <xmqqmto7ay6s.fsf@gitster.g>
-        <CAJDDKr6m9kXKSuQhC5g_OkJa52QRMtf8s8Bd0YbRNnzAgudifQ@mail.gmail.com>
-Date:   Wed, 22 Sep 2021 11:43:30 -0700
-In-Reply-To: <CAJDDKr6m9kXKSuQhC5g_OkJa52QRMtf8s8Bd0YbRNnzAgudifQ@mail.gmail.com>
-        (David Aguilar's message of "Mon, 20 Sep 2021 14:43:37 -0700")
-Message-ID: <xmqqv92s78od.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237103AbhIVSpo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 14:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60306 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhIVSpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 14:45:43 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 889FEC061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:44:13 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id f18so4038765vsp.2
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=FvkG4WLHUyyKCmAF81WEElQ6vwMeU9SW6AnGLeEvg0w=;
+        b=dKVCA4pctFGttljhMGE74Vx1VVF3Dbmhk/2eD900FJvhFF/ddR2epcmx2lRVebCeas
+         C+FaS8QnIRHEQ4n+5HuxU3aroNZmPPu33TBkZB4knJQ8yCMX+LH61OEdnM56SEBMEMtR
+         bhn7UPgoENVKj6E6Pp0JCbgh5K0ByHgSx9XuSem9CuMqvxRp/njhT32eZFPURGlnIw/A
+         rfKaTPjvMtKnp31vHYzmCH+fIQecnkipFHoWFoxHKsvTX/nJAoWxK55yUhWwGLVUEN1w
+         6Y6Il5m4CVXXBl7fEcvYnUX5jBf1ot5xs246ZFJkg9S2ghIlxb4S/G3xJZWocdyRP87y
+         EOAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FvkG4WLHUyyKCmAF81WEElQ6vwMeU9SW6AnGLeEvg0w=;
+        b=PqyiHXfUMtWQbBr4J8/rK96yoglrt5qzVQNJxry70T7i6hutP+AS/J9Hn41J7BuKFd
+         97TAltZ5L0ehiuofvGV+8Z9LG+ezngBpQ3GZwFKDBWMKt1XqZzV7QCMBg3ZZ+opxSidW
+         ZIA7ZTGqa/rMsWX8NuGqSmb0XvXuLApsO+8yI1eYH95T5h+nSm1fhJ8z/tx9Fg5WO06j
+         mwFArTosLKG/f5Onljrc81s4tb58EXUU2p7dl3obqGy1ZI23tbRae6V79mAkxnRGH2sm
+         Qc8TxiOwE0WIOhQ8NO5SUnDnJhHrNPctLsOTvgqVEZi4/nZNvodxqkpPxMukJYC8QcDZ
+         cVCg==
+X-Gm-Message-State: AOAM532DoNmQQZ9pXCcwpZTR3Xy4uAACmHd/UNVEJY4llXthMrJb/WPx
+        jNMB0lfVlF4AFYIiwIlcLnqBNIKQXEk1kXvD7d4=
+X-Google-Smtp-Source: ABdhPJyvjmDbEYTQeKbzHhz/rLxmHqElAeHltg5xmb5/+o+8pdcfA2Ge7jlb+ex8IZNEWfpINuI21X3Xd0+1ZeKgfFc=
+X-Received: by 2002:a67:d51d:: with SMTP id l29mr819111vsj.46.1632336252521;
+ Wed, 22 Sep 2021 11:44:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FC31DFAA-1BD4-11EC-ABE2-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
+ <xmqqmto48ufz.fsf@gitster.g> <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net> <xmqqzgs479d5.fsf@gitster.g>
+In-Reply-To: <xmqqzgs479d5.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 22 Sep 2021 11:44:01 -0700
+Message-ID: <CAPUEspjjfTJGaPUxvaNeGFFyKJYRurxoraX+2DNg2GF02WXn-g@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work with DEVOPTS=pedantic
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
-
-
-> Thanks. Patch 3/3 seems trivially correct so I won't resend that either=
-.
+On Wed, Sep 22, 2021 at 11:28 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> =C3=86var had notes about 2/3 which can be split off to a separate topi=
-c,
-> so that's the only one I'll plan to resend all by itself --in-reply-to
-> that thread.
+> Jeff King <peff@peff.net> writes:
+>
+> >> I wonder if the attached (with clean-up to remove the tracing cruft)
+> >> would show us a better direction.  It feeds a single line
+> >>
+> >>      int dummy_for_dep_check;
+> >>
+> >> C "program" from the standard input of the compiler to tackle the
+> >> "you are not supposed to be compiling an empty compilation unit"
+> >> problem in a more direct way.
+> >
+> > That feels a bit like we're playing a game of chicken with the compiler
+> > in terms of what it may complain about. For example, sparse will
+> > complain:
+> >
+> >   foo.c:1:5: warning: symbol 'dummy_for_dep_check' was not declared. Sh=
+ould it be static?
+> >
+> > Might compilers ever learn to warn of the same thing?
+>
+> Certainly.  That is the reason why I said "direction", not
+> "solution", and I do not think it is beyond our capability to come
+> up with a minimal "C program" that would be lint clean to make it
+> as a part of the "solution".
+>
+> For example, would sparse or compilers complain about this?
+>
+>     extern int incr(int); int incr(int i) { return i + 1; }
+>
+> > So I'd argue we should go even simpler, like:
+> >
+> > diff --git a/Makefile b/Makefile
+> > index 3628d14f16..4597a126d0 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1277,7 +1277,7 @@ COMPUTE_HEADER_DEPENDENCIES =3D auto
+> >  endif
+> >
+> >  ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
+> > -dep_check =3D $(shell $(CC) $(ALL_CFLAGS) \
+> > +dep_check =3D $(shell $(CC) \
+> >       -c -MF /dev/null -MQ /dev/null -MMD -MP \
+> >       -x c /dev/null -o /dev/null 2>&1; \
+> >       echo $$?)
+>
+> I am all for this simplification.  It takes us back to the state
+> before 1816bf26 (Makefile: Improve compiler header dependency check,
+> 2011-08-30).  But I think that is more or less orthogonal to the
+> "you are not supposed to feed an empty compilation unit" issue.
 
-Please don't do this.  Your topic is not the only one I am looking
-at, and being able to find the whole thing together is always more
-efficient than having to go back, re-read the discussion and pick
-the latest iteration of each step individually (which will not work
-if the topic needs reordering of the patches in it anyway).
+the problem really is IMHO, that we are passing around CFLAGS that
+indicate 2 things:
 
-> I see that it's already in "seen". I can send a replacement patch
-> shortly ...
+1) attributes that are relevant to how we build and what
+2) which diagnostics we want to use
 
-Please do not read anything in a topic being (or not being, for that
-matter) "seen".  It means "the maintainer has seen it and thought it
-might be interesting at one point of time in the past" and nothing
-more.  It certainly does not mean the maintainer is keeping track of
-how the topic is evolving and knows which piece will be replaced and
-which piece is already done.
+=C3=86var's approach addresses implicitly part of it (most of the
+diagnostics are added in config.mak.dev), but I think it still feels
+like a knee jerk reaction to the problem, while creating an
+maintaining something like "DIAGNOSTIC_FLAGS" which we will only pass
+to the compiler when we want to use diagnostic (including -pedantic,
+-Wpedantic and -Werror) would be a better approach.
 
-Thanks.
+Carlo
