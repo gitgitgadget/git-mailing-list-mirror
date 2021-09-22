@@ -2,469 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3D95C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 11:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EDAFC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 12:18:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B585A610A0
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 11:20:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D6D760E73
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 12:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235642AbhIVLVm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 07:21:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235651AbhIVLVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 07:21:35 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DA7C061766
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 04:20:05 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id q26so5647996wrc.7
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 04:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IIO8UOp5RWDnKcsRMcwBLah8EFGlmykg4yPXLK2HrBw=;
-        b=CkNWOL0TmpLzLgr+yamRM5IUVJ7QinQV3w5FFtCdeMXPpGwjVrJss81MK3L5ZXA32+
-         fwnO30u6VUmaEEA7PuzhROAiG6hdBYHSeJIn6HKgqLgxYdPc0y5apoD/HyOb4sKs/PXH
-         SUO6kbBRamWPDnYT9jdSlBie4IIGDxIDlzPsv4w6BJQ0a1Cs+ZggWgP5s3eEb3stnFYD
-         CC0vjAJutVCX7EDBIebQGdQXdScIBrtoGAvKiexY3vsN/Q2oxtLv2Oxbxn09RHekcEpX
-         LRWg+g6Bre/h44n6j6QNpaRtMT24xgbAQygEyM9C06ufWpDTedtrKstJ7sxZmlpYxw/a
-         1ayw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IIO8UOp5RWDnKcsRMcwBLah8EFGlmykg4yPXLK2HrBw=;
-        b=Fs+DUR+vrIF5TPNERgPCfOUxRj8582hcg2p45o8XtMCTE9xHF9oCJv6KvMzcQJhF7C
-         y9HiaxxfE/jOa5GGOpdBcH3xax0hGuE2Ft7dhDox5o1oBQd+3jFOr0RpK5SlTfoOHynT
-         gX+lVxzAm1LAmnnoWOGRgyKH0qzuEMyHMgf8LfXS7XK1VO3NGK5WfV3IUUH1dTh2D1oY
-         Eks2CNacT3R8pD89O1iQj/ZRASKgebKbISQMleIopBcNX70S+zCTzNGUVFOrgxSv+Znx
-         AfpCOuTkAFfUM076bu/IiF3nXu/80oqiWpTinpJjzMSKcSY/OX8Tvpo3vfvqPbRUGy7r
-         fQTA==
-X-Gm-Message-State: AOAM5329rcrc70IjyBI1Ag4WLVBKUy5KNzB5snFs8yDnkIotaJR3mQYz
-        ID2p+8sBCaTdCPh8/tbb5IlUQGVN0C+E4A==
-X-Google-Smtp-Source: ABdhPJzoHlD6p7WhwFx0d1vCJOsQlSjg0Go/ZrAn8W3rpEX2/i4dhfP/Jui/O1K2akM+6D2OrOs7JQ==
-X-Received: by 2002:a05:6000:1866:: with SMTP id d6mr34684540wri.205.1632309603754;
-        Wed, 22 Sep 2021 04:20:03 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d70sm1679165wmd.3.2021.09.22.04.20.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 04:20:03 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Ilya Bobyr <ilya.bobyr@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 7/7] test-lib tests: get rid of copy/pasted mock test code
-Date:   Wed, 22 Sep 2021 13:19:53 +0200
-Message-Id: <patch-v4-7.7-68f8fabaa1e-20210922T111734Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1225.g9f062250122
-In-Reply-To: <cover-v4-0.7-00000000000-20210922T111734Z-avarab@gmail.com>
-References: <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com> <cover-v4-0.7-00000000000-20210922T111734Z-avarab@gmail.com>
+        id S235458AbhIVMUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 08:20:17 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:45675 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235425AbhIVMUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 08:20:16 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mT1D2-0000yR-3M; Wed, 22 Sep 2021 13:18:44 +0100
+Subject: Re: [PATCH v2] MyFirstContribution: Document --range-diff option when
+ writing v2
+To:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
+References: <20210913194816.51182-1-chooglen@google.com>
+ <20210920223226.25877-1-chooglen@google.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <77a8b8d9-4e13-8c5b-c313-512fc7c2c953@iee.email>
+Date:   Wed, 22 Sep 2021 13:18:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210920223226.25877-1-chooglen@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that we've split up the write_sub_test_lib_test*() and
-run_sub_test_lib_test*() functions let's fix those tests in
-t0000-basic.sh that were verbosely copy/pasting earlier tests.
+On 20/09/2021 23:32, Glen Choo wrote:
+> In the "Sending v2" section, readers are directed to create v2 patches
+> without using --range-diff. However, it is customary to include a
+> range-diff against the v1 patches as a reviewer aid.
+>
+> Update the "Sending v2" section to suggest a simple workflow that uses
+> the --range-diff option. Also include some explanation for -v2 and
+> --range-diff to help the reader understand the importance.
+>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+> Thanks for the helpful comments on v1! v2 aims to clear up other
+> ambiguities from v1 and to propose a specific workflow for readers.
+>
+> Changes since v1:
+>
+> * recommend that readers reuse the `psuh` topic branch for v2
+> * recommend that readers mark their v1 topic branch
+> * add a link to the range-diff docs
+> * change the v2 glob pattern to `psuh/v2-*.patch` to match the v1 example
+> * explicitly call out the v2 glob pattern so that readers will be extra
+>   careful
+>
+> Interdiff against v1:
+>   diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+>   index add1c2bba9..790bf1e8b5 100644
+>   --- a/Documentation/MyFirstContribution.txt
+>   +++ b/Documentation/MyFirstContribution.txt
+>   @@ -1029,27 +1029,29 @@ kidding - be patient!)
+>    [[v2-git-send-email]]
+>    === Sending v2
+>    
+>   -Skip ahead to <<reviewing,Responding to Reviews>> for information on how to
+>   -handle comments from reviewers. Continue this section when your topic branch is
+>   -shaped the way you want it to look for your patchset v2.
+>   +This section will focus on how to send a v2 of your patchset. To learn what
+>   +should go into v2, skip ahead to <<reviewing,Responding to Reviews>> for
+>   +information on how to handle comments from reviewers.
+>    
+>   -Let's write v2 as its own topic branch, because this will make some things more
+>   -convenient later on. Create the `psuh-v2` branch like so:
+>   +We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
+>   +mark the tip of our v1 branch for easy reference:
+>    
+>    ----
+>   -$ git checkout -b psuh-v2 psuh
+>   +$ git checkout psuh
+>   +$ git branch psuh-v1
+>    ----
+>    
+>   -When you're ready with the next iteration of your patch, the process is fairly
+>   -similar to before. Generate your patches again, but with some new flags:
+>   +Make your changes with `git rebase -i`. Once you're ready with the next
+>   +iteration of your patch, the process is fairly similar to before. Generate your
+>   +patches again, but with some new flags:
+>    
+>    ----
+>   -$ git format-patch -v2 --range-diff psuh..psuh-v2 --cover-letter -o psuh/ master..psuh
+>   +$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
+>    ----
+>    
+>   -The `--range-diff psuh..psuh-v2` parameter tells `format-patch` to include a
+>   -range diff between `psuh` and `psuh-v2`. This helps tell reviewers about the
+>   -differences between your v1 and v2 patches.
+>   +The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
+>   +range-diff between `psuh-v1` and `psuh` (see linkgit:git-range-diff[1]). This
+>   +helps tell reviewers about the differences between your v1 and v2 patches.
+>    
+>    The `-v2` parameter tells `format-patch` to output "v2" patches. For instance,
+>    you may notice that your v2 patches, are all named like
+>   @@ -1058,8 +1060,10 @@ prefixing them with "[PATCH V2]" instead of "[PATCH]", and your range-diff will
+>    be prefaced with "Range-diff against v1".
+>    
+>    Afer you run this command, `format-patch` will output the patches to the `psuh/`
+>   -directory, alongside the v1 patches. That's fine, but be careful when you are
+>   -ready to send them.
+>   +directory, alongside the v1 patches. Using a single directory makes it easy to
+>   +refer to the old v1 patches while proofreading the v2 patches, but you will need
+>   +to be careful to send out only the v2 patches. We will use a pattern like
+>   +"psuh/v2-*.patch" ("psuh/*.patch" would match v1 and v2 patches).
+>    
+>    Edit your cover letter again. Now is a good time to mention what's different
+>    between your last version and now, if it's something significant. You do not
+>   @@ -1097,7 +1101,7 @@ to the command:
+>    ----
+>    $ git send-email --to=target@example.com
+>    		 --in-reply-to="<foo.12345.author@example.com>"
+>   -		 psuh/v2*
+>   +		 psuh/v2-*.patch
+>    ----
+>    
+>    [[single-patch]]
+>
+>  Documentation/MyFirstContribution.txt | 41 ++++++++++++++++++++-------
+>  1 file changed, 30 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index 015cf24631..790bf1e8b5 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -1029,22 +1029,41 @@ kidding - be patient!)
+>  [[v2-git-send-email]]
+>  === Sending v2
+>  
+> -Skip ahead to <<reviewing,Responding to Reviews>> for information on how to
+> -handle comments from reviewers. Continue this section when your topic branch is
+> -shaped the way you want it to look for your patchset v2.
+> +This section will focus on how to send a v2 of your patchset. To learn what
+> +should go into v2, skip ahead to <<reviewing,Responding to Reviews>> for
+> +information on how to handle comments from reviewers.
+> +
+> +We'll reuse our `psuh` topic branch for v2. Before we make any changes, we'll
+> +mark the tip of our v1 branch for easy reference:
+>  
+> -When you're ready with the next iteration of your patch, the process is fairly
+> -similar.
+> +----
+> +$ git checkout psuh
+> +$ git branch psuh-v1
+> +----
+>  
+> -First, generate your v2 patches again:
+> +Make your changes with `git rebase -i`. Once you're ready with the next
+> +iteration of your patch, the process is fairly similar to before. Generate your
+> +patches again, but with some new flags:
+>  
+>  ----
+> -$ git format-patch -v2 --cover-letter -o psuh/ master..psuh
+> +$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
+>  ----
+>  
+> -This will add your v2 patches, all named like `v2-000n-my-commit-subject.patch`,
+> -to the `psuh/` directory. You may notice that they are sitting alongside the v1
+> -patches; that's fine, but be careful when you are ready to send them.
+> +The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
+> +range-diff between `psuh-v1` and `psuh` (see linkgit:git-range-diff[1]). This
+> +helps tell reviewers about the differences between your v1 and v2 patches.
+> +
+> +The `-v2` parameter tells `format-patch` to output "v2" patches. For instance,
+> +you may notice that your v2 patches, are all named like
+> +`v2-000n-my-commit-subject.patch`. `-v2` will also format your patches by
+> +prefixing them with "[PATCH V2]" instead of "[PATCH]", and your range-diff will
+> +be prefaced with "Range-diff against v1".
+> +
+> +Afer you run this command, `format-patch` will output the patches to the `psuh/`
+> +directory, alongside the v1 patches. Using a single directory makes it easy to
+> +refer to the old v1 patches while proofreading the v2 patches, but you will need
+> +to be careful to send out only the v2 patches. We will use a pattern like
+> +"psuh/v2-*.patch" ("psuh/*.patch" would match v1 and v2 patches).
 
-That we caught all of them was asserted with a follow-up change that's
-not part of this series[1], we might add such a duplication check at
-some later time, but for now let's just one-off remove the duplicate
-boilerplate.
+Do we need a line to cover/suggest how the V2 to V3 follow up to further
+review commands are tweaked.
 
-1. https://lore.kernel.org/git/patch-v3-6.9-bc79b29f3c-20210805T103237Z-avarab@gmail.com/
+This sort of follows from the discussion about keeping the branch `psuh`
+as the working branch, and the `-v1`, -`v2`, `-v3` as the record of
+former submissions. The range-diff is then tweaked to be `--range-diff
+master..psuh-v<N>` where N is the last proper submission (just in case
+one version was a not-submitted dud).
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t0000-basic.sh | 228 +++++++++++++----------------------------------
- 1 file changed, 60 insertions(+), 168 deletions(-)
+(Hmm. Writing that was useful to help clear my thoughts as well ;-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 6fdd5f43cae..a0b99d83349 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -226,18 +226,13 @@ test_expect_success 'subtest: --verbose option' '
- '
- 
- test_expect_success 'subtest: --verbose-only option' '
--	write_and_run_sub_test_lib_test_err \
--		t2345-verbose-only-2 \
--		--verbose-only=2 <<-\EOF &&
--	test_expect_success "passing test" true
--	test_expect_success "test with output" "echo foo"
--	test_expect_success "failing test" false
--	test_done
--	EOF
--	check_sub_test_lib_test t2345-verbose-only-2 <<-\EOF
-+	run_sub_test_lib_test_err \
-+		t1234-verbose \
-+		--verbose-only=2 &&
-+	check_sub_test_lib_test t1234-verbose <<-\EOF
- 	> ok 1 - passing test
- 	> Z
--	> expecting success of 2345.2 '\''test with output'\'': echo foo
-+	> expecting success of 1234.2 '\''test with output'\'': echo foo
- 	> foo
- 	> ok 2 - test with output
- 	> Z
-@@ -250,15 +245,9 @@ test_expect_success 'subtest: --verbose-only option' '
- 
- test_expect_success 'subtest: skip one with GIT_SKIP_TESTS' '
- 	(
--		write_and_run_sub_test_lib_test git-skip-tests-basic \
--			--skip="git.2" <<-\EOF &&
--		for i in 1 2 3
--		do
--			test_expect_success "passing test #$i" "true"
--		done
--		test_done
--		EOF
--		check_sub_test_lib_test git-skip-tests-basic <<-\EOF
-+		run_sub_test_lib_test full-pass \
-+			--skip="full.2" &&
-+		check_sub_test_lib_test full-pass <<-\EOF
- 		> ok 1 - passing test #1
- 		> ok 2 # skip passing test #2 (GIT_SKIP_TESTS)
- 		> ok 3 - passing test #3
-@@ -293,15 +282,9 @@ test_expect_success 'subtest: skip several with GIT_SKIP_TESTS' '
- 
- test_expect_success 'subtest: sh pattern skipping with GIT_SKIP_TESTS' '
- 	(
--		write_and_run_sub_test_lib_test git-skip-tests-sh-pattern \
--			--skip="git.[2-5]" <<-\EOF &&
--		for i in 1 2 3 4 5 6
--		do
--			test_expect_success "passing test #$i" "true"
--		done
--		test_done
--		EOF
--		check_sub_test_lib_test git-skip-tests-sh-pattern <<-\EOF
-+		run_sub_test_lib_test git-skip-tests-several \
-+			--skip="git.[2-5]" &&
-+		check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 		> ok 1 - passing test #1
- 		> ok 2 # skip passing test #2 (GIT_SKIP_TESTS)
- 		> ok 3 # skip passing test #3 (GIT_SKIP_TESTS)
-@@ -316,15 +299,10 @@ test_expect_success 'subtest: sh pattern skipping with GIT_SKIP_TESTS' '
- 
- test_expect_success 'subtest: skip entire test suite with GIT_SKIP_TESTS' '
- 	(
--		write_and_run_sub_test_lib_test git-skip-tests-entire-suite \
--			--skip="git" <<-\EOF &&
--		for i in 1 2 3
--		do
--			test_expect_success "passing test #$i" "true"
--		done
--		test_done
--		EOF
--		check_sub_test_lib_test git-skip-tests-entire-suite <<-\EOF
-+		GIT_SKIP_TESTS="git" && export GIT_SKIP_TESTS &&
-+		run_sub_test_lib_test git-skip-tests-several \
-+			--skip="git" &&
-+		check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 		> 1..0 # SKIP skip all tests in git
- 		EOF
- 	)
-@@ -332,15 +310,10 @@ test_expect_success 'subtest: skip entire test suite with GIT_SKIP_TESTS' '
- 
- test_expect_success 'subtest: GIT_SKIP_TESTS does not skip unmatched suite' '
- 	(
--		write_and_run_sub_test_lib_test git-skip-tests-unmatched-suite \
--			--skip="notgit" <<-\EOF &&
--		for i in 1 2 3
--		do
--			test_expect_success "passing test #$i" "true"
--		done
--		test_done
--		EOF
--		check_sub_test_lib_test git-skip-tests-unmatched-suite <<-\EOF
-+		GIT_SKIP_TESTS="notgit" && export GIT_SKIP_TESTS &&
-+		run_sub_test_lib_test full-pass \
-+			--skip="notfull" &&
-+		check_sub_test_lib_test full-pass <<-\EOF
- 		> ok 1 - passing test #1
- 		> ok 2 - passing test #2
- 		> ok 3 - passing test #3
-@@ -351,14 +324,8 @@ test_expect_success 'subtest: GIT_SKIP_TESTS does not skip unmatched suite' '
- '
- 
- test_expect_success 'subtest: --run basic' '
--	write_and_run_sub_test_lib_test run-basic --run="1,3,5" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-basic <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several --run="1,3,5" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 # skip passing test #2 (--run)
- 	> ok 3 - passing test #3
-@@ -371,15 +338,9 @@ test_expect_success 'subtest: --run basic' '
- '
- 
- test_expect_success 'subtest: --run with a range' '
--	write_and_run_sub_test_lib_test run-range \
--		--run="1-3" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-range <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="1-3" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 - passing test #3
-@@ -392,15 +353,9 @@ test_expect_success 'subtest: --run with a range' '
- '
- 
- test_expect_success 'subtest: --run with two ranges' '
--	write_and_run_sub_test_lib_test run-two-ranges \
--		--run="1-2,5-6" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-two-ranges <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="1-2,5-6" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -413,15 +368,9 @@ test_expect_success 'subtest: --run with two ranges' '
- '
- 
- test_expect_success 'subtest: --run with a left open range' '
--	write_and_run_sub_test_lib_test run-left-open-range \
--		--run="-3" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-left-open-range <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="-3" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 - passing test #3
-@@ -434,15 +383,9 @@ test_expect_success 'subtest: --run with a left open range' '
- '
- 
- test_expect_success 'subtest: --run with a right open range' '
--	write_and_run_sub_test_lib_test run-right-open-range \
--		--run="4-" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-right-open-range <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="4-" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 # skip passing test #1 (--run)
- 	> ok 2 # skip passing test #2 (--run)
- 	> ok 3 # skip passing test #3 (--run)
-@@ -455,15 +398,9 @@ test_expect_success 'subtest: --run with a right open range' '
- '
- 
- test_expect_success 'subtest: --run with basic negation' '
--	write_and_run_sub_test_lib_test run-basic-neg \
--		--run="!3" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-basic-neg <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="!3" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -476,15 +413,9 @@ test_expect_success 'subtest: --run with basic negation' '
- '
- 
- test_expect_success 'subtest: --run with two negations' '
--	write_and_run_sub_test_lib_test run-two-neg \
--		--run="!3,!6" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-two-neg <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="!3,!6" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -497,15 +428,9 @@ test_expect_success 'subtest: --run with two negations' '
- '
- 
- test_expect_success 'subtest: --run a range and negation' '
--	write_and_run_sub_test_lib_test run-range-and-neg \
--		--run="-4,!2" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-range-and-neg <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="-4,!2" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 # skip passing test #2 (--run)
- 	> ok 3 - passing test #3
-@@ -518,15 +443,9 @@ test_expect_success 'subtest: --run a range and negation' '
- '
- 
- test_expect_success 'subtest: --run range negation' '
--	write_and_run_sub_test_lib_test run-range-neg \
--		--run="!1-3" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-range-neg <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="!1-3" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 # skip passing test #1 (--run)
- 	> ok 2 # skip passing test #2 (--run)
- 	> ok 3 # skip passing test #3 (--run)
-@@ -539,15 +458,9 @@ test_expect_success 'subtest: --run range negation' '
- '
- 
- test_expect_success 'subtest: --run include, exclude and include' '
--	write_and_run_sub_test_lib_test run-inc-neg-inc \
--		--run="1-5,!1-3,2" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-inc-neg-inc <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="1-5,!1-3,2" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 # skip passing test #1 (--run)
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -560,15 +473,9 @@ test_expect_success 'subtest: --run include, exclude and include' '
- '
- 
- test_expect_success 'subtest: --run include, exclude and include, comma separated' '
--	write_and_run_sub_test_lib_test run-inc-neg-inc-comma \
--		--run=1-5,!1-3,2 <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-inc-neg-inc-comma <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run=1-5,!1-3,2 &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 # skip passing test #1 (--run)
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -581,15 +488,9 @@ test_expect_success 'subtest: --run include, exclude and include, comma separate
- '
- 
- test_expect_success 'subtest: --run exclude and include' '
--	write_and_run_sub_test_lib_test run-neg-inc \
--		--run="!3-,5" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-neg-inc <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="!3-,5" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 - passing test #2
- 	> ok 3 # skip passing test #3 (--run)
-@@ -602,15 +503,9 @@ test_expect_success 'subtest: --run exclude and include' '
- '
- 
- test_expect_success 'subtest: --run empty selectors' '
--	write_and_run_sub_test_lib_test run-empty-sel \
--		--run="1,,3,,,5" <<-\EOF &&
--	for i in 1 2 3 4 5 6
--	do
--		test_expect_success "passing test #$i" "true"
--	done
--	test_done
--	EOF
--	check_sub_test_lib_test run-empty-sel <<-\EOF
-+	run_sub_test_lib_test git-skip-tests-several \
-+		--run="1,,3,,,5" &&
-+	check_sub_test_lib_test git-skip-tests-several <<-\EOF
- 	> ok 1 - passing test #1
- 	> ok 2 # skip passing test #2 (--run)
- 	> ok 3 - passing test #3
-@@ -660,12 +555,9 @@ test_expect_success 'subtest: --run keyword selection' '
- '
- 
- test_expect_success 'subtest: --run invalid range end' '
--	write_and_run_sub_test_lib_test_err run-inv-range-end \
--		--run="1-z" <<-\EOF &&
--	test_expect_success "passing test #1" "true"
--	test_done
--	EOF
--	check_sub_test_lib_test_err run-inv-range-end \
-+	run_sub_test_lib_test_err run-inv-range-start \
-+		--run="1-z" &&
-+	check_sub_test_lib_test_err run-inv-range-start \
- 		<<-\EOF_OUT 3<<-EOF_ERR
- 	> FATAL: Unexpected exit with code 1
- 	EOF_OUT
+Thanks for working on this.
 -- 
-2.33.0.1225.g9f062250122
+Philip
+>  
+>  Edit your cover letter again. Now is a good time to mention what's different
+>  between your last version and now, if it's something significant. You do not
+> @@ -1082,7 +1101,7 @@ to the command:
+>  ----
+>  $ git send-email --to=target@example.com
+>  		 --in-reply-to="<foo.12345.author@example.com>"
+> -		 psuh/v2*
+> +		 psuh/v2-*.patch
+>  ----
+>  
+>  [[single-patch]]
 
