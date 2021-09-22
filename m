@@ -2,82 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57B78C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE7CFC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C2B06127B
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:40:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A17CD611C9
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236886AbhIVRm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 13:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236815AbhIVRm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 13:42:28 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D1EC061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 10:40:58 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id d18so4383607iof.13
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 10:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mb1PqJQXrb/aYQNrTJa/YUnNxvtRhk/yBcSpQyEVGHc=;
-        b=FoC3ihqjb0ancDEoql6wKGvhAjmZKdsKbFS/a49oXZ5fIkkIizPPfqjFWiS3Gz3Y0Q
-         +h07dvUW8Amdm0sLcWaMsAvkTG8D/GEIuzUyh572dUZegZ+saAsoA+n/0z9vgFsKPRSb
-         CISdlFLTXMAfKPO/Y5JNU7RU3xOIX2oA704ni/9tWK0jF6Xl4ZhrU+QZ6/YBeUbU/ya1
-         7sBi8JEBJKaWV0rWnpspaKZbZSx1lPFYnsROQZ+ZENKX4QJrbRexO1Q+YH8KHQoOJUZj
-         zP3BREnP0pSKwKie+O4oTdfVrbiVgdRxGEIFyBuFWB7WdaxSauHNdfCvSOU49kQByQu5
-         GMDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mb1PqJQXrb/aYQNrTJa/YUnNxvtRhk/yBcSpQyEVGHc=;
-        b=7iFopVXCI2v8Vl8CYiyZqPdVNNK+B7v4KaWHyBJOnAPpRHC0SKKBIt0OAq/EMRJxou
-         Lf4zl2Ly9H94IxkNMFxVTBdQa2DKGqYlXZMYvr6tG/9JVgYARbWb8zLZnI5bprBn+gF0
-         O1Xd3/Nx81ozV6W2PCJRTkUi/4AlwVUgD3NtopLN1beOQ5oD6iXQnpeSObgIxVGopjj3
-         P4XAm/up2VTvqVJno24g6md6sCPvoUm5PJ8WKq07dSoLX6SZPHzzn3dAc2vgi6vW+6iB
-         B5F0MsvRJHVUUsBn+mNt8Zt7naLAj9N33mbBMrIm6yVFHdCAoE6/lV5Zo02c42kEPM1I
-         kADg==
-X-Gm-Message-State: AOAM531OhhIybwyCVRY3LzcWcn+SXNzJhqpjPhHdpgBINyRa0nXZ33A/
-        AFrG/gWj3iqANdS+1fuoFXU2bCt9PbpcXA==
-X-Google-Smtp-Source: ABdhPJy9fRYjK48Ni5wA3Itp4r517zseUqjePwVxtM5s8UBcfszlHG0VC3T+mSxHV/f8sQuQ9ZQCSg==
-X-Received: by 2002:a6b:be02:: with SMTP id o2mr163095iof.103.1632332457460;
-        Wed, 22 Sep 2021 10:40:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x5sm1244979ioa.35.2021.09.22.10.40.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 10:40:56 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 13:40:55 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, wolf@oriole.systems
-Subject: Re: [PATCH] rev-parse: fix mismatch quoting of separator in the
- message
-Message-ID: <YUtqp+1Mwl2v0kuh@nand.local>
-References: <20210922111744.675326-1-bagasdotme@gmail.com>
+        id S236836AbhIVRoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 13:44:00 -0400
+Received: from lug-owl.de ([188.68.32.151]:54850 "EHLO lug-owl.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236893AbhIVRn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 13:43:59 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+        id 1B98F41EF6; Wed, 22 Sep 2021 19:42:28 +0200 (CEST)
+Date:   Wed, 22 Sep 2021 19:42:28 +0200
+From:   Jan-Benedict Glaw <jbglaw@lug-owl.de>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: *ping* [PATCH RFC] gitweb: Handle non-ASCII email addresses
+Message-ID: <20210922174228.2i2bz2fx3ap45s75@lug-owl.de>
+References: <20210915192647.6fnk7ktwldz7uubf@lug-owl.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="ngimggxpzpwdokft"
 Content-Disposition: inline
-In-Reply-To: <20210922111744.675326-1-bagasdotme@gmail.com>
+In-Reply-To: <20210915192647.6fnk7ktwldz7uubf@lug-owl.de>
+X-Operating-System: Linux chamaeleon 5.8.0-0.bpo.2-amd64
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear
+ warfare test the bombastical terror of flooding the spy listeners explosion
+ sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare
+ test the bombastical terror of flooding the spy listeners explosion sex
+ drugs and rock'n'roll
+X-message-flag: Please send plain text messages only. Do not send HTML
+ emails. Thank you.
+User-Agent: NeoMutt/20170113 (1.7.2)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 06:17:45PM +0700, Bagas Sanjaya wrote:
-> There is a quoting mismatch quoting `--` separator in "no usage string
-> given...." message (`' instead of ``). Fix it.
 
-For what it's worth, I think that the `' style is typographic, since the
-pair look like English "smart quotes" (as opposed to straight quotes). I
-have no opinion about which is better, but I don't think the pre-image
-was necessarily a mistake.
+--ngimggxpzpwdokft
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi!
+
+On Wed, 2021-09-15 21:26:47 +0200, Jan-Benedict Glaw <jbglaw@lug-owl.de> wr=
+ote:
+> I accidentally had a bad user.email setting ("jbglaw@=C5=82ug-owl.de"
+> instead of "jbglaw@lug-owl.de") and this leads to incomplete HTML
+> being generated by gitweb, along with an error message:
+>=20
+> index.cgi: Wide character in subroutine entry at /usr/share/gitweb/index.=
+cgi line 2208.
+>=20
+> This patch may fix it, but I'm NOT a Perl guy:
+>=20
+> --- a/gitweb/gitweb.perl	2021-09-15 20:23:13.788195846 +0200
+> +++ b/gitweb/gitweb.perl	2021-09-15 20:24:19.911806868 +0200
+> @@ -2193,7 +2193,7 @@
+>  	my $size =3D shift;
+>  	$avatar_cache{$email} ||=3D
+>  		"//www.gravatar.com/avatar/" .
+> -			md5_hex($email) . "?s=3D";
+> +			md5_hex(utf8::is_utf8($email)? Encode::encode_utf8($email): $email) .=
+ "?s=3D";
+>  	return $avatar_cache{$email} . $size;
+>  }
+>=20
+>=20
+> Comments?
+
+I'd like to get some comment on this, maybe for anybody to merge it?
 
 Thanks,
-Taylor
+  Jan-Benedict
+
+--=20
+
+--ngimggxpzpwdokft
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQQlDTvPcScNjKREqWEdvV51g5nhuwUCYUtrAAAKCRAdvV51g5nh
+uzePAJ9wJsDQzgdjhjkqld7+e8LR6bUBOgCfZzHESRgyeCr23BF/jtV76lY9H5I=
+=MGJT
+-----END PGP SIGNATURE-----
+
+--ngimggxpzpwdokft--
