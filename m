@@ -2,108 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DECBC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B3CC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:43:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 783D86120E
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:33:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DCD16109E
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:43:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237090AbhIVSfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 14:35:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232806AbhIVSfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 14:35:19 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCDD5C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:33:49 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id q81so9365052qke.5
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jKNtK3kAxa6/CrRmbd7Lt7mInt1KyaoDjZOp0dHbBzs=;
-        b=bZM1Bp5GGoPPCy0x1RTOxzRSAX75BykxnsS/+IJD4ppIypGit7Z5gsh6sEB76zu2el
-         nFpUotugiQmIlagmeSZIP1YQ6w3XFl68jXuiNNamxbOXN7MlwpAZu3goZRSCNRuZ8mBy
-         I4iURz0XQcqTNugw/NtSIIf2S7bmgBtkCc6qB2qYu0biGIEMpXv+7Vpj1NF5GB6dQpu+
-         9LeL79VAk+kXDUe3kstofIg0d9yssjDAwso/ID2h3aASuuFkuk8Gf+kkTZiLhANYSjEL
-         8Cppy5HojzodV3dUftG3Lr1dbCzJwGKUyt8xhBHgRwKy2oS0cWkCYNTWrh2tIYYv1jzY
-         qDnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jKNtK3kAxa6/CrRmbd7Lt7mInt1KyaoDjZOp0dHbBzs=;
-        b=ljJsGI/DTF87vbGlX/ERAfYoAXAzX0QtGDsphURZJa8oO/ASMdnOPHcYlRLxJ77Gbb
-         3DGFylrMPYOkZXqNaLz2fVmXQyoX+aWIKvROrlY4yfrlfeL10mp6XOwhaDA7lP63td2H
-         +dxL4K6D+Ga2vyPutcTEWhbvRsrkzCN2399UtxMS6nT9yiVn2EDIL1AgNZ8CP1Ut/FiZ
-         ne78aZQbGKCPIOFr0V520j13AlvcqfpTuGKmry3HWNeCwc1nXWt7VFSWfBMbTK7QINv3
-         knYIukQWdml6By0hiq56xe7LpkamWKCt3XQ4AhxmhxV/WMYGFRztTH5VddBIa/rpavFN
-         THTg==
-X-Gm-Message-State: AOAM5306YGEa5pwpk0XKyT6eRaEFb6WI12Q/zlbMlS/Hk5iSfVM//07d
-        a41/pA1fXkpR+4m3YE4fBZrETNRZBUM=
-X-Google-Smtp-Source: ABdhPJwFWPBWMYxBwtddgKop1oui/frWZYTKqAhjtgfUFfhR5e7K0N/JnAxaksTKxSHUtrMNr73sLA==
-X-Received: by 2002:a05:620a:675:: with SMTP id a21mr684383qkh.421.1632335628535;
-        Wed, 22 Sep 2021 11:33:48 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id o4sm2022544qti.24.2021.09.22.11.33.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Sep 2021 11:33:48 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, levraiphilippeblain@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] Makefile: avoid breaking compilation database generation with DEPELOPER
-Date:   Wed, 22 Sep 2021 11:33:11 -0700
-Message-Id: <20210922183311.3766-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.911.gbe391d4e11
+        id S237076AbhIVSpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 14:45:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62502 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhIVSpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 14:45:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97F36157B9C;
+        Wed, 22 Sep 2021 14:43:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ckYPvBfchqxy
+        HaJLmgmCu4a64Vc+T7HRs2turnnDYJg=; b=QgbfliAj20szZt3dAuTRsxyfIGq7
+        ANY8UhHO0h4iUZf7wixVUgV7eoxeCyhS0gGFLv8XiqvwbXOpqcZciuiXmemqn/Sn
+        E688u3XiTVI2Y+HtNtMnib4xOKbUseBLeZl/LutEatmnN0TR5WdhCJW3oMWoQNr4
+        Vzp9nk3GejmeGBI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91448157B9B;
+        Wed, 22 Sep 2021 14:43:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EAC77157B95;
+        Wed, 22 Sep 2021 14:43:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Alan Blotz <work@blotz.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/3] difftool dir-diff symlink bug fix and cleanup
+ patches
+References: <20210919203832.91207-1-davvid@gmail.com>
+        <xmqqmto7ay6s.fsf@gitster.g>
+        <CAJDDKr6m9kXKSuQhC5g_OkJa52QRMtf8s8Bd0YbRNnzAgudifQ@mail.gmail.com>
+Date:   Wed, 22 Sep 2021 11:43:30 -0700
+In-Reply-To: <CAJDDKr6m9kXKSuQhC5g_OkJa52QRMtf8s8Bd0YbRNnzAgudifQ@mail.gmail.com>
+        (David Aguilar's message of "Mon, 20 Sep 2021 14:43:37 -0700")
+Message-ID: <xmqqv92s78od.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FC31DFAA-1BD4-11EC-ABE2-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-3821c38068 (Makefile: add support for generating JSON compilation
-database, 2020-09-03), adds a feature to be used with clang to generate
-a compilation database by copying most of what was done before with the
-header dependency, but by doing so includes on its availability check
-the CFLAGS which became specially problematic once DEVELOPER=1 implied
--pedantic as pointed out by Ævar[1].
+David Aguilar <davvid@gmail.com> writes:
 
-Remove the unnecessary flags in the availability test, so it will work
-regardless of which other warnings are enabled or if the compilers has
-been told to error on them.
 
-[1] https://lore.kernel.org/git/patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com/
+> Thanks. Patch 3/3 seems trivially correct so I won't resend that either=
+.
+>
+> =C3=86var had notes about 2/3 which can be split off to a separate topi=
+c,
+> so that's the only one I'll plan to resend all by itself --in-reply-to
+> that thread.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Please don't do this.  Your topic is not the only one I am looking
+at, and being able to find the whole thing together is always more
+efficient than having to go back, re-read the discussion and pick
+the latest iteration of each step individually (which will not work
+if the topic needs reordering of the patches in it anyway).
 
-diff --git a/Makefile b/Makefile
-index 9df565f27b..d5c6d0ea3b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1302,7 +1302,7 @@ GENERATE_COMPILATION_DATABASE = no
- endif
- 
- ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
--compdb_check = $(shell $(CC) $(ALL_CFLAGS) \
-+compdb_check = $(shell $(CC) \
- 	-c -MJ /dev/null \
- 	-x c /dev/null -o /dev/null 2>&1; \
- 	echo $$?)
--- 
-2.33.0.911.gbe391d4e11
+> I see that it's already in "seen". I can send a replacement patch
+> shortly ...
 
+Please do not read anything in a topic being (or not being, for that
+matter) "seen".  It means "the maintainer has seen it and thought it
+might be interesting at one point of time in the past" and nothing
+more.  It certainly does not mean the maintainer is keeping track of
+how the topic is evolving and knows which piece will be replaced and
+which piece is already done.
+
+Thanks.
