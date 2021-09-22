@@ -2,121 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD95C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50A0FC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 505EA6112F
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:09:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3366F61211
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237495AbhIVUK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 16:10:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52888 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237391AbhIVUKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 16:10:41 -0400
-Received: (qmail 10982 invoked by uid 109); 22 Sep 2021 20:09:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 20:09:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17810 invoked by uid 111); 22 Sep 2021 20:09:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 16:09:00 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Sep 2021 16:09:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH] http: match headers case-insensitively when redacting
-Message-ID: <YUuNXOb5blV7iN6P@coredump.intra.peff.net>
-References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
- <xmqq8rzo770h.fsf@gitster.g>
+        id S237421AbhIVUME (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 16:12:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237408AbhIVUMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 16:12:00 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E3BC0610CC
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:08:26 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id h20so4033346ilj.13
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=60zcqkPtCeV/p1RGEbincQxBCgY/NdVoCzMPOp4sW9Y=;
+        b=wjmgJ1aGGn/yHWMnUY3bHkR72dR6a4dnl67vOsmpEaYj5QGfS2J2BNEAF0oiv6TcWe
+         qvUzbCh3jYlBS8eeqi3hundp/VjE53gwf3ZPzsIe5hu68dbBfvdg+mNufLQmxXjHfAeP
+         rx9fO8p2jJphsQbpxiI60JUN76J5T8jqxZwugVGk8v1kBB2n3MdpYI2nsO16LlgSUH4+
+         59VpBHPEQFCwBBXG43rcfZVKX4amCibQbcnlLNbSnYwNWSP/oVw+mUFXTDgg4iMhgz5v
+         7ZLw22UralbJFeclptJBrlacwqUumtY1pg85dJTVLQPMgzAXsQIAhYilbDocCQvSZFD9
+         2rWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=60zcqkPtCeV/p1RGEbincQxBCgY/NdVoCzMPOp4sW9Y=;
+        b=lfUmdxNR9X6vKm40Q/81XhSaVrHUw88TyE+xeC45kIdk1nBJueYUeIWlsawHa4nSLP
+         Fh+psU5tLV8qRpfFRyhEz/VQDq+TgDLfj1PfEDkzm6w7nW5dUQsssq8zjqAUOTyHyxRg
+         gcG7BDfCIiNBKF/6inSotyrTB5E0EHgVGLr0VXKQHDWGWhagDJ+zTEA8VTzKmX1Lz6UT
+         kU06HToBrpHV65rdEJ6KckPEpIbmXqwJZnaB5IKr3mHsxJOrzL+lEezaRTAr4OW1FIGF
+         9aF4KaKkEIKxrN12nC/s9sLXMGHW+b7cY8UIedEzbvsCe8omj6r9PyGjjRCYIBUGNYHQ
+         yHRg==
+X-Gm-Message-State: AOAM531tcMlOmtk7pRpDrvkNqXUmmhm8w91HFvmIZ+OOp08n9nVmcrqk
+        Od42UU/zMUwjpS1qoUo8OsE+xw==
+X-Google-Smtp-Source: ABdhPJyRULa1QmQL2xTYhZac2eQXB9uh1iT8umZlHOh6owJ4tKwq1SAiyq51Sa5Fn7Oqr6kSl7cMpA==
+X-Received: by 2002:a92:c54c:: with SMTP id a12mr649024ilj.81.1632341306267;
+        Wed, 22 Sep 2021 13:08:26 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d10sm1519210ilu.54.2021.09.22.13.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 13:08:25 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 16:08:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        wolf@oriole.systems
+Subject: Re: [PATCH] rev-parse: fix mismatch quoting of separator in the
+ message
+Message-ID: <YUuNOcqClVjQamYh@nand.local>
+References: <20210922111744.675326-1-bagasdotme@gmail.com>
+ <YUtqp+1Mwl2v0kuh@nand.local>
+ <xmqqzgs45s15.fsf@gitster.g>
+ <YUuHP41V9m7cIEBL@nand.local>
+ <87bl4k7532.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8rzo770h.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bl4k7532.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 12:19:26PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > 	# Ensure that there is no "Basic" followed by a base64 string, but that
-> > 	# the auth details are redacted
-> > 	! grep "Authorization: Basic [0-9a-zA-Z+/]" trace &&
-> > 	grep "Authorization: Basic <redacted>" trace
+On Wed, Sep 22, 2021 at 09:59:51PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+> On Wed, Sep 22 2021, Taylor Blau wrote:
+>
+> > On Wed, Sep 22, 2021 at 12:28:22PM -0700, Junio C Hamano wrote:
+> >> Taylor Blau <me@ttaylorr.com> writes:
+> >>
+> >> > On Wed, Sep 22, 2021 at 06:17:45PM +0700, Bagas Sanjaya wrote:
+> >> >> There is a quoting mismatch quoting `--` separator in "no usage string
+> >> >> given...." message (`' instead of ``). Fix it.
+> >> >
+> >> > For what it's worth, I think that the `' style is typographic, since the
+> >> > pair look like English "smart quotes" (as opposed to straight quotes). I
+> >> > have no opinion about which is better, but I don't think the pre-image
+> >> > was necessarily a mistake.
+> >>
+> >> I thought that we try to avoid "smart quotes" in our messages.
 > >
-> > gets confused. It sees the "<redacted>" one from the pre-upgrade
-> > HTTP/1.1 request, but fails to see the unredacted HTTP/2 one, because it
-> > does not match the lower-case "authorization".
-> 
-> Neither pattern of the above two will not match the HTTP/2 one, so
-> the first one would report "there is no leakage of Auth with a
-> caplital letter"; the second one may see only one pre-upgrade Auth
-> with a capital letter, but as long as it does find one, it should be
-> happy, no?
-> 
-> I am a bit puzzled how the test gets confused.
+> > I think UTF-8 smart quotes are generally frowned upon in source code,
+> > but I didn't think we had any hard-and-fast rule about whether to prefer
+> > 'this' to `that' (for what it's worth, I prefer the former and it seems
+> > to be more common).
+>
+> No comment on what's preferred, other than I wish we'd pick a style and
+> stick to it. Just a note that this used to be the way to do it in
+> e.g. the GNU guidelines, I see it isn't anymore though: [1].
 
-The first one matches nothing, because the HTTP/2 one which fails to
-redact has a lower-case "A". The second one _does_ match, because we do
-issue an HTTP/1.1 request in addition to the HTTP/2 one. We have to in
-order to probe the server to say "this is HTTP/1.1, but by the way, we
-support HTTP/2".
+I agree. But for what it's worth, I think we should:
 
-I am a little surprised that we get as far as sending auth info via
-HTTP/1.1, since the initial probe that results in a 401 (causing us to
-send the auth) could in theory let us know the server speaks HTTP/2. But
-in practice it doesn't.  It looks like the server does not do the
-upgrade for a 401 (perhaps that's true for any non-success code, I don't
-know).
+  - accept patches, such as this one, which move things in a positive
+    direction
 
-You can see it in action if you use the test changes I mentioned earlier
-_without_ my patch applied (so neither the "grep -i" fix, nor the actual
-code change). And then do:
+  - not spend a ton of time or reviewer bandwidth on conversions
+    throughout the tree
 
-  ./t5551-http-fetch-smart.sh --run=1-17 --debug
-  egrep 'Send header:|Recv header:' trash*/trace
+In other words, I'm happy to see patches like this, or little clean-ups
+along the way in related areas, but I would be unhappy to see a massive
+patch to change all instances from one to the other.
 
-I get (with some extraneous headers omitted):
+> 1. https://www.gnu.org/prep/standards/standards.html#Quote-Characters-1
 
-  => Send header: GET /auth/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
-  => Send header: Connection: Upgrade, HTTP2-Settings
-  => Send header: Upgrade: h2c
-  => Send header: HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA
-
-  <= Recv header: HTTP/1.1 401 Unauthorized
-  <= Recv header: Date: Wed, 22 Sep 2021 20:03:32 GMT
-  <= Recv header: Server: Apache/2.4.49 (Debian)
-  <= Recv header: WWW-Authenticate: Basic realm="git-auth"
-
-  => Send header: GET /auth/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
-  => Send header: Authorization: Basic <redacted>
-  => Send header: Connection: Upgrade, HTTP2-Settings
-  => Send header: Upgrade: h2c
-  => Send header: HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA
-
-  <= Recv header: HTTP/1.1 101 Switching Protocols
-  <= Recv header: Upgrade: h2c
-  <= Recv header: Connection: Upgrade
-  <= Recv header: HTTP/2 200
-  <= Recv header: content-type: application/x-git-upload-pack-advertisement
-
-  => Send header: POST /auth/smart/repo.git/git-upload-pack HTTP/2
-  => Send header: authorization: Basic dXNlckBob3N0OnBhc3NAaG9zdA==
-  => Send header: content-type: application/x-git-upload-pack-request
-
-  <= Recv header: HTTP/2 200
-  <= Recv header: content-type: application/x-git-upload-pack-result
-  [...and so on...]
-
-So you can see both the redacted and unredacted lines in that output.
-I'm happy to include that in the commit message if it helps; I avoided
-it earlier because it was already getting quite long. ;)
-
--Peff
+Thanks,
+Taylor
