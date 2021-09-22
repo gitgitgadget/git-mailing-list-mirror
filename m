@@ -2,100 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D44CEC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DECA9C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:21:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E76E6112F
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:18:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B625A60F44
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237883AbhIVVUG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 17:20:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52998 "EHLO cloud.peff.net"
+        id S238130AbhIVVXH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 17:23:07 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:58796 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237770AbhIVVUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 17:20:05 -0400
-Received: (qmail 11789 invoked by uid 109); 22 Sep 2021 21:18:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 21:18:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18817 invoked by uid 111); 22 Sep 2021 21:18:33 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 17:18:33 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Sep 2021 17:18:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH] http: match headers case-insensitively when redacting
-Message-ID: <YUudqYmzy9N3e0Bk@coredump.intra.peff.net>
-References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
- <xmqq8rzo770h.fsf@gitster.g>
- <YUuNXOb5blV7iN6P@coredump.intra.peff.net>
- <xmqqk0j85o6c.fsf@gitster.g>
+        id S238141AbhIVVXF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 17:23:05 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4HFB7J52p0z5tl9;
+        Wed, 22 Sep 2021 23:21:32 +0200 (CEST)
+Subject: Re: [PATCH cb/pedantic-build-for-developers] lazyload.h: fix warnings
+ about mismatching function pointer types
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <4381472f-a9db-b8a7-a395-81c3935309ae@kdbg.org>
+ <CAPUEspguHsx+BtViT5tO3eyZSJf7mJ0of-K3vAMqB0-ju4fpsg@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2793c9c0-57ee-c7e0-957c-01d9aa27b44b@kdbg.org>
+Date:   Wed, 22 Sep 2021 23:21:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
+In-Reply-To: <CAPUEspguHsx+BtViT5tO3eyZSJf7mJ0of-K3vAMqB0-ju4fpsg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk0j85o6c.fsf@gitster.g>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 01:51:39PM -0700, Junio C Hamano wrote:
-
-> >> Neither pattern of the above two will not match the HTTP/2 one, so
-> >> the first one would report "there is no leakage of Auth with a
-> >> caplital letter"; the second one may see only one pre-upgrade Auth
-> >> with a capital letter, but as long as it does find one, it should be
-> >> happy, no?
-> >> 
-> >> I am a bit puzzled how the test gets confused.
-> >
-> > The first one matches nothing, because the HTTP/2 one which fails to
-> > redact has a lower-case "A". The second one _does_ match, because ...
+Am 22.09.21 um 22:16 schrieb Carlo Arenas:
+> On Wed, Sep 22, 2021 at 12:56 PM Johannes Sixt <j6t@kdbg.org> wrote:
+>>
+>> Here, GCC warns about every use of the INIT_PROC_ADDR macro, for example:
+>>
+>> In file included from compat/mingw.c:8:
+>> compat/mingw.c: In function 'mingw_strftime':
+>> compat/win32/lazyload.h:38:12: warning: assignment to
+>>    'size_t (*)(char *, size_t,  const char *, const struct tm *)'
+>>    {aka 'long long unsigned int (*)(char *, long long unsigned int,
+>>       const char *, const struct tm *)'} from incompatible pointer type
+>>    'FARPROC' {aka 'long long int (*)()'} [-Wincompatible-pointer-types]
+>>    38 |  (function = get_proc_addr(&proc_addr_##function))
+>>       |            ^
+>> compat/mingw.c:1014:6: note: in expansion of macro 'INIT_PROC_ADDR'
+>>  1014 |  if (INIT_PROC_ADDR(strftime))
+>>       |      ^~~~~~~~~~~~~~
 > 
-> I thought we were talking about the original case sensitive test
-> getting confused when testing the software that is fixed,
-> i.e. HTTP/2 lowercase "authorization" line properly redacted.
+> did you have CFLAGS adding -Wincompatible-pointer-types explicitly?
 
-No, sorry. I meant: before the fix, even if we were running HTTP/2, the
-test does not detect the bug. And thus it is hard to realize that the
-fix is indeed making the bug go away. :)
+I don't know of the top of my head (am not at that Windows box right
+now). I am fairly certain that I do not have DEVELOPER set.
 
-> > I get (with some extraneous headers omitted):
-> > ...
-> >   => Send header: GET /auth/smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1
-> >   => Send header: Authorization: Basic <redacted>
+> This is the reason why the code that got merged to master had -Wno
+> for this case.
 > 
-> So, this is what we see in HTTP/1.1 (with capitalization).  And then
-> ...
+>> (message wrapper for convenience). Insert a cast to keep the compiler
+>> happy. A cast is fine in these cases because they are generic function
+>> pointer values that have been looked up in a DLL.
 > 
-> > ...
-> >   => Send header: POST /auth/smart/repo.git/git-upload-pack HTTP/2
-> >   => Send header: authorization: Basic dXNlckBob3N0OnBhc3NAaG9zdA==
+> I have a more complete "fix" which I got stuck testing GGG[1]; you are likely
+> going to also hit -Wcast-function-type otherwise.
+
+I think that the correct solution is that get_proc_addr() returns void*,
+not FARPROC. Then either no cast is needed (because void* can be
+converted to function pointer type implicitly) or a cast is needed and
+that is then not between incompatible function pointer types and should
+not trigger -Wcast-function-type, theoretically.
+
+>> ---
+>>  How can this have worked ever without a warning?
 > 
-> this one, once the redaction code is fixed by applying this patch,
-> would show that we redacted it, too, no?
+> POSIX have a specific exception that allows (void *) for this,...
 
-Correct. But the test, without switching to "grep -i", does not realize
-that.
+Sure, but as you can see in the warning message, FARPROC is not void*,
+but a somewhat generic function pointer type. I was not questioning the
+assignment of function pointer values of different types, but the
+absence of a warning.
 
-> With or without the fix in the code, I agree that neither of the two
-> "grep" patterns without "grep -i" change will match this line.  So
-> the end result is that the test finds no unredacted line, and one
-> redacted one (instead of two).
-> 
-> I agree that it is *not* testing what we want to test, and if you
-> said so, I wouldn't have been puzzled.  I just wanted to know if
-> there is something _else_ (other than "gee, we are not testing the
-> HTTP/2 case at all") going on that I failed to read in your
-> "... gets confused".
-
-No, I think we are on the same page now. Do you want me to take
-another stab at writing the commit message to clarify things (i.e., do
-we think it's badly written, or was it just mis-interpreted)?
-
--Peff
+-- Hannes
