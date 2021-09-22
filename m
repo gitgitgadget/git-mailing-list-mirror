@@ -2,101 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE7CFC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D77F4C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:53:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A17CD611C9
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A886060527
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236836AbhIVRoA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 13:44:00 -0400
-Received: from lug-owl.de ([188.68.32.151]:54850 "EHLO lug-owl.de"
+        id S236925AbhIVRzN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 13:55:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52714 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236893AbhIVRn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 13:43:59 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-        id 1B98F41EF6; Wed, 22 Sep 2021 19:42:28 +0200 (CEST)
-Date:   Wed, 22 Sep 2021 19:42:28 +0200
-From:   Jan-Benedict Glaw <jbglaw@lug-owl.de>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: *ping* [PATCH RFC] gitweb: Handle non-ASCII email addresses
-Message-ID: <20210922174228.2i2bz2fx3ap45s75@lug-owl.de>
-References: <20210915192647.6fnk7ktwldz7uubf@lug-owl.de>
+        id S233552AbhIVRzN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 13:55:13 -0400
+Received: (qmail 10224 invoked by uid 109); 22 Sep 2021 17:53:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 17:53:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15999 invoked by uid 111); 22 Sep 2021 17:53:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 13:53:42 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 22 Sep 2021 13:53:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH 0/3] Makefile: make "sparse" and "hdr-check" non-.PHONY
+Message-ID: <YUttpgkU6eCOxMj/@coredump.intra.peff.net>
+References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
+ <YUqQzn5vFDpbF5dM@coredump.intra.peff.net>
+ <c13b050c-abb9-c669-b92c-930f2b43ce10@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="ngimggxpzpwdokft"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210915192647.6fnk7ktwldz7uubf@lug-owl.de>
-X-Operating-System: Linux chamaeleon 5.8.0-0.bpo.2-amd64
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear
- warfare test the bombastical terror of flooding the spy listeners explosion
- sex drugs and rock'n'roll
-X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare
- test the bombastical terror of flooding the spy listeners explosion sex
- drugs and rock'n'roll
-X-message-flag: Please send plain text messages only. Do not send HTML
- emails. Thank you.
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <c13b050c-abb9-c669-b92c-930f2b43ce10@ramsayjones.plus.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 22, 2021 at 05:58:16PM +0100, Ramsay Jones wrote:
 
---ngimggxpzpwdokft
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > All three seem pretty reasonable to me.
+> 
+> Heh, interesting. My initial reaction was completely negative! ;-P
+> (and not just mildly negative either, but 'you must be kidding').
+> 
+> However, I then thought 'I must be missing something, I'm being
+> stupid and about to embarrass myself in public!'. So, I have
+> been trying hard to understand what these patches are trying to
+> accomplish and just what it is I'm missing. But, I'm coming up
+> blank ...
 
-Hi!
+I think the point is just avoiding repeated work. If you just manually
+run "make sparse" once in a while, then caching the result probably
+isn't of much value. But if you plan to run, say:
 
-On Wed, 2021-09-15 21:26:47 +0200, Jan-Benedict Glaw <jbglaw@lug-owl.de> wr=
-ote:
-> I accidentally had a bad user.email setting ("jbglaw@=C5=82ug-owl.de"
-> instead of "jbglaw@lug-owl.de") and this leads to incomplete HTML
-> being generated by gitweb, along with an error message:
->=20
-> index.cgi: Wide character in subroutine entry at /usr/share/gitweb/index.=
-cgi line 2208.
->=20
-> This patch may fix it, but I'm NOT a Perl guy:
->=20
-> --- a/gitweb/gitweb.perl	2021-09-15 20:23:13.788195846 +0200
-> +++ b/gitweb/gitweb.perl	2021-09-15 20:24:19.911806868 +0200
-> @@ -2193,7 +2193,7 @@
->  	my $size =3D shift;
->  	$avatar_cache{$email} ||=3D
->  		"//www.gravatar.com/avatar/" .
-> -			md5_hex($email) . "?s=3D";
-> +			md5_hex(utf8::is_utf8($email)? Encode::encode_utf8($email): $email) .=
- "?s=3D";
->  	return $avatar_cache{$email} . $size;
->  }
->=20
->=20
-> Comments?
+  git rebase -x 'make sparse'
 
-I'd like to get some comment on this, maybe for anybody to merge it?
+then it would be nice for it to avoid checking the same files over and
+over.
 
-Thanks,
-  Jan-Benedict
+> At the heart of my unease is dependencies (or rather the lack) for
+> the 'synthetic object files' *.hco and *.sp. (Also, the addition
+> of even more 'shrapnel' to the build directories - I wrote a patch
+> to remove the useless *.hcc files just after commit b503a2d515e was
+> included, but didn't get around to submitting it).
 
---=20
+I don't consider them shrapnel if they're holding useful results. :) But
+I agree that this does make "ls" in the top-level increasingly cluttered
+(curiously, I find that's something I rarely do, but probably because
+I'm so used to knowing where everything is in this project).
 
---ngimggxpzpwdokft
-Content-Type: application/pgp-signature; name="signature.asc"
+Perhaps writing them to build-cruft/%.hco instead would help there. I
+guess there may be some complications around directory creation.
 
------BEGIN PGP SIGNATURE-----
+But overall, I do agree that if we can't make the dependencies solid
+here, this is not worth doing. Sacrificing correctness of the checks for
+reduced computation is not a good idea.
 
-iF0EABECAB0WIQQlDTvPcScNjKREqWEdvV51g5nhuwUCYUtrAAAKCRAdvV51g5nh
-uzePAJ9wJsDQzgdjhjkqld7+e8LR6bUBOgCfZzHESRgyeCr23BF/jtV76lY9H5I=
-=MGJT
------END PGP SIGNATURE-----
+> Hmm, odd:
+>   
+>   $ find . -iname '*.hcc' | sed s/.hcc// | sort >zz
+>   $ find . -iname '*.hco' | sed s/.hco// | sort >xx
+>   $ diff zz xx
+>   90d89
+>   < ./merge-strategies
+>   137d135
+>   < ./reftable/slice
+>   152d149
+>   < ./sha1-lookup
+>   198,202d194
+>   < ./vcs-svn/fast_export
+>   < ./vcs-svn/line_buffer
+>   < ./vcs-svn/sliding_window
+>   < ./vcs-svn/svndiff
+>   < ./vcs-svn/svndump
+>   $ 
+> 
+> ... just noticed in passing, I didn't investigate.
 
---ngimggxpzpwdokft--
+I think some of that is cruft from old runs. We no longer have
+vcs-svn/*.c at all, for example.
+
+> Now, by definition, every '*.hcc' file depends on git-compat-util.h, so
+> after changing that header an 'hdr-check' should check every header:
+> 
+>   $ touch git-compat-util.h
+>   $ make hdr-check
+>       HDR git-compat-util.h
+>   $ 
+
+Yeah, I think this is similar to the header-dependency thing I brought
+up for the sparse files. My thinking was that it wouldn't matter for the
+hdr-check, because by definition if a header you include changes, then
+we'd check it independently. But it's possible for foo.h to be fine
+itself, but bar.h which includes it to fail because of a change in foo.h
+(e.g., removing a type declaration).
+
+> Hmm, not quite. So, the sparse target should have similar problems:
+>   
+>   $ make sparse
+>       * new build flags
+>       SP abspath.c
+>   ...
+>       SP remote-curl.c
+>   $ 
+> 
+> OK, that works.
+
+Sort of. Your "new build flags" is what saved you there, which was
+triggered by something outside of your example commands. :)
+
+As you saw below (and I showed in my earlier email), it doesn't work in
+the general case.
+
+>   $ make clean
+>   ...
+>   rm -f GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
+>   $ find . -iname '*.sp' | wc -l
+>   452
+>   $ 
+>  
+> Ah, yes, you may want to add the removal of the 'synthetic objects' to the
+> make clean target!
+
+Agreed.
+
+> As I said, I don't quite understand what these patches want to do, so I can't
+> offer any solutions. :( Well, you could *add* the necessary dependencies,
+> of course, but that could lead to a rabbit hole which I would not want to
+> go down!
+
+I think depending on the ".o", as I mentioned earlier, is a good way of
+quickly getting those dependencies without having to specify any logic.
+Even though we don't use the ".o" file itself, it's a proxy for "all the
+things the .c file depends on".
+
+-Peff
