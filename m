@@ -2,129 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72DF7C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45D52C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:17:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 594EE60F9D
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:16:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A40360F9D
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237176AbhIVTRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 15:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237174AbhIVTRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 15:17:55 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB557C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:16:24 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id c7so13694199qka.2
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:16:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+OOr4ua7UFsA1pvLqjIjuBd49/DEZxqp8dvLqftvjNY=;
-        b=VPqu+qPYRs/Uro4JKQEEULTrR3rOqiE2slZ7legpR80swfTzaQh4wpln1bpGr/J31N
-         zADPnO1TylZbmzDJq6bDWKcVKiwgGnX3MYUoeoezQnRs0CcMLWKIuIZjYg4VxK0XoZQA
-         pBwXxwSx1n1knaIC6m/i3sgKu7Qwi01NOuvzGPg0qP+/wd1Qj3bnWA94KbNBiFg/iSwk
-         2sT4w8yZ6nqsmdZHR+H1DNzr0ECt3NF9HygbuOvPkz9sciil4NaCOQJgt41JjKEtRxaN
-         RRgspa6L+qYvOBCIqKAfDR/2NIyuWYQLZ/d55ftjCvxMmEnl9REgpv7YnhVh17rSqMl1
-         zkuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+OOr4ua7UFsA1pvLqjIjuBd49/DEZxqp8dvLqftvjNY=;
-        b=LFKMChH4mSt9z14px7ZLbgzeceKi3l3ZKuX+nWmxKnlkdiIdIy3UoCoAbmDxDJ7Deg
-         2zHH7UnC8/inQygXKYqWMmU2XYRnfMKtgbtzpPxNJRHozZGqYhuHt/3rRTNB0KsxR4Rh
-         kWjJ8D5syQx0B7Aef4r98z6edIC5ZTQVNXS79A+SpRsTiw70XnSkU5luMrgV0ufizt7v
-         RV85oqCimcqslntYJAGF6kaSCDrORcNtGFOmExQN6bPrTdyJed6wEHaL+AlUC95Hd907
-         DzleMtCYTs1rUUxRrKFChjVbQfnMxTxeZi9S0qx5mSaKQCTNbKoGKPYnDrsoSbS4Db7B
-         ToVQ==
-X-Gm-Message-State: AOAM5307rIKPO7Xnp9c9x2e+tyRZuFIEivca3jm0aOp2Cj9eDAz/cYG3
-        ZHqNhR5snY77zMvDLGxJzMuB6VvpH9192Q==
-X-Google-Smtp-Source: ABdhPJxWPKnv2rVehDakTCgn36Xm82+qljyHxzSAUjEKtuIAduHCmzTjfEMqzGbHlg7nkjv2IJBD7w==
-X-Received: by 2002:a37:9bd2:: with SMTP id d201mr928477qke.456.1632338183622;
-        Wed, 22 Sep 2021 12:16:23 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:1050:2d75:332d:7141? ([2600:1700:e72:80a0:1050:2d75:332d:7141])
-        by smtp.gmail.com with ESMTPSA id y11sm2095682qtm.27.2021.09.22.12.16.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Sep 2021 12:16:23 -0700 (PDT)
-Subject: Re: Memory leak with sparse-checkout
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Calbabreaker <calbabreaker@gmail.com>, git@vger.kernel.org
-References: <8a0ddd8e-b585-8f40-c4b1-0a51f11e6b84@gmail.com>
- <YUi55/3L9nizTVyA@nand.local>
- <b082f98b-eb49-7cc4-9f75-fe1ec480bd61@gmail.com>
- <b7ee5ff5-dfff-8d3f-36f6-b30daf2d71ec@gmail.com>
- <YUjcMu7Z094eaFRA@nand.local>
- <427c6d86-f123-035e-b0e6-4a21598ed111@gmail.com>
- <YUj7GN/qWhw67jyk@nand.local>
- <734ecf93-e563-20d5-7cf1-74048aa74d56@gmail.com>
- <YUoJGV0wj0ba7n8X@nand.local>
- <3c9af4e9-f3db-99af-d875-fb11bc8a643e@gmail.com>
- <YUpEX7mmZ0WPvbYK@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <98bd3b94-eb8d-b074-b89d-d86dcefaa995@gmail.com>
-Date:   Wed, 22 Sep 2021 15:16:22 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S237116AbhIVTSu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 15:18:50 -0400
+Received: from avasout02.plus.net ([212.159.14.17]:37571 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231967AbhIVTSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 15:18:49 -0400
+Received: from [10.0.2.15] ([217.32.115.204])
+        by smtp with ESMTPA
+        id T7k4mNIyvrasdT7k6mNXMl; Wed, 22 Sep 2021 20:17:18 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1632338238; bh=oDf9xVsa9foiEBjFBF2Q4/YG2OMgaUbFquQgKkX+lSE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Z1xStkhQBSyxb7gZ/IvTo18/Nuo2ijs4UR8Ujwl/xQgNknyHxKTFuhWw4+0rNi8N4
+         Bci4m7geQnLLYytbwrynOjzlEudhSs4tIvhhLiU39fxpTnNOje7N+A6rg4Pb4qAUGG
+         WuVipeoa1Hw4mFMyW3V/LbYlsSzY53DqXGucWQKh9cKPjyj7I7wEIMEMnJnxFyXNew
+         22uNbpcRxmis8+q5huu6Pj4FdwoEr8yNtJ7hu/FoXudZZpGDEgQ52eH/qnbGuqt4o1
+         3Cc6epE18WMBllkbr3ywNZi+CeidCz3/7wsbQpMkrfQvs3G3FLcODSwoPwzAUKrhlu
+         I2ybathKeazPA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=dIE9ZNRb c=1 sm=1 tr=0
+ a=SVJmvQqwCtcAfy+lhBggeQ==:117 a=SVJmvQqwCtcAfy+lhBggeQ==:17
+ a=IkcTkHD0fZMA:10 a=Zd-QLtE0D9qrs9zMDdYA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 0/3] Makefile: make "sparse" and "hdr-check" non-.PHONY
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>
+References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
+ <YUqQzn5vFDpbF5dM@coredump.intra.peff.net>
+ <c13b050c-abb9-c669-b92c-930f2b43ce10@ramsayjones.plus.com>
+ <YUttpgkU6eCOxMj/@coredump.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <82c3d9fc-32ff-c38a-cb44-873af1fb83d1@ramsayjones.plus.com>
+Date:   Wed, 22 Sep 2021 20:17:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <YUpEX7mmZ0WPvbYK@nand.local>
+In-Reply-To: <YUttpgkU6eCOxMj/@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGTfuC2bSjrrwO8TDAVbj+9oX0JtSlIYouAiNt3CKjoXrk+mpyb0eBT0tMhTNIu2wJOFmA0ZzEMJAWCkHjxzQixkfbHmPHtR/iuaJc320LnM1B9qGxjs
+ XCsTLvQUQ7Xw7fyO+RHnRsVuASlN5M6azGRqBMVDg40iO0biK/3bHG3U0gbEWEmoqtU6ETeL6zfmWA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/21/2021 4:45 PM, Taylor Blau wrote:
-> On Tue, Sep 21, 2021 at 02:56:01PM -0400, Derrick Stolee wrote:
->>> I thought that it might have been related to your third patch to change
->>> how bad patterns are detected. But I ran the following script after
->>> applying each of your three patches individually:
->>>
->>>     rm -fr repo
->>>     git init repo
->>>     cd repo
->>>
->>>     git sparse-checkout init
->>>     git sparse-checkout add foo
->>>     git sparse-checkout init --cone
->>>     git sparse-checkout add foo
->>>
->>> and the only difference is that we started silently dropping the bad
->>> "foo" pattern after re-adding foo in cone-mode starting with the second
->>> patch.
+
+
+On 22/09/2021 18:53, Jeff King wrote:
+> On Wed, Sep 22, 2021 at 05:58:16PM +0100, Ramsay Jones wrote:
+> 
+>>> All three seem pretty reasonable to me.
 >>
->> In patch 2, we "detect" that the old patterns were not in cone mode
->> because the core.sparseCheckoutCone config is false when parsing the
->> patterns, so use_cone_patterns is 0.
+>> Heh, interesting. My initial reaction was completely negative! ;-P
+>> (and not just mildly negative either, but 'you must be kidding').
+>>
+>> However, I then thought 'I must be missing something, I'm being
+>> stupid and about to embarrass myself in public!'. So, I have
+>> been trying hard to understand what these patches are trying to
+>> accomplish and just what it is I'm missing. But, I'm coming up
+>> blank ...
 > 
-> I fear that we're talking about different things. With your patches, if
-> I munge my .git/info/sparse-checkout file, I can easily get something
-> like:
+> I think the point is just avoiding repeated work. If you just manually
+> run "make sparse" once in a while, then caching the result probably
+> isn't of much value. But if you plan to run, say:
 > 
->   $ git.compile sparse-checkout list
->   warning: unrecognized pattern: 'foo'
->   warning: disabling cone pattern matching
+>   git rebase -x 'make sparse'
 > 
-> to appear. But I'm wondering why the same doesn't happen when running
-> `git sparse-checkout init --cone` while the existing sparse-checkout
-> definition contains non-cone mode entries.
+> then it would be nice for it to avoid checking the same files over and
+> over.
 
-You don't get that warning because it's not trying to parse the
-previous patterns using cone mode. Before my series, you would get
-the warning in a _second_ run of "git sparse-checkout init --cone".
+I haven't tried, but
 
-We should add a different warning for overwriting the existing
-patterns.
+    git rebase -x 'make CC=cgcc'
 
-Thanks,
--Stolee
+may be a better idea (for some definition of 'better' ;) ).
+(if you have been doing all recent builds with CC=cgcc, then
+the first commit wouldn't force a complete re-build!).
+
+Using CC=cgcc has a mixed past, sometimes working, sometimes
+not (again for some definition of 'working'), for example:
+
+  $ git checkout master
+  ...
+  $ make clean
+  ...
+  $ make CC=cgcc >out1 2>&1
+  $ ./git version
+  git version 2.33.0.514.g99c99ed825
+  $ git describe
+  v2.33.0-514-g99c99ed825
+  $ grep warn out1
+  imap-send.c:1461:9: warning: expression using sizeof on a function
+  http.c:715:9: warning: expression using sizeof on a function
+  http.c:1776:25: warning: expression using sizeof on a function
+  http.c:1781:25: warning: expression using sizeof on a function
+  http.c:2190:9: warning: expression using sizeof on a function
+  http.c:2362:9: warning: expression using sizeof on a function
+  http-walker.c:382:9: warning: expression using sizeof on a function
+  http-push.c:194:9: warning: expression using sizeof on a function
+  http-push.c:205:9: warning: expression using sizeof on a function
+  http-push.c:206:9: warning: expression using sizeof on a function
+  remote-curl.c:855:9: warning: expression using sizeof on a function
+  remote-curl.c:945:17: warning: expression using sizeof on a function
+  remote-curl.c:947:17: warning: expression using sizeof on a function
+  remote-curl.c:1014:9: warning: expression using sizeof on a function
+  $ grep error out1
+  $ 
+
+The warnings are due to some gnarly macro magic in the curl headers
+which is normally suppressed by setting -DCURL_DISABLE_TYPECHECK in
+the SP_EXTRA_FLAGS variable for each of those files. (see e.g the
+Makefile:2250).
+
+>> At the heart of my unease is dependencies (or rather the lack) for
+>> the 'synthetic object files' *.hco and *.sp. (Also, the addition
+>> of even more 'shrapnel' to the build directories - I wrote a patch
+>> to remove the useless *.hcc files just after commit b503a2d515e was
+>> included, but didn't get around to submitting it).
+> 
+> I don't consider them shrapnel if they're holding useful results. :)
+
+Heh, yes I am a bit of a curmudgeon! :D
+
+> But overall, I do agree that if we can't make the dependencies solid
+> here, this is not worth doing. Sacrificing correctness of the checks for
+> reduced computation is not a good idea.
+
+Yes, I suspect that 'make the dependencies solid' will be a
+challenge, with drip, drip, fixes being required. (Maybe I
+am just too pessimistic - maybe we can accept good enough
+rather than perfect. Also, the sparse solution may be easier
+than the hdr-check solution).
+
+ATB,
+Ramsay Jones
