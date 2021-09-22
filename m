@@ -2,126 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FFF8C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DECBC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:33:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37D266127A
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:28:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 783D86120E
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 18:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237071AbhIVSaN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 14:30:13 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61336 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236973AbhIVSaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 14:30:12 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 76291159CD7;
-        Wed, 22 Sep 2021 14:28:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H8RH9w/lLii7p1whsfzR474F1jRsPPA1ddmLL9
-        R6UoY=; b=LPQqck57Rrccz4NfKmC1M7RbysgeYkZlNIoFYHi3hcVHycIjAK84Ej
-        GhtjVWKTdolGjOmJC/clXvT/5Lbo+K73zhcsOr1kt7l26HehlISFP0I5eATpmRiM
-        V5qVRtItRU2oz/fXGf7aGyZ8zf6pZmdyjDhi2lSAQT4/ZUV6C5Csk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A6BA159CD6;
-        Wed, 22 Sep 2021 14:28:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8658159CD3;
-        Wed, 22 Sep 2021 14:28:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
- with DEVOPTS=pedantic
-References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
-        <xmqqmto48ufz.fsf@gitster.g>
-        <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
-Date:   Wed, 22 Sep 2021 11:28:38 -0700
-In-Reply-To: <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 22 Sep 2021 13:04:54 -0400")
-Message-ID: <xmqqzgs479d5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237090AbhIVSfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 14:35:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232806AbhIVSfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 14:35:19 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCDD5C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:33:49 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id q81so9365052qke.5
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 11:33:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jKNtK3kAxa6/CrRmbd7Lt7mInt1KyaoDjZOp0dHbBzs=;
+        b=bZM1Bp5GGoPPCy0x1RTOxzRSAX75BykxnsS/+IJD4ppIypGit7Z5gsh6sEB76zu2el
+         nFpUotugiQmIlagmeSZIP1YQ6w3XFl68jXuiNNamxbOXN7MlwpAZu3goZRSCNRuZ8mBy
+         I4iURz0XQcqTNugw/NtSIIf2S7bmgBtkCc6qB2qYu0biGIEMpXv+7Vpj1NF5GB6dQpu+
+         9LeL79VAk+kXDUe3kstofIg0d9yssjDAwso/ID2h3aASuuFkuk8Gf+kkTZiLhANYSjEL
+         8Cppy5HojzodV3dUftG3Lr1dbCzJwGKUyt8xhBHgRwKy2oS0cWkCYNTWrh2tIYYv1jzY
+         qDnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jKNtK3kAxa6/CrRmbd7Lt7mInt1KyaoDjZOp0dHbBzs=;
+        b=ljJsGI/DTF87vbGlX/ERAfYoAXAzX0QtGDsphURZJa8oO/ASMdnOPHcYlRLxJ77Gbb
+         3DGFylrMPYOkZXqNaLz2fVmXQyoX+aWIKvROrlY4yfrlfeL10mp6XOwhaDA7lP63td2H
+         +dxL4K6D+Ga2vyPutcTEWhbvRsrkzCN2399UtxMS6nT9yiVn2EDIL1AgNZ8CP1Ut/FiZ
+         ne78aZQbGKCPIOFr0V520j13AlvcqfpTuGKmry3HWNeCwc1nXWt7VFSWfBMbTK7QINv3
+         knYIukQWdml6By0hiq56xe7LpkamWKCt3XQ4AhxmhxV/WMYGFRztTH5VddBIa/rpavFN
+         THTg==
+X-Gm-Message-State: AOAM5306YGEa5pwpk0XKyT6eRaEFb6WI12Q/zlbMlS/Hk5iSfVM//07d
+        a41/pA1fXkpR+4m3YE4fBZrETNRZBUM=
+X-Google-Smtp-Source: ABdhPJwFWPBWMYxBwtddgKop1oui/frWZYTKqAhjtgfUFfhR5e7K0N/JnAxaksTKxSHUtrMNr73sLA==
+X-Received: by 2002:a05:620a:675:: with SMTP id a21mr684383qkh.421.1632335628535;
+        Wed, 22 Sep 2021 11:33:48 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id o4sm2022544qti.24.2021.09.22.11.33.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Sep 2021 11:33:48 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, levraiphilippeblain@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] Makefile: avoid breaking compilation database generation with DEPELOPER
+Date:   Wed, 22 Sep 2021 11:33:11 -0700
+Message-Id: <20210922183311.3766-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.911.gbe391d4e11
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E8660A48-1BD2-11EC-B378-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+3821c38068 (Makefile: add support for generating JSON compilation
+database, 2020-09-03), adds a feature to be used with clang to generate
+a compilation database by copying most of what was done before with the
+header dependency, but by doing so includes on its availability check
+the CFLAGS which became specially problematic once DEVELOPER=1 implied
+-pedantic as pointed out by Ævar[1].
 
->> I wonder if the attached (with clean-up to remove the tracing cruft)
->> would show us a better direction.  It feeds a single line
->> 
->> 	int dummy_for_dep_check;
->> 
->> C "program" from the standard input of the compiler to tackle the
->> "you are not supposed to be compiling an empty compilation unit"
->> problem in a more direct way.
->
-> That feels a bit like we're playing a game of chicken with the compiler
-> in terms of what it may complain about. For example, sparse will
-> complain:
->
->   foo.c:1:5: warning: symbol 'dummy_for_dep_check' was not declared. Should it be static?
->
-> Might compilers ever learn to warn of the same thing?
+Remove the unnecessary flags in the availability test, so it will work
+regardless of which other warnings are enabled or if the compilers has
+been told to error on them.
 
-Certainly.  That is the reason why I said "direction", not
-"solution", and I do not think it is beyond our capability to come
-up with a minimal "C program" that would be lint clean to make it
-as a part of the "solution".
+[1] https://lore.kernel.org/git/patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com/
 
-For example, would sparse or compilers complain about this?
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    extern int incr(int); int incr(int i) { return i + 1; }
+diff --git a/Makefile b/Makefile
+index 9df565f27b..d5c6d0ea3b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1302,7 +1302,7 @@ GENERATE_COMPILATION_DATABASE = no
+ endif
+ 
+ ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+-compdb_check = $(shell $(CC) $(ALL_CFLAGS) \
++compdb_check = $(shell $(CC) \
+ 	-c -MJ /dev/null \
+ 	-x c /dev/null -o /dev/null 2>&1; \
+ 	echo $$?)
+-- 
+2.33.0.911.gbe391d4e11
 
-> So I'd argue we should go even simpler, like:
->
-> diff --git a/Makefile b/Makefile
-> index 3628d14f16..4597a126d0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1277,7 +1277,7 @@ COMPUTE_HEADER_DEPENDENCIES = auto
->  endif
->  
->  ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
-> -dep_check = $(shell $(CC) $(ALL_CFLAGS) \
-> +dep_check = $(shell $(CC) \
->  	-c -MF /dev/null -MQ /dev/null -MMD -MP \
->  	-x c /dev/null -o /dev/null 2>&1; \
->  	echo $$?)
-
-I am all for this simplification.  It takes us back to the state
-before 1816bf26 (Makefile: Improve compiler header dependency check,
-2011-08-30).  But I think that is more or less orthogonal to the
-"you are not supposed to feed an empty compilation unit" issue.
-
-> I'm also tempted by a hunk like this. Then we can set the REQUIRE flag
-> in a CI job (or locally for git devs who know they have gcc) and notice
-> an unexpected breakage in the auto test.
->
-> @@ -1295,6 +1295,9 @@ ifneq ($(COMPUTE_HEADER_DEPENDENCIES),no)
->  $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
->  (not "$(COMPUTE_HEADER_DEPENDENCIES)"))
->  endif
-> +ifdef REQUIRE_COMPUTE_HEADER_DEPENDENCIES
-> +$(error computed header dependencies required, but auto-check did not find them)
-> +endif
->  endif
-
-Yup, I like that, too.
