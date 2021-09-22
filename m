@@ -2,112 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F1A7C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 425F3C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:56:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28B8860F4C
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:52:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 204BF61181
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238337AbhIVWyA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 18:54:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59146 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238356AbhIVWxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 18:53:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 10AB91594A0;
-        Wed, 22 Sep 2021 18:52:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CcD4nSAInNA1s/tDPPHtM1Saup1QGnwYBJUYGl
-        /5+tg=; b=bmSscxmMvjBGBKbwSVz2UDXdHY0DK0oq28R+4NkNq9Sbm1skYCCzNu
-        zCtqgDjW2L5m2ewgTBVPjWWLNLai3v5AUdgbUN3ZVc7D+gyyatzm7J9sJIM8aGb3
-        aVg44SV44fa+I7Xuk9ZbO3S2CB1QDCF+jzqQZyz3qnQt/DxoNLfDQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0895D15949F;
-        Wed, 22 Sep 2021 18:52:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C80615949E;
-        Wed, 22 Sep 2021 18:52:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, vdye@github.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 01/14] t3705: test that 'sparse_entry' is unstaged
-References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
-        <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
-        <ea940f10a7cd26c6be3693b5a800afb7d6f752f2.1632159937.git.gitgitgadget@gmail.com>
-Date:   Wed, 22 Sep 2021 15:52:11 -0700
-In-Reply-To: <ea940f10a7cd26c6be3693b5a800afb7d6f752f2.1632159937.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Mon, 20 Sep 2021
-        17:45:24 +0000")
-Message-ID: <xmqq7df85ilg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B97ECF4C-1BF7-11EC-8692-98D80D944F46-77302942!pb-smtp21.pobox.com
+        id S238436AbhIVW5l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 18:57:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238394AbhIVW5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 18:57:39 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3529BC061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:56:09 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id q17-20020a0cf5d1000000b00380e60ef363so15157566qvm.9
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=ZTpqK+KjUz17FgT71Mxt0DV//6cva+InEg4Dy+ix5rE=;
+        b=fAHtvbn8wW/85fwlRye9QbGQUeJkRKF0WVrtk+BiBnnYBuXUbFKNkFZPDV3O1DWZGX
+         LS5LOquMrz8s2y3KykVlg1Ja1DqddHPrmYgyWQP6Miv6JJgRUt3ppHav3mmSoSe83f9P
+         N2zPVKS8cTyfN7Fv3EknPS7lxGgdbUDVL3HpTBEV5waxXRfeTZBbksvZqSzTRQWjSaS7
+         Lwxs1eDbhWwmZJBpzsmMyNT2e9hnSEpGaOTh7w2KvLv/PAP3onHjqz7DmUWiI8EC6m9N
+         fL4hefMBxwOPlQSLl8BbQGAYw0kfknLrUsKk0KHubjsxOrjZGWNUfJrODsnOHsCAw4Sf
+         yZNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ZTpqK+KjUz17FgT71Mxt0DV//6cva+InEg4Dy+ix5rE=;
+        b=Gi5F8aD/oWstysQ3Hix4pL6olS4wmG/owNqtNpThn0qHIkwxPc7Ja1Q+Q93X8U/POz
+         zZ48g/vh97n3ryo0BrcFOUgEDq2mBpX4oOVEi4BdnMxmmzploGB/IArdJs4igVSHb+is
+         fAbVBbwvBq5eIxOg5u73l0jtKnQzRbKfeNZDLmA1BUk2GiYVRx7SM3//37gYGf5buJAj
+         KyZrt/cLaSehHPbQFXakLBdzvpOFx2w3eZs13lgZ7Fiw6Y6zEViA0Jfpk+F8vJb+SJK0
+         ZPHHV1CCdmjgT5ugeDJr3q1341hpZGaV6s2SGfQYrsW0xsFYRUOdzW5GBRUODr4gbJc+
+         juBA==
+X-Gm-Message-State: AOAM532CXUBO9NShyQXsgaQ302r5VwP7NiubeJs+CckcSs4SL9OI07gh
+        drpuVf4raCYO4hQzr+mVnhqJUWKgg23xunbKI9ah
+X-Google-Smtp-Source: ABdhPJy6PdBEDQZAPNLe9DkDo2m2xW8S5659of8yX5g7mgFHEVv/9VorzK7yictqR1ycZCnDWEJrZl5noYQ5H3MCoBCI
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:612:: with SMTP id
+ d18mr1899338ybq.113.1632351368265; Wed, 22 Sep 2021 15:56:08 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 15:56:05 -0700
+In-Reply-To: <c0d045a9de1a5e75d684b0dd2009a3137b6e5c59.1631730270.git.me@ttaylorr.com>
+Message-Id: <20210922225605.2608085-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <c0d045a9de1a5e75d684b0dd2009a3137b6e5c59.1631730270.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: Re: [PATCH v2 4/8] builtin/repack.c: keep track of existing packs unconditionally
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+        avarab@gmail.com, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> @@ -98,8 +98,9 @@ static void remove_pack_on_signal(int signo)
+>   * have a corresponding .keep file. These packs are not to
+>   * be kept if we are going to pack everything into one file.
+>   */
+> -static void get_non_kept_pack_filenames(struct string_list *fname_list,
+> -					const struct string_list *extra_keep)
+> +static void collect_pack_filenames(struct string_list *fname_list,
+> +				   struct string_list *fname_kept_list,
+> +				   const struct string_list *extra_keep)
+>  {
+>  	DIR *dir;
+>  	struct dirent *e;
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The tests in t3705-add-sparse-checkout.sh check to see how 'git add'
-> behaves with paths outside the sparse-checkout definition. These
-> currently check to see if a given warning is present but not that the
-> index is not updated with the sparse entries. Add a new
-> 'test_sparse_entry_unstaged' helper to be sure 'git add' is behaving
-> correctly.
->
-> We need to modify setup_sparse_entry to actually commit the sparse_entry
-> file so it exists at HEAD and as an entry in the index, but its exact
-> contents are not staged in the index.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t3705-add-sparse-checkout.sh | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-> index 2b1fd0d0eef..e202a2ff74a 100755
-> --- a/t/t3705-add-sparse-checkout.sh
-> +++ b/t/t3705-add-sparse-checkout.sh
-> @@ -19,6 +19,7 @@ setup_sparse_entry () {
->  	fi &&
->  	git add sparse_entry &&
->  	git update-index --skip-worktree sparse_entry &&
-> +	git commit --allow-empty -m "ensure sparse_entry exists at HEAD" &&
->  	SPARSE_ENTRY_BLOB=$(git rev-parse :sparse_entry)
->  }
->  
-> @@ -36,6 +37,11 @@ setup_gitignore () {
->  	EOF
->  }
->  
-> +test_sparse_entry_unstaged () {
-> +	git status --porcelain >actual &&
-> +	! grep "^[MDARCU][M ] sparse_entry\$" actual
+The comment in the before-context of this hunk needs to be updated.
 
-Does this say "we do not want any difference from the index, be it
-modification, deletion, addtion, etc."?
+Also, I think that fname_list should be renamed to fname_nonkept_list.
+It does have the same semantics as before, but the name of the function
+has changed. And also, fname_list sounds like a superset of
+fname_kept_list, but that is not the case.
 
-Just wondering if there were a reason why the pattern is more
-complex than "^[^ ][M ]" (i.e. anything but "unmodified since the
-index"), not necessarily suggesting to spell the test differently.
+> @@ -440,6 +440,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  	struct string_list names = STRING_LIST_INIT_DUP;
+>  	struct string_list rollback = STRING_LIST_INIT_NODUP;
+>  	struct string_list existing_packs = STRING_LIST_INIT_DUP;
+> +	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
+>  	struct pack_geometry *geometry = NULL;
+>  	struct strbuf line = STRBUF_INIT;
+>  	int i, ext, ret;
 
-Thanks.
+Likewise here - the introduction of a new similarly-named variable means
+that existing_packs should be renamed, I think.
+
+Other than that, this patch looks good.
