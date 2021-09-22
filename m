@@ -2,103 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC034C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75900C433FE
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:46:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC92161100
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:43:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E8BE60F11
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237215AbhIVToe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 15:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45166 "EHLO
+        id S237228AbhIVTs1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 15:48:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhIVTo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 15:44:28 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C400C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:42:57 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id b15so3990544ils.10
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:42:57 -0700 (PDT)
+        with ESMTP id S237222AbhIVTs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 15:48:27 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 877F3C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:46:56 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id m3so16598422lfu.2
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aEzDYHo94eUxBAakI8zF6xj1wb8Iy5LCFKBGuv3a4KA=;
-        b=zYVTSo+c3B/FPymhMTeWufNZa+wYX2s9s9VHMtTtUEZrvFBH0lNq0TkMzHjU12XqQ4
-         MEssppXWW+ju75YcrjdwMrEU5prCi6JXHhJUetM80gvIU8kDHa6NgB043hJ1+lJ6/Xpw
-         0eDOROAsB/NLFcvUUySiqX7zPzPVWyDV0deT6mSZ4LQvefEVVnsjeCra45g1VWS9ViTU
-         JfYAH/DYlCTLEUF33YaN8XwtbM9Sg1Q7AWjq0Jbz4Z8k5d17jmea1emHQ4SyCtbHFl9K
-         auZIjqjkx4nEUES0htarBIenN+vLoLi4skxFZqwDKWA+mZes5jj02pcVi174pkZoO2uy
-         xwuA==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WIBQAJ0vZgBT9yKx1MLZ1kv6aW9xf3uzha+8GKOrU/A=;
+        b=ZiornUuPBMqwQqKPZd9vcoT5nbJIBCAWv8TmkpVoOCHzKMSjkrpacjo2Q5PATlIId1
+         Ro/OWHh4W6UCAYVy4my5O8f6fI0VEGpE31S0/oiSc6OuhOoDnpg+gZiqXD4OnThBZO1u
+         INmDLMCTE/zr0rOKyPw7tkaCHAf+FCHFGXTLlHd3RvMSP70lQnG9lpMOnwCOR57L3Drw
+         7nANXMhZUhd+7bONU6qJWr/lHtTa+7YM560U0Q6Em28toI/D1B5t5AAj+LewzL8VNp9h
+         UqRol3zJ4VlHyrOTicGJUkn0kc0rQQ7J6PZBtTN+cthkrAtV9WQPaYGB56J0mYUMiQ/F
+         HqSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aEzDYHo94eUxBAakI8zF6xj1wb8Iy5LCFKBGuv3a4KA=;
-        b=v+D5WIfDt4oF7ufFPnHSG97Mj5DuYP/GBI6Z7U41d42jSSrU7S/3d3TmH4tu6xhJ/i
-         x7lBg01v/JBNsRwObfqJfT7nfT8XxM/I7kgcxjLVJHafK24gi9R/+j6g0QA4/OYi/FRm
-         /Fl3ninzqPvhkChcsOzE+9v8CjtRSbl7RIgg2TvqvpyoWpvPKtgybDojZj8DD3lpiHbT
-         vfPuJHrknlJ260SoYy5e7+ncokQujpXYZ5OrInaCGiHwBWxB4KYGedSVYdICoHKovIPx
-         xPKVsg4jHBh1Y7UpKTs76O0L8HlKaapQkDxkrk1GXcFyj2eecHErMJdXLkat4bL8/3Ar
-         HILg==
-X-Gm-Message-State: AOAM533hZs98rlnbDKi1/tHPfx/eYH5nLKenJmng3tR8QQwkidFLv7a9
-        HevlaYcxB8g5bVn6CTh5Y0xe7g==
-X-Google-Smtp-Source: ABdhPJwECydOTZ8O3llxN+DynUjUqbBAK5n33szws3YqQ0FYo4j0m/6UvvEOsrQVcXehKTNSOB9i1Q==
-X-Received: by 2002:a05:6e02:13d4:: with SMTP id v20mr577415ilj.247.1632339777058;
-        Wed, 22 Sep 2021 12:42:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z4sm1426032ioj.45.2021.09.22.12.42.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 12:42:56 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 15:42:55 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        wolf@oriole.systems
-Subject: Re: [PATCH] rev-parse: fix mismatch quoting of separator in the
- message
-Message-ID: <YUuHP41V9m7cIEBL@nand.local>
-References: <20210922111744.675326-1-bagasdotme@gmail.com>
- <YUtqp+1Mwl2v0kuh@nand.local>
- <xmqqzgs45s15.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WIBQAJ0vZgBT9yKx1MLZ1kv6aW9xf3uzha+8GKOrU/A=;
+        b=MdBOgna87a4OHl+DzlJWP0cVc51/01soXsaCqr6GgHWCmA4KgNitTXqo23vavDf/kb
+         FeLfy5/TkR5QfmNkad5PAFmsr8MOvSKTYvMecj9YqheE0XgZb5HShLdTjJkIuyWoCbHD
+         yjaGSzBQ/EqxbGlmBI8IDKFg+r5/vQ8K/V2BdUj/lTtksQfyXz4PA7TBcquP3DhBPd0q
+         MfsajCUI/TgMxIfMyOCsOUvoH7JCPb7kAFlEVn3+6Hynzczk776US3SB0dfguAQ1A5vh
+         +yehldPgVth6wDqQjHzJUcvWMPk9DtyKeqFZEX90m1M3MyUARnsYUReZEgvb9xRp3Apc
+         e95g==
+X-Gm-Message-State: AOAM531SLWoYhhOwj2gL8M5qQQ7BzuhAgl57c/6TdfLCQBtkcKOmLFCo
+        exwboYSD53Uu9hH7wtGsUqAl3WZfWSFSL9t2NuCQY20caK8GaQ==
+X-Google-Smtp-Source: ABdhPJz2LNCPByXt+FAvV1T+U3sjioCW/cXLvpUaubvCgcrWBactiX4USYJZ8EmV4jPLVVA85r+Dvw9Gk1tdZ7bcFQE=
+X-Received: by 2002:a05:6512:3190:: with SMTP id i16mr640167lfe.241.1632340014325;
+ Wed, 22 Sep 2021 12:46:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzgs45s15.fsf@gitster.g>
+References: <pull.1076.v3.git.git.1631590725.gitgitgadget@gmail.com>
+ <pull.1076.v4.git.git.1632176111.gitgitgadget@gmail.com> <12cad737635663ed596e52f89f0f4f22f58bfe38.1632176111.git.gitgitgadget@gmail.com>
+ <87mto58pkc.fsf@evledraar.gmail.com> <CANQDOdc1bNwDYhJ8ck2cwUfKmr3064uBHFDACphW+cGZRd-6EQ@mail.gmail.com>
+In-Reply-To: <CANQDOdc1bNwDYhJ8ck2cwUfKmr3064uBHFDACphW+cGZRd-6EQ@mail.gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 22 Sep 2021 12:46:43 -0700
+Message-ID: <CANQDOddTQZz8+LjX2wB5j+tSO9kj6S9VJGTvxKKU8--NQt7PSw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/6] core.fsyncobjectfiles: batched disk flushes
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 12:28:22PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Tue, Sep 21, 2021 at 6:23 PM Neeraj Singh <nksingh85@gmail.com> wrote:
 >
-> > On Wed, Sep 22, 2021 at 06:17:45PM +0700, Bagas Sanjaya wrote:
-> >> There is a quoting mismatch quoting `--` separator in "no usage string
-> >> given...." message (`' instead of ``). Fix it.
+> On Tue, Sep 21, 2021 at 4:41 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
 > >
-> > For what it's worth, I think that the `' style is typographic, since the
-> > pair look like English "smart quotes" (as opposed to straight quotes). I
-> > have no opinion about which is better, but I don't think the pre-image
-> > was necessarily a mistake.
+> >
+> > On Mon, Sep 20 2021, Neeraj Singh via GitGitGadget wrote:
+
+> > > -             fsync_object_files =3D git_config_bool(var, value);
+> > > +             if (value && !strcmp(value, "batch"))
+> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_BATCH=
+;
+> > > +             else if (git_config_bool(var, value))
+> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_ON;
+> > > +             else
+> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_OFF;
+> >
+> > Since the point of this setting is safety, let's explicitly check
+> > true/false here, use git_config_maybe_bool(), and perhaps issue a
+> > warning on unknown values, but maybe that would get too verbose...
+> >
+> > If we have a future "supersafe" mode, it'll get mapped to "false" on
+> > older versions of git, probably not a good idea...
+> >
 >
-> I thought that we try to avoid "smart quotes" in our messages.
+>  I took Junio's suggestion verbatim.  I'll try a warning if the value
+> exists, and is not 'batch' or <maybe bool>.
 
-I think UTF-8 smart quotes are generally frowned upon in source code,
-but I didn't think we had any hard-and-fast rule about whether to prefer
-'this' to `that' (for what it's worth, I prefer the former and it seems
-to be more common).
+An update on this.  I tested out some values:
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dbatch a=
+dd ./
+    fsync_object_files: 2
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D0 add .=
+/
+    fsync_object_files: 0
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D1 add .=
+/
+    fsync_object_files: 1
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D2 add .=
+/
+    fsync_object_files: 1
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dbarf ad=
+d ./
+    fatal: bad boolean config value 'barf' for 'core.fsyncobjectfiles'
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dtrue ad=
+d ./
+    fsync_object_files: 1
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dfalse a=
+dd ./
+    fsync_object_files: 0
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dt add .=
+/
+    fatal: bad boolean config value 't' for 'core.fsyncobjectfiles'
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dy add .=
+/
+    fatal: bad boolean config value 'y' for 'core.fsyncobjectfiles'
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dyes add=
+ ./
+    fsync_object_files: 1
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dno add =
+./
+    fsync_object_files: 0
+    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dnope ad=
+d ./
+    fatal: bad boolean config value 'nope' for 'core.fsyncobjectfiles'
 
-> And we do not expect our users to be expecting to read their error
-> messages in markdown, so `--` is not a "Fix", either (do we have
-> many instances of such uses of backticks in messages already?).
-
-There are many in code comments, but I could only find a handful in
-error messages or the description of command-line flags.
-
-Thanks,
-Taylor
+So I think the code already works like you are suggesting (thanks Junio!).
