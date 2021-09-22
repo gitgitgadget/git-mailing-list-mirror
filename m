@@ -2,124 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1068C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB02FC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:39:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9CF6610A1
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:35:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89FB6610A0
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 22:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238319AbhIVWgc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 18:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57194 "EHLO
+        id S238288AbhIVWlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 18:41:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238314AbhIVWgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 18:36:31 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8D2C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:35:01 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id lb1-20020a17090b4a4100b001993f863df2so3456615pjb.5
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:35:01 -0700 (PDT)
+        with ESMTP id S229506AbhIVWlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 18:41:10 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F336C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:39:40 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id q8-20020aa79828000000b0043d5595dad4so2578701pfl.13
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 15:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pGBs4qf8Lt7NBr2R+EwVKXJorf5G7xE42j2JmlsXguQ=;
-        b=TMOIEJt9kTwBGW3tKipX9Tf0semH5WYZiCyk7/RkYHlcEPK1tdbj1TA14P5/1kQ0fQ
-         lePYYLMM6rYbibzKRwWsj9F5IAATUFN/B15SVo9AgO4B8Id0y5WEcbBtKL7qxEUqiv/x
-         41tWUZye2bS3B5rM0o/+ItYX4vaptPorb1dzgcPWotOnOjMcdJ6akkG7sfLp2h11ySPc
-         pgWf2TAKhMBCAsS5e832MI7ft2Iv13z+VF9nGswVpWgGH+epK6aKV8ssoiS3WzyhIEW7
-         E6UfFH1OEG6Lpv98YvSDd00VV+o119cUBc/UatKGCSxiJWrd2BnJNjEcCd8svWCfho+T
-         6cpw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=9YAjKQ47RYk4oBp7wVuvvgSprI8fuBtDPuF2Gs5kfWA=;
+        b=KvD7AYc9nPX2iOFZIuRZZsaR2ikwGBLOWbxiTQKarOz12Vo6ofew7DHQC4i1fz/hI/
+         BYt3tBs419GgMyc72UOSOYit2iaEowcHY5vYyKjQlPrhV2EhdCOf6d2sAE/J8QL6+smS
+         BfdXYrqUn2uOxUqsjr4BHGQ8fDMkGudGa1thHJDHzQFGKXOwVwPsFSAVK2DJYUNrve67
+         fj/t0gQk449r0mLYd7TD5Wd4D8HDPVIeLcBdgubb/nRa0nSebC1sE85klJuZhHfA9LQA
+         ul7VLBRww1wvZD7uP+lVLPkkdhf1NVlJ0ICEsGvD4/PfoBZghts89tV1iGLgIP5PJwVm
+         EW1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=pGBs4qf8Lt7NBr2R+EwVKXJorf5G7xE42j2JmlsXguQ=;
-        b=EiFKEhkhCQ1+WyK/PVNc0gYW7zsLsUEbkZQ1CaEqJAWCCFVSDd59AMN7W8E3fOWrL0
-         NHN77FqQ0xxMfODY3WyUIoTrhcn+58Hc+maN4Delq9QYd3SR/0Dg3n3F/qVnuG1iVZJu
-         IVujuYGADOQo3LHIxcehy22dijRmeIYjNMpFZAA7PxJ4wS+34FnmtQ5K58BQQOjaZhIm
-         sl4xcK8SXodOKg3eUr6biRQVf9kSO05qwxUyFfjVFuLFk0OTyEGlkwKHzPyAS74VAVgi
-         i9RKCJlrwA53xr0aeCy03LSbMxxaIPBV0d4CnZEoDyMFz54BTR3scgoWkPtFiA2kR/LF
-         Cp0A==
-X-Gm-Message-State: AOAM532yXpdnDv/tBe+bOEfP1peknceRv2GJAQekAXpKOlkqKtWmBEbr
-        1QrKqj0XTrv0aqp0GzqeosuMFg==
-X-Google-Smtp-Source: ABdhPJwh+1jqwciqfr+aQyrAufX/bNvuMSV4YoU76eUkqJtLNKShPwb43VbaH6XFKU6eBXjgNdyNlQ==
-X-Received: by 2002:a17:90a:2b88:: with SMTP id u8mr14046219pjd.216.1632350100261;
-        Wed, 22 Sep 2021 15:35:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:3477:59f2:e961:3ce])
-        by smtp.gmail.com with ESMTPSA id j26sm3351235pfe.35.2021.09.22.15.34.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 15:34:59 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 15:34:53 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=9YAjKQ47RYk4oBp7wVuvvgSprI8fuBtDPuF2Gs5kfWA=;
+        b=DlY0+ILcvsOl59wt23TjymhUGWcmMT9umJB+EL2otAKl+zPARICXyrpys5Z04X/QdG
+         COQzZmCG8gu0KobIFfIm4vrdmIq/i05A5nlsR+WVWtEYoVn0qqJ/xvInEJELyKy8b0Nl
+         eNI3Pes/m/U/WTi0zQciMl5KMvbuAbBQCBJEJyq+8MOOh6KgJwYtP0sC30eFjbM9zg8F
+         zZG/synhspF0F5h76cbcFOOa/d8a+GG7DCWwswja6CYUy1xWBtOsgUjoL9D47R630dXj
+         G05EFIGFRc/wYYIxFKUlRQkNACqGXQ7GEgCD3ajCwAkWe17DxjvHmgAtX9xNH9HDxIyL
+         +YgA==
+X-Gm-Message-State: AOAM533EcycpXNAp3QJDb/91CTzrCIQS2FSl+Cnb58GvUgcR1dV3GXg+
+        dH0/byyS5FdGrRY2JSDRb3BSXEHt381nZzrUsKhi
+X-Google-Smtp-Source: ABdhPJxN9N6n76kQcA41yDQQgfnY018PgkilOIoCTXAL0s46OVWLqJm1nBczKjdJrQ6uRhxv7VmXzHINM3q8a6f1wK6Y
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:9a0e:0:b0:44a:3ae2:825c with
+ SMTP id w14-20020aa79a0e000000b0044a3ae2825cmr1089098pfj.28.1632350379882;
+ Wed, 22 Sep 2021 15:39:39 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 15:39:35 -0700
+In-Reply-To: <83dfdb8b125efe970659eeea1e5e88b09546c81e.1631730270.git.me@ttaylorr.com>
+Message-Id: <20210922223936.2606010-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <83dfdb8b125efe970659eeea1e5e88b09546c81e.1631730270.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: Re: [PATCH v2 6/8] builtin/repack.c: support writing a MIDX while repacking
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
 Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v2 3/8] midx: preliminary support for `--refs-snapshot`
-Message-ID: <YUuvjZl43k3G2SBn@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com, avarab@gmail.com
-References: <cover.1631331139.git.me@ttaylorr.com>
- <cover.1631730270.git.me@ttaylorr.com>
- <42f1ae9edeb55d8e1b0c8f2c3110e9c8326a5fc1.1631730270.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <42f1ae9edeb55d8e1b0c8f2c3110e9c8326a5fc1.1631730270.git.me@ttaylorr.com>
+        avarab@gmail.com, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A small nitpick for this patch:
-
-On 2021.09.15 14:24, Taylor Blau wrote:
-> diff --git a/midx.c b/midx.c
-> index 0330202fda..97ba3421f2 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -968,7 +968,42 @@ static void bitmap_show_commit(struct commit *commit, void *_data)
->  	data->commits[data->commits_nr++] = commit;
->  }
+> @@ -683,22 +755,41 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  	}
+>  	/* End of pack replacement. */
 >  
-> +static int read_refs_snapshot(const char *refs_snapshot,
-> +			      struct rev_info *revs)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct object_id oid;
-> +	FILE *f = xfopen(refs_snapshot, "r");
-> +
-> +	while (strbuf_getline(&buf, f) != EOF) {
-> +		struct object *object;
-> +		int preferred = 0;
-> +		char *hex = buf.buf;
-> +		const char *end = NULL;
-> +
-> +		if (buf.len && *buf.buf == '+') {
-> +			preferred = 1;
-> +			hex = &buf.buf[1];
+> +	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
+> +		const int hexsz = the_hash_algo->hexsz;
+> +		string_list_sort(&names);
+> +		for_each_string_list_item(item, &existing_packs) {
+> +			char *sha1;
+> +			size_t len = strlen(item->string);
+> +			if (len < hexsz)
+> +				continue;
+> +			sha1 = item->string + len - hexsz;
+> +			item->util = (void*)(intptr_t)!string_list_has_string(&names, sha1);
+
+OK, here is the tricky part. They are marked for deletion here...
+
 > +		}
-> +
-> +		if (parse_oid_hex(hex, &oid, &end) < 0)
-> +			die(_("could not parse line: %s"), buf.buf);
-> +		if (*end)
-> +			die(_("malformed line: %s"), buf.buf);
-> +
-> +		object = parse_object_or_die(&oid, NULL);
-> +		if (preferred)
-> +			object->flags |= NEEDS_BITMAP;
-> +
-> +		add_pending_object(revs, object, "");
 > +	}
 > +
-> +	fclose(f);
-> +	return 0;
-> +}
+> +	if (write_midx) {
+> +		struct string_list include = STRING_LIST_INIT_NODUP;
+> +		midx_included_packs(&include, &existing_packs,
+> +				    &existing_kept_packs, &names, geometry);
 
-`buf` needs to be released here.
+...the mark for deletion is taken into account during the execution of
+midx_included_packs() (as can be seen by looking at that function)...
+
+> +
+> +		ret = write_midx_included_packs(&include,
+> +						show_progress, write_bitmaps > 0);
+> +
+> +		string_list_clear(&include, 0);
+> +
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	reprepare_packed_git(the_repository);
+>  
+>  	if (delete_redundant) {
+>  		int opts = 0;
+> -		if (pack_everything & ALL_INTO_ONE) {
+> -			const int hexsz = the_hash_algo->hexsz;
+> -			string_list_sort(&names);
+> -			for_each_string_list_item(item, &existing_packs) {
+> -				char *sha1;
+> -				size_t len = strlen(item->string);
+> -				if (len < hexsz)
+> -					continue;
+> -				sha1 = item->string + len - hexsz;
+> -				if (!string_list_has_string(&names, sha1))
+> -					remove_redundant_pack(packdir, item->string);
+> -			}
+> +		for_each_string_list_item(item, &existing_packs) {
+> +			if (!item->util)
+> +				continue;
+
+...and the marks are also used here. I was at first confused about why
+the functionality of midx_included_packs() depended on whether redundant
+packs were marked for deletion - if they are redundant, shouldn't they
+never be taken into account (regardless of whether we actually delete
+them)? But I guess it makes sense as an overall design point that we
+pass all packs that are to remain (so if they will be deleted, exclude
+them, and if they will not be, include them).
+
+I think a comment "mark this pack for deletion" at the point we write
+the mark (so, where the cast to intptr_t is) is worthwhile. Other than
+that, this patch looks good to me.
+
+I (and the others in our review club) only managed to reach this patch.
+I hope to get to the other 2 by the end of the week.
