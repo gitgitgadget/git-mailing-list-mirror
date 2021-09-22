@@ -2,167 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ACEFC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC8BBC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:58:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FCAD611C9
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:55:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABB536105A
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236658AbhIVQ5D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 12:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236647AbhIVQ5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 12:57:02 -0400
-Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E331C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 09:55:32 -0700 (PDT)
-Received: by mail-qk1-x749.google.com with SMTP id bl32-20020a05620a1aa000b004330d29d5bfso10844756qkb.23
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 09:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=7RZQv94K/Xkc5Ndzs0etQ0maYmEaDx+r4jbpXo02Dzo=;
-        b=plNi0U5rmPXxWE39YhiVmyQhPPtC3E6MXDmcPU0PTtMveaI3ee4VDb2LyU7KuOEsr+
-         3RgK7FyrKnCffqe7LDJ9t6dCmtNfaxZYwCBK0voUkozu+Aq9vHBufg37RMaQuv0lybX2
-         qFeFnnOjTmZmM13I2MnnT2ocqb1xJGyhkPpz6cKdg0rEcNkISQGMEiA79JLZ6ZL0V2+y
-         hpE6u0TKpvNfIfF8oAEO4vy0UE0R6Wr1EgCw/g2f3S1SVH4WMLf2eElcWXjUNtNtbAhw
-         W89TCXEvaH0Mcrv1Yfy+0rfTHCEDNLdHVwIkuk0CoFvjtWQkbIdvHQQ0wRV4xcJ0EYhj
-         Ebcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=7RZQv94K/Xkc5Ndzs0etQ0maYmEaDx+r4jbpXo02Dzo=;
-        b=UvQlxZDOPk06zlPFkU/dKtFCbwHe3+CmPWSmeEvOv0utLHsuVfqP9c8xLjuSDSX9kU
-         xwWzqU2Vl9la+nAFKnZ9e1pMiVWQawRz1HsewITDcUQmgalOFvPSJWTZ8kh8DCwAhVAJ
-         CHQfRZPp8UujS2QJcguWmiQcSNA+CW01Iw1v2ePDh6VVOeDLkZSggfhqS9SF8CBsdx/F
-         XikI4SFfrlDa8PL4r7xHbqptOcfl0l5YLYCy/au+nxOckjTM4pUin0RtdAcXK+xOE5rE
-         cPZmDPXDVTLnx334st41m4cGWMqAD64U9qySS0+5skR7AdjrxykEeAkN3KaKNhzmb0aw
-         /uoQ==
-X-Gm-Message-State: AOAM531ru47oCzjS/1OiMPMnid0vCfHUU5qWaE8oGSVnN9oHk6kWncdS
-        YsgSic1Cjxrjs9MzWrF59auZgvBHrPjAxw==
-X-Google-Smtp-Source: ABdhPJy6VN54BnY6evmfL8C12AYzQWK/XUaIoPyDdKqGtpqW38dOwmD4jC8M66SmgdFBrY11WXyUGtnNzse6vw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a0c:e381:: with SMTP id
- a1mr855110qvl.42.1632329731261; Wed, 22 Sep 2021 09:55:31 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 09:55:28 -0700
-In-Reply-To: <87k0j87tdw.fsf@evledraar.gmail.com>
-Message-Id: <kl6lv92s35z3.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20210921232529.81811-1-chooglen@google.com> <20210921232529.81811-3-chooglen@google.com>
- <87k0j87tdw.fsf@evledraar.gmail.com>
-Subject: Re: [RFC PATCH 2/2] branch: add --recurse-submodules option for
- branch creation
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        id S236673AbhIVQ7w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 12:59:52 -0400
+Received: from avasout02.plus.net ([212.159.14.17]:58614 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236537AbhIVQ7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 12:59:50 -0400
+Received: from [10.0.2.15] ([217.32.115.204])
+        by smtp with ESMTPA
+        id T5ZYmN7PerasdT5ZZmNRF3; Wed, 22 Sep 2021 17:58:18 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1632329898; bh=K59Ullu2/VhEgm98twRZPr1baG3/GTpqh/u2GnxZZ54=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=NJKUOdVHiEBU90gxyrYOW2eCsQOKpNnBpmkDFeU6OQ74/asQ7IjnJ0SNe7fkrJBwm
+         XsYs9ZhOEYsHPG6iwnpgCvOeIghRH1exvGZpg7oQAOCjcXJ0kGjGhpsHuv/e6jxJOK
+         cNDC7xjlTy6Lo5Io1VFltFHv20BBZLCuZAILLhoD/DOvwXtg1jpWSHibXKmDc5mCa/
+         I/sWVLYX4jIz8Gtect043ax+GB4de8LuTZOe7c/PjdYSDCNqo5OhYofIQaqENgBRhz
+         DAX6MVb+r9dEmaxYEJoEcYv7kiKcz3TV5nCRA+VPA3UoZL6rNpFbs2A5fFjU7DDR+n
+         TZzuuSavEq9Nw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=dIE9ZNRb c=1 sm=1 tr=0
+ a=SVJmvQqwCtcAfy+lhBggeQ==:117 a=SVJmvQqwCtcAfy+lhBggeQ==:17
+ a=IkcTkHD0fZMA:10 a=FIB_ZjVnoVkjKK0TpOgA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 0/3] Makefile: make "sparse" and "hdr-check" non-.PHONY
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>
+References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
+ <YUqQzn5vFDpbF5dM@coredump.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <c13b050c-abb9-c669-b92c-930f2b43ce10@ramsayjones.plus.com>
+Date:   Wed, 22 Sep 2021 17:58:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <YUqQzn5vFDpbF5dM@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfNdqhepPhHoxOQU2yyF6a4PZ0nriKc26R5o575zxlhydn1IP9ArxalkDbr71K7x0LhQtxw6gunt18LnRfJ4NfACfWL5L4MZZOiVjmv+6oZdu8+I+rJxB
+ NczLX/NXT2J9Mhy2aqUZJpJ7TUTBcSy5v1+YAqLwZOY2Se2qUl/wTCmAnm5MOKA+pOdeZ83MonGH6A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->>  static const char *head;
->>  static struct object_id head_oid;
->> +static int recurse_submodules =3D 0;
->
-> Nit: just s/ =3D 0// will do here, and is the convention typically...
 
-Thanks for the catch!
+On 22/09/2021 03:11, Jeff King wrote:
+> On Wed, Sep 22, 2021 at 12:55:12AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+>> Now that my series to only build "TAGS" when we strictly need to has
+>> landed in 1b8bd2243e7 (Merge branch 'ab/make-tags-cleanup',
+>> 2021-09-20), let's do the same for the "sparse" and "hdr-check"
+>> targets.
+>>
+>> For *.c files we'll now generate corresponding empty *.sp and *.hco
+>> files when "sparse" and "hdr-check" are run, respectively. If either
+>> of those errored on the *.c file we'd fail to refresh the
+>> corresponding generated file.
+> 
+> All three seem pretty reasonable to me.
 
->> +	r_start_name =3D strcmp(start_name, "HEAD") ? start_name :
->> +		refs_resolve_refdup(get_main_ref_store(r), start_name, 0, NULL, NULL)=
-;
->
-> IMO clearer just as an if/else.
+Heh, interesting. My initial reaction was completely negative! ;-P
+(and not just mildly negative either, but 'you must be kidding').
 
-Sounds good, I'll use an if/else instead
+However, I then thought 'I must be missing something, I'm being
+stupid and about to embarrass myself in public!'. So, I have
+been trying hard to understand what these patches are trying to
+accomplish and just what it is I'm missing. But, I'm coming up
+blank ...
 
->> +	if (!recurse_submodules) {
->> +		return;
->> +	}
->
-> Can lose the braces here...
+At the heart of my unease is dependencies (or rather the lack) for
+the 'synthetic object files' *.hco and *.sp. (Also, the addition
+of even more 'shrapnel' to the build directories - I wrote a patch
+to remove the useless *.hcc files just after commit b503a2d515e was
+included, but didn't get around to submitting it).
 
-Ah, yes. Old habits die hard.. Thanks!
+So, lets try something:
 
->> +
->> +	for (i =3D 0; i < r->index->cache_nr; i++) {
->> +		const struct cache_entry *ce =3D r->index->cache[i];
->> +		if (!S_ISGITLINK(ce->ce_mode))
->> +			continue;
->> +		sub =3D submodule_from_path(r, null_oid(), ce->name);
->> +		if (repo_submodule_init(&subrepo, r, sub) < 0) {
->> +			warning(_("Unable to initialize subrepo %s, skipping."), ce->name);
->> +			continue;
->> +		}
->> +		/*
->> +		 * NEEDSWORK: branch tracking is not supported for
->> +		 * submodules because it is not possible to get the
->> +		 * remotes of a submodule.
->> +		 */
->
-> It isn't?
->
->     $ git -C sha1collisiondetection/ remote -v
->     origin  https://github.com/cr-marcstevens/sha1collisiondetection.git
+  $ make hdr-check
+  GIT_VERSION = 2.33.0.517.g53f5cfaf01
+      HDR add-interactive.h
+  ...
+      HDR xdiff-interface.h
+  $ 
 
-Ah, my comment is ambiguous. I meant that we cannot get
-submodule remotes in-process because remotes.c stores its state in
-static variables I believe it implicitly refers to the remotes of
-the_repository and can't be reused for submodules.
+OK, that seems to work.
+  
+  $ find . -iname '*.hcc' | wc -l
+  208
+  $ find . -iname '*.hco' | wc -l
+  200
+  $ 
 
-Of course I hope I am wrong, because that would make this task a lot
-easier :)
+Hmm, odd:
+  
+  $ find . -iname '*.hcc' | sed s/.hcc// | sort >zz
+  $ find . -iname '*.hco' | sed s/.hco// | sort >xx
+  $ diff zz xx
+  90d89
+  < ./merge-strategies
+  137d135
+  < ./reftable/slice
+  152d149
+  < ./sha1-lookup
+  198,202d194
+  < ./vcs-svn/fast_export
+  < ./vcs-svn/line_buffer
+  < ./vcs-svn/sliding_window
+  < ./vcs-svn/svndiff
+  < ./vcs-svn/svndump
+  $ 
 
-> All this manual file checking should depend on REFFILES, but better yet
-> is there a reason this can't use rev-parse? I.e. why can't we inpect
-> this state with 'for-each-ref', 'rev-parse' and the like? Does this test
-> need to assert that these files end up in these specific locations, or
-> just the ref store? Ditto for the later ones.
+... just noticed in passing, I didn't investigate.
 
-> Use test_cmp, also for this sort of thing the test "x$y" =3D "x" idiom
-> isn't needed unless you've got a computer from the mid-90s or something
-> :)
+Now, by definition, every '*.hcc' file depends on git-compat-util.h, so
+after changing that header an 'hdr-check' should check every header:
 
-The only reason the tests look this way is that I have copied the
-surrounding tests. From your comments, it seems clear that these tests
-are fairly out-of-date, so I should probably model them after something
-else.
+  $ touch git-compat-util.h
+  $ make hdr-check
+      HDR git-compat-util.h
+  $ 
 
-I will incorporate Philippe's suggestion
+Hmm, disappointing! Similarly, if I change (say) 'cache.h', then all
+the headers that '#include' that file, in addition to 'cache.h', should
+also be checked:
+  
+  $ git grep -n 'include.*cache\.h' -- '*.h' | wc -l
+  35
+  $ touch cache.h
+  $ make hdr-check
+      HDR cache.h
+  $ 
 
-  Most tests for submodules are usually in separate test files. I don't thi=
-nk
-  this is a set-in-stone rule, but if more tests are coming in the future, =
-maybe
-  a new test file t????-branch-submodule.sh would be appropriate ? Just a s=
-mall suggestion.
+Hmm, not quite. So, the sparse target should have similar problems:
+  
+  $ make sparse
+      * new build flags
+      SP abspath.c
+  ...
+      SP remote-curl.c
+  $ 
 
-Then at least my new tests won't look so out of place with the other
-branch tests.
+OK, that works.
+  
+  $ find . -iname '*.sp' | wc -l
+  452
+  $ 
+  
+  $ make sparse
+  $ touch git-compat-util.h
+  $ make sparse
+  $ touch git.h
+  $ make sparse
+  $ touch git.c
+  $ make sparse
+      SP git.c
+  $ 
+  
+  $ make clean
+  ...
+  rm -f GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
+  $ find . -iname '*.sp' | wc -l
+  452
+  $ 
+ 
+Ah, yes, you may want to add the removal of the 'synthetic objects' to the
+make clean target!
 
->> In this patchset, branching works slightly differently between the
->> superproject and submodule (skip ahead for specifics). There are two
->> very obvious alternatives that can address this:
-=20
->> * A: only implement --recurse-submodules behavior after we are able to
->>   eliminate any kind of dependence on the_repository/global state that
->>   shouldn't be shared.
->> * B: implement --recurse-submodules as child processes, which won't be
->>   bothered by global state.
+As I said, I don't quite understand what these patches want to do, so I can't
+offer any solutions. :( Well, you could *add* the necessary dependencies,
+of course, but that could lead to a rabbit hole which I would not want to
+go down!
 
-I was wondering if you had thoughts on this bit in particular. It seems
-unpleasant for branching to behave differently between superproject and
-submodule, so I'd like to discard this RFC (or at least the 'disable
-remotes' behavior) ASAP and start work on a version that serves us
-better.
+ATB,
+Ramsay Jones
+
+ 
+
