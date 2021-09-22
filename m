@@ -2,109 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F16FC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA94C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:17:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 595A8610D1
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:16:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 824F060F13
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 20:17:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237348AbhIVUSW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 16:18:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53372 "EHLO
+        id S237413AbhIVUSq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 16:18:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237309AbhIVUSV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 16:18:21 -0400
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA2BC061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:16:50 -0700 (PDT)
-Received: by mail-vs1-xe29.google.com with SMTP id n17so4251017vsr.10
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:16:50 -0700 (PDT)
+        with ESMTP id S237309AbhIVUSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 16:18:45 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2820C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:17:14 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id q11so10429495wrr.9
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 13:17:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tIqotQKJA5VehNFyQlfPSA30tjH/fEZ9xRu4jG4gzXw=;
-        b=CbZ4y8ESrlnYj9q5Et9xT6Ib5vRxbzwgpIu2aeiN2kqYdW2pKbtFKTh0vxZGOLFebg
-         ZAFUz5ZPMdDI7qQY1d4/gfTdIOPHh83YSSMyMcIm3XvG7UOLazCGwI7wGcIoEGc8HtkA
-         TEzTHJM/O1UznuICWUcCA9+XtfosUnkY/fnAzfHjL4lKUv85ewP3A9B9LDK31xhSD6/5
-         ZwayXQuVAANy02wEZrxsCbOCOTcm4TR1n7CDl6y/rLz29UJAbx/DVQM+EtVzz21uLep9
-         gE0hU13bAA0W/L9kpK0pJ8h/iFWUTrgQyqk3WogRrSj+zZZAAswQ5iagufd44YCP3ILS
-         SJHg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BxIBbN6TUcBQd7ZfWzdRk4xeUoOsDMjHnF0rGic5e8I=;
+        b=Z3jn250OQ36JfnJuFT0if/fUskGRL+CTmsCxx7Ue6ZFGCH3yEyq1GuqCBN/QfEH0XK
+         LXq9M1HbAAa2y/kUAxe1pn3b1mB9wBqdQ7IDQZuDGudaye2hahBlYGlnSgWQgetp9WP9
+         66KPJkP92sIHXYHe9/llhA86lJ1Firs40giOJYrpBulRG6nL5y7R6/oRnsZubhDF6JGE
+         tZGxOHB5e1O6Tp8HeDlF5oQf3B2yzEEa1cVf//7Zf/We7IWJLQtZd6nzf6ftjmU3fM/b
+         VBDKVisAhxu03Yq6QnYZnqtHtGZ2FusQT72XsceRifzMGsvz4h3wbFDS/PEwx7ynlh/t
+         GOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tIqotQKJA5VehNFyQlfPSA30tjH/fEZ9xRu4jG4gzXw=;
-        b=yJWEmMzE5dyh/JZCmHiJnCdJxpLW3T/YGUhyvNn9J0jVHCQv+XB2c0fXajApOZGVlR
-         6YKZfQXwAiDxFrQqHS1k4fcXOlmDgttlALSF9ydDQGcGLCwjlfUHafNQNoRJHrP40HWa
-         swErKGwr9RdNR2fILYu5dgO+q4qwTM+e8VZ2B3yqa5s4fNVnvaJsf6cJnRblxpkxWoRL
-         GmYSbaITWa/yKo+5AsMOfmqWveyr1U1rJHgarmz/UwowRL5yWsyLsRj0uDdDnl7E13vW
-         OEguYTyNssnU8+D9On4QfHWuF+0dJecpW862Zzfk3fxXLuNXVG7VFISTRP4MN5IkBxkY
-         EIDQ==
-X-Gm-Message-State: AOAM531MmiXiOIlyOohpgrR5Z0BT0/HF5W5CZwwQ5jDdjjSg0cqRgncq
-        uqh/J/uJasNGAGxIBMPyeX2wgXqyqrDi2Sz1V9Mp44CI8oI=
-X-Google-Smtp-Source: ABdhPJzF91r6LPO68u5hqNYI6g8+PL6bsr7IH3FaiQbDA8gEdrSXCJtToVq40UTP4X1sDfsA7hpSIg0wo+CVA1nEv7Y=
-X-Received: by 2002:a67:ee9a:: with SMTP id n26mr1318283vsp.14.1632341809724;
- Wed, 22 Sep 2021 13:16:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BxIBbN6TUcBQd7ZfWzdRk4xeUoOsDMjHnF0rGic5e8I=;
+        b=rKoEnEke29XS+4ZaQkhZxAtIABYln+POk33LEXh5c5oJKfIJ6Jcjstnbm2FWHuW4qd
+         LR4N87/buwWqgfTk0b1g+C4YAlrK5fAYxa1bh5Z9FJTNqyT9TO66MZF6k6SPlOhgqaED
+         rBMH+iJz3kVi5X0HqJC4auB2jlUnTktYUejFZwxMxHW1N4c1iRimo5BNBsg6XhuzsvZ9
+         72AzzMGaGIKDvWNZFg9Cbf+kxHrzkMN8gsgiMEESdZUbUMEdcsrTA01smArAbSQZSU4z
+         QnV/WKwlunZD/FtDTfBFbMD3Ombej6DB2JpvxTpyD6aHGeuhjVVeiQ0KRkygBYO69Ec8
+         flKA==
+X-Gm-Message-State: AOAM531JzOvADdtO9D1XANVjQ4hWBMgz+4RdJvHvNo7YbORI26LNc4Id
+        1EThFI0mfp5tIOayjVeJep5njDjWqbl68g==
+X-Google-Smtp-Source: ABdhPJwYPCuIyfzMYm31bg8iiBvfjebQn20B9mr/xsjpBKl8X98oGUr+Q+tt2+1NW2SQHhgoQM4ghw==
+X-Received: by 2002:a7b:cb04:: with SMTP id u4mr12349365wmj.176.1632341833251;
+        Wed, 22 Sep 2021 13:17:13 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t18sm2966741wrp.97.2021.09.22.13.17.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 13:17:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Makefile: clean .depend dirs under COMPUTE_HEADER_DEPENDENCIES != yes
+Date:   Wed, 22 Sep 2021 22:17:06 +0200
+Message-Id: <patch-1.1-b8bde2ee7b7-20210922T201615Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1225.g9f062250122
 MIME-Version: 1.0
-References: <4381472f-a9db-b8a7-a395-81c3935309ae@kdbg.org>
-In-Reply-To: <4381472f-a9db-b8a7-a395-81c3935309ae@kdbg.org>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 22 Sep 2021 13:16:38 -0700
-Message-ID: <CAPUEspguHsx+BtViT5tO3eyZSJf7mJ0of-K3vAMqB0-ju4fpsg@mail.gmail.com>
-Subject: Re: [PATCH cb/pedantic-build-for-developers] lazyload.h: fix warnings
- about mismatching function pointer types
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 12:56 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Here, GCC warns about every use of the INIT_PROC_ADDR macro, for example:
->
-> In file included from compat/mingw.c:8:
-> compat/mingw.c: In function 'mingw_strftime':
-> compat/win32/lazyload.h:38:12: warning: assignment to
->    'size_t (*)(char *, size_t,  const char *, const struct tm *)'
->    {aka 'long long unsigned int (*)(char *, long long unsigned int,
->       const char *, const struct tm *)'} from incompatible pointer type
->    'FARPROC' {aka 'long long int (*)()'} [-Wincompatible-pointer-types]
->    38 |  (function = get_proc_addr(&proc_addr_##function))
->       |            ^
-> compat/mingw.c:1014:6: note: in expansion of macro 'INIT_PROC_ADDR'
->  1014 |  if (INIT_PROC_ADDR(strftime))
->       |      ^~~~~~~~~~~~~~
+Fix a logic error in dfea575017d (Makefile: lazily compute header
+dependencies, 2010-01-26) where we'd make whether we cleaned the
+.depend dirs contingent on the currently configured
+COMPUTE_HEADER_DEPENDENCIES value. Before this running e.g.:
 
-did you have CFLAGS adding -Wincompatible-pointer-types explicitly?
+    make COMPUTE_HEADER_DEPENDENCIES=yes grep.o
+    make COMPUTE_HEADER_DEPENDENCIES=no clean
 
-This is the reason why the code that got merged to master had -Wno
-for this case.
+Would leave behind the .depend directory, now it'll be removed.
 
-> (message wrapper for convenience). Insert a cast to keep the compiler
-> happy. A cast is fine in these cases because they are generic function
-> pointer values that have been looked up in a DLL.
+Normally we'd need to use another variable, but in this case there's
+no other uses of $(dep_dirs), as opposed to $(dep_args) which is used
+as an argument to $(CC). So just deleting this line makes everything
+work correctly.
 
-I have a more complete "fix" which I got stuck testing GGG[1]; you are likely
-going to also hit -Wcast-function-type otherwise.
+See http://lore.kernel.org/git/xmqqmto48ufz.fsf@gitster.g for a report
+about this issue.
 
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  How can this have worked ever without a warning?
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-POSIX have a specific exception that allows (void *) for this, it is incorrect
-though in platforms where pointers to code and data might be different
-(ex DOS with its segmented model)
+diff --git a/Makefile b/Makefile
+index 9df565f27bb..bc987daf495 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2466,7 +2466,6 @@ dep_args = -MF $(dep_file) -MQ $@ -MMD -MP
+ endif
+ 
+ ifneq ($(COMPUTE_HEADER_DEPENDENCIES),yes)
+-dep_dirs =
+ missing_dep_dirs =
+ dep_args =
+ endif
+-- 
+2.33.0.1225.g9f062250122
 
-Carlo
-
-[1] https://github.com/git/git/pull/1094
