@@ -2,92 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 486E7C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EA61C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:04:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21A366105A
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 16:59:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F4F860EE5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236683AbhIVRAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 13:00:31 -0400
-Received: from mout.web.de ([212.227.15.4]:59175 "EHLO mout.web.de"
+        id S236769AbhIVRG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 13:06:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52656 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236537AbhIVRAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 13:00:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1632329925;
-        bh=RsDRK3mp9wDCmG6SKVo1BK8TXSEHr/WF3U+0H4NT3gA=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=d0rmOPKNnNMdq3v5f+g0VGfSE6by3ryiZr1HjIw0VdJK3CISN7adSMRdcCVD9yK2d
-         tBrqY6nHGcSImXuNF53LRlTa7KY9+WcuX0ZKsVzyg2EwX7yccjnU6jvOO2kZuBhAob
-         ZIARh4VSagTiJDLXDElppVi4hUd7+4enWY+Wu/xc=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LnSKE-1n5Cp90YXO-00hdNf; Wed, 22 Sep 2021 18:58:45 +0200
-Subject: Re: cb/pedantic-build-for-developers, POSIX-but-not-C99 and
- -Wno-pedantic-ms-format
+        id S236764AbhIVRG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 13:06:26 -0400
+Received: (qmail 10095 invoked by uid 109); 22 Sep 2021 17:04:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 17:04:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15538 invoked by uid 111); 22 Sep 2021 17:04:55 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 13:04:55 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 22 Sep 2021 13:04:54 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Wong <e@80x24.org>
-References: <xmqq1r5iaj9j.fsf@gitster.g> <87lf3q9u6b.fsf@evledraar.gmail.com>
- <CAPUEspiBP+4Ac4O5ZRTK0N+8PhHeewksrhL=x8TcswrvnS1JOw@mail.gmail.com>
- <b0eba1c6-5468-df31-db6f-701bcd24adff@web.de> <xmqqee9g8u3n.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <03283614-c589-5e19-4d35-f0a017e69895@web.de>
-Date:   Wed, 22 Sep 2021 18:58:43 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
+ with DEVOPTS=pedantic
+Message-ID: <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
+References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
+ <xmqqmto48ufz.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <xmqqee9g8u3n.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:wtsYEDPGgsR7AVc4+kmxoK4UwutBkv9Bgn5Ro8D4pT+RREkVy0v
- QW5NkMhG+Pi9eaSPQ2NGfF7hczOw7Hd7O0t4QZGL9EQ3/7rS6NDCZX3lABny7n5jZLdjm+s
- LtDN42hbbRsTQfSRKGeg242zckz1Pc1gyfpLk9f7gnzWSUNgiLrJYywQToJbHoFwaW/JR7g
- pekc5/6kk4zg3Nw7eWq8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mtiVim9CdcQ=:D0A+csM0+lebPKNa2ak/Ad
- t0GtFjy5OuJiZe35D/xN+fb3imu/Sh55K70mGjjpNN78mZX2pgfNUxuZZa6DnfRI7p6pxfkv0
- Gxp1aeX2X7hC6tQ/gSnXM1r3KZvhktiAEk2O8bs8MeyZrdANblWZ/GcuV1sZg3TXg1uDzsOvK
- fsHFXyzJ60t+VSSVnsuJPy2iYkN7rxKoRBBS4m41vCS7p39jZS+R0CvS1xojMthFRvFYZvY9E
- iyidxKW73OphQ6dKUkCy8BhQtqzBZJlHnOxMyIoRNLmX3D7/QuNQ6CTYvf0hPusFhYo27dBIH
- D0oXfOqHwtE8WP+M3fyqjUWVWnn6z+nQod4eBbQbyDORAW4Stg89R94qA7yIW0EWDJivKLf7j
- sqElpCg353uJQ/2ZpMbEssMsstxlzX/zaQUAmtl/QFr11fxsvuDDIOIbtQDSJ8kBsM5JwI6Qy
- 6UfdZuMtmybVSEPejK0uQ1/bfePMZlWaM5+DJkv3XswPWs4hfqa7lOwYoT8d0k/9f4yBxHK2C
- eDl1fOYdzcU2Sj2UU6J1ICKI1QCblpudTI7LCoj7P+c35N7DT5SUkQwGb3+hbJhvZhD04jYDk
- aDZm3Gpqgf0AoDHXjKLtYj/2dPWJpYZ9q1Jn/uM65sQSV8dmjP5Hl9WCnOJs+Bc+mGoXSwLMS
- QUKOAMfn9IsaAswJ6vWVqvnjLTPkQUijZ9ePhyvpIUpn8UdKxgDDQoUgzC2hWV/G9iH6kQj77
- 0PTgT1Kw0Mt7OMiETLBxMN67ZC6MJmlaMUDn6YpuJVFHSUW1Rc8/Ox5VUmYUoK6vtdghTKRJW
- dGWl4asbgsAP9xcMKlF7X3GB0u2rWZNWUT/etr2FLb8qEPPP3FJF/y/MWJfj9Vwod9WpyFOkq
- wT/v0IASXJQ9B/Y/QtouqDAx0WH/MhsBVArZwWewJ4irgymavDVqeWMyEB4m3NZeIVaxr/dKP
- Cb9c5sZpGoF/NH0IrRvm/PiVrKiMccrrMCDi6Kw78DG11rdcFaiDvEGU+GF8+6bEAZngooaH3
- 8eY0CQ7QQFVAlWPkxE5cc3MjmXJ1w1IY39eUB++ZqN3ILi4MI2EoDXaaAhYaJiEvGQ==
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqmto48ufz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.09.21 um 18:15 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> The lack of warnings about the use of that extension in po/ means
->> translated formats are not checked by the compiler at all, right?
->> According to the gettext documentation [2] msgfmt takes care of that
->> when building the translation files, though.
->
-> It is not even seen by the compiler at compilation time, right?  _()
-> at runtime is merely a function call to map its parameter string to
-> another string using what is in .mo (compiled from po/).
+On Wed, Sep 22, 2021 at 09:08:00AM -0700, Junio C Hamano wrote:
 
-Right, and it's up to the program that builds these .mo files (msgfmt)
-to only accept valid mappings between printf format strings.
+> While I agree with your analysis of the problem, I cannot shake this
+> nagging feeling that the proposed solution is barking up a wrong
+> tree.  After all, -pedantic and any other option that lets the
+> compiler notice that it is being asked to compile an empty source
+> can come directly from the end user (e.g. CC="gcc -pedantic" or as
+> part of CFLAGS)---realization of which makes me wonder if it is
+> essential to compile /dev/null for this check, or any reasonably
+> syntactically correct program would do.
+> 
+> I wonder if the attached (with clean-up to remove the tracing cruft)
+> would show us a better direction.  It feeds a single line
+> 
+> 	int dummy_for_dep_check;
+> 
+> C "program" from the standard input of the compiler to tackle the
+> "you are not supposed to be compiling an empty compilation unit"
+> problem in a more direct way.
 
-Ren=C3=A9
+That feels a bit like we're playing a game of chicken with the compiler
+in terms of what it may complain about. For example, sparse will
+complain:
+
+  foo.c:1:5: warning: symbol 'dummy_for_dep_check' was not declared. Should it be static?
+
+Might compilers ever learn to warn of the same thing?
+
+I kind of like the simplicity of Ævar's approach. We want to know if the
+compiler can be invoked with options XYZ, so we do so. That should be
+largely independent of our cflags, and there's prior art in how we
+invoke it in the detect-compiler script.
+
+So I'd argue we should go even simpler, like:
+
+diff --git a/Makefile b/Makefile
+index 3628d14f16..4597a126d0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1277,7 +1277,7 @@ COMPUTE_HEADER_DEPENDENCIES = auto
+ endif
+ 
+ ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
+-dep_check = $(shell $(CC) $(ALL_CFLAGS) \
++dep_check = $(shell $(CC) \
+ 	-c -MF /dev/null -MQ /dev/null -MMD -MP \
+ 	-x c /dev/null -o /dev/null 2>&1; \
+ 	echo $$?)
+
+I'm also tempted by a hunk like this. Then we can set the REQUIRE flag
+in a CI job (or locally for git devs who know they have gcc) and notice
+an unexpected breakage in the auto test.
+
+@@ -1295,6 +1295,9 @@ ifneq ($(COMPUTE_HEADER_DEPENDENCIES),no)
+ $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
+ (not "$(COMPUTE_HEADER_DEPENDENCIES)"))
+ endif
++ifdef REQUIRE_COMPUTE_HEADER_DEPENDENCIES
++$(error computed header dependencies required, but auto-check did not find them)
++endif
+ endif
+ 
+ ifndef GENERATE_COMPILATION_DATABASE
+
+-Peff
