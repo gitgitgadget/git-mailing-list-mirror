@@ -2,92 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DECA9C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3088C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:43:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B625A60F44
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:21:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9955D611CA
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 21:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238130AbhIVVXH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 17:23:07 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:58796 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238141AbhIVVXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 17:23:05 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4HFB7J52p0z5tl9;
-        Wed, 22 Sep 2021 23:21:32 +0200 (CEST)
-Subject: Re: [PATCH cb/pedantic-build-for-developers] lazyload.h: fix warnings
- about mismatching function pointer types
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <4381472f-a9db-b8a7-a395-81c3935309ae@kdbg.org>
- <CAPUEspguHsx+BtViT5tO3eyZSJf7mJ0of-K3vAMqB0-ju4fpsg@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <2793c9c0-57ee-c7e0-957c-01d9aa27b44b@kdbg.org>
-Date:   Wed, 22 Sep 2021 23:21:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S238136AbhIVVoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 17:44:34 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60408 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238066AbhIVVoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 17:44:32 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45F65158E9F;
+        Wed, 22 Sep 2021 17:43:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WCgJogVTGJ58ZZGW60B0CpvY2jLa6OwMDf0hwz
+        0u70c=; b=dBVcOsEp7S99qf89iavELrTLdhNVuGEfU29vI//mwcMFllvV8iB75k
+        TpJUOcoTJe3ZkumFpvFs+4yeULeDWZNJvAmDbjvBbVOX6M+Xikw1+VtS7f6boSUN
+        vzN+MaJ4Jw0QZqi2ehD5sKyGC3s/TmfP/qL4ARBuvGhrCLIY2DVyM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F07B158E9E;
+        Wed, 22 Sep 2021 17:43:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 99865158E9C;
+        Wed, 22 Sep 2021 17:42:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH] http: match headers case-insensitively when redacting
+References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
+        <xmqq8rzo770h.fsf@gitster.g>
+        <YUuNXOb5blV7iN6P@coredump.intra.peff.net>
+        <xmqqk0j85o6c.fsf@gitster.g>
+        <YUudqYmzy9N3e0Bk@coredump.intra.peff.net>
+Date:   Wed, 22 Sep 2021 14:42:57 -0700
+In-Reply-To: <YUudqYmzy9N3e0Bk@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 22 Sep 2021 17:18:33 -0400")
+Message-ID: <xmqqbl4k5lsu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPUEspguHsx+BtViT5tO3eyZSJf7mJ0of-K3vAMqB0-ju4fpsg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0DA02A26-1BEE-11EC-8DE4-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.09.21 um 22:16 schrieb Carlo Arenas:
-> On Wed, Sep 22, 2021 at 12:56 PM Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> Here, GCC warns about every use of the INIT_PROC_ADDR macro, for example:
->>
->> In file included from compat/mingw.c:8:
->> compat/mingw.c: In function 'mingw_strftime':
->> compat/win32/lazyload.h:38:12: warning: assignment to
->>    'size_t (*)(char *, size_t,  const char *, const struct tm *)'
->>    {aka 'long long unsigned int (*)(char *, long long unsigned int,
->>       const char *, const struct tm *)'} from incompatible pointer type
->>    'FARPROC' {aka 'long long int (*)()'} [-Wincompatible-pointer-types]
->>    38 |  (function = get_proc_addr(&proc_addr_##function))
->>       |            ^
->> compat/mingw.c:1014:6: note: in expansion of macro 'INIT_PROC_ADDR'
->>  1014 |  if (INIT_PROC_ADDR(strftime))
->>       |      ^~~~~~~~~~~~~~
-> 
-> did you have CFLAGS adding -Wincompatible-pointer-types explicitly?
+Jeff King <peff@peff.net> writes:
 
-I don't know of the top of my head (am not at that Windows box right
-now). I am fairly certain that I do not have DEVELOPER set.
+> No, I think we are on the same page now. Do you want me to take
+> another stab at writing the commit message to clarify things (i.e., do
+> we think it's badly written, or was it just mis-interpreted)?
 
-> This is the reason why the code that got merged to master had -Wno
-> for this case.
-> 
->> (message wrapper for convenience). Insert a cast to keep the compiler
->> happy. A cast is fine in these cases because they are generic function
->> pointer values that have been looked up in a DLL.
-> 
-> I have a more complete "fix" which I got stuck testing GGG[1]; you are likely
-> going to also hit -Wcast-function-type otherwise.
+I am not sure which, but perhaps more of the latter.  So I would not
+insist.
 
-I think that the correct solution is that get_proc_addr() returns void*,
-not FARPROC. Then either no cast is needed (because void* can be
-converted to function pointer type implicitly) or a cast is needed and
-that is then not between incompatible function pointer types and should
-not trigger -Wcast-function-type, theoretically.
-
->> ---
->>  How can this have worked ever without a warning?
-> 
-> POSIX have a specific exception that allows (void *) for this,...
-
-Sure, but as you can see in the warning message, FARPROC is not void*,
-but a somewhat generic function pointer type. I was not questioning the
-assignment of function pointer values of different types, but the
-absence of a warning.
-
--- Hannes
+Thanks.
