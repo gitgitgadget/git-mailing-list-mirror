@@ -2,109 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DCC5C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 23:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57855C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 23:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53A9161131
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 23:06:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38E0E60F24
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 23:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238383AbhIVXIU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 19:08:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59231 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238293AbhIVXIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 19:08:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D4DAEAB10;
-        Wed, 22 Sep 2021 19:06:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rYOSnwvxCCRuuOaPrt6t1dH1xBllKPmM0UC9tC
-        z+v44=; b=iTzt+dnpoTtk6RdsYmNdhLYbTr6qjRWNoV5GYscw0ODLRlPgOGitZx
-        Koy0D9YbazE9RpF0BjugmV7DxcA6apiGx2vCbVg1Bv2sbd/5/DxZY4BKY2iLGCmL
-        Azl70rrLnksIQkMEXrG+D1HmdPjA1O/aqLPBcxNDC6KwmAxg/M2pM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34AB3EAB0F;
-        Wed, 22 Sep 2021 19:06:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96A21EAB0E;
-        Wed, 22 Sep 2021 19:06:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, vdye@github.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 02/14] t1092: behavior for adding sparse files
-References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
-        <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
-        <c7dedb41291ed6ff48dd9b9b9814e3040f4fa92c.1632159937.git.gitgitgadget@gmail.com>
-Date:   Wed, 22 Sep 2021 16:06:46 -0700
-In-Reply-To: <c7dedb41291ed6ff48dd9b9b9814e3040f4fa92c.1632159937.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Mon, 20 Sep 2021
-        17:45:25 +0000")
-Message-ID: <xmqq35pw5hx5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C323F098-1BF9-11EC-9A2E-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+        id S238402AbhIVXNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 19:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37210 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238389AbhIVXNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 19:13:10 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A89C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 16:11:39 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id q8-20020a656848000000b0027e00518162so2664595pgt.11
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 16:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=fL9/fPGju1t9+KAEuI7RAs320ACfkMIGIbco/AQx84I=;
+        b=dDsgJCvWFLVHz9BXK+1AQBnHWFM/Gy8AqCXX2VXBtNGxjkE5Gj3w5kIu2h+PMk8xBI
+         PM4mM1LsmwR0JwEQRkiDS+Mr1BqwLbBegUMrCemKvMN70Mv6HbDyiF9ssrElHO9mYpeM
+         TjUFgP6kCpuNaN4tYRbHBhbIg1hrXpJgD08hARiwMoWwe5gMnJ25A4mGNrWVTsTrcNje
+         OKshTrrI7xq5VZuWz0rSJhQgjQbtPmOAiFCDZZm36CffGYhLvc+W06iPry7aV04hwZo6
+         3eMwVAUseElaciYzjBmGAtyYRi61ZUH1bV8tvtcA9STa/9cjH3lDIV3SBdeUhc7XC5YN
+         Gubw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=fL9/fPGju1t9+KAEuI7RAs320ACfkMIGIbco/AQx84I=;
+        b=t6kuY4Zei1cseJdRSYID1Oxf7qLTLbqeK9UM4r00I8WIr/e5I6nIugIileSk3hG2CM
+         T8bwgYsYm2CzkUKL9Cz6+pYxn9lEcl7GOzrUqEXwvbi7UvEbYLYx/oYTsRu8mfadv72P
+         ncfvxpK1Yj2ZzrH1b2/93TfRAhsAVUAkSCwRryBZ3u6fnkP2pRQl2RqG3jseFAndSn6V
+         pTTAKfOZ1EJwaShkoh+/bUagJwGPUqEV76fPcCzs31ZikElD2vowNSshAusWndNonrQo
+         vLOH8Ypq2a6IvALB/LwfcUnvTNsbViwAD/4iH5w1vdMkv4IUKTXO/gpGK/7NfyyetJQ+
+         sCWg==
+X-Gm-Message-State: AOAM530dbDcmoQkMW6RmcokoT32GyXUHDrYowrVRfPDJjfexYl5rhsEh
+        0hipUJhuJL1tBaV+Qwke9YSFaHP3PJuHS9EJaABz
+X-Google-Smtp-Source: ABdhPJwEKdwDjOUGTnO+UexkZAXX/qNkKQGFMlyCjoD37wPFth2LDjI6chMSCH++IKG/H/4zDtATvlqQtscmHV/Nv6hm
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:bb97:: with SMTP id
+ v23mr13944477pjr.128.1632352299191; Wed, 22 Sep 2021 16:11:39 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 16:11:37 -0700
+In-Reply-To: <59556e554565120929549239f1aee5a76d80ac8d.1631730270.git.me@ttaylorr.com>
+Message-Id: <20210922231137.2610100-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <59556e554565120929549239f1aee5a76d80ac8d.1631730270.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+Subject: Re: [PATCH v2 2/8] builtin/multi-pack-index.c: support
+ `--stdin-packs` mode
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+        avarab@gmail.com, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> An alternative approach
+> would have been to call that function from the `git repack` builtin
+> directly, but this introduces awkward problems around closing and
+> reopening the object store, so the MIDX will be written out-of-process.
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Add some tests to demonstrate the current behavior around adding files
-> outside of the sparse-checkout cone. Currently, untracked files are
-> handled differently from tracked files. A future change will make these
-> cases be handled the same way.
->
-> Further expand checking that a failed 'git add' does not stage changes
-> to the index.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 28 ++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
->
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 886e78715fe..3fb764f5eb9 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -187,6 +187,16 @@ test_sparse_match () {
->  	test_cmp sparse-checkout-err sparse-index-err
->  }
->  
-> +test_sparse_unstaged () {
-> +	file=$1 &&
-> +	for repo in sparse-checkout sparse-index
-> +	do
-> +		git -C $repo status --porcelain >$repo-out &&
-> +		! grep "^A  $file\$" $repo-out &&
-> +		! grep "^M  $file\$" $repo-out || return 1
+I'm not sure if the implementation direction started by this patch
+(eventually, running "git multi-pack-index write --stdin-packs" to
+replace the midx of a repository while "git repack" is running) would
+work on platforms in which mmap-ing a file means that other processes
+can't delete it, but if it works on a Windows CI, this should be fine.
+(I don't have a Windows CI handy to test it on, though.)
 
-Is addition and modification very special, as opposed to other kinds
-of changes?  Is the reason why we say "we do not want to see
-addition nor modification" here because there is no concrete X that
-we can say "we do want to see X" in various callers of this helper?
-
-I am also wondering, if this is asserting that $file is not added to
-the index, why we are using "git status" and not "ls-files", for
-example.  Wouldn't
-
-    test_must_fail git ls-files --error-unmatch "$file"
-
-be a more direct way to do so?
+Assuming it works on platforms like Windows, this patch looks fine.
