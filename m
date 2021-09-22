@@ -2,113 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EA61C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF54C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F4F860EE5
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:04:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3692610D1
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 17:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236769AbhIVRG0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 13:06:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52656 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236764AbhIVRG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 13:06:26 -0400
-Received: (qmail 10095 invoked by uid 109); 22 Sep 2021 17:04:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Sep 2021 17:04:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15538 invoked by uid 111); 22 Sep 2021 17:04:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Sep 2021 13:04:55 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Sep 2021 13:04:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
- with DEVOPTS=pedantic
-Message-ID: <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
-References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
- <xmqqmto48ufz.fsf@gitster.g>
+        id S236803AbhIVRYN convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 22 Sep 2021 13:24:13 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:26789 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236701AbhIVRYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 13:24:12 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 18MHMYDg011146
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 22 Sep 2021 13:22:35 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>
+Cc:     <git@vger.kernel.org>,
+        "=?UTF-8?Q?'Carlo_Marcelo_Arenas_Bel=C3=B3n'?=" <carenas@gmail.com>,
+        "'Jeff King'" <peff@peff.net>,
+        "'Phillip Wood'" <phillip.wood123@gmail.com>,
+        "'Eric Wong'" <e@80x24.org>,
+        "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>
+References: <xmqq1r5iaj9j.fsf@gitster.g> <87lf3q9u6b.fsf@evledraar.gmail.com> <xmqqilys8u74.fsf@gitster.g>
+In-Reply-To: <xmqqilys8u74.fsf@gitster.g>
+Subject: RE: cb/pedantic-build-for-developers, POSIX-but-not-C99 and -Wno-pedantic-ms-format
+Date:   Wed, 22 Sep 2021 13:22:29 -0400
+Message-ID: <02c701d7afd6$6f0a7f20$4d1f7d60$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqmto48ufz.fsf@gitster.g>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQMuoglFrJd/6yJXr/PiLib+ITjx0wGcUCbiAmfySIyo4jZ40A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 09:08:00AM -0700, Junio C Hamano wrote:
+On September 22, 2021 12:13 PM, Junio C Hamano:
+>Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> I.e. complaining about "%m$" instead of "%" in printf formats, it's
+>> easy enough to fix in my case, it's just something I used to
+>> de-duplicate a rather complex format, this makes it C(89|99)-compliant:
+>>
+>>     -       strbuf_addf(&fmt, "%%s%%s%%s-%%0%1$lud.%%0%1$lud-%%s-%%s-%%s",
+>>     -                   (unsigned long)tmp.len);
+>>     +       strbuf_addf(&fmt, "%%s%%s%%s-%%0%lud.%%0%lud-%%s-%%s-%%s",
+>>     +                   (unsigned long)tmp.len, (unsigned long)tmp.len);
+>>
+>> But in general, do we view -pedantic as an implicit endorsement that
+>> we should be using less POSIX and more standard C than we otherwise would?
+>>
+>> I may be wrong, but I believe that construct is widely portable, we
+>> don't use it in the main source, but in the po/ files (so anything
+>> that uses git + gettext tests for this already):
+>
+>Reordering (_("%s %s"), a, b) to ("%2$s %1$s", a, b) is essential to make po/ work.
+>
+>While I do not think of a reason why it should not work, I am not sure duplicating (%1$s %1$s", a) falls into the same category.
+>
+>Any solution that makes the per-cent ridden format string is better
 
-> While I agree with your analysis of the problem, I cannot shake this
-> nagging feeling that the proposed solution is barking up a wrong
-> tree.  After all, -pedantic and any other option that lets the
-> compiler notice that it is being asked to compile an empty source
-> can come directly from the end user (e.g. CC="gcc -pedantic" or as
-> part of CFLAGS)---realization of which makes me wonder if it is
-> essential to compile /dev/null for this check, or any reasonably
-> syntactically correct program would do.
-> 
-> I wonder if the attached (with clean-up to remove the tracing cruft)
-> would show us a better direction.  It feeds a single line
-> 
-> 	int dummy_for_dep_check;
-> 
-> C "program" from the standard input of the compiler to tackle the
-> "you are not supposed to be compiling an empty compilation unit"
-> problem in a more direct way.
+Positional parameters do not work on all POSIX platforms. Please do not do this. NonStop will be locked out of future git releases.
 
-That feels a bit like we're playing a game of chicken with the compiler
-in terms of what it may complain about. For example, sparse will
-complain:
+Sincerely,
+Randall
 
-  foo.c:1:5: warning: symbol 'dummy_for_dep_check' was not declared. Should it be static?
-
-Might compilers ever learn to warn of the same thing?
-
-I kind of like the simplicity of Ævar's approach. We want to know if the
-compiler can be invoked with options XYZ, so we do so. That should be
-largely independent of our cflags, and there's prior art in how we
-invoke it in the detect-compiler script.
-
-So I'd argue we should go even simpler, like:
-
-diff --git a/Makefile b/Makefile
-index 3628d14f16..4597a126d0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1277,7 +1277,7 @@ COMPUTE_HEADER_DEPENDENCIES = auto
- endif
- 
- ifeq ($(COMPUTE_HEADER_DEPENDENCIES),auto)
--dep_check = $(shell $(CC) $(ALL_CFLAGS) \
-+dep_check = $(shell $(CC) \
- 	-c -MF /dev/null -MQ /dev/null -MMD -MP \
- 	-x c /dev/null -o /dev/null 2>&1; \
- 	echo $$?)
-
-I'm also tempted by a hunk like this. Then we can set the REQUIRE flag
-in a CI job (or locally for git devs who know they have gcc) and notice
-an unexpected breakage in the auto test.
-
-@@ -1295,6 +1295,9 @@ ifneq ($(COMPUTE_HEADER_DEPENDENCIES),no)
- $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
- (not "$(COMPUTE_HEADER_DEPENDENCIES)"))
- endif
-+ifdef REQUIRE_COMPUTE_HEADER_DEPENDENCIES
-+$(error computed header dependencies required, but auto-check did not find them)
-+endif
- endif
- 
- ifndef GENERATE_COMPILATION_DATABASE
-
--Peff
