@@ -7,139 +7,131 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75900C433FE
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 856DCC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:51:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E8BE60F11
-	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:46:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 629EB61040
+	for <git@archiver.kernel.org>; Wed, 22 Sep 2021 19:51:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237228AbhIVTs1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 15:48:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46064 "EHLO
+        id S237236AbhIVTxK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 15:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237222AbhIVTs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 15:48:27 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 877F3C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:46:56 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id m3so16598422lfu.2
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:46:56 -0700 (PDT)
+        with ESMTP id S230456AbhIVTxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 15:53:09 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4D1C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:51:39 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id u27so14200916edi.9
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 12:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WIBQAJ0vZgBT9yKx1MLZ1kv6aW9xf3uzha+8GKOrU/A=;
-        b=ZiornUuPBMqwQqKPZd9vcoT5nbJIBCAWv8TmkpVoOCHzKMSjkrpacjo2Q5PATlIId1
-         Ro/OWHh4W6UCAYVy4my5O8f6fI0VEGpE31S0/oiSc6OuhOoDnpg+gZiqXD4OnThBZO1u
-         INmDLMCTE/zr0rOKyPw7tkaCHAf+FCHFGXTLlHd3RvMSP70lQnG9lpMOnwCOR57L3Drw
-         7nANXMhZUhd+7bONU6qJWr/lHtTa+7YM560U0Q6Em28toI/D1B5t5AAj+LewzL8VNp9h
-         UqRol3zJ4VlHyrOTicGJUkn0kc0rQQ7J6PZBtTN+cthkrAtV9WQPaYGB56J0mYUMiQ/F
-         HqSw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=oblE/jNL8jLejmGXjQc+w3JDUHXLvmoUs0hpHFGOm+w=;
+        b=F89AtFzfYAsJl9jUCseye6Pbh6o+xZHpJKuFNHv+UB01BhnXunZhRIl0WMEGAfTwoz
+         xUB9f8zw6znN8ii5886I2+Ql65h8BYFnRgKVKESHW6e51Jsruo/lqQx73gxTnNEqhhNW
+         L+G/Zxj7Ory5v3rE5dGkyhXNLWpWeqEyZIg/4Quw27ep4O0oUSXztTv6yJszcX8UPiz7
+         fH6pSKux9HTBKn5gEU6qazHSpxiZclAh89VYb762PuJLqQ3KQAlP8dEjRRZT7p8PJ3nl
+         vYhDgd8njwPCZTOt1cDpybQpt05spfRJgWWSnuPo4+WZ7io+BThCJZZ9dieM84itHyFz
+         W+Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WIBQAJ0vZgBT9yKx1MLZ1kv6aW9xf3uzha+8GKOrU/A=;
-        b=MdBOgna87a4OHl+DzlJWP0cVc51/01soXsaCqr6GgHWCmA4KgNitTXqo23vavDf/kb
-         FeLfy5/TkR5QfmNkad5PAFmsr8MOvSKTYvMecj9YqheE0XgZb5HShLdTjJkIuyWoCbHD
-         yjaGSzBQ/EqxbGlmBI8IDKFg+r5/vQ8K/V2BdUj/lTtksQfyXz4PA7TBcquP3DhBPd0q
-         MfsajCUI/TgMxIfMyOCsOUvoH7JCPb7kAFlEVn3+6Hynzczk776US3SB0dfguAQ1A5vh
-         +yehldPgVth6wDqQjHzJUcvWMPk9DtyKeqFZEX90m1M3MyUARnsYUReZEgvb9xRp3Apc
-         e95g==
-X-Gm-Message-State: AOAM531SLWoYhhOwj2gL8M5qQQ7BzuhAgl57c/6TdfLCQBtkcKOmLFCo
-        exwboYSD53Uu9hH7wtGsUqAl3WZfWSFSL9t2NuCQY20caK8GaQ==
-X-Google-Smtp-Source: ABdhPJz2LNCPByXt+FAvV1T+U3sjioCW/cXLvpUaubvCgcrWBactiX4USYJZ8EmV4jPLVVA85r+Dvw9Gk1tdZ7bcFQE=
-X-Received: by 2002:a05:6512:3190:: with SMTP id i16mr640167lfe.241.1632340014325;
- Wed, 22 Sep 2021 12:46:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=oblE/jNL8jLejmGXjQc+w3JDUHXLvmoUs0hpHFGOm+w=;
+        b=f2PV7Cmz5Y3hjkjFU1FfO8G+Zhv3Sc7vpnDC17m3ljbQlPNj6A8WUhPwHM2k221nuo
+         Ko3m1NVQlYneK71JrkhkLVkbomB65CZt71fDKa5W6VPf7hKgI9bGFuD97jX8grCPWcjn
+         L1gvCfdtTeiW47eE/mxpViAGTX+YLsbfrh4e9F+PNTL/ikFpdEraNIatX3LJtIjk1/Z9
+         4rtQPnhKP3taDjiPGwd+xt6vCjzm0dSfwTHvlXizix29kFtNxACbLMu6XTJgPuRxNqUw
+         525avyvcYllDHmTAMuHrVjmhY10XowHWh0qCNRPz4mmUdiZb3LTFN29leZWLZPGDSjHJ
+         NrCQ==
+X-Gm-Message-State: AOAM532335FtOaoMN079pJhhcGrFIFLPgh51hW0QG0N7UUXD2AfBWK/K
+        jnQuJgKniAyA2zfsTsW9xkniC2Px3yPysw==
+X-Google-Smtp-Source: ABdhPJz3EZmK47PKVU6F/GtGwhET4zdT6+oK4PLHNgEUml+7jNYJtLkv3vuRKcJCjd/SEeer22N9kQ==
+X-Received: by 2002:a05:6402:34c6:: with SMTP id w6mr1253512edc.97.1632340297817;
+        Wed, 22 Sep 2021 12:51:37 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id m22sm1690111edq.71.2021.09.22.12.51.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 12:51:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
+ with DEVOPTS=pedantic
+Date:   Wed, 22 Sep 2021 21:45:52 +0200
+References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
+ <xmqqmto48ufz.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqmto48ufz.fsf@gitster.g>
+Message-ID: <87fstw75iv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1076.v3.git.git.1631590725.gitgitgadget@gmail.com>
- <pull.1076.v4.git.git.1632176111.gitgitgadget@gmail.com> <12cad737635663ed596e52f89f0f4f22f58bfe38.1632176111.git.gitgitgadget@gmail.com>
- <87mto58pkc.fsf@evledraar.gmail.com> <CANQDOdc1bNwDYhJ8ck2cwUfKmr3064uBHFDACphW+cGZRd-6EQ@mail.gmail.com>
-In-Reply-To: <CANQDOdc1bNwDYhJ8ck2cwUfKmr3064uBHFDACphW+cGZRd-6EQ@mail.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 22 Sep 2021 12:46:43 -0700
-Message-ID: <CANQDOddTQZz8+LjX2wB5j+tSO9kj6S9VJGTvxKKU8--NQt7PSw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/6] core.fsyncobjectfiles: batched disk flushes
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 6:23 PM Neeraj Singh <nksingh85@gmail.com> wrote:
+
+On Wed, Sep 22 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> On Tue, Sep 21, 2021 at 4:41 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> >
-> > On Mon, Sep 20 2021, Neeraj Singh via GitGitGadget wrote:
-
-> > > -             fsync_object_files =3D git_config_bool(var, value);
-> > > +             if (value && !strcmp(value, "batch"))
-> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_BATCH=
-;
-> > > +             else if (git_config_bool(var, value))
-> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_ON;
-> > > +             else
-> > > +                     fsync_object_files =3D FSYNC_OBJECT_FILES_OFF;
-> >
-> > Since the point of this setting is safety, let's explicitly check
-> > true/false here, use git_config_maybe_bool(), and perhaps issue a
-> > warning on unknown values, but maybe that would get too verbose...
-> >
-> > If we have a future "supersafe" mode, it'll get mapped to "false" on
-> > older versions of git, probably not a good idea...
-> >
+>> The "COMPUTE_HEADER_DEPENDENCIES" feature added in [1] was extended to
+>> use auto-detection in [2]. Then when -Wpedantic support was added to
+>> DEVOPTS in [3] we started passing -Wpedantic in combination with
+>> -Werror to the compiler here.
+>>
+>> This broke the auto-detection, but since we'd quieted it in [4] we
+>> didn't find out.
 >
->  I took Junio's suggestion verbatim.  I'll try a warning if the value
-> exists, and is not 'batch' or <maybe bool>.
+> Are the references correct?  I am not seeing "quiet"ing in [4].  The
+> redirection 2>&1 to cram error messages also to $(dep_check), hence
+> making it impossible to match '0', was done in [2].
 
-An update on this.  I tested out some values:
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dbatch a=
-dd ./
-    fsync_object_files: 2
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D0 add .=
-/
-    fsync_object_files: 0
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D1 add .=
-/
-    fsync_object_files: 1
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3D2 add .=
-/
-    fsync_object_files: 1
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dbarf ad=
-d ./
-    fatal: bad boolean config value 'barf' for 'core.fsyncobjectfiles'
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dtrue ad=
-d ./
-    fsync_object_files: 1
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dfalse a=
-dd ./
-    fsync_object_files: 0
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dt add .=
-/
-    fatal: bad boolean config value 't' for 'core.fsyncobjectfiles'
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dy add .=
-/
-    fatal: bad boolean config value 'y' for 'core.fsyncobjectfiles'
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dyes add=
- ./
-    fsync_object_files: 1
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dno add =
-./
-    fsync_object_files: 0
-    nksingh@neerajsi-x1:~/src/git$ ./git -c core.fsyncobjectfiles=3Dnope ad=
-d ./
-    fatal: bad boolean config value 'nope' for 'core.fsyncobjectfiles'
+Yes it's incorrect, I meant [2]. I had this right in my head, just got
+the references wrong somehow,thanks.
 
-So I think the code already works like you are suggesting (thanks Junio!).
+> We did make the pedantic mode the default and pass both -pedantic
+> and -Wpedantic after [4].  Before we had only -pedantic.
+
+*nod*
+
+>> It was emitting all of this on STDERR under GCC:
+>>
+>>     /dev/null:1: error: ISO C forbids an empty translation unit
+>>     [-Werror=3Dpedantic]
+>>     cc1: note: unrecognized command-line option
+>>     =E2=80=98-Wno-pedantic-ms-format=E2=80=99 may have been intended to =
+silence
+>>     earlier diagnostics
+>>     cc1: all warnings being treated as errors
+>>
+>> Let's fix that bug by maintaining a NON_DEVELOPER_CFLAGS, it's like
+>> ALL_CFLAGS but without anything we add in config.mak.dev, and
+>> furthermore stop redirecting STDERR to /dev/null, this means that
+>> someone whose compiler doesn't support this will see this output, but
+>> also this new message:
+>>
+>>     Non-zero 1 exit with COMPUTE_HEADER_DEPENDENCIES=3Dauto, set it to "=
+yes" or "no" to quiet auto-detect
+>
+>
+> Hmmmmmph.=20=20
+>
+> I recentaly saw many .depend directories (not necessarily empty)
+> left after "make distclean". After building on one branch, I often
+> check out a different branch then run distclean on the new branch,
+> so leftover build artifacts are not necessarily a bug in our
+> Makefile, but the bug you found may explain it?
+
+Yes, I'll update the commit message, the problem is that we'll empty the
+dep_dirs list if we're not *currently* making them, that's a logic error
+in a few places in the Makefile, i.e. conflating currently building X
+with wanting to clean X.
+
+[Will respond to the rest with a re-roll and/or in other replies in-thread]
