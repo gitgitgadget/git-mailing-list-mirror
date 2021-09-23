@@ -2,138 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 932F2C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DCABC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:41:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A99D6115A
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:27:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55D406113E
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238782AbhIWB30 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 21:29:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238177AbhIWB3Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 21:29:25 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02062C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 18:27:54 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id dj4so17368844edb.5
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 18:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=FaSF8qI02KiuWej6tbMJqGaJkN/7rE1yTieS/vJpTPo=;
-        b=D6eOpnaDHN6y0rb2RcmcPQLaD+yRKhoO3OQxZ1dsPGu7ZF8FnVGqgnzQLmRbxXgIh6
-         O3zCpGRLF67YSBGkCZRt7YrEnu9yXhNTOWeuffF981miE/1dZ4GA28OKwD83YSFDVTfE
-         jNl1ThtKbgtRWsxuHurYBWXbhMPJOpSs3d5nf04hvIL9pOQdiQ+MgHh02bWpEvCiBGi9
-         k5Na7lF/cPRO7eXaruTM7lCFKKLXkihWVi7rLh/HtC32Ecgi64nvxhreI1GFdQSeHZPo
-         ZDiaLbk8kBTc8qmr82UZcQWPFqD0vXop9biBX10HTmInzUzBIdEb/p/nRmDG1RRG0lCQ
-         4LFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=FaSF8qI02KiuWej6tbMJqGaJkN/7rE1yTieS/vJpTPo=;
-        b=uouu3nZIUDHAOA9jcmgCcHGLh/Dl94GVfIYLNk61WtrAe4TL/5svSc72TfG8nLvqpn
-         wtaC/YZdlECd256KaAtIb+1+WHzz7K4DoAJ+QliejQg/TcugEkeCUrIoqgiTqiR79vQf
-         H1TqGcvCjvltyIP3zvlPpnzcg/cCkUDPU4cZ0p7D7l8L3qz2cU6S1DI5wixWJ6lV5nGp
-         DpY4Bg/4AIT97dRlyjEtlGuPLesKTV/UB+Hv3D+7Fi1K8lIY9S23mqj77NPvWGXyw80I
-         1IMSdU2mf84PT0I1l9MJt2H767D1NHmUfuky2rdKG+oeuf8Nf3pGs6qdeW4WlmtoVHMd
-         Y0zw==
-X-Gm-Message-State: AOAM531oFXIMDTTGmVh1SSi4pqBdtQlw8vynzVIpr6/N/3kVLN0qXmHz
-        e7wVIb43RsuzV36MtT71B617P7K9F+fnNQ==
-X-Google-Smtp-Source: ABdhPJz8TvYYcxOSVof0TY3EIRMRyZ54xk1lDCKX0nbodg9y/SY+8hE1IHostjKZAcPLPh30IcJY0A==
-X-Received: by 2002:a17:906:7855:: with SMTP id p21mr2335738ejm.330.1632360473369;
-        Wed, 22 Sep 2021 18:27:53 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bf28sm2216053edb.45.2021.09.22.18.27.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 18:27:52 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [PATCH] http: match headers case-insensitively when redacting
-Date:   Thu, 23 Sep 2021 03:22:04 +0200
-References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
- <afd7bd6b-52bf-7fd8-d13e-6dcd660c4100@gmail.com>
- <YUuN+KguN0WetC49@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YUuN+KguN0WetC49@coredump.intra.peff.net>
-Message-ID: <87lf3o5bdz.fsf@evledraar.gmail.com>
+        id S238814AbhIWBnR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 21:43:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46102 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238177AbhIWBnQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Sep 2021 21:43:16 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 43B8C60426;
+        Thu, 23 Sep 2021 01:41:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1632361305;
+        bh=7xO0zSWjfCs1gNIj+/DnHBUuPTH4bxOeIG8ipnXFXMQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=RHd8KaYlesgAXbYlIF1BgRUF0ucQKc4Hofxs0A3HbYR5gBSUmCaUlqzJMS/dv/y3d
+         4rdMoIE4zJGV3HBWQRLfSZ7ZmQ+/Vqg66yfAuJvR85kqDBVBIIGPbEUyhi9Ufaf2uK
+         Pqm+6F1662tlcBUETV6dPNwjevkOZrGLDBgvqHoG4nJIst0jbwIad4Uhe35eZdkU3Y
+         CftHai97T9GCSmp0LfqLr0SB6UBJmc+CsNJf+s8p4YctS3eCgKGZ3i+gw+DPNBTTgZ
+         MiNEn76rP9wmJYA2jSUN40JN/WG326ZlzvIBEf/tXQxNLimxJY4wFVh18GfNOawtVj
+         rY+2yeLU9sXTXPNGWq/hkNoo6GfJS7pB9euOSJ5De0b9m0zSLb6x30JH3c+HRorVt3
+         SAQzXq1IzMrHvLZLRfl+qcDPmjF53AsBi9Sn78AYnh4VAuyya0p3y2Y2Om6zLdnjnM
+         fV4Hq6tLiK4+gzp375D862LiIQ3lgPqrdOqRe6Dky7Tk4aSE51Q
+Date:   Thu, 23 Sep 2021 01:41:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        levraiphilippeblain@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] Makefile: avoid breaking compilation database
+ generation with DEVELOPER
+Message-ID: <YUvbU9HX6JA+MKd0@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, avarab@gmail.com,
+        levraiphilippeblain@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20210922183311.3766-1-carenas@gmail.com>
+ <20210922185702.4328-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ZCiUEiknG1xpP7Jz"
+Content-Disposition: inline
+In-Reply-To: <20210922185702.4328-1-carenas@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Sep 22 2021, Jeff King wrote:
+--ZCiUEiknG1xpP7Jz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, Sep 22, 2021 at 09:32:41AM +0700, Bagas Sanjaya wrote:
->
->> > but this has a few issues:
->> > 
->> >    - it's not necessarily portable. The http2 apache module might not be
->> >      available on all systems. Further, the http2 module isn't compatible
->> >      with the prefork mpm, so we have to switch to something else. But we
->> >      don't necessarily know what's available. It would be nice if we
->> >      could have conditional config, but IfModule only tells us if a
->> >      module is already loaded, not whether it is available at all.
->> > 
->> >      This might be a non-issue. The http tests are already optional, and
->> >      modern-enough systems may just have both of these. But...
->> > 
->> >    - if we do this, then we'd no longer be testing HTTP/1.1 at all. I'm
->> >      not sure how much that matters since it's all handled by curl under
->> >      the hood, but I'd worry that some detail leaks through. We'd
->> >      probably want two scripts running similar tests, one with HTTP/2 and
->> >      one with HTTP/1.1.
->> 
->> Maybe for httpd config we can say that if mpm_prefork isn't loaded, load
->> mpm_event and mod_http2.
->
-> That doesn't work. We can say "is mpm_prefork" loaded, and indeed we
-> already do, in order to load mpm_prefork! That's because the module may
-> or may not be built-in, and if not, we have to load it (or some mpm
-> module). See 296f0b3ea9 (t/lib-httpd/apache.conf: configure an MPM
-> module for apache 2.4, 2013-06-09).
->
-> But we have no way of knowing _which_ modules are available. It may just
-> be that "event" or "worker" (both of which support mod_http2) are
-> available close enough to everywhere that we can just guess.
->
->> And for testing both HTTP/2 and HTTP/1.1 did you mean sharing the same test
->> code (with adjustments for each protocol)?
->
-> Yes. I'd literally run the same battery of tests against both protocols
-> (see my other response to Taylor with a sketched-out example). I'm still
-> not sure it's entirely worth the effort, though. The underlying
-> transport should be pretty transparent to Git, with the exception of
-> things like debugging output.
+On 2021-09-22 at 18:57:02, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> 3821c38068 (Makefile: add support for generating JSON compilation
+> database, 2020-09-03), adds a feature to be used with clang to generate
+> a compilation database by copying most of what was done before with the
+> header dependency, but by doing so includes on its availability check
+> the CFLAGS which became specially problematic once DEVELOPER=3D1 implied
+> -pedantic as pointed out by =C3=86var[1].
+>=20
+> Remove the unnecessary flags in the availability test, so it will work
+> regardless of which other warnings are enabled or if the compiler has
+> been told to error on them.
+>=20
+> [1] https://lore.kernel.org/git/patch-1.1-6b2e9af5e67-20210922T103749Z-av=
+arab@gmail.com/
+>=20
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Makefile b/Makefile
+> index 9df565f27b..d5c6d0ea3b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1302,7 +1302,7 @@ GENERATE_COMPILATION_DATABASE =3D no
+>  endif
+> =20
+>  ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+> -compdb_check =3D $(shell $(CC) $(ALL_CFLAGS) \
+> +compdb_check =3D $(shell $(CC) \
+>  	-c -MJ /dev/null \
+>  	-x c /dev/null -o /dev/null 2>&1; \
+>  	echo $$?)
 
-Maybe I'm missing something, but it seems to me that trying to figure
-out if we support http v2 or not beforehand is the wrong thing to do in
-this case. Why don't we simply try to start the server, and fail and
-skip_all="sorry, no httpv2" if it fails?
+Are you sure this results in a functional set of files?  As I understand
+it, the reason that clangd needs these files is because it needs to know
+what include arguments and headers are supposed to be used, since C
+programs don't have a standard layout.  In this case, it looks like
+you're removing all of the -I arguments, so in that case clangd wouldn't
+be able to find all the files it's supposed to.
 
-Then have 2 test files:
+Of course, if I've misunderstood, and somehow we get those arguments
+elsewhere, that's fine, but I just want to be sure we don't regress the
+behavior.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-t1234-http-v1.sh
-t1235-http-v2.sh
+--ZCiUEiknG1xpP7Jz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Where the latter includes the former (or is a symlink with a $0 check),
-or both include a library. Doing it this way also means you'll get a
-message you notice via "prove", since you won't run all v1 tests in one
-file, then skip some v2.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-It also means we could add "ssl" in that mix and have 4x files, and
-unlike a GIT_TEST_* mode or shoving it all in one test we can run these
-in parallel and test all combinations in one test run.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYUvbUgAKCRB8DEliiIei
+gZHpAP48TJcrwAPch7WA19jRPbeWh0pAa0OES14nMghyqt1kAwEAp96O5/SAw71v
+5dAOXye4qEZTlOYhepjmO2Vh8FOKTQE=
+=9MFA
+-----END PGP SIGNATURE-----
 
+--ZCiUEiknG1xpP7Jz--
