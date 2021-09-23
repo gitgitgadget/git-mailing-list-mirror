@@ -2,97 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3332EC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 17:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EED1C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 17:45:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1741160EB6
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 17:41:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F33E06109E
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 17:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242557AbhIWRnJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 13:43:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56785 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233669AbhIWRnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 13:43:08 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 520FF15F46F;
-        Thu, 23 Sep 2021 13:41:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=W+qiluxj+SA2
-        wqrI6YbTnEDhtniCOCYJ5j5GGEyV4Dk=; b=OikHFu1lg7/7SB08NkxF99iD7Tgd
-        p8/dEuPm5AynZFi/2YljhOKaXm+rz1RKsS/D+XUF9z/AUQMKh60G2K6eh8IxHDKX
-        pdy2lKzAXJtQdWmIXZ+Jbqxoi/QyKvMHlPoOQQ1ASS/eQaBztpT8z1AK4AKrMhVs
-        It+k/m28LXa47bQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4BB6515F46E;
-        Thu, 23 Sep 2021 13:41:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AE84115F46D;
-        Thu, 23 Sep 2021 13:41:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
- with DEVOPTS=pedantic
-References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
-        <xmqqmto48ufz.fsf@gitster.g>
-        <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
-        <xmqqzgs479d5.fsf@gitster.g>
-        <YUuPYDkxjDIvIfwI@coredump.intra.peff.net>
-        <xmqqo88k40pd.fsf@gitster.g>
-        <YUypOEywhzEWpoef@coredump.intra.peff.net>
-Date:   Thu, 23 Sep 2021 10:41:32 -0700
-In-Reply-To: <YUypOEywhzEWpoef@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 23 Sep 2021 12:20:08 -0400")
-Message-ID: <xmqqpmsz196b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242042AbhIWRqh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 13:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37814 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230269AbhIWRqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 13:46:37 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88EAFC061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 10:45:05 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id b6so7575011ilv.0
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 10:45:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=G/+ZsqTMmoZMDtyMhnS93lf9O6mu50Z9E4EdSsXdBhk=;
+        b=hDrdG6aG9VR4t0ulvR4IUeYd+pgVU/56VBQGsC3JdafIrlzJbEDStveZwH2GWz5BHb
+         C1EKQ+mHTjbJzZk/5P1enOhT4F6cS3BbOHBlqVzC0hDxibUXbMfcNWwibYsJ/CH0yhNC
+         0zWJU8Wgl2CMf34B5GDgUqTJf8noM0SSM7rODxELVS25PNouIOef9aeoE+DfeHDRFWG7
+         B5ucZW56DzFgH1YLhHwlun8+byJU6oUNED3PuZqZP05US/JEH50CPJE2AUaMDsF04Yg+
+         nMm55o4tUcKhtZR66UEVvSGnrlplOEYpdY39gnKHYyBpmNRG1MHBbIE+ErNRv0s1wqQi
+         eX/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=G/+ZsqTMmoZMDtyMhnS93lf9O6mu50Z9E4EdSsXdBhk=;
+        b=ldoHu7Cp6vNT6/EzNxR6D02x/ClEFhnbCEcrIymaGAFBAuiY/lLEQmpWJYMNvLXL4c
+         5RmXuZoTajMUV0oky/4ioM16YTwB0YQeRkJk/pfqHOVegkg6OgUzotRA1b0LWwI9WCnL
+         MQV/hcKGaZRfEDOmWtzJGJz/snwFDRCkU3Ft+0+S5G0IFFH6SCLzVOKV48tPDI5TgVhG
+         R9IFK1MtGInEc1XpS5K5tU3LwtHPhvNVQa7fm5s+pLGF6QojeScNefJPh+CjcVv30FE2
+         YC+47mNXd1UsW5IgIXH0CgvCf+VkyN9PWCSJhDQyI29OaEWe6QJsNXUpB5kJo9ZjZlWN
+         lpAQ==
+X-Gm-Message-State: AOAM530n1bGoUfFBqlQ/vOckrKBYT1a257kRK3In8mPgyytbFN8VlSuS
+        FfbWk2jXJEpouy1XdsFq4TVxLQ==
+X-Google-Smtp-Source: ABdhPJxh1BjDnZgVq/7WF+89iMmaWRXnRV7fQFyyKCiwTOSaJdH7xtGJDvAvp/0Z05JQin2kH7HF7g==
+X-Received: by 2002:a05:6e02:1aa2:: with SMTP id l2mr4744313ilv.179.1632419104857;
+        Thu, 23 Sep 2021 10:45:04 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a12sm2822210ilb.66.2021.09.23.10.45.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 10:45:04 -0700 (PDT)
+Date:   Thu, 23 Sep 2021 13:45:03 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] doc/technical: remove outdated MIDX default note
+Message-ID: <YUy9HzRgHU2zvI4P@nand.local>
+References: <20210922221342.6867-1-e@80x24.org>
+ <9ebb4c34-8cdd-3120-ff9a-0e47099c3cf6@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7E5C3794-1C95-11EC-BD7E-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <9ebb4c34-8cdd-3120-ff9a-0e47099c3cf6@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Sep 22, 2021 at 05:03:58PM -0700, Junio C Hamano wrote:
+On Thu, Sep 23, 2021 at 09:47:03AM -0400, Derrick Stolee wrote:
+> On 9/22/2021 6:13 PM, Eric Wong wrote:
+> > Multi-pack-index files are used by default since
+> > commit 18e449f86b74bab35b150549c8342d252fe7ae00, so the
+> > outdated note was misleading.
 >
->> Jeff King <peff@peff.net> writes:
->>=20
->> > I almost suggested using "git.c" as the dummy file, since we know it
->> > must compile anyway. But that probably has other problems (it's more
->> > expensive, and if it _does_ have an error, the results may be
->> > confusing).
->> >
->> > It's a shame we can't just try to do the _real_ compiles using the
->> > auto-dependency stuff, and then fall back if they fail. But I think
->> > there's a chicken-and-egg problem there with "make" doing real work,=
- and
->> > figuring out the dependencies to do real work.
->>=20
->> Yeah, if compiling any of the real sources is inexpensive enough, I
->> would think that would be the happy way to go.  Do we have a trivial
->> source that almost never changes?  Perhaps version.c (especially if
->> we kick out two helper functions that do not really belong there)?
+> You are correct that the note is misleading, but it is still correct.
 >
-> Perhaps. TBH, I find =C3=86var's latest patch to just add -Wno-pedantic=
- to be
-> the simplest and most obviously-correct fix.
+> A user can _disable_ reading MIDX files by setting core.multiPackIndex
+> to false. If this was in the user-facing docs, not the technical docs,
+> then I might push back on trying to make that distinction.
 
-Yes, that is very much to-the-point.  If we have trouble with being
-pedantic, forcing us not to be is a fine solution ;-)
+It may present a fuller picture to instead say:
+
+  The core.multiPackIndex config setting must be on (which is the default)
+  to consume MIDX files. Setting it to `false` prevents Git from reading a
+  MIDX file, even if one exists.
+
+Thanks,
+Taylor
