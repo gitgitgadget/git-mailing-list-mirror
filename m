@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E6DC4332F
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 15:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F25C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 15:12:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4D5461211
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 15:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 794A061107
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 15:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241916AbhIWPFh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 11:05:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56374 "EHLO
+        id S241865AbhIWPN7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 11:13:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241902AbhIWPFg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 11:05:36 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB2FC06175F
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 08:04:04 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id s17so6257285edd.8
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 08:04:04 -0700 (PDT)
+        with ESMTP id S241835AbhIWPN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 11:13:58 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB06C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 08:12:27 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y89so14214147ede.2
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 08:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=CaE1wiiydCdirxPVE779Sey8ivOGrj/VX+YRKbIYeM4=;
-        b=Nq0e8BZ6FzynObhAexQHK8dbZX8itHEDf8ePNDwle8f6tyLlwZsxc/E4d62Vf8diSk
-         EPhUpLwzYNvQsktjO+ziuk9s5gOEx4xab9lUEKZBpDt2jAQcUOphFgYzQ3KUJF1ixnwn
-         LzKZPR5i2+clOdxm14spxVp+yW/b6v25SDR3uBA44i2o7hNGdTHw8giKWqPtT76xvVlN
-         6yfJ4Fdqy9TGSlqvhnQEfQeU4bES52opyKHwpXwNnWGHh7raXxQjRCUiYdSGOpCzGQCU
-         CT3f10hRTksQZ1y+Znf9mAK2m/xxu2OA+/zzG59F99I9r5F61FTXjKtpvhbSnkum9YtS
-         IlvA==
+        bh=qOVUVOCfydUTdeuB/P+JbL1s+HV/4VckWDRloHW5XRM=;
+        b=Mi7hWdf1TC0gefsxbYOg3B3vKMD46fvKG6hl1BZQMOGsqrydC/3DBb6hS9HWBtiH48
+         BYVzUio7LkKpiVcEeAPLE7QouXYg9UPE4qBNU3g6ZPjf7u14PFODFgSA1hy915IgYIj4
+         tTXqcPlTBigyYXVqaEWytbLMw0uSQ5cNvd5BmVFmjknoC6lvlsXN6fDKl7H3UpTT2MDO
+         uYoEWMmTUv3gsC/1QSiyehX35L9lECGirOQVhNs3cGOTv6XhAPSzsDG7EJ0fUc6ux30l
+         PkYnFOIP2UHU8bixJqsRdN0Sq1DEVTDmIBo2xhzpWsErw73f2gLbp8fjZMWIi7diC3nh
+         XnDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=CaE1wiiydCdirxPVE779Sey8ivOGrj/VX+YRKbIYeM4=;
-        b=naoJjg4czfkAb6o73ltpUJjW47nS2l+Fn3V2Cf7/cxqMJa4qZIBOVvKZnpmtonUyjk
-         sY+DC5ogZ7XymdubC2ofz3WqRU0sJvdOzHKcgYGG1mx37QEArQpzO8F6R4Qi/DvcFwCg
-         W2Okot4PQBj8M6foneHIct8231DL12JZJ08JvLf3M7gSHoRS8dGXMkXhZQYudo/K2L+j
-         7pGZkZX+pZ8sBadbH5CGw6EgeiQe6TDRV7GB0P18YhBc1WKU1/lEhTWTUU2n4x9iSqeZ
-         Z0bN04RoY+3GIbnET3qEi4qR5u0cXzSytGlZY/m0FTI84B0OWDompZC8jc943yMOfvkh
-         Jbvw==
-X-Gm-Message-State: AOAM532Hlk1HQu8ffxgIxMFe4qHCq49MAyAp9o+Kr579hoTJxu3luLnM
-        wzKlu6x5sJojZl/aQS/53BAtC3exOpKBSg==
-X-Google-Smtp-Source: ABdhPJwnO4GF/rGJZtVwh4YaQhqsF7t0w+N5AZZoIHeOmfrOswnDjhl+Wdj6T25LPS7vXc68XC+lXg==
-X-Received: by 2002:a17:906:7792:: with SMTP id s18mr5359660ejm.492.1632409403524;
-        Thu, 23 Sep 2021 08:03:23 -0700 (PDT)
+        bh=qOVUVOCfydUTdeuB/P+JbL1s+HV/4VckWDRloHW5XRM=;
+        b=u+IHnLMRl7cTmcKmKEoP9OICwFQkDyv5bQG8hJ4i61MRf8SxE26JAHRQb/4ug5th/e
+         KarivXsGM05L/eWqTcDDfgUTmK0JLdHlMw/mgYQ5t7FtnmZEdbQRzJo165BiLEPgN2He
+         R2dCW7VP7fiEDEb4ku5ri0nABclzulTgljv78jC9Q585C2r6vSAMId6xbTC1HVGNuKe1
+         aZoC80TOje4TJT13/z32h14UpPahTBbo2uTh5KEqGisL1hY+v/JMm/+C/MVSPPMyl/JG
+         ZzWa+AIwQjBtEuLSLRamKrr2LU8V76N/aNHb6f5CH4qUoyp4CbW1Ie+DT+lqiYHn0YMo
+         78ew==
+X-Gm-Message-State: AOAM531nUu6wpfvJ0lBh9rbLrr6q/8A0h1GXlmbkY0I+DzT3Wo29JhR3
+        EpvTBQI957VD8C3PsjD1h4tVmzzCWbC6vg==
+X-Google-Smtp-Source: ABdhPJyMFROH/dVmX4/905Lh6xqDu0rPvqOa/rrs5NhpYags547McBtjrVRt0BBN2rFkqYWiWBC7Ag==
+X-Received: by 2002:a50:d5c1:: with SMTP id g1mr5965953edj.296.1632409945203;
+        Thu, 23 Sep 2021 08:12:25 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id q9sm3120447ejf.70.2021.09.23.08.03.22
+        by smtp.gmail.com with ESMTPSA id j5sm3186579ejb.96.2021.09.23.08.12.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 08:03:22 -0700 (PDT)
+        Thu, 23 Sep 2021 08:12:24 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
@@ -62,13 +62,15 @@ Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Carlo Arenas <carenas@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 0/7] Builtin FSMonitor Part 1
-Date:   Thu, 23 Sep 2021 16:33:20 +0200
+Subject: Re: [PATCH v2 7/7] t/helper/simple-ipc: convert test-simple-ipc to
+ use start_bg_command
+Date:   Thu, 23 Sep 2021 17:03:56 +0200
 References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
  <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
+ <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
-Message-ID: <87v92r49mt.fsf@evledraar.gmail.com>
+In-reply-to: <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
+Message-ID: <87r1df497s.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,51 +80,114 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Sep 20 2021, Jeff Hostetler via GitGitGadget wrote:
 
-> Here is V2 of Part 1 of my Builtin FSMonitor series.
->
-> Changes since V1 include:
->
->  * Drop the Trace2 memory leak.
->  * Added a new "child_ready" event to Trace2 as an alternative to the
->    "child_exit" event for background processes.
->  * Convert the Trace2-related NEEDSWORK items in "start_bg_command()" to use
->    the new "child_ready" event.
->  * Various minor code and documentation cleanups.
+> +	switch (sbgr) {
+> +	case SBGR_READY:
+> +		return 0;
+>  
+> -		else if (pid_seen == pid_child) {
+> -			/*
+> -			 * The new child daemon process shutdown while
+> -			 * it was starting up, so it is not listening
+> -			 * on the socket.
+> -			 *
+> -			 * Try to ping the socket in the odd chance
+> -			 * that another daemon started (or was already
+> -			 * running) while our child was starting.
+> -			 *
+> -			 * Again, we don't care who services the socket.
+> -			 */
+> -			s = ipc_get_active_state(cl_args.path);
+> -			if (s == IPC_STATE__LISTENING)
+> -				return 0;
+> +	default:
+> +	case SBGR_ERROR:
+> +	case SBGR_CB_ERROR:
+> +		return error("daemon failed to start");
 
-I see 7/7 still has a pattern you included only to make a compiler error
-better. I noted in
-https://lore.kernel.org/git/87ilyycko3.fsf@evledraar.gmail.com/ that it
-make the error worse, on at least clang. You didn't note which compiler
-you were massaging, presumably MSVC.
+There was a discussion on v1 about the "default" being redundant here
+and hiding future compiler checks, this is another "not sure what you
+thought of that" case (per [1]).
 
-I think that's a relatively small matter, but it *is* one I know about,
-and there's no reply there, mention of it being unaddressed here or in
-the commit message.
+Interestingly in this case if I drop the "default" my local gcc
+uncharacteristically complains about a missing "return" in this
+function, but clang doesn't. I needed to add a BUG() to shut up the
+former. Maybe I'm wrong, but perhaps it's a sign of some deeper
+trouble. This is with gcc/clang 10.2.1-6/11.0.1-2.
 
-I haven't gone back & re-read v1 and seen if there's more unaddresed
-feedback from others, instead I wanted to encourage you to provide such
-a summary.
+1. https://lore.kernel.org/git/87v92r49mt.fsf@evledraar.gmail.com/
 
-It really helps when a series is re-rolled to aid review both for
-newcomers and returning reviewers. I really don't care about "getting my
-way" on such a minor thing.
+I played with the diff below on top of this, I can't remember if it was
+noted already, but the way you declare function ptrs and use them isn't
+the usual style:
 
-But it is frustrating to have the state of a re-roll be observably
-indistinguishable from one's E-Mail not having been received, when
-that's the case you've got to go back and re-read the thread, scour the
-range-diff, and generalyl do a lot of work that the person doing the
-re-roll has done, but either didn't keep notes, or didn't share them.
+-- >8 --
+diff --git a/run-command.c b/run-command.c
+index 76bbef9d96d..5c831545201 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1903,7 +1903,7 @@ void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir)
+ }
+ 
+ enum start_bg_result start_bg_command(struct child_process *cmd,
+-				      start_bg_wait_cb *wait_cb,
++				      start_bg_wait_cb wait_cb,
+ 				      void *cb_data,
+ 				      unsigned int timeout_sec)
+ {
+diff --git a/run-command.h b/run-command.h
+index 17b1b80c3d7..e8a637d1967 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -527,7 +527,7 @@ enum start_bg_result {
+  * Returns 0 if child is "ready".
+  * Returns -1 on any error and cause start_bg_command() to also error out.
+  */
+-typedef int(start_bg_wait_cb)(const struct child_process *cmd, void *cb_data);
++typedef int (*start_bg_wait_cb)(const struct child_process *cmd, void *cb_data);
+ 
+ /**
+  * Start a command in the background.  Wait long enough for the child
+@@ -549,7 +549,7 @@ typedef int(start_bg_wait_cb)(const struct child_process *cmd, void *cb_data);
+  * any instance data that it might require.  This may be NULL.
+  */
+ enum start_bg_result start_bg_command(struct child_process *cmd,
+-				      start_bg_wait_cb *wait_cb,
++				      start_bg_wait_cb wait_cb,
+ 				      void *cb_data,
+ 				      unsigned int timeout_sec);
+ 
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+index 28365ff85b6..82dc2906a2a 100644
+--- a/t/helper/test-simple-ipc.c
++++ b/t/helper/test-simple-ipc.c
+@@ -275,9 +275,7 @@ static int daemon__run_server(void)
+ 	return ret;
+ }
+ 
+-static start_bg_wait_cb bg_wait_cb;
+-
+-static int bg_wait_cb(const struct child_process *cp, void *cb_data)
++static int bg_wait_cb(const struct child_process *cp, void *cb_data, int foo)
+ {
+ 	int s = ipc_get_active_state(cl_args.path);
+ 
+@@ -319,9 +317,8 @@ static int daemon__start_server(void)
+ 	switch (sbgr) {
+ 	case SBGR_READY:
+ 		return 0;
+-
+-	default:
+ 	case SBGR_ERROR:
++		return 0;
+ 	case SBGR_CB_ERROR:
+ 		return error("daemon failed to start");
+ 
+@@ -331,6 +328,7 @@ static int daemon__start_server(void)
+ 	case SBGR_DIED:
+ 		return error("daemon terminated");
+ 	}
++	BUG("unreachable");
+ }
+ 
+ /*
 
-Personally I'm in the habit of "flagging" (starring in GMail terms)
-E-Mails with outstanding unaddresed comments I get on my own topics,
-then when I re-roll them I look at the thread, and "unwind the stack" as
-it were by removing flags on E-Mails that I've either addressed via
-updated commit messages, or added a note to a WIP cover letter.
-
-E.g. here (just an example that includes Taylor, since he reviewed v1
-here) is a case where Taylor suggested something that I didn't go for,
-but i'd like to think noting it helped him catch up:
-https://lore.kernel.org/git/cover-v4-0.5-00000000000-20210921T131003Z-avarab@gmail.com/
-
-All the best, just trying to make the reviewer & re-rolling process
-better for everyone.
