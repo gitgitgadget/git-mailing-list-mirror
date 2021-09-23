@@ -2,269 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0C3BC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D28EC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:06:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D49A46109E
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:00:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DFD660F48
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 01:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238725AbhIWBC0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 21:02:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63091 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237852AbhIWBCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 21:02:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1B64D0413;
-        Wed, 22 Sep 2021 21:00:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FlgHNzADTbRM20PA7aYirfHhihwJGh/Zi5kzMx
-        jUpJ4=; b=FUP/XxbXbV1uCYIN0O8UTrln+ocYvtUbHXeQ9I4nHFZJFph+BUp+aw
-        3BztSB2L3AvduFGo0jIzUBfgusZNMCbOuZHKdQ4noeJ3aECiqD0H5Su0TFuSfd3Q
-        4qHDYOTUqDaTSbIpISt496SUcqJ380QUM/hQpcysESR6NreO7zGzg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A83E5D0412;
-        Wed, 22 Sep 2021 21:00:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E84ED0411;
-        Wed, 22 Sep 2021 21:00:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/9] refs: make _advance() check struct repo, not flag
-References: <cover.1632242495.git.jonathantanmy@google.com>
-        <493fff7f4716d889da751b5f8c6740cc1e3aa360.1632242495.git.jonathantanmy@google.com>
-Date:   Wed, 22 Sep 2021 18:00:52 -0700
-In-Reply-To: <493fff7f4716d889da751b5f8c6740cc1e3aa360.1632242495.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 21 Sep 2021 09:51:03 -0700")
-Message-ID: <xmqq1r5g3y2j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238762AbhIWBIF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 21:08:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237852AbhIWBIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 21:08:00 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3635C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 18:06:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id c21so16818971edj.0
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 18:06:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=XGg9xW+TxD/I3Kt9O18TXNMwlUPkchnVdOmtyvqff1g=;
+        b=hcIuL4S3wyiFLZMLiFven4u4o2wFs9PahJ+36pO+j2XisHhKyIQGygWpatnUzUb6EQ
+         1kIU2d6+9AD3KTPNS3WT7teckHJW8PJhdWFqKLrtSy4a2J1Nf9+z56rlWLEknRksU687
+         kYA5kzfwWo1TAGe27qKHM4+iu4VUtq4bkjwHlPTCYhkpXb0sEXg+D0ImDSmqPSYEQqsV
+         p7NtE2lLw0f1/4DAkh1MgBIZnxGYZiT7xNLR2m/RTSA1452fNDv0L/Ks+4XNG2Wqiisv
+         8I8KgVmS+cZFC9k+p91tR2NK++lLYSLetE4uYH/g1I/P13yhpSLG6L1ad1lSQ9qmztV8
+         YxKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=XGg9xW+TxD/I3Kt9O18TXNMwlUPkchnVdOmtyvqff1g=;
+        b=ji6H701Kl+hR3qV8/W7ZvwC+DQv4YCGwgt9xrx/jNZeWiC6oRBQesbEQUQZo+hGhGV
+         FV7WIfNkvVV/jCtrvs9eGQ/YONoa+Hm2m4rvzWEe96P5LXjJ/PQWqt3a3s4iRDPQBfFN
+         U/FwA/9MitTL4hOQXLg7+0zE4fzic6IgHltcCmCdlKlDB3hKO6FD8Ij+M2DgoX4gSifb
+         SmL487NL+HsrVO/vUseyx5k0GTwQuW6TQRXGgOCB79hRckzVpsuHPyGLxnxyAjB4alCM
+         eDGAaIyPtG8yodCEEhwYQUzCbwtgPgbf99b+uy1QBnPUSgNYvQvySv5udMlQCbqcEC5d
+         kzmg==
+X-Gm-Message-State: AOAM530mhpQyo/F3ketw7RB20hUnUHsG5Kx09cIzqh98VF9MKTfdmhp3
+        RqYHnrt0rIje9le2U3zIurOLinMkrl9+vg==
+X-Google-Smtp-Source: ABdhPJzTHoRWzZPLaoyoVUP53BpbYWGNnRwaMOZIblLin6Wt/OuKW516kjnOcc59APY8XDWl9cxDDw==
+X-Received: by 2002:a17:907:1de0:: with SMTP id og32mr2297340ejc.348.1632359188128;
+        Wed, 22 Sep 2021 18:06:28 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id w11sm2258385edl.12.2021.09.22.18.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 18:06:27 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, levraiphilippeblain@gmail.com
+Subject: Re: [PATCH] Makefile: avoid breaking compilation database
+ generation with DEPELOPER
+Date:   Thu, 23 Sep 2021 02:55:36 +0200
+References: <20210922183311.3766-1-carenas@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20210922183311.3766-1-carenas@gmail.com>
+Message-ID: <87tuic5cdo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B3F96D18-1C09-11EC-99FF-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
 
-> As a first step in resolving both these problems, replace the
-> DO_FOR_EACH_INCLUDE_BROKEN flag with a struct repository pointer. This
-> commit is a mechanical conversion - whenever DO_FOR_EACH_INCLUDE_BROKEN
-> is set, a NULL repository (representing access to no object store) is
-> used instead, and whenever DO_FOR_EACH_INCLUDE_BROKEN is unset, a
-> non-NULL repository (representing access to that repository's object
-> store) is used instead.
+On Wed, Sep 22 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-Hmph, so the lack of "include broken" is a signal to validate the
-object the ref points at, and the new parameter is "if this pointer
-is not NULL, then expect to find the object in this repository and
-validate it" that replaces the original "validate it" with a bit
-more detailed instruction (i.e. "how to validate--use the object
-store associated to this repository")?
+> 3821c38068 (Makefile: add support for generating JSON compilation
+> database, 2020-09-03), adds a feature to be used with clang to generate
+> a compilation database by copying most of what was done before with the
+> header dependency, but by doing so includes on its availability check
+> the CFLAGS which became specially problematic once DEVELOPER=3D1 implied
+> -pedantic as pointed out by =C3=86var[1].
+>
+> Remove the unnecessary flags in the availability test, so it will work
+> regardless of which other warnings are enabled or if the compilers has
+> been told to error on them.
+>
+> [1] https://lore.kernel.org/git/patch-1.1-6b2e9af5e67-20210922T103749Z-av=
+arab@gmail.com/
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 9df565f27b..d5c6d0ea3b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1302,7 +1302,7 @@ GENERATE_COMPILATION_DATABASE =3D no
+>  endif
+>=20=20
+>  ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+> -compdb_check =3D $(shell $(CC) $(ALL_CFLAGS) \
+> +compdb_check =3D $(shell $(CC) \
+>  	-c -MJ /dev/null \
+>  	-x c /dev/null -o /dev/null 2>&1; \
+>  	echo $$?)
 
-> Right now, the locations in which
-> non-the_repository support needs to be added are marked with BUG()
-> statements - in a future patch, these will be replaced. (NEEDSWORK: in
-> this RFC patch set, this has not been done)
+Sorry about the overlap in
+https://lore.kernel.org/git/patch-v2-2.2-6b18bd08894-20210922T220532Z-avara=
+b@gmail.com/;
+I didn't see this thread before sending my version.
 
-> - Change the _advance() callback to also have a repository object
->   parameter, and either skip or not skip depending on whether that
->   parameter is NULL. This burdens callers to have to carry this
->   information along with the iterator, and such calling code may be
->   unclear as to why that parameter can be NULL in some cases and cannot
->   in others.
+I think your patch here is better than mine. FWIW I also had this on top
+of mine, i.e. emitting output to stderr unconditionally:
+https://github.com/avar/git/commit/d4bcc0e617e52df803870df29df82aa3b2205d84
 
-Hmph.  
+But thinking about it again I think with the rationale in that
+not-on-list commit of mine the below is better than either of our
+versions v1.
 
-> diff --git a/refs.c b/refs.c
-> index 8b9f7c3a80..49ddcdac53 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1413,16 +1413,16 @@ int head_ref(each_ref_fn fn, void *cb_data)
->  
->  struct ref_iterator *refs_ref_iterator_begin(
->  		struct ref_store *refs,
-> -		const char *prefix, int trim, int flags)
-> +		const char *prefix, int trim, struct repository *repo,
-> +		int flags)
->  {
->  	struct ref_iterator *iter;
->  
->  	if (ref_paranoia < 0)
->  		ref_paranoia = git_env_bool("GIT_REF_PARANOIA", 0);
-> -	if (ref_paranoia)
-> -		flags |= DO_FOR_EACH_INCLUDE_BROKEN;
->  
->  	iter = refs->be->iterator_begin(refs, prefix, flags);
-> +	iter->repo = ref_paranoia ? NULL : repo;
+I.e. for COMPUTE_HEADER_DEPENDENCIES the point of the test is that we
+turn it on automatically, so it needs to not suck by default. The reason
+we're doing this is, per the comment in 3821c38068:
 
-OK.  "flags" is still kept because there are bits other than
-"include broken" that need to be propagated.
+    If this variable is set, check that $(CC) indeed supports the `-MJ`
+    flag, following what is done for automatic dependencies.
 
-> @@ -1442,13 +1442,16 @@ struct ref_iterator *refs_ref_iterator_begin(
->   * Call fn for each reference in the specified submodule for which the
->   * refname begins with prefix. If trim is non-zero, then trim that
->   * many characters off the beginning of each refname before passing
-> - * the refname to fn. flags can be DO_FOR_EACH_INCLUDE_BROKEN to
-> - * include broken references in the iteration. If fn ever returns a
-> + * the refname to fn. If fn ever returns a
->   * non-zero value, stop the iteration and return that value;
->   * otherwise, return 0.
-> + *
-> + * See the documentation of refs_ref_iterator_begin() for more information on
-> + * the repo parameter.
->   */
->  static int do_for_each_repo_ref(struct repository *r, const char *prefix,
-> -				each_repo_ref_fn fn, int trim, int flags,
-> +				each_repo_ref_fn fn, int trim,
-> +				struct repository *repo, int flags,
->  				void *cb_data)
+Anyone using GENERATE_COMPILATION_DATABASE is turning it on explicitly,
+and I daresay if they're using it at all they're either not using
+anything but clang, or is keenly aware of the difference.
 
-Confusing.  We are iterating refs that exists in the repository "r",
-right?  Why do we need to have an extra "repo" parameter?  Can they
-ever diverge (beyond repo could be NULL to signal now-lost "include
-broken" bit wanted to convey)?  It's not like a valid caller can
-pass the superproject in 'r' and a submodule in 'repo', right?
+So do we really need to carry those 17 lines of the Makefile logic
+simply to avoid showing this error on say "CC=3Dgcc
+GENERATE_COMPILATION_DATABASE=3Dyes":
 
-Enhancing an interface this way, and allowing an arbitrary
-repository instance to be passed only to convey one bit of
-information, by adding a "repo" smells like inviting bugs in the
-future.
+    gcc: error: unrecognized command-line option =E2=80=98-MJ=E2=80=99; did=
+ you mean =E2=80=98-J=E2=80=99?
 
-I have a feeling that the function signature for this one should
-stay as before, and "repo" should be a local variable that is
-initialized as
+It doesn't seem worth it to me, especially as we document that we'll use
+the "-MJ" flag in the Makefile comment that the person turning on
+GENERATE_COMPILATION_DATABASE=3Dyes must have read.
 
-	struct repository *repo = (flags & DO_FOR_EACH_INCLUDE_BROKEN)
-				? r
-				: NULL;
+Anyway, I'll leave you to do what you think is best here, and I'm also
+fine with just going for the v1 you've got here, it just seems to me
+like we're both fixing logic that's been copy/pasted from
+COMPUTE_HEADER_DEPENDENCIES, and the reasons we need it for that
+facility don't apply at all to GENERATE_COMPILATION_DATABASE.
 
-to avoid such a future bug, but given that there is only one caller
-to this helper, I do not mind
+-- >8 --
+diff --git a/Makefile b/Makefile
+index 9df565f27bb..32538f9e858 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1301,23 +1301,6 @@ ifndef GENERATE_COMPILATION_DATABASE
+ GENERATE_COMPILATION_DATABASE =3D no
+ endif
+=20
+-ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+-compdb_check =3D $(shell $(CC) $(ALL_CFLAGS) \
+-	-c -MJ /dev/null \
+-	-x c /dev/null -o /dev/null 2>&1; \
+-	echo $$?)
+-ifneq ($(compdb_check),0)
+-override GENERATE_COMPILATION_DATABASE =3D no
+-$(warning GENERATE_COMPILATION_DATABASE is set to "yes", but your compiler=
+ does not \
+-support generating compilation database entries)
+-endif
+-else
+-ifneq ($(GENERATE_COMPILATION_DATABASE),no)
+-$(error please set GENERATE_COMPILATION_DATABASE to "yes" or "no" \
+-(not "$(GENERATE_COMPILATION_DATABASE)"))
+-endif
+-endif
+-
+ ifdef SANE_TOOL_PATH
+ SANE_TOOL_PATH_SQ =3D $(subst ','\'',$(SANE_TOOL_PATH))
+ BROKEN_PATH_FIX =3D 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SA=
+NE_TOOL_PATH_SQ)"|'
 
-	if (repo && r != repo)
-		BUG(...);
 
-to catch any such mistake.
-
->  int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data)
->  {
->  	return do_for_each_repo_ref(r, git_replace_ref_base, fn,
->  				    strlen(git_replace_ref_base),
-> -				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-> +				    NULL, 0, cb_data);
->  }
-
-And this is the only such caller, if I am reading the code right.
-
-Do we ever pass non-NULL "repo" to do_for_each_repo_ref() in future
-steps?
-
-If not, perhaps we do not even have to add "repo" as a new parameter
-to do_for_each_repo_ref(), and instead always pass NULL down to
-refs_ref_iterator_begin() from do_for_each_repo_ref()?
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 677b7e4cdd..cd145301d0 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -744,12 +744,6 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  		    ref_type(iter->iter0->refname) != REF_TYPE_PER_WORKTREE)
->  			continue;
->  
-> -		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
-> -		    !ref_resolves_to_object(iter->iter0->refname,
-> -					    iter->iter0->oid,
-> -					    iter->iter0->flags))
-> -			continue;
-> -
->  		iter->base.refname = iter->iter0->refname;
->  		iter->base.oid = iter->iter0->oid;
->  		iter->base.flags = iter->iter0->flags;
-> @@ -801,9 +795,6 @@ static struct ref_iterator *files_ref_iterator_begin(
->  	struct ref_iterator *ref_iterator;
->  	unsigned int required_flags = REF_STORE_READ;
->  
-> -	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN))
-> -		required_flags |= REF_STORE_ODB;
-> -
->  	refs = files_downcast(ref_store, required_flags, "ref_iterator_begin");
->  
->  	/*
-
-Hmph, I am not sure where the lossage in these two hunks are
-compensated.  Perhaps in the backend independent layer in
-refs/iterator.c?  Let's read on.
-
-> @@ -836,10 +827,13 @@ static struct ref_iterator *files_ref_iterator_begin(
->  	 * references, and (if needed) do our own check for broken
->  	 * ones in files_ref_iterator_advance(), after we have merged
->  	 * the packed and loose references.
-> +	 *
-> +	 * Do this by not supplying any repo, regardless of whether a repo was
-> +	 * supplied to files_ref_iterator_begin().
->  	 */
->  	packed_iter = refs_ref_iterator_begin(
->  			refs->packed_ref_store, prefix, 0,
-> -			DO_FOR_EACH_INCLUDE_BROKEN);
-> +			NULL, 0);
-
-OK.
-
-> diff --git a/refs/iterator.c b/refs/iterator.c
-> index a89d132d4f..5af6554887 100644
-> --- a/refs/iterator.c
-> +++ b/refs/iterator.c
-> @@ -10,7 +10,23 @@
->  
->  int ref_iterator_advance(struct ref_iterator *ref_iterator)
->  {
-> -	return ref_iterator->vtable->advance(ref_iterator);
-> +	int ok;
-> +
-> +	if (ref_iterator->repo && ref_iterator->repo != the_repository)
-
-OK. refs_ref_interator_begin() assigned the "repo" parameter that
-tells which repository to consult to validate the objects at the tip
-of refs to the .repo member of the iterator object, and we check it
-here.
-
-It is a bit surprising that ref_iterator does not know which
-repository it is working in (regardless of "include broken" bit).
-Do you think it will stay that way?  I have this nagging feeling
-that it won't, and having "struct repository *repository" pointer
-that always points at the repository the ref-store belongs to in a
-ref_iterator instance would become necessary in the longer run.
-
-In which case, this .repo member this patch adds would become a big
-problem, no?  If we were to validate objects at the tip of the refs
-against object store, we will always use the object store that
-belongs to the iterator->repository, so the only valid states for
-iterator->repo are either NULL or iterator->repository.  That again
-is the same problem I pointed out already about the parameter the
-do_for_each_repo_ref() helper that is inviting future bugs, it seems
-to me.  Wouldn't it make more sense to add
-
- * iterator->repository that points at the repository in which we
-   are iterating the refs
-
- * a bit in iterator that chooses between "do not bother checking"
-   and "do check the tip of refs against the object store of
-   iterator->repository
-
-to avoid such a mess?  Perhaps we already have such a bit in the
-flags word in the ref_iterator but I didn't check.
-
-Thanks.
