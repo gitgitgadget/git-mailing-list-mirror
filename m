@@ -2,176 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E394FC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 09:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8DD7C4332F
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 09:20:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBA7461038
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 09:06:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B054361214
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 09:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240063AbhIWJIA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 05:08:00 -0400
-Received: from mail-vi1eur05on2085.outbound.protection.outlook.com ([40.107.21.85]:41724
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239137AbhIWJH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 05:07:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TtqlxESr5qrCrkm/q5yq5lt0WFKi9vaVk9BUebI5rGjCpBOh0PGe3UOTgdc7QRej24zoJo5ga9dsh6CxJ4KJdwOJrxcxyXX4NQHfae4V5h2OhpdauFww2KHGYk1Jowi9JbhJ3G7U5L6VEMnInDnOGRe4W/isffKSPZAdk06GSyuQrrrTHdQ8Xb4b+S/5KLVV9Nkh2xXYx7UQCzc2CztoIa7KaLrJ93WELwHYtyUcKgwL3nruzxn3KNtbgQ1mvPX0xJ+OidvJv3xTlXkh+PAjYPz8ELqgHcITbRw4XW0c9I+NDVtD064OJwd+D5yY22M/IUQ6k87Ho0c3yYhA97gUPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=Nt6Nf4BsV9+RUGNWdJ6vIVn07cpLOHTYeKyI+U7ZiDE=;
- b=KPgC4KBkZ3nZ5jIfB97m7uOimkYaPn7tYJPcTspcbuRe0/1gSBPf0ynMUgT8Ade0I5uRfc4+EHAJjq9MK5uDFaFfXDBexAYggIgk2XuEb+WYnvCwUWO44ZLcsBikVxv3MudQ0Rhlj23ugNpb+B8Mk7+r1l6JE274ZdGu6Z7llEe/DsoKsS5iweZ1Bxjd9iDZFgUbOf7VYc3k9t/1AGL+RseHRK3B8+AfmtYwWEz8K0M0SB3iWC71h90nqGKpJCKr5zsR2hWyGWb8CHv82RaIdcfGaOmCFbFvq8IrRqpe6cMCITfQZSpc/mK5BRtxKT4riau120B9d9Eg3h9OWtTkbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ikan.be; dmarc=pass action=none header.from=ikan.be; dkim=pass
- header.d=ikan.be; arc=none
+        id S240070AbhIWJW0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 05:22:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60022 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239965AbhIWJWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 05:22:24 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B39C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 02:20:53 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id t8so15340835wri.1
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 02:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=IkanDevelopment.onmicrosoft.com;
- s=selector2-IkanDevelopment-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Nt6Nf4BsV9+RUGNWdJ6vIVn07cpLOHTYeKyI+U7ZiDE=;
- b=nDmUSYF5sk/Oax2kHlD0lgb9bvoLz1lnxYN/i/pwicgVcJ2DsAdytXRjIrz9fPmIB6f1YkIkwc6SGvzYMx90bXJzOclQHeBo7Zjz3aeaQT8B925g8xpR0hKsCSHhXGh2jI68TH2WVf7mRG1pluQ65u8NRNQZSFIB+GiRXOxFSiQ=
-Received: from AM0P191MB0804.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:156::23)
- by AM9P191MB1427.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:26c::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.13; Thu, 23 Sep
- 2021 09:06:25 +0000
-Received: from AM0P191MB0804.EURP191.PROD.OUTLOOK.COM
- ([fe80::9c88:26f8:5bfb:c090]) by AM0P191MB0804.EURP191.PROD.OUTLOOK.COM
- ([fe80::9c88:26f8:5bfb:c090%3]) with mapi id 15.20.4544.015; Thu, 23 Sep 2021
- 09:06:25 +0000
-From:   Nate Kerkhofs <Nate.Kerkhofs@ikan.be>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: potentially unexpected credential-helper behavior when using Git CLI
- from Junit test started by Ant script running in Karaf environment installed
- as a Windows service
-Thread-Topic: potentially unexpected credential-helper behavior when using Git
- CLI from Junit test started by Ant script running in Karaf environment
- installed as a Windows service
-Thread-Index: AdewWkUcrGorm2klTJKVuy+sa4NaVQ==
-Date:   Thu, 23 Sep 2021 09:06:25 +0000
-Message-ID: <AM0P191MB08040357C47BE834BB3EDEA5EBA39@AM0P191MB0804.EURP191.PROD.OUTLOOK.COM>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none header.from=ikan.be;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c6a33a91-9b1e-4a98-e04d-08d97e716c10
-x-ms-traffictypediagnostic: AM9P191MB1427:
-x-microsoft-antispam-prvs: <AM9P191MB142726B7C3BB67A01A1E29D0EBA39@AM9P191MB1427.EURP191.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: MBnN9cznr4c3P2C/HupWEOjLXCKrWQ7Q3J1IERGiARglzICXHhc8sS/kRTy4+ZbsRwVf+VVceH3dSRsLzwO4TrOSxy4hM9VnqqEWZP7run4N34O4KV+lxFI3M1qiAlDzIzNpqOeTJyURG7Scz+2kqdPKxn2J6zTy0Y5XOx6SI4aaVP5YzWgrgLVbGL1AJyV4IY03xK+5fmQ4cEiv5uj57ZxOSVbuV+rCYOt/Hhi34SSsYyYN/nl2dTvZA8jK9DBv+O2wPaLAVg6Yf/Yw87dbxrp+hgm0LIE2DxKEZGaT7pmW38b8t4Wu14840ZPy4+Cpkl8PYPPpEQewd/Uss4J9FzPWBf4eeAyO3fUE7V3U6ijY86BpdYUMOUxppQekCW2PPvGS9muO+dOn+oOU4kHVf1ZTae8RljhJ9QlhZ+Si09UaD4ndENI8u4HH7H00lQANevBiMbuh6R333EFGg2T0Lq8TUI9xy8QZMFrZuLFaO8aRtfwVhPkZf8pvGO+g5wh46I4israb1pzCWBfikSPI9wi2XbePof0I4VPrwDPWTYrs7qd+fZcJ7bS0kGlIstCm/tS2qDg0vXFq72O22kQNdRRi6g36AHnQNSZhNbziEeyWsK9AjzkGtHv8WbgQl8scfS0W9QSzrjahSTOsv46bT8H144AlgO/FrxojHBdjdmJgaynKRx2CfAx3jf9oW/ueTqFpZDYKdxI3AFfBfyupf8FUZlO6QwfPFMOKxD9tK68=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0P191MB0804.EURP191.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(39830400003)(136003)(396003)(366004)(376002)(346002)(71200400001)(38100700002)(52536014)(5660300002)(122000001)(66946007)(64756008)(66556008)(66446008)(76116006)(83380400001)(66476007)(7696005)(8936002)(186003)(9686003)(33656002)(38070700005)(316002)(508600001)(55016002)(6916009)(26005)(2906002)(8676002)(86362001)(6506007)(966005)(460985005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ZO3SR2OZtr1kuKOlcmC8lB3XA10qr2NasPKD+E2J1BOhVH5210080xrAleoS?=
- =?us-ascii?Q?sfWaAiU7WbxqDXU8J/mx0bKHeyppcbAYLT9bMKf4wyyYt7IfMAfPKbZqPUHH?=
- =?us-ascii?Q?c0EptFpP9ZsbhiSDecWN3mNeJ/u9G+vLPHnJqljh+QABf2wwKkePtsdavBE5?=
- =?us-ascii?Q?Cz90+5Zs5pZmkPwkXzlsrPUE6CoXyo0yGoB4hD6bMBIXxP+7Q2uBJyqCHA51?=
- =?us-ascii?Q?cW0QUmQSbZG2HttejfWca1jEKrYUrzD6mfS9KYCiu2/Pc975NSmt+ftLYK5H?=
- =?us-ascii?Q?TDFM3lC4i2Yq0jkTn+uN/+piwoI2iFqt78/W/fDPDhi1RzOMIzawCGEO7YW/?=
- =?us-ascii?Q?LfLBaDGXUFQyoNVqRWRqqQh1uABQjcIjJ+iZFeVpm1tPasmr83R8i3G11FzN?=
- =?us-ascii?Q?pgA4KkJuHSokeG3PCAPF9+KQNxPI+wToYr+zL6eiGoZSTHeJqoamJSgTglqu?=
- =?us-ascii?Q?m1xJ9RoKeKr6kpa5TwAOhS1mj60Kad4beQq98NmpMlF9qduDaNgdW5TebL2I?=
- =?us-ascii?Q?Yyq3kfR5kbzK6nRVgqSLnzMN5kp4YnLGJfrrb0/O4fNE6z9xaqMkL/0BSCL3?=
- =?us-ascii?Q?L3w2u5Qb13YU8aKh8uXeyVQRhB5RVnIyhKcfX8OqtAiVsRzexIJqkmi/Hy24?=
- =?us-ascii?Q?UnORipY1AieQ+gkGDZ9Tn6HoH+E2lVXvugzfrXLzz9qShoXHS/nWXN02CjdT?=
- =?us-ascii?Q?Rtdw+dsNaYx9f6xwf4epMIVjmV88jnTrjFFhPQ5U6ZOhEo0MZhwlkuVGFh0p?=
- =?us-ascii?Q?7PWyE7gXG+laGKgknrl9voeNjzGdOFsEg8bZFhuEI7LbmsPpJuu+j2sN46v1?=
- =?us-ascii?Q?h9c40SgSvGvOJZCe8s5LMvFNCDomb7FoNORqQ9wg72d9KdFKhtSlWmyGliXc?=
- =?us-ascii?Q?hYqEbecD21YyyxFS0IVgXbVJRxdcaxW1o90+GDCkb4HMlBvucnjZPdOf1MAb?=
- =?us-ascii?Q?EcwsPBc0fUdDMSIVtrLzkHazJuEl3Amok+4gOjCz4DrzctJ+l9V3x4Qw1BGg?=
- =?us-ascii?Q?T09sKLsHO1d8v3eO18lIThwbKDjj7cL6He3te5FL9yYhwajttPSf2i6Iv/X/?=
- =?us-ascii?Q?BA0pBUxZMdS+H5hPVvkr+wfyf5SVMoN4k27P1JykZW86hA8wP5eLfLMeW46s?=
- =?us-ascii?Q?qfLaDxWPfkQqzCtz8Obqq0jk4Z86j4leB3hdqq41YIOfrphNH1A3aoGnh6d4?=
- =?us-ascii?Q?AYU+NNLMygu0x/Y10V/Z/EaFhvhv6Lju3ulniXHprrcaHF8q16zqLTal3BDV?=
- =?us-ascii?Q?+hc3OuhKmYeBTqnDXGbdGjIgZ+RHxPJXSscz/ntdHf8Ry7Qc+hE89yd9Sh1R?=
- =?us-ascii?Q?YJyTjKvITsnfDG2s4DyTuVB8?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Q3va955bLvy/O5HE+gUFx0gjlOQVoRbeRSzr6zCVK/o=;
+        b=ddCqMZc38WbLBcZy5KIrrkK1kD9eBPpZee3IXuFTw2BHF3grXzwN0NOzgTwY3MGBb0
+         gBGUndHB78TMHyyoYk30kgta5bPd+szDbr6JfzJwxrtNCPnCHUFarPHbErFVfSvWJHru
+         srJUt2auqLIJO4pLe1l6JojmEp7Qw2n8otTEdgt38fyL73ZR1SU2qoZLPxdfwT/A7boK
+         rF4lEgPiCq74M6eY0EuZKqlcrErr8dsiQMEU1ZbcwQZN+Onkt05WwOV+jTS7Eh0iJ621
+         NQED+psMLjlDWabOwAIjmhLtScnADiaZUtxaqz5BtzwHXHBzJuw5t5yu9ba2Py3ixnY9
+         eTsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Q3va955bLvy/O5HE+gUFx0gjlOQVoRbeRSzr6zCVK/o=;
+        b=RcZlExVRl9Ey+HjxfefJ9jIJLasAHdXZ4Q9FpMW7G58jMjJa7Kt0T/Awsr5uZ0PnTg
+         tFtsK0DOTaeBYrRGrgBbAB3VtoaVAg9Nka07D4Vtissq8Z1IlIRIxSuqVOzJuxTYesKF
+         LbBeGAqXtiis6wJnT9WSv8WgRFJkpbzKgfYzYrWICJhHHm1sK15n4O5I30NithyCldMn
+         qUf2UXC4sAm2Ar0wOQ4jFFXYoj6kUwMCLMLL/m2nHZHKq69VDKrknepewZBB1tLhyPze
+         h6DWxdWvgmlRP09aHSfoj+Ek/RKkJ7vq8ZHs5kOnxwVujD/WTQ2BBbowy7T2YhPApNNn
+         aJKw==
+X-Gm-Message-State: AOAM53143mTd9Y7kMBPk/mkUzOGNZmJZN5fzqnkQDfIAAzv9xGMlWg9l
+        76eGCC0bi8tLQ3uObNBMN4qW4MkDlGJ8ZQ==
+X-Google-Smtp-Source: ABdhPJw8kBUzBt8+RVhABnBdCRI8W0UwaoWBQQI6N1MK7Wb4B3RNpyixvJfUnCCx3/imuISZo7z2OA==
+X-Received: by 2002:a7b:c767:: with SMTP id x7mr14958008wmk.62.1632388851100;
+        Thu, 23 Sep 2021 02:20:51 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n66sm4540669wmn.2.2021.09.23.02.20.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 02:20:50 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v8 1/2] Makefile: add SANITIZE=leak flag to GIT-BUILD-OPTIONS
+Date:   Thu, 23 Sep 2021 11:20:45 +0200
+Message-Id: <patch-v8-1.2-c68a7108dc4-20210923T091819Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1228.gdc65525c655
+In-Reply-To: <cover-v8-0.2-00000000000-20210923T091819Z-avarab@gmail.com>
+References: <cover-v7-0.2-00000000000-20210919T075619Z-avarab@gmail.com> <cover-v8-0.2-00000000000-20210923T091819Z-avarab@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: ikan.be
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0P191MB0804.EURP191.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6a33a91-9b1e-4a98-e04d-08d97e716c10
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2021 09:06:25.8069
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b00beb63-affb-4a0a-bf41-0329b15f3a07
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: LoGXZV+RI6tjDQX1L5Kl39snHWr6qIqz2HhMKZ51181/dEW58jrUUaW6D4Dk0e8+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9P191MB1427
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When SANITIZE=leak is specified we'll now add a SANITIZE_LEAK flag to
+GIT-BUILD-OPTIONS, this can then be picked up by the test-lib.sh,
+which sets a SANITIZE_LEAK prerequisite.
 
-We at Ikan maintain Ikan ALM, a commercial devops product that we use ourse=
-lf. As part of this devops product, we recently implemented an option to cl=
-one a single branch using --filter=3Dblob:none for performance reasons. We =
-had to upgrade the Git client we used for this from 2.26 to 2.33. We did no=
-t uninstall the old version because it was still in use by older scripts.
+We can then skip specific tests that are known to fail under
+SANITIZE=leak, add one such annotation to t0004-unwritable.sh, which
+now passes under SANITIZE=leak.
 
-After installing this new Git version and configuring our test scripts to u=
-se it, we found that our headless builds on our build server started freezi=
-ng, completely stopping partway through our tests. After a day of investiga=
-tion, I tracked down the cause and found that the new Git client was instal=
-led with the credential-helper feature enabled. This meant that as part of =
-the clone command, Git would at some point run sh -c "git credential-helper=
--selector store" "git credential-helper-selector store", which triggered an=
- invisible credential-helper modal dialog during our headless script, causi=
-ng the build script to freeze until someone would accept it, which of cours=
-e no one could do because due to the headless execution, no one was around =
-to accept it. Weirdly enough, when I manually ran the git clone command whi=
-ch caused this dialog to appear, the clone worked just fine and no dialog w=
-ould appear, which lead me to believe that this might be an issue with Git =
-with regards to running it from a headless script. It is unclear to me why =
-running the same command from a headless environment and from a normal comm=
-and line environment would have different functionality in these cases. I f=
-ixed the issue by disabling the credential-helper.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile              | 5 +++++
+ t/t0004-unwritable.sh | 2 +-
+ t/test-lib.sh         | 1 +
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-Some details about the environment these tests are ran in: our product uses=
- a Karaf 4.0.7 based agent, which runs as a Windows 2019 service running as=
- an administrative user. Karaf starts an Ant 1.10.3 script in a JDK 11.0.7 =
-Java environment. This ant script starts a Junit 4 test suite, which in tur=
-n starts Git 2.33.0.2 from the command line. The command that was executed =
-was (some details redacted):
+diff --git a/Makefile b/Makefile
+index 9df565f27bb..d7390e6b2b5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1214,6 +1214,9 @@ PTHREAD_CFLAGS =
+ SPARSE_FLAGS ?=
+ SP_EXTRA_FLAGS = -Wno-universal-initializer
+ 
++# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak target
++SANITIZE_LEAK =
++
+ # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
+ # usually result in less CPU usage at the cost of higher peak memory.
+ # Setting it to 0 will feed all files in a single spatch invocation.
+@@ -1258,6 +1261,7 @@ BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+ endif
+ ifneq ($(filter leak,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
++SANITIZE_LEAK = YesCompiledWithIt
+ endif
+ ifneq ($(filter address,$(SANITIZERS)),)
+ NO_REGEX = NeededForASAN
+@@ -2803,6 +2807,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
++	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
+ 	@echo X=\'$(X)\' >>$@+
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
+index e3137d638ee..fbdcb926b3a 100755
+--- a/t/t0004-unwritable.sh
++++ b/t/t0004-unwritable.sh
+@@ -21,7 +21,7 @@ test_expect_success POSIXPERM,SANITY 'write-tree should notice unwritable reposi
+ 	test_must_fail git write-tree
+ '
+ 
+-test_expect_success POSIXPERM,SANITY 'commit should notice unwritable repository' '
++test_expect_success POSIXPERM,SANITY,!SANITIZE_LEAK 'commit should notice unwritable repository' '
+ 	test_when_finished "chmod 775 .git/objects .git/objects/??" &&
+ 	chmod a-w .git/objects .git/objects/?? &&
+ 	test_must_fail git commit -m second
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d5ee9642548..06831086060 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1536,6 +1536,7 @@ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+ test -n "$USE_LIBPCRE2" && test_set_prereq PCRE
+ test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
+ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
++test -n "$SANITIZE_LEAK" && test_set_prereq SANITIZE_LEAK
+ 
+ if test -z "$GIT_TEST_CHECK_CACHE_TREE"
+ then
+-- 
+2.33.0.1228.gdc65525c655
 
-git.exe clone http://USERNAME:PASSWORD@GITSERVERHOSTNAME/git/GITREPONAME.gi=
-t -b tag1.1 --single-branch --filter=3Dblob:none e:/ikan/alm/test/repositor=
-ies/git/workdir
-
-I executed this command with the same user outside of the Karaf environment=
-, and it would clone the repo without asking me to select the credential-ma=
-nager. When the command was executed from the above described environment, =
-it would roughly start the following Git Command tree:
-
-- Git.exe clone
-- Git-remote-http.exe (unsure what command)
-- Git.exe
-- Sh -c "git credential-helper-selector store" "git credential-helper-selec=
-tor store"
-- Git.exe credential-helper-selector store
-- Git-credential-helper.exe
-
-The last 3 steps appears like they should have just configured the credenti=
-al helper selector to use the store credential manager, but instead it woul=
-d show the git credential helper and ask which credential manager to use.
-
-I'm not sure if this is the intended behavior, but It feels somewhat unlike=
-ly for an invisible dialog appearing like this to be intended.
-
-If any more information is needed, let me know and I'll share more details.
-
-Kind regards,
-
-Nate Kerkhofs
