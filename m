@@ -2,122 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A11EC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10574C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:18:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF0FB60F6F
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:09:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D884560F0F
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238896AbhIWCLS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 22:11:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48898 "EHLO
+        id S238884AbhIWCTk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 22:19:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238893AbhIWCLS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 22:11:18 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B01C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:09:47 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id y89so6816948ede.2
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:09:47 -0700 (PDT)
+        with ESMTP id S238859AbhIWCTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 22:19:40 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60857C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:18:09 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id e82so6012136iof.5
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=A/zRLFGaDI7TWfYr7hqnMrDk5m++xH8R1p0aUzaerbM=;
-        b=iNb33eozbOsbryAzRTkxnO4s/SzHH0AzqXPDBRJu8CwKmwdhzaao7sMcZMvFwhF69x
-         0UkMHaULkgbZFdba0xxOKjifMxYjIMVAA4AO2yl9QpLD6daNnu54Tia6j4q6H8H3IcfG
-         jh8FEzuasRviK9YUTK6YqutG0HztXYGiMnmo/NbxM0KdrBW3icFFFJcL7x5WvKVnrtyg
-         heFratN85NS2HaJM2M5724GpmnIdxJ+GEFM5hxEYuDBC0UMU0lHeziCF2CWLnAuW8IsI
-         EgzxpgcbWCkYy/onfDQlLXDkQoZWzMKaiQvtJMsOpAPQah0XiMAVtHNzBhY0PVnhOTFE
-         GcjA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=iTROrfD6KVbO/qKzYer9U7Z28M7Gt/lZ64WAltwbZRs=;
+        b=glxemuRXJ9FUAArbBOTw8f168FBSLtPs1nSFsj5jh0Kkmaa/pYn2xsJKcmYqKEcgrN
+         IDKnVyCWudWJRVfISSiluBfZQFHL4SmkYAPEXeGr2VDx3EqXDS/hiJKGgmV2DRhiJt6S
+         VtFSTwexQXuuMwuxB+Cqudhlf/uHNhapVZJ36tW7OZOoj/1J42Ao8W0D+iPuE520UpFw
+         h7U/QCBhtqmFhtSTCQAMQfnPb6+t224+6lxnbcViiJaq1iH8PALSDzL1lajpyCZcGOol
+         vcAKokfriRNzqNJy/USnnDpcIoPha2aDKPNcKZwj3egHEFUdj6ibW/rdqXzQ2xed3hGA
+         RqfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=A/zRLFGaDI7TWfYr7hqnMrDk5m++xH8R1p0aUzaerbM=;
-        b=An25MLMxaLfe1UVnNJhfWbIdcbgYrVYi2i4WO5iK8ldNmC4Fb5vNMSEzj1gBabMUNU
-         LaSWGvISNr1P4S3vphq/mfMZGswI7KioAhJs/ytpZOSFZGLYbfzd945EMrTktI+mhG+0
-         ZphxG57q9TPUDyUwktHFJlqUYVgnFIcY/8DjjjBuCVBfGbTUewrywQP4sHsSf0ek+lKx
-         tVqDtJnkU0atxXIJa0v4CA+6njn8Ho/zP4bt7AKdMt3W0l1OUjaTjkjBlYDIHmtVwrQL
-         iMEOdyxTQqYIGwC/uNbg4FmPTq1ddAC3kxd07Yk3EV9grlWhT8HBoUKM57ebVtV5sOgN
-         MjMw==
-X-Gm-Message-State: AOAM5308gfgJvvJ2gWlPn2PSS76Wxj/r9+9xEd5XQP3Ls1jjuR7ZMDOd
-        Lv3gPxgh856rQomN8nB2WKM=
-X-Google-Smtp-Source: ABdhPJw/ZGePf0znC+rCTpQ/MNscOf2TOyufuYO6eFxRgIGMau2UepDHvuLZi/hC571lg7FUl6Fm9w==
-X-Received: by 2002:a17:906:7302:: with SMTP id di2mr2504803ejc.409.1632362985789;
-        Wed, 22 Sep 2021 19:09:45 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b14sm2244631edy.56.2021.09.22.19.09.45
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iTROrfD6KVbO/qKzYer9U7Z28M7Gt/lZ64WAltwbZRs=;
+        b=5JooJsaxlNkhnelxcixUC4cehqOI4iy9hLB49fJ/taBaCvcDXnB6ZCyR2OWvGtbdbp
+         z2Cp8vNpi9G5fzG/QJZwBLmIu7wokNPIq1qbkO14sjbQYZ4IZ2B3u6NyiWdijC47KaP9
+         TDOMFRBGfoJL0WW8zdrJaoWBKq7EsJzmsM8pji6iM1MhsjkG5522WwumGyvWuWh3RBiy
+         Fb7lDVjN+efO23pnyjyd8HX+BeaCbVstBwmMm18e/9LyjrUtcFKolBxVTLFCF0F5QsSD
+         VDIu4WswpC7oFHaXBmqN15OQijSlp70GY/OHCtpdCsY1athQMfpHgeb5fGFU1bRB6H9W
+         TPOA==
+X-Gm-Message-State: AOAM531P/xW1fNTxF9eYqA+8/vIxWsvQzufPnuW3HvwOppe/6+4ckFF1
+        hO7EmRWZcTTvlk4ntqWqr/Dynw==
+X-Google-Smtp-Source: ABdhPJyRIPHSF0c05DxeHeuDrI4DeUKCjqUoKV5DcY5caGgeP0j/pFDll+PJxPhhARgUd6i6q9mcUA==
+X-Received: by 2002:a02:cd17:: with SMTP id g23mr1924572jaq.29.1632363488570;
+        Wed, 22 Sep 2021 19:18:08 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h18sm1803780ilq.40.2021.09.22.19.18.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 19:09:45 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, levraiphilippeblain@gmail.com,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] Makefile: avoid breaking compilation database
- generation with DEVELOPER
-Date:   Thu, 23 Sep 2021 04:08:29 +0200
-References: <20210922183311.3766-1-carenas@gmail.com>
- <20210922185702.4328-1-carenas@gmail.com>
- <YUvbU9HX6JA+MKd0@camp.crustytoothpaste.net>
- <CAPUEspjJdkPgpWvLJKNks+Uu-tZmahw6U3pa+XBkMB6_m_dtRQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CAPUEspjJdkPgpWvLJKNks+Uu-tZmahw6U3pa+XBkMB6_m_dtRQ@mail.gmail.com>
-Message-ID: <87czp059g7.fsf@evledraar.gmail.com>
+        Wed, 22 Sep 2021 19:18:08 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 22:18:07 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     me@ttaylorr.com, git@vger.kernel.org, peff@peff.net,
+        gitster@pobox.com, avarab@gmail.com
+Subject: Re: [PATCH v2 3/8] midx: preliminary support for `--refs-snapshot`
+Message-ID: <YUvj33QX5fvjNoiJ@nand.local>
+References: <42f1ae9edeb55d8e1b0c8f2c3110e9c8326a5fc1.1631730270.git.me@ttaylorr.com>
+ <20210922230012.2608849-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20210922230012.2608849-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Sep 22 2021, Carlo Arenas wrote:
-
-> On Wed, Sep 22, 2021 at 6:41 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
+On Wed, Sep 22, 2021 at 04:00:12PM -0700, Jonathan Tan wrote:
+> > This approach will cause a problem when multi-pack bitmaps are able to
+> > be generated from `git repack`, since the reference tips can change
+> > during the repack. Even though we ignore commits that don't exist in
+> > the MIDX (when doing a scan of the ref tips), it's possible that a
+> > commit in the MIDX reaches something that isn't.
+> >
+> > This can happen when a multi-pack index contains some pack which refers
+> > to loose objects (which by definition aren't included in the multi-pack
+> > index).
+> >
+> > By taking a snapshot of the references before we start repacking, we can
+> > close that race window.
 >
->> > diff --git a/Makefile b/Makefile
->> > index 9df565f27b..d5c6d0ea3b 100644
->> > --- a/Makefile
->> > +++ b/Makefile
->> > @@ -1302,7 +1302,7 @@ GENERATE_COMPILATION_DATABASE =3D no
->> >  endif
->> >
->> >  ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
->> > -compdb_check =3D $(shell $(CC) $(ALL_CFLAGS) \
->> > +compdb_check =3D $(shell $(CC) \
->> >       -c -MJ /dev/null \
->> >       -x c /dev/null -o /dev/null 2>&1; \
->> >       echo $$?)
->>
->> Are you sure this results in a functional set of files?
->
-> no; it does not
->
-> This call is only meant to be used to check if your compiler supports
-> the feature (which as =C3=86var points out[1], might not be the best thing
-> to do in this case), though
->
-> After this fix the files are being generated (in a different place
-> with their expected flags) and look healthy, but would be helpful to
-> know you see no regressions.
+> I can understand why we want the refs to remain the same both for the
+> MIDX generation and the MIDX bitmap generation (one reason that comes to
+> mind is how we select the commits for which to generate bitmaps), but I
+> don't understand what referring to loose objects has to do with it. I
+> think that using the same set of refs for MIDX generation and bitmap
+> generation is a good enough reason to do this, and we don't need to
+> mention loose objects.
 
-I had the same thought as brian, but you're right, since we never use
-the result of this it's OK.
+The point there is that a pack which contains objects that are ancestors
+of loose objects can show up at any time, including just before we
+select which packs to go into a MIDX.
 
-IOW this check is really functionally equivalent to something like:
+This is particularly common at GitHub, where all of our test-merges and
+objects created via the web interface are written loose. So we could
+compute a test merge, store the result loose, and have somebody push a
+pack up on top of it.
 
-    cc --help | grep -q -F -- -MJ
+If that pack shows up after the repack, but before we write a MIDX, then
+without the refs-snapshot code, we would include that pack, select its
+commits as candidates for bitmap selection, and then ultimately discover
+that the bitmap isn't closed, since the loose object won't be included.
 
-Or whatever, i.e. we're just checking if it's clang & supports the -MJ
-option.
+But that may be a little into the weeds for the patch message. Anyway,
+I did have to think about it for a minute, but I'm pretty sure that's
+what I was thinking when I wrote this.
 
-> [1] https://lore.kernel.org/git/87tuic5cdo.fsf@evledraar.gmail.com/
-
+Thanks,
+Taylor
