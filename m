@@ -2,88 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9262C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6051AC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:56:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE05761242
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:54:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BE6B61214
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:56:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbhIWV4U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 17:56:20 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63206 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238517AbhIWV4T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 17:56:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A28E4160C75;
-        Thu, 23 Sep 2021 17:54:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pP27btCtN710C9yDSjO+KGE7og28LDvnsYX8CN
-        ZHSDs=; b=TEHgPlek5Xg1vrYP/SXTvXhLjWHI8JxFMyjXHZNKQmG6AOkivt+iHo
-        qMGVw5qrka/gOE4CH8wIz9bTyOS2/8yOV7eOnLtUT+kNSezKI4vUeXJ0qGgcQlNU
-        tLJRyToH5BSpTnVPAdJeTJbYKc+X+t9DToIDtIeh6Oenc6b86+tRc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B81F160C74;
-        Thu, 23 Sep 2021 17:54:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E4FE4160C73;
-        Thu, 23 Sep 2021 17:54:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     The Grey Wolf <greywolf@starwolf.com>, git@vger.kernel.org
-Subject: Re: ANSI sequences produced on non-ANSI terminal
-References: <20210923052122.2F655CE@eddie.starwolf.com>
-        <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
-Date:   Thu, 23 Sep 2021 14:54:43 -0700
-In-Reply-To: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 23 Sep 2021 17:20:04 -0400")
-Message-ID: <xmqqmto3x8ik.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243349AbhIWV6P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 17:58:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54002 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235503AbhIWV6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 17:58:15 -0400
+Received: (qmail 16105 invoked by uid 109); 23 Sep 2021 21:56:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Sep 2021 21:56:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 361 invoked by uid 111); 23 Sep 2021 21:56:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Sep 2021 17:56:42 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 23 Sep 2021 17:56:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH] http: match headers case-insensitively when redacting
+Message-ID: <YUz4Gr3o/Kobj10r@coredump.intra.peff.net>
+References: <YUonS1uoZlZEt+Yd@coredump.intra.peff.net>
+ <afd7bd6b-52bf-7fd8-d13e-6dcd660c4100@gmail.com>
+ <YUuN+KguN0WetC49@coredump.intra.peff.net>
+ <87lf3o5bdz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DD087F78-1CB8-11EC-8178-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87lf3o5bdz.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 23, 2021 at 03:22:04AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> On Wed, Sep 22, 2021 at 10:21:22PM -0700, The Grey Wolf wrote:
->
->> Anything else you want to add:
->> 	I searched google and the documentation as best I was able for
->> 	this, but I am unable to find anywhere that will let me disable
->> 	(or enable) colour for a particular term type.  Sometimes I'm on
->> 	an xterm, for which this is GREAT.  Sometimes I'm on a Wyse WY60,
->> 	for which this is sub-optimal.  My workaround is to disable colour
->> 	completely, which is reluctantly acceptable, but it would be nice
->> 	to say "If I'm on an xterm/aterm/urxvt/ansi terminal, enable
->> 	colour or cursor-positioning, otherwise shut it off."  If this
->> 	seems too much of a one-off to handle, fine, but most things that
->> 	talk fancy to screens are kind enough to allow an opt-out based on
->> 	terminal type. :)
->
-> Git doesn't have any kind of list of terminals, beyond knowing that
-> "dumb" should disable auto-color. It's possible we could expand that if
-> there are known terminals that don't understand ANSI colors. I'm a bit
-> wary of having a laundry list of obscure terminals, though.
->
-> If we built against ncurses or some other terminfo-aware library we
-> could outsource that, but that would be a new dependency. I'm hesitant
-> to do that even as an optional dependency given the bang-for-the-buck
-> (and certainly making it require would be right out).
+> >> Maybe for httpd config we can say that if mpm_prefork isn't loaded, load
+> >> mpm_event and mod_http2.
+> >
+> > That doesn't work. We can say "is mpm_prefork" loaded, and indeed we
+> > already do, in order to load mpm_prefork! That's because the module may
+> > or may not be built-in, and if not, we have to load it (or some mpm
+> > module). See 296f0b3ea9 (t/lib-httpd/apache.conf: configure an MPM
+> > module for apache 2.4, 2013-06-09).
+> >
+> > But we have no way of knowing _which_ modules are available. It may just
+> > be that "event" or "worker" (both of which support mod_http2) are
+> > available close enough to everywhere that we can just guess.
+> >
+> >> And for testing both HTTP/2 and HTTP/1.1 did you mean sharing the same test
+> >> code (with adjustments for each protocol)?
+> >
+> > Yes. I'd literally run the same battery of tests against both protocols
+> > (see my other response to Taylor with a sketched-out example). I'm still
+> > not sure it's entirely worth the effort, though. The underlying
+> > transport should be pretty transparent to Git, with the exception of
+> > things like debugging output.
+> 
+> Maybe I'm missing something, but it seems to me that trying to figure
+> out if we support http v2 or not beforehand is the wrong thing to do in
+> this case. Why don't we simply try to start the server, and fail and
+> skip_all="sorry, no httpv2" if it fails?
+> 
+> Then have 2 test files:
+> 
+> t1234-http-v1.sh
+> t1235-http-v2.sh
 
-I was wondering if Gray Wolf can run screen on the Wyse, and then
-wouldn't git see TERM=screen which is pretty much ANSI if I am not
-mistaken ;-)?
+Sure. I was assuming we'd just have one server config (which _does_
+work), but if we are spinning up two servers anyway for the separate
+scripts, it would be easy enough to customize them. And I do think it
+would make sense to do it in separate scripts.
+
+And this dual-script thing might need to be repeated for others besides
+t5551. I didn't look at which other ones might potentially benefit (or
+if it's diminishing returns as we just add more basically-identical
+tests that spend a bunch of CPU). This is why I say "it might not be
+worth the effort".
+
+> Where the latter includes the former (or is a symlink with a $0 check),
+> or both include a library. Doing it this way also means you'll get a
+> message you notice via "prove", since you won't run all v1 tests in one
+> file, then skip some v2.
+
+This does work oddly with GIT_TEST_HTTPD=Yes, which complains about
+skipping (intentionally; it's how we notice when http setup code
+breaks).  That might be acceptable, though, if the folks setting that
+option (like me, or the linux CI jobs) are likely to have http2 support.
+
+-Peff
