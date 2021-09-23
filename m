@@ -5,55 +5,55 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FBC2C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BCDC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31A0861152
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AA466103D
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240396AbhIWKcr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 06:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47842 "EHLO
+        id S240397AbhIWKcu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 06:32:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240381AbhIWKco (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 06:32:44 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 768D3C061574
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:13 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id w17so15659516wrv.10
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:13 -0700 (PDT)
+        with ESMTP id S240387AbhIWKcp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 06:32:45 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30765C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:14 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id u18so15779241wrg.5
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zNHxA9w4355X0jut1wR1e2qwaNjWWhZi3GApKEGEsA0=;
-        b=C4PzsMCTOlxpR3eroK543mK39lQb20jHmJqF/GcGARtLQTUma3cHiqlyfvUs+ikLx7
-         F5ET5a/FZCe+/DW2KlvuEpre/k4nWcYLk9lZQ/qmG/JiPdknSPVCUI4Hc7vocL7FYMDk
-         HpLkreElRLfE6gFVnPw25axTaQzs4wcHfgB/PbbrOa1RXgaxXytn7hMxavKFH9cZcbIq
-         pjfmzkBM1NItKu+qspk/SFvp03ays9j60hkEadJMr+jZHYdQMJcUDWHpSGZScbbnnyjM
-         McdHVhlCxBB9Ub+lc/RkA4XH8UAl9+LMdTInFIRQ1xJ2BYybxjj1xRCMu4c1ppp70bzv
-         0WfQ==
+        bh=voaLg+G4Wd/QKPy+abvsS65WfNiyJIUOeGiqcJJ8CWQ=;
+        b=Kw9DctdgbVqQ/14Ci+1Oj2UaZfeeMJt1j3ZZWeCogZ83UDVr+VM/pa7ywL2xeGdazD
+         YA4ZcZfRS5g0pTcEXM57aizlgUXipLvyCOQtJ7oolf58WOuX41bo02mz110PJcWoiPBv
+         EeXvs7KDI/VXzWj6d5hJFcDEgWBQqmg5HTGpyeSiZ5L+RV+9oZtNZIdcYbcfvGqqpLKe
+         5VnOqBf6Npy5b2d6ivNLwWYpj/FTWXIx0brAO96SnJSZZHXBPrE6SP/dxdiBcV7FXUrY
+         qzAkgHTJgqoYochXxBNHBlaBuDYrwor82PLnqVRgYvkW0NSI/cJxB8sAPRdVFMZhMQg+
+         7drA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zNHxA9w4355X0jut1wR1e2qwaNjWWhZi3GApKEGEsA0=;
-        b=Q2dLWs07LbwGqxKjGMnsyeR2nyn+qWMMl9JrYe8Z7whe1Msxt7jY9ZYxm6kdySKD5Y
-         u90dcn+++1YsI3rex/2cP9zhgTZT6bwzRFUEtPiW7o2PPjY9/Cl0navGCOadPwdW9Jju
-         +46NLwg41GhcNHDV38Vi/3NUT/7viJwBL22J9LaYglocOBxH04tJwnmTmqyuM10xvGqD
-         Id0Z65SCJrT3/TpE4+PFt+oZ7wSaeLEg3CiziOItP12evBAwx61o3zJK9UgbeNiaUaUW
-         44JyAVrw16RIITUXPxJZ3K9eb1BLXZqNTTxQVyZnTi45nbyGo5omoiumufM4KrBz9sy1
-         w60A==
-X-Gm-Message-State: AOAM532T6y79bexw3HB+P3tbgZagEcctq10q4/6tVW4XxvqoGRMGenM2
-        rUp6gzf6oiFZ9F3hlGhTx4D+FmiMGxBTqw==
-X-Google-Smtp-Source: ABdhPJz4G8rJXArRqZy7wRKzkAKZ9drcZ8wfinsklmlmugKnC81HOWpX9za8uaoJXwfBaWpb/DdeYw==
-X-Received: by 2002:adf:f2c4:: with SMTP id d4mr4287280wrp.434.1632393071749;
-        Thu, 23 Sep 2021 03:31:11 -0700 (PDT)
+        bh=voaLg+G4Wd/QKPy+abvsS65WfNiyJIUOeGiqcJJ8CWQ=;
+        b=a1GTfnNpezkVm5XAuH1g9TQ2iyiVquzd82zbIlpcG3+a71Z5G/DpYryFC+XnsNWfm7
+         IPTKBCAXPfBbjV9y3xkWhuy8cwjN+BzLLEY8kX42eQRAVGvzejKNmOesO2o4yF1wc/ru
+         EPhrCnwPhkGBHq7DpxCxHJkqgpPB+GbEk0oPY4LJY/dr9lEQvExPpF08dlUVBmT7JDCg
+         PP+y7ga2v+U91ZLqwvpt1PmwAymGGu8OHztjoIIaNCG7vkDX8R4VTrubonvqfVSC1P7I
+         4bS8hWjfja/gA3eosDbukpckcT73WSGbXQqJqql3ZoVtDIe0XZiVvOZr8THTfuzktAlT
+         TWWg==
+X-Gm-Message-State: AOAM533Xf299tecu/LUMe/V987Rbw7IKIyHXtsU68XAznjACSwHGG1dj
+        TEkmpYIsWTCw22bpYpJBwa5Nsjhio3ptjw==
+X-Google-Smtp-Source: ABdhPJxsp1K5uwZwScIqnBeGVp2XSftKTDI6iO78d9JzTUxVSKJuQePpq69kkEWK20sbdqMPZkSkvw==
+X-Received: by 2002:a5d:4608:: with SMTP id t8mr4244694wrq.136.1632393072557;
+        Thu, 23 Sep 2021 03:31:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b187sm9027312wmd.33.2021.09.23.03.31.10
+        by smtp.gmail.com with ESMTPSA id b187sm9027312wmd.33.2021.09.23.03.31.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Sep 2021 03:31:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/8] Makefile: stop hardcoding {command,config}-list.h
-Date:   Thu, 23 Sep 2021 12:29:57 +0200
-Message-Id: <patch-2.8-804795771c6-20210923T095326Z-avarab@gmail.com>
+Subject: [PATCH 3/8] Makefile: don't perform "mv $@+ $@" dance for $(GENERATED_H)
+Date:   Thu, 23 Sep 2021 12:29:58 +0200
+Message-Id: <patch-3.8-010701fd784-20210923T095326Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1229.g50d2591fb53
 In-Reply-To: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
@@ -77,90 +77,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change various places that hardcode the names of these two files to
-refer to either $(GENERATED_H), or to a new generated-hdrs
-target. That target is consistent with the *-objs targets I recently
-added in 029bac01a8 (Makefile: add {program,xdiff,test,git,fuzz}-objs
-& objects targets, 2021-02-23).
+Change the "cmd.sh > $@+ && mv $@+ $@" pattern used for generating the
+config-list.h and command-list.h to just "cmd.sh >$@". This was needed
+as a guard to ensure that we don't have an empty file if the script
+failed, but since 7b76d6bf221 (Makefile: add and use the
+".DELETE_ON_ERROR" flag, 2021-06-29) GNU make ensures that doesn't
+happen.
 
-A subsequent commit will add a new generated hook-list.h. By doing
-this refactoring we'll only need to add the new file to the
-GENERATED_H variable, not EXCEPT_HDRS, the vcbuild/README etc.
+There's still a lot of other places in the Makefile where we
+needlessly use this pattern, but I'm just changing these because I'm
+about to add a new $(GENERATED_H) target, let's have them all look and
+act the same way.
 
-Hardcoding command-list.h there seems to have been a case of
-copy/paste programming in 976aaedca0 (msvc: add a Makefile target to
-pre-generate the Visual Studio solution, 2019-07-29). The
-config-list.h was added later in 709df95b78 (help: move
-list_config_help to builtin/help, 2020-04-16).
+Even with ".DELETE_ON_ERROR" there is still a point to using the "mv
+$@+ $@" pattern in some cases, e.g. to ensure that you have a working
+binary during recompilation (see [1] for the start of a long
+discussion about that), but that doesn't apply here. Nothing external
+uses $(GENERATED_H) directly, it's only ever used in the context of
+the Makefile's own dependency (re-)generation.
+
+1. https://lore.kernel.org/git/8735t93h0u.fsf@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile              | 6 ++++--
- compat/vcbuild/README | 2 +-
- config.mak.uname      | 6 +++---
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ Makefile | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e85a8e07d3e..eb5780264a4 100644
+index eb5780264a4..c529f283dcc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -817,6 +817,8 @@ XDIFF_LIB = xdiff/lib.a
+@@ -2238,15 +2238,14 @@ $(BUILT_INS): git$X
+ config-list.h: generate-configlist.sh
  
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
-+.PHONY: generated-hdrs
-+generated-hdrs: $(GENERATED_H)
+ config-list.h: Documentation/*config.txt Documentation/config/*.txt
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
+-		>$@+ && mv $@+ $@
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh >$@
  
- LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
- 	$(FIND) . \
-@@ -2910,7 +2912,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
- .PHONY: sparse $(SP_OBJ)
- sparse: $(SP_OBJ)
+ command-list.h: generate-cmdlist.sh command-list.txt
  
--EXCEPT_HDRS := command-list.h config-list.h unicode-width.h compat/% xdiff/%
-+EXCEPT_HDRS := $(GENERATED_H) unicode-width.h compat/% xdiff/%
- ifndef GCRYPT_SHA256
- 	EXCEPT_HDRS += sha256/gcrypt.h
- endif
-@@ -2933,7 +2935,7 @@ style:
- 	git clang-format --style file --diff --extensions c,h
+ command-list.h: $(wildcard Documentation/git*.txt)
+ 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
+ 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
+-		command-list.txt >$@+ && mv $@+ $@
++		command-list.txt >$@
  
- .PHONY: check
--check: config-list.h command-list.h
-+check: $(GENERATED_H)
- 	@if sparse; \
- 	then \
- 		echo >&2 "Use 'make sparse' instead"; \
-diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-index 51fb083dbbe..29ec1d0f104 100644
---- a/compat/vcbuild/README
-+++ b/compat/vcbuild/README
-@@ -92,7 +92,7 @@ The Steps of Build Git with VS2008
-    the git operations.
- 
- 3. Inside Git's directory run the command:
--       make command-list.h config-list.h
-+       make generated-hdrs
-    to generate the header file needed to compile git.
- 
- 4. Then either build Git with the GNU Make Makefile in the Git projects
-diff --git a/config.mak.uname b/config.mak.uname
-index 76516aaa9a5..8aac06eb094 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -735,9 +735,9 @@ vcxproj:
- 	 echo '</Project>') >git-remote-http/LinkOrCopyRemoteHttp.targets
- 	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
- 
--	# Add command-list.h and config-list.h
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 config-list.h command-list.h
--	git add -f config-list.h command-list.h
-+	# Add generated headers
-+	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(GENERATED_H)
-+	git add -f $(GENERATED_H)
- 
- 	# Add scripts
- 	rm -f perl/perl.mak
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+ 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
 -- 
 2.33.0.1229.g0a86d28df49
 
