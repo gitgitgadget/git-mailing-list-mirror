@@ -2,92 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E15FC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 00:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4E44C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 00:06:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 484B7611C6
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 00:04:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDAB8611CA
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 00:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238593AbhIWAFe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 20:05:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53728 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230414AbhIWAFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 20:05:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 583A1159AA6;
-        Wed, 22 Sep 2021 20:04:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wFg23bXXJWaN
-        VTMnUQdmr3PFWCseaAtIz4fBLBL5h6M=; b=ef12TJfSF/9p9YwCjpEy57YZCIHb
-        pnKMWxc7Sy2NcT64eWskmdDEnKDgunPk00CY3VoXIxMmgBPSHlCdgsZbIdZvSABb
-        vRpEZxJJbsaB6QS5lQNrzoKAD6VWubkLyaGXXBNRIwxuzDK+P2eAObJhATSGetKQ
-        eh2WMtNI/ztFKQM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50AA1159AA5;
-        Wed, 22 Sep 2021 20:04:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BA7AE159AA2;
-        Wed, 22 Sep 2021 20:03:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Makefile: make COMPUTE_HEADER_DEPENDENCIES=auto work
- with DEVOPTS=pedantic
-References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
-        <xmqqmto48ufz.fsf@gitster.g>
-        <YUtiNuUiBU4Xg4gw@coredump.intra.peff.net>
-        <xmqqzgs479d5.fsf@gitster.g>
-        <YUuPYDkxjDIvIfwI@coredump.intra.peff.net>
-Date:   Wed, 22 Sep 2021 17:03:58 -0700
-In-Reply-To: <YUuPYDkxjDIvIfwI@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 22 Sep 2021 16:17:36 -0400")
-Message-ID: <xmqqo88k40pd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238621AbhIWAHe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 20:07:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237101AbhIWAHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 20:07:30 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618A4C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 17:06:00 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id az15so4777770vsb.8
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 17:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IN1q+N+jdOF/yv+9CSpCR8sNJFx2LaTtPFE7ffNRQvo=;
+        b=IKd1TOAUJsGPdfMOf6mRHozrz6LGwPtNKe7hZrQI66Q47VzBFzbWQSJoyPYTjv98TA
+         1vy1YAtHBW1d7+iVD8Ovai8OJiRg8PY1rb0cegKaSk8SXoBFKso9j+VEEEI22kVUEnpz
+         XSlz+2jB4Xa4XVBcNlARlLtgB5gJd4XqiYz7a+i4EAo/Yo5SuDdQA/pY+/wSqo+4oryc
+         S65hACZLRED+KekbiwWesd0rSO+ORmUNh4/CSMMbawDqUZi40zWrF5gPAunF2MZhJaKs
+         p6DacbKu7RliHasl2wJKcfE0qO40KkQy5XDId+mBsf9OhrxOxe0QfzztJvhNeqcKyRHB
+         y09g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IN1q+N+jdOF/yv+9CSpCR8sNJFx2LaTtPFE7ffNRQvo=;
+        b=QQ9TF1Ec8R/U4TyIHIZoT9w0cZCJjTF6HimnoexooJtOz1b+li/cO8a+a3Ac6wH4Z9
+         jGCuKQl8bACebe0X3qkAl0IVgtGK0ff8R73HDLILm2P7XfRSdsnyNRhl8mYRLkNbqyEF
+         7vq/agnw+a0axCVaYt8HB9WWT5I06nMdElneeYK2vz0ue8KdN6N/RR71m2IjNIa99E5b
+         hvu8+ZtwptEwOFWrzTjzY3JDsEv1L6Q6tmHE53G+O4GVlLkOaKBmeHReP63IdXpB4X8L
+         9MSbMqvOITQvdl3xazT2wlEAIP/rtaeDb6ot5G/asj8efMB3CmDwWAKOfDvLHybYc361
+         f6gg==
+X-Gm-Message-State: AOAM530mAveqytxRMHclNrWfz/4dCMZRuNMEPouUOyW82onZtrQhjouR
+        mfxaeEMxl8enG3emuWUstxj3a4WvETkfbCdwGzlNOdaYVG0=
+X-Google-Smtp-Source: ABdhPJwjjWYrQkwQOG1ary1Zbjotw6Eh5Gc5cHi5l/DS6+VOBjGvZ49JVGygTren1f1OqZSGQed3Bf27kPvqYmCiWKQ=
+X-Received: by 2002:a67:d51d:: with SMTP id l29mr2077097vsj.46.1632355559544;
+ Wed, 22 Sep 2021 17:05:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C0DBCEB6-1C01-11EC-A649-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <patch-1.1-6b2e9af5e67-20210922T103749Z-avarab@gmail.com>
+ <cover-v2-0.2-00000000000-20210922T220532Z-avarab@gmail.com> <patch-v2-2.2-6b18bd08894-20210922T220532Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-2.2-6b18bd08894-20210922T220532Z-avarab@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 22 Sep 2021 17:05:48 -0700
+Message-ID: <CAPUEspikbd_YDM1PaEjLZsHoJtdaqv+AqCdg0KdB_xdJ9sUtFg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] Makefile: pass -Wno-pendantic under GENERATE_COMPILATION_DATABASE=yes
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+FWIW a simpler fix was posted[1] earlier, and you were CC; sorry for the mess
 
-> I almost suggested using "git.c" as the dummy file, since we know it
-> must compile anyway. But that probably has other problems (it's more
-> expensive, and if it _does_ have an error, the results may be
-> confusing).
->
-> It's a shame we can't just try to do the _real_ compiles using the
-> auto-dependency stuff, and then fall back if they fail. But I think
-> there's a chicken-and-egg problem there with "make" doing real work, an=
-d
-> figuring out the dependencies to do real work.
+Carlo
 
-Yeah, if compiling any of the real sources is inexpensive enough, I
-would think that would be the happy way to go.  Do we have a trivial
-source that almost never changes?  Perhaps version.c (especially if
-we kick out two helper functions that do not really belong there)?
-
-> ...
-> I'm happy to submit that on top, or even turn the earlier hunk into a
-> patch.  But let's see what =C3=86var has to say to what's been discusse=
-d so
-> far. I don't want to derail his effort.
-
-Yup.
+[1] https://lore.kernel.org/git/20210922185702.4328-1-carenas@gmail.com/
