@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C70E6C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 04:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFA4EC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 04:13:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E35E61040
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 04:12:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE8CD61040
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 04:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbhIWEO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 00:14:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47978 "EHLO
+        id S230062AbhIWEOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 00:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbhIWEO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 00:14:28 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48821C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 21:12:57 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id z14-20020a17090a8b8e00b0019cc29ceef1so6047911pjn.1
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 21:12:57 -0700 (PDT)
+        with ESMTP id S229436AbhIWEO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 00:14:29 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3FBAC061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 21:12:58 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id bj3-20020a17090b088300b0019e6603fe89so2469103pjb.4
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 21:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gmPSL3aR1QbWSjY6v+BZUUnMwpqnOOZJCXIC9xe99DA=;
-        b=khQzrSvmiIHDmFvvs0x+W1KnaghSyRmvkn0oy+Z2KAtugwNXitnR4VZ0Zeu1oSIuhc
-         ibU36U2r59gpAurt468hNm8gPmAqTXMAv62fTYFCQ3F9INiBI+i+HIyp0VY5C1jLkGPZ
-         CujkeIBM5qg8clSjInysYUx7OKsajkXnJT6vW7lbCVeP7L+VyMhA52GgP9VkbHX30/pE
-         iwLI1ZKvs/Hf50Sm3pgtqSZwy0h9dOs/DARABBfa2daJ+AMNNr+CIv3ppP0cEX1wRdJa
-         3PlX0f90uIwmjYQ2nNUM3zLOvMm0wNoDrLDMcpn0cRH/DlwAos/7U2ZxlD96CGMSIf4y
-         hUwQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E7cMUbVlRWdZY/ipgXQjTiNUmrw5GuRKf2RTf4kdukk=;
+        b=DZEZOIpDULHy1CenULIhFNoSj4hfcLjplE6FM1l1MUXVZvXo+21ttJVDYoadYBzWJr
+         u2h/P+9UuWD8ucD3/02dtMoKylOZ6VkJ77AJtp7l49bqzHEEaikTUPPZWh4W1SQIRLAk
+         ruOLloRrDv7Q8WFi3IhqlJeTLgtku3UlJ9aLGFI2O/NLVIIe51ExE/nC3lZGEjANceix
+         Dp9taBBq5pPML4zUKTIbYKtIq6T2zB/0AA6GtoMaoZmk2m/051NBQKvR5T7r+BobgH5f
+         686nxgrEzEE52QruCSdS3AZSAli4mKof8h9MuEdAD+LrU1LkmDuwp84o/vNtqEVuWmdd
+         u7xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gmPSL3aR1QbWSjY6v+BZUUnMwpqnOOZJCXIC9xe99DA=;
-        b=GLHxvE5JKFJ/YVHQGmy1d7V0SWkgFgGjJjizmjNJI2/+WpBW7X7bAqmPCRUjJkKo+1
-         xbSZYius+sdxwoG+ForE5A8NUb7PyFSfZMVeZC7PINcDhyDJp8BwJlHVax5L6c3t/WS2
-         iVkARCtbqFDHX4/4IHm86zUHj9n5ZK4huJj1hWaKifmL5alVM1hUQ1/4CZweHybZkesF
-         nac6jO+MI902Ybc7zsFWlBALSy6aaOF7gWcturRzuvmgQhdxS+ShsOEGyd/lvpDx0tu0
-         5wJ+jGUXiDrySZlz1Xp4/T1nihskUuokcmKIOn/daccVeP22I5TBeeWuXXf4DxgOg/t/
-         3J6w==
-X-Gm-Message-State: AOAM530Gl1FVKVUelJ/Spv1e95Iqup6gN5aMyhnrKPFV9WAEaGlGfNs9
-        o/CWRxih+xxE7K+A68WdLGE=
-X-Google-Smtp-Source: ABdhPJwEkQSwzgoQNqhsDyvjMHV0UtnWYiE3RjXOhtmwnbKOb/U61isz7lWeu2n2PjXctTzoUJfY9g==
-X-Received: by 2002:a17:90a:df0b:: with SMTP id gp11mr2919903pjb.96.1632370376609;
-        Wed, 22 Sep 2021 21:12:56 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E7cMUbVlRWdZY/ipgXQjTiNUmrw5GuRKf2RTf4kdukk=;
+        b=fR56LPQpyNyLGk7WF5PLFaPlyH7Z4HFVKvFqGdwAWFJ3eEduBwJBHKRSquyZm6Pj+A
+         YtSyNfWWQ/PMVmBm5dSr504o5TajCqNly/EZvisPSpwByhG9UW8aVgY5D8fwogZ4ofwc
+         7FHXi6OY2iRSAw4uH9VCeOfM3Rykw17jlLZBiqtceVPCc36CXfUZLkUPpUngBpYFkiKn
+         /DK8foHkDKKZozGXIM/ySc7Mq6MUBXfZAMtjGkC21BDp2CjaHSuU585bRyoPJbuQY2aM
+         oXMnzMMOFKii3XBQZ5REl8TmNwMIhNVBbCKjSv8UDIdoEO8c4n5uNIg5nq8kDtoB0GaL
+         obVA==
+X-Gm-Message-State: AOAM530td3PkqnDKnJN71msN4uukreDZwxoMLDyihp3BPyIGzST76YL1
+        u9ypLolDAU5ugYgwonOU8us=
+X-Google-Smtp-Source: ABdhPJxZBuIGzcZFJBDnmEP4eorqZnKBto89nN5xGTtWfqLvF7QSZnYRflytoZilZRqlsa68CTUyjQ==
+X-Received: by 2002:a17:90b:a42:: with SMTP id gw2mr2930878pjb.26.1632370378422;
+        Wed, 22 Sep 2021 21:12:58 -0700 (PDT)
 Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id u10sm3649870pjf.46.2021.09.22.21.12.54
+        by smtp.gmail.com with ESMTPSA id u10sm3649870pjf.46.2021.09.22.21.12.56
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Sep 2021 21:12:56 -0700 (PDT)
+        Wed, 22 Sep 2021 21:12:58 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -64,10 +64,12 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH v5 0/3] difftool dir-diff symlink bug fix and cleanup patches
-Date:   Wed, 22 Sep 2021 21:12:49 -0700
-Message-Id: <20210923041252.52596-1-davvid@gmail.com>
+Subject: [PATCH v5 1/3] difftool: fix symlink-file writing in dir-diff mode
+Date:   Wed, 22 Sep 2021 21:12:50 -0700
+Message-Id: <20210923041252.52596-2-davvid@gmail.com>
 X-Mailer: git-send-email 2.33.0.720.g59ef144b50
+In-Reply-To: <20210923041252.52596-1-davvid@gmail.com>
+References: <20210923041252.52596-1-davvid@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,33 +77,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a resend of previously submitted patches.
+The difftool dir-diff mode handles symlinks by replacing them with their
+readlink(2) values. This allows diff tools to see changes to symlinks
+as if they were regular text diffs with the old and new path values.
+This is analogous to what "git diff" displays when symlinks change.
 
-Links to previous discussions:
-https://public-inbox.org/git/20210919203832.91207-1-davvid@gmail.com/
-https://public-inbox.org/git/20210920220855.18637-1-davvid@gmail.com/
-https://public-inbox.org/git/CAPig+cTBfP5_czsPiALcF3tODJmNfXvNkTjqVFRbHCS535d-ng@mail.gmail.com/
+The temporary diff directories that are created initially contain
+symlinks because they get checked-out using a temporary index that
+retains the original symlinks as checked-in to the repository.
 
-Patches 2/3 and 3/3 have been rebased against "next" to resolve
-the clash with ab/retire-option-argument.
+A bug was introduced when difftool was rewritten in C that made
+difftool write the readlink(2) contents into the pointed-to file rather
+than the symlink itself. The write was going through the symlink and
+writing to its target rather than writing to the symlink path itself.
 
-Patch 1/3 is maint-worthy and can be applied there without conflicts.
-The commit message now uses the commit message ref format when referring to
-other commits. Its test was adjusted to do "cd xyz" instead of "cd ./xyz".
+Replace symlinks with raw text files by unlinking the symlink path
+before writing the readlink(2) content into them.
 
-Patch 2/3 has the strbuf leak avoidance brought up in the v4 round.
+When 18ec800512 (difftool: handle modified symlinks in dir-diff mode,
+2017-03-15) added handling for modified symlinks this bug got recorded
+in the test suite. The tests included the pointed-to symlink target
+paths. These paths were being reported because difftool was erroneously
+writing to them, but they should have never been reported nor written.
 
-Patch 3/3 is trivial and unchanged.
+Correct the modified-symlinks test cases by removing the target files
+from the expected output.
 
-David Aguilar (3):
-  difftool: fix symlink-file writing in dir-diff mode
-  difftool: create a tmpdir path without repeated slashes
-  difftool: add a missing space to the run_dir_diff() comments
+Add a test to ensure that symlinks are written with the readlink(2)
+values and that the target files contain their original content.
 
- builtin/difftool.c  | 52 +++++++++++++++----------------
- t/t7800-difftool.sh | 75 +++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 99 insertions(+), 28 deletions(-)
+Reported-by: Alan Blotz <work@blotz.org>
+Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ builtin/difftool.c  |  2 ++
+ t/t7800-difftool.sh | 67 +++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 67 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index bb9fe7245a..21e055d13a 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -557,11 +557,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		if (*entry->left) {
+ 			add_path(&ldir, ldir_len, entry->path);
+ 			ensure_leading_directories(ldir.buf);
++			unlink(ldir.buf);
+ 			write_file(ldir.buf, "%s", entry->left);
+ 		}
+ 		if (*entry->right) {
+ 			add_path(&rdir, rdir_len, entry->path);
+ 			ensure_leading_directories(rdir.buf);
++			unlink(rdir.buf);
+ 			write_file(rdir.buf, "%s", entry->right);
+ 		}
+ 	}
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index a173f564bc..528e0dabf0 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -674,7 +674,6 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 	rm c &&
+ 	ln -s d c &&
+ 	cat >expect <<-EOF &&
+-		b
+ 		c
+ 
+ 		c
+@@ -710,7 +709,6 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 	# Deleted symlinks
+ 	rm -f c &&
+ 	cat >expect <<-EOF &&
+-		b
+ 		c
+ 
+ 	EOF
+@@ -723,6 +721,71 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success SYMLINKS 'difftool --dir-diff writes symlinks as raw text' '
++	# Start out on a branch called "branch-init".
++	git init -b branch-init symlink-files &&
++	(
++		cd symlink-files &&
++		# This test ensures that symlinks are written as raw text.
++		# The "cat" tools output link and file contents.
++		git config difftool.cat-left-link.cmd "cat \"\$LOCAL/link\"" &&
++		git config difftool.cat-left-a.cmd "cat \"\$LOCAL/file-a\"" &&
++		git config difftool.cat-right-link.cmd "cat \"\$REMOTE/link\"" &&
++		git config difftool.cat-right-b.cmd "cat \"\$REMOTE/file-b\"" &&
++
++		# Record the empty initial state so that we can come back here
++		# later and not have to consider the any cases where difftool
++		# will create symlinks back into the worktree.
++		test_tick &&
++		git commit --allow-empty -m init &&
++
++		# Create a file called "file-a" with a symlink pointing to it.
++		git switch -c branch-a &&
++		echo a >file-a &&
++		ln -s file-a link &&
++		git add file-a link &&
++		test_tick &&
++		git commit -m link-to-file-a &&
++
++		# Create a file called "file-b" and point the symlink to it.
++		git switch -c branch-b &&
++		echo b >file-b &&
++		rm link &&
++		ln -s file-b link &&
++		git add file-b link &&
++		git rm file-a &&
++		test_tick &&
++		git commit -m link-to-file-b &&
++
++		# Checkout the initial branch so that the --symlinks behavior is
++		# not activated. The two directories should be completely
++		# independent with no symlinks pointing back here.
++		git switch branch-init &&
++
++		# The left link must be "file-a" and "file-a" must contain "a".
++		echo file-a >expect &&
++		git difftool --symlinks --dir-diff --tool cat-left-link \
++			branch-a branch-b >actual &&
++		test_cmp expect actual &&
++
++		echo a >expect &&
++		git difftool --symlinks --dir-diff --tool cat-left-a \
++			branch-a branch-b >actual &&
++		test_cmp expect actual &&
++
++		# The right link must be "file-b" and "file-b" must contain "b".
++		echo file-b >expect &&
++		git difftool --symlinks --dir-diff --tool cat-right-link \
++			branch-a branch-b >actual &&
++		test_cmp expect actual &&
++
++		echo b >expect &&
++		git difftool --symlinks --dir-diff --tool cat-right-b \
++			branch-a branch-b >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'add -N and difftool -d' '
+ 	test_when_finished git reset --hard &&
+ 
 -- 
 2.33.0.720.g59ef144b50
 
