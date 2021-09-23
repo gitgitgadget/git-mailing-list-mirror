@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C96DC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC53AC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 554AC6103D
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9319661152
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 10:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240438AbhIWKc5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 06:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47880 "EHLO
+        id S240415AbhIWKc7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 06:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240407AbhIWKcu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240410AbhIWKcu (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Sep 2021 06:32:50 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F1DC061766
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC465C0613CF
         for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:17 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id w17so15659987wrv.10
+Received: by mail-wr1-x435.google.com with SMTP id t8so15810533wrq.4
         for <git@vger.kernel.org>; Thu, 23 Sep 2021 03:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mlSVT1qHT1kHzD+vGRjkeQg1ql1/kBBjlh4kCrGOKps=;
-        b=KH29NOkIG3GyFGkWIpblm5ks3qQuH1LaVKCuMM/BACcl39PpQPYYVAkgP/JCiOF0gy
-         SICE/ieGSduiGI4zNjBAY6qgazOb7p5fmshCvBt1+Jl9bJ/DRaTSpqqfYqkknKZ50182
-         rrTnFN7khJ0cbRRKHSCFaqUOuVat4yV1ubBuNOVFc46j6ugvBzAZuTjOsza+oGUMgBM6
-         7BXM/YGzgBlKko8yIMutsZwLofvMEGr1VybI755VhGvqFm9KQnl9ML+xzQmMZxEpPler
-         vyzH9INAHEAv5YMFqyoES8INfw0fhFsRGTCTRTyqP8StXZ5Ndm4dwDkbhKj7OpqMrHpb
-         KR9Q==
+        bh=bQWrYLzj2d5GeGu3YE80um1v+yox8KcuyVEL+NubuHw=;
+        b=YsKDAkANmwmOnc+x9hJeeJtA0i1uPgRsY1FYLj5hmPXQsCYySb2OqDDiZyhkvfE19H
+         ypC8yP2KyN8qv5D6c2FwBHeGcEEFIphTDNTCUOvja3SSv3+E27wQ839I0ZZDOYOhr3Qp
+         exzhGMd0NYGFMmpP/dJmvWwHD71URIGMm6u2jiVTHMLupUpIdGP1IRzTZTpSwhjllDcM
+         Avihvpto1jotmokPGjtfcJnvrnKGdo+FkLekh9t6/tKjl05cRg6Xwc6B0uVRpM7Q8AcO
+         Zaugh3BWzF1bim8cxUY1cO7HWRaTCCTPn8qm7arwpz5tmlccv3XIQM4ZNWmXmClkbrON
+         rFHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mlSVT1qHT1kHzD+vGRjkeQg1ql1/kBBjlh4kCrGOKps=;
-        b=R/pwC3/0qBw+8R6UdIFZ7rS7vWCTD1cUlg7nsDSoimVR1uLs4VPD0vikBIw5f7cJGN
-         Os+81bDO7I+CNwRs71mXTX0ZhzU0uRaykkkrz0ueChA2xcb7VmA+hbgmUfoivYDm4rR7
-         UF53A298ra8IiHvTNG2jjyMy205mtya/GFhFyjSPV4qSa9PE4eIHY0AvsHfn/uemoOzv
-         FpXRPSXS4y/peeI+tITwoWx8o1GTebeLcw0JJ/0sAXJSntegDCKLJGw1xgXoRuK1O/rk
-         g7QrDTXFGU6HKhrry8SgKwDyHszNUlWM6D+SukWKgnPrKBOJu7dhiki54z827bXVLKZz
-         QlAQ==
-X-Gm-Message-State: AOAM533kJ7jDKNhYkp6HraNI6uKwnIJRxRNBRYNr8uZt8Zbyw4RUOR2M
-        CyksmeL6EfJw4wWshYiZ2DdKac55IVQTOA==
-X-Google-Smtp-Source: ABdhPJzEqsbXLGcRTqYylihtZTzbeU5Ky3KmpZbgT/Gksd4lwIUavEwBF/gjhZ5UVqtGA7Qi8tD8mQ==
-X-Received: by 2002:a7b:c392:: with SMTP id s18mr3531138wmj.184.1632393075341;
-        Thu, 23 Sep 2021 03:31:15 -0700 (PDT)
+        bh=bQWrYLzj2d5GeGu3YE80um1v+yox8KcuyVEL+NubuHw=;
+        b=5o6EOE9qGrVP2Y1BelORXv4n0+oeFhJOQCtaj7FMG3DilWotg5KITtn5Gem/C/1UMG
+         RANPAi63DhWJjgn054R3oOy5Fm6L7b3Oc9e/e4p6v2+wnZ88b3abaSVuREetRNgdUNNN
+         r5qidF/ZsrYmU6i+XuQ4mSZPSb5ZlgM2cfqt0HRoZz/wvh0Cu2vOyW6CQrl8Oj47GxXQ
+         2yVZ4bfC/+oqKytEN7gNwO6k2s0+2Fsx2BSyPSjfEjLrYj86o0qcbSPbVcIDh6mFj79i
+         bjMSbfbKL8vdb2c7i0NABgAVS31AxbEVEnSDb6qyv+KrLe0nVnbvFX7bXyFoVtqySmxk
+         8xRA==
+X-Gm-Message-State: AOAM533YNST0O0UETvNOPofp8/W8tavfIkeNjDLg8Sa/UR8oiBkYW9rU
+        F8HVrac5Cq4dt2mHP9Hf6ZbIA9Ga3zb3xg==
+X-Google-Smtp-Source: ABdhPJwsMDfTT0RMmoQzs1OrLIRxtedbrF7XR7w8va2ZQdTpQrurL/0XJfLQHlLoDQrRXWdLEr9ynA==
+X-Received: by 2002:a05:600c:4642:: with SMTP id n2mr14941472wmo.39.1632393076237;
+        Thu, 23 Sep 2021 03:31:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b187sm9027312wmd.33.2021.09.23.03.31.14
+        by smtp.gmail.com with ESMTPSA id b187sm9027312wmd.33.2021.09.23.03.31.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 03:31:14 -0700 (PDT)
+        Thu, 23 Sep 2021 03:31:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 6/8] hook.c: add a hook_exists() wrapper and use it in bugreport.c
-Date:   Thu, 23 Sep 2021 12:30:01 +0200
-Message-Id: <patch-6.8-db8893afee6-20210923T095326Z-avarab@gmail.com>
+Subject: [PATCH 7/8] hook.c users: use "hook_exists()" instead of "find_hook()"
+Date:   Thu, 23 Sep 2021 12:30:02 +0200
+Message-Id: <patch-7.8-b61130dee5b-20210923T095326Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1229.g50d2591fb53
 In-Reply-To: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
@@ -77,60 +77,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Use the new hook_exists() function instead of find_hook() where the
+latter was called in boolean contexts. This make subsequent changes in
+a series where we further refactor the hook API clearer, as we won't
+conflate wanting to get the path of the hook with checking for its
+existence.
 
-Add a boolean version of the find_hook() function for those callers
-who are only interested in checking whether the hook exists, not what
-the path to it is.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bugreport.c | 2 +-
- hook.c              | 5 +++++
- hook.h              | 5 +++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ builtin/commit.c       | 2 +-
+ builtin/merge.c        | 2 +-
+ builtin/receive-pack.c | 2 +-
+ sequencer.c            | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index c30a360d695..a02c2540bb1 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -82,7 +82,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5359d961d22..883c16256c8 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1052,7 +1052,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
  	}
  
- 	for (i = 0; i < ARRAY_SIZE(hook); i++)
--		if (find_hook(hook[i]))
-+		if (hook_exists(hook[i]))
- 			strbuf_addf(hook_info, "%s\n", hook[i]);
- }
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && hook_exists("pre-commit")) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/builtin/merge.c b/builtin/merge.c
+index fe664f6a863..956b6259f21 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -849,7 +849,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	 * and write it out as a tree.  We must do this before we invoke
+ 	 * the editor and after we invoke run_status above.
+ 	 */
+-	if (find_hook("pre-merge-commit"))
++	if (hook_exists("pre-merge-commit"))
+ 		discard_cache();
+ 	read_cache_from(index_file);
+ 	strbuf_addbuf(&msg, &merge_msg);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e3895aec622..25cc0c907e1 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1464,7 +1464,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
  
-diff --git a/hook.c b/hook.c
-index ba70b314718..55e1145a4b7 100644
---- a/hook.c
-+++ b/hook.c
-@@ -35,3 +35,8 @@ const char *find_hook(const char *name)
+ 	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
+ 
+-	if (!find_hook(push_to_checkout_hook))
++	if (!hook_exists(push_to_checkout_hook))
+ 		retval = push_to_deploy(sha1, &env, work_tree);
+ 	else
+ 		retval = push_to_checkout(sha1, &env, work_tree);
+diff --git a/sequencer.c b/sequencer.c
+index 8ee6c4ac240..e501945796d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1460,7 +1460,7 @@ static int try_to_commit(struct repository *r,
+ 		}
  	}
- 	return path.buf;
- }
-+
-+int hook_exists(const char *name)
-+{
-+	return !!find_hook(name);
-+}
-diff --git a/hook.h b/hook.h
-index 68624f16059..6aa36fc7ff9 100644
---- a/hook.h
-+++ b/hook.h
-@@ -8,4 +8,9 @@
-  */
- const char *find_hook(const char *name);
  
-+/**
-+ * A boolean version of find_hook()
-+ */
-+int hook_exists(const char *hookname);
-+
- #endif
+-	if (find_hook("prepare-commit-msg")) {
++	if (hook_exists("prepare-commit-msg")) {
+ 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+ 		if (res)
+ 			goto out;
 -- 
 2.33.0.1229.g0a86d28df49
 
