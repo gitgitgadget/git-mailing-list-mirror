@@ -2,43 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D22B9C433F5
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 18:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20948C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 18:05:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD12B611B0
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 18:03:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBA6A611B0
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 18:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242640AbhIWSF3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 14:05:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64319 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238811AbhIWSF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 14:05:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03B71D6E57;
-        Thu, 23 Sep 2021 14:03:55 -0400 (EDT)
+        id S242621AbhIWSGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 14:06:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59469 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238811AbhIWSGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 14:06:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3458E15F71F;
+        Thu, 23 Sep 2021 14:05:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jMQMNyxAykjo
-        gmRarYdJuEsINddccqku4jn/iCnv3mI=; b=lzB6+SW0ijXZYCZDzJdOOWTDuSMM
-        HK6Udd2v5mkB4bBVrvLnJx4jx/EG4JGyuTVEibO14zk3gyEFXFjq3QFy7viJBsM4
-        JO8bCDCowdWmRI3Lxe98PGowHgvnZZRuiTa8TilQiwiRdjNESV3xp2lS2KfM/Tf9
-        WJb/UHLqrQfdb2w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE4E8D6E56;
-        Thu, 23 Sep 2021 14:03:54 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=mlWeSc8RGCs8Rv2lSGsQnShCD
+        eKCyzydBLGG479QcXY=; b=VteU1RIuS9HuzlVi8khZuRBIWnWwS8hGwSXtDLwIC
+        MrXReQWnSYVPu0P9iuBp3gA0cz3PQpccy7LIvo4drcBQTyYkiG16poJBh2mTlBbu
+        GcZutyXtUm1FzIqe5zhYjADB0R0vKPDrKfFIXJAuEnxXmayi3K314ufdRhpyTr4H
+        lk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D2CD15F71E;
+        Thu, 23 Sep 2021 14:05:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4DAFBD6E55;
-        Thu, 23 Sep 2021 14:03:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8CFB915F71D;
+        Thu, 23 Sep 2021 14:05:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
@@ -49,16 +48,12 @@ Subject: Re: [PATCH v3 6/9] help: simplify by moving to OPT_CMDMODE()
 References: <cover-v2-0.5-00000000000-20210910T112545Z-avarab@gmail.com>
         <cover-v3-0.9-00000000000-20210921T223223Z-avarab@gmail.com>
         <patch-v3-6.9-b52269eeab9-20210921T223223Z-avarab@gmail.com>
-Date:   Thu, 23 Sep 2021 11:03:53 -0700
-In-Reply-To: <patch-v3-6.9-b52269eeab9-20210921T223223Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Sep
- 2021 00:40:36
-        +0200")
-Message-ID: <xmqqbl4j1852.fsf@gitster.g>
+Date:   Thu, 23 Sep 2021 11:05:17 -0700
+Message-ID: <xmqq4kab182q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9D6CA5EE-1C98-11EC-BC0A-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CFA4A494-1C98-11EC-B813-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,61 +61,41 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> +static void no_extra_argc(int argc)
-> +{
-> +	if (argc)
-> +		usage_msg_opt(_("this option doesn't take any other arguments"),
-> +			      builtin_help_usage, builtin_help_options);
-> +}
+> As preceding commits have incrementally established all of the --all,
+> --guides, --config and hidden --config-for-completion options are
+> mutually exclusive. So let's use OPT_CMDMODE() to parse the
+> command-line instead, and take advantage of its conflicting options
+> detection.
 
-The mention of "this option" smells like a loss of information.  I
-might expect the --verbose option might take the verbosity level and
-ask for
+Sounds quite logical.
 
-    $ git help --guides --verbose 99
+> I think this makes the usage information that we emit slightly worse,
+> e.g. before we'd emit:
+>
+>     $ git help --all --config
+>     fatal: --config and --all cannot be combined
+>
+>     usage: git help [-a|--all] [--[no-]verbose]]
+>              [[-i|--info] [-m|--man] [-w|--web]] [<command>]
+>        or: git help [-g|--guides]
+>        or: git help [-c|--config]
+>     [...]
+>     $
+>
+> And now:
+>
+>     $ git help --all --config
+>     error: option `config' is incompatible with --all
+>     $
 
-and the above message may give me a false impression that "this
-option" refers to "--verbose" that does not take any value.
+We often hear that our error messages for command line options are
+unhelpful by being too broad, don't we?  I think the new one would
+be much better by not scrolling away the most important part.  Those
+who want to know about options other than --all and --config can
+issue "git help -h" after seeing that single line error, but not
+everybody has to do so.
 
-As long as --all/--guides/--config are understood as "special" and
-different from other options, this may be OK, especially given that
-the user will get an error message much earlier if you give two or
-more of them at the same time, so such an "which option do you
-mean?" confusion may not happen very often.
+> But improving that is a general topic for parse-options.c improvement,
+> i.e. we should probably emit the full usage in that case.
 
->  int cmd_help(int argc, const char **argv, const char *prefix)
->  {
->  	int nongit;
-> @@ -554,28 +570,8 @@ int cmd_help(int argc, const char **argv, const ch=
-ar *prefix)
->  			builtin_help_usage, 0);
->  	parsed_help_format =3D help_format;
-> =20
-> +	switch (cmd_mode) {
-> +	case HELP_ACTION_ALL:
->  		git_config(git_help_config, NULL);
->  		if (verbose) {
->  			setup_pager();
-> @@ -585,25 +581,20 @@ int cmd_help(int argc, const char **argv, const c=
-har *prefix)
->  		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
->  		load_command_list("git-", &main_cmds, &other_cmds);
->  		list_commands(colopts, &main_cmds, &other_cmds);
-> +		printf("%s\n", _(git_more_info_string));
-> +		break;
-> +	case HELP_ACTION_GUIDES:
-> +		no_extra_argc(argc);
->  		list_guides_help();
->  		printf("%s\n", _(git_more_info_string));
->  		return 0;
-> +	case HELP_ACTION_CONFIG_FOR_COMPLETION:
-> +		list_config_help(0);
-> +		return 0;
-> +	case HELP_ACTION_CONFIG:
-> +		no_extra_argc(argc);
->  		setup_pager();
-> +		list_config_help(1);
->  		printf("\n%s\n", _("'git help config' for more information"));
->  		return 0;
->  	}
-
+Yes, absolutely.
