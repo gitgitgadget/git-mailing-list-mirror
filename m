@@ -2,61 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7AC5C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 13:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D32C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 13:43:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8391F61216
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 13:39:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFC6260F24
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 13:43:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241229AbhIWNkl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 09:40:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36148 "EHLO
+        id S241314AbhIWNoc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 09:44:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232633AbhIWNkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 09:40:40 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6BFEC061574
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 06:39:08 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id w17so6148675qta.9
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 06:39:08 -0700 (PDT)
+        with ESMTP id S231974AbhIWNob (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 09:44:31 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D33DC061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 06:42:59 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id u22so9705170oie.5
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 06:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UP5fHllOgKrcFEb2YYGeblKhuMGyxkbfPXSDRr6vMUk=;
-        b=YmsB7h8MNPbzcNDxNli9zJpMfPhXkj+j4Jre0wPMjmcOAjR9Y3vrUGRFzIdSzClaql
-         Qc1BNu7xym/0ofau7EOwOhOUlrS8LT6rtuUw/K1c/efYvuP0dQt2FqZDACwPc4S1Fv5/
-         RrHT4EhBlvBpPFJ7DZdmg+QeLqS2zKNPRfsDMBM4Tk/YvfSQnAD+Vw2Q5SgJqtBgOQKH
-         LmxoxSIV+apUBYFwdRBXQ18z7cWjhsck0Ay6y8IwWWj57C5TyNXWBuir05iKDPcXRnsc
-         AmNYUeaIGWZbw7/47Y1jiOkt5EnFSm9g8BS/i1C4oyy90tNYTtDaJxWyePwiZAwC+VfD
-         YrRQ==
+        bh=O/KQ8YHueVW6xSOKp3yv24P03d+ADDcJB7YEQmb9mmg=;
+        b=iVpZpKb88VFNkhKxg0lVWRppiqqsX1kPb1q6xFU8VhxjAGkOCex9LT99tjHT1+RgcD
+         m+HjBkXwvxS8zdWdy5056Jvn7Xxg3bpvzh/mJOKLzXpTB9x/HBz0+yuJkDktch4VCxsH
+         GvGJqVbBMJjOITChCN19Zo0HDKj+g6A2BiRzgGS5P0/xZMq3n7zhgPFdO35ZSD09Nwdf
+         BEYN0h/S1llUEWr0+SsOx4Es8V2WvPQ7u68RogWL0f5PE8YYxMMe2aCTzux7laWZljGu
+         ieV8WMKEC9ZoT7RA9S30IEPBojO4LR3SyEgO6mVYNDfPzmcuavwPXtRhBROH0ejqfrd8
+         lXxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=UP5fHllOgKrcFEb2YYGeblKhuMGyxkbfPXSDRr6vMUk=;
-        b=ORFWW2+T9/2/b41UhcxUDinSLRFeTMJuye1f4vJg0EhvgLlyktf05sx9IwSyzDpd1E
-         lFCCt9dlaE8OOCb/y7OrDAdX5Lt903vy25l7q9b728e8ZtI32CltBvmVWwplEJt8q1yY
-         YfGsiI3/sthodZA/VjdTnrPStUOYuSSkYNQzbeoTkRSyA+leGqKOiRcY5aXV+kODgjc0
-         hdVqf3kq4Hn+LsUPjaSacFrCvfNqWUtJ/CQ05xxHHS7FV1ZkDYTMInlHwVspSRbrYkH7
-         IFgFW2NzWxxzQhmcHJuPs0wtIl4Q4S8F7Nowz14+gAgu2tv+glJHuPvsU4511MxlelhB
-         e/BA==
-X-Gm-Message-State: AOAM530Ph21jbFf83zALvMxEir13tWqYeXcAXi8NDAY7XUqgm0nkmWML
-        hVYQ7HL3hKM9iI9hmr1LJQg=
-X-Google-Smtp-Source: ABdhPJwFekQAdWJXaSRFZET9PqBFGmH+fmhoqOxLQD9Mmk93vvJeVUG9pUA57lS/y+NnVG5E6cgJ7g==
-X-Received: by 2002:ac8:720f:: with SMTP id a15mr4845418qtp.84.1632404348020;
-        Thu, 23 Sep 2021 06:39:08 -0700 (PDT)
+        bh=O/KQ8YHueVW6xSOKp3yv24P03d+ADDcJB7YEQmb9mmg=;
+        b=EX0jyZiU9qk6pNPQNHqdIHS0XhG/rFXxFRfgcCU3QIU1iTgSG992mMi+ug5K+9OXpH
+         e94HD3a/vTE0bexixQEon1qUa25zAQLeIF7OiKQXxfJ8vi3ySIX66Xro+aoV8EidS8YN
+         IT6Cs7xFlXuDPoMzbJ56qaCp1YgHJc8FkJmEWk1yr91avau7OEBcMCe6rSIjO1plwwtE
+         POpBbLsqyJyRBcYzVkCfFwiJ9Esy7QTxl7tgmLQKNHMMdQGsena1CE7bsLet7ylvE/pj
+         yR00rFkWhFJkRZmfgkUQlCovKyVZQEpRBC8q0vMy0sWEsmIvAD9jzpJ93v7pAHllsb2U
+         JPKw==
+X-Gm-Message-State: AOAM533yWG4mZ9SdFeY4ry14UAC+/dxoVumfPA4UT57stdUJHS5NjuSR
+        1a9GepMXav7JD2HC9SAnJVBOTEziael3Aw==
+X-Google-Smtp-Source: ABdhPJzV8WQP3iWbEJZkRdgzm6KlkmwbKC+xgKzW5mAHKpV4HdWXYWgeV7WU41jxOCXCc16j7tv2lA==
+X-Received: by 2002:a05:6808:11c5:: with SMTP id p5mr3709275oiv.94.1632404578620;
+        Thu, 23 Sep 2021 06:42:58 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:b4dd:ad18:da7f:7cfe? ([2600:1700:e72:80a0:b4dd:ad18:da7f:7cfe])
-        by smtp.gmail.com with ESMTPSA id x125sm4199735qkd.8.2021.09.23.06.39.07
+        by smtp.gmail.com with ESMTPSA id t6sm1291052ots.55.2021.09.23.06.42.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Sep 2021 06:39:07 -0700 (PDT)
+        Thu, 23 Sep 2021 06:42:58 -0700 (PDT)
 Subject: Re: [PATCH v3 03/14] dir: extract directory-matching logic
+From:   Derrick Stolee <stolee@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
@@ -67,14 +69,13 @@ Cc:     git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
 References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
  <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
  <b1f6468f9cdb7d16f6317c71b21f4459af158e87.1632159937.git.gitgitgadget@gmail.com>
- <xmqqwnn8430s.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <36475af0-1021-f59d-cb33-b3b402c13767@gmail.com>
-Date:   Thu, 23 Sep 2021 09:39:06 -0400
+ <xmqqwnn8430s.fsf@gitster.g> <36475af0-1021-f59d-cb33-b3b402c13767@gmail.com>
+Message-ID: <a99a58ee-c3fe-501b-3116-8b54eaed0e53@gmail.com>
+Date:   Thu, 23 Sep 2021 09:42:56 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqwnn8430s.fsf@gitster.g>
+In-Reply-To: <36475af0-1021-f59d-cb33-b3b402c13767@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -82,33 +83,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/22/2021 7:13 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 9/23/2021 9:39 AM, Derrick Stolee wrote:
+> On 9/22/2021 7:13 PM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> +static int path_matches_dir_pattern(const char *pathname,
+>>> +				    int pathlen,
+>>> +				    int *dtype,
+>>> +				    struct path_pattern *pattern,
+>>> +				    struct index_state *istate)
+>>> +{
+>>> +	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+>>> +	if (*dtype != DT_DIR)
+>>> +		return 0;
+>>> +
+>>> +	return 1;
+>>> +}
+>>
+>> The function name and parameter list have "pattern" but as far as I
+>> can see any "matches" or "pattern" comes into the picture.  The code
+>> in the caller after calling this function may be doing pattern
+>> matching, but not this one.
+>>
+>> What this helper is doing is "signal if the pathname in the working
+>> tree is supposed to be a directory with the return value, while
+>> filling *dtype with what kind of thing it is."
+>>
+>> path_must_be_dir_in_working_tree() or something, perhaps?
 > 
->> +static int path_matches_dir_pattern(const char *pathname,
->> +				    int pathlen,
->> +				    int *dtype,
->> +				    struct path_pattern *pattern,
->> +				    struct index_state *istate)
->> +{
->> +	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
->> +	if (*dtype != DT_DIR)
->> +		return 0;
->> +
->> +	return 1;
->> +}
-> 
-> The function name and parameter list have "pattern" but as far as I
-> can see any "matches" or "pattern" comes into the picture.  The code
-> in the caller after calling this function may be doing pattern
-> matching, but not this one.
-> 
-> What this helper is doing is "signal if the pathname in the working
-> tree is supposed to be a directory with the return value, while
-> filling *dtype with what kind of thing it is."
-> 
-> path_must_be_dir_in_working_tree() or something, perhaps?
+> Yes, a rename would be prudent here. Thanks.
 
-Yes, a rename would be prudent here. Thanks.
+Of course, when I go to amend the commit, the commit message says
 
+	We will expand the path_matches_dir_pattern() method in a following
+	change.
+
+which means that more will follow that will actually care about the
+pattern and matching as a directory.
+
+After looking at the extension in the next patch, do you still think a
+rename is necessary? Specifically, this diff hunk:
+
+diff --git a/dir.c b/dir.c
+index 652135df896..9ea6cfe61cb 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1305,10 +1305,35 @@ int match_pathname(const char *pathname, int pathlen,
+ 
+ static int path_matches_dir_pattern(const char *pathname,
+ 				    int pathlen,
++				    struct strbuf **path_parent,
+ 				    int *dtype,
+ 				    struct path_pattern *pattern,
+ 				    struct index_state *istate)
+ {
++	if (!*path_parent) {
++		char *slash;
++		CALLOC_ARRAY(*path_parent, 1);
++		strbuf_add(*path_parent, pathname, pathlen);
++		slash = find_last_dir_sep((*path_parent)->buf);
++
++		if (slash)
++			strbuf_setlen(*path_parent, slash - (*path_parent)->buf);
++		else
++			strbuf_setlen(*path_parent, 0);
++	}
++
++	/*
++	 * If the parent directory matches the pattern, then we do not
++	 * need to check for dtype.
++	 */
++	if ((*path_parent)->len &&
++	    match_pathname((*path_parent)->buf, (*path_parent)->len,
++			   pattern->base,
++			   pattern->baselen ? pattern->baselen - 1 : 0,
++			   pattern->pattern, pattern->nowildcardlen,
++			   pattern->patternlen, pattern->flags))
++		return 1;
++
+ 	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+ 	if (*dtype != DT_DIR)
+ 		return 0;
+
+Thanks,
 -Stolee
