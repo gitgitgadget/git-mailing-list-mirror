@@ -4,104 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88D4DC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C890C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:53:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72431601FF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:46:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF19161241
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 21:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243361AbhIWVsG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 17:48:06 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51780 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243343AbhIWVsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 17:48:05 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E241160C20;
-        Thu, 23 Sep 2021 17:46:33 -0400 (EDT)
+        id S243405AbhIWVyb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 17:54:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50555 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243407AbhIWVy2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 17:54:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64F93D8970;
+        Thu, 23 Sep 2021 17:52:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hc62GMCHcqj/NdEzb4p2CBmhHL5WBHuX0A2ks1
-        Yr1yA=; b=m/UaS9SYDcPB8PxP7APlpmncQ9aoXhM2sMqoSZ92KqylH+/CZThI4M
-        DRAf/THhHywfNeaGIlRkxIVqzoVE/QQmIoyzisuRJ2OCGmuKbzcM+9xnml6OtE2l
-        Yh1CoMD2tVZUY3Mkg8pJDPKHeFtRrjZiD9rkfZ2yBNNkB/IEeaSgw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 965B4160C1F;
-        Thu, 23 Sep 2021 17:46:33 -0400 (EDT)
+        :content-type; s=sasl; bh=NFM7oSr9OSHokYH9G59gHm1KQKDDRcnRX7x1aF
+        WU2pM=; b=HaDsf5RG/yOy39eA/tj79oo1opz1iUXULG7yAkyMHLU3MqxNQYzpzf
+        Do72Uu8xGj7/G8l90e/fPiNZtGNXWqqkdMgL2h2gHWPYddeVuiBDPR7sXqloOo5Q
+        PUKxKgKF6j0he0oHM4nZz+AnbEG7hp4EIc1Gz7QAXClC+lUcUwXcY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D1DBD896F;
+        Thu, 23 Sep 2021 17:52:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 07259160C1E;
-        Thu, 23 Sep 2021 17:46:31 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C3507D896E;
+        Thu, 23 Sep 2021 17:52:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Alan Blotz <work@blotz.org>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 1/3] difftool: fix symlink-file writing in dir-diff mode
-References: <20210923041252.52596-1-davvid@gmail.com>
-        <20210923041252.52596-2-davvid@gmail.com>
-Date:   Thu, 23 Sep 2021 14:46:29 -0700
-In-Reply-To: <20210923041252.52596-2-davvid@gmail.com> (David Aguilar's
-        message of "Wed, 22 Sep 2021 21:12:50 -0700")
-Message-ID: <xmqqv92rx8wa.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Andrzej Hunt <andrzej@ahunt.org>
+Subject: Re: [PATCH] connect: also update offset for features without values
+References: <pull.1091.git.git.1631970872884.gitgitgadget@gmail.com>
+        <xmqq4kabyoo3.fsf@gitster.g>
+        <YUzzwCwlR9AwSeOD@coredump.intra.peff.net>
+Date:   Thu, 23 Sep 2021 14:52:53 -0700
+In-Reply-To: <YUzzwCwlR9AwSeOD@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 23 Sep 2021 17:38:08 -0400")
+Message-ID: <xmqqr1dfx8lm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B6A3EDBE-1CB7-11EC-B5C2-98D80D944F46-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 9B630FC0-1CB8-11EC-982B-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index bb9fe7245a..21e055d13a 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -557,11 +557,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->  		if (*entry->left) {
->  			add_path(&ldir, ldir_len, entry->path);
->  			ensure_leading_directories(ldir.buf);
-> +			unlink(ldir.buf);
->  			write_file(ldir.buf, "%s", entry->left);
->  		}
->  		if (*entry->right) {
->  			add_path(&rdir, rdir_len, entry->path);
->  			ensure_leading_directories(rdir.buf);
-> +			unlink(rdir.buf);
->  			write_file(rdir.buf, "%s", entry->right);
->  		}
->  	}
+> I think the problem is that our fake upload-pack exits immediately, so
+> ls-remote gets SIGPIPE. In a v0 conversation, ls-remote expects to say
+> "0000" to indicate that it's not interested in fetching anything (in v2,
+> it doesn't bother, since fetching would be a separate request that it
+> just declines to make).
 
-Curiously, this pattern repeats twice in the vicinity of the code.
-We cannot see it because it is out of pre-context, but the above is
-a body of a loop that iterates over "symlinks2" hashmap.  There is
-another identical loop that iterates over "submodules", and we are
-not protecting ourselves from following a stray/leftover symbolic
-link in the loop.
+Ah, Makes sense---the usual SIGPIPE problem ;-)
 
-I wonder if we should do the same to be defensive?  I also wondered
-if write_file() should be the one that may want to be doing the
-unlink(), but I ran out of time before I finished reading all the
-callers to see if that is even a correct thing to do (meaning: some
-caller may want to truly overwrite an existing file, and follow
-symlinks if there already is, and I didn't audit all callers to see
-if there is no such caller).
+> This seems to fix it:
+>
+> diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
+> index 34538cebf0..0983c2b507 100755
+> --- a/t/t5704-protocol-violations.sh
+> +++ b/t/t5704-protocol-violations.sh
+> @@ -40,7 +40,7 @@ test_expect_success 'bogus symref in v0 capabilities' '
+>  			test-tool pkt-line pack-raw-stdin &&
+>  		printf "0000"
+>  	} >input &&
+> -	git ls-remote --upload-pack="cat input ;:" . >actual &&
+> +	git ls-remote --upload-pack="cat input; read junk;:" . >actual &&
+>  	printf "%s\tHEAD\n" "$oid" >expect &&
+>  	test_cmp expect actual
+>  '
 
-The two identical looking loops also look like an accident waiting
-to happen---a patch like this that wants to touch only one of them
-would risk application to the other, wrong, loop if the patch gets
-old enough and patch offset grows larger ;-).
+Yup.  In the original thread there was some further back-and-forth
+about further improving the test, if I recall correctly; has the
+issue been settled there, or is everybody happy with the above
+version?
 
 Thanks.
-
