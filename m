@@ -2,114 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10574C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 665FBC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:20:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D884560F0F
-	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:18:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42B406103C
+	for <git@archiver.kernel.org>; Thu, 23 Sep 2021 02:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238884AbhIWCTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Sep 2021 22:19:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
+        id S238903AbhIWCVd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Sep 2021 22:21:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238859AbhIWCTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Sep 2021 22:19:40 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60857C061574
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:18:09 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id e82so6012136iof.5
-        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:18:09 -0700 (PDT)
+        with ESMTP id S238859AbhIWCVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Sep 2021 22:21:32 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFDC0C061574
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:20:01 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g8so17555125edt.7
+        for <git@vger.kernel.org>; Wed, 22 Sep 2021 19:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iTROrfD6KVbO/qKzYer9U7Z28M7Gt/lZ64WAltwbZRs=;
-        b=glxemuRXJ9FUAArbBOTw8f168FBSLtPs1nSFsj5jh0Kkmaa/pYn2xsJKcmYqKEcgrN
-         IDKnVyCWudWJRVfISSiluBfZQFHL4SmkYAPEXeGr2VDx3EqXDS/hiJKGgmV2DRhiJt6S
-         VtFSTwexQXuuMwuxB+Cqudhlf/uHNhapVZJ36tW7OZOoj/1J42Ao8W0D+iPuE520UpFw
-         h7U/QCBhtqmFhtSTCQAMQfnPb6+t224+6lxnbcViiJaq1iH8PALSDzL1lajpyCZcGOol
-         vcAKokfriRNzqNJy/USnnDpcIoPha2aDKPNcKZwj3egHEFUdj6ibW/rdqXzQ2xed3hGA
-         RqfQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=19+byU8eMFvUT9bPfRZTSLKamz6yLgI7AgQnpzqhtbs=;
+        b=dYRz/8Ju5Ck2St1Uzmsq+kNXx5ioTa+iaiMN3qWz/Kj1bnnWBIUXbHEYDDAUWo2g1K
+         qL6KDnW7eB2x8jfN2LQnEGG83AXCGILig6KMr5IRQEIfbez9LftOohOVrMr6JPWKJpGN
+         LQmjQyGs5N9oSS54DclhNxz3H9zXCj/RucASLBbYk6Ok/KQLUs1Ym2u9FLU37IBEK3zF
+         erLmXOMADQ9QlpeNBb3OJAiZv8wi66/oqXIBxvFJXWNUPheVRnctO3LGJbjC4Js20c7I
+         TNRV3wsq0ADgMudapx3b7/cdo2G5QdmQeicLE07yU1JlgSoGxHkIpjFflC7oTcEYKBAQ
+         fYZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iTROrfD6KVbO/qKzYer9U7Z28M7Gt/lZ64WAltwbZRs=;
-        b=5JooJsaxlNkhnelxcixUC4cehqOI4iy9hLB49fJ/taBaCvcDXnB6ZCyR2OWvGtbdbp
-         z2Cp8vNpi9G5fzG/QJZwBLmIu7wokNPIq1qbkO14sjbQYZ4IZ2B3u6NyiWdijC47KaP9
-         TDOMFRBGfoJL0WW8zdrJaoWBKq7EsJzmsM8pji6iM1MhsjkG5522WwumGyvWuWh3RBiy
-         Fb7lDVjN+efO23pnyjyd8HX+BeaCbVstBwmMm18e/9LyjrUtcFKolBxVTLFCF0F5QsSD
-         VDIu4WswpC7oFHaXBmqN15OQijSlp70GY/OHCtpdCsY1athQMfpHgeb5fGFU1bRB6H9W
-         TPOA==
-X-Gm-Message-State: AOAM531P/xW1fNTxF9eYqA+8/vIxWsvQzufPnuW3HvwOppe/6+4ckFF1
-        hO7EmRWZcTTvlk4ntqWqr/Dynw==
-X-Google-Smtp-Source: ABdhPJyRIPHSF0c05DxeHeuDrI4DeUKCjqUoKV5DcY5caGgeP0j/pFDll+PJxPhhARgUd6i6q9mcUA==
-X-Received: by 2002:a02:cd17:: with SMTP id g23mr1924572jaq.29.1632363488570;
-        Wed, 22 Sep 2021 19:18:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h18sm1803780ilq.40.2021.09.22.19.18.08
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=19+byU8eMFvUT9bPfRZTSLKamz6yLgI7AgQnpzqhtbs=;
+        b=4FwYq/FtH/pQ6+AYEv+P/2SnvWQe1tMUwUVqbBVKKaU6nGWopRAWTTe3Ihy5O3uuDC
+         ej8wER4Es0kbclwhq5Z6rQW3mzduWJ190DgT6Gz3ECkzh6vZ+3UUb704KiXoXFf2yOzc
+         VttKdEe8yNnL3XWeYcRu4YJQi+hiwHGqNjoPFm5kAAKgoyqhok2iubmFgPy5zJIOYJXV
+         bN4nZ6rKdtvJ9w0ljb0XVYujORtyBo5F2vJXZbS8C0nFYyuPlVhTYdDvmk7KN5x0YNTS
+         UvRJvPyLvcMLc2GGjNgBD0vNtQvlIETJA7KnF7/DWbqdKVjU+Wn2mVGEzKw8lUj8SKXj
+         1meA==
+X-Gm-Message-State: AOAM533hTv5wfMKg/F3Ph98LIyiEnJ8wKIUXPTjFAK9LwqWALFesFIh6
+        qYrrCI7geZ4YuDIpcpvIV/4=
+X-Google-Smtp-Source: ABdhPJw52NKZSlS19HMi17lLR42sqbDzEaDgr1n1ZL61OF8u3Q32usenbgziOo+hteYrJsmHw4hFsA==
+X-Received: by 2002:a05:6402:358a:: with SMTP id y10mr2732272edc.238.1632363600245;
+        Wed, 22 Sep 2021 19:20:00 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dh16sm2276109edb.63.2021.09.22.19.19.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 19:18:08 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 22:18:07 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     me@ttaylorr.com, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH v2 3/8] midx: preliminary support for `--refs-snapshot`
-Message-ID: <YUvj33QX5fvjNoiJ@nand.local>
-References: <42f1ae9edeb55d8e1b0c8f2c3110e9c8326a5fc1.1631730270.git.me@ttaylorr.com>
- <20210922230012.2608849-1-jonathantanmy@google.com>
+        Wed, 22 Sep 2021 19:19:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH 0/3] Makefile: make "sparse" and "hdr-check" non-.PHONY
+Date:   Thu, 23 Sep 2021 04:17:16 +0200
+References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
+ <YUqQzn5vFDpbF5dM@coredump.intra.peff.net>
+ <c13b050c-abb9-c669-b92c-930f2b43ce10@ramsayjones.plus.com>
+ <YUttpgkU6eCOxMj/@coredump.intra.peff.net>
+ <82c3d9fc-32ff-c38a-cb44-873af1fb83d1@ramsayjones.plus.com>
+ <xmqqsfxw42c1.fsf@gitster.g> <87pmt05bww.fsf@evledraar.gmail.com>
+ <xmqqtuic2igl.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqtuic2igl.fsf@gitster.g>
+Message-ID: <878rzo58z4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210922230012.2608849-1-jonathantanmy@google.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 22, 2021 at 04:00:12PM -0700, Jonathan Tan wrote:
-> > This approach will cause a problem when multi-pack bitmaps are able to
-> > be generated from `git repack`, since the reference tips can change
-> > during the repack. Even though we ignore commits that don't exist in
-> > the MIDX (when doing a scan of the ref tips), it's possible that a
-> > commit in the MIDX reaches something that isn't.
-> >
-> > This can happen when a multi-pack index contains some pack which refers
-> > to loose objects (which by definition aren't included in the multi-pack
-> > index).
-> >
-> > By taking a snapshot of the references before we start repacking, we can
-> > close that race window.
+
+On Wed, Sep 22 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> I can understand why we want the refs to remain the same both for the
-> MIDX generation and the MIDX bitmap generation (one reason that comes to
-> mind is how we select the commits for which to generate bitmaps), but I
-> don't understand what referring to loose objects has to do with it. I
-> think that using the same set of refs for MIDX generation and bitmap
-> generation is a good enough reason to do this, and we don't need to
-> mention loose objects.
+>> I've got some WIP efforts in other areas to do that for some other
+>> rules.
+>>
+>> The problem is that you need to "mkdir .shrapnel" to create a
+>> ".shrapnel/revision.sp". So you need the ".shrapnel/revision.sp" to
+>> depend on the ".shrapnel".
+>>
+>> Except you'll find that the na=C3=AFve implementation of that fails, sin=
+ce
+>> any file you create will bump the mtime of the containing directory, so
+>> you'll keep re-making ".shrapnel/revision.sp" because ".shrapnel"
+>> changed, because ".shrapnel/revision.sp" changed...
+>
+> We depend on GNU make anyway.  Isn't its "order-only-prerequisites"
+> feature what you exactly want to use for the above?
 
-The point there is that a pack which contains objects that are ancestors
-of loose objects can show up at any time, including just before we
-select which packs to go into a MIDX.
+It looks like it, and that I should probably take more time one of these
+days to read the GNU make manual through.
 
-This is particularly common at GitHub, where all of our test-merges and
-objects created via the web interface are written loose. So we could
-compute a test merge, store the result loose, and have somebody push a
-pack up on top of it.
+But in any case, I do think that's worthwhile in general, i.e. you can
+depend on %.h and not need to exclude generated %.h that we make
+ourselves if we put that into "gen/" or whatever, "clean" also becomes a
+lot easier.
 
-If that pack shows up after the repack, but before we write a MIDX, then
-without the refs-snapshot code, we would include that pack, select its
-commits as candidates for bitmap selection, and then ultimately discover
-that the bitmap isn't closed, since the loose object won't be included.
-
-But that may be a little into the weeds for the patch message. Anyway,
-I did have to think about it for a minute, but I'm pretty sure that's
-what I was thinking when I wrote this.
-
-Thanks,
-Taylor
+But I'd like to leave it for some future effort of moving *.o, *.sp
+etc. generated files around, rather than making *.sp an odd special-case
+now.
