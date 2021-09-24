@@ -2,193 +2,226 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C96C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8696C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:50:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0A1F6124C
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B35760E05
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347128AbhIXPlP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 11:41:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347182AbhIXPk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 11:40:59 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902A7C0613E2
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:24 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id t8so28892038wri.1
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=IqTNWyRXSwlJyMHaVGmitQJJcss5hdQINHnB6QXcZhQ=;
-        b=Aw3T3VOvgZdiDqv4rH50moVmeld0jWoSNyUy1FpvpqYRduIFq9K30UpJUywbPGCx5J
-         ByVj5ywhyjI71RmlhYtRrXNRU9+64vEpxN6jK0DHwYwyNkGrAd5HW+06gL6GqV1Fo69A
-         MkEktTAUh/9Dcqu3MMx9OQB2WUaznKnv5ZXP488xMqWEy8KqjbRxZmrCZIypnnGxfyri
-         4F3WGcVktY+zEuhaIdCgmHiwRTnPLzePFp12JDpzb5AEKlnQ+YkD56qGvyfSVYBAxRjS
-         J6RNQnAXthwJNwtC3vVaZv1sQSyq641uEZI1pztf7aTTkYkxl0mYzl+k6fVsz9xaCu0c
-         vcDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IqTNWyRXSwlJyMHaVGmitQJJcss5hdQINHnB6QXcZhQ=;
-        b=ADMnOyMxvG4QwOOsdDF+7sgiq+MORcZ+H2xvxPnp/vVhA+eR8nKfNpimtGb7Huk4Qv
-         lk2C+Z4M7MWB2lpjNnLzMMxl1kY9pmCkjWeEXWs4XSeHZgRSLYwrV7OKPmzAugBMoRtf
-         lU4O1sAvPSVnPvWnQf5Md7tIOyltnu7fvW4LUG671FGV+cHrPRaVEfe+0riTODUNAe6d
-         DB2NYEjG9eFQIEm/ieyq6IzJ0G2DT8YfA+iajtyJ0ETB+b9i4bfW9DKnT8kAd3Z3L15e
-         6rDWNDARpZghpOJwCbCjjG62vQJVNVlM4PIOZ3l1ZhDz+plasCMyC5e240HvrNh1Rfej
-         N4ZQ==
-X-Gm-Message-State: AOAM530xdV1KYIezXaxrPgSeo2KZxW6O/zqT8pkDYrCT4xXOMg8+ymvj
-        sIQlP2IQInDa9IxkpPQmeXwdJ69Z91s=
-X-Google-Smtp-Source: ABdhPJz7Q5Xz33Ni4CPmWDXEy/nfa/zmLye82X9ShYAycsldyLpJqM47WL/IoEs/vkkgonPAl8w+Hg==
-X-Received: by 2002:a5d:4d92:: with SMTP id b18mr12019300wru.245.1632497963170;
-        Fri, 24 Sep 2021 08:39:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v10sm9073516wri.29.2021.09.24.08.39.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 08:39:22 -0700 (PDT)
-Message-Id: <9fbc88ee0dab830bdc34575e9808b8f2a04a59e9.1632497954.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
-References: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
-        <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Sep 2021 15:39:14 +0000
-Subject: [PATCH v4 13/13] advice: update message to suggest '--sparse'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S233501AbhIXPvz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 11:51:55 -0400
+Received: from h4.fbrelay.privateemail.com ([131.153.2.45]:33228 "EHLO
+        h4.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233379AbhIXPvy (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Sep 2021 11:51:54 -0400
+Received: from MTA-11-3.privateemail.com (mta-11-1.privateemail.com [198.54.118.201])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id 8AAE28196E
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:50:20 -0400 (EDT)
+Received: from mta-11.privateemail.com (localhost [127.0.0.1])
+        by mta-11.privateemail.com (Postfix) with ESMTP id 5ECB918000AA;
+        Fri, 24 Sep 2021 11:50:19 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.221])
+        by mta-11.privateemail.com (Postfix) with ESMTPA id A011818000A5;
+        Fri, 24 Sep 2021 11:50:18 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
 To:     git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, vdye@github.com,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: [PATCH v8 1/2] grep: refactor next_match() and match_one_pattern() for external use
+Date:   Fri, 24 Sep 2021 11:49:59 -0400
+Message-Id: <20210924155000.1259649-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+These changes are made in preparation of, the colorization support for the
+"git log" subcommands that, rely on regex functionality (i.e. "--author",
+"--committer" and "--grep"). These changes are necessary primarily because
+match_one_pattern() expects header lines to be prefixed, however, in
+pretty, the prefixes are stripped from the lines because the name-email
+pairs need to go through additional parsing, before they can be printed and
+because next_match() doesn't handle the case of
+"ctx == GREP_CONTEXT_HEAD" at all. So, teach next_match() how to handle the
+new case and move match_one_pattern()'s core logic to
+headless_match_one_pattern() while preserving match_one_pattern()'s uses
+that depend on the additional processing.
 
-The previous changes modified the behavior of 'git add', 'git rm', and
-'git mv' to not adjust paths outside the sparse-checkout cone, even if
-they exist in the working tree and their cache entries lack the
-SKIP_WORKTREE bit. The intention is to warn users that they are doing
-something potentially dangerous. The '--sparse' option was added to each
-command to allow careful users the same ability they had before.
-
-To improve the discoverability of this new functionality, add a message
-to advice.updateSparsePath that mentions the existence of the option.
-
-The previous set of changes also modified the purpose of this message to
-include possibly a list of paths instead of only a list of pathspecs.
-Make the warning message more clear about this new behavior.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
 ---
- advice.c                       | 11 ++++++-----
- t/t3602-rm-sparse-checkout.sh  |  9 ++++++---
- t/t3705-add-sparse-checkout.sh |  9 ++++++---
- t/t7002-mv-sparse-checkout.sh  |  9 ++++++---
- 4 files changed, 24 insertions(+), 14 deletions(-)
+v5: separate grep changes from pretty changes.
 
-diff --git a/advice.c b/advice.c
-index 0b9c89c48ab..713fff49ee3 100644
---- a/advice.c
-+++ b/advice.c
-@@ -293,15 +293,16 @@ void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
- 	if (!pathspec_list->nr)
- 		return;
+v6: rescope some variables.
+
+v7: export header_field[] and allow for subsequent matches on header lines
+    in match_one_pattern().
+
+v8: add headless_match_one_pattern() and move header_field[] back.
+---
+ grep.c | 83 ++++++++++++++++++++++++++++++++++++----------------------
+ grep.h |  4 +++
+ 2 files changed, 55 insertions(+), 32 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 14fe8a0fd2..e46b046638 100644
+--- a/grep.c
++++ b/grep.c
+@@ -944,37 +944,19 @@ static struct {
+ 	{ "reflog ", 7 },
+ };
  
--	fprintf(stderr, _("The following pathspecs didn't match any"
--			  " eligible path, but they do match index\n"
--			  "entries outside the current sparse checkout:\n"));
-+	fprintf(stderr, _("The following paths and/or pathspecs matched paths that exist\n"
-+			  "outside of your sparse-checkout definition, so will not be\n"
-+			  "updated in the index:\n"));
- 	for_each_string_list_item(item, pathspec_list)
- 		fprintf(stderr, "%s\n", item->string);
+-static int match_one_pattern(struct grep_pat *p,
+-			     const char *bol, const char *eol,
+-			     enum grep_context ctx,
+-			     regmatch_t *pmatch, int eflags)
++static int headerless_match_one_pattern(struct grep_pat *p,
++					const char *bol, const char *eol,
++					enum grep_context ctx,
++					regmatch_t *pmatch, int eflags)
+ {
+ 	int hit = 0;
+ 	const char *start = bol;
  
- 	advise_if_enabled(ADVICE_UPDATE_SPARSE_PATH,
--			  _("Disable or modify the sparsity rules if you intend"
--			    " to update such entries."));
-+			  _("If you intend to update such entries, try one of the following:\n"
-+			    "* Use the --sparse option.\n"
-+			    "* Disable or modify the sparsity rules."));
+ 	if ((p->token != GREP_PATTERN) &&
+-	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
++	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
++	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
+ 		return 0;
+ 
+-	if (p->token == GREP_PATTERN_HEAD) {
+-		const char *field;
+-		size_t len;
+-		assert(p->field < ARRAY_SIZE(header_field));
+-		field = header_field[p->field].field;
+-		len = header_field[p->field].len;
+-		if (strncmp(bol, field, len))
+-			return 0;
+-		bol += len;
+-		switch (p->field) {
+-		case GREP_HEADER_AUTHOR:
+-		case GREP_HEADER_COMMITTER:
+-			strip_timestamp(bol, &eol);
+-			break;
+-		default:
+-			break;
+-		}
+-	}
+-
+  again:
+ 	hit = patmatch(p, bol, eol, pmatch, eflags);
+ 
+@@ -1025,6 +1007,36 @@ static int match_one_pattern(struct grep_pat *p,
+ 	return hit;
  }
  
- void detach_advice(const char *new_name)
-diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
-index 5f92b60a56a..ecce497a9ca 100755
---- a/t/t3602-rm-sparse-checkout.sh
-+++ b/t/t3602-rm-sparse-checkout.sh
-@@ -11,12 +11,15 @@ test_expect_success 'setup' "
- 	git commit -m files &&
++static int match_one_pattern(struct grep_pat *p,
++			     const char *bol, const char *eol,
++			     enum grep_context ctx, regmatch_t *pmatch,
++			     int eflags)
++{
++	const char *field;
++	size_t len;
++
++	if (p->token == GREP_PATTERN_HEAD) {
++		assert(p->field < ARRAY_SIZE(header_field));
++		field = header_field[p->field].field;
++		len = header_field[p->field].len;
++		if (strncmp(bol, field, len))
++			return 0;
++		bol += len;
++
++		switch (p->field) {
++		case GREP_HEADER_AUTHOR:
++		case GREP_HEADER_COMMITTER:
++			strip_timestamp(bol, &eol);
++			break;
++		default:
++			break;
++		}
++	}
++
++	return headerless_match_one_pattern(p, bol, eol, ctx, pmatch, eflags);
++}
++
++
+ static int match_expr_eval(struct grep_opt *opt, struct grep_expr *x,
+ 			   const char *bol, const char *eol,
+ 			   enum grep_context ctx, ssize_t *col,
+@@ -1143,7 +1155,7 @@ static int match_next_pattern(struct grep_pat *p,
+ {
+ 	regmatch_t match;
  
- 	cat >sparse_error_header <<-EOF &&
--	The following pathspecs didn't match any eligible path, but they do match index
--	entries outside the current sparse checkout:
-+	The following paths and/or pathspecs matched paths that exist
-+	outside of your sparse-checkout definition, so will not be
-+	updated in the index:
- 	EOF
+-	if (!match_one_pattern(p, bol, eol, ctx, &match, eflags))
++	if (!headerless_match_one_pattern(p, bol, eol, ctx, &match, eflags))
+ 		return 0;
+ 	if (match.rm_so < 0 || match.rm_eo < 0)
+ 		return 0;
+@@ -1158,22 +1170,28 @@ static int match_next_pattern(struct grep_pat *p,
+ 	return 1;
+ }
  
- 	cat >sparse_hint <<-EOF &&
--	hint: Disable or modify the sparsity rules if you intend to update such entries.
-+	hint: If you intend to update such entries, try one of the following:
-+	hint: * Use the --sparse option.
-+	hint: * Disable or modify the sparsity rules.
- 	hint: Disable this message with \"git config advice.updateSparsePath false\"
- 	EOF
+-static int next_match(struct grep_opt *opt,
+-		      const char *bol, const char *eol,
+-		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags)
+ {
+ 	struct grep_pat *p;
+ 	int hit = 0;
  
-diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-index 339ec0ed2d6..5b904988d49 100755
---- a/t/t3705-add-sparse-checkout.sh
-+++ b/t/t3705-add-sparse-checkout.sh
-@@ -44,12 +44,15 @@ test_sparse_entry_unstaged () {
+ 	pmatch->rm_so = pmatch->rm_eo = -1;
+ 	if (bol < eol) {
+-		for (p = opt->pattern_list; p; p = p->next) {
++		for (p = ((ctx == GREP_CONTEXT_HEAD)
++			   ? opt->header_list : opt->pattern_list);
++			  p; p = p->next) {
+ 			switch (p->token) {
+ 			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_HEAD:
+ 			case GREP_PATTERN_BODY:
+-				hit |= match_next_pattern(p, bol, eol, ctx,
+-							  pmatch, eflags);
++				if ((field == GREP_HEADER_FIELD_MAX) ||
++				    (p->field == field))
++					hit |= match_next_pattern(p, bol, eol,
++								  ctx, pmatch,
++								  eflags);
+ 				break;
+ 			default:
+ 				break;
+@@ -1261,7 +1279,8 @@ static void show_line(struct grep_opt *opt,
+ 			else if (sign == '=')
+ 				line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		}
+-		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
++		while (grep_next_match(opt, bol, eol, ctx, &match,
++				       GREP_HEADER_FIELD_MAX, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
  
- test_expect_success 'setup' "
- 	cat >sparse_error_header <<-EOF &&
--	The following pathspecs didn't match any eligible path, but they do match index
--	entries outside the current sparse checkout:
-+	The following paths and/or pathspecs matched paths that exist
-+	outside of your sparse-checkout definition, so will not be
-+	updated in the index:
- 	EOF
+diff --git a/grep.h b/grep.h
+index 3cb8a83ae8..521068308e 100644
+--- a/grep.h
++++ b/grep.h
+@@ -190,6 +190,10 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size);
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags);
  
- 	cat >sparse_hint <<-EOF &&
--	hint: Disable or modify the sparsity rules if you intend to update such entries.
-+	hint: If you intend to update such entries, try one of the following:
-+	hint: * Use the --sparse option.
-+	hint: * Disable or modify the sparsity rules.
- 	hint: Disable this message with \"git config advice.updateSparsePath false\"
- 	EOF
- 
-diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index 07dbfeb6d17..545748949aa 100755
---- a/t/t7002-mv-sparse-checkout.sh
-+++ b/t/t7002-mv-sparse-checkout.sh
-@@ -11,12 +11,15 @@ test_expect_success 'setup' "
- 	git commit -m files &&
- 
- 	cat >sparse_error_header <<-EOF &&
--	The following pathspecs didn't match any eligible path, but they do match index
--	entries outside the current sparse checkout:
-+	The following paths and/or pathspecs matched paths that exist
-+	outside of your sparse-checkout definition, so will not be
-+	updated in the index:
- 	EOF
- 
- 	cat >sparse_hint <<-EOF
--	hint: Disable or modify the sparsity rules if you intend to update such entries.
-+	hint: If you intend to update such entries, try one of the following:
-+	hint: * Use the --sparse option.
-+	hint: * Disable or modify the sparsity rules.
- 	hint: Disable this message with \"git config advice.updateSparsePath false\"
- 	EOF
- "
+ struct grep_source {
+ 	char *name;
 -- 
-gitgitgadget
+2.33.0
+
