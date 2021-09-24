@@ -2,213 +2,276 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 943F3C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75750C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7118261212
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:21:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E8BD610CB
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346153AbhIXTW2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 15:22:28 -0400
-Received: from mail.ncp-e.com ([62.153.165.35]:52016 "EHLO mail.ncp-e.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1344513AbhIXTWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 15:22:24 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2021 15:22:19 EDT
-DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaulte; 
- t=1632510944; bh=ko+ZmEm8D2lfuO3UBGW05Ud5D1b5cWpa3WYh+B5km8I=; h=
- "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
- a=ed25519-sha256; b=
- g9uTMSd8jliP1uGxkefoe0tAL5Zf0otWMYWWgiQBS349VoTqnCM5kLTl2R/375kUAN2OBqYT4ypjLL9MJuV3BQ==
-DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaultr; 
- t=1632510944; bh=ko+ZmEm8D2lfuO3UBGW05Ud5D1b5cWpa3WYh+B5km8I=; h=
- "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
- a=rsa-sha256; b=
- nfIYT+foQiOjpct7H/QERXULagSIXapmFy1lEaAiGGD1BTZQWDdpv84jHgyI8OU5AP6aFwICpFDd9S7UgNUw3WbIN7UvcJ0QyhjEjmzZqsPIqb9lsiHJuDsIEt16otCd4uHEn1WM6B21VMpnIcc1hvOHirDLot9+D7dK/D5lJt4=
-Content-Type: multipart/signed; 
- boundary=NoSpamProxy_93207c2a-ce7d-4927-a528-34a70352bf9e; 
- protocol="application/pkcs7-signature"; micalg="sha256"
-From:   "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git-blame:  '--color-by-age' option not documented in manual page
-Thread-Topic: git-blame:  '--color-by-age' option not documented in manual
- page
-Thread-Index: AdexeCKeNzj0sbS9QWOaEmrQ8JjrYA==
-Date:   Fri, 24 Sep 2021 19:15:40 +0000
-Message-ID: <d918fe0de6b04d8d848050d4aedbe060@ncp-e.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-c2processedorg: 9967f5a3-a146-4287-bbaa-84cba262ed0f
+        id S1346463AbhIXTZP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 15:25:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64872 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344513AbhIXTZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 15:25:12 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E90A11534FD;
+        Fri, 24 Sep 2021 15:23:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=817p7rJqNTH5UjQoXniKCjQLaVesGG3HfQNv9fuWmHg=; b=Pfdk
+        BwnkL0Z7lheUjO0/zej3MH7rloG5BK0N4mNbgQlmE/Wwr8nane6SosjgEVOz3cTY
+        vC3+1DxzJVu8uSh9ABwkBmxpLyVMxHRNoVqWP6C3T4lF8fzomY/Y+ZEMOqbsa/gG
+        YiNu4sKEj0sjpWv7CJdoYrEWf774Dqims89PhBw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E18AB1534FA;
+        Fri, 24 Sep 2021 15:23:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 581AD1534F9;
+        Fri, 24 Sep 2021 15:23:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hamza Mahfooz <someguy@effective-light.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v8 1/2] grep: refactor next_match() and
+ match_one_pattern() for external use
+References: <20210924155000.1259649-1-someguy@effective-light.com>
+Date:   Fri, 24 Sep 2021 12:23:35 -0700
+Message-ID: <xmqqilypu6a0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-X-CrossPremisesHeadersFilteredBySendConnector: ex19.ncp.local
-X-OrganizationHeadersPreserved: ex19.ncp.local
+Content-Type: text/plain
+X-Pobox-Relay-ID: EA2755C6-1D6C-11EC-AE81-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---NoSpamProxy_93207c2a-ce7d-4927-a528-34a70352bf9e
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hamza Mahfooz <someguy@effective-light.com> writes:
 
-SGksDQoNCkkganVzdCBub3RpY2VkIHRoYXQgdGhlICAgJy0tY29sb3ItYnktYWdlJyBvcHRpb24g
-b2YgZ2l0LWJsYW1lIChpbnRyb2R1Y2VkIGluIDI1ZDVmNTI5MDFmMGQ1NmIyZTNkZjA2YjUzMDYy
-ZWU1OTliMDQwM2IpDQppcyBsaXN0ZWQgYnkgJ2dpdCBibGFtZSAtaCcgYnV0IG5vdCBkb2N1bWVu
-dGVkIGluIHRoZSBtYW51YWwgcGFnZS4NCg0KUmVnYXJkcywNCk1hdHRoaWFzDQoNCg0KDQoNCkRy
-LiBNYXR0aGlhcyBTdC4gUGllcnJlDQpUZWNoIExlYWQgQ3J5cHRvZ3JhcGh5DQptYXR0aGlhcy5z
-dC5waWVycmVAbmNwLWUuY29tDQpQaG9uZTogKzQ5IDkxMSA5OTY4LTANCiB3d3cubmNwLWUuY29t
-DQoNCkhlYWRxdWFydGVycyBHZXJtYW55OiBOQ1AgZW5naW5lZXJpbmcgR21iSCDigKIgRG9tYnVl
-aGxlciBTdHIuIDIg4oCiIDkwNDQ5IOKAoiBOdXJlbWJlcmcNCk5vcnRoIEFtZXJpY2FuIEhROiBO
-Q1AgZW5naW5lZXJpbmcgSW5jLiDigKIgNjAxIENsZXZlbGFuZCBTdHIuLCBTdWl0ZSA1MDEtMjUg
-4oCiIENsZWFyd2F0ZXIsIEZMIDMzNzU1DQoNCkF1dGhvcml6ZWQgcmVwcmVzZW50YXRpdmVzOiBQ
-ZXRlciBTb2VsbCwgUGF0cmljayBPbGl2ZXIgR3JhZiwgQmVhdGUgRGlldHJpY2gNClJlZ2lzdHJ5
-IENvdXJ0OiBMb3dlciBEaXN0cmljdCBDb3VydCBvZiBOdXJlbWJlcmcNCkNvbW1lcmNpYWwgcmVn
-aXN0ZXIgTm8uOiBIUkIgNzc4NiBOdXJlbWJlcmcsIFZBVCBpZGVudGlmaWNhdGlvbiBOby46IERF
-IDEzMzU1NzYxOQ0KDQpUaGlzIGUtbWFpbCBtZXNzYWdlIGluY2x1ZGluZyBhbnkgYXR0YWNobWVu
-dHMgaXMgZm9yIHRoZSBzb2xlIHVzZSBvZiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50KHMpIGFuZCBt
-YXkgY29udGFpbiBwcml2aWxlZ2VkDQpvciBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24uIEFueSB1
-bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2UsIGRpc2Nsb3N1cmUgb3IgZGlzdHJpYnV0aW9uIGlzIHBy
-b2hpYml0ZWQuIElmIHlvdSBhcmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsDQpwbGVhc2Ug
-aW1tZWRpYXRlbHkgY29udGFjdCB0aGUgc2VuZGVyIGJ5IHJlcGx5IGUtbWFpbCBhbmQgZGVsZXRl
-IHRoZSBvcmlnaW5hbCBtZXNzYWdlIGFuZCBkZXN0cm95IGFsbCBjb3BpZXMgdGhlcmVvZi4NCg==
+> These changes are made in preparation of, the colorization support for the
+> "git log" subcommands that, rely on regex functionality (i.e. "--author",
+> "--committer" and "--grep"). These changes are necessary primarily because
+> match_one_pattern() expects header lines to be prefixed, however, in
+> pretty, the prefixes are stripped from the lines because the name-email
+> pairs need to go through additional parsing, before they can be printed and
+> because next_match() doesn't handle the case of
+> "ctx == GREP_CONTEXT_HEAD" at all. So, teach next_match() how to handle the
+> new case and move match_one_pattern()'s core logic to
+> headless_match_one_pattern() while preserving match_one_pattern()'s uses
+> that depend on the additional processing.
+>
+> Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+> ---
+> v5: separate grep changes from pretty changes.
+>
+> v6: rescope some variables.
+>
+> v7: export header_field[] and allow for subsequent matches on header lines
+>     in match_one_pattern().
+>
+> v8: add headless_match_one_pattern() and move header_field[] back.
 
---NoSpamProxy_93207c2a-ce7d-4927-a528-34a70352bf9e
-Content-Transfer-Encoding: BASE64
-Content-Type: application/pkcs7-signature; name=smime.p7s
-Content-Disposition: attachment; filename=smime.p7s
+This looks a lot more sensible split compared to the previous round.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGgghljMIIG
-bDCCBVSgAwIBAgIUPKVuE9U+tGhJnC8S/fnuDKqmsNowDQYJKoZIhvcNAQELBQAwVjELMAkGA1UE
-BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
-IFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTIwMTAyMzA4MTUyMFoXDTIxMTAyMzA4MTUyMFowgagx
-CzAJBgNVBAYTAkRFMUEwPwYDVQQKEzhOIEMgUCBlIEdtYkggTmV0d29yayBDb21tdW5pY2F0aW9u
-cyBQcm9kdWN0cyBlbmdpbmVlcmluZzErMCkGCSqGSIb3DQEJARYcbWF0dGhpYXMuc3QucGllcnJl
-QG5jcC1lLmNvbTEpMCcGA1UEAxMgU2VjdXJlIE1haWw6IEdhdGV3YXkgQ2VydGlmaWNhdGUwggEi
-MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC0lkytRuABMu1x4Muew7CMpYPEG4xKb7e8bpA6
-Tw+RCY9++kOkLuOtT7IKeXGdEqgitDC8WFrrkkd2bgB9Wgoed+tad17lWg1mKZnVEgUILz+ZCzH/
-QKhY/Lqj4FqIvB6zlXT9z/AVKLXSAX/NBwTugegABmF4b3bmvEr+w9/4NpW4tz9wAbkUqanbmzL6
-XRS/7yqVG65fSneX0j/kMYLIM3Cdenxr9X7J58x6ks+GKuUovrZyikPlnhkcEIccN+2YdR5SEI/C
-0wdpjM9M7rJC7sPPKzOo8cx69961zysSfT1rWbKbQSTpV6q4WuOP4b8dEJiqMuN2uqic9ovMgJlB
-AgMBAAGjggLdMIIC2TAnBgNVHREEIDAegRxtYXR0aGlhcy5zdC5waWVycmVAbmNwLWUuY29tMA4G
-A1UdDwEB/wQEAwIEsDATBgNVHSUEDDAKBggrBgEFBQcDBDAdBgNVHQ4EFgQUYPm4DackOULTcHVE
-k8u4bsukr4IwHwYDVR0jBBgwFoAU8MejMpG168q1WHcVp06+Gl1hQyUwgf8GA1UdHwSB9zCB9DBH
-oEWgQ4ZBaHR0cDovL2NybC5zd2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3
-NEVCRTFBNUQ2MTQzMjUwgaiggaWggaKGgZ9sZGFwOi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQv
-Q049RjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNSUyQ089U3dpc3NTaWdu
-JTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/b2JqZWN0Q2xhc3M9Y1JMRGlz
-dHJpYnV0aW9uUG9pbnQwawYDVR0gBGQwYjBWBglghXQBWQEDAQwwSTBHBggrBgEFBQcCARY7aHR0
-cDovL3JlcG9zaXRvcnkuc3dpc3NzaWduLmNvbS9Td2lzc1NpZ24tU2lsdmVyLUNQLUNQUy5wZGYw
-CAYGBACPegEDMIHZBggrBgEFBQcBAQSBzDCByTBkBggrBgEFBQcwAoZYaHR0cDovL3N3aXNzc2ln
-bi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvRjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1
-QTc0RUJFMUE1RDYxNDMyNTBhBggrBgEFBQcwAYZVaHR0cDovL3NpbHZlci1wZXJzb25hbC1nMi5v
-Y3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMy
-NTANBgkqhkiG9w0BAQsFAAOCAQEAxH661CQ5jVls9S8t17fU/o0VASpYg7xrqe489+G9cY9tia+d
-M5PQROt4GzXn+YPHW3keZKVN2iJgJoTljczWkptBhOTa3b+zdIlUcf2XW4PFQeFsqtpQ+/6BC4mG
-Jjd9HhYjWf1wuaplr64nHrGSo/gX1pm6kERVgQLIVVWwfXDejEUuB9c86iPyU1t06Q1WxWeyxeIa
-ribo8AIUCC6jP/PIIlZGWXqRgfDUPEthTsO3zugkGeAB84L8ZYOmfjlvUd7S5mrr7SfSTixujVni
-tFX6wNoPRNn2v7O64HxAWDAs2GvlHlqzkZMD8iJTUIMKkpr6j3WCIeA9t/Os82BcOTCCBmwwggVU
-oAMCAQICFDylbhPVPrRoSZwvEv357gyqprDaMA0GCSqGSIb3DQEBCwUAMFYxCzAJBgNVBAYTAkNI
-MRUwEwYDVQQKEwxTd2lzc1NpZ24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2
-ZXIgQ0EgMjAxNCAtIEcyMjAeFw0yMDEwMjMwODE1MjBaFw0yMTEwMjMwODE1MjBaMIGoMQswCQYD
-VQQGEwJERTFBMD8GA1UEChM4TiBDIFAgZSBHbWJIIE5ldHdvcmsgQ29tbXVuaWNhdGlvbnMgUHJv
-ZHVjdHMgZW5naW5lZXJpbmcxKzApBgkqhkiG9w0BCQEWHG1hdHRoaWFzLnN0LnBpZXJyZUBuY3At
-ZS5jb20xKTAnBgNVBAMTIFNlY3VyZSBNYWlsOiBHYXRld2F5IENlcnRpZmljYXRlMIIBIjANBgkq
-hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtJZMrUbgATLtceDLnsOwjKWDxBuMSm+3vG6QOk8PkQmP
-fvpDpC7jrU+yCnlxnRKoIrQwvFha65JHdm4AfVoKHnfrWnde5VoNZimZ1RIFCC8/mQsx/0CoWPy6
-o+BaiLwes5V0/c/wFSi10gF/zQcE7oHoAAZheG925rxK/sPf+DaVuLc/cAG5FKmp25sy+l0Uv+8q
-lRuuX0p3l9I/5DGCyDNwnXp8a/V+yefMepLPhirlKL62copD5Z4ZHBCHHDftmHUeUhCPwtMHaYzP
-TO6yQu7DzyszqPHMevfetc8rEn09a1mym0Ek6VequFrjj+G/HRCYqjLjdrqonPaLzICZQQIDAQAB
-o4IC3TCCAtkwJwYDVR0RBCAwHoEcbWF0dGhpYXMuc3QucGllcnJlQG5jcC1lLmNvbTAOBgNVHQ8B
-Af8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFGD5uA2nJDlC03B1RJPLuG7L
-pK+CMB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpdYUMlMIH/BgNVHR8EgfcwgfQwR6BFoEOG
-QWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVBNzRFQkUx
-QTVENjE0MzI1MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3NpZ24ubmV0L0NOPUYw
-QzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNPPVN3aXNzU2lnbiUyQ0M9
-Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1
-dGlvblBvaW50MGsGA1UdIARkMGIwVgYJYIV0AVkBAwEMMEkwRwYIKwYBBQUHAgEWO2h0dHA6Ly9y
-ZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWduLVNpbHZlci1DUC1DUFMucGRmMAgGBgQA
-j3oBAzCB2QYIKwYBBQUHAQEEgcwwgckwZAYIKwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0
-L2NnaS1iaW4vYXV0aG9yaXR5L2Rvd25sb2FkL0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVC
-RTFBNUQ2MTQzMjUwYQYIKwYBBQUHMAGGVWh0dHA6Ly9zaWx2ZXItcGVyc29uYWwtZzIub2NzcC5z
-d2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUwDQYJ
-KoZIhvcNAQELBQADggEBAMR+utQkOY1ZbPUvLde31P6NFQEqWIO8a6nuPPfhvXGPbYmvnTOT0ETr
-eBs15/mDx1t5HmSlTdoiYCaE5Y3M1pKbQYTk2t2/s3SJVHH9l1uDxUHhbKraUPv+gQuJhiY3fR4W
-I1n9cLmqZa+uJx6xkqP4F9aZupBEVYECyFVVsH1w3oxFLgfXPOoj8lNbdOkNVsVnssXiGq4m6PAC
-FAguoz/zyCJWRll6kYHw1DxLYU7Dt87oJBngAfOC/GWDpn45b1He0uZq6+0n0k4sbo1Z4rRV+sDa
-D0TZ9r+zuuB8QFgwLNhr5R5as5GTA/IiU1CDCpKa+o91giHgPbfzrPNgXDkwgga+MIIEpqADAgEC
-Ag8FRNZOrR7TNtUyQF0AuTYwDQYJKoZIhvcNAQELBQAwRzELMAkGA1UEBhMCQ0gxFTATBgNVBAoT
-DFN3aXNzU2lnbiBBRzEhMB8GA1UEAxMYU3dpc3NTaWduIFNpbHZlciBDQSAtIEcyMB4XDTE0MDkx
-OTIwMzY0OVoXDTI5MDkxNTIwMzY0OVowVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2ln
-biBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMIIB
-IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyzmxOYX++smhvMODqQ5KLYRyHv9oxafEHewP
-16iLEx6z0RaLQNwPU28BPezoZLWX24O8qKjAhDhYXgMUK+bKMO8AsusTORmSRyohAOVyzcIxYg7M
-Vir/d8RjjJjCb3jXtbbM6X0fM6aRBSr+0VLW9Oyc/k1MalLhhXZiu7lo5lJj/MEhkZJdGdjcgNEZ
-40kWVwIOGUSFqynJL/rGbWsKofb3/2thNRUmlJQCaSVdafe9XmuC2ZAMBvlDBSJJ6zbQIFpjEOM4
-IdV/FitBikZ68mfopNC6Hn8kJ3WYlEktVsRUM5GdYvnVX95bqRWYnJRTwYDpCRcVtBuAKTKh0K8T
-pwIDAQABo4ICljCCApIwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0O
-BBYEFPDHozKRtevKtVh3FadOvhpdYUMlMB8GA1UdIwQYMBaAFBegzcHkQbY6WzvLRZ29HMKY+oZY
-MIH/BgNVHR8EgfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0
-NDFCNjNBNUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9y
-eS5zd2lzc3NpZ24ubmV0L0NOPTE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
-NTglMkNPPVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29i
-amVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkBAwEGMEkw
-RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWduLVNp
-bHZlci1DUC1DUFMucGRmMIHGBggrBgEFBQcBAQSBuTCBtjBkBggrBgEFBQcwAoZYaHR0cDovL3N3
-aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvMTdBMENEQzFFNDQxQjYzQTVC
-M0JDQjQ1OURCRDFDQzI5OEZBODY1ODBOBggrBgEFBQcwAYZCaHR0cDovL29jc3Auc3dpc3NzaWdu
-Lm5ldC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MA0GCSqGSIb3DQEB
-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
-VVeJ/krLrlsXBcjyjSMxUzjSLWo/grmNCGr3XkF0bsMRfgesKWCRPzjKVxANvTAvx6XmQaDargWH
-mqCkZWxMCQyJurjTucCTijD6jeWaaxUBTmeq2mJWPoQIZtLENn2nPhD8iODUgOUAvarzTgajemr5
-YnLjCU/rmw4BI/Gfu3zc3GwRlyWy8rRjFNIGKmeMg/XO6gfYmmoe7OQKuypM6wlgOc7KYtgubjGA
-MIACAQEwbjBWMQswCQYDVQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydT
-d2lzc1NpZ24gUGVyc29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICFDylbhPVPrRoSZwvEv357gyq
-prDaMA0GCWCGSAFlAwQCAQUAoIICBjAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3
-DQEJBTEPFw0yMTA5MjQxOTE1NDRaMC8GCSqGSIb3DQEJBDEiBCB7h+ODYTzxINaW0SDMTTnYHTB7
-594fyXJVlYR/OIVaHDB9BgkrBgEEAYI3EAQxcDBuMFYxCzAJBgNVBAYTAkNIMRUwEwYDVQQKEwxT
-d2lzc1NpZ24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2ZXIgQ0EgMjAxNCAt
-IEcyMgIUPKVuE9U+tGhJnC8S/fnuDKqmsNowfwYLKoZIhvcNAQkQAgsxcKBuMFYxCzAJBgNVBAYT
-AkNIMRUwEwYDVQQKEwxTd2lzc1NpZ24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBT
-aWx2ZXIgQ0EgMjAxNCAtIEcyMgIUPKVuE9U+tGhJnC8S/fnuDKqmsNowgZoGCSqGSIb3DQEJDzGB
-jDCBiTAKBggqhkiG9w0CBTAHBgUrDgMCGjALBglghkgBZQMEAgEwCwYJYIZIAWUDBAICMAsGCWCG
-SAFlAwQCAzAKBggqhkiG9w0DBzALBglghkgBZQMEAQIwCwYJYIZIAWUDBAEGMAsGCWCGSAFlAwQB
-FjALBglghkgBZQMEASowCwYJYIZIAWUDBAEuMA0GCSqGSIb3DQEBAQUABIIBAKMKvnTwMntdKumI
-J5wXKqEZw7NdE4tv1bPizvHzazzmrFH/R6Awu93JQU8bDCJ/ohLPklcpVI1SyHx3mzEouJQzD8sr
-Mm//qyfILQf+L0jQr6lf8FDaAr+73YpoPYNiLYRizJdSjk19gEuk3/r3Z3gslgxEMeGEU0bsxwCf
-nenOYMSfMS4oG2zXids0DxSPG/CHOP9BiLlspOidvEGWMv/n/OOGdm+FKgFIdUX33ocdR1DZ1J2p
-KHiZ2X0tSLiQse/UqGm+Org7K6nyW5VBYg1qdrH59jRp2OmAiYO0gJsVH68IApjwjvUENORNO7+t
-fXamoufQrPmrb78RV4go9+0AAAAAAAAAAAAA
---NoSpamProxy_93207c2a-ce7d-4927-a528-34a70352bf9e--
+> ---
+>  grep.c | 83 ++++++++++++++++++++++++++++++++++++----------------------
+>  grep.h |  4 +++
+>  2 files changed, 55 insertions(+), 32 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index 14fe8a0fd2..e46b046638 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -944,37 +944,19 @@ static struct {
+>  	{ "reflog ", 7 },
+>  };
+>  
+> -static int match_one_pattern(struct grep_pat *p,
+> -			     const char *bol, const char *eol,
+> -			     enum grep_context ctx,
+> -			     regmatch_t *pmatch, int eflags)
+> +static int headerless_match_one_pattern(struct grep_pat *p,
+> +					const char *bol, const char *eol,
+> +					enum grep_context ctx,
+> +					regmatch_t *pmatch, int eflags)
+>  {
+>  	int hit = 0;
+>  	const char *start = bol;
+>  
+>  	if ((p->token != GREP_PATTERN) &&
+> -	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
+> +	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)) &&
+> +	    ((p->token == GREP_PATTERN_BODY) != (ctx == GREP_CONTEXT_BODY)))
 
+I _think_ it makes sense to have this additional "if looking for
+something in the body, do not bother if we are not in body", but I
+wonder if that is a bugfix that has nothing to do with this topic.
+
+In other words, even if for whatever reason we decide that it is not
+worth painting the hits in "git log --grep=<pattern> --author=<who>"
+output, would the addition to this single condition to the original
+code, with or without the refactoring, fix some existing bug?
+
+If so, perhaps that can be a separate patch with a test that
+demonstrates the bug fixed.  With this change mixed in, it is
+unclear if this step is pure refactoring that does not break the
+existing callers of the code path.
+
+If it is not a bugfix, we need to explain the reason why this
+additional condition is necessary in the proposed log message (I am
+assuming that this change is needed to get the end result working).
+
+> +static int match_one_pattern(struct grep_pat *p,
+> +			     const char *bol, const char *eol,
+> +			     enum grep_context ctx, regmatch_t *pmatch,
+> +			     int eflags)
+> +{
+> +	const char *field;
+> +	size_t len;
+> +
+> +	if (p->token == GREP_PATTERN_HEAD) {
+> +		assert(p->field < ARRAY_SIZE(header_field));
+> +		field = header_field[p->field].field;
+> +		len = header_field[p->field].len;
+> +		if (strncmp(bol, field, len))
+> +			return 0;
+> +		bol += len;
+> +
+> +		switch (p->field) {
+> +		case GREP_HEADER_AUTHOR:
+> +		case GREP_HEADER_COMMITTER:
+> +			strip_timestamp(bol, &eol);
+> +			break;
+> +		default:
+> +			break;
+> +		}
+> +	}
+> +
+> +	return headerless_match_one_pattern(p, bol, eol, ctx, pmatch, eflags);
+> +}
+
+So, match_one_pattern() after all the above changes behaves almost
+identically for existing callers, except that it has the "pattern
+for body should only apply to the body text" condition added, which
+may affect the behaviour.
+
+> @@ -1143,7 +1155,7 @@ static int match_next_pattern(struct grep_pat *p,
+>  {
+>  	regmatch_t match;
+>  
+> -	if (!match_one_pattern(p, bol, eol, ctx, &match, eflags))
+> +	if (!headerless_match_one_pattern(p, bol, eol, ctx, &match, eflags))
+>  		return 0;
+>  	if (match.rm_so < 0 || match.rm_eo < 0)
+>  		return 0;
+
+Since this "next" thing is designed to be repeatedly called, we use
+the new helper that is meant for <bol, eol> after we preprocessed
+the header and the trailing timestamp away, which makes sense, I
+guess.  But the caller needs to do the preprocessing before it makes
+the first call to match_next_pattern() on any given line to adjust
+bol and eol.
+
+> @@ -1158,22 +1170,28 @@ static int match_next_pattern(struct grep_pat *p,
+>  	return 1;
+>  }
+>  
+> -static int next_match(struct grep_opt *opt,
+> -		      const char *bol, const char *eol,
+> -		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
+> +int grep_next_match(struct grep_opt *opt,
+> +		    const char *bol, const char *eol,
+> +		    enum grep_context ctx, regmatch_t *pmatch,
+> +		    enum grep_header_field field, int eflags)
+>  {
+>  	struct grep_pat *p;
+>  	int hit = 0;
+>  
+>  	pmatch->rm_so = pmatch->rm_eo = -1;
+>  	if (bol < eol) {
+> -		for (p = opt->pattern_list; p; p = p->next) {
+> +		for (p = ((ctx == GREP_CONTEXT_HEAD)
+> +			   ? opt->header_list : opt->pattern_list);
+> +			  p; p = p->next) {
+>  			switch (p->token) {
+>  			case GREP_PATTERN: /* atom */
+>  			case GREP_PATTERN_HEAD:
+>  			case GREP_PATTERN_BODY:
+> -				hit |= match_next_pattern(p, bol, eol, ctx,
+> -							  pmatch, eflags);
+> +				if ((field == GREP_HEADER_FIELD_MAX) ||
+> +				    (p->field == field))
+> +					hit |= match_next_pattern(p, bol, eol,
+> +								  ctx, pmatch,
+> +								  eflags);
+
+... and this caller apparently does not.  It is made the
+responsibility of the callers of grep_next_match() to adjust bol and
+eol before calling it.
+
+>  				break;
+>  			default:
+>  				break;
+> @@ -1261,7 +1279,8 @@ static void show_line(struct grep_opt *opt,
+>  			else if (sign == '=')
+>  				line_color = opt->colors[GREP_COLOR_FUNCTION];
+>  		}
+> -		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
+> +		while (grep_next_match(opt, bol, eol, ctx, &match,
+> +				       GREP_HEADER_FIELD_MAX, eflags)) {
+
+... which is this caller, show_line(), which is the only caller of
+grep_next_match().
+
+But this function is not taught to strip headers and timestamp from
+<bol, eol>, either, so it is the responsibility of the callers of
+show_line().
+
+I _think_ all the current callers of show_line() handle the blob
+contents found by "git grep" and not "git log --grep/--author", and
+there is no GREP_PATTERN_HEAD/GREP_PATTERN_BODY given, but I may be
+mistaken.  With the current set of callers, do we ever call
+next_match() with a pattern with p->token set to GREP_PATTERN_HEAD
+or _BODY?  I am wondering why we even have those cases covered in
+the switch statement in the previous hunk.
+
+match_one_pattern() of course must be prepared to see the HEAD and
+BODY requests because match_expr_eval() is evantually called via
+grep_buffer() interface to implement "git log --grep/--author", but
+I do not think next_match() would be called in that code path.  The
+handling of GREP_PATTERN_HEAD and GREP_PATTERN_BODY in next_match(),
+which I am wondering about, came from 7e8f59d5 (grep: color patterns
+in output, 2009-03-07).
+
+Anyway, let's read on.
+
+> diff --git a/grep.h b/grep.h
+> index 3cb8a83ae8..521068308e 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -190,6 +190,10 @@ void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const
+>  void compile_grep_patterns(struct grep_opt *opt);
+>  void free_grep_patterns(struct grep_opt *opt);
+>  int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size);
+> +int grep_next_match(struct grep_opt *opt,
+> +		    const char *bol, const char *eol,
+> +		    enum grep_context ctx, regmatch_t *pmatch,
+> +		    enum grep_header_field field, int eflags);
+
+As this is made external, it at least needs a comment on the
+(somewhat strange) field parameter, especially the fact that "no,
+this is not grepping in the header lines in a commit object" is
+signalled by a special GREP_HEADER_FIELD_MAX value.
+
+>  
+>  struct grep_source {
+>  	char *name;
+
+Other than that, looks much cleaner than the previous round.
+
+Thanks.
