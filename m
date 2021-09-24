@@ -7,87 +7,120 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4417C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4581AC433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:08:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA2D261242
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:54:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 223B06124F
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234526AbhIXEzl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 00:55:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47452 "EHLO
+        id S244170AbhIXGKO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 02:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231256AbhIXEzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 00:55:40 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12658C061574
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 21:54:06 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id u11so5761964uaw.3
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 21:54:06 -0700 (PDT)
+        with ESMTP id S244177AbhIXGKN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 02:10:13 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 129D8C061756
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 23:08:38 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so6088240otb.1
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 23:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=MyMqngIVK70hqizo+jweTnmx/Y6h/vN9X9vpXRtA4yY=;
-        b=pBXzse+hoz0g/lq2u8AeO6r/89jmI2jcJAKgOheSWlTLJyXfEcMA+Hpr/94YFga6XL
-         sB+KXzY1ibtrV8QiAJSoklGHk8VnhjOdqDA/m9eDFTp3kYhY47/VKOg1cohFsnMtHaFs
-         GBBru4QB0PJp9VRt0jPcuMDsRqX2vcFS2BXI71aoZ4qbBEoJXzPUVZX1djkfmJ86E0vF
-         yBf30PXmgvKn+jvJXZEjjLKFCo+nKmU8j5c3iZel1F6lYvE+t1dxOrSXZAFqknz60rZz
-         L4KQHCxt5Oe1qavSxr7WEWWGSmjZ5VtzUW9/rmfykWUAYHv4BY9QVAkDJgJJCkBB3cGY
-         54tA==
+        bh=M9P/4Zf16Hcv/Cf/gq58KUSzi2ULBdXc2udqbLBl470=;
+        b=mHZA3zQIOTY/ttvyIZIDH6D/TRbwmKnHgYlgihS431rQ9scIhxR7dbTfzfrvLsWDdw
+         UhvCk8SsobaCPS/PQ9TgpociM7iAUkyy2WklejnQ5QJycMaUVV4KWgOZ+8uZxc3MEEQI
+         RhwWIE8lkCou1JA4k7A7hb3UqtiIDDpzTLbP8H1U5cqI9fdfvfBoELlQ14xE0TCB+fF0
+         sGMid1kdO/lhIqIix7V9H5KaCp8+7iSv6X99QPwpy9sHG9GApnmhI6fMENqCojaF+nqd
+         ozuOmvQiH/66x4LtEWDwAMW0y13jUuzA5WtStKzk+oNZb5uMN+CA+AFwfUPjq5UR/nKu
+         UOdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=MyMqngIVK70hqizo+jweTnmx/Y6h/vN9X9vpXRtA4yY=;
-        b=ELo9GVW8syMRO6sxk4eZMDugVFvgy0oi/rg+P5gOONszXEbp9D60dOTzQTb6b1fqwd
-         r6qx7OyCksDc6pLzjDWc1cdk4RM0C4lBhHk/69HZffWP/RY4MzuOzb6gOda+fQCR/N0v
-         Ub/eoBhna2x+5IZL91IwasrZj9jsLNMBxgiKzO1fbEpZYOsCLxenUOGmmkX2LaNfNPTE
-         2CrcOI5IlS1CbOxgToqWU7yBh/3Yopjuj32pPu0he58rcDOltwuYYbfj8xqQXw3E07lP
-         tKZVlfAJ2YurbRd/ZpmXsQpyQCJgZQaJABGmS7AHE/uzlrmBx4iVX5WaX7nCep+I88qB
-         ivNw==
-X-Gm-Message-State: AOAM530lMo/EIx/gUGxQLHzVg2yjAWDlETUbwPt+T9zHNpEFfg5MD/mQ
-        DiU+/dbFhmSxK+1uKQNCWiUo1mxq6CZ6PhFfJXo=
-X-Google-Smtp-Source: ABdhPJyvLcWicXakUOMpV1oZuP55Audl1cvS/J7FChNAH6G80LIp59b1WY3iEn/JT7t2/qeNyUnuNp8lGDV2jlUh6P0=
-X-Received: by 2002:ab0:7c4a:: with SMTP id d10mr7642318uaw.138.1632459245105;
- Thu, 23 Sep 2021 21:54:05 -0700 (PDT)
+        bh=M9P/4Zf16Hcv/Cf/gq58KUSzi2ULBdXc2udqbLBl470=;
+        b=UcB1qfaSVdrqDjzuy7g1OZBvxWj+Q4EIHq4Aj64FWSIm5oOQoWmCeKiF5dIzIvwe5e
+         0bLFKMX8QuXulryk7S2vsbNANVAkHWdBcXky5sR1kCoNwX3zpugM8S3YkRzali5/UOwT
+         8gBwgyofJW7X7r4r9BTs/jkxCnWmaDzdjDaoThlT6nhVUEZvGFBTod77D95/5cYq6Pnd
+         sUxfRkTOblse37YIhVLnsFPekwSuShSLMqWXDFNySu/Hy+WB4zjZ52NoikdbvNwaU/pc
+         0gSGWqCYEEgyOWSVnOYNZnCoufDJ4FLZ6Jgq2bl8aSa7PLOHDb/wv6zq/1EpbFdXZ6hz
+         e3CQ==
+X-Gm-Message-State: AOAM532TnLWGGGR4td7OFWUKnmzQJf/Gz+SdZmUvV4XnV1GvHizqeZlZ
+        YpL8jN18QIGmOwjjkDJMY6eUOz142xp3l9qcXHVTd4qdDG0=
+X-Google-Smtp-Source: ABdhPJzVvmpm3zwF8lVo+PPo3C58fsfVthxnju4zZvCEWGPJ+nRoKI+RluvVpPT+NmPMEivTmI713lPO/9DVESlcH4k=
+X-Received: by 2002:a05:6830:2b27:: with SMTP id l39mr2503049otv.25.1632463717311;
+ Thu, 23 Sep 2021 23:08:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <87zgs34ccx.fsf@evledraar.gmail.com> <20210924024606.20542-4-tbperrotta@gmail.com>
- <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
-In-Reply-To: <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 23 Sep 2021 21:53:54 -0700
-Message-ID: <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Thiago Perrotta <tbperrotta@gmail.com>, gitster@pobox.com,
-        avarab@gmail.com, git@vger.kernel.org
+References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com> <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 23 Sep 2021 23:08:25 -0700
+Message-ID: <CABPp-BGU3HgG5B7wXc-Wq1gwGYy_R9iveM7VRmUc80YhejLF1A@mail.gmail.com>
+Subject: Re: [PATCH v3 00/14] Sparse-checkout: modify 'git add', 'git rm', and
+ 'git add' behavior
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>, vdye@github.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 23, 2021 at 9:36 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+On Mon, Sep 20, 2021 at 10:45 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> On 24/09/21 09.46, Thiago Perrotta wrote:
-> >   SYNOPSIS
-> >   --------
-> >   [verse]
-> > -'git send-email' [<options>] <file|directory|rev-list options>...
-> > +'git send-email' [<options>] <file|directory>...
-> > +'git send-email' [<options>] <format-patch options>
-> >   'git send-email' --dump-aliases
+> This series is based on ds/mergies-with-sparse-index.
 >
-> Is <format-patch options> optional? If so, we can say [<format-patch
-> options>].
+> As requested, this series looks to update the behavior of git add, git rm,
+> and git mv when they attempt to modify paths outside of the sparse-checkout
+> cone. In particular, this care is expanded to not just cache entries with
+> the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
+> definition.
+>
+> This means that commands that worked before this series can now fail. In
+> particular, if 'git merge' results in a conflict outside of the
+> sparse-checkout cone, then 'git add ' will now fail.
+>
+> In order to allow users to circumvent these protections, a new '--sparse'
+> option is added that ignores the sparse-checkout patterns and the
+> SKIP_WORKTREE bit. The message for advice.updateSparsePath is adjusted to
+> assist with discovery of this option.
+>
+> There is a subtle issue with git mv in that it does not check the index
+> until it discovers a directory and then uses the index to find the contained
+> entries. This means that in non-cone-mode patterns, a pattern such as
+> "sub/dir" will not match the path "sub" and this can cause an issue.
+>
+> In order to allow for checking arbitrary paths against the sparse-checkout
+> patterns, some changes to the underlying pattern matching code is required.
+> It turns out that there are some bugs in the methods as advertised, but
+> these bugs were never discovered because of the way methods like
+> unpack_trees() will check a directory for a pattern match before checking
+> its contained paths. Our new "check patterns on-demand" approach pokes holes
+> in that approach, specifically with patterns that match entire directories.
+>
+>
+> Updates in v3
+> =============
+>
+>  * Fixed an incorrectly-squashed commit. Spread out some changes in a better
+>    way. For example, I don't add --sparse to tests before introducing the
+>    option.
+>
+>  * Use a NULL struct strbuf pointer to indicate an uninitialized value
+>    instead of relying on an internal member.
+>
+>  * Use grep over test_i18ngrep.
+>
+>  * Fixed line wrapping for error messages.
+>
+>  * Use strbuf_setlen() over modifying the len member manually.
 
-no; as Junio explained [1] this omission is intentional while the
-rev-list options that
-got cut to make space are not and are more relevant.
-
-IMHO leaving [<options>] to imply ALL options (that also include diff
-options, for example) is better
-
-Carlo
-
-[1] https://lore.kernel.org/git/xmqqh7fjuaar.fsf@gitster.g/
+I see that you and Junio had some interesting comments on the first 3
+patches, so I look forward to seeing how those play out, but you
+addressed all my feedback from the previous rounds here.
