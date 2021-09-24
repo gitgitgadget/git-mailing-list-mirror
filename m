@@ -2,108 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EEA2C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 02:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF8D5C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:22:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66BB6610C9
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 02:47:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A41DA610F7
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:22:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243990AbhIXCsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 22:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243960AbhIXCsi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 22:48:38 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A49CC061756
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 19:47:05 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id t13so2344214qtc.7
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 19:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p5miaebffGepVtspgU2vqqslmRuZ5w1xZvjmaNwSWAk=;
-        b=Wp1iQPwIkMOUfjuJIpcpJ6gLn1lSCD53lgZSvxASQFoCdZNyw6PDd5UuFcdz7Wz6Tj
-         EKH96Jvh1I+RvrYbNHgDRarHbyqGxtlm5yd/lLoTXQv9qJ3pal/5D+5za8GxM8jFBLVK
-         lRehWrSOVyDahrikBXoEJ5jsHq0OWvgBWNH9Pq1YO97z1NnHUteOKqJsf/n/6yA11N2v
-         isBc05PEtCP+w9v285as6+dqgijQceo9p/O/wnMZD5CIA5rX+m4qQlIicuga7UEhtS5o
-         eD/J6us6WKTWN6jXVE81uw89NWtnJetU+DPkKbNMyDsLml45Uv1ao83DSqnyQltNQIyo
-         qUIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p5miaebffGepVtspgU2vqqslmRuZ5w1xZvjmaNwSWAk=;
-        b=zGp4ejPe8a+vKrOYzTRtda2+JnouizaFE9EhJe2gIcdqX2W6VnuaepmQZnfm9qTrXy
-         1zQJQbAJpBR2PsVsYlgJFV6Fl/QWwq56d3TG2t/wR8p8H/n+QZS9yKtgSAFShBFx+ANk
-         pNSdvpG3kBTUTkooTy/+dTP8CJEum++o0JW8keAqS/qMEVDnY8uBDp0EkWPs9jeUmkbc
-         rMdnIjb3IhEUQ9wCRNliEFi3JZBfti/ch3oRgEsK85Oht5DZqiFNKx22YFttMNgjPstX
-         pChPYEt6kRmeccrIZHVpm0d50QHzJByw4YK9ya+PTITlnWsdawzgKLAB5bxMJ7zKpYVN
-         9Zsg==
-X-Gm-Message-State: AOAM531Ek9eBjHGJbuVj77QcQYS/0cI21832VqLpkZs+cvVU1BOX50/j
-        V95PrsO4PShzZCAMinTBcio=
-X-Google-Smtp-Source: ABdhPJzXe9X3wCk2Z512rzqBvFG2jHQOXSHXGKKmYlgv5Dj7hK3LoM5Lp4XyZwfHVITyh+qaOZvjCg==
-X-Received: by 2002:a05:622a:48d:: with SMTP id p13mr2075357qtx.282.1632451624752;
-        Thu, 23 Sep 2021 19:47:04 -0700 (PDT)
-Received: from valhalla.. (cpee03f49946310-cm589630b5b38a.cpe.net.cable.rogers.com. [99.250.23.181])
-        by smtp.gmail.com with ESMTPSA id v5sm5698011qkh.17.2021.09.23.19.47.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 19:47:04 -0700 (PDT)
-From:   Thiago Perrotta <tbperrotta@gmail.com>
-To:     carenas@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
-        avarab@gmail.com
-Cc:     Thiago Perrotta <tbperrotta@gmail.com>, git@vger.kernel.org
-Subject: [PATCH v5 3/3] send-email docs: add format-patch options
-Date:   Thu, 23 Sep 2021 22:46:06 -0400
-Message-Id: <20210924024606.20542-4-tbperrotta@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <87zgs34ccx.fsf@evledraar.gmail.com>
-References: <87zgs34ccx.fsf@evledraar.gmail.com>
+        id S232244AbhIXEXj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 00:23:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56605 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229853AbhIXEXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 00:23:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 172D9162B57;
+        Fri, 24 Sep 2021 00:22:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=mAXkGI3LkCu1gu9fwFDo9swJV
+        /9Bw/j3TpSYjhu818Y=; b=wS7tboN0MY96nFxeWjTVue8t7Kdgh19Z4nnFQvH/L
+        5pV7JbZmG2lFpW6ORzlDRqezw+IMeKU7+16dP5XqIKr5e9+56Y8C0+/2L5NOwnC7
+        i8nhdWziaMe8vM2c984OHPPUMChPMUp1BHUsZGIB7arTOdP61CfDKD3ENo05kOq6
+        Uc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F49D162B56;
+        Fri, 24 Sep 2021 00:22:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D7479162B54;
+        Fri, 24 Sep 2021 00:22:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 6/5] grep.c: mark eol/bol and derived as "const char *
+ const"
+References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
+        <patch-1.1-c317e6e125e-20210921T124416Z-avarab@gmail.com>
+        <YUnx7gt0KQNRlhuZ@coredump.intra.peff.net>
+        <874kadapq1.fsf@evledraar.gmail.com>
+        <YUowCkmWqKgIldNz@coredump.intra.peff.net>
+        <874kab5r63.fsf@evledraar.gmail.com>
+Date:   Thu, 23 Sep 2021 21:22:00 -0700
+Message-ID: <xmqq4kaay55j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F754A01A-1CEE-11EC-A22F-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-send-email(1) does not mention that "git format-patch" options are
-accepted. Augment SYNOPSIS and DESCRIPTION to mention it.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Thiago Perrotta <tbperrotta@gmail.com>
----
- Documentation/git-send-email.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> That I just don't understand, i.e. how the variable is defined in this
+> 6/5 pertains to how it gets used /inside/ the function in this case, th=
+e
+> caller code doesn't have to care, but perhaps I'm missing something...
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3db4eab4ba..41cd8cb424 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -9,7 +9,8 @@ git-send-email - Send a collection of patches as emails
- SYNOPSIS
- --------
- [verse]
--'git send-email' [<options>] <file|directory|rev-list options>...
-+'git send-email' [<options>] <file|directory>...
-+'git send-email' [<options>] <format-patch options>
- 'git send-email' --dump-aliases
- 
- 
-@@ -19,7 +20,8 @@ Takes the patches given on the command line and emails them out.
- Patches can be specified as files, directories (which will send all
- files in the directory), or directly as a revision list.  In the
- last case, any format accepted by linkgit:git-format-patch[1] can
--be passed to git send-email.
-+be passed to git send-email, as well as options understood by
-+linkgit:git-format-patch[1].
- 
- The header of the email is configurable via command-line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
--- 
-2.33.0
 
+-static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
++static struct grep_pat *create_grep_pat(const char *const pat, size_t pa=
+tlen,
+ 					const char *origin, int no,
+ 					enum grep_pat_token t,
+ 					enum grep_header_field field)
+
+Because the function signature is visible to the caller of this
+function, it sees that the callee, as part of its implementation
+detail, keeps "pat" pointer pointing at the same location.  That is
+not something the caller needs to care, even though the caller may
+deeply care that the memory locations "pat" points at will not be
+changed via the pointer by calling this function.
+
+On the other hand
+
+@@ -1438,7 +1439,7 @@ static int look_ahead(struct grep_opt *opt,
+ 		      const char **bol_p)
+ {
+ 	unsigned lno =3D *lno_p;
+-	const char *bol =3D *bol_p;
++	const char * const bol =3D *bol_p;
+ 	struct grep_pat *p;
+ 	const char *sp, *last_bol;
+ 	regoff_t earliest =3D -1;
+
+This one is totally invisible to the caller of the function, and is
+a good documentation for those who read the implementation of it.
+
+Thanks.
