@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA12C433FE
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C96C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0630C60EE9
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0A1F6124C
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347245AbhIXPlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 11:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54412 "EHLO
+        id S1347128AbhIXPlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 11:41:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347226AbhIXPk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1347182AbhIXPk7 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Sep 2021 11:40:59 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11CFAC061613
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902A7C0613E2
         for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:24 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id g16so28769716wrb.3
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:23 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id t8so28892038wri.1
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CHuU91yH6kh+CD5Uo0bNvdZ4oWb+wQY5zc7hR6FDZdA=;
-        b=IMZnZ18YieC+sYkw3vpe74OPJULpBi3r1CckwPojoisY8+7lqXPifVawjcQtDFyaan
-         qHIRFFSLNyGB1Fm6yK/eqKVNxWlwQGmmfo9qn5+QnuUJ9iIo1GuUNtO5kjcmS1u2+CCN
-         X5nvkwSMXV56d2Wc25DdbJ9vTC/d0KXAeho2SgIh8EbXt7t0+PVRfspYFVEouhwWCxxQ
-         WFJqQE29qen0ssrZznnwaLuM4reBaVHogR6GLvtMHuk1ChXHPbNz+2hblA2vYA/Oa1ZJ
-         zrYHmTNT6KC2Wlt1AbmQjc7de9s/M3EKOkX7YmLGAnUXXTxYljjcGkCUGMQAuAgwnxVz
-         cnJA==
+        bh=IqTNWyRXSwlJyMHaVGmitQJJcss5hdQINHnB6QXcZhQ=;
+        b=Aw3T3VOvgZdiDqv4rH50moVmeld0jWoSNyUy1FpvpqYRduIFq9K30UpJUywbPGCx5J
+         ByVj5ywhyjI71RmlhYtRrXNRU9+64vEpxN6jK0DHwYwyNkGrAd5HW+06gL6GqV1Fo69A
+         MkEktTAUh/9Dcqu3MMx9OQB2WUaznKnv5ZXP488xMqWEy8KqjbRxZmrCZIypnnGxfyri
+         4F3WGcVktY+zEuhaIdCgmHiwRTnPLzePFp12JDpzb5AEKlnQ+YkD56qGvyfSVYBAxRjS
+         J6RNQnAXthwJNwtC3vVaZv1sQSyq641uEZI1pztf7aTTkYkxl0mYzl+k6fVsz9xaCu0c
+         vcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CHuU91yH6kh+CD5Uo0bNvdZ4oWb+wQY5zc7hR6FDZdA=;
-        b=AgdcydNZkmJFeF8zWSNs/6f32gMNIdYEfmVRUOnpRc7HyQIhaVWTSxqzlG4nGin3Z+
-         5ONBCn15ndQrJ7eCYJKnqJG4YnzYDVU9Fl5qLbZ6hZc2kXvVUgiC9fzobmq/DkADKCUF
-         veJv2CevewaXOR7NNJoqt7mwFUra4xoZ0dkdXTkPUBfmf+kl7305hr5fqr5iu4cJojDL
-         j8spZy3RQyCgTmy1TNeCQVmndWoHtTQsmJQg/M4GHLxn2elWaD/g+xxLrMowKMzz/Kt6
-         Xb9K9BtTHa8tbksM59Pw8p9Wlrig7pVCr7PQNSs2oiFU4HJ1OeC2n/222SmWwJoeNQfj
-         9duw==
-X-Gm-Message-State: AOAM5312FErh0FdLNNpfSl6QJkilf1F4Jugx8O8Ck3YmOJ7C0iZ/1Gcc
-        mbltO4m3OSUuhMgnIdhOKompXH2zoL4=
-X-Google-Smtp-Source: ABdhPJyiyn5JEe6hbuXX6kYjzisWWjBuOJATYsH1uXtaFizsDLRtGPJsbrQLG9Pb25zqA84MIW/PLg==
-X-Received: by 2002:a05:6000:1284:: with SMTP id f4mr12423551wrx.88.1632497962601;
-        Fri, 24 Sep 2021 08:39:22 -0700 (PDT)
+        bh=IqTNWyRXSwlJyMHaVGmitQJJcss5hdQINHnB6QXcZhQ=;
+        b=ADMnOyMxvG4QwOOsdDF+7sgiq+MORcZ+H2xvxPnp/vVhA+eR8nKfNpimtGb7Huk4Qv
+         lk2C+Z4M7MWB2lpjNnLzMMxl1kY9pmCkjWeEXWs4XSeHZgRSLYwrV7OKPmzAugBMoRtf
+         lU4O1sAvPSVnPvWnQf5Md7tIOyltnu7fvW4LUG671FGV+cHrPRaVEfe+0riTODUNAe6d
+         DB2NYEjG9eFQIEm/ieyq6IzJ0G2DT8YfA+iajtyJ0ETB+b9i4bfW9DKnT8kAd3Z3L15e
+         6rDWNDARpZghpOJwCbCjjG62vQJVNVlM4PIOZ3l1ZhDz+plasCMyC5e240HvrNh1Rfej
+         N4ZQ==
+X-Gm-Message-State: AOAM530xdV1KYIezXaxrPgSeo2KZxW6O/zqT8pkDYrCT4xXOMg8+ymvj
+        sIQlP2IQInDa9IxkpPQmeXwdJ69Z91s=
+X-Google-Smtp-Source: ABdhPJz7Q5Xz33Ni4CPmWDXEy/nfa/zmLye82X9ShYAycsldyLpJqM47WL/IoEs/vkkgonPAl8w+Hg==
+X-Received: by 2002:a5d:4d92:: with SMTP id b18mr12019300wru.245.1632497963170;
+        Fri, 24 Sep 2021 08:39:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h125sm9037613wmh.9.2021.09.24.08.39.22
+        by smtp.gmail.com with ESMTPSA id v10sm9073516wri.29.2021.09.24.08.39.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 24 Sep 2021 08:39:22 -0700 (PDT)
-Message-Id: <28e703d80d38b5589dc117823d40ca99f8ad7cf3.1632497954.git.gitgitgadget@gmail.com>
+Message-Id: <9fbc88ee0dab830bdc34575e9808b8f2a04a59e9.1632497954.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
 References: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
         <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Sep 2021 15:39:13 +0000
-Subject: [PATCH v4 12/13] mv: refuse to move sparse paths
+Date:   Fri, 24 Sep 2021 15:39:14 +0000
+Subject: [PATCH v4 13/13] advice: update message to suggest '--sparse'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,345 +73,122 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Since cmd_mv() does not operate on cache entries and instead directly
-checks the filesystem, we can only use path_in_sparse_checkout() as a
-mechanism for seeing if a path is sparse or not. Be sure to skip
-returning a failure if '-k' is specified.
+The previous changes modified the behavior of 'git add', 'git rm', and
+'git mv' to not adjust paths outside the sparse-checkout cone, even if
+they exist in the working tree and their cache entries lack the
+SKIP_WORKTREE bit. The intention is to warn users that they are doing
+something potentially dangerous. The '--sparse' option was added to each
+command to allow careful users the same ability they had before.
 
-To ensure that the advice around sparse paths is the only reason a move
-failed, be sure to check this as the very last thing before inserting
-into the src_for_dst list.
+To improve the discoverability of this new functionality, add a message
+to advice.updateSparsePath that mentions the existence of the option.
 
-The tests cover a variety of cases such as whether the target is tracked
-or untracked, and whether the source or destination are in or outside of
-the sparse-checkout definition.
+The previous set of changes also modified the purpose of this message to
+include possibly a list of paths instead of only a list of pathspecs.
+Make the warning message more clear about this new behavior.
 
-Helped-by: Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/mv.c                  |  52 ++++++++--
- t/t7002-mv-sparse-checkout.sh | 186 ++++++++++++++++++++++++++++++++++
- 2 files changed, 229 insertions(+), 9 deletions(-)
- create mode 100755 t/t7002-mv-sparse-checkout.sh
+ advice.c                       | 11 ++++++-----
+ t/t3602-rm-sparse-checkout.sh  |  9 ++++++---
+ t/t3705-add-sparse-checkout.sh |  9 ++++++---
+ t/t7002-mv-sparse-checkout.sh  |  9 ++++++---
+ 4 files changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index c2f96c8e895..83a465ba831 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -118,21 +118,23 @@ static int index_range_of_same_dir(const char *src, int length,
- int cmd_mv(int argc, const char **argv, const char *prefix)
- {
- 	int i, flags, gitmodules_modified = 0;
--	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0;
-+	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0, ignore_sparse = 0;
- 	struct option builtin_mv_options[] = {
- 		OPT__VERBOSE(&verbose, N_("be verbose")),
- 		OPT__DRY_RUN(&show_only, N_("dry run")),
- 		OPT__FORCE(&force, N_("force move/rename even if target exists"),
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL('k', NULL, &ignore_errors, N_("skip move/rename errors")),
-+		OPT_BOOL(0, "sparse", &ignore_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
- 		OPT_END(),
- 	};
- 	const char **source, **destination, **dest_path, **submodule_gitfile;
--	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
-+	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX, SPARSE } *modes;
- 	struct stat st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct cache_entry *ce;
-+	struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
+diff --git a/advice.c b/advice.c
+index 0b9c89c48ab..713fff49ee3 100644
+--- a/advice.c
++++ b/advice.c
+@@ -293,15 +293,16 @@ void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
+ 	if (!pathspec_list->nr)
+ 		return;
  
- 	git_config(git_default_config, NULL);
+-	fprintf(stderr, _("The following pathspecs didn't match any"
+-			  " eligible path, but they do match index\n"
+-			  "entries outside the current sparse checkout:\n"));
++	fprintf(stderr, _("The following paths and/or pathspecs matched paths that exist\n"
++			  "outside of your sparse-checkout definition, so will not be\n"
++			  "updated in the index:\n"));
+ 	for_each_string_list_item(item, pathspec_list)
+ 		fprintf(stderr, "%s\n", item->string);
  
-@@ -176,14 +178,17 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		const char *src = source[i], *dst = destination[i];
- 		int length, src_is_dir;
- 		const char *bad = NULL;
-+		int skip_sparse = 0;
+ 	advise_if_enabled(ADVICE_UPDATE_SPARSE_PATH,
+-			  _("Disable or modify the sparsity rules if you intend"
+-			    " to update such entries."));
++			  _("If you intend to update such entries, try one of the following:\n"
++			    "* Use the --sparse option.\n"
++			    "* Disable or modify the sparsity rules."));
+ }
  
- 		if (show_only)
- 			printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
+ void detach_advice(const char *new_name)
+diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
+index 5f92b60a56a..ecce497a9ca 100755
+--- a/t/t3602-rm-sparse-checkout.sh
++++ b/t/t3602-rm-sparse-checkout.sh
+@@ -11,12 +11,15 @@ test_expect_success 'setup' "
+ 	git commit -m files &&
  
- 		length = strlen(src);
--		if (lstat(src, &st) < 0)
--			bad = _("bad source");
--		else if (!strncmp(src, dst, length) &&
-+		if (lstat(src, &st) < 0) {
-+			/* only error if existence is expected. */
-+			if (modes[i] != SPARSE)
-+				bad = _("bad source");
-+		} else if (!strncmp(src, dst, length) &&
- 				(dst[length] == 0 || dst[length] == '/')) {
- 			bad = _("can not move directory into itself");
- 		} else if ((src_is_dir = S_ISDIR(st.st_mode))
-@@ -212,11 +217,12 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				dst_len = strlen(dst);
+ 	cat >sparse_error_header <<-EOF &&
+-	The following pathspecs didn't match any eligible path, but they do match index
+-	entries outside the current sparse checkout:
++	The following paths and/or pathspecs matched paths that exist
++	outside of your sparse-checkout definition, so will not be
++	updated in the index:
+ 	EOF
  
- 				for (j = 0; j < last - first; j++) {
--					const char *path = active_cache[first + j]->name;
-+					const struct cache_entry *ce = active_cache[first + j];
-+					const char *path = ce->name;
- 					source[argc + j] = path;
- 					destination[argc + j] =
- 						prefix_path(dst, dst_len, path + length + 1);
--					modes[argc + j] = INDEX;
-+					modes[argc + j] = ce_skip_worktree(ce) ? SPARSE : INDEX;
- 					submodule_gitfile[argc + j] = NULL;
- 				}
- 				argc += last - first;
-@@ -244,14 +250,36 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			bad = _("multiple sources for the same target");
- 		else if (is_dir_sep(dst[strlen(dst) - 1]))
- 			bad = _("destination directory does not exist");
--		else
-+		else {
-+			/*
-+			 * We check if the paths are in the sparse-checkout
-+			 * definition as a very final check, since that
-+			 * allows us to point the user to the --sparse
-+			 * option as a way to have a successful run.
-+			 */
-+			if (!ignore_sparse &&
-+			    !path_in_sparse_checkout(src, &the_index)) {
-+				string_list_append(&only_match_skip_worktree, src);
-+				skip_sparse = 1;
-+			}
-+			if (!ignore_sparse &&
-+			    !path_in_sparse_checkout(dst, &the_index)) {
-+				string_list_append(&only_match_skip_worktree, dst);
-+				skip_sparse = 1;
-+			}
-+
-+			if (skip_sparse)
-+				goto remove_entry;
-+
- 			string_list_insert(&src_for_dst, dst);
-+		}
+ 	cat >sparse_hint <<-EOF &&
+-	hint: Disable or modify the sparsity rules if you intend to update such entries.
++	hint: If you intend to update such entries, try one of the following:
++	hint: * Use the --sparse option.
++	hint: * Disable or modify the sparsity rules.
+ 	hint: Disable this message with \"git config advice.updateSparsePath false\"
+ 	EOF
  
- 		if (!bad)
- 			continue;
- 		if (!ignore_errors)
- 			die(_("%s, source=%s, destination=%s"),
- 			     bad, src, dst);
-+remove_entry:
- 		if (--argc > 0) {
- 			int n = argc - i;
- 			memmove(source + i, source + i + 1,
-@@ -266,6 +294,12 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		}
- 	}
+diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+index 339ec0ed2d6..5b904988d49 100755
+--- a/t/t3705-add-sparse-checkout.sh
++++ b/t/t3705-add-sparse-checkout.sh
+@@ -44,12 +44,15 @@ test_sparse_entry_unstaged () {
  
-+	if (only_match_skip_worktree.nr) {
-+		advise_on_updating_sparse_paths(&only_match_skip_worktree);
-+		if (!ignore_errors)
-+			return 1;
-+	}
-+
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
- 		enum update_mode mode = modes[i];
-@@ -274,7 +308,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			printf(_("Renaming %s to %s\n"), src, dst);
- 		if (show_only)
- 			continue;
--		if (mode != INDEX && rename(src, dst) < 0) {
-+		if (mode != INDEX && mode != SPARSE && rename(src, dst) < 0) {
- 			if (ignore_errors)
- 				continue;
- 			die_errno(_("renaming '%s' failed"), src);
+ test_expect_success 'setup' "
+ 	cat >sparse_error_header <<-EOF &&
+-	The following pathspecs didn't match any eligible path, but they do match index
+-	entries outside the current sparse checkout:
++	The following paths and/or pathspecs matched paths that exist
++	outside of your sparse-checkout definition, so will not be
++	updated in the index:
+ 	EOF
+ 
+ 	cat >sparse_hint <<-EOF &&
+-	hint: Disable or modify the sparsity rules if you intend to update such entries.
++	hint: If you intend to update such entries, try one of the following:
++	hint: * Use the --sparse option.
++	hint: * Disable or modify the sparsity rules.
+ 	hint: Disable this message with \"git config advice.updateSparsePath false\"
+ 	EOF
+ 
 diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-new file mode 100755
-index 00000000000..07dbfeb6d17
---- /dev/null
+index 07dbfeb6d17..545748949aa 100755
+--- a/t/t7002-mv-sparse-checkout.sh
 +++ b/t/t7002-mv-sparse-checkout.sh
-@@ -0,0 +1,186 @@
-+#!/bin/sh
-+
-+test_description='git mv in sparse working trees'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' "
-+	mkdir -p sub/dir sub/dir2 &&
-+	touch a b c sub/d sub/dir/e sub/dir2/e &&
-+	git add -A &&
-+	git commit -m files &&
-+
-+	cat >sparse_error_header <<-EOF &&
-+	The following pathspecs didn't match any eligible path, but they do match index
-+	entries outside the current sparse checkout:
-+	EOF
-+
-+	cat >sparse_hint <<-EOF
-+	hint: Disable or modify the sparsity rules if you intend to update such entries.
-+	hint: Disable this message with \"git config advice.updateSparsePath false\"
-+	EOF
-+"
-+
-+test_expect_success 'mv refuses to move sparse-to-sparse' '
-+	test_when_finished rm -f e &&
-+	git reset --hard &&
-+	git sparse-checkout set a &&
-+	touch b &&
-+	test_must_fail git mv b e 2>stderr &&
-+	cat sparse_error_header >expect &&
-+	echo b >>expect &&
-+	echo e >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse b e 2>stderr &&
-+	test_must_be_empty stderr
-+'
-+
-+test_expect_success 'mv refuses to move sparse-to-sparse, ignores failure' '
-+	test_when_finished rm -f b c e &&
-+	git reset --hard &&
-+	git sparse-checkout set a &&
-+
-+	# tracked-to-untracked
-+	touch b &&
-+	git mv -k b e 2>stderr &&
-+	test_path_exists b &&
-+	test_path_is_missing e &&
-+	cat sparse_error_header >expect &&
-+	echo b >>expect &&
-+	echo e >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+
-+	git mv --sparse b e 2>stderr &&
-+	test_must_be_empty stderr &&
-+	test_path_is_missing b &&
-+	test_path_exists e &&
-+
-+	# tracked-to-tracked
-+	git reset --hard &&
-+	touch b &&
-+	git mv -k b c 2>stderr &&
-+	test_path_exists b &&
-+	test_path_is_missing c &&
-+	cat sparse_error_header >expect &&
-+	echo b >>expect &&
-+	echo c >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+
-+	git mv --sparse b c 2>stderr &&
-+	test_must_be_empty stderr &&
-+	test_path_is_missing b &&
-+	test_path_exists c
-+'
-+
-+test_expect_success 'mv refuses to move non-sparse-to-sparse' '
-+	test_when_finished rm -f b c e &&
-+	git reset --hard &&
-+	git sparse-checkout set a &&
-+
-+	# tracked-to-untracked
-+	test_must_fail git mv a e 2>stderr &&
-+	test_path_exists a &&
-+	test_path_is_missing e &&
-+	cat sparse_error_header >expect &&
-+	echo e >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse a e 2>stderr &&
-+	test_must_be_empty stderr &&
-+	test_path_is_missing a &&
-+	test_path_exists e &&
-+
-+	# tracked-to-tracked
-+	rm e &&
-+	git reset --hard &&
-+	test_must_fail git mv a c 2>stderr &&
-+	test_path_exists a &&
-+	test_path_is_missing c &&
-+	cat sparse_error_header >expect &&
-+	echo c >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse a c 2>stderr &&
-+	test_must_be_empty stderr &&
-+	test_path_is_missing a &&
-+	test_path_exists c
-+'
-+
-+test_expect_success 'mv refuses to move sparse-to-non-sparse' '
-+	test_when_finished rm -f b c e &&
-+	git reset --hard &&
-+	git sparse-checkout set a e &&
-+
-+	# tracked-to-untracked
-+	touch b &&
-+	test_must_fail git mv b e 2>stderr &&
-+	cat sparse_error_header >expect &&
-+	echo b >>expect &&
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse b e 2>stderr &&
-+	test_must_be_empty stderr
-+'
-+
-+test_expect_success 'recursive mv refuses to move (possible) sparse' '
-+	test_when_finished rm -rf b c e sub2 &&
-+	git reset --hard &&
-+	# Without cone mode, "sub" and "sub2" do not match
-+	git sparse-checkout set sub/dir sub2/dir &&
-+
-+	# Add contained contents to ensure we avoid non-existence errors
-+	mkdir sub/dir2 &&
-+	touch sub/d sub/dir2/e &&
-+
-+	test_must_fail git mv sub sub2 2>stderr &&
-+	cat sparse_error_header >expect &&
-+	cat >>expect <<-\EOF &&
-+	sub/d
-+	sub2/d
-+	sub/dir/e
-+	sub2/dir/e
-+	sub/dir2/e
-+	sub2/dir2/e
-+	EOF
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse sub sub2 2>stderr &&
-+	test_must_be_empty stderr &&
-+	git commit -m "moved sub to sub2" &&
-+	git rev-parse HEAD~1:sub >expect &&
-+	git rev-parse HEAD:sub2 >actual &&
-+	test_cmp expect actual &&
-+	git reset --hard HEAD~1
-+'
-+
-+test_expect_success 'recursive mv refuses to move sparse' '
-+	git reset --hard &&
-+	# Use cone mode so "sub/" matches the sparse-checkout patterns
-+	git sparse-checkout init --cone &&
-+	git sparse-checkout set sub/dir sub2/dir &&
-+
-+	# Add contained contents to ensure we avoid non-existence errors
-+	mkdir sub/dir2 &&
-+	touch sub/dir2/e &&
-+
-+	test_must_fail git mv sub sub2 2>stderr &&
-+	cat sparse_error_header >expect &&
-+	cat >>expect <<-\EOF &&
-+	sub/dir2/e
-+	sub2/dir2/e
-+	EOF
-+	cat sparse_hint >>expect &&
-+	test_cmp expect stderr &&
-+	git mv --sparse sub sub2 2>stderr &&
-+	test_must_be_empty stderr &&
-+	git commit -m "moved sub to sub2" &&
-+	git rev-parse HEAD~1:sub >expect &&
-+	git rev-parse HEAD:sub2 >actual &&
-+	test_cmp expect actual &&
-+	git reset --hard HEAD~1
-+'
-+
-+test_done
+@@ -11,12 +11,15 @@ test_expect_success 'setup' "
+ 	git commit -m files &&
+ 
+ 	cat >sparse_error_header <<-EOF &&
+-	The following pathspecs didn't match any eligible path, but they do match index
+-	entries outside the current sparse checkout:
++	The following paths and/or pathspecs matched paths that exist
++	outside of your sparse-checkout definition, so will not be
++	updated in the index:
+ 	EOF
+ 
+ 	cat >sparse_hint <<-EOF
+-	hint: Disable or modify the sparsity rules if you intend to update such entries.
++	hint: If you intend to update such entries, try one of the following:
++	hint: * Use the --sparse option.
++	hint: * Disable or modify the sparsity rules.
+ 	hint: Disable this message with \"git config advice.updateSparsePath false\"
+ 	EOF
+ "
 -- 
 gitgitgadget
-
