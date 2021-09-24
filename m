@@ -2,100 +2,270 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB1CBC4332F
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 931E9C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 21:07:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D327F60F13
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:54:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EB34611C8
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 21:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345966AbhIXUzg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 16:55:36 -0400
-Received: from mout.web.de ([212.227.17.11]:56747 "EHLO mout.web.de"
+        id S1346685AbhIXVIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 17:08:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54896 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1346002AbhIXUzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 16:55:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-        s=dbaedf251592; t=1632516837;
-        bh=pxLMeYwmW+uN6422bMpypdEUhkhoC5kcYjZ3Md0BrlM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=gB5gXJigCi3XOaTxjOqu8qgFy0tfXNFgsv45RtR+tvNAbrGCieLLp5Lt3w48gqoeX
-         UzkdFW5NGT49RG4zM/tkAj2W2UHBRi36Sjp9lJNOXoZGFjDw+1X4zwsp95USwmGk69
-         qS66a78UyH4c/sscaifTPSxuNWBlFfXfstwaIOHM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0MIvbh-1mRwOi0XZB-002VMd; Fri, 24 Sep 2021 22:53:57 +0200
-Subject: Re: [PATCH 1/3] show-ref: remove unused custom handling of -h
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>
-References: <20210924141920.ezfpyf4uutob2h5z@zenon.in.qult.net>
- <cover-0.3-00000000000-20210924T164820Z-avarab@gmail.com>
- <patch-1.3-c79a3907a27-20210924T164820Z-avarab@gmail.com>
- <xmqq8rzlu697.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b0b1c64d-9b53-a64f-73db-b8552c7b66a2@web.de>
-Date:   Fri, 24 Sep 2021 22:53:56 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S233217AbhIXVIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 17:08:40 -0400
+Received: (qmail 19543 invoked by uid 109); 24 Sep 2021 21:07:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Sep 2021 21:07:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13453 invoked by uid 111); 24 Sep 2021 21:07:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Sep 2021 17:07:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 24 Sep 2021 17:07:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        The Grey Wolf <greywolf@starwolf.com>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
+Message-ID: <YU49+Y+nRhl1mgof@coredump.intra.peff.net>
+References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
+ <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq8rzlu697.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4CEV7z8EzkYn3i2djxNXCMpVk0QnryaJ3uSacJpNl5WgrTu5WiD
- c0N3EsATV2EV9O+3ADwqdv3uXRhlwS77n+zvZDDLgwAaDY8rnG3syFrRl8q3uVJeARk8vYe
- iZvm6duzzsoAwI14jsH7MHtYAEYrmUpE4Fwm7bPWgKINd0CXgxwduuaDKDv9lpU37xDY1zJ
- d22hjSONrhJpyrgayldYw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uFInjiMWFGY=:jFvPjl2tzTGMTHny+dxSUP
- DWyuVcX9i9aYg+MbA1Mm5hs7Vhbp6pDLarX0iNsrnckrkxY5GBPQQpTRRJarvsMzGMCqyFZmC
- kRQ9Zpt6JBcxNj+2DR19+1j1tc6vj2Yl3WvUm0Ny56fY4lweOyjeIKhaK0QjiIk1d02ebj9RO
- r773MM+dsqLaV/+Sqe9H/iBKHB/n46/2q/zXKhVGKUzI0wOhJ+9ewnbh7HJFQxpXXZmW00q7F
- eRpnwh0WfncY8Q+d46CwTKTQkfhG/6AUolsMxbP0NuE2gPieOl82pz6pBdr+ohHP53PLbKBBp
- Z2VjBJPBP/MAVc1+ehtrPeE0eXroHRLnmnAg4IpG6rPTJNyRyZJ8JeBWhk2sTazQt5BgBURzU
- hOmi67H8Cq3389s8R2GZ0Jy4DXMzYM7xoDXo2AfipjMON5lxqjoYTxzMy3mf7lpOvjG1ZhFW8
- TRngX5NFvPnhfAvOnMjE1h/UGWFvwPjgobUwmSpo+kPG17lNx4zj5Duvh1qgPs+Of5Jm8pzva
- qJ9LXTzjvKZhM0sbTdyF0FBe8tgX7vGjuXLm9So5gdhs4svgKP2MYcu6QJm76qAR9IEuIKNr+
- fBwYhfKkyR7C4PWPrJPVhPyEK/7Ojw1UX8SMYRwIL0BqUhK39ENWJLluPJXk89r2Br+A1b4t/
- KExqwLK1qLuQcn3b3O3jqTDPrg0UQTDYVw5QXJhdyBN4mTMlqm6B5vbXWMqSmqEX6jvarPUyB
- /z927BpguDGbQ8ZcuaC1UHDCuWgRFv0Ajm4AIwubSOLXE0kjbaTSwSNAwTnTTErHD+sRARYJX
- JsrRnegTr9PT9zXKlbeOYldCRsURomCIunAfxxJL0XlV15BYgjGE4hJprY2cTNYJY8y5zlwPM
- 51u2fmK4m8+9DdYr+4HIkTI7tYKNaIpEZ8hqae+MGysSZO2yfO8H5jgOwvdji4ws9waHdlIuf
- hnRFVxbyBMDoXB7dwlQA+Ki0KM/mJdLZAteAj+InHi1abFTbRZ3S0SBha29yi0XRvvoTVe/D5
- sE5Cp804puu67ZYoeHHwcggMf6xpVBvB+rVZbKJGmcC/o4ocMaVXx86Q+yfM5Kj9JDqyrlzXZ
- szi/M+RGrEryRY=
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.09.21 um 21:24 schrieb Junio C Hamano:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Since b92891f9783 (parseopt: add PARSE_OPT_NO_INTERNAL_HELP,
->> 2009-03-08) parse_options() has handled "-h" unless told not to, so
->> when show-ref was migrated to parse_options() in
->> 69932bc6117 (show-ref: migrate to parse-options, 2009-06-20) the
->> custom "-h" handling that was retained did nothing.
->>
->> The option was then hidden in e62b3935056 (Show usage string for 'git
->> show-ref -h', 2009-11-09), but that OPT_BOOLEAN didn't do
->> anything. Let's just remove this dead code.
->>
->> Reported-by: Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
->> ---
->>  builtin/show-ref.c | 2 --
->>  1 file changed, 2 deletions(-)
->
-> While this is a fine no-op, I am not sure this "fixes" complaint
-> in Ignacy's report.  "git show-ref -h" would (and should) show the
-> short-help, no?
->
+On Fri, Sep 24, 2021 at 02:58:04AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-It would, but -h is not a no-op without this patch.  The option is
-equivalent to --heads as long as it's not the only argument.  E.g. it
-has an effect in "git show-ref -h HEA." or "git show-ref -hh".
+> Add an "includeIf" directive that's conditional on the value of an
+> environment variable. This has been suggested at least a couple of
+> times[1][2] as a proposed mechanism to drive dynamic includes, and to
+> e.g. match based on TERM=xterm in the user's environment.
 
-Ren=C3=A9
+Thanks. I think this is a reasonable thing to have (not surprising,
+since both of those suggestion references point to me!), and it's not
+much of a burden to carry, even if it isn't all that commonly used.
+
+I probably would have started with a smaller set of variants (just
+equality, with a missing variable presented as an empty string). But I
+don't think the bool/glob/exists variants are a lot of extra code or
+complexity.
+
+> I initially tried to implement just an "env" keyword, but found that
+> splitting them up was both easier to implement and to explain to
+> users. I.e. an "env" will need to handle an optional "=" for matching
+> the value, and should the semantics be if the variable exists? If it's
+> boolean?
+> 
+> By splitting them up we present a less ambiguous interface to users,
+> and make it easy to extend this in the future. I didn't see any point
+> in implementing a "/i" variant, that only makes sense for "gitdir"'s
+> matching of FS paths.
+
+I had thought to extend with the operator, like:
+
+  # equality
+  [includeIf "env:FOO==value"]
+  # regex
+  [includeIf "env:FOO=~v[a]l"]
+
+But as you note, "=" is somewhat problematic, and without that we can't
+use the "usual" operators. Plus there's no usual operator for globbing. ;)
+So embedding it in the name is fine by me (and mostly a bikeshed thing
+anyway).
+
+I agree we don't really need a "/i" variant here.
+
+> I would like syntax that used a "=" better, i.e. "envIs:TERM=xterm"
+> instead of the "envIs:TERM:xterm" implemented here, but the problem
+> with that is that it isn't possible to specify those sorts of config
+> keys on the command-line:
+> 
+>     $ git -c includeIf.someVerb:FOO:BAR.path=bar status --short
+>     $ git -c includeIf.someVerb:FOO=BAR.path=bar status --short
+>     error: invalid key: includeIf.someVerb:FOO
+>     fatal: unable to parse command-line config
+>     $
+
+Yeah, it's annoying that it doesn't work, and it's nice to think about
+that when designing the syntax. OTOH, I kind of wonder how often folks
+would write such a thing anyway. For one-offs like this, you'd just do
+an unconditional include (or set the actual variables you care about)
+anyway. This kind of conditional stuff is much more likely to appear in
+an actual file.
+
+Plus we will be stuck with whatever syntax we design here forever.
+Whereas we may eventually provide a split version of "-c" that can
+handle names with equals, at which point our syntax decision here will
+just be a historical wart. In fact, we already have "--config-env" that
+can do this.
+
+>  Documentation/config.txt  | 35 ++++++++++++++++++++
+>  config.c                  | 61 +++++++++++++++++++++++++++++++++--
+>  t/t1305-config-include.sh | 67 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 161 insertions(+), 2 deletions(-)
+
+The patch itself looks correct to me. Everything below is bikeshedding
+(as if the parts above were not!), but you may or may not find some of
+it compelling.
+
+> +`envExists`::
+> [...]
+> +`envMatch`::
+
+As I said, these four variants seem OK. Two other variants we might
+consider:
+
+  - regex vs glob; I think globbing is probably fine for now and regex
+    would be overkill. We might want to reconsider the use of the word
+    "match" though, since I assumed it to be a regex at first.
+
+  - negation; for the TERM example discussed recently, I wonder if TERM
+    != xterm would be a more natural fit. I had imagined "!=" as the
+    operator, but in your scheme, it would probably be "!envIs", etc.
+
+> +There is no way to match an environment variable name with any of the
+> +`env*` directives if that variable name contains a ":" character. Such
+> +names are allowed by POSIX, but it is assumed that nobody will need to
+> +match such a variable name in practice.
+
+That seems like a perfectly reasonable restriction.
+
+Should we allow whitespace around key names and values? E.g.:
+
+  [includeIf "env: FOO: bar"]
+
+is IMHO more readable (even more so if we had infix operators like
+"==").
+
+> +static int include_by_env_exists(const char *cond, size_t cond_len)
+> +{
+> +	char *cfg = xstrndup(cond, cond_len);
+> +	int ret = !!getenv(cfg);
+> +	free(cfg);
+> +	return ret;
+> +}
+
+Having to xstrndup() in each one of these is ugly. But doing it in the
+caller would be even uglier, as we don't discover cond/cond_len until we
+match via skip_prefix() in the big if/else chain. And certainly it's not
+new to your patch anyway, just something I noticed.
+
+BTW, I notice you used xmemdupz() in one case later on. I generally
+prefer it to xstrndup() because it's more straight-forward: the string
+is this long, and it needs to be NUL-terminated. Whereas xstrndup() is
+_mostly_ equivalent, but will produce a smaller string if there are
+embedded NULs. We would not expect them in this case, so I don't think
+it matters functionally. It just seemed funny to me to see them mixed.
+
+(I actually suspect 99% or more of xstrndup() calls should just be
+xmemdupz(), and I'd be happy to consolidate and drop one of them, but it
+would be finicky looking at each one to see if that's really true).
+
+> +static int include_by_env_match(const char *cond, size_t cond_len, int glob,
+> +				int *err)
+> +{
+> +	const char *eq;
+> +	const char *value;
+> +	const char *env;
+> +	char *cfg = xstrndup(cond, cond_len);
+> +	char *key = NULL;
+> +	int ret = 0;
+> +
+> +	eq = strchr(cfg, ':');
+> +	if (!eq) {
+> +		*err = error(_("'%s:%.*s' missing a ':' to match the value"),
+> +			     glob ? "envMatch" : "envIs", (int)(cond_len),
+> +			     cond);
+
+You made a string out of (cond, cond_len) already, so you could just use
+"cfg" here in the error (what you have isn't wrong, but I always find
+%.*s hard to read).
+
+> +	key = xmemdupz(cfg, eq - cfg);
+
+And this is the mixed xstrndup()/xmemdupz() case I mentioned. :)
+
+>  static int include_condition_is_true(const struct config_options *opts,
+> -				     const char *cond, size_t cond_len)
+> +				     const char *cond, size_t cond_len,
+> +				     int *err)
+
+OK, we need to return not just "true" or "not true" from the return now,
+so we stuff it into an out-parameter. We could use a tri-state instead.
+Our if-else would already propagate it:
+
+> @@ -301,6 +350,14 @@ static int include_condition_is_true(const struct config_options *opts,
+>  		return include_by_gitdir(opts, cond, cond_len, 1);
+>  	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
+>  		return include_by_branch(cond, cond_len);
+> +	else if (skip_prefix_mem(cond, cond_len, "envExists:", &cond, &cond_len))
+> +		return include_by_env_exists(cond, cond_len);
+> +	else if (skip_prefix_mem(cond, cond_len, "envBool:", &cond, &cond_len))
+> +		return include_by_env_bool(cond, cond_len);
+> +	else if (skip_prefix_mem(cond, cond_len, "envIs:", &cond, &cond_len))
+> +		return include_by_env_match(cond, cond_len, 0, err);
+> +	else if (skip_prefix_mem(cond, cond_len, "envMatch:", &cond, &cond_len))
+> +		return include_by_env_match(cond, cond_len, 1, err);
+
+But it would mess up this:
+
+>  	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
+> -	    (cond && include_condition_is_true(inc->opts, cond, cond_len)) &&
+> +	    (cond && include_condition_is_true(inc->opts, cond, cond_len, &ret)) &&
+>  	    !strcmp(key, "path"))
+>  		ret = handle_path_include(value, inc);
+
+So the out-parameter seems like a reasonable path.
+
+I did find it interesting that there are no other error-cases in the
+existing conditions. They mostly just evaluate to false (including if we
+don't recognize the condition at all). But in the cases you're catching
+here, it really is syntactic nonsense.
+
+I guess you could define "there is no colon" as "the value we'd parse
+after it is assumed to be the empty string" which makes the error case
+go away. I'm not sure it really matters all that much either way in
+practice.
+
+> +test_expect_success 'conditional include, envExists:*' '
+> +	echo value >expect &&
+> +	git config -f envExists.cfg some.key $(cat expect) &&
+> +
+> +	test_must_fail git -c includeIf.envExists:VAR.path="$PWD/envExists.cfg" config some.key 2>err &&
+> +	test_must_be_empty err &&
+
+The tests all look sane to me. We do define some exit codes for
+git-config here, so:
+
+  test_expect_code 1 git -c ...
+
+would be tighter (and you could probably just ditch the empty-err check
+then).
+
+Obviously avoiding the "=" question is beneficial here for testing via
+"-c".  As I said earlier, I think it's more realistic to expect these in
+actual files, but I think testing them either way is fine. If you did
+test them in a file, though, you could use a relative path in the
+include. Plus all three invocations could use the same file, so you
+don't have to repeat it over and over. I.e.:
+
+  test_config includeIf.envExists:VAR.path envExists.cfg &&
+
+  test_expect_code 1 git config some.key &&
+
+  VAR= git config some.key >actual &&
+  test_cmp expect actual &&
+
+  VAR=0 git config some.key >actual &&
+  test_cmp expect actual
+
+should work.
+
+-Peff
