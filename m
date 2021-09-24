@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A554C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C735AC433FE
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:53:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58EBE60E75
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:53:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABE52604DB
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236932AbhIXXzH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 19:55:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54832 "EHLO
+        id S245016AbhIXXzI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 19:55:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232695AbhIXXzG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235874AbhIXXzG (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Sep 2021 19:55:06 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 581B6C061613
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2FB6C061571
         for <git@vger.kernel.org>; Fri, 24 Sep 2021 16:53:32 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id d6so31935621wrc.11
+Received: by mail-wr1-x430.google.com with SMTP id w29so31987876wra.8
         for <git@vger.kernel.org>; Fri, 24 Sep 2021 16:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qaojmrOCfEqu729QPdI/H8/1KHs81q8gLQkfiU1S9D8=;
-        b=S1b0vgtFdY9MrfV3UAPyr1cZzZ+NgT6VyTiYwJPM6IFM6d4WlC0D9IU0iujVvQPk1H
-         3wAr1OMLc9/El1Qb+5wKL2JV+ylWyz+MbEjMBmixcY5uL+xE1p+0UcODb+L8tbjFFY4I
-         zDOO/kZStppD6p0IANdKlvPp5sPf6DpxCoJayzXYmzNgkNrkMnP5njLo1X9IncInna9k
-         je9S6fQqP3ZeDpduEvVBdpmovV6N4CH+/RG8HAnA/UWB8sdxmMxlM7T3uEeoumV7itZp
-         ie6aic86vPSCKZ1KMbnM0bGs1NbmLhSmI3Y0ayyBIq6CkLw+0iiLQQT4xcg5es1rRHpb
-         E+0g==
+        bh=7X2vP95Nrih2/ZYF5MeQkFO3N7Ybz8M6MMt6amHXYUA=;
+        b=RHXLDyCHpMx9ls3U4mHL1tguKOjEy1+9EkKRD/mmBMb73vKPIijCvXj46ooeAn2G3V
+         NZdsuqdSp1G7fF+rl1dt2ZlMXRJkC5GZYFgJ1Jjb3ymk5M1Mr9x8vB+zQHtWTsJQZoBC
+         GURXkxQkC2SKUJea+AH5v99fjmKO6KA06IniXiHZlj/vNDOzal13psDHBm41rnXyfEHw
+         g0L+ycwL0nCkOLdtbGbH/9sYjL+Cyh823aK3/iBjpF9Hr90MrbZye7kMsWp3IFuhvWit
+         GYAcGR0vQcxRGSq8XQubnVde+Eycu3phDOuVWAE5Il1C1zY2+uMBlatXhAG53M+pljFe
+         nY3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qaojmrOCfEqu729QPdI/H8/1KHs81q8gLQkfiU1S9D8=;
-        b=1br1ZuNec4jmXYbWDWFSZqixOspJBmHs3fM6Gm1F2hMa6XvS+ssxa4bAG/6Z8hKA5w
-         j9x/hk1GrxcBHWoOKtBXC9y0lW0lL6MLXfUIfZ38UGg4nfwggNjlpjIdBENLfZDXBIHf
-         JaFHK2FKYgIkIlOENUbGVYOJ/+f9WdM/jnGyYZmxZbPufKGCXbYNq+F3RqMO8GiLf9JG
-         OmmSux4uP4yz9ZBW/FEnHacpgiYVPI0agPF25oKy+o1oMO2LYrQZimuIUPvip4pU8qdH
-         peorAUoamtHQl5nzMdmPRWlPYy7jvuBjQIAGDm1N2BdA3iEuqH2rpR5tyFtNdI/GOjxZ
-         AkXQ==
-X-Gm-Message-State: AOAM532ja6Cj7TZR9ZSMcjXpsRmPwePnIKWpMxzLRvNfDCzOxNkk2Vot
-        vKCCRpdVNWH4xAnHXC8b4zLA1WJZkJY=
-X-Google-Smtp-Source: ABdhPJwy6qhHxXeUMOBg83m+ueWkAAcIOouU0Xn3AgSz5oOwgwN5jexZ+Hsc7kkaJCSl4WWxJuJf+g==
-X-Received: by 2002:adf:a549:: with SMTP id j9mr3319203wrb.353.1632527610867;
-        Fri, 24 Sep 2021 16:53:30 -0700 (PDT)
+        bh=7X2vP95Nrih2/ZYF5MeQkFO3N7Ybz8M6MMt6amHXYUA=;
+        b=P0H+jbUtMli/z39DfH9LDteQdAu6WhLKBvAFmIwu7LEvt8RAaSOtU2pxVPMn0ClpXf
+         kihmDDy9btEqFJabvo6hRW0/6GTRD6rfckqbnNk39A1b4houV0WfedqOzfoNjDh1Qznn
+         6tYHt+GPFT71x5l2l57CTztVtfc0SPfSNXjROVvI1rfzG5eYVO/sxjCllhNWuV2yV8xN
+         Z+5HWsCBDIXZW+UrIadPzQZwxXd8DzYpnV90oymT9HJcyNTNa04dvP9VKtdGRvrhw9lf
+         6iH+cO53+0tr3Y9dpO3Cl62/RXNaNNlJG7LiavZBf0MGVo8P5g62sHlb8fZTIFdQCk1y
+         i3qQ==
+X-Gm-Message-State: AOAM5335rI9Rf1s2IzObD+7do1v+jFyFA0YlN4TTByaNyV85FWrSZyd1
+        BnUDNy+auhLB0tIrCsfLJnxYUcYeGps=
+X-Google-Smtp-Source: ABdhPJxlt/wqHSlmlfmyzwcw8nX+DpZCJt6zMsN2teAVy20a4WhAtIFK7oN0BKzRqCiOQcLcEMNKmw==
+X-Received: by 2002:a7b:c3d2:: with SMTP id t18mr4541087wmj.33.1632527611373;
+        Fri, 24 Sep 2021 16:53:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h1sm9526680wmb.7.2021.09.24.16.53.30
+        by smtp.gmail.com with ESMTPSA id h18sm11212363wmq.23.2021.09.24.16.53.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 16:53:30 -0700 (PDT)
-Message-Id: <e4081f81f6ae4876bf3dff09b708c9ea89fffa59.1632527609.git.gitgitgadget@gmail.com>
+        Fri, 24 Sep 2021 16:53:31 -0700 (PDT)
+Message-Id: <ebba65e040cfa0b9d157e0dc383a6213c81f1943.1632527609.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com>
 References: <pull.1076.v5.git.git.1632514331.gitgitgadget@gmail.com>
         <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Sep 2021 23:53:22 +0000
-Subject: [PATCH v6 1/8] object-file.c: do not rename in a temp odb
+Date:   Fri, 24 Sep 2021 23:53:23 +0000
+Subject: [PATCH v6 2/8] bulk-checkin: rename 'state' variable and separate
+ 'plugged' boolean
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,187 +79,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-If a temporary ODB is active, as determined by GIT_QUARANTINE_PATH
-being set, create object files with their final names. This avoids
-an extra rename beyond what is needed to merge the temporary ODB in
-tmp_objdir_migrate.
+Preparation for adding bulk-fsync to the bulk-checkin.c infrastructure.
 
-Creating an object file with the expected final name should be okay
-since the git process writing to the temporary object store is the
-only writer, and it only invokes write_loose_object/create_object_file
-after checking that the object doesn't exist.
+* Rename 'state' variable to 'bulk_checkin_state', since we will later
+  be adding 'bulk_fsync_state'.  This also makes the variable easier to
+  find in the debugger, since the name is more unique.
+
+* Move the 'plugged' data member of 'bulk_checkin_state' into a separate
+  static variable. Doing this avoids resetting the variable in
+  finish_bulk_checkin when zeroing the 'bulk_checkin_state'. As-is, we
+  seem to unintentionally disable the plugging functionality the first
+  time a new packfile must be created due to packfile size limits. While
+  disabling the plugging state only results in suboptimal behavior for
+  the current code, it would be fatal for the bulk-fsync functionality
+  later in this patch series.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- environment.c  |  4 ++++
- object-file.c  | 51 ++++++++++++++++++++++++++++++++++----------------
- object-store.h |  6 ++++++
- repository.c   |  2 ++
- repository.h   |  1 +
- 5 files changed, 48 insertions(+), 16 deletions(-)
+ bulk-checkin.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index d6b22ede7ea..d9ba68402e9 100644
---- a/environment.c
-+++ b/environment.c
-@@ -177,6 +177,10 @@ void setup_git_env(const char *git_dir)
- 	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
- 	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
- 	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
-+	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+		args.object_dir_is_temp = 1;
-+	}
-+
- 	repo_set_gitdir(the_repository, git_dir, &args);
- 	strvec_clear(&to_free);
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index b023d9959aa..f117d62c908 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -10,9 +10,9 @@
+ #include "packfile.h"
+ #include "object-store.h"
  
-diff --git a/object-file.c b/object-file.c
-index a8be8994814..ab593515cec 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1800,12 +1800,17 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
- }
+-static struct bulk_checkin_state {
+-	unsigned plugged:1;
++static int bulk_checkin_plugged;
  
- /*
-- * Move the just written object into its final resting place.
-+ * Move the just written object into its final resting place,
-+ * unless it is already there, as indicated by an empty string for
-+ * tmpfile.
-  */
- int finalize_object_file(const char *tmpfile, const char *filename)
++static struct bulk_checkin_state {
+ 	char *pack_tmp_name;
+ 	struct hashfile *f;
+ 	off_t offset;
+@@ -21,7 +21,7 @@ static struct bulk_checkin_state {
+ 	struct pack_idx_entry **written;
+ 	uint32_t alloc_written;
+ 	uint32_t nr_written;
+-} state;
++} bulk_checkin_state;
+ 
+ static void finish_bulk_checkin(struct bulk_checkin_state *state)
  {
- 	int ret = 0;
- 
-+	if (!*tmpfile)
-+		goto out;
-+
- 	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
- 		goto try_rename;
- 	else if (link(tmpfile, filename))
-@@ -1878,21 +1883,37 @@ static inline int directory_size(const char *filename)
- }
- 
- /*
-- * This creates a temporary file in the same directory as the final
-- * 'filename'
-+ * This creates a loose object file for the specified object id.
-+ * If we're working in a temporary object directory, the file is
-+ * created with its final filename, otherwise it is created with
-+ * a temporary name and renamed by finalize_object_file.
-+ * If no rename is required, an empty string is returned in tmp.
-  *
-  * We want to avoid cross-directory filename renames, because those
-  * can have problems on various filesystems (FAT, NFS, Coda).
-  */
--static int create_tmpfile(struct strbuf *tmp, const char *filename)
-+static int create_objfile(const struct object_id *oid, struct strbuf *tmp,
-+			  struct strbuf *filename)
+@@ -260,21 +260,23 @@ int index_bulk_checkin(struct object_id *oid,
+ 		       int fd, size_t size, enum object_type type,
+ 		       const char *path, unsigned flags)
  {
--	int fd, dirlen = directory_size(filename);
-+	int fd, dirlen, is_retrying = 0;
-+	const char *object_name;
-+	static const int object_mode = 0444;
- 
-+	loose_object_path(the_repository, filename, oid);
-+	dirlen = directory_size(filename->buf);
-+
-+retry_create:
- 	strbuf_reset(tmp);
--	strbuf_add(tmp, filename, dirlen);
--	strbuf_addstr(tmp, "tmp_obj_XXXXXX");
--	fd = git_mkstemp_mode(tmp->buf, 0444);
--	if (fd < 0 && dirlen && errno == ENOENT) {
-+	if (!the_repository->objects->odb->is_temp) {
-+		strbuf_add(tmp, filename->buf, dirlen);
-+		object_name = "tmp_obj_XXXXXX";
-+		strbuf_addstr(tmp, object_name);
-+		fd = git_mkstemp_mode(tmp->buf, object_mode);
-+	} else {
-+		fd = open(filename->buf, O_CREAT | O_EXCL | O_RDWR, object_mode);
-+	}
-+
-+	if (fd < 0 && dirlen && errno == ENOENT && !is_retrying) {
- 		/*
- 		 * Make sure the directory exists; note that the contents
- 		 * of the buffer are undefined after mkstemp returns an
-@@ -1900,15 +1921,15 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
- 		 * scratch.
- 		 */
- 		strbuf_reset(tmp);
--		strbuf_add(tmp, filename, dirlen - 1);
-+		strbuf_add(tmp, filename->buf, dirlen - 1);
- 		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
- 			return -1;
- 		if (adjust_shared_perm(tmp->buf))
- 			return -1;
- 
- 		/* Try again */
--		strbuf_addstr(tmp, "/tmp_obj_XXXXXX");
--		fd = git_mkstemp_mode(tmp->buf, 0444);
-+		is_retrying = 1;
-+		goto retry_create;
- 	}
- 	return fd;
+-	int status = deflate_to_pack(&state, oid, fd, size, type,
++	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
+ 				     path, flags);
+-	if (!state.plugged)
+-		finish_bulk_checkin(&state);
++	if (!bulk_checkin_plugged)
++		finish_bulk_checkin(&bulk_checkin_state);
+ 	return status;
  }
-@@ -1925,14 +1946,12 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	static struct strbuf filename = STRBUF_INIT;
  
--	loose_object_path(the_repository, &filename, oid);
--
--	fd = create_tmpfile(&tmp_file, filename.buf);
-+	fd = create_objfile(oid, &tmp_file, &filename);
- 	if (fd < 0) {
- 		if (errno == EACCES)
- 			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
- 		else
--			return error_errno(_("unable to create temporary file"));
-+			return error_errno(_("unable to create object file"));
- 	}
+ void plug_bulk_checkin(void)
+ {
+-	state.plugged = 1;
++	assert(!bulk_checkin_plugged);
++	bulk_checkin_plugged = 1;
+ }
  
- 	/* Set it up */
-diff --git a/object-store.h b/object-store.h
-index b4dc6668aa2..f8c883a5730 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -26,6 +26,12 @@ struct object_directory {
- 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
- 	struct oidtree *loose_objects_cache;
- 
-+	/*
-+	 * This is a temporary object store, so there is no need to
-+	 * create new objects via rename.
-+	 */
-+	int is_temp;
-+
- 	/*
- 	 * Path to the alternative object store. If this is a relative path,
- 	 * it is relative to the current working directory.
-diff --git a/repository.c b/repository.c
-index b2bf44c6faf..a16de04dfa8 100644
---- a/repository.c
-+++ b/repository.c
-@@ -80,6 +80,8 @@ void repo_set_gitdir(struct repository *repo,
- 	expand_base_dir(&repo->objects->odb->path, o->object_dir,
- 			repo->commondir, "objects");
- 
-+	repo->objects->odb->is_temp = o->object_dir_is_temp;
-+
- 	free(repo->objects->alternate_db);
- 	repo->objects->alternate_db = xstrdup_or_null(o->alternate_db);
- 	expand_base_dir(&repo->graft_file, o->graft_file,
-diff --git a/repository.h b/repository.h
-index 3740c93bc0f..d3711367a6f 100644
---- a/repository.h
-+++ b/repository.h
-@@ -162,6 +162,7 @@ struct set_gitdir_args {
- 	const char *graft_file;
- 	const char *index_file;
- 	const char *alternate_db;
-+	int object_dir_is_temp;
- };
- 
- void repo_set_gitdir(struct repository *repo, const char *root,
+ void unplug_bulk_checkin(void)
+ {
+-	state.plugged = 0;
+-	if (state.f)
+-		finish_bulk_checkin(&state);
++	assert(bulk_checkin_plugged);
++	bulk_checkin_plugged = 0;
++	if (bulk_checkin_state.f)
++		finish_bulk_checkin(&bulk_checkin_state);
+ }
 -- 
 gitgitgadget
 
