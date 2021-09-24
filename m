@@ -2,93 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE34C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 17:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D500AC433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE0261250
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 17:59:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB995610C7
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344593AbhIXSAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 14:00:45 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53983 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344419AbhIXSAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 14:00:44 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 358AF166BDB;
-        Fri, 24 Sep 2021 13:59:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GJbbtCB+naRE
-        lOWpEXOufendx17DK0L/u5PFuYUW2vo=; b=OD3sRaIRNMScHNOmXoqy4pITCOjJ
-        C5kg6DPlQR2YWLFLN0qRF9i26dNgX1VabdhuKCAbVhjdNGEdrvHTE9uApviqMVIU
-        agweXJKdBZrhgxVa+33fcLKh1l85J3owOsomKwt7bbCtxCieqgW2ivT93gJxmmkP
-        9aTXR42/3Sv7Fek=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D9B9166BDA;
-        Fri, 24 Sep 2021 13:59:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 90AE9166BD3;
-        Fri, 24 Sep 2021 13:59:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matthias =?utf-8?Q?A=C3=9Fhauer?= via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: Is "make check-docs" useful anymore?
-References: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
-        <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
-        <bc9a4534f5bc6756ab2df869b55e390183c4ff30.1631626038.git.gitgitgadget@gmail.com>
-        <87o88i2keu.fsf@evledraar.gmail.com>
-Date:   Fri, 24 Sep 2021 10:59:07 -0700
-In-Reply-To: <87o88i2keu.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 24 Sep 2021 15:00:42 +0200")
-Message-ID: <xmqqpmsxvor8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1347728AbhIXSC1 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 24 Sep 2021 14:02:27 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:26728 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347774AbhIXSCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 14:02:22 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 18OI0gBa041092
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 24 Sep 2021 14:00:43 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Russell, Scott'" <Scott.Russell2@ncr.com>,
+        "'Emily Shaffer'" <emilyshaffer@google.com>
+Cc:     <git@vger.kernel.org>
+References: <BN6PR15MB1426A342CBA9D993C0C49E55CBA49@BN6PR15MB1426.namprd15.prod.outlook.com> <CAJoAoZ=DuqHe2brN8Y2Ts0_afEhUNrdasRBb1O8HHomLKRJ4PA@mail.gmail.com> <BN6PR15MB14261D1A350398C0C26793E1CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+In-Reply-To: <BN6PR15MB14261D1A350398C0C26793E1CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+Subject: RE: pull failed - why should I receive this message.
+Date:   Fri, 24 Sep 2021 14:00:37 -0400
+Message-ID: <000401d7b16e$17ea02d0$47be0870$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1D86FDEC-1D61-11EC-A2BA-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGWcii2WKBFANC2DS0vdPx70Z6ntAIBtWyzApdZ7ESsES7psA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> I didn't notice until after it hit master that this caused a regression
-> in "make check-docs":
+On September 24, 2021 1:34 PM Scott Russell wrote:
 >
->     $ make -s check-docs
->     removed but documented: git-version
+>Thanks for your answer.   Is there not an option on the pull to have git to overwrite the existing files?
 >
-> The "fix" is rather easy, i.e. adding "git-version" to the whitelist.
+>-----Original Message-----
+>From: Emily Shaffer <emilyshaffer@google.com>
+>Sent: Friday, September 24, 2021 1:29 PM
+>To: Russell, Scott <Scott.Russell2@ncr.com>
+>Cc: git@vger.kernel.org
+>Subject: Re: pull failed - why should I receive this message.
 >
-> But I wondered about $subject, i.e. we want to run the "lint" part, but
-> do we really need something reminding us that there isn't a mapping
-> between Documentation/*.txt and *.o files present at the top-level?
+>*External Message* - Use caution before opening links or attachments
+>
+>On Fri, Sep 24, 2021 at 10:08 AM Russell, Scott <Scott.Russell2@ncr.com> wrote:
+>>
+>> Files not previously in git were added to git.   Why should I have to manually delete them?
+>> Why can git put not replace them?  They were untracked files that are now tracked  and so the git copy is desired.
+>> We can't always know ahead of time what files may have been added elsewhere.
+>
+>To turn it around on you, you can't always know ahead of time what files may have been added elsewhere, so you can't be sure that your
+>newly added untracked file locally will be safe from being overwritten during a pull. How upsetting if you sink 30 hours into newlib.cpp
+>and then your teammate checks in their own newlib.cpp, and yours is overwritten without asking when you run 'git pull'.
+>
+>You might have some luck with the '--autostash' option, which would at least prompt you whether to get rid of things when trying to
+>merge them back together during the automatic 'git stash pop' at the end. Or you could run 'git clean --force' to automatically delete any
+>untracked files you might have - you could even alias yourself a command like 'git dangerous-pull' which runs 'git clean -f && git pull'.
+>
+>>
+>>
+>> We need the pull to work automatically.
+>>
+>> error: The following untracked working tree files would be overwritten by merge:
+>>         Staging/CADDApps/CADDUIHelper/Source/Release/CADDUIHelper.exe
+>>         Staging/CADDApps/CADDUIHelper/Source/Release_Unicode/CADDUIHelper.exe
+>>         Staging/CADDApps/InstallDriversPackage/Release/InstallDriversPackage.exe
+>>         Staging/Common/NCRCommonCCLib/Source/Release/NCRCommonCCLibMsg.dll
+>>         Staging/Devices/NFC/Elatec_RFIDReader/Bin/Director.exe
+>>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/AppBlaster.exe
+>>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/flash.exe
+>>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DIFxAPI.dll
+>>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DriverForge.v4.5.4.exe
+>>         Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriverInstaller.exe
+>>         Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriverInstallerMsg.dll
+>>
+>> Staging/Utilities64/SSPSWTaskMgr/Source/Release/SSPSWTaskMgr.exe
+>
+>Or better yet, you could avoid checking in compiled binaries like these and instead add them to your .gitignore, unless you really mean to
+>update them every time someone makes some change. When checking in binaries, you should be aware of the additional disk overhead
+>needed to do so and take a look at some options Git has to mitigate that overhead, like partial clone. However, in many cases the easiest
+>way to mitigate that overhead is to simply not check in binaries unless you absolutely need them to be version controlled.
+>
+>- Emily
 
-There were multiple things check-docs wanted to catch originally.
+If you are scripting this, try using git clean -dxf and git reset --hard before running the pull.  That will clean the objects out of your working directory.
 
- - commands not referred to from the main page
- - a new command added without documentation
- - an old command removed while leaving documentation
+-Randall
 
-It may be that we no longer remove commands, so the last check may
-be less useful.
-
-> If we're going to keep it in pretty much its current form then the CI
-> integration added in b98712b9aa9 (travis-ci: build documentation,
-> 2016-05-04) seems rather useless when it comes to this, i.e. we should
-> either adjust it to exit non-zero,...
-
-Yes, that is a good thing to do.
-
-Thanks.
