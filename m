@@ -2,103 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF8D5C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F575C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:36:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A41DA610F7
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:22:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AF2560C51
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 04:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232244AbhIXEXj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 00:23:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56605 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhIXEXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 00:23:37 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 172D9162B57;
-        Fri, 24 Sep 2021 00:22:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=mAXkGI3LkCu1gu9fwFDo9swJV
-        /9Bw/j3TpSYjhu818Y=; b=wS7tboN0MY96nFxeWjTVue8t7Kdgh19Z4nnFQvH/L
-        5pV7JbZmG2lFpW6ORzlDRqezw+IMeKU7+16dP5XqIKr5e9+56Y8C0+/2L5NOwnC7
-        i8nhdWziaMe8vM2c984OHPPUMChPMUp1BHUsZGIB7arTOdP61CfDKD3ENo05kOq6
-        Uc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F49D162B56;
-        Fri, 24 Sep 2021 00:22:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D7479162B54;
-        Fri, 24 Sep 2021 00:22:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 6/5] grep.c: mark eol/bol and derived as "const char *
- const"
-References: <YUlVZk1xXulAqdef@coredump.intra.peff.net>
-        <patch-1.1-c317e6e125e-20210921T124416Z-avarab@gmail.com>
-        <YUnx7gt0KQNRlhuZ@coredump.intra.peff.net>
-        <874kadapq1.fsf@evledraar.gmail.com>
-        <YUowCkmWqKgIldNz@coredump.intra.peff.net>
-        <874kab5r63.fsf@evledraar.gmail.com>
-Date:   Thu, 23 Sep 2021 21:22:00 -0700
-Message-ID: <xmqq4kaay55j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S244086AbhIXEiJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 00:38:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237144AbhIXEiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 00:38:09 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F13C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 21:36:36 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id g2so3741186pfc.6
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 21:36:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dNgbNrpKjpb6cAplpHULbfcJ69zsSgRGwCz3miBk8pA=;
+        b=NbZy2wSaLGja6CMnfxe2TwYbYimu6ljsuG3aEGV9RLe5Oh0/s2LVbZ+ZDVFwg0L/Ex
+         BrY9xr4smavmpIVLrHLHJDf7e5iZYGO7sKPK6Ep7wFGSvY2WH0mCe63pUEFKAz9XdTjN
+         ngzP7kXJh0MeOoYRyul9ChEVYIdtUP+mPjXqsHYnw+g3bmzJkojUheWOPgUKlAPw1r4f
+         4NGll+DAj3aH/zO1iG1ICUM7KYLtxScXtEVLSX8cWWV4wVEyk3RSmOFBK8i03uzJZuT/
+         fW6qs5CRpWJPa7zNbEuioOr9LNdSST2TXCLUlSADMcfRXy8KQdK/I20KojGYlEnGJsza
+         mI0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dNgbNrpKjpb6cAplpHULbfcJ69zsSgRGwCz3miBk8pA=;
+        b=E6i0DrvtbWat+idSaK285uYzqXw0E5/phWMuoHUl8y997/+2dRLq1Q6rTe+SxyB9Lz
+         F19fMk3x21IKZh4XZqsCNUNUlP1o3X/GS1biDMxa6Pos7/Ey4cW5jT5PRH2kxGZm7vFE
+         HDlAhShzyfWJbtYCurHdYFjCXdcAM8u5GiJXIZ67tbuEEoggi6UGx62D+xv9x5td2J1O
+         gruCYE0+Xeo7Mzf9CJkHN2EtlGB5CvD4M0Jlofnl3+BfRk92rPgJAJ7uTXT8AH/msWlg
+         wsZDJhOIdqM2JGuGkJgKpwo1u9G3k3hSpmhVAUPFsVcQzDJwSi1xEEpPfxo2QwnoKb4J
+         bgJA==
+X-Gm-Message-State: AOAM533Cu3AiWd1pzdbVopoLsM1jnITZ8BFbk3KerMVQWAiF63wxvna6
+        hH2sGrYA6ALFWCuyyqJYTyQZCbSrmQdXZQ==
+X-Google-Smtp-Source: ABdhPJxR3YNJR4gCH39ZdiabiaQr+DBZYhJjB/FFweULDhlaw0KuGte6o503yC6WjuvG2w72JdUURA==
+X-Received: by 2002:a63:480d:: with SMTP id v13mr2073582pga.455.1632458195903;
+        Thu, 23 Sep 2021 21:36:35 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-6.three.co.id. [180.214.233.6])
+        by smtp.gmail.com with ESMTPSA id 26sm9413431pgx.72.2021.09.23.21.36.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Sep 2021 21:36:35 -0700 (PDT)
+Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
+To:     Thiago Perrotta <tbperrotta@gmail.com>, carenas@gmail.com,
+        gitster@pobox.com, avarab@gmail.com
+Cc:     git@vger.kernel.org
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+ <20210924024606.20542-4-tbperrotta@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
+Date:   Fri, 24 Sep 2021 11:36:32 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F754A01A-1CEE-11EC-A22F-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210924024606.20542-4-tbperrotta@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 24/09/21 09.46, Thiago Perrotta wrote:
+>   SYNOPSIS
+>   --------
+>   [verse]
+> -'git send-email' [<options>] <file|directory|rev-list options>...
+> +'git send-email' [<options>] <file|directory>...
+> +'git send-email' [<options>] <format-patch options>
+>   'git send-email' --dump-aliases
 
-> That I just don't understand, i.e. how the variable is defined in this
-> 6/5 pertains to how it gets used /inside/ the function in this case, th=
-e
-> caller code doesn't have to care, but perhaps I'm missing something...
+Is <format-patch options> optional? If so, we can say [<format-patch 
+options>].
 
-
--static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
-+static struct grep_pat *create_grep_pat(const char *const pat, size_t pa=
-tlen,
- 					const char *origin, int no,
- 					enum grep_pat_token t,
- 					enum grep_header_field field)
-
-Because the function signature is visible to the caller of this
-function, it sees that the callee, as part of its implementation
-detail, keeps "pat" pointer pointing at the same location.  That is
-not something the caller needs to care, even though the caller may
-deeply care that the memory locations "pat" points at will not be
-changed via the pointer by calling this function.
-
-On the other hand
-
-@@ -1438,7 +1439,7 @@ static int look_ahead(struct grep_opt *opt,
- 		      const char **bol_p)
- {
- 	unsigned lno =3D *lno_p;
--	const char *bol =3D *bol_p;
-+	const char * const bol =3D *bol_p;
- 	struct grep_pat *p;
- 	const char *sp, *last_bol;
- 	regoff_t earliest =3D -1;
-
-This one is totally invisible to the caller of the function, and is
-a good documentation for those who read the implementation of it.
-
-Thanks.
+-- 
+An old man doll... just what I always wanted! - Clara
