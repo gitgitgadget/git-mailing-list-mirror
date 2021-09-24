@@ -2,147 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 393F1C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 408A5C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FF5061038
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:14:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22AFD611C8
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347004AbhIXUQG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 16:16:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33590 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346238AbhIXUQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 16:16:06 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8849EC061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:14:32 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id dj4so40547969edb.5
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5G7yROto/Wi7kcllZPwYOvryJuciG0IXwfdauQ/N3nM=;
-        b=pm6ORgOf5XFEhXjFmWeB7HlBLxPrq3ejvGxKmw79FZxQLvpG2Chf5t3VonpC/eItQy
-         349bp7rHeFeQnbCps0+hVEYSa4ZTSY2Zr01WT9ZfRkGgJRdDJNkyYvzTtiLKIeoDDLPo
-         /uKYxgxHgkKcBWB+0iaFDBzi6RC14PHkjP1hnyeENIQoU292p8yVH8MmsrH6EWxdpH4V
-         TShWZB60uxNqHgptK9CFdQI4CuHwhBsixjMt43JOb+95R48Dt/IiX2tmfRixcOzZmfSY
-         ruttQVPgn3GQyujp80tI9jQS+HqV5owEQoPZpY0t71DxNcKGtV1uvyGjwol0oz0leOnh
-         MXjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=5G7yROto/Wi7kcllZPwYOvryJuciG0IXwfdauQ/N3nM=;
-        b=Rp9fniJ0awqfrPGZVBnnpVtaHSoWsr39UzQvQEMXv8lU1T+1JPRT9RDFf4YY+e5gta
-         ndKRDXx3krygTdxuCHcYDHp+VD6AzP2sBE/9v45Nj5K7mMskM3J1twyE1X4vp/r1bCS+
-         OGJeYqZuEyPd4quSN0sF9JHc/vycuUuwaR0+Z3CceRPDd6D6Mome+pRYil9iZ62WYKWy
-         BHnRs9+o8KxSQAIL+EGr1RhG0abELd0ISrz1pXR/0ofoJWXKAJOeVh9/bdGAZjclVg3u
-         W3AXXwLng7AscK8ePeHA7sIknGZ+Y5O13jBLdTuhtE8loKv9YLe+sSPj1HHRwTG02E30
-         n2bg==
-X-Gm-Message-State: AOAM531qdkdkaipxfnbzdskFeybvcgmxy3F5RTIcchcT0lrEW+heAqPe
-        eO7vmscLvKTBIv/N2ZIG9Vg=
-X-Google-Smtp-Source: ABdhPJxWsStgMnOifFsDc/UXbe5/by0JF0NF+TF5dR14+U9FV8N5cuVKw2gHCZb1GPkQ5nfuPxIdrA==
-X-Received: by 2002:a17:906:eb0f:: with SMTP id mb15mr13373448ejb.113.1632514471150;
-        Fri, 24 Sep 2021 13:14:31 -0700 (PDT)
-Received: from evledraar ([109.38.130.174])
-        by smtp.gmail.com with ESMTPSA id cf16sm640664edb.51.2021.09.24.13.14.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 13:14:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
- config-list.h
-Date:   Fri, 24 Sep 2021 22:09:35 +0200
-References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
- <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
- <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
- <87fstt3gzd.fsf@evledraar.gmail.com>
- <8c7aaea3-afbc-1980-ac31-6c324eef5a94@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <8c7aaea3-afbc-1980-ac31-6c324eef5a94@web.de>
-Message-ID: <877df53f4q.fsf@evledraar.gmail.com>
+        id S1346996AbhIXUWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 16:22:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54848 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1346333AbhIXUWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 16:22:44 -0400
+Received: (qmail 19426 invoked by uid 109); 24 Sep 2021 20:21:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Sep 2021 20:21:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12909 invoked by uid 111); 24 Sep 2021 20:21:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Sep 2021 16:21:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 24 Sep 2021 16:21:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] packfile: release bad_objects in close_pack()
+Message-ID: <YU4zMj76HXP5PhCu@coredump.intra.peff.net>
+References: <33a0120b-c10d-2709-49d3-7c3dc26565ee@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <33a0120b-c10d-2709-49d3-7c3dc26565ee@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Sep 24, 2021 at 08:10:10AM +0200, René Scharfe wrote:
 
-On Fri, Sep 24 2021, Ren=C3=A9 Scharfe wrote:
+> Unusable entries of a damaged pack file are recorded in the oidset
+> bad_objects.  Release it when we're done with the pack.
+> 
+> This doesn't affect intact packs because an empty oidset requires
+> no allocation.
 
-> Am 24.09.21 um 21:30 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>
->> On Fri, Sep 24 2021, Phillip Wood wrote:
->>
->>> Hi =C3=86var
->>> On 23/09/2021 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
->>>> new file mode 100755
->>>> index 00000000000..6d4e56d1a31
->>>> --- /dev/null
->>>> +++ b/generate-hooklist.sh
->>>> @@ -0,0 +1,18 @@
->>>> +#!/bin/sh
->>>> +#
->>>> +# Usage: ./generate-hooklist.sh >hook-list.h
->>>> +
->>>> +cat <<EOF
->>>> +/* Automatically generated by generate-hooklist.sh */
->>>> +
->>>> +static const char *hook_name_list[] =3D {
->>>> +EOF
->>>> +
->>>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
->>>
->>> POSIX does not support using a semicolon after a closing brace [1],
->>> grepping our code base with
->>> 	git grep 'sed .*};' '*.sh'
->>> does not give any matches so I don't think we're using that pattern
->>> any where else. Replacing the semicolon with ' -e' would fix it.
->>>
->>> Best Wishes
->>>
->>> Phillip
->>
->> Does this fail on any system you're aware of? If so what OS/version (and
->> preferably version of "sed").
->
-> I wasn't aware of that restriction and my gut feeling is that enforcing
-> it in a sed implementation would be slightly harder than allowing "};".
->
->> Ren=C3=A9's downthread <d5f297d4-9c64-1ff9-8422-054979bf8cfa@web.de> see=
-ms to
->> suggest that this is fine.
->
-> That said, I didn't mean to suggest that we keep using this construct,
-> just that I couldn't find an implementation which would reject it.
+Good catch. I wondered if this was related to your recent 09ef66179b
+(packfile: use oidset for bad objects, 2021-09-11), but we'd have just
+leaked the manual array before then.
 
-I'll re-test without "};", my (seemingly incorrect) quick read of your
-E-Mail + my own testing was that semicolons were fine there, but maybe
-they're just accepted by most...
+> diff --git a/packfile.c b/packfile.c
+> index 0e92bd7bd2..89402cfc69 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -339,6 +339,7 @@ void close_pack(struct packed_git *p)
+>  	close_pack_fd(p);
+>  	close_pack_index(p);
+>  	close_pack_revindex(p);
+> +	oidset_clear(&p->bad_objects);
+>  }
 
->> Both beforehand and just now I've tested this on AIX, Solaris,
->> {Open,Net,Free}BSD, HP/UX, OSX and Linux (a few distros/versions).
->>
->> All of them are able to generate the same hook-list.h using this version
->> of the patch.
->
-> Impressive list.
+Looks obviously correct.
 
-FWIW that's just the GCC Farm which is fairly easy to get access to for
-free software devlopment: https://cfarm.tetaneutral.net/machines/list/
-
-The HP/UX box is a similar "private" setup mainly for Perl5 core
-development, I'm getting to use it to get git working there.
-
-> but still it's probably better to move the last "x" to its own -e, to
-> appease the POSIX spirits.  Small change..
-
-*nod*, will test with some version of that.
+-Peff
