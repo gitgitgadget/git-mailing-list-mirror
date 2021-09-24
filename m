@@ -2,118 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED840C433FE
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 11:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DF0DC433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 11:59:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D822D610F7
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 11:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3362C61164
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 11:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239961AbhIXLtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 07:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57354 "EHLO
+        id S245504AbhIXMAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 08:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343693AbhIXLtb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 07:49:31 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCBF7C061764
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 04:47:56 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id e15so39290043lfr.10
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 04:47:56 -0700 (PDT)
+        with ESMTP id S245466AbhIXMAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 08:00:50 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C565C061574
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 04:59:17 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id ee50so35164179edb.13
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 04:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=euewuloKFSznvQ6KCerzI1qeSBk5XFvc8AwefOtFX7I=;
-        b=MNSYFBu8RPbriUINL3g7bjjj2JmnAO+tuhmTFO0/E7zwxpvxaUn33imhBwfjTgBGHM
-         C/KRtJj747xO59u06EHNNUEFi+keqivbQ9gKTrNtc9iFwiXoKo92ung4q+ggpalvgDPB
-         d0/zxT8gvQ4tdp0nSKNkmpRQj1/yJO+OR9JCU=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Te5e9LNmiqfz3ts+DRlNTgsPnGemGZ3+Rv22IOCETBk=;
+        b=NYC6iQEiL3R1wq+Rm0q7OeJ/I12hwQxcUMS1xrZhTigihgsiFKEava9UVS0zJnwi3W
+         p3BDM548Rt3Mw8Na3Lrx1GLLwME12sVJnfzKnpR1RvJRBghFjQkfrF0gCyxb2VSHXip7
+         6yL4GtFFKqD/nJZ3lqrlUA02UdIX2m8s2W5KotG+yxMATKHeYjatiFYTi0FERE8OSUg1
+         NEZlEoCu3dJpJ7nZBozgm7J/Wftu5ge5FN7rClorP+DVThEj5pYu5seKltHF8nJ6h4hB
+         eiwXwbaMEnro1gKxmIzvGMoHKVNlw2z8nZxVUs04fTqYXF4C8TtEX8X7tvZnHcRcmv94
+         uyEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=euewuloKFSznvQ6KCerzI1qeSBk5XFvc8AwefOtFX7I=;
-        b=nXVR7c8HbSv1eChtu/5CxZjKkX1QtQT3d09AQ4FdM8x3/dhH+JZVRFDBOb/j/GgWs9
-         Xb3SFXPoQfNtNWN5wdxiAxD1raxBlV9B4UypmppkXNyhpUh7nDZ84RVsyWSBni54rKnV
-         HWKiGU8XFY6RUMEDTBEWOoQUnwZ8LznjXar5UZmujB7rarJJNGa5lL+NqTHBkqsB+sHQ
-         HXceYVUDx5PPOOG4spDVpi/n+MfGLHQBAPm1jzJAXX44HxVfYnMmr/n0T5Vq+81r70X3
-         1fAyi4gDa86D7MukT4cyuCtWuF6BDBxoLMr3D/q2rfeLezd5lSk4lYWK+R/jOfB9S8GU
-         x10A==
-X-Gm-Message-State: AOAM531fAgv5KsOOzhbsnrotp0GmPkrpDT6JjeJ3prkE/cN95brzT2Z3
-        vKdJC8HeqqK7rwWeHn66QD9BEakvX/23X8fMoP9FcLSCNe5HZrqP
-X-Google-Smtp-Source: ABdhPJwLUfu/1Hi7inaEwbd/Q6KVpkyqh5JnHh2SERPYPweOwcIc8VTGZ0Rf/I3CLhllLEx52m2N9p9FzICQlqPQ400=
-X-Received: by 2002:a05:6512:690:: with SMTP id t16mr9653901lfe.316.1632484075232;
- Fri, 24 Sep 2021 04:47:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Te5e9LNmiqfz3ts+DRlNTgsPnGemGZ3+Rv22IOCETBk=;
+        b=Xw1VF83ufNRJzPv+ZLM9usL0l0aMw+PAZbO+IOrz7nijQl+3LokQhPlxZdRxGzgtbJ
+         bGvv9qhAgF7mmmSKeKJPuwo49bNhJs//Bl8GUaGDUdRiKh1+q8cf3vp0MAt5Y1RPWUeS
+         uzhscMDB2/xkDzq5W0is8ZIM7A4S6c8msG5/FUMrlZWdj+MTGFQZDJdB9UXXCdgXA5gN
+         T9QaUkckPl+sPex5ZEjJHQaIyQ1gYGBr/uff2ie475janoaBWkVkL+QSaUb48U1bwXDT
+         +dBOzNMPkD58PwQC15icHK2dW/RSMxDakWcyrRBN7poDKkAp2CGCZr6EZwgCGhPzTG4f
+         uRhA==
+X-Gm-Message-State: AOAM531cVJUc55Iyit/SdyOnt6iwBBfEKe/J9Usu36w2JiGQM9ZX79Lu
+        AQsGAPOJ4Iga0dArv6vpdtB5SFBbLtQNgw==
+X-Google-Smtp-Source: ABdhPJzyptxLaVrT0nt8KVZevLcHvIqMwhsT1K9+ADLu5cP+35D7VtKYklyPdNP9klbVkngItAlxqg==
+X-Received: by 2002:a50:e187:: with SMTP id k7mr2172676edl.190.1632484755441;
+        Fri, 24 Sep 2021 04:59:15 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dh16sm5764424edb.63.2021.09.24.04.59.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Sep 2021 04:59:15 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 08/19] reftable: reading/writing blocks
+Date:   Fri, 24 Sep 2021 13:52:28 +0200
+References: <pull.1081.git.git.1630335476.gitgitgadget@gmail.com>
+ <pull.1081.v2.git.git.1631213264.gitgitgadget@gmail.com>
+ <97f7ee04886d573f6b0f2e0d54a853cf016e7d74.1631213265.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <97f7ee04886d573f6b0f2e0d54a853cf016e7d74.1631213265.git.gitgitgadget@gmail.com>
+Message-ID: <87wnn62nhp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1036.git.1632006923.gitgitgadget@gmail.com> <60c5d6b4615a6ac4179ec6c10e17cca480bc147a.1632006924.git.gitgitgadget@gmail.com>
-In-Reply-To: <60c5d6b4615a6ac4179ec6c10e17cca480bc147a.1632006924.git.gitgitgadget@gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Fri, 24 Sep 2021 12:47:43 +0100
-Message-ID: <CAE5ih79bzExNrp__GAUaVZWvMucYDrvSHSJe_+dNyeVR3VXynw@mail.gmail.com>
-Subject: Re: [PATCH 5/6] Comment important codepaths regarding nuking
- untracked files/dirs
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 19 Sept 2021 at 00:15, Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+
+On Thu, Sep 09 2021, Han-Wen Nienhuys via GitGitGadget wrote:
+
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> From: Elijah Newren <newren@gmail.com>
->
-> In the last few commits we focused on code in unpack-trees.c that
-> mistakenly removed untracked files or directories.  There may be more of
-> those, but in this commit we change our focus: callers of toplevel
-> commands that are expected to remove untracked files or directories.
->
-> As noted previously, we have toplevel commands that are expected to
-> delete untracked files such as 'read-tree --reset', 'reset --hard', and
-> 'checkout --force'.  However, that does not mean that other highlevel
-> commands that happen to call these other commands thought about or
-> conveyed to users the possibility that untracked files could be removed.
-> Audit the code for such callsites, and add comments near existing
-> callsites to mention whether these are safe or not.
->
-> My auditing is somewhat incomplete, though; it skipped several cases:
->   * git-rebase--preserve-merges.sh: is in the process of being
->     deprecated/removed, so I won't leave a note that there are
->     likely more bugs in that script.
->   * contrib/git-new-workdir: why is the -f flag being used in a new
->     empty directory??  It shouldn't hurt, but it seems useless.
->   * git-p4.py: Don't see why -f is needed for a new dir (maybe it's
->     not and is just superfluous), but I'm not at all familiar with
->     the p4 stuff
+> The reftable format is structured as a sequence of block. Within a block,
+> records are prefix compressed, with an index of offsets for fully expand keys to
+> enable binary search within blocks.
+> [...]
+> +	if (typ == BLOCK_TYPE_LOG) {
+> +		int block_header_skip = 4 + header_off;
+> +		uLongf dst_len = sz - block_header_skip; /* total size of dest
+> +							    buffer. */
+> +		uLongf src_len = block->len - block_header_skip;
+> +		/* Log blocks specify the *uncompressed* size in their header.
+> +		 */
+> +		uint8_t *uncompressed = reftable_malloc(sz);
+> +
+> +		/* Copy over the block header verbatim. It's not compressed. */
+> +		memcpy(uncompressed, block->data, block_header_skip);
+> +
+> +		/* Uncompress */
+> +		if (Z_OK !=
+> +		    uncompress2(uncompressed + block_header_skip, &dst_len,
+> +				block->data + block_header_skip, &src_len)) {
+> +			reftable_free(uncompressed);
+> +			return REFTABLE_ZLIB_ERROR;
+> +		}
+> +
+> +		if (dst_len + block_header_skip != sz)
+> +			return REFTABLE_FORMAT_ERROR;
+> +
+> +		/* We're done with the input data. */
+> +		reftable_block_done(block);
+> +		block->data = uncompressed;
+> +		block->len = sz;
+> +		block->source = malloc_block_source();
+> +		full_block_size = src_len + block_header_skip;
 
-Assuming you're talking about this code in git-p4.py:
+I haven't tried to re-implement this, but in 07/19 we're adding an
+uncompress2() fallaback function, and here's the only place where it'll
+get used.
 
-            print("Synchronizing p4 checkout...")
-            if new_client_dir:
-                # old one was destroyed, and maybe nobody told p4
-                p4_sync("...", "-f")
-            else:
-                p4_sync("...")
+Looking at the uncompress2() implementation isn't this a rather trivial
+wrapper for something we'd get from git.git's zlib.c, i.e. you seem to
+just need the "avail_in" here, which we're checking in various other
+parts of the codebase.
 
-This is doing a Perforce sync in the P4 repo, not the git repo.
+I suspect that the reason for this is that this code is trying to keep
+at arms length from the rest of git.git, but if so some ifdef here if
+it's compiling in git.git seems better than having a compat interface in
+git.git just for doing something its zlib.c API provides.
 
-In the usual/happy case, this directory already exists, the Perforce
-server knows about its state, and a normal "p4 sync ..." will bring it
-up to date.
-
-But, if someone manually deleted the directory then "p4 sync ..." will
-only update modified files, and all sorts of things will then go wrong
-(e.g. the files we updated in the git view won't be present, and
-git-p4 will fall flat on its face).
-
-So in this case, do a forced sync, which syncs everything ignoring the
-P4 server's idea of what files are/not present.
-
-Luke
+Anyway, re Junio's ask if this is ready for "next" in the latest What's
+Cooking I don't think this should be a blocker, just wondering if
+anyone's interested in some post-cleanup at some point, and whether I'm
+missing something about uncompress2() v.s. zlib.c.
