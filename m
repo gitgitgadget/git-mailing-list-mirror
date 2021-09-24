@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B837DC4332F
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDB68C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9719261100
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC66861107
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344104AbhIXQx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 12:53:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
+        id S1344159AbhIXQx3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 12:53:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344084AbhIXQx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 12:53:26 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF13C061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:52 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id u18so29404450wrg.5
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:52 -0700 (PDT)
+        with ESMTP id S1344084AbhIXQx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 12:53:27 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B59EC061571
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:53 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id t28so15957280wra.7
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AhQePB5TT8C0PstkXR2LYBE/KgU3p9wAhukUAsr7B8o=;
-        b=Io4P+SU0jFTMjpYc8xfabbh1vjLPjAwIGVy3kaF55h/CAuvo/g0QZtYGBotA6j9FZm
-         KMuvWx0RUdfsvpmNfkWSIUWOOBr76rdBW98UbYMkxwathG1usdPpcbzYkFxp9SW5mT7u
-         eOw0LRhau07D+E5RKrowB0R7rQSXcz13X1UxBmruWS7DIWW0sXVFgdE68o9ctCGP0taf
-         C6aeIE/ZnNdBBRQ5KGkF3T4Vh0brXm/P4/9Uj731m1r3+Z5nkUIiwI4IKUpRebTQgTsT
-         KILzMxeIgjO52gozUlgfALrV8rWCEJqaG2PGfVTlKl4E0I8A87VTIW4XuP9w4sbDw82t
-         dM7Q==
+        bh=BfXfhGqrhwjajRcHSAvwweh8bmaxGD0F3ilPpXVbxBo=;
+        b=jRUi3kh3NRD5q116q7ArI8cnnPvkdrG4buUzqtfkgrb5uEKwFtTC9+s9tKRjiyFsBh
+         FCJ6z748wbWvajBc9IhAVtvtJL84C03k0qoe/nOcyW7zgjSlsLnJRZgAM/Zie6SW5cgg
+         XrYyX5CEO+XedINIRyFyU9z362/D+A6mjtJjfqilZAOtgu9NoqIDqfi1pVMc2DHLAskR
+         TDZc/sahAJuhj2kfQScquZA/hqkHY51qryk4CgnZZwW7UCtmIvwa/6EDxTEoAYj6cV33
+         V2IofkFdfLhHf9kW/8CudrzOV++64Ll1cfqd0tTKwqL/S/bvl2KeEn/JxbvOUBEdVlNi
+         DHjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AhQePB5TT8C0PstkXR2LYBE/KgU3p9wAhukUAsr7B8o=;
-        b=sv4J3M4Zn+DtgSJyq4+dDhXal0GW5dlXyQgIm/WpNYsi54bfD0yG9WiqwawHQ50YOT
-         lL5HTHiqA5QgCMSGK3eQuXewQ7wYB7dEsCpSk/iQUSkSMkk9kkIN3kxUzLa0ivPapFLu
-         8zt81l6XEyqRevrxtnAbshi19DA2uAevPogLwHTua7AOPYtaKcLjbLPtMfQA4dY3Oc2u
-         Fo6B23FgaiEb3MmBnTv/AcfrOF3M7EafasCCjU8b6CEfA9BSw2nVxj+uURpmrpW4ft1H
-         lUIV/WNQeov6Hb2DmaBxVDhjrBP3nKlS7QMAc/7uuxf+i2TIAJGxWzbFM/mhhwTA+w+e
-         bgqw==
-X-Gm-Message-State: AOAM533PWraOq+An87+0ckPL05Rznk3ZiqSNTTfteoH6Sw9geNdBsAK9
-        G1xRU84HfZdVPMOIY3TxbPjS3o/xaUPurg==
-X-Google-Smtp-Source: ABdhPJzZ3T3xOOcUbAZ2iFNvQ4oQdNFjKj48zdHugTdEDSbDYLi5445Gngv5zQmkMd1PTecEpHcGlQ==
-X-Received: by 2002:a1c:4386:: with SMTP id q128mr3069609wma.129.1632502311102;
+        bh=BfXfhGqrhwjajRcHSAvwweh8bmaxGD0F3ilPpXVbxBo=;
+        b=a4PdOCO0k5d3gHxOwCztdWh0UACX/w0tN1J7xKfWQXq5nbyYTCNvUzPBcRAZqS1/Zq
+         cf1GPVvozheOEzwoL0k3xCCVITHZs5TmA4faAU0RWDd1u9slyQ9tzzDDZLEaAjJ57LRT
+         4CCnJ6kmJvZYXQgAdTytP6HlEX6WD74Shra+W01HMHQqdVsCCV3yF8sUhdqLFgNz7gxm
+         83eC/Lm9BXmIz9P4J3Hlos/he3dW97dpGpaHwCg9JjFaE0o4amIrRYkE8wpaXo7hXdpC
+         pvFUvJqgPRrzgekESwzkOPS/0D5hZKMrntFT00FGh7m3vlUuH9bXdAVM2/AXzKhJFNZd
+         z+Sw==
+X-Gm-Message-State: AOAM530CWG8Yh8KRbwvjPOFbYxM+XY6FLsWgIosZ9c6XItDkxKufnZ6J
+        Jr0nK7ZGG8EO8KLbe/XqR9HO347NT1p7Gg==
+X-Google-Smtp-Source: ABdhPJylSxVeLkwZpsJvWPjLc/yusUDcK8u/ir2AZoJqLdSFM6XYAiMDK+QF0LU1QhC55Z7rIypRqw==
+X-Received: by 2002:adf:fb89:: with SMTP id a9mr12698561wrr.164.1632502311947;
         Fri, 24 Sep 2021 09:51:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f1sm8929623wrc.66.2021.09.24.09.51.50
+        by smtp.gmail.com with ESMTPSA id f1sm8929623wrc.66.2021.09.24.09.51.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 09:51:50 -0700 (PDT)
+        Fri, 24 Sep 2021 09:51:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] ls-remote: remove documentation for custom -h option
-Date:   Fri, 24 Sep 2021 18:51:45 +0200
-Message-Id: <patch-2.3-32b8dbecfe0-20210924T164820Z-avarab@gmail.com>
+Subject: [PATCH 3/3] grep: pass PARSE_OPT_NO_INTERNAL_HELP, fix odd -h handling
+Date:   Fri, 24 Sep 2021 18:51:46 +0200
+Message-Id: <patch-3.3-996f3dae2a7-20210924T164820Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1285.g7aff81f6560
 In-Reply-To: <cover-0.3-00000000000-20210924T164820Z-avarab@gmail.com>
 References: <20210924141920.ezfpyf4uutob2h5z@zenon.in.qult.net> <cover-0.3-00000000000-20210924T164820Z-avarab@gmail.com>
@@ -70,49 +70,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The custom handling of the "-h" option was broken in
-ba5f28bf79e (ls-remote: use parse-options api, 2016-01-19), first
-released with Git v2.8.0. We've been promising that it's a synonym of
---head, but it's not.
+The "grep" command supports both "-h" and "-H" options, along with a
+mandatory pattern, but this has been partially usurped by the "-h"
+handling in parse_options().
 
-We could make this work again by supplying the
-PARSE_OPT_NO_INTERNAL_HELP flag to parse_options(), but if we were
-writing this command today we wouldn't make this an exception. Since
-it's been such a long time let's just remove this rather than
-restoring the exception to "-h" handling.
+The reason it's just been "odd" instead of a bug is that we'll only
+print out "-h" usage with parse_options() if there's no further
+non-option arguments, so instead of printing this brief blurb on a
+stand-alone -h we'd print out the full usage:
+
+    $ git grep -H
+    fatal: no pattern given
+
+But for the aforementioned reason a "git grep -h <pattern>" would
+work, we wouldn't take the !PARSE_OPT_NO_INTERNAL_HELP branch in
+parse_options_step(), would handle our own custom 'h' option, and
+builtin/grep.c itself would know what to do at that point.
 
 Reported-by: Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-ls-remote.txt | 1 -
- builtin/ls-remote.c             | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ builtin/grep.c  | 3 ++-
+ t/t0012-help.sh | 4 +++-
+ t/t7810-grep.sh | 4 ++++
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 492e573856f..6e241640bd9 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -21,7 +21,6 @@ commit IDs.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 51278b01fa2..a2d6704aa41 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -981,7 +981,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	argc = parse_options(argc, argv, prefix, options, grep_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH |
+-			     PARSE_OPT_STOP_AT_NON_OPTION);
++			     PARSE_OPT_STOP_AT_NON_OPTION |
++			     PARSE_OPT_NO_INTERNAL_HELP);
+ 	grep_commit_pattern_type(pattern_type_arg, &opt);
  
- OPTIONS
- -------
---h::
- --heads::
- -t::
- --tags::
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index f4fd823af83..c5e68918b78 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -64,7 +64,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 			   N_("path of git-upload-pack on the remote host"),
- 			   PARSE_OPT_HIDDEN },
- 		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
--		OPT_BIT('h', "heads", &flags, N_("limit to heads"), REF_HEADS),
-+		OPT_BIT(0, "heads", &flags, N_("limit to heads"), REF_HEADS),
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
+ 	if (use_index && !startup_info->have_repository) {
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 913f34c8e9d..0b623fe794a 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -90,7 +90,9 @@ test_expect_success 'git help succeeds without git.html' '
+ '
+ 
+ test_expect_success 'generate builtin list' '
+-	git --list-cmds=builtins >builtins
++	git --list-cmds=builtins >builtins &&
++	grep -v "^grep$" builtins >builtins+ &&
++	mv builtins+ builtins
+ '
+ 
+ while read builtin
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 6b6423a07c3..4c2777120b0 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -11,6 +11,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
++test_expect_success 'usage' '
++	test_expect_code 128 git grep -h
++'
++
+ test_invalid_grep_expression() {
+ 	params="$@" &&
+ 	test_expect_success "invalid expression: grep $params" '
 -- 
 2.33.0.1285.g7aff81f6560
 
