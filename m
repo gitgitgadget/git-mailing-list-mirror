@@ -2,93 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3804C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E53EC433FE
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB28061211
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:10:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F4BA6124F
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 06:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244178AbhIXGLt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 02:11:49 -0400
-Received: from mout.web.de ([217.72.192.78]:58519 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231675AbhIXGLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 02:11:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1632463810;
-        bh=LYATp8YqqFs+6v9rGkIDXi8pfFh5KoBWP3l34PyO2Bc=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=RTtZ0vd8CjT3Ca/iykXfpO1MgmDpLZdGKzRQ5DxFrEYGEUFs2/2ZaDBrlELx1zUTO
-         i65OIURBD0AIcHb6Big74DljRbjqziGemReTLo2e+WfWVE7nuMbf4bp1N+nIWnP8RD
-         XOVRQeXTf8O2uleWfUZT5pfpQdpOGuJgON2xfPik=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0LqDQS-1n7P0s1Zrs-00doja; Fri, 24 Sep 2021 08:10:10 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] packfile: release bad_objects in close_pack()
-Message-ID: <33a0120b-c10d-2709-49d3-7c3dc26565ee@web.de>
-Date:   Fri, 24 Sep 2021 08:10:10 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S244145AbhIXGXA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 02:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244176AbhIXGUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 02:20:39 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A38C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 23:19:07 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id s16so8101361pfk.0
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 23:19:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Rwg3fnzo+/Hy6c/OEJVfPFJCMTIasnwP4NmlLZXYI8A=;
+        b=CTZjOssME88L8GM0/XKdFi36AuQ6hYYDDjrYGeqXWGAT3q7uq0N4j6dSUcBdJdYy9c
+         mI3fx12uu4thrYTuPEshnY3/Q0aANOH2v5LzZDtpj28eZdyA2ZJIpeGQFYq0mh+qxOii
+         0YL0dVa71YH/8baL6K44NbGhIFwLmSy5vayYbq3MB3dP3CEhGpFIHm1iFzwhqFuglinf
+         La6Y2YMwz6azqrheanxK1K3pTVmYwhmzoX4Fa40PSZi5Z9korLdJPphzCdd+Dk94gv2U
+         VwvPx4C8FZ2KJWimYm2TgT3QY65v/VZROB7PGS6SsbNSNHwPlP+H6bZBtv7HLgRlQa2c
+         n+Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Rwg3fnzo+/Hy6c/OEJVfPFJCMTIasnwP4NmlLZXYI8A=;
+        b=25MPpfLCFBtvM3y58C+DSRSKjoh/EdMuCgIhb/F3KWeNTFnzHgxh/9o1rRSSdpLLTp
+         SlcnAcdLnRxUTirGWD236HSQ2FQg1FAFKosP9KDXhjQTXq/EQtWOrPWEvOBW7Ig95G7Y
+         W4GMnFqMCCwjj030z/VtNxK7xDzWqWAFLEkUlVClAiDh1vDWSywnu/jSOLRZDUSnXaiD
+         +9VeuHYdMj5a6voWAUi3NU+Cc0plGDeGGfcIRz2jD0XMsIQe5wzWTJGkBR+p4m1r/+Hv
+         kh9Tu1FVOG7MAk5nfKpdAUuxFOCf2RMv/TomlLvJiWHyqAUqj7eswKfkLCTsuWal7qrB
+         xKbQ==
+X-Gm-Message-State: AOAM532h35IFeYlNDQm5BtYHQeaNl/+ZISosJ7ksGxcgJDh3R6IdtE6N
+        peo9hPfBavQNpdsH9tO3rdDEnHIx4QzOiQ==
+X-Google-Smtp-Source: ABdhPJzDhhANitFGZ3VhQgacDQtNKluMhb/PJl3Kqgt0406Xo4dZtAF0oqp9JAsSB+Nq161yqF+F1w==
+X-Received: by 2002:a63:b50d:: with SMTP id y13mr2389708pge.286.1632464346524;
+        Thu, 23 Sep 2021 23:19:06 -0700 (PDT)
+Received: from [192.168.43.80] (subs09a-223-255-225-75.three.co.id. [223.255.225.75])
+        by smtp.gmail.com with ESMTPSA id z70sm3897519pgz.93.2021.09.23.23.19.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Sep 2021 23:19:06 -0700 (PDT)
+Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Thiago Perrotta <tbperrotta@gmail.com>, gitster@pobox.com,
+        avarab@gmail.com, git@vger.kernel.org
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+ <20210924024606.20542-4-tbperrotta@gmail.com>
+ <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
+ <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <4c415fd4-a74e-5eb0-061e-39185be623ca@gmail.com>
+Date:   Fri, 24 Sep 2021 13:19:03 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kYjHeRw1S78Av9iF80pTGMA23+cp1f57hH5nnSoWW4a6pT1/sRn
- Gm462quFOr3+pLfaHiAwysDqhAYKpyIl6erxgCBvtthQXuY5lYut01slMaluer5bbK8nXct
- e1a1qCnI2yxLYOsFFG0aPYoxWMg38eHBoXkb9cBLcwkEBTOJJKtUzYxw7xJ40C748Gf5Kbp
- q+53ObZNGwqxcoJG6OBaA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jJK7zW5GRPg=:N1sqfWxMr8BkirPbuGOP0P
- T+ndSANYyaxUeXwpaGtPBz+5bMmlO3NvsRDCAXCyWvsxSdGjFORwYR1O0KluANt2x8EskVZg3
- znPfqasg94+wJqqpWnBDM1znQYWt8U+8dKDbgKFwqH2vKqlSJdK/OPJwvcC+dVxE7CHQrVnTT
- hhYpL+LaScHkblxs2TeIsyAXtTYJyARxwdx6194l2uR3KYpfuXYebPROO65O3ECvvx7ZC9Nrv
- QhPl+fFjbNpOncyrjQmuDnsYoI0mSWCI73fbL3JzkqGhespjfufls7iDY6qcMLvvQyE69y1kY
- hhZJqTh2DR1APezSQPLLe9lglEq3bKuKxVEfZUsnVSKklNMVups+ov7DmR6qQEvzIqFgMLJ69
- D56LS5ka2BvkdNvta5oAU6Sapx2C4AA02klfcPAclvM443pq/C+OdW92np0ROATa+gATHccJw
- bMtAEs5M768Q/wMR3Wn0XNUkQlr6TrULwnw0WD8SXgA38vq2n1uQ5YLkcU3gPNXsUJetVoF6S
- lgALt4MD3uE0fzfZ0weGYFz4Gv+H9iHYja+iZQoXcik3p1UzhQfD8ChCCYbqY5zjDQYoLn72E
- S60TUopYgrLqgvzgVPM3T4k5YHF5FnX2Sxv10ym9pvD0rkZQ2pZLH44YhTvTrlZjTfJUWXZds
- rQGDWIHWYP7S6sVcOz7anhb8ZMmGTIiremtep46owpylvpq4VJTP8wKwHLsIOoGntmMsvlKBc
- yfRr2PPi8gIMZ7ZqcRUFj5jW6HGvVKQfsRH3Z0M2IOA3LaBuWx892AdtxcizHOW7nPT5JP1Vh
- AONDuzUd9etFR8oegOr+YOu/kA5qABFgbSUBHy67jLi7RyM+jkikeTOK7Ac6ShP912lH0JWzV
- 4Q8fkoTnuvMLXknOdtrRXkXDwOg1L9explmK/TiYyWTrITyZzJW/BeKs3s9DN6UvEq0+1BKnw
- b2MOZEjIl46DMCUynGXu8L2TltzmeGfmyxyjSZLgxoW9ogA1ThQp0lYvRPW11fWmPmQ9Byee2
- dSGk1lY1eoNrfu8HNF/pom5sxLqb+Xw9SIOuyt24mT4CWLgLi61Qt0GpWiy0AUHWzg==
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unusable entries of a damaged pack file are recorded in the oidset
-bad_objects.  Release it when we're done with the pack.
+On 24/09/21 11.53, Carlo Arenas wrote:
+> no; as Junio explained [1] this omission is intentional while the
+> rev-list options that
+> got cut to make space are not and are more relevant.
+> 
+> IMHO leaving [<options>] to imply ALL options (that also include diff
+> options, for example) is better
 
-This doesn't affect intact packs because an empty oidset requires
-no allocation.
+Quoting what you linked:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- packfile.c | 1 +
- 1 file changed, 1 insertion(+)
+> The program works in two majorly different modes.  It either takes
+> 
+>  * message files that are already proof-read and copy-edited from
+>    the filesystem and sends them out, or 
+> 
+>  * format-patch options to generate message files out of the commits
+>    and send them out without any proofreading.
 
-diff --git a/packfile.c b/packfile.c
-index 0e92bd7bd2..89402cfc69 100644
-=2D-- a/packfile.c
-+++ b/packfile.c
-@@ -339,6 +339,7 @@ void close_pack(struct packed_git *p)
- 	close_pack_fd(p);
- 	close_pack_index(p);
- 	close_pack_revindex(p);
-+	oidset_clear(&p->bad_objects);
- }
+I think we need to again modify SYNOPSIS and DESCRIPTIONS to highlight 
+above fact:
 
- void close_object_store(struct raw_object_store *o)
-=2D-
-2.33.0
+---- 8> ----
+diff --git a/Documentation/git-send-email.txt 
+b/Documentation/git-send-email.txt
+index 3db4eab4ba..6002ca1a02 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -9,17 +9,19 @@ git-send-email - Send a collection of patches as emails
+  SYNOPSIS
+  --------
+  [verse]
+-'git send-email' [<options>] <file|directory|rev-list options>...
++'git send-email' [<options>] <file|directory>...
++'git send-email' [<options>] <revision list>...
+  'git send-email' --dump-aliases
+
+
+  DESCRIPTION
+  -----------
+-Takes the patches given on the command line and emails them out.
+-Patches can be specified as files, directories (which will send all
+-files in the directory), or directly as a revision list.  In the
+-last case, any format accepted by linkgit:git-format-patch[1] can
+-be passed to git send-email.
++In the first form, take the patches in <file> or <directory> and
++emails them out. In the second form, generate patches from specified
++<revision list> (it can be revision range or explicit list of
++revisions from linkgit:git-rev-list[1]), then emails them out.
++<options> can also include options understood by
++linkgit:git-format-patch[1] if the second form is specified.
+
+  The header of the email is configurable via command-line options.  If not
+  specified on the command line, the user will be prompted with a ReadLine
+
+-- 
+An old man doll... just what I always wanted! - Clara
