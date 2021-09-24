@@ -2,225 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 678A2C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F00F0C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:27:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4619C61100
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D283161211
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243742AbhIXB1n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 21:27:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57602 "EHLO
+        id S243757AbhIXB2n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 21:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240863AbhIXB1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 21:27:42 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A3BC061574
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:26:10 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id v22so29083927edd.11
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:26:10 -0700 (PDT)
+        with ESMTP id S243740AbhIXB2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 21:28:42 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD89C061574
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:27:10 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id 24so12439385oix.0
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=6jIFM9gxIOb/YO22NX5geKbZklVRLU1lee/ixAnpjuk=;
-        b=oZD5/HnkoR5TUQdYqvaLt6031FoiUBimnTGGMSLn3Pc0npNpODCvkOVR3K6rMkbDVc
-         /dHSdnxBUmbNSmeeiDv/ADr2deH8GqMA5rhDPj6Acog1LVZHCtJBEJYacgrgwmWW52ZV
-         eVq/vzatSJlwQ/BlhJCzr9oWNM1gdXs/seabZyUYZyu9GIsA1M9r3v3c6f/0yjI+NRAr
-         YsYNWckggUEJHt72wsBwH3TNMKwOOpYkRph05T0XSsAvYZNo+hkHpfGJ7iWslrzHP7t6
-         rXVOz9CosLYmYNUYNt8pbM8Z0STmlRy/0aREJVWYT4ANN3eB32K9tlobJu2+YeqLB2/r
-         aerQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=pP7aEVSw/6SWSP4Y66iHs/eyircMrLrt8Olz6bhzHwI=;
+        b=jffHZo7mMNDeo4SfwrdazGlWk+zChrKHRvwH270eTe9V6Rqw8J8DiW0+iH+lyyKhtx
+         RSM4Z/h7llwqHc25hRYOXD0HNXNj0R2UeaDtr2c0pK52IMbKOmVYo71IaUHGe2hoiM+e
+         w4h5Ax460Re3l43GRV7ZtJdMCFVAKWSvnsaV5tFtWoFrRCH3G5Q5S9EFi2jkVI9zxQgL
+         vWkPARr3KxYPl0w1Al8ZdmfscmusOulkcqzFD6B2yLiXvHWwmq73b+PTulH73JP2YQ8f
+         o4GpPZ0LA0pIFA7ToknNdY5lx3BFrvMZJj0OcxggGJ4ohUEs80/Nu9ZNhIUnPWlYRKNT
+         +jcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=6jIFM9gxIOb/YO22NX5geKbZklVRLU1lee/ixAnpjuk=;
-        b=ExOPX9XDx1Znad1lA+e7UETpFUaLRC3owMk4Y9/742BGcA9gML1y/AzfkOSPlH5ew5
-         aIHO62RLwLOsybdCgd7f9QEaCAxxk0hnKh931F9NOAjftaZkx2I+c/DLL7TQVXTJXsn1
-         +LVw6gscglsYG0xXqavllyK84+xOipXVCGYFqw6LKN7f+LzbR0F4sh4kVLV9B6WiPepe
-         KldT/ymmI7x57COk1+TAE0mj2i4Zju9a5Pzjed6SUDmtLm3BBfKkYLierzos3MmAnBR6
-         nf0dwkQ2+sekWhA4BYUjbxfO1deCw2LSGGiTwaYYCHjU8iNt5Na8NlLgcO08qj9qBHY8
-         nqcQ==
-X-Gm-Message-State: AOAM533iQ9C0WeUeu8WYmTB7YhHIPQsOk/RGWLv5Y2P9qcumUnyAijfL
-        9+CntRzM7iQyCJ8m9/LPJGI=
-X-Google-Smtp-Source: ABdhPJxtGyCzT/1I2JlU1IvjeQG+9UhVmXih10+za+fXRhiYDcASIQsca3B42tOq+/kyhW0EiOSWNQ==
-X-Received: by 2002:a50:954c:: with SMTP id v12mr2084749eda.313.1632446769022;
-        Thu, 23 Sep 2021 18:26:09 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id q19sm4959024edc.74.2021.09.23.18.26.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 18:26:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v2] Makefile: make the "sparse" target non-.PHONY
-Date:   Fri, 24 Sep 2021 03:16:53 +0200
-References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
- <patch-v2-1.1-059829f2195-20210923T000654Z-avarab@gmail.com>
- <YUyqIpOLFDqG/kEJ@coredump.intra.peff.net> <xmqqtuib199x.fsf@gitster.g>
- <457ec039-1e26-9da9-55f6-9ea79b962bfe@ramsayjones.plus.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <457ec039-1e26-9da9-55f6-9ea79b962bfe@ramsayjones.plus.com>
-Message-ID: <87a6k24vdc.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pP7aEVSw/6SWSP4Y66iHs/eyircMrLrt8Olz6bhzHwI=;
+        b=WlmcekFFYZkF0+s2imn+gYvyoUXwbF1WPjxwPvDqzqcLzrm8fgzHoPPWyVyn1znla5
+         l98ktzyP8lnoiWP24yYWfZNZmyRjUhfQr/IU30l6uQ9T4KIfMldxqIsCALncBhy4mFIh
+         HSi5EQUszE6IupyDrlvwCVaiEKqxousgJ4RvJEqSrNNu6o8ZlDdEVOr2Rkk0UtIpbOVj
+         j2Q+6t5YE6jxDNPUtd9rZdLgh8ObHLB2kJK+phpo7nXfsBoUOl01/t9USRQAhAnB5xE0
+         QYD2/GnE9LF4M85ZCTh0mMtTHJ41eabZlylBlAPwt3HMy2uK8hM6ElRfmeQnL46z1rdC
+         88tA==
+X-Gm-Message-State: AOAM532JcUpqRYD+7aQorUglDqs6K9xZetobkIAZgaNtJ4E7BCvt32Aw
+        8Ex7vOUUKpdvoB9jG6tAO5Mwx9fu6Hd2TU0/9Jw=
+X-Google-Smtp-Source: ABdhPJzSwGj6ydB5hEc7XqAACaEGtsN9k536Lk6V/Y91v49yg0N2OQyTZTlXuBPs8cpjIM/g0L2bYVguO6tH5iB3hbg=
+X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr15607090oib.39.1632446829910;
+ Thu, 23 Sep 2021 18:27:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.1033.v2.git.1631546362.gitgitgadget@gmail.com> <pull.1033.v3.git.1632219848.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1033.v3.git.1632219848.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 23 Sep 2021 18:26:58 -0700
+Message-ID: <CABPp-BHznKM_Y8cz55aP2xtB4a6XEgpFK2USOU=z32EwF6tgGw@mail.gmail.com>
+Subject: Re: [PATCH v3 00/10] rebase: dereference tags
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Sergey Organov <sorganov@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Sep 21, 2021 at 3:24 AM Phillip Wood via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Thanks for the comments on V2. Here are the changes from that version:
+>
+>  * dropped the controversial cleanup that was patch 8
+>  * reworded patch 10 as suggested by Junio
+>
+> Cover letter for v2: Thanks to =C3=86var and Johannes for their comments.
 
-On Fri, Sep 24 2021, Ramsay Jones wrote:
+This version looks good to me.
 
-> On 23/09/2021 18:39, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->>=20
->>> On Thu, Sep 23, 2021 at 02:07:16AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->>>
->>>> We ensure that the recursive dependencies are correct by depending on
->>>> the *.o file, which in turn will have correct dependencies by either
->>>> depending on all header files, or under
->>>> "COMPUTE_HEADER_DEPENDENCIES=3Dyes" the headers it needs.
->>>>
->>>> This means that a plain "make sparse" is much slower, as we'll now
->>>> need to make the *.o files just to create the *.sp files, but
->>>> incrementally creating the *.sp files is *much* faster and less
->>>> verbose, it thus becomes viable to run "sparse" along with "all" as
->>>> e.g. "git rebase --exec 'make all sparse'".
->>>
->>> OK. I think this solves the dependency issues sufficiently. It is a
->>> tradeoff that you must do the normal build in order to do the sparse
->>> check now. That is certainly fine for my workflow (I am building Git all
->>> the time, and only occasionally run "make sparse"). I don't know if
->>> others would like it less (e.g., if Ramsay is frequently running sparse
->>> checks without having just built).
->>>
->>> (I'd say "I do not care that much either way", but then I do not care
->>> all that much either way about incremental sparse checks either, so I'm
->>> not sure my opinion really matters).
->>=20
->> My build procedure runs "make sparse" before the primary build,
->> simply because the former tends to be much faster to fail when there
->> is an issue in the code.  I can understand that depending on .o is a
->> cheap way to piggyback on the dependencies it has, but my latency
->> will get much slower if this goes in _and_ I keep trying to pick up
->> potentially problematic patches from the list.
+>
+>  * Changed "! test_cmp_rev" to "test_cmp_rev !" (suggested by =C3=86var)
+>  * Fixed the quoting for the title of the "rebase --quit" tests.
+>  * Reworked the last commit to handle the error case first (suggested by
+>    =C3=86var)
+>  * Tweaked the commit messages for patches 8 & 11
+>  * Rebased onto 31e4a0db03 ("Merge branch 'ab/rebase-fatal-fatal-fix'",
+>    2021-09-08) to avoid a merge conflict that upset gitgitgadget
+>
+> Cover letter for V1: Aborting a rebase stated with git rebase <upstream>
+> <tag-object> should checkout the commit pointed to by . Instead it gives
+>
+>     error: update_ref failed for ref 'HEAD': cannot update ref 'HEAD': tr=
+ying to write non-commit object       710d743b2b9892457fdcc3970f397e6ec0744=
+7e0 to branch 'HEAD'
 >
 >
-> I always run 'make sparse -k >sp-out 2>&1' after having done the main
-> build, so that is not an issue for me. Note that I always send all
-> output from each build step (for master, next and seen) to a series of
-> (branch keyed) files, so that I can easily diff from branch to branch.
-> Also, as above, I use '-k' on the 'sparse' and 'hdr-check' targets to
-> collect all errors/warnings in one go.
+> The fix for that is in the last patch, the rest of the patches are cleanu=
+ps
+> to t3407 and builtin/rebase.c
 >
-> So, this evening, with the v2 version of =C3=86var's patch having landed =
-in
-> the 'seen' branch, we see this (abridged) diff between next and seen:
+> Phillip Wood (10):
+>   t3407: run tests in $TEST_DIRECTORY
+>   t3407: use test_commit
+>   t3407: use test_cmp_rev
+>   t3407: rename a variable
+>   t3407: use test_path_is_missing
+>   t3407: strengthen rebase --abort tests
+>   t3407: rework rebase --quit tests
+>   rebase: use our standard error return value
+>   rebase: use lookup_commit_reference_by_name()
+>   rebase: dereference tags
 >
->   $ diff nsp-out ssp-out
->   77a78
->   >     SP hook.c
->   289a291
->   >     SP builtin/hook.c
->   417a420
->   >     SP t/helper/test-reftable.c
->   449a453,478
->   >     SP reftable/basics.c
-> ...
->   >     SP reftable/tree_test.c
->   452a482,483
->   >     CC contrib/scalar/scalar.o
->   >     SP contrib/scalar/scalar.c
->   $=20
+>  builtin/rebase.c        |  49 ++++++++-----------
+>  t/t3407-rebase-abort.sh | 105 ++++++++++++++++++----------------------
+>  2 files changed, 67 insertions(+), 87 deletions(-)
 >
-> So, this almost looks normal, except for the 'CC' line! Having discovered
-> some leftover cruft from old builds yesterday:
 >
->   $ git ls-files | grep contrib/scalar
->   contrib/scalar/.gitignore
->   contrib/scalar/Makefile
->   contrib/scalar/scalar.c
->   contrib/scalar/scalar.txt
->   contrib/scalar/t/Makefile
->   contrib/scalar/t/t9099-scalar.sh
->   $ ls contrib/scalar
->   Makefile  scalar.c  scalar.o  scalar.sp  scalar.txt  t/
->   $ rm contrib/scalar/scalar.{o,sp}
->   $ make
->       SUBDIR git-gui
->       SUBDIR gitk-git
->       SUBDIR templates
->   $ make sparse
->       CC contrib/scalar/scalar.o
->       SP contrib/scalar/scalar.c
->   $=20
+> base-commit: 31e4a0db0337e2aa972d9b9f11a332dff7c4cbcb
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1033%2F=
+phillipwood%2Fwip%2Frebase-handle-tags-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1033/phill=
+ipwood/wip/rebase-handle-tags-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1033
 >
-> Hmm, interesting, but not relevant here. So, lets play a bit:
+> Range-diff vs v2:
 >
->   $ make sparse=20=20
->   $ make git.sp
->   $ make git.sp
->   $ touch git.sp
->   $ make git.sp
->   $ touch git.c
->   $ make git.sp
->       CC git.o
->       SP git.c
->   $ touch git.o
->   $ make git.sp
->       SP git.c
->   $=20
+>   1:  bac009d8543 =3D  1:  bac009d8543 t3407: run tests in $TEST_DIRECTOR=
+Y
+>   2:  abfffb31a56 =3D  2:  abfffb31a56 t3407: use test_commit
+>   3:  7755ce17fef =3D  3:  7755ce17fef t3407: use test_cmp_rev
+>   4:  38eee11baf5 =3D  4:  38eee11baf5 t3407: rename a variable
+>   5:  61a37c89f1e =3D  5:  61a37c89f1e t3407: use test_path_is_missing
+>   6:  6866630528b =3D  6:  6866630528b t3407: strengthen rebase --abort t=
+ests
+>   7:  fd55a3196b1 =3D  7:  fd55a3196b1 t3407: rework rebase --quit tests
+>   8:  ad3c4efc027 <  -:  ----------- rebase: remove redundant strbuf
+>   9:  ad940b633d0 !  8:  d3af62c746c rebase: use our standard error retur=
+n value
+>      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, con=
+st char *prefix
+>                 } else if (!(options.flags & REBASE_NO_QUIET))
+>                         ; /* be quiet */
+>       @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, co=
+nst char *prefix)
+>      -          reset_head(the_repository, NULL, "Fast-forwarded", option=
+s.head_name,
+>      -                     RESET_HEAD_REFS_ONLY, "HEAD", buf.buf,
+>      +                     RESET_HEAD_REFS_ONLY, "HEAD", msg.buf,
+>                            DEFAULT_REFLOG_ACTION);
+>      +          strbuf_release(&msg);
+>       -         ret =3D !!finish_rebase(&options);
+>       +         ret =3D finish_rebase(&options);
+>                 goto cleanup;
+>  10:  bc103e703e8 =3D  9:  4eedd3ae766 rebase: use lookup_commit_referenc=
+e_by_name()
+>  11:  951de6bb199 ! 10:  55a6250ab38 rebase: dereference tags
+>      @@ Metadata
+>        ## Commit message ##
+>           rebase: dereference tags
 >
-> Hmm, so I think it is working as designed. However, I find it to be
-> more than a little irritating (curmudgeon alert!).
-
-Specifically that there's now "SP" lines in the output, that *.sp files
-are created at all, that they're created where they are, or some
-combination of those thigs?
-
-> Note there are currently no sparse warnings in any of the branches
-> I build (mainly because Junio patches them up before they hit the
-> git.kernel.org repo - I am not complaining! ;) ). However, should
-> any warnings/errors appear (from my own development, say), then I
-> would make extensive use of 'make <file>.sp' while fixing the
-> problem. Prior to this patch series, 'make <file>.sp' would _always_
-> run sparse over the file - it would not depend on the 'mtime' or
-> existence of any other file, or run the compiler (and wouldn't leave
-> any 'droppings' either). I liked that! :D
+>      -    Aborting a rebase stated with 'git rebase <upstream> <tag-objec=
+t>'
+>      -    should checkout the commit pointed to by <tag-object>. Instead =
+it gives
+>      +    A rebase started with 'git rebase <A> <B>' is conceptually to f=
+irst
+>      +    checkout <B> and run 'git rebase <A>' starting from that state.=
+  'git
+>      +    rebase --abort' in the middle of such a rebase should take us b=
+ack to
+>      +    the state we checked out <B>.
 >
-> So, I still don't quite get where the 'savings' come from - maybe it
-> is just me, but I don't think this improves any workflow (well not
-> mine anyway). I just don't get it. :(
-
-The point is that you can now instead of:
-
-    make -jN all
-
-Just do:
-
-    make -jN all sparse
-
-And do those checks all the time, whether it's in your your normal
-edit/compile/test cycle, or via "git rebase --exec", and not have it
-take much longer than not having "sparse" there.
-
-So I think you won't have any reason to run "make <file>.sp" anymore.
-Why not just run "make all sparse"?
-
-As long as you have any outstanding errors in a <file>.sp" you'll keep
-getting just that relevant output, and once you fix the issue the
-dependency is satisified.
-
-Just like if you've got a compile error in say usage.c now you've got no
-reason to stop running "make all" and start running "make usage.o", the
-dependency graph makes it so that you'll get the right output via "make
-all", and the added time from running the more general target is
-trivial.
+>      -        error: update_ref failed for ref 'HEAD': cannot update ref =
+'HEAD':
+>      -        trying to write non-commit object
+>      -        710d743b2b9892457fdcc3970f397e6ec07447e0 to branch 'HEAD'
+>      +    This used to work, even when <B> is a tag that points at a comm=
+it,
+>      +    until Git 2.20.0 when the command was reimplemented in C.  The =
+command
+>      +    now complains that the tag object itself cannot be checked out,=
+ which
+>      +    may be technically correct but is not what the user asked to do=
+.
+>
+>      -    This is because when we parse the command line arguments althou=
+gh we
+>      -    check that the tag points to a commit we remember the oid of th=
+e tag
+>      -    and try and checkout that object rather than the commit it poin=
+ts
+>      -    to. Fix this by using lookup_commit_reference_by_name() when pa=
+rsing
+>      -    the command line.
+>      +    Fix this old regression by using lookup_commit_reference_by_nam=
+e()
+>      +    when parsing <B>. The scripted version did not need to peel the=
+ tag
+>      +    because the commands it passed the tag to (e.g 'git reset') pee=
+led the
+>      +    tag themselves.
+>
+>           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>           ---
+>
+> --
+> gitgitgadget
