@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3B6CC433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 791C0C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:12:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6A2B61038
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:12:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6103761038
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348407AbhIXUOD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 16:14:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33032 "EHLO
+        id S1348421AbhIXUOY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 16:14:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345750AbhIXUNu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 16:13:50 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EDAFC0614ED
+        with ESMTP id S1348399AbhIXUNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 16:13:51 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88345C061613
         for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:12:17 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id d6so30675438wrc.11
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:12:16 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id i23so30894810wrb.2
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=c1quqjzj3unJsCwpkyV0syS23SZ3/Jt3uBM3z5xQXaE=;
-        b=CuZlD8Zf4bvztKYJcIMKrJ9x+KmfIb92c64NCkTXMNnSkxzp04E+iMMhHbw/PuyLN2
-         0poJo/ELibq0+cTJSvVC+ZHsLm+dXhiRnX0Zfu9VjNjjNzrswynBOSF0JguHsHsMydj5
-         MIexohUzBZvP/LPfEUJlz6RXM4YFRX51XU2NvbCPtehVDXcI2k+zDv5tQtigpbus0t8p
-         sSOCHEJcCaOB6Y9f69HkMuEPbSWxUvGYVOPaZO2rZh4EGNLvDCG1v1kXn5spjLtfLskt
-         XNdssjasa0CNxpo/FCcmq+Z3N55DKrx2mYMVjjyCHijeNEQJwWipic+kHfgPRt73EZkx
-         rLKg==
+        bh=Wx/NRBAYoIBhOKGldB61QZt0lf65wQv8k/Ky8embUfk=;
+        b=dM+xicnb9pPddczEcg4c4VC36EkigoiQk+gth5qeQ4MxE3QZD0BBv9RzM67PxEwLgJ
+         W+2zAWewlWikZ6/OI3JwhbYs+tKZWFGaAMj3Ns+s+tIxMRMv80eW59W+hrPFzsUYydxv
+         3H4PYx1TOe8CySGoxYKQ1HHoyhC2ogZCeU+64qMdXIaeTzguWJA+Mgi+a5jdIwAJwy5b
+         xSXUYpMJjF/aETXo2ZyUDJ2XIrB/MLa+oXs+/NLk9Amn+Zt/hSxS6ODXSzTc0jiMMidI
+         D0X+69cbAH3LWLpDRQ9cF8sZ17uTKJD7PVSi/R53VJfxEx29rhMCxHbyOFxDzvvWiAQe
+         qBrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c1quqjzj3unJsCwpkyV0syS23SZ3/Jt3uBM3z5xQXaE=;
-        b=I232Mx6PBs2SAGS7TNZfgziSyUiJhoqg7O8bYFKGA9Csfs/DgWEQdAgQ62boTLIfdd
-         HqdKKuJ2CFvyWaoBOXqCJtWGQRiG67AntyQVEYPlwjPLaydRo7stgmOOKeJbRJgapRZl
-         WG4FdsSeRY9NcrWsr27CK9fkMK5GeHWxX1Syupwi4T8qggWwxefkq1V5nzigrMdJZj3z
-         7y0+3VczaWj4sUpHce/6+jlGwjVsQfISiU6vNH4UPMmgDKwPoH4ryeQqk8uL8v/PRg0y
-         jqzV0DMWsc0G0u8kY/BM1lAg1ovYVXFgDB6klOketHiW7dx2e2eo2fdCSzFcsDutjRUD
-         b/+w==
-X-Gm-Message-State: AOAM530pnhTlX1F6L91ya5Ti0OhxdPkZQmnd3n3MUU663A+gCyjqJDUN
-        0MNw3TvjoeHW9Qh7zkT1yEGMzQAhvAw=
-X-Google-Smtp-Source: ABdhPJx0u60Eig1bKYNn5q43lPEKDZpW8Hr8BNqhqwsIuus5EAEHyQzF22NFjaPnVnstsS4zv+K0EA==
-X-Received: by 2002:a7b:c191:: with SMTP id y17mr4020064wmi.122.1632514335636;
-        Fri, 24 Sep 2021 13:12:15 -0700 (PDT)
+        bh=Wx/NRBAYoIBhOKGldB61QZt0lf65wQv8k/Ky8embUfk=;
+        b=vkRpPpXiYL0QwtX/sOogMyFpb14JOVQTUfc1VQrpFgVi6Vbbrn8hSNna/0mjSQp+wr
+         ELHW9JG/YH4APXqJ6K238ONOcKXFW4a8ysWi//ksK2bWk55OLriuL3yaBVKnGDl18a0X
+         sKPGwReS9IIgPLsyq6diMQG2F0PEkEv5VfbF5z3kJDXgcv7Kz68DSqk0dhOEoULv8FuG
+         bWVJomF4IRj+G1l67GQGJYdOteKqQh4IofIwL7AspDiRi/1hVWm3UQ6t2GNaKbQpnQ7p
+         4o2YfWidzPK+HACi8yLl+aciwNQ7aCbkOqpdko+LwCbQXfh7TyF0zo46aapzqZfv1Zsp
+         z/UA==
+X-Gm-Message-State: AOAM530Owa5jYnnz+w1mQ8CRecw+Pb3BO4caAJYpYxggK63FQ3y+Gd60
+        689aVHAr8/gdlFSd6rmmBXWBy4NBUP4=
+X-Google-Smtp-Source: ABdhPJxBDoyLKte2l4FgOnnI4IU8WmmPgVdY25lz7cYks9Q6iMH0jbO7DtFGdQpxtNy1QRbhPjI+Ig==
+X-Received: by 2002:a7b:ce94:: with SMTP id q20mr4085564wmj.83.1632514336238;
+        Fri, 24 Sep 2021 13:12:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u25sm10599860wmm.5.2021.09.24.13.12.15
+        by smtp.gmail.com with ESMTPSA id a77sm9267800wme.28.2021.09.24.13.12.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 13:12:15 -0700 (PDT)
-Message-Id: <485b4a767dfa54729c40b32b7fea033aedc870d1.1632514331.git.gitgitgadget@gmail.com>
+        Fri, 24 Sep 2021 13:12:16 -0700 (PDT)
+Message-Id: <889e76687601e3a1242e57c430a1b7f64ea1d77b.1632514331.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v5.git.git.1632514331.gitgitgadget@gmail.com>
 References: <pull.1076.v4.git.git.1632176111.gitgitgadget@gmail.com>
         <pull.1076.v5.git.git.1632514331.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Sep 2021 20:12:08 +0000
-Subject: [PATCH v5 4/7] update-index: use the bulk-checkin infrastructure
+Date:   Fri, 24 Sep 2021 20:12:09 +0000
+Subject: [PATCH v5 5/7] unpack-objects: use the bulk-checkin infrastructure
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,57 +78,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-The update-index functionality is used internally by 'git stash push' to
-setup the internal stashed commit.
+The unpack-objects functionality is used by fetch, push, and fast-import
+to turn the transfered data into object database entries when there are
+fewer objects than the 'unpacklimit' setting.
 
-This change enables bulk-checkin for update-index infrastructure to
-speed up adding new objects to the object database by leveraging the
-pack functionality and the new bulk-fsync functionality. This mode
-is enabled when passing paths to update-index via the --stdin flag,
-as is done by 'git stash'.
-
-There is some risk with this change, since under batch fsync, the object
-files will not be available until the update-index is entirely complete.
-This usage is unlikely, since any tool invoking update-index and
-expecting to see objects would have to synchronize with the update-index
-process after passing it a file path.
+By enabling bulk-checkin when unpacking objects, we can take advantage
+of batched fsyncs.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/update-index.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ builtin/unpack-objects.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 187203e8bb5..dc7368bb1ee 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -5,6 +5,7 @@
-  */
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 4a9466295ba..51eb4f7b531 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
  #include "cache.h"
 +#include "bulk-checkin.h"
  #include "config.h"
- #include "lockfile.h"
- #include "quote.h"
-@@ -1088,6 +1089,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 
- 	the_index.updated_skipworktree = 1;
- 
-+	/* we might be adding many objects to the object database */
+ #include "object-store.h"
+ #include "object.h"
+@@ -503,10 +504,12 @@ static void unpack_all(void)
+ 	if (!quiet)
+ 		progress = start_progress(_("Unpacking objects"), nr_objects);
+ 	CALLOC_ARRAY(obj_list, nr_objects);
 +	plug_bulk_checkin();
-+
- 	/*
- 	 * Custom copy of parse_options() because we want to handle
- 	 * filename arguments as they come.
-@@ -1168,6 +1172,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
+ 	for (i = 0; i < nr_objects; i++) {
+ 		unpack_one(i);
+ 		display_progress(progress, i + 1);
  	}
- 
-+	/* by now we must have added all of the new objects */
 +	unplug_bulk_checkin();
- 	if (split_index > 0) {
- 		if (git_config_get_split_index() == 0)
- 			warning(_("core.splitIndex is set to false; "
+ 	stop_progress(&progress);
+ 
+ 	if (delta_list)
 -- 
 gitgitgadget
 
