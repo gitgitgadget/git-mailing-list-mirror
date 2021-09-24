@@ -2,120 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BD04C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CABBC433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:07:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 738CB61107
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:04:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D9256103D
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348315AbhIXUFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 16:05:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47346 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1345661AbhIXUFs (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Sep 2021 16:05:48 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 410566073C;
-        Fri, 24 Sep 2021 20:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1632513824;
-        bh=1xz1At3+xBjQU9bjC8+NvXg+//7Cu25zc4BzrL3bLwk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=axsPIZ3PPXEt33UJ5bTTj5vprSgNc8Bg7og5YBl/nyKMOPcYraAQ1gHi9DeeySxnP
-         5JNU8O78hjr1+56L5D+GsZL4SfDmpYLmZntVIWVC8K41tqaJOt4jjpQ2dWq8+B+E6L
-         t96awbowjCK5Ud5RsduhRCwAf3j0Ki5obY0XS1mTh4QbVUFjikUWN7UiGr1lQRAcYq
-         axtBQQ0D5bi6ZcumkHlkvDxdSIMqnObQHX+SkC69tIVlwE+EnCiOjCfBIqm9GC2MDR
-         vBcaS51cDDdE13Kh8i2gCjrHI9dP2/WmktGfPHk74Wi1nTulr/APWtNP0Kj94m5GX8
-         wid2l+uvY/82QvhupAgeZCSk571PCib3GFhMEkpMpS1PaClUG3kUk5VDE0ylsJdoFT
-         oMO9HsjYXTq1QHbZnOvSYIhmKQC83Hmq3b7LvJsyvqmIC+oiFr0ZFU8hSXeBOe7bSR
-         w7jkueC1IIA0fFYmlTMfa+Jgg6k7XV3z6XUJbsMC8uoUMSOzjUB
-Date:   Fri, 24 Sep 2021 20:03:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Russell, Scott" <Scott.Russell2@ncr.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Emily Shaffer' <emilyshaffer@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: pull failed - why should I receive this message.
-Message-ID: <YU4vG0TI+BkK6xiW@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Russell, Scott" <Scott.Russell2@ncr.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Emily Shaffer' <emilyshaffer@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <BN6PR15MB1426A342CBA9D993C0C49E55CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
- <CAJoAoZ=DuqHe2brN8Y2Ts0_afEhUNrdasRBb1O8HHomLKRJ4PA@mail.gmail.com>
- <BN6PR15MB14261D1A350398C0C26793E1CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
- <000401d7b16e$17ea02d0$47be0870$@nexbridge.com>
- <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+        id S1348353AbhIXUIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 16:08:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346803AbhIXUIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 16:08:49 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0722EC061571
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:07:15 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id dj4so40478989edb.5
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 13:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=KJ/BzqOVyHPFONbAOk/DcVqpWMOvZi0F0BK5b0zeqdY=;
+        b=CktTHHXkFbV9J2ZaCYznCTB/kpRmV6nar7zAssDiuwisLg9ewsoKG9ievByQd8m+zW
+         0pIy96NMK5axgswMSjnFNCcffeEiE97bJerLlzVMI8uAUOxx8BDkVC0pHLnpTcxl8/nl
+         I182i2Efv/4HpB3VqrhN13KhHFM+Kmqxdt5qt2FaJeW9nziisVGwGRZDrKAyPV+Giisc
+         HDiYoI9ib/BHYIgkcM3GYUf62FeqKVAp5SreilbHzvNFg2afKljFyhX6wTSSiLzT4wJM
+         nV57RijoSwKfVe1p/dgXeJ/kpTvy+e3yNFcmkbCgcFIn64IfLtBh4XY1B4K8utSjB+Nd
+         O1lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=KJ/BzqOVyHPFONbAOk/DcVqpWMOvZi0F0BK5b0zeqdY=;
+        b=irVQCXCKoia/8O/E2N9c+I8gH6W9j1AYPJFswZvr6HZh/qB4xfmZ4MLEMaicExGv0X
+         PS987zpkYxjKt9y+ydiyaI7bBMTiyH65b4KpizwmW7EZ1bxvygCK0T3zd5rgHltAzflB
+         WMhYF33uNhU6MTycCHqQbK26zDB+YHxzL5HXocHZwWJ+/O2zhlIFC5V54458y/M9lvFY
+         7MBwvO+iP+YZ/1q6kjgOFIuKZimwlUyvhC2mLEBtPcJkBlGazmUl/Xd0nY3pbswsK2RP
+         pqj0oWLSYu/IQIpGQM6+JScW8nXjv9OGhkzcV6YaNl0DkZeld6PCWS9KUeWN6VScV2jD
+         89/w==
+X-Gm-Message-State: AOAM530I6Z9dZZGkMYCJmzC1rEsik1NyWheEBYNNRH96BAlm1Ml4MGKc
+        vVuuhUMTJhMpnR4PD1loAlJGzMLerrANxQ==
+X-Google-Smtp-Source: ABdhPJxg0w2LkfGklhlxQznUvH7XOpnWLnuUT2nUXzA8lFEIeUdsRholaytY+ld5Rz5jA+9jui1qyg==
+X-Received: by 2002:a50:da4e:: with SMTP id a14mr7288758edk.154.1632514033453;
+        Fri, 24 Sep 2021 13:07:13 -0700 (PDT)
+Received: from evledraar ([109.38.130.174])
+        by smtp.gmail.com with ESMTPSA id d15sm5450583ejo.4.2021.09.24.13.07.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Sep 2021 13:07:13 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Thiago Perrotta <tbperrotta@gmail.com>
+Cc:     carenas@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] send-email: shell completion improvements
+Date:   Fri, 24 Sep 2021 22:02:25 +0200
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+ <20210924024606.20542-1-tbperrotta@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20210924024606.20542-1-tbperrotta@gmail.com>
+Message-ID: <87bl4h3fgv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0HfqGeON3c+l9/lK"
-Content-Disposition: inline
-In-Reply-To: <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---0HfqGeON3c+l9/lK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Sep 23 2021, Thiago Perrotta wrote:
 
-On 2021-09-24 at 18:36:51, Russell, Scott wrote:
-> Randall,
->=20
-> Thanks for your answer.   However, this is a build system.
-> Git clean -dxf would delete all untracked files - not just the conflicted=
- ones.
->=20
-> We must keep all untracked files that would not be conflicted by the pull.
-> Otherwise, the result would be our build would need to do a fresh build o=
-f all objects and build targets - those are all untracked as well.
-> Instead of the desired case of just building the changed files and their =
-resultant targets.
+> Thanks for the heads up, I am slowly getting used to this email
+> workflow, this is my first contribution. Hopefully I got it right this
+> time.
+>
+>> Isn't this just:
+>
+>> my @params = <getopts list>;
+>> GetOptions(@params);
+>
+> Let me know if the regex approach I went with is OK. You seem to have
+> suggested me to do something with the `GetOptions` module, but I'm
+> afraid I only know the basics of Perl.
+>
+> I tried to do something like `GetOptions($USAGE)` but it didn't quite
+> work (clearly I have no idea how to do that :P). If you have something
+> specific in mind, I'd appreciate if you could send a small patch back
+> that I can incorporate. Otherwise, either way, the current regex
+> approach isn't too horrible and seems to be reasonably reliable.
 
-Note that a "git clean -dxf" will clean even ignored files.  If you just
-need to clean untracked files, you can do "git clean -df" (without the
--x) and then your ignored files will not be deleted.
+I meant something like the below patch, feel free to incorporate it if
+you'd like with my signed-off-by, i.e. there's no reason to parse the
+usage message, or hardcode another set of options, we've got it right
+there as structured program data being fed to the GetOptions() function.
 
-> We just need the pull to overwrite any untracked files that may exist in =
-conflict with newly tracked files.
->=20
-> I see git is troublesome in this situation.   Every time a developer adds=
- an untracked file to the repo - regardless of type,
-> It will result in failure of the pull.   And a failure of the build.
+All we need to do is to assign that to a hash, and use it both for
+emitting the help and to call GetOptions().
 
-I do strongly agree with Emily that build artifacts should not be
-tracked in the repository and that the best way to solve it is to
-address that problem.
+What I have doesn't *quite* work, i.e. the --git-completion-helper
+expects "--foo=" I think for things that are "foo=s" in perl, so the
+regex needs adjusting, but that should be an easy addition on top.
 
-However, if your goal is to just update the working tree to a specific
-revision, rather than to potentially merge that commit into the working
-directory, you can use "git fetch origin" to fetch the remote, and then
-use "git checkout -f REVISION" to check out the branch and destroy local
-changes.  I suspect in your case, since this is a build server, that
-checking out a specific revision is the intended behavior.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---0HfqGeON3c+l9/lK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYU4vGwAKCRB8DEliiIei
-gVuyAQD80swLb9Wq0gEqt1TfSKhUjP9aN4iYzRlXKsV/1YBP1gD+JoKS9Uuz2VJS
-JHi97NqGPlTYKFr+EgUPlWrp4H0caAM=
-=BCdL
------END PGP SIGNATURE-----
-
---0HfqGeON3c+l9/lK--
+-- >8 --
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 5262d88ee32..221115fbbdd 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -114,8 +114,18 @@ sub usage {
+ }
+ 
+ sub completion_helper {
+-    print Git::command('format-patch', '--git-completion-helper');
+-    exit(0);
++	my ($options) = @_;
++
++	my @gse_options = sort map {
++		"--$_"
++	} map {
++		s/(?:[:=][si]|!)$//;
++		split /\|/, $_;
++	} keys %$options;
++	my @fpa_options = Git::command('format-patch', '--git-completion-helper');
++	my @options = sort @gse_options, @fpa_options;
++	print "@options\n";
++	exit(0);
+ }
+ 
+ # most mail servers generate the Date: header, but not all...
+@@ -449,7 +459,7 @@ sub config_regexp {
+ usage() unless $rc;
+ die __("--dump-aliases incompatible with other options\n")
+     if !$help and $dump_aliases and @ARGV;
+-$rc = GetOptions(
++my %options = (
+ 		    "sender|from=s" => \$sender,
+                     "in-reply-to=s" => \$initial_in_reply_to,
+ 		    "reply-to=s" => \$reply_to,
+@@ -508,7 +518,8 @@ sub config_regexp {
+ 		    "batch-size=i" => \$batch_size,
+ 		    "relogin-delay=i" => \$relogin_delay,
+ 		    "git-completion-helper" => \$git_completion_helper,
+-	 );
++);
++$rc = GetOptions(%options);
+ 
+ # Munge any "either config or getopt, not both" variables
+ my @initial_to = @getopt_to ? @getopt_to : ($no_to ? () : @config_to);
+@@ -516,7 +527,7 @@ sub config_regexp {
+ my @initial_bcc = @getopt_bcc ? @getopt_bcc : ($no_bcc ? () : @config_bcc);
+ 
+ usage() if $help;
+-completion_helper() if $git_completion_helper;
++completion_helper(\%options) if $git_completion_helper;
+ unless ($rc) {
+     usage();
+ }
