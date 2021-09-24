@@ -2,191 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1593BC433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00BD5C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:41:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D80D360E52
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C861660F26
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241618AbhIXSlW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 14:41:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231919AbhIXSlV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 14:41:21 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 451B0C061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:39:48 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id e15so44074595lfr.10
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=s0FZHl1Uy4MsJR49Yq7TUSvJ5Koqp18MPNZXP6uCToE=;
-        b=V5R05a143Qlc5L3R/FcH6sQRhE8QTjeizAnMkRlZ86cTbMVmGNGZrlFsGRRf589eIk
-         NH2yvH7tx88V9gUevDqWI919HWNfe5KqGnYSpDm1k0YpnL5syGUFhfJ0rIMMqzZuGYqr
-         ir5nDma9Bc5WGleumUqK6USheOT4SmFmME6Tkded/ZfVhGw4coyfkGoH3SGztKt21NBl
-         FeE2SBZ9iIPUWL33AjVVZXuB308YuAton5tMThDA0wMn3USGHZqltjHRgUMkcSYAsDyw
-         M+ZhTd+bt+3kuvILoG1WyUnYS45vpgswOI6uctHMLPNR7fvnYGndCCH6fsB/4JduJdRP
-         2dCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=s0FZHl1Uy4MsJR49Yq7TUSvJ5Koqp18MPNZXP6uCToE=;
-        b=6rM5trnSE5ZE00eAbnsz3KbMPXrIHz9rNddlQpLegxrOAMM0Evu8yV0G6kA3mjQzLN
-         syFzH9bA0zaQOmdz3QZxe9jDLyvVLIxxa0GGEVcs93+g6ExkUrQ43lWrb3Kl21Zu1KNY
-         ulk01MBKzjtDKCcqDNDd27rpBs8aLOBrdPwFTc9effKhUMZsOnTwwEAV2zYdVkqTEgqQ
-         RJ6p1zOnd0jUsIUF2RzCQilhrehISo5yVgbtIPpbizYLPfSdfAqY0J3gR3abQYlFLC6S
-         YOC7oZ0DbBgVG4dahJ6D0XnlRVxwvqK11K78h10NiJO2qU51ZC1fhmcCjHRctUITup6u
-         OTzg==
-X-Gm-Message-State: AOAM532UMZZNhv4T3qgNQNTEvipfFh1OnG0Ofy0vrRjQl5iD2L7PRcr3
-        S1mz0etZ/LHX+jGrfRfy+O5GnDFvnx9djWEtfPBJ6vwLWZ8=
-X-Google-Smtp-Source: ABdhPJwgkTaqQAxdkEaVKpCDvL4TywwhLpnJ2R0yBbss+BsaUrNg0cEN2c4Kdx6d1OqsYYm5W9nJezaGLTyPl8B9tP8=
-X-Received: by 2002:a05:651c:228:: with SMTP id z8mr12715586ljn.429.1632508786400;
- Fri, 24 Sep 2021 11:39:46 -0700 (PDT)
+        id S1346501AbhIXSnH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 14:43:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54664 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231919AbhIXSnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 14:43:06 -0400
+Received: (qmail 19129 invoked by uid 109); 24 Sep 2021 18:41:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Sep 2021 18:41:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11152 invoked by uid 111); 24 Sep 2021 18:41:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Sep 2021 14:41:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 24 Sep 2021 14:41:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH 10/16] refs: add DO_FOR_EACH_OMIT_DANGLING_SYMREFS flag
+Message-ID: <YU4b3LxHdQiVGtWW@coredump.intra.peff.net>
+References: <YU4ZOF9+ubmoItmK@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <BN6PR15MB1426A342CBA9D993C0C49E55CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
- <CAJoAoZ=DuqHe2brN8Y2Ts0_afEhUNrdasRBb1O8HHomLKRJ4PA@mail.gmail.com>
- <BN6PR15MB14261D1A350398C0C26793E1CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
- <000401d7b16e$17ea02d0$47be0870$@nexbridge.com> <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
-In-Reply-To: <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Fri, 24 Sep 2021 11:39:35 -0700
-Message-ID: <CAJoAoZnuTGoF5J9FiwFTxsrG5VZ78zwKXe9w7__8U6UrCVQmeQ@mail.gmail.com>
-Subject: Re: pull failed - why should I receive this message.
-To:     "Russell, Scott" <Scott.Russell2@ncr.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YU4ZOF9+ubmoItmK@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 24, 2021 at 11:36 AM Russell, Scott <Scott.Russell2@ncr.com> wr=
-ote:
->
-> Randall,
->
-> Thanks for your answer.   However, this is a build system.
-> Git clean -dxf would delete all untracked files - not just the conflicted=
- ones.
->
-> We must keep all untracked files that would not be conflicted by the pull=
-.
-> Otherwise, the result would be our build would need to do a fresh build o=
-f all objects and build targets - those are all untracked as well.
-> Instead of the desired case of just building the changed files and their =
-resultant targets.
->
-> We just need the pull to overwrite any untracked files that may exist in =
-conflict with newly tracked files.
->
-> I see git is troublesome in this situation.   Every time a developer adds=
- an untracked file to the repo - regardless of type,
-> It will result in failure of the pull.   And a failure of the build.
+When the DO_FOR_EACH_INCLUDE_BROKEN flag is used, we include both actual
+corrupt refs (illegal names, missing objects), but also symrefs that
+point to nothing. This latter is not really a corruption, but just
+something that may happen normally. For example, the symref at
+refs/remotes/origin/HEAD may point to a tracking branch which is later
+deleted. (The local HEAD may also be unborn, of course, but we do not
+access it through ref iteration).
 
-It sounds to me like the correct solution here is to add build
-artifacts to .gitignore, which will prevent committers from
-accidentally tracking them and breaking your buildbot's pull.
+Most callers of for_each_ref() etc, do not care. They don't pass
+INCLUDE_BROKEN, so don't see it at all. But for those which do pass it,
+this somewhat-normal state causes extra warnings (e.g., from
+for-each-ref) or even aborts operations (destructive repacks with
+GIT_REF_PARANOIA set).
 
->
->
-> Thanks,
->
-> Scott Russell
-> NCR Corporation
->
->
-> -----Original Message-----
-> From: Randall S. Becker <rsbecker@nexbridge.com>
-> Sent: Friday, September 24, 2021 2:01 PM
-> To: Russell, Scott <Scott.Russell2@ncr.com>; 'Emily Shaffer' <emilyshaffe=
-r@google.com>
-> Cc: git@vger.kernel.org
-> Subject: RE: pull failed - why should I receive this message.
->
-> On September 24, 2021 1:34 PM Scott Russell wrote:
-> >
-> >Thanks for your answer.   Is there not an option on the pull to have git=
- to overwrite the existing files?
-> >
-> >-----Original Message-----
-> >From: Emily Shaffer <emilyshaffer@google.com>
-> >Sent: Friday, September 24, 2021 1:29 PM
-> >To: Russell, Scott <Scott.Russell2@ncr.com>
-> >Cc: git@vger.kernel.org
-> >Subject: Re: pull failed - why should I receive this message.
-> >
-> >*External Message* - Use caution before opening links or attachments
-> >
-> >On Fri, Sep 24, 2021 at 10:08 AM Russell, Scott <Scott.Russell2@ncr.com>=
- wrote:
-> >>
-> >> Files not previously in git were added to git.   Why should I have to =
-manually delete them?
-> >> Why can git put not replace them?  They were untracked files that are =
-now tracked  and so the git copy is desired.
-> >> We can't always know ahead of time what files may have been added else=
-where.
-> >
-> >To turn it around on you, you can't always know ahead of time what
-> >files may have been added elsewhere, so you can't be sure that your
-> >newly added untracked file locally will be safe from being overwritten d=
-uring a pull. How upsetting if you sink 30 hours into newlib.cpp and then y=
-our teammate checks in their own newlib.cpp, and yours is overwritten witho=
-ut asking when you run 'git pull'.
-> >
-> >You might have some luck with the '--autostash' option, which would at
-> >least prompt you whether to get rid of things when trying to merge them
-> >back together during the automatic 'git stash pop' at the end. Or you co=
-uld run 'git clean --force' to automatically delete any untracked files you=
- might have - you could even alias yourself a command like 'git dangerous-p=
-ull' which runs 'git clean -f && git pull'.
-> >
-> >>
-> >>
-> >> We need the pull to work automatically.
-> >>
-> >> error: The following untracked working tree files would be overwritten=
- by merge:
-> >>         Staging/CADDApps/CADDUIHelper/Source/Release/CADDUIHelper.exe
-> >>         Staging/CADDApps/CADDUIHelper/Source/Release_Unicode/CADDUIHel=
-per.exe
-> >>         Staging/CADDApps/InstallDriversPackage/Release/InstallDriversP=
-ackage.exe
-> >>         Staging/Common/NCRCommonCCLib/Source/Release/NCRCommonCCLibMsg=
-.dll
-> >>         Staging/Devices/NFC/Elatec_RFIDReader/Bin/Director.exe
-> >>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/AppBlaster.exe
-> >>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/flash.exe
-> >>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DIFxAPI.dll
-> >>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DriverForge.v4.5.=
-4.exe
-> >>         Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWD=
-riverInstaller.exe
-> >>
-> >> Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriverIn
-> >> stallerMsg.dll
-> >>
-> >> Staging/Utilities64/SSPSWTaskMgr/Source/Release/SSPSWTaskMgr.exe
-> >
-> >Or better yet, you could avoid checking in compiled binaries like these
-> >and instead add them to your .gitignore, unless you really mean to
-> >update them every time someone makes some change. When checking in
-> >binaries, you should be aware of the additional disk overhead needed to =
-do so and take a look at some options Git has to mitigate that overhead, li=
-ke partial clone. However, in many cases the easiest way to mitigate that o=
-verhead is to simply not check in binaries unless you absolutely need them =
-to be version controlled.
-> >
-> >- Emily
->
-> If you are scripting this, try using git clean -dxf and git reset --hard =
-before running the pull.  That will clean the objects out of your working d=
-irectory.
->
-> -Randall
->
+This patch just introduces the flag and the mechanism; there are no
+callers yet (and hence no tests). Two things to note on the
+implementation:
+
+  - we actually skip any symref that does not resolve to a ref. This
+    includes ones which point to an invalidly-named ref. You could argue
+    this is a more serious breakage than simple dangling. But the
+    overall effect is the same (we could not follow the symref), as well
+    as the impact on things like REF_PARANOIA (either way, a symref we
+    can't follow won't impact reachability, because we'll see the ref
+    itself during iteration). The underlying resolution function doesn't
+    distinguish these two cases (they both get REF_ISBROKEN).
+
+  - we change the iterator in refs/files-backend.c where we check
+    INCLUDE_BROKEN. There's a matching spot in refs/packed-backend.c,
+    but we don't know need to do anything there. The packed backend does
+    not support symrefs at all.
+
+The resulting set of flags might be a bit easier to follow if we broke
+this down into "INCLUDE_CORRUPT_REFS" and "INCLUDE_DANGLING_SYMREFS".
+But there are a few reasons not do so:
+
+  - adding a new OMIT_DANGLING_SYMREFS flag lets us leave existing
+    callers intact, without changing their behavior (and some of them
+    really do want to see the dangling symrefs; e.g., t5505 has a test
+    which expects us to report when a symref becomes dangling)
+
+  - they're not actually independent. You cannot say "include dangling
+    symrefs" without also including refs whose objects are not
+    reachable, because dangling symrefs by definition do not have an
+    object. We could tweak the implementation to distinguish this, but
+    in practice nobody wants to ask for that. Adding the OMIT flag keeps
+    the implementation simple and makes sure we don't regress the
+    current behavior.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ refs/files-backend.c | 5 +++++
+ refs/refs-internal.h | 6 ++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 74c0385873..1148c0cf09 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -744,6 +744,11 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		    ref_type(iter->iter0->refname) != REF_TYPE_PER_WORKTREE)
+ 			continue;
+ 
++		if ((iter->flags & DO_FOR_EACH_OMIT_DANGLING_SYMREFS) &&
++		    (iter->iter0->flags & REF_ISSYMREF) &&
++		    (iter->iter0->flags & REF_ISBROKEN))
++			continue;
++
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+ 		    !ref_resolves_to_object(iter->iter0->refname,
+ 					    iter->iter0->oid,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 2c4e1739f2..96911fb26e 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -268,6 +268,12 @@ enum do_for_each_ref_flags {
+ 	 * per-worktree refs.
+ 	 */
+ 	DO_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
++
++	/*
++	 * Omit dangling symrefs from output; this only has an effect with
++	 * INCLUDE_BROKEN, since they are otherwise not included at all.
++	 */
++	DO_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
+ };
+ 
+ /*
+-- 
+2.33.0.1071.gb37e412355
+
