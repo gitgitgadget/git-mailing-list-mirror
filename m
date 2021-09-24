@@ -7,83 +7,126 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68CA2C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74751C433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:52:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44F73604E9
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:30:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 571E260EB4
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 01:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243745AbhIXBcG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Sep 2021 21:32:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58632 "EHLO
+        id S243820AbhIXBy2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Sep 2021 21:54:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243687AbhIXBcG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Sep 2021 21:32:06 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056C6C061574
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:30:34 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id y201so12395463oie.3
-        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:30:33 -0700 (PDT)
+        with ESMTP id S243823AbhIXByY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Sep 2021 21:54:24 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EBF0C061756
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:52:52 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id v10so25416924edj.10
+        for <git@vger.kernel.org>; Thu, 23 Sep 2021 18:52:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3tcBvpzYkX4shnXE9dx6avXP6qiPp1oNsk843JXSLCo=;
-        b=W8PjScyfzSB/+p8t5fMZvm/QIyqzcN/BvZdE6ZTKpovIOPHe6BZtZAfTCus+AbB+ZG
-         n23D1QnIEvEAu9g3DZ/jD48vj45UmS/EONDEgnAzlOl5ZFDeitnUE0O4nepJuNdVRmBj
-         aWv/nG21E4bJ28illFgtjmATvW85M/81xaaN6VasHJCSXrqb9zrtUw0NbUM/EIPLjiGa
-         1zPJ8L4sBYMu3Bydsjw5HZaB5qzASWoDbcHyFZsPnLnF0AM1+CAOmDLWQ+nwJXDa8sfp
-         r3zPZjbctnGBoQqUtdMTOpGs7Ng9VGVWqWdUu1n7n5ppbAw618W9K0q2npXPjjMX7cb7
-         Tosg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FC62zdPufCONtCTPFOQ4jSvBg7YQtr/iPHzeoanrffo=;
+        b=bk/8ngm8Sh0TLBrrCxVAxCDWiXkFvj6tstTnl/g4nHGWW7HPmbG7sOolmIzKGuiQql
+         d0+mLN3Il/ChE03n2KsmBUtdSMcriBefi6BnqUQlKGiwJq5g+n18+p59kSQV3rKFbWmM
+         KjZ4JJzOtwiGOQSBjBZMNPy4W157v4/H+y2me8TWx4AXxxSGgHGgR2TeiciVVLf3K8nQ
+         0B1g0Tz26oaLfy6Wd09UvAOoPowZ6ehxv6J5nrSW1FAasceGbo7OmAYLAv5PSR5xGKw+
+         xkK3a/gaRRPrVUX09ArcaBTVXQThvZBxjRvXjL7wQ7cV+auieatpZiDFjbwMLTsjATbT
+         5b0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3tcBvpzYkX4shnXE9dx6avXP6qiPp1oNsk843JXSLCo=;
-        b=azdjy3x5NZbYk2O7xtsdLyQpZWaEi6PkQ+0NG8UtznRxKR7CBTfybb6vr8J2lKjEna
-         Q/HpLAWwRL7J3sdYrAza08DgvWraDevq57ksrQ8VWA3IHEJ4aJ/lal/gdHgxTOuAjIoS
-         M5VDPIYSloF3ku3ICUPqIQvIfIC9Ke8xCJ2AZtBMGQiwYKHTrNhuI0KuP4bC8gqrruOX
-         FQqfU2Bmr3HdYzDOpJ+mo5WlAL6H9rvZrW8x7iUuNU2u3rQHyJmFy1riMQ+S2/saupyw
-         2TTQ4o/G4fq6Dd28eRDwqS7I7o4VncrETgbjmcHNveMrRtQqAtZWQkBN+9/5qDVmcsyP
-         +V4A==
-X-Gm-Message-State: AOAM531kYQJ7/Fl+OPORFkrZziSJHA6vyy2eTYnATWN29ZOgX4PDT4yi
-        t/6oHmFbF0fzsOLhwJ9YV/9bekpKGzQh9FJlgJIPlX+Kkm8=
-X-Google-Smtp-Source: ABdhPJxEVFx6lPtcjtXoX1vpTXeikwiCLJJK4ainxE2Qk+oRg0u3k5P/o3fkQgxGtonNiG8elpYNvopBF4ts7oWuXyI=
-X-Received: by 2002:a05:6808:1a29:: with SMTP id bk41mr14879990oib.167.1632447033331;
- Thu, 23 Sep 2021 18:30:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqa6k2yj1j.fsf@gitster.g>
-In-Reply-To: <xmqqa6k2yj1j.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 23 Sep 2021 18:30:21 -0700
-Message-ID: <CABPp-BFXrdj7ZV5LYW0cLghzX1Q8a=NuBfWaUsj4JO9m+v7yxw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #07; Thu, 23)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=FC62zdPufCONtCTPFOQ4jSvBg7YQtr/iPHzeoanrffo=;
+        b=azds5BzLYcR5JWJnCAG/BrGrgT+GHjmqgNGGwdXF95mm5LtHIhMXqhoE+92pPKefWY
+         6Cn+EtxZl++9hjBQVMCQLgW1vvBllUYu6zwckhUFNKeBxjrWcWaTJbn1nhli0i7JN0Mp
+         ThN/V9JmyUlBaG5tPezFW7CA2XZ6615z1Jz6R+yy6LS/FmSd6HhMaRKn76uvQHs4JWxC
+         CVGSKo+D/SBCWf9dDoBsKRgR3Hd57qPUCLlX8ruNFVsXWKr8ZKoxt8dSBdyWiR8bsYCF
+         b3CI35Aj/29uVqE5OXenUqInHZ0mLCaWzwbGSwe25Hw6wqzRNV7Zl35IQ6ZATAlSOyM6
+         z5Ww==
+X-Gm-Message-State: AOAM531yo+GL9Ib+MaIkbRKAl5B/Fx/tXOhQQdY2PhwctZV133CIfNvf
+        +rZkIWBVI+8YJ6M6sEJ4DcA=
+X-Google-Smtp-Source: ABdhPJxhRHJ6E4ywoRW5L2/aiPPkVAbo5KKvjZrYWZOKdAWMVwIwK+a/KfRC+AK3S/peQr75PGP5KQ==
+X-Received: by 2002:a17:907:76b2:: with SMTP id jw18mr8876351ejc.120.1632448370643;
+        Thu, 23 Sep 2021 18:52:50 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id a4sm4876386edb.79.2021.09.23.18.52.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 18:52:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2] Makefile: make the "sparse" target non-.PHONY
+Date:   Fri, 24 Sep 2021 03:30:10 +0200
+References: <cover-0.3-00000000000-20210921T224944Z-avarab@gmail.com>
+ <patch-v2-1.1-059829f2195-20210923T000654Z-avarab@gmail.com>
+ <YUyqIpOLFDqG/kEJ@coredump.intra.peff.net> <xmqqtuib199x.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqtuib199x.fsf@gitster.g>
+Message-ID: <875yuq4u4u.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 23, 2021 at 4:24 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> * pw/rebase-of-a-tag-fix (2021-09-22) 10 commits
->  - rebase: dereference tags
->  - rebase: use lookup_commit_reference_by_name()
->  - rebase: use our standard error return value
->  - t3407: rework rebase --quit tests
->  - t3407: strengthen rebase --abort tests
->  - t3407: use test_path_is_missing
->  - t3407: rename a variable
->  - t3407: use test_cmp_rev
->  - t3407: use test_commit
->  - t3407: run tests in $TEST_DIRECTORY
->
->  "git rebase <upstream> <tag>" failed when aborted in the middle, as
->  it mistakenly tried to write the tag object instead of peeling it
->  to HEAD.
->
->  Will merge to 'next'?
+On Thu, Sep 23 2021, Junio C Hamano wrote:
 
-I think so; the series looks good to me, and it appears Phillip
-addressed everyone else's feedback.
+> Jeff King <peff@peff.net> writes:
+>
+>> On Thu, Sep 23, 2021 at 02:07:16AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>
+>>> We ensure that the recursive dependencies are correct by depending on
+>>> the *.o file, which in turn will have correct dependencies by either
+>>> depending on all header files, or under
+>>> "COMPUTE_HEADER_DEPENDENCIES=3Dyes" the headers it needs.
+>>>=20
+>>> This means that a plain "make sparse" is much slower, as we'll now
+>>> need to make the *.o files just to create the *.sp files, but
+>>> incrementally creating the *.sp files is *much* faster and less
+>>> verbose, it thus becomes viable to run "sparse" along with "all" as
+>>> e.g. "git rebase --exec 'make all sparse'".
+>>
+>> OK. I think this solves the dependency issues sufficiently. It is a
+>> tradeoff that you must do the normal build in order to do the sparse
+>> check now. That is certainly fine for my workflow (I am building Git all
+>> the time, and only occasionally run "make sparse"). I don't know if
+>> others would like it less (e.g., if Ramsay is frequently running sparse
+>> checks without having just built).
+>>
+>> (I'd say "I do not care that much either way", but then I do not care
+>> all that much either way about incremental sparse checks either, so I'm
+>> not sure my opinion really matters).
+>
+> My build procedure runs "make sparse" before the primary build,
+> simply because the former tends to be much faster to fail when there
+> is an issue in the code.  I can understand that depending on .o is a
+> cheap way to piggyback on the dependencies it has, but my latency
+> will get much slower if this goes in _and_ I keep trying to pick up
+> potentially problematic patches from the list.
+
+Would you be OK with just running something like this instead?:
+
+    make -j $(nproc) objects CC=3Dcgcc CFLAGS=3D"-no-compile -Wsparse-error=
+ -Wno-pointer-arith -Wno-memcpy-max-count"
+
+It gives you almost exactly the same thing as the old "sparse" target. I
+think the way it worked is really not something we needed a special
+target for in the first place, or perhaps just a .PHONY alias.
+
+The "almost" is because those -Wno-* are now per-file via
+SP_EXTRA_FLAGS.
+
+I.e. if we have a $(CC) that's willing to accept CC-like options but
+just won't create output files we can use "objects" (or other targets I
+added in 029bac01a87 (Makefile: add {program,xdiff,test,git,fuzz}-objs &
+objects targets, 2021-02-23)). Even if the tool itself created broken
+*.o files a change of $(CC) to the "real" compiler would ensure that
+they'd get regenerated.
