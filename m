@@ -2,129 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E82CC433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CFDC433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:03:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F050C6103B
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:56:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADD386124B
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 20:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346236AbhIXT6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 15:58:23 -0400
-Received: from mout.web.de ([212.227.17.12]:55081 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1344226AbhIXT6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 15:58:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1632513392;
-        bh=ZKF4s+g25B/Gu2U6qsIdAt9eKsFT9iuBQlU3lC7jzjM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=HNV9YLB5eQyRa+YTMNm0i47iauyhDDkNYwWnCckxFAt3VDSmImIj1iytW5kZdG0t6
-         2nvLwLtdjmmQzf+0hCutVafDNei02RlZW2jKZbxkDHKCQ7rp0lUqxSFTEEnMYDDDIp
-         mViCa6Aa7EHhjsA6CCkWBgEwPcq4q2yyjO4GH8tQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0LvSPv-1mu9gZ1SEN-010g79; Fri, 24 Sep 2021 21:56:32 +0200
-Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
- config-list.h
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>
-References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
- <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
- <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
- <87fstt3gzd.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <8c7aaea3-afbc-1980-ac31-6c324eef5a94@web.de>
-Date:   Fri, 24 Sep 2021 21:56:29 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S1345980AbhIXUEi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 16:04:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62413 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345661AbhIXUEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 16:04:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FFFE167726;
+        Fri, 24 Sep 2021 16:03:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QWjNFElcYXc7XqHWuKHvOqCY5heE376boyUF4V
+        iU0fs=; b=owHoU3PMCjuy/oQyhtFZxi4I3EMVAm5ZDmAO2KF/b+yxTQsEvztm3h
+        LhQ3nT0Yhe60VGSVexlO7OyexOj6/32fZtzGBID2P4QN4k/YRzPrx8Qb/2yUtuhD
+        wR8wfu5u9b5jWZylX25JKy78cwy+jvJkmRr3/0vQGpP+6UxAZby7k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2DA2B167725;
+        Fri, 24 Sep 2021 16:03:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8B7A2167721;
+        Fri, 24 Sep 2021 16:03:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Thiago Perrotta <tbperrotta@gmail.com>, avarab@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+        <20210924024606.20542-4-tbperrotta@gmail.com>
+        <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
+        <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
+        <xmqqzgs2vvim.fsf@gitster.g>
+        <CAPUEspiSh91a8MvhqhKm=DAn5_u-HoRBuL6-gBRMUtSshqpf=g@mail.gmail.com>
+Date:   Fri, 24 Sep 2021 13:03:00 -0700
+In-Reply-To: <CAPUEspiSh91a8MvhqhKm=DAn5_u-HoRBuL6-gBRMUtSshqpf=g@mail.gmail.com>
+        (Carlo Arenas's message of "Fri, 24 Sep 2021 10:34:19 -0700")
+Message-ID: <xmqqo88hspvv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87fstt3gzd.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:BnruShuRoC1C+2LqPsHBF1eonjcIpnDECfwqV2E9GdXAovwscxo
- bkqXPL7FGeDClffpMQUHujF5E+MsIMtZrLdMunRZuDVBDpPan3iI/UwRlDndYtSmL+4NOy5
- tAH2vSWmzEI8Tm3fOEDBqsFLKS7qg3qETpI6/Hs5IGwzqBZUeNmPwZ9qRrYQMI+ebbMPIWU
- Qj+lLaBNAhRD4GC+s1ZlA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2V6xDyHDoD0=:4eGzySL6xoawiwhDmB1llQ
- dfxV4xnFM65gS04TYwUVhIpEONqy7O3Qtxbr7TTT4pnU5X6dgiopR4VYHSlKFQR2WDO9VROwu
- zy51wcV13Q0h9DeFGcYKNTnAwpB2YEhWUawh7FWkqgnZi7pwp66Fe45SGQb0kJM0w+f7f+Wj/
- acpEugpYvKnOE5vPiwbx4FFaf0n8nY2H8FsrYh+RwwSDf2lQN6Czi74temL4Du3t1aoji8Ep8
- aBlM5X4mGkqw0LU0zESYLHGNTULco2a/r+iVSzGrT+2s3j4MDlbXcukOKyfnZWAvP7X9h5ZJc
- yheiWyozFGhCE6VgFTTuRgpZ/yKLjsqYJPD3XFQ/94Bdk2gUaZ2ykckthxyzuyz9kk1GIbS8A
- 8vtzhGhJTPlPQJgsPedI0vRpBwvtMbnGmMWw08opkaK0wrI3QVslZV0BqJMP5BS9KJXZw3nzW
- A60PecbduA9mI/msmWYLUtHnftl9CbJExquzezlxzI17i+lJgogmyTr0r9bw+zG8rNNZRnzom
- 7pdUbRSs4aJ72Wns4C8PAIA0p1Xqc0Qlsx/js808GCiv48opUnC5L4+cf7X6oJRNqsqUmSXM2
- Kn8TagPYpHfCCQ3lFGlWzU1XjrktWaYjgKddxXEfG07CtwieDLCpBndtW30giNiMG0RcLGrYe
- KYfwd9aUPigAVHK9wrUCxufaqQuf/Pg6mLoHI6IBvApAQ6J9hYsIcnUUQxuSzSCrg6hwXvJVp
- J6/bU5Dl1Tr4EMVYkhUUk7+El+2ygbELtLNAoUbn43xnqjGRangvrhYMEaw4zUQiAG8VATFOo
- 9yj8IJmZ8sDFrYkG0a8KgtOg70LwXPGXFIldGryf7Ev45b3CX5Xq4Uw5yyLXWtFhtvY12+TFz
- GkrxV7R9v5wpo0ns6KipNCpxquQVg9eDM5J7xIorGaH4yYRBu7k6nlsh6RoQBP2zdce7Bchzc
- qGmVirDbd5xuBsCJh2A8G4OpI8yTWw7Bqp4mts405a3YGuP6REq0Dh0c25yRB0jlVdirjGVJY
- wGT/1S4sd1prWjwSkFQFTbZnGfOiAHiAOWDQTkJs77ZtaRYU5BjcUuAXZY/Tk+EKUH9lIDsLK
- 5WJ/P/oJywwAIk=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6BEDD440-1D72-11EC-8B17-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.09.21 um 21:30 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Fri, Sep 24 2021, Phillip Wood wrote:
->
->> Hi =C3=86var
->> On 23/09/2021 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
->>> new file mode 100755
->>> index 00000000000..6d4e56d1a31
->>> --- /dev/null
->>> +++ b/generate-hooklist.sh
->>> @@ -0,0 +1,18 @@
->>> +#!/bin/sh
->>> +#
->>> +# Usage: ./generate-hooklist.sh >hook-list.h
->>> +
->>> +cat <<EOF
->>> +/* Automatically generated by generate-hooklist.sh */
->>> +
->>> +static const char *hook_name_list[] =3D {
->>> +EOF
->>> +
->>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
+Carlo Arenas <carenas@gmail.com> writes:
+
+>> Or do you mean
 >>
->> POSIX does not support using a semicolon after a closing brace [1],
->> grepping our code base with
->> 	git grep 'sed .*};' '*.sh'
->> does not give any matches so I don't think we're using that pattern
->> any where else. Replacing the semicolon with ' -e' would fix it.
+>>         git send-email <options>
 >>
->> Best Wishes
->>
->> Phillip
+>> and have the <options> placeholder to stand for both send-email
+>> options and options meant for format-patch?
 >
-> Does this fail on any system you're aware of? If so what OS/version (and
-> preferably version of "sed").
+> the later AND including a non optional part that explains that you
+> need to indicate some sort of revision ...
 
-I wasn't aware of that restriction and my gut feeling is that enforcing
-it in a sed implementation would be slightly harder than allowing "};".
+Ah, thanks for explanation.
 
-> Ren=C3=A9's downthread <d5f297d4-9c64-1ff9-8422-054979bf8cfa@web.de> see=
-ms to
-> suggest that this is fine.
+    git format-patch -2
 
-That said, I didn't mean to suggest that we keep using this construct,
-just that I couldn't find an implementation which would reject it.
+would be options-only way to "indicate some sort of revision", so
+perhaps 
 
-> Both beforehand and just now I've tested this on AIX, Solaris,
-> {Open,Net,Free}BSD, HP/UX, OSX and Linux (a few distros/versions).
->
-> All of them are able to generate the same hook-list.h using this version
-> of the patch.
+    . git send-email <send-email options> files|directory
+    . git send-email <send-email options> <format-patch options>
 
-Impressive list, but still it's probably better to move the last "x" to
-its own -e, to appease the POSIX spirits.  Small change..
-
-Ren=C3=A9
+(where "options" is used to refer to both --options and arguments)
+would illustrate the differences better?
