@@ -2,175 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A89BC433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 13:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8899AC433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 13:33:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FB5D61038
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 13:27:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FB386103D
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 13:33:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345959AbhIXN2q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 09:28:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50912 "EHLO
+        id S1346611AbhIXNek (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 09:34:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346189AbhIXN2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 09:28:42 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986F6C0D943B
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 06:05:51 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id x7so21277828edd.6
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 06:05:51 -0700 (PDT)
+        with ESMTP id S1346568AbhIXNec (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 09:34:32 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBFD6C061A11
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 06:29:18 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id r1so9335350qta.12
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 06:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=73XR2FClo7S84vCGMUICnodzmfBCHb8gwbNHEsBeam0=;
-        b=bf6TzjYjJJXKFlpDH/kzwI0jMzZPq6EkBcE4OjeAZQfRpHMLRnqU7xs+NZhMrMYM6z
-         a2aSnIhoLbbfZlu91LISG1WYJyAnPvmacEC9woqD1Zw0oP3vkrqFrWXEQsmxClFSX/7z
-         FEU01egjrCo5Bu1QQpQ5p0a9FJNYhhMImdrhepqR0yc7pgD1TCgk4sRWzGcHSlbXLCx4
-         dIQGO/K/lP0eKf23Fo3nlbSjUjaqnc2pXE6NbmA7YCfXJedyLSi/XGVr4dyJ6Q64k0UK
-         P829/wWdHJj3xfHWkb8VU0sq8pf6dkaAemCAmIHijNvDV+hgWpJoEDMTnIYKW7HCakqv
-         7dNA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=d6obe3zU0oUXhwdTDhkOuQd48DAZCgLoI+gIS/YA6E4=;
+        b=mJXQ0td3y3OxWXCvnn05PepFfLChh38iJ1KFQ1tt/8GjXC+B/ozOt2Zcrw4cfKgxIM
+         C9KqvidJ4VCPoQgaSNGMboa2XvO1Qt88nzY8YObt0k6N9YzNF9SILFKxz1jJBoVoxwhf
+         wyyCC1YUSxeKFUACxE6yWCN975amjlWd5UFdVvPtVFwB1ufJsx+AO4mA8fSFLUthoVzT
+         Vq3bvUWP3kFYslAasiFK33O4VMaCEiYeSd2wQX7ReX0122kYRvXyH+/msRN1T4qQo9l5
+         DMs1iUSUtoyY2qJYWJN0m578WCfYSYqg5RK1YCxm8E4bWBtBcpswcN1ekZFyzz77oXhB
+         p81w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=73XR2FClo7S84vCGMUICnodzmfBCHb8gwbNHEsBeam0=;
-        b=Q0IL6BiIIPjwgeZGcD1qKgoK0rJK/6HQQF39KaLrtxOuY9gOzLrpsZkK9M0HIhYjHB
-         Yux16QpHxJSqGmrpiBI5lrhz861CaqGeEK2xU/L728wzHuy4jmCfj+9Fe1IGovwD2vDU
-         HlyQHpREa0l2l/Uiw1E0uvDIduSD5ljidMsehiV90qNrrAe7LvU8921aVzrBeDA0bA6L
-         0nzWSXNcwnDGXN9Dry3dRiDQXazLpWBtXwknNLii6riaVftLDQ4CgQKbjBTOYPP1zHF1
-         iH1NQoWO+hles5Lrvm0GfqIQPrRttVA36Dfpz1vR+A4HRTUjerPRuxiL43YZ2xysXzJC
-         rirw==
-X-Gm-Message-State: AOAM5316qCp88KEg0TLzuCt+VrKdXXnCIwMR7YVWvUo7hgfu2fMGHLvW
-        T+n24XpbYAldjRGo6PTpi4NF5z3zJ/LpOg==
-X-Google-Smtp-Source: ABdhPJzqmExwB05Pq2Tzj4MqNnM8fQ/LTuai1kCSkXHVpVyit7FxMkCBZ2JdBkNHI9YFiV76l5U/Xg==
-X-Received: by 2002:a17:906:32c9:: with SMTP id k9mr11373650ejk.218.1632488748490;
-        Fri, 24 Sep 2021 06:05:48 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w13sm4830018ejc.100.2021.09.24.06.05.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 06:05:47 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matthias =?utf-8?Q?A=C3=9Fhauer?= via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Is "make check-docs" useful anymore?
-Date:   Fri, 24 Sep 2021 15:00:42 +0200
-References: <pull.1038.git.1631531218.gitgitgadget@gmail.com>
- <pull.1038.v2.git.1631626038.gitgitgadget@gmail.com>
- <bc9a4534f5bc6756ab2df869b55e390183c4ff30.1631626038.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <bc9a4534f5bc6756ab2df869b55e390183c4ff30.1631626038.git.gitgitgadget@gmail.com>
-Message-ID: <87o88i2keu.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=d6obe3zU0oUXhwdTDhkOuQd48DAZCgLoI+gIS/YA6E4=;
+        b=yoNDxAYj7jc+VaN3XD8+nj6Nr7c8LP672JnKBcB1uZmEMUW1eilJrK0In2yLRoWkRg
+         eHoiM/wzeD+d0ZartWmrzPmz5gCe0xJEndY0pE8tajiwKyKdrloNySwSy0QhcpjpWAUG
+         OrI9XbhNabyu2vQVGILYp6oE5079FCeJsuMLxlDvaMWaPSBdzLsdMdMycvU0J+ceLcWh
+         hdXoAzXSxy3dbPQvqvPJyNa+CI7KS8HmFN8gl1gE+3AtQjKIF4Fd9HC+MSXqcunJcd92
+         TAk6y0w7dC2AmgxVAUSf0Mm1u1h1nzXWcE0rSYjP0K33vT45yIbyfIWpOxkxJJKAubup
+         unBg==
+X-Gm-Message-State: AOAM53257n3PeqbsHNEHCHmiSgox4VWpujX5Pii0WStQM/gXW/v1HOHy
+        OiKa4dUc2ePxUNCYtRXmjNA3pNY2FUlaeA==
+X-Google-Smtp-Source: ABdhPJxRuD4nogHV/USvnh+/OM4FWLXNmRcK6ILnyYlp8nfYJPqQqC+FMeUypTF2vEW3CgekmdxsGQ==
+X-Received: by 2002:ac8:7b48:: with SMTP id m8mr4136587qtu.133.1632490157942;
+        Fri, 24 Sep 2021 06:29:17 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:90c9:2224:1ace:eb97? ([2600:1700:e72:80a0:90c9:2224:1ace:eb97])
+        by smtp.gmail.com with ESMTPSA id o145sm6354105qke.120.2021.09.24.06.29.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Sep 2021 06:29:16 -0700 (PDT)
+Message-ID: <a848a476-3993-6fa4-9fe0-3c96c46041a4@gmail.com>
+Date:   Fri, 24 Sep 2021 09:29:14 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH v3 03/14] dir: extract directory-matching logic
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
+        vdye@github.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+ <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+ <b1f6468f9cdb7d16f6317c71b21f4459af158e87.1632159937.git.gitgitgadget@gmail.com>
+ <xmqqwnn8430s.fsf@gitster.g> <36475af0-1021-f59d-cb33-b3b402c13767@gmail.com>
+ <a99a58ee-c3fe-501b-3116-8b54eaed0e53@gmail.com> <xmqqlf3nywuw.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqlf3nywuw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 9/23/2021 2:23 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> On 9/23/2021 9:39 AM, Derrick Stolee wrote:
+>>> On 9/22/2021 7:13 PM, Junio C Hamano wrote:
+>>>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>>
+>>>>> +static int path_matches_dir_pattern(const char *pathname,
+>>>>> +				    int pathlen,
+>>>>> +				    int *dtype,
+>>>>> +				    struct path_pattern *pattern,
+>>>>> +				    struct index_state *istate)
+>>>>> +{
+>>>>> +	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+>>>>> +	if (*dtype != DT_DIR)
+>>>>> +		return 0;
+>>>>> +
+>>>>> +	return 1;
+>>>>> +}
+>>>>
+>>>> The function name and parameter list have "pattern" but as far as I
+>>>> can see any "matches" or "pattern" comes into the picture.  The code
+>>>> in the caller after calling this function may be doing pattern
+>>>> matching, but not this one.
+>>>>
+>>>> What this helper is doing is "signal if the pathname in the working
+>>>> tree is supposed to be a directory with the return value, while
+>>>> filling *dtype with what kind of thing it is."
+>>>>
+>>>> path_must_be_dir_in_working_tree() or something, perhaps?
+>>>
+>>> Yes, a rename would be prudent here. Thanks.
+>>
+>> Of course, when I go to amend the commit, the commit message says
+>>
+>> 	We will expand the path_matches_dir_pattern() method in a following
+>> 	change.
+>>
+>> which means that more will follow that will actually care about the
+>> pattern and matching as a directory.
+>>
+>> After looking at the extension in the next patch, do you still think a
+>> rename is necessary?
+> 
+> When the focus and purpose of the function changes, it may warrant a
+> rename to include "matching" or "pattern", but not before.
+> 
+> Or we might be seeing a premature refactoring with these two steps.
+> Are we gaining multiple callers of this function before it gets
+> extended to care about pattern and matching?  If not, perhaps
+> teaching the inlined codepath about the pattern and matching in
+> place first before extracting the code to a helper function for
+> readability and reusability may help make the resulting series
+> easier to follow, and we do not have to see a function with a
+> misleading name.
+ 
+Squashing these two patches together has the same effect, but
+takes a little bit extra work to see that the re-used code is
+the same. It's small enough that I don't see that as a huge
+hurdle.
 
-On Tue, Sep 14 2021, Matthias A=C3=9Fhauer via GitGitGadget wrote:
-
-> From: =3D?UTF-8?q?Matthias=3D20A=3DC3=3D9Fhauer?=3D <mha1993@live.de>
->
-> While 'git version' is probably the least complex git command,
-> it is a non-experimental user-facing builtin command. As such
-> it should have a help page.
->
-> Both `git help` and `git version` can be called as options
-> (`--help`/`--version`) that internally get converted to the
-> corresponding command. Add a small paragraph to
-> Documentation/git.txt describing how these two options
-> interact with each other and link to this help page for the
-> sub-options that `--version` can take. Well, currently there
-> is only one sub-option, but that could potentially increase
-> in future versions of Git.
->
-> Signed-off-by: Matthias A=C3=9Fhauer <mha1993@live.de>
-> ---
->  Documentation/git-version.txt | 28 ++++++++++++++++++++++++++++
->  Documentation/git.txt         |  4 ++++
->  2 files changed, 32 insertions(+)
->  create mode 100644 Documentation/git-version.txt
->
-> diff --git a/Documentation/git-version.txt b/Documentation/git-version.txt
-> new file mode 100644
-> index 00000000000..80fa7754a6d
-> --- /dev/null
-> +++ b/Documentation/git-version.txt
-> @@ -0,0 +1,28 @@
-> +git-version(1)
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +NAME
-> +----
-> +git-version - Display version information about Git
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git version' [--build-options]
-> +
-> +DESCRIPTION
-> +-----------
-> +With no options given, the version of 'git' is printed on the standard o=
-utput.
-> +
-> +Note that `git --version` is identical to `git version` because the
-> +former is internally converted into the latter.
-> +
-> +OPTIONS
-> +-------
-> +--build-options::
-> +	Include additional information about how git was built for diagnostic
-> +	purposes.
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 6dd241ef838..95fe6f31b4f 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -41,6 +41,10 @@ OPTIONS
->  -------
->  --version::
->  	Prints the Git suite version that the 'git' program came from.
-> ++
-> +This option is internaly converted to `git version ...` and accepts
-> +the same options as the linkgit:git-version[1] command. If `--help` is
-> +also given, it takes precedence over `--version`.
->=20=20
->  --help::
->  	Prints the synopsis and a list of the most commonly used
-
-I didn't notice until after it hit master that this caused a regression
-in "make check-docs":
-
-    $ make -s check-docs
-    removed but documented: git-version
-
-The "fix" is rather easy, i.e. adding "git-version" to the whitelist.
-
-But I wondered about $subject, i.e. we want to run the "lint" part, but
-do we really need something reminding us that there isn't a mapping
-between Documentation/*.txt and *.o files present at the top-level?
-
-That whole part seems to have been some "reminder to document" addition
-in 8c989ec5288 (Makefile: $(MAKE) check-docs, 2006-04-13).
-
-If we're going to keep it in pretty much its current form then the CI
-integration added in b98712b9aa9 (travis-ci: build documentation,
-2016-05-04) seems rather useless when it comes to this, i.e. we should
-either adjust it to exit non-zero, or check if we've got output under
-"make -s" and fail the check then.
+Thanks,
+-Stolee
