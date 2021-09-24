@@ -2,147 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8AE0C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E82CC433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:56:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADDB66103D
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:55:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F050C6103B
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 19:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348234AbhIXT4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 15:56:48 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57038 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344832AbhIXT4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 15:56:48 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81B5816767D;
-        Fri, 24 Sep 2021 15:55:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0Bm9Ce+9CKn0XXBXhhrp1zqboQbO8OQvhRN6P0
-        ufx34=; b=M5G9VSytQYTHpHYhgOvHiO4yJsPBl7aXflQmZL6HmK6Mb2jLET3uMw
-        AeUUulUK4Sx6SMIDcJNJ3LbxRSjcixfDKQESXnKONp85QKb2gsq465TtuhasifRU
-        LI8AXyyhTIL3zhWvqrrmsiDxtyEBuC3GH5ieFPV5KmB3Mo4S5dHbc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79C5A16767C;
-        Fri, 24 Sep 2021 15:55:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D735616767B;
-        Fri, 24 Sep 2021 15:55:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/9] refs: make _advance() check struct repo, not flag
-References: <xmqq1r5g3y2j.fsf@gitster.g>
-        <20210924175651.2918488-1-jonathantanmy@google.com>
-Date:   Fri, 24 Sep 2021 12:55:10 -0700
-In-Reply-To: <20210924175651.2918488-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Fri, 24 Sep 2021 10:56:51 -0700")
-Message-ID: <xmqqsfxtsq8x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1346236AbhIXT6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 15:58:23 -0400
+Received: from mout.web.de ([212.227.17.12]:55081 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344226AbhIXT6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 15:58:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1632513392;
+        bh=ZKF4s+g25B/Gu2U6qsIdAt9eKsFT9iuBQlU3lC7jzjM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=HNV9YLB5eQyRa+YTMNm0i47iauyhDDkNYwWnCckxFAt3VDSmImIj1iytW5kZdG0t6
+         2nvLwLtdjmmQzf+0hCutVafDNei02RlZW2jKZbxkDHKCQ7rp0lUqxSFTEEnMYDDDIp
+         mViCa6Aa7EHhjsA6CCkWBgEwPcq4q2yyjO4GH8tQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0LvSPv-1mu9gZ1SEN-010g79; Fri, 24 Sep 2021 21:56:32 +0200
+Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
+ config-list.h
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff King <peff@peff.net>
+References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
+ <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
+ <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
+ <87fstt3gzd.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <8c7aaea3-afbc-1980-ac31-6c324eef5a94@web.de>
+Date:   Fri, 24 Sep 2021 21:56:29 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53F8A262-1D71-11EC-81EB-98D80D944F46-77302942!pb-smtp21.pobox.com
+In-Reply-To: <87fstt3gzd.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BnruShuRoC1C+2LqPsHBF1eonjcIpnDECfwqV2E9GdXAovwscxo
+ bkqXPL7FGeDClffpMQUHujF5E+MsIMtZrLdMunRZuDVBDpPan3iI/UwRlDndYtSmL+4NOy5
+ tAH2vSWmzEI8Tm3fOEDBqsFLKS7qg3qETpI6/Hs5IGwzqBZUeNmPwZ9qRrYQMI+ebbMPIWU
+ Qj+lLaBNAhRD4GC+s1ZlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2V6xDyHDoD0=:4eGzySL6xoawiwhDmB1llQ
+ dfxV4xnFM65gS04TYwUVhIpEONqy7O3Qtxbr7TTT4pnU5X6dgiopR4VYHSlKFQR2WDO9VROwu
+ zy51wcV13Q0h9DeFGcYKNTnAwpB2YEhWUawh7FWkqgnZi7pwp66Fe45SGQb0kJM0w+f7f+Wj/
+ acpEugpYvKnOE5vPiwbx4FFaf0n8nY2H8FsrYh+RwwSDf2lQN6Czi74temL4Du3t1aoji8Ep8
+ aBlM5X4mGkqw0LU0zESYLHGNTULco2a/r+iVSzGrT+2s3j4MDlbXcukOKyfnZWAvP7X9h5ZJc
+ yheiWyozFGhCE6VgFTTuRgpZ/yKLjsqYJPD3XFQ/94Bdk2gUaZ2ykckthxyzuyz9kk1GIbS8A
+ 8vtzhGhJTPlPQJgsPedI0vRpBwvtMbnGmMWw08opkaK0wrI3QVslZV0BqJMP5BS9KJXZw3nzW
+ A60PecbduA9mI/msmWYLUtHnftl9CbJExquzezlxzI17i+lJgogmyTr0r9bw+zG8rNNZRnzom
+ 7pdUbRSs4aJ72Wns4C8PAIA0p1Xqc0Qlsx/js808GCiv48opUnC5L4+cf7X6oJRNqsqUmSXM2
+ Kn8TagPYpHfCCQ3lFGlWzU1XjrktWaYjgKddxXEfG07CtwieDLCpBndtW30giNiMG0RcLGrYe
+ KYfwd9aUPigAVHK9wrUCxufaqQuf/Pg6mLoHI6IBvApAQ6J9hYsIcnUUQxuSzSCrg6hwXvJVp
+ J6/bU5Dl1Tr4EMVYkhUUk7+El+2ygbELtLNAoUbn43xnqjGRangvrhYMEaw4zUQiAG8VATFOo
+ 9yj8IJmZ8sDFrYkG0a8KgtOg70LwXPGXFIldGryf7Ev45b3CX5Xq4Uw5yyLXWtFhtvY12+TFz
+ GkrxV7R9v5wpo0ns6KipNCpxquQVg9eDM5J7xIorGaH4yYRBu7k6nlsh6RoQBP2zdce7Bchzc
+ qGmVirDbd5xuBsCJh2A8G4OpI8yTWw7Bqp4mts405a3YGuP6REq0Dh0c25yRB0jlVdirjGVJY
+ wGT/1S4sd1prWjwSkFQFTbZnGfOiAHiAOWDQTkJs77ZtaRYU5BjcUuAXZY/Tk+EKUH9lIDsLK
+ 5WJ/P/oJywwAIk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> It is a bit surprising that ref_iterator does not know which
->> repository it is working in (regardless of "include broken" bit).
->> Do you think it will stay that way?  I have this nagging feeling
->> that it won't, and having "struct repository *repository" pointer
->> that always points at the repository the ref-store belongs to in a
->> ref_iterator instance would become necessary in the longer run.
+Am 24.09.21 um 21:30 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> I think it's better if it stays that way, so that callers that don't
-> want to access the ODB (all the callers that currently use
-> DO_FOR_EACH_INCLUDE_BROKEN) can be assured that the iterator won't do
-> that. If we had a non-NULL "struct repository *repository" parameter, a
-> future code change might inadvertently use it, thus causing a bug.
-
-Hmph, I am unlikely to be the one who is doing such a future code
-change, but anybody who equates having a pointer to the repository
-structure and the need to always validate the tips of refs with the
-object store associated to the repository would be poor future
-developers we wouldn't want their hands on our codebase.
-
-An in-core repository has a lot more than the object store.
-
-Besides, if we really want to have choice between "do check them"
-and "ignore broken" expressed cleanly in the code, it would be much
-better to be explicit about it, and a member in the context struct
-whose name is ".repo" is not it[*].  A reader would say "ok, I see a
-repo.  What is that thing for?  Can I reliably use it to figure out
-other things about the repository this reference enumeration is
-going on from it?  Ah, no, it sometimes is NULL---what crazy thing
-is going on here???".
-
-	Side note.  If it were called
-	.check_ref_tips_against_the_object_store_of_this_repository,
-	it would be a different story.
-
->> In which case, this .repo member this patch adds would become a big
->> problem, no?  If we were to validate objects at the tip of the refs
->> against object store, we will always use the object store that
->> belongs to the iterator->repository, so the only valid states for
->> iterator->repo are either NULL or iterator->repository.  That again
->> is the same problem I pointed out already about the parameter the
->> do_for_each_repo_ref() helper that is inviting future bugs, it seems
->> to me.  Wouldn't it make more sense to add
->> 
->>  * iterator->repository that points at the repository in which we
->>    are iterating the refs
->> 
->>  * a bit in iterator that chooses between "do not bother checking"
->>    and "do check the tip of refs against the object store of
->>    iterator->repository
->> 
->> to avoid such a mess?  Perhaps we already have such a bit in the
->> flags word in the ref_iterator but I didn't check.
+> On Fri, Sep 24 2021, Phillip Wood wrote:
 >
-> If we need iterator->repository, then I agree with you. The bit could
-> then be DO_FOR_EACH_INCLUDE_BROKEN (which currently exists, and which I
-> am removing in this patch, but if we think we should keep it, then we
-> should keep it).
+>> Hi =C3=86var
+>> On 23/09/2021 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+>>> new file mode 100755
+>>> index 00000000000..6d4e56d1a31
+>>> --- /dev/null
+>>> +++ b/generate-hooklist.sh
+>>> @@ -0,0 +1,18 @@
+>>> +#!/bin/sh
+>>> +#
+>>> +# Usage: ./generate-hooklist.sh >hook-list.h
+>>> +
+>>> +cat <<EOF
+>>> +/* Automatically generated by generate-hooklist.sh */
+>>> +
+>>> +static const char *hook_name_list[] =3D {
+>>> +EOF
+>>> +
+>>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
+>>
+>> POSIX does not support using a semicolon after a closing brace [1],
+>> grepping our code base with
+>> 	git grep 'sed .*};' '*.sh'
+>> does not give any matches so I don't think we're using that pattern
+>> any where else. Replacing the semicolon with ' -e' would fix it.
+>>
+>> Best Wishes
+>>
+>> Phillip
+>
+> Does this fail on any system you're aware of? If so what OS/version (and
+> preferably version of "sed").
 
-I do not care too much about the bit itself.  I have huge trouble
-with the idea that representing a single bit with an entire pointer
-to a repository, which can cause confusion down the line.  Those who
-want to have an access to the repository does not have a reliable
-way to get to it, those who do set it can mistakenly set to point at
-an unrelated repository.
+I wasn't aware of that restriction and my gut feeling is that enforcing
+it in a sed implementation would be slightly harder than allowing "};".
 
-> Having said all that, it may be better to have a non-NULL repository
-> reference in the iterator and retain DO_FOR_EACH_INCLUDE_BROKEN - at the
+> Ren=C3=A9's downthread <d5f297d4-9c64-1ff9-8422-054979bf8cfa@web.de> see=
+ms to
+> suggest that this is fine.
 
-Yes.
+That said, I didn't mean to suggest that we keep using this construct,
+just that I couldn't find an implementation which would reject it.
 
-> very least, this is a more gradual change and still leaves open the
-> possibility of turning the repository reference into a nullable one.
-> Callers that use DO_FOR_EACH_INCLUDE_BROKEN will have to deal with an
-> API that is unclear about what is being done with the repository object
-> being passed in, but that is the same as the status quo. I'll try it and
-> see how it goes (it will probably simplify patch 2 too).
+> Both beforehand and just now I've tested this on AIX, Solaris,
+> {Open,Net,Free}BSD, HP/UX, OSX and Linux (a few distros/versions).
+>
+> All of them are able to generate the same hook-list.h using this version
+> of the patch.
 
-I do not think a structure member of type "struct repository" that
-signals anything but "we are not operating in a repository" by being
-NULL is a sane interface, so I do not see any positive value in
-leaving opent he possibility at all.  The next person who would want
-to _optionally_ use a repository for some other purpose (other than
-"checking the validity of the object name") may be tempted to add
-another member .repo2 next to your .repo---and that would be insane,
-given that ref iterator will be iterating over a ref store of a
-single repo at any given time.  It is much saner to have a single
-"this is the repository the refstore we are iterating over is
-attached to" instance, with separate bits "please do validate" and
-"do whatever check the second develoepr wanted to signal the need
-for with the .repo2 member".
+Impressive list, but still it's probably better to move the last "x" to
+its own -e, to appease the POSIX spirits.  Small change..
 
-Thanks.
+Ren=C3=A9
