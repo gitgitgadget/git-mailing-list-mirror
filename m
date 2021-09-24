@@ -2,77 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA1CAC433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 263FBC433F5
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96B2A61260
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:03:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DB9A61076
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345843AbhIXSEf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 14:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345127AbhIXSEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 14:04:34 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEB0C061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:03:00 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id ee50so39170036edb.13
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ZHR7oG4TI68PuX+NAs2olRG6k6MROpGEEXf2hxGvMFs=;
-        b=vqEv9RvDwsh57UDACHEvh0w48u0pIDS72CC0o/jSCmfpdVeLZnTygosMLoJOsy9See
-         OmxC202dMABKzBSIdIBxvcLkoKrrMdqR2Xr1+y5ICeKDrEfSFrqOv9LuSfUgK18umsyk
-         gZfOq1lHQ0Xj1oj2xPrSmC/K3ZwtWW0110kS4afssicJkYUQXlnWxVw9YtaetEvWHxjO
-         UNrw7d1fIFPvotfDHDbG9x2AwFVsnrLdSwmvw6PgEvm6VkriSXbFbn70Hs6RT/PkmA+q
-         zMrlvpOBDqTFI3TxDskY/mLM6UuPXiQMNhkjtU1RwtzmY+JI8Oq2qr0n4OoxVbK/65PG
-         5RVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZHR7oG4TI68PuX+NAs2olRG6k6MROpGEEXf2hxGvMFs=;
-        b=ub8I/g2AMZW5AmxS3RXFVt6xdYwxBaeC5Rgj36Mlb6+N1UfApw6e6bZ3oQBPzuMX8e
-         hvHxB5MzKIkPDpt3EI13VOeu5HoW6XTeQjF4f8LqhJxvsfV0y8knNB3W+ay2fH/YamPJ
-         Fzqw19RbyNlTBUvtfBxxZTEKPe9YFwVeFn4qmoUKLjWn9EUAzP4aNbw6WwLUpleIdHCe
-         5smDc5YVhPgrtKyV+8Ki7mvv7on1NgeBJ47obaKdqOltdIZAkL0MOlDKZauiyLNFZZ/3
-         prlD/qzmEQOKuYieS0W19MPet5rl0pINA+tXPlQJSvZ/ImT1O+0+3vcEfqdlcTzM1JWO
-         YzYQ==
-X-Gm-Message-State: AOAM531rGvvwNBpvyq6e/HAq1YrryZASOwXIuQndaYki+Qh/Z0yCzR8u
-        5gq5JVRiUla1GqpH7ogb+Udpfk3Dw1wdOX3Akk3zn+xUB5Hy8w==
-X-Google-Smtp-Source: ABdhPJy9+7xKVKZiqofN4fb5/b6kH1V5813ruHsmOWeKhfBY2WUszUUvgnEjuawnoK4e84zuRGFYEcLDQu5N3g2qvL8=
-X-Received: by 2002:a17:906:584:: with SMTP id 4mr12837024ejn.56.1632506579199;
- Fri, 24 Sep 2021 11:02:59 -0700 (PDT)
+        id S1347982AbhIXSOe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 14:14:34 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51664 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344906AbhIXSOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 14:14:33 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A374152E52;
+        Fri, 24 Sep 2021 14:13:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=p9shYcl6i82iIJ/32/Yf2b6R8nFLVfpG40tKTQ
+        KCVVU=; b=oecpmsNZKbV3DSXQ6KJXbNXx2GDiyW+GrjBv6MbWOfZucDtBgvFvfd
+        e2j8MV4CumRvLEZQ0pkE+utg5t2/fb/LQ7vlL4zPRe/MCfTmcZBIjbKt5Tp7EGck
+        9yx/9VBJR3DkJhv4ICENykwS4giOkeoVwlPA3iTXuFCslEEuUbVSU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 63186152E51;
+        Fri, 24 Sep 2021 14:13:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C6223152E50;
+        Fri, 24 Sep 2021 14:12:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>
+Cc:     git@vger.kernel.org
+Subject: Re: Wrong option -h in grep, ls-remote, and show-ref.
+References: <20210924141920.ezfpyf4uutob2h5z@zenon.in.qult.net>
+Date:   Fri, 24 Sep 2021 11:12:56 -0700
+In-Reply-To: <20210924141920.ezfpyf4uutob2h5z@zenon.in.qult.net> (Ignacy
+        Gawedzki's message of "Fri, 24 Sep 2021 16:19:20 +0200")
+Message-ID: <xmqqilypvo47.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 24 Sep 2021 20:02:48 +0200
-Message-ID: <CAPMMpoj-oiD1yDHx6WS_1uiPOXMLj7FcfBPZm-q4vO30kpE_ow@mail.gmail.com>
-Subject: New built-in fsmonitor: messages accidentally on stdout?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0BC83628-1D63-11EC-9851-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr> writes:
 
-I've been testing the new "core.usebuiltinfsmonitor=true" capability
-in Git for Windows 2.33.0.windows.2, and came across something today
-that threw off my scripting:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> git ls-remote -h
+>
+> What did you expect to happen? (Expected behavior)
+>
+> The same as git ls-remote --heads.
+>
+> What happened instead? (Actual behavior)
+>
+> Displayed the git ls-remote usage.
 
-In general, git "informational" messages are always output on stderr;
-this caught me out initially, but is a godsend for scripting.
+Thanks for a report, but this is very much working as intended.
 
-However, with this new functionality, the "starting fsmonitor-daemon
-in 'C:/whatever" message is being output on stdout!
+There may be some subcommands that assign their own meaning to "-h"
+for historical reasons (like "ls-remote -h origin"), or for external
+reasons (like "grep -h -e pattern"), but most newbies expect a short
+help out of "-h" uniformly across subcommands.
 
-This interferes with scripting around things like "git status --porcelain".
+Fortunately, "-h" alone would not make any sense for "grep" (you
+need a pattern) and you do not need to use "-h" for "ls-remote" [*].
+We prioritized to help newbies by consistently giving a short help
+across subcommands, over letting "git grep -h" to complain "you need
+to give me a pattern", like so:
 
-I understand this fsmonitor stuff is still somewhat in-flux (patched
-into the windows port but not yet "regular" git releases?), and this
-issue may already have been reported and addressed in the latest set
-of patches - my apologies if that is the case!
+    $ git ls-remote --heads
+    fatal: No remote configured to list refs from.
 
-Best regards,
-Tao
+    $ git grep
+    fatal: no pattern given
+
+    $ git grep -h
+    usage: git grep [<options>] [-e] <pattern> [<rev>...] [[--] <path>...]
+
+    --cached              search in index instead of in the work tree
+    ...
+
+    $ git ls-remote -h
+    usage: git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+                         [-q | --quiet] [--exit-code] [--get-url]
+    ...
+
+HTH.
+
+
+[Footnote]
+
+* It is not end-user facing Porcelain, but is meant for scripting,
+  and you can afford to write "--heads".  Besides, "-h" acts as
+  "--heads" in "git ls-remote -h origin" or "git ls-remote -h -q"
+  just fine.  Only the "-h and nothing else is given" case is
+  sacrificed to help newbies in the case of this subcommand.
+
+
+
