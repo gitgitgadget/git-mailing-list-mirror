@@ -2,143 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDB68C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD63C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 17:08:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC66861107
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 16:51:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C102B60EE9
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 17:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344159AbhIXQx3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 12:53:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344084AbhIXQx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 12:53:27 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B59EC061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:53 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id t28so15957280wra.7
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 09:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BfXfhGqrhwjajRcHSAvwweh8bmaxGD0F3ilPpXVbxBo=;
-        b=jRUi3kh3NRD5q116q7ArI8cnnPvkdrG4buUzqtfkgrb5uEKwFtTC9+s9tKRjiyFsBh
-         FCJ6z748wbWvajBc9IhAVtvtJL84C03k0qoe/nOcyW7zgjSlsLnJRZgAM/Zie6SW5cgg
-         XrYyX5CEO+XedINIRyFyU9z362/D+A6mjtJjfqilZAOtgu9NoqIDqfi1pVMc2DHLAskR
-         TDZc/sahAJuhj2kfQScquZA/hqkHY51qryk4CgnZZwW7UCtmIvwa/6EDxTEoAYj6cV33
-         V2IofkFdfLhHf9kW/8CudrzOV++64Ll1cfqd0tTKwqL/S/bvl2KeEn/JxbvOUBEdVlNi
-         DHjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BfXfhGqrhwjajRcHSAvwweh8bmaxGD0F3ilPpXVbxBo=;
-        b=a4PdOCO0k5d3gHxOwCztdWh0UACX/w0tN1J7xKfWQXq5nbyYTCNvUzPBcRAZqS1/Zq
-         cf1GPVvozheOEzwoL0k3xCCVITHZs5TmA4faAU0RWDd1u9slyQ9tzzDDZLEaAjJ57LRT
-         4CCnJ6kmJvZYXQgAdTytP6HlEX6WD74Shra+W01HMHQqdVsCCV3yF8sUhdqLFgNz7gxm
-         83eC/Lm9BXmIz9P4J3Hlos/he3dW97dpGpaHwCg9JjFaE0o4amIrRYkE8wpaXo7hXdpC
-         pvFUvJqgPRrzgekESwzkOPS/0D5hZKMrntFT00FGh7m3vlUuH9bXdAVM2/AXzKhJFNZd
-         z+Sw==
-X-Gm-Message-State: AOAM530CWG8Yh8KRbwvjPOFbYxM+XY6FLsWgIosZ9c6XItDkxKufnZ6J
-        Jr0nK7ZGG8EO8KLbe/XqR9HO347NT1p7Gg==
-X-Google-Smtp-Source: ABdhPJylSxVeLkwZpsJvWPjLc/yusUDcK8u/ir2AZoJqLdSFM6XYAiMDK+QF0LU1QhC55Z7rIypRqw==
-X-Received: by 2002:adf:fb89:: with SMTP id a9mr12698561wrr.164.1632502311947;
-        Fri, 24 Sep 2021 09:51:51 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f1sm8929623wrc.66.2021.09.24.09.51.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 09:51:51 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] grep: pass PARSE_OPT_NO_INTERNAL_HELP, fix odd -h handling
-Date:   Fri, 24 Sep 2021 18:51:46 +0200
-Message-Id: <patch-3.3-996f3dae2a7-20210924T164820Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1285.g7aff81f6560
-In-Reply-To: <cover-0.3-00000000000-20210924T164820Z-avarab@gmail.com>
-References: <20210924141920.ezfpyf4uutob2h5z@zenon.in.qult.net> <cover-0.3-00000000000-20210924T164820Z-avarab@gmail.com>
+        id S1344492AbhIXRJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 13:09:44 -0400
+Received: from mx0b-00209e01.pphosted.com ([148.163.152.55]:48568 "EHLO
+        mx0b-00209e01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1343657AbhIXRJU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Sep 2021 13:09:20 -0400
+X-Greylist: delayed 8319 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2021 13:09:20 EDT
+Received: from pps.filterd (m0115756.ppops.net [127.0.0.1])
+        by mx0b-00209e01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 18O9KVPm011668
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 10:49:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ncr.com; h=from : to : subject :
+ date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=pod1119; bh=0I+ZhbzQFJgQEkEjTXbNjcEjx2xMQNDTDwruq/nw/3Y=;
+ b=u0q+dIKMTx+06AZ3flr7twHJmeMmV08wwAHtQ7KjrTHMO3TWOrhMOxuRGgXnfJJ8SVBx
+ LvdsVjqa8HM49zWjdVjWf+OGEm6NEP0n3ETyPEXpdYDJ+uqijxtcYDjO5BtTIaDzrmHj
+ Az1EPvRcWyDHEu5a4KOxxGVbpdvyPEMtPpGZwGPsNk9Ah5X6iapkr3iL5yMAJlv7//Eb
+ SX4JcPD5fwfGb5sbrep8nrqqkGZBsMufT9iuJHVI+ZrEa9y8N/hscf4NPE8nbkL+0Tc6
+ DXo265U2IWeFQRzq8mYk/LfKGECbYAr5NbqNyCTbqlZ3rGlN/5W+vY7frYvX0I4ZcsLI GA== 
+Received: from nam11-co1-obe.outbound.protection.outlook.com (mail-co1nam11lp2171.outbound.protection.outlook.com [104.47.56.171])
+        by mx0b-00209e01.pphosted.com with ESMTP id 3b93f1mdq7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 10:49:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bz6psRu+0Ix87buXeZ9NXeosRhMy9HIc949TU205DEC6Nt0VJdjYwZqUf66sLb4hPbxNn5a5i2kCa4bw5Twu2wG7IBZN1Cmyx1EWt4WZV0tRyczbNZVAn9DTbOPupQIunsYquVLBbYzvzQ+xHS3NVMc/Fq5k/t3+3gKICQGe6eoS+rlmXer79dlTWKlEh8jHaQbSuTJayYP+yzjOZjR60s4aschaZoOE1Vy4WJEX5za/5RNxPVtIyNR6xtIxtpb3WU26wA13eXzdvsW0haz5VLA7ZBkFTe1CrQPPxYB2ZnWF3+qYgIAVQc0IxZViXM5oAc1wTjJmqwoOL9ggUYlxsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=0I+ZhbzQFJgQEkEjTXbNjcEjx2xMQNDTDwruq/nw/3Y=;
+ b=aT/YoEB8w9CoB0uk+knJkXNHZyDGSJc62/KRqnTmP5tHg/kvC4ayV1jXz7ZoorE4Nl0Z+G8m2OHFUKl9g5qPtv3ejieuU9oOvy0t6vcdyv7Gy4BLhLZ7K0q/8sf5UIcYUAkFVuc1HEZwFIEqHLEEFt4EOkdMMKwovn5ens3IlOsZKWSvzrmQylKUTLqc+IsBap7crWd9/VjgI8aIZ2J2Z8GqU64iUlx2dYyBB9rSX+v1j7sc/wyZIC4OsBSAjn9jH+BOVQ2xgDVslDC8IdJGoeWImr3nxIz3m0IVCuBPWv4JE9f9MKVFGLVrbleTFJXcO0gohmrHrW/F2hCu30G6nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ncr.com; dmarc=pass action=none header.from=ncr.com; dkim=pass
+ header.d=ncr.com; arc=none
+Received: from BN6PR15MB1426.namprd15.prod.outlook.com (2603:10b6:404:c4::18)
+ by BN7PR15MB2450.namprd15.prod.outlook.com (2603:10b6:406:92::29) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.13; Fri, 24 Sep
+ 2021 14:48:59 +0000
+Received: from BN6PR15MB1426.namprd15.prod.outlook.com
+ ([fe80::fdf3:7fad:62b4:e015]) by BN6PR15MB1426.namprd15.prod.outlook.com
+ ([fe80::fdf3:7fad:62b4:e015%12]) with mapi id 15.20.4544.014; Fri, 24 Sep
+ 2021 14:48:59 +0000
+From:   "Russell, Scott" <Scott.Russell2@ncr.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: pull failed - why should I receive this message.  
+Thread-Topic: pull failed - why should I receive this message.  
+Thread-Index: AdexUt9vq4ww6wDrT/SkOsyNHqWUqQ==
+Date:   Fri, 24 Sep 2021 14:48:59 +0000
+Message-ID: <BN6PR15MB1426A342CBA9D993C0C49E55CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Enabled=true;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SetDate=2021-09-24T14:45:22Z;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Method=Standard;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Name=dc233488-06c6-4c2b-96ac-e256c4376f84;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SiteId=ae4df1f7-611e-444f-897e-f964e1205171;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_ActionId=f6047282-e59f-453b-8bf1-bef0a06d57fd;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_ContentBits=0
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=ncr.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 443e0d7e-3ce8-4100-6a2a-08d97f6a7174
+x-ms-traffictypediagnostic: BN7PR15MB2450:
+x-microsoft-antispam-prvs: <BN7PR15MB24507128799F0A18CB4416E3CBA49@BN7PR15MB2450.namprd15.prod.outlook.com>
+x-from-ncr-tenant: Processed
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: +/a/K1dfV5FFiuxhbsRTcIU5Tm9piHEUbzMHHkMBy31ist4iVV2fjo+CMRoMFuCD9SmPWoS8Rhs/pWiZozT96Vuezrv3t6dhBksh96OyiwkaLjG81l6ur99hHnsK54hkVQ6BfCVISuAwLghUsJNH1Ynjmtgw+jQNsY0pZB+sEAMnIM4ZOpU2AlbzAVXoBapojBhh/GOBIehnXq1OzUE5WG7AJ6Sk9kmwUKCsjEn/O3U5ai1ay0/UAojVrDQVR3g2jS/JBJFCCvxe3SChdzZbZhDxK5c+rAZtTZbZMZvvW/VzVE0BOd8X1kv4jK6bDkuLwNug8ay1YUgxE2tbOeUJyvwQL7jkWNTTGwoAjt/uwT5iVeiKIaV7YUH1sJB+Y99vYdh2iN72Svv9GgZp0ZLBaERHA3Js2XZ2D0QQjaiTe4kte+pyn0LbI4d0LNDlDjK7m1y5cPLuKlRLf1SmGMur37iheyT425xYM7IutJhDjlMs3w/ujCa+IeaD1ETEXpdzqauX1AN6x+wt2tZcrstv3ezoBEcBLlrjWJakqdjzpxX2seOMBb87lvWRpVqlFWvLzPBOwgbJXCPOsgDPMLfKA6/MaZE6/3VAF5EsrVZRe8vd+ZzK3tdWxqSJ4C3jBsBVz+L37GT2dzqNj/Z9bbebAvLfQltBdlsAWFaDqsoZY/VNUW7dNA/S6wdWPqwL4gcejcF+bpwN/qC5fx15NgcX77xw44TK7NhL83YKVciu6HCLG6A9GRQYqQOeMhlyLEmcNqC61KYfjdpdC/7i2kGSFw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN6PR15MB1426.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2906002)(83380400001)(86362001)(6916009)(55016002)(9686003)(7696005)(8936002)(6506007)(5660300002)(38070700005)(52536014)(186003)(26005)(71200400001)(316002)(508600001)(8676002)(122000001)(33656002)(64756008)(66446008)(76116006)(66946007)(38100700002)(66476007)(66556008)(460985005)(2480315003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?2aD2thTWd64J3sz6uSi+lMasipHH+BbR/PD16NuMtTFDnyDCUCZ4A7acWojG?=
+ =?us-ascii?Q?OB9xxcMyU2wfytPun+K6/fugrZa0wQIW0ASvNjzFpZvgejRZiWez1FkByqg+?=
+ =?us-ascii?Q?XjCzmd9g8msVJEnXWxaOFwUCU6SechTfZ43aSrj/mrEZW/qxtCVbOR3KeFEq?=
+ =?us-ascii?Q?tl/cC9SZZL6y71KF1mg/55LTbgEREcVAx9nuy2TBLXzH2Gf0DTnNLMt+uISx?=
+ =?us-ascii?Q?qkpVpuXA07fz8n4Jef8JPA6/jQ8A6gV5HbX/uXdAFfF1wnAbLwrsmhEFLP6g?=
+ =?us-ascii?Q?sBYgwdAgxnJ5LRw6EH93cXqva1OKDgo+bs1+LCzTgCBKXy2Sze8dAkGO0Rm3?=
+ =?us-ascii?Q?gDbvW2eZYrKX6tFx6ImKQWCy8ySq09Yx0BQKhMQ3orY3NP1P8e6mjElXNqrq?=
+ =?us-ascii?Q?OTIX/lN1pDCCWkFPWY7QdG38BEbgWJ1Qhj+ALsqGcIVHQLNpwIBvzYb1FXAb?=
+ =?us-ascii?Q?BpLVDIZM1KV8mBVBuV0o9+NI4/XoTplH39pwnAydsQMJghcmlG17yoRw8x7f?=
+ =?us-ascii?Q?AcOY4MNsLeBsd40leTqjvLBrxDjbBS5i2N1Kg0zBWW/Uwd75N5q1yBMAdr5B?=
+ =?us-ascii?Q?4vUEmCotRcmKmyKnk+At5TokSMsIVDKbHfXdDPWVxyBdgYvxRICbft0RlCux?=
+ =?us-ascii?Q?+cUebwt2uroIu8RbE93+tCJEFndbXpBWiMKANE4k0KnxIYXO9hpkLEuCaRma?=
+ =?us-ascii?Q?9PBJas3SH0mmF8GXtqeUPwHle9vSK7ujadbz6dASiPIt+p9tl/IeLTZNT34d?=
+ =?us-ascii?Q?M7pUDR3tKfPsTrSmjr9FAEvHFQ5mLT6Yl0L6xU21fBndaZfu8bnwUhhaA3F/?=
+ =?us-ascii?Q?ha/WeFZliynzTvkHCeCgJwxQSA4V3fTvv42rQBm/fcEAsuVFsm4blLeG9Snh?=
+ =?us-ascii?Q?VROiNpYdaAL1/dMVPQxKUCxbtobRsLNXZd4gMu42T6qe+0psuwc4G+MOv0H4?=
+ =?us-ascii?Q?6PmOr/Bpt/AiAPqwgdP3kmyGfrX9iZTBhV/TyKFIhV7hbmgvnRgKSaGlBXp7?=
+ =?us-ascii?Q?pdPwzobObrqSY3Axk8UjmHiTuKsU7e9mOQiTrJDH4qQsViASarTVRzPe81zl?=
+ =?us-ascii?Q?bcKOuF2+1pOmDUfTRxsRpKpcLDcNiIQuOFZqWTo5Grugqqdgrxpd5mt0wdh/?=
+ =?us-ascii?Q?q3qgyLLignPuEHsZSx1TmfNY04Z9Zc3iAmV7OTtkFsn/TPaIlFXYX+W7V1az?=
+ =?us-ascii?Q?sJyJCQTd/RCGqtiBhDLKpPatNPgDLC8vAW4DKWXCTQVX1QnBH1ALY2kUTFy7?=
+ =?us-ascii?Q?AE+3crckMY1GQyZv62SrutIOaRwNtsiMDCUUT8/jK1k2qkeZug+R24E0EM50?=
+ =?us-ascii?Q?u4mcQ2BMJig+h/tfJd9F6tzJ?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: ncr.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN6PR15MB1426.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 443e0d7e-3ce8-4100-6a2a-08d97f6a7174
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Sep 2021 14:48:59.4752
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: ae4df1f7-611e-444f-897e-f964e1205171
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hen0ZULW5rSOKeaPUpVq+MS+v1JQ+PbzgpGGqtqLNZ91aEiqGDPkn+p+wQ/8cZwBNXtwBfq0+UTUf5Av4Ya8tA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR15MB2450
+X-Proofpoint-ORIG-GUID: 531U5AmcfUp19hqV6B8enPXt68CiD1vX
+X-Proofpoint-GUID: 531U5AmcfUp19hqV6B8enPXt68CiD1vX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
+ definitions=2021-09-24_04,2021-09-24_02,2020-04-07_01
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "grep" command supports both "-h" and "-H" options, along with a
-mandatory pattern, but this has been partially usurped by the "-h"
-handling in parse_options().
+Files not previously in git were added to git.   Why should I have to manua=
+lly delete them?=20
+Why can git put not replace them?  They were untracked files that are now t=
+racked  and so the git copy is desired. =20
+We can't always know ahead of time what files may have been added elsewhere=
+. =20
+We need the pull to work automatically.=20
 
-The reason it's just been "odd" instead of a bug is that we'll only
-print out "-h" usage with parse_options() if there's no further
-non-option arguments, so instead of printing this brief blurb on a
-stand-alone -h we'd print out the full usage:
+error: The following untracked working tree files would be overwritten by m=
+erge:
+        Staging/CADDApps/CADDUIHelper/Source/Release/CADDUIHelper.exe
+        Staging/CADDApps/CADDUIHelper/Source/Release_Unicode/CADDUIHelper.e=
+xe
+        Staging/CADDApps/InstallDriversPackage/Release/InstallDriversPackag=
+e.exe
+        Staging/Common/NCRCommonCCLib/Source/Release/NCRCommonCCLibMsg.dll
+        Staging/Devices/NFC/Elatec_RFIDReader/Bin/Director.exe
+        Staging/Devices/NFC/Elatec_RFIDReader/Firmware/AppBlaster.exe
+        Staging/Devices/NFC/Elatec_RFIDReader/Firmware/flash.exe
+        Staging/Utilities64/SSPSWDriverInstaller/Bin/DIFxAPI.dll
+        Staging/Utilities64/SSPSWDriverInstaller/Bin/DriverForge.v4.5.4.exe
+        Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriver=
+Installer.exe
+        Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriver=
+InstallerMsg.dll
+        Staging/Utilities64/SSPSWTaskMgr/Source/Release/SSPSWTaskMgr.exe
+Please move or remove them before you merge.
+Aborting
+Updating e6f37b6878..02aa693031
 
-    $ git grep -H
-    fatal: no pattern given
 
-But for the aforementioned reason a "git grep -h <pattern>" would
-work, we wouldn't take the !PARSE_OPT_NO_INTERNAL_HELP branch in
-parse_options_step(), would handle our own custom 'h' option, and
-builtin/grep.c itself would know what to do at that point.
+Thanks,=20
 
-Reported-by: Ignacy Gawedzki <ignacy.gawedzki@green-communications.fr>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/grep.c  | 3 ++-
- t/t0012-help.sh | 4 +++-
- t/t7810-grep.sh | 4 ++++
- 3 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 51278b01fa2..a2d6704aa41 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -981,7 +981,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	 */
- 	argc = parse_options(argc, argv, prefix, options, grep_usage,
- 			     PARSE_OPT_KEEP_DASHDASH |
--			     PARSE_OPT_STOP_AT_NON_OPTION);
-+			     PARSE_OPT_STOP_AT_NON_OPTION |
-+			     PARSE_OPT_NO_INTERNAL_HELP);
- 	grep_commit_pattern_type(pattern_type_arg, &opt);
- 
- 	if (use_index && !startup_info->have_repository) {
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 913f34c8e9d..0b623fe794a 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -90,7 +90,9 @@ test_expect_success 'git help succeeds without git.html' '
- '
- 
- test_expect_success 'generate builtin list' '
--	git --list-cmds=builtins >builtins
-+	git --list-cmds=builtins >builtins &&
-+	grep -v "^grep$" builtins >builtins+ &&
-+	mv builtins+ builtins
- '
- 
- while read builtin
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 6b6423a07c3..4c2777120b0 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -11,6 +11,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- 
-+test_expect_success 'usage' '
-+	test_expect_code 128 git grep -h
-+'
-+
- test_invalid_grep_expression() {
- 	params="$@" &&
- 	test_expect_success "invalid expression: grep $params" '
--- 
-2.33.0.1285.g7aff81f6560
+Scott Russell
+Scott.Russell2@ncr.com  |  ncr.com
+      =20
 
