@@ -2,313 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0307C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9651C433FE
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C627461241
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C897761242
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 15:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347224AbhIXPk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 11:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54354 "EHLO
+        id S1347233AbhIXPlA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 11:41:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347182AbhIXPku (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 11:40:50 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D610DC061571
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:16 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id t8so28890914wri.1
-        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:16 -0700 (PDT)
+        with ESMTP id S1347187AbhIXPkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 11:40:51 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1FBC06161E
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:18 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id d6so28619219wrc.11
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 08:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=KbsNlraAXjOK2VT0uR+aVTZlR+MX3K3NAD/4QLd+rpo=;
-        b=Ihi4rs6i/KGsaycyStY4zWZ8zFQAulhKkfb1SMrUSNl9SDBiSFtNwDaXzF+z3e7Wgp
-         PlaMjI4q0ZA1ce3cc3ayMUltLm5Yb1T6roBq80fRYaoIw7YFi+ORJ4/aU120Jq7VZZnZ
-         3It4xaY2W8CU2q+Y948gvX8v7x1jptc8cHDIamdWwzakBFAz/gNRwpR5FRFTYgQ8zD5O
-         3BltDRPqpYjKWgMzV1wdlBAk9InuW275330WjZqijRzZZGtpRZMyiJFC8GL3RWn2bgiM
-         sJwH6tVU7DEjRN8QibMpDdbkq7g/Rx1tQKrd6DzGgb602i/jHfrABuyzMDYiKKzdNwic
-         k5nA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TEtjt+Ut+ZPEGjZU8UZf8b6xjgXJsx/g9OCijhwvt5w=;
+        b=CF4oEmu/s2/EnIpscKQdu/JN1PjNrQ/d+nGjd1axKVGHXOJ2d0m8MRzxTXLhJv7yRo
+         RkKnNCjzWvUQTe7FdkmizqobYCYloSqoykwoNob2OYEP94jEemPD5EkPOZ3KfW8nZ2ti
+         dOu71m6i/rAlB9mQmU6/cwmopAQylchhaTC+AixRX7z1ZUiX3+Hp3tndxdo+K8PHb0XE
+         XG6DZ1TgjlgxSKq5uJRnAkyp8dkXEFKvBwz1yH/TDYN+jdGiRF7SIuyP+3VDCni/kMlQ
+         Ib3zLU5qxyg/f7ht9UVoEy0vIpedpL417t9Gg7A79sotx4Fxd78woq5PTDR79gIcL+gx
+         FK+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=KbsNlraAXjOK2VT0uR+aVTZlR+MX3K3NAD/4QLd+rpo=;
-        b=3x5Qn6hApG3lgwIW73rHuSmoCp9J4rVTS8HLxew/mLfLJdpjg8La+mPQZS+TXqMv2I
-         5YZTTFfxkyv3qIh4LefM3ysCduemwxVwkGbrB9pOvQvn268SXMSpv0Ft0apB2pSe2KdS
-         93QqVzl/2tyqqqQMMKCd1iKqi/iTaRHThk2e+GQlauizcwx22TQDDnL2TalRodPMGilg
-         rQP+/BI/9X7Es5MR+94ik5Tai+xY3auJPK4pqeLibZR5ECHE8WgRT4TVKFoFdbjEU2C2
-         SKKLGMWFkufsONPl+PusQX62SgfSPTURlQ8lVrUtNLBzfOp1aaJmyiFf8RC6YyxGHue6
-         SCHA==
-X-Gm-Message-State: AOAM530vhFo4sJCl/lV8+rOBzKMaFQjIns2+RcMG1IRX2IOkaBd71SQt
-        gkby7WDzl8Gt0Rs1mT1rvVhT3ot4iYY=
-X-Google-Smtp-Source: ABdhPJxQ5znL4ePSkj0TQIm47bGpzql7GgbKXDlhmL2N6c+RQL0n2opxiCroOsvYIFYghBxYPi7wYg==
-X-Received: by 2002:adf:f612:: with SMTP id t18mr12310163wrp.16.1632497955305;
-        Fri, 24 Sep 2021 08:39:15 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=TEtjt+Ut+ZPEGjZU8UZf8b6xjgXJsx/g9OCijhwvt5w=;
+        b=QaA2YcT07a5s4zrJ2aKftowP38nv3tQQwOm/ur1yVFu6qXoUoWBxC4fVxFMfoz4gAw
+         lm1ZE+mGZmJN8gFFvWhuKWyHG/kYGC96PRruWYdxuyM/8ePeBixESfso6/TmtnlW7/lj
+         9M/fB/pRPXkiP2xfB4V+Xx0B2oG4vibuA2qB82e04lKm9WPkILS2Vtc+vekai5B5b84c
+         fwfpWwNa0JQtq3wgGFNFuKs7ZDbWVpf+PZyXXBI6oOnyiKkTXKq4eVUGw1XU9c9SStDs
+         kW4UgzdZ4+4D84aMNTZ56+giygRsXI/sP/PeoyXf6dHtg273zsb4iXK9j2X0zSxrzlPZ
+         C8dA==
+X-Gm-Message-State: AOAM531pW/Tre8ZVsDg/iJNkPZAbTjpohox5j76wcBK31IrtjO5TYvRN
+        Sg67iGHl6cX5ES0pt3fjH8Up5B6RAaU=
+X-Google-Smtp-Source: ABdhPJxkXOJrGt2wlQ2amgEacJoTZJNrvauYi87b67HMcP+/Y1lOYrVnyZinXxXRahMWeYHkDSEJag==
+X-Received: by 2002:a5d:4d4f:: with SMTP id a15mr12275972wru.210.1632497956679;
+        Fri, 24 Sep 2021 08:39:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t23sm8892890wrb.71.2021.09.24.08.39.14
+        by smtp.gmail.com with ESMTPSA id y64sm9568173wmc.38.2021.09.24.08.39.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 08:39:14 -0700 (PDT)
-Message-Id: <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+        Fri, 24 Sep 2021 08:39:16 -0700 (PDT)
+Message-Id: <58389edc76ca8f14951ee9387a0067c1ead08f41.1632497954.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
 References: <pull.1018.v3.git.1632159937.gitgitgadget@gmail.com>
+        <pull.1018.v4.git.1632497954.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Sep 2021 15:39:01 +0000
-Subject: [PATCH v4 00/13] Sparse-checkout: modify 'git add', 'git rm', and 'git mv' behavior
-MIME-Version: 1.0
+Date:   Fri, 24 Sep 2021 15:39:03 +0000
+Subject: [PATCH v4 02/13] t1092: behavior for adding sparse files
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
         stolee@gmail.com, vdye@github.com,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is based on ds/mergies-with-sparse-index.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-As requested, this series looks to update the behavior of git add, git rm,
-and git mv when they attempt to modify paths outside of the sparse-checkout
-cone. In particular, this care is expanded to not just cache entries with
-the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
-definition.
+Add some tests to demonstrate the current behavior around adding files
+outside of the sparse-checkout cone. Currently, untracked files are
+handled differently from tracked files. A future change will make these
+cases be handled the same way.
 
-This means that commands that worked before this series can now fail. In
-particular, if 'git merge' results in a conflict outside of the
-sparse-checkout cone, then 'git add ' will now fail.
+Further expand checking that a failed 'git add' does not stage changes
+to the index.
 
-In order to allow users to circumvent these protections, a new '--sparse'
-option is added that ignores the sparse-checkout patterns and the
-SKIP_WORKTREE bit. The message for advice.updateSparsePath is adjusted to
-assist with discovery of this option.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t1092-sparse-checkout-compatibility.sh | 28 ++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-There is a subtle issue with git mv in that it does not check the index
-until it discovers a directory and then uses the index to find the contained
-entries. This means that in non-cone-mode patterns, a pattern such as
-"sub/dir" will not match the path "sub" and this can cause an issue.
-
-In order to allow for checking arbitrary paths against the sparse-checkout
-patterns, some changes to the underlying pattern matching code is required.
-It turns out that there are some bugs in the methods as advertised, but
-these bugs were never discovered because of the way methods like
-unpack_trees() will check a directory for a pattern match before checking
-its contained paths. Our new "check patterns on-demand" approach pokes holes
-in that approach, specifically with patterns that match entire directories.
-
-
-Updates in v4
-=============
-
- * Instead of using 'git status' and 'grep' to detect staged changes, we use
-   'git diff --staged'. t1092 uses an additional --diff-filter because it
-   tests with merge conflicts, so it needs this extra flag.
-
- * Patches 3 and 4 are merged into the new patch 3 to avoid temporarily
-   having a poorly named method.
-
-
-Updates in v3
-=============
-
- * Fixed an incorrectly-squashed commit. Spread out some changes in a better
-   way. For example, I don't add --sparse to tests before introducing the
-   option.
-
- * Use a NULL struct strbuf pointer to indicate an uninitialized value
-   instead of relying on an internal member.
-
- * Use grep over test_i18ngrep.
-
- * Fixed line wrapping for error messages.
-
- * Use strbuf_setlen() over modifying the len member manually.
-
-
-Updates in v2
-=============
-
- * I got no complaints about these restrictions, so this is now a full
-   series, not RFC.
-
- * Thanks to Matheus, several holes are filled with extra testing and
-   bugfixes.
-
- * New patches add --chmod and --renormalize improvements. These are added
-   after the --sparse option to make them be one change each.
-
-Thanks, -Stolee
-
-Derrick Stolee (13):
-  t3705: test that 'sparse_entry' is unstaged
-  t1092: behavior for adding sparse files
-  dir: select directories correctly
-  dir: fix pattern matching on dirs
-  add: fail when adding an untracked sparse file
-  add: skip tracked paths outside sparse-checkout cone
-  add: implement the --sparse option
-  add: update --chmod to skip sparse paths
-  add: update --renormalize to skip sparse paths
-  rm: add --sparse option
-  rm: skip sparse paths with missing SKIP_WORKTREE
-  mv: refuse to move sparse paths
-  advice: update message to suggest '--sparse'
-
- Documentation/git-add.txt                |   9 +-
- Documentation/git-rm.txt                 |   6 +
- advice.c                                 |  11 +-
- builtin/add.c                            |  32 +++-
- builtin/mv.c                             |  52 +++++--
- builtin/rm.c                             |  10 +-
- dir.c                                    |  56 ++++++-
- pathspec.c                               |   5 +-
- t/t1091-sparse-checkout-builtin.sh       |   4 +-
- t/t1092-sparse-checkout-compatibility.sh |  75 +++++++--
- t/t3602-rm-sparse-checkout.sh            |  40 ++++-
- t/t3705-add-sparse-checkout.sh           |  68 +++++++-
- t/t7002-mv-sparse-checkout.sh            | 189 +++++++++++++++++++++++
- 13 files changed, 505 insertions(+), 52 deletions(-)
- create mode 100755 t/t7002-mv-sparse-checkout.sh
-
-
-base-commit: 516680ba7704c473bb21628aa19cabbd787df4db
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1018%2Fderrickstolee%2Fsparse-index%2Fadd-rm-mv-behavior-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1018/derrickstolee/sparse-index/add-rm-mv-behavior-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1018
-
-Range-diff vs v3:
-
-  1:  ea940f10a7c !  1:  642b05fc020 t3705: test that 'sparse_entry' is unstaged
-     @@ t/t3705-add-sparse-checkout.sh: setup_gitignore () {
-       }
-       
-      +test_sparse_entry_unstaged () {
-     -+	git status --porcelain >actual &&
-     -+	! grep "^[MDARCU][M ] sparse_entry\$" actual
-     ++	git diff --staged -- sparse_entry >diff &&
-     ++	test_must_be_empty diff
-      +}
-      +
-       test_expect_success 'setup' "
-  2:  c7dedb41291 !  2:  58389edc76c t1092: behavior for adding sparse files
-     @@ t/t1092-sparse-checkout-compatibility.sh: test_sparse_match () {
-      +	file=$1 &&
-      +	for repo in sparse-checkout sparse-index
-      +	do
-     -+		git -C $repo status --porcelain >$repo-out &&
-     -+		! grep "^A  $file\$" $repo-out &&
-     -+		! grep "^M  $file\$" $repo-out || return 1
-     ++		# Skip "unmerged" paths
-     ++		git -C $repo diff --staged --diff-filter=ACDMRTXB -- "$file" >diff &&
-     ++		test_must_be_empty diff || return 1
-      +	done
-      +}
-      +
-  3:  b1f6468f9cd <  -:  ----------- dir: extract directory-matching logic
-  4:  0252c7ee15c !  3:  2ebaf8e68c2 dir: select directories correctly
-     @@ Commit message
-          contained files. However, other commands will start matching individual
-          files against pattern lists without that recursive approach.
-      
-     -    We modify path_matches_dir_pattern() to take a strbuf pointer
-     -    'path_parent' that is used to store the parent directory of 'pathname'
-     -    between multiple pattern matching tests. This is loaded lazily, only on
-     -    the first pattern it finds that has the PATTERN_FLAG_MUSTBEDIR flag.
-     +    The last_matching_pattern_from_list() logic performs some checks on the
-     +    filetype of a path within the index when the PATTERN_FLAG_MUSTBEDIR flag
-     +    is set. This works great when setting SKIP_WORKTREE bits within
-     +    unpack_trees(), but doesn't work well when passing an arbitrary path
-     +    such as a file within a matching directory.
-     +
-     +    We extract the logic around determining the file type, but attempt to
-     +    avoid checking the filesystem if the parent directory already matches
-     +    the sparse-checkout patterns. The new path_matches_dir_pattern() method
-     +    includes a 'path_parent' parameter that is used to store the parent
-     +    directory of 'pathname' between multiple pattern matching tests. This is
-     +    loaded lazily, only on the first pattern it finds that has the
-     +    PATTERN_FLAG_MUSTBEDIR flag.
-      
-          If we find that a path has a parent directory, we start by checking to
-          see if that parent directory matches the pattern. If so, then we do not
-     @@ Commit message
-      
-       ## dir.c ##
-      @@ dir.c: int match_pathname(const char *pathname, int pathlen,
-     + 				 WM_PATHNAME) == 0;
-     + }
-       
-     - static int path_matches_dir_pattern(const char *pathname,
-     - 				    int pathlen,
-     ++static int path_matches_dir_pattern(const char *pathname,
-     ++				    int pathlen,
-      +				    struct strbuf **path_parent,
-     - 				    int *dtype,
-     - 				    struct path_pattern *pattern,
-     - 				    struct index_state *istate)
-     - {
-     ++				    int *dtype,
-     ++				    struct path_pattern *pattern,
-     ++				    struct index_state *istate)
-     ++{
-      +	if (!*path_parent) {
-      +		char *slash;
-      +		CALLOC_ARRAY(*path_parent, 1);
-     @@ dir.c: int match_pathname(const char *pathname, int pathlen,
-      +			   pattern->patternlen, pattern->flags))
-      +		return 1;
-      +
-     - 	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
-     - 	if (*dtype != DT_DIR)
-     - 		return 0;
-     ++	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
-     ++	if (*dtype != DT_DIR)
-     ++		return 0;
-     ++
-     ++	return 1;
-     ++}
-     ++
-     + /*
-     +  * Scan the given exclude list in reverse to see whether pathname
-     +  * should be ignored.  The first match (i.e. the last on the list), if
-      @@ dir.c: static struct path_pattern *last_matching_pattern_from_list(const char *pathname
-       {
-       	struct path_pattern *res = NULL; /* undecided */
-     @@ dir.c: static struct path_pattern *last_matching_pattern_from_list(const char *p
-       		const char *exclude = pattern->pattern;
-       		int prefix = pattern->nowildcardlen;
-       
-     --		if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
-     --		    !path_matches_dir_pattern(pathname, pathlen,
-     +-		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR) {
-     +-			*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
-     +-			if (*dtype != DT_DIR)
-     +-				continue;
-     +-		}
-      +		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR &&
-      +		    !path_matches_dir_pattern(pathname, pathlen, &path_parent,
-     - 					      dtype, pattern, istate))
-     - 			continue;
-     ++					      dtype, pattern, istate))
-     ++			continue;
-       
-     + 		if (pattern->flags & PATTERN_FLAG_NODIR) {
-     + 			if (match_basename(basename,
-      @@ dir.c: static struct path_pattern *last_matching_pattern_from_list(const char *pathname
-       			break;
-       		}
-  5:  c6d17df5e5d =  4:  24bffdab139 dir: fix pattern matching on dirs
-  6:  3dd1d6c228c =  5:  e3a749e3182 add: fail when adding an untracked sparse file
-  7:  15039e031e5 =  6:  2c5c834bc9f add: skip tracked paths outside sparse-checkout cone
-  8:  6014ac8ab9e =  7:  430ab44e4f1 add: implement the --sparse option
-  9:  2bd3448be5f =  8:  4f7b5cdfa36 add: update --chmod to skip sparse paths
- 10:  131beda1bc3 =  9:  30ec6096939 add: update --renormalize to skip sparse paths
- 11:  837a9314893 = 10:  99d50921ef4 rm: add --sparse option
- 12:  cc25ce17162 = 11:  47a1444115b rm: skip sparse paths with missing SKIP_WORKTREE
- 13:  63a9cd80ade = 12:  28e703d80d3 mv: refuse to move sparse paths
- 14:  79a3518dc15 = 13:  9fbc88ee0da advice: update message to suggest '--sparse'
-
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 886e78715fe..7edc2060221 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -187,6 +187,16 @@ test_sparse_match () {
+ 	test_cmp sparse-checkout-err sparse-index-err
+ }
+ 
++test_sparse_unstaged () {
++	file=$1 &&
++	for repo in sparse-checkout sparse-index
++	do
++		# Skip "unmerged" paths
++		git -C $repo diff --staged --diff-filter=ACDMRTXB -- "$file" >diff &&
++		test_must_be_empty diff || return 1
++	done
++}
++
+ test_expect_success 'sparse-index contents' '
+ 	init_repos &&
+ 
+@@ -291,6 +301,20 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout -
+ '
+ 
++# NEEDSWORK: This documents current behavior, but is not a desirable
++# behavior (untracked files are handled differently than tracked).
++test_expect_success 'add outside sparse cone' '
++	init_repos &&
++
++	run_on_sparse mkdir folder1 &&
++	run_on_sparse ../edit-contents folder1/a &&
++	run_on_sparse ../edit-contents folder1/newfile &&
++	test_sparse_match test_must_fail git add folder1/a &&
++	grep "Disable or modify the sparsity rules" sparse-checkout-err &&
++	test_sparse_unstaged folder1/a &&
++	test_sparse_match git add folder1/newfile
++'
++
+ test_expect_success 'commit including unstaged changes' '
+ 	init_repos &&
+ 
+@@ -339,7 +363,11 @@ test_expect_success 'status/add: outside sparse cone' '
+ 
+ 	# Adding the path outside of the sparse-checkout cone should fail.
+ 	test_sparse_match test_must_fail git add folder1/a &&
++	grep "Disable or modify the sparsity rules" sparse-checkout-err &&
++	test_sparse_unstaged folder1/a &&
+ 	test_sparse_match test_must_fail git add --refresh folder1/a &&
++	grep "Disable or modify the sparsity rules" sparse-checkout-err &&
++	test_sparse_unstaged folder1/a &&
+ 
+ 	# NEEDSWORK: Adding a newly-tracked file outside the cone succeeds
+ 	test_sparse_match git add folder1/new &&
 -- 
 gitgitgadget
+
