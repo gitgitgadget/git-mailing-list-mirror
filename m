@@ -2,186 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 626D3C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1593BC433EF
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DE6861269
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D80D360E52
+	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 18:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235814AbhIXSlT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 14:41:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54656 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231919AbhIXSlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 14:41:19 -0400
-Received: (qmail 19110 invoked by uid 109); 24 Sep 2021 18:39:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Sep 2021 18:39:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11109 invoked by uid 111); 24 Sep 2021 18:39:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Sep 2021 14:39:45 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 24 Sep 2021 14:39:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 09/16] refs-internal.h: reorganize DO_FOR_EACH_* flag
- documentation
-Message-ID: <YU4bcPAsVa61t8Ze@coredump.intra.peff.net>
-References: <YU4ZOF9+ubmoItmK@coredump.intra.peff.net>
+        id S241618AbhIXSlW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 14:41:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231919AbhIXSlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 14:41:21 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 451B0C061571
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:39:48 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id e15so44074595lfr.10
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 11:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=s0FZHl1Uy4MsJR49Yq7TUSvJ5Koqp18MPNZXP6uCToE=;
+        b=V5R05a143Qlc5L3R/FcH6sQRhE8QTjeizAnMkRlZ86cTbMVmGNGZrlFsGRRf589eIk
+         NH2yvH7tx88V9gUevDqWI919HWNfe5KqGnYSpDm1k0YpnL5syGUFhfJ0rIMMqzZuGYqr
+         ir5nDma9Bc5WGleumUqK6USheOT4SmFmME6Tkded/ZfVhGw4coyfkGoH3SGztKt21NBl
+         FeE2SBZ9iIPUWL33AjVVZXuB308YuAton5tMThDA0wMn3USGHZqltjHRgUMkcSYAsDyw
+         M+ZhTd+bt+3kuvILoG1WyUnYS45vpgswOI6uctHMLPNR7fvnYGndCCH6fsB/4JduJdRP
+         2dCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=s0FZHl1Uy4MsJR49Yq7TUSvJ5Koqp18MPNZXP6uCToE=;
+        b=6rM5trnSE5ZE00eAbnsz3KbMPXrIHz9rNddlQpLegxrOAMM0Evu8yV0G6kA3mjQzLN
+         syFzH9bA0zaQOmdz3QZxe9jDLyvVLIxxa0GGEVcs93+g6ExkUrQ43lWrb3Kl21Zu1KNY
+         ulk01MBKzjtDKCcqDNDd27rpBs8aLOBrdPwFTc9effKhUMZsOnTwwEAV2zYdVkqTEgqQ
+         RJ6p1zOnd0jUsIUF2RzCQilhrehISo5yVgbtIPpbizYLPfSdfAqY0J3gR3abQYlFLC6S
+         YOC7oZ0DbBgVG4dahJ6D0XnlRVxwvqK11K78h10NiJO2qU51ZC1fhmcCjHRctUITup6u
+         OTzg==
+X-Gm-Message-State: AOAM532UMZZNhv4T3qgNQNTEvipfFh1OnG0Ofy0vrRjQl5iD2L7PRcr3
+        S1mz0etZ/LHX+jGrfRfy+O5GnDFvnx9djWEtfPBJ6vwLWZ8=
+X-Google-Smtp-Source: ABdhPJwgkTaqQAxdkEaVKpCDvL4TywwhLpnJ2R0yBbss+BsaUrNg0cEN2c4Kdx6d1OqsYYm5W9nJezaGLTyPl8B9tP8=
+X-Received: by 2002:a05:651c:228:: with SMTP id z8mr12715586ljn.429.1632508786400;
+ Fri, 24 Sep 2021 11:39:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YU4ZOF9+ubmoItmK@coredump.intra.peff.net>
+References: <BN6PR15MB1426A342CBA9D993C0C49E55CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <CAJoAoZ=DuqHe2brN8Y2Ts0_afEhUNrdasRBb1O8HHomLKRJ4PA@mail.gmail.com>
+ <BN6PR15MB14261D1A350398C0C26793E1CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <000401d7b16e$17ea02d0$47be0870$@nexbridge.com> <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+In-Reply-To: <BN6PR15MB14262C7036B3C792CCE861D8CBA49@BN6PR15MB1426.namprd15.prod.outlook.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Fri, 24 Sep 2021 11:39:35 -0700
+Message-ID: <CAJoAoZnuTGoF5J9FiwFTxsrG5VZ78zwKXe9w7__8U6UrCVQmeQ@mail.gmail.com>
+Subject: Re: pull failed - why should I receive this message.
+To:     "Russell, Scott" <Scott.Russell2@ncr.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation for the DO_FOR_EACH_* flags is sprinkled over the
-refs-internal.h file. We define the two flags in one spot, and then
-describe them in more detail far away from there, in the definitions of
-refs_ref_iterator_begin() and ref_iterator_advance_fn().
+On Fri, Sep 24, 2021 at 11:36 AM Russell, Scott <Scott.Russell2@ncr.com> wr=
+ote:
+>
+> Randall,
+>
+> Thanks for your answer.   However, this is a build system.
+> Git clean -dxf would delete all untracked files - not just the conflicted=
+ ones.
+>
+> We must keep all untracked files that would not be conflicted by the pull=
+.
+> Otherwise, the result would be our build would need to do a fresh build o=
+f all objects and build targets - those are all untracked as well.
+> Instead of the desired case of just building the changed files and their =
+resultant targets.
+>
+> We just need the pull to overwrite any untracked files that may exist in =
+conflict with newly tracked files.
+>
+> I see git is troublesome in this situation.   Every time a developer adds=
+ an untracked file to the repo - regardless of type,
+> It will result in failure of the pull.   And a failure of the build.
 
-Let's try to organize this a bit better:
+It sounds to me like the correct solution here is to add build
+artifacts to .gitignore, which will prevent committers from
+accidentally tracking them and breaking your buildbot's pull.
 
-  - convert the #defines to an enum. This makes it clear that they are
-    related, and that the enum shows the complete set of flags.
-
-  - combine all descriptions for each flag in a single spot, next to the
-    flag's definition
-
-  - use the enum rather than a bare int for functions which take the
-    flags. This helps readers realize which flags can be used.
-
-  - clarify the mention of flags for ref_iterator_advance_fn(). It does
-    not take flags itself, but is meant to depend on ones set up
-    earlier.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c               | 10 ++++++----
- refs/refs-internal.h | 46 ++++++++++++++++++++++++++------------------
- 2 files changed, 33 insertions(+), 23 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 8b9f7c3a80..c28bd6a818 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1413,7 +1413,8 @@ int head_ref(each_ref_fn fn, void *cb_data)
- 
- struct ref_iterator *refs_ref_iterator_begin(
- 		struct ref_store *refs,
--		const char *prefix, int trim, int flags)
-+		const char *prefix, int trim,
-+		enum do_for_each_ref_flags flags)
- {
- 	struct ref_iterator *iter;
- 
-@@ -1479,7 +1480,8 @@ static int do_for_each_ref_helper(struct repository *r,
- }
- 
- static int do_for_each_ref(struct ref_store *refs, const char *prefix,
--			   each_ref_fn fn, int trim, int flags, void *cb_data)
-+			   each_ref_fn fn, int trim,
-+			   enum do_for_each_ref_flags flags, void *cb_data)
- {
- 	struct ref_iterator *iter;
- 	struct do_for_each_ref_help hp = { fn, cb_data };
-@@ -1516,7 +1518,7 @@ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
- 
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsigned int broken)
- {
--	unsigned int flag = 0;
-+	enum do_for_each_ref_flags flag = 0;
- 
- 	if (broken)
- 		flag = DO_FOR_EACH_INCLUDE_BROKEN;
-@@ -1528,7 +1530,7 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 			     each_ref_fn fn, void *cb_data,
- 			     unsigned int broken)
- {
--	unsigned int flag = 0;
-+	enum do_for_each_ref_flags flag = 0;
- 
- 	if (broken)
- 		flag = DO_FOR_EACH_INCLUDE_BROKEN;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 7b30910974..2c4e1739f2 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -245,16 +245,30 @@ int refs_rename_ref_available(struct ref_store *refs,
- /* We allow "recursive" symbolic refs. Only within reason, though */
- #define SYMREF_MAXDEPTH 5
- 
--/* Include broken references in a do_for_each_ref*() iteration: */
--#define DO_FOR_EACH_INCLUDE_BROKEN 0x01
--
- /*
-- * Only include per-worktree refs in a do_for_each_ref*() iteration.
-- * Normally this will be used with a files ref_store, since that's
-- * where all reference backends will presumably store their
-- * per-worktree refs.
-+ * These flags are passed to refs_ref_iterator_begin() (and do_for_each_ref(),
-+ * which feeds it).
-  */
--#define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
-+enum do_for_each_ref_flags {
-+	/*
-+	 * Include broken references in a do_for_each_ref*() iteration, which
-+	 * would normally be omitted. This includes both refs that point to
-+	 * missing objects (a true repository corruption), ones with illegal
-+	 * names (which we prefer not to expose to callers), as well as
-+	 * dangling symbolic refs (i.e., those that point to a non-existent
-+	 * ref; this is not a corruption, but as they have no valid oid, we
-+	 * omit them from normal iteration results).
-+	 */
-+	DO_FOR_EACH_INCLUDE_BROKEN = (1 << 0),
-+
-+	/*
-+	 * Only include per-worktree refs in a do_for_each_ref*() iteration.
-+	 * Normally this will be used with a files ref_store, since that's
-+	 * where all reference backends will presumably store their
-+	 * per-worktree refs.
-+	 */
-+	DO_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
-+};
- 
- /*
-  * Reference iterators
-@@ -357,16 +371,12 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
-  * Return an iterator that goes over each reference in `refs` for
-  * which the refname begins with prefix. If trim is non-zero, then
-  * trim that many characters off the beginning of each refname.
-- * The output is ordered by refname. The following flags are supported:
-- *
-- * DO_FOR_EACH_INCLUDE_BROKEN: include broken references in
-- *         the iteration.
-- *
-- * DO_FOR_EACH_PER_WORKTREE_ONLY: only produce REF_TYPE_PER_WORKTREE refs.
-+ * The output is ordered by refname.
-  */
- struct ref_iterator *refs_ref_iterator_begin(
- 		struct ref_store *refs,
--		const char *prefix, int trim, int flags);
-+		const char *prefix, int trim,
-+		enum do_for_each_ref_flags flags);
- 
- /*
-  * A callback function used to instruct merge_ref_iterator how to
-@@ -454,10 +464,8 @@ void base_ref_iterator_free(struct ref_iterator *iter);
- /*
-  * backend-specific implementation of ref_iterator_advance. For symrefs, the
-  * function should set REF_ISSYMREF, and it should also dereference the symref
-- * to provide the OID referent. If DO_FOR_EACH_INCLUDE_BROKEN is set, symrefs
-- * with non-existent referents and refs pointing to non-existent object names
-- * should also be returned. If DO_FOR_EACH_PER_WORKTREE_ONLY, only
-- * REF_TYPE_PER_WORKTREE refs should be returned.
-+ * to provide the OID referent. It should respect do_for_each_ref_flags
-+ * that were passed to refs_ref_iterator_begin().
-  */
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
- 
--- 
-2.33.0.1071.gb37e412355
-
+>
+>
+> Thanks,
+>
+> Scott Russell
+> NCR Corporation
+>
+>
+> -----Original Message-----
+> From: Randall S. Becker <rsbecker@nexbridge.com>
+> Sent: Friday, September 24, 2021 2:01 PM
+> To: Russell, Scott <Scott.Russell2@ncr.com>; 'Emily Shaffer' <emilyshaffe=
+r@google.com>
+> Cc: git@vger.kernel.org
+> Subject: RE: pull failed - why should I receive this message.
+>
+> On September 24, 2021 1:34 PM Scott Russell wrote:
+> >
+> >Thanks for your answer.   Is there not an option on the pull to have git=
+ to overwrite the existing files?
+> >
+> >-----Original Message-----
+> >From: Emily Shaffer <emilyshaffer@google.com>
+> >Sent: Friday, September 24, 2021 1:29 PM
+> >To: Russell, Scott <Scott.Russell2@ncr.com>
+> >Cc: git@vger.kernel.org
+> >Subject: Re: pull failed - why should I receive this message.
+> >
+> >*External Message* - Use caution before opening links or attachments
+> >
+> >On Fri, Sep 24, 2021 at 10:08 AM Russell, Scott <Scott.Russell2@ncr.com>=
+ wrote:
+> >>
+> >> Files not previously in git were added to git.   Why should I have to =
+manually delete them?
+> >> Why can git put not replace them?  They were untracked files that are =
+now tracked  and so the git copy is desired.
+> >> We can't always know ahead of time what files may have been added else=
+where.
+> >
+> >To turn it around on you, you can't always know ahead of time what
+> >files may have been added elsewhere, so you can't be sure that your
+> >newly added untracked file locally will be safe from being overwritten d=
+uring a pull. How upsetting if you sink 30 hours into newlib.cpp and then y=
+our teammate checks in their own newlib.cpp, and yours is overwritten witho=
+ut asking when you run 'git pull'.
+> >
+> >You might have some luck with the '--autostash' option, which would at
+> >least prompt you whether to get rid of things when trying to merge them
+> >back together during the automatic 'git stash pop' at the end. Or you co=
+uld run 'git clean --force' to automatically delete any untracked files you=
+ might have - you could even alias yourself a command like 'git dangerous-p=
+ull' which runs 'git clean -f && git pull'.
+> >
+> >>
+> >>
+> >> We need the pull to work automatically.
+> >>
+> >> error: The following untracked working tree files would be overwritten=
+ by merge:
+> >>         Staging/CADDApps/CADDUIHelper/Source/Release/CADDUIHelper.exe
+> >>         Staging/CADDApps/CADDUIHelper/Source/Release_Unicode/CADDUIHel=
+per.exe
+> >>         Staging/CADDApps/InstallDriversPackage/Release/InstallDriversP=
+ackage.exe
+> >>         Staging/Common/NCRCommonCCLib/Source/Release/NCRCommonCCLibMsg=
+.dll
+> >>         Staging/Devices/NFC/Elatec_RFIDReader/Bin/Director.exe
+> >>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/AppBlaster.exe
+> >>         Staging/Devices/NFC/Elatec_RFIDReader/Firmware/flash.exe
+> >>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DIFxAPI.dll
+> >>         Staging/Utilities64/SSPSWDriverInstaller/Bin/DriverForge.v4.5.=
+4.exe
+> >>         Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWD=
+riverInstaller.exe
+> >>
+> >> Staging/Utilities64/SSPSWDriverInstaller/Source/Release/SSPSWDriverIn
+> >> stallerMsg.dll
+> >>
+> >> Staging/Utilities64/SSPSWTaskMgr/Source/Release/SSPSWTaskMgr.exe
+> >
+> >Or better yet, you could avoid checking in compiled binaries like these
+> >and instead add them to your .gitignore, unless you really mean to
+> >update them every time someone makes some change. When checking in
+> >binaries, you should be aware of the additional disk overhead needed to =
+do so and take a look at some options Git has to mitigate that overhead, li=
+ke partial clone. However, in many cases the easiest way to mitigate that o=
+verhead is to simply not check in binaries unless you absolutely need them =
+to be version controlled.
+> >
+> >- Emily
+>
+> If you are scripting this, try using git clean -dxf and git reset --hard =
+before running the pull.  That will clean the objects out of your working d=
+irectory.
+>
+> -Randall
+>
