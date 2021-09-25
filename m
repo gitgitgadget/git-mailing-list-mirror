@@ -2,88 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3F06C433EF
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 04:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC0E3C433F5
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 05:49:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8858E601FA
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 04:07:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9C3361151
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 05:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230070AbhIYEJO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Sep 2021 00:09:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62234 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbhIYEJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Sep 2021 00:09:12 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B76A1D480F;
-        Sat, 25 Sep 2021 00:07:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0zbSNKTuSDBpZi/2S18P5FK3U7UzxTsC5AbBpZ
-        g8E0o=; b=WUajJ/6LMy5yQsYg0qgU7k5jVaa24DDGUWuRMuuDgRL9GJAmogKos7
-        MuMh1CJOSaPXb0tjPLo9ARok1R6aB7CKehBf42JxwLB4eA5ryrxzeEzENlYS/jIZ
-        99ZUElDVr05tiewIOiOCJXbs7F7TNtJDpTBdBQjn7G8yNuLS1OX9E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B42BD480E;
-        Sat, 25 Sep 2021 00:07:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E65BBD480C;
-        Sat, 25 Sep 2021 00:07:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Thiago Perrotta <tbperrotta@gmail.com>, avarab@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
-References: <87zgs34ccx.fsf@evledraar.gmail.com>
-        <20210924024606.20542-4-tbperrotta@gmail.com>
-        <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
-        <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
-        <xmqqzgs2vvim.fsf@gitster.g>
-        <CAPUEspiSh91a8MvhqhKm=DAn5_u-HoRBuL6-gBRMUtSshqpf=g@mail.gmail.com>
-        <xmqqo88hspvv.fsf@gitster.g>
-        <d9114e0a-cb6e-1791-51f8-6e57f313e8d5@gmail.com>
-Date:   Fri, 24 Sep 2021 21:07:35 -0700
-In-Reply-To: <d9114e0a-cb6e-1791-51f8-6e57f313e8d5@gmail.com> (Bagas Sanjaya's
-        message of "Sat, 25 Sep 2021 10:03:01 +0700")
-Message-ID: <xmqq5yups3g8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1345793AbhIYFut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Sep 2021 01:50:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55150 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230453AbhIYFus (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Sep 2021 01:50:48 -0400
+Received: (qmail 21139 invoked by uid 109); 25 Sep 2021 05:49:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Sep 2021 05:49:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17788 invoked by uid 111); 25 Sep 2021 05:49:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Sep 2021 01:49:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 25 Sep 2021 01:49:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Greywolf <greywolf@starwolf.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ANSI sequences produced on non-ANSI terminal
+Message-ID: <YU64WQOg/zY7P+Gh@coredump.intra.peff.net>
+References: <20210923052122.2F655CE@eddie.starwolf.com>
+ <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
+ <592a799b-0d16-1615-4737-3c634d029d7f@starwolf.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E33E296-1DB6-11EC-9EAE-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <592a799b-0d16-1615-4737-3c634d029d7f@starwolf.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On Fri, Sep 24, 2021 at 04:57:11PM -0700, Greywolf wrote:
 
-> On 25/09/21 03.03, Junio C Hamano wrote:
->> Ah, thanks for explanation.
->>      git format-patch -2
->> would be options-only way to "indicate some sort of revision", so
->> perhaps
->>      . git send-email <send-email options> files|directory
->>      . git send-email <send-email options> <format-patch options>
->> (where "options" is used to refer to both --options and arguments)
->> would illustrate the differences better?
->> 
->
-> But we can also directly specify revision range (commonly <common
-> ancestor>..HEAD or HEAD ^<common ancestor>).
+> On 9/23/2021 14:20, Jeff King wrote:
+> 
+> > Git doesn't have any kind of list of terminals, beyond knowing that "dumb"
+> > should disable auto-color. It's possible we could expand that if there are
+> > known terminals that don't understand ANSI colors. I'm a bit wary of having
+> > a laundry list of obscure terminals, though.
+> 
+> Oh, gods, I wouldn't have that at all!  No, I just want it NOT to spit out
+> not only the colour codes, but the cursor positioning codes as it seems
+> wont to do when I do a fetch.  I'm more than happy to turn coloring off
+> (conditional on TERM would be a bonus, however it's done) on my own;
+> in fact, I have done so, but the fetch/pull still seem to be messing up
+> my screen, with color turned off (unless I'm not turning it off
+> *enough*, which is entirely possible).
 
-That is exactly why I have the parenthetical definition of what
-"options" mean in my explanation.  
+OK, that makes things a bit easier. The colors, as you noticed, can be
+disabled by config. The other thing you're seeing is ANSI ESC[K, which
+is used to clear to the end of line. We use this in a couple places,
+notably when relaying progress lines from the server (with the "remote:"
+prefix) which may use carriage-returns to overwrite lines.
 
-	git format-patch -2
-	git format-patch master
-	git format-patch master..HEAD
+See ebe8fa738d (fix display overlap between remote and local progress,
+2007-11-04) if you're really interested.
 
-Everything after "git format-patch", i.e. -2, master, master..HEAD,
-are usable, and there isn't much point in singling out revision
-ranges.  FWIW, I think you can even give "-- <pathspec>" at the end,
-which are not options or revision ranges.
+Anyway, there's no config option to disable that. However, we do disable
+it if TERM is empty or set to "dumb" (and instead just write some extra
+spaces to clear out the line). So that may be an option, though of
+course setting TERM=dumb may affect other programs you use.
+
+I don't think it would be unreasonable to have a config option to
+select whether we use the ANSI or dumb-term version.
+
+> > If we built against ncurses or some other terminfo-aware library we could
+> > outsource that, but that would be a new dependency. I'm hesitant to do that
+> > even as an optional dependency given the bang-for-the-buck (and certainly
+> > making it require would be right out).
+> 
+> Well understood.  Also, not asking for people to jump thru flaming hoops.
+> Just trying to figure out how to get git to stop assuming things.
+> (as stated, I am aware it could be my fault for not setting variables
+> properly all the way).
+
+Nah, it sounds like you actually set the variables correctly. We've just
+assumed that we can get by with ANSI codes as a lowest common
+denominator in the modern world, without having to resort to all the
+complexities of using a terminfo library. It's worked pretty well so
+far. ;)
+
+-Peff
