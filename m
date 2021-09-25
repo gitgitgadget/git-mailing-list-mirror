@@ -2,35 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ED19C433F5
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0FEDC433F5
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 03:03:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46DA9610F7
-	for <git@archiver.kernel.org>; Fri, 24 Sep 2021 23:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B014E610F7
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 03:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236431AbhIXX6r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Sep 2021 19:58:47 -0400
-Received: from [50.213.99.139] ([50.213.99.139]:65519 "EHLO eddie.starwolf.com"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S229669AbhIXX6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Sep 2021 19:58:47 -0400
-Received: by eddie.starwolf.com (Postfix, from userid 118)
-        id 158BC55AB; Fri, 24 Sep 2021 18:01:13 -0700 (PDT)
-Received: from [172.21.12.13] (topaz.middle-earth.starwolf.com [172.21.12.13])
-        by eddie.starwolf.com (Postfix) with ESMTP id 0397455AB;
-        Fri, 24 Sep 2021 18:01:11 -0700 (PDT)
-Subject: Re: ANSI sequences produced on non-ANSI terminal
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <20210923052122.2F655CE@eddie.starwolf.com>
- <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
-From:   Greywolf <greywolf@starwolf.com>
-Message-ID: <592a799b-0d16-1615-4737-3c634d029d7f@starwolf.com>
-Date:   Fri, 24 Sep 2021 16:57:11 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+        id S1347738AbhIYDEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Sep 2021 23:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347703AbhIYDEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Sep 2021 23:04:40 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F606C061571
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 20:03:06 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id r2so11729606pgl.10
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 20:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7dyL2lAWtfJdXFOjZ8yQ16g1ck3SaYAJqJf+N/GJ3NU=;
+        b=nOYtK2s9VFDmIZ8K17yRWqBFRQo3tLmqrBhVMcHMtzIo7f//fL/id/VRoXj7PrRz66
+         TZcZIYUPuaJj6oMzLRY8GHwwI/eMuTmsUMXAYwJ2NDwfLYb/CmmtAgnrMPxfwjXeGRYA
+         SeK8fRfnFh0h89dcMHhE3awZ5O7T8FQP4hX0r3/lPur5oaQoBVDFjmc/W06CFSTz746Q
+         9mCMnW33wOuDS3MuW+KZkDOG+g0BPpBFmEWL/nv6nrL/VnuaEWMRl3DmL1+aCU3VjMrE
+         sDJqk8upXDJljnvQznZ4XhtTqKDcxtVfgsl1RoROiddQ8GtXp3lxQVQIUfNstgNljlCX
+         9OdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7dyL2lAWtfJdXFOjZ8yQ16g1ck3SaYAJqJf+N/GJ3NU=;
+        b=7KOPFVYz4Osgut22yS7FCco2e+WNWN1lSwwC5G9iUA2NFvgmKUXAqMJ7StR7rYi2ud
+         oMBy9HEALVXpO2Tunnuo/wjM24n8eshjOAoL5/Bv6iMjbdIltdVXEpk+g0M4+/esODSP
+         jP4hOX6/y/ssC0KUnSKUiD5z++ZZn5BsWW//0ZrW2deNScQXU0zVh3mKARDsDzPW0p7S
+         +6CMm4xCxefUzqv3fgEncYHYsn+0xg80dlSPdW3eHGcMkvfg4mDlIVE7fvBUY3d4N9PO
+         ajQfCmW75ngXUcRC6VfS9qcoCEkcZGa6HBAVxW29JBs58L9bjGzLc0W8G/MDMkbOfdE5
+         GaIA==
+X-Gm-Message-State: AOAM531sIxjJexr1Ob5GBvfNQmfbspfm2fI/n8MDZ5vS7aA/ZMT3yLB1
+        6MO0fXQI0lW83M5ucH3XRGxofnw5rm/k7d9Q
+X-Google-Smtp-Source: ABdhPJyn2gRAIHOB6VFbX9nxb3LB4RF7Xfs572RmbThMjfdKUZoO6IN3c8nEB5TNiwSOmPmEUmfE8A==
+X-Received: by 2002:a63:131f:: with SMTP id i31mr6504379pgl.207.1632538985513;
+        Fri, 24 Sep 2021 20:03:05 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-88.three.co.id. [180.214.232.88])
+        by smtp.gmail.com with ESMTPSA id b142sm10434422pfb.17.2021.09.24.20.03.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Sep 2021 20:03:04 -0700 (PDT)
+Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
+To:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Arenas <carenas@gmail.com>
+Cc:     Thiago Perrotta <tbperrotta@gmail.com>, avarab@gmail.com,
+        git@vger.kernel.org
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+ <20210924024606.20542-4-tbperrotta@gmail.com>
+ <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
+ <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
+ <xmqqzgs2vvim.fsf@gitster.g>
+ <CAPUEspiSh91a8MvhqhKm=DAn5_u-HoRBuL6-gBRMUtSshqpf=g@mail.gmail.com>
+ <xmqqo88hspvv.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <d9114e0a-cb6e-1791-51f8-6e57f313e8d5@gmail.com>
+Date:   Sat, 25 Sep 2021 10:03:01 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
+In-Reply-To: <xmqqo88hspvv.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -38,53 +77,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings and thank you ALL for your responses!
-
-On 9/23/2021 14:20, Jeff King wrote:
-
-> Git doesn't have any kind of list of terminals, beyond knowing that "dumb"
-> should disable auto-color. It's possible we could expand that if there are
-> known terminals that don't understand ANSI colors. I'm a bit wary of having
-> a laundry list of obscure terminals, though.
-
-Oh, gods, I wouldn't have that at all!  No, I just want it NOT to spit out
-not only the colour codes, but the cursor positioning codes as it seems
-wont to do when I do a fetch.  I'm more than happy to turn coloring off
-(conditional on TERM would be a bonus, however it's done) on my own;
-in fact, I have done so, but the fetch/pull still seem to be messing up
-my screen, with color turned off (unless I'm not turning it off
-*enough*, which is entirely possible).
-
-> If we built against ncurses or some other terminfo-aware library we could
-> outsource that, but that would be a new dependency. I'm hesitant to do that
-> even as an optional dependency given the bang-for-the-buck (and certainly
-> making it require would be right out).
-
-Well understood.  Also, not asking for people to jump thru flaming hoops.
-Just trying to figure out how to get git to stop assuming things.
-(as stated, I am aware it could be my fault for not setting variables
-properly all the way).
-
-> Obviously you can wrap Git with a script to tweak the config based on the
-> current setting of the $TERM variable. It would be nice if you could have
-> conditional config for that. E.g., something like:
+On 25/09/21 03.03, Junio C Hamano wrote:
+> Ah, thanks for explanation.
 > 
-> [includeIf "env:TERM==xterm"] path = gitconfig-color
+>      git format-patch -2
 > 
-> That doesn't exist, but would fit in reasonably well with our other 
-> conditional config options.
+> would be options-only way to "indicate some sort of revision", so
+> perhaps
+> 
+>      . git send-email <send-email options> files|directory
+>      . git send-email <send-email options> <format-patch options>
+> 
+> (where "options" is used to refer to both --options and arguments)
+> would illustrate the differences better?
+> 
 
-That is a consideration; and one I had not thought of.
+But we can also directly specify revision range (commonly <common 
+ancestor>..HEAD or HEAD ^<common ancestor>).
 
-> As far as generating non-ANSI codes, that's all Git knows how to do.
+So for the second form, the syntax will be:
 
-Just need to have it NOT generate ANSI codes, if requested.  I'm certainly
-not requesting the world of terminals to be incorporated -- just some
-universal readability.
+   git send-email <send-email options> <format-patch options> <revision 
+range>
 
-As far as the suggestion to use "screen", I'm not going to be starting up
-a screen session every time I log in. :)
-
-				Thank you all very much!
-
-				--*greywolf;
+-- 
+An old man doll... just what I always wanted! - Clara
