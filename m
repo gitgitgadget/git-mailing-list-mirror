@@ -2,91 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC0E3C433F5
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 05:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A6DAC433F5
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 06:13:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9C3361151
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 05:49:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B72361268
+	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 06:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345793AbhIYFut (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Sep 2021 01:50:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55150 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230453AbhIYFus (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Sep 2021 01:50:48 -0400
-Received: (qmail 21139 invoked by uid 109); 25 Sep 2021 05:49:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Sep 2021 05:49:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17788 invoked by uid 111); 25 Sep 2021 05:49:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Sep 2021 01:49:14 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 25 Sep 2021 01:49:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Greywolf <greywolf@starwolf.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ANSI sequences produced on non-ANSI terminal
-Message-ID: <YU64WQOg/zY7P+Gh@coredump.intra.peff.net>
-References: <20210923052122.2F655CE@eddie.starwolf.com>
- <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
- <592a799b-0d16-1615-4737-3c634d029d7f@starwolf.com>
+        id S1347939AbhIYGPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Sep 2021 02:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52640 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347874AbhIYGPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Sep 2021 02:15:04 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719D3C061613
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 23:13:30 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id r16so11593956qtw.11
+        for <git@vger.kernel.org>; Fri, 24 Sep 2021 23:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZSc1T+B73YB+VUYKtuZ+PsLPMGvthQtoAqbFXEXfuX8=;
+        b=oSRwKVJU1IOXG5L/fKU7PwsFvauQ/EkEw4PkiTex+BpGRoO8oNcSWLd1eU9M2fDFvN
+         CSscUkfXLLoycrDg4q3Lu5KD3zkRb5S8vZqX4oLdfDY3lE5YKb/ACOrIJJX6DpV4U097
+         jRNyWN9eHDUte8TenCgh92bK7cP9dM0sItuVEMac7n5oR7AVMppWBU+AKUvTN2cmpgmh
+         t73+gRjnTwJ8/A7sUwXvS0CgnY2iRnxhKyKuDY5bWbYOuqIk5Wo6gPT4v3sQrw1BIJX5
+         N+dmTGgMd39dseNTbBBE9EDFZkaDSwXDWqTFlFFRQtYgQTv8gm9deiN1bElGO8nlhLaR
+         iv3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZSc1T+B73YB+VUYKtuZ+PsLPMGvthQtoAqbFXEXfuX8=;
+        b=bdM++ZwKEPF4S84dTz2B0xXlm46neV70zLsXH5upRCQ/+xUp6c6X9ofmKggkUAo/zX
+         sWSJk3MuNS9U7mqrDgtAas2QccrcBvvqMosckjmwDioSgMvLWQjs9MxVm5ujI+JeCywh
+         mc/tOkGWFbzK9LrL4hpQIWhZ8ZqNiPHZp38kYVsHB2ft26mA8j26LxfGuM9TQgFATNRN
+         1XKXx8tKieWmBc2kbR6D7zb47ltPOfCIQYzuflXKGOW/7tFYGJ9YmgddOfR/RW3Gx5R/
+         FGjX6ewbf00KY8bV6AGHdUApnQ9dIrHEXK4fHmo8N654desEWzinzP9BFdSov7+lVJAY
+         EgbA==
+X-Gm-Message-State: AOAM533rL3qGeGjQ+BmMt5M1xtLv6u2QlNVskmpBQRqmOKOQ+P1Dm4MR
+        M2JpDB6dX5T0jiNdUmOTFf6s4x6SY/w=
+X-Google-Smtp-Source: ABdhPJwB+5urjwv5/fVz5iQe8+cohDO93sFFSi2AqbK1stcAoKuoX+4Mbd4n/KwZJNmPgGx8eYoenA==
+X-Received: by 2002:ac8:7d0e:: with SMTP id g14mr8113421qtb.28.1632550409563;
+        Fri, 24 Sep 2021 23:13:29 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id v3sm8097274qkd.20.2021.09.24.23.13.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Sep 2021 23:13:29 -0700 (PDT)
+Date:   Fri, 24 Sep 2021 23:13:25 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Thiago Perrotta <tbperrotta@gmail.com>, avarab@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] send-email docs: add format-patch options
+Message-ID: <YU6+BWC+xvGJP3b0@carlos-mbp.lan>
+References: <87zgs34ccx.fsf@evledraar.gmail.com>
+ <20210924024606.20542-4-tbperrotta@gmail.com>
+ <9a60226c-7a35-0486-a687-31f7691e7551@gmail.com>
+ <CAPUEspjxYy4GOABXkzRza-wmKnZAdq-v=OP-9+-wfV2PCnDGwQ@mail.gmail.com>
+ <xmqqzgs2vvim.fsf@gitster.g>
+ <CAPUEspiSh91a8MvhqhKm=DAn5_u-HoRBuL6-gBRMUtSshqpf=g@mail.gmail.com>
+ <xmqqo88hspvv.fsf@gitster.g>
+ <d9114e0a-cb6e-1791-51f8-6e57f313e8d5@gmail.com>
+ <xmqq5yups3g8.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <592a799b-0d16-1615-4737-3c634d029d7f@starwolf.com>
+In-Reply-To: <xmqq5yups3g8.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 24, 2021 at 04:57:11PM -0700, Greywolf wrote:
-
-> On 9/23/2021 14:20, Jeff King wrote:
+On Fri, Sep 24, 2021 at 09:07:35PM -0700, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> > On 25/09/21 03.03, Junio C Hamano wrote:
+> >> Ah, thanks for explanation.
+> >>      git format-patch -2
+> >> would be options-only way to "indicate some sort of revision", so
+> >> perhaps
+> >>      . git send-email <send-email options> files|directory
+> >>      . git send-email <send-email options> <format-patch options>
+> >> (where "options" is used to refer to both --options and arguments)
+> >> would illustrate the differences better?
+> >> 
+> > But we can also directly specify revision range (commonly <common
+> > ancestor>..HEAD or HEAD ^<common ancestor>).
 > 
-> > Git doesn't have any kind of list of terminals, beyond knowing that "dumb"
-> > should disable auto-color. It's possible we could expand that if there are
-> > known terminals that don't understand ANSI colors. I'm a bit wary of having
-> > a laundry list of obscure terminals, though.
+> That is exactly why I have the parenthetical definition of what
+> "options" mean in my explanation.  
 > 
-> Oh, gods, I wouldn't have that at all!  No, I just want it NOT to spit out
-> not only the colour codes, but the cursor positioning codes as it seems
-> wont to do when I do a fetch.  I'm more than happy to turn coloring off
-> (conditional on TERM would be a bonus, however it's done) on my own;
-> in fact, I have done so, but the fetch/pull still seem to be messing up
-> my screen, with color turned off (unless I'm not turning it off
-> *enough*, which is entirely possible).
-
-OK, that makes things a bit easier. The colors, as you noticed, can be
-disabled by config. The other thing you're seeing is ANSI ESC[K, which
-is used to clear to the end of line. We use this in a couple places,
-notably when relaying progress lines from the server (with the "remote:"
-prefix) which may use carriage-returns to overwrite lines.
-
-See ebe8fa738d (fix display overlap between remote and local progress,
-2007-11-04) if you're really interested.
-
-Anyway, there's no config option to disable that. However, we do disable
-it if TERM is empty or set to "dumb" (and instead just write some extra
-spaces to clear out the line). So that may be an option, though of
-course setting TERM=dumb may affect other programs you use.
-
-I don't think it would be unreasonable to have a config option to
-select whether we use the ANSI or dumb-term version.
-
-> > If we built against ncurses or some other terminfo-aware library we could
-> > outsource that, but that would be a new dependency. I'm hesitant to do that
-> > even as an optional dependency given the bang-for-the-buck (and certainly
-> > making it require would be right out).
+> 	git format-patch -2
+> 	git format-patch master
+> 	git format-patch master..HEAD
 > 
-> Well understood.  Also, not asking for people to jump thru flaming hoops.
-> Just trying to figure out how to get git to stop assuming things.
-> (as stated, I am aware it could be my fault for not setting variables
-> properly all the way).
+> Everything after "git format-patch", i.e. -2, master, master..HEAD,
+> are usable, and there isn't much point in singling out revision
+> ranges.  FWIW, I think you can even give "-- <pathspec>" at the end,
+> which are not options or revision ranges.
 
-Nah, it sounds like you actually set the variables correctly. We've just
-assumed that we can get by with ANSI codes as a lowest common
-denominator in the modern world, without having to resort to all the
-complexities of using a terminfo library. It's worked pretty well so
-far. ;)
+<format-patch options> then it is; would the following be worth adding
+in top so the recursive reference can be followed?
 
--Peff
+Carlo
+------ >8 ------
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index fe2f69d36e..806ff93259 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -30,7 +30,7 @@ SYNOPSIS
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+ 		   [--filename-max-length=<n>]
+ 		   [--progress]
+-		   [<common diff options>]
++		   [<common diff options>] [<rev-list options>]
+ 		   [ <since> | <revision range> ]
+ 
+ DESCRIPTION
