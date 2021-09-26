@@ -2,108 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F1E3C433EF
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 17:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A264CC433F5
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 03:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 860F66108C
-	for <git@archiver.kernel.org>; Sat, 25 Sep 2021 17:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D28460F0F
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 03:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbhIYRTi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Sep 2021 13:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        id S230413AbhIZDtx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Sep 2021 23:49:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbhIYRTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Sep 2021 13:19:37 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03447C061570
-        for <git@vger.kernel.org>; Sat, 25 Sep 2021 10:18:01 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id r43-20020a05683044ab00b0054716b40005so10924811otv.4
-        for <git@vger.kernel.org>; Sat, 25 Sep 2021 10:18:00 -0700 (PDT)
+        with ESMTP id S230373AbhIZDtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Sep 2021 23:49:53 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7996C061570
+        for <git@vger.kernel.org>; Sat, 25 Sep 2021 20:48:16 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id w17so40026766wrv.10
+        for <git@vger.kernel.org>; Sat, 25 Sep 2021 20:48:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=7oX4zfnNm0xOzKKJLWSoP98KBLcqeFl0VKzuDRLxryg=;
-        b=I8XJuqehBnBySFe0tRY8GnCx90bknodlXBY2XKXbGl7LEHTGkAJ0FTcTU6EVrqE86c
-         GYB4Cmq0XXFqwWnLNrVsiOz81qQB01omlrZlmJ4d543hqzk38VquzI5ZjZPsWYpYCAOM
-         EKX58DDCyqgwphK7R068NqB6dxe/ZzqAob3kow9ov2DNEk7a2m5UGi5cumUE+5ZYVlHW
-         CSQ5SaJSsm1VJb9XXbpcrhLnIyRO4eQU56s98s5/ZExFzazVeRFBASkRRUlUiGg2HFRB
-         bZuWoSzRIcsGadtfiRjkDHs3Ldu3Ll37bR/rK0jWktHXIY2j2AlMiwt6yVJaFOp1M4Ff
-         RyfQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=X0u0jo3dmvsK7WGf9NlGO1P/HX3r2n337Luuci9g3vA=;
+        b=UGx/67y3v2jC2odr6oAG5iFZb74/RGiHK40BVrAfuG3kY5BWNBhezA26wOvOGBtM9L
+         h8RP7JNfO5e1pY63h9qwGQnnbC58rjNP1+NnnqiABZNOLJXWZTqsOw1EzUUi66Oil4SE
+         QAvhfDbr3XzxhTjl5mnuWyXJLotQCw/BSx3LOntpBntVYcrIKuDEbZ6HXzuh5XvcjVow
+         N+7Q1w5Og73d0KLrgu3a53SxtlVv67tJstOSscqriG/9ehBy/1pOZrATihbTTeIC6Kwb
+         uQvY6axXcXCQjf/PUQXqg+M4K033SZsrEc8VUvZ33ypCdQDG4J56c/Ct9PYpCy0VapOy
+         2EZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=7oX4zfnNm0xOzKKJLWSoP98KBLcqeFl0VKzuDRLxryg=;
-        b=JG/KFJgVBjJk0+eI5Q3kK1qjkbOLexHTtISZHVDuIfoQurvFHSVh+/plKiBbkPNZnc
-         6BsmfgDScdjEXIobsZA6ORYwwKdOG6RgUGH0rCIlqaGA+n/gpc9fcfTQ1xftYObSunkp
-         Z1pSoDi3RubCOUIePZyS2M95P7E29nDglC6eF3UEW/DSPxgfYJhCkQTDXBJ7GDYneARG
-         VUj+4TVA3s6ZANsynaKCVda/jW7rTj4wwCepn1y8gjfrXIG9aoKueIvvAN3LNjoPT7kC
-         s1wOyhCl2lT+zraxCoH312p8lUoQenRkzJLnJtE1yQ3U4dOM2RnNqrKVxAg9b1jfSVyt
-         iA6A==
-X-Gm-Message-State: AOAM531YnID82FA0hPgZ5w2IQq1Ii4usr8IpnTRq+h9lhjnH+AFozokO
-        uZ8/ImtL/3P4TdDl/Yax6Hw=
-X-Google-Smtp-Source: ABdhPJz+iu+58kfgX5Rfm/Qjiu8024OX5F+ioyDEUKdAu5SJueZF/l+mI7ppJOZvUjDUgqqXUGye2A==
-X-Received: by 2002:a9d:4c11:: with SMTP id l17mr9406478otf.106.1632590280310;
-        Sat, 25 Sep 2021 10:18:00 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b8d5:1f00:5c83:e0ce? ([2600:1700:e72:80a0:b8d5:1f00:5c83:e0ce])
-        by smtp.gmail.com with ESMTPSA id v186sm3093169oig.52.2021.09.25.10.17.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Sep 2021 10:17:59 -0700 (PDT)
-Message-ID: <be95aff9-b2e4-c3b8-a32a-375a3053fdfb@gmail.com>
-Date:   Sat, 25 Sep 2021 13:17:56 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH v3] doc/technical: update note about core.multiPackIndex
-Content-Language: en-US
-To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <20210922221342.6867-1-e@80x24.org>
- <9ebb4c34-8cdd-3120-ff9a-0e47099c3cf6@gmail.com>
- <YUy9HzRgHU2zvI4P@nand.local> <20210923201252.GA25980@dcvr>
- <20210924111136.GA15127@dcvr>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20210924111136.GA15127@dcvr>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=X0u0jo3dmvsK7WGf9NlGO1P/HX3r2n337Luuci9g3vA=;
+        b=K0m1TTAhpCrEijbsnSwGI2HDSr7PsrQ73vVyz51JRDlsPfh3NzUC+aJEgY+sTPbYKI
+         b73cQFX0Ts0fyXX5sIdH/2zOzo40U0C7iT0irQnaOIfy/CnU353kVagQEd9GU93q25C9
+         ZpfTNTjtOhyPPVzuqC4LGbRIoc7Xr0ipK3Sv8tzvUADhIDsfD9B4Mm8HUSxzhvAV3i7V
+         hFEyE/zscZbEvlPF45nqaDUCN32puZlx3RKsv3FHRVzAWnWExWM3Wn0bA9C5ik49Xg4q
+         dIGWUxn8p5rXvfwXlXMBC3NyXnanJFUWxvOwa9zHZ48kYYB/eyAlgBYc9wOr/huH/tJj
+         oicA==
+X-Gm-Message-State: AOAM5339U8p3F+mJp/2Gbp90ncjj9mbuPK85hP3NhmdxlI18TRvYsJlL
+        E/Cv6i+Ibtki/cyUCN6cbT+2+8rrwAA=
+X-Google-Smtp-Source: ABdhPJyMlrf61EviOolPqUnarszNmZ3Lb5RK1Ithkcw5WttU1OM60qGPfDhDMGi0OLg7LThy5eK1bg==
+X-Received: by 2002:a5d:47ca:: with SMTP id o10mr20754753wrc.326.1632628084312;
+        Sat, 25 Sep 2021 20:48:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d3sm15169875wrb.36.2021.09.25.20.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Sep 2021 20:48:03 -0700 (PDT)
+Message-Id: <pull.1095.git.git.1632628082841.gitgitgadget@gmail.com>
+From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 26 Sep 2021 03:48:02 +0000
+Subject: [PATCH] doc: fix capitalization in porcelain v2 section
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/24/2021 7:11 AM, Eric Wong wrote:
-> MIDX files are used by default since commit 18e449f86b74
-> (midx: enable core.multiPackIndex by default, 2020-09-25)
-> 
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  v3: I cited the wrong commit in the commit message of v2 :x
+From: Orgad Shaneh <orgads@gmail.com>
 
-Good catch.
+The summary line had xy, while the description (and other sub-sections)
+has XY.
+
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+    doc: fix capitalization in porcelain v2 section
+    
+    The summary line had xy, while the description (and other sub-sections)
+    has XY.
+    
+    Signed-off-by: Orgad Shaneh orgads@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1095%2Forgads%2Fstatus-doc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1095/orgads/status-doc-v1
+Pull-Request: https://github.com/git/git/pull/1095
+
+ Documentation/git-status.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 83f38e31981..c33a3d8d532 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -363,7 +363,7 @@ Field       Meaning
+ Unmerged entries have the following format; the first character is
+ a "u" to distinguish from ordinary changed entries.
  
->  Documentation/technical/multi-pack-index.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-> index 1a73c3ee203e..86f40f24909a 100644
-> --- a/Documentation/technical/multi-pack-index.txt
-> +++ b/Documentation/technical/multi-pack-index.txt
-> @@ -36,7 +36,9 @@ Design Details
->    directory of an alternate. It refers only to packfiles in that
->    same directory.
->  
-> -- The core.multiPackIndex config setting must be on to consume MIDX files.
-> +- The core.multiPackIndex config setting must be on (which is the
-> +  default) to consume MIDX files.  Setting it to `false` prevents
-> +  Git from reading a MIDX file, even if one exists.
->  
->  - The file format includes parameters for the object ID hash
->    function, so a future change of hash algorithm does not require
+-    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
++    u <XY> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
+ 
+ ....
+ Field       Meaning
 
-This looks good to me, too!
-
-Thanks,
--Stolee
+base-commit: ddb1055343948e0d0bc81f8d20245f1ada6430a0
+-- 
+gitgitgadget
