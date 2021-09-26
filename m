@@ -2,79 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B91A9C433EF
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9767CC433F5
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:14:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 972C261041
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AE7C610A2
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232045AbhIZPLq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Sep 2021 11:11:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232076AbhIZPLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Sep 2021 11:11:41 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06662C061575
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 08:10:05 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id d207so34307245qkg.0
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 08:10:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=2e1FTK6jj7RSaMD8x/0AlDbjgwCZ/o/ItHreKGfBDVQ=;
-        b=JxX7ESj/2LpeRlZdtnpjy5EZ1XmCr7Nq3H5zUfHTPSaVI9GRVI5lJWIhvKaAaHztlR
-         Ty9m/p11/HLiRIEqqw4lbLygjl0zXdvq0sawk+mnweB70QwASpy39IN6+MXEcaF/cVgS
-         k1ywJ50s8aZQT3w5xzIEzvlMBP4oU6b1zRWcCZuak1d6P6wkPhU7GfY8oq3uathLlDf1
-         aEdYS9oCofj51FZzgcGppPmIZnGeJOwce0OXEQYFNwhHxiYgn5zwAeSFa4Gy+ULzYbKy
-         TvDS6TKPz+JlTsY+Ruo7OjqJ/ong+CBy1+eeOTbN4fypgbP3c+PQtTaa55qwJBIzsWVu
-         IUzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=2e1FTK6jj7RSaMD8x/0AlDbjgwCZ/o/ItHreKGfBDVQ=;
-        b=DJcL62km79kiM9mw8wLqZwILw+MPP0Szxm5S3GYSVMKTHmlBncLOjl122PVsXSUnTq
-         q9EKxSN7icpZVssZBAVBUMlttC4UdHXow25OIsO5UVWEIEcHl8dxo2k3zpjT54rKE34n
-         E7iCTSxDBJZ4fPid33It5QdCWAySJR4ywf2wzw06JxB2lZUgFDRWtqWph789qDFwMkj8
-         wQKIfAar3HoB34gbs3B/D9Fz8oavx/HNvJ7b4P6+CG0r1RPSkL1oTFxyqD6APNWYFsVO
-         ekjk0xHSqwYPX0tVpY70juOAO3VhtjXyXS7ryPd340ldMxkPuG/XCh+51ZuvodtDji3B
-         215Q==
-X-Gm-Message-State: AOAM533QnCftD7Jx+Lyd79qNSYlpLYekotqHApS2jzj0kat+j+wO9g4i
-        +6zzABJWuV5pZaNCilQ0yoqcL5b80n1n/ynGHcAZTEZk5B7aZg==
-X-Google-Smtp-Source: ABdhPJx3W35mYiZBqywzjsPmZ9EALGRVL/IHNxUAm5uB6PDPcu722b7KelJG7pGRPyYJQwkLb5JlRqpO8e1t69dL8QM=
-X-Received: by 2002:a37:a095:: with SMTP id j143mr19894889qke.277.1632669004077;
- Sun, 26 Sep 2021 08:10:04 -0700 (PDT)
+        id S231970AbhIZPQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Sep 2021 11:16:18 -0400
+Received: from mx.kolabnow.com ([95.128.36.41]:14480 "EHLO
+        ext-mx-out002.mykolab.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S231927AbhIZPQS (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Sep 2021 11:16:18 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id CC3C512BE;
+        Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+        content-transfer-encoding:content-language:content-type
+        :content-type:in-reply-to:mime-version:date:date:message-id:from
+        :from:references:subject:subject:received:received:received; s=
+        dkim20160331; t=1632669278; x=1634483679; bh=0UvWckk+5heD47iiIDh
+        OXywiKsdWhEv5wsR+W4AE1Uk=; b=Lr6x3cjjgrldf4JOYw1wnM4DboTAfOl9IIa
+        CtIa/hQYYyJfU3m4be5hWGJ1n9J9attyQdWs+R28gsY/wCuZTMdUFgq1muRaoRy0
+        VzvOfnXNjOizbHS5/Dg67sC2vtH/ED4SxOq7hhQ9QpTKXcCjeQTQwHJPckCL1UwK
+        rjr4BfvjweU4VSydXB1Fm4OLpU/Ljesd2v6P4my4uAk2QiGpQx6AhB7EC3rQHYVW
+        J5A5H/c1ZcFEGB6WB0S2tHqHMbJeoTGqUuWp/9LY8qXht2u4wOhKlAnltVZD5d5M
+        oHy52t8Ti+6MEjohpT5auu0aieLIQQbgBZWA8fu0fsjerDBZHrmV37/0ZWZWoDsB
+        /7gCvjQcuGlNzVZW2re9C8K/A6lr/mw6+aUOjJ3HVtJw/JoD6ltRHK2e8vb+apz/
+        WLSQyjazSHCPIlGOCrnvvWTzhOq8y55ivEn2sFoYdhr54acL/8y/14KuoTbmBTpL
+        a1rzD2I93qUdI/xSw5fpTtQRRFqibyMwfuYjjcXsdJWiEyOfy5D0M1Vcin/YVBa+
+        l5hIY15A81mvvkSfaRH7b/ajnk6Te6fxZgrq/kfRaRfLeQHcj0J9wbKnPY5AL5Fa
+        0hkz63UDAcgCcxdJLxKD+e2JYLhJCiqEGU9x7OnEoONN0e4cyUkff7x3bTSOjxB9
+        TNtCdHMo=
+X-Virus-Scanned: amavisd-new at mykolab.com
+Received: from ext-mx-out002.mykolab.com ([127.0.0.1])
+        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id cbfY-_DBVC2W; Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
+Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 771F012A5;
+        Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
+Received: from ext-subm001.mykolab.com (unknown [10.9.6.1])
+        by int-mx002.mykolab.com (Postfix) with ESMTPS id 6CB911B54;
+        Sun, 26 Sep 2021 17:14:37 +0200 (CEST)
+Subject: Re: [PATCH] connect: also update offset for features without values
+To:     Taylor Blau <me@ttaylorr.com>,
+        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.1091.git.git.1631970872884.gitgitgadget@gmail.com>
+ <YUYLXKN8U9AMa5ke@nand.local>
+From:   Andrzej Hunt <andrzej@ahunt.org>
+Message-ID: <14ff5661-e06a-8348-7088-387fa7e3e094@ahunt.org>
+Date:   Sun, 26 Sep 2021 17:14:35 +0200
 MIME-Version: 1.0
-From:   Sashank Bandi <bandi.rao999@gmail.com>
-Date:   Sun, 26 Sep 2021 20:39:54 +0530
-Message-ID: <CABkJDHFOMkf-Pouaw3rtjtM+KFhPxnYtCiMbqKYCraXFb_9qQw@mail.gmail.com>
-Subject: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YUYLXKN8U9AMa5ke@nand.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-I am new to the concept of mailing lists so please bear with me.
 
-I'm a JS developer. I love Git GUI for its minimalism in both size and
-layout. I have been using Git and Git GUI on Windows for a long time.
-I think the only thing missing from the "Official" Git GUI is dark
-mode.
+On 18/09/2021 17:53, Taylor Blau wrote:
+>> parse_feature_value() does not update offset if the feature being
+>> searched for does not specify a value. A loop that uses
+>> parse_feature_value() to find a feature which was specified without a
+>> value therefore might never exit (such loops will typically use
+>> next_server_feature_value() as opposed to parse_feature_value() itself).
+>> This usually isn't an issue: there's no point in using
+>> next_server_feature_value() to search for repeated instances of the same
+>> capability unless that capability typically specifies a value - but a
+>> broken server could send a response that omits the value for a feature
+>> even when we are expecting a value.
+> 
+> It may be worth adding a little detail here. parse_feature_value takes
+> an offset, and uses it to seek past the point in features_list that
+> we've already seen. But if we get a value-less feature, then offset is
+> never updated, and we'll keep parsing the same thing over and over in a
+> loop.
+> 
+> (I know that you know all of that, but I think it is worth spelling out
+> a little more clearly in the patch message).
 
-I use dark mode on almost all places. Firefox, Discord, GitHub,
-Outlook, Notepad++, VS Code and even Reddit too. The only place that
-is missing dark mode in my workflow is Git GUI.
+Good point - I've tried to improve this for V2 (I've mostly just copied 
+your description verbatim).
 
-Is there any way I can make Git GUI dark mode ?
+> 
+>> Therefore we add an offset update calculation for the no-value case,
+>> which helps ensure that loops using next_server_feature_value() will
+>> always terminate.
+> 
+>> next_server_feature_value(), and the offset calculation, were first
+>> added in 2.28 in:
+>>    2c6a403d96 (connect: add function to parse multiple v1 capability values, 2020-05-25)
+> 
+> This line wrapping is a little odd, but not a big deal.
 
-I don't know a lot of Tcl/Tk but I am currently trying to learn it. I
-did a few edits and made the About page in dark mode.
-You can look at it here:
-https://user-images.githubusercontent.com/76554862/134190271-d861407a-31be-436d-aac4-9ea3d72f0fb0.png
-.
+I'll fix this for V2 - I think I tried too hard to make this look nice, 
+but putting the reference inline does look better (and I've now realised 
+this seems to be the usual way of doing things here).
 
-I have found two threads in the mailing list but those are just dead
-ends for me. Hence I reached this mailing list.
+ATB,
+
+Andrzej
