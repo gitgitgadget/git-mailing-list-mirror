@@ -2,289 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2446C433EF
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 19:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43139C433F5
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 19:22:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC78C60EE4
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 19:03:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2057A60ED4
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 19:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229926AbhIZTF0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Sep 2021 15:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52294 "EHLO
+        id S229884AbhIZTXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Sep 2021 15:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbhIZTFR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Sep 2021 15:05:17 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B6CC061604
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 12:03:40 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id v17so2015853wrv.9
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 12:03:40 -0700 (PDT)
+        with ESMTP id S229822AbhIZTXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Sep 2021 15:23:52 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 066F7C061570
+        for <git@vger.kernel.org>; Sun, 26 Sep 2021 12:22:16 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id b26so11394445edt.0
+        for <git@vger.kernel.org>; Sun, 26 Sep 2021 12:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cYEONVduxMEKD6Z4E0+Rm3E/MNFnUnQKAp467O6U5mc=;
-        b=hDSMHOqREvGBk17QhKeZB0eQhXgIbXJIY1fJZEY4V44sgwSHIv62QOTl9N7BVBRlPI
-         b8ImDyo3LuPLYA64WfXEaFDFKG+Px5u2Wt3ldDjByfMXtwhQ2UGIbYhuqaZjJ6FkZgn/
-         yapsEbrN7kh4H9941fjAj7aU1Zj95LgXNwgZLK1zHQAxhtxQOnTEfP8BboA9wNSpqkQZ
-         q4L+mUdz88FVj48y2jepyn90eQcjkZQUxy40BqP8rL58ZAcXjJJodyAe+2CrhiR7PEPu
-         cGRa7IIiExp2ZmnTuhcnKai8nDaFe8oxLdsOWlHOvbdMwjdfuJ6XYMrQEtOdIZUz1KQ8
-         AAtQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Bujh/J0yFErr20AH2qibDkKCxQSDl9H313PjokihAQY=;
+        b=JdRFTsoPVSbepmpwvDUSyFlFeivjox7p7gt1yA39tINP/ARllrcZYiCPE67jq6wGFh
+         i8xoueCSSb/xVccTniJ4+Fc3/kPRWyCMpg43x8gJMnpZAFWiFsMcnbAT4keFOISmeFRL
+         iMMRfCZvlOnzoNstX18bn8jEKzcIhiGFSCYou95zayWJKWtclCzavdouHgoa0+0W1ntF
+         B+B/kOzxz7lyp/nJxFBRT3KvccjQM5TcTQIYmxBF5Iiov/4CRd9H0Mj7dvHp/e5F6w+Q
+         ojjsCH711CWutQRF46TxXrkQh1VUyZaqPPwN8g1qJkeZSFo+viItWL2ERWfIom2Ow5nP
+         hspg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cYEONVduxMEKD6Z4E0+Rm3E/MNFnUnQKAp467O6U5mc=;
-        b=Pmfdizgp7bgKMBDGG3itQD/ePQl3USaSFsomZQB2hqOrM3GqmnkGPY9CixADLlfmaJ
-         M9Fz8JaVbTRtNADBM5bk5GoyJOI9NI8w9ezV0HWfy32BMEDmWbOMZFfOPazD3jevN1Oq
-         xC0byT6+Ukdo44JEEfxgK9LmimJiaxSiUMYh1wTVwFXpojw+4Q5JxvcSAHopT6sjKcyn
-         8gUaYxF+8UAU2uF3IwlB0ysIyvDNNiD90U5BNTNWUaA55KOrMnn+RJ2Hc1LzGthPBV1s
-         lRrjqTzkzIITGLMXuFVC5VzElIcz9frk8EgFYQYeDZ/tdxuTQnJ/Ho0LWt4+r2mYzwm1
-         wBzg==
-X-Gm-Message-State: AOAM53299ky/WCM7abIMkprZdWuw911uk2fpEtVT5/PnaG8W1rWIgBNf
-        GBjS8xPJ6ziWDbQYv0p+k5iJHgsboa6MHQ==
-X-Google-Smtp-Source: ABdhPJwBvXaf5CbNSVfZg78Lhv9yIaYr2YrIbX5zu9GSwoYfOSSD42RVmY+oBsIrr07VBtzwnxtSJw==
-X-Received: by 2002:a1c:43c3:: with SMTP id q186mr4179033wma.143.1632683018680;
-        Sun, 26 Sep 2021 12:03:38 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v20sm14691523wra.73.2021.09.26.12.03.37
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Bujh/J0yFErr20AH2qibDkKCxQSDl9H313PjokihAQY=;
+        b=qdzHo/gYOsS6ANLBNhguvFTmJxM0Pbq3+uv6SC2Gsoz/NIygTBIBxTeKatmdXEeilq
+         wjOBysgmmJqovQ+rPVJqvqRbar2w2+krkwnzslIs360AmUe0+P3Ym8yg3mRp6oHf9igA
+         XSGLMxyZdcJLJE+GTmJ/3aMTCaD4GR/kGILV9+6dDRoXcC8K3Qps2SBExQt6fDvmoISd
+         HdAr/twpc4/0GAUeIaR3JEmOHIhLQNYEFLutjdZgSHwHkU2h5UIpfi1TwGeOa2BG601N
+         yOgvv0mBIjgx728fD3lGo9b95IDyvaO7AURmBC5fY7RP6q1gxlOmU8O5arHIwa0RKl/K
+         aAaA==
+X-Gm-Message-State: AOAM533wohcE/7gk3My+MMqO+/Rx+68tSP7E/kQgDQJ58oWppFwtAtwM
+        D5r8/jDqo0jEOwmJyTCEvJ8=
+X-Google-Smtp-Source: ABdhPJw/vso/UvctJj8ldz4UQEJWsugGRQk2uWiIqSTBCUYJAzk0uh6yhJxH1O+uL0Kr0xEYRUMG7Q==
+X-Received: by 2002:aa7:d392:: with SMTP id x18mr19206631edq.334.1632684134550;
+        Sun, 26 Sep 2021 12:22:14 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t4sm9564789edc.2.2021.09.26.12.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Sep 2021 12:03:38 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 8/8] hook-list.h: add a generated list of hooks, like config-list.h
-Date:   Sun, 26 Sep 2021 21:03:29 +0200
-Message-Id: <patch-v2-8.8-7420267ce09-20210926T185800Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1291.g8857a6a91ac
-In-Reply-To: <cover-v2-0.8-00000000000-20210926T185800Z-avarab@gmail.com>
-References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20210926T185800Z-avarab@gmail.com>
+        Sun, 26 Sep 2021 12:22:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 01/15] scalar: create a rudimentary executable
+Date:   Sun, 26 Sep 2021 21:15:37 +0200
+References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
+ <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
+ <852ec003109b8244e2f9360ec64749779989c4a2.1631630356.git.gitgitgadget@gmail.com>
+ <87sfxu2kyc.fsf@evledraar.gmail.com> <xmqqy27lvoyb.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqy27lvoyb.fsf@gitster.g>
+Message-ID: <8735pr2lcq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make githooks(5) the source of truth for what hooks git supports, and
-punt out early on hooks we don't know about in find_hook(). This
-ensures that the documentation and the C code's idea about existing
-hooks doesn't diverge.
 
-We still have Perl and Python code running its own hooks, but that'll
-be addressed by Emily Shaffer's upcoming "git hook run" command.
+On Fri, Sep 24 2021, Junio C Hamano wrote:
 
-This resolves a long-standing TODO item in bugreport.c of there being
-no centralized listing of hooks, and fixes a bug with the bugreport
-listing only knowing about 1/4 of the p4 hooks. It didn't know about
-the recent "reference-transaction" hook either.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> ... the
+>> usage.c API, which is generally being phased out.
+>
+> That is news to me.  Any reason why you think so?
 
-We could make the find_hook() function die() or BUG() out if the new
-known_hook() returned 0, but let's make it return NULL just as it does
-when it can't find a hook of a known type. Making it die() is overly
-anal, and unlikely to be what we need in catching stupid typos in the
-name of some new hook hardcoded in git.git's sources. By making this
-be tolerant of unknown hook names, changes in a later series to make
-"git hook run" run arbitrary user-configured hook names will be easier
-to implement.
+Perhaps better phrased as "generally going unused where we're using
+parse-options.c", although some quick historical trends I ran as an
+ad-hoc show usage() standing still since v1.6.0 in number of builtin*.c
+files[1], v.s. a 3x growth in usage_with_options() since then[2].
 
-I have not been able to directly test the CMake change being made
-here. Since 4c2c38e800 (ci: modification of main.yml to use cmake for
-vs-build job, 2020-06-26) some of the Windows CI has a hard dependency
-on CMake, this change works there, and is to my eyes an obviously
-correct use of a pattern established in previous CMake changes,
-namely:
+But in this case we're using an ad-hoc parser in cmd_main(), seemingly
+because it ends up copy/pasting a very small part of git.ci
+functionality over there, which is something that's been discussed as
+something we should move over to parse_options() sooner than later.
 
- - 061c2240b1 (Introduce CMake support for configuring Git,
-    2020-06-12)
- - 709df95b78 (help: move list_config_help to builtin/help,
-    2020-04-16)
- - 976aaedca0 (msvc: add a Makefile target to pre-generate the Visual
-   Studio solution, 2019-07-29)
+It looks like a better approach to just use parse_options() consistently
+in scalar.c, as e.g. commit-graph.c, stash.c, multi-pack-index.c
+etc. that all implement a similar cmd/subcommand pattern do.
 
-The LC_ALL=C is needed because at least in my locale the dash ("-") is
-ignored for the purposes of sorting, which results in a different
-order. I'm not aware of anything in git that has a hard dependency on
-the order, but e.g. the bugreport output would end up using whatever
-locale was in effect when git was compiled.
+The end-state of duplicating the "-C" and "-c" options from git.c can
+then easily be handled by parse-options.c, IIRC the stumbling point in
+migrating over git.c was some of the statefulness of other parts
+potentially needing incremenatl parsing (i.e. via parse_options_step()
+and friends).
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Helped-by: René Scharfe <l.s.r@web.de>
----
- .gitignore                          |  1 +
- Makefile                            |  8 +++++-
- builtin/bugreport.c                 | 44 ++++++-----------------------
- contrib/buildsystems/CMakeLists.txt |  7 +++++
- generate-hooklist.sh                | 20 +++++++++++++
- 5 files changed, 43 insertions(+), 37 deletions(-)
- create mode 100755 generate-hooklist.sh
+1. $ parallel "printf "%s: " {} && git grep -l '\busage\(' {} -- 'builtin*.=
+c' | wc -l" ::: v1.{1..9}.0 v2.{0..32}.0
+v1.1.0:0
+v1.2.0:0
+v1.3.0:0
+v1.4.0:20
+v1.5.0:51
+v1.7.0:35
+v1.6.0:40
+v1.8.0:34
+v2.1.0:32
+v1.9.0:33
+v2.0.0:33
+v2.2.0:32
+v2.3.0:32
+v2.4.0:32
+v2.5.0:32
+v2.6.0:31
+v2.7.0:31
+v2.9.0:29
+v2.8.0:30
+v2.11.0:29
+v2.10.0:29
+v2.12.0:29
+v2.13.0:29
+v2.14.0:31
+v2.15.0:31
+v2.16.0:31
+v2.17.0:31
+v2.19.0:32
+v2.18.0:31
+v2.22.0:31
+v2.21.0:32
+v2.24.0:31
+v2.23.0:31
+v2.20.0:32
+v2.25.0:30
+v2.26.0:30
+v2.27.0:30
+v2.32.0:29
+v2.31.0:30
+v2.29.0:31
+v2.28.0:29
+v2.30.0:31
 
-diff --git a/.gitignore b/.gitignore
-index 311841f9bed..6be9de41ae8 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -190,6 +190,7 @@
- /gitweb/static/gitweb.min.*
- /config-list.h
- /command-list.h
-+/hook-list.h
- *.tar.gz
- *.dsc
- *.deb
-diff --git a/Makefile b/Makefile
-index 1f2b0205da5..21e2bcc21e3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -817,6 +817,8 @@ XDIFF_LIB = xdiff/lib.a
- 
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
-+GENERATED_H += hook-list.h
-+
- .PHONY: generated-hdrs
- generated-hdrs: $(GENERATED_H)
- 
-@@ -2208,8 +2210,9 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
- 		$(filter %.o,$^) $(LIBS)
- 
- help.sp help.s help.o: command-list.h
-+hook.sp hook.s hook.o: hook-list.h
- 
--builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
-+builtin/help.sp builtin/help.s builtin/help.o: config-list.h hook-list.h GIT-PREFIX
- builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
- 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
-@@ -2241,6 +2244,9 @@ command-list.h: $(wildcard Documentation/git*.txt)
- 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
- 		command-list.txt >$@
- 
-+hook-list.h: generate-hooklist.sh Documentation/githooks.txt
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh >$@
-+
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
- 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
- 	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index a02c2540bb1..9de32bc96e7 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -4,6 +4,7 @@
- #include "help.h"
- #include "compat/compiler.h"
- #include "hook.h"
-+#include "hook-list.h"
- 
- 
- static void get_system_info(struct strbuf *sys_info)
-@@ -41,39 +42,7 @@ static void get_system_info(struct strbuf *sys_info)
- 
- static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- {
--	/*
--	 * NEEDSWORK: Doesn't look like there is a list of all possible hooks;
--	 * so below is a transcription of `git help hooks`. Later, this should
--	 * be replaced with some programmatically generated list (generated from
--	 * doc or else taken from some library which tells us about all the
--	 * hooks)
--	 */
--	static const char *hook[] = {
--		"applypatch-msg",
--		"pre-applypatch",
--		"post-applypatch",
--		"pre-commit",
--		"pre-merge-commit",
--		"prepare-commit-msg",
--		"commit-msg",
--		"post-commit",
--		"pre-rebase",
--		"post-checkout",
--		"post-merge",
--		"pre-push",
--		"pre-receive",
--		"update",
--		"post-receive",
--		"post-update",
--		"push-to-checkout",
--		"pre-auto-gc",
--		"post-rewrite",
--		"sendemail-validate",
--		"fsmonitor-watchman",
--		"p4-pre-submit",
--		"post-index-change",
--	};
--	int i;
-+	const char **p;
- 
- 	if (nongit) {
- 		strbuf_addstr(hook_info,
-@@ -81,9 +50,12 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- 		return;
- 	}
- 
--	for (i = 0; i < ARRAY_SIZE(hook); i++)
--		if (hook_exists(hook[i]))
--			strbuf_addf(hook_info, "%s\n", hook[i]);
-+	for (p = hook_name_list; *p; p++) {
-+		const char *hook = *p;
-+
-+		if (hook_exists(hook))
-+			strbuf_addf(hook_info, "%s\n", hook);
-+	}
- }
- 
- static const char * const bugreport_usage[] = {
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 171b4124afe..fd1399c440f 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -624,6 +624,13 @@ if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
- 			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
- endif()
- 
-+if(NOT EXISTS ${CMAKE_BINARY_DIR}/hook-list.h)
-+	message("Generating hook-list.h")
-+	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
-+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-+			OUTPUT_FILE ${CMAKE_BINARY_DIR}/hook-list.h)
-+endif()
-+
- include_directories(${CMAKE_BINARY_DIR})
- 
- #build
-diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-new file mode 100755
-index 00000000000..2f9f54eb545
---- /dev/null
-+++ b/generate-hooklist.sh
-@@ -0,0 +1,20 @@
-+#!/bin/sh
-+#
-+# Usage: ./generate-hooklist.sh >hook-list.h
-+
-+cat <<EOF
-+/* Automatically generated by generate-hooklist.sh */
-+
-+static const char *hook_name_list[] = {
-+EOF
-+
-+sed -n \
-+	-e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}' \
-+	-e 'x' \
-+	<Documentation/githooks.txt |
-+	LC_ALL=C sort
-+
-+cat <<EOF
-+	NULL,
-+};
-+EOF
--- 
-2.33.0.1291.g8857a6a91ac
-
+2. $ parallel "printf "%s: " {} && git grep -l '\busage_with_options\(' {} =
+-- 'builtin*.c' | wc -l" ::: v1.{1..9}.0 v2.{0..32}.0
+v1.1.0:0
+v1.2.0:0
+v1.3.0:0
+v1.4.0:0
+v1.5.0:0
+v1.6.0:19
+v1.7.0:33
+v1.8.0:42
+v2.0.0:42
+v1.9.0:42
+v2.1.0:43
+v2.2.0:43
+v2.3.0:43
+v2.4.0:43
+v2.5.0:44
+v2.6.0:45
+v2.8.0:44
+v2.10.0:45
+v2.7.0:44
+v2.9.0:45
+v2.11.0:45
+v2.12.0:45
+v2.13.0:46
+v2.14.0:47
+v2.15.0:47
+v2.16.0:47
+v2.17.0:47
+v2.19.0:50
+v2.18.0:49
+v2.20.0:52
+v2.21.0:52
+v2.22.0:53
+v2.24.0:54
+v2.23.0:54
+v2.25.0:56
+v2.26.0:55
+v2.27.0:55
+v2.28.0:55
+v2.30.0:58
+v2.32.0:60
+v2.29.0:58
+v2.31.0:58
