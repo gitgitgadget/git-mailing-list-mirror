@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9767CC433F5
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B63C433F5
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:16:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AE7C610A2
-	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:14:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6F80603E7
+	for <git@archiver.kernel.org>; Sun, 26 Sep 2021 15:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231970AbhIZPQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Sep 2021 11:16:18 -0400
-Received: from mx.kolabnow.com ([95.128.36.41]:14480 "EHLO
-        ext-mx-out002.mykolab.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S231927AbhIZPQS (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Sep 2021 11:16:18 -0400
+        id S231987AbhIZPSI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Sep 2021 11:18:08 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:5548 "EHLO
+        ext-mx-out001.mykolab.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S232009AbhIZPSE (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Sep 2021 11:18:04 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id CC3C512BE;
-        Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id E46E1B00;
+        Sun, 26 Sep 2021 17:16:25 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:content-language:content-type
         :content-type:in-reply-to:mime-version:date:date:message-id:from
         :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1632669278; x=1634483679; bh=0UvWckk+5heD47iiIDh
-        OXywiKsdWhEv5wsR+W4AE1Uk=; b=Lr6x3cjjgrldf4JOYw1wnM4DboTAfOl9IIa
-        CtIa/hQYYyJfU3m4be5hWGJ1n9J9attyQdWs+R28gsY/wCuZTMdUFgq1muRaoRy0
-        VzvOfnXNjOizbHS5/Dg67sC2vtH/ED4SxOq7hhQ9QpTKXcCjeQTQwHJPckCL1UwK
-        rjr4BfvjweU4VSydXB1Fm4OLpU/Ljesd2v6P4my4uAk2QiGpQx6AhB7EC3rQHYVW
-        J5A5H/c1ZcFEGB6WB0S2tHqHMbJeoTGqUuWp/9LY8qXht2u4wOhKlAnltVZD5d5M
-        oHy52t8Ti+6MEjohpT5auu0aieLIQQbgBZWA8fu0fsjerDBZHrmV37/0ZWZWoDsB
-        /7gCvjQcuGlNzVZW2re9C8K/A6lr/mw6+aUOjJ3HVtJw/JoD6ltRHK2e8vb+apz/
-        WLSQyjazSHCPIlGOCrnvvWTzhOq8y55ivEn2sFoYdhr54acL/8y/14KuoTbmBTpL
-        a1rzD2I93qUdI/xSw5fpTtQRRFqibyMwfuYjjcXsdJWiEyOfy5D0M1Vcin/YVBa+
-        l5hIY15A81mvvkSfaRH7b/ajnk6Te6fxZgrq/kfRaRfLeQHcj0J9wbKnPY5AL5Fa
-        0hkz63UDAcgCcxdJLxKD+e2JYLhJCiqEGU9x7OnEoONN0e4cyUkff7x3bTSOjxB9
-        TNtCdHMo=
+        dkim20160331; t=1632669385; x=1634483786; bh=XM2ikgDTRAkMjW9XVfp
+        whRI/cnqSivgxqJVRmd0f/cs=; b=B0LZgnFqv1zwRxYJEYhUBqhTmtietHIBoYd
+        nZrOsJwUBKeqZK5ooXyOcTHtLfgxrUohTlral5YyxLl2wkVNdNLzrVJQRjw3oJUm
+        P+m/wuzkG1C4VN39W0faeX+WHSxCmVKUtgAZxX+nh+0rn7532ffoXP3w0zotLM2r
+        lZOhcPEMMOg6ED03qkkP40enGRC03NWD02YPMWjGinBm492VbOizYy/N+V6GrJeO
+        4/TgAvfFp2t9hJQ3R9pWlbyuo4cX2BJh/fV7viq/R9F7Sc5jvVKYvGwzrC79lvYm
+        gsVfFob5mIkfnnm+Mm4bMEGLMguztlImYvYFVqgDSj0IB0LfyNSbH6F6JD24I/7B
+        vFmiKL0ZfnI+xRNa5QIqezat9efqlfm3tNG6BmbTqXCNgNpTisr9qV0t1WYGjPyx
+        0fhrSkyfTYx7yRDhGEUldFkqyv/4O8EkGQC5BTPkXOIFhWX7tckonETAU/Mwhqpv
+        JzbEt9gaaG0lrUMZHReibXB8T6LQ4KlMpmdolL63BI1HWA8D8RpJfrERfd1mUAjj
+        U2bpu4eQf9FXofNZVrfKXRDsNK4ma9q59d4xBoDen3y87mH2rCryA2YujemPaALe
+        LsvSegXSN0SNJWs3FYtUkwt7TqrROr/Lz2DDmYbw4fjgOJU08bBjW3PiXHwqkIwb
+        oHYLlsMk=
 X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from ext-mx-out002.mykolab.com ([127.0.0.1])
-        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id cbfY-_DBVC2W; Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
-Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 771F012A5;
-        Sun, 26 Sep 2021 17:14:38 +0200 (CEST)
+Received: from ext-mx-out001.mykolab.com ([127.0.0.1])
+        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id UePWknF2HKjc; Sun, 26 Sep 2021 17:16:25 +0200 (CEST)
+Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 46513443;
+        Sun, 26 Sep 2021 17:16:25 +0200 (CEST)
 Received: from ext-subm001.mykolab.com (unknown [10.9.6.1])
-        by int-mx002.mykolab.com (Postfix) with ESMTPS id 6CB911B54;
-        Sun, 26 Sep 2021 17:14:37 +0200 (CEST)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id 6296E8BA;
+        Sun, 26 Sep 2021 17:16:24 +0200 (CEST)
 Subject: Re: [PATCH] connect: also update offset for features without values
-To:     Taylor Blau <me@ttaylorr.com>,
-        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
 References: <pull.1091.git.git.1631970872884.gitgitgadget@gmail.com>
- <YUYLXKN8U9AMa5ke@nand.local>
+ <xmqq4kabyoo3.fsf@gitster.g> <YUzzwCwlR9AwSeOD@coredump.intra.peff.net>
+ <xmqqr1dfx8lm.fsf@gitster.g> <YUz5dPB6/jFmdSRU@coredump.intra.peff.net>
 From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <14ff5661-e06a-8348-7088-387fa7e3e094@ahunt.org>
-Date:   Sun, 26 Sep 2021 17:14:35 +0200
+Message-ID: <e1395ff2-e697-83b2-082b-d5468b7a11ac@ahunt.org>
+Date:   Sun, 26 Sep 2021 17:16:22 +0200
 MIME-Version: 1.0
-In-Reply-To: <YUYLXKN8U9AMa5ke@nand.local>
+In-Reply-To: <YUz5dPB6/jFmdSRU@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -65,45 +66,80 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 18/09/2021 17:53, Taylor Blau wrote:
->> parse_feature_value() does not update offset if the feature being
->> searched for does not specify a value. A loop that uses
->> parse_feature_value() to find a feature which was specified without a
->> value therefore might never exit (such loops will typically use
->> next_server_feature_value() as opposed to parse_feature_value() itself).
->> This usually isn't an issue: there's no point in using
->> next_server_feature_value() to search for repeated instances of the same
->> capability unless that capability typically specifies a value - but a
->> broken server could send a response that omits the value for a feature
->> even when we are expecting a value.
+On 24/09/2021 00:02, Jeff King wrote:
+> On Thu, Sep 23, 2021 at 02:52:53PM -0700, Junio C Hamano wrote:
 > 
-> It may be worth adding a little detail here. parse_feature_value takes
-> an offset, and uses it to seek past the point in features_list that
-> we've already seen. But if we get a value-less feature, then offset is
-> never updated, and we'll keep parsing the same thing over and over in a
-> loop.
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> I think the problem is that our fake upload-pack exits immediately, so
+>>> ls-remote gets SIGPIPE. In a v0 conversation, ls-remote expects to say
+>>> "0000" to indicate that it's not interested in fetching anything (in v2,
+>>> it doesn't bother, since fetching would be a separate request that it
+>>> just declines to make).
+>>
+>> Ah, Makes sense---the usual SIGPIPE problem ;-)
 > 
-> (I know that you know all of that, but I think it is worth spelling out
-> a little more clearly in the patch message).
+> Yes, though it definitely took some head-scratching for me to see where
+> it was. ;)
+> 
+> Doing: "./t5704-* --stress" made it pretty clear. It fails almost
+> immediately, and mentions SIGPIPE (well, exit code 141, but by now I
+> have that one memorized).
+> 
+>>> This seems to fix it:
+>>>
+>>> diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
+>>> index 34538cebf0..0983c2b507 100755
+>>> --- a/t/t5704-protocol-violations.sh
+>>> +++ b/t/t5704-protocol-violations.sh
+>>> @@ -40,7 +40,7 @@ test_expect_success 'bogus symref in v0 capabilities' '
+>>>   			test-tool pkt-line pack-raw-stdin &&
+>>>   		printf "0000"
+>>>   	} >input &&
+>>> -	git ls-remote --upload-pack="cat input ;:" . >actual &&
+>>> +	git ls-remote --upload-pack="cat input; read junk;:" . >actual &&
+>>>   	printf "%s\tHEAD\n" "$oid" >expect &&
+>>>   	test_cmp expect actual
+>>>   '
+>>
+>> Yup.  In the original thread there was some further back-and-forth
+>> about further improving the test, if I recall correctly; has the
+>> issue been settled there, or is everybody happy with the above
+>> version?
+> 
+> I think the change I showed earlier (to use ls-remote --symref) is worth
+> doing. There was lots of discussion about how to format a tab, but in
+> the end I don't think it really matters.
+> 
+> So here's that patch again, with this race fix on top, which could be
+> squashed in, and then I hope we can call it good.
 
-Good point - I've tried to improve this for V2 (I've mostly just copied 
-your description verbatim).
+Thanks again for doing the actual work - I'll send out a V2 with your 
+changes squashed in, along with an attempt at improving the commit 
+message (as discussed in reply to Taylor's comments).
 
 > 
->> Therefore we add an offset update calculation for the no-value case,
->> which helps ensure that loops using next_server_feature_value() will
->> always terminate.
+> diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
+> index 34538cebf0..bc393d7c31 100755
+> --- a/t/t5704-protocol-violations.sh
+> +++ b/t/t5704-protocol-violations.sh
+> @@ -35,13 +35,15 @@ test_expect_success 'extra delim packet in v2 fetch args' '
+>   test_expect_success 'bogus symref in v0 capabilities' '
+>   	test_commit foo &&
+>   	oid=$(git rev-parse HEAD) &&
+> +	dst=refs/heads/foo &&
+>   	{
+> -		printf "%s HEAD\0symref object-format=%s\n" "$oid" "$GIT_DEFAULT_HASH" |
+> +		printf "%s HEAD\0symref object-format=%s symref=HEAD:%s\n" \
+> +			"$oid" "$GIT_DEFAULT_HASH" "$dst" |
+>   			test-tool pkt-line pack-raw-stdin &&
+>   		printf "0000"
+>   	} >input &&
+> -	git ls-remote --upload-pack="cat input ;:" . >actual &&
+> -	printf "%s\tHEAD\n" "$oid" >expect &&
+> +	git ls-remote --symref --upload-pack="cat input; read junk;:" . >actual &&
+> +	printf "ref: %s\tHEAD\n%s\tHEAD\n" "$dst" "$oid" >expect &&
+>   	test_cmp expect actual
+>   '
+>   
 > 
->> next_server_feature_value(), and the offset calculation, were first
->> added in 2.28 in:
->>    2c6a403d96 (connect: add function to parse multiple v1 capability values, 2020-05-25)
-> 
-> This line wrapping is a little odd, but not a big deal.
-
-I'll fix this for V2 - I think I tried too hard to make this look nice, 
-but putting the reference inline does look better (and I've now realised 
-this seems to be the usual way of doing things here).
-
-ATB,
-
-Andrzej
