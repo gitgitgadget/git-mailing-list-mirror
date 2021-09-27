@@ -2,68 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 706CDC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80DC5C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:06:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57A4360F46
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:02:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61884610E8
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:06:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233946AbhI0LDp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 07:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
+        id S233965AbhI0LIT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 07:08:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233908AbhI0LDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 07:03:36 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3264BC061604
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:01:58 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id g7so8097475edv.1
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:01:58 -0700 (PDT)
+        with ESMTP id S233954AbhI0LIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 07:08:18 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD19C061604
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:06:40 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id g8so67635067edt.7
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=GxPCnal1F/yde5OUwAX3XyzcXtmg7IU8Qc7A+LE2Vqs=;
-        b=m1blf7hL+I72Jwxw2o/UgaSE5DmKGQ2A8VQG7Ny9iGRwpUPLMKR12AdTvxkro91akz
-         X1EdG1ENauXe6TtcS3qbgtEaPNKLugkpSbtYl3pxhj3Oxe14W0nF63tRApdkC8Vrl8yQ
-         qiIspkL3QL6z9EeYKiC20a9C8gLRSkzRG0VSQro8krR5+XOV+Thfe+9NmrOka1ePuKFt
-         ek2ms7bc8YwPn4TT6HCQloOllXxz3ZRtGnIvNDmqdqC61dm+4rl1uTaoQGUXkM99yhge
-         cQxq7Blzsen2PVGtvAWtgA6TdUIQjakKBILngysoXRDhxmBW9dGP2oylw0R4yhzUhG7Y
-         r/4g==
+        bh=MRl4LF1rnDDyFMWEJexCxJYhOmt1Xmxww5HUQsaQGdU=;
+        b=Lfq6vOMTDcNBFIN2uP3lRyMwOXyNju5nATnNgCme34TZWurgr8exnLDG9xADNI2dox
+         4RPSO96go5k0b6HH/Esoz3rKyUjgGvY83OCRPmUQeAjUlanQlbeIsu5MOLqzqEbZlwu1
+         ukVOC13I+yRCo/XqK7Qd0Zm1url/DsiuaZ3W9iIiHmirPsj5Fkpf0mgi5itx0U6ewR+J
+         lVxI6Dx435lSR+j1Smdlc3S6GLnX00sHADATfK1l7l5xpc5dVzxPVJ3DDh5TnqEw7lfo
+         S3tWOfnctlGb43ZfOfwZNkH7SrmTpYDT8icUT8FBGfBf9x5kecoePtr76O9gIYbnLFxw
+         m6aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=GxPCnal1F/yde5OUwAX3XyzcXtmg7IU8Qc7A+LE2Vqs=;
-        b=GevnNHWG5MVHcvz75msd2/bcLJ5A0hbhzNQAJJKBUYbVZhQ+2Iux/X7meHf/yFxa8X
-         UOz5y+WWt9gc/JWxBoEZ2vSP9OCu5c+ccs3SCkZ0GsJZuUbQ1AaJGWl0sj4WDLarggOm
-         HECYORyN+JdaQtwhYKhX/BIZQZ9qOUyrD9ZT/pie1g77PIMC6DlL9mqA+6R7qU4O+lB8
-         I+E6dYJie2AWFBBAhRsyt3WNGG3hQq+6dr+0Qp7KwJnWnmKIc+NkDs8O5rT8qIBoYED9
-         yOnq/rXOXzfdNpzLVC+BJwmByzeNDhMMcmoUWcUtH/rllWxR+AWtj15jcb6HksPOk2dS
-         HZ7g==
-X-Gm-Message-State: AOAM530x3O/86aLxn3h0PyPSni3u9Qf+Dvcsotrzw37kPyTrUfAXf9E4
-        AXfPHwAc6mEbmW+J7mJxNVg=
-X-Google-Smtp-Source: ABdhPJz9oTG0m96LV4ulk/ZfEqGaEKiExcZGsGOPnBafBvlxB0vPFrG9MdsDT4//5PSKOwFWjURJ3Q==
-X-Received: by 2002:a17:906:b05a:: with SMTP id bj26mr7374873ejb.226.1632740516702;
-        Mon, 27 Sep 2021 04:01:56 -0700 (PDT)
+        bh=MRl4LF1rnDDyFMWEJexCxJYhOmt1Xmxww5HUQsaQGdU=;
+        b=1FgN9vHUUeOBO++n6wjnFTkuAW2CsV9PkFmyIkK5a1SxThta0PPQvYJq1wXgiO7sLf
+         6kkYzt50m3EvXgr6sH/LI3sDpAUhajB2TS0WJjx+iSOSMLWUDW0LPKH/IZ3FqSFg2/Hg
+         p00NYLZ+w3gp3u9pXQ9JL0IwgTXa3AUacn4v8YvxIWo/B+0iHPb+/8Fq+A/ife3qhZnI
+         0L+CT16WAlgedYL934srUrfFvi2D/bGU8ikbKWEt11xpyf1INyu0JswwQmJN5og6/5vm
+         k1hO/RhABaar6HrNTQy/sSpJDL2dl+alOiyFEYDR09JxYySWOlndHcp8HKgjphped090
+         4cng==
+X-Gm-Message-State: AOAM53284mAwMLZ359STm55FInMzF3sH91b0M/v/ZCprYuaa7mlLnb3S
+        0YAEDNCL6K0T5AS2hEYpFzL68M/xWspPRA==
+X-Google-Smtp-Source: ABdhPJxN0rE+sjFSH+cjju1NRGT29BHwpNMN3g+KPnXf5ANzDIO7QdzYesJeHENFaXOz+eD82oQpFg==
+X-Received: by 2002:a05:6402:3454:: with SMTP id l20mr22396067edc.83.1632740799153;
+        Mon, 27 Sep 2021 04:06:39 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g6sm10130512edr.15.2021.09.27.04.01.56
+        by smtp.gmail.com with ESMTPSA id x7sm10418206ede.86.2021.09.27.04.06.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 04:01:56 -0700 (PDT)
+        Mon, 27 Sep 2021 04:06:38 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
+        git@vger.kernel.org
 Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
-Date:   Mon, 27 Sep 2021 13:00:01 +0200
+Date:   Mon, 27 Sep 2021 13:02:35 +0200
 References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
  <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
- <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
+ <694f477d-b387-c8ea-4138-0e9334540c69@kdbg.org>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
-Message-ID: <87h7e61duk.fsf@evledraar.gmail.com>
+In-reply-to: <694f477d-b387-c8ea-4138-0e9334540c69@kdbg.org>
+Message-ID: <87czou1dmp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -72,46 +71,46 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Sep 27 2021, Phillip Wood wrote:
+On Mon, Sep 27 2021, Johannes Sixt wrote:
 
-> Hi =C3=86var
->
-> On 27/09/2021 01:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Use the same pattern for cb_init() as the one established in the
->> recent refactoring of other such patterns in
->> 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
->> macro, 2021-07-01).
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>   cbtree.h | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->> diff --git a/cbtree.h b/cbtree.h
->> index a04a312c3f5..dedbb8e2a45 100644
+> Am 27.09.21 um 02:39 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >> --- a/cbtree.h
 >> +++ b/cbtree.h
 >> @@ -37,11 +37,12 @@ enum cb_next {
->>   	CB_BREAK =3D 1
->>   };
->>   -#define CBTREE_INIT { .root =3D NULL }
+>>  	CB_BREAK =3D 1
+>>  };
+>>=20=20
+>> -#define CBTREE_INIT { .root =3D NULL }
 >> +#define CBTREE_INIT { 0 }
->>     static inline void cb_init(struct cb_tree *t)
->>   {
+>>=20=20
+>>  static inline void cb_init(struct cb_tree *t)
+>>  {
 >> -	t->root =3D NULL;
 >> +	struct cb_tree blank =3D CBTREE_INIT;
+>
+> This could be
+>
+> 	static const struct cb_tree blank =3D CBTREE_INIT;
+
+*nod*...
+
 >> +	memcpy(t, &blank, sizeof(*t));
->>   }
 >
-> Slightly off topic but would this be a good site for a compound
-> literal test balloon?
+> Is
+> 	*t =3D blank;
 >
-> 	*t =3D (struct cb_tree){ 0 };
+> not a thing in C?
 >
-> Compound literals are in C99 and seem to have been supported by MSVC
-> since 2013 [1].
+> -- Hannes
 
-I think that's a good thing to test out, FWIW I've also tested it on the
-IBM xlc, Oracle SunCC and HP/UX's aCC, they all seem to accept it.
+...but to both this & the above my reply in the side-thread at
+https://lore.kernel.org/git/87h7e61duk.fsf@evledraar.gmail.com/
+applies. I.e. this is just following a pattern I got from Jeff King &
+used in bd4232fac33 (Merge branch 'ab/struct-init', 2021-07-16).
 
-But I'd prefer just doing that in some general follow-up to bd4232fac33
-(Merge branch 'ab/struct-init', 2021-07-16), i.e. let's just use the
-init pattern it established here.
+FWIW with "const" in general I don't use it as much as I'd personally
+prefer, see e.g. [1] for one recent discussion, but maybe there wouldn't
+be any push-back in this case...
+
+1. https://lore.kernel.org/git/patch-1.1-c317e6e125e-20210921T124416Z-avara=
+b@gmail.com/
