@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60DAAC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 706CDC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:02:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3877060555
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:54:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57A4360F46
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 11:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233894AbhI0Kzs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 06:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
+        id S233946AbhI0LDp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 07:03:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233862AbhI0Kzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 06:55:47 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D917C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:54:09 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id dm26so33354289edb.12
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:54:09 -0700 (PDT)
+        with ESMTP id S233908AbhI0LDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 07:03:36 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3264BC061604
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:01:58 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id g7so8097475edv.1
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 04:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=Z6zVOAUQhkUcy00BoV+EUlhGglYpbflx45R5JYvrqQA=;
-        b=gRqlKCemG6QEuoN8PkWv4cst8//S6ichewpv+oIFUPx+V8qUdiJIwLdxfyFiOUBw/L
-         qFL51QROoKtDqDH1jPY4To5eHdHeP84TJr3mmS4CtGj5G0rmfRcr6sfVg1mzk1apN46p
-         CoS5jiCjBge+0EiVZO7X5VDDfvl6cpi+GRetrbPKxhY2NKIcV8KPfI+IQl11W3LLTeLn
-         8dyMvato63rfL+zMG/E2fJFw0CySOSTkA+KH+D0BM0eBkjsoiEdrgfLVOgNRJ4qHIDpH
-         f84dtbmcRJVLsaeqyY11oHk0Dx+X83jy3ctXaRUsYBMMg/sYvo73DEbT+//oUi1MsEM8
-         RFPg==
+        bh=GxPCnal1F/yde5OUwAX3XyzcXtmg7IU8Qc7A+LE2Vqs=;
+        b=m1blf7hL+I72Jwxw2o/UgaSE5DmKGQ2A8VQG7Ny9iGRwpUPLMKR12AdTvxkro91akz
+         X1EdG1ENauXe6TtcS3qbgtEaPNKLugkpSbtYl3pxhj3Oxe14W0nF63tRApdkC8Vrl8yQ
+         qiIspkL3QL6z9EeYKiC20a9C8gLRSkzRG0VSQro8krR5+XOV+Thfe+9NmrOka1ePuKFt
+         ek2ms7bc8YwPn4TT6HCQloOllXxz3ZRtGnIvNDmqdqC61dm+4rl1uTaoQGUXkM99yhge
+         cQxq7Blzsen2PVGtvAWtgA6TdUIQjakKBILngysoXRDhxmBW9dGP2oylw0R4yhzUhG7Y
+         r/4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Z6zVOAUQhkUcy00BoV+EUlhGglYpbflx45R5JYvrqQA=;
-        b=TP183GO+wG8qIRWruL8N+8w96QXJ6ynU8qbGNkmwaq9/liEoo/sxKT/UK+b9AH+DLy
-         GLZeYGaz6HTbWiZ0faWaMgLqUKPKqUZwKheZPpPiInAfAAN+VAFgbSznt+kM/uay5Fnn
-         +B0sXerlDxY087glY0yTxH1tdId4z+qpkJCEAjPGHk+7pi2niEExEOf/7pGv1sR8tb1t
-         nP4TMFdsPSpEJYwoZnrv/oz79+l3+ybAEaZT7Rc/z/zyebrWi5dTWckx2CGveE1y6Z/g
-         JkDztZ6nENHnBlV18ume/xrvqdIYAo90tvQV93BO4wZk5mr6hFvfyNlrSMMK9uZELcr/
-         9YUw==
-X-Gm-Message-State: AOAM530RKi+a5SJ5KSEhXyqV0GTnaLXe2WkosqTPMMMh3rP3hk+7rS7V
-        puZlBdVdZTs2U/07UxXHjqY=
-X-Google-Smtp-Source: ABdhPJxwGC1izPDtRU8qjifhEuMu5ajZMHhHrL0Tm5Oka6lHlDvlsR7ERqCpClyQL8OeztmFA2OWOw==
-X-Received: by 2002:a05:6402:2061:: with SMTP id bd1mr22582495edb.186.1632740048040;
-        Mon, 27 Sep 2021 03:54:08 -0700 (PDT)
+        bh=GxPCnal1F/yde5OUwAX3XyzcXtmg7IU8Qc7A+LE2Vqs=;
+        b=GevnNHWG5MVHcvz75msd2/bcLJ5A0hbhzNQAJJKBUYbVZhQ+2Iux/X7meHf/yFxa8X
+         UOz5y+WWt9gc/JWxBoEZ2vSP9OCu5c+ccs3SCkZ0GsJZuUbQ1AaJGWl0sj4WDLarggOm
+         HECYORyN+JdaQtwhYKhX/BIZQZ9qOUyrD9ZT/pie1g77PIMC6DlL9mqA+6R7qU4O+lB8
+         I+E6dYJie2AWFBBAhRsyt3WNGG3hQq+6dr+0Qp7KwJnWnmKIc+NkDs8O5rT8qIBoYED9
+         yOnq/rXOXzfdNpzLVC+BJwmByzeNDhMMcmoUWcUtH/rllWxR+AWtj15jcb6HksPOk2dS
+         HZ7g==
+X-Gm-Message-State: AOAM530x3O/86aLxn3h0PyPSni3u9Qf+Dvcsotrzw37kPyTrUfAXf9E4
+        AXfPHwAc6mEbmW+J7mJxNVg=
+X-Google-Smtp-Source: ABdhPJz9oTG0m96LV4ulk/ZfEqGaEKiExcZGsGOPnBafBvlxB0vPFrG9MdsDT4//5PSKOwFWjURJ3Q==
+X-Received: by 2002:a17:906:b05a:: with SMTP id bj26mr7374873ejb.226.1632740516702;
+        Mon, 27 Sep 2021 04:01:56 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o23sm1336565edr.89.2021.09.27.03.54.07
+        by smtp.gmail.com with ESMTPSA id g6sm10130512edr.15.2021.09.27.04.01.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 03:54:07 -0700 (PDT)
+        Mon, 27 Sep 2021 04:01:56 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     phillip.wood@dunelm.org.uk
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH 3/6] shortlog: use designated initializer for "struct
- shortlog"
-Date:   Mon, 27 Sep 2021 12:52:33 +0200
-References: <cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com>
- <patch-3.6-c9db107fcb1-20210927T004920Z-avarab@gmail.com>
- <94842a94-d168-2b61-4a44-0059ecbe1b36@gmail.com>
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
+Date:   Mon, 27 Sep 2021 13:00:01 +0200
+References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
+ <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
+ <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <94842a94-d168-2b61-4a44-0059ecbe1b36@gmail.com>
-Message-ID: <87lf3i1e7k.fsf@evledraar.gmail.com>
+In-reply-to: <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
+Message-ID: <87h7e61duk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,53 +76,42 @@ On Mon, Sep 27 2021, Phillip Wood wrote:
 
 > Hi =C3=86var
 >
-> On 27/09/2021 01:53, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Change code added in 64093fc06a (blame,shortlog: don't make local
->> option variables static, 2016-06-13) to use a designated initializer
->> via a typical *_INIT macro pattern.
+> On 27/09/2021 01:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Use the same pattern for cb_init() as the one established in the
+>> recent refactoring of other such patterns in
+>> 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
+>> macro, 2021-07-01).
 >> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 >> ---
->>   builtin/shortlog.c | 2 +-
->>   shortlog.h         | 4 ++++
->>   2 files changed, 5 insertions(+), 1 deletion(-)
->> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
->> index 3e7ab1ca821..fa1f76cc51e 100644
->> --- a/builtin/shortlog.c
->> +++ b/builtin/shortlog.c
->> @@ -342,7 +342,7 @@ void shortlog_init(struct shortlog *log)
->>     int cmd_shortlog(int argc, const char **argv, const char
->> *prefix)
->>   {
->> -	struct shortlog log =3D { STRING_LIST_INIT_NODUP };
->> +	struct shortlog log =3D SHORTLOG_INIT;
->>   	struct rev_info rev;
->>   	int nongit =3D !startup_info->have_repository;
->>   diff --git a/shortlog.h b/shortlog.h
->> index 3f7e9aabcae..47892d6d604 100644
->> --- a/shortlog.h
->> +++ b/shortlog.h
->> @@ -28,6 +28,10 @@ struct shortlog {
->>   	FILE *file;
+>>   cbtree.h | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>> diff --git a/cbtree.h b/cbtree.h
+>> index a04a312c3f5..dedbb8e2a45 100644
+>> --- a/cbtree.h
+>> +++ b/cbtree.h
+>> @@ -37,11 +37,12 @@ enum cb_next {
+>>   	CB_BREAK =3D 1
 >>   };
->>   +#define SHORTLOG_INIT { \
->> +	.list =3D STRING_LIST_INIT_NODUP, \
->> +}
->> +
->>   void shortlog_init(struct shortlog *log);
+>>   -#define CBTREE_INIT { .root =3D NULL }
+>> +#define CBTREE_INIT { 0 }
+>>     static inline void cb_init(struct cb_tree *t)
+>>   {
+>> -	t->root =3D NULL;
+>> +	struct cb_tree blank =3D CBTREE_INIT;
+>> +	memcpy(t, &blank, sizeof(*t));
+>>   }
 >
-> looking at this wouldn't it be better follow the pattern in the first
-> patch in this series and replace shortlog_init() with a designated=20
-> initializer?
+> Slightly off topic but would this be a good site for a compound
+> literal test balloon?
+>
+> 	*t =3D (struct cb_tree){ 0 };
+>
+> Compound literals are in C99 and seem to have been supported by MSVC
+> since 2013 [1].
 
-I've ejected this patch from a WIP re-roll, I don't know what I was
-thinking when I included it.
+I think that's a good thing to test out, FWIW I've also tested it on the
+IBM xlc, Oracle SunCC and HP/UX's aCC, they all seem to accept it.
 
-It's "correct", but one of those cases where we can't easily get rid of
-the not-a-macro init() function, so having a *_INIT macro that doesn't
-actually do the initialization for both users is just confusing.
-
-Worse, that "nodup" is actually a like, the shortlog_init() function
-sets it to "dup", that issue pre-dated by change here, but I shouldn't
-have carried it forward.
-
-Sorry!
+But I'd prefer just doing that in some general follow-up to bd4232fac33
+(Merge branch 'ab/struct-init', 2021-07-16), i.e. let's just use the
+init pattern it established here.
