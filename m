@@ -2,112 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92082C433F5
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 261ADC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:37:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 779B960F6C
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:20:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06D6D6103B
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233818AbhI0KVk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 06:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55684 "EHLO
+        id S233828AbhI0KjU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 06:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233757AbhI0KVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 06:21:38 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51653C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:20:01 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id 73so36214927qki.4
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:20:01 -0700 (PDT)
+        with ESMTP id S233787AbhI0KjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 06:39:19 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0AEC061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:37:42 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id y35so16163676ede.3
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jvHaAr257C3sJTzAAcb1QaraMUpKg/rBWw/oaYrilFg=;
-        b=dthV27l8jeedVV3ELRZZsnsxRqOk+SkLdIj5MDFFfg1Ybd3eSiuqEC/OGpKaWJnn5G
-         FLmpINXHjg1ye83z10A6U/YxRUL3TTL1LNjArwIW5SUBvHYq/Volj4zgqT7I0aG45Kxy
-         cwHMSG1QRFD+RjiyFgrt1zNQO86LCYZdI1AogXEXIXQudzEW7iolBKLSuZbOjuMV/T8F
-         yw9Pe8873F+jK4Ex2zpBjiODKeBBDFNeNnJ9mA/93zEAaj3NN2C6dB6nz4rU/539ObVT
-         G+iKE2sEO1WNbo0DL9/YLnBDmoLcs/sLmVUlFgNtzk8+CKDEBiwfkhG1kX8Cw7FRqhm/
-         eU8Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Vni2glJPLNX8eOEA9GH/1FrNB+ZBdEZNy5EVyYhznt4=;
+        b=bNJuUe0iCXz8IP4dLHLfhdbGa8L9P+DS9G5tx7NC0LEpG+IwoV7aqnZoFxpefZ5UrV
+         YQbJh6iaLjBjTOIGa7TlROaWQXxub/LV2jXFsRQnse7h1/FhPJyZFn16/eu7INxtjqKc
+         5LuzGiookT6iUU0y3kq8+DYgXmmPFuzO6t/BbpuU5KADxGuFGQ0cSiUBm315/qgXNtXY
+         vYmGcHWyhx9CLjeZ4sd8K765hktERRNot83crzQEnLDyTHwWtSy4/OuNIRdTTUG8uEmH
+         g5LJNtYwoNq/1A8hAdVkGDX7144G/K32mgqb4EhhkqHchdRUpsM8RXMgOwqPb/ptg1O4
+         nfFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jvHaAr257C3sJTzAAcb1QaraMUpKg/rBWw/oaYrilFg=;
-        b=x9wELMy7KX/NYzuQu96lXWA5uWQ0AEAt59CH68/OqPutzLvaTIRbS5zU+1BYsCGDXV
-         Ay5ihHs9MCqFqEAJOPiTsZmpafUZ12SiKpEvWrgLmTidr78mY1UFyDwOrIgmw1ES9kmq
-         gLtD1Uv1XKM7YoX34T22sngdeTf2e9RYtryo8aAAPGf/72u8Y8sY2sd3jSpPvbSXB4eO
-         3EYPY3LmUPj4AuYQoQ93p5WcsXYuYXOYa+4PwOhjqMD4G5xkUK4fo8oURoevngLUnQn6
-         jgw1Su2hYGchpHCMmCcJvV05k2ldZ4KhDwzSe/yVTbVvAhxZ8i60NrSzBbcrkx+tKELH
-         T6QQ==
-X-Gm-Message-State: AOAM530E38qZo6oWGQGkSR3LGB3txViVHlKbF6GXKpBx4q4WMXWQw6Z5
-        zlyywL+g7vAa4UFnjRL8pV6lGhn+Hgapb3Kc26FMF2BAGNFOHg==
-X-Google-Smtp-Source: ABdhPJyULeoAjF4NHpZoaZwW6bTEeWGAJuJj/IekNK4e2Un2e/SOvdJvoonT7Sz/KvMeq/QxUWMYE+GQk9r4OPbcDT0=
-X-Received: by 2002:a37:9e4b:: with SMTP id h72mr22632106qke.475.1632738000311;
- Mon, 27 Sep 2021 03:20:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Vni2glJPLNX8eOEA9GH/1FrNB+ZBdEZNy5EVyYhznt4=;
+        b=PzL5BxynayoIdsyZn0vcwrQ/pitY+OICjzJKAva10fKeiVjwuzfVR+M5Oy6TnJOfJl
+         1P0oJnUfmPeNRFBQVNuV4CNf8E1+LR0GGHquKrZvyNMzZVxJmYVUiU2eEtTYkErZvKU5
+         OgodB/eXFG+OXk/eFkaOcA2UUJEUTKe0OVeU1vdZ85uL9kbzmP1UoDk2Jsb/JyToxwe4
+         Pfn6PbN2CpYts3Lvz/aj4Z97oDiNjP5nKJEptJnx+cX95JHuhWnvM9J8rARFegMA+WUP
+         ZH2Hd/WDJMT3LsQIIcUD9It73sB4Hj8HWRYchysOq6UzD1s6GdntqceZ5k0rwcCLv4Sv
+         kJMg==
+X-Gm-Message-State: AOAM532Lc35Mejer9lBdCt1U94pXVej05fj5yzHmvxIV2rvPGe3L6WI/
+        ia9PU395ta+ZhmK6j2kCsnY=
+X-Google-Smtp-Source: ABdhPJwrzKPVQ3ctVUO168Fllb8gg2qHYRGHCQ+lKsF0rohGir6u4mpeFFE6Bq4U32FnHXvUwcHgxQ==
+X-Received: by 2002:a50:e0c3:: with SMTP id j3mr22404113edl.60.1632739060666;
+        Mon, 27 Sep 2021 03:37:40 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id z4sm2893941edb.16.2021.09.27.03.37.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Sep 2021 03:37:40 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
+ config-list.h
+Date:   Mon, 27 Sep 2021 12:36:32 +0200
+References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
+ <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
+ <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
+ <87fstt3gzd.fsf@evledraar.gmail.com>
+ <e0feb87e-4f8e-04c7-5533-3b10d82403e4@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <e0feb87e-4f8e-04c7-5533-3b10d82403e4@gmail.com>
+Message-ID: <87tui61ez0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CABkJDHFOMkf-Pouaw3rtjtM+KFhPxnYtCiMbqKYCraXFb_9qQw@mail.gmail.com>
- <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
-In-Reply-To: <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
-From:   Sashank Bandi <bandi.rao999@gmail.com>
-Date:   Mon, 27 Sep 2021 15:49:51 +0530
-Message-ID: <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
-Subject: Re: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
-To:     git@vger.kernel.org
-Cc:     bagasdotme@gmail.com, me@yadavpratyush.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 12:02 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+
+On Mon, Sep 27 2021, Phillip Wood wrote:
+
+> On 24/09/2021 20:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Fri, Sep 24 2021, Phillip Wood wrote:
+>>=20
+>>> Hi =C3=86var
+>>> On 23/09/2021 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+>>>> new file mode 100755
+>>>> index 00000000000..6d4e56d1a31
+>>>> --- /dev/null
+>>>> +++ b/generate-hooklist.sh
+>>>> @@ -0,0 +1,18 @@
+>>>> +#!/bin/sh
+>>>> +#
+>>>> +# Usage: ./generate-hooklist.sh >hook-list.h
+>>>> +
+>>>> +cat <<EOF
+>>>> +/* Automatically generated by generate-hooklist.sh */
+>>>> +
+>>>> +static const char *hook_name_list[] =3D {
+>>>> +EOF
+>>>> +
+>>>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
+>>>
+>>> POSIX does not support using a semicolon after a closing brace [1],
+>>> grepping our code base with
+>>> 	git grep 'sed .*};' '*.sh'
+>>> does not give any matches so I don't think we're using that pattern
+>>> any where else. Replacing the semicolon with ' -e' would fix it.
+>>>
+>>> Best Wishes
+>>>
+>>> Phillip
+>> Does this fail on any system you're aware of? If so what OS/version
+>> (and
+>> preferably version of "sed").
 >
-> On 26/09/21 22.09, Sashank Bandi wrote:
-> > Hello,
-> >
-> > I am new to the concept of mailing lists so please bear with me.
-> >
-> > I'm a JS developer. I love Git GUI for its minimalism in both size and
-> > layout. I have been using Git and Git GUI on Windows for a long time.
-> > I think the only thing missing from the "Official" Git GUI is dark
-> > mode.
-> >
-> > I use dark mode on almost all places. Firefox, Discord, GitHub,
-> > Outlook, Notepad++, VS Code and even Reddit too. The only place that
-> > is missing dark mode in my workflow is Git GUI.
-> >
-> > Is there any way I can make Git GUI dark mode ?
-> >
-> > I don't know a lot of Tcl/Tk but I am currently trying to learn it. I
-> > did a few edits and made the About page in dark mode.
-> > You can look at it here:
-> > https://user-images.githubusercontent.com/76554862/134190271-d861407a-31be-436d-aac4-9ea3d72f0fb0.png
-> > .
-> >
-> > I have found two threads in the mailing list but those are just dead
-> > ends for me. Hence I reached this mailing list.
-> >
+> I'm not aware of any such system but I rarely use anything other than
+> linux. As this departure from POSIX is not already in the code base I=20
+> thought it was worth flagging it. I did wonder if it would be
+> supported by the various BSDs but you testing shows it is actually
+> quite widely supported.
 >
-> I would rather like to see yourself posted PR to the dedicated subsytem
-> at [1].
-Nice to hear that you like my design.
-I think this confirms my suspicion that there is no "Official" Git GUI Dark
-Mode on Windows 10.
+> Best Wishes
+>
+> Phillip
 
-> I think you want to implement tri-state `Dark mode` option. When it is
-> set to `Yes`, always use dark theme regardless of system settings; when
-> it is `No` the opposite; and `Auto` use dark theme when it is enabled in
-> system settings, normal the opposite.
-Our interests conflict here.
-I think we should rather provide 3 different options here.
-1. System Default
-2. Light Mode
-3. Dark Mode
-I find these options easy rather than the "Yes" or "No" options.
+Thanks, I completely agree that it's worth changing either way (as I did
+in my v2). I just wondered if it was a careful reading of the standard
+or having run into it on a system in the wild, in that case I'd try to
+test on that system in the future.
 
-I'm currently planning to convert this into a C++ program as there is no
-way from the Tcl itself to change the color and background color of the title
-bar or menu of the Git GUI window.
-
-I also CCed Pratyush Yadav as he is the official maintainer of the project.
+Good eyes :)
