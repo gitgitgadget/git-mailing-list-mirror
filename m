@@ -2,109 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0A03C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D59C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:37:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D143C60230
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:36:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBB9460230
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234550AbhI0NiQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 09:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234487AbhI0NiP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 09:38:15 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9101C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 06:36:37 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id d6so51857648wrc.11
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 06:36:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=5pzddiYO2NHNNOFUflWeBY4lqPmaYpANvWDz4PRtx0A=;
-        b=PaHQ2UVVS98kwbwC9JO+v5+ZF4X7l4n+W9jMYfDzssVqLB0fZkQk7lAjWmIz9dno2O
-         /n3ocCYPDZrGqpFjNNWui35j3AU3lNY4NyobE7yPBT39V4G5LCXvb0sWSznryqmW5MYH
-         QBLK/sBMfDyCA8DurUPfK/V10PBQndObDiMRY2q+NE4sGlpW3mAH5lEqTl2lNDaN1Rx+
-         xHBeobNKWqxjUpYdy1W0u49vjqiHeIcw9UP74ZpfeseUqzRxuOUps3a/gdaLhvlymLwi
-         UVl5/z1GcxCzSpype5LIp2GHuSS9P/ovkZeGzJVxKYAWKIaOII3vQ8lQSKHZz5Q2CdfQ
-         cWJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=5pzddiYO2NHNNOFUflWeBY4lqPmaYpANvWDz4PRtx0A=;
-        b=jBZrUvVfENkWDbplYeLQx/nh8cc7RuqLMgQPvJV/7sssf0WIAnCa34lIqKYT8JbOnh
-         ZE1z5rJo1WMyeU+eaT8/Zog7O3ryz2fIB+ERbHEIXXo72TD82Psrx36nLLfO/EBTGNQi
-         ftjXXGMzNN0cgFUnZ55K27tN212mCQUyqVoymIrvDl7BJ6Ll/bOGywrKWFv2sX7zKQ6n
-         8AHHVQEpqnXnSMpN8RX1VAelgEE61c4/hu6sfss6plsVsayeSGeWnMevSJhtBrmXkE7H
-         PJuIo4p7PZtpq76FbBaF+k+B0zRR9C/vHhWNMlAuUmqzInyiG9JRpuBrcjZfbsZek17b
-         wCEw==
-X-Gm-Message-State: AOAM533NyTO+7rfFBetCv5W0/hEl9ODQRQR72bJZspL1W+EppPDuH/oC
-        p00iH4Rj4PV/HSWCAAR2d9ahxy6uRyN5a49vmqilhgrc
-X-Google-Smtp-Source: ABdhPJwKspcQh9PgOutClFI5uwA/RUZEJVDA7vAKWB0LIXr+xnCkFsbTqF+esPsctbKmhPn1avw4UuMw7Mz8XlP/qZ4=
-X-Received: by 2002:adf:e44f:: with SMTP id t15mr28569224wrm.394.1632749796077;
- Mon, 27 Sep 2021 06:36:36 -0700 (PDT)
+        id S234484AbhI0NjC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 09:39:02 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20046 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234114AbhI0NjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 09:39:01 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A5E9D3F404F;
+        Mon, 27 Sep 2021 09:37:23 -0400 (EDT)
+Received: from test.azshci.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 64E743F4047;
+        Mon, 27 Sep 2021 09:37:23 -0400 (EDT)
+Subject: Re: [PATCH v2 0/7] Builtin FSMonitor Part 1
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
+ <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
+ <87v92r49mt.fsf@evledraar.gmail.com>
+ <0ec69aff-40a9-aac1-5fca-08033c967d88@jeffhostetler.com>
+ <87ee9f3t0m.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8de10d97-f5a0-b08a-ca36-a86b4280db94@jeffhostetler.com>
+Date:   Mon, 27 Sep 2021 09:37:22 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-From:   Calvin Taylor <coolcatt@gmail.com>
-Date:   Mon, 27 Sep 2021 10:36:24 -0300
-Message-ID: <CAP9BFHVdg_BWZ2wvdv8t-mN3WKjW4fA+v2181WRYQGsrgmvKmA@mail.gmail.com>
-Subject: Bug Report: git ls-files -d
-To:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000009a4a5d05ccfa2f2f"
+In-Reply-To: <87ee9f3t0m.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---0000000000009a4a5d05ccfa2f2f
-Content-Type: text/plain; charset="UTF-8"
 
--- 
 
-Calvin Taylor
-506 260-2866
+On 9/23/21 4:47 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Sep 23 2021, Jeff Hostetler wrote:
+> 
+>> On 9/23/21 10:33 AM, Ævar Arnfjörð Bjarmason wrote:
+>>> On Mon, Sep 20 2021, Jeff Hostetler via GitGitGadget wrote:
+>>>
+>>>> Here is V2 of Part 1 of my Builtin FSMonitor series.
+>>>>
+>>>> Changes since V1 include:
+>>>>
+>>>>    * Drop the Trace2 memory leak.
+>>>>    * Added a new "child_ready" event to Trace2 as an alternative to the
+>>>>      "child_exit" event for background processes.
+>>>>    * Convert the Trace2-related NEEDSWORK items in "start_bg_command()" to use
+>>>>      the new "child_ready" event.
+>>>>    * Various minor code and documentation cleanups.
+>>> I see 7/7 still has a pattern you included only to make a compiler
+>>> error
+>>> better. I noted in
+>>> https://lore.kernel.org/git/87ilyycko3.fsf@evledraar.gmail.com/ that it
+>>> make the error worse, on at least clang. You didn't note which compiler
+>>> you were massaging, presumably MSVC.
+>>>
+>>
+>> I've been holding my tongue for days on this issue and hoping a third
+>> party would step in an render an opinion one way or another.
+>>
+>> Too me, a forward declaration seemed like no big deal and it does
+>> have value as I tried to explain.  And frankly, it felt a little bit
+>> like bike-shedding and was trying to avoid that again.
+> 
+> I agree with you that it's no big deal in the end,
+> 
+> I thought I made it clear in <87v92r49mt.fsf@evledraar.gmail.com> but
+> the main thing I'm commenting on is not that I or anyone else suggested
+> Y over X, and you said nah and went for X in the end.
+> 
+> That's fine, I mean, depending on the comment/issue etc. it's something
+> other reviewers & Junio can draw their own conclusions about.
+> 
+> What I am saying that it's much better for review of iterations of
+> patches in general, and especially of a complex multi-part series if
+> reviewers don't have to read the cover letter of vX and wonder what's
+> omitted/unaddressed in the V(X-1) comments, and then go and re-read the
+> discussion themselves. It's not the "nah", but that the "nah" is
+> implicit and only apparent when sending an E-Mail like this.
+> 
+> Of course that's never perfect, you can't summarize every point
+> etc. Personally I try to do this, but I've sometimes noticed after the
+> fact that I've gotten it wrong etc.
+> 
+> In the end I and I think anyone else offering their time to review
+> things is trying to move the relevant topic forward in one way or
+> another. I'd much rather spend my time on a vX discussing new things &
+> getting the thing closer to merge-able state, than re-reading all of
+> v(X-1) & effectively coming up with my own cover letter summary in my
+> head or in my own notes as I read along.
+> 
+> Anyway, sorry about the bikeshedding getting out of hand, and what seems
+> to have been at least partially a misunderstanding in the last couple of
+> E-Mails between us, but the above is all I was going for.
 
---0000000000009a4a5d05ccfa2f2f
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2021-09-27-0939.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2021-09-27-0939.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_ku2p1pkr0>
-X-Attachment-Id: f_ku2p1pkr0
+Thanks.  Yeah, email is a terrible communication medium and prone
+to misunderstandings.  It's easy to forget that at times, since we
+spend so much time in it.
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCiBoYXZlIG1hY29zIGFuZCBJIGhhdmUgc29tZSBjb21tYW5kcyBw
-b3NzaWJseSByZW1hcHBlZCBsaWtlIGdzZWQsIGdmaW5kIHRvIHNlZCwgZmluZAoKV2hhdCBkaWQg
-eW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKZ2l0IGxzLWZpbGVzIC1k
-IHRvIHNob3cgZGVsZXRlZCBmaWxlcyBpbiBteSByZXBvc2l0b3J5CgpXaGF0IGhhcHBlbmVkIGlu
-c3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCm5vdGhpbmcgaXMgc2hvd24sIEkgZW5hYmxlZCBHSVRf
-VFJBQ0U9MSwgYW5kIHN0YXJ0ZWQgYmFzaCBpbmNhc2Ugb2gtbXktenNoIG1pZ2h0IGhhdmUgYmVl
-biBpbnRlcmZlcmVpbmcsIGFuZCBnb3Qgc2ltaWxhciByZXN1bHRzCgokIGdpdCBscy1maWxlcyAt
-ZAowOTo0Mjo0Ny42OTI4ODAgZXhlYy1jbWQuYzoxMzkgICAgICAgICAgdHJhY2U6IHJlc29sdmVk
-IGV4ZWN1dGFibGUgcGF0aCBmcm9tIERhcndpbiBzdGFjazogL0xpYnJhcnkvRGV2ZWxvcGVyL0Nv
-bW1hbmRMaW5lVG9vbHMvdXNyL2Jpbi9naXQKMDk6NDI6NDcuNjkzNTkxIGV4ZWMtY21kLmM6MjM4
-ICAgICAgICAgIHRyYWNlOiByZXNvbHZlZCBleGVjdXRhYmxlIGRpcjogL0xpYnJhcnkvRGV2ZWxv
-cGVyL0NvbW1hbmRMaW5lVG9vbHMvdXNyL2JpbgowOTo0Mjo0Ny42OTUwNTMgZ2l0LmM6NDQ0ICAg
-ICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgbHMtZmlsZXMgLWQKMDk6NDI6NDcuNzY0
-MDg5IGV4ZWMtY21kLmM6MTM5ICAgICAgICAgIHRyYWNlOiByZXNvbHZlZCBleGVjdXRhYmxlIHBh
-dGggZnJvbSBEYXJ3aW4gc3RhY2s6IC9MaWJyYXJ5L0RldmVsb3Blci9Db21tYW5kTGluZVRvb2xz
-L3Vzci9iaW4vZ2l0CjA5OjQyOjQ3Ljc2NDkyMSBleGVjLWNtZC5jOjIzOCAgICAgICAgICB0cmFj
-ZTogcmVzb2x2ZWQgZXhlY3V0YWJsZSBkaXI6IC9MaWJyYXJ5L0RldmVsb3Blci9Db21tYW5kTGlu
-ZVRvb2xzL3Vzci9iaW4KMDk6NDI6NDcuNzY1OTE5IGdpdC5jOjQ0NCAgICAgICAgICAgICAgIHRy
-YWNlOiBidWlsdC1pbjogZ2l0IGNvbmZpZyAtLWdldCBvaC1teS16c2guaGlkZS1kaXJ0eQoKV2hh
-dCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5
-IGhhcHBlbmVkPwpJIGhhdmUgc2V2ZXJhbCBkaXJlY3RvcmllcyBJJ2QgbGlrZSB0byBkZWxldGUg
-dGVtcG9yYXJpbHkgc28gSSBjYW4gc2ltcGxpZnkgYW5kIHN0dWR5IGJ1aWxkIHByb2Nlc3NlcwoK
-QW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6CgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9m
-IHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3UgY2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0
-IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJbmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24g
-Mi4zMC4xIChBcHBsZSBHaXQtMTMwKQpjcHU6IHg4Nl82NApubyBjb21taXQgYXNzb2NpYXRlZCB3
-aXRoIHRoaXMgYnVpbGQKc2l6ZW9mLWxvbmc6IDgKc2l6ZW9mLXNpemVfdDogOApzaGVsbC1wYXRo
-OiAvYmluL3NoCnVuYW1lOiBEYXJ3aW4gMjAuNi4wIERhcndpbiBLZXJuZWwgVmVyc2lvbiAyMC42
-LjA6IE1vbiBBdWcgMzAgMDY6MTI6MjEgUERUIDIwMjE7IHJvb3Q6eG51LTcxOTUuMTQxLjZ+My9S
-RUxFQVNFX1g4Nl82NCB4ODZfNjQKY29tcGlsZXIgaW5mbzogY2xhbmc6IDEyLjAuNSAoY2xhbmct
-MTIwNS4wLjIyLjYpCmxpYmMgaW5mbzogbm8gbGliYyBpbmZvcm1hdGlvbiBhdmFpbGFibGUKJFNI
-RUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZlIHNoZWxsKTogL2Jpbi96c2gKCgpbRW5hYmxlZCBI
-b29rc10K
---0000000000009a4a5d05ccfa2f2f--
+Drafting a v(X+1) cover letter is a bit of an art.  It is easy to
+err on the less-is-better side when trying to decide how much to
+include to explain the new version vs not wanting to including
+every little typo or nit.
+
+I tend to drop / cross-off issues that I decide to ignore or not act
+upon rather than report them.  However, you're right, I should have
+included a brief statement about not changing the stuff mentioned in
+7/7, since there was a larger conversation around it.  Sorry.
+
+
+Jeff
