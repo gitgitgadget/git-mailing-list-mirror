@@ -2,82 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9F95C433F5
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65960C433F5
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:56:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92FD160FF2
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:54:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45C3160EE9
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237336AbhI0V4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 17:56:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62603 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237237AbhI0V4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 17:56:22 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF3D9EB0BA;
-        Mon, 27 Sep 2021 17:54:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=B4sLGc6McvWZ
-        RLziHunL08zDhINYSYxmsAI1D1Cr+Sw=; b=rh7k4df75B6r02A6S6B5qmcM856Q
-        4gKsFEseS4owW23BjNbohlFLMQc9odgyjHTJCUiGADfkAagYI2Y7CfL5hlNEITZd
-        AnH9hQ00ATsmb3P2zzGuX9O88btNtcE+ZmgGyWh8/b8ywKIXybIqDCAi6wimISNe
-        xxgSvi2bEXzEesY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D561BEB0B9;
-        Mon, 27 Sep 2021 17:54:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45A69EB0B8;
-        Mon, 27 Sep 2021 17:54:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 3/5] *.h _INIT macros: don't specify fields equal to 0
-References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
-        <cover-v2-0.5-00000000000-20210927T124407Z-avarab@gmail.com>
-        <patch-v2-3.5-590220bbdcc-20210927T124407Z-avarab@gmail.com>
-Date:   Mon, 27 Sep 2021 14:54:41 -0700
-In-Reply-To: <patch-v2-3.5-590220bbdcc-20210927T124407Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 27 Sep
- 2021 14:54:26
-        +0200")
-Message-ID: <xmqqk0j1ofa6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237491AbhI0V6K convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 27 Sep 2021 17:58:10 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:54503 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237393AbhI0V6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 17:58:07 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 18RLuGrC019794
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 27 Sep 2021 17:56:16 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, <git@vger.kernel.org>,
+        "'The Grey Wolf'" <greywolf@starwolf.com>
+References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net> <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com> <YU49+Y+nRhl1mgof@coredump.intra.peff.net> <xmqqa6k1slxe.fsf@gitster.g> <YU5KOpGkS5sH4iFJ@coredump.intra.peff.net> <xmqqo88eq8um.fsf@gitster.g> <YVImeFHxY7hmb3wY@coredump.intra.peff.net> <00ee01d7b3e1$ceb06840$6c1138c0$@nexbridge.com> <YVI5rYamHBkGQ/jy@coredump.intra.peff.net>
+In-Reply-To: <YVI5rYamHBkGQ/jy@coredump.intra.peff.net>
+Subject: RE: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
+Date:   Mon, 27 Sep 2021 17:56:10 -0400
+Message-ID: <00f701d7b3ea$7eb59eb0$7c20dc10$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 851B5678-1FDD-11EC-97A9-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHNlhe/H9xUBWexP8Y5jg2L0M3l4gJZS/JsALVatmcCOYbmaACH6NfUAkwXmUIDEF/NxwGzAHMKAhd8yqqrVPATcA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On September 27, 2021 5:38 PM, Jeff King wrote:
+>Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
+>
+>On Mon, Sep 27, 2021 at 04:53:59PM -0400, Randall S. Becker wrote:
+>
+>> What about something like:
+>>
+>> 	[includeIf "env:PATH ~= '^(.*😊)/usr/bin(:.*)*$' "]
+>>
+>> Using single quotes and a full regex pattern instead of trying to
+>> provide a syntax to extract a pattern and then match. One call to
+>> regexec() would be easier. Then escaping is regcomp's problem
+>> (mostly). Potentially, you could even remove the outer ", but that
+>> would be wonky. You could omit the ^ and $ by default assuming a full
+>> match.
+>
+>I almost suggested that, but then...how do you put single-quotes in your pattern? You can backslash-escape them, but:
+>
+>  - do you need to escape the backslash to get it through the config
+>    parser intact?
+>
+>  - it seems extra funny to me because single quotes usually imply a
+>    lack of interpolation
 
-> -#define IPC_CLIENT_CONNECT_OPTIONS_INIT { \
-> -	.wait_if_busy =3D 0, \
-> -	.wait_if_not_found =3D 0, \
-> -	.uds_disallow_chdir =3D 0, \
-> -}
-> +#define IPC_CLIENT_CONNECT_OPTIONS_INIT { 0 }
+Exactly so. I think it would be more clear to have a regular expression be provided literally without interpretation other than by regcomp - other than the emergency ' escape, of course.
 
-The original explicitly initializes the members using designated
-init, and the loss somewhat feels like a temporary regression, but
-as long as the new norm is
-
- - If there is *no* member that is initialized to non-zero value, we
-   use { 0 }, and
-
- - Otherwise, we only explicitly initialize members to non-zero
-   value using designated initializers
-
-this conversion is perfectly fine.
