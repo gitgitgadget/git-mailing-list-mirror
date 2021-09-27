@@ -2,282 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89E08C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 177DDC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 02:17:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7381F60F92
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7DEA60F4F
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 02:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232375AbhI0AzM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Sep 2021 20:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232374AbhI0AzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Sep 2021 20:55:05 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7AFC061570
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:53:28 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id x20so2551935wrg.10
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aPVW358KMffOcU5NvWPMkqkUO9OA/F0e/FQahSbWyxg=;
-        b=Ul3hRhbdt3nLPh9FRwHEOuwcWecMnh7P2qX+gXK2jmTkyqRr4qrK/9ibjrY12JKvLq
-         6vSoNRNSMtpFD17Ob/BbxbEd5bquxi3FrAKcGZhLz7LZ9H7v/NlomGbo2fDbiQ2oPwIh
-         4It6YMLlNx8hqsOrvDJWYI9qBbk+dTb+PQS2dWvyXDBeNWtHQE/zVYNQ4ZdqikScncqx
-         olR1IlTdfn7T/bKlmxGgVDPNDBTQwUEgTTdI+z3Y9K3e1gSPvCJGMGWO5o9bB9tAB0f/
-         hxK45AoalDPhg487yCu81NSpNcj8BWogAcdTnEOQohHcVkTxmJya10DWqdR7uNYmrIOI
-         qy0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aPVW358KMffOcU5NvWPMkqkUO9OA/F0e/FQahSbWyxg=;
-        b=J/mhkLlcLeznzB1zosDx/K6Nh8o8r0VpA58sPnUmZpxiGi4OLXy6qCn6g/tAmir6cr
-         c6ZxmOrCzSLMhADm2epXaBPjvZ2Cn00NeFSpLwayOsi8DHc21calsCUzsJWYe+w0Gg/s
-         s/WNHAp7iy1lyaeyEWYuaJf9eBdg2qRoJrLP4wVMv75fUCMH630G13Cj1rLk545h0TCs
-         cE2ngm6MVG6UsBA7t5IKXkbqZAotlhApd4gpoAqezMVRgZ0446mTwiMGvFvz8w1UR6rk
-         OC+rvhoQmaWEKmWE6lLUjYH4oJtH+sNslWDctaJGPZO1lXM/noUk91kG7tzUe4eWxzBM
-         vCCQ==
-X-Gm-Message-State: AOAM5302YvLw6//BuxgvMubIsLgo+cHU34/Uw2yFhsMXMi+TVyoXOA3x
-        hgptOIzETRBgEO4MIydTY0jLyyMODYh7tQ==
-X-Google-Smtp-Source: ABdhPJy6AUg1aBwUyec+0pfi7hZoyU9boc+jaEsTLK2/cWkAN2stIncSyfcQDt5Z/kvYx2bwxfIvMA==
-X-Received: by 2002:adf:ee48:: with SMTP id w8mr24836081wro.263.1632704006569;
-        Sun, 26 Sep 2021 17:53:26 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i2sm14749745wrq.78.2021.09.26.17.53.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Sep 2021 17:53:26 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 6/6] builtin/remote.c: add and use SHOW_INFO_INIT
-Date:   Mon, 27 Sep 2021 02:53:20 +0200
-Message-Id: <patch-6.6-76fa070e89c-20210927T004920Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1316.gb2e9b3ba3ae
-In-Reply-To: <cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com>
+        id S232435AbhI0CSq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Sep 2021 22:18:46 -0400
+Received: from mga11.intel.com ([192.55.52.93]:31780 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229811AbhI0CSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Sep 2021 22:18:44 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10119"; a="221188351"
+X-IronPort-AV: E=Sophos;i="5.85,325,1624345200"; 
+   d="scan'208";a="221188351"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2021 19:17:06 -0700
+X-IronPort-AV: E=Sophos;i="5.85,325,1624345200"; 
+   d="scan'208";a="615600912"
+Received: from mdroper-desk1.fm.intel.com (HELO mdroper-desk1.amr.corp.intel.com) ([10.1.27.134])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2021 19:17:06 -0700
+Date:   Sun, 26 Sep 2021 19:17:05 -0700
+From:   Matt Roper <matthew.d.roper@intel.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG REPORT] split-index behavior during interactive rebase
+Message-ID: <20210927021705.GW3389343@mdroper-desk1.amr.corp.intel.com>
+References: <20210916055057.GT3389343@mdroper-desk1.amr.corp.intel.com>
+ <20210926215703.GB3311029@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210926215703.GB3311029@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the preceding commit we introduced REF_STATES_INIT, but did not
-change the "struct show_info" to have a corresponding
-initializer. Let's do that, and make it use "REF_STATES_INIT" and
-"STRING_LIST_INIT_DUP", doing that requires changing "list" and
-"states" away from being pointers.
+On Sun, Sep 26, 2021 at 11:57:03PM +0200, SZEDER G�bor wrote:
+> On Wed, Sep 15, 2021 at 10:50:57PM -0700, Matt Roper wrote:
+> > What did you do before the bug happened? (Steps to reproduce your issue)
+> > 
+> >   I activated split index mode on a repo ("git config core.splitIndex
+> >   true"), performed an interactive rebase, modified a commit earlier in
+> >   the history.
+> > 
+> >   The steps can be reproduced via a sequence of:
+> >       $ mkdir tmp && cd tmp && git init
+> >       $ git config core.splitIndex true
+> >       $ for x in `seq 20`; do echo $x >> count; git add count; git commit -m "Commit $x"; done
+> 
+> It's important to note that this test repository has only a single
+> tracked file in it.
+> 
+> >       $ git rebase -i HEAD~10
+> >       
+> >       ## Add "x git commit --amend --no-edit" as the first command of
+> >       ## the todo list.
+> > 
+> > What did you expect to happen? (Expected behavior)
+> > 
+> >   My expectation was that there would still only be a single shared index
+> >   file in the .git directory upon completion of the rebase.
+> > 
+> > What happened instead? (Actual behavior)
+> > 
+> >   A large number of distinct sharedindex.* files were generated in the .git
+> >   directory during the rebase.
+> 
+> I think this works as intended.
+> 
+> A new shared index is written when the number of index entries that
+> would be writen to '.git/index' is higher than a given percentage of
+> the total number of index entries.  This percentage can be specified
+> with the 'splitIndex.maxPercentChange' configuration variable and it
+> defaults to 20%.  In your test repository above there is only a single
+> file and it is modified in every commit, so when switching from one
+> commit to the other 100% of the index entries would be written to
+> '.git/index', resulting in a new shared index file written for each
+> rebase step.
 
-The resulting end-state is simpler since we omit the local "info_list"
-and "states" variables in show() as well as the memset().
+Good point; my attempt to create a simple reproducer may not be
+sufficiently complex in this case.  But I don't think this is the source
+of the problem for my real Linux kernel repo; see below.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/remote.c | 90 ++++++++++++++++++++++++------------------------
- 1 file changed, 45 insertions(+), 45 deletions(-)
+> 
+> > What's different between what you expected and what actually happened?
+> > 
+> >   Rather than a single shared index file, I wound up with a huge number of
+> >   large shared index files.  The real repository I was working with (a Linux
+> >   kernel source tree) had a shared index file size of about 7MB, and I was
+> >   modifying a commit several hundred back in history (in case it
+> >   matters, these were all linear commits, no merges), so the resulting
+> >   collection of shared index files consumed a surprising amount of disk
+> >   space.
+> 
+> The last commit in my somewhat outdated linux repo contains ~71k
+> files, the 20% of that is ~14k.  Does that linear string of "several
+> hundred" commits modify that many files?
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 160dd954f74..deb48772ac5 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -972,26 +972,31 @@ static int get_remote_ref_states(const char *name,
- }
- 
- struct show_info {
--	struct string_list *list;
--	struct ref_states *states;
-+	struct string_list list;
-+	struct ref_states states;
- 	int width, width2;
- 	int any_rebase;
- };
- 
-+#define SHOW_INFO_INIT { \
-+	.list = STRING_LIST_INIT_DUP, \
-+	.states = REF_STATES_INIT, \
-+}
-+
- static int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
- {
- 	struct show_info *info = cb_data;
- 	int n = strlen(item->string);
- 	if (n > info->width)
- 		info->width = n;
--	string_list_insert(info->list, item->string);
-+	string_list_insert(&info->list, item->string);
- 	return 0;
- }
- 
- static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- {
- 	struct show_info *info = cb_data;
--	struct ref_states *states = info->states;
-+	struct ref_states *states = &info->states;
- 	const char *name = item->string;
- 
- 	if (states->queried) {
-@@ -1018,7 +1023,7 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- static int add_local_to_show_info(struct string_list_item *branch_item, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
--	struct ref_states *states = show_info->states;
-+	struct ref_states *states = &show_info->states;
- 	struct branch_info *branch_info = branch_item->util;
- 	struct string_list_item *item;
- 	int n;
-@@ -1031,7 +1036,7 @@ static int add_local_to_show_info(struct string_list_item *branch_item, void *cb
- 	if (branch_info->rebase >= REBASE_TRUE)
- 		show_info->any_rebase = 1;
- 
--	item = string_list_insert(show_info->list, branch_item->string);
-+	item = string_list_insert(&show_info->list, branch_item->string);
- 	item->util = branch_info;
- 
- 	return 0;
-@@ -1086,7 +1091,7 @@ static int add_push_to_show_info(struct string_list_item *push_item, void *cb_da
- 		show_info->width = n;
- 	if ((n = strlen(push_info->dest)) > show_info->width2)
- 		show_info->width2 = n;
--	item = string_list_append(show_info->list, push_item->string);
-+	item = string_list_append(&show_info->list, push_item->string);
- 	item->util = push_item->util;
- 	return 0;
- }
-@@ -1214,9 +1219,7 @@ static int show(int argc, const char **argv)
- 		OPT_BOOL('n', NULL, &no_query, N_("do not query remotes")),
- 		OPT_END()
- 	};
--	struct ref_states states = REF_STATES_INIT;
--	struct string_list info_list = STRING_LIST_INIT_NODUP;
--	struct show_info info;
-+	struct show_info info = SHOW_INFO_INIT;
- 
- 	argc = parse_options(argc, argv, NULL, options, builtin_remote_show_usage,
- 			     0);
-@@ -1227,25 +1230,22 @@ static int show(int argc, const char **argv)
- 	if (!no_query)
- 		query_flag = (GET_REF_STATES | GET_HEAD_NAMES | GET_PUSH_REF_STATES);
- 
--	memset(&info, 0, sizeof(info));
--	info.states = &states;
--	info.list = &info_list;
- 	for (; argc; argc--, argv++) {
- 		int i;
- 		const char **url;
- 		int url_nr;
- 
--		get_remote_ref_states(*argv, &states, query_flag);
-+		get_remote_ref_states(*argv, &info.states, query_flag);
- 
- 		printf_ln(_("* remote %s"), *argv);
--		printf_ln(_("  Fetch URL: %s"), states.remote->url_nr > 0 ?
--		       states.remote->url[0] : _("(no URL)"));
--		if (states.remote->pushurl_nr) {
--			url = states.remote->pushurl;
--			url_nr = states.remote->pushurl_nr;
-+		printf_ln(_("  Fetch URL: %s"), info.states.remote->url_nr > 0 ?
-+		       info.states.remote->url[0] : _("(no URL)"));
-+		if (info.states.remote->pushurl_nr) {
-+			url = info.states.remote->pushurl;
-+			url_nr = info.states.remote->pushurl_nr;
- 		} else {
--			url = states.remote->url;
--			url_nr = states.remote->url_nr;
-+			url = info.states.remote->url;
-+			url_nr = info.states.remote->url_nr;
- 		}
- 		for (i = 0; i < url_nr; i++)
- 			/*
-@@ -1258,57 +1258,57 @@ static int show(int argc, const char **argv)
- 			printf_ln(_("  Push  URL: %s"), _("(no URL)"));
- 		if (no_query)
- 			printf_ln(_("  HEAD branch: %s"), _("(not queried)"));
--		else if (!states.heads.nr)
-+		else if (!info.states.heads.nr)
- 			printf_ln(_("  HEAD branch: %s"), _("(unknown)"));
--		else if (states.heads.nr == 1)
--			printf_ln(_("  HEAD branch: %s"), states.heads.items[0].string);
-+		else if (info.states.heads.nr == 1)
-+			printf_ln(_("  HEAD branch: %s"), info.states.heads.items[0].string);
- 		else {
- 			printf(_("  HEAD branch (remote HEAD is ambiguous,"
- 				 " may be one of the following):\n"));
--			for (i = 0; i < states.heads.nr; i++)
--				printf("    %s\n", states.heads.items[i].string);
-+			for (i = 0; i < info.states.heads.nr; i++)
-+				printf("    %s\n", info.states.heads.items[i].string);
- 		}
- 
- 		/* remote branch info */
- 		info.width = 0;
--		for_each_string_list(&states.new_refs, add_remote_to_show_info, &info);
--		for_each_string_list(&states.tracked, add_remote_to_show_info, &info);
--		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
--		if (info.list->nr)
-+		for_each_string_list(&info.states.new_refs, add_remote_to_show_info, &info);
-+		for_each_string_list(&info.states.tracked, add_remote_to_show_info, &info);
-+		for_each_string_list(&info.states.stale, add_remote_to_show_info, &info);
-+		if (info.list.nr)
- 			printf_ln(Q_("  Remote branch:%s",
- 				     "  Remote branches:%s",
--				     info.list->nr),
-+				     info.list.nr),
- 				  no_query ? _(" (status not queried)") : "");
--		for_each_string_list(info.list, show_remote_info_item, &info);
--		string_list_clear(info.list, 0);
-+		for_each_string_list(&info.list, show_remote_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
- 		/* git pull info */
- 		info.width = 0;
- 		info.any_rebase = 0;
- 		for_each_string_list(&branch_list, add_local_to_show_info, &info);
--		if (info.list->nr)
-+		if (info.list.nr)
- 			printf_ln(Q_("  Local branch configured for 'git pull':",
- 				     "  Local branches configured for 'git pull':",
--				     info.list->nr));
--		for_each_string_list(info.list, show_local_info_item, &info);
--		string_list_clear(info.list, 0);
-+				     info.list.nr));
-+		for_each_string_list(&info.list, show_local_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
- 		/* git push info */
--		if (states.remote->mirror)
-+		if (info.states.remote->mirror)
- 			printf_ln(_("  Local refs will be mirrored by 'git push'"));
- 
- 		info.width = info.width2 = 0;
--		for_each_string_list(&states.push, add_push_to_show_info, &info);
--		QSORT(info.list->items, info.list->nr, cmp_string_with_push);
--		if (info.list->nr)
-+		for_each_string_list(&info.states.push, add_push_to_show_info, &info);
-+		QSORT(info.list.items, info.list.nr, cmp_string_with_push);
-+		if (info.list.nr)
- 			printf_ln(Q_("  Local ref configured for 'git push'%s:",
- 				     "  Local refs configured for 'git push'%s:",
--				     info.list->nr),
-+				     info.list.nr),
- 				  no_query ? _(" (status not queried)") : "");
--		for_each_string_list(info.list, show_push_info_item, &info);
--		string_list_clear(info.list, 0);
-+		for_each_string_list(&info.list, show_push_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
--		free_remote_ref_states(&states);
-+		free_remote_ref_states(&info.states);
- 	}
- 
- 	return result;
+No.  In the real Linux repo I'm working with, nearly all of the commits
+are in the drm/i915 driver tree.  The overall diff of the patches being
+rebased is
+
+         614 files changed, 107114 insertions(+), 8751 deletions(-)
+
+> 
+> > Anything else you want to add:
+> > 
+> >   As an experiment, I tried setting splitIndex.sharedIndexExpire=now
+> 
+> I would advise against that, it's potentially dangerous, because it
+> can remove shared index files that are still in use by other git
+> processes.
+
+Yeah, I also found sharedIndexExpire=now to be incompatible with a few
+other commands such as "git stash" too.
+
+
+> 
+> >   to see
+> >   if it would avoid the explosion of shared index files, but it appears the
+> >   stale index files are still not being removed during the rebase, and I
+> >   still wind up with a huge number at the end of the rebase.  If I manually
+> >   run "git update-index --split-index" after the rebase completes it will
+> >   properly delete all of the stale ones at that point.
+> > 
+> >   Rebases that do not actually modify the history do _not_ trigger the
+> >   explosion of shared index files (e.g., "git rebase -i HEAD~10 --exec 'echo
+> >   foo'").
+> > 
+> >   If I do not set the core.splitIndex setting on the repository, but only
+> >   activate split index manually via "git update-index --split-index" there
+> >   is only one shared index file at the end of the rebase, but based on the
+> >   file size it appears the repository is no longer operating in split index
+> >   mode.
+> > 
+> >   Before:
+> >   $ ll .git | grep index
+> >   -rw-rw-r--   1 mdroper mdroper   149165 Sep 15 22:21 index
+> >   -rw-rw-r--   1 mdroper mdroper  7296080 Sep 15 22:21 sharedindex.f916dd59ccc22ca34298f557a4659aca2767dae4
+> > 
+> >   After (just amending HEAD~1 in this case):
+> >   $ ls -l .git | grep index
+> >   -rw-rw-r--   1 mdroper mdroper  7445145 Sep 15 22:22 index
+> >   -rw-rw-r--   1 mdroper mdroper  7296080 Sep 15 22:22 sharedindex.f916dd59ccc22ca34298f557a4659aca2767dae4
+> 
+> > git version 2.33.0
+> 
+> I could reproduce all this with v2.33.0 (except that I saw the split
+> index being turned off even with core.splitIndex enabled), but was
+> unable to do so with current master.
+> 
+> I think that this is a bug in the interaction between the split index
+> feature and 'git rebase' when using the recursive merge strategy and
+> when a couple of other, more subtle conditions are met.  It seems that
+> with the right conditions rebase only writes regular index files, and
+> by not entering the split index code paths it doesn't look for old
+> shared index files to expire.
+> 
+> After v2.33.0 we switched the default merge strategy from recursive to
+> 'ort', and with that these cases appear to work as intended, i.e. old
+> shared index files are expired and the split index feature doesn't get
+> turned off.  Since the 'ort' strategy is in many ways better (faster,
+> more correct, etc.) than the recursive, I don't think it's worth the
+> effort to try to fix this issue with split index, rebase and the
+> recursive strategy.
+
+Yeah, if this is specific to the recursive strategy then it's probably
+not worth sinking too much time into tracking down.  I just tried
+setting pull.twohead=ort in my config to make v2.33.0 also use the ort
+strategy by default, and from some preliminary testing that does indeed
+appear to solve the problem.
+
+Thanks for looking into this!
+
+
+Matt
+
 -- 
-2.33.0.1316.gb2e9b3ba3ae
-
+Matt Roper
+Graphics Software Engineer
+VTT-OSGC Platform Enablement
+Intel Corporation
+(916) 356-2795
