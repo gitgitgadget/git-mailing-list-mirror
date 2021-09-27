@@ -2,90 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39352C433FE
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED30C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:37:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F14860FC2
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:32:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 198876109F
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 21:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237264AbhI0VeP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 17:34:15 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:47118 "EHLO
-        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237028AbhI0VeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 17:34:11 -0400
-Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:2b6b:76fe:e08a:5eba])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id 2CDFD511687;
-        Mon, 27 Sep 2021 23:32:00 +0200 (CEST)
-Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1632778320; bh=gG64CtGjVLvwwjP6jqZpQ9AmoO0fdMxZBgt1GMpQcUg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=y8FnL+KEwJZa7kx9mifcb01mFHe1CSBVphEa+CnyJs8ygj5lFNMmhfuGTbEzJ/SZI
-         1tLOZCarJXffnZ3AvnHGiNM6UE/wuqQebw7JQeZEzOTqc2YqG7421nQqFouU/I+i3Y
-         K/bOgpF6FhmglImhBLblwgmvOlg07+mDCzsUT4nU=
-From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
-Subject: [PATCH 1/1] maintenance: fix test t7900-maintenance.sh
-Date:   Mon, 27 Sep 2021 23:30:16 +0200
-Message-Id: <20210927213016.21714-2-lenaic@lhuard.fr>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210927213016.21714-1-lenaic@lhuard.fr>
-References: <20210927213016.21714-1-lenaic@lhuard.fr>
+        id S237222AbhI0Vj3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 17:39:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55772 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237050AbhI0Vj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 17:39:28 -0400
+Received: (qmail 7533 invoked by uid 109); 27 Sep 2021 21:37:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Sep 2021 21:37:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20683 invoked by uid 111); 27 Sep 2021 21:37:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Sep 2021 17:37:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 27 Sep 2021 17:37:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Junio C Hamano' <gitster@pobox.com>,
+        =?utf-8?B?J8OGdmFyIEFybmZqw7Zyw7A=?= Bjarmason' 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        'The Grey Wolf' <greywolf@starwolf.com>
+Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
+Message-ID: <YVI5rYamHBkGQ/jy@coredump.intra.peff.net>
+References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
+ <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
+ <YU49+Y+nRhl1mgof@coredump.intra.peff.net>
+ <xmqqa6k1slxe.fsf@gitster.g>
+ <YU5KOpGkS5sH4iFJ@coredump.intra.peff.net>
+ <xmqqo88eq8um.fsf@gitster.g>
+ <YVImeFHxY7hmb3wY@coredump.intra.peff.net>
+ <00ee01d7b3e1$ceb06840$6c1138c0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <00ee01d7b3e1$ceb06840$6c1138c0$@nexbridge.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit b681b191 introduced the support of systemd timers for git
-maintenance.
-A test is leveraging the `systemd-analyze verify` utility to verify the
-correctness of the systemd unit files generated by git.
+On Mon, Sep 27, 2021 at 04:53:59PM -0400, Randall S. Becker wrote:
 
-But on some systems, although the `systemd-analyze` tool is installed
-and supports the `verify` subcommand, it fails with some permission
-errors.
+> What about something like:
+> 
+> 	[includeIf "env:PATH ~= '^(.*😊)/usr/bin(:.*)*$' "]
+> 
+> Using single quotes and a full regex pattern instead of trying to
+> provide a syntax to extract a pattern and then match. One call to
+> regexec() would be easier. Then escaping is regcomp's problem
+> (mostly). Potentially, you could even remove the outer ", but that
+> would be wonky. You could omit the ^ and $ by default assuming a full
+> match.
 
-So, instead of only checking if the `verify` subcommand exists, a more
-reliable way of detecting whether `systemd-analyze verify` can be used
-is to try to use it.
+I almost suggested that, but then...how do you put single-quotes in your
+pattern? You can backslash-escape them, but:
 
-The SYSTEMD_ANALYZE prerequisite is now trying to run `systemd-analyze
-verify` on a systemd unit file which is shipped by systemd itself.
-We can reasonably think that, on systemd hosts, this file is present and
-valid.
+  - do you need to escape the backslash to get it through the config
+    parser intact?
 
-Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
----
- t/t7900-maintenance.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+  - it seems extra funny to me because single quotes usually imply a
+    lack of interpolation
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 36a4218745..6b4941980c 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -21,8 +21,7 @@ test_xmllint () {
- }
- 
- test_lazy_prereq SYSTEMD_ANALYZE '
--	systemd-analyze --help >out &&
--	grep verify out
-+	systemd-analyze verify /lib/systemd/system/basic.target
- '
- 
- test_systemd_analyze_verify () {
--- 
-2.33.0
-
+-Peff
