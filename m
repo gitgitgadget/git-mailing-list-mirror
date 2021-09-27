@@ -2,97 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC340C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4E0FC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:30:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D6DF60EE9
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:27:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A1986113A
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 00:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232216AbhI0A3R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Sep 2021 20:29:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37858 "EHLO
+        id S232284AbhI0Aby (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Sep 2021 20:31:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231232AbhI0A3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Sep 2021 20:29:16 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0977C061570
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:27:39 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id e15so69462532lfr.10
-        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:27:39 -0700 (PDT)
+        with ESMTP id S232251AbhI0Abx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Sep 2021 20:31:53 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 094E2C061570
+        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:30:16 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id v18so26700752edc.11
+        for <git@vger.kernel.org>; Sun, 26 Sep 2021 17:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=m2fzfmP8lSHPr4ka4KADs9JTkDH4PnmVWdbLcYnlAyo=;
-        b=H1nReJ+vA8rskSQMaQKcG4MrGKdDvdQxFwSzwGmoqizGQ3BX6lanefpqnm3gSD60LN
-         A6l8NyqXDjnXn+Yvo0aFHlKORi4meyr4E7TW0Zr7UVXx3RnTPzHi0h+ZeaRcQXKrV8OI
-         rSwjWNUJC/bz4FGkLhyAPUdNoDJwhah99Zw9oxHg3cW31LztJju9s8ywTIhjN0aGHgiv
-         Sdxg+wG0zauA6TFsUZ+Q8sDG0nSEgpLFuyqjFCoJnv+XAFiavnSYjEsqGFes8OvUFoFi
-         cNPAJDcYqkezdPw4RW+kndGVYcEtwGiA5JaGntGx/IJZJC7XqjFm4u2x1zEs6gATsQy+
-         Bldg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=BHLsAsoHTg40bNt/NIbLChe39beNLwX4PEyM721coXk=;
+        b=fQEQc75rCJu3fV3Laksvtb4PaMCXsUNROo0qDwHqPqY0ft/+Cju9+tkDkmbiCjhC2W
+         sjKptqYr1IiF7AqXIFY17ubGQcuJusCm3hi8OV2rV44Iu11Yi76zeYE0Ty7fsIESabBR
+         WOgBYCBhNNHjyRMr9fMwJpv8YKXEj66PpYZqGK2n7W3YTecloB/iKAThP8Vtyjx3IUsj
+         IZWoXRemq/NqfRUB3sGyQyDX0R2eGsGwz9yNcydAe4BouizM78LcGXJTHbcoJuagkpWm
+         NhLqQZNRtLMvGc/inNskSw3vJAODwxptMe3plWHCEaMxr8LJ9HC2pcgQnPI80UGoM4Bd
+         Amfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=m2fzfmP8lSHPr4ka4KADs9JTkDH4PnmVWdbLcYnlAyo=;
-        b=E71RsYB2GNLfYCt2XT1r110JEDPhhysaGOWd93IcJ2E8SVtfnh+KtDOwztDO7YYYx2
-         E63wpGWe/V/q5Ui5zAYb9GR5GBQRtEP6Hp5gPyer7hBe50jlV6IsuvhGCpGrcv+CY+8H
-         kHsiVXrZhLYkY9xQ8UgQqtGwBD+v9YRq2J35cTv+gljcnhalEQCC8ebhUljQhZbYDTeW
-         oRLKPPfueuVouO51A2cpic4G6hIEUHkZy9Fh03ev5hh9yGozPHAHRYkRI39TxkPe2ExL
-         UCtJb2u79UiriILpKjfmFzjZdWa3Ef0YbL2a2H5jWVm8tr8dtisTIs7MXL+QOYnR6AVY
-         GUMQ==
-X-Gm-Message-State: AOAM530sNSkS/ByoRzCnxBIHXMN+O6wmYckoAO1ul8RDRCYi4ZbV0LNg
-        olH/jqZWYzL7emvKmRglN61csweaRYeJUGkbzM67eApsRVM=
-X-Google-Smtp-Source: ABdhPJx3VJZLzewW2M84S72d89Xc/R41k2EIptoKAa+9T+qrZMCBHMEDZ/zAtHFyPfO8HbKYgnbLWElBx70baHMu6mQ=
-X-Received: by 2002:a19:7701:: with SMTP id s1mr21551566lfc.592.1632702458013;
- Sun, 26 Sep 2021 17:27:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=BHLsAsoHTg40bNt/NIbLChe39beNLwX4PEyM721coXk=;
+        b=e8gLGoD8E17FrhTRZ3V+qoMLDNwfnbLjHzR+fhME7YED3+/8gQHF3RQq86BLMSKBFA
+         TQiRV2SXam44RygOOec0aXFYsqSRXjyD1+UsJ5cqlTl+3R6b6MmSBwqVaqUCJOrPXSiG
+         PmFZcaEp8wTD8BOXxUWTwRHKE2nZLLuOsZ5kuCoWpdonDaFU3HHhz4QO2IZe4wXjCl+x
+         sIo5qJ/q1i3vyowrxjKvwSe++fcpiioaf6UUQCoFIPIZojkcfH17+8FU2kyn6zSXswUL
+         vKgFVVJijqGhlANvrI+2AjnxNTDjb+UbLQYf5X/Ik4Zt72FnZDFeXOcgsMasZffLsHVR
+         YlUg==
+X-Gm-Message-State: AOAM531Orp43SLSSjpGrB+3dkGVWAV/7BgOUpX1mgfKZR8N44OYYlzL/
+        FJ8fV5UvN/KlT1R4OMgJaT0=
+X-Google-Smtp-Source: ABdhPJykxeKEuhT4Z3b9jvHrKw1qObkJebBSQdDctXp2NN3F28lzJEpA/p0mLJCBdClYJFHqr/rjjQ==
+X-Received: by 2002:a17:906:686:: with SMTP id u6mr23654222ejb.569.1632702614530;
+        Sun, 26 Sep 2021 17:30:14 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id k21sm7626724ejj.55.2021.09.26.17.30.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Sep 2021 17:30:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Joseph Jenne <joseph.jenne15@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: BUG: git log dies to SIGPIPE
+Date:   Mon, 27 Sep 2021 02:29:32 +0200
+References: <CAB5AetcMK6=yZh4OY-0A6x6vs7X+0_1APfp4cCP_MSK_TO46ow@mail.gmail.com>
+ <CAOLTT8QqF-4rRiuWwntA3TfauCfc-MKingPQmyuKw3r5zf7O3A@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <CAOLTT8QqF-4rRiuWwntA3TfauCfc-MKingPQmyuKw3r5zf7O3A@mail.gmail.com>
+Message-ID: <87y27i273e.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1076.v5.git.git.1632514331.gitgitgadget@gmail.com>
- <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com> <543ea3569342165363c1602ce36683a54dce7a0b.1632527609.git.gitgitgadget@gmail.com>
- <e8244ef1-dbd3-d56d-b9db-1e67114538fa@gmail.com>
-In-Reply-To: <e8244ef1-dbd3-d56d-b9db-1e67114538fa@gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Sun, 26 Sep 2021 17:27:27 -0700
-Message-ID: <CANQDOdfN9y+iVS=KuWkcVaFkOoeWPT7ACQWmmgxe=uxftduq+Q@mail.gmail.com>
-Subject: Re: [PATCH v6 3/8] core.fsyncobjectfiles: batched disk flushes
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 24, 2021 at 8:15 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
->
-> On 25/09/21 06.53, Neeraj Singh via GitGitGadget wrote:
-> > At the end of the entire transaction when unplugging bulk checkin we:
-> > 1. Issue an fsync against a dummy file to flush the hardware writeback
-> >     cache, which should by now have processed the tmp-objdir writes.
-> > 2. Rename all of the tmp-objdir files to their final names.
-> > 3. When updating the index and/or refs, we assume that Git will issue
-> >     another fsync internal to that operation. This is not the case today,
-> >     but may be a good extension to those components.
->
-> The 'we' can be stripped because only point 1 and 2 that are
-> subject-inferred, so that subject needs to be explicitly mentioned, like:
->
-> ```
-> At the end of ... <snip>.:
-> 1. We issue an fsync ... <snip>.
-> 2. We rename ... <snip>.
-> 3. When ... <snip>, we assume <snip>. (stays same)
-> ```
 
-I'll fix this in the github PR so that it will ride along with any
-other re-roll.
+On Sun, Sep 26 2021, ZheNing Hu wrote:
 
-Thanks,
-Neeraj
+> Joseph Jenne <joseph.jenne15@gmail.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=883=
+=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:47=E5=86=99=E9=81=93=EF=BC=
+=9A
+>>
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> used `git log`, exiting the viewer (`less`) before reading the entire
+>> commit history of the project
+>> What did you expect to happen? (Expected behavior)
+>> normal exit with status code 0
+>> What happened instead? (Actual behavior)
+>> git log dies to SIGPIPE after `less` exits
+>> What's different between what you expected and what actually happened?
+>> git does not exit normally as would be expected
+>> Anything else you want to add:
+>>
+>>
+>>
+>> [System Info]
+>> git version:
+>> git version 2.30.2
+>> cpu: x86_64
+>> no commit associated with this build
+>> sizeof-long: 8
+>> sizeof-size_t: 8
+>> shell-path: /bin/sh
+>> uname: Linux 5.10.0-8-amd64 #1 SMP Debian 5.10.46-2 (2021-07-20) x86_64
+>> compiler info: gnuc: 10.2
+>> libc info: glibc: 2.31
+>> $SHELL (typically, interactive shell): /bin/zsh
+>
+> I may be a little unresponsive, I also saw this bug today, and there
+> is no such bug
+> in a small repository, it only appears in a large repository.
+>
+> I now know that it comes from outside git, this is really bad.
+
+Please see the discussion starting at
+https://lore.kernel.org/git/YAG%2FvzctP4JwSp5x@zira.vinc17.org/ about
+whether this is even considered a bug, but in any case the causes are
+well understood.
