@@ -2,27 +2,27 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A3F1C433F5
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6E95C433F5
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:34:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48BDC611BD
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:24:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9B0B611C3
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238208AbhI0X03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 19:26:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55884 "EHLO cloud.peff.net"
+        id S238113AbhI0Xfv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 19:35:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55900 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238189AbhI0X03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 19:26:29 -0400
-Received: (qmail 7834 invoked by uid 109); 27 Sep 2021 23:24:51 -0000
+        id S238012AbhI0Xfu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 19:35:50 -0400
+Received: (qmail 7868 invoked by uid 109); 27 Sep 2021 23:34:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Sep 2021 23:24:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Sep 2021 23:34:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21995 invoked by uid 111); 27 Sep 2021 23:24:50 -0000
+Received: (qmail 22069 invoked by uid 111); 27 Sep 2021 23:34:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Sep 2021 19:24:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Sep 2021 19:34:11 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 27 Sep 2021 19:24:50 -0400
+Date:   Mon, 27 Sep 2021 19:34:11 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -30,46 +30,55 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 2/5] *.[ch] *_INIT macros: use { 0 } for a "zero out"
- idiom
-Message-ID: <YVJSwuqjolz28+mG@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 1/5] submodule-config.h: remove unused SUBMODULE_INIT
+ macro
+Message-ID: <YVJU89iekC0zZSkF@coredump.intra.peff.net>
 References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
  <cover-v2-0.5-00000000000-20210927T124407Z-avarab@gmail.com>
- <patch-v2-2.5-afcd2729c95-20210927T124407Z-avarab@gmail.com>
+ <patch-v2-1.5-7a7a0141515-20210927T124407Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-2.5-afcd2729c95-20210927T124407Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-1.5-7a7a0141515-20210927T124407Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 02:54:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Sep 27, 2021 at 02:54:24PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> In C it isn't required to specify that all members of a struct are
-> zero'd out to 0, NULL or '\0', just providing a "{ 0 }" will
-> accomplish that.
+> This macro was added and used in c68f8375760 (implement fetching of
+> moved submodules, 2017-10-16) but its last user went away in
+> be76c212823 (fetch: ensure submodule objects fetched, 2018-12-06).
 > 
-> Let's also change code that provided N zero'd fields to just
-> provide one, and change e.g. "{ NULL }" to "{ 0 }" for
-> consistency. I.e. even if the first member is a pointer let's use "0"
-> instead of "NULL". The point of using "0" consistently is to pick one,
-> and to not have the reader wonder why we're not using the same pattern
-> everywhere.
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  submodule-config.h | 4 ----
+>  1 file changed, 4 deletions(-)
+> 
+> diff --git a/submodule-config.h b/submodule-config.h
+> index c11e22cf509..65875b94ea5 100644
+> --- a/submodule-config.h
+> +++ b/submodule-config.h
+> @@ -45,10 +45,6 @@ struct submodule {
+>  	struct object_id gitmodules_oid;
+>  	int recommend_shallow;
+>  };
+> -
+> -#define SUBMODULE_INIT { NULL, NULL, NULL, RECURSE_SUBMODULES_NONE, \
+> -	NULL, NULL, SUBMODULE_UPDATE_STRATEGY_INIT, { { 0 } }, -1 };
 
-I seem to recall we've had some linter complaints about using "0" to
-initialize a pointer, but I think these days it's OK, per:
+I was a bit surprised by this one, just because we generally prefer the
+builtin initializers to init functions. And even if we are only using
+the latter, I like the move to implementing it in terms of the former.
 
- - 1c96642326 (sparse: allow '{ 0 }' to be used without warnings,
-   2020-05-22)
+But this struct is extra funny, as now it will have neither. It comes
+only from submodule_from_name() or submodule_from_path(), which in turn
+are building up from config and the initialization in
+lookup_or_create_by_name(). And keeping those two in sync is potentially
+error-prone.
 
-and
-
- - https://lore.kernel.org/git/18bd6127-be72-b7b7-8e2a-17bbe7214a2e@ramsayjones.plus.com/
-
-I think this is a good step, as the long lists are unwieldy and difficult to
-keep up to date without actually providing any readability or functional
-value.
+So this whole "make a submodule struct on the stack" thing is pretty odd
+in the first place, and I'm happy to see this initializer going away.
 
 -Peff
