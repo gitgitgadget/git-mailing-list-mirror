@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5610FC433FE
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 16:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64910C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 16:34:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 408EE60EE2
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 16:34:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EE756103B
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 16:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235535AbhI0QgE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 12:36:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58712 "EHLO
+        id S235599AbhI0QgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 12:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235520AbhI0Qfl (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235522AbhI0Qfl (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Sep 2021 12:35:41 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931B4C061771
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 09:33:56 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id g16so53029569wrb.3
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 09:33:56 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A687C061772
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 09:33:57 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id g19-20020a1c9d13000000b003075062d4daso485361wme.0
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 09:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4flcDxnWAKshHJowklyWsYUv/4ql0eXm7FSKYXZjCq8=;
-        b=YcCqAUxc/RSw2fcoA8n2p+GaImBIA4LpoP/zaiKWEixKJCnXTPHJNbAJgiz74gn2lr
-         Aa6onHKhLxp5S3zQnemMO91PPuMK81A70EvYab9dBzxCLELz+T05Jz1fCgItFIzr2CVw
-         e8rcsaUrQ2XQIOnnRJ93OiTdA47/IYm2P8MGRwczuTt5PuKa1EDbJt/fOAbHkOsIu0FV
-         TRrzHxTECbEPjZ0+vKIybgf+yeHH0nA7Wtgcr8NGtA80RpjrhjoxMtFlWglwjgBvMP5i
-         ZYmG5Q781O0mHSmn1MOmPyvikSsugiVv6xH/tlOWeM4COM/s+oZovExSz3vF/GW4vP5U
-         nsLw==
+        bh=5lP2C1cPbEMfe/VUNzBw0385qhXCQ10cKlGFDXXepgs=;
+        b=Y8Qp/MLhw2ZS4iohD5h9LACjWc00Agjf5gK7cqNj5qZkV/qzuyaMlaepAhsCxKm48w
+         LPO35XRaUjX53PgARf/8G3cbVr9f9KhcGjqk5/kKnh5c0aMjNFQqVoOiw2WUyLZB5+/S
+         Y+WtGpYq507wWf4CiWmKrXILEvMHDdaoyQJFN26to7oqSTs9Zc0X+hhjl7JFmBFS9/Nm
+         64W1zy2X49wb+rK09MCVUcJ7I4R6USH3uVsOP5oV+zmXyLcvibYtbknktAqqIRFywf9/
+         4XOg5qbST/x6S2hckeVqfEFO3aJd1crd6PabtQNWNhIfraSIkTlIx+P+QgrhSvI7E9iN
+         sEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4flcDxnWAKshHJowklyWsYUv/4ql0eXm7FSKYXZjCq8=;
-        b=aE9CFydV0JIsI+z+tUzIJO7ObI7dYq5bORPAs2Ek44Ev9slJJsHEW5XsSAVD2bJ3Ex
-         r0DcsGSgeXKFHSRdydNl4oHW8KD3E8PCsaVKS0nl7FR6Oma0O5P5jwF73D5TqC5be68d
-         PJ4Is7qkDuRbqQOOZzYIKom/LV88eAFHi52HABj1wIp/bQcukwwZea5vw5S1WoDQdPQV
-         xV3s+Uxht948G9aJe9p+M0rgcjuUqieaxA7/yTmyw6s1gngxiyhkrFgJQQc7JYsZwFI/
-         qdgCJfHdmA8dEZCcemk4N3m8rlwc/y2AohpDwBVLVCn5rWy/OjaVwljSLEZBWYgLlVig
-         Y+PA==
-X-Gm-Message-State: AOAM532NQRVuElhGOjmyVq+detPvmgObHuhxbIC2TXsbyU1DG2opCCKm
-        6o7FpAaWpoAPzWgZbL6NUoHY701Wx5A=
-X-Google-Smtp-Source: ABdhPJzA2zmiPCBWhqw+/Kr/uIDIbpudcrAc4JBnmvjsIIES+PxGcUAow5/WVDf0lILeWj5HYwTzhw==
-X-Received: by 2002:a05:6000:18a:: with SMTP id p10mr863941wrx.161.1632760435256;
+        bh=5lP2C1cPbEMfe/VUNzBw0385qhXCQ10cKlGFDXXepgs=;
+        b=Jcxg6nom6GMgq3CBz81PbvPqV4m24+ck24jh087T+LQERbW3X8RswH9JGS81GwPk4V
+         V7ZzyZeuxJSAP01JL3/LKYn696gVf2rfJBOja8MST4YbnUFzS4XguXeMmyVzDtjxXzOx
+         l5BLL569lTuJ/cZlX6BWSNsppKemtRfrD+T5EJ+B0B9KYz71aQfV2NKF8tybOJ/M1Qxi
+         jiyrMdQ1TW3X21pFGbkBs+QZV61001aQ/RAZp90xtmRP9c9fH32Oz5MexPo6bSUMnmT1
+         lAnIvlF4/1ePN+sutwKb4uzJAswd+SKmv1m9bRkjfs/JDLlBoHwBpD3i8VJ0s8o3SB7m
+         3Lyw==
+X-Gm-Message-State: AOAM530Zd1nZJLNvnsaRAZR097ul9JVsRx7w5dTMA9lJoUWnfLBSOns2
+        DOnPyImptovsRHCSpeIKI8uz+CMzWtk=
+X-Google-Smtp-Source: ABdhPJwx87xUVBvjVZhucTxc6BoeR29Y3PxdCTaLcpAU3bxMkqinbhlzsron5v1Oo69vyRhQYN4a1w==
+X-Received: by 2002:a1c:d4:: with SMTP id 203mr11706902wma.87.1632760435768;
         Mon, 27 Sep 2021 09:33:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g21sm15429wmk.10.2021.09.27.09.33.54
+        by smtp.gmail.com with ESMTPSA id v17sm7644526wro.34.2021.09.27.09.33.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 09:33:54 -0700 (PDT)
-Message-Id: <6b42a80bf3d46e16980d0724e8b07101225239d0.1632760428.git.gitgitgadget@gmail.com>
+        Mon, 27 Sep 2021 09:33:55 -0700 (PDT)
+Message-Id: <de416f887d7ce24f20ad3ad4cc838394d6523635.1632760428.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
 References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
         <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Sep 2021 16:33:47 +0000
-Subject: [PATCH v3 10/11] Comment important codepaths regarding nuking
- untracked files/dirs
+Date:   Mon, 27 Sep 2021 16:33:48 +0000
+Subject: [PATCH v3 11/11] Documentation: call out commands that nuke untracked
+ files/directories
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,94 +77,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In the last few commits we focused on code in unpack-trees.c that
-mistakenly removed untracked files or directories.  There may be more of
-those, but in this commit we change our focus: callers of toplevel
-commands that are expected to remove untracked files or directories.
-
-As noted previously, we have toplevel commands that are expected to
-delete untracked files such as 'read-tree --reset', 'reset --hard', and
-'checkout --force'.  However, that does not mean that other highlevel
-commands that happen to call these other commands thought about or
-conveyed to users the possibility that untracked files could be removed.
-Audit the code for such callsites, and add comments near existing
-callsites to mention whether these are safe or not.
-
-My auditing is somewhat incomplete, though; it skipped several cases:
-  * git-rebase--preserve-merges.sh: is in the process of being
-    deprecated/removed, so I won't leave a note that there are
-    likely more bugs in that script.
-  * contrib/git-new-workdir: why is the -f flag being used in a new
-    empty directory??  It shouldn't hurt, but it seems useless.
-  * git-p4.py: Don't see why -f is needed for a new dir (maybe it's
-    not and is just superfluous), but I'm not at all familiar with
-    the p4 stuff
-  * git-archimport.perl: Don't care; arch is long since dead
-  * git-cvs*.perl: Don't care; cvs is long since dead
-
-Also, the reset --hard in builtin/worktree.c looks safe, due to only
-running in an empty directory.
+Some commands have traditionally also removed untracked files (or
+directories) that were in the way of a tracked file we needed.  Document
+these cases.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/stash.c             | 1 +
- builtin/submodule--helper.c | 4 ++++
- contrib/rerere-train.sh     | 2 +-
- submodule.c                 | 1 +
- 4 files changed, 7 insertions(+), 1 deletion(-)
+ Documentation/git-checkout.txt  | 5 +++--
+ Documentation/git-read-tree.txt | 5 +++--
+ Documentation/git-reset.txt     | 3 ++-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 0e3662a230c..aa31163a5a1 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1521,6 +1521,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 		} else {
- 			struct child_process cp = CHILD_PROCESS_INIT;
- 			cp.git_cmd = 1;
-+			/* BUG: this nukes untracked files in the way */
- 			strvec_pushl(&cp.args, "reset", "--hard", "-q",
- 				     "--no-recurse-submodules", NULL);
- 			if (run_command(&cp)) {
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5336daf186d..e13f2a0bcd0 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3090,6 +3090,10 @@ static int add_submodule(const struct add_data *add_data)
- 		prepare_submodule_repo_env(&cp.env_array);
- 		cp.git_cmd = 1;
- 		cp.dir = add_data->sm_path;
-+		/*
-+		 * NOTE: we only get here if add_data->force is true, so
-+		 * passing --force to checkout is reasonable.
-+		 */
- 		strvec_pushl(&cp.args, "checkout", "-f", "-q", NULL);
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index b1a6fe44997..d473c9bf387 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -118,8 +118,9 @@ OPTIONS
+ -f::
+ --force::
+ 	When switching branches, proceed even if the index or the
+-	working tree differs from `HEAD`.  This is used to throw away
+-	local changes.
++	working tree differs from `HEAD`, and even if there are untracked
++	files in the way.  This is used to throw away local changes and
++	any untracked files or directories that are in the way.
+ +
+ When checking out paths from the index, do not fail upon unmerged
+ entries; instead, unmerged entries are ignored.
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index 0222a27c5af..8c3aceb8324 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -38,8 +38,9 @@ OPTIONS
  
- 		if (add_data->branch) {
-diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
-index eeee45dd341..75125d6ae00 100755
---- a/contrib/rerere-train.sh
-+++ b/contrib/rerere-train.sh
-@@ -91,7 +91,7 @@ do
- 		git checkout -q $commit -- .
- 		git rerere
- 	fi
--	git reset -q --hard
-+	git reset -q --hard  # Might nuke untracked files...
- done
+ --reset::
+ 	Same as -m, except that unmerged entries are discarded instead
+-	of failing. When used with `-u`, updates leading to loss of
+-	working tree changes will not abort the operation.
++	of failing.  When used with `-u`, updates leading to loss of
++	working tree changes or untracked files or directories will not
++	abort the operation.
  
- if test -z "$branch"
-diff --git a/submodule.c b/submodule.c
-index 78aed03d928..c8ba93cc708 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1908,6 +1908,7 @@ static void submodule_reset_index(const char *path)
+ -u::
+ 	After a successful merge, update the files in the work
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 252e2d4e47d..6f7685f53d5 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -69,7 +69,8 @@ linkgit:git-add[1]).
  
- 	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
- 		     get_super_prefix_or_empty(), path);
-+	/* TODO: determine if this might overwright untracked files */
- 	strvec_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
+ --hard::
+ 	Resets the index and working tree. Any changes to tracked files in the
+-	working tree since `<commit>` are discarded.
++	working tree since `<commit>` are discarded.  Any untracked files or
++	directories in the way of writing any tracked files are simply deleted.
  
- 	strvec_push(&cp.args, empty_tree_oid_hex());
+ --merge::
+ 	Resets the index and updates the files in the working tree that are
 -- 
 gitgitgadget
-
