@@ -2,283 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F7EC433FE
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 12:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0A03C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:36:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5DD661052
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 12:58:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D143C60230
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 13:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234513AbhI0NAe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 09:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
+        id S234550AbhI0NiQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 09:38:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234497AbhI0NAb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 09:00:31 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E5C7C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 05:58:53 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id d6so51640120wrc.11
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 05:58:53 -0700 (PDT)
+        with ESMTP id S234487AbhI0NiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 09:38:15 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9101C061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 06:36:37 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id d6so51857648wrc.11
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 06:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aPVW358KMffOcU5NvWPMkqkUO9OA/F0e/FQahSbWyxg=;
-        b=cjjKgMvLbLpHIertHZdJBStYs7jZKWaG55HSrbmw569WtlR7a9mTy33TJB2z0YsoTY
-         JG4KkOadBvz4928La31tqpleJNP2Z6Ienik0SMHs6Y01s+Z+s8nKrYFG6hGyu4ptJ17J
-         ZYPZsznxJykxsZt1I9uN4DBrgz4tUs95zQDxd4rVwlC6JmBz4ssqEIGFW7CXqOy2q8Qr
-         XP5XSFFHfaHPTPoAdZLDXjjJZj+tJIU9MyWvRS56JNYDsRR6j3vIvP7h0SB4tYN9MqhM
-         V41i7NNTx7EGBMaKT21Z43N1ipRoy6YshCftIb8X/nljDDN4N7CNs5NDkLfmRhPHmGcO
-         FyXw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5pzddiYO2NHNNOFUflWeBY4lqPmaYpANvWDz4PRtx0A=;
+        b=PaHQ2UVVS98kwbwC9JO+v5+ZF4X7l4n+W9jMYfDzssVqLB0fZkQk7lAjWmIz9dno2O
+         /n3ocCYPDZrGqpFjNNWui35j3AU3lNY4NyobE7yPBT39V4G5LCXvb0sWSznryqmW5MYH
+         QBLK/sBMfDyCA8DurUPfK/V10PBQndObDiMRY2q+NE4sGlpW3mAH5lEqTl2lNDaN1Rx+
+         xHBeobNKWqxjUpYdy1W0u49vjqiHeIcw9UP74ZpfeseUqzRxuOUps3a/gdaLhvlymLwi
+         UVl5/z1GcxCzSpype5LIp2GHuSS9P/ovkZeGzJVxKYAWKIaOII3vQ8lQSKHZz5Q2CdfQ
+         cWJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aPVW358KMffOcU5NvWPMkqkUO9OA/F0e/FQahSbWyxg=;
-        b=GY193stWSakeIcnHPkRxYcC8ghRwtmKClkbUGjNyw2iU2Jp+DjuaEYscqYjJuasGkR
-         7aIjjrdx9LhnxQZW4l4SBl0XPhcfqd99IPTErbwZrR6xfE6ENdmFnjxLrojLN8fc6aYy
-         4vBH1f80Z/eggu2alRrUWu4QZiIoQs1LXdQxF6Ekz2f6ZJRHA1XQKjBgdamS3VAJa3+r
-         4fb/ZbE6IpBmUYNt81dTRtzJdfgp5Tp+TN04rxzOTUHpfq1tu56t4WfXa67SI3ykmi0a
-         nKu34IsHTncnAbdH98+2DQjaXE6/Q3+tktcsOxL3Xuj9fwWk9Cm+yRCcHRDTgnoVCz1J
-         lqfw==
-X-Gm-Message-State: AOAM532GdhyaumjOWUH7ZuWxEAPUTaa88PH1T6o36L2qtGFpje8bN/d/
-        sZAzJYvxrAR0w10UzioSxys1Grx3SdGzEg==
-X-Google-Smtp-Source: ABdhPJyFtZrs9+crdbdx869Etbyv2+dnuwLooiE5JxarhYv2LUjYLvCeVeoMyWzuRVg/PMkNQz6IMQ==
-X-Received: by 2002:adf:9147:: with SMTP id j65mr27655371wrj.163.1632747531709;
-        Mon, 27 Sep 2021 05:58:51 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j21sm17562179wmj.40.2021.09.27.05.58.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 05:58:51 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 5/5] builtin/remote.c: add and use SHOW_INFO_INIT
-Date:   Mon, 27 Sep 2021 14:58:45 +0200
-Message-Id: <patch-v2-5.5-b78a9ec0846-20210927T125715Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1316.gb2e9b3ba3ae
-In-Reply-To: <cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com> <cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5pzddiYO2NHNNOFUflWeBY4lqPmaYpANvWDz4PRtx0A=;
+        b=jBZrUvVfENkWDbplYeLQx/nh8cc7RuqLMgQPvJV/7sssf0WIAnCa34lIqKYT8JbOnh
+         ZE1z5rJo1WMyeU+eaT8/Zog7O3ryz2fIB+ERbHEIXXo72TD82Psrx36nLLfO/EBTGNQi
+         ftjXXGMzNN0cgFUnZ55K27tN212mCQUyqVoymIrvDl7BJ6Ll/bOGywrKWFv2sX7zKQ6n
+         8AHHVQEpqnXnSMpN8RX1VAelgEE61c4/hu6sfss6plsVsayeSGeWnMevSJhtBrmXkE7H
+         PJuIo4p7PZtpq76FbBaF+k+B0zRR9C/vHhWNMlAuUmqzInyiG9JRpuBrcjZfbsZek17b
+         wCEw==
+X-Gm-Message-State: AOAM533NyTO+7rfFBetCv5W0/hEl9ODQRQR72bJZspL1W+EppPDuH/oC
+        p00iH4Rj4PV/HSWCAAR2d9ahxy6uRyN5a49vmqilhgrc
+X-Google-Smtp-Source: ABdhPJwKspcQh9PgOutClFI5uwA/RUZEJVDA7vAKWB0LIXr+xnCkFsbTqF+esPsctbKmhPn1avw4UuMw7Mz8XlP/qZ4=
+X-Received: by 2002:adf:e44f:: with SMTP id t15mr28569224wrm.394.1632749796077;
+ Mon, 27 Sep 2021 06:36:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Calvin Taylor <coolcatt@gmail.com>
+Date:   Mon, 27 Sep 2021 10:36:24 -0300
+Message-ID: <CAP9BFHVdg_BWZ2wvdv8t-mN3WKjW4fA+v2181WRYQGsrgmvKmA@mail.gmail.com>
+Subject: Bug Report: git ls-files -d
+To:     git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000009a4a5d05ccfa2f2f"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the preceding commit we introduced REF_STATES_INIT, but did not
-change the "struct show_info" to have a corresponding
-initializer. Let's do that, and make it use "REF_STATES_INIT" and
-"STRING_LIST_INIT_DUP", doing that requires changing "list" and
-"states" away from being pointers.
+--0000000000009a4a5d05ccfa2f2f
+Content-Type: text/plain; charset="UTF-8"
 
-The resulting end-state is simpler since we omit the local "info_list"
-and "states" variables in show() as well as the memset().
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/remote.c | 90 ++++++++++++++++++++++++------------------------
- 1 file changed, 45 insertions(+), 45 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 160dd954f74..deb48772ac5 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -972,26 +972,31 @@ static int get_remote_ref_states(const char *name,
- }
- 
- struct show_info {
--	struct string_list *list;
--	struct ref_states *states;
-+	struct string_list list;
-+	struct ref_states states;
- 	int width, width2;
- 	int any_rebase;
- };
- 
-+#define SHOW_INFO_INIT { \
-+	.list = STRING_LIST_INIT_DUP, \
-+	.states = REF_STATES_INIT, \
-+}
-+
- static int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
- {
- 	struct show_info *info = cb_data;
- 	int n = strlen(item->string);
- 	if (n > info->width)
- 		info->width = n;
--	string_list_insert(info->list, item->string);
-+	string_list_insert(&info->list, item->string);
- 	return 0;
- }
- 
- static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- {
- 	struct show_info *info = cb_data;
--	struct ref_states *states = info->states;
-+	struct ref_states *states = &info->states;
- 	const char *name = item->string;
- 
- 	if (states->queried) {
-@@ -1018,7 +1023,7 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- static int add_local_to_show_info(struct string_list_item *branch_item, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
--	struct ref_states *states = show_info->states;
-+	struct ref_states *states = &show_info->states;
- 	struct branch_info *branch_info = branch_item->util;
- 	struct string_list_item *item;
- 	int n;
-@@ -1031,7 +1036,7 @@ static int add_local_to_show_info(struct string_list_item *branch_item, void *cb
- 	if (branch_info->rebase >= REBASE_TRUE)
- 		show_info->any_rebase = 1;
- 
--	item = string_list_insert(show_info->list, branch_item->string);
-+	item = string_list_insert(&show_info->list, branch_item->string);
- 	item->util = branch_info;
- 
- 	return 0;
-@@ -1086,7 +1091,7 @@ static int add_push_to_show_info(struct string_list_item *push_item, void *cb_da
- 		show_info->width = n;
- 	if ((n = strlen(push_info->dest)) > show_info->width2)
- 		show_info->width2 = n;
--	item = string_list_append(show_info->list, push_item->string);
-+	item = string_list_append(&show_info->list, push_item->string);
- 	item->util = push_item->util;
- 	return 0;
- }
-@@ -1214,9 +1219,7 @@ static int show(int argc, const char **argv)
- 		OPT_BOOL('n', NULL, &no_query, N_("do not query remotes")),
- 		OPT_END()
- 	};
--	struct ref_states states = REF_STATES_INIT;
--	struct string_list info_list = STRING_LIST_INIT_NODUP;
--	struct show_info info;
-+	struct show_info info = SHOW_INFO_INIT;
- 
- 	argc = parse_options(argc, argv, NULL, options, builtin_remote_show_usage,
- 			     0);
-@@ -1227,25 +1230,22 @@ static int show(int argc, const char **argv)
- 	if (!no_query)
- 		query_flag = (GET_REF_STATES | GET_HEAD_NAMES | GET_PUSH_REF_STATES);
- 
--	memset(&info, 0, sizeof(info));
--	info.states = &states;
--	info.list = &info_list;
- 	for (; argc; argc--, argv++) {
- 		int i;
- 		const char **url;
- 		int url_nr;
- 
--		get_remote_ref_states(*argv, &states, query_flag);
-+		get_remote_ref_states(*argv, &info.states, query_flag);
- 
- 		printf_ln(_("* remote %s"), *argv);
--		printf_ln(_("  Fetch URL: %s"), states.remote->url_nr > 0 ?
--		       states.remote->url[0] : _("(no URL)"));
--		if (states.remote->pushurl_nr) {
--			url = states.remote->pushurl;
--			url_nr = states.remote->pushurl_nr;
-+		printf_ln(_("  Fetch URL: %s"), info.states.remote->url_nr > 0 ?
-+		       info.states.remote->url[0] : _("(no URL)"));
-+		if (info.states.remote->pushurl_nr) {
-+			url = info.states.remote->pushurl;
-+			url_nr = info.states.remote->pushurl_nr;
- 		} else {
--			url = states.remote->url;
--			url_nr = states.remote->url_nr;
-+			url = info.states.remote->url;
-+			url_nr = info.states.remote->url_nr;
- 		}
- 		for (i = 0; i < url_nr; i++)
- 			/*
-@@ -1258,57 +1258,57 @@ static int show(int argc, const char **argv)
- 			printf_ln(_("  Push  URL: %s"), _("(no URL)"));
- 		if (no_query)
- 			printf_ln(_("  HEAD branch: %s"), _("(not queried)"));
--		else if (!states.heads.nr)
-+		else if (!info.states.heads.nr)
- 			printf_ln(_("  HEAD branch: %s"), _("(unknown)"));
--		else if (states.heads.nr == 1)
--			printf_ln(_("  HEAD branch: %s"), states.heads.items[0].string);
-+		else if (info.states.heads.nr == 1)
-+			printf_ln(_("  HEAD branch: %s"), info.states.heads.items[0].string);
- 		else {
- 			printf(_("  HEAD branch (remote HEAD is ambiguous,"
- 				 " may be one of the following):\n"));
--			for (i = 0; i < states.heads.nr; i++)
--				printf("    %s\n", states.heads.items[i].string);
-+			for (i = 0; i < info.states.heads.nr; i++)
-+				printf("    %s\n", info.states.heads.items[i].string);
- 		}
- 
- 		/* remote branch info */
- 		info.width = 0;
--		for_each_string_list(&states.new_refs, add_remote_to_show_info, &info);
--		for_each_string_list(&states.tracked, add_remote_to_show_info, &info);
--		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
--		if (info.list->nr)
-+		for_each_string_list(&info.states.new_refs, add_remote_to_show_info, &info);
-+		for_each_string_list(&info.states.tracked, add_remote_to_show_info, &info);
-+		for_each_string_list(&info.states.stale, add_remote_to_show_info, &info);
-+		if (info.list.nr)
- 			printf_ln(Q_("  Remote branch:%s",
- 				     "  Remote branches:%s",
--				     info.list->nr),
-+				     info.list.nr),
- 				  no_query ? _(" (status not queried)") : "");
--		for_each_string_list(info.list, show_remote_info_item, &info);
--		string_list_clear(info.list, 0);
-+		for_each_string_list(&info.list, show_remote_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
- 		/* git pull info */
- 		info.width = 0;
- 		info.any_rebase = 0;
- 		for_each_string_list(&branch_list, add_local_to_show_info, &info);
--		if (info.list->nr)
-+		if (info.list.nr)
- 			printf_ln(Q_("  Local branch configured for 'git pull':",
- 				     "  Local branches configured for 'git pull':",
--				     info.list->nr));
--		for_each_string_list(info.list, show_local_info_item, &info);
--		string_list_clear(info.list, 0);
-+				     info.list.nr));
-+		for_each_string_list(&info.list, show_local_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
- 		/* git push info */
--		if (states.remote->mirror)
-+		if (info.states.remote->mirror)
- 			printf_ln(_("  Local refs will be mirrored by 'git push'"));
- 
- 		info.width = info.width2 = 0;
--		for_each_string_list(&states.push, add_push_to_show_info, &info);
--		QSORT(info.list->items, info.list->nr, cmp_string_with_push);
--		if (info.list->nr)
-+		for_each_string_list(&info.states.push, add_push_to_show_info, &info);
-+		QSORT(info.list.items, info.list.nr, cmp_string_with_push);
-+		if (info.list.nr)
- 			printf_ln(Q_("  Local ref configured for 'git push'%s:",
- 				     "  Local refs configured for 'git push'%s:",
--				     info.list->nr),
-+				     info.list.nr),
- 				  no_query ? _(" (status not queried)") : "");
--		for_each_string_list(info.list, show_push_info_item, &info);
--		string_list_clear(info.list, 0);
-+		for_each_string_list(&info.list, show_push_info_item, &info);
-+		string_list_clear(&info.list, 0);
- 
--		free_remote_ref_states(&states);
-+		free_remote_ref_states(&info.states);
- 	}
- 
- 	return result;
 -- 
-2.33.0.1316.gb2e9b3ba3ae
 
+Calvin Taylor
+506 260-2866
+
+--0000000000009a4a5d05ccfa2f2f
+Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2021-09-27-0939.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2021-09-27-0939.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_ku2p1pkr0>
+X-Attachment-Id: f_ku2p1pkr0
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCiBoYXZlIG1hY29zIGFuZCBJIGhhdmUgc29tZSBjb21tYW5kcyBw
+b3NzaWJseSByZW1hcHBlZCBsaWtlIGdzZWQsIGdmaW5kIHRvIHNlZCwgZmluZAoKV2hhdCBkaWQg
+eW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKZ2l0IGxzLWZpbGVzIC1k
+IHRvIHNob3cgZGVsZXRlZCBmaWxlcyBpbiBteSByZXBvc2l0b3J5CgpXaGF0IGhhcHBlbmVkIGlu
+c3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCm5vdGhpbmcgaXMgc2hvd24sIEkgZW5hYmxlZCBHSVRf
+VFJBQ0U9MSwgYW5kIHN0YXJ0ZWQgYmFzaCBpbmNhc2Ugb2gtbXktenNoIG1pZ2h0IGhhdmUgYmVl
+biBpbnRlcmZlcmVpbmcsIGFuZCBnb3Qgc2ltaWxhciByZXN1bHRzCgokIGdpdCBscy1maWxlcyAt
+ZAowOTo0Mjo0Ny42OTI4ODAgZXhlYy1jbWQuYzoxMzkgICAgICAgICAgdHJhY2U6IHJlc29sdmVk
+IGV4ZWN1dGFibGUgcGF0aCBmcm9tIERhcndpbiBzdGFjazogL0xpYnJhcnkvRGV2ZWxvcGVyL0Nv
+bW1hbmRMaW5lVG9vbHMvdXNyL2Jpbi9naXQKMDk6NDI6NDcuNjkzNTkxIGV4ZWMtY21kLmM6MjM4
+ICAgICAgICAgIHRyYWNlOiByZXNvbHZlZCBleGVjdXRhYmxlIGRpcjogL0xpYnJhcnkvRGV2ZWxv
+cGVyL0NvbW1hbmRMaW5lVG9vbHMvdXNyL2JpbgowOTo0Mjo0Ny42OTUwNTMgZ2l0LmM6NDQ0ICAg
+ICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgbHMtZmlsZXMgLWQKMDk6NDI6NDcuNzY0
+MDg5IGV4ZWMtY21kLmM6MTM5ICAgICAgICAgIHRyYWNlOiByZXNvbHZlZCBleGVjdXRhYmxlIHBh
+dGggZnJvbSBEYXJ3aW4gc3RhY2s6IC9MaWJyYXJ5L0RldmVsb3Blci9Db21tYW5kTGluZVRvb2xz
+L3Vzci9iaW4vZ2l0CjA5OjQyOjQ3Ljc2NDkyMSBleGVjLWNtZC5jOjIzOCAgICAgICAgICB0cmFj
+ZTogcmVzb2x2ZWQgZXhlY3V0YWJsZSBkaXI6IC9MaWJyYXJ5L0RldmVsb3Blci9Db21tYW5kTGlu
+ZVRvb2xzL3Vzci9iaW4KMDk6NDI6NDcuNzY1OTE5IGdpdC5jOjQ0NCAgICAgICAgICAgICAgIHRy
+YWNlOiBidWlsdC1pbjogZ2l0IGNvbmZpZyAtLWdldCBvaC1teS16c2guaGlkZS1kaXJ0eQoKV2hh
+dCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5
+IGhhcHBlbmVkPwpJIGhhdmUgc2V2ZXJhbCBkaXJlY3RvcmllcyBJJ2QgbGlrZSB0byBkZWxldGUg
+dGVtcG9yYXJpbHkgc28gSSBjYW4gc2ltcGxpZnkgYW5kIHN0dWR5IGJ1aWxkIHByb2Nlc3NlcwoK
+QW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6CgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9m
+IHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3UgY2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0
+IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJbmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24g
+Mi4zMC4xIChBcHBsZSBHaXQtMTMwKQpjcHU6IHg4Nl82NApubyBjb21taXQgYXNzb2NpYXRlZCB3
+aXRoIHRoaXMgYnVpbGQKc2l6ZW9mLWxvbmc6IDgKc2l6ZW9mLXNpemVfdDogOApzaGVsbC1wYXRo
+OiAvYmluL3NoCnVuYW1lOiBEYXJ3aW4gMjAuNi4wIERhcndpbiBLZXJuZWwgVmVyc2lvbiAyMC42
+LjA6IE1vbiBBdWcgMzAgMDY6MTI6MjEgUERUIDIwMjE7IHJvb3Q6eG51LTcxOTUuMTQxLjZ+My9S
+RUxFQVNFX1g4Nl82NCB4ODZfNjQKY29tcGlsZXIgaW5mbzogY2xhbmc6IDEyLjAuNSAoY2xhbmct
+MTIwNS4wLjIyLjYpCmxpYmMgaW5mbzogbm8gbGliYyBpbmZvcm1hdGlvbiBhdmFpbGFibGUKJFNI
+RUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZlIHNoZWxsKTogL2Jpbi96c2gKCgpbRW5hYmxlZCBI
+b29rc10K
+--0000000000009a4a5d05ccfa2f2f--
