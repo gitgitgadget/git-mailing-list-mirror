@@ -2,130 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 261ADC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B84E8C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:39:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06D6D6103B
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:37:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 878B46101A
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 10:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233828AbhI0KjU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 06:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
+        id S233843AbhI0KlT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 06:41:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233787AbhI0KjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 06:39:19 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0AEC061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:37:42 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id y35so16163676ede.3
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:37:42 -0700 (PDT)
+        with ESMTP id S233787AbhI0KlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 06:41:18 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDBFAC061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:39:40 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id s11so17361292pgr.11
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 03:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Vni2glJPLNX8eOEA9GH/1FrNB+ZBdEZNy5EVyYhznt4=;
-        b=bNJuUe0iCXz8IP4dLHLfhdbGa8L9P+DS9G5tx7NC0LEpG+IwoV7aqnZoFxpefZ5UrV
-         YQbJh6iaLjBjTOIGa7TlROaWQXxub/LV2jXFsRQnse7h1/FhPJyZFn16/eu7INxtjqKc
-         5LuzGiookT6iUU0y3kq8+DYgXmmPFuzO6t/BbpuU5KADxGuFGQ0cSiUBm315/qgXNtXY
-         vYmGcHWyhx9CLjeZ4sd8K765hktERRNot83crzQEnLDyTHwWtSy4/OuNIRdTTUG8uEmH
-         g5LJNtYwoNq/1A8hAdVkGDX7144G/K32mgqb4EhhkqHchdRUpsM8RXMgOwqPb/ptg1O4
-         nfFg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dJ8f2Ugo57sR2fd9QeineGtq8LDDeaHyfs+fIUD96Ro=;
+        b=GFCI6v5NZrVxWikG7RpG2YnaoOoODobOm15+jdt60phWheCOr4f3htw4G5cRXACxn/
+         UonqRHE4+9CCw/wHEj/G4N0YoxGgct7szfq6dWYHWsW8c4b4seS7YEsUihLYTDYiO7gW
+         CLAd0Ru2Wg3ClwGHWycBrt06+WHaCsQfwSVh4q56xH+pif3bfs+3s/ewLRwV4yd6usJ2
+         L78z3i8DgACYJNswlhFjLQqQx8GS6dNOlEx4vPhdJq/6FCDvng0FpqxyTbZoAzBm4gMz
+         ISK+Ig4ZLNwNorToOoonIjgw9qGnqeITnFJUAhkbv7ryhKUS44ODGUQ7oGM6l66/V46F
+         bQxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Vni2glJPLNX8eOEA9GH/1FrNB+ZBdEZNy5EVyYhznt4=;
-        b=PzL5BxynayoIdsyZn0vcwrQ/pitY+OICjzJKAva10fKeiVjwuzfVR+M5Oy6TnJOfJl
-         1P0oJnUfmPeNRFBQVNuV4CNf8E1+LR0GGHquKrZvyNMzZVxJmYVUiU2eEtTYkErZvKU5
-         OgodB/eXFG+OXk/eFkaOcA2UUJEUTKe0OVeU1vdZ85uL9kbzmP1UoDk2Jsb/JyToxwe4
-         Pfn6PbN2CpYts3Lvz/aj4Z97oDiNjP5nKJEptJnx+cX95JHuhWnvM9J8rARFegMA+WUP
-         ZH2Hd/WDJMT3LsQIIcUD9It73sB4Hj8HWRYchysOq6UzD1s6GdntqceZ5k0rwcCLv4Sv
-         kJMg==
-X-Gm-Message-State: AOAM532Lc35Mejer9lBdCt1U94pXVej05fj5yzHmvxIV2rvPGe3L6WI/
-        ia9PU395ta+ZhmK6j2kCsnY=
-X-Google-Smtp-Source: ABdhPJwrzKPVQ3ctVUO168Fllb8gg2qHYRGHCQ+lKsF0rohGir6u4mpeFFE6Bq4U32FnHXvUwcHgxQ==
-X-Received: by 2002:a50:e0c3:: with SMTP id j3mr22404113edl.60.1632739060666;
-        Mon, 27 Sep 2021 03:37:40 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z4sm2893941edb.16.2021.09.27.03.37.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 03:37:40 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
- config-list.h
-Date:   Mon, 27 Sep 2021 12:36:32 +0200
-References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
- <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
- <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
- <87fstt3gzd.fsf@evledraar.gmail.com>
- <e0feb87e-4f8e-04c7-5533-3b10d82403e4@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <e0feb87e-4f8e-04c7-5533-3b10d82403e4@gmail.com>
-Message-ID: <87tui61ez0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dJ8f2Ugo57sR2fd9QeineGtq8LDDeaHyfs+fIUD96Ro=;
+        b=CnI4abamp9bFQUO2ACIP/d2XfRa15tZKri2A60Db2OrRdnrgaJoR0BWqpadDXNSg5X
+         G4errbH2KGg9uX2sRpQWsR5KnmhVK91pldwEcqlInoX3NCyO+2Z82uUUcVFMZs85+aVB
+         sxIBSpADllvCW+bLEm38A4fpNNSuUAR3JpjqoPCE9d6IBQlMHCZVLyecx7aZnUobR1XO
+         I90pCIGWLaPUc/7b1qOJI2cgD8THxhUM1V3+OUHsidqnf7LpKzHhWcNo8xPWK8gIC+3g
+         5U+jlbiwUmLI6rqRoXQ17MbT5dkqKlqWTi1/IYyRWW3cPgwCsuQ41uSVSPcu7N75mQVB
+         PwTg==
+X-Gm-Message-State: AOAM531QLcSGruzFrHfLx7/gB7yDAJLZ3DgZz/UxM2dvfKXNBDhTUpIp
+        9/fV3kXsZEz8r8jjxLMScF8=
+X-Google-Smtp-Source: ABdhPJzrOsMrYlWTceyePaCm+W3V9hTpXrJMEWqgPI3Yj/oIPhTricl5ap/L9P8Yf1g1ylTOGc1qUg==
+X-Received: by 2002:a63:ac57:: with SMTP id z23mr16024517pgn.239.1632739180422;
+        Mon, 27 Sep 2021 03:39:40 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-26.three.co.id. [180.214.233.26])
+        by smtp.gmail.com with ESMTPSA id o15sm17732917pfg.14.2021.09.27.03.39.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Sep 2021 03:39:40 -0700 (PDT)
+Subject: Re: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
+To:     Sashank Bandi <bandi.rao999@gmail.com>, git@vger.kernel.org
+Cc:     me@yadavpratyush.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CABkJDHFOMkf-Pouaw3rtjtM+KFhPxnYtCiMbqKYCraXFb_9qQw@mail.gmail.com>
+ <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
+ <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <135f854b-7975-a6a0-69ea-8697583a87b2@gmail.com>
+Date:   Mon, 27 Sep 2021 17:39:36 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 27/09/21 17.19, Sashank Bandi wrote:
+> I'm currently planning to convert this into a C++ program as there is no
+> way from the Tcl itself to change the color and background color of the title
+> bar or menu of the Git GUI window.
+> 
+> I also CCed Pratyush Yadav as he is the official maintainer of the project.
+> 
 
-On Mon, Sep 27 2021, Phillip Wood wrote:
+Regarding GUI toolkit, you should pick the replacement carefully - 
+tooling used in Git for Windows will need to be adapted in order to 
+compile your chosen toolkit (whether it is Qt, GTK, or wxWidgets) for 
+Windows.
 
-> On 24/09/2021 20:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Fri, Sep 24 2021, Phillip Wood wrote:
->>=20
->>> Hi =C3=86var
->>> On 23/09/2021 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
->>>> new file mode 100755
->>>> index 00000000000..6d4e56d1a31
->>>> --- /dev/null
->>>> +++ b/generate-hooklist.sh
->>>> @@ -0,0 +1,18 @@
->>>> +#!/bin/sh
->>>> +#
->>>> +# Usage: ./generate-hooklist.sh >hook-list.h
->>>> +
->>>> +cat <<EOF
->>>> +/* Automatically generated by generate-hooklist.sh */
->>>> +
->>>> +static const char *hook_name_list[] =3D {
->>>> +EOF
->>>> +
->>>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
->>>
->>> POSIX does not support using a semicolon after a closing brace [1],
->>> grepping our code base with
->>> 	git grep 'sed .*};' '*.sh'
->>> does not give any matches so I don't think we're using that pattern
->>> any where else. Replacing the semicolon with ' -e' would fix it.
->>>
->>> Best Wishes
->>>
->>> Phillip
->> Does this fail on any system you're aware of? If so what OS/version
->> (and
->> preferably version of "sed").
->
-> I'm not aware of any such system but I rarely use anything other than
-> linux. As this departure from POSIX is not already in the code base I=20
-> thought it was worth flagging it. I did wonder if it would be
-> supported by the various BSDs but you testing shows it is actually
-> quite widely supported.
->
-> Best Wishes
->
-> Phillip
+CC also Johannes Schindelin for comments.
 
-Thanks, I completely agree that it's worth changing either way (as I did
-in my v2). I just wondered if it was a careful reading of the standard
-or having run into it on a system in the wild, in that case I'd try to
-test on that system in the future.
-
-Good eyes :)
+-- 
+An old man doll... just what I always wanted! - Clara
