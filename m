@@ -2,91 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1232C433F5
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 18:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E18C433F5
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 19:44:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A8B760E09
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 18:51:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F190F60F94
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 19:44:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236443AbhI0Swd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 14:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236414AbhI0SwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 14:52:23 -0400
-Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com [IPv6:2607:f8b0:4864:20::a34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89657C061604
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 11:50:45 -0700 (PDT)
-Received: by mail-vk1-xa34.google.com with SMTP id f73so7395255vkf.6
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 11:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lqR39hBZl3lnf0y7Z/onIDslPxlBa3Q+hsulPbdR7ZQ=;
-        b=ByfS/78VeBr+PoQdoZd8xMWIcTH7Gt8xM6MHzf6jfOriG+NMB3OLmiJmNLbvzszst1
-         W5eGCg2Zwji48jO/uXjZs91nMSt+L8jXkdKlQZUOsKs0AmuBPV5Kgo54VYoXhRMc0eP7
-         x5iBn42pB2vQu9REaxKgBdIyL6RHV5vsQAF/UjxoLGZnDF2mVdgiAzvOq8J4zOWxOZvx
-         nqc04HLGnGnAwTs0MFR00PYUqMQ24NMBfvlwryDAXOGTkkaNbBI0RW/klYm+7MOYMRHR
-         Z8ew2bIdnvXcCpM8AoiU504AMi2rYbVNnzbtueZkqR5gX71c3vJCHJJ0wILlRKgRMPGU
-         h6jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lqR39hBZl3lnf0y7Z/onIDslPxlBa3Q+hsulPbdR7ZQ=;
-        b=jrUL2HVlrRMheN/aOqjY709gcCnJ1gXB4GGjZdI2lvPMjK3o9BulktS4eE5Qum1T1O
-         HqCzLJf9tDsR/4UsViaKK9bXd7wJHKRQBY9A5v/GOEdj4T2CKsgf3NoKo9fldBeEiMCo
-         0PGe4R9UABBRGmMmdA5iRxSbev5ymmMKXIDLRQKOb/mbe8FT4UWuvYugpPF/+bE8K9KE
-         wQ/ScRNkUOZzhMJC0v/FpFcmhmxWJ07CmLuIH3w8nmpRAchagNqKBX+7fTZ3iVZtzDUf
-         hyfiazCITj/L02qMAa13PwMC+po7IkU2B9p9GXS3cuiLm19acEkNbOX055m4sE6HH0Vi
-         +F1A==
-X-Gm-Message-State: AOAM533BPM8UFGl6BFvJLs/UbNiPw/5queyY//UTlz0e1g8IpTpsh+ey
-        zkZQNum3mCcX8RZWdm0vCiU0kfN+jK320d8u1kQyaFnd4/C0Ew==
-X-Google-Smtp-Source: ABdhPJz/ivCesht/TRIRWA0XVlGl2P02jtydjZgdL3WenIcbxvFanCHeWwlMEAxJVgUGKobdFkoBQH9VSA8ZyogfAdI=
-X-Received: by 2002:a05:6122:a24:: with SMTP id 36mr1677275vkn.25.1632768644463;
- Mon, 27 Sep 2021 11:50:44 -0700 (PDT)
+        id S236610AbhI0Tp5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 15:45:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51442 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236588AbhI0Tp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 15:45:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D7E2157D51;
+        Mon, 27 Sep 2021 15:44:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SAYJNcGpcm1HnMv8UnNpgSHUwDuJexkFg05LBV
+        uKajk=; b=BfiG6GzvhFiSOnmWe8gZIA4zWaLvBYyMLRK0Y59wshM0wcKP9juy1H
+        E0FXLEXtcAskOVAoR/DgvydiCmQQE5WgIYRz8XZaqba1KqZO0scMAmuCoryjleMT
+        uJZA8gOPfb4uykQTLXINDqpdQFN9lWdwoWm7QOEoBicTu4ft27+rs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 265BB157D50;
+        Mon, 27 Sep 2021 15:44:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DF6D157D4D;
+        Mon, 27 Sep 2021 15:44:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>,
+        git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] blame: document --color-* options
+References: <d918fe0de6b04d8d848050d4aedbe060@ncp-e.com>
+        <20210925121817.1089897-1-bagasdotme@gmail.com>
+Date:   Mon, 27 Sep 2021 12:44:14 -0700
+In-Reply-To: <20210925121817.1089897-1-bagasdotme@gmail.com> (Bagas Sanjaya's
+        message of "Sat, 25 Sep 2021 19:18:18 +0700")
+Message-ID: <xmqq5yulregh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210923065251.21363-1-carenas@gmail.com> <20210926100512.58924-1-carenas@gmail.com>
- <20210926100512.58924-3-carenas@gmail.com> <xmqqk0j2q8m3.fsf@gitster.g>
-In-Reply-To: <xmqqk0j2q8m3.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 27 Sep 2021 11:50:33 -0700
-Message-ID: <CAPUEspif_MAg1==aNWT4q1spOFbsp0cUfr+JjPdc2RLy4F4L1A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] lazyload.h: use an even more generic function
- pointer than FARPROC
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, j6t@kdbg.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4C06BAD8-1FCB-11EC-9B20-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 9:35 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->
-> > Because of the way the function declaration was done in the previous
-> > patch the order of variables that use it had to be adjusted so that
-> > it is the last variable declared, as well.
->
-> Is it clear to everybody what this paragraph is referring to?  It is
-> not, at least to me.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-It is not, and it is no longer needed after the fixup was applied to
-the previous
-patch.  Do you want me to send another series removing it or can be done
-while applying?
+> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+> index 117f4cf806..b15999a3c8 100644
+> --- a/Documentation/blame-options.txt
+> +++ b/Documentation/blame-options.txt
+> @@ -136,5 +136,13 @@ take effect.
+>  	option.  An empty file name, `""`, will clear the list of revs from
+>  	previously processed files.
+>  
+> +--color-lines::
+> +	Color lines that contain repeated metadata. The color used is set with
+> +	`color.blame.repeatedLines` config option.
+> +
+> +--color-by-age::
+> +	Color metadata depending on age of the line. `color.blame.highlightRecent`
+> +	config option controls what color is used for each range of age.
 
-It was slightly better explained in the fixup[1] commit message.
+Nowhere in "git blame --help" output we mention anything about
+"metadata", so the readers of this new description will be left
+puzzled what the word means in the context of this command.
 
-Because of the double ';', When the macro was used to declare a
-function variable
-and it was not the last variable declared, then it will trigger
--Wdeclaration-after-statement.
+We would need to pick words or phrases that readers can link easily
+with the description of "THE PORCELAIN FORMAT" section.
 
-Carlo
-
-[1] https://lore.kernel.org/git/3f963bba-3197-8c52-9828-6d78ef1d25b1@kdbg.o=
-rg/
+Thanks.
