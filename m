@@ -2,108 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C569AC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AF32C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C805611CE
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2291261181
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 23:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238185AbhI0X4B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 19:56:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55922 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231674AbhI0X4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 19:56:00 -0400
-Received: (qmail 7906 invoked by uid 109); 27 Sep 2021 23:54:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Sep 2021 23:54:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22281 invoked by uid 111); 27 Sep 2021 23:54:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Sep 2021 19:54:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 27 Sep 2021 19:54:20 -0400
-From:   Jeff King <peff@peff.net>
+        id S238012AbhI0X61 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 19:58:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50320 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231674AbhI0X61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 19:58:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2A84142A1B;
+        Mon, 27 Sep 2021 19:56:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Je640hu+zyuq
+        JzKhWxii9v6oFE9/5lYP2bJmY6nZH+k=; b=uzx+L/2aQr4BBfGdYRREzAb0p2Ti
+        8FzfWJKTGH1oivUIclG87XyGFElNUjXpzjOBwzNbQo2Bg/4xwboswGvpPyTVsvgN
+        Worlkgz4auFknBYBn13lG2kaEDHcF+kU3Jr2zrWTqrFd1ALzlIZh2oonFGN2HvbQ
+        EVGZIlHNSVqdye4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99846142A19;
+        Mon, 27 Sep 2021 19:56:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F0972142A18;
+        Mon, 27 Sep 2021 19:56:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
-Message-ID: <YVJZrOYucywgoi+v@coredump.intra.peff.net>
-References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
- <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
- <694f477d-b387-c8ea-4138-0e9334540c69@kdbg.org>
- <87czou1dmp.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 4/5] builtin/remote.c: add and use a REF_STATES_INIT
+References: <cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com>
+        <cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com>
+        <patch-v2-4.5-13ef9566903-20210927T125715Z-avarab@gmail.com>
+        <xmqq4ka5oc1k.fsf@gitster.g> <87v92lzihd.fsf@evledraar.gmail.com>
+Date:   Mon, 27 Sep 2021 16:56:44 -0700
+In-Reply-To: <87v92lzihd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 28 Sep 2021 01:38:16 +0200")
+Message-ID: <xmqqv92lmv2b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87czou1dmp.fsf@evledraar.gmail.com>
+X-Pobox-Relay-ID: 925EFCD4-1FEE-11EC-B3A9-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 01:02:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> >>  static inline void cb_init(struct cb_tree *t)
-> >>  {
-> >> -	t->root = NULL;
-> >> +	struct cb_tree blank = CBTREE_INIT;
-> >
-> > This could be
-> >
-> > 	static const struct cb_tree blank = CBTREE_INIT;
-> 
-> *nod*...
-> [...]
-> ...but to both this & the above my reply in the side-thread at
-> https://lore.kernel.org/git/87h7e61duk.fsf@evledraar.gmail.com/
-> applies. I.e. this is just following a pattern I got from Jeff King &
-> used in bd4232fac33 (Merge branch 'ab/struct-init', 2021-07-16).
+> The ownership of the "states" struct or its lifetime isn't different
+> after this change. It's only that we're doing:
+>
+>     struct foo =3D FOO_INIT;
+>     /* use &foo */
+>
+> Instead of:
+>
+>     struct foo;
+>     memset(&foo, 0, sizeof(foo));
+>     foo->some_list.strdup_strings =3D 1;
 
-I'm not sure how a compiler would react to the "static const" thing. I
-tested the compiler output for the "auto" struct case you've written
-here, and at least gcc and clang are smart enough to just initialize the
-pointed-to struct directly, with no extra copy.
+No, I am not talking about ownership of "foo" itself.  What changes
+is ownership of some of the string_list embedded in "foo" that used
+NOT to have strdup_strings member set now have the bit set, so the
+string list owns the string.
 
-For a "static const" I'm not sure if they'd end up with the same code,
-or if they'd allocate a struct in the data segment and just memcpy()
-into place. A non-const static would perhaps push it in the direction of the
-data/memcpy thing, though the compiler should be well aware that the
-struct is never changed nor aliased, and thus we're always writing the
-INIT values.
+>>> +	struct ref_states states =3D REF_STATES_INIT;
+>>>  	struct string_list refs_to_prune =3D STRING_LIST_INIT_NODUP;
+>>>  	struct string_list_item *item;
+>>>  	const char *dangling_msg =3D dry_run
+>>>  		? _(" %s will become dangling!")
+>>>  		: _(" %s has become dangling!");
+>>> =20
+>>> -	memset(&states, 0, sizeof(states));
+>>>  	get_remote_ref_states(remote, &states, GET_REF_STATES);
+>>
+>> Like this one, get_remote_ref_states() used to receive states that
+>> are set to borrow strings, but now we get duplicated strings, right?
+>> Are we leaking whatever strings we push to these string lists now?
+>
+> Ah, yes it *could* happen as a side-effect of this sotr of change that
+> that memset() was implicitly flipping some string_list structs to the
+> equivalent of strdup_strings=3D0.
+>
+> But that's not the case here, it was just memset() boilerplate, then in
+> get_remote_ref_states() we'd set all the string lists we'd use to "dup"=
+.
 
-I suspect the performance is not that different either way (the big
-thing to avoid is initializing an auto struct on the fly and then
-copying from it, but this is a pretty easy optimization for compilers to
-get right).
+OK, get_remotes_ref_states() marked all string list to the dup
+variant, then we won't have a problem.  I was trying to make sure
+that was something you looked at when preparing these patches.
 
-> >> +	memcpy(t, &blank, sizeof(*t));
-> >
-> > Is
-> > 	*t = blank;
-> >
-> > not a thing in C?
-
-It would be fine to use struct assignment here, and should be equivalent
-in most compilers. They know about memcpy() and will inline it as
-appropriate.
-
-I think some C programmers tend to prefer memcpy() just because that's
-how they think. It also wasn't legal in old K&R compilers, but as far as
-I know was in C89.
-
-You have to take care with assignment of flex-structs, of course, but
-you also have to do so with memcpy(), too. :)
-
-> FWIW with "const" in general I don't use it as much as I'd personally
-> prefer, see e.g. [1] for one recent discussion, but maybe there wouldn't
-> be any push-back in this case...
-
-This isn't a parameter, so I don't think that discussion applies. _If_
-you are going to make it a static, I think a const makes sense here (but
-probably does nothing beyond signaling your intention, because the
-compiler can see that it is never modified), but I wouldn't bother with
-either.
-
--Peff
+Thanks.
