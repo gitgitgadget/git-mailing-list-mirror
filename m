@@ -2,124 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DB94C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 09:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D39FC433EF
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 09:24:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C9136113D
-	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 09:13:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7584E61166
+	for <git@archiver.kernel.org>; Mon, 27 Sep 2021 09:24:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233614AbhI0JPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 05:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40794 "EHLO
+        id S233676AbhI0J0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 05:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233519AbhI0JPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 05:15:33 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844F3C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 02:13:55 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id i23so50478376wrb.2
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 02:13:55 -0700 (PDT)
+        with ESMTP id S233657AbhI0J0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 05:26:11 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CA6C061604
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 02:24:33 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id c21so20811862wrb.13
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 02:24:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=oPXjed6j+zF1Y6hSp6RmTZ0hOzdQQPsZs+3CeH6GqAY=;
-        b=AydkW/i/t+z6TQZfi70fs1BNJCvYz/uBEcW8OIRdMNuLaO/ewMb9iQGGj65z8DBo5K
-         LYU3u9J7gmiNgYAmPs1fQe2mMR4iRF06pqdr9aA+4dkrviSFDR+Uif9lo9Zt3C6M8QNv
-         GusP4H/89ZjHv1Hf8ysB3T+1/4MGL5V/puY2lwsDupueMGlPvDY43Q4Gk1QtBync9Wfg
-         ejo/sf7YIdJBt0eRAkhLiIwsPaVWWUC6KhS7RbBnaBwjT3yZ2Kl67YtTAAGiJPjC+3S+
-         T2RYk6MpWbWtLIkC80pTX/wRM0sJnM5+Uevg+eaEdEPgyH8Xx16O1L+IM9Cigi20E4sC
-         w3Nw==
+        bh=Z9XTytBPegBaUaDSIDRMNudZMavDQGUjCIlJcYLXaMg=;
+        b=AT0RU4SgSVnDAnxKU6M91yHQFYIRFpAc2waLEjbqPcsilEQC9Ugatg8TxT1z989jGm
+         Nb4Um3GMxdR+SJ3mGJ26Zk2ccp6UnXzCEgsZWulkG1R6aW8RgVyyU+iJPicG91ozFLAW
+         jCOjVJpQlH0ossxXaXl+YxMLHJlOdU2Clpbyqm4XJEQNSNKwooY2cFa1uYT8VwFkQoW3
+         7mj5mZ2GFnsRHyCozdp2akiOpWYDG1VJaRSxbK4c1lQns8ylKPCxsp8eXjeLpchsxY6E
+         qk1o+ydvVA0/pERtc3y7NiYpIl9TKvoxI3G2mXGa4KeDTM5O9pC26cOkV2utVFibFPER
+         g2Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=oPXjed6j+zF1Y6hSp6RmTZ0hOzdQQPsZs+3CeH6GqAY=;
-        b=ygdevmmuQ2W2IXIMljhBPboURuCb/pRaSRqXjyctHoqS40Xt/WlOTF4AYj0swWebkI
-         PMZiEqeIka0Myw8xBhzloeOkhlYRsGOwUuscLARDZjfy185giYJZjMjRY8YTTav0/bXH
-         FcRW0tfEPqGGU8uXfa9DbQtW2xXe7rxAp/LndONxSmxP4F0miB+Ic8F6IcbxOfk+Zlb4
-         otsIXZ8m3vzAKrXAZnv1TVdO7xM2bsKKt7m2qk2aKzi0/TEv8zSvDQY9hLXbdcYuypkB
-         tu/wPJ81DosGsoN9p/seooCxRY4+zessZTfF4Si/PvFL1rgf4bgyf16k0orQJBC/hRre
-         P4mQ==
-X-Gm-Message-State: AOAM533p7FUtxYNr6DXxBpJBTpvv4oEIYbY/wigo779drEK3hSjQuFiu
-        zTeS5QhAekvSI+Ern9Wcvks=
-X-Google-Smtp-Source: ABdhPJyrPui6dV63sZDgbgKapvQ1DFdWZvk1kp5ymAw5m3Ljkf+yqm5T2xXoFLdm3agogS2o8v0iGQ==
-X-Received: by 2002:a05:600c:b41:: with SMTP id k1mr15039630wmr.4.1632734034167;
-        Mon, 27 Sep 2021 02:13:54 -0700 (PDT)
+        bh=Z9XTytBPegBaUaDSIDRMNudZMavDQGUjCIlJcYLXaMg=;
+        b=TguBUEg4gI/z8LawyW+c9agTNKsahvoVqz/Dry31nhO+TnhKkbtcDMn/kMqEzkxj2/
+         RojT7EHHo+9HmnMGxt9bmhaA/WG+QTzqCAOMQUBxmRaxEgwcmk1LyupXFrUaG76foBts
+         aV7xQxnRHH9S0vJfD/spIMnp9X035SntA7rjfmdksKU+k7nTJl58QnywhRv9w8wxhdZN
+         IrbzGrzos2b7sW4XQQlo/l34O5QFmH+sxqJ2x/xP/X+kVToRYj8PQ5D0TcKiDeF/txUi
+         nj6EtQEFbntwvTyfejuqL5xsd7lOXriO96QCaKFXYpU4hcXxrU5zzgi1TsRkTcwSyqDG
+         F+jg==
+X-Gm-Message-State: AOAM530YzMqr8691M1qklQiml7pw2CuimdAPYbVfTO/LwvVNg6urjISB
+        qqwAKo+ZjvEx558l9ayeMGc=
+X-Google-Smtp-Source: ABdhPJymaR9v7n4yCyhbpXfeqrxPjwLXNUkgPqMS2qI62WyKOo3xFPBLHh57gKXm1udd+SaUmYS7Sg==
+X-Received: by 2002:a1c:ac03:: with SMTP id v3mr14565351wme.13.1632734672226;
+        Mon, 27 Sep 2021 02:24:32 -0700 (PDT)
 Received: from [192.168.1.240] (178.2.7.51.dyn.plus.net. [51.7.2.178])
-        by smtp.gmail.com with ESMTPSA id g2sm16806460wrb.20.2021.09.27.02.13.53
+        by smtp.gmail.com with ESMTPSA id k19sm15612250wmr.21.2021.09.27.02.24.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Sep 2021 02:13:53 -0700 (PDT)
-Message-ID: <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
-Date:   Mon, 27 Sep 2021 10:13:50 +0100
+        Mon, 27 Sep 2021 02:24:31 -0700 (PDT)
+Message-ID: <e0feb87e-4f8e-04c7-5533-3b10d82403e4@gmail.com>
+Date:   Mon, 27 Sep 2021 10:24:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.1.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
+Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
+ config-list.h
 Content-Language: en-GB-large
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
- <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
+ <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
+ <92471ff9-7573-c3e4-e9fd-63a5cbf5738f@gmail.com>
+ <87fstt3gzd.fsf@evledraar.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
+In-Reply-To: <87fstt3gzd.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
-
-On 27/09/2021 01:39, Ævar Arnfjörð Bjarmason wrote:
-> Use the same pattern for cb_init() as the one established in the
-> recent refactoring of other such patterns in
-> 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
-> macro, 2021-07-01).
+On 24/09/2021 20:30, Ævar Arnfjörð Bjarmason wrote:
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   cbtree.h | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+> On Fri, Sep 24 2021, Phillip Wood wrote:
 > 
-> diff --git a/cbtree.h b/cbtree.h
-> index a04a312c3f5..dedbb8e2a45 100644
-> --- a/cbtree.h
-> +++ b/cbtree.h
-> @@ -37,11 +37,12 @@ enum cb_next {
->   	CB_BREAK = 1
->   };
->   
-> -#define CBTREE_INIT { .root = NULL }
-> +#define CBTREE_INIT { 0 }
->   
->   static inline void cb_init(struct cb_tree *t)
->   {
-> -	t->root = NULL;
-> +	struct cb_tree blank = CBTREE_INIT;
-> +	memcpy(t, &blank, sizeof(*t));
->   }
+>> Hi Ævar
+>> On 23/09/2021 11:30, Ævar Arnfjörð Bjarmason wrote:
+>>> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+>>> new file mode 100755
+>>> index 00000000000..6d4e56d1a31
+>>> --- /dev/null
+>>> +++ b/generate-hooklist.sh
+>>> @@ -0,0 +1,18 @@
+>>> +#!/bin/sh
+>>> +#
+>>> +# Usage: ./generate-hooklist.sh >hook-list.h
+>>> +
+>>> +cat <<EOF
+>>> +/* Automatically generated by generate-hooklist.sh */
+>>> +
+>>> +static const char *hook_name_list[] = {
+>>> +EOF
+>>> +
+>>> +sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
+>>
+>> POSIX does not support using a semicolon after a closing brace [1],
+>> grepping our code base with
+>> 	git grep 'sed .*};' '*.sh'
+>> does not give any matches so I don't think we're using that pattern
+>> any where else. Replacing the semicolon with ' -e' would fix it.
+>>
+>> Best Wishes
+>>
+>> Phillip
+> 
+> Does this fail on any system you're aware of? If so what OS/version (and
+> preferably version of "sed").
 
-Slightly off topic but would this be a good site for a compound literal 
-test balloon?
-
-	*t = (struct cb_tree){ 0 };
-
-Compound literals are in C99 and seem to have been supported by MSVC 
-since 2013 [1].
+I'm not aware of any such system but I rarely use anything other than 
+linux. As this departure from POSIX is not already in the code base I 
+thought it was worth flagging it. I did wonder if it would be supported 
+by the various BSDs but you testing shows it is actually quite widely 
+supported.
 
 Best Wishes
 
 Phillip
 
-[1] 
-https://docs.microsoft.com/en-us/cpp/porting/visual-cpp-what-s-new-2003-through-2015?view=msvc-160#whats-new-for-c-in-visual-studio-2013
-
->   struct cb_node *cb_lookup(struct cb_tree *, const uint8_t *k, size_t klen);
+> René's downthread <d5f297d4-9c64-1ff9-8422-054979bf8cfa@web.de> seems to
+> suggest that this is fine.
+> 
+> Both beforehand and just now I've tested this on AIX, Solaris,
+> {Open,Net,Free}BSD, HP/UX, OSX and Linux (a few distros/versions).
+> 
+> All of them are able to generate the same hook-list.h using this version
+> of the patch.
 > 
