@@ -2,122 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B29EAC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20DCFC433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:50:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99EBC61381
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:42:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01DE161374
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242758AbhI1UoQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 16:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242226AbhI1UoO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:44:14 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CFCC06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:42:35 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id b68so15219pfb.10
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KZ1RbZfMCIKiVSMzkhM8sptVwShdXjJyqB1jdUXW0F0=;
-        b=onabPd1BnHxw4faesHbceZ+s/vMH7dghK6fSvagkYmKS2nGIrABFbuxY7ClhVW3I8X
-         TUpZmv9C9KWlQZq5mGL2LPvqYxHrFyHlissc78dh2CRI2V5nkHznc+hMe8UaO0yra9FC
-         fVoG1Q0sgqL9PwLQ1RUJNYqVoXkv4X0G0jArHQcF/ieb0f7Iqe/qxC5t53EPjjXG7bfr
-         Vgi3BHopfQbLXyopSIzPcXvhDZczhe++XDX3UOd8tp7Idn3UTXN7uA2hME0zYSaVy1GL
-         K9XtEeXIJNPnUGfoxSBw2tr3P6mhljYp2u0j26Mma9zKJII8SdKsbHIsdAKTl/F0FCEO
-         9mFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KZ1RbZfMCIKiVSMzkhM8sptVwShdXjJyqB1jdUXW0F0=;
-        b=1NlI0m+O3y3g4Jhxx9CalypF3oejoVeSuSyONMcl/DIcFClyhoxHdNQlsQL5dGsBZb
-         J3A00d5Kvfe+Xgek8FoFzE5OPRvAVAFT0FCHehxGqXIr5B8lP3cbKMnCC9+oHYmUQADu
-         Ujge9he1eb9g13mr+AeQDp7AzCI2NbIv8LzmqafEjoFITA4bfpgM8eYRgBne9yqC5IYI
-         hGLgUYK3BaQzK4AeFscA0qdqRj3DFazwCBEomLt4hSG/0vbbZRyQWiKw6XNJIsF7TqR5
-         YaDQGYGcp+2+2UG7NBz6JNOjJIA+NseMlBJxBdCAFKXbABDo6SBc3kGQz+Umi4Vo4mgF
-         8XlA==
-X-Gm-Message-State: AOAM532b2lg5V0qfhYEZnWSen1vR24Q+ob9MBI2nrliRdfYaZo6vb0tL
-        1MzBG7SRDZy+MOMw1RpGIC6KKH1eNO/+3ehvL30=
-X-Google-Smtp-Source: ABdhPJzezY0dI6eZVp0yh0DtlG9Zqs4Pl84YX4vx/UNYj9UwI0WxjN4c3abYbT8tlJJ4gIpQ3J/lvJoccdOO8U7HNn4=
-X-Received: by 2002:a05:6a00:2405:b0:3e1:9f65:9703 with SMTP id
- z5-20020a056a00240500b003e19f659703mr7532065pfh.6.1632861754419; Tue, 28 Sep
- 2021 13:42:34 -0700 (PDT)
+        id S242780AbhI1Uwi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 16:52:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59278 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242604AbhI1Uwh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 16:52:37 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5742914AF38;
+        Tue, 28 Sep 2021 16:50:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=O01mj48b2Ots
+        Jgz7qVRX4+SksEmQav8dXfMjtmznGjI=; b=QrnSCbfbEb30YQKIvGuvvmYjR3/A
+        AhPSgIWCICllII2xl0Tg3Bk6JHxGHL92rUU090EmdDOAcxYTXKwsoJQU3oNSGXwC
+        R63cfUlqEki/QNi20ADPiQ1mFjALey1MixUeStQGLgGTKJPC17KAhbLJFi6px/cu
+        ugoaEjA8inBc5g8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 50AD214AF37;
+        Tue, 28 Sep 2021 16:50:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B5B1814AF34;
+        Tue, 28 Sep 2021 16:50:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
+References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
+        <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
+        <694f477d-b387-c8ea-4138-0e9334540c69@kdbg.org>
+        <87czou1dmp.fsf@evledraar.gmail.com>
+        <YVJZrOYucywgoi+v@coredump.intra.peff.net>
+        <xmqqpmssk0v1.fsf@gitster.g> <877df0wknp.fsf@evledraar.gmail.com>
+Date:   Tue, 28 Sep 2021 13:50:53 -0700
+In-Reply-To: <877df0wknp.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 28 Sep 2021 21:42:45 +0200")
+Message-ID: <xmqqlf3gjufm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1095.git.git.1632628082841.gitgitgadget@gmail.com> <xmqqsfxppylh.fsf@gitster.g>
-In-Reply-To: <xmqqsfxppylh.fsf@gitster.g>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Tue, 28 Sep 2021 23:42:23 +0300
-Message-ID: <CAGHpTBKkET3dcsjq0oQshMmxDRoA6rMOhUoPsAaG634_sHizRg@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix capitalization in porcelain v2 section
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C6205680-209D-11EC-A905-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 11:12 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Subject: Re: [PATCH] doc: fix capitalization in porcelain v2 section
-> > From: Orgad Shaneh <orgads@gmail.com>
->
-> Between "doc" and "porcelain v2 section", there is this level called
-> "page" ;-) When this commit is mixed together with other commits in
-> "git shortlog" output, it will be hard to tell that this is about
-> fixing documentation for which command, so you must give it to your
-> readers.
->
->     Subject: doc: match XY placeholder in status --porcelain-v2 output
->
-> or something like that, perhaps?
->
-> Thanks.
->
-> >
-> > The summary line had xy, while the description (and other sub-sections)
-> > has XY.
-> >
-> > Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> > ---
-> >     doc: fix capitalization in porcelain v2 section
-> >
-> >     The summary line had xy, while the description (and other sub-sections)
-> >     has XY.
-> >
-> >     Signed-off-by: Orgad Shaneh orgads@gmail.com
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1095%2Forgads%2Fstatus-doc-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1095/orgads/status-doc-v1
-> > Pull-Request: https://github.com/git/git/pull/1095
-> >
-> >  Documentation/git-status.txt | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-> > index 83f38e31981..c33a3d8d532 100644
-> > --- a/Documentation/git-status.txt
-> > +++ b/Documentation/git-status.txt
-> > @@ -363,7 +363,7 @@ Field       Meaning
-> >  Unmerged entries have the following format; the first character is
-> >  a "u" to distinguish from ordinary changed entries.
-> >
-> > -    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
-> > +    u <XY> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
-> >
-> >  ....
-> >  Field       Meaning
-> >
-> > base-commit: ddb1055343948e0d0bc81f8d20245f1ada6430a0
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Fine with me. Should I resubmit the patch, or will you push it with
-the revised subject?
+> On Tue, Sep 28 2021, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>>>> >> +	memcpy(t, &blank, sizeof(*t));
+>>>> >
+>>>> > Is
+>>>> > 	*t =3D blank;
+>>>> >
+>>>> > not a thing in C?
+>>>
+>>> It would be fine to use struct assignment here, and should be equival=
+ent
+>>> in most compilers. They know about memcpy() and will inline it as
+>>> appropriate.
+>>
+>> FWIW, I'd be fine with structure assignment, but we already have too
+>> many such memcpy(<ptr>, &<struct>, sizeof(struct)), adding one more
+>> is not giving us too much incremental burden for later clean-up.
+>>
+>>> I think some C programmers tend to prefer memcpy() just because that'=
+s
+>>> how they think. It also wasn't legal in old K&R compilers, but as far=
+ as
+>>> I know was in C89.
+>>
+>> I think so, too.
+>
+> Getting back to the topic of this v2 in general, my reading of the
+> discussion since then is that nothing in it necessitated a v3 re-roll t=
+o
+> address outstanding issues. If I've got that wrong please shout...
 
--  Orgad
+I was hoping that these can hit 'next' soonish.
