@@ -2,169 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E8BEC433FE
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB605C433FE
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:31:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5433F61131
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:14:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9237060F9D
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240811AbhI1NQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 09:16:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34360 "EHLO
+        id S240984AbhI1NdO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 09:33:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240711AbhI1NQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:16:25 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8CAC061575
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:14:46 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id t18so58046508wrb.0
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:14:46 -0700 (PDT)
+        with ESMTP id S240883AbhI1NdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 09:33:13 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1669DC061575
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:31:34 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id b65so40167308qkc.13
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=y2ga8NrhoHT62xcigXV6kP7xXqqvMgVdPXbBGem337I=;
-        b=SJc2xfk82cG49oQt2MncZbeaJaAsBkZJOiXNFxqp20frEPaIwZ1ESEHNf9JNnQNM2V
-         HnUvOIYFK0SWIlBwqanllewfZ/Q5/yEA4PoPOOnMy+QLa4n+yBZ4Yg39eLIa7145DtKg
-         so0v2ODbwkADErvak4O9sUbE1IE72Yn4L8dyPIXNgtdvrYUGJsVeOrQPOgdvDw5RclUx
-         bNDHFwHDufFG/9O9nOX0iECUOb2wPTzxSHZ5G5ogfDRSE2qZOXh0oll7ewZgTSYSjkMJ
-         1/VXMFOJvm848+zxFmBQXVwZvIArb4l/aiNzfTt7HdHUtOVTZQFpKF6XYJjhhW3EeBhM
-         QL7w==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vkiVlwquF9bfZcqOWOWvPpau7L152gtX0AX8Kc5f2yo=;
+        b=QAqwaGzz2yf9ijmhNXU8cRVOW5zF/Q3Ygz1/4eXbPdAIYN1tZD9u2oLXZxlLb53k4x
+         azSvMQR0LR5uJnujVrP4GPlQ6LXwReQfw5/Au8SMCnsmNGmzEZSJxqMy4MRckrzcZ/X0
+         oWwNgz2UtM41kyqkEU295NxoMfGoTdG+2jBe7rzW8w0QknwJnaJ7gMWTXrN5SuY7ybyG
+         yy5EwYbz6ZnoEHeMeSBlC+mZmNZ/MpHvrleQ4ynl7S3ZZmn47xothNErGR1gyg4WZRrH
+         VY+qVPJRNamb0l6aUJhFqvdATexyRBxHLEpMpoMOjgB5V3K/e03eUJ33rmKuMYiCUdEl
+         bi/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=y2ga8NrhoHT62xcigXV6kP7xXqqvMgVdPXbBGem337I=;
-        b=JMGCSbPtkT3yGjWKhUTnF2EbR0BI5pXN/cUnuMMn2nsq00+27dqaC8k7WdQ/BuRLE8
-         4hlk7rY+CPz0XTxBTXT3jTyain+6aMeerze4Bn4EzXlNUk5Z18jzcMMfVHMr1lnR7MOq
-         iD6fDbC4wtUhGq/+xjyDQX9DQEuI4HAbr4FWDme+4TqGrs7a8+4mjSSHkyCQkmbsHRUE
-         iUlFfGFu4iw3ggNGtBb2LeA5tJE4xPk6btO/w4ueL98Ggr/cipNbFTWjcA+1hXhP+SPB
-         8uiDuA265eNwwq8r25klRrF1Tu8b/xEfSzmUoO4V8lUiZ9YwO3ruNZqBFyyHDjLzKo9V
-         7pNw==
-X-Gm-Message-State: AOAM532E2DM3ygCrR8zHfjVvSe2x6JotlYJxPfdoUL2hVXuXPBW3u3Zg
-        ORfcZpOqqyv8AbvjAuIRBb5QN9mk5YVOuA==
-X-Google-Smtp-Source: ABdhPJyyQ8uD8zvIuDK/YIm9SMMTllRrV7SpYQvZWlHzpnq0NNRvz5V9JcvIblsGw3cwtYWROEDb7Q==
-X-Received: by 2002:a05:6000:8d:: with SMTP id m13mr6430827wrx.109.1632834884355;
-        Tue, 28 Sep 2021 06:14:44 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l21sm2617981wmh.31.2021.09.28.06.14.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 06:14:43 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 10/10] parse-options: change OPT_{SHORT,UNSET} to an enum
-Date:   Tue, 28 Sep 2021 15:14:31 +0200
-Message-Id: <patch-10.10-a28ab961125-20210928T130905Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1339.g53eae12fb46
-In-Reply-To: <cover-00.10-00000000000-20210928T130905Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20210928T130905Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vkiVlwquF9bfZcqOWOWvPpau7L152gtX0AX8Kc5f2yo=;
+        b=KVm3uB78EuArwjAPwXEyxsoHNV35jrNZ+uXO0zMJC12Z77Ri2rGW4TunBMMFRiewKt
+         B62jR+qmgLAMAJnlrtxg+lcJoTK66xcEqeq4eih6YSw2GccaFTQnhGO10Vgf/wdlErHw
+         hsxNFnjLeRfJDpR1j5D5cxEPqPZYCYJLNgGpzB78o7/iNijh2WP50cNeEJiXnoIga93P
+         JBTZUOJ+5K9nxOjQ7UhRo8nzLlmUJQdvK1mzELbwJiM7tBPO8bs9FqTPRyjICZmxLcLd
+         IsEYRu6jmXprUp45+MAlf7+yfQPArPkUzZk8voVV5cjRq6bH6rmYIsQm223qn5tozmZw
+         m6cQ==
+X-Gm-Message-State: AOAM532wALp8MPDUwYdkwk8bt4DhWf8PDHHdiV1DMcek0/7w35EPGn1n
+        yDJ/nWk6afXuCPGuQd4LGmc=
+X-Google-Smtp-Source: ABdhPJwzn66svOLyNGQGEbOAdfoKR9YJ7xdiEqL1XcdL/npcQ4v7+/GgeAtAcT/yB9onTW1wmXM39Q==
+X-Received: by 2002:a37:a7d5:: with SMTP id q204mr9405qke.236.1632835891560;
+        Tue, 28 Sep 2021 06:31:31 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b9f6:9a69:7554:f4bc? ([2600:1700:e72:80a0:b9f6:9a69:7554:f4bc])
+        by smtp.gmail.com with ESMTPSA id q184sm15115768qkd.35.2021.09.28.06.31.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Sep 2021 06:31:31 -0700 (PDT)
+Message-ID: <97eb5075-2ef3-8891-138a-44a035437404@gmail.com>
+Date:   Tue, 28 Sep 2021 09:31:28 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <xmqq8rzhmsi7.fsf@gitster.g>
+ <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the comparisons against OPT_SHORT and OPT_UNSET to an enum
-which keeps track of how a given option got parsed. The case of "0"
-was an implicit OPT_LONG, so let's add an explicit label for it.
+On 9/28/2021 2:46 AM, Elijah Newren wrote:
+> [Did some slight re-ordering of topics]
+> 
+> On Mon, Sep 27, 2021 at 5:53 PM Junio C Hamano <gitster@pobox.com> wrote:
+> 
+>> * ds/add-rm-with-sparse-index (2021-09-24) 13 commits
+>>  - advice: update message to suggest '--sparse'
+>>  - mv: refuse to move sparse paths
+>>  - rm: skip sparse paths with missing SKIP_WORKTREE
+>>  - rm: add --sparse option
+>>  - add: update --renormalize to skip sparse paths
+>>  - add: update --chmod to skip sparse paths
+>>  - add: implement the --sparse option
+>>  - add: skip tracked paths outside sparse-checkout cone
+>>  - add: fail when adding an untracked sparse file
+>>  - dir: fix pattern matching on dirs
+>>  - dir: select directories correctly
+>>  - t1092: behavior for adding sparse files
+>>  - t3705: test that 'sparse_entry' is unstaged
+>>
+>>  "git add", "git mv", and "git rm" have been adjusted to avoid
+>>  updating paths outside of the sparse-checkout definition unless
+>>  the user specifies a "--sparse" option.
+>>
+>>  Will merge to 'next'?
+> 
+> It would be nice to see the --diff-filter=u change, which you also
+> seemed to like[1]; but after that, yeah this is ready to merge down.
+> 
+> [1] https://lore.kernel.org/git/xmqq35pppwsm.fsf@gitster.g/
 
-Due to the xor in 0f1930c5875 (parse-options: allow positivation of
-options starting, with no-, 2012-02-25) the code already relied on
-this being set back to 0. To avoid refactoring the logic involved in
-that let's just start the enum at "0" instead of the usual "1<<0" (1),
-but BUG() out if we don't have one of our expected flags.
+Yes, I agree. I was waiting to see if more comments trickled in, but
+it seems stable now. Do you want me to re-roll the whole series, or
+do you want to apply the fixup below?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Thanks,
+-Stolee
+
+
+---- >8 ----
+
+From d279bd580ad3b66187f9a8c0370acc5bca7cc5b6 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Tue, 28 Sep 2021 09:30:10 -0400
+Subject: [PATCH] fixup! t1092: behavior for adding sparse files
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- parse-options.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ t/t1092-sparse-checkout-compatibility.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 57e95846e83..1eb3b51f753 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -8,8 +8,11 @@
- 
- static int disallow_abbreviated_options;
- 
--#define OPT_SHORT 1
--#define OPT_UNSET 2
-+enum opt_parsed {
-+	OPT_LONG  = 0,
-+	OPT_SHORT = 1<<0,
-+	OPT_UNSET = 1<<1,
-+};
- 
- static int optbug(const struct option *opt, const char *reason)
- {
-@@ -22,7 +25,7 @@ static int optbug(const struct option *opt, const char *reason)
- 	return error("BUG: switch '%c' %s", opt->short_name, reason);
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index a00e42fa233..ca91c6a67f8 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -192,7 +192,7 @@ test_sparse_unstaged () {
+ 	for repo in sparse-checkout sparse-index
+ 	do
+ 		# Skip "unmerged" paths
+-		git -C $repo diff --staged --diff-filter=ACDMRTXB -- "$file" >diff &&
++		git -C $repo diff --staged --diff-filter=u -- "$file" >diff &&
+ 		test_must_be_empty diff || return 1
+ 	done
  }
- 
--static const char *optname(const struct option *opt, int flags)
-+static const char *optname(const struct option *opt, enum opt_parsed flags)
- {
- 	static struct strbuf sb = STRBUF_INIT;
- 
-@@ -31,15 +34,17 @@ static const char *optname(const struct option *opt, int flags)
- 		strbuf_addf(&sb, "switch `%c'", opt->short_name);
- 	else if (flags & OPT_UNSET)
- 		strbuf_addf(&sb, "option `no-%s'", opt->long_name);
--	else
-+	else if (flags == OPT_LONG)
- 		strbuf_addf(&sb, "option `%s'", opt->long_name);
-+	else
-+		BUG("optname() got unknown flags %d", flags);
- 
- 	return sb.buf;
- }
- 
- static enum parse_opt_result get_arg(struct parse_opt_ctx_t *p,
- 				     const struct option *opt,
--				     int flags, const char **arg)
-+				     enum opt_parsed flags, const char **arg)
- {
- 	if (p->opt) {
- 		*arg = p->opt;
-@@ -65,7 +70,7 @@ static void fix_filename(const char *prefix, const char **file)
- static enum parse_opt_result opt_command_mode_error(
- 	const struct option *opt,
- 	const struct option *all_opts,
--	int flags)
-+	enum opt_parsed flags)
- {
- 	const struct option *that;
- 	struct strbuf that_name = STRBUF_INIT;
-@@ -97,7 +102,7 @@ static enum parse_opt_result opt_command_mode_error(
- static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
- 				       const struct option *opt,
- 				       const struct option *all_opts,
--				       int flags)
-+				       enum opt_parsed flags)
- {
- 	const char *s, *arg;
- 	const int unset = flags & OPT_UNSET;
-@@ -318,11 +323,11 @@ static enum parse_opt_result parse_long_opt(
- 	const struct option *all_opts = options;
- 	const char *arg_end = strchrnul(arg, '=');
- 	const struct option *abbrev_option = NULL, *ambiguous_option = NULL;
--	int abbrev_flags = 0, ambiguous_flags = 0;
-+	enum opt_parsed abbrev_flags = OPT_LONG, ambiguous_flags = OPT_LONG;
- 
- 	for (; options->type != OPTION_END; options++) {
- 		const char *rest, *long_name = options->long_name;
--		int flags = 0, opt_flags = 0;
-+		enum opt_parsed flags = OPT_LONG, opt_flags = OPT_LONG;
- 
- 		if (!long_name)
- 			continue;
 -- 
-2.33.0.1340.ge9f77250f2b
+2.33.0.vfs.0.0
+
 
