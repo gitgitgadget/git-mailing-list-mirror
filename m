@@ -2,141 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB605C433FE
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53493C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:36:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9237060F9D
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:31:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38ABF60F9D
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240984AbhI1NdO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 09:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38618 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240883AbhI1NdN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:33:13 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1669DC061575
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:31:34 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id b65so40167308qkc.13
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:31:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vkiVlwquF9bfZcqOWOWvPpau7L152gtX0AX8Kc5f2yo=;
-        b=QAqwaGzz2yf9ijmhNXU8cRVOW5zF/Q3Ygz1/4eXbPdAIYN1tZD9u2oLXZxlLb53k4x
-         azSvMQR0LR5uJnujVrP4GPlQ6LXwReQfw5/Au8SMCnsmNGmzEZSJxqMy4MRckrzcZ/X0
-         oWwNgz2UtM41kyqkEU295NxoMfGoTdG+2jBe7rzW8w0QknwJnaJ7gMWTXrN5SuY7ybyG
-         yy5EwYbz6ZnoEHeMeSBlC+mZmNZ/MpHvrleQ4ynl7S3ZZmn47xothNErGR1gyg4WZRrH
-         VY+qVPJRNamb0l6aUJhFqvdATexyRBxHLEpMpoMOjgB5V3K/e03eUJ33rmKuMYiCUdEl
-         bi/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=vkiVlwquF9bfZcqOWOWvPpau7L152gtX0AX8Kc5f2yo=;
-        b=KVm3uB78EuArwjAPwXEyxsoHNV35jrNZ+uXO0zMJC12Z77Ri2rGW4TunBMMFRiewKt
-         B62jR+qmgLAMAJnlrtxg+lcJoTK66xcEqeq4eih6YSw2GccaFTQnhGO10Vgf/wdlErHw
-         hsxNFnjLeRfJDpR1j5D5cxEPqPZYCYJLNgGpzB78o7/iNijh2WP50cNeEJiXnoIga93P
-         JBTZUOJ+5K9nxOjQ7UhRo8nzLlmUJQdvK1mzELbwJiM7tBPO8bs9FqTPRyjICZmxLcLd
-         IsEYRu6jmXprUp45+MAlf7+yfQPArPkUzZk8voVV5cjRq6bH6rmYIsQm223qn5tozmZw
-         m6cQ==
-X-Gm-Message-State: AOAM532wALp8MPDUwYdkwk8bt4DhWf8PDHHdiV1DMcek0/7w35EPGn1n
-        yDJ/nWk6afXuCPGuQd4LGmc=
-X-Google-Smtp-Source: ABdhPJwzn66svOLyNGQGEbOAdfoKR9YJ7xdiEqL1XcdL/npcQ4v7+/GgeAtAcT/yB9onTW1wmXM39Q==
-X-Received: by 2002:a37:a7d5:: with SMTP id q204mr9405qke.236.1632835891560;
-        Tue, 28 Sep 2021 06:31:31 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b9f6:9a69:7554:f4bc? ([2600:1700:e72:80a0:b9f6:9a69:7554:f4bc])
-        by smtp.gmail.com with ESMTPSA id q184sm15115768qkd.35.2021.09.28.06.31.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Sep 2021 06:31:31 -0700 (PDT)
-Message-ID: <97eb5075-2ef3-8891-138a-44a035437404@gmail.com>
-Date:   Tue, 28 Sep 2021 09:31:28 -0400
+        id S241111AbhI1NiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 09:38:06 -0400
+Received: from forward105o.mail.yandex.net ([37.140.190.183]:41296 "EHLO
+        forward105o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241153AbhI1Nh6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Sep 2021 09:37:58 -0400
+Received: from forward100q.mail.yandex.net (forward100q.mail.yandex.net [IPv6:2a02:6b8:c0e:4b:0:640:4012:bb97])
+        by forward105o.mail.yandex.net (Yandex) with ESMTP id C075B4C4C1D
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 16:36:17 +0300 (MSK)
+Received: from vla3-424b09af403e.qloud-c.yandex.net (vla3-424b09af403e.qloud-c.yandex.net [IPv6:2a02:6b8:c15:3511:0:640:424b:9af])
+        by forward100q.mail.yandex.net (Yandex) with ESMTP id BC9726F40002
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 16:36:17 +0300 (MSK)
+Received: from vla3-3dd1bd6927b2.qloud-c.yandex.net (2a02:6b8:c15:350f:0:640:3dd1:bd69 [2a02:6b8:c15:350f:0:640:3dd1:bd69])
+        by vla3-424b09af403e.qloud-c.yandex.net (mxback/Yandex) with ESMTP id u2bWzdyYuI-aHESQvjn;
+        Tue, 28 Sep 2021 16:36:17 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1632836177;
+        bh=3+l/GN66yzNGRKiNQarRwU2lSudUGCAiVjpljDOh0fM=;
+        h=Subject:To:Message-ID:From:Date;
+        b=LslAFXri3vHqkA+mep4hKUmj/pmWLOcWnojbhAk2Qq/Qona4fId4EVk3ZO4+oLean
+         dOMoOWSuBeefS3b3rq3f3og9LN4bqUJ/zms60mEXVZEuoDkICHOc3U5QrfQAJW69A0
+         QDOSWr4YAaUO2jXqrhbYBmg0SOWgEebaRpGjvkE0=
+Authentication-Results: vla3-424b09af403e.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by vla3-3dd1bd6927b2.qloud-c.yandex.net (smtp/Yandex) with ESMTPS id I0sP9WhW6S-aHxShs9X;
+        Tue, 28 Sep 2021 16:36:17 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (Client certificate not present)
+Date:   Tue, 28 Sep 2021 16:36:16 +0300
+From:   Eugen Konkov <kes-kes@yandex.ru>
+Message-ID: <691467377.20210928163616@yandex.ru>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Commit is marked as new, despite on it already on branch
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <xmqq8rzhmsi7.fsf@gitster.g>
- <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/28/2021 2:46 AM, Elijah Newren wrote:
-> [Did some slight re-ordering of topics]
-> 
-> On Mon, Sep 27, 2021 at 5:53 PM Junio C Hamano <gitster@pobox.com> wrote:
-> 
->> * ds/add-rm-with-sparse-index (2021-09-24) 13 commits
->>  - advice: update message to suggest '--sparse'
->>  - mv: refuse to move sparse paths
->>  - rm: skip sparse paths with missing SKIP_WORKTREE
->>  - rm: add --sparse option
->>  - add: update --renormalize to skip sparse paths
->>  - add: update --chmod to skip sparse paths
->>  - add: implement the --sparse option
->>  - add: skip tracked paths outside sparse-checkout cone
->>  - add: fail when adding an untracked sparse file
->>  - dir: fix pattern matching on dirs
->>  - dir: select directories correctly
->>  - t1092: behavior for adding sparse files
->>  - t3705: test that 'sparse_entry' is unstaged
->>
->>  "git add", "git mv", and "git rm" have been adjusted to avoid
->>  updating paths outside of the sparse-checkout definition unless
->>  the user specifies a "--sparse" option.
->>
->>  Will merge to 'next'?
-> 
-> It would be nice to see the --diff-filter=u change, which you also
-> seemed to like[1]; but after that, yeah this is ready to merge down.
-> 
-> [1] https://lore.kernel.org/git/xmqq35pppwsm.fsf@gitster.g/
+Hi.
 
-Yes, I agree. I was waiting to see if more comments trickled in, but
-it seems stable now. Do you want me to re-roll the whole series, or
-do you want to apply the fixup below?
+Here is comparison of two branches. All same commits are marked as '='
+But in my situaltion commit is marked as new '>'
 
-Thanks,
--Stolee
+Here is my main 'dev' branch
+*   8fd53c7d (HEAD -> dev, local/dev) Merge branch 'frontend' into test-dev
+|\  
+| * 3da9e49c (local/frontend, frontend) 'Save/sync' button is active always
+| * d192d9a7 Added library 'materialize' and facelifted the contractor table
+|/  
+* 0cb280f5 Do not export test data
+*   ce1df25f Merge branch 'frontend' into dev
+|\  
+| * da78b64f Display disabled element title
+| * 5f741628 Gen podio ref using document or agreement info
+| * 2d756923 Added ref to 'Podio'
+| * 129c972d Clean forms when load o reload the page
+| * d96c45e4 Use production and test modes in parallel
+| * 20bf7186 Added refs to download document and sandbox link for agreement
+* | a0e338cb Display only tick for user experience
+* | 2b2fb1d5 Merge branch 'frontend' into dev
+|\| 
+| * d868d72b Added fonts link and some changes for user experience
+| * 74426fd0 Added message to say "The docn has been used. Use another docn."
+| * b183803b Fill client passport form by parsed passport data
+| * b40234ed Fill client form by parsed client data string
+|/  
+* ed3f3026 Invert data to show provider as 'true' value
+
+Here we see our interesting commit:
+a0e338cb Display only tick for user experience
+
+Here is branch I do comparison to:
+*   ec655271 (HEAD, xtucha/dev) Merge branch 'frontend' into dev
+|\  
+| * a6085d95 'Save/sync' button is active always
+| * bbca694b Added library 'materialize' and facelifted the contractor table
+| * 92103b2d Display only tick for user experience
+| *   4f0a1881 Merge branch 'frontend' into dev
+| |\  
+* | | 0cb280f5 Do not export test data
+* | |   ce1df25f Merge branch 'frontend' into dev
+|\ \ \  
+| | |/  
+| |/|   
+| * | da78b64f Display disabled element title
+| * | 5f741628 Gen podio ref using document or agreement info
+| * | 2d756923 Added ref to 'Podio'
+| * | 129c972d Clean forms when load o reload the page
+| * | d96c45e4 Use production and test modes in parallel
+| * | 20bf7186 Added refs to download document and sandbox link for agreement
+* | | a0e338cb Display only tick for user experience
+* | | 2b2fb1d5 Merge branch 'frontend' into dev
+|\| | 
+| |/  
+|/|   
+| * d868d72b Added fonts link and some changes for user experience
+| * 74426fd0 Added message to say "The docn has been used. Use another docn."
+| * b183803b Fill client passport form by parsed passport data
+| * b40234ed Fill client form by parsed client data string
+|/  
+* ed3f3026 Invert data to show provider as 'true' value
 
 
----- >8 ----
+$git log --graph --decorate --pretty=oneline --abbrev-commit --cherry-mark --boundary --left-right dev...xtucha/dev
+<   8fd53c7d (HEAD -> dev, local/dev) Merge branch 'frontend' into test-dev
+|\  
+| = 3da9e49c (local/frontend, frontend) 'Save/sync' button is active always
+| = d192d9a7 Added library 'materialize' and facelifted the contractor table
+|/  
+| > ec655271 (xtucha/dev) Merge branch 'frontend' into dev
+|/| 
+| = a6085d95 'Save/sync' button is active always
+| = bbca694b Added library 'materialize' and facelifted the contractor table
+| > 92103b2d Display only tick for user experience
+| >   4f0a1881 Merge branch 'frontend' into dev
+| |\  
+| | o da78b64f Display disabled element title
+| o ed3f3026 Invert data to show provider as 'true' value
+o 0cb280f5 Do not export test data
 
-From d279bd580ad3b66187f9a8c0370acc5bca7cc5b6 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Tue, 28 Sep 2021 09:30:10 -0400
-Subject: [PATCH] fixup! t1092: behavior for adding sparse files
+Here you can see that '92103b2d Display only tick for user experience' commit is marked as new
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+If I do explicite comarison of a0e338cb and 92103b2d, then we see that is marked as '='
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index a00e42fa233..ca91c6a67f8 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -192,7 +192,7 @@ test_sparse_unstaged () {
- 	for repo in sparse-checkout sparse-index
- 	do
- 		# Skip "unmerged" paths
--		git -C $repo diff --staged --diff-filter=ACDMRTXB -- "$file" >diff &&
-+		git -C $repo diff --staged --diff-filter=u -- "$file" >diff &&
- 		test_must_be_empty diff || return 1
- 	done
- }
+git range-diff a0e338cb...92103b2d
+-:  -------- > 1:  20bf7186 Added refs to download document and sandbox link for agreement
+-:  -------- > 2:  d96c45e4 Use production and test modes in parallel
+-:  -------- > 3:  129c972d Clean forms when load o reload the page
+-:  -------- > 4:  2d756923 Added ref to 'Podio'
+-:  -------- > 5:  5f741628 Gen podio ref using document or agreement info
+-:  -------- > 6:  da78b64f Display disabled element title
+1:  a0e338cb = 7:  92103b2d Display only tick for user experience
+
+if I do range-diff between branches dev...xtucha/dev
+git range-diff 8fd53c7d...ec655271
+-:  -------- > 1:  92103b2d Display only tick for user experience
+1:  d192d9a7 = 2:  bbca694b Added library 'materialize' and facelifted the contractor tabl
+2:  3da9e49c = 3:  a6085d95 'Save/sync' button is active always
+
+We again see 'Display only tick for user experience' commit as new
+
+
+I think problem arise because git does not see that all three commits:
+   
+| | o da78b64f Display disabled element title
+| o ed3f3026 Invert data to show provider as 'true' value
+o 0cb280f5 Do not export test data
+
+have same fork-point  "ed3f3026 Invert data to show provider as 'true' value"
+
+
+Probably because git merge-base get analyzed only left branch and not right:
+$ git merge-base ec655271 8fd53c7d
+0cb280f544113926e1059568811f99c311489d4c
+
+
+
+
+
+I expect that end of out should look like this:
+
+| |  |
+| |  * da78b64f Display disabled element title
+| * |   0cb280f5 Do not export test data
+| |  |
+........
+| |  /
+---  
+|/  
+o ed3f3026 Invert data to show provider as 'true' value
+
+
+
+
+
 -- 
-2.33.0.vfs.0.0
-
+Best regards,
+Eugen Konkov
 
