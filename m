@@ -2,86 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3719FC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F37EC433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F204761153
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:05:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01891611BD
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231964AbhI1FHK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 01:07:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33288 "EHLO
+        id S234039AbhI1FVU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 01:21:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhI1FHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 01:07:09 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45F1C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:05:30 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id n64so9241315oih.2
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:05:30 -0700 (PDT)
+        with ESMTP id S233290AbhI1FVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 01:21:19 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40BFC061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:19:40 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id x33-20020a9d37a4000000b0054733a85462so27489660otb.10
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=R88JBGgywJUTAygpL+wXTcnShgotUV/F6BmdabFthyE=;
-        b=a8Vze+m/j774q+7bQz273o0z95S+1hTZ1p5+6o1iL8dzgHl1x53do9oVIYRwbRZ+ra
-         xfvxYoNs3QP4CjMuLa3g+DgJj5W137woFmpLGhQ32xuahfDyk4XKlDx/zhHni5DD8WGE
-         Npgjc7TzdC6uiEaVHR0cXHzk7a3Vjo3jF3sZd2WQ6S7Rd1XJdPV8Ks2FbxcmAjAjBkFZ
-         dlLa5526KXVhsNrnk6Pzf3rvx8K+VaZoLOi0Y7G2Klc89m5NHfoLQWQGuXZMceapIULh
-         rr7FotA9xf8cLl2JZWO3eCAsW9ZDlrl/ZrY1vdN/qO3QqB9xxoE1/D72oaps0Jv8jWIh
-         V2sA==
+        bh=IqNyFAIYDWf+cnVZNdpHAhEwepvbnQpJHizZ4OSMhN4=;
+        b=hbcq4IpYa4nlOQsTQuJKKC85uqkC4py7YJ6eBo8HK6g4ozeDJELilhWqUsq36NNULr
+         VsR7iJWTRpQTMw9s8ntaXfoutTzuMZhZCdAhEXV9Opq1FN5gaZhjm7XeKEmDs3wFajit
+         TQrzOTBagX6x+qy/ZXiSsfi1NpUn1Vw6q9Ys7+3bY+gcUEuFE/xW9VfRppCMBymuqiaa
+         Q6Q5Nr5EEYwsyvdRMU1XjM1derl8DjrZvAdgOCzEgdWqz2WBt2qLJ0DaobD3K4ZocqP0
+         61uzlj4y0Tx/RBDKz2nDNtV+4oigWCgxL4bsf1AzeiDnc+ozTZwoAvBu3YHouVlwmRjK
+         phQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=R88JBGgywJUTAygpL+wXTcnShgotUV/F6BmdabFthyE=;
-        b=3y1/du2JXLxvt3LHZP1uBF7X0vtj5t/Sua3mwKCxwPuaVId5B9cWirC3YxYv26a01j
-         hMi0YPsKLE1rsl7vLEyc9HR+iEDMs0gUDSSguQCPSUs3HFLPCO6EUm9dZ1TprBb7lD4B
-         oFZt1qZTTCnMf83rWFOMAlj+1d8F7PWdT9jtSZmt0sffJm1urkD7Tfl9ppQZxJeejie3
-         cvLSLO6aIwg344Exbo1SK6yCt2ZiFyJfA9GOcvJgcpc5u/xUyvQNl1SgseGdh5GLubvr
-         K0P5hJvP+IpN0X69PlT+iLE8F26UgQGJZEOTgZmS+oxEXu1FwcqjpRyRIxjhUMGVluAE
-         AbQw==
-X-Gm-Message-State: AOAM5312GjEEx+5pmtjtPzEsNmoU3/Dg0AzLMR4Hb4Q9u9P/p8OxjIeM
-        aj/BrcOYbgZVVfFi5f22O7PZQRziMolsFhQc3TYPE3WENl32QA==
-X-Google-Smtp-Source: ABdhPJw+3szKawOgvqt+GcbR7jyXX8BWCNUWPk4xxJk/pPpWaeaETsVhrP7MPqPn26B+Hbv8PR7f9tZjiVuf7Lty0bs=
-X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr2261069oib.39.1632805530071;
- Mon, 27 Sep 2021 22:05:30 -0700 (PDT)
+        bh=IqNyFAIYDWf+cnVZNdpHAhEwepvbnQpJHizZ4OSMhN4=;
+        b=IayzMY0PcwAUfq4tROqcVEi42jIksaGszeTXhzmi+bTaPz+mj7zorpQXg1uz96jY5W
+         aGC72OdwPy9/hfYJv1KQ9JX8PHeZkVAUL5nHxam6+YU+NzTlVUQ8JYfrhEphRLf2Q1qV
+         wEFJXsLP9oXC1/3PIJ40VGJVASkT/xwTGaUk2dhEJVa6vseaXtwwX+UbaZmvVBGcw3rB
+         n6qnVKPGSc2YaZv+KZgErus+KOPuN1THceZWRIwa6e5EREjWR5PEoAsN6SRwuSKrw/5o
+         uVyszSDSbh6u933XNPhvlrmnRA8aepN4SSSpyWwWU8179AJ9/6CJtvmxXfURuOYIDMEQ
+         wVHA==
+X-Gm-Message-State: AOAM532dVKIt0m7xYMSA6CWNt1hYJeMJHGXZb7hKD/X3luF+4SXkIG3w
+        6PYT5qKGwNt6zCnGyq5SWyXtRC55G/MTu1MlHY4=
+X-Google-Smtp-Source: ABdhPJx0Zi/wI58pikhzZguCLvbAduY8Hn8S92VX3FvOZ9PJQrh47gDkMnJdhG3zqWmhK9IP6gqwvsXd0uvLnECokQM=
+X-Received: by 2002:a05:6830:2b27:: with SMTP id l39mr3554228otv.25.1632806379919;
+ Mon, 27 Sep 2021 22:19:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com>
- <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com> <bbbc4c3339043bcd718dd2defcbaaaac2092227a.1631630356.git.gitgitgadget@gmail.com>
-In-Reply-To: <bbbc4c3339043bcd718dd2defcbaaaac2092227a.1631630356.git.gitgitgadget@gmail.com>
+References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <2cbf0b611133df5fa7eed1bf38460f9d119d2a6e.1630359290.git.gitgitgadget@gmail.com>
+In-Reply-To: <2cbf0b611133df5fa7eed1bf38460f9d119d2a6e.1630359290.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 27 Sep 2021 22:05:18 -0700
-Message-ID: <CABPp-BGLcLKk1QLHtb6KpCOpn=M1-wwK6KD91rLCYbh6n5gTYA@mail.gmail.com>
-Subject: Re: [PATCH v4 04/15] scalar: 'register' sets recommended config and
- starts maintenance
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Date:   Mon, 27 Sep 2021 22:19:28 -0700
+Message-ID: <CABPp-BH0U9+KEHTuMdfu-jhL+y3eRzjyfuRzWy9-jGxka8PH+Q@mail.gmail.com>
+Subject: Re: [PATCH 08/15] scalar: implement the `clone` subcommand
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, one more thing...
-
-On Tue, Sep 14, 2021 at 7:39 AM Derrick Stolee via GitGitGadget
+On Mon, Aug 30, 2021 at 2:36 PM Johannes Schindelin via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
+>
 ...
-> +               /* check if currently in enlistment root with src/ workdir */
-> +               strbuf_addstr(&path, "/src/.git");
-> +               if (is_git_directory(path.buf)) {
+>  COMMANDS
+>  --------
+>
+> +Clone
+> +~~~~~
+> +
+> +clone [<options>] <url> [<enlistment>]::
+> +    Clones the specified repository, similar to linkgit:git-clone[1]. By
+> +    default, only commit and tree objects are cloned. Once finished, the
+> +    worktree is located at `<enlistment>/src`.
+> ++
+> +The sparse-checkout feature is enabled (except when run with `--full-clone`)
+> +and the only files present are those in the top-level directory. Use
+> +`git sparse-checkout set` to expand the set of directories you want to see,
+> +or `git sparse-checkout disable` to expand to all files (see
+> +linkgit:git-sparse-checkout[1] for more details). You can explore the
+> +subdirectories outside your sparse-checkout by using `git ls-tree HEAD`.
 
-...and...
-
-> +               /* check if currently in workdir */
-> +               strbuf_addstr(&path, "/.git");
-> +               if (is_git_directory(path.buf)) {
-
-Do these two checks suggest that only a primary worktree can be
-enlisted with scalar?  (Is git-worktree generally incompatible?)
+Should this be `git ls-tree [-r] HEAD`?  Do you expect people to just
+add directories that are found immediately under the toplevel, rather
+than some that are a bit deeper?
