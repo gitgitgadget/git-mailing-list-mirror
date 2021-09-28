@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC6AFC433FE
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF3DC433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:02:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE90961139
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:02:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC2EA610E5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 13:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240854AbhI1NER (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 09:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59774 "EHLO
+        id S240880AbhI1NET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 09:04:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240754AbhI1NEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:04:14 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52719C061765
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:02:35 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id i23so58002736wrb.2
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:02:35 -0700 (PDT)
+        with ESMTP id S240849AbhI1NEQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 09:04:16 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F53CC061575
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:02:37 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id g16so57926183wrb.3
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 06:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BWzZNSZlLqHb7JiYN949u/XL/6K/WmSSl3phQ7/XwYU=;
-        b=IK/MNHFWVCy9tDDavKCFH4YMbnGm3VSwy5I1U3Zz06/eeuLT6/TAYkHKh3Zl1iyKfG
-         vdEGMQmfn5hcD7Im1CkHIVr4Fxuww39nmULzRv5FyIHbd1fUvt49D0YkZ42AdjKZ9HPm
-         R8V8AcJMgBZh1g1hX95GoapCEwuWJvL4fnEIFfflcrkk6w2sC9IAU2sQrpfCO2shGzeP
-         TKmldU2A8s2xzHq0otVDbh+qLlbXUXr+mPXlc61ki07Hsj9zrYceRJZ5kEC5Ndv+UFBh
-         JIkqkAtqN+bNYwOaD7LQGm9Bl5RUtGv2QYHmK9mDWtIw0stH1vG7/tYQ5gOWmuTUYUf6
-         j6mQ==
+        bh=CGlcVyfbhAtRmwEpn3mSxi+SfDsetOVK2Lfe45MZEIM=;
+        b=jLtVRuC/3LKlSUtc/P5kYs5s/AuDc9KSyBzcpTglkL1lK31iP6qWcsKywYAc0IXb9+
+         o9+sUlAg0duRcjvaHor8xUkqrDIDCETREJ+FreSJHQbwYgkKcmcqjw90jsLbjj7ce1uK
+         zKkOslYEDOvj0lH5yG30lLSIUUQ1gOzIcsqsPaMyxfidFcnX9ouOkF/eZiSw/A4Fdl5+
+         m0zachailGrMLNmTChHvdx0vqC3Sq2W8m8BUf55DMsHsjDksUvFiTcFtFoM2oSQ7BAJO
+         BNzK+EvWFExAmgkUY2Bfm3sHPFURjl7n5klZfAC7wwLKv+M1C/k8HeOQ+CMPxz8DtpD+
+         d1mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BWzZNSZlLqHb7JiYN949u/XL/6K/WmSSl3phQ7/XwYU=;
-        b=RRRQ9i9pymB8OP9zHvBVv/XTKrc5p0RXMEVzCl00xMdKj54CcM0QueSLQzEGYE/Xx1
-         6vIng7p4rWuSTsO5GxH7ZLpqw+/m+onIR6rMq6/pbD4ey6uxPzwn+osfXL8HAWn+gqG9
-         R4kXgHwOMbXRO5MAa5uV49igHLM4gqvm5AZEgoGEWpvpMpPle1VmIK+k0mi3WqWJlcwi
-         ksFWdXGhFPvxGE0x2mcgVQ/BoG2cho/I5ZSPIegFajWyt7cuA9fE7jLBOnRNR/diosX4
-         S0E9supawcr2glVZp+uCK5sBO0dn1HDfLn8xm+YMgHoowYOQl9TXYQfO/mSdxYUpbd4p
-         A5FQ==
-X-Gm-Message-State: AOAM530RY2EIyrGhoXVIItUvKI+xTs/+hdIBURuYRbDc8tqNLAa9QEkI
-        ulv08rB1Os0FXqiTfPPQXmV81Frwy01pnw==
-X-Google-Smtp-Source: ABdhPJwkDhan7qB6TFcNrDzRrSlGSeXj6KP4Qs12dGTRD+bACrtcvc8HRxVIkJUtsrva4iDz1s3kZQ==
-X-Received: by 2002:a5d:5746:: with SMTP id q6mr6314668wrw.434.1632834153017;
-        Tue, 28 Sep 2021 06:02:33 -0700 (PDT)
+        bh=CGlcVyfbhAtRmwEpn3mSxi+SfDsetOVK2Lfe45MZEIM=;
+        b=aVMILKpKVJWPlivUtm8tYGdXyZyCPWF6mSPSzh2XM/AsnRiDV70sGr9RKy4dvec2sX
+         4DzdPzp+uQ9NB82SU7DYIpUfOcJnF5PNK5im6ue2maf5hohKTAk49nKlErQN9AciXyjI
+         zAljkn0X2ZCibXeAYz5dNr+0gokNYH8zAbz5sNvrU3gQZjZvJyGnpcfNCGgm2yYIgKB2
+         dmWdNJ+fUs9qc1VHpn79hURYjJrrVl7gi5x+9k5N2VdEggZcLord0m8GpSsfhn88cfdZ
+         n/JmoHbKVwK/psUuRpdpkgYlqTl96twmIpy2sfTELjzQuDwKlzoFbymnFy8sRDdqyIqu
+         74dQ==
+X-Gm-Message-State: AOAM530nGLICn32xi/wTbYaBvsIXJWEFs6k8wnOkTaD3fnzaOD674ucb
+        IX2JVe/uuGrf76kcyoQ6s9+jJspfClPyFg==
+X-Google-Smtp-Source: ABdhPJyO78akzL+yWrhl6/SO3SRlOb5qI6lSUjT4sPaDMygVJc159atU3ytpHcNZ4mR6XFUaMpcELA==
+X-Received: by 2002:a5d:6b89:: with SMTP id n9mr2456678wrx.372.1632834154853;
+        Tue, 28 Sep 2021 06:02:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d5sm20180669wra.38.2021.09.28.06.02.30
+        by smtp.gmail.com with ESMTPSA id d5sm20180669wra.38.2021.09.28.06.02.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 06:02:31 -0700 (PDT)
+        Tue, 28 Sep 2021 06:02:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] refs/ref-cache.[ch]: remove unused add_ref_entry()
-Date:   Tue, 28 Sep 2021 15:02:22 +0200
-Message-Id: <patch-3.5-962c1bffa21-20210928T130032Z-avarab@gmail.com>
+Subject: [PATCH 4/5] refs/ref-cache.c: remove "mkdir" parameter from find_containing_dir()
+Date:   Tue, 28 Sep 2021 15:02:23 +0200
+Message-Id: <patch-4.5-a6f9c19f658-20210928T130032Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1340.ge9f77250f2b
 In-Reply-To: <cover-0.5-00000000000-20210928T130032Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210928T130032Z-avarab@gmail.com>
@@ -71,53 +71,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function has not been used since 9dd389f3d8d (packed_ref_store:
-get rid of the `ref_cache` entirely, 2017-09-25).
+Remove the "mkdir" parameter from the find_containing_dir() function,
+the add_ref_entry() function removed in the preceding commit was its
+last user.
+
+Since "mkdir" is always "0" we can also remove the parameter from
+search_for_subdir(), which in turn means that we can delete most of
+that function.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/ref-cache.c | 9 ---------
- refs/ref-cache.h | 7 -------
- 2 files changed, 16 deletions(-)
+ refs/ref-cache.c | 36 ++++++++++++------------------------
+ 1 file changed, 12 insertions(+), 24 deletions(-)
 
 diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index e0feebf628f..a28883768c9 100644
+index a28883768c9..73b338f5ff2 100644
 --- a/refs/ref-cache.c
 +++ b/refs/ref-cache.c
-@@ -212,15 +212,6 @@ struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname)
- 	return (entry->flag & REF_DIR) ? NULL : entry;
+@@ -144,30 +144,19 @@ int search_ref_dir(struct ref_dir *dir, const char *refname, size_t len)
+ /*
+  * Search for a directory entry directly within dir (without
+  * recursing).  Sort dir if necessary.  subdirname must be a directory
+- * name (i.e., end in '/').  If mkdir is set, then create the
+- * directory if it is missing; otherwise, return NULL if the desired
++ * name (i.e., end in '/'). Returns NULL if the desired
+  * directory cannot be found.  dir must already be complete.
+  */
+ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+-					 const char *subdirname, size_t len,
+-					 int mkdir)
++					 const char *subdirname, size_t len)
+ {
+ 	int entry_index = search_ref_dir(dir, subdirname, len);
+ 	struct ref_entry *entry;
+-	if (entry_index == -1) {
+-		if (!mkdir)
+-			return NULL;
+-		/*
+-		 * Since dir is complete, the absence of a subdir
+-		 * means that the subdir really doesn't exist;
+-		 * therefore, create an empty record for it but mark
+-		 * the record complete.
+-		 */
+-		entry = create_dir_entry(dir->cache, subdirname, len, 0);
+-		add_entry_to_dir(dir, entry);
+-	} else {
+-		entry = dir->entries[entry_index];
+-	}
++
++	if (entry_index == -1)
++		return NULL;
++
++	entry = dir->entries[entry_index];
+ 	return get_ref_dir(entry);
  }
  
--int add_ref_entry(struct ref_dir *dir, struct ref_entry *ref)
--{
--	dir = find_containing_dir(dir, ref->name, 1);
--	if (!dir)
--		return -1;
--	add_entry_to_dir(dir, ref);
--	return 0;
--}
--
- /*
-  * Emit a warning and return true iff ref1 and ref2 have the same name
-  * and the same oid. Die if they have the same name but different
-diff --git a/refs/ref-cache.h b/refs/ref-cache.h
-index bd1ff578ea2..580d4038f62 100644
---- a/refs/ref-cache.h
-+++ b/refs/ref-cache.h
-@@ -199,13 +199,6 @@ void free_ref_cache(struct ref_cache *cache);
+@@ -176,18 +165,17 @@ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+  * tree that should hold refname. If refname is a directory name
+  * (i.e., it ends in '/'), then return that ref_dir itself. dir must
+  * represent the top-level directory and must already be complete.
+- * Sort ref_dirs and recurse into subdirectories as necessary. If
+- * mkdir is set, then create any missing directories; otherwise,
++ * Sort ref_dirs and recurse into subdirectories as necessary. Will
+  * return NULL if the desired directory cannot be found.
   */
- void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
+ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+-					   const char *refname, int mkdir)
++					   const char *refname)
+ {
+ 	const char *slash;
+ 	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
+ 		size_t dirnamelen = slash - refname + 1;
+ 		struct ref_dir *subdir;
+-		subdir = search_for_subdir(dir, refname, dirnamelen, mkdir);
++		subdir = search_for_subdir(dir, refname, dirnamelen);
+ 		if (!subdir) {
+ 			dir = NULL;
+ 			break;
+@@ -202,7 +190,7 @@ struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname)
+ {
+ 	int entry_index;
+ 	struct ref_entry *entry;
+-	dir = find_containing_dir(dir, refname, 0);
++	dir = find_containing_dir(dir, refname);
+ 	if (!dir)
+ 		return NULL;
+ 	entry_index = search_ref_dir(dir, refname, strlen(refname));
+@@ -478,7 +466,7 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
  
--/*
-- * Add a ref_entry to the ref_dir (unsorted), recursing into
-- * subdirectories as necessary.  dir must represent the top-level
-- * directory.  Return 0 on success.
-- */
--int add_ref_entry(struct ref_dir *dir, struct ref_entry *ref);
--
- /*
-  * Find the value entry with the given name in dir, sorting ref_dirs
-  * and recursing into subdirectories as necessary.  If the name is not
+ 	dir = get_ref_dir(cache->root);
+ 	if (prefix && *prefix)
+-		dir = find_containing_dir(dir, prefix, 0);
++		dir = find_containing_dir(dir, prefix);
+ 	if (!dir)
+ 		/* There's nothing to iterate over. */
+ 		return empty_ref_iterator_begin();
 -- 
 2.33.0.1340.ge9f77250f2b
 
