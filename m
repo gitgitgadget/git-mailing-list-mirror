@@ -2,147 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B7FDC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 23:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6294EC433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 23:50:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56A5E613A9
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 23:40:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EC3D613B1
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 23:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243363AbhI1Xl4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 19:41:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57282 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243355AbhI1Xl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 19:41:56 -0400
-Received: (qmail 11975 invoked by uid 109); 28 Sep 2021 23:40:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Sep 2021 23:40:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6148 invoked by uid 111); 28 Sep 2021 23:40:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Sep 2021 19:40:14 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Sep 2021 19:40:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-Message-ID: <YVOn3hDsb5pnxR53@coredump.intra.peff.net>
-References: <xmqq8rzhmsi7.fsf@gitster.g>
- <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+        id S243153AbhI1Xsf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 19:48:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50960 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230349AbhI1Xse (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 19:48:34 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FA9AF4103;
+        Tue, 28 Sep 2021 19:46:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nkA4twUTppDQlvIh789vHMgw3sgOK2lUIX6ZOM
+        MOrL8=; b=Z/bNVHAuQ46jq2d4Y5aRcB9pKoGo7FqERQSEvqbe4CGLODdA2aC18h
+        WnlWwS0JkDkonzVvVGnCZa66fMrF7AJGmrReAVeAPDTy0o54DjNcqjILvcGbA0X0
+        gzgQa9bPsrzqTIfpPXiHw9Qy7vQbelAu6TP/1wfkYoBoWaoJWUNEY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37536F4102;
+        Tue, 28 Sep 2021 19:46:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9FE31F4101;
+        Tue, 28 Sep 2021 19:46:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Joey Hess <joeyh@joeyh.name>, git@vger.kernel.org
+Subject: Re: [PATCH] avoid insecure use of mail in man page example
+References: <20210928121648.1390915-1-joeyh@joeyh.name>
+        <YVNi91WYyj3Le6UF@coredump.intra.peff.net>
+Date:   Tue, 28 Sep 2021 16:46:52 -0700
+In-Reply-To: <YVNi91WYyj3Le6UF@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 28 Sep 2021 14:46:15 -0400")
+Message-ID: <xmqqtui4gt5f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5BBA352C-20B6-11EC-B48A-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 11:46:40PM -0700, Elijah Newren wrote:
+Jeff King <peff@peff.net> writes:
 
-> > * en/remerge-diff (2021-08-31) 7 commits
-> >  - doc/diff-options: explain the new --remerge-diff option
-> >  - show, log: provide a --remerge-diff capability
-> >  - tmp-objdir: new API for creating and removing primary object dirs
-> >  - merge-ort: capture and print ll-merge warnings in our preferred fashion
-> >  - ll-merge: add API for capturing warnings in a strbuf instead of stderr
-> >  - merge-ort: add ability to record conflict messages in a file
-> >  - merge-ort: mark a few more conflict messages as omittable
-> >
-> >  A new presentation for two-parent merge "--remerge-diff" can be
-> >  used to show the difference between mechanical (and possibly
-> >  conflicted) merge results and the recorded resolution.
-> >
-> >  Will merge to 'next'?
-> 
-> It has been a month that it's been cooking with no issues brought up,
-> and it's been in production for nearly a year...
-> 
-> But just this morning I pinged peff and jrnieder if they might have
-> time to respectively look at the tmp-objdir stuff (patch 5, plus its
-> integration into log-tree.c in patch 7) and the ll-merge.[ch] changes
-> (patch 3).  I don't know if either will have time to do it, but
-> perhaps wait half a week or so to see if they'll mention they have
-> time?  Otherwise, yeah, it's probably time to merge this down.
+> On Tue, Sep 28, 2021 at 08:16:48AM -0400, Joey Hess wrote:
+>
+>> As recently seen in fail2ban's security hole (CVE-2021-32749),
+>> piping user controlled input to mail is exploitable,
+>> since a line starting with "~! foo" in the input will run command foo.
+>> 
+>> This example on the man page pipes to mail. It may not be exploitable.
+>> git rev-list --pretty indents commit messages, which prevents the escape
+>> sequence working there. It's less clear if it might be possible to embed
+>> the escape sequence in a signed push certificate. The user reading the
+>> man page might alter the example to do something more exploitable.
+>> To encourage safe use of mail, add -E 'set escape'
+>
+> Seems like a good goal, but is "-E" portable?
+>
+> On my system, where "mail" comes from the bsd-mailx package, "-E" means
+> "do not send a message with an empty body" and your example command
+> barfs as it tries to deliver to the recipient "set escape".
+>
+> At least we'd want to make a note in the documentation saying what the
+> mysterious "set escape" is doing, and that not all versions of mail
+> would need / want it.
 
-Sorry to take so long. I think this is a very exciting topic, and I
-appreciate being called into to look at tmp-objdir stuff, because it can
-be quite subtle.
+It is not the primary focus for this documentation page to teach how
+to send e-mails in the first place.  Instead of risking confused
+users rightly complain with "my 'mail' does not understand the -E
+option---what does this do?", I wonder if it is better to just change it to
 
-I just left a rather long-ish mail in the thread, but the gist of it is
-that I'm worried that there's some possibility of corruption there if
-the diff code writes objects. I didn't do a proof-of-concept there, but
-I worked one up just now. Try this:
+	git rev-list --pretty ...
+-   fi |
+-   mail -s ...    
++   fi >>/var/log/update.log
 
-  # make a repo
-  git init repo
-  cd repo
-  echo base >file
-  git add file
-  git commit -m base
+so that it illustrates what's available *out* *of* *us* to the
+authors of the script, without having to teach them "mail" and other
+things we are responsible for.
 
-  # two diverging branches
-  echo main >file
-  git commit -am main
-  git checkout -b side HEAD^
-  echo side >file
-  git commit -am side
-
-  # we get a conflict, and we resolve
-  git merge main
-  echo resolved >file
-  git commit -am merged
-
-  # now imagine we had a file with a diff driver. I stuffed it
-  # in here after the fact, but it could have been here all along,
-  # or come as part of the merge, etc.
-  echo whatever >unrelated
-  echo "unrelated diff=foo" >.gitattributes
-  git add .
-  git commit --amend --no-edit
-
-  # set up the diff driver not just to do a textconv, but to cache the
-  # result. This will require writing out new objects for the cache
-  # as part of the diff operation.
-  git config diff.foo.textconv "$PWD/upcase"
-  git config diff.foo.cachetextconv true
-  cat >upcase <<\EOF &&
-  #!/bin/sh
-  tr a-z A-Z <$1
-  EOF
-  chmod +x upcase
-
-  # now show the diff
-  git log -1 --remerge-diff
-
-  # and make sure the repo is still OK
-  git fsck
-
-The remerge diff will correctly show the textconv'd content (because
-it's not in either parent, and hence an evil merge):
-
-  diff --git a/unrelated b/unrelated
-  new file mode 100644
-  index 0000000..982793c
-  --- /dev/null
-  +++ b/unrelated
-  @@ -0,0 +1 @@
-  +WHATEVER
-
-but then fsck shows that our cache is corrupted:
-
-  Checking object directories: 100% (256/256), done.
-  error: refs/notes/textconv/foo: invalid sha1 pointer 1e9b3ecffca73411001043fe914a7ec0e7291043
-  error: refs/notes/textconv/foo: invalid reflog entry 1e9b3ecffca73411001043fe914a7ec0e7291043
-  dangling tree 569b6e414203d2f50bdaafc1585eae11e28afc37
-
-Now I'll admit the textconv-cache is a pretty seldom-used feature. And
-that there _probably_ aren't a lot of other ways that the diff code
-would try to write objects or references. But I think it speaks to the
-kind of subtle interactions we should worry about (and certainly
-corrupting the repository is a pretty bad outcome, though at least in
-this case it's "just" a cache and we could blow away that ref manually).
-
--Peff
