@@ -2,110 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 024B0C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0546C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDE5B60FBF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:01:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF54F61139
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242799AbhI1VCm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 17:02:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242572AbhI1VCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 17:02:42 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E48EC06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 14:01:02 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id 145so48835pfz.11
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 14:01:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Mb957kPaFl35YecmGIyFs36PNCRfV3U5o++5k+xD6s0=;
-        b=duTc288/GcSA3zFyIPO4vAn4inBzawsdQwcbdWTs7A6QPx/IeLwgXk2WfaTJSIklCm
-         lYZIRTdOzSt/p6Z+GjMlcZ3eD1vw0Y0tUMC8AnkAzC5e4Ead6H4GlFGK+Y4BS2361aaW
-         0sTzU2lMAGEuhf8gpOK3D1Bbp2VAFdYZUqAooYI6NGkMupvmVTCUoJGumws/BhtgDlV8
-         dAj6RrWTBauZB/YgxnF6tTh6dctnvn61hw/gN3Iz20wO4DM2Rc/od5nlaAMr04x+J+wT
-         LXUBj4fbG9OQ4NLwqbIv8YVPfdGpStV/7kmqToGWYqrFnaeFCIsKtwm5w8a5lUBPRfGo
-         GzUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Mb957kPaFl35YecmGIyFs36PNCRfV3U5o++5k+xD6s0=;
-        b=tFT77Mc+mpUsuAc0yToPAZFwK0D1yjeGJUcAaNgse5u6kGaYNoYJ4NDPCqj0BXb9lm
-         sqP6aiT0JddesjnHpFn5pTqlnjmFl7wSoL6sGmB1IuuekS8sVdd1IkT6u1/TDdzLxIHU
-         sTJdjB4FmOcK5O79FSczWMLcQH4xMXPWaQtxwJifJoTv5WYgu4I2cnRpv8vIMfHRKeHL
-         kSl72kIcE8mxfKS96/CzEhuD52v75U6ASbzxrLNZxG0MhAXVqdHqoKGunz4sJbHvR6oE
-         AqnHuZvy2A8IsXIU7Id7QqfQexkzLTnphblsO86lP+BBdFfgoo5C7p683xLlXbhS5IBy
-         UTXg==
-X-Gm-Message-State: AOAM530pMtKlB49lFggk7hhPjmtMVVWMTcgtonbpj9EeVvEvVpm1mH1F
-        OaMdAiCTytWiZtTtU80aJdQ=
-X-Google-Smtp-Source: ABdhPJx6dP2ZUGEo0/xtAPslrrbCfuhTS6sryAvLddbLY6Ndb5TSiu761suKlq3LxmBgVcpmuQL70Q==
-X-Received: by 2002:a62:1e43:0:b0:447:cb0b:4c6e with SMTP id e64-20020a621e43000000b00447cb0b4c6emr7584686pfe.1.1632862861361;
-        Tue, 28 Sep 2021 14:01:01 -0700 (PDT)
-Received: from neerajsi-x1.localdomain (c-24-56-227-232.customer.broadstripe.net. [24.56.227.232])
-        by smtp.gmail.com with ESMTPSA id r18sm58495pfh.214.2021.09.28.14.01.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 14:01:00 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 14:00:59 -0700
-From:   Neeraj Singh <nksingh85@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-Message-ID: <20210928210059.vy5isvmcj75vufdu@neerajsi-x1.localdomain>
-References: <xmqq8rzhmsi7.fsf@gitster.g>
- <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
- <87v92lxhh4.fsf@evledraar.gmail.com>
- <xmqqilykliiz.fsf@gitster.g>
+        id S242872AbhI1VVd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 17:21:33 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54807 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241482AbhI1VVd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 17:21:33 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2FF1B14B2F6;
+        Tue, 28 Sep 2021 17:19:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=wr1zY/aA2mug
+        H6l14PamJ+mUxQXRBpHZ2rZg0HhEI/I=; b=uyTD+bawMTiqOFNIi2FrNZOA/6F+
+        GkYP66ddknsDzjYi+IfB/7PCrPq6PbHFJ4+FAvb4UzBucOgBr2oPHpFaT1k67pKv
+        OchVCeXrOiAsUbQRCfG0qg8ZZT2+mWOgPfM7viiVqbW33V6oGyI07/MkJiG2YHJQ
+        bj9isRRTs/qOdMU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2845914B2F5;
+        Tue, 28 Sep 2021 17:19:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8800514B2F4;
+        Tue, 28 Sep 2021 17:19:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, t.gummerer@gmail.com, avarab@gmail.com,
+        pclouds@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH 2/3] Makefile: avoid multiple -Wall in CFLAGS
+References: <20210928091054.78895-1-carenas@gmail.com>
+        <20210928091054.78895-3-carenas@gmail.com>
+Date:   Tue, 28 Sep 2021 14:19:49 -0700
+In-Reply-To: <20210928091054.78895-3-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 28 Sep 2021 02:10:53 -0700")
+Message-ID: <xmqqbl4cjt3e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqilykliiz.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D0C0797C-20A1-11EC-9168-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 10:25:08AM -0700, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > I haven't poked at it much, but haven't you and Neeraj Singh (CC'd)
-> > independently come up with two slightly different changes in
-> > tmp-objdir.c to do the same thing? See the tmp-objdir.c part of:
-> >
-> > http://lore.kernel.org/git/543ea3569342165363c1602ce36683a54dce7a0b.1632527609.git.gitgitgadget@gmail.com
-> >
-> > And your:
-> >
-> > http://lore.kernel.org/git/67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com
-> >
-> > I.e. yours has the object database managed outside, his has it added to
-> > "struct tmp_objdir", but it's the same objdir dance isn't it?
-> 
-> They touch the same tmp-objdir, but unlike the original use in the
-> receive-pack (i.e. responding to "git push") with the intention to
-> add the objects collected in them back to the primary, remerge-diff
-> wants to discard what was added there at the end.  I do not think it
-> would directly help the bulk-fsync stuff (but I didn't quite see why
-> bulk-fsync stuff needed to _add_ new functions to tmp-objdir API,
-> instead of just being a customer of tmp-objdir API), where it wants
-> to do the same _migrate() dance in the end.
+Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
-Both Elijah and I needed the same functionality of having a writable
-ODB in the current process, which wasn't previously provided by tmp-objdir.
+> 6163f3f1a4 (config.mak.dev: add -Wall, primarily for -Wformat, to help
+> autoconf users, 2018-10-12) adds a second -Wall in config.mak.dev to
+> workaround the lack of one from config.mak.autogen.
+>
+> Since 6d5d4b4e93 (Makefile: allow for combining DEVELOPER=3D1 and
+> CFLAGS=3D"...", 2019-02-22), that variable is set instead as part of
+> DEVELOPER_FLAGS which won't be overriden by config.mak.autogen, so
+> it can be safely removed from config.mak.dev if set instead in the
+> Makefile.
 
-I'm making a new patch which is an amalgamation of Elijah's version and mine.
-I'll rebase and resend my patch series with that version and I'll also make
-a modified version of Elijah's branch available on github.
+Hmph, don't this break non-developers, though?
 
-Thanks,
-Neeraj
+They now do not get -Wall that they used to?  Or am I reading the
+patch incorrectly?
+
+Thanks.
+
+> This also has the advantage of separating cleanly CFLAGS which are
+> used for building with the ones that provide with diagnostics.
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  Makefile       | 3 ++-
+>  config.mak.dev | 1 -
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 9df565f27b..963b9e7c6b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1200,7 +1200,8 @@ endif
+>  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+>  # tweaked by config.* below as well as the command-line, both of
+>  # which'll override these defaults.
+> -CFLAGS =3D -g -O2 -Wall
+> +CFLAGS =3D -g -O2
+> +DEVELOPER_CFLAGS =3D -Wall
+>  LDFLAGS =3D
+>  CC_LD_DYNPATH =3D -Wl,-rpath,
+>  BASIC_CFLAGS =3D -I.
+> diff --git a/config.mak.dev b/config.mak.dev
+> index c81be62a5c..90c47d2782 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -6,7 +6,6 @@ ifeq ($(filter no-error,$(DEVOPTS)),)
+>  DEVELOPER_CFLAGS +=3D -Werror
+>  SPARSE_FLAGS +=3D -Wsparse-error
+>  endif
+> -DEVELOPER_CFLAGS +=3D -Wall
+>  ifeq ($(filter no-pedantic,$(DEVOPTS)),)
+>  DEVELOPER_CFLAGS +=3D -pedantic
+>  ifneq ($(filter clang4 gcc5,$(COMPILER_FEATURES)),)
