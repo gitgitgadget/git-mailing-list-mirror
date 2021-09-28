@@ -2,111 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74867C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CA0C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 09:11:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BFFB611BD
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:38:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD5F3611F0
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 09:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239562AbhI1IkG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 04:40:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53602 "EHLO
+        id S239910AbhI1JMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 05:12:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239551AbhI1IkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 04:40:05 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20CD9C061575
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:38:26 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id l8so32461421edw.2
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:38:26 -0700 (PDT)
+        with ESMTP id S239827AbhI1JMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 05:12:46 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E1DC061575
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 02:11:07 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso28044018otv.12
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 02:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=46OnGNqZS6TuXG2JTjP6Bd3PJWVwnSfVMlZl2Qa1Hxs=;
-        b=OFGCoZpMrd2CfpeKVuTkUdxk3gEEd+bWTRPZD92h2GFtcikN1H6ya+3LjVt1NogK61
-         HKlDZrjlPwKbCyzpRajNsakFjlULv6kjxX9LGCk+0MNHDK7hDzo7IbOqNkkP3ardxp2f
-         QwvrdWmjiWST4m1iO/SevWm7j4U2qAY8Pk0skAioCxItuLAV78IexTv077GmGMxNIdWW
-         aQ/rO64OrpVX99Rwv5FU1tieKaCf1H7dxn3UUK+2xZViVbrh9ag9/liX5+M9+L/bh8Fc
-         tdTJDqKG2ud86jabuHQif7TrUg2PDXR3eCztFdtoYsQNwLP536kS53mZRiF43ZTHySSF
-         pXew==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1MgEWOIHT4udSAtMxdte6TQXQh7XGGU640w3wMbxWzE=;
+        b=TlhImCzK3b26biTYaj/xqY8qABAh7CKtsHcNNLn1KLKGAaxYcA1yVP+6+ViZHZI2o3
+         5i5wPDlRfuOv5M41gWxSWy0+5y0dP2NpsSRhb/rwouGtpm0NTIzsiWqfOFSZ2/kLUKwg
+         iuHGtc7/k+m91aQseDLXzk9hCwGXVWE+Bjem0nhC7whYmU5HSTx7RwsLMvcnWVAzlDs1
+         0jzB17MmcQ8d4mROWLi95cPKgcVl2Kxjza+jIl/YJ6uBq5QKr4k0B9sLQBpy2zSPyqlC
+         IkoSdWUyuyPokbCoUSWUGN96fK4n/S5hG2my5oA4bgemkWnVPI4CbZpxcLrBN2sCvYcE
+         rqFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=46OnGNqZS6TuXG2JTjP6Bd3PJWVwnSfVMlZl2Qa1Hxs=;
-        b=M61+gSEZqYapPsOgALkvbNJqxlbvqcud02uPISX9CGgxajsGwv0aIT8IQjCGYGlAuN
-         NPIb9OfUPBONfad3pxe0J7t3kok934AtosN3jBejjJNqgYC2pkmDgSSZIjHg6IXPtJPn
-         kSHvyx5pnIMZaNZjkG9q2jOhS1V08UfU30UPl7hj4woJAzFK0ie5dFR8WPTKdFwVjao0
-         xfuFdvmRvxV/HkMjFy1VkWehYD8whTbzpSpmkUusoMSmjZCp/c/4BhagM+O7SYdIBQnJ
-         beSdOZ5jzSsUrcO7UCt/0+/V5zzCzXDrPPdVyqz5SMHtltGXiliraqsUaCrCFx/KSVBc
-         6BNg==
-X-Gm-Message-State: AOAM531B9giywZek3x4YdOeNoZr1/t2cK2BmG38pmI8zb+WrTIyB31lS
-        p4tIVsKA9cJzBjWY2/ptk+U=
-X-Google-Smtp-Source: ABdhPJyP83VwGbEh9XiyWHAPFFp+gFNTfm1+GFdx2VSTn0N1WdMjfuamRhXoLrUsUREo9oQnj8deNg==
-X-Received: by 2002:a17:906:c18c:: with SMTP id g12mr5258537ejz.458.1632818300387;
-        Tue, 28 Sep 2021 01:38:20 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y8sm10073950ejm.104.2021.09.28.01.38.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 01:38:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1MgEWOIHT4udSAtMxdte6TQXQh7XGGU640w3wMbxWzE=;
+        b=Ik1GjjEf2hqIPXa3vts7E37ZcSixuKBwFZ/yxmpf74LbUmJ2MUz8zl/YAeaOnQQxDF
+         6qdfdM+UjWnoFYe2drWXGGzjPSIcaPYA0WKDVyHbh3n5x+cavCCnhJEAq7akNPSV6bNS
+         dRN5053mVQRgLa4hxFS7omdo2gSZULGZ4ejRVt0JJC5+yaIZ1Ct15DQwz6ZBXoproTbC
+         pMT1OBMIPCMfg6Io4grebRvbsQqwjLIJVAf8hwwW8f0tW7iQoMyBM5S4oUrHlwpyn5RK
+         bmIsVaofwyeMrWuS42JuerTe1VEKA7bmlC4c6jFuBwEsw6XAzEv2xXFx8IH6dbBRJAD8
+         if2g==
+X-Gm-Message-State: AOAM530VCRlhLG4GEs4uUA3mqsoggRPmD5yzkROmTWAA/EWKsiCnpwW8
+        Lbr2eeidylQd5DVNpEvv0CW6FvgviCHy1w==
+X-Google-Smtp-Source: ABdhPJzbuwghTSX8TJSrLXzR7bCTy/K6eU2B0DZzEAvvKw/FnON5gHbav8W/MgwpWpdm55ty865dog==
+X-Received: by 2002:a9d:6142:: with SMTP id c2mr4173215otk.118.1632820266446;
+        Tue, 28 Sep 2021 02:11:06 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id r23sm4441250otu.54.2021.09.28.02.11.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Sep 2021 02:11:06 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: hn/reftable (Re: What's cooking in git.git (Sep 2021, #08; Mon, 27))
-Date:   Tue, 28 Sep 2021 10:35:36 +0200
-References: <xmqq8rzhmsi7.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqq8rzhmsi7.fsf@gitster.g>
-Message-ID: <871r59xfgk.fsf@evledraar.gmail.com>
+To:     git@vger.kernel.org
+Cc:     t.gummerer@gmail.com, avarab@gmail.com, pclouds@gmail.com,
+        jonathantanmy@google.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH 0/3] Makefile: tighten pedantic flag
+Date:   Tue, 28 Sep 2021 02:10:51 -0700
+Message-Id: <20210928091054.78895-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.955.gee03ddbf0e
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series uses the feedback provided so far to tighten the pedantic
+flags that were added previously, which is mostly done in the first
+patch.
 
-On Mon, Sep 27 2021, Junio C Hamano wrote:
+It is based on js/win-lazyload-buildfix to avoid merge conflicts with
+it, but could be also applied independently if needed (specially patches
+2 and 3 that are somehow orthogonal cleanups).
 
-> * hn/reftable (2021-09-10) 20 commits
->  - fixup! reftable: implement stack, a mutable database of reftable files.
->  - Add "test-tool dump-reftable" command.
->  - reftable: add dump utility
->  - reftable: implement stack, a mutable database of reftable files.
->  - reftable: implement refname validation
->  - reftable: add merged table view
->  - reftable: add a heap-based priority queue for reftable records
->  - reftable: reftable file level tests
->  - reftable: read reftable files
->  - reftable: generic interface to tables
->  - reftable: write reftable files
->  - reftable: a generic binary tree implementation
->  - reftable: reading/writing blocks
->  - Provide zlib's uncompress2 from compat/zlib-compat.c
->  - reftable: (de)serialization for the polymorphic record type.
->  - reftable: add blocksource, an abstraction for random access reads
->  - reftable: utility functions
->  - reftable: add error related functionality
->  - reftable: RFC: add LICENSE
->  - hash.h: provide constants for the hash IDs
->
->  The "reftable" backend for the refs API, without integrating into
->  the refs subsystem.
->
->  Will merge to 'next'?
+Alternatively, patch 3 could be dropped and patch 1 refactor based on
+the reviewer feedback.
 
-I think we've reached approximately "good enough" with this for the next
-steps, and can hopefully fix any remaining nits (such as my [1])
-post-merge.
+Carlo Marcelo Arenas Belón (3):
+  Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
+  Makefile: avoid multiple -Wall in CFLAGS
+  config.mak.dev: simplify compiler check for multiple compilers
 
-Maybe hold off until Han-Wen gets a chance to ack it, and whether he's
-ok with the proposed fixup(s)?
+ Makefile         | 3 ++-
+ config.mak.dev   | 9 ++++++---
+ config.mak.uname | 3 +++
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-Wasn't there an outstanding "some of this in reftable/* should be static
-functions" from someone, Carlo? (CC'd). In any case that sort of thing
-could also be a post-cleanup, I couldn't find a reference to that
-discussion in anything except my vague memory of it as I wrote this.
 
-1. https://lore.kernel.org/git/87wnn62nhp.fsf@evledraar.gmail.com/
+base-commit: 2d84c4ed571215f4cdd5ea05a46861974d10d123
+-- 
+2.33.0.955.gee03ddbf0e
+
