@@ -2,136 +2,265 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B29DC433FE
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3082BC433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:20:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E8B760E54
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:11:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F1846127A
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:20:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241591AbhI1PM7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 11:12:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33980 "EHLO
+        id S241593AbhI1PWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 11:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241577AbhI1PMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 11:12:25 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ADD2C061770
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:33 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u18so58696580wrg.5
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:33 -0700 (PDT)
+        with ESMTP id S241461AbhI1PWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 11:22:03 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7B0C06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:20:24 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id c73-20020a1c9a4c000000b0030d040bb895so3042023wme.2
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Oq3m349hkcfRVasOp2vvR/xdnJBjdFd5wMdePqDzUUg=;
-        b=hKNCedYdyGQ1Xy4CjRElzBYxJzyv9h61R+Q1J3OyAPb5tL0gbROe8gXyKoEQaGOCAS
-         m6wVZf1BFLc/Y7ja6ML3qoauYXBw6XwONGoGPC1Cg6XSyMTolppPvGz7yH56J2/AwwNn
-         h+VqZQIOI2lZUHwgf3hO7srrdSz9ol/CdDw0YxAXiFZ8WL3qSUCosmtMPpBwAobCbZh8
-         MLmpuJmIejWDspfmiaXtP/c23oOyjAR+bO/4brfRD9g0gj3C7OzxAnlHxYgT79zboUEX
-         N+Oplvyztuh8v/degt6egIeeKn6XjphkuJX8Fdtft8OHDvd+Lm8ubmeXMY9dnYeu7Chi
-         4EQg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=MIYC7caHEcGgNnPvyKX4TarSZoZpcdkjhSRFXDnkIk0=;
+        b=FGZPbM7j7+l1vyakjcP98TYvuZt2qKAeTUgQQqsmqKjTdHxD5dodKQQyNO/ov0F+WO
+         dvmk572JIDMTalHzoMSUDgpkaQ4alg+GvOmmcNVAFiD7pQUPflKKuTtXl06B8v4GiYKn
+         8gv03SXpFrpote3Vhfpllp6qGRFxuRymzUqlzqaBUXzqgcyIAuWPpBLCO6ezhBHSwfZD
+         guW9XClOiv2LNiFXh1eH17EpFyeeCBRG4Q+ttPskxCjNjRLwpQJGvXlbJFQ1fXfa0S5m
+         Skp4J9CO25EgG01kh7SB1ZjXMko+EpmqxL4//44QuU6sMH8/BE5KAn+0p5Jog17qggcO
+         3y/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Oq3m349hkcfRVasOp2vvR/xdnJBjdFd5wMdePqDzUUg=;
-        b=ZT7ssOOgxkYDyil1s++LzXI4ueRDD+Lrra7yLuLGbz2fuFt89IghksKswQYGMRQDNs
-         ZMLaX6VzxhjHDd0VHFtCteOO3v0at1cJu7J8WEM7SdEOUJ2s5y8U89zYV7i6WSTE8mrj
-         xKR5oX6u7fChEX6y6I/F4KEmaggFKs7yb8nQG9SYcq3Efx8HFYSqy4BbMIMKnMCvp/8z
-         nNbiLGda2GbHG+op64eVrSCScLOPsyg4AxY00dzN/13Fi1C22SoaKdR7GBVfsBtM4o5P
-         16n9a18yH681uk0bT7T9i32iwRb/sSJVYqqAMV8MsrYrBIR/mN23EUObYd3efuNVnFu4
-         A0jw==
-X-Gm-Message-State: AOAM531n8+r9uSO+dhIUFZM0TK32jfe22OR8inXBWVuOLchpjN+/GqYW
-        h+OXryEKDKF4XG0JO2mrXpHHyJA10zo=
-X-Google-Smtp-Source: ABdhPJw64Z9KFG/9OHrAnkziHSiyJA5FpQLq4RcXequUzWcoB0qdOCDi4zBTyZ1kw4aXGeG7575m2A==
-X-Received: by 2002:a05:6000:1b90:: with SMTP id r16mr674012wru.250.1632841832150;
-        Tue, 28 Sep 2021 08:10:32 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MIYC7caHEcGgNnPvyKX4TarSZoZpcdkjhSRFXDnkIk0=;
+        b=fUD2Kq3MtzxSKaH75bUm7tJgVKKNoOJ38TIODR3OeJZ2CGRbgNtKh/4V5gb9QViwba
+         KvBaU0n3RxZ0Txtw2/wH6H1qqdOvcdVQHp1aowwyK229yFFl/+9lXf+Y2hf99Kmjy66A
+         SgNE3PO3jVXqxoBQk4y4Q//FW0Sw+m8L79jxl6VPiBEEcDwObnQPiLd404fTzDwgSlV/
+         r/ze1epxNSMsdgSc8Brw9t0sNfdmGgcGGwV9oudFYq/zIkYTKYv7ycwAlAdLilRimAJo
+         /qfzgi18APRfC6zrivt0Z/2pLn8xLcLnTdErsGF77lCsHAojKsnijCLPBUQZ3kd545lw
+         1X0A==
+X-Gm-Message-State: AOAM532dLiXRnZacTjdLDb30/kb4h47/3c+fQuL3jPkYQKSXGxM9FR8b
+        34QtvG6XdPVOceKplGe3G3uDh2Gr78g=
+X-Google-Smtp-Source: ABdhPJx15jRq5fUu48Ov9I0zkDGj1uj5XaXCov/ZBUZl6fjtiFH6w4vZNU8k/JqXIqnhgM8BI81zDA==
+X-Received: by 2002:a7b:c842:: with SMTP id c2mr5334209wml.93.1632842422590;
+        Tue, 28 Sep 2021 08:20:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x21sm3020961wmc.14.2021.09.28.08.10.31
+        by smtp.gmail.com with ESMTPSA id l2sm3039373wmi.1.2021.09.28.08.20.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 08:10:31 -0700 (PDT)
-Message-Id: <7b3215aef390d64e1064c89e8a566b62a1ab24b5.1632841817.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
-References: <pull.1081.v2.git.git.1631213264.gitgitgadget@gmail.com>
-        <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Sep 2021 15:10:16 +0000
-Subject: [PATCH v3 19/19] Add "test-tool dump-reftable" command.
+        Tue, 28 Sep 2021 08:20:21 -0700 (PDT)
+Message-Id: <pull.1047.git.1632842421213.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 28 Sep 2021 15:20:21 +0000
+Subject: [PATCH] reset: behave correctly with sparse-checkout
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     gitster@pobox.com, newren@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Kevin Willford <kewillf@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+From: Kevin Willford <kewillf@microsoft.com>
 
-This command dumps individual tables or a stack of of tables.
+When using the sparse checkout feature, 'git reset' will add entries to
+the index that will have the skip-worktree bit off but will leave the
+working directory empty. File data is lost because the index version of
+the files has been changed but there is nothing that is in the working
+directory. This will cause the next 'git status' call to show either
+deleted for files modified or deleting or nothing for files added. The
+added files should be shown as untracked and modified files should be
+shown as modified.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+To fix this when the reset is running if there is not a file in the
+working directory and if it will be missing with the new index entry or
+was not missing in the previous version, we create the previous index
+version of the file in the working directory so that status will report
+correctly and the files will be availble for the user to deal with.
+
+This fixes a documented failure from t1092 that was created in 19a0acc
+(t1092: test interesting sparse-checkout scenarios, 2021-01-23).
+
+Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile                 | 1 +
- t/helper/test-reftable.c | 5 +++++
- t/helper/test-tool.c     | 1 +
- t/helper/test-tool.h     | 1 +
- 4 files changed, 8 insertions(+)
+    reset: behave correctly with sparse-checkout
+    
+    This is a version of a commit [1] that has been in the microsoft/git
+    fork for a while (authored in March 2017). I finally got around to
+    figuring out why a test marked as 'test_expect_failure' was succeeding
+    in our fork by bisecting to this commit.
+    
+    I only made superficial modifications from Kevin's original commit. Some
+    style things, including whitespace and variable names, plus the switch
+    to 'test_expect_success' in t1092.
+    
+    [1]
+    https://github.com/microsoft/git/commit/6b8a074edfe3f4c06d08c3e1f2e496d3aef0a056
+    
+    Thanks, Stolee
 
-diff --git a/Makefile b/Makefile
-index 53c13c90a5e..21834ace4cf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2452,6 +2452,7 @@ REFTABLE_OBJS += reftable/writer.o
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1047%2Fderrickstolee%2Fsparse-checkout%2Freset-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1047/derrickstolee/sparse-checkout/reset-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1047
+
+ builtin/reset.c                          | 39 +++++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh |  4 +-
+ t/t7114-reset-sparse-checkout.sh         | 61 ++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7114-reset-sparse-checkout.sh
+
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 51c9e2f43ff..8ffcd713720 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -25,6 +25,8 @@
+ #include "cache-tree.h"
+ #include "submodule.h"
+ #include "submodule-config.h"
++#include "dir.h"
++#include "entry.h"
  
- REFTABLE_TEST_OBJS += reftable/basics_test.o
- REFTABLE_TEST_OBJS += reftable/block_test.o
-+REFTABLE_TEST_OBJS += reftable/dump.o
- REFTABLE_TEST_OBJS += reftable/merged_test.o
- REFTABLE_TEST_OBJS += reftable/pq_test.o
- REFTABLE_TEST_OBJS += reftable/record_test.o
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 996da85f7b5..26b03d7b789 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -14,3 +14,8 @@ int cmd__reftable(int argc, const char **argv)
- 	tree_test_main(argc, argv);
- 	return 0;
- }
+ #define REFRESH_INDEX_DELAY_WARNING_IN_MS (2 * 1000)
+ 
+@@ -127,12 +129,49 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 		struct diff_options *opt, void *data)
+ {
+ 	int i;
++	int pos;
+ 	int intent_to_add = *(int *)data;
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filespec *one = q->queue[i]->one;
++		struct diff_filespec *two = q->queue[i]->two;
+ 		int is_missing = !(one->mode && !is_null_oid(&one->oid));
++		int was_missing = !two->mode && is_null_oid(&two->oid);
+ 		struct cache_entry *ce;
++		struct cache_entry *ce_before;
++		struct checkout state = CHECKOUT_INIT;
 +
-+int cmd__dump_reftable(int argc, const char **argv)
-+{
-+	return reftable_dump_main(argc, (char *const *)argv);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f7c888ffda7..338a57b104d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -61,6 +61,7 @@ static struct test_cmd cmds[] = {
- 	{ "read-midx", cmd__read_midx },
- 	{ "ref-store", cmd__ref_store },
- 	{ "reftable", cmd__reftable },
-+	{ "dump-reftable", cmd__dump_reftable },
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
- 	{ "revision-walking", cmd__revision_walking },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 25f77469146..48cee1f4a2d 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -19,6 +19,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
- int cmd__dump_fsmonitor(int argc, const char **argv);
- int cmd__dump_split_index(int argc, const char **argv);
- int cmd__dump_untracked_cache(int argc, const char **argv);
-+int cmd__dump_reftable(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
++		/*
++		 * When using the sparse-checkout feature the cache entries
++		 * that are added here will not have the skip-worktree bit
++		 * set. Without this code there is data that is lost because
++		 * the files that would normally be in the working directory
++		 * are not there and show as deleted for the next status.
++		 * In the case of added files, they just disappear.
++		 *
++		 * We need to create the previous version of the files in
++		 * the working directory so that they will have the right
++		 * content and the next status call will show modified or
++		 * untracked files correctly.
++		 */
++		if (core_apply_sparse_checkout && !file_exists(two->path)) {
++			pos = cache_name_pos(two->path, strlen(two->path));
++			if ((pos >= 0 && ce_skip_worktree(active_cache[pos])) &&
++			    (is_missing || !was_missing)) {
++				state.force = 1;
++				state.refresh_cache = 1;
++				state.istate = &the_index;
++
++				ce_before = make_cache_entry(&the_index, two->mode,
++							     &two->oid, two->path,
++							     0, 0);
++				if (!ce_before)
++					die(_("make_cache_entry failed for path '%s'"),
++						two->path);
++
++				checkout_entry(ce_before, &state, NULL, NULL);
++			}
++		}
+ 
+ 		if (is_missing && !intent_to_add) {
+ 			remove_file_from_cache(one->path);
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 886e78715fe..c5977152661 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -459,9 +459,7 @@ test_expect_failure 'blame with pathspec outside sparse definition' '
+ 	test_all_match git blame deep/deeper2/deepest/a
+ '
+ 
+-# NEEDSWORK: a sparse-checkout behaves differently from a full checkout
+-# in this scenario, but it shouldn't.
+-test_expect_failure 'checkout and reset (mixed)' '
++test_expect_success 'checkout and reset (mixed)' '
+ 	init_repos &&
+ 
+ 	test_all_match git checkout -b reset-test update-deep &&
+diff --git a/t/t7114-reset-sparse-checkout.sh b/t/t7114-reset-sparse-checkout.sh
+new file mode 100755
+index 00000000000..a8029707fb1
+--- /dev/null
++++ b/t/t7114-reset-sparse-checkout.sh
+@@ -0,0 +1,61 @@
++#!/bin/sh
++
++test_description='reset when using a sparse-checkout'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_tick &&
++	echo "checkout file" >c &&
++	echo "modify file" >m &&
++	echo "delete file" >d &&
++	git add . &&
++	git commit -m "initial commit" &&
++	echo "added file" >a &&
++	echo "modification of a file" >m &&
++	git rm d &&
++	git add . &&
++	git commit -m "second commit" &&
++	git checkout -b endCommit
++'
++
++test_expect_success 'reset when there is a sparse-checkout' '
++	echo "/c" >.git/info/sparse-checkout &&
++	test_config core.sparsecheckout true &&
++	git checkout -B resetBranch &&
++	test_path_is_missing m &&
++	test_path_is_missing a &&
++	test_path_is_missing d &&
++	git reset HEAD~1 &&
++	echo "checkout file" >expect &&
++	test_cmp expect c &&
++	echo "added file" >expect &&
++	test_cmp expect a &&
++	echo "modification of a file" >expect &&
++	test_cmp expect m &&
++	test_path_is_missing d
++'
++
++test_expect_success 'reset after deleting file without skip-worktree bit' '
++	git checkout -f endCommit &&
++	git clean -xdf &&
++	cat >.git/info/sparse-checkout <<-\EOF &&
++	/c
++	/m
++	EOF
++	test_config core.sparsecheckout true &&
++	git checkout -B resetAfterDelete &&
++	test_path_is_file m &&
++	test_path_is_missing a &&
++	test_path_is_missing d &&
++	rm -f m &&
++	git reset HEAD~1 &&
++	echo "checkout file" >expect &&
++	test_cmp expect c &&
++	echo "added file" >expect &&
++	test_cmp expect a &&
++	test_path_is_missing m &&
++	test_path_is_missing d
++'
++
++test_done
+
+base-commit: ddb1055343948e0d0bc81f8d20245f1ada6430a0
 -- 
 gitgitgadget
