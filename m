@@ -2,95 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2895BC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A67C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:43:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00A8F6113E
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:42:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7078B611C3
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 05:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235457AbhI1FoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 01:44:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56222 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234243AbhI1FoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 01:44:10 -0400
-Received: (qmail 8661 invoked by uid 109); 28 Sep 2021 05:42:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Sep 2021 05:42:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26208 invoked by uid 111); 28 Sep 2021 05:42:30 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Sep 2021 01:42:30 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Sep 2021 01:42:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        The Grey Wolf <greywolf@starwolf.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
-Message-ID: <YVKrRooSIN7OeLy9@coredump.intra.peff.net>
-References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
- <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
- <YU49+Y+nRhl1mgof@coredump.intra.peff.net>
- <xmqqa6k1slxe.fsf@gitster.g>
- <YU5KOpGkS5sH4iFJ@coredump.intra.peff.net>
- <xmqqo88eq8um.fsf@gitster.g>
- <YVImeFHxY7hmb3wY@coredump.intra.peff.net>
- <87lf3hzhkr.fsf@evledraar.gmail.com>
- <YVJkx2HMf9WlPx6G@coredump.intra.peff.net>
- <878rzhz9yw.fsf@evledraar.gmail.com>
+        id S235991AbhI1Fo6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 01:44:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234243AbhI1Foz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 01:44:55 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B22FC061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:43:17 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id y8so17955203pfa.7
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 22:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2d8bnc++iDJyvokbZB4lfS/ByvKRyDhUYNkk/2GWgbc=;
+        b=BPMzFgl0mwbouEnpmY8ZFRhVHKkG69Gecmb5aPvu88TyBHdnGUL8KMN9q5yAiUDEG4
+         ani0MoZo7iqcNiUOMsm3e4XMBlXXXq+216xYANfGxJzOIIyfZMpBdkNxO/ZSm0fFdaWh
+         TwyrPHa3Gt1RKrSN2e3hPKNGfkZQaIcH7193CpGr3bAGVXze3BZnDqbXpQJOKvJqPYh7
+         II6n0DU5AbUAGPX42OBH8GLeFuQP987foNptDAhl1NEZ9gjN0+VyfUafwQzZkIwl/slq
+         FUtNYUASnjv33TRWRNiiT2MdFs0xHLbH8fxSyMAhCbufWIyIzT9gcehKtVrrgl4Q6kgQ
+         REgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2d8bnc++iDJyvokbZB4lfS/ByvKRyDhUYNkk/2GWgbc=;
+        b=CTTC19ncmIORkzf69I6rCNY8nZLf53hV6fPi0HNJEQ/PlM3cBtRDcSSIx4kfovqFIo
+         9yLTXEJIAKihQrLYkdY17t+05kE2m5xYc46slNtRMS/0LbzmzuAvgVcLGQftHdNND2ke
+         txOK58oyAtGpS1LlliX8nv7TJVyIwtAZLuFms6t4xFXyX662/thEwNML06XfWHqng/2K
+         cXGk2PMdrJJrJeNI2fz3bQhv39Ru5wL0zvMPFLbn8z2SQdZLXSDpyRuqxXPhKL+GtmT3
+         107yosN8z1GGjWrMRVAUavlTKyf567/irsihZdR8FVQL4MqaiT87ItlU7f0N+7T1iOOn
+         ylkw==
+X-Gm-Message-State: AOAM533iUfzvT3HIoq/qCcYPcI/HlBNobr3s6DS11aT8RX6g6iiZiJcr
+        +sl6XAGpkfdPYd7LefDoeUc=
+X-Google-Smtp-Source: ABdhPJxMvUGuh01Ww4MMRTsWGHvUADRwHjiTvH+vTNdeAuZ41a2l4piDOxpf86KVO5BVkd5MmGfuKg==
+X-Received: by 2002:a63:34c9:: with SMTP id b192mr3025602pga.466.1632807796560;
+        Mon, 27 Sep 2021 22:43:16 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-85.three.co.id. [180.214.232.85])
+        by smtp.gmail.com with ESMTPSA id 23sm21434006pfw.97.2021.09.27.22.43.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Sep 2021 22:43:16 -0700 (PDT)
+Subject: Re: [PATCH] blame: document --color-* options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>,
+        git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>
+References: <d918fe0de6b04d8d848050d4aedbe060@ncp-e.com>
+ <20210925121817.1089897-1-bagasdotme@gmail.com> <xmqq5yulregh.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <fe78329d-07a7-bdf3-2bda-13def35f3de3@gmail.com>
+Date:   Tue, 28 Sep 2021 12:43:13 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <878rzhz9yw.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqq5yulregh.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 04:42:51AM +0200, Ævar Arnfjörð Bjarmason wrote:
-
-> > A perhaps more subtle but less awkward to type version is to just
-> > require two arguments, like:
-> >
-> >   git --config <key> <value> ...
+On 28/09/21 02.44, Junio C Hamano wrote:
+> Nowhere in "git blame --help" output we mention anything about
+> "metadata", so the readers of this new description will be left
+> puzzled what the word means in the context of this command.
 > 
-> I suppose --config would work like that, you can'd to it with "-c". I
-> think it's more confusing to have a "-c" and "--config" which unlike
-> most other things don't follow the obvious long and short option names
-> working the same way.
+> We would need to pick words or phrases that readers can link easily
+> with the description of "THE PORCELAIN FORMAT" section.
 
-Yeah, probably "--config-pair" or something might be less confusing.
-Anyway...
+In git-blame(1), we only describe output format for "THE PORCELAIN 
+FORMAT" as well as "INCREMENTAL OUTPUT", but not default format.
 
-> > but I'd just as soon continue to leave it un-implemented if nobody has
-> > actually needed it in practice.
-> 
-> *nod*. I do think it's bad design to introduce an "env" inclusion
-> feature that relies on "=" though while we don't have something like
-> that, i.e.
-> 
-> I think we should probably not add that --config-{key,value}, but
-> avoiding the arbitrary limitation of not being able to specify certain
-> config keys seems prudent in that case, and since the "=" v.s. ":" is
-> only an aesthetic preference I think being able to compose things
-> without limitations wins out.
+On the other hand, --color-* options only works on default format, not 
+the others.
 
-I don't really agree with that. Whatever syntax we use now, we'll be
-stuck with forever. It seems a shame to predicate that choice only on
-the "-c doesn't support =" thing that nobody has actually run across in
-practice (and I don't think is something people will run into with
-this).
-
-> We do have the "=" key limitation now, but I don't think it's there for
-> any key we currently define, except things like "url.<base>.insteadOf"
-> if the "<base> has a "=" in it (and maybe just that one).
-
-It's really a potential problem for any 3-level config key. So urls,
-branch names, remote names, various tool names, filter/diff drivers,
-existing includeIf conditions. This might be the first one where we
-really _encourage_ the use of "=" signs, but it still strikes me as
-weird that you'd want to do so on the command-line in practice.
-
--Peff
+-- 
+An old man doll... just what I always wanted! - Clara
