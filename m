@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8755CC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 050AAC433FE
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70D3E61262
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCB8961247
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238643AbhI1CUx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 22:20:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52642 "EHLO
+        id S238621AbhI1CUz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 22:20:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238618AbhI1CUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 22:20:46 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF146C06176C
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:07 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id b192so2120841wmb.2
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:07 -0700 (PDT)
+        with ESMTP id S238620AbhI1CUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 22:20:47 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F95C06176D
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:08 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id r11-20020a1c440b000000b0030cf0f01fbaso969406wma.1
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=941xkVdEIIfKskTrUanhKcz+5TrptFvB/pvltBzo3Rc=;
-        b=Kn8ueQhi6YKMpzD+Ie1ri2dn9Zweusxpsr1RGnGCcqX+DCep6AMlSwljKpXoI7VAqd
-         5J8U3Byb5leIVkazEFduQs+iLemSd0EjYoqR5q6a1wczYKgF7Njzf44in/Ira7kWjbdh
-         3RLGD446YP7jOpuESZj6Y18YtTPTJ8TA9H/GOYhXn421WSXaiInY4Tymo3sghwIEPpaL
-         Gwj7CTQ6yZsr6ijkgZiOYdNUr83XD8PMRZ8mcXdjeUUCCCizidiIjrbwG8QUXLtbUOgA
-         6GCvtXCcGowopULsYIUwcAvnKMN7mEdz89LZlISPbXStJK80FTH0p7pqul8iAeNTinvG
-         EP/Q==
+        bh=d564A1KdVdLFXzWwd5C0iHFxsjimTsWNt6g1L+VMLRg=;
+        b=kNts406AnEVYFkvd1mlt00DI8foPV0VwSN5b76iSYCmKNIzxGg1iFqXLEJocLmqctS
+         uuvGax1F7jblrOAU6AGopzNXtiAkUCh7NYMt+7iPFOu3JhSqV+FxB8Tsm1GOgu4du/fi
+         L0b5JtuRHgDW5RhEFycdklGVrc6z/UGheD2DQIv5PeXFvdU8BnlLW1GfpbQBnE3i7kFf
+         1XhSe/CEuHRzrPbrxEpFjALI/05XxT/WV6PibDkq3hS7f8T+utr/4wRdQO8scFg1XCkr
+         ONMUCK7bQAxY3UCcmzMi6aVVnGhDevsTqwZN50U7uqX1k5zgA/3D4xDWpDeBvRS3/JK5
+         P6iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=941xkVdEIIfKskTrUanhKcz+5TrptFvB/pvltBzo3Rc=;
-        b=y7Z4ncpQnVuHOLgU2QdvATwm5VrMmycpiD5ssLc0ShxjkFI2ZxZ6JVwn3fhLGMjLmK
-         sWbt/D3SHdxoK5DdX7+h04WZsvqIuQnpKgTHKgFje8ADdunyQQzCwcCQQqpaHA+czlVk
-         J9wXf9nPm3/COFgb8LxTEjiVA/J/m2uY12EwiteeGpVSjoR/sV1e78Bz5Yixhb/40Z60
-         TGyFBBxXGPbp9P8V/VUFipsQhua93aTE99KAxkNsfQjeaMxivmGbZ4/Iu4iJsJZo6Pf/
-         LfdfTIXMBNfWnO2J/EcVftFZuUGP2Btef7cxnz+ze3ZJsx+QRyxAksRDEEznQlTm7j/F
-         3u/Q==
-X-Gm-Message-State: AOAM5334TmliC9+QfRBN73AgY+PBPSeaduYuHz7/tmtKJfFIz9p6oXYK
-        mm2+GlSz08DDMrr5vc/nrnUfM+B4+JuQTQ==
-X-Google-Smtp-Source: ABdhPJwM8NDKCiPSRhC1i4bQGWMEAxxE42VTb8cDv05wKSEmO/um+XbWtZ08y+ugU9DELak1T2b5jA==
-X-Received: by 2002:a05:600c:230b:: with SMTP id 11mr2283736wmo.102.1632795546184;
-        Mon, 27 Sep 2021 19:19:06 -0700 (PDT)
+        bh=d564A1KdVdLFXzWwd5C0iHFxsjimTsWNt6g1L+VMLRg=;
+        b=vJ1OZ6u1gJerZRC+WHVwHO+LpjrjcLGSLSge3C2wD4GtXGoV1dxEOXA2m2oNzojN5q
+         19KTqRlOl3//tgC/xTQFj6sFoIoDy0zY/fGAKIGdE7gruZ+tSMiq8nhnHPWd1U2RP3o4
+         RWuCT17nMis2T/sR0YwP4tI+f0vFMv17RMOSzZr6TinsJQGjWqzeoY8lrJHkNbE5dVj/
+         3G5vgSGOUrfBsRDSfrXyyrPuifSAfBRGLXNU5EpaKa0LDaGS5hfP2KgWxgU43+wBJpL1
+         LySyoIZbcF0aId1UsgGiexKQExgY7a0+WVgC7PmdZQl2rIVyq+zPrMnnyg/Kf4nf+0Dp
+         Lafw==
+X-Gm-Message-State: AOAM531s6+qZnHfGQW2Htkq8f/2D/7gHrHq57BG2PKzdtNUSf/odwuts
+        ilC24pXJpJvqyNR0pXQ1NnIOKiBu83SFwQ==
+X-Google-Smtp-Source: ABdhPJxJNBCrLikC57VMS9aKSQBWS5iUhT2gmAHHhpb1AjIC19DjNwInpPxbK7ItTV4Imj3BS0wpOA==
+X-Received: by 2002:a1c:2543:: with SMTP id l64mr2185260wml.9.1632795547019;
+        Mon, 27 Sep 2021 19:19:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.05
+        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 19:19:05 -0700 (PDT)
+        Mon, 27 Sep 2021 19:19:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v8 08/17] cat-file tests: test for current --allow-unknown-type behavior
-Date:   Tue, 28 Sep 2021 04:18:49 +0200
-Message-Id: <patch-v8-08.17-215f98ad369-20210928T021616Z-avarab@gmail.com>
+Subject: [PATCH v8 09/17] object-file.c: don't set "typep" when returning non-zero
+Date:   Tue, 28 Sep 2021 04:18:50 +0200
+Message-Id: <patch-v8-09.17-3e1df3594df-20210928T021616Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1327.g9926af6cb02
 In-Reply-To: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
 References: <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com> <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
@@ -72,89 +72,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add more tests for the current --allow-unknown-type behavior. As noted
-in [1] I don't think much of this makes sense, but let's test for it
-as-is so we can see if the behavior changes in the future.
+When the loose_object_info() function returns an error stop faking up
+the "oi->typep" to OBJ_BAD. Let the return value of the function
+itself suffice. This code cleanup simplifies subsequent changes.
 
-1. https://lore.kernel.org/git/87r1i4qf4h.fsf@evledraar.gmail.com/
+That we set this at all is a relic from the past. Before
+052fe5eaca9 (sha1_loose_object_info: make type lookup optional,
+2013-07-12) we would always return the type_from_string(type) via the
+parse_sha1_header() function, or -1 (i.e. OBJ_BAD) if we couldn't
+parse it.
+
+Then in a combination of 46f034483eb (sha1_file: support reading from
+a loose object of unknown type, 2015-05-03) and
+b3ea7dd32d6 (sha1_loose_object_info: handle errors from
+unpack_sha1_rest, 2017-10-05) our API drifted even further towards
+conflating the two again.
+
+Having read the code paths involved carefully I think this is OK. We
+are just about to return -1, and we have only one caller:
+do_oid_object_info_extended(). That function will in turn go on to
+return -1 when we return -1 here.
+
+This might be introducing a subtle bug where a caller of
+oid_object_info_extended() would inspect its "typep" and expect a
+meaningful value if the function returned -1.
+
+Such a problem would not occur for its simpler oid_object_info()
+sister function. That one always returns the "enum object_type", which
+in the case of -1 would be the OBJ_BAD.
+
+Having read the code for all the callers of these functions I don't
+believe any such bug is being introduced here, and in any case we'd
+likely already have such a bug for the "sizep" member (although
+blindly checking "typep" first would be a more common case).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1006-cat-file.sh | 61 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ object-file.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 15774979ad3..5b16c69c286 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -402,6 +402,67 @@ do
- 	done
- done
+diff --git a/object-file.c b/object-file.c
+index be4f94ecf3b..766ba88b851 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1525,8 +1525,6 @@ static int loose_object_info(struct repository *r,
+ 		git_inflate_end(&stream);
  
-+test_expect_success '-e is OK with a broken object without --allow-unknown-type' '
-+	git cat-file -e $bogus_short_sha1
-+'
-+
-+test_expect_success '-e can not be combined with --allow-unknown-type' '
-+	test_expect_code 128 git cat-file -e --allow-unknown-type $bogus_short_sha1
-+'
-+
-+test_expect_success '-p cannot print a broken object even with --allow-unknown-type' '
-+	test_must_fail git cat-file -p $bogus_short_sha1 &&
-+	test_expect_code 128 git cat-file -p --allow-unknown-type $bogus_short_sha1
-+'
-+
-+test_expect_success '<type> <hash> does not work with objects of broken types' '
-+	cat >err.expect <<-\EOF &&
-+	fatal: invalid object type "bogus"
-+	EOF
-+	test_must_fail git cat-file $bogus_short_type $bogus_short_sha1 2>err.actual &&
-+	test_cmp err.expect err.actual
-+'
-+
-+test_expect_success 'broken types combined with --batch and --batch-check' '
-+	echo $bogus_short_sha1 >bogus-oid &&
-+
-+	cat >err.expect <<-\EOF &&
-+	fatal: invalid object type
-+	EOF
-+
-+	test_must_fail git cat-file --batch <bogus-oid 2>err.actual &&
-+	test_cmp err.expect err.actual &&
-+
-+	test_must_fail git cat-file --batch-check <bogus-oid 2>err.actual &&
-+	test_cmp err.expect err.actual
-+'
-+
-+test_expect_success 'the --batch and --batch-check options do not combine with --allow-unknown-type' '
-+	test_expect_code 128 git cat-file --batch --allow-unknown-type <bogus-oid &&
-+	test_expect_code 128 git cat-file --batch-check --allow-unknown-type <bogus-oid
-+'
-+
-+test_expect_success 'the --allow-unknown-type option does not consider replacement refs' '
-+	cat >expect <<-EOF &&
-+	$bogus_short_type
-+	EOF
-+	git cat-file -t --allow-unknown-type $bogus_short_sha1 >actual &&
-+	test_cmp expect actual &&
-+
-+	# Create it manually, as "git replace" will die on bogus
-+	# types.
-+	head=$(git rev-parse --verify HEAD) &&
-+	test_when_finished "rm -rf .git/refs/replace" &&
-+	mkdir -p .git/refs/replace &&
-+	echo $head >.git/refs/replace/$bogus_short_sha1 &&
-+
-+	cat >expect <<-EOF &&
-+	commit
-+	EOF
-+	git cat-file -t --allow-unknown-type $bogus_short_sha1 >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success "Type of broken object is correct" '
- 	echo $bogus_short_type >expect &&
- 	git cat-file -t --allow-unknown-type $bogus_short_sha1 >actual &&
+ 	munmap(map, mapsize);
+-	if (status && oi->typep)
+-		*oi->typep = status;
+ 	if (oi->sizep == &size_scratch)
+ 		oi->sizep = NULL;
+ 	strbuf_release(&hdrbuf);
 -- 
 2.33.0.1327.g9926af6cb02
 
