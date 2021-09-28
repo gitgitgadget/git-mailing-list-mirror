@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A002C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0019CC433FE
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BFBD611C3
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD95C611C3
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242703AbhI1UM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 16:12:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
+        id S242708AbhI1UM5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 16:12:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242625AbhI1UMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:12:53 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501BCC06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:13 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id w5-20020a654105000000b002692534afceso179479pgp.8
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:13 -0700 (PDT)
+        with ESMTP id S242694AbhI1UMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 16:12:55 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E8FC061746
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:15 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id q10-20020a05620a0d8a00b0045de482ae16so55588947qkl.12
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=nEK0YW4RyngRwSrhB2/a1MiORL8rUO3dHHdC1i3zZNE=;
-        b=J2Bhxl3wybzauM0BFE0AkvHpralOYFMa9Zk70A+mZQ/ydMPFoJk6W8DuuJa3U3KYWd
-         LHOCJJeuL5dynFUkH5tOk0iw2sX9Hpp0ttLSviIz4rFJNUlO4MxzLlIGLNX5OsJ9H7Ct
-         Viak/iIGZuB6naPj5uI5GN7xyOltiS7BF4yvJ9jcROs7ECoyIuGcMy9u/Rang1cOcNuB
-         XiYFhImPq59SFdcYuakLuJ+qVFakHuzQzwzHkvACsPicWHGQ63UvAl6RmCcwp8h+KxL9
-         dlFg17TFwErLIVoFIDVzL+ACqnXnPOxUMgds1cSUAKDA/AhDFietqk5JUTip9bRzn2gJ
-         VV7w==
+        bh=FMo5m71X/pOjr4FDnJntl6CMsU98+1MECDqIZbL7WCs=;
+        b=YMzmeavS6cF19MYJB3dvvk0cMJtZmS3rNu88nquvpR9wncXtxbFbWwJv4Dv1kMHafR
+         xFKHJ5WTDsCB9Cpa4DSZfXNLet/LxGOfeIcA5UCBV7YBOF40MkIjb2fVPSugjpMSWs24
+         +dC+2pVqky8wa53f++O2hqbHunvekJobVi4GyqZvUXxTSvzGmAegxD/39QA54B79HoCX
+         O1yTScytK4c4UJnuJTk8X2RvH1LeTNqLSEEQYeQMIqtXX1Y2mLfF0TrQFOT08KZu5inq
+         pjjXczLGTvYQk3qi86y2tpIvZ+7DKCiDq2iYzp87pbVIGJI/Bg/im5sGbyy51jt1yl/j
+         FAIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=nEK0YW4RyngRwSrhB2/a1MiORL8rUO3dHHdC1i3zZNE=;
-        b=7bRi0N/a+JCghjCn9p6r0vYtM+p8nCBB5qpsMX7pDYPKThpxeGSyK5mnz0mqtnUsGC
-         KmVUncx04jHGm4epnaFB40dIENHx2N1l8uSkQnRxIIhrGFMVMccqitelIzVwiTF1/ZBB
-         RS+P0pB3SlDT5nep0UIxn3SZIjZuOmxmIHQaMQBFsQzR46kpHuovgfSlSx/K/7a/Zsm1
-         /CI4ETnEQrrngW51HsQVe5yJbkMTcMtWtEdOmztGSlr0yur/ktHVW0O1im91arRKd/S3
-         1gxiPYVq6EZS+jlSzAzfQvTgusakbjjB2CvVLTosewkA8eFh7UdBZyZh9Qw9gG+rdwOY
-         W4Bg==
-X-Gm-Message-State: AOAM532RzC1jFN0FPti7W8TFxmifx5GKtTP7bbpPy7uSCozlY1BTAi0n
-        3QaTK9EOLDrX6IIuF24eaSUDls8M1Gj6DMAPKiWpe810TfzajTQ2LXTAunYztgrtfd9J40JJg0u
-        d28kF4NeL2zxfrYC1194jEZoXcPnm/NOBvnzNn5HqBPOziK4/BeOumSjL2fJdmNJ0lb08Mr8+zV
-        vo
-X-Google-Smtp-Source: ABdhPJwpDoiJLebQGutOM5Nr19iXDYfsTAM1xFxCEEuCtOBLheve/1AF61YF6nyPGv3mchaR90rFwPicKBdIZa/bkbIR
+        bh=FMo5m71X/pOjr4FDnJntl6CMsU98+1MECDqIZbL7WCs=;
+        b=Bhi9/xNeTwdnMK+Mtym89Pf+L73CabnYohMN8UQJZixsRojDUyeSL2NA9rdPPP5KNp
+         x1Lf/cNskBKyPhF77dAMWW6U0SElZy2KIjLHowRq9GtL2xUbvdHkrQ/Kp+emgYzKHvvi
+         GHiNCUa/sUeRnBsoiQqFyKdDD3Uvbq9Ux7HJYD/UZA5waceMxC/b6RnOQpDsrvC3TrpG
+         P2/upHFcP06KVD9sDGo8Ea+qnE2l5uP18YA6CWQIWa3yyBsPo4IJHfwR8BEgdCtybL6O
+         cWlECcgNNhyuGfe0a5WqwdHg4o4YBHnRq9FEN3C0yoDHXE1Ghs8OCDK7PCAoPaifn9DS
+         FLrw==
+X-Gm-Message-State: AOAM531MQtLA1/uS+u2D5mD9DIAREfHUsKn3DHXkdQXZQ1p0IzJKzh3L
+        nOeXsYVOS0BG+v8YGcTGt7HpyONitHZ8+BzJhymRSdGlStky9sPwUn2UmW1G6J3YlJULcUZKhAV
+        y02OHqJ+gR+AOQHuZcYss3ykFExrNpPTB8hf/jOiswb6+suO9kvZs8SjgLH3oK51E9ZNoZOgbvq
+        9W
+X-Google-Smtp-Source: ABdhPJxgNVRxMDrDpeMS8pCoafpiyesKLZU7hm0dpup3O1sxq/qvZ0x5Ey5XmLMn28Yti4gLlMAom5G10+0FE/GAVfmG
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:64d6:b0:13e:59fe:8124 with
- SMTP id y22-20020a17090264d600b0013e59fe8124mr1085596pli.89.1632859872642;
- Tue, 28 Sep 2021 13:11:12 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 13:10:52 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:e1cf:: with SMTP id
+ v15mr1678836qvl.32.1632859874369; Tue, 28 Sep 2021 13:11:14 -0700 (PDT)
+Date:   Tue, 28 Sep 2021 13:10:53 -0700
 In-Reply-To: <cover.1632859147.git.jonathantanmy@google.com>
-Message-Id: <9c5ce004b283788763df0e574edcf7f77b166370.1632859148.git.jonathantanmy@google.com>
+Message-Id: <1fca3b1a2582e86fdc16b5f9db0f3c446b94a56f.1632859148.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1632242495.git.jonathantanmy@google.com> <cover.1632859147.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
-Subject: [PATCH v2 6/9] object-file: only register submodule ODB if needed
+Subject: [PATCH v2 7/9] submodule: pass repo to check_has_commit()
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
@@ -66,32 +65,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a35e03dee0 ("submodule: lazily add submodule ODBs as alternates",
-2021-09-08), Git was taught to add all known submodule ODBs as
-alternates when attempting to read an object that doesn't exist, as a
-fallback for when a submodule object is read as if it were in
-the_repository. However, this behavior wasn't restricted to happen only
-when reading from the_repository. Fix this.
+Pass the repo explicitly when calling check_has_commit() to avoid
+relying on add_submodule_odb(). With this commit and the parent commit,
+several tests no longer rely on add_submodule_odb(), so mark these tests
+accordingly.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- object-file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ submodule.c                            | 16 +++++++++++++---
+ t/t5526-fetch-submodules.sh            |  3 +++
+ t/t5572-pull-submodule.sh              |  3 +++
+ t/t7418-submodule-sparse-gitmodules.sh |  3 +++
+ 4 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index be4f94ecf3..2b988b7c36 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1614,7 +1614,8 @@ static int do_oid_object_info_extended(struct repository *r,
- 				break;
- 		}
+diff --git a/submodule.c b/submodule.c
+index bc3ec4a242..992890321a 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -934,23 +934,33 @@ struct has_commit_data {
+ static int check_has_commit(const struct object_id *oid, void *data)
+ {
+ 	struct has_commit_data *cb = data;
++	struct repository subrepo;
++	enum object_type type;
  
--		if (register_all_submodule_odb_as_alternates())
-+		if (r == the_repository &&
-+		    register_all_submodule_odb_as_alternates())
- 			/* We added some alternates; retry */
- 			continue;
+-	enum object_type type = oid_object_info(cb->repo, oid, NULL);
++	if (repo_submodule_init(&subrepo, cb->repo, cb->path, null_oid())) {
++		cb->result = 0;
++		goto cleanup;
++	}
++
++	type = oid_object_info(&subrepo, oid, NULL);
  
+ 	switch (type) {
+ 	case OBJ_COMMIT:
+-		return 0;
++		goto cleanup;
+ 	case OBJ_BAD:
+ 		/*
+ 		 * Object is missing or invalid. If invalid, an error message
+ 		 * has already been printed.
+ 		 */
+ 		cb->result = 0;
+-		return 0;
++		goto cleanup;
+ 	default:
+ 		die(_("submodule entry '%s' (%s) is a %s, not a commit"),
+ 		    cb->path, oid_to_hex(oid), type_name(type));
+ 	}
++cleanup:
++	repo_clear(&subrepo);
++	return 0;
+ }
+ 
+ static int submodule_has_commits(struct repository *r,
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index ed11569d8d..2dc75b80db 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -6,6 +6,9 @@ test_description='Recursive "git fetch" for submodules'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
++export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
++
+ . ./test-lib.sh
+ 
+ pwd=$(pwd)
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 4f92a116e1..fa6b4cca65 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='pull can handle submodules'
+ 
++GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
++export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
++
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
+index 3f7f271883..f87e524d6d 100755
+--- a/t/t7418-submodule-sparse-gitmodules.sh
++++ b/t/t7418-submodule-sparse-gitmodules.sh
+@@ -12,6 +12,9 @@ The test setup uses a sparse checkout, however the same scenario can be set up
+ also by committing .gitmodules and then just removing it from the filesystem.
+ '
+ 
++GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
++export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
++
+ . ./test-lib.sh
+ 
+ test_expect_success 'sparse checkout setup which hides .gitmodules' '
 -- 
 2.33.0.685.g46640cef36-goog
 
