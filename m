@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7099C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2786C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6557611C3
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3CFC611C3
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 20:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242623AbhI1UMs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 16:12:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47580 "EHLO
+        id S242618AbhI1UMw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 16:12:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242618AbhI1UMq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:12:46 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2295EC06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:07 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id j12-20020aa783cc000000b0044b702424b7so8380277pfn.6
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:07 -0700 (PDT)
+        with ESMTP id S242625AbhI1UMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 16:12:48 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D823C061745
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:09 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id z24-20020aa79f98000000b004463f2f0277so15260963pfr.23
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 13:11:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=aGoXUhGWjtwWe92po6Rtl/aLT+nNtXai3nLWXr/8a+c=;
-        b=VDijicMIFJsRzjEAWDGxMs+sHKoFhOK0Pa+ZEtVnsKtZJ4KEdtMbM1kQaoaY7blWeI
-         QS7Q5i5kwRpdAgROCdLfj7/29vsxVRv0Et6DaxhK+Weilp7P7g5SjeBNR4Wb/48ERv0p
-         wn2YLcWfawf3l5Ay83D7jHPuhoj6Ji8CI+t0SlMPn1HqUp6EpsFZvaRbGZZL838am0Ty
-         +YZM2J2yAkgsofn5OBu+HfxsbUWFNILKXCa9H3X3R3lVMWI208XpMHoSOO7kok87bAdZ
-         Far1v6eO4zb6VtMUhBWr+WkYFdIZW/QoyH4/Rx8FsXtmOV9gyfd1dDTuHdYQSobe0cEa
-         xSUg==
+        bh=4ooikbujL/FbFPkGOXKemlcmwuOOciQiq1oPUQ7+nZs=;
+        b=sXeFk8474+M7NQEgK+p3+SjP+b9w5F4oqnoMygPxFjVQvqnCiEtO/iniUar7dyqfp0
+         Jc7YdQl0VwKvLfaKlYAKjWxBFa4xLfJBb2BYGAjbTKBdYLyR9hCCMLQYI+SQMybK/V9q
+         UbvlZGs1CjxmL8xREBR+Sei9/qPWEs3cXf+NSD1hc6oh7G/xOlKh7LxwaeBIGwWx060M
+         lnXCO+DjfD/19x/mYU/wIh/ieiEzdksCvdz5RpnDvGGbx/jnUJKwClEanJydrr1U7GWp
+         0iL/ccB+vqPwhvSICY8Sac3Of4zurA9hFdQ1H6Kzhk4Zcs2GZ10rTHBfkUzf5wWjlCC9
+         5MWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=aGoXUhGWjtwWe92po6Rtl/aLT+nNtXai3nLWXr/8a+c=;
-        b=CX1P4dZ0UY0CbNemSp33jYAq+qUr9kj5S7goao/jOSzY08/04+fLmBRO28UtWIigoy
-         SlHV0UNnpvbD0fxEUdqiIG4hSEQ5+OcjyjQaVp/UIUYWgewES4hy/yElRys2XFOJ3Sg2
-         w7KCUQNx+aDntnNacAAYe+aMAQdbjbWQES9QLjRSQhI8QOX96DHu8OUgVq/abjJ0bXe+
-         AcRDAkFHm6r/wwpSFKLcAz0tD+ni/JKRUieRfoTtldpt//vvUc6FpZ6dX6/x2Q9vPUhr
-         DSFBi2iiG7igG1+JEpQds0BaIe3QbPOdiIZuN0QNTyVcBegisDHPlJ4VNeCOkGABwn68
-         TZxQ==
-X-Gm-Message-State: AOAM530qx3LQtoQtLd2hsz6RpHTHKhThKqR0FP30oWvtV/m4K1TL+Y+o
-        I3j4OpmRxQtlbobZlguNvW0ZoVXGRWl4kFLDz0ZsebHQ3f2o/SbQpPBu8AnDpgS+U7G2Ej8p0MK
-        JqI4GlURZLd1OPOtiRYb9gLrkA2sUMYAg7C/SMlda5LkU4a1R3TE+JfXa56xtTTj+cNHl5Qpc1E
-        Gn
-X-Google-Smtp-Source: ABdhPJxyY1IuEBwjLMXproM3kD6D8tpG5aJ3SUD56WJGvMcORHvyRinM0MhAKygemqyjA26wAgw2F2hw86I3JSglPdWn
+        bh=4ooikbujL/FbFPkGOXKemlcmwuOOciQiq1oPUQ7+nZs=;
+        b=VNC+ocCnTv1MF6dbeKdiXmnBT9CF13TP3MyMQ+7a2ngE6lG93xdnN8tV1khWcRHybz
+         VROGwjTMmQmLMlT+LVoeA8PDHKsKbG9YDPuF5uuPQQYh/TC7NjPoJvwmw7ivC1VWPoEV
+         9HAWVOEa+GEt51uBfKmX324DXlTy5O5nXeaD+KV/VAq8vnvH+5hfk1xdfsZnlzh/PKkJ
+         ouYKgoqWx8mXN2M5SHPl6dnEbiJhyPosd0kJzfJzdmoExCiNb/P2guO9KRi5DGNwh1Jz
+         wN4myic+9MEHojl3IAvaRAAEGdd3zldjz2SFnGlUQqkfcyUD3T3lmc49pFFwI5XmVgnh
+         8Bww==
+X-Gm-Message-State: AOAM53071UMcNkeZuikWd/HdmkuYRnn/3Gh2jIkHyHxFBDjFHaQnYj1M
+        4OtcgsIo4SfAGUcIFN4xLqRYjSHLOwIu1wiPoUfslelSj8Sew1mVWgFQwYWWbgQXzcOgVAzXRuw
+        5Cj6iPzbedLEdNjr3C9vPHflB/iqUAdyHHFhPIwHawgYyk9HhncjtKXqQcuiRufUjNg+fW+0VvN
+        VM
+X-Google-Smtp-Source: ABdhPJwSbL2jzljH9HUauqcze+VFviI2e7goaRqXRHKFueeOb600KMMDS4l7Zh2yGqw1gxqVlSpsPJKvmEoiGzlSSbaS
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:2a4b:: with SMTP id
- d11mr1936981pjg.172.1632859866436; Tue, 28 Sep 2021 13:11:06 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 13:10:48 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:9816:0:b0:447:bdf9:eac2 with
+ SMTP id e22-20020aa79816000000b00447bdf9eac2mr7420409pfl.31.1632859868258;
+ Tue, 28 Sep 2021 13:11:08 -0700 (PDT)
+Date:   Tue, 28 Sep 2021 13:10:49 -0700
 In-Reply-To: <cover.1632859147.git.jonathantanmy@google.com>
-Message-Id: <ec153eff7b0d5ca3188ec6f43bc40c38609f6a80.1632859148.git.jonathantanmy@google.com>
+Message-Id: <dd1a8871f42f76bb7a29e18d811028ad17325c31.1632859148.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1632242495.git.jonathantanmy@google.com> <cover.1632859147.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
-Subject: [PATCH v2 2/9] refs: teach arbitrary repo support to iterators
+Subject: [PATCH v2 3/9] refs: peeling non-the_repository iterators is BUG
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
@@ -65,116 +66,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Note that should_pack_ref() is called when writing refs, which is only
-supported for the_repository, hence the_repository is hardcoded there.
+There is currently no support for peeling the current ref of an iterator
+iterating over a non-the_repository ref store, and none is needed. Thus,
+for now, BUG() if that happens.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- refs.c                | 3 ++-
- refs/files-backend.c  | 5 ++++-
- refs/packed-backend.c | 6 ++++--
- refs/refs-internal.h  | 1 +
- 4 files changed, 11 insertions(+), 4 deletions(-)
+ refs/files-backend.c  |  5 +++--
+ refs/packed-backend.c |  3 +++
+ refs/ref-cache.c      | 10 ++++++++++
+ refs/ref-cache.h      |  1 +
+ 4 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 6f7b3447a7..5163e064ae 100644
---- a/refs.c
-+++ b/refs.c
-@@ -255,12 +255,13 @@ int refname_is_safe(const char *refname)
-  * does not exist, emit a warning and return false.
-  */
- int ref_resolves_to_object(const char *refname,
-+			   struct repository *repo,
- 			   const struct object_id *oid,
- 			   unsigned int flags)
- {
- 	if (flags & REF_ISBROKEN)
- 		return 0;
--	if (!has_object_file(oid)) {
-+	if (!repo_has_object_file(repo, oid)) {
- 		error(_("%s does not point to a valid object!"), refname);
- 		return 0;
- 	}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f0cbea41c9..4d883d9a89 100644
+index 4d883d9a89..3289beb03e 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -730,6 +730,7 @@ struct files_ref_iterator {
- 	struct ref_iterator base;
+@@ -831,7 +831,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	 */
  
- 	struct ref_iterator *iter0;
-+	struct repository *repo;
- 	unsigned int flags;
- };
+ 	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
+-					      prefix, 1);
++					      prefix, repo, 1);
  
-@@ -751,6 +752,7 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	/*
+ 	 * The packed-refs file might contain broken references, for
+@@ -1164,7 +1164,8 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
  
- 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
- 		    !ref_resolves_to_object(iter->iter0->refname,
-+					    iter->repo,
- 					    iter->iter0->oid,
- 					    iter->iter0->flags))
- 			continue;
-@@ -854,6 +856,7 @@ static struct ref_iterator *files_ref_iterator_begin(
- 	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable,
- 			       overlay_iter->ordered);
- 	iter->iter0 = overlay_iter;
-+	iter->repo = repo;
- 	iter->flags = flags;
+ 	packed_refs_lock(refs->packed_ref_store, LOCK_DIE_ON_ERROR, &err);
  
- 	return ref_iterator;
-@@ -1138,7 +1141,7 @@ static int should_pack_ref(const char *refname,
- 		return 0;
- 
- 	/* Do not pack broken refs: */
--	if (!ref_resolves_to_object(refname, oid, ref_flags))
-+	if (!ref_resolves_to_object(refname, the_repository, oid, ref_flags))
- 		return 0;
- 
- 	return 1;
+-	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
++	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL,
++					the_repository, 0);
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 		/*
+ 		 * If the loose reference can be packed, add an entry
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 94fb1042a2..55c8bd3081 100644
+index 55c8bd3081..e2f57a013e 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -776,6 +776,7 @@ struct packed_ref_iterator {
- 	struct object_id oid, peeled;
- 	struct strbuf refname_buf;
+@@ -884,6 +884,9 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 	struct packed_ref_iterator *iter =
+ 		(struct packed_ref_iterator *)ref_iterator;
  
++	if (iter->repo != the_repository)
++		BUG("peeling for non-the_repository is not supported");
++
+ 	if ((iter->base.flags & REF_KNOWS_PEELED)) {
+ 		oidcpy(peeled, &iter->peeled);
+ 		return is_null_oid(&iter->peeled) ? -1 : 0;
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 49d732f6db..97a6ac349e 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -435,6 +435,8 @@ struct cache_ref_iterator {
+ 	 * on from there.)
+ 	 */
+ 	struct cache_ref_iterator_level *levels;
++
 +	struct repository *repo;
- 	unsigned int flags;
  };
  
-@@ -864,8 +865,8 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 			continue;
+ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+@@ -491,6 +493,11 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
++	struct cache_ref_iterator *iter =
++		(struct cache_ref_iterator *)ref_iterator;
++
++	if (iter->repo != the_repository)
++		BUG("peeling for non-the_repository is not supported");
+ 	return peel_object(ref_iterator->oid, peeled) ? -1 : 0;
+ }
  
- 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
--		    !ref_resolves_to_object(iter->base.refname, &iter->oid,
--					    iter->flags))
-+		    !ref_resolves_to_object(iter->base.refname, iter->repo,
-+					    &iter->oid, iter->flags))
- 			continue;
+@@ -513,6 +520,7 @@ static struct ref_iterator_vtable cache_ref_iterator_vtable = {
  
- 		return ITER_OK;
-@@ -954,6 +955,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 
- 	iter->base.oid = &iter->oid;
+ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+ 					      const char *prefix,
++					      struct repository *repo,
+ 					      int prime_dir)
+ {
+ 	struct ref_dir *dir;
+@@ -547,5 +555,7 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+ 		level->prefix_state = PREFIX_CONTAINS_DIR;
+ 	}
  
 +	iter->repo = repo;
- 	iter->flags = flags;
- 
- 	if (prefix && *prefix)
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 9440be51da..e7b0a0a658 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -66,6 +66,7 @@ int refname_is_safe(const char *refname);
-  * referred-to object does not exist, emit a warning and return false.
++
+ 	return ref_iterator;
+ }
+diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+index 3bfb89d2b3..7877bf86ed 100644
+--- a/refs/ref-cache.h
++++ b/refs/ref-cache.h
+@@ -238,6 +238,7 @@ struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname);
   */
- int ref_resolves_to_object(const char *refname,
-+			   struct repository *repo,
- 			   const struct object_id *oid,
- 			   unsigned int flags);
+ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+ 					      const char *prefix,
++					      struct repository *repo,
+ 					      int prime_dir);
  
+ #endif /* REFS_REF_CACHE_H */
 -- 
 2.33.0.685.g46640cef36-goog
 
