@@ -2,71 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B9D8C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 22:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB918C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 22:49:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA82E6139E
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 22:39:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B21E461209
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 22:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243088AbhI1Wld (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 18:41:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57202 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238632AbhI1Wlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 18:41:32 -0400
-Received: (qmail 11705 invoked by uid 109); 28 Sep 2021 22:39:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Sep 2021 22:39:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5381 invoked by uid 111); 28 Sep 2021 22:39:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Sep 2021 18:39:51 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Sep 2021 18:39:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 4/7] merge-ort: capture and print ll-merge warnings in
- our preferred fashion
-Message-ID: <YVOZty9D7NRbzhE5@coredump.intra.peff.net>
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <ce95b82fc492d48fa6022df424f9a303a1c70ad4.1630376800.git.gitgitgadget@gmail.com>
+        id S243142AbhI1Wvf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 18:51:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57315 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238632AbhI1Wvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 18:51:35 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F04CE14BC2C;
+        Tue, 28 Sep 2021 18:49:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hASrqxOivQkReN68ZRi4EnYBx18qiaRQtoCOQS
+        vgKrI=; b=G4DjqHRZNueRt7eeJ++rgY9FJvyyJ3uDb4q7jLb5CLAekCXgozHPel
+        f7rLzEvghqiIJgujfZjzg06R2dvhPeDqHH/XZAaaMzImeNGfKMy3IwDUTPk4DewD
+        GlLO9JR/CPBdzgK0mGCdXHi+wddoQ5e9DuLlGnwRHctHFDK+wUPo8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E8E1814BC2B;
+        Tue, 28 Sep 2021 18:49:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 600EA14BC29;
+        Tue, 28 Sep 2021 18:49:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, newren@gmail.com
+Subject: Re: [PATCH v2 4/9] refs: teach refs_for_each_ref() arbitrary repos
+References: <cover.1632242495.git.jonathantanmy@google.com>
+        <cover.1632859147.git.jonathantanmy@google.com>
+        <da0c9c2d44da40e25c2c5b68697e3461cefd63a5.1632859148.git.jonathantanmy@google.com>
+Date:   Tue, 28 Sep 2021 15:49:51 -0700
+In-Reply-To: <da0c9c2d44da40e25c2c5b68697e3461cefd63a5.1632859148.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 28 Sep 2021 13:10:50 -0700")
+Message-ID: <xmqqh7e4iacw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ce95b82fc492d48fa6022df424f9a303a1c70ad4.1630376800.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 647F1522-20AE-11EC-9094-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 31, 2021 at 02:26:37AM +0000, Elijah Newren via GitGitGadget wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Instead of immediately printing ll-merge warnings to stderr, we save
-> them in our output strbuf.  Besides allowing us to move these warnings
-> to a special file for --remerge-diff, this has two other benefits for
-> regular merges done by merge-ort:
-> 
->   * The deferral of messages ensures we can print all messages about
->     any given path together (merge-recursive was known to sometimes
->     intersperse messages about other paths, particularly when renames
->     were involved).
-> 
->   * The deferral of messages means we can avoid printing spurious
->     conflict messages when we just end up aborting due to local user
->     modifications in the way.  (In contrast to merge-recursive.c which
->     prematurely checks for local modifications in the way via
->     unpack_trees() and gets the check wrong both in terms of false
->     positives and false negatives relative to renames, merge-ort does
->     not perform the local modifications in the way check until the
->     checkout() step after the full merge has been computed.)
+>  	} else if (!(flags & OPT_CACHED)) {
+>  		struct object_id oid;
+> -		struct ref_store *refs = get_submodule_ref_store(path);
+> +		struct repository subrepo;
+>  
+> -		if (!refs) {
+> +		if (repo_submodule_init(&subrepo, the_repository, path, null_oid())) {
+>  			print_status(flags, '-', path, ce_oid, displaypath);
+>  			goto cleanup;
+>  		}
+> -		if (refs_head_ref(refs, handle_submodule_head_ref, &oid))
+> +		if (refs_head_ref(&subrepo, handle_submodule_head_ref, &oid))
+>  			die(_("could not resolve HEAD ref inside the "
+>  			      "submodule '%s'"), path);
+> +		repo_clear(&subrepo);
 
-Yeah, this is a good example of why having ll_merge() print warnings in
-the first place is probably wrong. If you buy my argument that
-ll_merge() should be returning an enum, then this code becomes IMHO even
-nicer, as you can generate your own sensible message in the caller.
+While this makes perfect sense, if we extended the ref_store to know
+what repository it belongs to, I suspect that we don't have to
+change anything in a "user" codepath like this one.
+get_submodule_ref_store() would repare a ref store that is bound to
+the submodule repository, refs_head_ref() and other helpers that
+take a ref_store would not have to gain an extra "repository"
+parameter (because it is known via the ref_store) and does the
+iteration in the right repository, etc...
 
--Peff
+> @@ -1018,9 +1019,12 @@ static void generate_submodule_summary(struct summary_cb *info,
+>  
+>  	if (!info->cached && oideq(&p->oid_dst, null_oid())) {
+>  		if (S_ISGITLINK(p->mod_dst)) {
+> -			struct ref_store *refs = get_submodule_ref_store(p->sm_path);
+> -			if (refs)
+> -				refs_head_ref(refs, handle_submodule_head_ref, &p->oid_dst);
+> +			struct repository subrepo;
+> +
+> +			if (!repo_submodule_init(&subrepo, the_repository, p->sm_path, null_oid())) {
+> +				refs_head_ref(&subrepo, handle_submodule_head_ref, &p->oid_dst);
+> +				repo_clear(&subrepo);
+> +			}
+
+The story looks the same here, too.
+
