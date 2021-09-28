@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F0FBC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 428F4C4332F
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 870FF61247
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D8D761247
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238623AbhI1CVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S238661AbhI1CVA (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 27 Sep 2021 22:21:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52696 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238655AbhI1CUz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238652AbhI1CUz (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Sep 2021 22:20:55 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A02C061778
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:12 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id q127-20020a1ca785000000b0030cb71ea4d1so1501141wme.1
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:12 -0700 (PDT)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B10C061775
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:11 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id v127so2127979wme.5
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yTfkA9cJmOFeDByXesQFa7t1cpnzmZyfmbqkEDL/CnU=;
-        b=nT8xlLevBqmdGN9gytccI7hCqq799fJsnlstXJvVvxIcRbqMlsxQUq6l7oS7959NbF
-         PFq08N/65fqraGZRu6C6l+timJBncubRFSzxnYzYPlLdMuDeILKcjmq5YM5Dhha625MA
-         ltaKz+HwbXBMICXhl4zqXRJyevOwQZIU+doIj7EOdeEwrwQpMExMXwh+XwhfCZMDOKZG
-         PAqufLRqYUGwEBDUvcUTVh8464a/IsyhAoeUm3eyW3xtvkxtv7SxiwIcpT/nofh+GZiP
-         HfDutyuteNfmoUfvPPo+/ud/YEP8BFJBG6ZDx6YQkrunc0IF3N/+4Gu8IU3nfWwGpLUD
-         Ideg==
+        bh=NfUV2yquG+AqMyBAjxwbha1uQU09bZqOYJms+skUKOE=;
+        b=OYko0QfrsCvr92Yp1tMwqtUcXRM+1finsYoDdATkm4vQLYOCFlYOt3SE69/eSvfjTW
+         7aOcmydzHNtlKem3WSTuCakM7N95ZFFezZEol+ahsF6wNf9SzRiJInnqXzJgTDDKPFvB
+         WYvFZlD1Pgiqb53ehCdwMfWKRmbDxPWnJGmpIctC6J5yTOkJk247r9Hxg0IAkbEIUOMa
+         6i4R1rEPO33bI3OZ2Dyx4dhfvj9l1LMj+pJSa9fb7/r1WQVzDr8tPDtt1FswaRDy6D05
+         UHv3sCb8Fs4kvT6eBQQDMr9IBFc8RcKsP2UkOEsC/steV5KH0EFA1dY9ZPywKvfUajLg
+         H6KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yTfkA9cJmOFeDByXesQFa7t1cpnzmZyfmbqkEDL/CnU=;
-        b=K/mw3mtRDRJHXxoHHaTRDidt2e9vr1F8SX34EuFKEnlj9jafMsyO1NHGpxyQ1cyXRG
-         kbl4sLKnfGA0xYHhyPVJzsgI0AnIhkofLuynpTKRk4UzGPd89yg4sxaBjbwXvAUm21qn
-         MuxlrZnMtEFPDcCdmH+kTRPtEgkClNLvFL7Xn+ZWyKjrxiGiz9OE/EI1PeviDB2vFZva
-         A98eH30F0OR1AX7/RHJ72VQStJ3E7NYaRaGkoxG4KnLyEP5i6odBLg1w652LQIRE4GZL
-         2UcFCjd4dmt4d5Jh4N1ym+EXRlW+vgm5efxHjbfZ9sRLpl+LNM/0ftEBhCE00xWnlcr9
-         DQig==
-X-Gm-Message-State: AOAM533cFoUKZRJ9H8k9fgf4dL8CJeEQPHNzR1QyGD9/jIDliUP24ueA
-        Glsxm23g+yO5on0cYdvPcP5MF8dcKACSsg==
-X-Google-Smtp-Source: ABdhPJwMxjY/zNW2HBL9WJM2xwcEwgqdrJC9WZY+eNFEHJOyiVMxYYkQSvGs44Li7LJU8/KnFjOPkQ==
-X-Received: by 2002:a05:600c:4f54:: with SMTP id m20mr2292150wmq.96.1632795551071;
-        Mon, 27 Sep 2021 19:19:11 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=NfUV2yquG+AqMyBAjxwbha1uQU09bZqOYJms+skUKOE=;
+        b=bYYt4+b3i/T6tj1DimgGVWKwG6GA+oBbW8YEKhAIwEu7ra16bqQ/QmIZpnY1M4GB6P
+         6+vquQGskEmnmJbe4Xulq6kBewDcUMHcTmYN7LjCXEXh6S6Nu3dBEu3ehktZrHSK6SVQ
+         jYGx0NEgUdfobAfuYpLUnEjefaHe6iAWkXmIS1ffvBXsWfad4sWc7VxUbPeduyJ9BCR+
+         UGaQaUxpjnGiS6wXA+UhGe5p77rfOTMjETuLoGHMyaN8WPfSqd84Um3SaX11t14G0Qmm
+         1f8Qfynws1gaM1SUinPdeXe/7h4+P3B56NOu070ATyCvyEDnnEDUyGTfqxPk26vsWZ5I
+         uCXw==
+X-Gm-Message-State: AOAM531yLgx+afDV+rxF4d5SIG1acElhKHDzefHQoS5L+i2lSG76mivF
+        q+3HnPs/bwLVBl4no4A/9+f3l9J6VK4qGw==
+X-Google-Smtp-Source: ABdhPJzo3BVes4+FpjVUUECksByzAE1aOM64/bSzBSggAM7iYSHvszzBY5/rZ2X8+dE10YgvvlIs6A==
+X-Received: by 2002:a05:600c:354a:: with SMTP id i10mr2140351wmq.77.1632795550259;
         Mon, 27 Sep 2021 19:19:10 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Sep 2021 19:19:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v8 14/17] object-file.c: return ULHR_TOO_LONG on "header too long"
-Date:   Tue, 28 Sep 2021 04:18:55 +0200
-Message-Id: <patch-v8-14.17-42b8d135c8c-20210928T021616Z-avarab@gmail.com>
+Subject: [PATCH v8 13/17] object-file.c: use "enum" return type for unpack_loose_header()
+Date:   Tue, 28 Sep 2021 04:18:54 +0200
+Message-Id: <patch-v8-13.17-07481bcb55c-20210928T021616Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1327.g9926af6cb02
 In-Reply-To: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
 References: <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com> <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
@@ -72,114 +72,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split up the return code for "header too long" from the generic
-negative return value unpack_loose_header() returns, and report via
-error() if we exceed MAX_HEADER_LEN.
+In a preceding commit we changed and documented unpack_loose_header()
+from its previous behavior of returning any negative value or zero, to
+only -1 or 0.
 
-As a test added earlier in this series in t1006-cat-file.sh shows
-we'll correctly emit zlib errors from zlib.c already in this case, so
-we have no need to carry those return codes further down the
-stack. Let's instead just return ULHR_TOO_LONG saying we ran into the
-MAX_HEADER_LEN limit, or other negative values for "unable to unpack
-<OID> header".
+Let's add an "enum unpack_loose_header_result" type and use it for
+these return values, and have the compiler assert that we're
+exhaustively covering all of them.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- cache.h             | 5 ++++-
- object-file.c       | 8 ++++++--
- streaming.c         | 1 +
- t/t1006-cat-file.sh | 4 ++--
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ cache.h       | 19 +++++++++++++++----
+ object-file.c | 34 +++++++++++++++++++++-------------
+ streaming.c   | 23 +++++++++++++----------
+ 3 files changed, 49 insertions(+), 27 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 7239e20a625..8e05392fda8 100644
+index d7189aed8fc..7239e20a625 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1328,16 +1328,19 @@ int git_open_cloexec(const char *name, int flags);
+@@ -1324,7 +1324,10 @@ int git_open_cloexec(const char *name, int flags);
+  * unpack_loose_header() initializes the data stream needed to unpack
+  * a loose object header.
   *
-  * - ULHR_OK on success
-  * - ULHR_BAD on error
-+ * - ULHR_TOO_LONG if the header was too long
+- * Returns 0 on success. Returns negative values on error.
++ * Returns:
++ *
++ * - ULHR_OK on success
++ * - ULHR_BAD on error
   *
   * It will only parse up to MAX_HEADER_LEN bytes unless an optional
   * "hdrbuf" argument is non-NULL. This is intended for use with
-  * OBJECT_INFO_ALLOW_UNKNOWN_TYPE to extract the bad type for (error)
+@@ -1332,9 +1335,17 @@ int git_open_cloexec(const char *name, int flags);
   * reporting. The full header will be extracted to "hdrbuf" for use
-- * with parse_loose_header().
-+ * with parse_loose_header(), ULHR_TOO_LONG will still be returned
-+ * from this function to indicate that the header was too long.
+  * with parse_loose_header().
   */
- enum unpack_loose_header_result {
- 	ULHR_OK,
- 	ULHR_BAD,
-+	ULHR_TOO_LONG,
- };
- enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- 						    unsigned char *map,
+-int unpack_loose_header(git_zstream *stream, unsigned char *map,
+-			unsigned long mapsize, void *buffer,
+-			unsigned long bufsiz, struct strbuf *hdrbuf);
++enum unpack_loose_header_result {
++	ULHR_OK,
++	ULHR_BAD,
++};
++enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
++						    unsigned char *map,
++						    unsigned long mapsize,
++						    void *buffer,
++						    unsigned long bufsiz,
++						    struct strbuf *hdrbuf);
++
+ struct object_info;
+ int parse_loose_header(const char *hdr, struct object_info *oi,
+ 		       unsigned int flags);
 diff --git a/object-file.c b/object-file.c
-index e0f508415dd..3589c5a2e33 100644
+index 1327872cbf4..e0f508415dd 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1290,7 +1290,7 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+@@ -1255,10 +1255,12 @@ void *map_loose_object(struct repository *r,
+ 	return map_loose_object_1(r, NULL, oid, size);
+ }
+ 
+-int unpack_loose_header(git_zstream *stream,
+-			unsigned char *map, unsigned long mapsize,
+-			void *buffer, unsigned long bufsiz,
+-			struct strbuf *header)
++enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
++						    unsigned char *map,
++						    unsigned long mapsize,
++						    void *buffer,
++						    unsigned long bufsiz,
++						    struct strbuf *header)
+ {
+ 	int status;
+ 
+@@ -1274,13 +1276,13 @@ int unpack_loose_header(git_zstream *stream,
+ 	status = git_inflate(stream, 0);
+ 	obj_read_lock();
+ 	if (status < Z_OK)
+-		return -1;
++		return ULHR_BAD;
+ 
+ 	/*
+ 	 * Check if entire header is unpacked in the first iteration.
+ 	 */
+ 	if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+-		return 0;
++		return ULHR_OK;
+ 
+ 	/*
+ 	 * We have a header longer than MAX_HEADER_LEN. The "header"
+@@ -1288,7 +1290,7 @@ int unpack_loose_header(git_zstream *stream,
  	 * --allow-unknown-type".
  	 */
  	if (!header)
--		return ULHR_BAD;
-+		return ULHR_TOO_LONG;
+-		return -1;
++		return ULHR_BAD;
  
  	/*
  	 * buffer[0..bufsiz] was not large enough.  Copy the partial
-@@ -1311,7 +1311,7 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+@@ -1309,7 +1311,7 @@ int unpack_loose_header(git_zstream *stream,
  		stream->next_out = buffer;
  		stream->avail_out = bufsiz;
  	} while (status != Z_STREAM_END);
--	return ULHR_BAD;
-+	return ULHR_TOO_LONG;
+-	return -1;
++	return ULHR_BAD;
  }
  
  static void *unpack_loose_rest(git_zstream *stream,
-@@ -1484,6 +1484,10 @@ static int loose_object_info(struct repository *r,
+@@ -1474,13 +1476,19 @@ static int loose_object_info(struct repository *r,
+ 	if (oi->disk_sizep)
+ 		*oi->disk_sizep = mapsize;
+ 
+-	if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
+-				allow_unknown ? &hdrbuf : NULL) < 0)
++	switch (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr),
++				    allow_unknown ? &hdrbuf : NULL)) {
++	case ULHR_OK:
++		break;
++	case ULHR_BAD:
  		status = error(_("unable to unpack %s header"),
  			       oid_to_hex(oid));
- 		break;
-+	case ULHR_TOO_LONG:
-+		status = error(_("header for %s too long, exceeds %d bytes"),
-+			       oid_to_hex(oid), MAX_HEADER_LEN);
+-	if (status < 0)
+-		; /* Do nothing */
+-	else if (hdrbuf.len) {
 +		break;
- 	}
- 
- 	if (status < 0) {
++	}
++
++	if (status < 0) {
++		/* Do nothing */
++	} else if (hdrbuf.len) {
+ 		if ((status = parse_loose_header(hdrbuf.buf, oi, flags)) < 0)
+ 			status = error(_("unable to parse %s header with --allow-unknown-type"),
+ 				       oid_to_hex(oid));
 diff --git a/streaming.c b/streaming.c
-index 6df0247a4cb..bd89c50e7b3 100644
+index cb3c3cf6ff6..6df0247a4cb 100644
 --- a/streaming.c
 +++ b/streaming.c
-@@ -235,6 +235,7 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
- 	case ULHR_OK:
- 		break;
- 	case ULHR_BAD:
-+	case ULHR_TOO_LONG:
- 		goto error;
+@@ -229,17 +229,16 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
+ 	st->u.loose.mapped = map_loose_object(r, oid, &st->u.loose.mapsize);
+ 	if (!st->u.loose.mapped)
+ 		return -1;
+-	if ((unpack_loose_header(&st->z,
+-				 st->u.loose.mapped,
+-				 st->u.loose.mapsize,
+-				 st->u.loose.hdr,
+-				 sizeof(st->u.loose.hdr),
+-				 NULL) < 0) ||
+-	    (parse_loose_header(st->u.loose.hdr, &oi, 0) < 0)) {
+-		git_inflate_end(&st->z);
+-		munmap(st->u.loose.mapped, st->u.loose.mapsize);
+-		return -1;
++	switch (unpack_loose_header(&st->z, st->u.loose.mapped,
++				    st->u.loose.mapsize, st->u.loose.hdr,
++				    sizeof(st->u.loose.hdr), NULL)) {
++	case ULHR_OK:
++		break;
++	case ULHR_BAD:
++		goto error;
  	}
- 	if (parse_loose_header(st->u.loose.hdr, &oi, 0) < 0)
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 5b16c69c286..a5e7401af8b 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -356,12 +356,12 @@ do
- 			if test "$arg2" = "-p"
- 			then
- 				cat >expect <<-EOF
--				error: unable to unpack $bogus_long_sha1 header
-+				error: header for $bogus_long_sha1 too long, exceeds 32 bytes
- 				fatal: Not a valid object name $bogus_long_sha1
- 				EOF
- 			else
- 				cat >expect <<-EOF
--				error: unable to unpack $bogus_long_sha1 header
-+				error: header for $bogus_long_sha1 too long, exceeds 32 bytes
- 				fatal: git cat-file: could not get object info
- 				EOF
- 			fi &&
++	if (parse_loose_header(st->u.loose.hdr, &oi, 0) < 0)
++		goto error;
+ 
+ 	st->u.loose.hdr_used = strlen(st->u.loose.hdr) + 1;
+ 	st->u.loose.hdr_avail = st->z.total_out;
+@@ -248,6 +247,10 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
+ 	st->read = read_istream_loose;
+ 
+ 	return 0;
++error:
++	git_inflate_end(&st->z);
++	munmap(st->u.loose.mapped, st->u.loose.mapsize);
++	return -1;
+ }
+ 
+ 
 -- 
 2.33.0.1327.g9926af6cb02
 
