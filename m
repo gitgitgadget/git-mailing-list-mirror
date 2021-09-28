@@ -2,127 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47869C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 01:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7E7C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F31D6120A
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 01:44:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F79061247
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238555AbhI1BqW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 21:46:22 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:40409 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238481AbhI1BqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 21:46:21 -0400
-Received: from [10.0.2.15] ([147.147.167.109])
-        by smtp with ESMTPA
-        id V2Ahmw86RzwAFV2AimK7ZD; Tue, 28 Sep 2021 02:44:41 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1632793481; bh=OYjvEl0DEZkCW4Xy9Gzw1InvK9V5BU+ZjJfOiFXnESQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=NgXDA6H3pRGXfca4Uz+qvdYSzDCqttHLtR/EdI30NltbmnU62wACYcOSkqGi5EUnm
-         5ByHl5tzMG2BAyR47+RHsey46pJ7/Nq35TbTWiJJ2Qu87RrM5FIkAAj0jQF8hJ0amh
-         beOH+N3qBvA5jKrJ8aE7b/obE3bqIrkxOai9G0uT/4361yFeFQ9iFyURxLnG3ellrW
-         zvs8n8ylJwWovsfsZXGk2brdckqtcLiR+pxVLTtYC/X7pkyPUKcFmASuKWUYIMJmOY
-         xvsdh+eocHDYrQAenu+0fAdCscSxAU3jqSS4f/HvzHF+Bp9JyXTOYGWEri9ooiQGfj
-         o0JQmxg97drjg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=FKGAO9gs c=1 sm=1 tr=0
- a=QdS5mZX/VJYKMdXaSBaSIA==:117 a=QdS5mZX/VJYKMdXaSBaSIA==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8 a=pGLkceISAAAA:8
- a=zreE_j2jaizrHBlNcCIA:9 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 2/5] *.[ch] *_INIT macros: use { 0 } for a "zero out"
- idiom
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
- <cover-v2-0.5-00000000000-20210927T124407Z-avarab@gmail.com>
- <patch-v2-2.5-afcd2729c95-20210927T124407Z-avarab@gmail.com>
- <YVJSwuqjolz28+mG@coredump.intra.peff.net>
- <87h7e5zgjw.fsf@evledraar.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <4516b271-c9ed-2413-67c9-a783119fc0dd@ramsayjones.plus.com>
-Date:   Tue, 28 Sep 2021 02:44:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S238575AbhI1CUm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 22:20:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238529AbhI1CUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 22:20:41 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73EB2C061604
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:02 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id d21so55081066wra.12
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=NOTtP7QG8bBmVdro4EjXBoilQTXKAEyvSH13/rvxGOE=;
+        b=Ih8oAEb3olRPcrx8joifg/+hbapiR6EBy7Z6dZHpY/Fk834jN7scsxvE+mUo2AHgXS
+         iP4Uw2fSF3Dz34BxiMsiwwUrQ8x2ZJ4fLIHldrHodCej+7iW71zMkcm35Uf+5Dsi+lO7
+         IIfocnOVtHMh8Hbk0v2lWyA2Vv5wvIaWn34t8hH2Bh41aKWL4TuY7LIMt/sYp/T3L88Q
+         8RcEKqKmkX5DTTCddKGDvOJxGs+eHaQxUXw2dFbUyzEBfnxNWAAhlkLhPUY6J5WsuR8V
+         nTdxblkODLFnr/ycO32KI8/3yHI8Wfri0UKjQueCpYbHnSRznloOSQhqXKMqavvMUeNP
+         PouQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=NOTtP7QG8bBmVdro4EjXBoilQTXKAEyvSH13/rvxGOE=;
+        b=Ydqkow+8roSnwkQ+NX+gsRd23r3MTsWS+7w87sLG//i71y1GzufYCMVMLxS2UakV2S
+         I1EBcMlJvL1qvnRxX6xoxFCpC7DMR3rzh5P7+bQb0dlUTQ5cms0RH3bbA4YaHWpcQEay
+         YtWOmumS+SZh05vaLb5LmMhyrvbZNc1Vo9U7WDPI1gUXz3hbtetVCZA1BuKQvSqUo5iP
+         6CuiY/4KgDyW3Jdk7fJhNNVip5H8e5pWr1qVE0eevrEox8grgpyH+e01aYVAJ2F/NhZg
+         Cv6J102muFvw3f+I6D4i1ozdtFZuuTQ7oFBU5qvgtGmNakOgWbaXvB7X9YzU0tB5l6ax
+         wa/w==
+X-Gm-Message-State: AOAM533xSJr6dUx+jvMtBHVRkZnWmmmpXXu5a0P+Fj0baLAVDgMau8Ze
+        mIlqb7Naowmo+NVExzTKW/1XvBG1j6+QqA==
+X-Google-Smtp-Source: ABdhPJxry7FOdeFmKftEWcYVjmNrorvlD5dAG0G3Uhdt63LgAjRyRS/ctE/qtcHRKyTseAHJF87tPQ==
+X-Received: by 2002:a5d:6545:: with SMTP id z5mr3534483wrv.90.1632795540886;
+        Mon, 27 Sep 2021 19:19:00 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Sep 2021 19:19:00 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v8 01/17] fsck tests: add test for fsck-ing an unknown type
+Date:   Tue, 28 Sep 2021 04:18:42 +0200
+Message-Id: <patch-v8-01.17-b999ab695d9-20210928T021616Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1327.g9926af6cb02
+In-Reply-To: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
+References: <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com> <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87h7e5zgjw.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfInXMF2MXGdhA/O+jEYmdU7GF3lAq1o+DoVc92OD8YMkQU4Ej4e02H5vIp1NDqIY4TxckOxEAjCBQjLA62QMCDaRd3X5DoC78QLIB1gk3qoDhpIiRpEk
- wfoZQD/EJalii9UOvy46N43ZSd96XkGMEVuI7ec4fOvokzUeVaCnJPfG1n+TomBpnInEdY8tS6pLTw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix a blindspot in the fsck tests by checking what we do when we
+encounter an unknown "garbage" type produced with hash-object's
+--literally option.
 
+This behavior needs to be improved, which'll be done in subsequent
+patches, but for now let's test for the current behavior.
 
-On 28/09/2021 01:25, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Sep 27 2021, Jeff King wrote:
-> 
->> On Mon, Sep 27, 2021 at 02:54:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>
->>> In C it isn't required to specify that all members of a struct are
->>> zero'd out to 0, NULL or '\0', just providing a "{ 0 }" will
->>> accomplish that.
->>>
->>> Let's also change code that provided N zero'd fields to just
->>> provide one, and change e.g. "{ NULL }" to "{ 0 }" for
->>> consistency. I.e. even if the first member is a pointer let's use "0"
->>> instead of "NULL". The point of using "0" consistently is to pick one,
->>> and to not have the reader wonder why we're not using the same pattern
->>> everywhere.
->>
->> I seem to recall we've had some linter complaints about using "0" to
->> initialize a pointer, but I think these days it's OK, per:
->>
->>  - 1c96642326 (sparse: allow '{ 0 }' to be used without warnings,
->>    2020-05-22)
->>
->> and
->>
->>  - https://lore.kernel.org/git/18bd6127-be72-b7b7-8e2a-17bbe7214a2e@ramsayjones.plus.com/
->>
->> I think this is a good step, as the long lists are unwieldy and difficult to
->> keep up to date without actually providing any readability or functional
->> value.
-> 
-> [+CC Luc Van Oostenryck <luc.vanoostenryck@gmail.com>]
-> 
-> It seems like we should just revert 1c96642326, looking at the history
-> of sparse.git there's:
-> 
->  - 537e3e2d (univ-init: conditionally accept { 0 } without warnings, 2020-05-18)
-> 
-> Followed by git.git's 1c96642326 a few days later, but then in sparse.git:
-> 
->  - 41f651b4 (univ-init: set default to -Wno-universal-initializer, 2020-05-29)
-> 
-> I.e. a few days after the workaround in git.git the upstream repo
-> changed the default. The 537e3e2d isn't in any release of sparse that
-> 41f651b4 isn't in, they both first appeared in v0.6.2.
-> 
-> So us having -Wno-universal-initializer only seems useful if you're
-> using some old commit in sparse.git.
-> 
-> Having written the above I found
-> https://lore.kernel.org/git/20200530162432.a7fitzjc53hsn2ej@ltop.local/;
-> i.e. sparse's maintainer pretty much saying the same thing.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t1450-fsck.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Yes, this has been on my TODO list pretty much since commit 41f651b4, but
-it wasn't a priority. ;-)
-
-ATB,
-Ramsay Jones
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5071ac63a5b..969bfbbdd8f 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -865,4 +865,21 @@ test_expect_success 'detect corrupt index file in fsck' '
+ 	test_i18ngrep "bad index file" errors
+ '
+ 
++test_expect_success 'fsck hard errors on an invalid object type' '
++	git init --bare garbage-type &&
++	(
++		cd garbage-type &&
++
++		empty=$(git hash-object --stdin -w -t blob </dev/null) &&
++		garbage=$(git hash-object --stdin -w -t garbage --literally </dev/null) &&
++
++		cat >err.expect <<-\EOF &&
++		fatal: invalid object type
++		EOF
++		test_must_fail git fsck >out 2>err &&
++		test_cmp err.expect err &&
++		test_must_be_empty out
++	)
++'
++
+ test_done
+-- 
+2.33.0.1327.g9926af6cb02
 
