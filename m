@@ -2,451 +2,318 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D32FC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8CD7C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C1DF61262
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:19:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0D9C61058
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238686AbhI1CVE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 22:21:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
+        id S238646AbhI1CiX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 22:38:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238662AbhI1CU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 22:20:57 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F5FC061780
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:15 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id t18so55268896wrb.0
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:19:15 -0700 (PDT)
+        with ESMTP id S238720AbhI1CiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 22:38:18 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C1ACC061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:36:39 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id dn26so144417edb.13
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BAkEW/0TY5agHuq8SkgE6ErbZVCtFhtl8ELr1pZqVEc=;
-        b=g4aR3gY3rg0ILG6tyXixfZ6c4TR+6j/AjtrYl/G7AVrgL3J0A5x08M3zWCwiL6s44a
-         pL+GeIgfMsR5G5I/hWy4pFhxQDr6O7d9KgzDP1LsnaWZoKcs1Bba633nDLrify03ek1p
-         so4FNLHICGTanOeTWnvce10Pf/YJyNj7XlY7RUpncXF9rmC/WQ2P23Bgq05cT76fR2gp
-         pfJeGkbk2irv/0p/zVt/cmz5I2Q3SkbZw8dDIr/GYbw3r7QNu9/6mDmp/6W4eNBMrVJ4
-         1f9wefH9ndK6lxZoyQEoqwW8TsJ3UF+Lp9TAlwjraYOir4qldJg6ogesQZR8QbRLbQ5S
-         NkFg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=b1TfXwlYPBjuZujnkDjJH2qlDXipNQQr1FIHZVT8RRo=;
+        b=aV/D+KcL5tseUiGjBopgv0Z6zXC77d+NXDpp1qfLKWTpqL49rgwMdGwCgeplCZBn2H
+         xMTjZqasDkU7Ki85pcqCBHjj+2B0C0+EBenwunplk3oAoIn4zX6hYxYtZdH9newkeLFV
+         OPNI+t4NpClj7Zklq64RnSk8kDCikqDC2U+h7rdTnefKhQh+yWoB+0QnJ044Lc+NpIjp
+         ELODIBIM/9MHeTPenIZuLKwet4VI7A7UjzJ5PI4GzCuB1j7zJ+WfweMpUVb/hxegSyIM
+         GO/bCiLBUkzkuaYgQCPlpSy+e/eP3mH3Pf/qMarSui7bEJ36Ny0Tq6i1ZmwWxsZUCkuK
+         n9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BAkEW/0TY5agHuq8SkgE6ErbZVCtFhtl8ELr1pZqVEc=;
-        b=o/TIe3x+WQQG01hIu3aiSUmGbyKY2inInjTE9cNWm+/xhnZ+J4KNwtIeaIjPsgDEk0
-         jq5T2PmkJW+A09Gv0kaNjJAkkmL+rv3lIqopZlk5O5bN4EMCksYip6viHVYGuBjI5SI4
-         +CNatfbDdLTAEvHSl7zgGv3LXhRKgIOMPo7ZR2LT/tHJN3as2o7RUULLhXLzeibW9Mi6
-         jeYC8r0/DpeVrZYw7rJBuDJEFq0oBEs97zkD7hM56+ZFggBg+BHvg3WPRuNocpp8LxRl
-         iZAy6bEjOYoY3m6NZZZRdeRPo6yblYJpiNjI0HPpt59bnAaqmiC2US0YS9mMdYFPQXzS
-         7i6A==
-X-Gm-Message-State: AOAM5310exbmVkJItO2zokn8SD5GXgFhedKURDjK2qhbZ8gLF69lP+VY
-        ZC2V/Uz6W3EGAK4tGlwFQmuh4873uv4MLw==
-X-Google-Smtp-Source: ABdhPJxzmsp24rDCgg9PQDnnx/N4zkDo6KgtBwTTxzjl2iLMEVs/7WJoK1I9Re9HSH+2cgER1rUnTA==
-X-Received: by 2002:adf:dd8e:: with SMTP id x14mr3630084wrl.260.1632795553833;
-        Mon, 27 Sep 2021 19:19:13 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c132sm1126987wma.22.2021.09.27.19.19.13
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=b1TfXwlYPBjuZujnkDjJH2qlDXipNQQr1FIHZVT8RRo=;
+        b=I/x0st9AslUIKN8ReYHN2FTwZSX2UEWk9TYhdVmWs82m8G87b/l3LU2Wn55fTabPw5
+         b8O4XYAZlWwJHNlnR92c40hOt7p+uW3x7R7VNmkZXxh1duvq8GRm7BklYb1KOFLGl977
+         U68Wrlus+v+f/FQDPfaBaSGzP50zCVHV14QOjEOWFE9igbFQ6cxLzHtENuhowGUfXbev
+         FZEvCCHgwlURRbX0X7yDfPHDHqeaGobOMh0+jOtHloTPxibXNdr6EiPPrXzS6qg8hDSh
+         I0jttfo7AhFg6NJmDG3MvYs5K8sR7lvJlwX00VceqXzJvj55xGoJtDfHCAK4OOZhHxqT
+         +5Ig==
+X-Gm-Message-State: AOAM531q6D6HlWqn0CP1YFIQ2iUcqANlGP/njZ/PIrh8wUaEI8zqhQrj
+        0tM4j/7zXqLIETqR+TLZXOs=
+X-Google-Smtp-Source: ABdhPJyiiuJZJ2Y4APcpGITaaMYxdpp0aTBDQtI1xQblVsAmqa033fXO5bf9a1zEFb5pCC/Trq1Imw==
+X-Received: by 2002:a17:907:785a:: with SMTP id lb26mr3996957ejc.77.1632796598029;
+        Mon, 27 Sep 2021 19:36:38 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id h7sm624000edt.37.2021.09.27.19.36.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 19:19:13 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v8 17/17] fsck: report invalid object type-path combinations
-Date:   Tue, 28 Sep 2021 04:18:58 +0200
-Message-Id: <patch-v8-17.17-7f394a991a6-20210928T021616Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1327.g9926af6cb02
-In-Reply-To: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
-References: <cover-v7-00.17-00000000000-20210920T190304Z-avarab@gmail.com> <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
+        Mon, 27 Sep 2021 19:36:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Jeff King <peff@peff.org>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+Date:   Tue, 28 Sep 2021 03:57:01 +0200
+References: <xmqq8rzhmsi7.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqq8rzhmsi7.fsf@gitster.g>
+Message-ID: <87czotzaru.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the error that's emitted in cases where we find a loose object
-we parse, but which isn't at the location we expect it to be.
 
-Before this change we'd prefix the error with a not-a-OID derived from
-the path at which the object was found, due to an emergent behavior in
-how we'd end up with an "OID" in these codepaths.
+On Mon, Sep 27 2021, Junio C Hamano wrote:
 
-Now we'll instead say what object we hashed, and what path it was
-found at. Before this patch series e.g.:
+Updates on my topics, CC'd the people I mentioned.
 
-    $ git hash-object --stdin -w -t blob </dev/null
-    e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-    $ mv objects/e6/ objects/e7
+> * ab/config-based-hooks-1 (2021-09-27) 8 commits
+>  - hook-list.h: add a generated list of hooks, like config-list.h
+>  - hook.c users: use "hook_exists()" instead of "find_hook()"
+>  - hook.c: add a hook_exists() wrapper and use it in bugreport.c
+>  - hook.[ch]: move find_hook() from run-command.c to hook.c
+>  - Makefile: remove an out-of-date comment
+>  - Makefile: don't perform "mv $@+ $@" dance for $(GENERATED_H)
+>  - Makefile: stop hardcoding {command,config}-list.h
+>  - Makefile: mark "check" target as .PHONY
 
-Would emit ("[...]" used to abbreviate the OIDs):
+Thanks for picking this up. Looks like my split-up plan is working in
+that this has received a lot of careful review.
 
-    git fsck
-    error: hash mismatch for ./objects/e7/9d[...] (expected e79d[...])
-    error: e79d[...]: object corrupt or missing: ./objects/e7/9d[...]
+I think per Ren=C3=A9's the v2 should be good-to-go, barring any new
+undiscovered issues:
+https://lore.kernel.org/git/0e07cee4-079a-af12-880f-d4a99300df28@web.de/
 
-Now we'll instead emit:
+> * ab/http-pinned-public-key-mismatch (2021-09-27) 1 commit
+>  - http: check CURLE_SSL_PINNEDPUBKEYNOTMATCH when emitting errors
+>
+>  HTTPS error handling updates.
+>
+>  Will merge to 'next'?
 
-    error: e69d[...]: hash-path mismatch, found at: ./objects/e7/9d[...]
+I'd like it merged. I think a fair summary of Jeff King's
+https://lore.kernel.org/git/YU5CJC9XJvQITfr8@coredump.intra.peff.net/ is
+"meh" though :)
 
-Furthermore, we'll do the right thing when the object type and its
-location are bad. I.e. this case:
+I think the translation improvement + mentioning the specific git config
+variable in play is a pretty minor but still worthwhile change.
 
-    $ git hash-object --stdin -w -t garbage --literally </dev/null
-    8315a83d2acc4c174aed59430f9a9c4ed926440f
-    $ mv objects/83 objects/84
+> * ab/make-compdb-fix (2021-09-27) 1 commit
+>  - Makefile: pass -Wno-pendantic under GENERATE_COMPILATION_DATABASE=3Dyes
+>
+>  Build update.
+>
+>  Will merge to 'next'.
 
-As noted in an earlier commits we'd simply die early in those cases,
-until preceding commits fixed the hard die on invalid object type:
+Thanks, FWIW I thought Carlos's cb/make-compdb-fix was better, but see
+from this E-Mail & other context that you'd looked at both and preferred
+the consistency with my COMPUTE_HEADER_DEPENDENCIES fix.
 
-    $ git fsck
-    fatal: invalid object type
+In any case both fix the immediate "pedantic" fallout.
 
-Now we'll instead emit sensible error messages:
+> * ab/pack-objects-stdin (2021-07-09) 5 commits
+>  - pack-objects.c: make use of REV_INFO_STDIN_LINE_PROCESS
+>  - pack-objects.c: do stdin parsing via revision.c's API
+>  - revision.[ch]: add a "handle_stdin_line" API
+>  - revision.h: refactor "disable_stdin" and "read_from_stdin"
+>  - upload-pack: run is_repository_shallow() before setup_revisions()
+>
+>  Introduce handle_stdin_line callback to revision API and uses it.
+>
+>  Expecting a reroll.
 
-    $ git fsck
-    error: 8315[...]: hash-path mismatch, found at: ./objects/84/15[...]
-    error: 8315[...]: object is of unknown type 'garbage': ./objects/84/15[...]
+I said I'd re-roll this into the larger "git bundle --stdin" topic I had
+in mind, but when doing so found one memory leak, which I really wanted
+the SANITIZE=3Dleak interface to fix.
 
-In both fsck.c and object-file.c we're using null_oid as a sentinel
-value for checking whether we got far enough to be certain that the
-issue was indeed this OID mismatch.
+I think it's best to eject/discard this given the amount of other
+outstanding stuff I've got. I don't really *need* this for anything
+else, I'll loop back to it sometime after the SANITIZE=3Dleak testing has
+landed.
 
-We need to add the "object corrupt or missing" special-case to deal
-with cases where read_loose_object() will return an error before
-completing check_object_signature(), e.g. if we have an error in
-unpack_loose_rest() because we find garbage after the valid gzip
-content:
+> * ab/fsck-unexpected-type (2021-09-22) 17 commits
+> [...]
+>  "git fsck" has been taught to report mismatch between expected and
+>  actual types of an object better.
+>
+>  Needs review.
 
-    $ git hash-object --stdin -w -t blob </dev/null
-    e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-    $ chmod 755 objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-    $ echo garbage >>objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391
-    $ git fsck
-    error: garbage at end of loose object 'e69d[...]'
-    error: unable to unpack contents of ./objects/e6/9d[...]
-    error: e69d[...]: object corrupt or missing: ./objects/e6/9d[...]
+The "needs review" note here pre-dates v6, which got a thorough review,
+and Taylor seemed happy with the v7, aside from a minor issue I just
+re-rolled v8 with a fix for:
 
-There is currently some weird messaging in the edge case when the two
-are combined, i.e. because we're not explicitly passing along an error
-state about this specific scenario from check_stream_oid() via
-read_loose_object() we'll end up printing the null OID if an object is
-of an unknown type *and* it can't be unpacked by zlib, e.g.:
+https://lore.kernel.org/git/cover-v8-00.17-00000000000-20210928T021616Z-ava=
+rab@gmail.com/
 
-    $ git hash-object --stdin -w -t garbage --literally </dev/null
-    8315a83d2acc4c174aed59430f9a9c4ed926440f
-    $ chmod 755 objects/83/15a83d2acc4c174aed59430f9a9c4ed926440f
-    $ echo garbage >>objects/83/15a83d2acc4c174aed59430f9a9c4ed926440f
-    $ /usr/bin/git fsck
-    fatal: invalid object type
-    $ ~/g/git/git fsck
-    error: garbage at end of loose object '8315a83d2acc4c174aed59430f9a9c4ed926440f'
-    error: unable to unpack contents of ./objects/83/15a83d2acc4c174aed59430f9a9c4ed926440f
-    error: 8315a83d2acc4c174aed59430f9a9c4ed926440f: object corrupt or missing: ./objects/83/15a83d2acc4c174aed59430f9a9c4ed926440f
-    error: 0000000000000000000000000000000000000000: object is of unknown type 'garbage': ./objects/83/15a83d2acc4c174aed59430f9a9c4ed926440f
-    [...]
+> * ab/make-clean-depend-dirs (2021-09-22) 1 commit
+> [...]
+>  Will merge to 'next'.
 
-I think it's OK to leave that for future improvements, which would
-involve enum-ifying more error state as we've done with "enum
-unpack_loose_header_result" in preceding commits. In these
-increasingly more obscure cases the worst that can happen is that
-we'll get slightly nonsensical or inapplicable error messages.
+Thanks!
 
-There's other such potential edge cases, all of which might produce
-some confusing messaging, but still be handled correctly as far as
-passing along errors goes. E.g. if check_object_signature() returns
-and oideq(real_oid, null_oid()) is true, which could happen if it
-returns -1 due to the read_istream() call having failed.
+> * ab/auto-depend-with-pedantic (2021-09-22) 1 commit
+>  - Makefile: make COMPUTE_HEADER_DEPENDENCIES=3Dauto work with DEVOPTS=3D=
+pedantic
+>
+>  Improve build procedure for developers.
+>
+>  Will merge to 'next'.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/fast-export.c |  2 +-
- builtin/fsck.c        | 23 +++++++++++++++--------
- builtin/index-pack.c  |  2 +-
- builtin/mktag.c       |  3 ++-
- cache.h               |  3 ++-
- object-file.c         | 21 ++++++++++-----------
- object-store.h        |  1 +
- object.c              |  4 ++--
- pack-check.c          |  3 ++-
- t/t1006-cat-file.sh   |  2 +-
- t/t1450-fsck.sh       |  8 +++++---
- 11 files changed, 42 insertions(+), 30 deletions(-)
+Thanks!
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 95e8e89e81f..8e2caf72819 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -312,7 +312,7 @@ static void export_blob(const struct object_id *oid)
- 		if (!buf)
- 			die("could not read blob %s", oid_to_hex(oid));
- 		if (check_object_signature(the_repository, oid, buf, size,
--					   type_name(type)) < 0)
-+					   type_name(type), NULL) < 0)
- 			die("oid mismatch in blob %s", oid_to_hex(oid));
- 		object = parse_object_buffer(the_repository, oid, type,
- 					     size, buf, &eaten);
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 3b046820750..d925cdbae5c 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -598,23 +598,30 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
- 	struct object *obj;
- 	enum object_type type;
- 	unsigned long size;
--	void *contents;
-+	unsigned char *contents = NULL;
- 	int eaten;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct object_info oi = OBJECT_INFO_INIT;
--	int err = 0;
-+	struct object_id real_oid = *null_oid();
-+	int ret;
- 
- 	oi.type_name = &sb;
- 	oi.sizep = &size;
- 	oi.typep = &type;
- 
--	if (read_loose_object(path, oid, &contents, &oi) < 0)
--		err = error(_("%s: object corrupt or missing: %s"),
--			    oid_to_hex(oid), path);
-+	ret = read_loose_object(path, oid, &real_oid, (void **)&contents, &oi);
-+	if (ret < 0) {
-+		if (contents && !oideq(&real_oid, oid))
-+			error(_("%s: hash-path mismatch, found at: %s"),
-+			      oid_to_hex(&real_oid), path);
-+		else
-+			error(_("%s: object corrupt or missing: %s"),
-+			      oid_to_hex(oid), path);
-+	}
- 	if (type < 0)
--		err = error(_("%s: object is of unknown type '%s': %s"),
--			    oid_to_hex(oid), sb.buf, path);
--	if (err) {
-+		ret = error(_("%s: object is of unknown type '%s': %s"),
-+			    oid_to_hex(&real_oid), sb.buf, path);
-+	if (ret < 0) {
- 		errors_found |= ERROR_OBJECT;
- 		return 0; /* keep checking other objects */
- 	}
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 7ce69c087ec..15ae406e6b7 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1415,7 +1415,7 @@ static void fix_unresolved_deltas(struct hashfile *f)
- 
- 		if (check_object_signature(the_repository, &d->oid,
- 					   data, size,
--					   type_name(type)))
-+					   type_name(type), NULL))
- 			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
- 
- 		/*
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index dddcccdd368..3b2dbbb37e6 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -62,7 +62,8 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
- 
- 	repl = lookup_replace_object(the_repository, tagged_oid);
- 	ret = check_object_signature(the_repository, repl,
--				     buffer, size, type_name(*tagged_type));
-+				     buffer, size, type_name(*tagged_type),
-+				     NULL);
- 	free(buffer);
- 
- 	return ret;
-diff --git a/cache.h b/cache.h
-index 6c5f00c82d5..e2a203073ea 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1361,7 +1361,8 @@ struct object_info;
- int parse_loose_header(const char *hdr, struct object_info *oi);
- 
- int check_object_signature(struct repository *r, const struct object_id *oid,
--			   void *buf, unsigned long size, const char *type);
-+			   void *buf, unsigned long size, const char *type,
-+			   struct object_id *real_oidp);
- 
- int finalize_object_file(const char *tmpfile, const char *filename);
- 
-diff --git a/object-file.c b/object-file.c
-index fe95285f405..49561e31551 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1084,9 +1084,11 @@ void *xmmap(void *start, size_t length,
-  * the streaming interface and rehash it to do the same.
-  */
- int check_object_signature(struct repository *r, const struct object_id *oid,
--			   void *map, unsigned long size, const char *type)
-+			   void *map, unsigned long size, const char *type,
-+			   struct object_id *real_oidp)
- {
--	struct object_id real_oid;
-+	struct object_id tmp;
-+	struct object_id *real_oid = real_oidp ? real_oidp : &tmp;
- 	enum object_type obj_type;
- 	struct git_istream *st;
- 	git_hash_ctx c;
-@@ -1094,8 +1096,8 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
- 	int hdrlen;
- 
- 	if (map) {
--		hash_object_file(r->hash_algo, map, size, type, &real_oid);
--		return !oideq(oid, &real_oid) ? -1 : 0;
-+		hash_object_file(r->hash_algo, map, size, type, real_oid);
-+		return !oideq(oid, real_oid) ? -1 : 0;
- 	}
- 
- 	st = open_istream(r, oid, &obj_type, &size, NULL);
-@@ -1120,9 +1122,9 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
- 			break;
- 		r->hash_algo->update_fn(&c, buf, readlen);
- 	}
--	r->hash_algo->final_oid_fn(&real_oid, &c);
-+	r->hash_algo->final_oid_fn(real_oid, &c);
- 	close_istream(st);
--	return !oideq(oid, &real_oid) ? -1 : 0;
-+	return !oideq(oid, real_oid) ? -1 : 0;
- }
- 
- int git_open_cloexec(const char *name, int flags)
-@@ -2572,6 +2574,7 @@ static int check_stream_oid(git_zstream *stream,
- 
- int read_loose_object(const char *path,
- 		      const struct object_id *expected_oid,
-+		      struct object_id *real_oid,
- 		      void **contents,
- 		      struct object_info *oi)
- {
-@@ -2582,8 +2585,6 @@ int read_loose_object(const char *path,
- 	char hdr[MAX_HEADER_LEN];
- 	unsigned long *size = oi->sizep;
- 
--	*contents = NULL;
--
- 	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
- 	if (!map) {
- 		error_errno(_("unable to mmap %s"), path);
-@@ -2613,9 +2614,7 @@ int read_loose_object(const char *path,
- 			goto out;
- 		}
- 		if (check_object_signature(the_repository, expected_oid,
--					   *contents, *size, oi->type_name->buf)) {
--			error(_("hash mismatch for %s (expected %s)"), path,
--			      oid_to_hex(expected_oid));
-+					   *contents, *size, oi->type_name->buf, real_oid)) {
- 			free(*contents);
- 			goto out;
- 		}
-diff --git a/object-store.h b/object-store.h
-index c90c41a07f7..17b072e5a19 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -253,6 +253,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime);
-  */
- int read_loose_object(const char *path,
- 		      const struct object_id *expected_oid,
-+		      struct object_id *real_oid,
- 		      void **contents,
- 		      struct object_info *oi);
- 
-diff --git a/object.c b/object.c
-index 4e85955a941..23a24e678a8 100644
---- a/object.c
-+++ b/object.c
-@@ -279,7 +279,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid)
- 	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
- 	    (!obj && repo_has_object_file(r, oid) &&
- 	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
--		if (check_object_signature(r, repl, NULL, 0, NULL) < 0) {
-+		if (check_object_signature(r, repl, NULL, 0, NULL, NULL) < 0) {
- 			error(_("hash mismatch %s"), oid_to_hex(oid));
- 			return NULL;
- 		}
-@@ -290,7 +290,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid)
- 	buffer = repo_read_object_file(r, oid, &type, &size);
- 	if (buffer) {
- 		if (check_object_signature(r, repl, buffer, size,
--					   type_name(type)) < 0) {
-+					   type_name(type), NULL) < 0) {
- 			free(buffer);
- 			error(_("hash mismatch %s"), oid_to_hex(repl));
- 			return NULL;
-diff --git a/pack-check.c b/pack-check.c
-index c8e560d71ab..3f418e3a6af 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -142,7 +142,8 @@ static int verify_packfile(struct repository *r,
- 			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
- 				    oid_to_hex(&oid), p->pack_name,
- 				    (uintmax_t)entries[i].offset);
--		else if (check_object_signature(r, &oid, data, size, type_name(type)))
-+		else if (check_object_signature(r, &oid, data, size,
-+						type_name(type), NULL))
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(&oid), p->pack_name);
- 		else if (fn) {
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index a5e7401af8b..0f52ca9cc82 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -512,7 +512,7 @@ test_expect_success 'cat-file -t and -s on corrupt loose object' '
- 		# Swap the two to corrupt the repository
- 		mv -f "$other_path" "$empty_path" &&
- 		test_must_fail git fsck 2>err.fsck &&
--		grep "hash mismatch" err.fsck &&
-+		grep "hash-path mismatch" err.fsck &&
- 
- 		# confirm that cat-file is reading the new swapped-in
- 		# blob...
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 167c319823a..eb0e772f098 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -54,6 +54,7 @@ test_expect_success 'object with hash mismatch' '
- 		cd hash-mismatch &&
- 
- 		oid=$(echo blob | git hash-object -w --stdin) &&
-+		oldoid=$oid &&
- 		old=$(test_oid_to_path "$oid") &&
- 		new=$(dirname $old)/$(test_oid ff_2) &&
- 		oid="$(dirname $new)$(basename $new)" &&
-@@ -65,7 +66,7 @@ test_expect_success 'object with hash mismatch' '
- 		git update-ref refs/heads/bogus $cmt &&
- 
- 		test_must_fail git fsck 2>out &&
--		grep "$oid.*corrupt" out
-+		grep "$oldoid: hash-path mismatch, found at: .*$new" out
- 	)
- '
- 
-@@ -75,6 +76,7 @@ test_expect_success 'object with hash and type mismatch' '
- 		cd hash-type-mismatch &&
- 
- 		oid=$(echo blob | git hash-object -w --stdin -t garbage --literally) &&
-+		oldoid=$oid &&
- 		old=$(test_oid_to_path "$oid") &&
- 		new=$(dirname $old)/$(test_oid ff_2) &&
- 		oid="$(dirname $new)$(basename $new)" &&
-@@ -87,8 +89,8 @@ test_expect_success 'object with hash and type mismatch' '
- 
- 
- 		test_must_fail git fsck 2>out &&
--		grep "^error: hash mismatch for " out &&
--		grep "^error: $oid: object is of unknown type '"'"'garbage'"'"'" out
-+		grep "^error: $oldoid: hash-path mismatch, found at: .*$new" out &&
-+		grep "^error: $oldoid: object is of unknown type '"'"'garbage'"'"'" out
- 	)
- '
- 
--- 
-2.33.0.1327.g9926af6cb02
+> * ab/make-sparse-for-real (2021-09-22) 1 commit
+>  - Makefile: make the "sparse" target non-.PHONY
+>
+>  Prevent "make sparse" from running for the source files that
+>  haven't been modified.
+>
+>  Will merge to 'next'?
 
+I just submitted a hopefully final v4, please ignore the v3 :)
+https://lore.kernel.org/git/patch-v4-1.1-f31fa3e8282-20210928T014023Z-avara=
+b@gmail.com/T/#u
+
+That leaves "sparse" as the bug-for-bug compatible old target, with a
+new "sparse-incr" for those (like me) who want the incremental
+version. The feedback on v2 was mainly about the change in behavior
+breaking existing workflows, so v4 should get around that nicely.
+
+> * ab/repo-settings-cleanup (2021-09-22) 5 commits
+> [...]
+>  Will merge to 'next'.
+
+Thanks!
+
+> * ab/align-parse-options-help (2021-09-22) 4 commits
+>  - parse-options: properly align continued usage output
+>  - git rev-parse --parseopt tests: add more usagestr tests
+>  - send-pack: properly use parse_options() API for usage string
+>  - parse-options API users: align usage output in C-strings
+>
+>  When "git cmd -h" shows more than one line of usage text (e.g.
+>  the cmd subcommand may take sub-sub-command), parse-options API
+>  learned to align these lines, even across i18n/l10n.
+>
+>  Will merge to 'next'?
+
+I think it's ready for that.
+
+> * ab/help-config-vars (2021-09-23) 9 commits
+>  - help: move column config discovery to help.c library
+>  - help / completion: make "git help" do the hard work
+>  - help tests: test --config-for-completion option & output
+>  - help: simplify by moving to OPT_CMDMODE()
+>  - help: correct logic error in combining --all and --guides
+>  - help: correct logic error in combining --all and --config
+>  - help tests: add test for --config output
+>  - help: correct usage & behavior of "git help --guides"
+>  - help: correct the usage string in -h and documentation
+>
+>  Teach "git help -c" into helping the command line completion of
+>  configuration variables.
+>
+>  Will merge to 'next'?
+
+I think so too, you had some feedback on the v3, I think partially
+addressed by the "simplify by moving to OPT_CMDMODE()" step.
+
+For further improving the usage info in the rare case of combining
+e.g. --all and --config I'd prefer to just leave it for a future
+improvement.
+
+> * ab/sanitize-leak-ci (2021-09-23) 2 commits
+>  - tests: add a test mode for SANITIZE=3Dleak, run it in CI
+>  - Makefile: add SANITIZE=3Dleak flag to GIT-BUILD-OPTIONS
+>
+>  CI learns to run the leak sanitizer builds.
+>
+>  Will merge to 'next'?
+
+Yes please! As noted in some other threads I've got more memory leak
+fixes waiting on this, and since the v8 to avoid testing the split index
+it doesn't seem to be causing any trouble:
+https://lore.kernel.org/git/cover-v8-0.2-00000000000-20210923T091819Z-avara=
+b@gmail.com/
+
+> * ab/refs-errno-cleanup (2021-08-25) 4 commits
+>  - refs: make errno output explicit for refs_resolve_ref_unsafe
+>  - refs: explicitly return failure_errno from parse_loose_ref_contents
+>  - branch tests: test for errno propagating on failing read
+>  - refs: add failure_errno to refs_read_raw_ref() signature
+>  (this branch uses ab/refs-files-cleanup and hn/refs-errno-cleanup.)
+>
+>  The "remainder" of hn/refs-errno-cleanup topic.
+
+I think this should be ready too, but if you'd prefer to wait a bit
+after ab/refs-files-cleanup and ab/refs-files-cleanup land I understand,
+it's a lot of ref code changes...
+
+> * ab/lib-subtest (2021-09-22) 9 commits
+>  - test-lib tests: get rid of copy/pasted mock test code
+>  - test-lib tests: assert 1 exit code, not non-zero
+>  - test-lib tests: refactor common part of check_sub_test_lib_test*()
+>  - test-lib tests: avoid subshell for "test_cmp" for readability
+>  - test-lib tests: don't provide a description for the sub-tests
+>  - test-lib tests: split up "write and run" into two functions
+>  - test-lib tests: move "run_sub_test" to a new lib-subtest.sh
+>  - Merge branch 'ps/t0000-output-directory-fix' into ab/lib-subtest
+>  - Merge branch 'jk/t0000-subtests-fix' into ab/lib-subtest
+>
+>  Updates to the tests in t0000 to test the test framework.
+>
+>  Will merge to 'next'?
+
+Yes please, it was waiting on review for a long time. Carlo had some
+feedback on it that I re-rolled v4 addressing, resolving what I think
+was the main sticking point all along. I.e. conflating a test assertion
+mode with this t0000 cleanup/split-up:
+
+https://lore.kernel.org/git/cover-v4-0.7-00000000000-20210922T111734Z-avara=
+b@gmail.com/
+
+> * ab/only-single-progress-at-once (2021-09-22) 8 commits
+>  - progress.c: add & assert a "global_progress" variable
+>  - pack-bitmap-write.c: add a missing stop_progress()
+>  - progress.c: add temporary variable from progress struct
+>  - progress.c: stop eagerly fflush(stderr) when not a terminal
+>  - progress.c: call progress_interval() from progress_test_force_update()
+>  - progress.c: move signal handler functions lower
+>  - progress.c tests: test some invalid usage
+>  - progress.c tests: make start/stop verbs on stdin
+>
+>  Further tweaks on progress API.
+
+I think per
+https://lore.kernel.org/git/cover-v2-0.8-00000000000-20210920T225701Z-avara=
+b@gmail.com/
+this should be ready to progress.
+
+I.e. it was held off due to comment from SZEDER that once clarified I
+understand to be a general concern that we should test the 8/8 step. As
+noted in the re-rolled 8/8 I've tested this thoroughly in a way that
+would break if that BUG() was going to bite us.
+
+> * ab/refs-files-cleanup (2021-08-25) 13 commits
+> [...]
+>
+>  Continued work on top of the hn/refs-errno-cleanup topic.
+>
+>  Will merge to 'master'.
+
+[...]
+
+> * hn/refs-errno-cleanup (2021-08-25) 4 commits
+> [...]
+>
+>  Will merge to 'master'.
+
+Yay, thanks!
