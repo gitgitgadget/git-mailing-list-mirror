@@ -2,68 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 058F0C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71DA2C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:21:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1E2460F9B
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:05:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E67E61153
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 08:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239341AbhI1IHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 04:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46150 "EHLO
+        id S239490AbhI1IX3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 04:23:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239043AbhI1IHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 04:07:18 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758DDC061575
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:05:39 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id v10so75440078edj.10
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:05:39 -0700 (PDT)
+        with ESMTP id S239292AbhI1IX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 04:23:28 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E78F0C061575
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:21:48 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id ba1so22099409edb.4
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 01:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=opeZetJ9ZhulvOy2FjPPvaor4Mlw3/vPc9ESU3Ohklw=;
-        b=CY20L44ChPLQllKWD1RcBdPM5gmWlGtMYB3SwLUIFno1abFu9foR67Ce6i7RLJUNJa
-         uSozRr6oxqcVbUlPl8EISLU4zNy6tEwbGxOU+akAnk9krC4CAKfqz9symDMDnmYPmm8l
-         Z4NJL6CXGMuLMj6pcum5hseoHiEn/+uND6gdHWpfO8aMBIoJm6hQ859OVW6vbITPvNUj
-         QYcbbLd9gbfZvX1N6XNsOm05IaRti1lPv4MiGpgIQRiJU3iYdbbRjSV1IMprenX7u46m
-         i51S/YSsg23CSHitLDy4A4KyiGlhQhyPxXI5ghwfJw4LGYlS84CXOziSSEmltW7HeY6I
-         tYIg==
+        bh=zctvQluzP7qFGdhrBys5i0JLWmTzd0omZtKtI9NUsiw=;
+        b=jk6ksyX3V0NTrDEI0dHdopfeyuL3OZ+ylq4tbQrnoBocXYRbdgzaao/jCMKP59hxT+
+         1uHF9wN/6TBZZZuuPNWULgVvlH5+/hxW5z2iSvPxzs90FKvZ7zkQnK870944gD2EI12R
+         /GtxyhgJpn6222l6JWF5z+6DEmtYXKchPxmLAOdg7D3ZlGrVmqT/KC0Zch0oNQzMzoxE
+         FQTppsofoEhmMR9YxFLuBhmw85wCAQjKSQq4jzffvE9FVJa0UJdc5dlNUELlqrpy7ViO
+         IMcfDCEEywzUVCh3pNfSZ94GrHv9hYs+v1ea/ufIiMDHDQXp03LmAR0cNXRzmpPxssQY
+         0/hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=opeZetJ9ZhulvOy2FjPPvaor4Mlw3/vPc9ESU3Ohklw=;
-        b=AS0nwEJw+rgTPIXq6bEJyOcWNv/ufifcFndt2EEf0DSyCkKtYpdYgGfojqOMPzQLAV
-         aQqcSkCeJlzMBS0Hic8tUq2A2E8cMoG7EhJIvoGpI3Is1zUfaxIyXyDGTrMI7TMFD72z
-         ek0oINIzpCjHT/SuzUGqeUt+4WezS076z2BT6tQ1nsUNKSQdhNniNMFjf3dhkgPFh26a
-         6LwKUvBrK7A65Zxz2ssjerbMs2NZeH0KRmzmahkSrpoDXy0qt4jbRElPuYCedfg0FRRY
-         TftBNQ43ilPTrLHPntT9upqUwl4OmngE26HO0RpXnASJ0bsFiOLW/sFu90E86zdWB3Jx
-         W/IQ==
-X-Gm-Message-State: AOAM530XTOPC+RC5SZWI15djeG+/pKqediS8yCgdeaG20EjM5MzDSjca
-        mdIl9ZABaTXlFu8ojOw1iNa598Xd54dE8w==
-X-Google-Smtp-Source: ABdhPJzmpx7i9zOrXp6uJ1Gv/m1YgIdrZIRlif3spG+GSJvFygSQ+2Obf1JSt4V1hx3ikktd/+jjaw==
-X-Received: by 2002:a50:d887:: with SMTP id p7mr6119769edj.164.1632816337767;
-        Tue, 28 Sep 2021 01:05:37 -0700 (PDT)
+        bh=zctvQluzP7qFGdhrBys5i0JLWmTzd0omZtKtI9NUsiw=;
+        b=7tLgA7UKI85CdJ7s3pW7iMI6ohBFC8dXzrX/w8mpKkbkGef8C0N835V3B/fdmEXRGE
+         hUgSPhAd4KeRyvXxnXKDqje2J8jqJ9ZmS1hEqvJ/3elo7lWXclgsLevhrZ+gqb0bV5Wa
+         AfbGbp208uW+0EFqf+l1bf8Md51RRyyoX7FXfjc92fBZftlqCUwid6i3YBspbxq/D9Bg
+         3ajK1lPBGKllbUktqjnQvOySOoS+zOWIbjfjeFyRC3Ria2ALdVCHDKGWmgZ2Y+4sZgyf
+         iwCJw/AfLQTE40OJcuZjNiQANjh0oCyy1tzIYioiPDAIIxyRyfkGZeshkf5j4pRqEenz
+         ZMRg==
+X-Gm-Message-State: AOAM530xhVQbpSY6VMVEnX+thPMXRUlJ378Iy2pO9Fe5ea6znv8z2xgj
+        ucsX78GXv8fAbYN/HhktVT8=
+X-Google-Smtp-Source: ABdhPJwxlKfb9n781fnBon8UnJCL8HaSSM9SQF0loZokBaOhQz4/3ES+e68NJT8W+PvI5GecPHyCgA==
+X-Received: by 2002:a17:907:7785:: with SMTP id ky5mr5275588ejc.247.1632817307439;
+        Tue, 28 Sep 2021 01:21:47 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d22sm9956921ejk.5.2021.09.28.01.05.37
+        by smtp.gmail.com with ESMTPSA id b5sm4811962edu.13.2021.09.28.01.21.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 01:05:37 -0700 (PDT)
+        Tue, 28 Sep 2021 01:21:46 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH 6/7] show, log: provide a --remerge-diff capability
-Date:   Tue, 28 Sep 2021 10:01:03 +0200
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <b75e73384fde4f23296bd02eb40455263f805706.1630376800.git.gitgitgadget@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+Date:   Tue, 28 Sep 2021 10:07:41 +0200
+References: <xmqq8rzhmsi7.fsf@gitster.g>
+ <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <b75e73384fde4f23296bd02eb40455263f805706.1630376800.git.gitgitgadget@gmail.com>
-Message-ID: <87mtnxxgz3.fsf@evledraar.gmail.com>
+In-reply-to: <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+Message-ID: <87ilylxg85.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,57 +69,78 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Aug 31 2021, Elijah Newren via GitGitGadget wrote:
+On Mon, Sep 27 2021, Elijah Newren wrote:
 
->  static int decoration_given;
->  static int use_mailmap_config = 1;
-> +static struct tmp_objdir *tmp_objdir;
->  static const char *fmt_patch_subject_prefix = "PATCH";
->  static int fmt_patch_name_max = FORMAT_PATCH_NAME_MAX_DEFAULT;
->  static const char *fmt_pretty;
+[Aside: I quite liked the method of replying to What's Cooking per-topic
+in Johannes's replies to
+https://lore.kernel.org/git/xmqqsfyf5b74.fsf@gitster.g/; I'm never quite
+sure if I should have one E-Mail with all of my comments on other
+in-flight work, use existing commentary as a springboard etc. Doing the
+latter here]
 
-So here we make this static file-level etc...
+>> * js/scalar (2021-09-14) 15 commits
+>>  - scalar: accept -C and -c options before the subcommand
+>>  - scalar: implement the `version` command
+>>  - scalar: implement the `delete` command
+>>  - scalar: teach 'reconfigure' to optionally handle all registered enlistments
+>>  - scalar: allow reconfiguring an existing enlistment
+>>  - scalar: implement the `run` command
+>>  - scalar: teach 'clone' to support the --single-branch option
+>>  - scalar: implement the `clone` subcommand
+>>  - scalar: implement 'scalar list'
+>>  - scalar: let 'unregister' handle a deleted enlistment directory gracefully
+>>  - scalar: 'unregister' stops background maintenance
+>>  - scalar: 'register' sets recommended config and starts maintenance
+>>  - scalar: create test infrastructure
+>>  - scalar: start documenting the command
+>>  - scalar: create a rudimentary executable
+>>
+>>  Add pieces from "scalar" to contrib/.
+>>
+>>  Will merge to 'next'?
+>
+> I feel bad for taking so long to take a look, but I finally responded
+> with a few comments.  Mostly, I'm glad it's a contrib thing; a lot of
+> the config makes sense to me (even if some of it is 'meh' for my
+> repository sizes or setup), but two of the config settings would be
+> very objectionable if they were a core git command.  Since it's
+> contrib, though, it's probably fine to be very opinionated...and
+> perhaps even excessively so.  ;-)
+>
+> However, since Johannes has been away for a couple weeks, maybe give
+> him a chance to return and respond to myself and others (and perhaps
+> push any updates that occurred to him while on vacation) before
+> merging down?
 
-> @@ -407,6 +410,17 @@ static int cmd_log_walk(struct rev_info *rev)
->  	int saved_nrl = 0;
->  	int saved_dcctc = 0;
->  
-> +	if (rev->remerge_diff) {
-> +		tmp_objdir = tmp_objdir_create();
-> +		if (!tmp_objdir)
-> +			die(_("unable to create temporary object directory"));
-> +		tmp_objdir_make_primary(the_repository, tmp_objdir);
-> +
-> +		strbuf_init(&rev->remerge_objdir_location, 0);
-> +		strbuf_addstr(&rev->remerge_objdir_location,
-> +			      tmp_objdir_path(tmp_objdir));
-> +	}
-> +
->  	if (rev->early_output)
->  		setup_early_output();
->  
-> @@ -449,6 +463,13 @@ static int cmd_log_walk(struct rev_info *rev)
->  	rev->diffopt.no_free = 0;
->  	diff_free(&rev->diffopt);
->  
-> +	if (rev->remerge_diff) {
-> +		strbuf_release(&rev->remerge_objdir_location);
-> +		tmp_objdir_remove_as_primary(the_repository, tmp_objdir);
-> +		tmp_objdir_destroy(tmp_objdir);
-> +		tmp_objdir = NULL;
+Since the thread at
+https://lore.kernel.org/git/87ilz44kdk.fsf@evledraar.gmail.com/ I've
+been running with an altered version of Johannes's patches that does the
+Makefile integration differently, per my
+https://lore.kernel.org/git/87ilz44kdk.fsf@evledraar.gmail.com/.
 
-...but all of the "tmp_objdir" usage is in one function, can't the
-variable be declared here instead?
+I've been trickling in some of the Makefile changes that make that
+easier (still quite possible on top of "master", I just had some
+cleanups). It builds[1], tests[2], installs[3] and participates in any
+auxiliary targets like "check-docs", "sparse"[4] (and now my
+"sparse-incr") etc.
 
-We need to hand the "remerge_objdir_location" off to the "rev_info"
-struct, but that seems separate from its lifetime.
+AFAIKT Johannes's version is so far just doing [1] and [2], and just
+optionally if you "make" in the contrib subdirectory.
 
-Re my [1] & [2] I like Neeraj's "atexit cleanup" approach better,
-perhaps that makes your cleanup in log-tree.c redundant or easier?
+Junio seemed positive on that direction in [1][2]. Re your comments in
+[3]: Right now "scalar" doesn't define any of its own config, but one
+way out of some of your comments seems to be to do that.
 
-Per [2] it looks like you need to "hand off" the
-"remerge_objdir_location", so having the struct live in tmp-objdir.h as
-I suggested in [2] might make that work...
+If it's using its own build system in contrib/scalar that'll happen how
+exactly? We keep the main manpage in contrib/scalar/scalar.txt but have
+a Documentation/config/scalar.txt? Have "git help --config" grow some
+optional mode for scalar-specific config? Add a "scalar help-config"?
 
-1. https://lore.kernel.org/git/87v92lxhh4.fsf@evledraar.gmail.com/
-2. https://lore.kernel.org/git/87r1d9xh71.fsf@evledraar.gmail.com/
+In case my opinion on it isn't painfully obvious at this point I think
+the answer for both current & future integration reasons should be to
+just have its assets & build logic intergrated with existing locations
+and logic.
+
+1. https://lore.kernel.org/git/xmqqilz32hhr.fsf@gitster.g/
+2. https://lore.kernel.org/git/xmqq1r5qzv35.fsf@gitster.g/
+3. https://lore.kernel.org/git/CABPp-BG_wupp1o5bBSYOJSvF3eJjf=TbX0RBHqqKuD+3F8s6hw@mail.gmail.com/
