@@ -2,111 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0546C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 644A5C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:30:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF54F61139
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:19:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F99C6136F
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 21:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242872AbhI1VVd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 17:21:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54807 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241482AbhI1VVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 17:21:33 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2FF1B14B2F6;
-        Tue, 28 Sep 2021 17:19:53 -0400 (EDT)
+        id S242888AbhI1Vbv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 17:31:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57352 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242867AbhI1Vbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 17:31:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BBB1F3461;
+        Tue, 28 Sep 2021 17:30:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wr1zY/aA2mug
-        H6l14PamJ+mUxQXRBpHZ2rZg0HhEI/I=; b=uyTD+bawMTiqOFNIi2FrNZOA/6F+
-        GkYP66ddknsDzjYi+IfB/7PCrPq6PbHFJ4+FAvb4UzBucOgBr2oPHpFaT1k67pKv
-        OchVCeXrOiAsUbQRCfG0qg8ZZT2+mWOgPfM7viiVqbW33V6oGyI07/MkJiG2YHJQ
-        bj9isRRTs/qOdMU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2845914B2F5;
-        Tue, 28 Sep 2021 17:19:53 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Xhxg2+QjXHSx
+        PTn8fKZxCed9HJfBzSzbC/OgOVeuJfk=; b=fNGSqauV1ZJ5CEnSAC6jjAMgUrm9
+        GQ2d2sd8jDy/ifkX0EYZBklPQ2ZG7tHne4+3vJkmyIFQLshvMFJASDkbhb2+ytWs
+        fhXmGS93Yx9P6wredYAMwbyUgBN8NQ5G0v5YeUA6v5D/zUyONldjqyMBbCzX1A3D
+        +yLB2LTIiRdgS80=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9860AF3460;
+        Tue, 28 Sep 2021 17:30:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8800514B2F4;
-        Tue, 28 Sep 2021 17:19:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA6E7F345C;
+        Tue, 28 Sep 2021 17:30:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, t.gummerer@gmail.com, avarab@gmail.com,
-        pclouds@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH 2/3] Makefile: avoid multiple -Wall in CFLAGS
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, t.gummerer@gmail.com, pclouds@gmail.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH 3/3] config.mak.dev: simplify compiler check for
+ multiple compilers
 References: <20210928091054.78895-1-carenas@gmail.com>
-        <20210928091054.78895-3-carenas@gmail.com>
-Date:   Tue, 28 Sep 2021 14:19:49 -0700
-In-Reply-To: <20210928091054.78895-3-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 28 Sep 2021 02:10:53 -0700")
-Message-ID: <xmqqbl4cjt3e.fsf@gitster.g>
+        <20210928091054.78895-4-carenas@gmail.com>
+        <87k0j0x5mg.fsf@evledraar.gmail.com>
+Date:   Tue, 28 Sep 2021 14:30:02 -0700
+In-Reply-To: <87k0j0x5mg.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 28 Sep 2021 14:07:09 +0200")
+Message-ID: <xmqq4ka4jsmd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D0C0797C-20A1-11EC-9168-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3F71E3B4-20A3-11EC-97D4-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> 6163f3f1a4 (config.mak.dev: add -Wall, primarily for -Wformat, to help
-> autoconf users, 2018-10-12) adds a second -Wall in config.mak.dev to
-> workaround the lack of one from config.mak.autogen.
+> Anyway, feel free to ignore the below, and I think it's certainly not
+> needed for this series, just my 0.02 if you're eventually refactoring
+> some of this.
 >
-> Since 6d5d4b4e93 (Makefile: allow for combining DEVELOPER=3D1 and
-> CFLAGS=3D"...", 2019-02-22), that variable is set instead as part of
-> DEVELOPER_FLAGS which won't be overriden by config.mak.autogen, so
-> it can be safely removed from config.mak.dev if set instead in the
-> Makefile.
-
-Hmph, don't this break non-developers, though?
-
-They now do not get -Wall that they used to?  Or am I reading the
-patch incorrectly?
-
-Thanks.
-
-> This also has the advantage of separating cleanly CFLAGS which are
-> used for building with the ones that provide with diagnostics.
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  Makefile       | 3 ++-
->  config.mak.dev | 1 -
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 9df565f27b..963b9e7c6b 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1200,7 +1200,8 @@ endif
->  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
->  # tweaked by config.* below as well as the command-line, both of
->  # which'll override these defaults.
-> -CFLAGS =3D -g -O2 -Wall
-> +CFLAGS =3D -g -O2
-> +DEVELOPER_CFLAGS =3D -Wall
->  LDFLAGS =3D
->  CC_LD_DYNPATH =3D -Wl,-rpath,
->  BASIC_CFLAGS =3D -I.
 > diff --git a/config.mak.dev b/config.mak.dev
-> index c81be62a5c..90c47d2782 100644
+> index 0a87d8cbe9d..df27340b4b0 100644
 > --- a/config.mak.dev
 > +++ b/config.mak.dev
-> @@ -6,7 +6,6 @@ ifeq ($(filter no-error,$(DEVOPTS)),)
+> @@ -2,6 +2,14 @@ ifndef COMPILER_FEATURES
+>  COMPILER_FEATURES :=3D $(shell ./detect-compiler $(CC))
+>  endif
+> =20
+> +# These are all the empty string if the compiler *isn't* X or
+> +# earlier. Note that clang v5, v6 etc. also qualify as "have v4".
+
+I had to read this three times and still cannot decide what it wants
+ot say.
+
+> +CC_HAVE_CLANG4 =3D $(filter clang4,$(COMPILER_FEATURES))
+> +CC_HAVE_GCC4 =3D $(filter gcc4,$(COMPILER_FEATURES))
+> +CC_HAVE_GCC5 =3D $(filter gcc5,$(COMPILER_FEATURES))
+> +CC_HAVE_GCC6 =3D $(filter gcc6,$(COMPILER_FEATURES))
+> +CC_HAVE_GCC10 =3D $(filter gcc10,$(COMPILER_FEATURES))
+
+It is empty if the compiler isn't X.  It is also empty if the
+compiler isn't earlier than X?  That would mean version (X+1) would
+qualify, as it is not X, which is not what we want.
+
+I think you meant "... empty string, unless the compiler is X or
+later."
+
+Also, I often see "Note that" to imply "despite what I just said",
+but as far as I can tell CLANG4 is not all that special and follows
+the same general rule.  Perhaps "Note that" -> "For example," is
+needed to clarify.
+
+Having said all that, I find that the original=20
+
+	ifneq ($(filter x y, $(COMPILER_FEATURES)),)
+
+idiom is readable enough, and
+
+	ifneq ($(CC_HAVE_X)$(CC_HAVE_Y),)
+
+does not necessarily make it easier to spot X and Y that are being
+checked with the conditional.
+
+>  ifeq ($(filter no-error,$(DEVOPTS)),)
 >  DEVELOPER_CFLAGS +=3D -Werror
 >  SPARSE_FLAGS +=3D -Wsparse-error
->  endif
-> -DEVELOPER_CFLAGS +=3D -Wall
+> @@ -9,9 +17,9 @@ endif
+>  DEVELOPER_CFLAGS +=3D -Wall
 >  ifeq ($(filter no-pedantic,$(DEVOPTS)),)
 >  DEVELOPER_CFLAGS +=3D -pedantic
->  ifneq ($(filter clang4 gcc5,$(COMPILER_FEATURES)),)
+> -ifneq ($(filter clang4 gcc5,$(COMPILER_FEATURES)),)
+> +ifneq ($(CC_HAVE_CLANG4)$(CC_HAVE_GCC5),)
