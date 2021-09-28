@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4BD4C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04965C433FE
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:10:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC9FF60E54
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:10:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBF8960E54
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 15:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241400AbhI1PMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 11:12:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33870 "EHLO
+        id S241454AbhI1PMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 11:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241524AbhI1PMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 11:12:05 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2611CC061745
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:25 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id i6-20020a1c3b06000000b0030d05169e9bso374011wma.4
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:25 -0700 (PDT)
+        with ESMTP id S241531AbhI1PMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 11:12:06 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BACCC06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:26 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id a131so3794586wmd.1
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 08:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=6KnZZ9gv+hvc+Y77VJh/jXIYe41t58YYH3mgZAJEPg0=;
-        b=R8XSFbcdF8jv9hS6FPi625/OTvTFHrScKYsKpJEZn/900LSZ4wPV7lPpUxn+mq0Nii
-         ketIvwnc959r1Mmei6R5xD8+72gN3ARgKxHu1ee/r1QihCFtnZy7W0OwShE+iqIQkTlP
-         xeAoCXMz2nnyk6ZlZD45PhOzmvbKV1jcr8ZGlHVQbwDvXZwPI2ylQo4GU9NC0+dVe/uL
-         c/oJBw6AnjOexOpu34lvDivc5A5O6YpwPBFDVbtOTxek4lVMbikggJ1zBBfTJjS8CXXT
-         h214DxoF/Lc4+WLyp/Zhgp+PPDOyN0KHSQIgI9OunK1jxSnzUGzqOs90ujQkb2nGid36
-         PwCw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4M6vMHdijhn98p9EQkJY+VG7AVSUIMMF1+tzDJHGZWs=;
+        b=XktiUpGaaw1bH6ra/e7dQ3IfUxm8eXF0cyl5LU33ZtVQ8GlPHgKAHjIfkQluQFTLKY
+         YDsg3ecoZDUbZdIkVoCWykJBo0igMYeDvoYk/JEXEmYZd8/sECQ3vpunbYRCSkOuz/Sv
+         hUAJKWOgVZRxFU1oiNQlZy081TFpFTj7pwBpejfzgvg86WvIgrnACj/CxmOz0oBawQB6
+         BbI7ewyY+0OR1yKcE4SUytY8bh6NTU7Pcsn/kPgFkrlVUT7OoF2olSjJ8JknWERjQkEe
+         I325ICxZ1DOmZbL6ewyrFkLXlNHmSSvOQoW2rGhkK9ty7vQPk/tH9ACCytcdi9J1dfkD
+         KXhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=6KnZZ9gv+hvc+Y77VJh/jXIYe41t58YYH3mgZAJEPg0=;
-        b=tkaaOJtxHHuzBUquLs3P+L7ZAYQqA/q0P9hdT0KzLcRCwi7kHkZGJGdsVHS5iq35y7
-         HMkO4DJuBs2qqG4DpwlDW3CwHnz745tyKt2qW8403oGrh6eCjEtr1ioPmTvVJ4Z2GNX2
-         8XO6mpRfvsbUr/exEL3MIa3JyHas6IyGHM5BoDo84md/ug2B3eFSMdUbBeZ9WRjP5NVO
-         ByWhKhA1izE4114KiWD3LcJmijqWqlE0VOwpBdinL5XiYwrXIRwQSBji4XCiu93jR6Tz
-         ji3ln91vGIzY7uUqssNKrciq+07E7X6BkccrwTyCZQzcnXexkRWP3tnCtfVYj+ZR9Y9H
-         8lcQ==
-X-Gm-Message-State: AOAM531+zpK2+Colpq0XSQA64hTLJHaFTksxZnEFfGEa/oOZlj0Zu4zx
-        ff4xbD1te/6XxDcg+llE9fXQ+YQHSB0=
-X-Google-Smtp-Source: ABdhPJwbJS91k2RLaB6O2fxiTC1uL1lXBJkjkUlm3IyrKgXttGy5wa6gIOsQLkT6O8JgPhGU9+BsaA==
-X-Received: by 2002:a05:600c:3ba5:: with SMTP id n37mr1606323wms.46.1632841823717;
-        Tue, 28 Sep 2021 08:10:23 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4M6vMHdijhn98p9EQkJY+VG7AVSUIMMF1+tzDJHGZWs=;
+        b=1nG7bVDLe400DAjVbr88oR5wmEeGfJZzRycjPbybjOETTT2zynCcuEMeds507wu5cY
+         I6549nNT12ByrhU/ohlyrElEWxy4cDVTKDgaajZLqEwp/kNwraTvJqgzwpFhc1tQSe8i
+         AccM/v8ldMuSRMvkOMAedJWB9+HpEK0ybtpKAdxGlMVH+J7v+WggdRL9W4c7HTuDhCdv
+         OPZcfhjlWMavrV4ML/4+Gss77kuXG4bbhOHkVnU2UrYb8tjkkqPUCtIefLMH9F/Ao6ot
+         a9gtJJcc1CmIjPwCFu/9EFNXU+LgEvRTwcbvzPA/3Vi1Yq3E4YluVYysva0VfFn/YItg
+         h4dw==
+X-Gm-Message-State: AOAM531JU0ri1KWRVMxHDMbTvRpdcrFtWPAXaA+HpJyEUF4u06bz9QpZ
+        SyC3NFp2B0rxnTRcaamaSP+wDDiPllA=
+X-Google-Smtp-Source: ABdhPJxfaEQLUGxmRKE2ESZz/3VsU8wVR0XHM/qkqpWceetKBn40tLc7l3O7l4sq1F1gghj0dlIUMA==
+X-Received: by 2002:a05:600c:40c4:: with SMTP id m4mr5154862wmh.100.1632841824902;
+        Tue, 28 Sep 2021 08:10:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a192sm132089wme.5.2021.09.28.08.10.23
+        by smtp.gmail.com with ESMTPSA id l21sm2894118wmh.31.2021.09.28.08.10.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 08:10:23 -0700 (PDT)
-Message-Id: <4f6ecd3646affde086114c2551e7e5c7266a3d40.1632841817.git.gitgitgadget@gmail.com>
+        Tue, 28 Sep 2021 08:10:24 -0700 (PDT)
+Message-Id: <f6c2da61208ce539710d79bd44e3256fd916cb68.1632841817.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
 References: <pull.1081.v2.git.git.1631213264.gitgitgadget@gmail.com>
         <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Sep 2021 15:10:04 +0000
-Subject: [PATCH v3 07/19] Provide zlib's uncompress2 from compat/zlib-compat.c
-MIME-Version: 1.0
+Date:   Tue, 28 Sep 2021 15:10:06 +0000
+Subject: [PATCH v3 09/19] reftable: a generic binary tree implementation
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>,
         Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= 
@@ -74,208 +74,232 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This will be needed for reading reflog blocks in reftable.
+The reftable format includes support for an (OID => ref) map. This map can speed
+up visibility and reachability checks. In particular, various operations along
+the fetch/push path within Gerrit have ben sped up by using this structure.
 
-Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+The map is constructed with help of a binary tree. Object IDs are hashes, so
+they are uniformly distributed. Hence, the tree does not attempt forced
+rebalancing.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                  |  7 +++
- ci/lib.sh                 |  1 +
- compat/.gitattributes     |  1 +
- compat/zlib-uncompress2.c | 95 +++++++++++++++++++++++++++++++++++++++
- config.mak.uname          |  4 ++
- configure.ac              | 13 ++++++
- 6 files changed, 121 insertions(+)
- create mode 100644 compat/.gitattributes
- create mode 100644 compat/zlib-uncompress2.c
+ Makefile                 |  4 ++-
+ reftable/tree.c          | 63 ++++++++++++++++++++++++++++++++++++++++
+ reftable/tree.h          | 34 ++++++++++++++++++++++
+ reftable/tree_test.c     | 61 ++++++++++++++++++++++++++++++++++++++
+ t/helper/test-reftable.c |  1 +
+ 5 files changed, 162 insertions(+), 1 deletion(-)
+ create mode 100644 reftable/tree.c
+ create mode 100644 reftable/tree.h
+ create mode 100644 reftable/tree_test.c
 
 diff --git a/Makefile b/Makefile
-index 7cbc8f95c8b..39e250c7e8c 100644
+index f4528fdbaf2..339a44f9271 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -256,6 +256,8 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
-+# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
-+#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-@@ -1716,6 +1718,11 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
- endif
+@@ -2440,11 +2440,13 @@ REFTABLE_OBJS += reftable/block.o
+ REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/publicbasics.o
+ REFTABLE_OBJS += reftable/record.o
++REFTABLE_OBJS += reftable/tree.o
  
-+ifdef NO_UNCOMPRESS2
-+	BASIC_CFLAGS += -DNO_UNCOMPRESS2
-+	REFTABLE_OBJS += compat/zlib-uncompress2.o
-+endif
-+
- ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
- endif
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 476c3f369f5..5711c63979d 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -224,6 +224,7 @@ linux-gcc-default)
- 	;;
- Linux32)
- 	CC=gcc
-+	MAKEFLAGS="$MAKEFLAGS NO_UNCOMPRESS2=1"
- 	;;
- linux-musl)
- 	CC=gcc
-diff --git a/compat/.gitattributes b/compat/.gitattributes
++REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+-REFTABLE_TEST_OBJS += reftable/basics_test.o
++REFTABLE_TEST_OBJS += reftable/tree_test.o
+ 
+ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ 
+diff --git a/reftable/tree.c b/reftable/tree.c
 new file mode 100644
-index 00000000000..40dbfb170da
+index 00000000000..82db7995dd6
 --- /dev/null
-+++ b/compat/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-uncompress2.c	whitespace=-indent-with-non-tab,-trailing-space
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-new file mode 100644
-index 00000000000..3dcb90b2839
---- /dev/null
-+++ b/compat/zlib-uncompress2.c
-@@ -0,0 +1,95 @@
-+/* taken from zlib's uncompr.c
++++ b/reftable/tree.c
+@@ -0,0 +1,63 @@
++/*
++Copyright 2020 Google LLC
 +
-+   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
-+   Author: Mark Adler <madler@alumni.caltech.edu>
-+   Date:   Sun Jan 15 09:18:46 2017 -0800
-+
-+       zlib 1.2.11
-+
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "../reftable/system.h"
-+#define z_const
++#include "tree.h"
++
++#include "basics.h"
++#include "system.h"
++
++struct tree_node *tree_search(void *key, struct tree_node **rootp,
++			      int (*compare)(const void *, const void *),
++			      int insert)
++{
++	int res;
++	if (*rootp == NULL) {
++		if (!insert) {
++			return NULL;
++		} else {
++			struct tree_node *n =
++				reftable_calloc(sizeof(struct tree_node));
++			n->key = key;
++			*rootp = n;
++			return *rootp;
++		}
++	}
++
++	res = compare(key, (*rootp)->key);
++	if (res < 0)
++		return tree_search(key, &(*rootp)->left, compare, insert);
++	else if (res > 0)
++		return tree_search(key, &(*rootp)->right, compare, insert);
++	return *rootp;
++}
++
++void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
++		void *arg)
++{
++	if (t->left) {
++		infix_walk(t->left, action, arg);
++	}
++	action(arg, t->key);
++	if (t->right) {
++		infix_walk(t->right, action, arg);
++	}
++}
++
++void tree_free(struct tree_node *t)
++{
++	if (t == NULL) {
++		return;
++	}
++	if (t->left) {
++		tree_free(t->left);
++	}
++	if (t->right) {
++		tree_free(t->right);
++	}
++	reftable_free(t);
++}
+diff --git a/reftable/tree.h b/reftable/tree.h
+new file mode 100644
+index 00000000000..fbdd002e23a
+--- /dev/null
++++ b/reftable/tree.h
+@@ -0,0 +1,34 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef TREE_H
++#define TREE_H
++
++/* tree_node is a generic binary search tree. */
++struct tree_node {
++	void *key;
++	struct tree_node *left, *right;
++};
++
++/* looks for `key` in `rootp` using `compare` as comparison function. If insert
++ * is set, insert the key if it's not found. Else, return NULL.
++ */
++struct tree_node *tree_search(void *key, struct tree_node **rootp,
++			      int (*compare)(const void *, const void *),
++			      int insert);
++
++/* performs an infix walk of the tree. */
++void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
++		void *arg);
 +
 +/*
-+ * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-+ * For conditions of distribution and use, see copyright notice in zlib.h
-+ */
++ * deallocates the tree nodes recursively. Keys should be deallocated separately
++ * by walking over the tree. */
++void tree_free(struct tree_node *t);
 +
-+#include <zlib.h>
++#endif
+diff --git a/reftable/tree_test.c b/reftable/tree_test.c
+new file mode 100644
+index 00000000000..cbff1255886
+--- /dev/null
++++ b/reftable/tree_test.c
+@@ -0,0 +1,61 @@
++/*
++Copyright 2020 Google LLC
 +
-+/* clang-format off */
-+
-+/* ===========================================================================
-+     Decompresses the source buffer into the destination buffer.  *sourceLen is
-+   the byte length of the source buffer. Upon entry, *destLen is the total size
-+   of the destination buffer, which must be large enough to hold the entire
-+   uncompressed data. (The size of the uncompressed data must have been saved
-+   previously by the compressor and transmitted to the decompressor by some
-+   mechanism outside the scope of this compression library.) Upon exit,
-+   *destLen is the size of the decompressed data and *sourceLen is the number
-+   of source bytes consumed. Upon return, source + *sourceLen points to the
-+   first unused input byte.
-+
-+     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
-+   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
-+   Z_DATA_ERROR if the input data was corrupted, including if the input data is
-+   an incomplete zlib stream.
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
 +*/
-+int ZEXPORT uncompress2 (
-+    Bytef *dest,
-+    uLongf *destLen,
-+    const Bytef *source,
-+    uLong *sourceLen) {
-+    z_stream stream;
-+    int err;
-+    const uInt max = (uInt)-1;
-+    uLong len, left;
-+    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
 +
-+    len = *sourceLen;
-+    if (*destLen) {
-+        left = *destLen;
-+        *destLen = 0;
-+    }
-+    else {
-+        left = 1;
-+        dest = buf;
-+    }
++#include "tree.h"
 +
-+    stream.next_in = (z_const Bytef *)source;
-+    stream.avail_in = 0;
-+    stream.zalloc = (alloc_func)0;
-+    stream.zfree = (free_func)0;
-+    stream.opaque = (voidpf)0;
++#include "basics.h"
++#include "record.h"
++#include "test_framework.h"
++#include "reftable-tests.h"
 +
-+    err = inflateInit(&stream);
-+    if (err != Z_OK) return err;
-+
-+    stream.next_out = dest;
-+    stream.avail_out = 0;
-+
-+    do {
-+        if (stream.avail_out == 0) {
-+            stream.avail_out = left > (uLong)max ? max : (uInt)left;
-+            left -= stream.avail_out;
-+        }
-+        if (stream.avail_in == 0) {
-+            stream.avail_in = len > (uLong)max ? max : (uInt)len;
-+            len -= stream.avail_in;
-+        }
-+        err = inflate(&stream, Z_NO_FLUSH);
-+    } while (err == Z_OK);
-+
-+    *sourceLen -= len + stream.avail_in;
-+    if (dest != buf)
-+        *destLen = stream.total_out;
-+    else if (stream.total_out && err == Z_BUF_ERROR)
-+        left = 1;
-+
-+    inflateEnd(&stream);
-+    return err == Z_STREAM_END ? Z_OK :
-+           err == Z_NEED_DICT ? Z_DATA_ERROR  :
-+           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
-+           err;
++static int test_compare(const void *a, const void *b)
++{
++	return (char *)a - (char *)b;
 +}
-diff --git a/config.mak.uname b/config.mak.uname
-index 76516aaa9a5..4acc3e3609b 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -258,6 +258,10 @@ ifeq ($(uname_S),FreeBSD)
- 	FILENO_IS_A_MACRO = UnfortunatelyYes
- endif
- ifeq ($(uname_S),OpenBSD)
-+	# Versions < 7.0 need compatibility layer
-+	ifeq ($(shell expr "$(uname_R)" : "[1-6]\."),2)
-+		NO_UNCOMPRESS2 = UnfortunatelyYes
-+	endif
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
-diff --git a/configure.ac b/configure.ac
-index 031e8d3fee8..c3a913103d0 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -672,9 +672,22 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
- 	NO_DEFLATE_BOUND=yes])
- LIBS="$old_LIBS"
- 
-+AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
-+AC_LANG_PROGRAM([#include <zlib.h>],
-+ [uncompress2(NULL,NULL,NULL,NULL);])])
-+AC_MSG_CHECKING([for uncompress2 in -lz])
-+old_LIBS="$LIBS"
-+LIBS="$LIBS -lz"
-+AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
-+	[AC_MSG_RESULT([yes])],
-+	[AC_MSG_RESULT([no])
-+	NO_UNCOMPRESS2=yes])
-+LIBS="$old_LIBS"
 +
- GIT_UNSTASH_FLAGS($ZLIB_PATH)
- 
- GIT_CONF_SUBST([NO_DEFLATE_BOUND])
-+GIT_CONF_SUBST([NO_UNCOMPRESS2])
- 
- #
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
++struct curry {
++	void *last;
++};
++
++static void check_increasing(void *arg, void *key)
++{
++	struct curry *c = arg;
++	if (c->last) {
++		EXPECT(test_compare(c->last, key) < 0);
++	}
++	c->last = key;
++}
++
++static void test_tree(void)
++{
++	struct tree_node *root = NULL;
++
++	void *values[11] = { NULL };
++	struct tree_node *nodes[11] = { NULL };
++	int i = 1;
++	struct curry c = { NULL };
++	do {
++		nodes[i] = tree_search(values + i, &root, &test_compare, 1);
++		i = (i * 7) % 11;
++	} while (i != 1);
++
++	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
++		EXPECT(values + i == nodes[i]->key);
++		EXPECT(nodes[i] ==
++		       tree_search(values + i, &root, &test_compare, 0));
++	}
++
++	infix_walk(root, check_increasing, &c);
++	tree_free(root);
++}
++
++int tree_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_tree);
++	return 0;
++}
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index c9deeaf08c7..050551fa698 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -6,5 +6,6 @@ int cmd__reftable(int argc, const char **argv)
+ 	basics_test_main(argc, argv);
+ 	block_test_main(argc, argv);
+ 	record_test_main(argc, argv);
++	tree_test_main(argc, argv);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
