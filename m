@@ -2,132 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF091C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 00:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8138C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 00:41:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA2ED60FF2
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 00:31:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CA9C60F4A
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 00:41:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238361AbhI1Ad3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 20:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238236AbhI1Ad2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 20:33:28 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5880C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 17:31:49 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id g7so16813277edv.1
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 17:31:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iypwsmOXVdxEKNH6LwmXkqd99SDTP6tuXVfU01uZPJw=;
-        b=owfsp/Kt2k/mzFdAeKwNHBGNdI3R5wK9wA2aP/VXLqTkOxONeUpiK6eV8OZHpS7biQ
-         Aefz0LWLk5T1X27n/KX/DY6/ENUoLp5g1M6sJx/4R5ZbUXJ3SarOFwIBaJnnTtHylKWI
-         3V4NGMSCdobpead9gI/zEpLJdEULxnVEkRJGQ5AiV25yUuBv8QEc1qMqfpd01AqWUvLZ
-         tWU0Yx3HatmTjqbwXCDhNmiL4anCmBg1tlfm3wUe3HL/7pzGOgCL0jXVYFfu5PhZk+UT
-         lx4wYRTvVHnUkqZgPGUPlWYEs9ZrqO5zqdQGsk/kHzdwlz3D1WVSpBVUlvA0eGJjczF/
-         NupQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=iypwsmOXVdxEKNH6LwmXkqd99SDTP6tuXVfU01uZPJw=;
-        b=nzYULUCW3s7rJoH8apG9+zPugf5DTPD28xHx8squH9ftQk5FRWnTVyTXC24m1qG1fr
-         wpMVcV5aDtwx/+HOYLeABY8Txt25w/AD8lFCbhsmz6j4diUVnQ+Jn8O+BvIvcDRjOKXE
-         K/Wen4KSSBFMfPurPgqo9HLEHIIoaGxSpwFodxJIGysRjyBSVmjtjeAt0x6fQWKx6C9L
-         VvYXcSQemnvbJeAKiOoFGp7r19UqpDuHZkNU8QJ9vkrfGOrWL55LTesTT7wEjTkY7HB3
-         UpW1pNwJYpUJrzduuwV6QSxS6QcKadiRD2ROR+4gDJoIyf6wviEjdLxRzEj91qz6TD2C
-         lstA==
-X-Gm-Message-State: AOAM531K+5xUSSjW8xViwJ69gPwzNJZIl9mtnEB5fZt0W1CYPRmEY4UP
-        a7iM+8MwYktuBtoboAkgHuw=
-X-Google-Smtp-Source: ABdhPJwfBA+65rpPC110RbZcXECD1beTFxVd6kD0fgD+fBYumVqGMkHi5wCVD4+TtZ+b2JC8sT+xDg==
-X-Received: by 2002:a17:906:d1d6:: with SMTP id bs22mr3571058ejb.554.1632789108330;
-        Mon, 27 Sep 2021 17:31:48 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ck10sm11856039edb.43.2021.09.27.17.31.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 17:31:47 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Subject: Re: [PATCH v2 2/5] *.[ch] *_INIT macros: use { 0 } for a "zero out"
- idiom
-Date:   Tue, 28 Sep 2021 02:25:16 +0200
-References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
- <cover-v2-0.5-00000000000-20210927T124407Z-avarab@gmail.com>
- <patch-v2-2.5-afcd2729c95-20210927T124407Z-avarab@gmail.com>
- <YVJSwuqjolz28+mG@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YVJSwuqjolz28+mG@coredump.intra.peff.net>
-Message-ID: <87h7e5zgjw.fsf@evledraar.gmail.com>
+        id S238354AbhI1AnX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 20:43:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56012 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238236AbhI1AnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 20:43:23 -0400
+Received: (qmail 8075 invoked by uid 109); 28 Sep 2021 00:41:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Sep 2021 00:41:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22968 invoked by uid 111); 28 Sep 2021 00:41:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Sep 2021 20:41:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 27 Sep 2021 20:41:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        The Grey Wolf <greywolf@starwolf.com>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
+Message-ID: <YVJkx2HMf9WlPx6G@coredump.intra.peff.net>
+References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
+ <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
+ <YU49+Y+nRhl1mgof@coredump.intra.peff.net>
+ <xmqqa6k1slxe.fsf@gitster.g>
+ <YU5KOpGkS5sH4iFJ@coredump.intra.peff.net>
+ <xmqqo88eq8um.fsf@gitster.g>
+ <YVImeFHxY7hmb3wY@coredump.intra.peff.net>
+ <87lf3hzhkr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87lf3hzhkr.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Sep 28, 2021 at 01:52:26AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Mon, Sep 27 2021, Jeff King wrote:
+> An implicit assumption of mine in the simpler positive-match-only
+> version (which I should have made clear) is that anyone who needs this
+> sort of complexity can just arrange to wrap their "git" in a function,
+> or do this sort of thing in their ~/.bashrc, i.e. just:
+> 
+>     if code_of_arbitrary_complexity
+>     then
+>         export GIT_DO_XYZ_INCLUDES=1
+>     fi
+> 
+> Then in your config:
+> 
+>     includeIf.envBool:GIT_DO_XYZ_INCLUDES.path=~/.gitconfig.d/xyz.cfg
+> 
+> And having written that out I think the best thing to do is probably to
+> have a version that only does the envExists and envBool version (or just
+> envBool), and skip envIs and envMatch entirely.
 
-> On Mon, Sep 27, 2021 at 02:54:25PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> In C it isn't required to specify that all members of a struct are
->> zero'd out to 0, NULL or '\0', just providing a "{ 0 }" will
->> accomplish that.
->>=20
->> Let's also change code that provided N zero'd fields to just
->> provide one, and change e.g. "{ NULL }" to "{ 0 }" for
->> consistency. I.e. even if the first member is a pointer let's use "0"
->> instead of "NULL". The point of using "0" consistently is to pick one,
->> and to not have the reader wonder why we're not using the same pattern
->> everywhere.
->
-> I seem to recall we've had some linter complaints about using "0" to
-> initialize a pointer, but I think these days it's OK, per:
->
->  - 1c96642326 (sparse: allow '{ 0 }' to be used without warnings,
->    2020-05-22)
->
-> and
->
->  - https://lore.kernel.org/git/18bd6127-be72-b7b7-8e2a-17bbe7214a2e@ramsa=
-yjones.plus.com/
->
-> I think this is a good step, as the long lists are unwieldy and difficult=
- to
-> keep up to date without actually providing any readability or functional
-> value.
+I'm not sure I agree. If you are willing to wrap git, then you can just
+add:
 
-[+CC Luc Van Oostenryck <luc.vanoostenryck@gmail.com>]
+  git -c include.path=~/.gitconfig.d/xyz.cfg
 
-It seems like we should just revert 1c96642326, looking at the history
-of sparse.git there's:
+to the command-line in the first place. Or if you're willing to use our
+undocumented interface, you can even do it in your .bashrc:
 
- - 537e3e2d (univ-init: conditionally accept { 0 } without warnings, 2020-0=
-5-18)
+  if code_of_arbitrary_complexity
+  then
+          GIT_CONFIG_PARAMETERS="'include.path'='~/.gitconfig.d/xyz.cfg'"
+  fi
 
-Followed by git.git's 1c96642326 a few days later, but then in sparse.git:
+The value of this env matching is that it is done at run-time without
+wrapping, and can meaningfully inspect the state of the world. E.g., the
+$TERM thing that started this thread.
 
- - 41f651b4 (univ-init: set default to -Wno-universal-initializer, 2020-05-=
-29)
+> In the case of env:PATH we're just setting users up for some buggy or
+> unexpected interaction with something that would be better done either
+> via a gitdir include, or if they really need $PATH they can just wrap
+> "git" in a function that sets a boolean inclusion variable.
 
-I.e. a few days after the workaround in git.git the upstream repo
-changed the default. The 537e3e2d isn't in any release of sparse that
-41f651b4 isn't in, they both first appeared in v0.6.2.
+Yes, I have trouble imagining why any matching on env:PATH would be
+useful (or $PWD, since we have the much less confusing gitdir
+conditional). Which isn't to say I want to forbid it, but just because
+people can shoot themselves in the foot with complexity doesn't mean
+that "envIs" is a bad thing when it's not misused.
 
-So us having -Wno-universal-initializer only seems useful if you're
-using some old commit in sparse.git.
+> > I think it's just the mashed-up colons that I find ugly in the first
+> > one. But I agree the latter isn't that nice either, and introduces the
+> > ambiguity you describe.
+> 
+> FWIW I hacked up a --config-key --config-value pairing so you could set
+> keys with "=" in them on the command-line, I'm not sure I like the
+> interface, but it gets rid of that ":" v.s. "=" edge case:
+> https://github.com/avar/git/commit/a86053df48b
 
-Having written the above I found
-https://lore.kernel.org/git/20200530162432.a7fitzjc53hsn2ej@ltop.local/;
-i.e. sparse's maintainer pretty much saying the same thing.
+Yeah, we talked about that a while ago, but nobody liked the interface
+enough to actually code it (and as far as I know, it's really
+theoretical; nobody has actually wanted to set such an option from the
+command-line yet, and we have the --config-env stuff for people who want
+to robustly pass along arbitrary keys).
+
+A perhaps more subtle but less awkward to type version is to just
+require two arguments, like:
+
+  git --config <key> <value> ...
+
+but I'd just as soon continue to leave it un-implemented if nobody has
+actually needed it in practice.
+
+-Peff
