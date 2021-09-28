@@ -2,183 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9947DC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D40C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:59:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 789BA611C0
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:54:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F28560F41
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 02:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238742AbhI1Czl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Sep 2021 22:55:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60694 "EHLO
+        id S238786AbhI1DBC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Sep 2021 23:01:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238699AbhI1Czk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Sep 2021 22:55:40 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AC5C061575
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:54:01 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id b26so28941024edt.0
-        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:54:01 -0700 (PDT)
+        with ESMTP id S238728AbhI1DBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Sep 2021 23:01:02 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF82C061575
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:59:23 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id x7so62645007edd.6
+        for <git@vger.kernel.org>; Mon, 27 Sep 2021 19:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=OV+osTD9s28fyH6ldrsy8r52yWu4YOJpoVtSmiugbDc=;
-        b=gMrtI2Zn8rP/7K7r7/yTc+Q/tSghIqSL2nZb1ZTqteI5Uq9bEDXHovL79t/lPZ7t60
-         qxUCihw6NckhQqNjIRCaqVou3ck2tAKSa4k3cUiJ9fzCGskJQJEviT7J6076e3itcT1m
-         SXfwhYGsYcXkpd/qvjMunOtoxKtNQL8HR+eB79/46Nr0asfgLjuyeNENrfyJjLxMg0y9
-         q+P7nEZX3pG7wOuJwAu3bMPxN7pmPL3OVLmwqq/vngMoEBzSdWGeRfmGhfjRERIGM94F
-         hJd7HVdOKYzsttHsbQIi34YbdxaTmSzHzsZtibcApwOtyug74nm2MYRND/nHR8naFCPK
-         84Ug==
+         :message-id:mime-version;
+        bh=CkZA9fQ3PKGzECX4ZER+C/lejrK7HEq0Rh+Tb4gKbmY=;
+        b=quhQMn+Hv4sW20Eiok69iFU1NkQN39YKUS9i2nRak/rMs28KOxEpJFzWAeCvGTzaBA
+         j/36jmun+tafVLonzyBxb1+f+jcvl+P6tkzP5IoZ+WplXLBSGldyjk3JRmw8w1xc5q96
+         fd7yqSTnZ3cuFlyIsI6QLCweMsot+n5KCE+3CX0GmG1elTHpoe/5+4X/4zKkRAm0XpJa
+         kOx4nSujWh11edvtgXELc13SJ9mw+wjXUgcW9JCGzcW3aQdjlv4++HKXA7NzcLNATjuP
+         EhK+m8GAgeJmjMj/wWTTvefUZcSjJJyZOQmTyFNozpZPMOzqeEkkh0HFodpRPYDOGodx
+         Uygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=OV+osTD9s28fyH6ldrsy8r52yWu4YOJpoVtSmiugbDc=;
-        b=vnup3l8gLazlWLn9b44JXUDvPm8azlwWlCbnObWdscx0t2Ih64u2nVIwWNMWbJiPf2
-         8qxVS3beIieryIK6hMumAMIqt1qPzDjxRB0bNkuWnTDUKkvVkmgcYuso8Bf1tZjxOXIH
-         rEB0f7TPe/Spbo9AeNMnCr0AqoTR0XJbobZpMefjUVvRFAdDXtGV5/aivudn7o70Zgue
-         PdCfm6O0hzvPpM4ukqTJld5ZQzuKgAhGtitoShCfN++bP3qSt1/4rc0MRlFskGhYD7tF
-         MNZVSz45h1I8b0rD8U/45/4ZMQxWu0iJI9ninw83+Wgx2rKNvoKPzI1OfiPnJcsYtX4z
-         aw6g==
-X-Gm-Message-State: AOAM531Nd2s8sBiQVjsO7rgVmpRKpVDhGsaqtlo1Z1Gj888saTlIRFrk
-        lphlza79E0NfBV39XyM0ScA=
-X-Google-Smtp-Source: ABdhPJxaffftyWV3GLLbQ+p5JSM+Xr/7HlPvJPmNNLYE9bJ2vngoVkl2jQRnzN+vb7ohY7LE9kFGFQ==
-X-Received: by 2002:aa7:d303:: with SMTP id p3mr4821354edq.174.1632797640268;
-        Mon, 27 Sep 2021 19:54:00 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=CkZA9fQ3PKGzECX4ZER+C/lejrK7HEq0Rh+Tb4gKbmY=;
+        b=Uyej2YY7EgdYz3xr/LG0rBw3+KW0dO5fWtMs+QNgrWR/JAEhsEhIPOoHoo08DA/1z3
+         1T5bN1Mz706VZy+oXjIdM6r8B0E2WoPYj3E7PLe4K+l5e09aEWu8KkjU4LoLUFdF3/d0
+         aUJcqtDtIp42Fv//fOwSPoShDzF6ZCa8Z9vL/lhCEZsg2rCRYRdAJ3Re7hfEEe1wVyU6
+         noZvpEScO3e7yj3hFGl4mj3T3cV4F6IgSk4WLe0LpOr3sjB8d+Oo3I+wMw/WFhRawoVh
+         PPAN4Wh+W9E9jtbm5srFBP2o9NVaIgZyffCbcqzDcWmEhFcf8TLBq9VpS8gewGS1JbBt
+         9cZQ==
+X-Gm-Message-State: AOAM532GHbnVPOcpYY4yrw2GfuVdXCJ3MEo1tKpj525nUoWf1CuOcOkw
+        k+ulGRcmo5LheG0kokmUzKrPoV9Q1gM8hQ==
+X-Google-Smtp-Source: ABdhPJyLB9I9d6HMENQ3qgnBF19V7DmbWxV+f9GTlNpy01Z7e+SZNuT6esCDfZYkAJpTtI9jW/IGdA==
+X-Received: by 2002:a17:906:a246:: with SMTP id bi6mr3998506ejb.389.1632797961807;
+        Mon, 27 Sep 2021 19:59:21 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o15sm9599948ejj.10.2021.09.27.19.53.59
+        by smtp.gmail.com with ESMTPSA id k21sm9283791ejj.55.2021.09.27.19.59.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 19:53:59 -0700 (PDT)
+        Mon, 27 Sep 2021 19:59:21 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        The Grey Wolf <greywolf@starwolf.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] config: add an includeIf.env{Exists,Bool,Is,Match}
-Date:   Tue, 28 Sep 2021 04:42:51 +0200
-References: <YUzvhLUmvsdF5w+r@coredump.intra.peff.net>
- <patch-1.1-1fe6f60d2bf-20210924T005553Z-avarab@gmail.com>
- <YU49+Y+nRhl1mgof@coredump.intra.peff.net> <xmqqa6k1slxe.fsf@gitster.g>
- <YU5KOpGkS5sH4iFJ@coredump.intra.peff.net> <xmqqo88eq8um.fsf@gitster.g>
- <YVImeFHxY7hmb3wY@coredump.intra.peff.net>
- <87lf3hzhkr.fsf@evledraar.gmail.com>
- <YVJkx2HMf9WlPx6G@coredump.intra.peff.net>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] Don't ignore transport_disconnect error codes in fetch
+ and clone
+Date:   Tue, 28 Sep 2021 04:56:37 +0200
+References: <20210928001726.2592734-1-mh@glandium.org>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YVJkx2HMf9WlPx6G@coredump.intra.peff.net>
-Message-ID: <878rzhz9yw.fsf@evledraar.gmail.com>
+In-reply-to: <20210928001726.2592734-1-mh@glandium.org>
+Message-ID: <874ka5z9pz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Sep 27 2021, Jeff King wrote:
+On Tue, Sep 28 2021, Mike Hommey wrote:
 
-> On Tue, Sep 28, 2021 at 01:52:26AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> When a remote-helper fails in a way that is not directly visible in the
+> remote-helper protocol, the helper failure is ignored by git during
+> fetch or clone.
 >
->> An implicit assumption of mine in the simpler positive-match-only
->> version (which I should have made clear) is that anyone who needs this
->> sort of complexity can just arrange to wrap their "git" in a function,
->> or do this sort of thing in their ~/.bashrc, i.e. just:
->>=20
->>     if code_of_arbitrary_complexity
->>     then
->>         export GIT_DO_XYZ_INCLUDES=3D1
->>     fi
->>=20
->> Then in your config:
->>=20
->>     includeIf.envBool:GIT_DO_XYZ_INCLUDES.path=3D~/.gitconfig.d/xyz.cfg
->>=20
->> And having written that out I think the best thing to do is probably to
->> have a version that only does the envExists and envBool version (or just
->> envBool), and skip envIs and envMatch entirely.
+> For example, a helper cannot directly report an error during an `import`
+> command (short of sending `feature done` to the fast-import file
+> descriptor and not sending a `done` later on).
 >
-> I'm not sure I agree. If you are willing to wrap git, then you can just
-> add:
+> Or if the helper crashes at the wrong moment, git doesn't notice and
+> thinks everything went well.
 >
->   git -c include.path=3D~/.gitconfig.d/xyz.cfg
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  builtin/clone.c | 5 +++--
+>  builtin/fetch.c | 6 +++---
+>  2 files changed, 6 insertions(+), 5 deletions(-)
 >
-> to the command-line in the first place. Or if you're willing to use our
-> undocumented interface, you can even do it in your .bashrc:
+> What I'm not sure about is whether a message should be explicitly
+> printed by git itself in those cases.
 >
->   if code_of_arbitrary_complexity
->   then
->           GIT_CONFIG_PARAMETERS=3D"'include.path'=3D'~/.gitconfig.d/xyz.c=
-fg'"
->   fi
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 66fe66679c..f26fa027c5 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1398,7 +1398,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	submodule_progress = transport->progress;
+>  
+>  	transport_unlock_pack(transport);
+> -	transport_disconnect(transport);
+> +	err = transport_disconnect(transport);
+>  
+>  	if (option_dissociate) {
+>  		close_object_store(the_repository->objects);
+> @@ -1406,7 +1406,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	junk_mode = JUNK_LEAVE_REPO;
+> -	err = checkout(submodule_progress);
+> +	if (!err)
+> +		err = checkout(submodule_progress);
+>  
+>  	free(remote_name);
+>  	strbuf_release(&reflog_msg);
 
-Sort of, that'll give you unconditional inclusion, but won't e.g. handle
-a case where the env include only runs in some .git/config, or depending
-on other inclusion (e.g. in ~/dev/git, but only if XYZ env var).
+This seems buggy in some cases, e.g. just because we couldn't close()
+some final socket we should just not run the checkout at all? Shouldn't
+we note the disconnect status, but still see if we can do the checkout
+etc?
 
-But yeah, it won't handle all potential cases. I figured for this sort
-of thing it was better to start small and see if the provided interface
-was enough..
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 25740c13df..66bccf6f50 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1886,7 +1886,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+>  {
+>  	struct refspec rs = REFSPEC_INIT_FETCH;
+>  	int i;
+> -	int exit_code;
+> +	int exit_code, disconnect_code;
+>  	int maybe_prune_tags;
+>  	int remote_via_config = remote_is_configured(remote, 0);
+>  
 
-> The value of this env matching is that it is done at run-time without
-> wrapping, and can meaningfully inspect the state of the world. E.g., the
-> $TERM thing that started this thread.
 
-Yeah, maybe we should have at least an ifStrEQ, whatever we call it...
+> @@ -1952,9 +1952,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+>  	exit_code = do_fetch(gtransport, &rs);
+>  	sigchain_pop(SIGPIPE);
+>  	refspec_clear(&rs);
+> -	transport_disconnect(gtransport);
+> +	disconnect_code = transport_disconnect(gtransport);
+>  	gtransport = NULL;
+> -	return exit_code;
+> +	return exit_code || disconnect_code;
+>  }
+>  
+>  int cmd_fetch(int argc, const char **argv, const char *prefix)
 
->> In the case of env:PATH we're just setting users up for some buggy or
->> unexpected interaction with something that would be better done either
->> via a gitdir include, or if they really need $PATH they can just wrap
->> "git" in a function that sets a boolean inclusion variable.
->
-> Yes, I have trouble imagining why any matching on env:PATH would be
-> useful (or $PWD, since we have the much less confusing gitdir
-> conditional). Which isn't to say I want to forbid it, but just because
-> people can shoot themselves in the foot with complexity doesn't mean
-> that "envIs" is a bad thing when it's not misused.
+This seems like it really needs fixes in other areas,
+i.e. disconnect_git() returns 0 unconditionally, but should check at
+least finish_connect(), no?
 
-I'm biased by past on-list discussions where existing behavior, no
-matter if unintentional or emergent can be really hard to fix once
-established.
-
->> > I think it's just the mashed-up colons that I find ugly in the first
->> > one. But I agree the latter isn't that nice either, and introduces the
->> > ambiguity you describe.
->>=20
->> FWIW I hacked up a --config-key --config-value pairing so you could set
->> keys with "=3D" in them on the command-line, I'm not sure I like the
->> interface, but it gets rid of that ":" v.s. "=3D" edge case:
->> https://github.com/avar/git/commit/a86053df48b
->
-> Yeah, we talked about that a while ago, but nobody liked the interface
-> enough to actually code it (and as far as I know, it's really
-> theoretical; nobody has actually wanted to set such an option from the
-> command-line yet, and we have the --config-env stuff for people who want
-> to robustly pass along arbitrary keys).
->
-> A perhaps more subtle but less awkward to type version is to just
-> require two arguments, like:
->
->   git --config <key> <value> ...
-
-I suppose --config would work like that, you can'd to it with "-c". I
-think it's more confusing to have a "-c" and "--config" which unlike
-most other things don't follow the obvious long and short option names
-working the same way.
-
-> but I'd just as soon continue to leave it un-implemented if nobody has
-> actually needed it in practice.
-
-*nod*. I do think it's bad design to introduce an "env" inclusion
-feature that relies on "=3D" though while we don't have something like
-that, i.e.
-
-I think we should probably not add that --config-{key,value}, but
-avoiding the arbitrary limitation of not being able to specify certain
-config keys seems prudent in that case, and since the "=3D" v.s. ":" is
-only an aesthetic preference I think being able to compose things
-without limitations wins out.
-
-We do have the "=3D" key limitation now, but I don't think it's there for
-any key we currently define, except things like "url.<base>.insteadOf"
-if the "<base> has a "=3D" in it (and maybe just that one).
+Also once that's done you'll have a logic error here where you're
+conflating exit and error codes, we should not return -1 from main() (we
+do in a few cases, but it's nasty)>
