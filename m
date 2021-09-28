@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A85ACC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 11:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F431C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 12:10:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D66E60EBB
-	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 11:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1146B611CB
+	for <git@archiver.kernel.org>; Tue, 28 Sep 2021 12:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240476AbhI1L61 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 07:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43922 "EHLO
+        id S240490AbhI1MMd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 08:12:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240333AbhI1L60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 07:58:26 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76199C061604
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 04:56:46 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id ba1so24263483edb.4
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 04:56:46 -0700 (PDT)
+        with ESMTP id S240426AbhI1MMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 08:12:30 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4DE3C061575
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 05:10:50 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id r18so6211345edv.12
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 05:10:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=+k/DgYBNu/bIzpp/iGus5qWusmZ8vH5CnaE+mM3gWAQ=;
-        b=BzfhcdLSt7kaK8E0fERu0CeztEetMLbYX21cRpUyWRAum+pq598IQKuF3tcLlP0o5a
-         oDKpn2ye+cZnAXUTHNucxGat90RgRASR2nS32R3QFv/wjCnJETUfuzxflYG4WGQW98aE
-         lFa5/83GYPo1K4Q/UIiV04doqcI6dkY7amyKqVrAt0gwzBIGCBw8WGHyQOAl4/5tadYR
-         NEuwsHIeZCU96iGIFmVbFp5P89wStgxITyZRD+Mb/g3Dyj1AeR7svvX4AHsiOI+wdcgc
-         zRrnESJp7LJns9CrExolvl7GUCIJfDGEGZ2v/2QMuBf+2428jU/vVO1ISs1lMATo/xe6
-         G6iA==
+        bh=6gojjqoZ+1CBK4Duf2oH1kqWXOiBc1JYuaVHRa3y/zo=;
+        b=R9jIvX2KixiJq9T59Y4ei9TYrEzvVeXRg3bDx2IEeRimpTdQp5wJCUk42g9ovOfi7+
+         XL0WHtOBdN+A5AeA+bQQ8/2RQziuE9Zbzum4Tx8Ut1M8YQRv0sgAvnMPEw8O341fgdW4
+         YoobmGHja46dP9Q2IvSrJ8TR/5sE3/QTP8iIt3wh/YAtyCz9LYlrHN6/0wlqoZ+FnZ6F
+         RjncO/vXRNLJAMoPBFRAhNFD3Jlo8PePAVhYpgcELSDwhKAT9bKvzSdyax/32cMJHhHv
+         OtFvjyS1wLmnxjh8A1iwFKkeRJ+J/ZOCOIGJe/Xgq9GDorFUp0fApnedd97QpnhKEiij
+         3jYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=+k/DgYBNu/bIzpp/iGus5qWusmZ8vH5CnaE+mM3gWAQ=;
-        b=4PZPhX0wLCFWKHF57Mlg71MgmJp22t0VDzjw+RI6e63bDtKOL5du7Hh8lFgW1fLz3L
-         2pe48rZ/TZ5Mh4TYVWPhbhIb9lO9TofieKKRa9ajIrgaaNk86QV41tmzrp7fYbEhofZi
-         OlmdNH5AoKrxgNhpqqMMn4pLEXPuUyvGDORvJ+b0h/HiWTius5Vc/BBVOeLd3s/DjNpo
-         TF/K38AJi8bKCHk+1cQy+tZsj3ntA11nejJOgvKXEwnhOCbv3DhdsKThwmLpY4Y3Tu3y
-         KXZ8k9ub63HHwxJs9ZNwPXGtPF1kOn9zvmpGDUNlz7I2tgeFfveOI4dWswbqAI9vvEzJ
-         ZYVw==
-X-Gm-Message-State: AOAM53192GPjBHQmZekqPVk79G/ujZkbKsMnGPgy7TVrAyrJB8OYMHBT
-        DOg4XhhlAWkurLlZzKfMb8TSMoOM9PnuCw==
-X-Google-Smtp-Source: ABdhPJwMqxiEUQjm8I32VbYjkgNFuvqFjrL05OTV0bhcdUsROp+RjifSoHb8YjLfrWEC6sPkdVrZ8A==
-X-Received: by 2002:a05:6402:5186:: with SMTP id q6mr7204345edd.64.1632830204727;
-        Tue, 28 Sep 2021 04:56:44 -0700 (PDT)
+        bh=6gojjqoZ+1CBK4Duf2oH1kqWXOiBc1JYuaVHRa3y/zo=;
+        b=O53vySnto/8I4UWBhgjcFubjcq27a8F9LUchsn3F9qk8KzyCMJppE9ufiNJuVFul0Z
+         ktme74XJcWrHbTPS847kMGcv+7ISf0OUaHrWxNxSc28t/djSZQEl36zEbDlkxUfKe4we
+         x3DCTKWHcD6n9un+vOct+wNBiyQj0Vaxnmrelivfw/La4jgP6qjcHW4D0nh6Xpw7q2zV
+         4LWgEJIkin8/+g63D6iSko/4NFxhNU5xffa3puB6WeQzQV65n82aaFiWkRbbv23i+ei/
+         D6NjMgqyF98j1bJm2UoroJtGuCqhrboZ3J8TKKriLejY+PVD2ZMwbzzpMOSI7vKA8fRn
+         eaGw==
+X-Gm-Message-State: AOAM533iMuYo7wEfLNU+ciGYUXstlWWRqPhnUexAN77MBQnsdaULvvBN
+        d8owXNsxlm57BdJZDqipv07OuKfUkMCreg==
+X-Google-Smtp-Source: ABdhPJynh/wvsXBPob2sg1p2p8ABt0otuPVQgV3CtUnwS7Kq9g93vobKT4BukE5f6CnlJX28PLLfWg==
+X-Received: by 2002:a05:6402:8ce:: with SMTP id d14mr7137163edz.193.1632831048949;
+        Tue, 28 Sep 2021 05:10:48 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bd2sm4948717edb.65.2021.09.28.04.56.43
+        by smtp.gmail.com with ESMTPSA id bx11sm10670095ejb.107.2021.09.28.05.10.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 04:56:44 -0700 (PDT)
+        Tue, 28 Sep 2021 05:10:48 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
 Cc:     git@vger.kernel.org, t.gummerer@gmail.com, pclouds@gmail.com,
         jonathantanmy@google.com
-Subject: Re: [PATCH 1/3] Makefile: restrict -Wpedantic and
- -Wno-pedantic-ms-format better
-Date:   Tue, 28 Sep 2021 13:46:14 +0200
+Subject: Re: [PATCH 3/3] config.mak.dev: simplify compiler check for
+ multiple compilers
+Date:   Tue, 28 Sep 2021 14:07:09 +0200
 References: <20210928091054.78895-1-carenas@gmail.com>
- <20210928091054.78895-2-carenas@gmail.com>
+ <20210928091054.78895-4-carenas@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20210928091054.78895-2-carenas@gmail.com>
-Message-ID: <87o88cx69w.fsf@evledraar.gmail.com>
+In-reply-to: <20210928091054.78895-4-carenas@gmail.com>
+Message-ID: <87k0j0x5mg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -72,102 +72,98 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Sep 28 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-> 6a8cbc41ba (developer: enable pedantic by default, 2021-09-03)
-> enables pedantic mode in as many compilers as possible to help gather
-> feedback on future tightening of the net, so lets do so.
+> 1da1580e4c (Makefile: detect compiler and enable more warnings in
+> DEVELOPER=3D1, 2018-04-14), includes an $(or) of two different filters
+> to check for both gcc and clang versions.
 >
-> -Wpedantic is missing in some really old gcc 4 versions so lets restrict
-> it to gcc5 and clang4 (it does work in clang3 AFAIK, but it will be
-> unlikely a developer will use such an old compiler anyway).
->
-> MinGW gcc is the only one which has -Wno-pedantic-ms-format, and while
-> that is available also in older compilers, the Windows SDK provides gcc10
-> so lets aim for that.  Note that in order to target the flag to only
-> Windows, additional changes were needed in config.mak.uname to propagate
-> the OS detection done there.
+> As shown in a previous patch, a simpler syntax is available so apply
+> the same logic here also for consistency.
 >
 > Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 > ---
->  config.mak.dev   | 6 +++++-
->  config.mak.uname | 3 +++
->  2 files changed, 8 insertions(+), 1 deletion(-)
+>  config.mak.dev | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/config.mak.dev b/config.mak.dev
-> index cdf043c52b..c81be62a5c 100644
+> index 90c47d2782..b66fae8665 100644
 > --- a/config.mak.dev
 > +++ b/config.mak.dev
-> @@ -9,11 +9,15 @@ endif
->  DEVELOPER_CFLAGS +=3D -Wall
->  ifeq ($(filter no-pedantic,$(DEVOPTS)),)
->  DEVELOPER_CFLAGS +=3D -pedantic
-> +ifneq ($(filter clang4 gcc5,$(COMPILER_FEATURES)),)
->  DEVELOPER_CFLAGS +=3D -Wpedantic
-> -ifneq ($(filter gcc5,$(COMPILER_FEATURES)),)
-> +ifneq ($(filter gcc10,$(COMPILER_FEATURES)),)
-> +ifeq ($(uname_S),MINGW)
->  DEVELOPER_CFLAGS +=3D -Wno-pedantic-ms-format
+> @@ -31,7 +31,7 @@ ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
+>  DEVELOPER_CFLAGS +=3D -Wtautological-constant-out-of-range-compare
 >  endif
->  endif
-> +endif
-> +endif
->  DEVELOPER_CFLAGS +=3D -Wdeclaration-after-statement
->  DEVELOPER_CFLAGS +=3D -Wformat-security
->  DEVELOPER_CFLAGS +=3D -Wold-style-definition
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 76516aaa9a..aa68bbdec7 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -589,6 +589,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
->  	SHELL_PATH =3D /usr/coreutils/bin/bash
->  endif
->  ifneq (,$(findstring MINGW,$(uname_S)))
-> +	uname_S :=3D MINGW
+>=20=20
+> -ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang4,$(COMPIL=
+ER_FEATURES))),)
+> +ifneq ($(filter clang4 gcc6,$(COMPILER_FEATURES)),)
+>  DEVELOPER_CFLAGS +=3D -Wextra
+>  # if a function is public, there should be a prototype and the right
+>  # header file should be included. If not, it should be static.
 
-Just in terms of implementation, this somewhat pre-dates your change,
-but every single other uname we check as a constant. I wonder if this
-"findstring" is really needed under MINGW. It was added in f4626df51f6
-(Add target architecture MinGW., 2007-12-01).
+This looks like a good cleanup and ends up being much more readable.
 
-(Goes and seaches stackoverflow etc.)
+I wonder if eventually a larger change to simplify this like perhaps the
+below wouldn't be nicer. I didn't test it carefully & may have gotten
+the logic wrong, which I think somewhat makes the point that reading
+this ifeq/ifneq logic (especially the nested bit at the end) is a bit
+hard, at least for me:)
 
-Ah yes, it seems it'll emit e.g. "MINGW64_NT-10.0", ew!
+Anyway, feel free to ignore the below, and I think it's certainly not
+needed for this series, just my 0.02 if you're eventually refactoring
+some of this.
 
-In any case, I wonder if we should at least be better off with the
-diff-at-the-end on top (untested).
-
-And also not necessarily for this series, but IMO this sort of thing
-really longer-term belongs in config.mak.uname (or maybe a
-config.mak.dev.uname, ew!). Well, maybe. Anyway, looking at potentially
-implementing that we get into similar ordering issues as I noted in my
-2/3 comment, i.e. we'd have to hoist "COMPILER_FEATURES" over to the
-main Makefile before including both.
-
-So nevermind I guess, but aside from which variable we set/override
-where (and feel very free to ignore my musings there) this change LGTM.
-
-diff --git a/config.mak.uname b/config.mak.uname
-index aa68bbdec72..0028891ac67 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -11,6 +11,10 @@ uname_R :=3D $(shell sh -c 'uname -r 2>/dev/null || echo=
- not')
- uname_P :=3D $(shell sh -c 'uname -p 2>/dev/null || echo not')
- uname_V :=3D $(shell sh -c 'uname -v 2>/dev/null || echo not')
-=20
-+ifneq (,$(findstring MINGW,$(uname_S)))
-+	uname_S :=3D MINGW
-+endif
-+
- ifdef MSVC
- 	# avoid the MingW and Cygwin configuration sections
- 	uname_S :=3D Windows
-@@ -588,8 +592,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	SANE_TOOL_PATH =3D /usr/coreutils/bin:/usr/local/bin
- 	SHELL_PATH =3D /usr/coreutils/bin/bash
+diff --git a/config.mak.dev b/config.mak.dev
+index 0a87d8cbe9d..df27340b4b0 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -2,6 +2,14 @@ ifndef COMPILER_FEATURES
+ COMPILER_FEATURES :=3D $(shell ./detect-compiler $(CC))
  endif
--ifneq (,$(findstring MINGW,$(uname_S)))
--	uname_S :=3D MINGW
-+ifeq ($(uname_S),MINGW)
- 	pathsep =3D ;
- 	HAVE_ALLOCA_H =3D YesPlease
- 	NO_PREAD =3D YesPlease
+=20
++# These are all the empty string if the compiler *isn't* X or
++# earlier. Note that clang v5, v6 etc. also qualify as "have v4".
++CC_HAVE_CLANG4 =3D $(filter clang4,$(COMPILER_FEATURES))
++CC_HAVE_GCC4 =3D $(filter gcc4,$(COMPILER_FEATURES))
++CC_HAVE_GCC5 =3D $(filter gcc5,$(COMPILER_FEATURES))
++CC_HAVE_GCC6 =3D $(filter gcc6,$(COMPILER_FEATURES))
++CC_HAVE_GCC10 =3D $(filter gcc10,$(COMPILER_FEATURES))
++
+ ifeq ($(filter no-error,$(DEVOPTS)),)
+ DEVELOPER_CFLAGS +=3D -Werror
+ SPARSE_FLAGS +=3D -Wsparse-error
+@@ -9,9 +17,9 @@ endif
+ DEVELOPER_CFLAGS +=3D -Wall
+ ifeq ($(filter no-pedantic,$(DEVOPTS)),)
+ DEVELOPER_CFLAGS +=3D -pedantic
+-ifneq ($(filter clang4 gcc5,$(COMPILER_FEATURES)),)
++ifneq ($(CC_HAVE_CLANG4)$(CC_HAVE_GCC5),)
+ DEVELOPER_CFLAGS +=3D -Wpedantic
+-ifneq ($(filter gcc10,$(COMPILER_FEATURES)),)
++ifneq ($(CC_HAVE_GCC10),)
+ ifeq ($(uname_S),MINGW)
+ DEVELOPER_CFLAGS +=3D -Wno-pedantic-ms-format
+ DEVELOPER_CFLAGS +=3D -Wno-incompatible-pointer-types
+@@ -29,11 +37,11 @@ DEVELOPER_CFLAGS +=3D -Wunused
+ DEVELOPER_CFLAGS +=3D -Wvla
+ DEVELOPER_CFLAGS +=3D -fno-common
+=20
+-ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
++ifneq ($(CC_HAVE_CLANG4),)
+ DEVELOPER_CFLAGS +=3D -Wtautological-constant-out-of-range-compare
+ endif
+=20
+-ifneq ($(filter clang4 gcc6,$(COMPILER_FEATURES)),)
++ifneq ($(CC_HAVE_CLANG4)$(CC_HAVE_GCC6),)
+ DEVELOPER_CFLAGS +=3D -Wextra
+ # if a function is public, there should be a prototype and the right
+ # header file should be included. If not, it should be static.
+@@ -49,8 +57,8 @@ endif
+=20
+ # uninitialized warnings on gcc 4.9.2 in xdiff/xdiffi.c and config.c
+ # not worth fixing since newer compilers correctly stop complaining
+-ifneq ($(filter gcc4,$(COMPILER_FEATURES)),)
+-ifeq ($(filter gcc5,$(COMPILER_FEATURES)),)
++ifneq ($(CC_HAVE_GCC4),)
++ifeq ($(CC_HAVE_GCC5),)
+ DEVELOPER_CFLAGS +=3D -Wno-uninitialized
+ endif
+ endif
