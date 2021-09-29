@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE09C433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E04C433FE
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:48:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB7E8613D1
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:48:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1396B613D0
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243441AbhI2Au0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 20:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
+        id S243435AbhI2Au2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 20:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243396AbhI2AuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 20:50:25 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 731E9C06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 17:48:45 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id c6-20020a9d2786000000b005471981d559so789243otb.5
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 17:48:45 -0700 (PDT)
+        with ESMTP id S243433AbhI2Au0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 20:50:26 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6517AC06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 17:48:46 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id 24so840983oix.0
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 17:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aRUUjtSFWC2Gu29zLeo6QdhRGrMa/aHI7IcaEr3qv8E=;
-        b=BbRZNZ8nbu9y0tMYUI4x+VkH/moAkG+Vx0lCh/pyeG6aj1xCh7xlHbrH4BUw89+tHf
-         Pc1aJQarIUPYisOwZQLqyekvqCrPZteQLLVw+Xr9Dy+JdGycgUJuc5f4xKsEYwxddTu6
-         kwi6UX+82NZmjyRDGQRvOanlTDcuLkFPrvj9od/FBWWL/YO1oFjyulmJfWggkYaNycvG
-         804UV1mG5Z4GE9XuEtIbw4CAEm9ujLnxtIy2JxOAYXYyd+L4vBKhZDk4o8g5zw8Yo3Cp
-         8H6I65bS8eMxIj667NO3QiPBJFsE+PSWhPTF8tZP3ca3XvlRAVSzSGIX5mLtSvhcgwa1
-         s/9Q==
+        bh=yYpv/SVLr56EIWQwhPDNNxFdvuVgd/Y5pQ417vZMAEs=;
+        b=WEOYamk6r2onvOuEqdxnJjkcsbP0GmWEYAPinds0EmjWm/l3WspdDUYg2o0IBHtrF/
+         Qy2OfQiiYHO66aO2+FW+RbKnMEeGKfVNOZneMzIGyWYJ7DN5F7nt3N185VGv0D9bkD54
+         fwBFcDkskkgxN6+fovYQf0I9Wz+5Yoog/teQN4cgyPrfZmVMW6b2lB3nsN06lvZBkXs7
+         h6xpxWEYquc/DnXnPidqUjCzRByqgNKKtMmvz7JlWKpfN69wbmqb0DDWQGm679M0ts+H
+         fCbUKlbA1GDbHw6OaZ4Yq/I5zFYQibdB4xPFccWDymLxV+GHjyYvjWvffYbgpzKH/Oy4
+         uoUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aRUUjtSFWC2Gu29zLeo6QdhRGrMa/aHI7IcaEr3qv8E=;
-        b=FxMX+sAaB1beGehioDwZJfxVcsgrsvBFREQ9W162mVOAUaGZwFq/N/UZNYkKxk3a4E
-         i08XKyt3Gi7dCFv8XLlDTmc0/vJEX94VHswA0GT8zjN/xMAkOt0BBaEk661ANrmFBlWw
-         R3yPe0Gd19DfkMw5lwULExhYzLS6oEglOZFzLbEcnxtEwXJkVJKN4my6fE1MRl7DjfUK
-         swXmqejzc27aI1JZuq6KqtfIJqPZET4hifpU5PUhXlv8Vi6O4wmLw1n3V1A1AmHqBpJo
-         lW689sw3L7ZoGHyoEBdJjpN/KTz2wqmyOwy6I0Gcm6IDsylAyzBm2A/AhJ7gJKbLZ6yk
-         /hZA==
-X-Gm-Message-State: AOAM531JI0axfKIycWvo//VHtFkyhFSj8ImGTkjv4F1cQ0mwVOTkEPzZ
-        arrFp4OmEk6hM4dNdlCfjO2WQdZNKVoSew==
-X-Google-Smtp-Source: ABdhPJw7ZWHCw1cn29ukciwWXXh4pn94BAlXYx0y9B3tcrrBtYddD7EhwUMAsqU7szWRS/zJVZLsVQ==
-X-Received: by 2002:a05:6830:210c:: with SMTP id i12mr7725861otc.102.1632876524492;
-        Tue, 28 Sep 2021 17:48:44 -0700 (PDT)
+        bh=yYpv/SVLr56EIWQwhPDNNxFdvuVgd/Y5pQ417vZMAEs=;
+        b=bXmhY9Uo8NiMVYvncevkudNz0v85WAdsdHh8tOINVd7Dj3/EW/A5/VS4wRbbZVku2+
+         P5oRb24awmnhnOYWqDjg0Rw9gVeohaFPp9RyeL2apUR674VrvmizuWeCIYqFcWwa90Kh
+         RjVt8rVF9sve2jGuMqTl9UJQH6m0aF/wVC2yjXbq2wwiqDYxmDT7lnO+/SCsmeb8U6wB
+         WEEN8vD9QLfGVGjIUbqr0AZDmdPUUvO9Me5qmbFvUCs1nwTAHYd/74gTUNtKjM2X+a6f
+         J1R9qBGlFdaQ444+Yxf/5Sgsy9bmHR6127sDEjJ1mGIzaF96na3vUDdaT9xyPRrgBfXX
+         f05g==
+X-Gm-Message-State: AOAM533tTY5kxsQuX0M1oPBC/TzRNcKCoovKywP+7lv7YYlWrXpzrSDW
+        Sn2NCdVONV6erR4e5n4fL3Hyn1qNB39uxA==
+X-Google-Smtp-Source: ABdhPJzxBuwPSpcsyfVPJWZIfZ9eLMg2mFPbp8I3urGfnVpNy4qUBWJ0+Fgipc9qQTWpol2zK2aTMA==
+X-Received: by 2002:a05:6808:1211:: with SMTP id a17mr5694886oil.91.1632876525493;
+        Tue, 28 Sep 2021 17:48:45 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id r18sm159924ote.28.2021.09.28.17.48.43
+        by smtp.gmail.com with ESMTPSA id r18sm159924ote.28.2021.09.28.17.48.44
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Sep 2021 17:48:44 -0700 (PDT)
+        Tue, 28 Sep 2021 17:48:45 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, gitster@pobox.com, avarab@gmail.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH v4 0/3] js/win-lazyload-buildfix
-Date:   Tue, 28 Sep 2021 17:48:29 -0700
-Message-Id: <20210929004832.96304-1-carenas@gmail.com>
+Subject: [PATCH v4 1/3] lazyload.h: fix warnings about mismatching function pointer types
+Date:   Tue, 28 Sep 2021 17:48:30 -0700
+Message-Id: <20210929004832.96304-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.33.0.955.gee03ddbf0e
-In-Reply-To: <20210926100512.58924-1-carenas@gmail.com>
+In-Reply-To: <20210929004832.96304-1-carenas@gmail.com>
 References: <20210926100512.58924-1-carenas@gmail.com>
+ <20210929004832.96304-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,31 +70,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series includes all changes from v3 and an additional patch that is
-based on the one that was originally[1] published as patch 1 from a different
-series that depended on this one.
+From: Johannes Sixt <j6t@kdbg.org>
 
-Range-diff looks weird, but that might be just another bug in format-patch
-as it looked fine when calling range-diff directly.
+Here, GCC warns about every use of the INIT_PROC_ADDR macro, for example:
 
-[1] https://lore.kernel.org/git/20210928091054.78895-2-carenas@gmail.com/
+In file included from compat/mingw.c:8:
+compat/mingw.c: In function 'mingw_strftime':
+compat/win32/lazyload.h:38:12: warning: assignment to
+   'size_t (*)(char *, size_t,  const char *, const struct tm *)'
+   {aka 'long long unsigned int (*)(char *, long long unsigned int,
+      const char *, const struct tm *)'} from incompatible pointer type
+   'FARPROC' {aka 'long long int (*)()'} [-Wincompatible-pointer-types]
+   38 |  (function = get_proc_addr(&proc_addr_##function))
+      |            ^
+compat/mingw.c:1014:6: note: in expansion of macro 'INIT_PROC_ADDR'
+ 1014 |  if (INIT_PROC_ADDR(strftime))
+      |      ^~~~~~~~~~~~~~
 
-Carlo Marcelo Arenas Belón (2):
-  lazyload.h: use an even more generic function pointer than FARPROC
-  Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
+(message wrapped for convenience). Insert a cast to keep the compiler
+happy. A cast is fine in these cases because they are generic function
+pointer values that have been looked up in a DLL.
 
-Johannes Sixt (1):
-  lazyload.h: fix warnings about mismatching function pointer types
+Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ compat/win32/lazyload.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
- compat/win32/lazyload.h | 14 +++++++++-----
- config.mak.dev          |  8 ++++++--
- config.mak.uname        |  8 +++++++-
- 3 files changed, 22 insertions(+), 8 deletions(-)
-
-Range-diff against v3:
--:  ---------- > 1:  d2c470f9bc lazyload.h: fix warnings about mismatching function pointer types
--:  ---------- > 2:  2d84c4ed57 lazyload.h: use an even more generic function pointer than FARPROC
-1:  a731848d01 = 3:  a731848d01 Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
+diff --git a/compat/win32/lazyload.h b/compat/win32/lazyload.h
+index d2056cdadf..121ee24ed2 100644
+--- a/compat/win32/lazyload.h
++++ b/compat/win32/lazyload.h
+@@ -26,7 +26,8 @@ struct proc_addr {
+ #define DECLARE_PROC_ADDR(dll, rettype, function, ...) \
+ 	static struct proc_addr proc_addr_##function = \
+ 	{ #dll, #function, NULL, 0 }; \
+-	static rettype (WINAPI *function)(__VA_ARGS__)
++	typedef rettype (WINAPI *proc_type_##function)(__VA_ARGS__); \
++	static proc_type_##function function
+ 
+ /*
+  * Loads a function from a DLL (once-only).
+@@ -35,7 +36,7 @@ struct proc_addr {
+  * This function is not thread-safe.
+  */
+ #define INIT_PROC_ADDR(function) \
+-	(function = get_proc_addr(&proc_addr_##function))
++	(function = (proc_type_##function)get_proc_addr(&proc_addr_##function))
+ 
+ static inline FARPROC get_proc_addr(struct proc_addr *proc)
+ {
 -- 
 2.33.0.955.gee03ddbf0e
 
