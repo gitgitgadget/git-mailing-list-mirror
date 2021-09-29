@@ -2,30 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E6CFC433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 10:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F0A4C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 11:53:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29DD66138E
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 10:53:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20DEA6136A
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 11:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245296AbhI2Kyu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 06:54:50 -0400
-Received: from mail.ncp-e.com ([62.153.165.35]:62420 "EHLO mail.ncp-e.com"
+        id S1343497AbhI2Lyn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 07:54:43 -0400
+Received: from mail.ncp-e.com ([62.153.165.35]:64957 "EHLO mail.ncp-e.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245275AbhI2Kyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 06:54:50 -0400
+        id S1343494AbhI2Lyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 07:54:36 -0400
 DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaulte; 
- t=1632912787; bh=A2tO0o22TXrLSvgJs1KO5OUCi2sLquD63Ua9/130Rps=; h=
+ t=1632916367; bh=K+7exbpuNizhNwhAlPJjpnMJ4GnODhZ83VglJ7J2vWc=; h=
  "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
  a=ed25519-sha256; b=
- TpdAnnFhlJgKBZheN8rMIg1ZcYs5MF6hTu8SZREnHkIVivnOefYeRgzIPgpgqbiuyzW4Iq8+jzfI4dLmDwBaCA==
+ +Ik1iFEwJjcvw2yIGHzm9IZSJTG2fWo4pBtnVDE+gsKmUj+lLr0N6sscPbBuUrwm4l8rOPZuQtOKCUFvx2AtBw==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaultr; 
- t=1632912787; bh=A2tO0o22TXrLSvgJs1KO5OUCi2sLquD63Ua9/130Rps=; h=
+ t=1632916367; bh=K+7exbpuNizhNwhAlPJjpnMJ4GnODhZ83VglJ7J2vWc=; h=
  "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
  a=rsa-sha256; b=
- UU+kuZYNIOF2qZu+Cwy+FszNQbpWOd9VvLTLXI1ke/YFjIub50GnvExcHddan9eZy04O8nl2JCWHXoUNCHG8zUJkivdgOKKne4ZcNeKgfdwhOF63BeNbvP4P6CL+cOUG6t6xIbwxtModm6SambIkGytY1JPHdSQH9lAoGTgHhxU=
+ ROx2MO29bezCxth3JoWXYVaRZ+7j+cYg8b2uYVHCr4veDxjCNOA9y9KGqnYVltaruULmtBJ2rIfsHPPABg5Pp3U1WLoY9Ya210PaIG6yfHn3oV/UWx7Knhb/ikyflsQ0m6k50GrnR60l3Kco6nDd48hvz9oyn8wdfAbMvLE+5VQ=
 Content-Type: multipart/signed; 
- boundary=NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b; 
+ boundary=NoSpamProxy_906fa38b-6982-4269-93ee-b6e3669094d9; 
  protocol="application/pkcs7-signature"; micalg="sha256"
 From:   "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>
 To:     Bagas Sanjaya <bagasdotme@gmail.com>,
@@ -34,15 +34,16 @@ CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Stefan Beller <stefanbeller@gmail.com>
 Subject: RE: [PATCH] blame: document --color-* options
 Thread-Topic: [PATCH] blame: document --color-* options
-Thread-Index: AQHXsgevOfCnzPIFfEG7E3jd/1s90Ku4TBf9gACFxoCAAJSXMIABQzkAgAAxLwA=
-Date:   Wed, 29 Sep 2021 10:53:07 +0000
-Message-ID: <21b21b58e0da407387c9c1e103233a31@ncp-e.com>
+Thread-Index: AQHXsgevOfCnzPIFfEG7E3jd/1s90Ku4TBf9gACFxoCAAJSXMIABQzkAgAAxLwCAABIAcA==
+Date:   Wed, 29 Sep 2021 11:52:45 +0000
+Message-ID: <1c7e7fbc0a06455f96b207c43cb37b99@ncp-e.com>
 References: <d918fe0de6b04d8d848050d4aedbe060@ncp-e.com>
  <20210925121817.1089897-1-bagasdotme@gmail.com> <xmqq5yulregh.fsf@gitster.g>
  <fe78329d-07a7-bdf3-2bda-13def35f3de3@gmail.com>
  <4078bebf2da14e5f8fc80a5ac7918151@ncp-e.com>
  <c3603f8a-f75e-37f0-0517-c9a04c21e18e@gmail.com>
-In-Reply-To: <c3603f8a-f75e-37f0-0517-c9a04c21e18e@gmail.com>
+ <21b21b58e0da407387c9c1e103233a31@ncp-e.com>
+In-Reply-To: <21b21b58e0da407387c9c1e103233a31@ncp-e.com>
 Accept-Language: de-DE, en-US
 Content-Language: de-DE
 X-MS-Has-Attach: 
@@ -55,44 +56,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b
+--NoSpamProxy_906fa38b-6982-4269-93ee-b6e3669094d9
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
 
-DQo+IEkgY2FuJ3QgYXBwbHkgdGhlIHN1Z2dlc3Rpb24gcGF0Y2ggYWJvdmUuIFlvdSBzZW50IHRo
-ZSBwYXRjaCB3aXRoDQo+IFMvTUlNRSwgcmlnaHQ/DQo+DQo+IE5leHQgdGltZSwgd2hldGhlciB5
-b3UgcG9zdCBwYXRjaGVzIGhlcmUsIGxlYXJuIHRvIHVzZSBnaXQgZm9ybWF0LXBhdGNoDQo+IGFu
-ZCBnaXQgc2VuZC1lbWFpbC4gU2VuZCBwYXRjaGVzIGluIHBsYWluIHRleHQgb25seSwgKm5vIChT
-LylNSU1FLCBubw0KPiBsaW5rcywgbm8gY29tcHJlc3Npb24sIG5vIGF0dGFjaG1lbnRzKi4NCj4N
-Cj4gUGxlYXNlIHJlc2VuZCB5b3VyIHN1Z2dlc3Rpb24gcGF0Y2ggdXNpbmcgZ2l0IHNlbmQtZW1h
-aWwsIGtlZXBpbmcgaW4NCj4gbWluZCB0aGUgZ3VpZGVsaW5lcyBhYm92ZS4NCg0KSSdtIHNvcnJ5
-IGZvciB0aGUgaW5jb252ZW5pZW5jZTogbXkgY29tcGFueSBoYXMgYSBmYW5jeS1zdXBlci1zbWFy
-dCBtYWlsIGdhdGV3YXkNCndoaWNoIGFkZHMgc3R1ZmYgdG8gdGhlIG1haWwgd2hpY2ggaXMgb3V0
-IG9mIG15IGNvbnRyb2wuIEZvciB0aGF0IHJlYXNvbiwgZ2l0IHNlbmQtZW1haWwNCmN1cnJlbnRs
-eSBkb2Vzbid0IHdvcmsgZm9yIG1lLiBTbyBJIGtpbmRseSBhc2sgdG8gcHVsbCB0aGUgY29tbWl0
-IGZyb20gbXkgR2l0SHViIGZvcms6DQoNCiAgZ2l0IGZldGNoIGh0dHBzOi8vZ2l0aHViLmNvbS9t
-c3BuY3AvZ2l0LmdpdCBkb2N1bWVudC1naXQtYmxhbWUtY29sb3Itb3B0aW9ucw0KICBnaXQgY2hl
-Y2tvdXQgLWIgZG9jdW1lbnQtZ2l0LWJsYW1lLWNvbG9yLW9wdGlvbnMNCg0KVGhlIHRydW5jYXRl
-ZCBvcHRpb24gbmFtZSBoYXMgYWxyZWFkeSBiZWVuIGNvcnJlY3RlZC4NCg0KTWF0dGhpYXMNCg0K
-DQoNCkRyLiBNYXR0aGlhcyBTdC4gUGllcnJlDQpUZWNoIExlYWQgQ3J5cHRvZ3JhcGh5DQptYXR0
-aGlhcy5zdC5waWVycmVAbmNwLWUuY29tDQpQaG9uZTogKzQ5IDkxMSA5OTY4LTANCiB3d3cubmNw
-LWUuY29tDQoNCkhlYWRxdWFydGVycyBHZXJtYW55OiBOQ1AgZW5naW5lZXJpbmcgR21iSCDigKIg
-RG9tYnVlaGxlciBTdHIuIDIg4oCiIDkwNDQ5IOKAoiBOdXJlbWJlcmcNCk5vcnRoIEFtZXJpY2Fu
-IEhROiBOQ1AgZW5naW5lZXJpbmcgSW5jLiDigKIgNjAxIENsZXZlbGFuZCBTdHIuLCBTdWl0ZSA1
-MDEtMjUg4oCiIENsZWFyd2F0ZXIsIEZMIDMzNzU1DQoNCkF1dGhvcml6ZWQgcmVwcmVzZW50YXRp
-dmVzOiBQZXRlciBTb2VsbCwgUGF0cmljayBPbGl2ZXIgR3JhZiwgQmVhdGUgRGlldHJpY2gNClJl
-Z2lzdHJ5IENvdXJ0OiBMb3dlciBEaXN0cmljdCBDb3VydCBvZiBOdXJlbWJlcmcNCkNvbW1lcmNp
-YWwgcmVnaXN0ZXIgTm8uOiBIUkIgNzc4NiBOdXJlbWJlcmcsIFZBVCBpZGVudGlmaWNhdGlvbiBO
-by46IERFIDEzMzU1NzYxOQ0KDQpUaGlzIGUtbWFpbCBtZXNzYWdlIGluY2x1ZGluZyBhbnkgYXR0
-YWNobWVudHMgaXMgZm9yIHRoZSBzb2xlIHVzZSBvZiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50KHMp
-IGFuZCBtYXkgY29udGFpbiBwcml2aWxlZ2VkDQpvciBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24u
-IEFueSB1bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2UsIGRpc2Nsb3N1cmUgb3IgZGlzdHJpYnV0aW9u
-IGlzIHByb2hpYml0ZWQuIElmIHlvdSBhcmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsDQpw
-bGVhc2UgaW1tZWRpYXRlbHkgY29udGFjdCB0aGUgc2VuZGVyIGJ5IHJlcGx5IGUtbWFpbCBhbmQg
-ZGVsZXRlIHRoZSBvcmlnaW5hbCBtZXNzYWdlIGFuZCBkZXN0cm95IGFsbCBjb3BpZXMgdGhlcmVv
-Zi4NCg==
+U29ycnksIEkgZm9yZ290ICdGRVRDSF9IRUFEJzoNCg0KICBnaXQgZmV0Y2ggaHR0cHM6Ly9naXRo
+dWIuY29tL21zcG5jcC9naXQuZ2l0IGRvY3VtZW50LWdpdC1ibGFtZS1jb2xvci1vcHRpb25zDQog
+IGdpdCBjaGVja291dCAtYiBkb2N1bWVudC1naXQtYmxhbWUtY29sb3Itb3B0aW9ucyBGRVRDSF9I
+RUFEDQoNCg0KRHIuIE1hdHRoaWFzIFN0LiBQaWVycmUNClRlY2ggTGVhZCBDcnlwdG9ncmFwaHkN
+Cm1hdHRoaWFzLnN0LnBpZXJyZUBuY3AtZS5jb20NClBob25lOiArNDkgOTExIDk5NjgtMA0KIHd3
+dy5uY3AtZS5jb20NCg0KSGVhZHF1YXJ0ZXJzIEdlcm1hbnk6IE5DUCBlbmdpbmVlcmluZyBHbWJI
+IOKAoiBEb21idWVobGVyIFN0ci4gMiDigKIgOTA0NDkg4oCiIE51cmVtYmVyZw0KTm9ydGggQW1l
+cmljYW4gSFE6IE5DUCBlbmdpbmVlcmluZyBJbmMuIOKAoiA2MDEgQ2xldmVsYW5kIFN0ci4sIFN1
+aXRlIDUwMS0yNSDigKIgQ2xlYXJ3YXRlciwgRkwgMzM3NTUNCg0KQXV0aG9yaXplZCByZXByZXNl
+bnRhdGl2ZXM6IFBldGVyIFNvZWxsLCBQYXRyaWNrIE9saXZlciBHcmFmLCBCZWF0ZSBEaWV0cmlj
+aA0KUmVnaXN0cnkgQ291cnQ6IExvd2VyIERpc3RyaWN0IENvdXJ0IG9mIE51cmVtYmVyZw0KQ29t
+bWVyY2lhbCByZWdpc3RlciBOby46IEhSQiA3Nzg2IE51cmVtYmVyZywgVkFUIGlkZW50aWZpY2F0
+aW9uIE5vLjogREUgMTMzNTU3NjE5DQoNClRoaXMgZS1tYWlsIG1lc3NhZ2UgaW5jbHVkaW5nIGFu
+eSBhdHRhY2htZW50cyBpcyBmb3IgdGhlIHNvbGUgdXNlIG9mIHRoZSBpbnRlbmRlZCByZWNpcGll
+bnQocykgYW5kIG1heSBjb250YWluIHByaXZpbGVnZWQNCm9yIGNvbmZpZGVudGlhbCBpbmZvcm1h
+dGlvbi4gQW55IHVuYXV0aG9yaXplZCByZXZpZXcsIHVzZSwgZGlzY2xvc3VyZSBvciBkaXN0cmli
+dXRpb24gaXMgcHJvaGliaXRlZC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVu
+dCwNCnBsZWFzZSBpbW1lZGlhdGVseSBjb250YWN0IHRoZSBzZW5kZXIgYnkgcmVwbHkgZS1tYWls
+IGFuZCBkZWxldGUgdGhlIG9yaWdpbmFsIG1lc3NhZ2UgYW5kIGRlc3Ryb3kgYWxsIGNvcGllcyB0
+aGVyZW9mLg0K
 
---NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b
+--NoSpamProxy_906fa38b-6982-4269-93ee-b6e3669094d9
 Content-Transfer-Encoding: BASE64
 Content-Type: application/pkcs7-signature; name=smime.p7s
 Content-Disposition: attachment; filename=smime.p7s
@@ -214,8 +203,8 @@ MC/HpeZBoNquBYeaoKRlbEwJDIm6uNO5wJOKMPqN5ZprFQFOZ6raYlY+hAhm0sQ2fac+EPyI4NSA
 CWA5zspi2C5uMYAwgAIBATBuMFYxCzAJBgNVBAYTAkNIMRUwEwYDVQQKEwxTd2lzc1NpZ24gQUcx
 MDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2ZXIgQ0EgMjAxNCAtIEcyMgIUMtWNCqK3
 ycGRro81QxAdKsHXAIYwDQYJYIZIAWUDBAIBBQCgggIGMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
-BwEwHAYJKoZIhvcNAQkFMQ8XDTIxMDkyOTEwNTMwN1owLwYJKoZIhvcNAQkEMSIEIFGJAjiv8fBh
-plN43P4cFOmllLfv6PB+t2ghDR6nPDOCMH0GCSsGAQQBgjcQBDFwMG4wVjELMAkGA1UEBhMCQ0gx
+BwEwHAYJKoZIhvcNAQkFMQ8XDTIxMDkyOTExNTI0N1owLwYJKoZIhvcNAQkEMSIEIGevfS0cIlYh
+ZTZjc4aYmkEB3965+pF9UKAorKF/kh2sMH0GCSsGAQQBgjcQBDFwMG4wVjELMAkGA1UEBhMCQ0gx
 FTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZl
 ciBDQSAyMDE0IC0gRzIyAhQy1Y0KorfJwZGujzVDEB0qwdcAhjB/BgsqhkiG9w0BCRACCzFwoG4w
 VjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWdu
@@ -223,10 +212,10 @@ IFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAhQy1Y0KorfJwZGujzVDEB0qwdcAhjCBmgYJ
 KoZIhvcNAQkPMYGMMIGJMAoGCCqGSIb3DQIFMAcGBSsOAwIaMAsGCWCGSAFlAwQCATALBglghkgB
 ZQMEAgIwCwYJYIZIAWUDBAIDMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQBAjALBglghkgBZQMEAQYw
 CwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAS4wDQYJKoZIhvcNAQEBBQAEggEA
-wfKxzEIjOsFrihovtUyfqhX/cKiCQ6/FvEzTHLesYZUav3Ffo+ncx87H0v6Q+QZJNr/DhUQKC46R
-NY3lNijT+qINlyxnhlDnNKhYKCFtf6v6lc2li85CBQct5mdPad/Qjv0qCW0YsVw9aXBE+1Js0PwH
-TKKdFjd2MhE08Gpa8+kItc5jzDRHw23Wb+KTtFGLXJdPsibT/1ZE1JGTMYCG4UyYNT4cdkGra8eJ
-CPQd4/7oehLJwRDihpgrv45304XIV0VomG6Kh5/B887rFVrpqQ+ib/ZNZtUVVELNj17NhXjY3TI+
-3COzg8w3E9h7ywff9woc5jn0nYGcc/gvAe/epQAAAAAAAAAAAAA=
---NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b--
+RZo0sMv3Ucpb5RvsOPtUocU1o53VV3P6xlRLndbOq4sWrrSbG+gOvEep+jTuvTSQle+kFptn6Dn4
+EOHE+Fii2CdPZbQKUNgAR/XXBpP6/s7Wtx/G44ierpj1nP74lUhnjDLBEZ+9bU81CUgLsWNQVX0i
+u6VyukNtJxe4uZPvJG2rYtDgMFf/8di5KrrfdjSCrEASphQO1qXP8fkPs+2ZPw0H73HOHlqF3nKh
+7ggfaGpiS0t9O4+JUOa2VQkPgVLfz2r9FsH9RpIGxqO2RLcJ9yC+8sU+GBC7KRUJ0M1gdUiic9sp
+ZafPXk3FGWdxymI2MwZDwa81vU3lnhBp5Q/SNwAAAAAAAAAAAAA=
+--NoSpamProxy_906fa38b-6982-4269-93ee-b6e3669094d9--
 
