@@ -2,167 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B3CCC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A2D5C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:55:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6016261406
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76FEE61439
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345941AbhI2Qmx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 12:42:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46580 "EHLO
+        id S1345631AbhI2Q53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 12:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233735AbhI2Qmw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:42:52 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093E6C06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:41:11 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id i19so10392066lfu.0
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:41:10 -0700 (PDT)
+        with ESMTP id S245276AbhI2Q52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 12:57:28 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1892C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:55:47 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id 61-20020aed2143000000b002a6a0f52ce7so9382752qtc.0
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:55:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tX3mZhywYOxvQ/D4dvL+zytylGpgX7KSkTW77Sp0QqQ=;
-        b=HaLDG67UIwfhDhUx0xlNg3+3+wSZWJxPDDPDJYkHU9NPxU4U1GgblayCshCGW2PCJ/
-         4ky7kZ+lsarHZpd4OKkDuKgKu13K8HF8kUl75w4aCbYuJnnCOnqWLpnG2zUJKYioYSAv
-         y2ajuxxVXv0/qb/AMZl68kzrteydJWZNgoxJuFDU+Ar9VXlCI+cS4/RmhOVdc/wiAwKK
-         lxWARYVYXmFkCPt0A8WG0IodWXrNT8aOECCydI1apKesJuNWIvGVYTbQDX3n0ulX1Hn9
-         osD/zYYjUThAD6SsyPV/zedaEUSV2E7pqBkgK39ym+woaVvdQcfZIe2Y8vf/ODB+GGtB
-         U9pQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=LjI9VkFEcMyWvigmo4Y1h16ZScjUqLstXyWh3Ns5QkQ=;
+        b=F4TUmXcYUZpxZf3sGVxeBf/Iy1Xy6zWTrGbQwb0Em1JNfV0ceWzeGYlqF6kkyZUcoV
+         7FtdUWPJ1RDO8rc9foT7XjYLoCZLKDlnJo+ppbgdAV/Io6FqNZTBp2+0XjAithmFLT7J
+         ZJy2gBPc86keOOpzCOR49Zt7350ItPLz2IhNBBJpmWSTm4GGdPd6xegiWEGwUwscmCAe
+         bOAr3hWJGSZ+97j5iSahdV4wZx+3Zs6tLUNfQ+hWi2knL3GBolfbYmJtdYFXlyr8TGmB
+         TyaAySFFPWzocWyldsyTtX01KAadKoetlQ6pAH1UlQWBLEFRwUgAn5UcL51qrV1pO11K
+         se6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tX3mZhywYOxvQ/D4dvL+zytylGpgX7KSkTW77Sp0QqQ=;
-        b=m1TkTbM8FSy9s1z51EJPQ8pox7/ik7XN9JGSHBFFtWRa6ffA87tL69nrNm4mwRGcu8
-         8U++uqyH5t/IXB5Q/znDred81YJ92yhI8wu6BLiR47NMIu1KwuqtUPMhEicPXnYF9z19
-         6cNZKzx8HVCbin02qoxSxpin/R4yGE0AvXAP0Sv28ZeIfTWID5o0PurzG4rDvVlAlERT
-         f8emINrcjSNx/PctQYOM7c0OP8Shg8AGJwInleaJZoKjnVXDVVDWxHktrMYj5MjRz2YM
-         plxaKVE99HHDmiZpu1LL64U0MVsCyCuKpBQWaQY2Wv7BGFoHkT27tKqX42Lm24n2m0LT
-         Ic/Q==
-X-Gm-Message-State: AOAM53336fk/QH74jF3u4e4L1ONqTReWV5vdqAEqR3r3ZDamIBEJkg1f
-        tvGnWMCRTUSo52Bvng5ZUW1lnkfjG5VT3PCm+eg=
-X-Google-Smtp-Source: ABdhPJyPyTI0+8OD4EvBov2pp/ysS3s5Mg7rQaocslG1ALusJSG5RDG6Gk1zeVCjJMjNw9xwGsfarVwYLpdMTiy4wnc=
-X-Received: by 2002:a05:6512:31c1:: with SMTP id j1mr699252lfe.442.1632933669289;
- Wed, 29 Sep 2021 09:41:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com>
- <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com> <6ce72a709a11686b9082439a257fd5f58e5eb0f7.1632871971.git.gitgitgadget@gmail.com>
- <CABPp-BHAQU=i0K9KCtqdifECw4qQjH=6c=4-Bz45yEmbT1YABw@mail.gmail.com>
-In-Reply-To: <CABPp-BHAQU=i0K9KCtqdifECw4qQjH=6c=4-Bz45yEmbT1YABw@mail.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Wed, 29 Sep 2021 09:40:58 -0700
-Message-ID: <CANQDOddqwVtWfC4eEP3fJB4sUiszGX8bLqoEVLcMf=v+jzx19g@mail.gmail.com>
-Subject: Re: [PATCH v7 2/9] tmp-objdir: new API for creating temporary
- writable databases
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christoph Hellwig <hch@lst.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=LjI9VkFEcMyWvigmo4Y1h16ZScjUqLstXyWh3Ns5QkQ=;
+        b=v6bBP9A/wF1KbOmuJnZXU0sDzmogrVMY9XBg0R8OkQHVNKqF1f+4bIaE9BpSNSRZVR
+         A3f8mWfuhhj5FTHzEwSQp3AJWIelSrWFaGqwFhnRf4JOtYN6Q+NjCCHFoz+lEI9Zsh+u
+         /ofv96ddYVcuJGlUkie2Mp0/UWpDyxukKE8mUsMmODK1ijukKjvg2nuuIpX2fVPguZez
+         ZiO+/Ta6ad8PEe5BPhQCGv0NrLeHObR2BtZ3Ko2PBTs2fPDzJEwnRy+BZcotQjXx6Nsb
+         3q9mYOP49mtrBmNmv271/Pz3/KhARs2lKMj52hUje6d1Lrlse0FGkj5p6hkV/1LDn0E/
+         RmJA==
+X-Gm-Message-State: AOAM532LsfIVE6zCPYPEvi4qMZqOE6h6wcF3NsRpSbtkbu7zLM3QzBGe
+        fWYOd/TV9h+vlQvWjFN1I2Z74OJj8FKT4A==
+X-Google-Smtp-Source: ABdhPJxzerG5YDOzw+69qT6PWWYoyq/AwjwCJYcr/Y9KQAcPfC5bmbNWCmFqCbs3NmvkNJAt+yqoWzG/yFE/Mw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:ad4:4652:: with SMTP id
+ y18mr917322qvv.2.1632934546973; Wed, 29 Sep 2021 09:55:46 -0700 (PDT)
+Date:   Wed, 29 Sep 2021 09:55:45 -0700
+In-Reply-To: <87y27gv5bk.fsf@evledraar.gmail.com>
+Message-Id: <kl6lwnmzpbhq.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <CAENgTz2DoStQEqoKYKa-qMcyaez64u55mnv1HHOzDm392fuEqQ@mail.gmail.com>
+ <CAENgTz0st6RpnVusP67-SSh2eENSxQn1_qiEqUDiMKzg=r54vQ@mail.gmail.com>
+ <CAPUEspgr71t-thozi+Ez4xwxAkSJizsLuV=0TnROKZ85M6-kBg@mail.gmail.com>
+ <kl6l1r58r6ba.fsf@chooglen-macbookpro.roam.corp.google.com> <87y27gv5bk.fsf@evledraar.gmail.com>
+Subject: Re: Feature Request: `git commit --amend-to`
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Carlo Arenas <carenas@gmail.com>,
+        Aidan Gallagher <aidgal2@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 29, 2021 at 1:42 AM Elijah Newren <newren@gmail.com> wrote:
->
-> Hi,
->
-> Thanks for working on this, and for moving this up in your series near
-> the beginning.
->
-> On Tue, Sep 28, 2021 at 4:34 PM Neeraj Singh via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Neeraj Singh <neerajsi@microsoft.com>
-> >
-> > This patch is based on work by Elijah Newren. Any bugs however are my
-> > own.
->
-> This kind of information is often included in a commit message via a
-> trailer such as:
->     Based-on-patch-by: Elijah Newren <newren@gmail.com>
-> or Helped-by: or Co-authored-by: or Contributions-by: .
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Will fix. I didn't know what some acceptable trailers were.  I'll use:
-Based-on-patch-by: Elijah Newren <newren@gmail.com>
-
-> >
-> > +struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy)
-> > +{
-> > +       struct object_directory *new_odb;
-> > +
-> > +       /*
-> > +        * Make sure alternates are initialized, or else our entry may be
-> > +        * overwritten when they are.
-> > +        */
-> > +       prepare_alt_odb(the_repository);
+>> [...] I think the problem
+>> has more to do with how Git manages merges and conflicts and less to do
+>> with having shortcuts in the CLI.
 >
-> This implicit dependence on the_repository is unfortunate.  My
-> versions passed the repository parameter explicitly.  While my
-> remerge-diff code doesn't really make use of that currently, it could
-> make sense to have temporary object stores for a submodule and do
-> remerge-diff work on them.  You've also got two more uses of
-> the_repository later in this function.
+> I think that users who'd like an --amend-to would probably be happy with
+> or might want to try out something like "hg absorb", which is something
+> I think we should have stolen in git already, but it's never too late.
 
-The core loose object code in object-file.c is riven with
-the_repository assumptions. I'd have to refactor that code (including
-the alternates code) to take repository arguments.  Given the
-extensive assumptions, I'd like to push back on this suggestion and
-all of the related suggestions.
+Agree. I think some "hg absorb" features get at the heart of what I
+meant, which is that users would benefit from making this merge conflict
+resolution a lot simpler.
 
-> > diff --git a/object-store.h b/object-store.h
-> > index 551639f173d..5bc9da6634e 100644
-> > --- a/object-store.h
-> > +++ b/object-store.h
-> > @@ -31,7 +31,12 @@ struct object_directory {
-> >          * This is a temporary object store, so there is no need to
-> >          * create new objects via rename.
-> >          */
-> > -       int is_temp;
-> > +       int is_temp : 8;
-> > +
-> > +       /*
-> > +        * This object store is ephemeral, so there is no need to fsync.
-> > +        */
-> > +       int will_destroy : 8;
->
-> Why 8 bits wide rather than 1?  I thought these were boolean
-> values...was I mistaken?
->
-> (Also, if boolean and compressing to 1 bit, should probably be
-> unsigned rather than signed.)
+> I.e. it's a "git commit --squash" on steroids, which tries to find what
+> commit to amend things into.
 
-This will go away when I drop the rename patch.  I wish we had a
-standard bool_t type which is one char wide.  This is a
-microoptimization, since accessing bits usually encodes to more or
-larger instructions than accessing bytes.
+But this is an even bigger step up from what I was suggesting. I blame
+my own lack of imagination for not even considering this possibility.
 
-> > +        */
-> > +       strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
-> >
-> >         /*
-> >          * Grow the strbuf beyond any filename we expect to be placed in it.
-> > @@ -269,6 +279,15 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
-> >         if (!t)
-> >                 return 0;
-> >
-> > +
-> > +
->
-> Why so many blank lines?
->
+To me, what really sells the feature is the "history of lines" approach
+cited in
+https://gregoryszorc.com/blog/2018/11/05/absorbing-commit-changes-in-mercur=
+ial-4.8/:
 
-This was an accident, will remove.
+  The automatic rewriting logic of hg absorb is implemented by following
+  the history of lines. This is fundamentally different from the approach
+  taken by hg histedit or git rebase, which tend to rely on merge
+  strategies based on the 3-way merge to derive a new version of a file
+  given multiple input versions.
 
-> Other than those minor things, I couldn't find any problems.
-
-Thanks for the review!
+Traditional 3-way merge is extremely frustrating when you find yourself
+touching the same lines over and over in a rebase, and I think "history
+of lines" maps quite cleanly to how humans think of lines. However I'm
+not sure if Git has any machinery for doing this.
