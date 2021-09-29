@@ -2,121 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8DAC433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B3CCC433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:41:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CA816128C
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:32:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6016261406
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344370AbhI2Qdn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 12:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44394 "EHLO
+        id S1345941AbhI2Qmx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 12:42:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244930AbhI2Qdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:33:42 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 855CCC06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:32:01 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id g7so10815580edv.1
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:32:01 -0700 (PDT)
+        with ESMTP id S233735AbhI2Qmw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 12:42:52 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093E6C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:41:11 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id i19so10392066lfu.0
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tPjKUP2MX3QIm8Rgbb+3fROhVdNAvj0kGOtIuxfMIC4=;
-        b=Btd+yJhbrP9Cts5epJjBGQnhSQq3sbzMNDYi8GsK1aKitlc8nXJyaK6hIGvp0RNxs8
-         L6WscNol5P/RDQ8vOgKfTgP/x+vs2I36mr9CofWSXOTLDbX+Uglha+0UjwSEIi48Gic1
-         ktwJnOWZ4Zw55qZLsCSnuXcLh6FII3B+HWWk9Xy4NKxJ+al57hYI8FQehpkhR8DjcdFL
-         8YWizxtbSXGNYt0Ua18LyHRFAoI1o7M32CIXpR8t+V5QJp+553Bju+yEegcCueOacYjd
-         D0UD8o32ocKP3m9BOTv/6uo/xbzg/J3KXIoQTEHFjUmJtpKSeteJvazVUzedpc8M1uvu
-         aagw==
+        bh=tX3mZhywYOxvQ/D4dvL+zytylGpgX7KSkTW77Sp0QqQ=;
+        b=HaLDG67UIwfhDhUx0xlNg3+3+wSZWJxPDDPDJYkHU9NPxU4U1GgblayCshCGW2PCJ/
+         4ky7kZ+lsarHZpd4OKkDuKgKu13K8HF8kUl75w4aCbYuJnnCOnqWLpnG2zUJKYioYSAv
+         y2ajuxxVXv0/qb/AMZl68kzrteydJWZNgoxJuFDU+Ar9VXlCI+cS4/RmhOVdc/wiAwKK
+         lxWARYVYXmFkCPt0A8WG0IodWXrNT8aOECCydI1apKesJuNWIvGVYTbQDX3n0ulX1Hn9
+         osD/zYYjUThAD6SsyPV/zedaEUSV2E7pqBkgK39ym+woaVvdQcfZIe2Y8vf/ODB+GGtB
+         U9pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tPjKUP2MX3QIm8Rgbb+3fROhVdNAvj0kGOtIuxfMIC4=;
-        b=Xold/5hqOspMF6paeUrA1JQ4GR7pB3A0Num5NAovNeEKq4Vj2aZfDJSgcrP0hhcQzS
-         AjoafxuEYow1UiDs4SlV9MNB3mNt41DLfeRVD/2teZ6dL281Z2PnpjY///ARJ/u3NeVN
-         edTdLk3gukkcNzNKUq7gCULGqfOIPDCa0brltvMeu7TPfYqACRS3S5fRURVcmhMjSiNj
-         cqIDXzKF7HZjV0sA/ODlCZaywukVwzrIzOCS2cRrO+cD/jmNxQ4tnAFd0E0K3mdwFWwu
-         O+M6em0qon/G03IouZVqQIzZQZVtmT6a9beh1Y7GcoHbpveCgwncEtvqcNXffnvAKmzH
-         53Og==
-X-Gm-Message-State: AOAM533kzSWtRze3MHAoPct28xXhRLw6GRKiESkfLvsx1RiyIbRdz7jg
-        G3nmGzHTAbPBtfgtE3vwJTuuRt+FV/ZVOZTiJAWgDdAqymw=
-X-Google-Smtp-Source: ABdhPJx2TWkAtafNvrdvPNRxdh2sJ3BJ4nNC8JTnCMIAiNGYsARTY++mY+PCKVWfmJanPUHIEqbA8dKE+Vwleb95YjU=
-X-Received: by 2002:a50:be82:: with SMTP id b2mr975074edk.56.1632933119840;
- Wed, 29 Sep 2021 09:31:59 -0700 (PDT)
+        bh=tX3mZhywYOxvQ/D4dvL+zytylGpgX7KSkTW77Sp0QqQ=;
+        b=m1TkTbM8FSy9s1z51EJPQ8pox7/ik7XN9JGSHBFFtWRa6ffA87tL69nrNm4mwRGcu8
+         8U++uqyH5t/IXB5Q/znDred81YJ92yhI8wu6BLiR47NMIu1KwuqtUPMhEicPXnYF9z19
+         6cNZKzx8HVCbin02qoxSxpin/R4yGE0AvXAP0Sv28ZeIfTWID5o0PurzG4rDvVlAlERT
+         f8emINrcjSNx/PctQYOM7c0OP8Shg8AGJwInleaJZoKjnVXDVVDWxHktrMYj5MjRz2YM
+         plxaKVE99HHDmiZpu1LL64U0MVsCyCuKpBQWaQY2Wv7BGFoHkT27tKqX42Lm24n2m0LT
+         Ic/Q==
+X-Gm-Message-State: AOAM53336fk/QH74jF3u4e4L1ONqTReWV5vdqAEqR3r3ZDamIBEJkg1f
+        tvGnWMCRTUSo52Bvng5ZUW1lnkfjG5VT3PCm+eg=
+X-Google-Smtp-Source: ABdhPJyPyTI0+8OD4EvBov2pp/ysS3s5Mg7rQaocslG1ALusJSG5RDG6Gk1zeVCjJMjNw9xwGsfarVwYLpdMTiy4wnc=
+X-Received: by 2002:a05:6512:31c1:: with SMTP id j1mr699252lfe.442.1632933669289;
+ Wed, 29 Sep 2021 09:41:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <ed71913886e19ccc276b382de707b4bab7834d12.1630376800.git.gitgitgadget@gmail.com>
- <YVOXPTjsp9lrxmS6@coredump.intra.peff.net> <CABPp-BEioOUJRd6FSsmsDtYHhUy7xhr4YabdEmVKzkduo4g9TQ@mail.gmail.com>
- <xmqqr1d7e4ug.fsf@gitster.g>
-In-Reply-To: <xmqqr1d7e4ug.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Sep 2021 09:31:46 -0700
-Message-ID: <CABPp-BEidvD6Hi0rj4tnG5xioi1RXQK95NjGJkPYqjqmaU12nA@mail.gmail.com>
-Subject: Re: [PATCH 2/7] merge-ort: add ability to record conflict messages in
- a file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+References: <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com>
+ <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com> <6ce72a709a11686b9082439a257fd5f58e5eb0f7.1632871971.git.gitgitgadget@gmail.com>
+ <CABPp-BHAQU=i0K9KCtqdifECw4qQjH=6c=4-Bz45yEmbT1YABw@mail.gmail.com>
+In-Reply-To: <CABPp-BHAQU=i0K9KCtqdifECw4qQjH=6c=4-Bz45yEmbT1YABw@mail.gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 29 Sep 2021 09:40:58 -0700
+Message-ID: <CANQDOddqwVtWfC4eEP3fJB4sUiszGX8bLqoEVLcMf=v+jzx19g@mail.gmail.com>
+Subject: Re: [PATCH v7 2/9] tmp-objdir: new API for creating temporary
+ writable databases
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 29, 2021 at 9:14 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Sep 29, 2021 at 1:42 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> Elijah Newren <newren@gmail.com> writes:
+> Hi,
 >
-> > I also don't like how diff.orderFile provides a global ordering of the
-> > files listed, rather than providing some scheme for relative
-> > orderings.  That'd either force me to precompute the diff to determine
-> > all the files that were different so I can list _all_ of them,...
+> Thanks for working on this, and for moving this up in your series near
+> the beginning.
 >
-> Don't we determine all the files that would be listed in the diff
-> anyway?  The diffcore pipeline collects all the different filepairs,
-> matches them up for rename/copy detection, and finally do the output
-> formatting for each individual filepair.
+> On Tue, Sep 28, 2021 at 4:34 PM Neeraj Singh via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> >
+> > This patch is based on work by Elijah Newren. Any bugs however are my
+> > own.
+>
+> This kind of information is often included in a commit message via a
+> trailer such as:
+>     Based-on-patch-by: Elijah Newren <newren@gmail.com>
+> or Helped-by: or Co-authored-by: or Contributions-by: .
 
-merge-ort is missing one side of the diff.  It only has the parents of
-the merge commit, and their merge base.  So, merge-ort would now need
-to know about an additional commit (the original merge), and compute
-the diff between that and the merge-result it is creating, in advance
-of an external caller (log) calling diff to compute the result between
-those two trees.
+Will fix. I didn't know what some acceptable trailers were.  I'll use:
+Based-on-patch-by: Elijah Newren <newren@gmail.com>
 
-> > So, I'm not so sure about this solution; it feels like it introduces
-> > bigger holes than the ugly space character it is fixing.
 > >
-> >>  - there can be other non-diff data between the individual segments. For
-> >>    example, "patch" will skip over non-diff lines. And certainly in Git
-> >>    we have our own custom headers. I'm wondering if we could attach
-> >>    these annotations to the diff-pair somehow, and then show something
-> >>    like:
-> >>
-> >>      diff --git a/foo.c b/foo.c
-> >>      index 1234abcd..5678cdef 100644
-> >>      conflict modify/delete foo.c
-> >
-> > A couple things here...
-> >
-> > First, I'm not so sure I like the abbreviation here.  Just knowing
-> > "modify/delete" might be enough in some cases, but I'd rather have the
-> > full messages that would have been printed to the console...
-> >
-> > Second, what about when there are multiple ...
-> >
-> > Third, what about the cases where there is no diff, ...
+> > +struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy)
+> > +{
+> > +       struct object_directory *new_odb;
+> > +
+> > +       /*
+> > +        * Make sure alternates are initialized, or else our entry may be
+> > +        * overwritten when they are.
+> > +        */
+> > +       prepare_alt_odb(the_repository);
 >
-> None of the above seems like a problem to me at least from the
-> presentation and consumption sides.  There is no rule that extended
-> diff headers has to fit on a 72-char line, cannot use line folding
-> by inserting LF-SP in the middle of a logical line, and there
-> already is at least one case we give an extended diff header without
-> a single line of content change (namely, "chmod +x README").
+> This implicit dependence on the_repository is unfortunate.  My
+> versions passed the repository parameter explicitly.  While my
+> remerge-diff code doesn't really make use of that currently, it could
+> make sense to have temporary object stores for a submodule and do
+> remerge-diff work on them.  You've also got two more uses of
+> the_repository later in this function.
 
-Cool, that's good to hear.  I'll look into it.
+The core loose object code in object-file.c is riven with
+the_repository assumptions. I'd have to refactor that code (including
+the alternates code) to take repository arguments.  Given the
+extensive assumptions, I'd like to push back on this suggestion and
+all of the related suggestions.
+
+> > diff --git a/object-store.h b/object-store.h
+> > index 551639f173d..5bc9da6634e 100644
+> > --- a/object-store.h
+> > +++ b/object-store.h
+> > @@ -31,7 +31,12 @@ struct object_directory {
+> >          * This is a temporary object store, so there is no need to
+> >          * create new objects via rename.
+> >          */
+> > -       int is_temp;
+> > +       int is_temp : 8;
+> > +
+> > +       /*
+> > +        * This object store is ephemeral, so there is no need to fsync.
+> > +        */
+> > +       int will_destroy : 8;
+>
+> Why 8 bits wide rather than 1?  I thought these were boolean
+> values...was I mistaken?
+>
+> (Also, if boolean and compressing to 1 bit, should probably be
+> unsigned rather than signed.)
+
+This will go away when I drop the rename patch.  I wish we had a
+standard bool_t type which is one char wide.  This is a
+microoptimization, since accessing bits usually encodes to more or
+larger instructions than accessing bytes.
+
+> > +        */
+> > +       strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
+> >
+> >         /*
+> >          * Grow the strbuf beyond any filename we expect to be placed in it.
+> > @@ -269,6 +279,15 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
+> >         if (!t)
+> >                 return 0;
+> >
+> > +
+> > +
+>
+> Why so many blank lines?
+>
+
+This was an accident, will remove.
+
+> Other than those minor things, I couldn't find any problems.
+
+Thanks for the review!
