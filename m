@@ -2,341 +2,237 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E041BC433FE
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 11:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C70EC433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 12:24:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF9036140D
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 11:57:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CC596136A
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 12:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343557AbhI2L7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 07:59:06 -0400
-Received: from mta-09-4.privateemail.com ([68.65.122.29]:35452 "EHLO
-        MTA-09-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245149AbhI2L7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 07:59:03 -0400
-Received: from mta-09.privateemail.com (localhost [127.0.0.1])
-        by mta-09.privateemail.com (Postfix) with ESMTP id 4B86518000A7;
-        Wed, 29 Sep 2021 07:57:21 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.219])
-        by mta-09.privateemail.com (Postfix) with ESMTPA id A6DC7180009F;
-        Wed, 29 Sep 2021 07:57:20 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
+        id S1343654AbhI2M0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 08:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245563AbhI2M0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 08:26:17 -0400
+Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8449BC06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 05:24:36 -0700 (PDT)
+Received: by mail-vk1-xa33.google.com with SMTP id f73so1044399vkf.6
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 05:24:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ESRiwWFcfYnjOf4yFKN9x9mD/2+fiyaP4k6OnoKbUug=;
+        b=ACjYfitfZBLuHx9vCjNlp6/STB0W24aI9o51SGWgykEekkLIwEpEb3fgleLPbh7Wqn
+         XxNw+z603Nk25os3VrdId8GmBzH//1nvfTslKjV94iwvJkkM23ZnN0yiHPdnGLxaJqmz
+         uWJAUkCu9pydxXuvqr3h4RM5qMuI4T8zsGTVEYVQF9kCcfuN9qwj1j56rMXInow6UT38
+         1LeNv1yBV/A5c4tSlRnTs2+laxKX9V+urbWciT4uvskDZNZOPPeOD4oo/UeP3t0/JDEI
+         /PzAl8KxvM39EPiMBi6TqgRnTuSUyNsvaaPajXsGsnu0SOD4LhnpGOkF0d9ii9HDWRrS
+         FSbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ESRiwWFcfYnjOf4yFKN9x9mD/2+fiyaP4k6OnoKbUug=;
+        b=BxAdDqXwURnhEwrcTaE6nv37uN4TG79Ezq+0sR/hw+3crgOL9W0YIS6XdsM0PzJfdc
+         ai0dRqw884OsmudjQ+83PibOB1ZMlwUfbxj6z4KLzJlngF9mEV1YhzvHtK/QS2K554a1
+         u/RIg5sGt5HFTXQ5KP+NRIddyfJ/JOj0lcm5WnI+CRqhwOHgjUix8ZrjGFwmDazdxUU8
+         2aBpMnbvbaBrxeKk7Lqyb+U+Ir4o+T2ZVEDdaTNqbEyNX3xe5cxYcB9A2Tdtj8CKV/bq
+         +rboA3rB3Rp8l6vjd8mPE7BQajx4x0YwMvydaRfDyX8cg3/wedlgtDDMdAxBZpgEpW//
+         Rgkg==
+X-Gm-Message-State: AOAM530X2/MFACPyhVZa7VZOxpV/2xjjOh/+FXEi0XXDtVeGq2M8MqAh
+        uDoOb77Hm78D9yL8WCAI/efIK7uhvqZsBg==
+X-Google-Smtp-Source: ABdhPJygkzqXNZ1N4vfSiwimNPOzPYWRbIdynbi7nMaTEM/vz9exnvosXwN++rz+DBV9lcLqHWPBKQ==
+X-Received: by 2002:a1f:8fc1:: with SMTP id r184mr5576319vkd.9.1632918274713;
+        Wed, 29 Sep 2021 05:24:34 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.116.19])
+        by smtp.gmail.com with ESMTPSA id t3sm573028vka.35.2021.09.29.05.24.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Sep 2021 05:24:34 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v10 2/2] pretty: colorize pattern matches in commit messages
-Date:   Wed, 29 Sep 2021 07:57:16 -0400
-Message-Id: <20210929115716.10364-2-someguy@effective-light.com>
+Cc:     avarab@gmail.com, gitster@pobox.com, jonathantanmy@google.com,
+        sunshine@sunshineco.com
+Subject: [PATCH v2] grep: demonstrate bug with textconv attributes and submodules
+Date:   Wed, 29 Sep 2021 09:24:25 -0300
+Message-Id: <8c8932465cd2fb2f0d4d6d9a5b86e51e2a72865b.1632918166.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210929115716.10364-1-someguy@effective-light.com>
-References: <20210929115716.10364-1-someguy@effective-light.com>
+In-Reply-To: <8c266e58dede247b2c97ad2870c7c24c3b35ed55.1632848754.git.matheus.bernardino@usp.br>
+References: <8c266e58dede247b2c97ad2870c7c24c3b35ed55.1632848754.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git log" command limits its output to the commits that contain strings
-matched by a pattern when the "--grep=<pattern>" option is used, but unlike
-output from "git grep -e <pattern>", the matches are not highlighted,
-making them harder to spot.
+In some circumstances, "git grep --textconv --recurse-submodules"
+ignores the textconv attributes from the submodules and erroneously
+applies the attributes defined in the superproject on the submodules'
+files. The textconv cache is also saved on the superproject, even for
+submodule objects.
 
-Teach the pretty-printer code to highlight matches from the
-"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-options (to view the last one, you may have to ask for --pretty=fuller).
+A fix for these problems will probably require at least three changes:
 
-Also, it must be noted that we are effectively greping the content twice,
-however it only slows down "git log --author=^H" on this repository by
-around 1-2% (compared to v2.33.0), so it should be a small enough slow
-down to justify the addition of the feature.
+- Some textconv and attributes functions (as well as their callees) will
+  have to be adjusted to work with arbitrary repositories. Note that
+  "fill_textconv()", for example, already receives a "struct repository"
+  but it writes the textconv cache using "write_loose_object()", which
+  implicitly works on "the_repository".
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+- grep.c functions will have to call textconv/userdiff routines passing
+  the "repo" field from "struct grep_source" instead of the one from
+  "struct grep_opt". The latter always points to "the_repository" on
+  "git grep" executions (see its initialization in builtin/grep.c), but
+  the former points to the correct repository that each source (an
+  object, file, or buffer) comes from.
+
+- "userdiff_find_by_path()" might need to use a different attributes
+  stack for each repository it works on or reset its internal static
+  stack when the repository is changed throughout the calls.
+
+For now, let's add some tests to demonstrate these problems, and also
+update a NEEDSWORK comment in grep.h that mentions this bug to reference
+the added tests.
+
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
-v2: make the commit message whole (add the missing ingredients), rename
-    append_matched_line() to append_line_with_color(), use
-    colors[GREP_COLOR_MATCH_SELECTED] instead of
-    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
-    customized, don't copy strings to a buffer when not coloring in
-    append_line_with_color(), rename next_match() to grep_next_match(),
-    repurpose grep_next_match()/match_one_pattern() for use in
-    append_line_with_color() (allowing us to remove duplicated matching
-    code in append_line_with_color()), document how to customize the
-    feature and modify some of the tests to fit the feature better.
 
-v3: fix a formatting issue with the added documentation.
+Changed in v2: fixed typos in commit message and test names
 
-v4: add strbuf_add_with_color(), use the correct color code scheme in the
-    unit tests and add more unit tests.
+ grep.h                             |   6 +-
+ t/t7814-grep-recurse-submodules.sh | 103 +++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+), 3 deletions(-)
 
-v5: separate grep changes from pretty changes and add some performance
-    analysis in the commit message.
-
-v6: put the documentation in the correct place, cleanup pretty.c and
-    format the unit tests according to the current convention.
-
-v7: get rid of all manual strbuf management, constify where now appropriate
-    and fix the header line prefix issue properly.
-
-v8: remove code that relies on grep_header_fields[].
----
- Documentation/config/color.txt |   7 ++-
- pretty.c                       | 101 +++++++++++++++++++++++++++++----
- t/t4202-log.sh                 |  51 +++++++++++++++++
- 3 files changed, 145 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index e05d520a86..91d9a9da32 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -104,9 +104,12 @@ color.grep.<slot>::
- `matchContext`;;
- 	matching text in context lines
- `matchSelected`;;
--	matching text in selected lines
-+	matching text in selected lines. Also, used to customize the following
-+	linkgit:git-log[1] subcommands: `--grep`, `--author` and `--committer`.
- `selected`;;
--	non-matching text in selected lines
-+	non-matching text in selected lines. Also, used to customize the
-+	following linkgit:git-log[1] subcommands: `--grep`, `--author` and
-+	`--committer`.
- `separator`;;
- 	separators between fields on a line (`:`, `-`, and `=`)
- 	and between hunks (`--`)
-diff --git a/pretty.c b/pretty.c
-index 73b5ead509..2dd94af886 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,6 +431,52 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
-+					 const char *buf, size_t buflen)
-+{
-+	strbuf_addstr(sb, color);
-+	strbuf_add(sb, buf, buflen);
-+	if (*color)
-+		strbuf_addstr(sb, GIT_COLOR_RESET);
-+}
-+
-+static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-+				   const char *line, size_t linelen,
-+				   int color, enum grep_context ctx,
-+				   enum grep_header_field field)
-+{
-+	const char *buf, *eol, *line_color, *match_color;
-+	regmatch_t match;
-+	int eflags = 0;
-+
-+	buf = line;
-+	eol = buf + linelen;
-+
-+	if (!opt || !want_color(color) || opt->invert)
-+		goto end;
-+
-+	line_color = opt->colors[GREP_COLOR_SELECTED];
-+	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
-+
-+	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
-+		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
-+				      match.rm_eo - match.rm_so);
-+		buf += match.rm_eo;
-+		eflags = REG_NOTBOL;
-+	}
-+
-+	if (eflags)
-+		strbuf_add_with_color(sb, line_color, buf, eol - buf);
-+	else {
-+end:
-+		strbuf_add(sb, buf, eol - buf);
-+	}
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
-@@ -496,9 +542,26 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		struct strbuf id = STRBUF_INIT;
-+		enum grep_header_field field = GREP_HEADER_FIELD_MAX;
-+		struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: ", what);
-+		if (pp->fmt == CMIT_FMT_FULLER)
-+			strbuf_addchars(sb, ' ', 4);
-+
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
-+				       GREP_CONTEXT_HEAD, field);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1939,8 +2002,9 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
-+				 int color, int tabwidth, const char *line,
-+				 int linelen)
- {
- 	const char *tab;
- 
-@@ -1957,7 +2021,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_line_with_color(sb, opt, line, tab - line, color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1972,7 +2038,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
+diff --git a/grep.h b/grep.h
+index 128007db65..3b63bd0253 100644
+--- a/grep.h
++++ b/grep.h
+@@ -128,9 +128,9 @@ struct grep_opt {
+ 	 * instead.
+ 	 *
+ 	 * This is potentially the cause of at least one bug - "git grep"
+-	 * ignoring the textconv attributes from submodules. See [1] for more
+-	 * information.
+-	 * [1] https://lore.kernel.org/git/CAHd-oW5iEQarYVxEXoTG-ua2zdoybTrSjCBKtO0YT292fm0NQQ@mail.gmail.com/
++	 * using the textconv attributes from the superproject on the
++	 * submodules. See the failing "git grep --textconv" tests in
++	 * t7814-grep-recurse-submodules.sh for more information.
  	 */
--	strbuf_add(sb, line, linelen);
-+	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
-+			       GREP_HEADER_FIELD_MAX);
- }
+ 	struct repository *repo;
  
- /*
-@@ -1984,11 +2051,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
-+				     line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_line_with_color(sb, opt, line, linelen, pp->color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2006,7 +2078,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2027,14 +2101,17 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
--					     line, linelen);
-+			strbuf_add_tabexpand(sb, opt, pp->color,
-+					     pp->expand_tabs_in_log, line,
-+					     linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_line_with_color(sb, opt, line, linelen,
-+					       pp->color, GREP_CONTEXT_BODY,
-+					       GREP_HEADER_FIELD_MAX);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9dfead936b..3d240bba57 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -449,6 +449,57 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
- 	)
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index 3172f5b936..058e5d0c96 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -441,4 +441,107 @@ test_expect_success 'grep --recurse-submodules with --cached ignores worktree mo
+ 	test_must_fail git grep --recurse-submodules --cached "A modified line in submodule" >actual 2>&1 &&
+ 	test_must_be_empty actual
  '
- 
-+test_expect_success 'log --author' '
++
++test_expect_failure 'grep --textconv: superproject .gitattributes does not affect submodules' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	echo "a diff=d2x" >.gitattributes &&
++
 +	cat >expect <<-\EOF &&
-+	Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
++	a:(1|2)x(3|4)
 +	EOF
-+	git log -1 --color=always --author="A U" >log &&
-+	grep Author log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
++	git grep --textconv --recurse-submodules x >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'log --committer' '
++test_expect_failure 'grep --textconv: superproject .gitattributes (from index) does not affect submodules' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	echo "a diff=d2x" >.gitattributes &&
++	git add .gitattributes &&
++	rm .gitattributes &&
++
 +	cat >expect <<-\EOF &&
-+	Commit:     C O Mitter <committer@<BOLD;RED>example<RESET>.com>
++	a:(1|2)x(3|4)
 +	EOF
-+	git log -1 --color=always --pretty=fuller --committer="example" >log &&
-+	grep "Commit:" log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
++	git grep --textconv --recurse-submodules x >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'log -i --grep with color' '
++test_expect_failure 'grep --textconv: superproject .git/info/attributes does not affect submodules' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	super_attr="$(git rev-parse --git-path info/attributes)" &&
++	test_when_finished "rm -f \"$super_attr\"" &&
++	echo "a diff=d2x" >"$super_attr" &&
++
 +	cat >expect <<-\EOF &&
-+	    <BOLD;RED>Sec<RESET>ond
-+	    <BOLD;RED>sec<RESET>ond
++	a:(1|2)x(3|4)
 +	EOF
-+	git log --color=always -i --grep=^sec >log &&
-+	grep -i sec log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
++	git grep --textconv --recurse-submodules x >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '-c color.grep.selected log --grep' '
++# Note: what currently prevents this test from passing is not that the
++# .gitattributes file from "./submodule" is being ignored, but that it is being
++# propagated to the nested "./submodule/sub" files.
++#
++test_expect_failure 'grep --textconv correctly reads submodule .gitattributes' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	echo "a diff=d2x" >submodule/.gitattributes &&
++
 +	cat >expect <<-\EOF &&
-+	    <GREEN>th<RESET><BOLD;RED>ir<RESET><GREEN>d<RESET>
++	submodule/a:(1|2)x(3|4)
 +	EOF
-+	git -c color.grep.selected="green" log --color=always --grep=ir >log &&
-+	grep ir log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
++	git grep --textconv --recurse-submodules x >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success '-c color.grep.matchSelected log --grep' '
++test_expect_failure 'grep --textconv correctly reads submodule .gitattributes (from index)' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++	echo "a diff=d2x" >submodule/.gitattributes &&
++	git -C submodule add .gitattributes &&
++	rm submodule/.gitattributes &&
++
 +	cat >expect <<-\EOF &&
-+	    <BLUE>i<RESET>n<BLUE>i<RESET>t<BLUE>i<RESET>al
++	submodule/a:(1|2)x(3|4)
 +	EOF
-+	git -c color.grep.matchSelected="blue" log --color=always --grep=i >log &&
-+	grep al log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
++	git grep --textconv --recurse-submodules x >actual &&
 +	test_cmp expect actual
 +'
 +
- cat > expect <<EOF
- * Second
- * sixth
++test_expect_failure 'grep --textconv correctly reads submodule .git/info/attributes' '
++	reset_and_clean &&
++	test_config_global diff.d2x.textconv "sed -e \"s/d/x/\"" &&
++
++	submodule_attr="$(git -C submodule rev-parse --path-format=absolute --git-path info/attributes)" &&
++	test_when_finished "rm -f \"$submodule_attr\"" &&
++	echo "a diff=d2x" >"$submodule_attr" &&
++
++	cat >expect <<-\EOF &&
++	submodule/a:(1|2)x(3|4)
++	EOF
++	git grep --textconv --recurse-submodules x >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'grep saves textconv cache in the appropriate repository' '
++	reset_and_clean &&
++	test_config_global diff.d2x_cached.textconv "sed -e \"s/d/x/\"" &&
++	test_config_global diff.d2x_cached.cachetextconv true &&
++	echo "a diff=d2x_cached" >submodule/.gitattributes &&
++
++	# We only read/write to the textconv cache when grepping from an OID,
++	# as the working tree file might have modifications.
++	git grep --textconv --cached --recurse-submodules x &&
++
++	super_textconv_cache="$(git rev-parse --git-path refs/notes/textconv/d2x_cached)" &&
++	sub_textconv_cache="$(git -C submodule rev-parse \
++			--path-format=absolute --git-path refs/notes/textconv/d2x_cached)" &&
++	test_path_is_missing "$super_textconv_cache" &&
++	test_path_is_file "$sub_textconv_cache"
++'
++
+ test_done
 -- 
 2.33.0
 
