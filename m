@@ -2,160 +2,458 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE02C433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 08:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F74FC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 08:41:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AB5F613C8
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 08:12:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E56B06128E
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 08:41:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244516AbhI2IO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 04:14:29 -0400
-Received: from mail-am6eur05on2083.outbound.protection.outlook.com ([40.107.22.83]:64353
-        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S243282AbhI2IO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 04:14:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jyWj5+5PWhzFb6PllS53VwynXfdF2o5nLezNLJ0pVo6irEE4qxbhBd/Mche6BPzj1CU1cpAhIVCHXIjvmfDqdN8OT6z52RiDlriPHOSUts2hFcKiTPVwOUDJR5ROI4tdT/CTkwZRamS7VfmFH3JL32LzqOVXmoeRBEF+Dweh0PwankFN2Rl/+YuQIXl64el91JfrplKTrcrecpy/wYNn1ve7YuXnxxDSF8cpxda4z8MUH+70rnXRobAxYJm8bzIk+8NWRB2yQePGWPmV9vdfgu6ssrVvRBiWRGt+BICwVgr//ALv1tB7cCkQWuRvKeKZT9TzYjpUDNYjlCUjA+XR+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=k4fA87HursWoOpr1UdRTMWg8UIEBJ7U26fg+g9GKDhA=;
- b=E7XdY3whGopWg6dJeZcihlTfjKiC22U9zGZtmJQ+Vcqdcs8XY5ln+talYlu7nABCwdvNBmmrzEK6rEHobksqt05zttUXLDb9EiRpO5LuP3YduOQ9HQZL7/j38+FbnbK/G+K62ZXK9R62lXXMGXk855vgMyHyVnbwfv9d3Nka7LBOlmH4RgGmgYGHX8hVLaoLsKzaAFoTyrOlDN0YdKlekg0CupGAmasG8ac+dHMrt0Dqws6FNe1vaV3PviXm/qVEu9/RKfrsFqzEu4aXd5+QuNKBhvdqWHCFfFYaNwrw72LgYK2V/1uyWD4t3W4nN+IzZCve/qwGnHgMJCywtLyGCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
+        id S244770AbhI2Ine (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 04:43:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244582AbhI2Ine (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 04:43:34 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3D95C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 01:41:53 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id c26-20020a056830349a00b0054d96d25c1eso1929824otu.9
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 01:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k4fA87HursWoOpr1UdRTMWg8UIEBJ7U26fg+g9GKDhA=;
- b=Cnw76bUC7v/V+gjB0Py0nlJ9snlo6K0qRnAmaJW3kXuf0jhg2lf4V+VHxBUATyjkrQHfzH3WknhPL5tzzZPbK6PZylF7RClsRp9y23ERGR7sP0+SMJPxS3Ls3bM+iCRvS3ZjSGmONNyw/3cGblIHD2A2J7d59jxaKNTnmjqrw58=
-Authentication-Results: pobox.com; dkim=none (message not signed)
- header.d=none;pobox.com; dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4528.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:107::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.13; Wed, 29 Sep
- 2021 08:12:46 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::49a2:88ed:be81:d939%6]) with mapi id 15.20.4544.022; Wed, 29 Sep 2021
- 08:12:46 +0000
-Message-ID: <fd244131-84d4-7152-c88c-45f9ada6b609@gigacodes.de>
-Date:   Wed, 29 Sep 2021 10:12:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.0
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq8rzhmsi7.fsf@gitster.g>
-From:   Fabian Stelzer <fs@gigacodes.de>
-In-Reply-To: <xmqq8rzhmsi7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM0PR02CA0201.eurprd02.prod.outlook.com
- (2603:10a6:20b:28f::8) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Odlq9gwBzm44cnRsYy+g85PzT9E0exq0FAp/DI5kD6o=;
+        b=Y52o7s4Zctl/kXn07P5sDEEV6Xx5WL5NfiGxwK5d81m1zT0f54rQvJoNXVZwOicAgN
+         2yTxGJWstxLK/oFjv/j164OSOOEhUzchL07s0BaArpcGZj2ZkT22teIEC6FPCzc39kc2
+         zLX99G7DvIAu6ztPjXdpNXGNKApyj2z7rwcW/BsfUZ6yByf96vKKRs8GZ/Wjb24KdgoY
+         hY+oupfBz8EyhGuOQHdTQQfhodrwxz7LTvHzOD+sy0kHPx2qIfrFFWsPv3uUTYwR5qh0
+         XM4nPemc8qIGt+TWj0Hi22lYrPOS1UaRRk1dSXF5lV824MRXc2VsLvxmIRrdD754i9jS
+         3RGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Odlq9gwBzm44cnRsYy+g85PzT9E0exq0FAp/DI5kD6o=;
+        b=SWAGSecyH7Lj8ke+lAa0LIAHoqxxJcmhaa9V5nGQKyrNOH8erEq5j1XnK0igGli8PN
+         66KNIjnoJb0+Czze8jSNNWkPxEcpdOXS79PujK4VPc+sqKsiTryUy6yyT6Ls3skXwY2z
+         5paeQ2ptXP7kIx/PbH1Qte8ZjfLyVIO+oQxrspjqcQX8DXxNj1AIxvwrAHomLmIt1MMA
+         BEDY5lJaa/ucAo9k/22lukGrPDSKpACCToIkhkY9e2ROAGiOGEp5q+Rbm5hcxYwiBOHe
+         WZn0RbzMqDNL0JYcyQdNzOcyIjOklZWUZ8gMBUjkd5PSsdMEyO5fOyWa8KUGJtS1g+z1
+         1oBw==
+X-Gm-Message-State: AOAM530WFmfASUOXNkUx6Z7GGPqDqHMQnWamTdU38D8PK0TyOessUij0
+        zInePeQh1x5fClBWwQwI+c0HLCJMm4mddktZkwg=
+X-Google-Smtp-Source: ABdhPJxTU7Wik8KCGLtff0ZlLSvQkigEjpdQPQG0EUK7EkZb41gjFCmFV3ImjAwlLbTRccrjure/OOvCZl2RcZSUd6A=
+X-Received: by 2002:a05:6830:24ac:: with SMTP id v12mr9157091ots.174.1632904913038;
+ Wed, 29 Sep 2021 01:41:53 -0700 (PDT)
 MIME-Version: 1.0
-Received: from [IPV6:2003:ea:5820:600:4db6:1dfa:2076:87b5] (2003:ea:5820:600:4db6:1dfa:2076:87b5) by AM0PR02CA0201.eurprd02.prod.outlook.com (2603:10a6:20b:28f::8) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.15 via Frontend Transport; Wed, 29 Sep 2021 08:12:45 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f9f239d7-97ca-4533-39c0-08d98320eb45
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4528:
-X-Microsoft-Antispam-PRVS: <PA4PR10MB45284C3499EB703A17BE2AE5B6A99@PA4PR10MB4528.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: kbt1JJeGn7dwAchSERxQ4xnY+krBisqUFSM19p+fw1xIgyEBNxnuTgO2Iq8YaMj0y9AIkY9G6pPpIIshwE3WX7BWepWUcsa5OhYn7cl7mtByzb7Y5PFO1bfLEQQL9UwI20EzVytWE7ehkbZV5pCheN2GzphnhikUEJDrUtfMGn5CnsAyxNqIY5wXzkqBhE/qmM4V+c43Todx9jmvHt05cMSEKpLKxfprucZAMxV5vPcLAAv3AfKRi66XF/nasza3aa8etRwpRyPehu3y84rS5uJd6bg7bFLb/zXKQdZT1zQlKZr5oegyzt9XkD4kaNJPYe7CmlWlyqZk7kjBuY9bnsRTs816+7NAsHHSDsJMP1R2NXdU3m2hpzgkP+x7i3qVcLfBhaiLdcVNUTA5Fn3SJSounUUNBWqv3Qjrc1aCzvkvay8UZy82BIo5X47lUe/93ZCp7C4wQhG/qIk+MGIbkQ4gJBGwDhDbmKQ9FlQP5NEra8peXcHUnCqV3gvrkJCw7LF1dCXSaC5M0QL6iZow9cIL1+YuoYneI8ckwkPmQUJCp0Zb+wAyEPF1h+ukpm7g8se8WI3N5WG5yE99DpcLASKRW9dKIE9B4J2j4bitQExwrfQ8gyJqyMD9wHQS5zM65X0PRN/qQxhX1LBBcMUGQTJ1+1KbNC8UWjcCHGfJhYmsMLiCz6C/DwUTDlN8q3aggaVdTmMv0nNuk4nUpAYuuoQ++RqH96wQLLQdJ8jKSIA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(396003)(366004)(346002)(376002)(39840400004)(136003)(186003)(508600001)(52116002)(83380400001)(38100700002)(8676002)(5660300002)(2616005)(31686004)(86362001)(66556008)(66476007)(66946007)(8936002)(6486002)(316002)(6666004)(31696002)(2906002)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzhxcndWL1F6LytzbXdKa1drTitxT2hIbXZtMkdGYkVlWk85TXpkenhXK0s2?=
- =?utf-8?B?UUUvVHZnZlRaUUd6RXEzbU13WjZnUFdHYnJVQ2pQZ3VSdTFFTlV4dDBrbHpa?=
- =?utf-8?B?RlpUUWhmb3luS1FNdlgwVVdTcEU5M25HZVFOamRkUE54cXd4VXM3bEtWMVhx?=
- =?utf-8?B?SlpMZmhwOTJaUzM5bUptUFhuaXhnQWFKYVZSeGdxQ1pKcGdjNU5CdEU2N3NF?=
- =?utf-8?B?aG1zc3diVUpFNHJYSjZNTjNvRFdGUmdaOFpUVTJkbTk1cDkwZHpqbDJieWRS?=
- =?utf-8?B?VGFZRHRxL0UxZGE4SGFZR09RMHYxWDhxcWNoUUJRU1k0K3BmL2pGTzhZdStm?=
- =?utf-8?B?bEdMNUNiTEhOUG45b0tId3RiWFlZODlLTEMrZzVFUlFUMVpTU3hRa2xSazJl?=
- =?utf-8?B?dmVIaXVZcU9rZ1krS1ZYbnJ2dkZ1dUhIVW1IRUM1SUYzUnFIRXZ3YjBsMFJW?=
- =?utf-8?B?ekNoVUhvVXl1OXJKT0JvQTVxS2Vyb3Zxam5xWXhHZWNkTDdpQXFjZy85WU1H?=
- =?utf-8?B?UzZDSzllbTRiT3dtTzhsUWhPS0xRUEhJZ2tLbHlvWDcxSVExVit6eTBKOVdj?=
- =?utf-8?B?ZnpYVUVhRnpPQzFtM3JRS1hPZzloaldsdG8xeDhxY2RHcm9oTEsvUG04Y3h3?=
- =?utf-8?B?L1hod1A1bHV0TTNiaU9TbFBhSFNvRzNHdFRHSnpOT0gvU1hxd2dVWWdDd3dT?=
- =?utf-8?B?UG9TREV5ek9kM3BrWU9Lb0Z2WldrT29pNXpCNVAyc2pzb3ZXTVdjSEtNYzNN?=
- =?utf-8?B?M0xGbFFVaXMvbldaclJTTitWODFUMnc3QnM0M3ppWVhSYTdRRHVBYTlZNzJi?=
- =?utf-8?B?VmMrR3hJZVZVWlUvSW13RDRPQ01Yb3JYSTV6ZlFNYzU1S1V1bytDMlhYOWk5?=
- =?utf-8?B?eDZDUW92bW5oeGF1aEN5LytzenJrQkZHOHdoeitXVUpJZ2N3ZmFvTDhxcFFx?=
- =?utf-8?B?V1ZMZWVZQ1ZPNVUyNUswK2RzY2xWQUovMjVsZ3M5RXdSclNuSjQwT2tSODhW?=
- =?utf-8?B?QmNtVER3L3F5c2gzV0REVmlqaWpqUzJJajJJRWF2L2tuVkVIOGVKSE5SQUdh?=
- =?utf-8?B?WG5GQUZiVHlvRkFXVWowQ1h6TjNzN241b2RaSTIyNU5iVlJFbVN3dUtSOWZl?=
- =?utf-8?B?NlVPRFpRL2orNGM3R3BEcUo4cjBGQXU5dHhhUjVGYmo0RlovbTRHQTlZQ24w?=
- =?utf-8?B?V0N3MTREbFVTeHBGRFpNeFhyWEFWM2tSZXVzS3lkUVVMTUdOZHZTSUtqUnc2?=
- =?utf-8?B?dnFFM1JpbHdkZWNzaXA5dzZqcEhXalZuRlpFd3BoRStCeEtGbTVuUUFPOXZL?=
- =?utf-8?B?cE1vOC83ZXluTEhRTWpvSEhPRGJxbjJWL3FqZHpXYUVFMXhwMTA0ejJqWFo0?=
- =?utf-8?B?SjRSa1Q1cWJsT0paYkhrbFRKWHArUDVWYU1WaDR0MG8wQmU5dkFMS1R4eG94?=
- =?utf-8?B?VnRJeDRIUVcvVFNWaU4xVTJ3b3dvWUZZazd0L0RJV1VETmxVd3ZhTDhpY01Z?=
- =?utf-8?B?SVN5OUR0UXFlc00rc0xvVVNWQUNLdXppMEhKTmFJdjF4WXZSQTVNd2RIMmpL?=
- =?utf-8?B?VGIwT1NqY1VHTkNUQ2ZtZVB0bjNTc2NrelQ3QzJzWWlpZDBzYlpmK3U1R0Jm?=
- =?utf-8?B?Zk5WRlVlTTh5clFMWlg3VW42NHRXQjJZeTlhZXAwNWtFTnA4REVDNGNZRWY0?=
- =?utf-8?B?aDNlSjhxOEZQTFlicFQxdVVFUkJPWlh4cFd3VDI5VXhQZUFKZnNNam9aT0gz?=
- =?utf-8?B?cWFCOE5nUURjV2RUSlFyY29ESDNqWGtVMkpVdjl6d0hyUzlQWTAwaHRwenNl?=
- =?utf-8?B?dzFtUk50dVFtU1kzTWZvZ2ZyMng2am5hK05KdDZKWG9jcHppd05SWXVpTUZO?=
- =?utf-8?Q?WdonY1TZCqasz?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9f239d7-97ca-4533-39c0-08d98320eb45
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2021 08:12:46.0195
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P8uY9N4d1xV6S20C/22HNDCT7fBOvR6DRplVn4G0N7oDdJPRH0T0IH9YR5kKTlGHiDd90BqlrxM1t1aTwmsz0f2KHOxyfLwlCHnSWciuuX0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4528
+References: <pull.1076.v6.git.git.1632527609.gitgitgadget@gmail.com>
+ <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com> <6ce72a709a11686b9082439a257fd5f58e5eb0f7.1632871971.git.gitgitgadget@gmail.com>
+In-Reply-To: <6ce72a709a11686b9082439a257fd5f58e5eb0f7.1632871971.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 29 Sep 2021 01:41:41 -0700
+Message-ID: <CABPp-BHAQU=i0K9KCtqdifECw4qQjH=6c=4-Bz45yEmbT1YABw@mail.gmail.com>
+Subject: Re: [PATCH v7 2/9] tmp-objdir: new API for creating temporary
+ writable databases
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Neeraj-Personal <nksingh85@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28.09.21 02:52, Junio C Hamano wrote > * fs/ssh-signing (2021-09-10)
-9 commits
->  - ssh signing: test that gpg fails for unknown keys
->  - ssh signing: tests for logs, tags & push certs
->  - ssh signing: duplicate t7510 tests for commits
->  - ssh signing: verify signatures using ssh-keygen
->  - ssh signing: provide a textual signing_key_id
->  - ssh signing: retrieve a default key from ssh-agent
->  - ssh signing: add ssh key format and signing code
->  - ssh signing: add test prereqs
->  - ssh signing: preliminary refactoring and clean-up
-> 
->  Use ssh public crypto for object and push-cert signing.
-> 
->  On hold.
->  cf. <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
->  cf. <532d97e7-8c91-df6a-6d90-70668256f513@gigacodes.de>
-> 
+Hi,
+
+Thanks for working on this, and for moving this up in your series near
+the beginning.
+
+On Tue, Sep 28, 2021 at 4:34 PM Neeraj Singh via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-Openssh 8.8 has been released a few days ago and includes the needed fix
-for the find-principal segfault.
-I ran the full git testsuite against it without issues.
+> From: Neeraj Singh <neerajsi@microsoft.com>
+>
+> This patch is based on work by Elijah Newren. Any bugs however are my
+> own.
 
-Also, we (~30developers) have been running this patch with
-openssh-portable (2d678c5e3bdc2f5c99f7af5122e9d054925d560d / post 8.7 -
-pre 8.8) in our organization for the last 2 weeks without problems.
+This kind of information is often included in a commit message via a
+trailer such as:
+    Based-on-patch-by: Elijah Newren <newren@gmail.com>
+or Helped-by: or Co-authored-by: or Contributions-by: .
 
-The only issues we saw with our users are related to some misleading
-openssh error messages.
-For example if you configure a public key and the private key is not
-available via the ssh-agent the error message is: "invalid format".
-Or if the public key contains a typo (forgot a char in copy&pase) it
-will error with "no such file or directory".
-I will need to dig a bit deeper into openssh to see if we can make these
-more specific without breaking any compatibility. Both errors originate
-from some lower level lib functions which i don't want to change.
+> The tmp_objdir API provides the ability to create temporary object
+> directories, but was designed with the goal of having subprocesses
+> access these object stores, followed by the main process migrating
+> objects from it to the main object store or just deleting it.  The
+> subprocesses would view it as their primary datastore and write to it.
+>
+> Here we add the tmp_objdir_replace_primary_odb function that replaces
+> the current process's writable "main" object directory with the
+> specified one. The previous main object directory is restored in either
+> tmp_objdir_migrate or tmp_objdir_destroy.
+>
+> For the --remerge-diff usecase, add a new `will_destroy` flag in `struct
+> object_database` to mark ephemeral object databases that do not require
+> fsync durability.
+>
+> Add 'git prune' support for removing temporary object databases, and
+> make sure that they have a name starting with tmp_ and containing an
+> operation-specific name.
+>
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  builtin/prune.c        | 22 +++++++++++++++++----
+>  builtin/receive-pack.c |  2 +-
+>  object-file.c          | 45 ++++++++++++++++++++++++++++++++++++++++--
+>  object-store.h         | 21 +++++++++++++++++++-
+>  object.c               |  2 +-
+>  tmp-objdir.c           | 32 +++++++++++++++++++++++++++---
+>  tmp-objdir.h           | 14 ++++++++++---
+>  7 files changed, 123 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/prune.c b/builtin/prune.c
+> index 02c6ab7cbaa..9c72ecf5a58 100644
+> --- a/builtin/prune.c
+> +++ b/builtin/prune.c
+> @@ -18,6 +18,7 @@ static int show_only;
+>  static int verbose;
+>  static timestamp_t expire;
+>  static int show_progress = -1;
+> +static struct strbuf remove_dir_buf = STRBUF_INIT;
+>
+>  static int prune_tmp_file(const char *fullpath)
+>  {
+> @@ -26,10 +27,19 @@ static int prune_tmp_file(const char *fullpath)
+>                 return error("Could not stat '%s'", fullpath);
+>         if (st.st_mtime > expire)
+>                 return 0;
+> -       if (show_only || verbose)
+> -               printf("Removing stale temporary file %s\n", fullpath);
+> -       if (!show_only)
+> -               unlink_or_warn(fullpath);
+> +       if (S_ISDIR(st.st_mode)) {
+> +               if (show_only || verbose)
+> +                       printf("Removing stale temporary directory %s\n", fullpath);
+> +               if (!show_only) {
+> +                       strbuf_addstr(&remove_dir_buf, fullpath);
+> +                       remove_dir_recursively(&remove_dir_buf, 0);
+> +               }
+> +       } else {
+> +               if (show_only || verbose)
+> +                       printf("Removing stale temporary file %s\n", fullpath);
+> +               if (!show_only)
+> +                       unlink_or_warn(fullpath);
+> +       }
+>         return 0;
+>  }
+>
+> @@ -97,6 +107,9 @@ static int prune_cruft(const char *basename, const char *path, void *data)
+>
+>  static int prune_subdir(unsigned int nr, const char *path, void *data)
+>  {
+> +       if (verbose)
+> +               printf("Removing directory %s\n", path);
+> +
+>         if (!show_only)
+>                 rmdir(path);
+>         return 0;
+> @@ -185,5 +198,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+>                 prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
+>         }
+>
+> +       strbuf_release(&remove_dir_buf);
+>         return 0;
+>  }
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 48960a9575b..418a42ca069 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -2208,7 +2208,7 @@ static const char *unpack(int err_fd, struct shallow_info *si)
+>                 strvec_push(&child.args, alt_shallow_file);
+>         }
+>
+> -       tmp_objdir = tmp_objdir_create();
+> +       tmp_objdir = tmp_objdir_create("incoming");
+>         if (!tmp_objdir) {
+>                 if (err_fd > 0)
+>                         close(err_fd);
+> diff --git a/object-file.c b/object-file.c
+> index 49c53f801f7..1a3ad558c45 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -751,6 +751,44 @@ void add_to_alternates_memory(const char *reference)
+>                              '\n', NULL, 0);
+>  }
+>
+> +struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy)
+> +{
+> +       struct object_directory *new_odb;
+> +
+> +       /*
+> +        * Make sure alternates are initialized, or else our entry may be
+> +        * overwritten when they are.
+> +        */
+> +       prepare_alt_odb(the_repository);
 
-But vverall i think this is ready for some broader usage/testing via next.
+This implicit dependence on the_repository is unfortunate.  My
+versions passed the repository parameter explicitly.  While my
+remerge-diff code doesn't really make use of that currently, it could
+make sense to have temporary object stores for a submodule and do
+remerge-diff work on them.  You've also got two more uses of
+the_repository later in this function.
 
-I'd suggest to send the additional patches for valid-before/after
-functionality in a new patchset for review after.
+> +
+> +       /*
+> +        * Make a new primary odb and link the old primary ODB in as an
+> +        * alternate
+> +        */
+> +       new_odb = xcalloc(1, sizeof(*new_odb));
+> +       new_odb->path = xstrdup(dir);
+> +       new_odb->is_temp = 1;
+> +       new_odb->will_destroy = will_destroy;
+> +       new_odb->next = the_repository->objects->odb;
+> +       the_repository->objects->odb = new_odb;
+> +       return new_odb->next;
+> +}
+> +
+> +void restore_primary_odb(struct object_directory *restore_odb, const char *old_path)
+> +{
+> +       struct object_directory *cur_odb = the_repository->objects->odb;
 
-Best regards,
-Fabian
+Another use of the_repository, and some more below.
+
+> +
+> +       if (strcmp(old_path, cur_odb->path))
+> +               BUG("expected %s as primary object store; found %s",
+> +                   old_path, cur_odb->path);
+> +
+> +       if (cur_odb->next != restore_odb)
+> +               BUG("we expect the old primary object store to be the first alternate");
+> +
+> +       the_repository->objects->odb = restore_odb;
+> +       free_object_directory(cur_odb);
+> +}
+> +
+>  /*
+>   * Compute the exact path an alternate is at and returns it. In case of
+>   * error NULL is returned and the human readable error is added to `err`
+> @@ -1893,8 +1931,11 @@ int hash_object_file(const struct git_hash_algo *algo, const void *buf,
+>  /* Finalize a file on disk, and close it. */
+>  static void close_loose_object(int fd)
+>  {
+> -       if (fsync_object_files)
+> -               fsync_or_die(fd, "loose object file");
+> +       if (!the_repository->objects->odb->will_destroy) {
+> +               if (fsync_object_files)
+> +                       fsync_or_die(fd, "loose object file");
+> +       }
+> +
+>         if (close(fd) != 0)
+>                 die_errno(_("error when closing loose object file"));
+>  }
+> diff --git a/object-store.h b/object-store.h
+> index 551639f173d..5bc9da6634e 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -31,7 +31,12 @@ struct object_directory {
+>          * This is a temporary object store, so there is no need to
+>          * create new objects via rename.
+>          */
+> -       int is_temp;
+> +       int is_temp : 8;
+> +
+> +       /*
+> +        * This object store is ephemeral, so there is no need to fsync.
+> +        */
+> +       int will_destroy : 8;
+
+Why 8 bits wide rather than 1?  I thought these were boolean
+values...was I mistaken?
+
+(Also, if boolean and compressing to 1 bit, should probably be
+unsigned rather than signed.)
+
+>         /*
+>          * Path to the alternative object store. If this is a relative path,
+> @@ -64,6 +69,17 @@ void add_to_alternates_file(const char *dir);
+>   */
+>  void add_to_alternates_memory(const char *dir);
+>
+> +/*
+> + * Replace the current writable object directory with the specified temporary
+> + * object directory; returns the former primary object directory.
+> + */
+> +struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy);
+> +
+> +/*
+> + * Restore a previous ODB replaced by set_temporary_main_odb.
+> + */
+> +void restore_primary_odb(struct object_directory *restore_odb, const char *old_path);
+> +
+>  /*
+>   * Populate and return the loose object cache array corresponding to the
+>   * given object ID.
+> @@ -74,6 +90,9 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
+>  /* Empty the loose object cache for the specified object directory. */
+>  void odb_clear_loose_cache(struct object_directory *odb);
+>
+> +/* Clear and free the specified object directory */
+> +void free_object_directory(struct object_directory *odb);
+> +
+>  struct packed_git {
+>         struct hashmap_entry packmap_ent;
+>         struct packed_git *next;
+> diff --git a/object.c b/object.c
+> index 4e85955a941..98635bc4043 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -513,7 +513,7 @@ struct raw_object_store *raw_object_store_new(void)
+>         return o;
+>  }
+>
+> -static void free_object_directory(struct object_directory *odb)
+> +void free_object_directory(struct object_directory *odb)
+>  {
+>         free(odb->path);
+>         odb_clear_loose_cache(odb);
+> diff --git a/tmp-objdir.c b/tmp-objdir.c
+> index b8d880e3626..366ffe28511 100644
+> --- a/tmp-objdir.c
+> +++ b/tmp-objdir.c
+> @@ -11,6 +11,7 @@
+>  struct tmp_objdir {
+>         struct strbuf path;
+>         struct strvec env;
+> +       struct object_directory *prev_odb;
+>  };
+>
+>  /*
+> @@ -38,6 +39,9 @@ static int tmp_objdir_destroy_1(struct tmp_objdir *t, int on_signal)
+>         if (t == the_tmp_objdir)
+>                 the_tmp_objdir = NULL;
+>
+> +       if (!on_signal && t->prev_odb)
+> +               restore_primary_odb(t->prev_odb, t->path.buf);
+> +
+>         /*
+>          * This may use malloc via strbuf_grow(), but we should
+>          * have pre-grown t->path sufficiently so that this
+> @@ -52,6 +56,7 @@ static int tmp_objdir_destroy_1(struct tmp_objdir *t, int on_signal)
+>          */
+>         if (!on_signal)
+>                 tmp_objdir_free(t);
+> +
+>         return err;
+>  }
+>
+> @@ -121,7 +126,7 @@ static int setup_tmp_objdir(const char *root)
+>         return ret;
+>  }
+>
+> -struct tmp_objdir *tmp_objdir_create(void)
+> +struct tmp_objdir *tmp_objdir_create(const char *prefix)
+>  {
+>         static int installed_handlers;
+>         struct tmp_objdir *t;
+> @@ -129,11 +134,16 @@ struct tmp_objdir *tmp_objdir_create(void)
+>         if (the_tmp_objdir)
+>                 BUG("only one tmp_objdir can be used at a time");
+>
+> -       t = xmalloc(sizeof(*t));
+> +       t = xcalloc(1, sizeof(*t));
+>         strbuf_init(&t->path, 0);
+>         strvec_init(&t->env);
+>
+> -       strbuf_addf(&t->path, "%s/incoming-XXXXXX", get_object_directory());
+> +       /*
+> +        * Use a string starting with tmp_ so that the builtin/prune.c code
+> +        * can recognize any stale objdirs left behind by a crash and delete
+> +        * them.
+> +        */
+> +       strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
+>
+>         /*
+>          * Grow the strbuf beyond any filename we expect to be placed in it.
+> @@ -269,6 +279,15 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
+>         if (!t)
+>                 return 0;
+>
+> +
+> +
+
+Why so many blank lines?
+
+> +       if (t->prev_odb) {
+> +               if (the_repository->objects->odb->will_destroy)
+
+Another implicit dependence on the_repository.
+
+> +                       BUG("migrating and ODB that was marked for destruction");
+> +               restore_primary_odb(t->prev_odb, t->path.buf);
+> +               t->prev_odb = NULL;
+> +       }
+> +
+>         strbuf_addbuf(&src, &t->path);
+>         strbuf_addstr(&dst, get_object_directory());
+>
+> @@ -292,3 +311,10 @@ void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
+>  {
+>         add_to_alternates_memory(t->path.buf);
+>  }
+> +
+> +void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
+> +{
+> +       if (t->prev_odb)
+> +               BUG("the primary object database is already replaced");
+> +       t->prev_odb = set_temporary_primary_odb(t->path.buf, will_destroy);
+> +}
+> diff --git a/tmp-objdir.h b/tmp-objdir.h
+> index b1e45b4c75d..75754cbfba6 100644
+> --- a/tmp-objdir.h
+> +++ b/tmp-objdir.h
+> @@ -10,7 +10,7 @@
+>   *
+>   * Example:
+>   *
+> - *     struct tmp_objdir *t = tmp_objdir_create();
+> + *     struct tmp_objdir *t = tmp_objdir_create("incoming");
+>   *     if (!run_command_v_opt_cd_env(cmd, 0, NULL, tmp_objdir_env(t)) &&
+>   *         !tmp_objdir_migrate(t))
+>   *             printf("success!\n");
+> @@ -22,9 +22,10 @@
+>  struct tmp_objdir;
+>
+>  /*
+> - * Create a new temporary object directory; returns NULL on failure.
+> + * Create a new temporary object directory with the specified prefix;
+> + * returns NULL on failure.
+>   */
+> -struct tmp_objdir *tmp_objdir_create(void);
+> +struct tmp_objdir *tmp_objdir_create(const char *prefix);
+>
+>  /*
+>   * Return a list of environment strings, suitable for use with
+> @@ -51,4 +52,11 @@ int tmp_objdir_destroy(struct tmp_objdir *);
+>   */
+>  void tmp_objdir_add_as_alternate(const struct tmp_objdir *);
+>
+> +/*
+> + * Replaces the main object store in the current process with the temporary
+> + * object directory and makes the former main object store an alternate.
+> + * If will_destroy is nonzero, the object directory may not be migrated.
+> + */
+> +void tmp_objdir_replace_primary_odb(struct tmp_objdir *, int will_destroy);
+> +
+>  #endif /* TMP_OBJDIR_H */
+> --
+> gitgitgadget
+
+Other than those minor things, I couldn't find any problems.
