@@ -2,102 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A2D5C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF231C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 17:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76FEE61439
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 16:55:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C075C6124F
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 17:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345631AbhI2Q53 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 12:57:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49926 "EHLO
+        id S1345000AbhI2RGB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 13:06:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245276AbhI2Q52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:57:28 -0400
-Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1892C06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:55:47 -0700 (PDT)
-Received: by mail-qt1-x84a.google.com with SMTP id 61-20020aed2143000000b002a6a0f52ce7so9382752qtc.0
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 09:55:47 -0700 (PDT)
+        with ESMTP id S243396AbhI2RGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 13:06:00 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD09C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 10:04:19 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id 62-20020aed2044000000b002a6aa209efaso9182365qta.18
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 10:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=LjI9VkFEcMyWvigmo4Y1h16ZScjUqLstXyWh3Ns5QkQ=;
-        b=F4TUmXcYUZpxZf3sGVxeBf/Iy1Xy6zWTrGbQwb0Em1JNfV0ceWzeGYlqF6kkyZUcoV
-         7FtdUWPJ1RDO8rc9foT7XjYLoCZLKDlnJo+ppbgdAV/Io6FqNZTBp2+0XjAithmFLT7J
-         ZJy2gBPc86keOOpzCOR49Zt7350ItPLz2IhNBBJpmWSTm4GGdPd6xegiWEGwUwscmCAe
-         bOAr3hWJGSZ+97j5iSahdV4wZx+3Zs6tLUNfQ+hWi2knL3GBolfbYmJtdYFXlyr8TGmB
-         TyaAySFFPWzocWyldsyTtX01KAadKoetlQ6pAH1UlQWBLEFRwUgAn5UcL51qrV1pO11K
-         se6A==
+         :cc;
+        bh=w8go7dyEKqo23ESH4wJMb0ReorPPLNgISJPkN4mD8aM=;
+        b=Bp0QkTxcKGnvpFcksVJeLKGf31ynz+nj9cAweNQvmVRdAImgBY6CPJdfW+Ag6PxPLE
+         TqW/ee90EmQUDKhJpv6ghfrb6gjeI1weL419+rN4uiOwol6TnyT2yV36rMeuyUWl+Rkt
+         M/tBC16VUMjY/YUZ3iH2yPpsdQ0WvgZ97/aykcyvIAm11cySSNr8SkafRZLAR4CYPXc8
+         gpVAbR7aNqHsS+iDohLThFE74S68j5x4JSdO3hFxneOB1ZqdthnaAsa/rcXeidA6TbZT
+         DomPbSouWwzmzK/wyKnTt/SUEmVPgKnC5SCozE7bDSgIEeixP7PkpucuyPo2sS3jlTLY
+         wgow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=LjI9VkFEcMyWvigmo4Y1h16ZScjUqLstXyWh3Ns5QkQ=;
-        b=v6bBP9A/wF1KbOmuJnZXU0sDzmogrVMY9XBg0R8OkQHVNKqF1f+4bIaE9BpSNSRZVR
-         A3f8mWfuhhj5FTHzEwSQp3AJWIelSrWFaGqwFhnRf4JOtYN6Q+NjCCHFoz+lEI9Zsh+u
-         /ofv96ddYVcuJGlUkie2Mp0/UWpDyxukKE8mUsMmODK1ijukKjvg2nuuIpX2fVPguZez
-         ZiO+/Ta6ad8PEe5BPhQCGv0NrLeHObR2BtZ3Ko2PBTs2fPDzJEwnRy+BZcotQjXx6Nsb
-         3q9mYOP49mtrBmNmv271/Pz3/KhARs2lKMj52hUje6d1Lrlse0FGkj5p6hkV/1LDn0E/
-         RmJA==
-X-Gm-Message-State: AOAM532LsfIVE6zCPYPEvi4qMZqOE6h6wcF3NsRpSbtkbu7zLM3QzBGe
-        fWYOd/TV9h+vlQvWjFN1I2Z74OJj8FKT4A==
-X-Google-Smtp-Source: ABdhPJxzerG5YDOzw+69qT6PWWYoyq/AwjwCJYcr/Y9KQAcPfC5bmbNWCmFqCbs3NmvkNJAt+yqoWzG/yFE/Mw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:ad4:4652:: with SMTP id
- y18mr917322qvv.2.1632934546973; Wed, 29 Sep 2021 09:55:46 -0700 (PDT)
-Date:   Wed, 29 Sep 2021 09:55:45 -0700
-In-Reply-To: <87y27gv5bk.fsf@evledraar.gmail.com>
-Message-Id: <kl6lwnmzpbhq.fsf@chooglen-macbookpro.roam.corp.google.com>
+         :references:subject:from:to:cc;
+        bh=w8go7dyEKqo23ESH4wJMb0ReorPPLNgISJPkN4mD8aM=;
+        b=G//jgDwW2L+ncrFaoqU3zFhI10dBaLlWmiS2VhxBsVorpyAIlovGkNWZJPk0+PCip8
+         0Eu4vKz0Fish8XOI8z6XBCsZ3qp1yFcWZas5V5S8zXaEC0rg3Z+Ax/rUmS7+Fx0w93li
+         4UxDfZH695BG7csi5VLmQxlC3TMsNOj2oneVCoPLvkQek412XZiWjJdeXzn/SymHe8N+
+         Yfw/vP4M1wcd4CTwn4pLrE7rTI5XB7aGWTnwQV4/P1E2tGSbtlRadu40Mat/yACCdGo/
+         fCYr5fwkwfjT7FrSbuu1pJQKSCHbNH8RXvtbFS3GHMDnAJZZvCoabMm4Hjay312XnfR8
+         BsPg==
+X-Gm-Message-State: AOAM533903/xcyv6alay4FZVG/A2/PWpxhW/fPdohyejoHhiZBcMwMoD
+        3H2gPQavKnWhNUjhzvM7A0HuRC25IJ5IBcW1mV/S
+X-Google-Smtp-Source: ABdhPJzeMMTBOxx9GFutij6G5Ou+3dcTYzcXNRBqR23AD0PwrNi754cwE3tq3mShuy50UsAVZNIuJuBArz5f1Pdi/0m3
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:8045:: with SMTP id
+ 63mr1011931qva.63.1632935058503; Wed, 29 Sep 2021 10:04:18 -0700 (PDT)
+Date:   Wed, 29 Sep 2021 10:04:15 -0700
+In-Reply-To: <xmqqlf3gib0p.fsf@gitster.g>
+Message-Id: <20210929170415.1236650-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <CAENgTz2DoStQEqoKYKa-qMcyaez64u55mnv1HHOzDm392fuEqQ@mail.gmail.com>
- <CAENgTz0st6RpnVusP67-SSh2eENSxQn1_qiEqUDiMKzg=r54vQ@mail.gmail.com>
- <CAPUEspgr71t-thozi+Ez4xwxAkSJizsLuV=0TnROKZ85M6-kBg@mail.gmail.com>
- <kl6l1r58r6ba.fsf@chooglen-macbookpro.roam.corp.google.com> <87y27gv5bk.fsf@evledraar.gmail.com>
-Subject: Re: Feature Request: `git commit --amend-to`
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     Carlo Arenas <carenas@gmail.com>,
-        Aidan Gallagher <aidgal2@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+References: <xmqqlf3gib0p.fsf@gitster.g>
+X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
+Subject: Re: [PATCH v2 2/9] refs: teach arbitrary repo support to iterators
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net,
+        newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> The two steps so far seems to give the necessary information to code
+> paths that want them, so it is not wrong per-se, but this makes me
+> wonder a few things.
+> 
+>  - There may be multiple ref backends and iterators corresponding to
+>    them.  Is it reasonable to assume that there are backends that do
+>    not need "repo"?  Otherwise, shouldn't this be added to the base
+>    class "struct ref_iterator base"?
 
->> [...] I think the problem
->> has more to do with how Git manages merges and conflicts and less to do
->> with having shortcuts in the CLI.
->
-> I think that users who'd like an --amend-to would probably be happy with
-> or might want to try out something like "hg absorb", which is something
-> I think we should have stolen in git already, but it's never too late.
+All backends need repos, but not all iterators need backends - there is
+a merge_ref_iterator and a prefix_ref_iterator, for example.
 
-Agree. I think some "hg absorb" features get at the heart of what I
-meant, which is that users would benefit from making this merge conflict
-resolution a lot simpler.
+>  - The iterator_begin() and other functions have been taught to take
+>    the repository in addition to the ref_store in the previous step,
+>    but
+> 
+>    . Doesn't iterator iterate over a single ref_store?  Shouldn't it
+>      have a pointer to the ref_store it is iterating over?
 
-> I.e. it's a "git commit --squash" on steroids, which tries to find what
-> commit to amend things into.
+No - as above, merge_ref_iterator, for example, does not iterate over a
+ref_store but combines the results of 2 other iterators.
 
-But this is an even bigger step up from what I was suggesting. I blame
-my own lack of imagination for not even considering this possibility.
+>    . Doesn't a ref_store belong to a single repository?  Shouldn't
+>      it have a pointer to the repository it is part of?
+> 
+>    If the answers to both are 'yes', then we wouldn't need to add a
+>    repository pointer as a new parameter to functions that already
+>    took a ref store.
+> 
+> In other words, I am wondering if the right pieces of information
+> are stored in the right structure.
+> 
+> Thanks.
 
-To me, what really sells the feature is the "history of lines" approach
-cited in
-https://gregoryszorc.com/blog/2018/11/05/absorbing-commit-changes-in-mercur=
-ial-4.8/:
+A ref_store does belong to a single repository. The reason why it
+doesn't have a pointer to that repository is probably because struct
+ref_store (00eebe351c ("refs: create a base class "ref_store" for
+files_ref_store", 2016-09-09)) predates struct repository (359efeffc1
+("repository: introduce the repository object", 2017-06-23)). I've been
+avoiding introducing a pointer to the repository in struct ref_store to
+avoid unnecessary coupling, but it is looking more and more necessary,
+as you mention in your reply [1] to another patch about how this would
+eliminate certain other "user" codepaths needing to know about the repo.
+I'll take a look at introducing a pointer to the repo in struct
+ref_store and report back with my findings.
 
-  The automatic rewriting logic of hg absorb is implemented by following
-  the history of lines. This is fundamentally different from the approach
-  taken by hg histedit or git rebase, which tend to rely on merge
-  strategies based on the 3-way merge to derive a new version of a file
-  given multiple input versions.
-
-Traditional 3-way merge is extremely frustrating when you find yourself
-touching the same lines over and over in a rebase, and I think "history
-of lines" maps quite cleanly to how humans think of lines. However I'm
-not sure if Git has any machinery for doing this.
+[1] https://lore.kernel.org/git/xmqqh7e4iacw.fsf@gitster.g/
