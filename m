@@ -2,341 +2,351 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D2DEC433FE
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0DE2C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:55:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0D85613DB
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:19:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6718613C8
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:55:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243631AbhI2BVi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 21:21:38 -0400
-Received: from mta-07-4.privateemail.com ([68.65.122.27]:5348 "EHLO
-        MTA-07-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243604AbhI2BVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 21:21:38 -0400
-Received: from mta-07.privateemail.com (localhost [127.0.0.1])
-        by mta-07.privateemail.com (Postfix) with ESMTP id 8EF5918000A6;
-        Tue, 28 Sep 2021 21:19:57 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.208])
-        by mta-07.privateemail.com (Postfix) with ESMTPA id EEA3E18000A3;
-        Tue, 28 Sep 2021 21:19:56 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
+        id S243608AbhI2B4W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 21:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41266 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229505AbhI2B4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 21:56:21 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4FF7C06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 18:54:40 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id b6so1184357ilv.0
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 18:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=oBE/5MQADp8ULQ+7CrCEmr6sChXJQXgq9SPRfEDfCtM=;
+        b=pTpj1EyZ/roQoxQNge5BIMZpJcoZ4qJN3q7qUVaw1RWVnPWJHULuhewWE2pMNA9+XT
+         RcLK8e66iRnwjh77x7ThM+iEDB2bbmefwblAZUvgvBVMP6yI7N9yQqqB6ambPVlYSkM7
+         08onjir5PdERXWL6hfWcaXZ3tbqw6PJmiLoRLIrTBspzX9+VhqUQF+YKkB49r9JCdenv
+         2UF8NF4gC9jorHkQWFS5Yn/K4d9qnNoZ9Eql+mezKd01Gfe5pG4zj6dmM1q2Rd5ZNvGY
+         kO2MP+EPE2YSi+pDPjCAuhxPDS3M008FNw7g0UeFasxTSNFxDQhC7axL1paR2sWQNQWh
+         7L0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=oBE/5MQADp8ULQ+7CrCEmr6sChXJQXgq9SPRfEDfCtM=;
+        b=Ew8qnpvkyVhrAivnqUdYKKI8/RuJykNot0pPoulMvZxyRvgKcxvRzEdhSTIyyzJeiC
+         88QyJ4hHhk2cadA+yuVCKOHVhfeYObKDm8TZpEz+Uj8oZVSEO6M/zq3ScyukgzolULNE
+         LCbOkJQlH+w+vpx1Byg/EY2wKf0ejYd/il9Pw90ywgaxc0nKzVBmqyFOxSQnriLXT3Vf
+         duWYXLFvbwjQHv0PQVwq57EAAnulylnGpeWwAzBnYZ5NYinMT5B6qvBhfyblfpnWKicn
+         I6L3QMOohcx/rU2ONP21o1QY06eQFCty82i71hSabRodO7lcFz/blmpDcOPkst1nFoIk
+         8FfA==
+X-Gm-Message-State: AOAM530Enzt8btm0RW9ASoYBdSRXdZawgPN+ZoIHaLNxCMie5N8wb+AD
+        35nualvQi6KeKoEEvjCJ8fiCy8g7lOeCvg==
+X-Google-Smtp-Source: ABdhPJxuhalTpCaA9SVCWt/UF/3ie7nraPPFVuNPrU1oo3MJbVB9NaRXsM+ZKvPd/WyQFlAacxZERQ==
+X-Received: by 2002:a05:6e02:1402:: with SMTP id n2mr475385ilo.160.1632880479480;
+        Tue, 28 Sep 2021 18:54:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id k4sm489003ilc.10.2021.09.28.18.54.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Sep 2021 18:54:38 -0700 (PDT)
+Date:   Tue, 28 Sep 2021 21:54:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v9 2/2] pretty: colorize pattern matches in commit messages
-Date:   Tue, 28 Sep 2021 21:19:52 -0400
-Message-Id: <20210929011952.611792-2-someguy@effective-light.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210929011952.611792-1-someguy@effective-light.com>
-References: <20210929011952.611792-1-someguy@effective-light.com>
+Cc:     peff@peff.net, avarab@gmail.com, gitster@pobox.com,
+        jonathantanmy@google.com, steadmon@google.com
+Subject: [PATCH v3 0/9] repack: introduce `--write-midx`
+Message-ID: <cover.1632880469.git.me@ttaylorr.com>
+References: <cover.1631730270.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1631730270.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git log" command limits its output to the commits that contain strings
-matched by a pattern when the "--grep=<pattern>" option is used, but unlike
-output from "git grep -e <pattern>", the matches are not highlighted,
-making them harder to spot.
+Here is another small reroll of my series to implement the final component of
+multi-pack reachability bitamps, which is to be able to write them from `git
+repack`.
 
-Teach the pretty-printer code to highlight matches from the
-"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-options (to view the last one, you may have to ask for --pretty=fuller).
+This version incorporates feedback from Jonathan Tan and others at Google who
+graciously provided review. A range-diff is included below, but the major
+changes are:
 
-Also, it must be noted that we are effectively greping the content twice,
-however it only slows down "git log --author=^H" on this repository by
-around 1-2% (compared to v2.33.0), so it should be a small enough slow
-down to justify the addition of the feature.
+  - A comment to explain the relationship between 'ctx->m' and 'ctx->to_include'
+    in midx.c:add_pack_to_midx().
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
-v2: make the commit message whole (add the missing ingredients), rename
-    append_matched_line() to append_line_with_color(), use
-    colors[GREP_COLOR_MATCH_SELECTED] instead of
-    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
-    customized, don't copy strings to a buffer when not coloring in
-    append_line_with_color(), rename next_match() to grep_next_match(),
-    repurpose grep_next_match()/match_one_pattern() for use in
-    append_line_with_color() (allowing us to remove duplicated matching
-    code in append_line_with_color()), document how to customize the
-    feature and modify some of the tests to fit the feature better.
+  - A comment to explain the meaning of write_midx_file_only().
 
-v3: fix a formatting issue with the added documentation.
+  - Clean-up of stray hunks, a missing strbuf_release().
 
-v4: add strbuf_add_with_color(), use the correct color code scheme in the
-    unit tests and add more unit tests.
+  - Replacing the name `existing_packs` with `existing_nonkept_packs` to
+    emphasize the relationship between it and the similarly-named
+    `existing_kept_packs`.
 
-v5: separate grep changes from pretty changes and add some performance
-    analysis in the commit message.
+Instead of depending on tb/multi-pack-bitmaps, this series now depends on the
+tip of master.
 
-v6: put the documentation in the correct place, cleanup pretty.c and
-    format the unit tests according to the current convention.
+Taylor Blau (9):
+  midx: expose `write_midx_file_only()` publicly
+  builtin/multi-pack-index.c: support `--stdin-packs` mode
+  midx: preliminary support for `--refs-snapshot`
+  builtin/repack.c: keep track of existing packs unconditionally
+  builtin/repack.c: rename variables that deal with non-kept packs
+  builtin/repack.c: extract showing progress to a variable
+  builtin/repack.c: support writing a MIDX while repacking
+  builtin/repack.c: make largest pack preferred
+  builtin/repack.c: pass `--refs-snapshot` when writing bitmaps
 
-v7: get rid of all manual strbuf management, constify where now appropriate
-    and fix the header line prefix issue properly.
+ Documentation/git-multi-pack-index.txt |  19 ++
+ Documentation/git-repack.txt           |  18 +-
+ builtin/multi-pack-index.c             |  36 +++-
+ builtin/repack.c                       | 279 ++++++++++++++++++++++---
+ midx.c                                 | 110 ++++++++--
+ midx.h                                 |  15 +-
+ pack-bitmap.c                          |   2 +-
+ pack-bitmap.h                          |   1 +
+ t/helper/test-read-midx.c              |  25 ++-
+ t/lib-midx.sh                          |   8 +
+ t/t5319-multi-pack-index.sh            |  15 ++
+ t/t5326-multi-pack-bitmaps.sh          |  82 ++++++++
+ t/t7700-repack.sh                      |  96 +++++++++
+ t/t7703-repack-geometric.sh            |  24 ++-
+ 14 files changed, 674 insertions(+), 56 deletions(-)
+ create mode 100644 t/lib-midx.sh
 
-v8: remove code that relies on grep_header_fields[].
----
- Documentation/config/color.txt |   7 ++-
- pretty.c                       | 101 +++++++++++++++++++++++++++++----
- t/t4202-log.sh                 |  51 +++++++++++++++++
- 3 files changed, 145 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index e05d520a86..91d9a9da32 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -104,9 +104,12 @@ color.grep.<slot>::
- `matchContext`;;
- 	matching text in context lines
- `matchSelected`;;
--	matching text in selected lines
-+	matching text in selected lines. Also, used to customize the following
-+	linkgit:git-log[1] subcommands: `--grep`, `--author` and `--committer`.
- `selected`;;
--	non-matching text in selected lines
-+	non-matching text in selected lines. Also, used to customize the
-+	following linkgit:git-log[1] subcommands: `--grep`, `--author` and
-+	`--committer`.
- `separator`;;
- 	separators between fields on a line (`:`, `-`, and `=`)
- 	and between hunks (`--`)
-diff --git a/pretty.c b/pretty.c
-index 73b5ead509..2dd94af886 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,6 +431,52 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
-+					 const char *buf, size_t buflen)
-+{
-+	strbuf_addstr(sb, color);
-+	strbuf_add(sb, buf, buflen);
-+	if (*color)
-+		strbuf_addstr(sb, GIT_COLOR_RESET);
-+}
-+
-+static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-+				   const char *line, size_t linelen,
-+				   int color, enum grep_context ctx,
-+				   enum grep_header_field field)
-+{
-+	const char *buf, *eol, *line_color, *match_color;
-+	regmatch_t match;
-+	int eflags = 0;
-+
-+	buf = line;
-+	eol = buf + linelen;
-+
-+	if (!opt || !want_color(color) || opt->invert)
-+		goto end;
-+
-+	line_color = opt->colors[GREP_COLOR_SELECTED];
-+	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
-+
-+	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
-+		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
-+				      match.rm_eo - match.rm_so);
-+		buf += match.rm_eo;
-+		eflags = REG_NOTBOL;
-+	}
-+
-+	if (eflags)
-+		strbuf_add_with_color(sb, line_color, buf, eol - buf);
-+	else {
-+end:
-+		strbuf_add(sb, buf, eol - buf);
-+	}
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
-@@ -496,9 +542,26 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		struct strbuf id = STRBUF_INIT;
-+		enum grep_header_field field = GREP_HEADER_FIELD_MAX;
-+		struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: ", what);
-+		if (pp->fmt == CMIT_FMT_FULLER)
-+			strbuf_addchars(sb, ' ', 4);
-+
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
-+				       GREP_CONTEXT_HEAD, field);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1939,8 +2002,9 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
-+				 int color, int tabwidth, const char *line,
-+				 int linelen)
- {
- 	const char *tab;
- 
-@@ -1957,7 +2021,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_line_with_color(sb, opt, line, tab - line, color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1972,7 +2038,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
- 	 */
--	strbuf_add(sb, line, linelen);
-+	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
-+			       GREP_HEADER_FIELD_MAX);
- }
- 
- /*
-@@ -1984,11 +2051,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
-+				     line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_line_with_color(sb, opt, line, linelen, pp->color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2006,7 +2078,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2027,14 +2101,17 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
--					     line, linelen);
-+			strbuf_add_tabexpand(sb, opt, pp->color,
-+					     pp->expand_tabs_in_log, line,
-+					     linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_line_with_color(sb, opt, line, linelen,
-+					       pp->color, GREP_CONTEXT_BODY,
-+					       GREP_HEADER_FIELD_MAX);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9dfead936b..3d240bba57 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -449,6 +449,57 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
- 	)
- '
- 
-+test_expect_success 'log --author' '
-+	cat >expect <<-\EOF &&
-+	Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
-+	EOF
-+	git log -1 --color=always --author="A U" >log &&
-+	grep Author log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --committer' '
-+	cat >expect <<-\EOF &&
-+	Commit:     C O Mitter <committer@<BOLD;RED>example<RESET>.com>
-+	EOF
-+	git log -1 --color=always --pretty=fuller --committer="example" >log &&
-+	grep "Commit:" log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log -i --grep with color' '
-+	cat >expect <<-\EOF &&
-+	    <BOLD;RED>Sec<RESET>ond
-+	    <BOLD;RED>sec<RESET>ond
-+	EOF
-+	git log --color=always -i --grep=^sec >log &&
-+	grep -i sec log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.selected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <GREEN>th<RESET><BOLD;RED>ir<RESET><GREEN>d<RESET>
-+	EOF
-+	git -c color.grep.selected="green" log --color=always --grep=ir >log &&
-+	grep ir log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.matchSelected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <BLUE>i<RESET>n<BLUE>i<RESET>t<BLUE>i<RESET>al
-+	EOF
-+	git -c color.grep.matchSelected="blue" log --color=always --grep=i >log &&
-+	grep al log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
+Range-diff against v2:
+ 1:  03c1b2c4d3 !  1:  b7c72d0bf5 midx: expose `write_midx_file_only()` publicly
+    @@ midx.c: struct write_midx_context {
+      
+      static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+     @@ midx.c: static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+    + 
+    + 	if (ends_with(file_name, ".idx")) {
+      		display_progress(ctx->progress, ++ctx->pack_paths_checked);
+    ++		/*
+    ++		 * Note that at most one of ctx->m and ctx->to_include are set,
+    ++		 * so we are testing midx_contains_pack() and
+    ++		 * string_list_has_string() independently (guarded by the
+    ++		 * appropriate NULL checks).
+    ++		 *
+    ++		 * We could support passing to_include while reusing an existing
+    ++		 * MIDX, but don't currently since the reuse process drags
+    ++		 * forward all packs from an existing MIDX (without checking
+    ++		 * whether or not they appear in the to_include list).
+    ++		 *
+    ++		 * If we added support for that, these next two conditional
+    ++		 * should be performed independently (likely checking
+    ++		 * to_include before the existing MIDX).
+    ++		 */
+      		if (ctx->m && midx_contains_pack(ctx->m, file_name))
+      			return;
+     +		else if (ctx->to_include &&
+    @@ midx.c: static int write_midx_internal(const char *object_dir,
+      		struct bitmap_index *bitmap_git;
+      		int bitmap_exists;
+      		int want_bitmap = flags & MIDX_WRITE_BITMAP;
+    -@@ midx.c: static int write_midx_internal(const char *object_dir,
+    - 
+    - 	QSORT(ctx.info, ctx.nr, pack_info_compare);
+    - 
+    --	if (packs_to_drop && packs_to_drop->nr) {
+    -+	if (ctx.m && packs_to_drop && packs_to_drop->nr) {
+    - 		int drop_index = 0;
+    - 		int missing_drops = 0;
+    - 
+     @@ midx.c: int write_midx_file(const char *object_dir,
+      		    const char *preferred_pack_name,
+      		    unsigned flags)
+    @@ midx.h: int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pa
+      int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
+      
+      int write_midx_file(const char *object_dir, const char *preferred_pack_name, unsigned flags);
+    ++/*
+    ++ * Variant of write_midx_file which writes a MIDX containing only the packs
+    ++ * specified in packs_to_include.
+    ++ */
+     +int write_midx_file_only(const char *object_dir,
+     +			 struct string_list *packs_to_include,
+     +			 const char *preferred_pack_name,
+ 2:  59556e5545 =  2:  986ef14f2a builtin/multi-pack-index.c: support `--stdin-packs` mode
+ 3:  42f1ae9ede !  3:  4e3769a4f3 midx: preliminary support for `--refs-snapshot`
+    @@ Commit message
+         commit in the MIDX reaches something that isn't.
+     
+         This can happen when a multi-pack index contains some pack which refers
+    -    to loose objects (which by definition aren't included in the multi-pack
+    -    index).
+    +    to loose objects (e.g., if a pack was pushed after starting the repack
+    +    but before generating the MIDX which depends on an object which is
+    +    stored as loose in the repository, and by definition isn't included in
+    +    the multi-pack index).
+     
+         By taking a snapshot of the references before we start repacking, we can
+         close that race window. In the above scenario (where we have a packed
+    @@ midx.c: static void bitmap_show_commit(struct commit *commit, void *_data)
+     +	}
+     +
+     +	fclose(f);
+    ++	strbuf_release(&buf);
+     +	return 0;
+     +}
+     +
+    @@ midx.h: int fill_midx_entry(struct repository *r, const struct object_id *oid, s
+      int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
+      
+     -int write_midx_file(const char *object_dir, const char *preferred_pack_name, unsigned flags);
+    + /*
+    +  * Variant of write_midx_file which writes a MIDX containing only the packs
+    +  * specified in packs_to_include.
+    +  */
+     +int write_midx_file(const char *object_dir,
+     +		    const char *preferred_pack_name,
+     +		    const char *refs_snapshot,
+ 4:  c0d045a9de !  4:  1b3dd331ca builtin/repack.c: keep track of existing packs unconditionally
+    @@ Commit message
+     
+      ## builtin/repack.c ##
+     @@ builtin/repack.c: static void remove_pack_on_signal(int signo)
+    -  * have a corresponding .keep file. These packs are not to
+    -  * be kept if we are going to pack everything into one file.
+    + }
+    + 
+    + /*
+    +- * Adds all packs hex strings to the fname list, which do not
+    +- * have a corresponding .keep file. These packs are not to
+    +- * be kept if we are going to pack everything into one file.
+    ++ * Adds all packs hex strings to either fname_list or fname_kept_list
+    ++ * based on whether each pack has a corresponding .keep file or not.
+    ++ * Packs without a .keep file are not to be kept if we are going to
+    ++ * pack everything into one file.
+       */
+     -static void get_non_kept_pack_filenames(struct string_list *fname_list,
+     -					const struct string_list *extra_keep)
+ -:  ---------- >  5:  15831a201a builtin/repack.c: rename variables that deal with non-kept packs
+ 5:  09de03de47 =  6:  1a40161baf builtin/repack.c: extract showing progress to a variable
+ 6:  83dfdb8b12 !  7:  6854f0751d builtin/repack.c: support writing a MIDX while repacking
+    @@ Commit message
+         check we can make consistently when (1) telling the MIDX which packs we
+         want to exclude, and (2) actually unlinking the redundant packs.
+     
+    +    There is also a tiny change to short-circuit the body of
+    +    write_midx_included_packs() when no packs remain in the case of an empty
+    +    repository. The MIDX code does not handle this, so avoid trying to
+    +    generate a MIDX covering zero packs in the first place.
+    +
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+      ## Documentation/git-repack.txt ##
+    @@ builtin/repack.c: static void clear_pack_geometry(struct pack_geometry *geometry
+      }
+      
+     +static void midx_included_packs(struct string_list *include,
+    -+				struct string_list *existing_packs,
+    ++				struct string_list *existing_nonkept_packs,
+     +				struct string_list *existing_kept_packs,
+     +				struct string_list *names,
+     +				struct pack_geometry *geometry)
+    @@ builtin/repack.c: static void clear_pack_geometry(struct pack_geometry *geometry
+     +			string_list_insert(include, strbuf_detach(&buf, NULL));
+     +		}
+     +	} else {
+    -+		for_each_string_list_item(item, existing_packs) {
+    ++		for_each_string_list_item(item, existing_nonkept_packs) {
+     +			if (item->util)
+     +				continue;
+     +			string_list_insert(include, xstrfmt("%s.idx", item->string));
+    @@ builtin/repack.c: static void clear_pack_geometry(struct pack_geometry *geometry
+     +	FILE *in;
+     +	int ret;
+     +
+    ++	if (!include->nr)
+    ++		return 0;
+    ++
+     +	cmd.in = -1;
+     +	cmd.git_cmd = 1;
+     +
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+     +	if (delete_redundant && pack_everything & ALL_INTO_ONE) {
+     +		const int hexsz = the_hash_algo->hexsz;
+     +		string_list_sort(&names);
+    -+		for_each_string_list_item(item, &existing_packs) {
+    ++		for_each_string_list_item(item, &existing_nonkept_packs) {
+     +			char *sha1;
+     +			size_t len = strlen(item->string);
+     +			if (len < hexsz)
+     +				continue;
+     +			sha1 = item->string + len - hexsz;
+    ++			/*
+    ++			 * Mark this pack for deletion, which ensures that this
+    ++			 * pack won't be included in a MIDX (if `--write-midx`
+    ++			 * was given) and that we will actually delete this pack
+    ++			 * (if `-d` was given).
+    ++			 */
+     +			item->util = (void*)(intptr_t)!string_list_has_string(&names, sha1);
+     +		}
+     +	}
+     +
+     +	if (write_midx) {
+     +		struct string_list include = STRING_LIST_INIT_NODUP;
+    -+		midx_included_packs(&include, &existing_packs,
+    ++		midx_included_packs(&include, &existing_nonkept_packs,
+     +				    &existing_kept_packs, &names, geometry);
+     +
+     +		ret = write_midx_included_packs(&include,
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+     -		if (pack_everything & ALL_INTO_ONE) {
+     -			const int hexsz = the_hash_algo->hexsz;
+     -			string_list_sort(&names);
+    --			for_each_string_list_item(item, &existing_packs) {
+    +-			for_each_string_list_item(item, &existing_nonkept_packs) {
+     -				char *sha1;
+     -				size_t len = strlen(item->string);
+     -				if (len < hexsz)
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+     -				if (!string_list_has_string(&names, sha1))
+     -					remove_redundant_pack(packdir, item->string);
+     -			}
+    -+		for_each_string_list_item(item, &existing_packs) {
+    ++		for_each_string_list_item(item, &existing_nonkept_packs) {
+     +			if (!item->util)
+     +				continue;
+     +			remove_redundant_pack(packdir, item->string);
+    @@ t/t7700-repack.sh: test_expect_success 'auto-bitmaps do not complain if unavaila
+     +'
+     +
+      test_done
+    +
+    + ## t/t7703-repack-geometric.sh ##
+    +@@ t/t7703-repack-geometric.sh: test_expect_success '--geometric with no packs' '
+    + 	(
+    + 		cd geometric &&
+    + 
+    +-		git repack --geometric 2 >out &&
+    ++		git repack --write-midx --geometric 2 >out &&
+    + 		test_i18ngrep "Nothing new to pack" out
+    + 	)
+    + '
+ 7:  68bc49d8ae !  8:  3596c76daf builtin/repack.c: make largest pack preferred
+    @@ builtin/repack.c: static int write_midx_included_packs(struct string_list *inclu
+      	if (ret)
+      		return ret;
+     @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
+    - 		midx_included_packs(&include, &existing_packs,
+    + 		midx_included_packs(&include, &existing_nonkept_packs,
+      				    &existing_kept_packs, &names, geometry);
+      
+     -		ret = write_midx_included_packs(&include,
+ 8:  eb24b308ec !  9:  d99f075321 builtin/repack.c: pass `--refs-snapshot` when writing bitmaps
+    @@ builtin/repack.c: static void clear_pack_geometry(struct pack_geometry *geometry
+     +}
+     +
+      static void midx_included_packs(struct string_list *include,
+    - 				struct string_list *existing_packs,
+    + 				struct string_list *existing_nonkept_packs,
+      				struct string_list *existing_kept_packs,
+     @@ builtin/repack.c: static void midx_included_packs(struct string_list *include,
+      
 -- 
-2.33.0
-
+2.33.0.96.g73915697e6
