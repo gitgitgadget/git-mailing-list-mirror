@@ -2,147 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 172DAC433FE
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 03:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 646FAC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 04:00:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F29E76138F
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 03:19:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3999C61409
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 04:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243906AbhI2DVi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 23:21:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60324 "EHLO
+        id S229550AbhI2ECG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 00:02:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243892AbhI2DVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 23:21:37 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D37C06161C
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 20:19:56 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id e16so1019460qte.13
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 20:19:56 -0700 (PDT)
+        with ESMTP id S229452AbhI2ECF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 00:02:05 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D56C06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 21:00:25 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 97-20020a9d006a000000b00545420bff9eso1239959ota.8
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 21:00:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WlSebNwYPqeonzOR1gZ4SXx7Vt5FfOi/vCYHqKbPDW0=;
-        b=Z3KBXk1DSdnTAdmfSojC6nzqO2K6svjQSWWh7kfb12jsc6xOi56p1ommJn9W9d+ug1
-         /HPh91OOrehjy2BKs/TAJBIW07y0WhNxn+eqmn06futer+U0UDL4pumIL0O7zf7Z/zYK
-         giwPa9i6BQ9+pWzyTpD8/+V/6S6Th+tqZ9eeLYfOVjsn7hWtnZAnkyawqpXwuwU/X7jr
-         mS/k5SP60ynF4TmWnOC1bi/yvh2G4frNvYmzu0ZH/3YPzUG6xV4NCnyuu/Qhakb4l0AA
-         7ejiT0sckoeNPlceByPxkXUyRtJSTQFe4VCi1khq1PWCM1XGEEWw4FLiWoUTappp8SDL
-         nGQw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=adDjGDdKCk3yKjDy+UQxmYDd5Xwm8UJHoIITxtq4+/o=;
+        b=LLP9wSybYLbn1k7mljMF+kZ93TIbiWpmyDUv0ub8zVgdW/G/AODA7/UD/ynYOijuw/
+         ZBlRlx6O94jmtsshvHZNILTd0LDyQWCcDg83qN38uFQEcBiwreDe78UTt9AMUqByS2Ad
+         YP0dt3ReNZD1qo8m6FbHtvvOSsimRuJOEIJCQYS8XyiVLjeOSBhJnuRwl2xhqr+Mwwq/
+         SEL05H4IkdOQ1OpQxfGnFeTFF7AA3/5v0ZTtk7JuYI4BN3zbrBeBaTsl2iPi0E/YMia8
+         q0JvqRiZysgJBA0hriDcwSmKLc8RJjlojUETuswHrC96VTN9pxZ2HTUAPtLbBuZKONon
+         pzWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WlSebNwYPqeonzOR1gZ4SXx7Vt5FfOi/vCYHqKbPDW0=;
-        b=OTTY2k4vuEtI/EDcS9iWzlsPJisLPi5C9Rj72v2lW1AZpXNKsOnjJ2n51QkCdOMpPV
-         Ro5RoR7pMFguT6Pzu+32m38+MrKcHfvRl3DjYSVbuIlrTAXMHwSkVWx/AMiBxXCcC0UI
-         vpqp2Ul638zQgCwuKbqQAF+m8mmHxJdorqH1Xstcz1m/lEQY3pWIw1LLEeD2dKTdpiek
-         KCXAtj2PyYHnTrYdGJBzpJPbpwUAw42RvIAOqZXuB2JB24iO7eYBoBWcOSVMpQY5wAr/
-         kL3Z4TlfMVyLKCUO+T/Zxsrae+rcVSS7WELiClDQAowpwuCK+k1mapo/BF2xPbD2Uzty
-         2EYw==
-X-Gm-Message-State: AOAM532DWV+Pqlr+xGlAWqBL4JjxIsZyA1SnsWhgZpa2mVI3wDtWonJR
-        Tw4qD1uiB3XvIPSyoxbq63HrokonpcGUMg==
-X-Google-Smtp-Source: ABdhPJzoVS4YMkepfu7PCI/0ilymsdhenu5/VGNi9nBuhcD/NA1a3aIMFYKFwutTornjC+4fvBEu0g==
-X-Received: by 2002:ac8:4113:: with SMTP id q19mr9574932qtl.108.1632885595438;
-        Tue, 28 Sep 2021 20:19:55 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id h2sm801350qkk.10.2021.09.28.20.19.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Sep 2021 20:19:54 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     j6t@kdbg.org, gitster@pobox.com, avarab@gmail.com,
-        jonathantanmy@google.com, ramsay@ramsayjones.plus.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH v5 3/3] Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
-Date:   Tue, 28 Sep 2021 20:19:40 -0700
-Message-Id: <20210929031940.97092-4-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.955.gee03ddbf0e
-In-Reply-To: <20210929031940.97092-1-carenas@gmail.com>
-References: <20210929004832.96304-1-carenas@gmail.com>
- <20210929031940.97092-1-carenas@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=adDjGDdKCk3yKjDy+UQxmYDd5Xwm8UJHoIITxtq4+/o=;
+        b=zmz9fGrLgg5DJzfKMxWFF1C58JKM1aqG7j8/qcT4+Ijb7q//Ko8dfaoeXVClPrimfh
+         4qzobxWHhoQc9UmsVa+LdclwTV3iaFrul0fdLiD/ER9IQQui/u34Nefqcq2fBKbtg1Bt
+         cyZcKLeunfI48/wF0UFfI7WaQtc0ECX2n9LH39AHwfsT83Sxe+YosVndRLGfa3MU4jUA
+         cWMhkLJFqIINaGqrsZYoiNpBS0QA/hLsg3wJ6qWr4F49XwgrPlKabIvB0r1JNN4fc2QG
+         A+aftweONLChEKl0d362vGoQGw14W9u12oQYTp9AfL0cjT5fUnxe9q0TIU+402DWlYOR
+         jENQ==
+X-Gm-Message-State: AOAM530kLwIqVsN1Am+JQFMSbYvZbH1iv4ZveZMWZBKB/mgB5yhAxxRF
+        wzYxU4fL9t3xfh7Roo7Y8J4ZArIVlqesKn54AoA=
+X-Google-Smtp-Source: ABdhPJya/Oi7DO3B98wXEQl4CELyfwGTNHtiURvi7BPlVfhO45sSsMJSnl/Pbs8p7aePkHPizSbxh0eDZOSlQTz9MfQ=
+X-Received: by 2002:a05:6830:24ac:: with SMTP id v12mr8326292ots.174.1632888024723;
+ Tue, 28 Sep 2021 21:00:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+ <b75e73384fde4f23296bd02eb40455263f805706.1630376800.git.gitgitgadget@gmail.com>
+ <87mtnxxgz3.fsf@evledraar.gmail.com>
+In-Reply-To: <87mtnxxgz3.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 28 Sep 2021 21:00:12 -0700
+Message-ID: <CABPp-BGwunfsThNEPAKfXMUZKpHQTCdRU7V8=3J88XThN6=2Kg@mail.gmail.com>
+Subject: Re: [PATCH 6/7] show, log: provide a --remerge-diff capability
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-6a8cbc41ba (developer: enable pedantic by default, 2021-09-03)
-enables pedantic mode in as many compilers as possible to help gather
-feedback on future tightening, so lets do so.
+On Tue, Sep 28, 2021 at 1:05 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Tue, Aug 31 2021, Elijah Newren via GitGitGadget wrote:
+>
+> >  static int decoration_given;
+> >  static int use_mailmap_config =3D 1;
+> > +static struct tmp_objdir *tmp_objdir;
+> >  static const char *fmt_patch_subject_prefix =3D "PATCH";
+> >  static int fmt_patch_name_max =3D FORMAT_PATCH_NAME_MAX_DEFAULT;
+> >  static const char *fmt_pretty;
+>
+> So here we make this static file-level etc...
+>
+> > @@ -407,6 +410,17 @@ static int cmd_log_walk(struct rev_info *rev)
+> >       int saved_nrl =3D 0;
+> >       int saved_dcctc =3D 0;
+> >
+> > +     if (rev->remerge_diff) {
+> > +             tmp_objdir =3D tmp_objdir_create();
+> > +             if (!tmp_objdir)
+> > +                     die(_("unable to create temporary object director=
+y"));
+> > +             tmp_objdir_make_primary(the_repository, tmp_objdir);
+> > +
+> > +             strbuf_init(&rev->remerge_objdir_location, 0);
+> > +             strbuf_addstr(&rev->remerge_objdir_location,
+> > +                           tmp_objdir_path(tmp_objdir));
+> > +     }
+> > +
+> >       if (rev->early_output)
+> >               setup_early_output();
+> >
+> > @@ -449,6 +463,13 @@ static int cmd_log_walk(struct rev_info *rev)
+> >       rev->diffopt.no_free =3D 0;
+> >       diff_free(&rev->diffopt);
+> >
+> > +     if (rev->remerge_diff) {
+> > +             strbuf_release(&rev->remerge_objdir_location);
+> > +             tmp_objdir_remove_as_primary(the_repository, tmp_objdir);
+> > +             tmp_objdir_destroy(tmp_objdir);
+> > +             tmp_objdir =3D NULL;
+>
+> ...but all of the "tmp_objdir" usage is in one function, can't the
+> variable be declared here instead?
 
--Wpedantic is missing in some really old gcc 4 versions so lets restrict
-it to gcc5 and clang4 (it does work in clang3 AFAIK, but it will be
-unlikely that a developer will use such an old compiler anyway).
+That's a very good point.
 
-MinGW gcc is the only one which has -Wno-pedantic-ms-format, and while
-that is available also in older compilers, the Windows SDK provides gcc10
-so lets aim for that.
+> We need to hand the "remerge_objdir_location" off to the "rev_info"
+> struct, but that seems separate from its lifetime.
 
-Note that in order to target the flag to only Windows, additional changes
-were needed in config.mak.uname to propagate the OS detection which also
-did some minor refactoring, but which is functionaly equivalent.
+Given Peff's suggestion elsewhere, though, to destroy the tmp_objdir
+after each merge and create a new one, I wonder if I should actually
+be passing a tmp_objdir** to rev_info (allowing log-tree to do the
+work of destroying and creating a new one after each merge, instead of
+using the "remerge_objdir_location" to run a recursive delete of
+files).  That'd still work with your idea to remove the statically
+scoped variable, though.
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- config.mak.dev   | 7 ++++++-
- config.mak.uname | 6 +++++-
- 2 files changed, 11 insertions(+), 2 deletions(-)
+> Re my [1] & [2] I like Neeraj's "atexit cleanup" approach better,
+> perhaps that makes your cleanup in log-tree.c redundant or easier?
 
-diff --git a/config.mak.dev b/config.mak.dev
-index cdf043c52b..7673fed114 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -6,14 +6,19 @@ ifeq ($(filter no-error,$(DEVOPTS)),)
- DEVELOPER_CFLAGS += -Werror
- SPARSE_FLAGS += -Wsparse-error
- endif
-+
- DEVELOPER_CFLAGS += -Wall
- ifeq ($(filter no-pedantic,$(DEVOPTS)),)
- DEVELOPER_CFLAGS += -pedantic
-+ifneq (($or $(filter gcc5,$(COMPILER_FEATURES)),$(filter clang4,$(COMPILER_FEATURES))),)
- DEVELOPER_CFLAGS += -Wpedantic
--ifneq ($(filter gcc5,$(COMPILER_FEATURES)),)
-+ifneq ($(filter gcc10,$(COMPILER_FEATURES)),)
-+ifeq ($(uname_S),MINGW)
- DEVELOPER_CFLAGS += -Wno-pedantic-ms-format
- endif
- endif
-+endif
-+endif
- DEVELOPER_CFLAGS += -Wdeclaration-after-statement
- DEVELOPER_CFLAGS += -Wformat-security
- DEVELOPER_CFLAGS += -Wold-style-definition
-diff --git a/config.mak.uname b/config.mak.uname
-index 76516aaa9a..2b178bad58 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -11,6 +11,10 @@ uname_R := $(shell sh -c 'uname -r 2>/dev/null || echo not')
- uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
- uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
- 
-+ifneq ($(findstring MINGW,$(uname_S)),)
-+	uname_S := MINGW
-+endif
-+
- ifdef MSVC
- 	# avoid the MingW and Cygwin configuration sections
- 	uname_S := Windows
-@@ -588,7 +592,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
- 	SHELL_PATH = /usr/coreutils/bin/bash
- endif
--ifneq (,$(findstring MINGW,$(uname_S)))
-+ifeq ($(uname_S),MINGW)
- 	pathsep = ;
- 	HAVE_ALLOCA_H = YesPlease
- 	NO_PREAD = YesPlease
--- 
-2.33.0.955.gee03ddbf0e
+Having an atexit cleanup as a safety measure seems fine.  However, I
+don't like avoiding the manual cleanup step and relying on atexit
+cleanup; I'd go so far as to say I think that'd be a bug, at least for
+my usage.  It presumes one-shot usage, whereas I'd rather move git to
+being more library-like.
 
+However, fully destroying the tmp_objdir probably makes the cleanup in
+log-tree.c easier.
+
+> Per [2] it looks like you need to "hand off" the
+> "remerge_objdir_location", so having the struct live in tmp-objdir.h as
+> I suggested in [2] might make that work...
+>
+> 1. https://lore.kernel.org/git/87v92lxhh4.fsf@evledraar.gmail.com/
+> 2. https://lore.kernel.org/git/87r1d9xh71.fsf@evledraar.gmail.com/
