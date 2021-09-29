@@ -2,94 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E2A6C433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 736E9C433F5
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:27:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14F54613BD
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:22:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5254E613BD
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 00:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243379AbhI2AYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 20:24:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55313 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242525AbhI2AX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 20:23:59 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1A28E2D4B;
-        Tue, 28 Sep 2021 20:22:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=k753H7SZWtDO
-        3X780XNF3qEvD1bMllqxAeiL5D/KWJI=; b=Qm5vcnnRrP6RkJJGSJWGKP0iE6PS
-        EQ54VCw0t4W/pK+ya/d4SebO9b0KDtvtPquiox7fYipT/oBSHTkJz+wZFswJ2Mcv
-        lWeWxJH3hY4eGXXIfjavzSbUawEyJQNmwTuWEcQb6q2MycispAXWsy6TBLv4TMCi
-        zZP9uKAajKbKN3U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9C50E2D4A;
-        Tue, 28 Sep 2021 20:22:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2F8FFE2D48;
-        Tue, 28 Sep 2021 20:22:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 05/10] parse-options.h: make the "flags" in "struct
- option" an enum
-References: <cover-00.10-00000000000-20210928T130905Z-avarab@gmail.com>
-        <patch-05.10-697e432c012-20210928T130905Z-avarab@gmail.com>
-Date:   Tue, 28 Sep 2021 17:22:17 -0700
-In-Reply-To: <patch-05.10-697e432c012-20210928T130905Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 28 Sep
- 2021 15:14:26
-        +0200")
-Message-ID: <xmqq1r58grie.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243426AbhI2A2j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 20:28:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57362 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240715AbhI2A2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 20:28:38 -0400
+Received: (qmail 12198 invoked by uid 109); 29 Sep 2021 00:26:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Sep 2021 00:26:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6628 invoked by uid 111); 29 Sep 2021 00:26:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Sep 2021 20:26:56 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 28 Sep 2021 20:26:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Joey Hess <joeyh@joeyh.name>, git@vger.kernel.org
+Subject: Re: [PATCH] avoid insecure use of mail in man page example
+Message-ID: <YVOy0HLvManYQdGo@coredump.intra.peff.net>
+References: <20210928121648.1390915-1-joeyh@joeyh.name>
+ <YVNi91WYyj3Le6UF@coredump.intra.peff.net>
+ <xmqqtui4gt5f.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4E0D9AAE-20BB-11EC-9906-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqtui4gt5f.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Tue, Sep 28, 2021 at 04:46:52PM -0700, Junio C Hamano wrote:
 
-> Change the "flags" members of "struct option" to refer to their
-> corresponding "enum" defined earlier in the file.
->
-> The benefit of changing this to an enum isn't as great as with some
-> "enum parse_opt_type" as we'll always check this as a bitfield, so we
-> can't rely on the compiler checking "case" arms for us. But let's do
-> it for consistency with the rest of the file.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Sep 28, 2021 at 08:16:48AM -0400, Joey Hess wrote:
+> >
+> >> As recently seen in fail2ban's security hole (CVE-2021-32749),
+> >> piping user controlled input to mail is exploitable,
+> >> since a line starting with "~! foo" in the input will run command foo.
+> >> 
+> >> This example on the man page pipes to mail. It may not be exploitable.
+> >> git rev-list --pretty indents commit messages, which prevents the escape
+> >> sequence working there. It's less clear if it might be possible to embed
+> >> the escape sequence in a signed push certificate. The user reading the
+> >> man page might alter the example to do something more exploitable.
+> >> To encourage safe use of mail, add -E 'set escape'
+> >
+> > Seems like a good goal, but is "-E" portable?
+> >
+> > On my system, where "mail" comes from the bsd-mailx package, "-E" means
+> > "do not send a message with an empty body" and your example command
+> > barfs as it tries to deliver to the recipient "set escape".
+> >
+> > At least we'd want to make a note in the documentation saying what the
+> > mysterious "set escape" is doing, and that not all versions of mail
+> > would need / want it.
+> 
+> It is not the primary focus for this documentation page to teach how
+> to send e-mails in the first place.  Instead of risking confused
+> users rightly complain with "my 'mail' does not understand the -E
+> option---what does this do?", I wonder if it is better to just change it to
+> 
+> 	git rev-list --pretty ...
+> -   fi |
+> -   mail -s ...    
+> +   fi >>/var/log/update.log
+> 
+> so that it illustrates what's available *out* *of* *us* to the
+> authors of the script, without having to teach them "mail" and other
+> things we are responsible for.
 
-For the same reason as my comment on [02/10], this is more or less
-"Meh" for me.  If we wanted to make any change here, I'd probably
-suggest making it "unsigned" to clarify that this is a OR'ed bit
-patterns.
+Yeah, I'd agree that side-stepping the issue entirely is a good
+direction. Doing it right is probably best left to tools like
+git-multimail.
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  parse-options.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/parse-options.h b/parse-options.h
-> index a1c7c86ad30..74b66ba6e93 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -134,7 +134,7 @@ struct option {
->  	const char *argh;
->  	const char *help;
-> =20
-> -	int flags;
-> +	enum parse_opt_option_flags flags;
->  	parse_opt_cb *callback;
->  	intptr_t defval;
->  	parse_opt_ll_cb *ll_callback;
+-Peff
