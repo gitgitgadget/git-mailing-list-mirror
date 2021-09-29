@@ -2,179 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A267C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 09:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E6CFC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 10:53:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEECB613CD
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 09:51:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29DD66138E
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 10:53:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244738AbhI2Jxj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 05:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233563AbhI2Jxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 05:53:39 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C4CC06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 02:51:58 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id me1so1225045pjb.4
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 02:51:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lDRpdBWf7EYhffR8XEPUuMXpklpgl1lxS3EJTwOc5wg=;
-        b=TGHTO1xcr+zbxYgunWu96mF1QtrOiRfw+m3mpLLXY8yI7FWZfTk6hGq9YsK5jHUQvC
-         jw6FcHeifqRxFKY+fznnXpk8mrE/F1t2g/EDXZMeZ5AmgNucRuZjtMXL+KKVW0COJCR8
-         s8BwiNgfXvNNRZP+m5xbIca2AaBJ34BPhMr7MkONf0+fUPpEoByQQUpHKvreYyEPpTvw
-         K7Z2Lu9aHd6A27dVEfDRirk76lzikyZkeucnTMaYqLxmX/hV4HOS2UKQ9NTxSL1aDcoW
-         pfZc4MYiFhyUoSV4JBtYkufkpxruZiZWBfjsM4fjd7hcUYsz0lpTzHz259aKJXXFXToi
-         IPSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lDRpdBWf7EYhffR8XEPUuMXpklpgl1lxS3EJTwOc5wg=;
-        b=8Ey6FFJ6xJ3sS1CgdFlXBjRzdO21iUe1ohg9BLqG2ayBMEBkheyqIT/WWq60SYKVgJ
-         BeC0fZ5Dwir1IHnYoLJKPehPK1OK8sh1XDv6abErSY5Jc7G3Yoosnc+dvRSS00Yc6MHq
-         EM9G2Tk7rQu4kW6C7FL07bL+5woOKA6rwIM17JD7Ki4GGTawRS1OcWUEjKDTwMn25x/f
-         gDbdHHfvUhwrEeUCkaIogwj4Oqyrg8RQOu67oV7nm5cF8Pv4L/+HaEiSfJshCGxjABAz
-         tWrpjAXjrlNALBc8I2ptyFQ6tZv3k1ctWEh7x/90rd5U5UUebdqTWZrGx+HDfK0Hv6sQ
-         oLVg==
-X-Gm-Message-State: AOAM531CqBBa6tQNI3Cwdgyx/xBRvobjKZ4iQv+qiqVx2R6fqHaZ/Rup
-        uQqHXMjzLfiEizWGB3QPcy3tXRyJ9JKykA==
-X-Google-Smtp-Source: ABdhPJwY7SM9ifNIbd7k3ktEAmiy2Uspio6LjHWvcUxC1rraDRBKs3mP77F3Rg2rZAtHEfi5qwCyJQ==
-X-Received: by 2002:a17:90a:49:: with SMTP id 9mr5462601pjb.80.1632909117714;
-        Wed, 29 Sep 2021 02:51:57 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-59.three.co.id. [116.206.28.59])
-        by smtp.gmail.com with ESMTPSA id d5sm2247825pfv.87.2021.09.29.02.51.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Sep 2021 02:51:57 -0700 (PDT)
-Subject: Re: [PATCH] blame: document --color-* options
-To:     "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>,
+        id S245296AbhI2Kyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 06:54:50 -0400
+Received: from mail.ncp-e.com ([62.153.165.35]:62420 "EHLO mail.ncp-e.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S245275AbhI2Kyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 06:54:50 -0400
+DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaulte; 
+ t=1632912787; bh=A2tO0o22TXrLSvgJs1KO5OUCi2sLquD63Ua9/130Rps=; h=
+ "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
+ a=ed25519-sha256; b=
+ TpdAnnFhlJgKBZheN8rMIg1ZcYs5MF6hTu8SZREnHkIVivnOefYeRgzIPgpgqbiuyzW4Iq8+jzfI4dLmDwBaCA==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=ncp-e.com; s=defaultr; 
+ t=1632912787; bh=A2tO0o22TXrLSvgJs1KO5OUCi2sLquD63Ua9/130Rps=; h=
+ "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
+ a=rsa-sha256; b=
+ UU+kuZYNIOF2qZu+Cwy+FszNQbpWOd9VvLTLXI1ke/YFjIub50GnvExcHddan9eZy04O8nl2JCWHXoUNCHG8zUJkivdgOKKne4ZcNeKgfdwhOF63BeNbvP4P6CL+cOUG6t6xIbwxtModm6SambIkGytY1JPHdSQH9lAoGTgHhxU=
+Content-Type: multipart/signed; 
+ boundary=NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b; 
+ protocol="application/pkcs7-signature"; micalg="sha256"
+From:   "Dr. Matthias St. Pierre" <Matthias.St.Pierre@ncp-e.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Stefan Beller <stefanbeller@gmail.com>
+Subject: RE: [PATCH] blame: document --color-* options
+Thread-Topic: [PATCH] blame: document --color-* options
+Thread-Index: AQHXsgevOfCnzPIFfEG7E3jd/1s90Ku4TBf9gACFxoCAAJSXMIABQzkAgAAxLwA=
+Date:   Wed, 29 Sep 2021 10:53:07 +0000
+Message-ID: <21b21b58e0da407387c9c1e103233a31@ncp-e.com>
 References: <d918fe0de6b04d8d848050d4aedbe060@ncp-e.com>
  <20210925121817.1089897-1-bagasdotme@gmail.com> <xmqq5yulregh.fsf@gitster.g>
  <fe78329d-07a7-bdf3-2bda-13def35f3de3@gmail.com>
  <4078bebf2da14e5f8fc80a5ac7918151@ncp-e.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <c3603f8a-f75e-37f0-0517-c9a04c21e18e@gmail.com>
-Date:   Wed, 29 Sep 2021 16:51:54 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ <c3603f8a-f75e-37f0-0517-c9a04c21e18e@gmail.com>
+In-Reply-To: <c3603f8a-f75e-37f0-0517-c9a04c21e18e@gmail.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-c2processedorg: 9967f5a3-a146-4287-bbaa-84cba262ed0f
 MIME-Version: 1.0
-In-Reply-To: <4078bebf2da14e5f8fc80a5ac7918151@ncp-e.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-CrossPremisesHeadersFilteredBySendConnector: ex19.ncp.local
+X-OrganizationHeadersPreserved: ex19.ncp.local
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28/09/21 19.38, Dr. Matthias St. Pierre wrote:
-> Thank you Bagas for adding the documentation. I think the only that disturbed Junio is the use of the word "metadata",
-> which is used internally, but not in the official documentation aimed at the git user.
-> 
-> Starting from your patch, I added some suggestions for alternative wordings.
-> 
-> Regards,
-> Matthias
-> 
-> 
-> 
-> commit ae2c59b7c76d9201d68aeb21b0ce57f2845732a1
-> Author: Bagas Sanjaya <bagasdotme@gmail.com>
-> Date:   Tue Sep 28 10:11:23 2021 +0200
-> 
->      blame: document --color-* options
-> 
->      Commit cdc2d5f11f1a (builtin/blame: dim uninteresting metadata lines,
->      2018-04-23) and 25d5f52901f0 (builtin/blame: highlight recently changed
->      lines, 2018-04-23) introduce --color-lines and --color-by-age options to
->      git blame, respectively. While both options are mentioned in usage help,
->      they aren't documented in git-blame(1). Document them.
-> 
->      Co-authored-by: Dr. Matthias St. Pierre <m.st.pierre@ncp-e.com>
-> 
-> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-> index 117f4cf806..1560f2b6df 100644
-> --- a/Documentation/blame-options.txt
-> +++ b/Documentation/blame-options.txt
-> @@ -136,5 +136,15 @@ take effect.
->   option.  An empty file name, `""`, will clear the list of revs from
->   previously processed files.
-> 
-> +--color-lines::
-> +Color lines differently if they belong to the same commit as the preceding line.
-> +This facilitates distinguishing code blocks introduced by different commits.
-> +The color defaults to cyan and be adjusted using the `color.blame.repeatedLines`
-> +config option.
-> +
-> +--color-by-age::
-> +Color lines depending on the age of the line. The `color.blame.highlightRecent`
-> +config option controls what color is used for which range of age.
-> +
->   -h::
->   Show help message.
-> diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-> index e05d520a86..a1cf36fc89 100644
-> --- a/Documentation/config/color.txt
-> +++ b/Documentation/config/color.txt
-> @@ -9,8 +9,8 @@ color.advice.hint::
->   Use customized color for hints.
-> 
->   color.blame.highlightRecent::
-> -This can be used to color the metadata of a blame line depending
-> -on age of the line.
-> +Used to color line annotations differently depending on the age of the commit
-> +(`git blame --color-by-age`).
->   +
->   This setting should be set to a comma-separated list of color and date settings,
->   starting and ending with a color, the dates should be set from oldest to newest.
-> @@ -25,10 +25,9 @@ everything older than one year blue, recent changes between one month and
->   one year old are kept white, and lines introduced within the last month are
->   colored red.
-> 
-> -color.blame.repeatedLines::
-> -Use the customized color for the part of git-blame output that
-> -is repeated meta information per line (such as commit id,
-> -author name, date and timezone). Defaults to cyan.
-> +color.blame.repeated
-> +Use this color to colorize line annotations, if they belong to the same commit
-> +as the preceding line (`git blame --color-lines`). Defaults to cyan.
-> 
->   color.branch::
->   A boolean to enable/disable color in the output of
-> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-> index 3bf5d5d8b4..cfdbad030b 100644
-> --- a/Documentation/git-blame.txt
-> +++ b/Documentation/git-blame.txt
-> @@ -11,8 +11,8 @@ SYNOPSIS
->   'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
->       [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
->       [--ignore-rev <rev>] [--ignore-revs-file <file>]
-> -    [--progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>..<rev>]
-> -    [--] <file>
-> +    [--color-lines] [--color-by-age] [--progress] [--abbrev=<n>]
-> +    [<rev> | --contents <file> | --reverse <rev>..<rev>] [--] <file>
-> 
->   DESCRIPTION
->   -----------
-> 
-> 
+--NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I can't apply the suggestion patch above. You sent the patch with 
-S/MIME, right?
+DQo+IEkgY2FuJ3QgYXBwbHkgdGhlIHN1Z2dlc3Rpb24gcGF0Y2ggYWJvdmUuIFlvdSBzZW50IHRo
+ZSBwYXRjaCB3aXRoDQo+IFMvTUlNRSwgcmlnaHQ/DQo+DQo+IE5leHQgdGltZSwgd2hldGhlciB5
+b3UgcG9zdCBwYXRjaGVzIGhlcmUsIGxlYXJuIHRvIHVzZSBnaXQgZm9ybWF0LXBhdGNoDQo+IGFu
+ZCBnaXQgc2VuZC1lbWFpbC4gU2VuZCBwYXRjaGVzIGluIHBsYWluIHRleHQgb25seSwgKm5vIChT
+LylNSU1FLCBubw0KPiBsaW5rcywgbm8gY29tcHJlc3Npb24sIG5vIGF0dGFjaG1lbnRzKi4NCj4N
+Cj4gUGxlYXNlIHJlc2VuZCB5b3VyIHN1Z2dlc3Rpb24gcGF0Y2ggdXNpbmcgZ2l0IHNlbmQtZW1h
+aWwsIGtlZXBpbmcgaW4NCj4gbWluZCB0aGUgZ3VpZGVsaW5lcyBhYm92ZS4NCg0KSSdtIHNvcnJ5
+IGZvciB0aGUgaW5jb252ZW5pZW5jZTogbXkgY29tcGFueSBoYXMgYSBmYW5jeS1zdXBlci1zbWFy
+dCBtYWlsIGdhdGV3YXkNCndoaWNoIGFkZHMgc3R1ZmYgdG8gdGhlIG1haWwgd2hpY2ggaXMgb3V0
+IG9mIG15IGNvbnRyb2wuIEZvciB0aGF0IHJlYXNvbiwgZ2l0IHNlbmQtZW1haWwNCmN1cnJlbnRs
+eSBkb2Vzbid0IHdvcmsgZm9yIG1lLiBTbyBJIGtpbmRseSBhc2sgdG8gcHVsbCB0aGUgY29tbWl0
+IGZyb20gbXkgR2l0SHViIGZvcms6DQoNCiAgZ2l0IGZldGNoIGh0dHBzOi8vZ2l0aHViLmNvbS9t
+c3BuY3AvZ2l0LmdpdCBkb2N1bWVudC1naXQtYmxhbWUtY29sb3Itb3B0aW9ucw0KICBnaXQgY2hl
+Y2tvdXQgLWIgZG9jdW1lbnQtZ2l0LWJsYW1lLWNvbG9yLW9wdGlvbnMNCg0KVGhlIHRydW5jYXRl
+ZCBvcHRpb24gbmFtZSBoYXMgYWxyZWFkeSBiZWVuIGNvcnJlY3RlZC4NCg0KTWF0dGhpYXMNCg0K
+DQoNCkRyLiBNYXR0aGlhcyBTdC4gUGllcnJlDQpUZWNoIExlYWQgQ3J5cHRvZ3JhcGh5DQptYXR0
+aGlhcy5zdC5waWVycmVAbmNwLWUuY29tDQpQaG9uZTogKzQ5IDkxMSA5OTY4LTANCiB3d3cubmNw
+LWUuY29tDQoNCkhlYWRxdWFydGVycyBHZXJtYW55OiBOQ1AgZW5naW5lZXJpbmcgR21iSCDigKIg
+RG9tYnVlaGxlciBTdHIuIDIg4oCiIDkwNDQ5IOKAoiBOdXJlbWJlcmcNCk5vcnRoIEFtZXJpY2Fu
+IEhROiBOQ1AgZW5naW5lZXJpbmcgSW5jLiDigKIgNjAxIENsZXZlbGFuZCBTdHIuLCBTdWl0ZSA1
+MDEtMjUg4oCiIENsZWFyd2F0ZXIsIEZMIDMzNzU1DQoNCkF1dGhvcml6ZWQgcmVwcmVzZW50YXRp
+dmVzOiBQZXRlciBTb2VsbCwgUGF0cmljayBPbGl2ZXIgR3JhZiwgQmVhdGUgRGlldHJpY2gNClJl
+Z2lzdHJ5IENvdXJ0OiBMb3dlciBEaXN0cmljdCBDb3VydCBvZiBOdXJlbWJlcmcNCkNvbW1lcmNp
+YWwgcmVnaXN0ZXIgTm8uOiBIUkIgNzc4NiBOdXJlbWJlcmcsIFZBVCBpZGVudGlmaWNhdGlvbiBO
+by46IERFIDEzMzU1NzYxOQ0KDQpUaGlzIGUtbWFpbCBtZXNzYWdlIGluY2x1ZGluZyBhbnkgYXR0
+YWNobWVudHMgaXMgZm9yIHRoZSBzb2xlIHVzZSBvZiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50KHMp
+IGFuZCBtYXkgY29udGFpbiBwcml2aWxlZ2VkDQpvciBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24u
+IEFueSB1bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2UsIGRpc2Nsb3N1cmUgb3IgZGlzdHJpYnV0aW9u
+IGlzIHByb2hpYml0ZWQuIElmIHlvdSBhcmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsDQpw
+bGVhc2UgaW1tZWRpYXRlbHkgY29udGFjdCB0aGUgc2VuZGVyIGJ5IHJlcGx5IGUtbWFpbCBhbmQg
+ZGVsZXRlIHRoZSBvcmlnaW5hbCBtZXNzYWdlIGFuZCBkZXN0cm95IGFsbCBjb3BpZXMgdGhlcmVv
+Zi4NCg==
 
-Next time, whether you post patches here, learn to use git format-patch 
-and git send-email. Send patches in plain text only, *no (S/)MIME, no 
-links, no compression, no attachments*.
+--NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b
+Content-Transfer-Encoding: BASE64
+Content-Type: application/pkcs7-signature; name=smime.p7s
+Content-Disposition: attachment; filename=smime.p7s
 
-Please resend your suggestion patch using git send-email, keeping in 
-mind the guidelines above.
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGgghk1MIIG
+VTCCBT2gAwIBAgIUMtWNCqK3ycGRro81QxAdKsHXAIYwDQYJKoZIhvcNAQELBQAwVjELMAkGA1UE
+BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
+IFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTIxMDkyNTA4MTgwMFoXDTIyMDkyNTA4MTgwMFowgagx
+CzAJBgNVBAYTAkRFMUEwPwYDVQQKEzhOIEMgUCBlIEdtYkggTmV0d29yayBDb21tdW5pY2F0aW9u
+cyBQcm9kdWN0cyBlbmdpbmVlcmluZzErMCkGCSqGSIb3DQEJARYcbWF0dGhpYXMuc3QucGllcnJl
+QG5jcC1lLmNvbTEpMCcGA1UEAxMgU2VjdXJlIE1haWw6IEdhdGV3YXkgQ2VydGlmaWNhdGUwggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDEthLmyK8enWHzbnf3WZJh8gGJXBkLd5053InH
+bdWTx8whzB/FNahNAJdNDuX1WHeQUxJ3E5wOnoDHX3DUi3K6odAJwqCd416ijhO21LDitykqvKRw
+IwY4auiL3yK206RAzhph1JRCJ5Jwv86xIHZaKuYVw2ul/LfzZF3NwFbX8uVS3J2d7gHvFxRnEgTN
+sL01U0qAFt3Wye6hl7ecJj5MwHJLBGPdv8C3k/wAv9TezALjweb1ikkfoUDvxZnM7SL7a4KHy3wp
+WmtMeawSZ0Fu8j4rlLiATC4nnqD0jxqXChxebzo8u4NuS074Aceb0k7wW+OJ+gyWsioILDDhRhOJ
+AgMBAAGjggLGMIICwjAnBgNVHREEIDAegRxtYXR0aGlhcy5zdC5waWVycmVAbmNwLWUuY29tMA4G
+A1UdDwEB/wQEAwIEsDATBgNVHSUEDDAKBggrBgEFBQcDBDAdBgNVHQ4EFgQU5BJkWkMKYiO6GO8/
+3Hk6Tu/jaqgwHwYDVR0jBBgwFoAU8MejMpG168q1WHcVp06+Gl1hQyUwgf8GA1UdHwSB9zCB9DBH
+oEWgQ4ZBaHR0cDovL2NybC5zd2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3
+NEVCRTFBNUQ2MTQzMjUwgaiggaWggaKGgZ9sZGFwOi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQv
+Q049RjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNSUyQ089U3dpc3NTaWdu
+JTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/b2JqZWN0Q2xhc3M9Y1JMRGlz
+dHJpYnV0aW9uUG9pbnQwZwYDVR0gBGAwXjBSBghghXQBWQIBCzBGMEQGCCsGAQUFBwIBFjhodHRw
+czovL3JlcG9zaXRvcnkuc3dpc3NzaWduLmNvbS9Td2lzc1NpZ25fQ1BTX1NNSU1FLnBkZjAIBgYE
+AI96AQMwgcYGCCsGAQUFBwEBBIG5MIG2MGQGCCsGAQUFBzAChlhodHRwOi8vc3dpc3NzaWduLm5l
+dC9jZ2ktYmluL2F1dGhvcml0eS9kb3dubG9hZC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVBNzRF
+QkUxQTVENjE0MzI1ME4GCCsGAQUFBzABhkJodHRwOi8vb2NzcC5zd2lzc3NpZ24ubmV0L0YwQzdB
+MzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUwDQYJKoZIhvcNAQELBQADggEBABdb
+MVHD4q0EB+RgXq6I8Ae8HiJob4a4AcICuocd/zCWO/27zkwJC2OJREx516IrAoJDFN3B9g3E8EgJ
+B9W4BGbb0kmIh5W1ZNNfUN1yvzKgfYgHWKT2qCZ/Ld/q9Z2iX123McZk0bbB0MmfYVT1AV22KYwj
+Nv5Gs4DAPU1amB25RLwcOdj5frGKsvXVRtSOV82dpU3w15axIa7EOt2JY51foI9SKxfpVEVYZgWq
+vpZGJVZTwcuj6aynJElPs06cX/TBTkftBdzWG+eqjwoOt/XYmyZV/1JlVPTu9+BHFq72UV3lCpbn
+u3OSJmhHpk2hZh/sXploM1EAhOI4ZvzJkdMwggZVMIIFPaADAgECAhQy1Y0KorfJwZGujzVDEB0q
+wdcAhjANBgkqhkiG9w0BAQsFADBWMQswCQYDVQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFH
+MTAwLgYDVQQDEydTd2lzc1NpZ24gUGVyc29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjIwHhcNMjEw
+OTI1MDgxODAwWhcNMjIwOTI1MDgxODAwWjCBqDELMAkGA1UEBhMCREUxQTA/BgNVBAoTOE4gQyBQ
+IGUgR21iSCBOZXR3b3JrIENvbW11bmljYXRpb25zIFByb2R1Y3RzIGVuZ2luZWVyaW5nMSswKQYJ
+KoZIhvcNAQkBFhxtYXR0aGlhcy5zdC5waWVycmVAbmNwLWUuY29tMSkwJwYDVQQDEyBTZWN1cmUg
+TWFpbDogR2F0ZXdheSBDZXJ0aWZpY2F0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AMS2EubIrx6dYfNud/dZkmHyAYlcGQt3nTncicdt1ZPHzCHMH8U1qE0Al00O5fVYd5BTEncTnA6e
+gMdfcNSLcrqh0AnCoJ3jXqKOE7bUsOK3KSq8pHAjBjhq6IvfIrbTpEDOGmHUlEInknC/zrEgdloq
+5hXDa6X8t/NkXc3AVtfy5VLcnZ3uAe8XFGcSBM2wvTVTSoAW3dbJ7qGXt5wmPkzAcksEY92/wLeT
+/AC/1N7MAuPB5vWKSR+hQO/FmcztIvtrgofLfClaa0x5rBJnQW7yPiuUuIBMLieeoPSPGpcKHF5v
+Ojy7g25LTvgBx5vSTvBb44n6DJayKggsMOFGE4kCAwEAAaOCAsYwggLCMCcGA1UdEQQgMB6BHG1h
+dHRoaWFzLnN0LnBpZXJyZUBuY3AtZS5jb20wDgYDVR0PAQH/BAQDAgSwMBMGA1UdJQQMMAoGCCsG
+AQUFBwMEMB0GA1UdDgQWBBTkEmRaQwpiI7oY7z/ceTpO7+NqqDAfBgNVHSMEGDAWgBTwx6MykbXr
+yrVYdxWnTr4aXWFDJTCB/wYDVR0fBIH3MIH0MEegRaBDhkFodHRwOi8vY3JsLnN3aXNzc2lnbi5u
+ZXQvRjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTCBqKCBpaCBooaBn2xk
+YXA6Ly9kaXJlY3Rvcnkuc3dpc3NzaWduLm5ldC9DTj1GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVB
+NzRFQkUxQTVENjE0MzI1JTJDTz1Td2lzc1NpZ24lMkNDPUNIP2NlcnRpZmljYXRlUmV2b2NhdGlv
+bkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRpb25Qb2ludDBnBgNVHSAEYDBeMFIG
+CGCFdAFZAgELMEYwRAYIKwYBBQUHAgEWOGh0dHBzOi8vcmVwb3NpdG9yeS5zd2lzc3NpZ24uY29t
+L1N3aXNzU2lnbl9DUFNfU01JTUUucGRmMAgGBgQAj3oBAzCBxgYIKwYBBQUHAQEEgbkwgbYwZAYI
+KwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0L2NnaS1iaW4vYXV0aG9yaXR5L2Rvd25sb2Fk
+L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUwTgYIKwYBBQUHMAGGQmh0
+dHA6Ly9vY3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1
+RDYxNDMyNTANBgkqhkiG9w0BAQsFAAOCAQEAF1sxUcPirQQH5GBerojwB7weImhvhrgBwgK6hx3/
+MJY7/bvOTAkLY4lETHnXoisCgkMU3cH2DcTwSAkH1bgEZtvSSYiHlbVk019Q3XK/MqB9iAdYpPao
+Jn8t3+r1naJfXbcxxmTRtsHQyZ9hVPUBXbYpjCM2/kazgMA9TVqYHblEvBw52Pl+sYqy9dVG1I5X
+zZ2lTfDXlrEhrsQ63YljnV+gj1IrF+lURVhmBaq+lkYlVlPBy6PprKckSU+zTpxf9MFOR+0F3NYb
+56qPCg639dibJlX/UmVU9O734EcWrvZRXeUKlue7c5ImaEemTaFmH+xemWgzUQCE4jhm/MmR0zCC
+Br4wggSmoAMCAQICDwVE1k6tHtM21TJAXQC5NjANBgkqhkiG9w0BAQsFADBHMQswCQYDVQQGEwJD
+SDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMSEwHwYDVQQDExhTd2lzc1NpZ24gU2lsdmVyIENBIC0g
+RzIwHhcNMTQwOTE5MjAzNjQ5WhcNMjkwOTE1MjAzNjQ5WjBWMQswCQYDVQQGEwJDSDEVMBMGA1UE
+ChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVyc29uYWwgU2lsdmVyIENBIDIw
+MTQgLSBHMjIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDLObE5hf76yaG8w4OpDkot
+hHIe/2jFp8Qd7A/XqIsTHrPRFotA3A9TbwE97OhktZfbg7yoqMCEOFheAxQr5sow7wCy6xM5GZJH
+KiEA5XLNwjFiDsxWKv93xGOMmMJveNe1tszpfR8zppEFKv7RUtb07Jz+TUxqUuGFdmK7uWjmUmP8
+wSGRkl0Z2NyA0RnjSRZXAg4ZRIWrKckv+sZtawqh9vf/a2E1FSaUlAJpJV1p971ea4LZkAwG+UMF
+IknrNtAgWmMQ4zgh1X8WK0GKRnryZ+ik0LoefyQndZiUSS1WxFQzkZ1i+dVf3lupFZiclFPBgOkJ
+FxW0G4ApMqHQrxOnAgMBAAGjggKWMIICkjAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB
+/wIBADAdBgNVHQ4EFgQU8MejMpG168q1WHcVp06+Gl1hQyUwHwYDVR0jBBgwFoAUF6DNweRBtjpb
+O8tFnb0cwpj6hlgwgf8GA1UdHwSB9zCB9DBHoEWgQ4ZBaHR0cDovL2NybC5zd2lzc3NpZ24ubmV0
+LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2NTgwgaiggaWggaKGgZ9sZGFw
+Oi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQvQ049MTdBMENEQzFFNDQxQjYzQTVCM0JDQjQ1OURC
+RDFDQzI5OEZBODY1OCUyQ089U3dpc3NTaWduJTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25M
+aXN0P2Jhc2U/b2JqZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnQwYQYDVR0gBFowWDBWBglg
+hXQBWQEDAQYwSTBHBggrBgEFBQcCARY7aHR0cDovL3JlcG9zaXRvcnkuc3dpc3NzaWduLmNvbS9T
+d2lzc1NpZ24tU2lsdmVyLUNQLUNQUy5wZGYwgcYGCCsGAQUFBwEBBIG5MIG2MGQGCCsGAQUFBzAC
+hlhodHRwOi8vc3dpc3NzaWduLm5ldC9jZ2ktYmluL2F1dGhvcml0eS9kb3dubG9hZC8xN0EwQ0RD
+MUU0NDFCNjNBNUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4ME4GCCsGAQUFBzABhkJodHRwOi8vb2Nz
+cC5zd2lzc3NpZ24ubmV0LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2NTgw
+DQYJKoZIhvcNAQELBQADggIBAMN5p1e3e61RaPVEjEGVKAF8dNY7arxt76fXTTmZHWiNygjZ0HGx
+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
+--NoSpamProxy_79b8411f-c211-4bbc-9964-c802f565f33b--
 
--- 
-An old man doll... just what I always wanted! - Clara
