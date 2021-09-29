@@ -2,228 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59C5EC433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23702C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 03:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 411CA61352
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 01:55:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0610C6138F
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 03:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243702AbhI2B5K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Sep 2021 21:57:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41524 "EHLO
+        id S243860AbhI2DVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Sep 2021 23:21:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243696AbhI2B5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Sep 2021 21:57:08 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1EFC061766
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 18:55:25 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id a11so1096687ilk.9
-        for <git@vger.kernel.org>; Tue, 28 Sep 2021 18:55:25 -0700 (PDT)
+        with ESMTP id S243803AbhI2DVd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Sep 2021 23:21:33 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3886C06161C
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 20:19:52 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id b16so1054224qtt.7
+        for <git@vger.kernel.org>; Tue, 28 Sep 2021 20:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GVAEaDvJESveSFFWdD9hElxuP8CI9v2+PMwEro7P404=;
-        b=HtYDIAkT/qox0aKRxzMmX7588P96IJ6Th9y9AK5cgBaEZ+fHEkut7w28dy391z1YSu
-         dFxLKZHuCAI/gID+m6Qdh3Xdu904ZYiUpJ7F84HyrG/xwwkxB4c1hEVTOtxrTc2iwpU/
-         ZA7ll7N8ldDPRtEhCYH4kykSnPG9URlfhVqOWjTsHUnB5NExHK+tdMPYq5LS5Zg8HLT5
-         6TK+uomO4nFkESC1cjpet+b6hq1ZRrAE/VpqAsFcnY8dNQro+eUPbnj28n5BrsNqq2A7
-         V3OyF6jZSpMsxCIG4N1v7eZwNu8rgbfS54SeitlVDSTspFLJGs9WPkT7lCTFlkchMBzs
-         ZbOA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=11CR5UYRWRWc3bPRbplr+0scAh0ANI0GdLzwxqemGBM=;
+        b=ErlMODII5omiyDPCdS6PxSz2/trZy/RtzBtNA5BABMc3sJA2nhDOzVDwIYGZNNbxwZ
+         SOfteexwS5BUxq7LNp6+JVV0sXU2/zr+sAhxHiEzH81C79jed0Kf0JYasEYSyWaeBPox
+         J1voOsOVAXi98oTDGvxFl6Dleu8KCG9+4bsM4CTv6sVUdYq8FnfEmv47R5Yc/gI1Zqmv
+         gVq0E7TRmY0KgVimT3pWyk+ctdKuNIOsy/iPf9WR+INnObykniWolgsreTqI/6OT4Q8D
+         J/FjqglW0r0PG1Y9o1xyP8b6or2zjXUSiTD47ye0VxP8O5dS+jB8KS52CWEXUjhsT3OU
+         OC3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GVAEaDvJESveSFFWdD9hElxuP8CI9v2+PMwEro7P404=;
-        b=quME+dtbX6SPfY6/G9nebT3hQsadlEm/8D2BX2jLicUd5t8wwi//Xcsj2TZk5oFmu8
-         xLjKd3CfBJSgESQuC5629VPbnQL4bGemtih8gxu309YAcr/yVuSvAbjh3YAeX3mPggG9
-         4eLLHPb4LS/nwvGsbx4GnsKwRz++34M/WtUPZkkAHtlvm+tiITTprJeL1TTsd54/55Sv
-         k+bQ2e1/xP6zI/4ylqYvZop3UMFycBUoiv2NzjVDje+X0a4kUm4mrG+Y/zEqbheaWgH4
-         CSO7CWiqOhGFx2SRfGX+Qpa5RU5wVaOGnAP7BXaOwBmJ3RnuCKFSQCgW4eBhcjlqGi1e
-         CWTw==
-X-Gm-Message-State: AOAM531uzHyJ0TqP8R4BVvwgAmNWHbGV1Ku99VuQOoePuqXUAnAYvYYw
-        sIC5KHYaX/XNOoCVUqsKvc2cJ9A1rmOGlA==
-X-Google-Smtp-Source: ABdhPJwIOGwWP4hKbemijyq77uq+LFLNlXYtCxjhqvsbYqhmJqpGJDpKoi3Y6HD+tlZMa1DuzEZOyQ==
-X-Received: by 2002:a05:6e02:1e0c:: with SMTP id g12mr6325930ila.155.1632880524451;
-        Tue, 28 Sep 2021 18:55:24 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b14sm504760ilc.63.2021.09.28.18.55.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 18:55:24 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 21:55:23 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=11CR5UYRWRWc3bPRbplr+0scAh0ANI0GdLzwxqemGBM=;
+        b=vhhuaF+kaoPUQOR+MbOp7BSynF37TBklz7tdC4V1Rl95T9rPxfl7mA+/nWyyITloAk
+         ArRqWYHEZPaeP1bI9sQ0444sovXEqLd5hxM6LQcl3M5HZudfNIFAD7l7Oin6Nt57GoMB
+         wBDMCWmvHRELTxjNbqO/bGTDjp2o1y0o2bUw9/DHq6sYMMUbuwDTTCcbiFkRyrrmxOVg
+         OxY6FbKyNNo6a+LS2VjN/r2QGw+/g4j1t7jo9VkvZ/vQ/EIbgeuc4lth409z+XIpv2Wg
+         u1MlSd+YnjFPZbngydhJre08YKk9ceWrcntX9VrTMN/PE2sw36PBAt9W2NbJR5GJVRg0
+         ZgKA==
+X-Gm-Message-State: AOAM533TDTFfCEk0nKamTEy0abYtJy+oz4uaNaoi6rmbFqg0iRUT7hXI
+        /XNVQeau5kViNYpmTwM1BU7L6gKKn211Og==
+X-Google-Smtp-Source: ABdhPJw/b8/RRUq9Kx3OEJ/wPOlYBrfmT6c6cPFte9cJAK+Uz+Og9sxBbOI+ZJkuFIDwny/qzkk9BA==
+X-Received: by 2002:a05:622a:1350:: with SMTP id w16mr9575611qtk.354.1632885591594;
+        Tue, 28 Sep 2021 20:19:51 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id h2sm801350qkk.10.2021.09.28.20.19.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Sep 2021 20:19:51 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, gitster@pobox.com,
-        jonathantanmy@google.com, steadmon@google.com
-Subject: [PATCH v3 9/9] builtin/repack.c: pass `--refs-snapshot` when writing
- bitmaps
-Message-ID: <d99f0753213a8073afbb1213f0e6d082bf3e5195.1632880469.git.me@ttaylorr.com>
-References: <cover.1631730270.git.me@ttaylorr.com>
- <cover.1632880469.git.me@ttaylorr.com>
+Cc:     j6t@kdbg.org, gitster@pobox.com, avarab@gmail.com,
+        jonathantanmy@google.com, ramsay@ramsayjones.plus.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v5 0/3] js/win-lazyload-buildfix
+Date:   Tue, 28 Sep 2021 20:19:37 -0700
+Message-Id: <20210929031940.97092-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.955.gee03ddbf0e
+In-Reply-To: <20210929004832.96304-1-carenas@gmail.com>
+References: <20210929004832.96304-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1632880469.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prevent the race described in an earlier patch, generate and pass a
-reference snapshot to the multi-pack bitmap code, if we are writing one
-from `git repack`.
+This is a reroll of v3, merged in seen at 906546091d (Merge branch
+'js/win-lazyload-buildfix' into jch, 2021-09-28) and that provides a
+buildfix for a non standard setup found and provided by Hannes, plus
+cleanup for confusing issues reported by Ævar and Jonathan Tan due
+to the original implementation of cb/pedantic-build-for-developers
+now in master.
 
-This patch is mostly limited to creating a temporary file, and then
-calling for_each_ref(). Except we try to minimize duplicates, since
-doing so can drastically reduce the size in network-of-forks style
-repositories. In the kernel's fork network (the repository containing
-all objects from the kernel and all its forks), deduplicating the
-references drops the snapshot size from 934 MB to just 12 MB.
+v5
+- remove unnecessary export of a make variable as suggested by Ramsay
 
-But since we're handling duplicates in this way, we have to make sure
-that we preferred references (those listed in pack.preferBitmapTips)
-before non-preferred ones (to avoid recording an object which is pointed
-at by a preferred tip as non-preferred).
+v4
+- add a third patch based on feedback from cb/pedantic-build-for-developers
+  in master and including suggestions by Ævar on a similar patch posted as
+  part of a different series.
 
-We accomplish this by doing separate passes over the references: first
-visiting each prefix in pack.preferBitmapTips, and then over the rest of
-the references.
+v3
+- fixup to patch1 to help usability and typo fixes from Eric and Junio.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+v2
+- add a second patch to avoid CI build issues caused by the first and retire
+  now obsoleted -Wno-incompatible-pointer-types.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 1577f0d59f..5cc0dff77c 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -15,6 +15,8 @@
- #include "promisor-remote.h"
- #include "shallow.h"
- #include "pack.h"
-+#include "pack-bitmap.h"
-+#include "refs.h"
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-@@ -453,6 +455,65 @@ static void clear_pack_geometry(struct pack_geometry *geometry)
- 	geometry->split = 0;
- }
- 
-+struct midx_snapshot_ref_data {
-+	struct tempfile *f;
-+	struct oidset seen;
-+	int preferred;
-+};
-+
-+static int midx_snapshot_ref_one(const char *refname,
-+				 const struct object_id *oid,
-+				 int flag, void *_data)
-+{
-+	struct midx_snapshot_ref_data *data = _data;
-+	struct object_id peeled;
-+
-+	if (!peel_iterated_oid(oid, &peeled))
-+		oid = &peeled;
-+
-+	if (oidset_insert(&data->seen, oid))
-+		return 0; /* already seen */
-+
-+	if (oid_object_info(the_repository, oid, NULL) != OBJ_COMMIT)
-+		return 0;
-+
-+	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-+		oid_to_hex(oid));
-+
-+	return 0;
-+}
-+
-+static void midx_snapshot_refs(struct tempfile *f)
-+{
-+	struct midx_snapshot_ref_data data;
-+	const struct string_list *preferred = bitmap_preferred_tips(the_repository);
-+
-+	data.f = f;
-+	oidset_init(&data.seen, 0);
-+
-+	if (!fdopen_tempfile(f, "w"))
-+		 die(_("could not open tempfile %s for writing"),
-+		     get_tempfile_path(f));
-+
-+	if (preferred) {
-+		struct string_list_item *item;
-+
-+		data.preferred = 1;
-+		for_each_string_list_item(item, preferred)
-+			for_each_ref_in(item->string, midx_snapshot_ref_one, &data);
-+		data.preferred = 0;
-+	}
-+
-+	for_each_ref(midx_snapshot_ref_one, &data);
-+
-+	if (close_tempfile_gently(f)) {
-+		int save_errno = errno;
-+		delete_tempfile(&f);
-+		errno = save_errno;
-+		die_errno(_("could not close refs snapshot tempfile"));
-+	}
-+}
-+
- static void midx_included_packs(struct string_list *include,
- 				struct string_list *existing_nonkept_packs,
- 				struct string_list *existing_kept_packs,
-@@ -488,6 +549,7 @@ static void midx_included_packs(struct string_list *include,
- 
- static int write_midx_included_packs(struct string_list *include,
- 				     struct pack_geometry *geometry,
-+				     const char *refs_snapshot,
- 				     int show_progress, int write_bitmaps)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -517,6 +579,9 @@ static int write_midx_included_packs(struct string_list *include,
- 		strvec_pushf(&cmd.args, "--preferred-pack=%s",
- 			     pack_basename(largest));
- 
-+	if (refs_snapshot)
-+		strvec_pushf(&cmd.args, "--refs-snapshot=%s", refs_snapshot);
-+
- 	ret = start_command(&cmd);
- 	if (ret)
- 		return ret;
-@@ -539,6 +604,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct string_list existing_kept_packs = STRING_LIST_INIT_DUP;
- 	struct pack_geometry *geometry = NULL;
- 	struct strbuf line = STRBUF_INIT;
-+	struct tempfile *refs_snapshot = NULL;
- 	int i, ext, ret;
- 	FILE *out;
- 	int show_progress = isatty(2);
-@@ -627,6 +693,18 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
- 		die(_(incremental_bitmap_conflict_error));
- 
-+	if (write_midx && write_bitmaps) {
-+		struct strbuf path = STRBUF_INIT;
-+
-+		strbuf_addf(&path, "%s/%s_XXXXXX", get_object_directory(),
-+			    "bitmap-ref-tips");
-+
-+		refs_snapshot = xmks_tempfile(path.buf);
-+		midx_snapshot_refs(refs_snapshot);
-+
-+		strbuf_release(&path);
-+	}
-+
- 	if (geometric_factor) {
- 		if (pack_everything)
- 			die(_("--geometric is incompatible with -A, -a"));
-@@ -809,6 +887,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				    &existing_kept_packs, &names, geometry);
- 
- 		ret = write_midx_included_packs(&include, geometry,
-+						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
- 						show_progress, write_bitmaps > 0);
- 
- 		string_list_clear(&include, 0);
+v1
+- first patch with a build fix when -Wno-incompatible-pointer-types (included
+  with 6a8cbc41ba (developer: enable pedantic by default, 2021-09-03)) was
+  not in effect.
+
+Carlo Marcelo Arenas Belón (2):
+  lazyload.h: use an even more generic function pointer than FARPROC
+  Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
+
+Johannes Sixt (1):
+  lazyload.h: fix warnings about mismatching function pointer types
+
+ compat/win32/lazyload.h | 14 +++++++++-----
+ config.mak.dev          |  8 ++++++--
+ config.mak.uname        |  6 +++++-
+ 3 files changed, 20 insertions(+), 8 deletions(-)
+
+Range-diff against v4:
+1:  d2c470f9bc = 1:  d2c470f9bc lazyload.h: fix warnings about mismatching function pointer types
+2:  2d84c4ed57 = 2:  2d84c4ed57 lazyload.h: use an even more generic function pointer than FARPROC
+3:  a731848d01 ! 3:  0d4f097db9 Makefile: restrict -Wpedantic and -Wno-pedantic-ms-format better
+    @@ config.mak.uname: ifeq ($(uname_S),NONSTOP_KERNEL)
+      	pathsep = ;
+      	HAVE_ALLOCA_H = YesPlease
+      	NO_PREAD = YesPlease
+    -@@ config.mak.uname: ifeq ($(uname_S),QNX)
+    - 	NO_STRLCPY = YesPlease
+    - endif
+    - 
+    -+export uname_S
+    -+
+    - vcxproj:
+    - 	# Require clean work tree
+    - 	git update-index -q --refresh && \
 -- 
-2.33.0.96.g73915697e6
+2.33.0.955.gee03ddbf0e
+
