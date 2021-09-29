@@ -2,95 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F241C433F5
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 22:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C74AEC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 22:58:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 84DEE60F39
-	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 22:57:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1A4E61502
+	for <git@archiver.kernel.org>; Wed, 29 Sep 2021 22:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347277AbhI2W6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 18:58:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345988AbhI2W6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 18:58:42 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E730DC06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 15:57:00 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id z130-20020a256588000000b005b6b4594129so5510159ybb.15
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 15:57:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=tbefX+8HOmyxwVtFBsPPUV6npnlwsw4GxV9Gdvtfmp0=;
-        b=JNi+p8bXok4b8LsS8t87LR6YTvHWNCISnI4aFUOxpEHieTa5fe/l8Y7xEr1eVTElsF
-         rpuDZKiUI517dnTCKsDRkQwhpDhnulDnsdFTGLhggHJMj6LCdkNbeqrNbIRrH+yt7U4u
-         KNIl44voewH3M8g66MTDkEFyv3Nzsw1BXYr5nuWOWhNu30j/nZZ0DQh/unfastl+wgHi
-         TFLjjvcBu33+nvVtUiusIq8QFNanl5k6QHEK0HOn6P0TdzuR4ITzSGmiaX+tUDEwXYPC
-         lm7XffLQPt+NR5RE0sr0XuHbQDpL0ewmToLH0QyP3IA0uZL3gkee2ePXUdTABoGQoXhr
-         zHBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=tbefX+8HOmyxwVtFBsPPUV6npnlwsw4GxV9Gdvtfmp0=;
-        b=XSpLhMbZ8MSGY9PK78aDD/UX7+rDreFmU29zeNM1x6nr03+UTkNkB7xGiy2QWpB/qN
-         qp4nQKM928RZBhHvwe2/eAbAwaXKI5Ce6eaLjpPPkkTuQ7SbBe8cqCRCPAxtT6d4DaHF
-         GVcra3b3+li2izsNc9a3U7fpK6QJENqXjbWuo/H0qNgxlYFToh+hUv+95yWGPOCXgkMc
-         ZCWxYqgyzgSkBtc+E7iFRw1VEmkUKymN1TatD37xOVp1xw+K1BI8KEIOn3d980nZ/o7K
-         hbQLUCooyGtEuwE/uDxzMnlYimqirsMLePCTMa7dNfVBM1G5J+d6hHLZ6+DrRqaXVE5Y
-         QHAQ==
-X-Gm-Message-State: AOAM530da82bHBeOI1UL9oT8HbxlSpqUFfrVIfO+md+sffgox1BZojVl
-        hYwHKcM4iHUmZmVr8sEnEtoBKsk+Q72NKA==
-X-Google-Smtp-Source: ABdhPJyVoiC/s37+tzH47jPb7JcTNZNZbLZcdf2i198t+NRlfAxUdsVTSt0aUdLF4kSWoetrED6v++mzWNE20Q==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a25:ce14:: with SMTP id
- x20mr3058605ybe.68.1632956220232; Wed, 29 Sep 2021 15:57:00 -0700 (PDT)
-Date:   Wed, 29 Sep 2021 15:56:58 -0700
-In-Reply-To: <ebe894b4-af25-f79e-c43f-1839e075908d@sunshineco.com>
-Message-Id: <kl6lr1d7ourp.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20210913181221.42635-1-chooglen@google.com> <20210917225459.68086-1-chooglen@google.com>
- <20210917225459.68086-3-chooglen@google.com> <ebe894b4-af25-f79e-c43f-1839e075908d@sunshineco.com>
-Subject: Re: [PATCH v2 2/3] fsck: verify multi-pack-index when implictly enabled
-From:   Glen Choo <chooglen@google.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1347223AbhI2XAh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 19:00:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50938 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1345988AbhI2XAg (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Sep 2021 19:00:36 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6FA8E6073C;
+        Wed, 29 Sep 2021 22:58:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1632956334;
+        bh=Ve6VVKnZLqjvx1IpnoRxrNpBZ+nP4KcbIW5mCerUS4Q=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=meAqv/PYM0osmhQvO1J3zdNZrfQ+pZOWOVXZQnkeEpblM5u/5jQvXFbW/VeYUaSKG
+         /Tdu2lIcqZPfz4aIZfXC3x00FCmWa3BCcoU9F5hmBWs+IVM75omndl6pYNNRgMzp6h
+         9VQV8Dzm7RMqiu+P2+urvAYO5Bj/3DLTBSnrs08hA0FTGVbEjSFa5UFeYlDTG6bhMZ
+         DDbWntr8I8CUgubqELkhrvFIj1hmZJyU5kYkJwe/d1lpJrJu0TI5HdB56XGYDQj57y
+         zAHDH7/e7cIYnhbpaEENo8Ck8jxqqhrTLvGtDjGU8zfE75zBSq7AvjDV/j8IcBrM7x
+         rBOgKcwfNY0d7mFYia+dvAxcRFGvewb8TVlefyhwZEeA1n2WsphS94K9g9WkZ0g+Dc
+         +12d5gShX8z26vPAA6jZR7MOipNJANz3GcoCA5GmHqBAUXbFQixn6I8ztcrCwIqQv3
+         nlLpArARBee4hz1zIkkqJbRW2/OtcNi8klI+rlOnhE9zccIEClO
+Date:   Wed, 29 Sep 2021 22:58:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Kevin Kendzia <kevin.kendzia@googlemail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Issues with newest version of openssh 8.8p1-1
+Message-ID: <YVTvqpjkHuB2c15l@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bryan Turner <bturner@atlassian.com>,
+        Kevin Kendzia <kevin.kendzia@googlemail.com>,
+        Git Users <git@vger.kernel.org>
+References: <CAKcQ8=cyq46=eF8NZtUifmfHgWUphmHPYh4s3oQrHjiX2nqEmQ@mail.gmail.com>
+ <CAGyf7-FBgmRTmjKFjMi2p5MArGEQh9a4Z6RA6FO-2U4D5jGnmA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="dY6GBEog7C8x3Ksd"
+Content-Disposition: inline
+In-Reply-To: <CAGyf7-FBgmRTmjKFjMi2p5MArGEQh9a4Z6RA6FO-2U4D5jGnmA@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
->>   test_expect_success 'git-fsck incorrect offset' '
->>   	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\377" $objdir \
->>   		"incorrect object offset" \
->> -		"git -c core.multipackindex=true fsck"
->> +		"git -c core.multipackindex=true fsck" &&
->> +		test_must_fail git fsck &&
->> +		git -c core.multipackindex=false fsck
->>   '
->
-> I guess the newly-added `test_must_fail git fsck` line is checking the 
-> fallback case then `core.multipackindex` is not set. We could make this 
-> check a bit more robust by _ensuring_ that it is unset rather than 
-> relying upon whatever state the configuration is in by the time this 
-> test is reached. Perhaps something like this:
->
->      ...
->      "git -c core.multipackindex=true fsck" &&
->      test_unconfig core.multipackindex &&
->      test_must_fail git fsck &&
->      git -c core.multipackindex=false fsck
+--dY6GBEog7C8x3Ksd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think this extra robustness is worth it. I sometimes find that the
-tests are a bit too interdependent to read on their own, so this is a
-good step forward.
+On 2021-09-28 at 07:32:05, Bryan Turner wrote:
+> Ultimately this isn't a Git issue; it's an SSH issue. My guess would
+> be that upgrading to OpenSSH 8.8 picks up the change to stop using RSA
+> signatures using SHA-1 hashes by default.[1]
+>=20
+> You can update your ~/.ssh/config to add these lines to revert that
+> and allow using those keys again:
+> Host old-host
+>      HostkeyAlgorithms +ssh-rsa
+>      PubkeyAcceptedAlgorithms +ssh-rsa
 
-> The indentation is a bit unusual. It aligns nicely and is, in some 
-> sense, easy to read, but the two new lines are over-indented considering 
-> that they are siblings of the corrupt_midx_and_verify() call.
+I should point out that these algorithms are disabled by default because
+they are a security risk.  This has been announced for a long time now
+in OpenSSH and everyone should have either switched key types or enabled
+RSA with SHA-2 or both.
 
-I agree. This was a typo from me, not a conscious choice.
+> With that said, though, if possible a better solution is to generate
+> new SSH keys using ECDSA, Ed25519 or another stronger signature and
+> switch to those.
+
+You also need to contact the party operating the server to which you're
+trying to push in this case, since it's ultimately the fact that they
+don't support RSA with SHA-2 that's the problem.
+
+There are a couple different providers (in my testing just this second,
+I found Bitbucket and Azure DevOps) who are still offering only the
+ssh-rsa host keys (possibly with ssh-dss as well) and not offering the
+rsa-sha2-256 and rsa-sha2-512 algorithms, and only the server operator
+can fix those.  If the server operator adds support for RSA with SHA-2,
+then OpenSSH 8.8 will work just fine.  But otherwise, this will continue
+to be broken out of the box.
+
+But as for client keys, I do strongly recommend Ed25519 in all cases.
+If you have the misfortune of having to use a FIPS-compliant environment
+(which I don't recommend in any case), then use RSA with SHA-2.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--dY6GBEog7C8x3Ksd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYVTvqQAKCRB8DEliiIei
+gaiwAP9azBZhU9ggOxEof+fCPLPFBhwz4ez3GBE8z8auKMPMoQEA+e9s42wTiFYs
+SdhLkVCu3UxlBek25UOi9Heah2PsRgs=
+=YFa9
+-----END PGP SIGNATURE-----
+
+--dY6GBEog7C8x3Ksd--
