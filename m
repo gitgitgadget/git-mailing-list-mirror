@@ -2,226 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82722C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E286C433FE
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 690E761216
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 425C561216
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352487AbhI3RDh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 13:03:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44268 "EHLO
+        id S1352483AbhI3RDi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 13:03:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350626AbhI3RDf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1352475AbhI3RDf (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 30 Sep 2021 13:03:35 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E2D9C061770
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:51 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id me5-20020a17090b17c500b0019af76b7bb4so7241783pjb.2
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:51 -0700 (PDT)
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62BACC061776
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:52 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id ce20-20020a17090aff1400b0019f13f6a749so6975167pjb.4
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yp+S3YXJbiSTiiNQG123ymRkO0FMviVKplqovkp0nM0=;
-        b=mo6qjE4/J7ZoB7A7YWu6q+t3cNR9H4wOtqjkSAfKdiP0vzzIEVe2m9hD6xRjU/v7eG
-         4p/ZArxWPfK6gbSTKQDjYifggEOL0CNODw7zSS0Q6b0auzULEvP8OYW6xMZLEcGEoXp0
-         vZy+JRraJ+FfF4ZZ8nc/6NZZi5U0SmoQtZLJ0PMaQIHosfBpODtzRu1sCoeZa+tfI/hL
-         ZdhGu7GhhccKEFYNNHGolmW9GI1Xw7DJuDHCuyadpsdtkNzb/dJUU6N7mm5fYCY9Kfk5
-         9/QCisjYsoEjpQpv0+Rc2XUEQXQdad2n1Kwk6rDjJGk33F8qfCBSomyK+e6f04T5WpKL
-         TX6w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=A5Xel3ExkB+C0/nXPTgnGFF1CIQPY7WoHSwf2uT/Bsc=;
+        b=VsdadnbRLWJv8gxVVO98uW1y8sSINbsJ+k9Vtt02oB8VWGZho6mvP36+5/xxpgnKNe
+         bvlrDDbrg/DBpMFZmzBneCSljmru2E1IHxm8ihIC2xnx5IFBwzF0HouhHS5MTS/68JWE
+         tCe0aBlU0+RRX2NQnYxHzNTHC2sM/Qu824k6oaHpjCV/iujCigkzseS1y4bu/2hj9Dvv
+         59LlI6TMENGcMSNW9pe+ezxzECabNJ68atMzFV+lyr78mgngF26um3gRzRP5pFg0cwIe
+         E7gPgd4scvmlKIkROZdR3Ipscr3MHlTyA0kJr9k2WLLEc8FCBrxyM7B0suiuwnDbr6pv
+         2jmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yp+S3YXJbiSTiiNQG123ymRkO0FMviVKplqovkp0nM0=;
-        b=PKmEHrnQdVC/dhtXgi5Bho2L/fY2dqcOKPVP3uNcMnPRkL8h5l0AtjpBAmOKvwEXwR
-         eKhfSdXDw9bcz4nBKiAcd0fYztSbxcFIqJx6N3dtwY4kQMO0A3lXRGmjgwMMDOQ4do3K
-         NFg4s1MPnQ1DQtttGkg+2HnFoGqq8O1no9efA+cobLc3PKjRTxxR/HeRM4SDPaesDsY6
-         mWu0onpEREEXf6FDFHTC3uc/VDOC9OYxKBcpba4J8c68urKV3PbAq2LF6ignzL7+SGSa
-         bN26TIUUhVsckY2otGxIxgAy4HxsyrQMmz0FMYXL2ZxyTqo/w2fYyLTjQAZeovm7XrA5
-         uUHQ==
-X-Gm-Message-State: AOAM5322HE1m0N1UDdACG92syXtHNaiRAE+t9ar9JZMppN/OZdfzHgKB
-        K0pUecHURN2G8OEXax8G++uZSrVTBIc=
-X-Google-Smtp-Source: ABdhPJzTCAb5k+vx6y99Pd38OaNAmUEEW2Udv1MhMkK86AOvB9SxAPtLG3NAhZmgA42JxC2rKZIjjA==
-X-Received: by 2002:a17:902:d88d:b0:13e:807b:d52b with SMTP id b13-20020a170902d88d00b0013e807bd52bmr391032plz.69.1633021310028;
-        Thu, 30 Sep 2021 10:01:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=A5Xel3ExkB+C0/nXPTgnGFF1CIQPY7WoHSwf2uT/Bsc=;
+        b=zrtqokFgCqrqrvr7AvzcRfLBH7H5bQLsSkjwyIDFy67qA4eO2sM1w92eg3v8kiXUbc
+         HDIStV02Tq2vlMvjTB/GqAW2tV6m5zBESYO966J4zDznekDVWK7KVy0/bDbpT7okhyl+
+         Z27Sy4NwecDeE9m81gN5A6BG/DeGhHaXHHphcOSE6aImON+HqH9jHU5uZOSCvxqC8zOi
+         r3XfmgKb7ZT2sTP8VkfXMBFmoQeFzRggBDVALVQvqc7XBola8zJho+kXf5F5+jW86f7R
+         r+9Auu9xGLxr5FdJuhg0h9FKFnhxGgNaLuiHs4TXkE6rqYWWEAXgF/zPxyOJhNpHUtBU
+         ulIQ==
+X-Gm-Message-State: AOAM532GjSHW0QgG690jT3YvjzLgiFV8m0cfIlaskKu6s2W3YpbjhxKT
+        bTqi0ixkAXdvYA9qH99KckSD+PVTcrE=
+X-Google-Smtp-Source: ABdhPJxNDMzZXf3khdtotj3LFtLtH6Qktrpa+26+2pkP+b7wn2LTY+z+tnMBsk8o79pRhRRFZwtu9w==
+X-Received: by 2002:a17:90a:8413:: with SMTP id j19mr7637884pjn.181.1633021311603;
+        Thu, 30 Sep 2021 10:01:51 -0700 (PDT)
 Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id p4sm2740678pjo.0.2021.09.30.10.01.48
+        by smtp.gmail.com with ESMTPSA id p4sm2740678pjo.0.2021.09.30.10.01.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Sep 2021 10:01:49 -0700 (PDT)
+        Thu, 30 Sep 2021 10:01:51 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v6 1/5] difftool: create a tmpdir path without repeated slashes
-Date:   Thu, 30 Sep 2021 10:01:42 -0700
-Message-Id: <20210930170146.61489-1-davvid@gmail.com>
+Subject: [PATCH v6 2/5] difftool: add a missing space to the run_dir_diff() comments
+Date:   Thu, 30 Sep 2021 10:01:43 -0700
+Message-Id: <20210930170146.61489-2-davvid@gmail.com>
 X-Mailer: git-send-email 2.33.0.887.g8db6ae3373
+In-Reply-To: <20210930170146.61489-1-davvid@gmail.com>
+References: <20210930170146.61489-1-davvid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The paths generated by difftool are passed to user-facing diff tools.
-Using paths with repeated slashes in them is a cosmetic blemish that
-is exposed to users and can be avoided.
-
-Use a strbuf to create the buffer used for the dir-diff tmpdir.
-Strip trailing slashes from the value read from TMPDIR to avoid
-repeated slashes in the generated paths.
-
-Adjust the error handling to avoid leaking strbufs.
-
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-This patch is a resend based off of "next" so that this series can be
-tracked together.
+Trivial tweak. Unchanged but resubmitted for ease of application.
 
-This patch is unchanged since the v5 was submitted, but there are
-new related patches that proceed it.
-
- builtin/difftool.c  | 48 ++++++++++++++++++++++-----------------------
- t/t7800-difftool.sh |  7 +++++++
- 2 files changed, 30 insertions(+), 25 deletions(-)
+ builtin/difftool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 210da03908..9d2dfd3361 100644
+index 9d2dfd3361..fdaaa86bff 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -252,16 +252,6 @@ static void changed_files(struct hashmap *result, const char *index_path,
- 	strbuf_release(&buf);
- }
- 
--static NORETURN void exit_cleanup(const char *tmpdir, int exit_code)
--{
--	struct strbuf buf = STRBUF_INIT;
--	strbuf_addstr(&buf, tmpdir);
--	remove_dir_recursively(&buf, 0);
--	if (exit_code)
--		warning(_("failed: %d"), exit_code);
--	exit(exit_code);
--}
--
- static int ensure_leading_directories(char *path)
- {
- 	switch (safe_create_leading_directories(path)) {
-@@ -333,16 +323,16 @@ static int checkout_path(unsigned mode, struct object_id *oid,
- static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 			struct child_process *child)
- {
--	char tmpdir[PATH_MAX];
- 	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
- 	struct strbuf rpath = STRBUF_INIT, buf = STRBUF_INIT;
- 	struct strbuf ldir = STRBUF_INIT, rdir = STRBUF_INIT;
- 	struct strbuf wtdir = STRBUF_INIT;
--	char *lbase_dir, *rbase_dir;
-+	struct strbuf tmpdir = STRBUF_INIT;
-+	char *lbase_dir = NULL, *rbase_dir = NULL;
- 	size_t ldir_len, rdir_len, wtdir_len;
- 	const char *workdir, *tmp;
- 	int ret = 0, i;
--	FILE *fp;
-+	FILE *fp = NULL;
- 	struct hashmap working_tree_dups = HASHMAP_INIT(working_tree_entry_cmp,
- 							NULL);
- 	struct hashmap submodules = HASHMAP_INIT(pair_cmp, NULL);
-@@ -351,7 +341,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	struct pair_entry *entry;
- 	struct index_state wtindex;
- 	struct checkout lstate, rstate;
--	int rc, flags = RUN_GIT_CMD, err = 0;
-+	int flags = RUN_GIT_CMD, err = 0;
- 	const char *helper_argv[] = { "difftool--helper", NULL, NULL, NULL };
- 	struct hashmap wt_modified, tmp_modified;
- 	int indices_loaded = 0;
-@@ -360,11 +350,15 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 
- 	/* Setup temp directories */
- 	tmp = getenv("TMPDIR");
--	xsnprintf(tmpdir, sizeof(tmpdir), "%s/git-difftool.XXXXXX", tmp ? tmp : "/tmp");
--	if (!mkdtemp(tmpdir))
--		return error("could not create '%s'", tmpdir);
--	strbuf_addf(&ldir, "%s/left/", tmpdir);
--	strbuf_addf(&rdir, "%s/right/", tmpdir);
-+	strbuf_add_absolute_path(&tmpdir, tmp ? tmp : "/tmp");
-+	strbuf_trim_trailing_dir_sep(&tmpdir);
-+	strbuf_addstr(&tmpdir, "/git-difftool.XXXXXX");
-+	if (!mkdtemp(tmpdir.buf)) {
-+		ret = error("could not create '%s'", tmpdir.buf);
-+		goto finish;
-+	}
-+	strbuf_addf(&ldir, "%s/left/", tmpdir.buf);
-+	strbuf_addf(&rdir, "%s/right/", tmpdir.buf);
- 	strbuf_addstr(&wtdir, workdir);
- 	if (!wtdir.len || !is_dir_sep(wtdir.buf[wtdir.len - 1]))
- 		strbuf_addch(&wtdir, '/');
-@@ -580,7 +574,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 		flags = 0;
- 	} else
- 		setenv("GIT_DIFFTOOL_DIRDIFF", "true", 1);
--	rc = run_command_v_opt(helper_argv, flags);
-+	ret = run_command_v_opt(helper_argv, flags);
- 
- 	/* TODO: audit for interaction with sparse-index. */
- 	ensure_full_index(&wtindex);
-@@ -614,7 +608,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 		if (!indices_loaded) {
- 			struct lock_file lock = LOCK_INIT;
- 			strbuf_reset(&buf);
--			strbuf_addf(&buf, "%s/wtindex", tmpdir);
-+			strbuf_addf(&buf, "%s/wtindex", tmpdir.buf);
- 			if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
- 			    write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
- 				ret = error("could not write %s", buf.buf);
-@@ -644,11 +638,14 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+@@ -542,7 +542,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
  	}
  
- 	if (err) {
--		warning(_("temporary files exist in '%s'."), tmpdir);
-+		warning(_("temporary files exist in '%s'."), tmpdir.buf);
- 		warning(_("you may want to cleanup or recover these."));
--		exit(1);
--	} else
--		exit_cleanup(tmpdir, rc);
-+		ret = 1;
-+	} else {
-+		remove_dir_recursively(&tmpdir, 0);
-+		if (ret)
-+			warning(_("failed: %d"), ret);
-+	}
- 
- finish:
- 	if (fp)
-@@ -660,6 +657,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	strbuf_release(&rdir);
- 	strbuf_release(&wtdir);
- 	strbuf_release(&buf);
-+	strbuf_release(&tmpdir);
- 
- 	return ret;
- }
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 528e0dabf0..096456292c 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -453,6 +453,13 @@ run_dir_diff_test 'difftool --dir-diff' '
- 	grep "^file$" output
- '
- 
-+run_dir_diff_test 'difftool --dir-diff avoids repeated slashes in TMPDIR' '
-+	TMPDIR="${TMPDIR:-/tmp}////" \
-+		git difftool --dir-diff $symlinks --extcmd echo branch >output &&
-+	grep -v // output >actual &&
-+	test_line_count = 1 actual
-+'
-+
- run_dir_diff_test 'difftool --dir-diff ignores --prompt' '
- 	git difftool --dir-diff $symlinks --prompt --extcmd ls branch >output &&
- 	grep "^sub$" output &&
+ 	/*
+-	 * Symbolic links require special treatment.The standard "git diff"
++	 * Symbolic links require special treatment. The standard "git diff"
+ 	 * shows only the link itself, not the contents of the link target.
+ 	 * This loop replicates that behavior.
+ 	 */
 -- 
 2.33.0.887.g8db6ae3373
 
