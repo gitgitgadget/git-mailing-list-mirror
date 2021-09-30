@@ -2,153 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECC55C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA53BC433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAE8F61216
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DF9C61881
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 17:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352476AbhI3RDi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 13:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44268 "EHLO
+        id S1352482AbhI3RDj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 13:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352479AbhI3RDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 13:03:36 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD638C06176C
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:53 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id r7so4636677pjo.3
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:53 -0700 (PDT)
+        with ESMTP id S1352478AbhI3RDi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 13:03:38 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C73C06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:55 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id r7so4636724pjo.3
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 10:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YVbJ9jnvgsvfNkzebOvnWIRfVgI6Qul6aa559+zbb30=;
-        b=CeKq5vOEl7o0WoXJmsA4ckVxKw4xge0+OPSeQY7kh8BPOimWgb5DXBSYgfxhHdxWz9
-         WQmk+NDJG8pIHzpsvgMze1ZwixEakibnaI74dE+CLTWqiNZ2m9ZscvNhzAI5S3+08qiL
-         TGEtEYMKJLZBhdMOnsBae7qf9JStj3zKh+grYSlirkv3YjUcfw0+QF8/VMyCMHn4f0VO
-         l/YUx76nvOfM4tPYMAI0cYR03uL0EpiWxaOThB660ZBSRYyj+4UAZ7gkZYChzaznBk/D
-         fjtypN/QbIk+knABHF6x435wyveF28EtM1U0TPJW3S3H9biT3zb3FcECp+VCgaUr1xjA
-         H9ag==
+        bh=vqWBem/sC0ubBy22X5nYFj2VzyRwmznXXHCFxvbtNbc=;
+        b=qIYJcCz2xsrQbIgmRpNJ+LeEQ3wfYYzqGS6R7+cFEvDzFTStz2BYAHTKuS8ONHlITZ
+         w3oPKJvozsEHdwOSeVZUM6v7pQmTYtcKov1LdibXtem4f94AFGkxmb1UYZ4hJoZUwazk
+         zlenshtYDrQz19qk1+5HJIbMvKMM5KlYq5V7qM3d96dIzKp1FvTLI+mMXuBnlmuAUOto
+         c1rXvYlX+1NCgsxFz9GaIT55NsnDExn3ah/mygJv47b3pbi/bf4gLEdDV1VrZokFQ8dM
+         TSBDRwpCk3IfVnQ4GFnd8fNs6DLhK9v0hBQxxAyqg4iOStPwyYf0CwHSvT0USzkR5Zno
+         cmmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YVbJ9jnvgsvfNkzebOvnWIRfVgI6Qul6aa559+zbb30=;
-        b=s6yJmLA3QiuPLLgRYkRKuXAjZW6MJ1pY6msUBVtIWrs2HZOHuQJES5C/fWV5zXe6Eq
-         BCgOQjsgeuhM5kM7kmIIZy8hX9T+tt1vwfU2MytXCrVnhTvRDZS4kgy1WU2bzHoYvS6H
-         u7BwVRRn7IBafhZkW34lk4snRpEDQqtxairS/zJdfJKxfnll+DDYiTnIBijms7t/s7Jo
-         mE08A5H4EuawdTiiUdaOSbOFwYZvf/riGjvvaBcb2SsH8mmkPazmwFoheToZII0EoYew
-         3ZarW/W+YquZE13rQ4nukxxY4DxX+tIR/IF3rRxx1e2fIymKGrgGR7k6Z5dWtkfylgNY
-         X+gQ==
-X-Gm-Message-State: AOAM531UrbcZf4ZjyBhMB/bG9hWE20gZ4fUwH8FsxCOjUNTCWq3EPk3T
-        2D64RrsQm98pFFwYd6w2H1dbmFl4zAs=
-X-Google-Smtp-Source: ABdhPJwuq0KKd5BGPnDtROBJqwXI+ixLiMTXlc4wBErIS8lxSc1TdTWu6Y2N351oiRx12LMy9lUx5A==
-X-Received: by 2002:a17:90a:718c:: with SMTP id i12mr14380399pjk.182.1633021313073;
-        Thu, 30 Sep 2021 10:01:53 -0700 (PDT)
+        bh=vqWBem/sC0ubBy22X5nYFj2VzyRwmznXXHCFxvbtNbc=;
+        b=ktWWyCiyWZT6fwS+Ae3ofDSnM9wUIRV7r5d9oVhytWLj6CRjSptCdFKkCesaCCAV0x
+         Pyjb7VhcNs/T9VXCwbjm/m0rBpjGuL0mM+ndxBMKiS/RjJ4GZVqMxzdFvNbDyPM1iA+b
+         k9dKXLId54jbWUOndFeEd7BKLTrNSfYgfG1L0toBr4Zp8JvWRHrJDZIb1eD7lAQiG5Ax
+         fo4+VXdXKXjTh7HZRdZhqD6mrJncwO45CfPsx3nMf+XzMVvSX32w27mz889UV93dctMp
+         0PVM2/W6ankpcTrMmF1qa17Gn8h1hdWaY4XPaG9wc56yhTAdXDjAm7KmONdKh3Nu5zDt
+         Bp5A==
+X-Gm-Message-State: AOAM530scxpJ7bXU3A3l1uqfCZG+pNwGTC8ZFG7EtAVCDl3wjzLoKVmE
+        WDa6RJH2TTv9tUHHtgb0ldWi8smKvF8=
+X-Google-Smtp-Source: ABdhPJx7rLAXKRhyLW/6DS8auZ08wMFXdk3LTdb48wqse1RwI/bX0BBF8ezKKTTf2RpGoWr0Gc64XA==
+X-Received: by 2002:a17:90a:351:: with SMTP id 17mr7771817pjf.145.1633021314491;
+        Thu, 30 Sep 2021 10:01:54 -0700 (PDT)
 Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id p4sm2740678pjo.0.2021.09.30.10.01.51
+        by smtp.gmail.com with ESMTPSA id p4sm2740678pjo.0.2021.09.30.10.01.53
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Sep 2021 10:01:52 -0700 (PDT)
+        Thu, 30 Sep 2021 10:01:54 -0700 (PDT)
 From:   David Aguilar <davvid@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v6 3/5] difftool: avoid returning -1 to cmd_main() from run_dir_diff()
-Date:   Thu, 30 Sep 2021 10:01:44 -0700
-Message-Id: <20210930170146.61489-3-davvid@gmail.com>
+Subject: [PATCH v6 4/5] difftool: refactor dir-diff to write files using a helper function
+Date:   Thu, 30 Sep 2021 10:01:45 -0700
+Message-Id: <20210930170146.61489-4-davvid@gmail.com>
 X-Mailer: git-send-email 2.33.0.887.g8db6ae3373
 In-Reply-To: <20210930170146.61489-1-davvid@gmail.com>
 References: <20210930170146.61489-1-davvid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-difftool was forwarding the -1 result from error() to cmd_main(), which
-is implementation-defined since it is outside of the 0-255 range
-specified by POSIX for program exit codes.
+Add a write_entry() helper function to handle the unlinking and writing
+of the dir-diff submodule and symlink stand-in files.
 
-Stop assigning the result of error() to `ret`. Assign a value of 1
-whenever internal errors are detected instead.
+Use write_entry() inside of the hashmap loops to eliminate duplicate
+code and to safeguard the submodules hashmap loop against the
+symlink-chasing behavior that 5bafb3576a (difftool: fix symlink-file
+writing in dir-diff mode, 2021-09-22) addressed.
+
+The submodules loop should not strictly require the unlink() call that
+this is introducing to them, but it does not necessarily hurt them
+either beyond the cost of the extra unlink().
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
-This patch addresses the note from Ævar about returning -1 to cmd_main().
+This is cleanup refactoring that Junio suggested when
+5bafb3576a (difftool: fix symlink-file writing in dir-diff mode, 2021-09-22)
+touched this area of the code.
 
- builtin/difftool.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ builtin/difftool.c | 38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index fdaaa86bff..e419bd3cd1 100644
+index e419bd3cd1..bbb8b399c2 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -447,7 +447,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+@@ -320,6 +320,17 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+ 	return ret;
+ }
  
- 		if (lmode && status != 'C') {
- 			if (checkout_path(lmode, &loid, src_path, &lstate)) {
--				ret = error("could not write '%s'", src_path);
-+				ret = 1;
-+				error("could not write '%s'", src_path);
- 				goto finish;
- 			}
- 		}
-@@ -468,8 +469,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 			if (!use_wt_file(workdir, dst_path, &roid)) {
- 				if (checkout_path(rmode, &roid, dst_path,
- 						  &rstate)) {
--					ret = error("could not write '%s'",
--						    dst_path);
-+					ret = 1;
-+					error("could not write '%s'", dst_path);
- 					goto finish;
- 				}
- 			} else if (!is_null_oid(&roid)) {
-@@ -487,15 +488,16 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 
- 				add_path(&rdir, rdir_len, dst_path);
- 				if (ensure_leading_directories(rdir.buf)) {
--					ret = error("could not create "
--						    "directory for '%s'",
--						    dst_path);
-+					ret = 1;
-+					error("could not create directory for '%s'",
-+						dst_path);
- 					goto finish;
- 				}
- 				add_path(&wtdir, wtdir_len, dst_path);
- 				if (symlinks) {
- 					if (symlink(wtdir.buf, rdir.buf)) {
--						ret = error_errno("could not symlink '%s' to '%s'", wtdir.buf, rdir.buf);
-+						ret = 1;
-+						error_errno("could not symlink '%s' to '%s'", wtdir.buf, rdir.buf);
- 						goto finish;
- 					}
- 				} else {
-@@ -504,7 +506,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 						st.st_mode = 0644;
- 					if (copy_file(rdir.buf, wtdir.buf,
- 						      st.st_mode)) {
--						ret = error("could not copy '%s' to '%s'", wtdir.buf, rdir.buf);
-+						ret = 1;
-+						error("could not copy '%s' to '%s'", wtdir.buf, rdir.buf);
- 						goto finish;
- 					}
- 				}
-@@ -515,7 +518,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	fclose(fp);
- 	fp = NULL;
- 	if (finish_command(child)) {
--		ret = error("error occurred running diff --raw");
-+		ret = 1;
-+		error("error occurred running diff --raw");
- 		goto finish;
++static void write_entry(const char *path, const char *content,
++			struct strbuf *buf, size_t len)
++{
++	if (!*content)
++		return;
++	add_path(buf, len, path);
++	ensure_leading_directories(buf->buf);
++	unlink(buf->buf);
++	write_file(buf->buf, "%s", content);
++}
++
+ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 			struct child_process *child)
+ {
+@@ -533,16 +544,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	 */
+ 	hashmap_for_each_entry(&submodules, &iter, entry,
+ 				entry /* member name */) {
+-		if (*entry->left) {
+-			add_path(&ldir, ldir_len, entry->path);
+-			ensure_leading_directories(ldir.buf);
+-			write_file(ldir.buf, "%s", entry->left);
+-		}
+-		if (*entry->right) {
+-			add_path(&rdir, rdir_len, entry->path);
+-			ensure_leading_directories(rdir.buf);
+-			write_file(rdir.buf, "%s", entry->right);
+-		}
++		write_entry(entry->path, entry->left, &ldir, ldir_len);
++		write_entry(entry->path, entry->right, &rdir, rdir_len);
  	}
  
+ 	/*
+@@ -552,18 +555,9 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	 */
+ 	hashmap_for_each_entry(&symlinks2, &iter, entry,
+ 				entry /* member name */) {
+-		if (*entry->left) {
+-			add_path(&ldir, ldir_len, entry->path);
+-			ensure_leading_directories(ldir.buf);
+-			unlink(ldir.buf);
+-			write_file(ldir.buf, "%s", entry->left);
+-		}
+-		if (*entry->right) {
+-			add_path(&rdir, rdir_len, entry->path);
+-			ensure_leading_directories(rdir.buf);
+-			unlink(rdir.buf);
+-			write_file(rdir.buf, "%s", entry->right);
+-		}
++
++		write_entry(entry->path, entry->left, &ldir, ldir_len);
++		write_entry(entry->path, entry->right, &rdir, rdir_len);
+ 	}
+ 
+ 	strbuf_release(&buf);
 -- 
 2.33.0.887.g8db6ae3373
 
