@@ -2,137 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 075F7C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BDBC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:27:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD1FA61423
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:07:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 309A5615E5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347988AbhI3FH6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 01:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45840 "EHLO
+        id S239907AbhI3F30 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 01:29:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347971AbhI3FH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 01:07:56 -0400
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984E3C06176A
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:06:14 -0700 (PDT)
-Received: by mail-vs1-xe32.google.com with SMTP id 188so5890242vsv.0
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:06:14 -0700 (PDT)
+        with ESMTP id S233588AbhI3F3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 01:29:25 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB937C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:27:43 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id l8so17684741edw.2
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Kcg0FBLNTpPiDeEOscRb1RTo2jS57Uh95l8hzNIHKDI=;
-        b=Zf5OAOHrFhAOlG4apRIyfu/1o04sgkWWfE8Swdqkeib1CCAc7Ckamr/rjK0ZXSDyON
-         Kvnx9YQ34nJ0Tr/ylpTGdM3XSUV4T5yxweGaB5S8zonhXLLcj4vEgSZvDSm1gnGnF6VY
-         T4wH4ASeTKJDfutTzxfSXi95teaJTQ3cI2vbji4MqInOhStGvd6/Y/ijEgAvpOFsiIhO
-         2NujlEdXDAWLDNXSb9cgblCNyKgoAcc9ERjR232TeXF5WaigRJReiGWpYYC30jWHuF9s
-         aNmLnzf3D3cJpxOVtB+c2SLtYAEml+qoFGQPSUJKaxwcVFfKGKdGABOUHdQq91Ids2kp
-         g9EQ==
+         :cc;
+        bh=Mpk49iruhf8TgXrEldZetqa3OVeVAndnr4DiD5wIw3I=;
+        b=nw2njgLTzY4KckdivbcG0sWwtpTjtsyqepO7HbW8oJgkkHr+hqgBTHNDO3zI5IDBjS
+         crQurtiGuYnKQjflgkZpjiQ9BvMbTZr/voBv52ca3Nc2rfsNocIp2yB2IhGt/aTHePYE
+         qWL3K//A7u2Ek08rEnqYgIIL2kIPGYF7wHhUiVoYDIEOL8w9HHYKy3F8cR+sdlSHPyW3
+         teCW+Xzpw0h3wkOlvMSo6XwpFQ8CzOlX50pvuyFLQnV2vmaE93MuQHBMRujKg/m3ZUNy
+         k9nCnvfe9Jj/Cps+2JfLk04ZXvQOyT2sq/ZFK+J7Nz8B17AvjFcQdQyZ0hhFZCCieek7
+         aAbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Kcg0FBLNTpPiDeEOscRb1RTo2jS57Uh95l8hzNIHKDI=;
-        b=CeZNFi+SOJKUTiS//WBK/KDxaA393C8uiBOv09ub+sJ56VhI/d2vjxmc/SiIkmA4jD
-         oSQRUnl4tkjh+yqpt8Li8iYBjunz3f6cFsnbl8FnFm8CUqjIrveXqJgYurKlDJLyEd8+
-         8uGIp/bs5V8LTo96BNMpH1VR8yGchOssb9mMr4x3vNNvyj4aFzwHYYZDuTfcEyrHGcA5
-         oU9JATvlcs69wvAuD78MZo0nqnLO+g+hH/6mGjOvPO4sVnDb+a2CYgXYYxREsEkDocap
-         icQ4+B7QtYpbC7bXMFhWHCTG98WYitPM/nExdrBs0xNO5WyQgYLh4dEeqFPf9aSkUxgK
-         BsnA==
-X-Gm-Message-State: AOAM532x3jBieZKJ+IDuvNmZrskZlB6RXYL/R+tzpW/qnHSkHwx06wqW
-        xT4ESqIj3mnPzyshaFXNVXZbaXF4QuhrUBRlOwI=
-X-Google-Smtp-Source: ABdhPJzzVjJQwUWQUWi7Or7/mBrvhVMKQITJqMEzsNqaOyh5FBk7dFER/HqA/5/coKYkYDZoZd/gvJTt23GGuuftJV0=
-X-Received: by 2002:a05:6102:1d4:: with SMTP id s20mr1815161vsq.3.1632978373579;
- Wed, 29 Sep 2021 22:06:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Mpk49iruhf8TgXrEldZetqa3OVeVAndnr4DiD5wIw3I=;
+        b=p3RIZSKQcOOkc31lAcbZFwg6d3rsl7/AyjlpEn7nQG+91aDs8WD6/UivtzTpcUdJWv
+         8MigI4GuywG7sUOtPU81si7bnkTh+VPE0KnfZkL/MritwjMKCk33zTeyu7uAlo4xgo5J
+         UDWeEHb9U4g8h2QQfwD53IqNCogXjAFrBLlK6EsZLIQa9ll2liMmaT85/VEez1DVfy+a
+         pCLsQ5gHuY0oSQS2yh6xk5jsL7TVYQ+N829oxzfI/vyckm+V44ksikFx/Nngyifo1Nfx
+         LsnW4SCqXBzMIVoyKcN/w++K6hvFq4ftUjZYca6QRb0jI+Jbvv+n2nDRrZ5XnsZh7Az2
+         cJ6A==
+X-Gm-Message-State: AOAM5303NdqOWEBtARngdNQDDJVS1GKpR4O3hLwSojNEgpQTuDS3JM7B
+        u7gdjrDsk0u2b0+bpHfcV7SDwfNjb9yu4kpMuG3fdLQs4/I=
+X-Google-Smtp-Source: ABdhPJwqVXL7FTF3pMBLefXbonX0cMPJ2w2+orNdbVCwg+c98pgpb4otGzi7KPJx+GXE4Gpxu0kah3D2XU7vTrbYU54=
+X-Received: by 2002:a50:be82:: with SMTP id b2mr4820449edk.56.1632979662273;
+ Wed, 29 Sep 2021 22:27:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq8rzhmsi7.fsf@gitster.g> <871r59xfgk.fsf@evledraar.gmail.com> <CAFQ2z_NxqLVfSWNtcXdyWQsTXrTrWGq7Qof=wdx9mmeqOAJS_Q@mail.gmail.com>
-In-Reply-To: <CAFQ2z_NxqLVfSWNtcXdyWQsTXrTrWGq7Qof=wdx9mmeqOAJS_Q@mail.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 29 Sep 2021 22:06:02 -0700
-Message-ID: <CAPUEspj6q_N-ZPRzUv8jx_5_eP0gDO5TyTpi5-kPkfeoVhkjvg@mail.gmail.com>
-Subject: Re: hn/reftable (Re: What's cooking in git.git (Sep 2021, #08; Mon, 27))
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        ramsay@ramsayjones.plus.com
+References: <CANgfOPtz9JqCs-7z1DJnOqxnsGiQS6BBPD6tKTWnTpC0K3qZ9Q@mail.gmail.com>
+In-Reply-To: <CANgfOPtz9JqCs-7z1DJnOqxnsGiQS6BBPD6tKTWnTpC0K3qZ9Q@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 29 Sep 2021 22:27:29 -0700
+Message-ID: <CABPp-BGv=+R1trGZq7r+-VneVUSoH_nOhS9sh3P7WSCiSVZksQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Question_about_git_merge_=2Ds_ort_command=E2=80=8F=E2=80=8F?=
+To:     Ariel Man <arielman22@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 5:19 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
-> On Tue, Sep 28, 2021 at 10:38 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> > > * hn/reftable (2021-09-10) 20 commits
-> > >  - fixup! reftable: implement stack, a mutable database of reftable f=
-iles.
-> > >  - Add "test-tool dump-reftable" command.
-> > >  - reftable: add dump utility
-> > >  - reftable: implement stack, a mutable database of reftable files.
-> > >  - reftable: implement refname validation
-> > >  - reftable: add merged table view
-> > >  - reftable: add a heap-based priority queue for reftable records
-> > >  - reftable: reftable file level tests
-> > >  - reftable: read reftable files
-> > >  - reftable: generic interface to tables
-> > >  - reftable: write reftable files
-> > >  - reftable: a generic binary tree implementation
-> > >  - reftable: reading/writing blocks
-> > >  - Provide zlib's uncompress2 from compat/zlib-compat.c
-> > >  - reftable: (de)serialization for the polymorphic record type.
-> > >  - reftable: add blocksource, an abstraction for random access reads
-> > >  - reftable: utility functions
-> > >  - reftable: add error related functionality
-> > >  - reftable: RFC: add LICENSE
-> > >  - hash.h: provide constants for the hash IDs
-> > >
-> > >  The "reftable" backend for the refs API, without integrating into
-> > >  the refs subsystem.
-> > >
-> > >  Will merge to 'next'?
-> >
-> > I think we've reached approximately "good enough" with this for the nex=
-t
-> > steps, and can hopefully fix any remaining nits (such as my [1])
-> > post-merge.
+On Sun, Sep 19, 2021 at 8:12 PM Ariel Man <arielman22@gmail.com> wrote:
 >
-> There is still an RFC in 02/19. Maybe we can get agreement that this
-> is OK and drop the RFC ?
+> Hi,
+> following the below thread, led me to do some tests:
+> https://stackoverflow.com/a/69114710/11705021
 >
-> > Maybe hold off until Han-Wen gets a chance to ack it, and whether he's
-> > ok with the proposed fixup(s)?
+> One of the test can be seen here, in the last example in my question:
+> https://stackoverflow.com/questions/69150777/git-mv-doesnt-work-as-expected-wrong-files-location
 >
-> regarding uncompress2: I thought it was functionality best left to
-> zlib to implement, but I imagine git.git offers something similar.
-> Sounds good to use that.
->
-> > Wasn't there an outstanding "some of this in reftable/* should be stati=
-c
-> > functions" from someone, Carlo? (CC'd). In any case that sort of thing
-> > could also be a post-cleanup, I couldn't find a reference to that
-> > discussion in anything except my vague memory of it as I wrote this.
->
-> I think I have addressed all outstanding issues in my github PR, and
-> I'll send it out once I see CI pass.
+> I wanted to get confirmation for my case:
+> Does `git merge -s ort` command, doesn't know to detect new folder
+> location when merging it? It did worked for folders and files
+> renaming, and new files under existing folders (as describe here:
+> https://stackoverflow.com/a/52227201/6309)
 
-It was actually raised by Ramsay[1], and might have been a red herring,
-but there was for sure no follow up.
+I mean, if you have a testcase and want to see how it works, you can
+just try it.  merge-ort has been released and is part of git already.
 
-I have a few minor fixups that will post for discussion, and might be even
-ok to merge to next without squashing if included on top, but I am not
-sure if all those issues could be addressed post-cleanup, since IMHO
-once this gets into master, then it will be considered a stable API
-and it can't be changed.
+But I'll take a stab...
 
-For example. while looking at Ramsay message noticed the API for "reader"
-in libreftable might be better with s/init_reader/reader_init/g
+Your testcase with new folders sounds like testcase 12f from t6423 in
+our testsuite (from commit 902c521a35 ("t6423: more involved directory
+rename test", 2020-10-15)), a case that works with the `ort` merge
+strategy but not with `recursive`.  So, the `ort` strategy is likely
+to be better for your usecase than `recursive`, but it's hard for me
+to definitively state that it'll solve all your usecase(s) since you
+didn't fully describe them.  This is especially important since you
+appear to have discovered a segfault (in the first post); I was not
+aware of any circumstances when the old merge machinery would do so.
+I'd be interested to know if the same issue repeats with the `ort`
+strategy, and, if so, whether you can get a stack trace, or find an
+example that reproduces the problem, or provide us with access to your
+repository.  Also, in your second link, you allude to problems in a
+case that does not include new folders, in situations where I'd expect
+`recursive` and `ort` to behave the same.  But it's hard to know the
+expected behavior since you didn't provide that many details about the
+setup -- e.g. you didn't cover the contents of any of the files (so
+it's hard to know if files are more similar to ones with different
+names than what you expected to be matched up), it's unclear if there
+are other files involved (e.g. if you have multiple copies of some
+library and the rename detection is detecting a different copy than
+you expected, or if there are lots of additional files besides those
+you are listing in your example and they are being renamed
+differently, etc.), whether you have lots of large files also being
+renamed (perhaps the VDI files you allude to somewhere?), etc., etc.
+If you can provide access to a repository and the commands you
+reported and what you expected vs. what you saw, I'd try to find some
+time to take a look.
 
-Carlo
+I hope that helps, though I'm not sure I've got enough details to
+answer all your questions.  I guess if I were to summarize, I'd say:
+  * the `ort` strategy would be better than `recursive` for you, for
+one particular type of issue, but probably behave the same on other
+areas
+  * you seem to have useful testcases that might be different than
+ones we have in our testsuite or that I know about
+  * you haven't provided enough information for me to investigate or
+answer any further, though.
 
-[1] https://lore.kernel.org/git/bc387e32-321e-4726-2a02-2e6cf6ed5250@ramsay=
-jones.plus.com/
-
-CC +Ramsay
+You have gotten me really curious about this segfaulting testcase --
+whether it's just in the recursive backend or also afflicts merge-ort,
+and how to duplicate it.
