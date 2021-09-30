@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A47C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE39C433EF
 	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7E8F61A55
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C374B61A55
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351945AbhI3OxC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 10:53:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41148 "EHLO
+        id S1351957AbhI3OxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 10:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351940AbhI3Owu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 10:52:50 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10A42C06176A
+        with ESMTP id S1351588AbhI3Owv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 10:52:51 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E35BC06176D
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:09 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 205-20020a1c01d6000000b0030cd17ffcf8so8670825wmb.3
         for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:08 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id u18so10551141wrg.5
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qAk86aBmKlCy4z8JyEWL95ajU/tKM5J+bszwzD+1GQM=;
-        b=XmCzfMXu41eGGjl1mfGJK8I0UXCHmvSyUAlMxgfF3UH1cu28cD2mqk7ALhlP7WlILZ
-         hn0rDsgeg2VbcHpEgplNPMTMk2uWZ+aUqN4arBQUqw22VFwsNgo8KJypzgwlvfKruQtt
-         kJvlGqFZEc91G7UqcUb1e4+pK1XvZXK4U9DRosTIUlUrP8ZlgfvJ1gu+UZMKsLILa/iA
-         /tO3ig6defc3iKeryqc92nBfLv48OkH4Y+txvTkg0kH6WAE7Mqf87IYsRucy935wbUms
-         WFX3/1H8MmbjpgfdIccja/6XUTq1wuq/pRCuwbGNvhx8OzMN42D4IiP+B4x6XBGdq1F5
-         fDag==
+        bh=2HRlxeP3tz/uNY5+unoDO9/v7e3CHEEqIbEgAsKvEsY=;
+        b=TJdDPhNdD2GGzb+ll2IqaLMvZWfxOf6OtyRjlMgLyi0UvAhBlqV6nIEAITZS8o+u7s
+         XW0/+pctnztXaEXGW9ldtaCKbb0sn450Sq4K2qUxKjW8T51bvqzFdKiF35sD4itamjef
+         9RYWF+odCfkkINGF4HF9glsvk6S6L/rLYg8xV6BMDaDYK+tCVjv/orh/ZA9mvYBzIFnJ
+         QIbWkisKBMJjHQagHR8kS1VdrrjoCft6ImB5PQs26cGzb0mhHAabZX6wLRXiqWWn2Dxd
+         Rn1w7ayHxYnb7lCyQkpKwV4tGGwyD2wIcAp7HFVy1ZYvNp6gKivdHPTGyeayFrBa7NAE
+         syQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qAk86aBmKlCy4z8JyEWL95ajU/tKM5J+bszwzD+1GQM=;
-        b=gSK2j6wVH/G50f+yxf6EY0Z1wvf7NTWs5AF3K5zv0tyXUAz/bIwt5LiXktoTJ/NBzS
-         rYLje/2shiM1o0ITOmcSThQUSbFZ6kq4Qnec0aLhg5Ume8R9jbowVWtFCTq3yRgghp8w
-         5ZQF/41CDDOW4TNkfDHR7SuzFpbeIfN7wNz04P9LJUTYkHtH7cOv045QEtwccadqcrfg
-         DOFcAomEeXrz7WGBCt73yGCUxoVm55AxgqHzfRHrvtopD/TkLcg5ARXwvro3MU3W5aoA
-         qgk5zZ+Vxq3Nj/MFDDguheKZZFx63qWDCapvPqxtPi3/5lUDKli/fkp28xbc/KNUWS4n
-         Pnqw==
-X-Gm-Message-State: AOAM533RCON6EzMTw+2htzSjupMpcaEZs1/hOoogb2uVmAlDFOElNMoq
-        LcVHb45EPq7rCksyjvGrw8dclzxAr6M=
-X-Google-Smtp-Source: ABdhPJxqniqvKmHMNqrqzzQuP4zVoJ5nZcRo1XULFPw2O28mP0/+dVMqurVJApdyDYiGHhvKM4hXhw==
-X-Received: by 2002:adf:9bd3:: with SMTP id e19mr772480wrc.136.1633013466614;
-        Thu, 30 Sep 2021 07:51:06 -0700 (PDT)
+        bh=2HRlxeP3tz/uNY5+unoDO9/v7e3CHEEqIbEgAsKvEsY=;
+        b=f7JfqazWVL5eBBHjM6v/zGi/aGGpXWhms8BQ8qsS4YHPKekLCWwy84pW2l+mwvuhuj
+         8zF1D4LEhh16prJ3JHgV5UChduzgiAJhZj/AWT1HNYsBAKEyXkaM5L97ubBCi2DNpuYa
+         V4okjLPWo7xp5PzQKHTrO3PmOsz5/kmLs3x84rgN86s7+3myDl084R9uJhcBoTtVkmD1
+         h/ZafbqyNpUBFpGzZFB1PDVk8LFKZRC5qpv3rd6j4tAzHl0hSpB/bwTM7QrIlnLFnVTa
+         je4XQZKhKCzwTatnU7n893LY73lpr+phKPd9NUEtzOHv85JdJLTR5u50kEkCeQGqxBct
+         Sj7A==
+X-Gm-Message-State: AOAM531Grxj9uoCxIGSo+GUk4BYRD1YkQ7j2qVkBijzTbdP1ewprpYpW
+        hrGQ8d9urG78iT9lTsG2qrz1cBhhDq8=
+X-Google-Smtp-Source: ABdhPJytIMA/tirUJ/BTtebDz6c7MXieobae8KCc0YQ0u3AF1u39IOayRV47Bm1dtIUxQecfC6up6g==
+X-Received: by 2002:a7b:c842:: with SMTP id c2mr16270216wml.93.1633013467213;
+        Thu, 30 Sep 2021 07:51:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c132sm5120291wma.22.2021.09.30.07.51.06
+        by smtp.gmail.com with ESMTPSA id j27sm3792093wms.6.2021.09.30.07.51.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 30 Sep 2021 07:51:06 -0700 (PDT)
-Message-Id: <e7cda32efb63c63cf60513ec447418fd97ab3fa9.1633013461.git.gitgitgadget@gmail.com>
+Message-Id: <8637ec1660ebb1b19f1f73c38debb7b098187e6f.1633013461.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
 References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Sep 2021 14:51:00 +0000
-Subject: [PATCH 6/7] reset: make --mixed sparse-aware
+Date:   Thu, 30 Sep 2021 14:51:01 +0000
+Subject: [PATCH 7/7] unpack-trees: improve performance of next_cache_entry
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,103 +69,117 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Sparse directory entries are "diffed" as trees in `diff_cache` (used
-internally by `reset --mixed`), following a code path separate from
-individual file handling. The use of `diff_tree_oid` there requires setting
-explicit `change` and `add_remove` functions to process the internal
-contents of a sparse directory.
+To find the first non-unpacked cache entry, `next_cache_entry` iterates
+through index, starting at `cache_bottom`. The performance of this in full
+indexes is helped by `cache_bottom` advancing with each invocation of
+`mark_ce_used` (called by `unpack_index_entry`). However, the presence of
+sparse directories can prevent the `cache_bottom` from advancing in a sparse
+index case, effectively forcing `next_cache_entry` to search from the
+beginning of the index each time it is called.
 
-Additionally, the `recursive` diff option handles cases in which `reset
---mixed` must diff/merge files that are nested multiple levels deep in a
-sparse directory.
+The `cache_bottom` must be preserved for the sparse index (see 17a1bb570b
+(unpack-trees: preserve cache_bottom, 2021-07-14)).  Therefore, to retain
+the benefit `cache_bottom` provides in non-sparse index cases, a separate
+`hint` position indicates the first position `next_cache_entry` should
+search, updated each execution with a new position.  The performance of `git
+reset -- does-not-exist` (testing the "worst case" in which all entries in
+the index are unpacked with `next_cache_entry`) is significantly improved
+for the sparse index case:
+
+Test          before            after
+------------------------------------------------------
+(full-v3)     0.79(0.38+0.30)   0.91(0.43+0.34) +15.2%
+(full-v4)     0.80(0.38+0.29)   0.85(0.40+0.35) +6.2%
+(sparse-v3)   0.76(0.43+0.69)   0.44(0.08+0.67) -42.1%
+(sparse-v4)   0.71(0.40+0.65)   0.41(0.09+0.65) -42.3%
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/reset.c                          | 30 +++++++++++++++++++++++-
- t/t1092-sparse-checkout-compatibility.sh | 13 +++++++++-
- 2 files changed, 41 insertions(+), 2 deletions(-)
+ unpack-trees.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 92b9a3815c7..2d95ce76f20 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -196,6 +196,8 @@ static int read_from_tree(const struct pathspec *pathspec,
- 			  int intent_to_add)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 8ea0a542da8..b94733de6be 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -645,17 +645,24 @@ static void mark_ce_used_same_name(struct cache_entry *ce,
+ 	}
+ }
+ 
+-static struct cache_entry *next_cache_entry(struct unpack_trees_options *o)
++static struct cache_entry *next_cache_entry(struct unpack_trees_options *o, int *hint)
  {
- 	struct diff_options opt;
-+	unsigned int i;
-+	char *skip_worktree_seen = NULL;
+ 	const struct index_state *index = o->src_index;
+ 	int pos = o->cache_bottom;
  
- 	memset(&opt, 0, sizeof(opt));
- 	copy_pathspec(&opt.pathspec, pathspec);
-@@ -203,9 +205,35 @@ static int read_from_tree(const struct pathspec *pathspec,
- 	opt.format_callback = update_index_from_diff;
- 	opt.format_callback_data = &intent_to_add;
- 	opt.flags.override_submodule_config = 1;
-+	opt.flags.recursive = 1;
- 	opt.repo = the_repository;
-+	opt.change = diff_change;
-+	opt.add_remove = diff_addremove;
++	if (*hint > pos)
++		pos = *hint;
 +
-+	/*
-+	 * When pathspec is given for resetting a cone-mode sparse checkout, it may
-+	 * identify entries that are nested in sparse directories, in which case the
-+	 * index should be expanded. For the sake of efficiency, this check is
-+	 * overly-cautious: anything with a wildcard or a magic prefix requires
-+	 * expansion, as well as literal paths that aren't in the sparse checkout
-+	 * definition AND don't match any directory in the index.
-+	 */
-+	if (pathspec->nr && the_index.sparse_index) {
-+		if (pathspec->magic || pathspec->has_wildcard) {
-+			ensure_full_index(&the_index);
-+		} else {
-+			for (i = 0; i < pathspec->nr; i++) {
-+				if (!path_in_cone_mode_sparse_checkout(pathspec->items[i].original, &the_index) &&
-+				    !matches_skip_worktree(pathspec, i, &skip_worktree_seen)) {
-+					ensure_full_index(&the_index);
-+					break;
-+				}
-+			}
+ 	while (pos < index->cache_nr) {
+ 		struct cache_entry *ce = index->cache[pos];
+-		if (!(ce->ce_flags & CE_UNPACKED))
++		if (!(ce->ce_flags & CE_UNPACKED)) {
++			*hint = pos + 1;
+ 			return ce;
 +		}
-+	}
+ 		pos++;
+ 	}
 +
-+	free(skip_worktree_seen);
++	*hint = pos;
+ 	return NULL;
+ }
  
--	ensure_full_index(&the_index);
- 	if (do_diff_cache(tree_oid, &opt))
- 		return 1;
- 	diffcore_std(&opt);
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 0b6ff0de17d..c9b9ef4992c 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -801,14 +801,25 @@ test_expect_success 'sparse-index is not expanded' '
- 	for ref in update-deep update-folder1 update-folder2 update-deep
- 	do
- 		echo >>sparse-index/README.md &&
-+		ensure_not_expanded reset --mixed $ref
- 		ensure_not_expanded reset --hard $ref || return 1
- 	done &&
+@@ -1365,12 +1372,13 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
  
- 	ensure_not_expanded reset --hard update-deep &&
- 	ensure_not_expanded reset --keep base &&
- 	ensure_not_expanded reset --merge update-deep &&
--	ensure_not_expanded reset --hard &&
+ 	/* Are we supposed to look at the index too? */
+ 	if (o->merge) {
++		int hint = -1;
+ 		while (1) {
+ 			int cmp;
+ 			struct cache_entry *ce;
  
-+	ensure_not_expanded reset base -- deep/a &&
-+	ensure_not_expanded reset base -- nonexistent-file &&
-+	ensure_not_expanded reset deepest -- deep &&
+ 			if (o->diff_index_cached)
+-				ce = next_cache_entry(o);
++				ce = next_cache_entry(o, &hint);
+ 			else
+ 				ce = find_cache_entry(info, p);
+ 
+@@ -1690,7 +1698,7 @@ static int verify_absent(const struct cache_entry *,
+ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
+ {
+ 	struct repository *repo = the_repository;
+-	int i, ret;
++	int i, hint, ret;
+ 	static struct cache_entry *dfc;
+ 	struct pattern_list pl;
+ 	int free_pattern_list = 0;
+@@ -1763,13 +1771,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		info.pathspec = o->pathspec;
+ 
+ 		if (o->prefix) {
++			hint = -1;
 +
-+	# Although folder1 is outside the sparse definition, it exists as a
-+	# directory entry in the index, so it will be reset without needing to
-+	# expand the full index.
-+	ensure_not_expanded reset --hard update-folder1 &&
-+	ensure_not_expanded reset base -- folder1 &&
-+
-+	ensure_not_expanded reset --hard update-deep &&
- 	ensure_not_expanded checkout -f update-deep &&
- 	test_config -C sparse-index pull.twohead ort &&
- 	(
+ 			/*
+ 			 * Unpack existing index entries that sort before the
+ 			 * prefix the tree is spliced into.  Note that o->merge
+ 			 * is always true in this case.
+ 			 */
+ 			while (1) {
+-				struct cache_entry *ce = next_cache_entry(o);
++				struct cache_entry *ce = next_cache_entry(o, &hint);
+ 				if (!ce)
+ 					break;
+ 				if (ce_in_traverse_path(ce, &info))
+@@ -1790,8 +1800,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 
+ 	/* Any left-over entries in the index? */
+ 	if (o->merge) {
++		hint = -1;
+ 		while (1) {
+-			struct cache_entry *ce = next_cache_entry(o);
++			struct cache_entry *ce = next_cache_entry(o, &hint);
+ 			if (!ce)
+ 				break;
+ 			if (unpack_index_entry(ce, o) < 0)
 -- 
 gitgitgadget
-
