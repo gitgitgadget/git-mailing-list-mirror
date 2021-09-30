@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CAE5C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED02C433FE
 	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 13:37:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D240611C7
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 13:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F1DE619E9
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 13:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351697AbhI3Njc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 09:39:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51906 "EHLO
+        id S1351668AbhI3Njd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 09:39:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351647AbhI3NjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 09:39:19 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A34C06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 06:37:36 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id d26so10114564wrb.6
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 06:37:36 -0700 (PDT)
+        with ESMTP id S1351492AbhI3NjU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 09:39:20 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5293C06176F
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 06:37:37 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id d26so10114664wrb.6
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 06:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HaEnrTf+WYDy4A4BLJ+sYMdCPrP7roJKnxUMEepScV8=;
-        b=fiSXwQosWLTRPKN5qFxnIrGg+dV2siRIIt/glA9UCwiTf6MjH+uJJ8DoAEprwu4Wva
-         6By3lCPAxG7u+QnEkTpeVUAcu939R/K2tRhqkEAFTU9QXot5wClSJY5/bKcWyR1+LJCT
-         xhJl/duYfZicW9ya4K81ri7UXtO5hen/R5OZMQfFp6ly0A/lpOigiVQOfxk8SS/xuiTo
-         s19z+D3Wtm72wafjTdHp2tAOVTfxNQCgiCA0Q7WA6Uzg0EEkAsdKfVViHCn79WJjrVu8
-         ner4DXP2BXP8RB/1IzIiUQ+kfHo81/Jnhp1fW0U+JXgVuvVqFSSwgAghtP0uc5p3j+8Y
-         y7jQ==
+        bh=EB2fZEVummt8748pmMRqI4GRZrL4BmqzBtvYUa20LUY=;
+        b=kBJFBEPUYGSPLIk/pHFRyXxy6wJPT5jqYDgclAyZ0Mv9uuDkeqN/2bqkRPqp5Xsw+a
+         W/tVZDonLQ3yhkxgY8h30Get0rP7fmbTD/AhFPsWO+LUOcL4+HoAAGQru2fOVJJpUskR
+         fFKOrlFM2NME9QRCZ3p6NZSw1NSRs/PYbmi09yqk/RvI7GvVUhg2CLhRDKEqhNhHIYN5
+         dOyu+DjbCVTonm1r52dKRU6Li99sjQTfSHYj9GZPjHI7thxh1IwARo4gd4Pe7Qhzg2SZ
+         dgN7cPu+8eO0dAKwOlELjDPyjctIrqCQZDsjaa45NxSkxgrzzGIqTxxUGGxOY4dQvMc9
+         sHAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HaEnrTf+WYDy4A4BLJ+sYMdCPrP7roJKnxUMEepScV8=;
-        b=tjv+8DapaTVD9uWdPszN4F36uYyWbgqD04pE50BgGc3aOHzjt3V4BUNmTBtanvt+B2
-         0yq7KkaE6hCYvnLdU8FcsAwaAg3Dp8CiRV1i8Y0Z5LlirDY6mlPpNZRk19ioizKwzu8E
-         aAfUgLJ6B3bmDidbgq6oSFb0eHSJwRMqhdUafUdLUbBkn0gqflBkl2lrLRh0j3lzR7Fn
-         7DXqWhdgRCrxuSMyZlhfsTstRJTkP9I+7HlHspuxyrNogiuuXgJGd3dVyZ7FFKJFq6lx
-         L7xZeqf3fNTFNiQGSgAktN5MDAUJrpQrzv570QAAJE6t1tx9oN2tBiEOfXtSp0LX8ZaD
-         9cdg==
-X-Gm-Message-State: AOAM532Vj5/WwwJmgs5vHPq0VndskWOZVlVhEyIb/6TGOYJa2eAHTtdq
-        CEnpNeDxo2C1GmBCqhORJN1IfakB7Qr1SczV
-X-Google-Smtp-Source: ABdhPJxbXutpdghxXkMmKPr1WN3VO1d8fClbDZ3kxe4D9Z+TO0TpOlZLN9hjsAmku5QUUjbyCtoEIA==
-X-Received: by 2002:adf:e4cc:: with SMTP id v12mr6164176wrm.95.1633009055130;
-        Thu, 30 Sep 2021 06:37:35 -0700 (PDT)
+        bh=EB2fZEVummt8748pmMRqI4GRZrL4BmqzBtvYUa20LUY=;
+        b=BKJWzHGUVRYNCXJoJBTALP4unVakdhdvSUuaPcNTNAAbNPa6UUi3wmPCKsZVffnaNc
+         Avhy/aX21YT1b8F8hymZROE0hDl4/WUl7/OMYrEcVM2MgX4s4e3F1vegtKP1aiRs5tY6
+         bZFfO2Js0wu8VgLJu9VHNt5MF7wGCWtH/vNZISBeGUIop/C/WYtX8YsbTcGtfL3X2MF0
+         IsFq4yc6Pmu+fX3dFwR+MNMYvtMvLY3rIUxxdRLCk4ZS9CahaDG8Wv3gEUj/k+RwkmIR
+         bYhlD/V6OjGDcaaFRfKBg5OODS+z0SknpdYfBM2fiitMzgTuB9qF2Tvqs4w9/nvRIB6U
+         e4sA==
+X-Gm-Message-State: AOAM532ka0yJwurQBK1tMh5haJFhirxrpEp5OrPJfDCUGDYsU2Eh4uOz
+        /c9EppmmyC9hgaeHGlUloRbSGcQVm5wyV5Tn
+X-Google-Smtp-Source: ABdhPJwLST62fhaj1OTQxpQ8EK1NZn8bRrJ/Qn/Bnv6jsAS0Y9aYPmCEsDytCsbRjFOYvTqcyeEClw==
+X-Received: by 2002:adf:a499:: with SMTP id g25mr5747822wrb.239.1633009056137;
+        Thu, 30 Sep 2021 06:37:36 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o11sm4654713wmh.11.2021.09.30.06.37.33
+        by smtp.gmail.com with ESMTPSA id o11sm4654713wmh.11.2021.09.30.06.37.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 06:37:34 -0700 (PDT)
+        Thu, 30 Sep 2021 06:37:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v9 09/17] object-file.c: don't set "typep" when returning non-zero
-Date:   Thu, 30 Sep 2021 15:37:14 +0200
-Message-Id: <patch-v9-09.17-6f0673d38c8-20210930T133300Z-avarab@gmail.com>
+Subject: [PATCH v9 10/17] object-file.c: return -1, not "status" from unpack_loose_header()
+Date:   Thu, 30 Sep 2021 15:37:15 +0200
+Message-Id: <patch-v9-10.17-6637e8fd2ca-20210930T133300Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1374.g05459a61530
 In-Reply-To: <cover-v9-00.17-00000000000-20210930T133300Z-avarab@gmail.com>
 References: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com> <cover-v9-00.17-00000000000-20210930T133300Z-avarab@gmail.com>
@@ -72,58 +72,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the loose_object_info() function returns an error stop faking up
-the "oi->typep" to OBJ_BAD. Let the return value of the function
-itself suffice. This code cleanup simplifies subsequent changes.
+Return a -1 when git_inflate() fails instead of whatever Z_* status
+we'd get from zlib.c. This makes no difference to any error we report,
+but makes it more obvious that we don't care about the specific zlib
+error codes here.
 
-That we set this at all is a relic from the past. Before
-052fe5eaca9 (sha1_loose_object_info: make type lookup optional,
-2013-07-12) we would always return the type_from_string(type) via the
-parse_sha1_header() function, or -1 (i.e. OBJ_BAD) if we couldn't
-parse it.
+See d21f8426907 (unpack_sha1_header(): detect malformed object header,
+2016-09-25) for the commit that added the "return status" code. As far
+as I can tell there was never a real reason (e.g. different reporting)
+for carrying down the "status" as opposed to "-1".
 
-Then in a combination of 46f034483eb (sha1_file: support reading from
-a loose object of unknown type, 2015-05-03) and
-b3ea7dd32d6 (sha1_loose_object_info: handle errors from
-unpack_sha1_rest, 2017-10-05) our API drifted even further towards
-conflating the two again.
+At the time that d21f8426907 was written there was a corresponding
+"ret < Z_OK" check right after the unpack_sha1_header() call (the
+"unpack_sha1_header()" function was later rename to our current
+"unpack_loose_header()").
 
-Having read the code paths involved carefully I think this is OK. We
-are just about to return -1, and we have only one caller:
-do_oid_object_info_extended(). That function will in turn go on to
-return -1 when we return -1 here.
+However, that check was removed in c84a1f3ed4d (sha1_file: refactor
+read_object, 2017-06-21) without changing the corresponding return
+code.
 
-This might be introducing a subtle bug where a caller of
-oid_object_info_extended() would inspect its "typep" and expect a
-meaningful value if the function returned -1.
-
-Such a problem would not occur for its simpler oid_object_info()
-sister function. That one always returns the "enum object_type", which
-in the case of -1 would be the OBJ_BAD.
-
-Having read the code for all the callers of these functions I don't
-believe any such bug is being introduced here, and in any case we'd
-likely already have such a bug for the "sizep" member (although
-blindly checking "typep" first would be a more common case).
+So let's do the minor cleanup of also changing this function to return
+a -1.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-file.c | 2 --
- 1 file changed, 2 deletions(-)
+ object-file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/object-file.c b/object-file.c
-index be4f94ecf3b..766ba88b851 100644
+index 766ba88b851..8475b128944 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1525,8 +1525,6 @@ static int loose_object_info(struct repository *r,
- 		git_inflate_end(&stream);
+@@ -1284,7 +1284,7 @@ int unpack_loose_header(git_zstream *stream,
+ 					       buffer, bufsiz);
  
- 	munmap(map, mapsize);
--	if (status && oi->typep)
--		*oi->typep = status;
- 	if (oi->sizep == &size_scratch)
- 		oi->sizep = NULL;
- 	strbuf_release(&hdrbuf);
+ 	if (status < Z_OK)
+-		return status;
++		return -1;
+ 
+ 	/* Make sure we have the terminating NUL */
+ 	if (!memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
 -- 
 2.33.0.1374.g05459a61530
 
