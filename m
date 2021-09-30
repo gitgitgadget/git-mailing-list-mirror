@@ -2,87 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14615C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65DC6C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:45:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E63C761A54
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:32:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 390C3619F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245527AbhI3Ve1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 17:34:27 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57597 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbhI3Ve0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 17:34:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5968B14A75C;
-        Thu, 30 Sep 2021 17:32:43 -0400 (EDT)
+        id S230033AbhI3Vqy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 17:46:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63859 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229787AbhI3Vqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 17:46:53 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41EEFEC509;
+        Thu, 30 Sep 2021 17:45:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OaJjm0y5x04kl+rsvAxzznkspXSC4SSOH5tviD
-        FNDWI=; b=v5Yl022dmQFb06lyOyjQEA9WAfryTfxIalGRsbqmP2znoJpjfOadcB
-        mM4MWXyN3qxByu1vH9jTHXqzz/jGDZ2WjXfFNwt76D7u7uRpYJyqaqrVsSuFmHgu
-        IuX3zVYfGX2KYxdyJsXBwB6A15Ce0XUggnB0/irJAVd0F5XjiZweg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 51DA914A75B;
-        Thu, 30 Sep 2021 17:32:43 -0400 (EDT)
+        :content-type; s=sasl; bh=CgD/zx2P7ph/GmAemfxx4oqUnJNJjbmbOEli5R
+        Iaxv0=; b=SJfTBW9HGzucEpjBJmdAf9T1IYceBuax4i2fuMkihuI6hnOVOF/q6v
+        9xiAaIm+/ceF1XXvnVDWT7hRwPwflJDNpfcncE0GQZyElzPdvzx1vyosthYMc4EI
+        e8qOx8o/5Bpl7z76877ysWwLsVhFwcZI5SRtkhoCvwOFQ6FRRgW58=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23591EC507;
+        Thu, 30 Sep 2021 17:45:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AFD7914A75A;
-        Thu, 30 Sep 2021 17:32:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 472E6EC506;
+        Thu, 30 Sep 2021 17:45:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, newren@gmail.com
-Subject: Re: [PATCH 2/7] sparse-index: update command for expand/collapse test
-References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
-        <a1fa7c080aed2056afaad6415186c125c04a80cb.1633013461.git.gitgitgadget@gmail.com>
-        <YVYNW13aVADaR+g6@nand.local>
-        <6e9843d5-bc04-e69c-9e53-7bf18ca30fc8@github.com>
-Date:   Thu, 30 Sep 2021 14:32:39 -0700
-In-Reply-To: <6e9843d5-bc04-e69c-9e53-7bf18ca30fc8@github.com> (Victoria Dye's
-        message of "Thu, 30 Sep 2021 16:11:20 -0400")
-Message-ID: <xmqqk0ixagw8.fsf@gitster.g>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 1/5] difftool: create a tmpdir path without repeated
+ slashes
+References: <20210930170146.61489-1-davvid@gmail.com>
+Date:   Thu, 30 Sep 2021 14:45:07 -0700
+In-Reply-To: <20210930170146.61489-1-davvid@gmail.com> (David Aguilar's
+        message of "Thu, 30 Sep 2021 10:01:42 -0700")
+Message-ID: <xmqqee95agbg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F0A1661C-2235-11EC-A0F8-98D80D944F46-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: AED28E3A-2237-11EC-8FEF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> Taylor Blau wrote:
->> On Thu, Sep 30, 2021 at 02:50:56PM +0000, Victoria Dye via GitGitGadget wrote:
->>> From: Victoria Dye <vdye@github.com>
->>>
->>> In anticipation of multiple commands being fully integrated with sparse
->>> index, update the test for index expand and collapse for non-sparse index
->>> integrated commands to use `mv`.
->>> ...
->>>  	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->>> -		git -C sparse-index -c core.fsmonitor="" reset --hard &&
->>> +		git -C sparse-index -c core.fsmonitor="" mv a b &&
->> 
->> Double-checking my understanding as somebody who is not so familiar with
->> t1092: this test is to ensure that commands which don't yet understand
->> the sparse index can temporarily expand it in order to do their work?
+> The paths generated by difftool are passed to user-facing diff tools.
+> Using paths with repeated slashes in them is a cosmetic blemish that
+> is exposed to users and can be avoided.
 >
-> Exactly - if a command doesn't explicitly enable use of the sparse index by
-> setting `command_requires_full_index` to 0, the index is expanded if/when it
-> is first read during the command's execution and collapsed if/when it is
-> written to disk. This test makes sure that mechanism works as intended.
+> Use a strbuf to create the buffer used for the dir-diff tmpdir.
+> Strip trailing slashes from the value read from TMPDIR to avoid
+> repeated slashes in the generated paths.
+>
+> Adjust the error handling to avoid leaking strbufs.
+>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> This patch is a resend based off of "next" so that this series can be
+> tracked together.
+>
+> This patch is unchanged since the v5 was submitted, but there are
+> new related patches that proceed it.
 
-Sorry, I do not quite follow.  
-
-So is this "before this series of patches, 'reset --hard' can be
-used to as a sample of a command that expands and then collapses,
-but because it no longer is a good sample of a command so we replace
-it with 'mv a b'"?  Do we need to update this further when "mv a b"
-learns to expand and then collapse?
+OK.  I confirmed that this is unchanged from the first step of v5.
