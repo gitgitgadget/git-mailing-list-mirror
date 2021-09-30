@@ -2,136 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D14F3C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82D63C4332F
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE52761A56
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6896E61A55
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 14:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351531AbhI3Owr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 10:52:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41120 "EHLO
+        id S1351926AbhI3Owt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 10:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349797AbhI3Owq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 10:52:46 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C8BFC06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:04 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id b192-20020a1c1bc9000000b0030cfaf18864so4547372wmb.4
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:04 -0700 (PDT)
+        with ESMTP id S1351915AbhI3Ows (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 10:52:48 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7473DC06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id m22so5086221wrb.0
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 07:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=0CCt8/5IR42Wfd9qrNU42gBGZD1GEHugPr2B9FNcWHI=;
-        b=pK9jDH6Pxayuhueo/ZxBLSuER1jEb/Uxy+coDpI1+PIVuTggmgzwhFxHqbD6q6LGEO
-         nJy+T2pIDczL2PGskUQM2Iv4fWMJzx8mwvjcEMFYCAJZuekBK/+gqwniNQxdcJsiAc8L
-         sbdJ58U7/u60UvxKUBnZOf1tcJPpU/bYNkx7EUOl9vAAtTvEOGEB9oFxx7QcYRgwOjbh
-         BQIpsW2Z8/eTPUztBbvnBgRrCpEe7M2uSclWP13nfixoxlaUr6xNzEidsWj+As4krsEM
-         vl4RUYRip0S6LszscePm8JDZ/lhI+MThNcRJ8ZBAMnBZvDWJnU/yFc5ULM9PhBHocGMY
-         dWWg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=kWQPjrk76/fCKSTx7JTIfz6mPHkIGUtZo1+CF8cCSwM=;
+        b=UlvV1jAHkkaTlOPkDGbT6NdT/wJ2jL5xpNKInkZSHM7RRnApDmuKA5CY/5cQRj6FB9
+         qSC9i+AaqUSXxEJyFNlM7bAO3z9pPNrdTCJmW4h2i4N/kq9fSyB1pCcYU5S8goVEihOk
+         AmjRfcRZ+K6AepFaIZlngof3KrdiMqx5P1RszOUCWiJ6yDxSsCVeCO3oDZh4qbQxHMRy
+         kbz32DvKzl335aYZz5X/42egVbnMwQq0djd01kEgiXwSn8q4VymD7a7eLLNrH1HNRWtQ
+         g7G/tkmJ4DCGv6KIwJYazLXM6tQaJ3fOXFlfR+gXsH00XW+Wu6rckLKQ3fjvXFk9Bf0a
+         7U3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0CCt8/5IR42Wfd9qrNU42gBGZD1GEHugPr2B9FNcWHI=;
-        b=qL04JAsOMM3s48AYpJicUK9HNlnbfK/BtD76MAQU8F/cRQfKeCcYAzaAuegC9cChrE
-         LopLgtsIc1tcea4AQdlpPTbaH0oir9jURWm1r0ZAEpIKjvaENcSJ7ugozSPnAAEXmzke
-         u5axH3nMmu2VScbMQOIoa32NreY/lm6PNAqxCxBzr/PLljhDVLaWgG+7p2+wNB+Wptri
-         ARcEF4XcU02euH6w/MenSRQuGn29sQGoLyonQ/L995Qqmtu6PwDGfWA/ERk2nyKfI1LR
-         xNyQf6LLw2jowkqrsXUZpEit44M+iSMSqdE1V2qvOUzYK601oCIDF1KKetdroZ9UDweb
-         vnFQ==
-X-Gm-Message-State: AOAM531cuqVEASaYvmoKSjuH+tP/dsujqVq5mk9SFCrd7XNYWyC8rmev
-        vtJjOy4NnwBdr/r6RMlqRpTT0CM5m7E=
-X-Google-Smtp-Source: ABdhPJxXkZLGoMjgJ57NRL/ncC6GOhlwuz0NPeTYJXE5ch1cDs/p0YIK+9BwG++PNComY23q1x9nww==
-X-Received: by 2002:a7b:c74d:: with SMTP id w13mr16339282wmk.11.1633013462696;
-        Thu, 30 Sep 2021 07:51:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=kWQPjrk76/fCKSTx7JTIfz6mPHkIGUtZo1+CF8cCSwM=;
+        b=XrVNH0WLJa4R1w+wtCP7L+TMYwPmoE5CK/B4SGqd09cfosoDyh/txMRBYjPwUuW0ZK
+         7+rQg2ai8A0JTWevhnkN0sPCpelrlJK4FQs9ads/q8chm7dfSh9ALmqULMvjTgDqjjxA
+         5BDQDJPlHGKwRbdsP1ZMp9fcN5pbg1YGAFwdfeTEdYTAjLANQ2f9udaAUkRTcQe+qtXb
+         doE6axAgETY+NZ6pLvwKAsOkI4uwpN6OMNFj2NSNmR9ZY4sx2kk8eWK/U2kcQxIFp/MJ
+         74RmWm3QA94dLkYxxIyLHC6+Vd+JJ0Uh+3y7tvB9NPvZobJP9B1hUbdUfNI6O6vwuNOh
+         wlKg==
+X-Gm-Message-State: AOAM531v4Dzrf8LnGdh6Ooe5x4ZOaMsYiU/ov7twRMjuRi2Ozw7GcdVd
+        mqD6uXQ4Y5s5GRYL7T83Dxx+CgKY4fg=
+X-Google-Smtp-Source: ABdhPJzG/pR1APraOVqqMd/p0ppchvxH0YV43q0bwBOybMqjdpyUgVKBpvUZpmuR0lTp0d32/P/AhQ==
+X-Received: by 2002:adf:b7c1:: with SMTP id t1mr6622593wre.387.1633013464117;
+        Thu, 30 Sep 2021 07:51:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d70sm3157922wmd.3.2021.09.30.07.51.02
+        by smtp.gmail.com with ESMTPSA id c17sm4843637wmr.15.2021.09.30.07.51.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 07:51:02 -0700 (PDT)
-Message-Id: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
+        Thu, 30 Sep 2021 07:51:03 -0700 (PDT)
+Message-Id: <a1fa7c080aed2056afaad6415186c125c04a80cb.1633013461.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
+References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Sep 2021 14:50:54 +0000
-Subject: [PATCH 0/7] Sparse Index: integrate with reset
+Date:   Thu, 30 Sep 2021 14:50:56 +0000
+Subject: [PATCH 2/7] sparse-index: update command for expand/collapse test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
-        Victoria Dye <vdye@github.com>
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series integrates the sparse index with git reset and provides
-miscellaneous fixes and improvements to the command in sparse checkouts.
-This includes:
+From: Victoria Dye <vdye@github.com>
 
- 1. tests added to t1092 and p2000 to establish the baseline functionality
-    of the command
- 2. repository settings to enable the sparse index with ensure_full_index
-    guarding any code paths that break tests without other compatibility
-    updates.
- 3. modifications to remove or reduce the scope in which ensure_full_index
-    must be called.
+In anticipation of multiple commands being fully integrated with sparse
+index, update the test for index expand and collapse for non-sparse index
+integrated commands to use `mv`.
 
-The sparse index updates are predicated on a fix originating from the
-microsoft/git fork [1], correcting how git reset --mixed handles resetting
-entries outside the sparse checkout definition. Additionally, a performance
-"bug" in next_cache_entry with sparse index is corrected, preventing
-repeatedly looping over already-searched entries.
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ t/t1092-sparse-checkout-compatibility.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The p2000 tests demonstrate an overall ~70% execution time reduction across
-all tested usages of git reset using a sparse index:
-
-Test                                               before   after       
-------------------------------------------------------------------------
-2000.22: git reset (full-v3)                       0.48     0.51 +6.3% 
-2000.23: git reset (full-v4)                       0.47     0.50 +6.4% 
-2000.24: git reset (sparse-v3)                     0.93     0.30 -67.7%
-2000.25: git reset (sparse-v4)                     0.94     0.29 -69.1%
-2000.26: git reset --hard (full-v3)                0.69     0.68 -1.4% 
-2000.27: git reset --hard (full-v4)                0.75     0.68 -9.3% 
-2000.28: git reset --hard (sparse-v3)              1.29     0.34 -73.6%
-2000.29: git reset --hard (sparse-v4)              1.31     0.34 -74.0%
-2000.30: git reset -- does-not-exist (full-v3)     0.54     0.51 -5.6% 
-2000.31: git reset -- does-not-exist (full-v4)     0.54     0.52 -3.7% 
-2000.32: git reset -- does-not-exist (sparse-v3)   1.02     0.31 -69.6%
-2000.33: git reset -- does-not-exist (sparse-v4)   1.07     0.30 -72.0%
-
-
-[1] microsoft@6b8a074
-
-Thanks! -Victoria
-
-Kevin Willford (1):
-  reset: behave correctly with sparse-checkout
-
-Victoria Dye (6):
-  sparse-index: update command for expand/collapse test
-  reset: expand test coverage for sparse checkouts
-  reset: integrate with sparse index
-  reset: make sparse-aware (except --mixed)
-  reset: make --mixed sparse-aware
-  unpack-trees: improve performance of next_cache_entry
-
- builtin/reset.c                          |  77 ++++++++++++-
- cache-tree.c                             |  43 ++++++-
- cache.h                                  |  10 ++
- read-cache.c                             |  22 ++--
- t/perf/p2000-sparse-operations.sh        |   3 +
- t/t1092-sparse-checkout-compatibility.sh | 139 ++++++++++++++++++++++-
- t/t7114-reset-sparse-checkout.sh         |  61 ++++++++++
- unpack-trees.c                           |  23 +++-
- 8 files changed, 353 insertions(+), 25 deletions(-)
- create mode 100755 t/t7114-reset-sparse-checkout.sh
-
-
-base-commit: cefe983a320c03d7843ac78e73bd513a27806845
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1048%2Fvdye%2Fvdye%2Fsparse-index-part1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1048/vdye/vdye/sparse-index-part1-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1048
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index c5977152661..aed8683e629 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -642,7 +642,7 @@ test_expect_success 'sparse-index is expanded and converted back' '
+ 	init_repos &&
+ 
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+-		git -C sparse-index -c core.fsmonitor="" reset --hard &&
++		git -C sparse-index -c core.fsmonitor="" mv a b &&
+ 	test_region index convert_to_sparse trace2.txt &&
+ 	test_region index ensure_full_index trace2.txt
+ '
 -- 
 gitgitgadget
+
