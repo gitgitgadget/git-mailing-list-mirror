@@ -2,98 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1BB5C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 09:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6A44C433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 10:01:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D45361528
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 09:37:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C2176136A
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 10:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349471AbhI3JjT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 05:39:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51362 "EHLO
+        id S1349723AbhI3KD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 06:03:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349453AbhI3JjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 05:39:18 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD82C06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 02:37:36 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id na16-20020a17090b4c1000b0019f5bb661f9so542057pjb.0
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 02:37:36 -0700 (PDT)
+        with ESMTP id S238316AbhI3KDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 06:03:13 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65470C06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 03:01:30 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id w29so9071886wra.8
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 03:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:user-agent:in-reply-to:references
-         :message-id:mime-version:content-transfer-encoding;
-        bh=f8DBinmSthQL+z3H3wBzGzSYGcbDtwwOen+HTxq9Ql8=;
-        b=DBkVdgmuNwOCnuRYeQG65sYiB21XTN+2RN8V5uCWxparzr5VAf3KkcAX+tNHPVcpbO
-         mM6lQoA0iwiCZaDbqbIATvO/ClMdzm1WJukFfVromWxL9eZfAn3E/su3aGPRh6BgLRDT
-         weGC8gkTuymHk0MtZhP2XvtotiLnwc5vbm88iQNr4BVOTcDZt0nQCOtvx43jwq+g5GxZ
-         bieLtsuUdIC68ssKp8onOI4SLu/PEH5uic9lidAQ2CL7KRHaPHgGecym1usx4CeouMcq
-         DdBPYjeC0WNfHFSr4uUW5oNNcx/n/h+04b2HxCCsHEQtIxGFq1q1w0PheM65PO7qS5uc
-         CNMQ==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hOExkUyCnmMN9zGuNsWSGWnRwyyRqQ2W4BQosKgUJXo=;
+        b=DVfQwxfUk48fSwPix+NjVkh6mookJjPH7TB9BHVvYp/0g/kiC54ScIyjBuDUnL/5+S
+         GUlYnCzwKvhCEtDLgK1J3N2PLPlIktN1Rc5ie+71Dc+l+sDMkFmJt0g788u0mEJ+911p
+         SECY3HaijTCGUx6Bia4HkS2HimwosSF88iUrrrAWU4T7AtlPhC2zayqEnH2JsyJstme9
+         iU/klpl62IJA6Mxh0ZSWp3xstvyod86wmOjEVlecz+L/lHe6FkdwcAlERsLrJF1k4oGf
+         vWY+DBfWDNu60n6JPYiN3pbOrcEiZNdeEGyhbUS+ZnBlJWPjFnm77iRRVlwQQh+Xew9r
+         KwPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
-         :references:message-id:mime-version:content-transfer-encoding;
-        bh=f8DBinmSthQL+z3H3wBzGzSYGcbDtwwOen+HTxq9Ql8=;
-        b=MDJhWefRRoG124dwr+ZM03xEgjz2xUtgweR/z1NINVLm34QvsTeY1lbI8z9wtINuL8
-         HWV5oZIIgbwMvPbrTgqHTUiO2GDw6oKpqtVY59HHiPUUwyP3XzKujPrQldJYe7IgMvFF
-         LESbmci9Ud5rvECeg31yEwZG8wEGij+/64VnrfnYb29kXRQ794QvrudUQz4GgqHw8zx/
-         fofUbKUZ2FJ5ACShtUgBZy5xnw4JvyOeS4XirLCVN1TfAbkOTGRPEtj3AchpiEWEk/if
-         0mrS+8vorWguZZehR3P/V/a1DmeCNpBPEHxAHL1XWb7zZ16x5ZveUiOYRjOeZ2Y5LmXq
-         unxg==
-X-Gm-Message-State: AOAM533OkP9Esn7KLUhm/P915RlcYMTaGtdVCLw8RaxlQorf/aguppLM
-        PCaPtTjN62Y5zZ9FnJzZg7weA1Etgdca40iU
-X-Google-Smtp-Source: ABdhPJxpD5VjJOWqaUVTyn6PbWOeQdWx2NNaTMpAtSygdRIntwKYkO2wMhmIdNv/4KreeSuvyOT7Zw==
-X-Received: by 2002:a17:902:8543:b029:12d:461f:a6a8 with SMTP id d3-20020a1709028543b029012d461fa6a8mr3190067plo.1.1632994655842;
-        Thu, 30 Sep 2021 02:37:35 -0700 (PDT)
-Received: from [127.0.0.1] ([223.181.213.116])
-        by smtp.gmail.com with ESMTPSA id u12sm4292906pjr.2.2021.09.30.02.37.34
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hOExkUyCnmMN9zGuNsWSGWnRwyyRqQ2W4BQosKgUJXo=;
+        b=OUwtdnAUTYHrwsTXQ+4u7mV1t5GEi/J/LacYk20hyt2neNT3sMGwd9ORJ0ttLD03ve
+         tUvQFtDhh3Dz39fyOb+EZU0HyG9f0Tz2Zabvu692QxQjpaytj7+Atjwguc4Tby8bs7fY
+         7buiXunudXlvtFhHTU6YfjvRL70V2vK5kGolyxS2e7+U9H56D2rM6a1VpBjMCXb7g+gj
+         xppKJj6IKZbrCpkmpQ4fhYJ0qipnLtqvXW+B27sUaU0R/oKT5SY5m+jAOhya/TGUPoZv
+         C4t4vX9oM55vcnqyVoY3A55a/Pm6jm/i43YOIf9Ar6zknK544vXVovE1rScWtKv5zcyD
+         abMQ==
+X-Gm-Message-State: AOAM532Zh9NNmTlZ24ZvsYSplZYRV7gl4GLkPiDP1BlVMK/wJjSGRTV1
+        GNYc9o78eMvDPLeKms5jQ7MHo840ZZ8=
+X-Google-Smtp-Source: ABdhPJz0Drj3npH2L+1Pe2DHnezjw9g9UKBEM6J4MAT/BpJ+rcCoK+eP6ygsc9P6Vh3Bkg9G5j4nlA==
+X-Received: by 2002:adf:a499:: with SMTP id g25mr4583307wrb.239.1632996089057;
+        Thu, 30 Sep 2021 03:01:29 -0700 (PDT)
+Received: from [192.168.1.201] (178.2.7.51.dyn.plus.net. [51.7.2.178])
+        by smtp.googlemail.com with ESMTPSA id o1sm2534519wru.91.2021.09.30.03.01.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Sep 2021 02:37:35 -0700 (PDT)
-Date:   Thu, 30 Sep 2021 15:07:33 +0530
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-CC:     Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Draft of Git Rev News edition 79
-User-Agent: K-9 Mail for Android
-In-Reply-To: <5973e00d-251f-101a-b3c6-34bc29e015e8@iee.email>
-References: <CAP8UFD1necFT_wSzuu3Ua+d7zxeBuurys=ubp0ocbNR+4H0Q6w@mail.gmail.com> <5973e00d-251f-101a-b3c6-34bc29e015e8@iee.email>
-Message-ID: <2882D89C-7CFF-4CCC-800A-B9A3E7533496@gmail.com>
+        Thu, 30 Sep 2021 03:01:28 -0700 (PDT)
+Message-ID: <05770f9c-49e9-2572-d610-dcbd2b97cca3@gmail.com>
+Date:   Thu, 30 Sep 2021 11:01:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 5/5] cbtree.h: define cb_init() in terms of CBTREE_INIT
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+References: <cover-0.5-00000000000-20210927T003330Z-avarab@gmail.com>
+ <patch-5.5-7e571667674-20210927T003330Z-avarab@gmail.com>
+ <ef724a3a-a4b8-65d3-c928-13a7d78f189a@gmail.com>
+ <87h7e61duk.fsf@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <87h7e61duk.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+On 27/09/2021 12:00, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Sep 27 2021, Phillip Wood wrote:
+> 
+>> Hi Ævar
+>>
+>> On 27/09/2021 01:39, Ævar Arnfjörð Bjarmason wrote:
+>>> Use the same pattern for cb_init() as the one established in the
+>>> recent refactoring of other such patterns in
+>>> 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
+>>> macro, 2021-07-01).
+>>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>>> ---
+>>>    cbtree.h | 5 +++--
+>>>    1 file changed, 3 insertions(+), 2 deletions(-)
+>>> diff --git a/cbtree.h b/cbtree.h
+>>> index a04a312c3f5..dedbb8e2a45 100644
+>>> --- a/cbtree.h
+>>> +++ b/cbtree.h
+>>> @@ -37,11 +37,12 @@ enum cb_next {
+>>>    	CB_BREAK = 1
+>>>    };
+>>>    -#define CBTREE_INIT { .root = NULL }
+>>> +#define CBTREE_INIT { 0 }
+>>>      static inline void cb_init(struct cb_tree *t)
+>>>    {
+>>> -	t->root = NULL;
+>>> +	struct cb_tree blank = CBTREE_INIT;
+>>> +	memcpy(t, &blank, sizeof(*t));
+>>>    }
+>>
+>> Slightly off topic but would this be a good site for a compound
+>> literal test balloon?
+>>
+>> 	*t = (struct cb_tree){ 0 };
+>>
+>> Compound literals are in C99 and seem to have been supported by MSVC
+>> since 2013 [1].
+> 
+> I think that's a good thing to test out, FWIW I've also tested it on the
+> IBM xlc, Oracle SunCC and HP/UX's aCC, they all seem to accept it.
 
+Thanks for taking the time to test those other systems, it's good to 
+know they support compound literals
 
-On 29 September 2021 6:01:12 pm IST, Philip Oakley <philipoakley@iee=2Eema=
-il> wrote:
->Added a couple of video links to the light reading=2E PR sent=2E
->
+> But I'd prefer just doing that in some general follow-up to bd4232fac33
+> (Merge branch 'ab/struct-init', 2021-07-16), i.e. let's just use the
+> init pattern it established here.
 
-I'm trying to locate your PR at the following link but couldn't find it=2E=
- Anything I missed?=20
- https://github=2Ecom/git/git=2Egithub=2Eio/pulls?q=3Dis%3Apr
+I agree it makes sense to introduce it as a separate series. I'm not 
+sure if there is a pressing need for them but it is the sort of thing 
+that is occasionally useful.
 
---=20
-Sivaraam
+Best Wishes
 
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
---=20
-Sivaraam
+Phillip
 
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
