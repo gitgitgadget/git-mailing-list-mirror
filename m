@@ -2,260 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B721C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F1E1C433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:33:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E36AE611C0
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:26:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA82061527
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348733AbhI3H23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 03:28:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58106 "EHLO cloud.peff.net"
+        id S1348766AbhI3Hfh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 03:35:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58112 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1348577AbhI3H20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 03:28:26 -0400
-Received: (qmail 22261 invoked by uid 109); 30 Sep 2021 07:26:43 -0000
+        id S1348760AbhI3Hfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 03:35:32 -0400
+Received: (qmail 22280 invoked by uid 109); 30 Sep 2021 07:33:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Sep 2021 07:26:43 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Sep 2021 07:33:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24204 invoked by uid 111); 30 Sep 2021 07:26:43 -0000
+Received: (qmail 24238 invoked by uid 111); 30 Sep 2021 07:33:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Sep 2021 03:26:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Sep 2021 03:33:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 30 Sep 2021 03:26:42 -0400
+Date:   Thu, 30 Sep 2021 03:33:48 -0400
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing
  primary object dirs
-Message-ID: <YVVmssXlaFM6yD5W@coredump.intra.peff.net>
+Message-ID: <YVVoXJo3DlPQd1A3@coredump.intra.peff.net>
 References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
  <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
  <YVOiggCWAdZcxAb6@coredump.intra.peff.net>
- <CABPp-BFuj3W20J-aKU4BL9cqgA-GPZ2prEbAebY_kR0adaGzHw@mail.gmail.com>
+ <xmqqsfxof2hr.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BFuj3W20J-aKU4BL9cqgA-GPZ2prEbAebY_kR0adaGzHw@mail.gmail.com>
+In-Reply-To: <xmqqsfxof2hr.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 10:05:31PM -0700, Elijah Newren wrote:
+On Tue, Sep 28, 2021 at 09:08:00PM -0700, Junio C Hamano wrote:
 
-> So there are other parts of running `git log` that are not read-only,
-> besides what I'm doing.  That's unfortunate.  Can we just disable
-> those things in this section of the code?
-
-It might be possible for the cache (we'd still generate entries, but
-just not write them). It's "just" an optimization, though it's possible
-there are cases where it's really annoying to do so. I'd imagine those
-are a stretch. I do use textconv to decrypt gpg blobs with a key on a
-hardware token, for example. I don't require a touch for each one,
-though, nor would I use textconv caching anyway (since the point is not
-to store the unencrypted contents).
-
-It wouldn't necessarily be OK to disable object writes in general.
-Though I'd think since a diff is _conceptually_ a read-only operation
-that any writes it wants to do would be in the same caching /
-optimization boat.  I'd also worry about the maintenance cost of having
-to annotate any such case.
-
-> Also, I think it makes sense that textconv caching causes a problem
-> via writing new blobs and trees *and* refs that reference these blobs
-> and trees.  However, I'm not sure I'm really grasping it, because I
-> don't see how your solutions are safe either.  I'll mention more after
-> each one.
-
-Heh. So I originally wrote more on this in my earlier email, but worried
-I was getting too into the weeds and would confuse you, so I pared it
-down. But I managed to be confusing anyway. :)
-
-Here's one mental model. If you have a temporary object store, then
-these are the bad things that can happen:
-
-  1. Some code may write an object to it, thinking the data is saved,
-     but we later throw it away.
-
-  2. Some code may _skip_ writing an object, thinking that we already
-     have that object available (when in fact we'll later throw it
-     away).
-
-  3. Some code may record the fact that we have an object in memory, and
-     then later (after the temporary object store is not in use), may
-     point to it when writing an object or reference.
-
-Pointing the primary object-dir at a temporary directory (like your
-patch does) means we're subject to all three.
-
-Problem (1) happens because unrelated code may not realize we've swapped
-out the primary object writing code for this throw-away directory. But
-we could require writers to explicitly indicate that they want to write
-to the temporary area, while allowing other writes to go to the regular
-object store. This could be done with a flag or variant of
-write_object_file(). Or if the temporary area isn't a regular object
-directory at all (like the whole tempfile / pretend thing), then this
-happens automatically, because the regular object-write paths don't even
-know about our temporary area.
-
-Problem (2) is mostly handled inside write_object_file(). It will
-optimize out writes of objects we already have. So it needs to know when
-we have an object "for real", and when we just have it in our temporary
-store. If we make the tmp_objdir the primary, then it doesn't know this
-(though we could teach it to check. In the pretend_object_file() system,
-it already knows this (it uses the "freshen" code paths which actually
-want to find the entry in the filesystem).
-
-Problem (3) is the hardest one, because we don't really distinguish
-between readers and writers. So if I call has_object_file(), is it
-because I want to access the object? Or is it because I want to generate
-a new reference to it, which must ensure that it exists? One of those is
-OK to look at the tmp_objdir (and indeed, is the whole point of making
-it in the first place), and the other is the first step to corrupting
-the repository. ;)
-
-With the environment variables we set up for running external commands
-(like hooks) in the receive-pack quarantine, one bit of safety we have
-is to prevent ref writes entirely in those commands. That works
-reasonably well. Even if they may write new objects that might get
-thrown away (if the push is rejected), they'd ultimately need to point
-to those objects with a ref.  And because those hooks spend their
-_entire_ run-time in the quarantine state, they can't ever write a ref.
-
-Whereas doing it in-process is a little dicier. Right now the textconv
-cache writes out a new tree for every entry we add, so it happens to do
-the ref write while the tmp-objdir is still in place. But as this
-comment notes:
-
-  $ git grep -B6 notes_cache_write diff.c
-  diff.c-         /*
-  diff.c-          * we could save up changes and flush them all at the end,
-  diff.c-          * but we would need an extra call after all diffing is done.
-  diff.c-          * Since generating a cache entry is the slow path anyway,
-  diff.c-          * this extra overhead probably isn't a big deal.
-  diff.c-          */
-  diff.c:         notes_cache_write(textconv->cache);
-
-this is slow, and it would be perfectly reasonable to flush the cache at
-the end of the process (e.g., using an atexit() handler). In which case
-we'd hit this problem (3) exactly: we'd generate and remember objects
-during the tmp-objdir period, but only later actually reference them.
-This is more likely than the receive-pack hook case, because we're doing
-it all in process.
-
-> > If you remove the tmp_objdir as the primary as soon as you're done with
-> > the merge, but before you run the diff, you might be OK, though.
+> Jeff King <peff@peff.net> writes:
 > 
-> It has to be after I run the diff, because the diff needs access to
-> the temporary files to diff against them.
-
-Right, of course. I was too fixated on the object-write part, forgetting
-that the whole point of the exercise is to later read them back. :)
-
-> > If not, then I think the solution is probably not to install this as the
-> > "primary", but rather:
+> >   Side note: The pretend_object_file() approach is actually even better,
+> >   because we know the object is fake. So it does not confuse
+> >   write_object_file()'s "do we already have this object" freshening
+> >   check.
 > >
-> >   - do the specific remerge-diff writes we want using a special "write
-> >     to this object dir" variant of write_object_file()
+> >   I suspect it could even be made faster than the tmp_objdir approach.
+> >   From our perspective, these objects really are tempfiles. So we could
+> >   write them as such, not worrying about things like fsyncing them,
+> >   naming them into place, etc. We could just write them out, then mmap
+> >   the results, and put the pointers into cached_objects (currently it
+> >   insists on malloc-ing a copy of the input buffer, but that seems like
+> >   an easy extension to add).
 > >
-> >   - install the tmp_objdir as an alternate, so the reading side (which
-> >     is diff code that doesn't otherwise know about our remerge-diff
-> >     trickery) can find them
-> >
-> > And that lets other writers avoid writing into the temporary area
-> > accidentally.
+> >   In fact, I think you could get away with just _one_ tempfile per
+> >   merge. Open up one tempfile. Write out all of the objects you want to
+> >   "store" into it in sequence, and record the lseek() offsets before and
+> >   after for each object. Then mmap the whole result, and stuff the
+> >   appropriate pointers (based on arithmetic with the offsets) into the
+> >   cached_objects list.
 > 
-> Doesn't this have the same problem?  If something similar to textconv
-> caching were to create new trees that referenced the existing blobs
-> and then added a ref that referred to that tree, then you have the
-> exact same problem, right?  The new tree and the new ref would be
-> corrupt as soon as the tmp-objdir went away.  Whether or not other
-> callers write to the temporary area isn't the issue, it's whether they
-> write refs that can refer to anything from the temporary area.  Or am
-> I missing something?
+> Cute.  The remerge diff code path creates a full tree that records
+> the mechanical merge result.  By hooking into the lowest layer of
+> write_object() interface, we'd serialize all objects in such a tree
+> in the order they are computed (bottom up from the leaf level, I'd
+> presume) into a single flat file ;-)
 
-The key thing here is in the first step, where remerge-diff is
-explicitly saying "I want to write to this temporary object-dir". But
-the textconv-cache code does not; it gets to write to the normal spot.
-So it avoids problem (1).
+I do still like this approach, but just two possible gotchas I was
+thinking of:
 
-You're right that it does not avoid problem (3) exactly. But triggering
-that would require some code not just writing other objects or
-references while the tmp-objdir is in place, but specifically
-referencing the objects that remerge-diff did put into the tmp-objdir.
-That seems a lot less likely to me (because the thing we're most worried
-about is unrelated code that just happens to write while the tmp-objdir
-is in place).
+ - This side-steps all of our usual code for getting object data into
+   memory. In general, I'd expect this content to not be too enormous,
+   but it _could_ be if there are many / large blobs in the result. So
+   we may end up with large maps. Probably not a big deal on modern
+   64-bit systems. Maybe an issue on 32-bit systems, just because of
+   virtual address space.
 
-> > In that sense this is kind of like the pretend_object_file() interface,
-> > except that it's storing the objects on disk instead of in memory. Of
-> > course another way of doing that would be to stuff the object data into
-> > tempfiles and just put pointers into the in-memory cached_objects array.
-> >
-> > It's also not entirely foolproof (nor is the existing
-> > pretend_object_file()). Any operation which is fooled into thinking we
-> > have object X because it's in the fake-object list or the tmp_objdir may
-> > reference that object erroneously, creating a corruption. But it's still
-> > safer than allowing arbitrary writes into the tmp_objdir.
-> 
-> Why is the pretend_object_file() interface safer?  Does it disable the
-> textconv caching somehow?  I don't see why it helps avoid this
-> problem.
+   Likewise, we do support systems with NO_MMAP. They'd work here, but
+   it would probably mean putting all that object data into the heap. I
+   could live with that, given how rare such systems are these days, and
+   that it only matters if you're using --remerge-diff with big blobs.
 
-So hopefully it's clearer now from what I wrote above, but just
-connecting the dots:
-
-  1. Unrelated code calling write_object_file() would still write real,
-     durable objects, as usual.
-
-  2. The write_object_file() "skip this write" optimization already
-     ignores the pretend_object_file() objects while checking "do we
-     have this object".
-
-> Interesting.  I'm not familiar with the pretend_object_file() code,
-> but I think I catch what you're saying.  I don't see anything in
-> object-file.c that allows removing items from the cache, as I would
-> want to do, but I'm sure I could add something.
-
-Right, it's pretty limited now, and there's only one caller. And in fact
-I've wanted to get rid of it, exactly because it can create the danger
-we're discussing here. But I still think it's _less_ dangerous than
-fully replacing the object directory.
-
-> (I'm still not sure how this avoids the problem of things like
-> textconv caching trying to write an object that references one of
-> these, though.  Should we just manually disable textconv caching
-> during a remerge-diff?)
-
-It can't avoid it completely, but in general, the textconv cache should
-be writing and referencing its own objects. Even if they happen to be
-the same as something remerge-diff generated, it won't know that until
-it has tried to write it (and so that's why having write_object_file()
-continue to really write the object is important).
-
-
-Hopefully that clears up my line of thinking. I do think a lot of this
-is kind of theoretical, in the sense that:
-
-  - textconv caching is an obscure feature that we _could_ just disable
-    during remerge-diffs
-
-  - there's a reasonable chance that there isn't any other code that
-    wants to write during a diff
-
-But this is all scary and error-prone enough that I'd prefer an approach
-that has the "least surprise". So any solution where random code calling
-write_object_file() _can't_ accidentally write to a throw-away directory
-seems like a safer less surprising thing.
-
-It does mean that the remerge-diff code needs to be explicit in its
-object writes to say "this needs to go to the temporary area" (whether
-it's a flag, or calling into a totally different function or subsystem).
-I'm hoping that's not hard to do (because its writes are done explicitly
-by the remerge-diff code), but I worry that it may be (because you are
-relying on more generic tree code to the write under the hood).
+ - I wonder to what degree --remerge-diff benefits from omitting writes
+   for objects we already have. I.e., if you are writing out a whole
+   tree representing the conflicted state, then you don't want to write
+   all of the trees that aren't interesting. Hopefully the code is
+   already figuring out which paths the merge even touched, and ignoring
+   the rest. It probably benefits performance-wise from
+   write_object_file() deciding to skip some object writes, as well
+   (e.g., for resolutions which the final tree already took, as they'd
+   be in the merge commit). The whole pretend-we-have-this-object thing
+   may want to likewise make sure we don't write out objects that we
+   already have in the real odb.
 
 -Peff
