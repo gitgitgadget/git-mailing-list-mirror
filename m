@@ -2,153 +2,260 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A91C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 06:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B721C433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:26:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CFF6615E1
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 06:58:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E36AE611C0
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 07:26:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348431AbhI3G7o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 02:59:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348428AbhI3G7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 02:59:42 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446F2C06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 23:58:00 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 17so5282781pgp.4
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 23:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fL8nY4VDzxY6NNE7mHPkRVm2g3UWCNyKLQo2E3QAov4=;
-        b=YhbCHsmJ+4JNL1igZe95K5+vH9klfVnLNDPm8WyMUWCbKJlX8VqX5ZR+HvSS5A3k93
-         ueOQ7g4O/rmj8CTJg7t9pdTIQCtzq95sEU6/0E1UabTf3CHUtsgazFbP2nuk5OmgtLgp
-         TuxYY/9ew/52h8x0jG1ulCq+/ogrOsdVgsjkCyg/e4IFVDys1RWenmqT+UVfL9GkWyqH
-         ZznVdt8Qjm03W69cLjphMwrARr7ixHyelyUMC+PyhtMCn2xg5VK6Ow7L7/ySArLjl9BP
-         HIXEzeyJv6SBPfkdn3gne9Vhx1DAkEqLjyO7AmthoLMuGgoTi8mAo2PMGrYH0THWDwvM
-         +w7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fL8nY4VDzxY6NNE7mHPkRVm2g3UWCNyKLQo2E3QAov4=;
-        b=de5lfaT1DnOKZSdAaE/fFTWQh65olXY+3J9MHzTht2FXxakTMLriwI+KmBbJKut+c8
-         fiG59apzseifu2VbJ/+w1jx73sjVENhhpDBb/PRFLZjuKZLLo0CzcBxgqkISngs5HJcO
-         vq7YW7QRbQBN8vqC8aHAB6MdPbSm4IJfGMZDtVXS5oH4rp+pyzS7KfLtpENVcA47bg80
-         3cxuUzZkMLdRNuwryywWgKjyAInHSf6Ps8aoueujgJRhgpAh/Y+MbweLt114ysHuIj1k
-         VAhfGDpZSHOrsiraPJhce8Xp+Oj7ME3yt+d2PZ6eGrF/vExRCgqzMFDD6F7zE86Zz4AF
-         qeCw==
-X-Gm-Message-State: AOAM531na9vJp7MPDcNsWx/+ChjDd5lqKA4nefkXctg1Fm670u4MCnPB
-        zMxgZnoogp5FrsVzHOeVe6ebJVuvwrydp/XFSVEGpZdDBNM=
-X-Google-Smtp-Source: ABdhPJyevm6vAXQ5M0zs2L0abcQkB1F0ugp/309Mjl9SeKtLn5NAMNtSgX6MccJ9ZJ7RLxLxDX7/Y/0lArLDFrZYFGA=
-X-Received: by 2002:aa7:9dc6:0:b0:440:b629:6e57 with SMTP id
- g6-20020aa79dc6000000b00440b6296e57mr3891664pfq.69.1632985079625; Wed, 29 Sep
- 2021 23:57:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <CANgfOPtz9JqCs-7z1DJnOqxnsGiQS6BBPD6tKTWnTpC0K3qZ9Q@mail.gmail.com>
- <CABPp-BGv=+R1trGZq7r+-VneVUSoH_nOhS9sh3P7WSCiSVZksQ@mail.gmail.com>
-In-Reply-To: <CABPp-BGv=+R1trGZq7r+-VneVUSoH_nOhS9sh3P7WSCiSVZksQ@mail.gmail.com>
-From:   Ariel Man <arielman22@gmail.com>
-Date:   Thu, 30 Sep 2021 09:57:48 +0300
-Message-ID: <CANgfOPvBy+v4hMDt7uNjawvEC5F-daSm2TTvk=3oBJPrj2KNYA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Question_about_git_merge_=2Ds_ort_command=E2=80=8F=E2=80=8F?=
+        id S1348733AbhI3H23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 03:28:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58106 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1348577AbhI3H20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 03:28:26 -0400
+Received: (qmail 22261 invoked by uid 109); 30 Sep 2021 07:26:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Sep 2021 07:26:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24204 invoked by uid 111); 30 Sep 2021 07:26:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Sep 2021 03:26:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 30 Sep 2021 03:26:42 -0400
+From:   Jeff King <peff@peff.net>
 To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing
+ primary object dirs
+Message-ID: <YVVmssXlaFM6yD5W@coredump.intra.peff.net>
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+ <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
+ <YVOiggCWAdZcxAb6@coredump.intra.peff.net>
+ <CABPp-BFuj3W20J-aKU4BL9cqgA-GPZ2prEbAebY_kR0adaGzHw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFuj3W20J-aKU4BL9cqgA-GPZ2prEbAebY_kR0adaGzHw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Thanks for the detailed answer, but just to clarify, my main question
-is regarding ORT strategy, and not recursive.
-Mainly in this case, where ORT didn't behave as I expected:
-https://stackoverflow.com/questions/69150777/git-mv-doesnt-work-as-expected=
--wrong-files-location#:~:text=3Dtest3.py%0A%E2%94%82%20%20%20%E2%94%94%E2%9=
-4%80%E2%94%80%20dir3-,UPDATE,-I%27m%20adding%20one
+On Tue, Sep 28, 2021 at 10:05:31PM -0700, Elijah Newren wrote:
 
-As I wrote, this specific case is where new folder and files were
-created after the consolidation (and not new files under the existing
-folder). As you can see, when only new files were added to the
-existing folder, the git ORT recognized it and moved the folder
-python1 with its files test1.py and test4.py to the right place
-(dir2). But when new folder was created on the target (new_test with
-the file test5.py), when I ran the ORT command, the GIT didn't
-recognized it and created again the folder python1 on the old path
-(dir1-->python1-->new_test-->test5.py).
-I believe you can reproduce it yourself on your repository and see the
-behaviour.
-Ariel
+> So there are other parts of running `git log` that are not read-only,
+> besides what I'm doing.  That's unfortunate.  Can we just disable
+> those things in this section of the code?
 
-=E2=80=AB=D7=91=D7=AA=D7=90=D7=A8=D7=99=D7=9A =D7=99=D7=95=D7=9D =D7=94=D7=
-=B3, 30 =D7=91=D7=A1=D7=A4=D7=98=D7=B3 2021 =D7=91-8:27 =D7=9E=D7=90=D7=AA =
-=E2=80=AAElijah Newren=E2=80=AC=E2=80=8F
-<=E2=80=AAnewren@gmail.com=E2=80=AC=E2=80=8F>:=E2=80=AC
->
-> On Sun, Sep 19, 2021 at 8:12 PM Ariel Man <arielman22@gmail.com> wrote:
+It might be possible for the cache (we'd still generate entries, but
+just not write them). It's "just" an optimization, though it's possible
+there are cases where it's really annoying to do so. I'd imagine those
+are a stretch. I do use textconv to decrypt gpg blobs with a key on a
+hardware token, for example. I don't require a touch for each one,
+though, nor would I use textconv caching anyway (since the point is not
+to store the unencrypted contents).
+
+It wouldn't necessarily be OK to disable object writes in general.
+Though I'd think since a diff is _conceptually_ a read-only operation
+that any writes it wants to do would be in the same caching /
+optimization boat.  I'd also worry about the maintenance cost of having
+to annotate any such case.
+
+> Also, I think it makes sense that textconv caching causes a problem
+> via writing new blobs and trees *and* refs that reference these blobs
+> and trees.  However, I'm not sure I'm really grasping it, because I
+> don't see how your solutions are safe either.  I'll mention more after
+> each one.
+
+Heh. So I originally wrote more on this in my earlier email, but worried
+I was getting too into the weeds and would confuse you, so I pared it
+down. But I managed to be confusing anyway. :)
+
+Here's one mental model. If you have a temporary object store, then
+these are the bad things that can happen:
+
+  1. Some code may write an object to it, thinking the data is saved,
+     but we later throw it away.
+
+  2. Some code may _skip_ writing an object, thinking that we already
+     have that object available (when in fact we'll later throw it
+     away).
+
+  3. Some code may record the fact that we have an object in memory, and
+     then later (after the temporary object store is not in use), may
+     point to it when writing an object or reference.
+
+Pointing the primary object-dir at a temporary directory (like your
+patch does) means we're subject to all three.
+
+Problem (1) happens because unrelated code may not realize we've swapped
+out the primary object writing code for this throw-away directory. But
+we could require writers to explicitly indicate that they want to write
+to the temporary area, while allowing other writes to go to the regular
+object store. This could be done with a flag or variant of
+write_object_file(). Or if the temporary area isn't a regular object
+directory at all (like the whole tempfile / pretend thing), then this
+happens automatically, because the regular object-write paths don't even
+know about our temporary area.
+
+Problem (2) is mostly handled inside write_object_file(). It will
+optimize out writes of objects we already have. So it needs to know when
+we have an object "for real", and when we just have it in our temporary
+store. If we make the tmp_objdir the primary, then it doesn't know this
+(though we could teach it to check. In the pretend_object_file() system,
+it already knows this (it uses the "freshen" code paths which actually
+want to find the entry in the filesystem).
+
+Problem (3) is the hardest one, because we don't really distinguish
+between readers and writers. So if I call has_object_file(), is it
+because I want to access the object? Or is it because I want to generate
+a new reference to it, which must ensure that it exists? One of those is
+OK to look at the tmp_objdir (and indeed, is the whole point of making
+it in the first place), and the other is the first step to corrupting
+the repository. ;)
+
+With the environment variables we set up for running external commands
+(like hooks) in the receive-pack quarantine, one bit of safety we have
+is to prevent ref writes entirely in those commands. That works
+reasonably well. Even if they may write new objects that might get
+thrown away (if the push is rejected), they'd ultimately need to point
+to those objects with a ref.  And because those hooks spend their
+_entire_ run-time in the quarantine state, they can't ever write a ref.
+
+Whereas doing it in-process is a little dicier. Right now the textconv
+cache writes out a new tree for every entry we add, so it happens to do
+the ref write while the tmp-objdir is still in place. But as this
+comment notes:
+
+  $ git grep -B6 notes_cache_write diff.c
+  diff.c-         /*
+  diff.c-          * we could save up changes and flush them all at the end,
+  diff.c-          * but we would need an extra call after all diffing is done.
+  diff.c-          * Since generating a cache entry is the slow path anyway,
+  diff.c-          * this extra overhead probably isn't a big deal.
+  diff.c-          */
+  diff.c:         notes_cache_write(textconv->cache);
+
+this is slow, and it would be perfectly reasonable to flush the cache at
+the end of the process (e.g., using an atexit() handler). In which case
+we'd hit this problem (3) exactly: we'd generate and remember objects
+during the tmp-objdir period, but only later actually reference them.
+This is more likely than the receive-pack hook case, because we're doing
+it all in process.
+
+> > If you remove the tmp_objdir as the primary as soon as you're done with
+> > the merge, but before you run the diff, you might be OK, though.
+> 
+> It has to be after I run the diff, because the diff needs access to
+> the temporary files to diff against them.
+
+Right, of course. I was too fixated on the object-write part, forgetting
+that the whole point of the exercise is to later read them back. :)
+
+> > If not, then I think the solution is probably not to install this as the
+> > "primary", but rather:
 > >
-> > Hi,
-> > following the below thread, led me to do some tests:
-> > https://stackoverflow.com/a/69114710/11705021
+> >   - do the specific remerge-diff writes we want using a special "write
+> >     to this object dir" variant of write_object_file()
 > >
-> > One of the test can be seen here, in the last example in my question:
-> > https://stackoverflow.com/questions/69150777/git-mv-doesnt-work-as-expe=
-cted-wrong-files-location
+> >   - install the tmp_objdir as an alternate, so the reading side (which
+> >     is diff code that doesn't otherwise know about our remerge-diff
+> >     trickery) can find them
 > >
-> > I wanted to get confirmation for my case:
-> > Does `git merge -s ort` command, doesn't know to detect new folder
-> > location when merging it? It did worked for folders and files
-> > renaming, and new files under existing folders (as describe here:
-> > https://stackoverflow.com/a/52227201/6309)
->
-> I mean, if you have a testcase and want to see how it works, you can
-> just try it.  merge-ort has been released and is part of git already.
->
-> But I'll take a stab...
->
-> Your testcase with new folders sounds like testcase 12f from t6423 in
-> our testsuite (from commit 902c521a35 ("t6423: more involved directory
-> rename test", 2020-10-15)), a case that works with the `ort` merge
-> strategy but not with `recursive`.  So, the `ort` strategy is likely
-> to be better for your usecase than `recursive`, but it's hard for me
-> to definitively state that it'll solve all your usecase(s) since you
-> didn't fully describe them.  This is especially important since you
-> appear to have discovered a segfault (in the first post); I was not
-> aware of any circumstances when the old merge machinery would do so.
-> I'd be interested to know if the same issue repeats with the `ort`
-> strategy, and, if so, whether you can get a stack trace, or find an
-> example that reproduces the problem, or provide us with access to your
-> repository.  Also, in your second link, you allude to problems in a
-> case that does not include new folders, in situations where I'd expect
-> `recursive` and `ort` to behave the same.  But it's hard to know the
-> expected behavior since you didn't provide that many details about the
-> setup -- e.g. you didn't cover the contents of any of the files (so
-> it's hard to know if files are more similar to ones with different
-> names than what you expected to be matched up), it's unclear if there
-> are other files involved (e.g. if you have multiple copies of some
-> library and the rename detection is detecting a different copy than
-> you expected, or if there are lots of additional files besides those
-> you are listing in your example and they are being renamed
-> differently, etc.), whether you have lots of large files also being
-> renamed (perhaps the VDI files you allude to somewhere?), etc., etc.
-> If you can provide access to a repository and the commands you
-> reported and what you expected vs. what you saw, I'd try to find some
-> time to take a look.
->
-> I hope that helps, though I'm not sure I've got enough details to
-> answer all your questions.  I guess if I were to summarize, I'd say:
->   * the `ort` strategy would be better than `recursive` for you, for
-> one particular type of issue, but probably behave the same on other
-> areas
->   * you seem to have useful testcases that might be different than
-> ones we have in our testsuite or that I know about
->   * you haven't provided enough information for me to investigate or
-> answer any further, though.
->
-> You have gotten me really curious about this segfaulting testcase --
-> whether it's just in the recursive backend or also afflicts merge-ort,
-> and how to duplicate it.
+> > And that lets other writers avoid writing into the temporary area
+> > accidentally.
+> 
+> Doesn't this have the same problem?  If something similar to textconv
+> caching were to create new trees that referenced the existing blobs
+> and then added a ref that referred to that tree, then you have the
+> exact same problem, right?  The new tree and the new ref would be
+> corrupt as soon as the tmp-objdir went away.  Whether or not other
+> callers write to the temporary area isn't the issue, it's whether they
+> write refs that can refer to anything from the temporary area.  Or am
+> I missing something?
+
+The key thing here is in the first step, where remerge-diff is
+explicitly saying "I want to write to this temporary object-dir". But
+the textconv-cache code does not; it gets to write to the normal spot.
+So it avoids problem (1).
+
+You're right that it does not avoid problem (3) exactly. But triggering
+that would require some code not just writing other objects or
+references while the tmp-objdir is in place, but specifically
+referencing the objects that remerge-diff did put into the tmp-objdir.
+That seems a lot less likely to me (because the thing we're most worried
+about is unrelated code that just happens to write while the tmp-objdir
+is in place).
+
+> > In that sense this is kind of like the pretend_object_file() interface,
+> > except that it's storing the objects on disk instead of in memory. Of
+> > course another way of doing that would be to stuff the object data into
+> > tempfiles and just put pointers into the in-memory cached_objects array.
+> >
+> > It's also not entirely foolproof (nor is the existing
+> > pretend_object_file()). Any operation which is fooled into thinking we
+> > have object X because it's in the fake-object list or the tmp_objdir may
+> > reference that object erroneously, creating a corruption. But it's still
+> > safer than allowing arbitrary writes into the tmp_objdir.
+> 
+> Why is the pretend_object_file() interface safer?  Does it disable the
+> textconv caching somehow?  I don't see why it helps avoid this
+> problem.
+
+So hopefully it's clearer now from what I wrote above, but just
+connecting the dots:
+
+  1. Unrelated code calling write_object_file() would still write real,
+     durable objects, as usual.
+
+  2. The write_object_file() "skip this write" optimization already
+     ignores the pretend_object_file() objects while checking "do we
+     have this object".
+
+> Interesting.  I'm not familiar with the pretend_object_file() code,
+> but I think I catch what you're saying.  I don't see anything in
+> object-file.c that allows removing items from the cache, as I would
+> want to do, but I'm sure I could add something.
+
+Right, it's pretty limited now, and there's only one caller. And in fact
+I've wanted to get rid of it, exactly because it can create the danger
+we're discussing here. But I still think it's _less_ dangerous than
+fully replacing the object directory.
+
+> (I'm still not sure how this avoids the problem of things like
+> textconv caching trying to write an object that references one of
+> these, though.  Should we just manually disable textconv caching
+> during a remerge-diff?)
+
+It can't avoid it completely, but in general, the textconv cache should
+be writing and referencing its own objects. Even if they happen to be
+the same as something remerge-diff generated, it won't know that until
+it has tried to write it (and so that's why having write_object_file()
+continue to really write the object is important).
+
+
+Hopefully that clears up my line of thinking. I do think a lot of this
+is kind of theoretical, in the sense that:
+
+  - textconv caching is an obscure feature that we _could_ just disable
+    during remerge-diffs
+
+  - there's a reasonable chance that there isn't any other code that
+    wants to write during a diff
+
+But this is all scary and error-prone enough that I'd prefer an approach
+that has the "least surprise". So any solution where random code calling
+write_object_file() _can't_ accidentally write to a throw-away directory
+seems like a safer less surprising thing.
+
+It does mean that the remerge-diff code needs to be explicit in its
+object writes to say "this needs to go to the temporary area" (whether
+it's a flag, or calling into a totally different function or subsystem).
+I'm hoping that's not hard to do (because its writes are done explicitly
+by the remerge-diff code), but I worry that it may be (because you are
+relying on more generic tree code to the write under the hood).
+
+-Peff
