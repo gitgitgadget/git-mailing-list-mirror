@@ -2,141 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1568FC433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 230B7C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:35:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF2BF619F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:25:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2D6761AAA
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344543AbhI3X1b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 19:27:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47094 "EHLO
+        id S1348954AbhI3XhM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 19:37:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbhI3X1b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 19:27:31 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A9CC06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:25:47 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ba1so28086324edb.4
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:25:47 -0700 (PDT)
+        with ESMTP id S230188AbhI3XhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 19:37:11 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D1FC06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:35:28 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id v10so28402149edj.10
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cEGEK+AWKlXYTnWXMMFykNUNLHuzY5aZuVyuWWCkBdc=;
-        b=Fb2a0YieyGxpDQ+JUI0T8EDkZaeVywUsziJct4zyU8oMpzBj717Zbjg8aDWyOHbvDl
-         NfLB3pVbTquXS1G2vTy5W7Dixru3zPsEg8ORFwXMx3hGIU9trV+djk6vvOSql51CPW4W
-         NXUipxnGEJ1M2MM2FZuuqDA7T2Qqoy6T6gSWeoA6j9BOjHIc1urpQM48khqZbFQreMPS
-         jKq+Y3wBIeqhgBBKjMQWBKzlYBqeOkbv/rZEHdMOlLDP2W1E87OBNwO5gH3NX/f1iLhq
-         uP4tRKzpEn1exNlpNStYCiuikEfiEcPzsyMK3QrAUdE9PIPSJ8sUCAEPcNwmMne9vRNv
-         M7+w==
+         :cc;
+        bh=sEY1quUdU2GniL25nwL3a6y/CjvCjjzMjpNL6scL58Y=;
+        b=KpXFcNdyBr0TafhiMvhQ5Gcn8PAd/Bsq7XXVsjzpQD5MbOPsRBpMo/5tveyOJDdz42
+         dbXlG2d27nWkK9Ea0hDXV1Axxgbf9v3JF0Bwp3PHYHHXKixDhnMPDwpxUYAR6iXhGFyC
+         3FTrDmFXO4epSmBA6q1TAiRc2hNX39+K9XQwRBlnyER+ZAQVzFXhtM5xr2VuYX3kGDXt
+         1Q17fqRq00mtVnw3zLWyP4yG5dCKgfny0QDWQVpkC8Fs0PQjzpATaWId9qnFcdGMLymf
+         AZjnYpYfBAUCP8vzvBdQsxTLkp2u3V5a2gEM45PlwTJXxvnHnx+vkHinvj8vdq7wkUOV
+         yiNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cEGEK+AWKlXYTnWXMMFykNUNLHuzY5aZuVyuWWCkBdc=;
-        b=GmIPHSt8S0Smd2n3wcYWss5aNiNxUx/X1YJP6DVTdASsrFRXncCsIgw143NsXqiPjh
-         3ucbILp8jJO33uCkyq2FnMfBfSzqxGmg4CgD+I+AwL6igZP4TkBK5qSlaVXPI3V97pYr
-         jbmVB3PvUM5fXDRZNmZFMkQxd6iWy8fDlGrec49WFkIj+YKVebZKQCAn/h/8pZfM9GKh
-         HWrYF5WSGMpZgPgixBijybfjZMfS0KW+WFWLTJb4q1HbkoUzr10x9HlQIk6/HhVrbuSy
-         hBAc0URCeDlyfEwuMhMnUN+ElugaIZ/Yk2c++iAQCAXjhmdmFuHpwDmuXGphpK3V3t1c
-         m8JQ==
-X-Gm-Message-State: AOAM531n3AieK+H1p/k5qK7fvkv23dekf620uNtovVtEzjOUrRMjTQ2M
-        kypte4q7IHw+AoOJcTcaYAg9/hB0E/1lrDUeXWg=
-X-Google-Smtp-Source: ABdhPJyU/ByGa/iZ9czqa9KKG4fZ7cK7MtMcTem7lhwPbZjhBgp8MZgjopnGfyDmRRJ/d8dsLbMIip7vihsdGnsRjBE=
-X-Received: by 2002:a17:906:1c0e:: with SMTP id k14mr2439884ejg.286.1633044346277;
- Thu, 30 Sep 2021 16:25:46 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=sEY1quUdU2GniL25nwL3a6y/CjvCjjzMjpNL6scL58Y=;
+        b=nNwDhooPp6FUzpF/z3iQ6TfO3wWmvmFVhRiYuGdENWZIc+rMM5ry2VhOZAy4LJpgQo
+         d5Eon2bAQo/lGMKVKl5mzwrhgiaZ/WKLcQUjB6ZwDA/C/rJSLRtNhaXCnEkKaLSoL3g6
+         LhYpf3Ca7hrdm2K1MXqEWZMX1eJN4Lx0mhE1NQZN1gdG7s0hXEmCORA1AwQeX72Y3WJ4
+         +WETE63FOX66ynwAIBbudJE1oo4Ymail9q6Nqp6dzFKzzWT6MV1Sr/Z8kG4mpyCOiclB
+         TjL9nAECw4qfuYN7m+hMfOZJhodqrzY0qabH20RQXG9U3j8f/CfMWa9SezjV3lFKWtZ2
+         hjXQ==
+X-Gm-Message-State: AOAM530QTNyv5WseuUewQnj/1Ym6OxGUd8q6P0sNjNKrf1+y5KNWoCzo
+        IoMQMhUiG6yqTg9P1DPV6QqPrqUR6a7+S+c0Ns8=
+X-Google-Smtp-Source: ABdhPJzVez9x/X0RR0ardTuwkAelGXwqD2J3u9Rx93Wx9XxX/NxJTlZbfrFfS06kzVbHvG+LLSc5TZFiIXoqG9+qh5s=
+X-Received: by 2002:a17:907:7664:: with SMTP id kk4mr2470710ejc.130.1633044926683;
+ Thu, 30 Sep 2021 16:35:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210930170146.61489-1-davvid@gmail.com> <20210930170146.61489-3-davvid@gmail.com>
- <xmqq7dexafch.fsf@gitster.g>
-In-Reply-To: <xmqq7dexafch.fsf@gitster.g>
+References: <20210930170146.61489-1-davvid@gmail.com> <20210930170146.61489-4-davvid@gmail.com>
+ <xmqq35plaetp.fsf@gitster.g>
+In-Reply-To: <xmqq35plaetp.fsf@gitster.g>
 From:   David Aguilar <davvid@gmail.com>
-Date:   Thu, 30 Sep 2021 16:25:10 -0700
-Message-ID: <CAJDDKr41qzbUudAHgokRARK-kEG4araFwJ0UhLmJ4Pca=xFZRA@mail.gmail.com>
-Subject: Re: [PATCH v6 3/5] difftool: avoid returning -1 to cmd_main() from run_dir_diff()
+Date:   Thu, 30 Sep 2021 16:34:50 -0700
+Message-ID: <CAJDDKr78WcoWjeZqz3c_bdt3s0RRg8Hx9-wC1VFmpy2yPbpbqA@mail.gmail.com>
+Subject: Re: [PATCH v6 4/5] difftool: refactor dir-diff to write files using a
+ helper function
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 30, 2021 at 3:06 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Sep 30, 2021 at 3:17 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > David Aguilar <davvid@gmail.com> writes:
 >
-> > difftool was forwarding the -1 result from error() to cmd_main(), which
-> > is implementation-defined since it is outside of the 0-255 range
-> > specified by POSIX for program exit codes.
-> >
-> > Stop assigning the result of error() to `ret`. Assign a value of 1
-> > whenever internal errors are detected instead.
+> > This is cleanup refactoring that Junio suggested when
+> > 5bafb3576a (difftool: fix symlink-file writing in dir-diff mode, 2021-09-22)
+> > touched this area of the code.
 >
-> Many existing codepaths take advantage of error() returning -1 and I
-> do not see anything is wrong to keep that "negative is error"
-> convention for the value of "ret" variable.  Most lines in this
-> patch however split that "ret =3D error(...)" pattern into two
-> statements and I do not see a very good reason for it.
+> Not really what I would want to take credit for  ;-)
+
+Likewise, even I don't like to take credit for my scrappy patches sometimes ;-)
+
+I'll reword this to avoid mentioning the review context.
+
+
+> > +static void write_entry(const char *path, const char *content,
+> > +                     struct strbuf *buf, size_t len)
+> > +{
+> > +     if (!*content)
+> > +             return;
 >
-> Worse yet, after applying this patch, there still are at least three
-> assignments to "ret" that can give it a negative value:
+> I am not sure "this function is unable to write an empty file" is a
+> limitation we want to give to an otherwise more or less generic
+> helper function that may be useful in this file (it probably is not
+> very useful outside difftool, as what add_path() does seems quite
+> specific to it).
 
-Indeed.
 
+Good point, I'll move the conditional checks into the call sites
+rather than having it in the helper. It'll read a little more clearly that
+way as well.
+
+
+> Also, is "write entry" a good name for this helper?  The fact that
+> the contents came from entry->$side is lost inside this callee.  It
+> looks more like "create a file for <path> and write <content> to it",
+> i.e. a variant of write_file() but inside the tree specified by the
+> extra <buf, len> pair.  So perhaps
 >
->         if (!mkdtemp(tmpdir.buf)) {
->                 ret =3D error("could not create '%s'", tmpdir.buf);
->                 goto finish;
->         }
+>         write_file_in_directory(buf, len, path, content);
 >
->         ret =3D run_command_v_opt(helper_argv, flags);
+> to match how the write_file() takes its parameters?  While
+> write_file() takes a single pathname with the payload, this thing
+> takes three parameters <buf, len, path> to specify to which
+> "file-in-directory" the payload is written.
 >
->         strbuf_addf(&buf, "%s/wtindex", tmpdir.buf);
->         if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
->             write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
->                 ret =3D error("could not write %s", buf.buf);
->                 goto finish;
->         }
+> > +     add_path(buf, len, path);
+> > +     ensure_leading_directories(buf->buf);
+> > +     unlink(buf->buf);
+> > +     write_file(buf->buf, "%s", content);
+> > +}
 >
-> Among them, the return value from run_command_v_opt() eventually
-> come from wait_or_whine(), I think, so it may be generic -1 or
-> it may be WEXITSTATUS() of the child process.
->
-> But I am not sure if this particular caller cares.  It is not
+> Other than these two minor points, this looks good to me.
 
-The property I was trying to maintain is that we would forward the result
-from the child process in most situations, so we should try and forward
-the result from run_command_v_opt() whenever possible.
+write_file_in_directory() is much clearer. I'll adjust the signature
+in the next version.
 
-But for the others we would have to add an "ret =3D 1" there,
-and that doesn't seem worth it since it's too hard to maintain.
-
-
-
-> prepared to handle -1 and positive return from run_command_v_opt()
-> any differently.  So I think a single
->
-> -       return ret;
-> +       return !!ret;
->
-> at the end would be much easier to reason about and maintain.
-
-Hmm I don't think we can use "return !!ret".
-
-In C this does a bool cast so we lose the positive value from the
-underlying diff tool when the value is quantized to 0/1 via !!ret.
-
-That suggests that =C3=86var's sug is better...
-
-    return (ret < 0) ? 1 : ret;
-
-If that sounds good I can send a replacement series that squashes this into=
- the
-repeated-symlinks patch. It doesn't seem like we'll need a separate
-patch for this.
-
---
+Thanks for the review. I'll wait to hear back about 3/5 before sending v7.
+-- 
 David
