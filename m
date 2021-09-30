@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBA92C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BC54C433FE
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:40:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E35A617E4
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:40:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68E0B615E5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348138AbhI3Fmb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 01:42:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53492 "EHLO
+        id S1348140AbhI3Fmc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 01:42:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348132AbhI3Fm3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 01:42:29 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4B7EC06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:40:47 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id f130so4719987qke.6
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:40:47 -0700 (PDT)
+        with ESMTP id S1348136AbhI3Fmb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 01:42:31 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BDF2C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:40:49 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id cv2so2929389qvb.5
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IlUSRBuOzboCr12GXqf5BR3k0qa4IxnN3qVWAQP0DTw=;
-        b=P9tIuIW5WUfeeVl7XKGP8kBrYNwWzcgcrwnOu5W5mAX8JOi0n6KDHe1QKXw+9MAz9b
-         JwkhKcjqLW4N6ynR/JpLAMFqSa6RnqqJJSQEdp36p50eO5x1SmUaoN52yE97PpZUSUVp
-         m8V94mDga1NCzceePbiSF/R5VZ2JKcMSyqb6CKlBcrXYmZkYZ8g/Z2QFopJpoeZDVPzV
-         rIOG13JVIEriCMF+X3Hf1yyFVLS6KHCNui13ASD0CO0oq0eHGMl9p0fkZKpib+rhMr3l
-         SLZKB8lVQnxhTmroil/GM8hGTau4F6rmG1+MdI1jU/xjnej4tm0L/l+JgL+c3eRGrRY+
-         TK/A==
+        bh=leQ3GXPs0SFhbHZXj3pG5Rj4rj66XgOMKTyWpmRYFzQ=;
+        b=IwC1212uNUQl2mkwxnTcgMU9Or0wqNU98VDA+7De6NNbagBZz9V/zpLkljd3BEIMoF
+         rIa9krfwYdHZcgRAXE1v5anaePUq75OyLf1RTp0/WBfgOUjcSjnwiu49SR+vqa+XB/cQ
+         U+kRohK+4nK29GBNQoLHCZlNu9G8D7FsWcIoPvfX3tfJwYNSkBh4cPrpRYgO/16hrqFi
+         fNZTRqt4cVr0tdbl6zV5IVFPY+j+TR32oISSJjl8CqXhdcOqaqMV+ne7T35ef7vgyMuu
+         uDsDMr4pRGytEN3jr4IIRNJBdLet4SJWwVR9JadG/mNomAQnAlZhG1JZdqrJ7uMl954Y
+         cR4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IlUSRBuOzboCr12GXqf5BR3k0qa4IxnN3qVWAQP0DTw=;
-        b=H7fp0ZsupaqXUWOCvnV84fHI9x6BzBBN+yd/8N45nB5nDj6xILzB0xTta6uf1FyaXK
-         ZqHSEP/SjDGJ8GVFp8Hi+SnXOOEF00GYah4f7U/UhWqTGuh54UqxS0Nd1Y8DoUbHHTPZ
-         xAREvUDkiK0zdhgIpviSe9nCzBrC2lhufaKnnscE7NDkc+HvWguR1hg6Q5M+VPOMyDb8
-         JahGiB/WWn1KIdjireE08lZL8vKxN19BDrwTDD2DyceSaHIeMsJR0y9um8vRwKy3hDvA
-         PeNOHdY1fVatVRfg5WibabFL47mIB733/KzxY+wq12u4cpm05dtgMrVUumSsB/LgEUkG
-         7Y3Q==
-X-Gm-Message-State: AOAM531aUYCXHhtKn5vFbqnuLpLrAjMnlpR8ePReL3Ba/+f5ntrfukFW
-        VB4dFrakNIyZ2ALInQkPuf9diH+9eHvZEQ==
-X-Google-Smtp-Source: ABdhPJypPLaaMCB1U/jz34BtwrtsJAQqd3nDwstOOLY31x2/4/InLpi+XXprRWEOBzKu76ixwqRWbA==
-X-Received: by 2002:a37:8a02:: with SMTP id m2mr3290795qkd.29.1632980446840;
-        Wed, 29 Sep 2021 22:40:46 -0700 (PDT)
+        bh=leQ3GXPs0SFhbHZXj3pG5Rj4rj66XgOMKTyWpmRYFzQ=;
+        b=p4CYK+cD5MPz9cu692PzqbtkbQn1YUzgUe3maMHASvJRIJVDAusg5uIrkXKAl+0Pwm
+         MRaglO6L3oF3+MLV8TkuyjeGHkMuwQTeUzspWCgMqmxDPchSAPQZcbmQc8MmG4kqUoQm
+         5FpcKVC9+XrTyRYuqZECoziGumkDDQxkSr+2pi/qHi7OF4dAU+D/A+QjWP2FqHWBmc9L
+         AqVc0B4tkLy+NGEngpV2OjFwgNquN3Qz7hHBsSrOm01a4U+pzD2Q4Rl6u5IRFpEaUpW+
+         D55gCgeU8Lci3bXSuA3ztfqCBNv4gSryH30bIdN96EhqJV3Db4/35R9//ZcPTANtin0Y
+         MlIQ==
+X-Gm-Message-State: AOAM531f6tRar7XzLGTAX9bE4Hod2Ru6WUIYyhhZECVaS5goUoRhJtsT
+        6vywNY5h271PyRqde/Fj1C55Kx/sw6n5eA==
+X-Google-Smtp-Source: ABdhPJxkcwEgaXPW+CMGtXMFPKSIXRX6fuxUGLP500vYO/dJVvOZTXfWbvBxRoZN8sebdMadA6vcUg==
+X-Received: by 2002:ad4:482f:: with SMTP id h15mr2225871qvy.29.1632980448024;
+        Wed, 29 Sep 2021 22:40:48 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id a2sm1006826qkk.53.2021.09.29.22.40.45
+        by smtp.gmail.com with ESMTPSA id a2sm1006826qkk.53.2021.09.29.22.40.47
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Sep 2021 22:40:46 -0700 (PDT)
+        Wed, 29 Sep 2021 22:40:47 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     hanwen@google.com, avarab@gmail.com, gitster@pobox.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 2/4] fixup! reftable: implement stack, a mutable database of reftable files.
-Date:   Wed, 29 Sep 2021 22:40:30 -0700
-Message-Id: <20210930054032.16867-3-carenas@gmail.com>
+Subject: [PATCH 3/4] config.mak.uname: last release and snapshots of Minix still use zlib 1.2.3
+Date:   Wed, 29 Sep 2021 22:40:31 -0700
+Message-Id: <20210930054032.16867-4-carenas@gmail.com>
 X-Mailer: git-send-email 2.33.0.955.gee03ddbf0e
 In-Reply-To: <20210930054032.16867-1-carenas@gmail.com>
 References: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
@@ -70,39 +70,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid C++ style comments, that are not allowed in C89.
+Minix 3 uses a BSD userspace from NetBSD, but might had synced last before
+8.x got branched.
+
+While Minix itself doesn't have much activity, this is still affecting the
+last release (and subsequent snapshots).
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- reftable/stack_test.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 7a4641ab60..f907215d3c 100644
---- a/reftable/stack_test.c
-+++ b/reftable/stack_test.c
-@@ -46,8 +46,10 @@ static int count_dir_entries(const char *dirname)
- 	return len;
- }
- 
--// Work linenumber into the tempdir, so we can see which tests forget to
--// cleanup.
-+/*
-+ * Work linenumber into the tempdir, so we can see which tests forget to
-+ * cleanup.
-+ */
- static char *get_tmp_template(int linenumber)
- {
- 	const char *tmp = getenv("TMPDIR");
-@@ -861,7 +863,7 @@ static void test_reftable_stack_compaction_concurrent(void)
- 
- static void unclean_stack_close(struct reftable_stack *st)
- {
--	// break abstraction boundary to simulate unclean shutdown.
-+	/* break abstraction boundary to simulate unclean shutdown */
- 	int i = 0;
- 	for (; i < st->readers_len; i++) {
- 		reftable_reader_free(st->readers[i]);
+diff --git a/config.mak.uname b/config.mak.uname
+index 4acc3e3609..9399247cbb 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -517,6 +517,7 @@ ifeq ($(uname_S),Interix)
+ 	endif
+ endif
+ ifeq ($(uname_S),Minix)
++	NO_UNCOMPRESS2 = YesPlease
+ 	NO_IPV6 = YesPlease
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	NO_NSEC = YesPlease
 -- 
 2.33.0.955.gee03ddbf0e
 
