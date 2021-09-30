@@ -2,74 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BEF6C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 20:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8005DC433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:00:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65F2F61994
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 20:35:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6062F61881
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbhI3UhY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 16:37:24 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64351 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348142AbhI3UhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 16:37:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF61B15C2ED;
-        Thu, 30 Sep 2021 16:35:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GcYRXFoLi1uE
-        AMbn1HCaT4fTTGrRhrjEA45gudUvI0E=; b=N8wxdDBsXGTKHuYqH18928nNn1BN
-        MyKWjLJ2VXEr0LNNdplMaAwFtfvUrfFR4JQHpfTEOYzSti0GLtGCMxhQGi7a7UDQ
-        PpADEKilb/uU0d3rKfc7C6Jp1njG96dZMLJhPqA4w+ALb+Gx4QfhKyLubDAoDPf7
-        fOCg6KcX0VmlVo8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C795C15C2EC;
-        Thu, 30 Sep 2021 16:35:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C5FB15C2EB;
-        Thu, 30 Sep 2021 16:35:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, hanwen@google.com, avarab@gmail.com
-Subject: Re: hn/reftable "fixes"
-References: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
-        <20210930054032.16867-1-carenas@gmail.com>
-Date:   Thu, 30 Sep 2021 13:35:36 -0700
-In-Reply-To: <20210930054032.16867-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 29 Sep 2021 22:40:28 -0700")
-Message-ID: <xmqq1r55by3r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1343896AbhI3VCG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 17:02:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58676 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229957AbhI3VCG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 17:02:06 -0400
+Received: (qmail 25382 invoked by uid 109); 30 Sep 2021 21:00:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Sep 2021 21:00:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 755 invoked by uid 111); 30 Sep 2021 21:00:22 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Sep 2021 17:00:22 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 30 Sep 2021 17:00:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing
+ primary object dirs
+Message-ID: <YVYlZhl6uACu+UGG@coredump.intra.peff.net>
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+ <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
+ <YVOiggCWAdZcxAb6@coredump.intra.peff.net>
+ <xmqqsfxof2hr.fsf@gitster.g>
+ <YVVoXJo3DlPQd1A3@coredump.intra.peff.net>
+ <87tui2tckn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F899788A-222D-11EC-ABC2-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87tui2tckn.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+On Thu, Sep 30, 2021 at 03:16:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Patch 1, was discussed before and might be solved in a better way as an
-> alternative.
->
-> Patch 2 and 3 are "nice to have" for portability and hopefully not cont=
-roversial
-> but could be dropped, if someone feels strongly against it.
->
-> Patch 4 is not something I'd found failing anywhere, but the fact that =
-Microsoft
-> mentions it is only supported as an extension and it needs to be suppor=
-ted by
-> the dynamic linker and I couldn't find anything clear about it in POSIX=
- means,
-> that is probably safer this way.
+> I also wonder how much if anything writing out the one file v.s. lots of
+> loose objects is worthwhile on systems where we could write out those
+> loose objects on a ramdisk, which is commonly available on e.g. Linux
+> distros these days out of the box. If you care about performance but not
+> about your transitory data using a ramdisk is generally much better than
+> any other potential I/O optimization.
 
-All of them look sensible.  Thanks.
+I'd think in general we won't be using a ramdisk, because tmp_objdir is
+putting its directory inside $GIT_DIR/objects. It doesn't _have_ to, but
+using a ramdisk works against its original purpose (which was to store
+potentially quite a lot of data from an incoming push, and to be able to
+rename it cheaply into its final resting place).
+
+It would probably not be too hard to provide a flag that indicates the
+intended use, though (and then we decide where to create the temporary
+directory based on that).
+
+> Finally, and I don't mean to throw a monkey wrench into this whole
+> discussion, so take this as a random musing: I wonder how much faster
+> this thing could be on its second run if instead of avoiding writing to
+> the store & cleaning up, it just wrote to the store, and then wrote
+> another object keyed on the git version and any revision paramaters
+> etc., and then pretty much just had to do a "git cat-file -p <that-obj>"
+> to present the result to the user :)
+> 
+> I suppose that would be throwing a lot more work at an eventual "git gc"
+> than we ever do now, so maybe it's a bit crazy, but I think it might be
+> an interesting direction in general to (ab)use either the primary or
+> some secondary store in the .git dir as a semi-permanent cache of
+> resolved queries from the likes of "git log".
+
+I don't think it's crazy to just write the objects to the main object
+store. We already generate cruft objects for some other operations
+(Junio asked elsewhere in the thread about virtual trees for recursive
+merges; I don't know the answer offhand, but I'd guess we do there).
+They do get cleaned up eventually.
+
+I'm not sure it helps performance much by itself. In a merge (or even
+just writing a tree out from the index), by the time you realize you
+already have the object, you've done most of the work to generate it.
+
+I think what you're describing is to make some kind of cache structure
+on top. That might be sensible (and indeed, the index already does this
+with the cachetree extension). But it can also easily come later if the
+objects are just in the regular odb.
+
+-Peff
