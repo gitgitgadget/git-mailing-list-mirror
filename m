@@ -2,135 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB582C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 03:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67509C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 04:25:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A08B561452
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 03:10:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39BE761880
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 04:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347711AbhI3DMW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 23:12:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48350 "EHLO
+        id S234307AbhI3E1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 00:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347001AbhI3DMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 23:12:21 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DBDC06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id n64so5566227oih.2
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
+        with ESMTP id S229643AbhI3E12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 00:27:28 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F37C06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 21:25:35 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id ba1so16941285edb.4
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 21:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=8UbVoCACzz4yoGpFa+zLqhdSnIuiXuESCmnwThF50/A=;
-        b=MFLtrTPS6mkeAE/HEWTuov/23K5GYJRMJdQMOymoG9zzEG5ByG91UEx0lkpHlrM/ec
-         ozRWE0IOui3IRCWbvv37LJHan4iU1ReDoN2Ya+Xq75RDoZ8d/gz5MDVeThh9kGmqbg5d
-         6CPwn/fS4YrhCfkBoRzi5wEe6t1gnSX0Z1cSDSl2KCdQ7JNDJ1v/MN+zzM7HlcIoMjHN
-         GFeEwbavM1Da/GJRGEkbBpoiPMgOEsechXT+IBg0fPkpgYRG70+cYd52ZkKS/j8NmT8M
-         TYKa3xNRp2fYNakTFoFgLYqXB+uxmBvoLZjGKnFrhrbZP4lVr2Ey9Exqx88uvyDOz14C
-         WFVg==
+        bh=5kfgHUUnb0z7sS/d102NHetFSb2ZPjA9pDxNbW6mRLA=;
+        b=PRROIZfkgPD91IemYwVIEhYMGHW/vCpvR8Yn8KrdkKRBMdZ7WSI9wdbiAxpBWqOqwn
+         8+d17Fzo/P9xQ/BkfdVEFfUFGLSKUKVqqlD/7SJXQzylIKm93DR+dq5Or4M8V7Zl+UJ7
+         Lt2Xqqdc0JSLo7lUzSFBgaW+Aczu3SHnNtBlVRx8DMFfAUF1D0E/QsuSvNX3yAZPEXGr
+         vrWjPfR6vhNwyE3x6WgKu57WiQHlRJ6fH12yWGjy3kDr/T6nuMGB1X71EYx/g+VDA42R
+         ZB8QdB52mikngSJ9JZWISsB46V5NBoIHKB2u9hYfntwi2xa8uaKVzthuv8m/dOzEENmM
+         1tDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8UbVoCACzz4yoGpFa+zLqhdSnIuiXuESCmnwThF50/A=;
-        b=mhPPggRHZrOIPFgNNyonVMjkn5hkftDLt4giroFIENu6BSX2CJhO9iDYTiMEMcU/e6
-         GjzqGJYY0RE1AsS6NQLlpw7mL6EBqvTFxGoVkcVnb1TLG5ws1ZuNsx5jZCRsXE8lEqJK
-         ALx/XLXhy+p2U0Ke7UcVAD8DKZnNHxicEGAtdPvsAlQpMP70y0R/hWYGTnfeil81+5tk
-         MecwoA/4Hx7k2ZjFwCV90S396ZT4S/GhNqqy/KRt4XGqOTD4ZkR0u5M0OpcwqAhFBQ/D
-         zeqztkciQLqRTZcwdcGMiaJECrWHVyNTz7y9q1dMNFfN7JNpSirDEms1C4iqOUMQXglA
-         tEow==
-X-Gm-Message-State: AOAM533trnUGM/7hov1BwvUC3nWy4XYi670jjHYR1Hs1msUddTaoUt3b
-        hPRSFe6jC+pNpErsngx+bzb8xQQN7hM/zbzzG3X8qVuk4AU=
-X-Google-Smtp-Source: ABdhPJwrIKZJnSHc5pFHqoxzI0ekHZ6CUbBb8ZLGjpqIo5vWiovdXxai9BzjpUL3WKxbKjqL51xxg4yy1BTQezqX/yA=
-X-Received: by 2002:aca:aace:: with SMTP id t197mr255044oie.167.1632971439158;
- Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
+        bh=5kfgHUUnb0z7sS/d102NHetFSb2ZPjA9pDxNbW6mRLA=;
+        b=NVUnISuafdLmSR9/ILHJvkiaR62ov0mvHIB1qUdRyXD8iQHViIk2p4bHmxlSNzsq2m
+         X/AToQzWTxy/58mxkZ/Dj5PLhops2t/wFj7d75Nrla7HgF6zP3f4lXnosJZCRJKpeOTi
+         L6Da2AFd0rtE6GQUUX1HzkPtytn8XRBQPRLB78q++/MWbG4BUP2e2DeEYAB9RdF5lioM
+         bVXMsaWIfNyFc/RzL7uul/xjrdXw9t9MADj5UDDpxMF9NSlPDmvxOUOsQdm/isDboUNh
+         XEW1jNvESAvrWpmOPCt9YuQb6CuYXVXlgKfSPdsQbgcl1eWCv/4IXIOVrvTogg0rnPa5
+         unKQ==
+X-Gm-Message-State: AOAM532k2wNumXcLN70HLwdQ17jkUHP/OFqPBtKNPuXVYQEMjxrZPB9T
+        3wKPGcgtmP8MTT0AKOjfZ9ijnyO4GQjLaqaz2e5rU7Ra2dg=
+X-Google-Smtp-Source: ABdhPJwH99M3aLzCatNlIzbtefdOqqKPSk5bYJ+qaYu/aFhafxIlvXOzjkmf+Ox6ET1FWcqM7uXL2wYRT09MX4seeeU=
+X-Received: by 2002:a17:906:38c8:: with SMTP id r8mr4227727ejd.172.1632975933482;
+ Wed, 29 Sep 2021 21:25:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <87zgs34ccx.fsf@evledraar.gmail.com> <20210924024606.20542-1-tbperrotta@gmail.com>
- <87bl4h3fgv.fsf@evledraar.gmail.com>
-In-Reply-To: <87bl4h3fgv.fsf@evledraar.gmail.com>
-From:   Thiago Perrotta <tbperrotta@gmail.com>
-Date:   Wed, 29 Sep 2021 23:10:23 -0400
-Message-ID: <CABOtWuqXS_kJk2md=kgg-ReaWtKermpUW_Dk_bc0pMXQL+xMeA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] send-email: shell completion improvements
+References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
+ <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
+ <87ilyjviiy.fsf@evledraar.gmail.com> <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
+ <87ee97utaq.fsf@evledraar.gmail.com>
+In-Reply-To: <87ee97utaq.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 29 Sep 2021 21:25:20 -0700
+Message-ID: <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to unpack_trees_options
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Carlo Arenas <carenas@gmail.com>, gitster@pobox.com,
-        bagasdotme@gmail.com, git@vger.kernel.org
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 24 Sept 2021 at 16:07, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-
-> I meant something like the below patch, feel free to incorporate it if
-> you'd like with my signed-off-by, i.e. there's no reason to parse the
-> usage message, or hardcode another set of options, we've got it right
-> there as structured program data being fed to the GetOptions() function.
+On Wed, Sep 29, 2021 at 11:32 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> All we need to do is to assign that to a hash, and use it both for
-> emitting the help and to call GetOptions().
+> On Wed, Sep 29 2021, Elijah Newren wrote:
 >
-> What I have doesn't *quite* work, i.e. the --git-completion-helper
-> expects "--foo=3D" I think for things that are "foo=3Ds" in perl, so the
-> regex needs adjusting, but that should be an easy addition on top.
+> > On Wed, Sep 29, 2021 at 2:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >>
+...
+> >>
+> >> I think getting rid of the boilerplate makes sense, but it doesn't sou=
+nd
+> >> from the commit message like you've considered just making that "struc=
+t
+> >> dir*" member a "struct dir" instead.
+> >>
+> >> That simplifies things a lot, i.e. we can just DIR_INIT it, and don't
+> >> need every caller to malloc/free it.
+> >
+> > See the next patch in the series.  :-)
+>
+> Ah!
+>
+> >> Sometimes a pointer makes sense, but in this case the "struct
+> >> unpack_trees_options" can just own it.
+> >
+> > I did make it internal to unpack_trees_options in the next patch, but
+> > kept it as a pointer just because that let me know whether it was used
+> > or not.  I guess I could have added a boolean as well.  But I don't
+> > actually allocate anything, because it's either a NULL pointer, or a
+> > pointer to something on the stack.  So, I do get to just use DIR_INIT.
+>
+> I think I'm probably missing something. I just made it allocated on the
+> stack by the caller using "struct unpack_trees_options", but then you
+> end up having a dir* in the struct, but that's only filled in as a
+> pointer to the stack variable? Maybe there's some subtlety I'm missing
+> here...
 
-1)
-Thanks =C3=86var, I get the gist of it. Your approach revealed a few issues
-with the current usage string:
+As per the next patch:
 
-The following options exist in GetOptions but not in the usage string:
+int unpack_trees(..., struct unpack_trees_options *o)
+{
+    struct dir_struct dir =3D DIR_INIT;
+    ...
+    if (!o->preserve_ignored) {
+        /* Setup 'dir', make o->dir point to it */
+        ....
+        o->dir =3D &dir;
+    }
+    ...
+    if (o->dir)
+        /* cleanup */
+    ....
+}
 
---git-completion-helper
---no-signed-off-cc
---sender
---signed-off-cc
-
-Out of these, I'd argue --git-completion-helper is intentionally omitted,
-however --sender and --signed-off-cc were overlooked.
-
-2)
-Also, your patch misses --dump-aliases and --identity; that's because
-they are in other GetOptions functions in the file.
-
-The two obvious possibilities here are either (i) hard-code them directly, =
-i.e.:
-
--my @options =3D sort @gse_options, @fpa_options;
-+my @options =3D sort @gse_options, @fpa_options, "--dump-aliases", "--send=
-er";
-
-or (ii) refactor the other two GetOptions like you did in your patch,
-so that `sub completion_helper` ends up receiving all three hashes
-(or maybe a single hash as a result of all three merged).
-
-Any preference between (i) or (ii)? I am leaning towards (i).
-
-3)
-Finally, I noticed that "sort @gse_options, @fpa_options" doesn't
-really sort fpa_options.
-
-If sorting is really intended, it would be better to modify the source
-of format-patch to
-emit sorted output.
-
-Otherwise, we may as well leave it untouched. AFAIK from a completion
-perspective it
-seems that it doesn't matter: both bash and zsh emit `git format-patch
---<TAB>` sorted
-today, even though the output of `git format-patch
---git-completion-helper` isn't sorted.
-The only benefit of sorting I see would be to deduplicate ('uniq') flags.
-
-Do you agree with this rationale?
-Either way, let me know whether or not it's preferable to sort.
-I'll probably sort `send-email` options anyway just to deduplicate a
-few flags such as --to-cover,
-but `format-patch` could remain as is.
-
-
-I'll wait for replies before sending another patch (on top of your
-original one).
+The caller doesn't touch o->dir (other than initializing it to zeros);
+unpack_trees() is wholly responsible for it.  I'd kind of like to
+entirely remove dir from unpack_trees_options(), but I need a way of
+passing it down through all the other functions in unpack-trees.c, and
+leaving it in unpack_trees_options seems the easiest way to do so.  So
+I just marked it as "for internal use only".
