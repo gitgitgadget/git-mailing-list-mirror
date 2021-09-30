@@ -2,131 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67509C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 04:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 075F7C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:07:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39BE761880
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 04:25:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD1FA61423
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 05:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234307AbhI3E1b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 00:27:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
+        id S1347988AbhI3FH6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 01:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbhI3E12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 00:27:28 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F37C06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 21:25:35 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ba1so16941285edb.4
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 21:25:34 -0700 (PDT)
+        with ESMTP id S1347971AbhI3FH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 01:07:56 -0400
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984E3C06176A
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:06:14 -0700 (PDT)
+Received: by mail-vs1-xe32.google.com with SMTP id 188so5890242vsv.0
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 22:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=5kfgHUUnb0z7sS/d102NHetFSb2ZPjA9pDxNbW6mRLA=;
-        b=PRROIZfkgPD91IemYwVIEhYMGHW/vCpvR8Yn8KrdkKRBMdZ7WSI9wdbiAxpBWqOqwn
-         8+d17Fzo/P9xQ/BkfdVEFfUFGLSKUKVqqlD/7SJXQzylIKm93DR+dq5Or4M8V7Zl+UJ7
-         Lt2Xqqdc0JSLo7lUzSFBgaW+Aczu3SHnNtBlVRx8DMFfAUF1D0E/QsuSvNX3yAZPEXGr
-         vrWjPfR6vhNwyE3x6WgKu57WiQHlRJ6fH12yWGjy3kDr/T6nuMGB1X71EYx/g+VDA42R
-         ZB8QdB52mikngSJ9JZWISsB46V5NBoIHKB2u9hYfntwi2xa8uaKVzthuv8m/dOzEENmM
-         1tDA==
+        bh=Kcg0FBLNTpPiDeEOscRb1RTo2jS57Uh95l8hzNIHKDI=;
+        b=Zf5OAOHrFhAOlG4apRIyfu/1o04sgkWWfE8Swdqkeib1CCAc7Ckamr/rjK0ZXSDyON
+         Kvnx9YQ34nJ0Tr/ylpTGdM3XSUV4T5yxweGaB5S8zonhXLLcj4vEgSZvDSm1gnGnF6VY
+         T4wH4ASeTKJDfutTzxfSXi95teaJTQ3cI2vbji4MqInOhStGvd6/Y/ijEgAvpOFsiIhO
+         2NujlEdXDAWLDNXSb9cgblCNyKgoAcc9ERjR232TeXF5WaigRJReiGWpYYC30jWHuF9s
+         aNmLnzf3D3cJpxOVtB+c2SLtYAEml+qoFGQPSUJKaxwcVFfKGKdGABOUHdQq91Ids2kp
+         g9EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5kfgHUUnb0z7sS/d102NHetFSb2ZPjA9pDxNbW6mRLA=;
-        b=NVUnISuafdLmSR9/ILHJvkiaR62ov0mvHIB1qUdRyXD8iQHViIk2p4bHmxlSNzsq2m
-         X/AToQzWTxy/58mxkZ/Dj5PLhops2t/wFj7d75Nrla7HgF6zP3f4lXnosJZCRJKpeOTi
-         L6Da2AFd0rtE6GQUUX1HzkPtytn8XRBQPRLB78q++/MWbG4BUP2e2DeEYAB9RdF5lioM
-         bVXMsaWIfNyFc/RzL7uul/xjrdXw9t9MADj5UDDpxMF9NSlPDmvxOUOsQdm/isDboUNh
-         XEW1jNvESAvrWpmOPCt9YuQb6CuYXVXlgKfSPdsQbgcl1eWCv/4IXIOVrvTogg0rnPa5
-         unKQ==
-X-Gm-Message-State: AOAM532k2wNumXcLN70HLwdQ17jkUHP/OFqPBtKNPuXVYQEMjxrZPB9T
-        3wKPGcgtmP8MTT0AKOjfZ9ijnyO4GQjLaqaz2e5rU7Ra2dg=
-X-Google-Smtp-Source: ABdhPJwH99M3aLzCatNlIzbtefdOqqKPSk5bYJ+qaYu/aFhafxIlvXOzjkmf+Ox6ET1FWcqM7uXL2wYRT09MX4seeeU=
-X-Received: by 2002:a17:906:38c8:: with SMTP id r8mr4227727ejd.172.1632975933482;
- Wed, 29 Sep 2021 21:25:33 -0700 (PDT)
+        bh=Kcg0FBLNTpPiDeEOscRb1RTo2jS57Uh95l8hzNIHKDI=;
+        b=CeZNFi+SOJKUTiS//WBK/KDxaA393C8uiBOv09ub+sJ56VhI/d2vjxmc/SiIkmA4jD
+         oSQRUnl4tkjh+yqpt8Li8iYBjunz3f6cFsnbl8FnFm8CUqjIrveXqJgYurKlDJLyEd8+
+         8uGIp/bs5V8LTo96BNMpH1VR8yGchOssb9mMr4x3vNNvyj4aFzwHYYZDuTfcEyrHGcA5
+         oU9JATvlcs69wvAuD78MZo0nqnLO+g+hH/6mGjOvPO4sVnDb+a2CYgXYYxREsEkDocap
+         icQ4+B7QtYpbC7bXMFhWHCTG98WYitPM/nExdrBs0xNO5WyQgYLh4dEeqFPf9aSkUxgK
+         BsnA==
+X-Gm-Message-State: AOAM532x3jBieZKJ+IDuvNmZrskZlB6RXYL/R+tzpW/qnHSkHwx06wqW
+        xT4ESqIj3mnPzyshaFXNVXZbaXF4QuhrUBRlOwI=
+X-Google-Smtp-Source: ABdhPJzzVjJQwUWQUWi7Or7/mBrvhVMKQITJqMEzsNqaOyh5FBk7dFER/HqA/5/coKYkYDZoZd/gvJTt23GGuuftJV0=
+X-Received: by 2002:a05:6102:1d4:: with SMTP id s20mr1815161vsq.3.1632978373579;
+ Wed, 29 Sep 2021 22:06:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
- <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
- <87ilyjviiy.fsf@evledraar.gmail.com> <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
- <87ee97utaq.fsf@evledraar.gmail.com>
-In-Reply-To: <87ee97utaq.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Sep 2021 21:25:20 -0700
-Message-ID: <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
-Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to unpack_trees_options
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+References: <xmqq8rzhmsi7.fsf@gitster.g> <871r59xfgk.fsf@evledraar.gmail.com> <CAFQ2z_NxqLVfSWNtcXdyWQsTXrTrWGq7Qof=wdx9mmeqOAJS_Q@mail.gmail.com>
+In-Reply-To: <CAFQ2z_NxqLVfSWNtcXdyWQsTXrTrWGq7Qof=wdx9mmeqOAJS_Q@mail.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 29 Sep 2021 22:06:02 -0700
+Message-ID: <CAPUEspj6q_N-ZPRzUv8jx_5_eP0gDO5TyTpi5-kPkfeoVhkjvg@mail.gmail.com>
+Subject: Re: hn/reftable (Re: What's cooking in git.git (Sep 2021, #08; Mon, 27))
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        ramsay@ramsayjones.plus.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 29, 2021 at 11:32 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Sep 29 2021, Elijah Newren wrote:
->
-> > On Wed, Sep 29, 2021 at 2:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-...
-> >>
-> >> I think getting rid of the boilerplate makes sense, but it doesn't sou=
-nd
-> >> from the commit message like you've considered just making that "struc=
+On Tue, Sep 28, 2021 at 5:19 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+> On Tue, Sep 28, 2021 at 10:38 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+> > > * hn/reftable (2021-09-10) 20 commits
+> > >  - fixup! reftable: implement stack, a mutable database of reftable f=
+iles.
+> > >  - Add "test-tool dump-reftable" command.
+> > >  - reftable: add dump utility
+> > >  - reftable: implement stack, a mutable database of reftable files.
+> > >  - reftable: implement refname validation
+> > >  - reftable: add merged table view
+> > >  - reftable: add a heap-based priority queue for reftable records
+> > >  - reftable: reftable file level tests
+> > >  - reftable: read reftable files
+> > >  - reftable: generic interface to tables
+> > >  - reftable: write reftable files
+> > >  - reftable: a generic binary tree implementation
+> > >  - reftable: reading/writing blocks
+> > >  - Provide zlib's uncompress2 from compat/zlib-compat.c
+> > >  - reftable: (de)serialization for the polymorphic record type.
+> > >  - reftable: add blocksource, an abstraction for random access reads
+> > >  - reftable: utility functions
+> > >  - reftable: add error related functionality
+> > >  - reftable: RFC: add LICENSE
+> > >  - hash.h: provide constants for the hash IDs
+> > >
+> > >  The "reftable" backend for the refs API, without integrating into
+> > >  the refs subsystem.
+> > >
+> > >  Will merge to 'next'?
+> >
+> > I think we've reached approximately "good enough" with this for the nex=
 t
-> >> dir*" member a "struct dir" instead.
-> >>
-> >> That simplifies things a lot, i.e. we can just DIR_INIT it, and don't
-> >> need every caller to malloc/free it.
-> >
-> > See the next patch in the series.  :-)
+> > steps, and can hopefully fix any remaining nits (such as my [1])
+> > post-merge.
 >
-> Ah!
+> There is still an RFC in 02/19. Maybe we can get agreement that this
+> is OK and drop the RFC ?
 >
-> >> Sometimes a pointer makes sense, but in this case the "struct
-> >> unpack_trees_options" can just own it.
-> >
-> > I did make it internal to unpack_trees_options in the next patch, but
-> > kept it as a pointer just because that let me know whether it was used
-> > or not.  I guess I could have added a boolean as well.  But I don't
-> > actually allocate anything, because it's either a NULL pointer, or a
-> > pointer to something on the stack.  So, I do get to just use DIR_INIT.
+> > Maybe hold off until Han-Wen gets a chance to ack it, and whether he's
+> > ok with the proposed fixup(s)?
 >
-> I think I'm probably missing something. I just made it allocated on the
-> stack by the caller using "struct unpack_trees_options", but then you
-> end up having a dir* in the struct, but that's only filled in as a
-> pointer to the stack variable? Maybe there's some subtlety I'm missing
-> here...
+> regarding uncompress2: I thought it was functionality best left to
+> zlib to implement, but I imagine git.git offers something similar.
+> Sounds good to use that.
+>
+> > Wasn't there an outstanding "some of this in reftable/* should be stati=
+c
+> > functions" from someone, Carlo? (CC'd). In any case that sort of thing
+> > could also be a post-cleanup, I couldn't find a reference to that
+> > discussion in anything except my vague memory of it as I wrote this.
+>
+> I think I have addressed all outstanding issues in my github PR, and
+> I'll send it out once I see CI pass.
 
-As per the next patch:
+It was actually raised by Ramsay[1], and might have been a red herring,
+but there was for sure no follow up.
 
-int unpack_trees(..., struct unpack_trees_options *o)
-{
-    struct dir_struct dir =3D DIR_INIT;
-    ...
-    if (!o->preserve_ignored) {
-        /* Setup 'dir', make o->dir point to it */
-        ....
-        o->dir =3D &dir;
-    }
-    ...
-    if (o->dir)
-        /* cleanup */
-    ....
-}
+I have a few minor fixups that will post for discussion, and might be even
+ok to merge to next without squashing if included on top, but I am not
+sure if all those issues could be addressed post-cleanup, since IMHO
+once this gets into master, then it will be considered a stable API
+and it can't be changed.
 
-The caller doesn't touch o->dir (other than initializing it to zeros);
-unpack_trees() is wholly responsible for it.  I'd kind of like to
-entirely remove dir from unpack_trees_options(), but I need a way of
-passing it down through all the other functions in unpack-trees.c, and
-leaving it in unpack_trees_options seems the easiest way to do so.  So
-I just marked it as "for internal use only".
+For example. while looking at Ramsay message noticed the API for "reader"
+in libreftable might be better with s/init_reader/reader_init/g
+
+Carlo
+
+[1] https://lore.kernel.org/git/bc387e32-321e-4726-2a02-2e6cf6ed5250@ramsay=
+jones.plus.com/
+
+CC +Ramsay
