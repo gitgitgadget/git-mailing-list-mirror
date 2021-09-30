@@ -2,86 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C846C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1568FC433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDF7761A08
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:23:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF2BF619F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345610AbhI3XZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 19:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
+        id S1344543AbhI3X1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 19:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230167AbhI3XZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 19:25:07 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FEBC06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:23:24 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id s17so27409885edd.8
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:23:24 -0700 (PDT)
+        with ESMTP id S229992AbhI3X1b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 19:27:31 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A9CC06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:25:47 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id ba1so28086324edb.4
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=cacP9MVDNxDqECaQtsfEiBYXoy37wz/FBM+zOtIkWqM=;
-        b=LPoU7GpqYevhabQ3dSd7uKt+ZbD+UNfpGiqylbUJC8Ec0VkykpfxlkznClH4XwRVTz
-         DuWUmUx7J1O7SE7uiNGCGZAwrDDjc47UPZAC3AxlHxZ0zAn3pYlPMF8T9t+UyPcjroOG
-         YUoWRl4vV+e3NFi6C7RKtMQfktYXjnl5g8LEYHgk2ETqrdJTbYBUe3rYxPA8kGHamsrR
-         keVCpwcUg5c3ABm5LhOaY8nLlB7WvQ3jE1O6WraAPeIu9zCIlk3O6BYM3xaT4jPjKUUa
-         MlChWAZ8S8Dl+Ji9lwJkZ7jj4fvVb9hh0ObUOrKBg3UoHoO2blS1wEmk7149t1nZbMmB
-         JRUQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cEGEK+AWKlXYTnWXMMFykNUNLHuzY5aZuVyuWWCkBdc=;
+        b=Fb2a0YieyGxpDQ+JUI0T8EDkZaeVywUsziJct4zyU8oMpzBj717Zbjg8aDWyOHbvDl
+         NfLB3pVbTquXS1G2vTy5W7Dixru3zPsEg8ORFwXMx3hGIU9trV+djk6vvOSql51CPW4W
+         NXUipxnGEJ1M2MM2FZuuqDA7T2Qqoy6T6gSWeoA6j9BOjHIc1urpQM48khqZbFQreMPS
+         jKq+Y3wBIeqhgBBKjMQWBKzlYBqeOkbv/rZEHdMOlLDP2W1E87OBNwO5gH3NX/f1iLhq
+         uP4tRKzpEn1exNlpNStYCiuikEfiEcPzsyMK3QrAUdE9PIPSJ8sUCAEPcNwmMne9vRNv
+         M7+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=cacP9MVDNxDqECaQtsfEiBYXoy37wz/FBM+zOtIkWqM=;
-        b=7UFT9nptR7cUgnDbM87+zqFSyjAri1/pPcgc/0zIs1NKgQ+Ke6GJf3cXTzku8exWuH
-         /5M+kLEUFrnnP5BJfznngTbDdYuhEOSP5Pjt5/S6JY26qGyQuoCJK4EtOgeGIgBqQJ2j
-         jOsBAEhVi2srZbXpQns2ZKG+pjqkEToHyn+1GQ/WON48jGiRjhrIe7yi3dKTitFTm5iJ
-         261NFXkqnRnPHx9cb8trm9UUXRQKZPmXfc7za36SR+QCLoyZnuyWIqfodE8TkOTu1toV
-         5ofFkEwIP5FHLCjjYm7eyuznAg0FcEyFqcsfuq328DYAxSzI6kzR7Vv6j8/J6/RmBLsS
-         YD+w==
-X-Gm-Message-State: AOAM5315GGEV9ZIQydb+6m58CecgErkOtGmDMlpHDatzuBZysYKlQyge
-        +TOt6DxsbjL0ltw2S0nclARhJEibI9RE4w==
-X-Google-Smtp-Source: ABdhPJwSNipZEas3h2awyxEbh6A4ytqSYD8VyqNft2ICW/1sqQf5SfT63KgG4NmVJkP5BmrG/lkIrw==
-X-Received: by 2002:a17:906:401:: with SMTP id d1mr2469959eja.242.1633044202264;
-        Thu, 30 Sep 2021 16:23:22 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e22sm2371291edu.35.2021.09.30.16.23.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 16:23:20 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Brian Bartels <bartels.desmond@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Should help.autocorrect be on by default?
-Date:   Fri, 01 Oct 2021 01:16:40 +0200
-References: <CAEWW4VdL0N9DmJ7jwGY0WNN6SR75v-RR2HU-uFn7qDkod8o7Sg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CAEWW4VdL0N9DmJ7jwGY0WNN6SR75v-RR2HU-uFn7qDkod8o7Sg@mail.gmail.com>
-Message-ID: <875yuhtzpz.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cEGEK+AWKlXYTnWXMMFykNUNLHuzY5aZuVyuWWCkBdc=;
+        b=GmIPHSt8S0Smd2n3wcYWss5aNiNxUx/X1YJP6DVTdASsrFRXncCsIgw143NsXqiPjh
+         3ucbILp8jJO33uCkyq2FnMfBfSzqxGmg4CgD+I+AwL6igZP4TkBK5qSlaVXPI3V97pYr
+         jbmVB3PvUM5fXDRZNmZFMkQxd6iWy8fDlGrec49WFkIj+YKVebZKQCAn/h/8pZfM9GKh
+         HWrYF5WSGMpZgPgixBijybfjZMfS0KW+WFWLTJb4q1HbkoUzr10x9HlQIk6/HhVrbuSy
+         hBAc0URCeDlyfEwuMhMnUN+ElugaIZ/Yk2c++iAQCAXjhmdmFuHpwDmuXGphpK3V3t1c
+         m8JQ==
+X-Gm-Message-State: AOAM531n3AieK+H1p/k5qK7fvkv23dekf620uNtovVtEzjOUrRMjTQ2M
+        kypte4q7IHw+AoOJcTcaYAg9/hB0E/1lrDUeXWg=
+X-Google-Smtp-Source: ABdhPJyU/ByGa/iZ9czqa9KKG4fZ7cK7MtMcTem7lhwPbZjhBgp8MZgjopnGfyDmRRJ/d8dsLbMIip7vihsdGnsRjBE=
+X-Received: by 2002:a17:906:1c0e:: with SMTP id k14mr2439884ejg.286.1633044346277;
+ Thu, 30 Sep 2021 16:25:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210930170146.61489-1-davvid@gmail.com> <20210930170146.61489-3-davvid@gmail.com>
+ <xmqq7dexafch.fsf@gitster.g>
+In-Reply-To: <xmqq7dexafch.fsf@gitster.g>
+From:   David Aguilar <davvid@gmail.com>
+Date:   Thu, 30 Sep 2021 16:25:10 -0700
+Message-ID: <CAJDDKr41qzbUudAHgokRARK-kEG4araFwJ0UhLmJ4Pca=xFZRA@mail.gmail.com>
+Subject: Re: [PATCH v6 3/5] difftool: avoid returning -1 to cmd_main() from run_dir_diff()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Sep 30 2021, Brian Bartels wrote:
-
-> This would save developers precious inner loop time. I looked at the
-> code and it already handles cases where the environment isn't
-> interactive. So this should be a pretty minor configuration change.
+On Thu, Sep 30, 2021 at 3:06 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Let me know what you think,
-> Brian
+> David Aguilar <davvid@gmail.com> writes:
+>
+> > difftool was forwarding the -1 result from error() to cmd_main(), which
+> > is implementation-defined since it is outside of the 0-255 range
+> > specified by POSIX for program exit codes.
+> >
+> > Stop assigning the result of error() to `ret`. Assign a value of 1
+> > whenever internal errors are detected instead.
+>
+> Many existing codepaths take advantage of error() returning -1 and I
+> do not see anything is wrong to keep that "negative is error"
+> convention for the value of "ret" variable.  Most lines in this
+> patch however split that "ret =3D error(...)" pattern into two
+> statements and I do not see a very good reason for it.
+>
+> Worse yet, after applying this patch, there still are at least three
+> assignments to "ret" that can give it a negative value:
 
-I haven't looked myself, but it's very informative to browse the list
-archives at https://lore.kernel.org/git/ (search for help.autocorrect)
-to see if this has been brought up before, whether there were any
-arguments for/against, or if it was just an arbitrary (or careful due to
-a new feature) default at the time.
+Indeed.
 
-That and trying your hand at flipping the default via a patch, running
-the tests, seeing if any fail & fixing them is also a good way to both
-get the ball rolling, and to discover any past opinions about what
-should/shouldn't be the default added as code/tests at the time.
+>
+>         if (!mkdtemp(tmpdir.buf)) {
+>                 ret =3D error("could not create '%s'", tmpdir.buf);
+>                 goto finish;
+>         }
+>
+>         ret =3D run_command_v_opt(helper_argv, flags);
+>
+>         strbuf_addf(&buf, "%s/wtindex", tmpdir.buf);
+>         if (hold_lock_file_for_update(&lock, buf.buf, 0) < 0 ||
+>             write_locked_index(&wtindex, &lock, COMMIT_LOCK)) {
+>                 ret =3D error("could not write %s", buf.buf);
+>                 goto finish;
+>         }
+>
+> Among them, the return value from run_command_v_opt() eventually
+> come from wait_or_whine(), I think, so it may be generic -1 or
+> it may be WEXITSTATUS() of the child process.
+>
+> But I am not sure if this particular caller cares.  It is not
+
+The property I was trying to maintain is that we would forward the result
+from the child process in most situations, so we should try and forward
+the result from run_command_v_opt() whenever possible.
+
+But for the others we would have to add an "ret =3D 1" there,
+and that doesn't seem worth it since it's too hard to maintain.
+
+
+
+> prepared to handle -1 and positive return from run_command_v_opt()
+> any differently.  So I think a single
+>
+> -       return ret;
+> +       return !!ret;
+>
+> at the end would be much easier to reason about and maintain.
+
+Hmm I don't think we can use "return !!ret".
+
+In C this does a bool cast so we lose the positive value from the
+underlying diff tool when the value is quantized to 0/1 via !!ret.
+
+That suggests that =C3=86var's sug is better...
+
+    return (ret < 0) ? 1 : ret;
+
+If that sounds good I can send a replacement series that squashes this into=
+ the
+repeated-symlinks patch. It doesn't seem like we'll need a separate
+patch for this.
+
+--
+David
