@@ -2,98 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8005DC433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5BF0C433F5
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:01:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6062F61881
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:00:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76AB361A0B
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 21:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343896AbhI3VCG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 17:02:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58676 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229957AbhI3VCG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 17:02:06 -0400
-Received: (qmail 25382 invoked by uid 109); 30 Sep 2021 21:00:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Sep 2021 21:00:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 755 invoked by uid 111); 30 Sep 2021 21:00:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Sep 2021 17:00:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 30 Sep 2021 17:00:22 -0400
-From:   Jeff King <peff@peff.net>
+        id S1344447AbhI3VDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 17:03:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52453 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229957AbhI3VDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 17:03:04 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A4D8EC19D;
+        Thu, 30 Sep 2021 17:01:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=syCiRfXzBjOF
+        DbS5BIPB3EvySLuzUveNgu+iFqKpqhA=; b=xs97ovqU9xNi+1fL4PcUy6mMildy
+        QejQ4pVtHjUUIVMiFiiiWz3QSXCdR8Ut+FQbhlpldKNAQaSikU12xkjhCbyMhevE
+        wHUZ8A+Ufzi76p/TE0wZ5HP4PqeRgA1eH/X2zbQBPmXB6NGpG3SLD93TsmhbH0Dk
+        nKtpqoEGlrXvu6Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21213EC19B;
+        Thu, 30 Sep 2021 17:01:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7BC83EC199;
+        Thu, 30 Sep 2021 17:01:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing
- primary object dirs
-Message-ID: <YVYlZhl6uACu+UGG@coredump.intra.peff.net>
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
- <YVOiggCWAdZcxAb6@coredump.intra.peff.net>
- <xmqqsfxof2hr.fsf@gitster.g>
- <YVVoXJo3DlPQd1A3@coredump.intra.peff.net>
- <87tui2tckn.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v9 17/17] fsck: report invalid object type-path
+ combinations
+References: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
+        <cover-v9-00.17-00000000000-20210930T133300Z-avarab@gmail.com>
+        <patch-v9-17.17-8d926e41fc3-20210930T133300Z-avarab@gmail.com>
+Date:   Thu, 30 Sep 2021 14:01:19 -0700
+In-Reply-To: <patch-v9-17.17-8d926e41fc3-20210930T133300Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 30 Sep
+ 2021 15:37:22
+        +0200")
+Message-ID: <xmqqsfxlaicg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tui2tckn.fsf@evledraar.gmail.com>
+X-Pobox-Relay-ID: 8FF06344-2231-11EC-9FE7-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 30, 2021 at 03:16:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> I also wonder how much if anything writing out the one file v.s. lots of
-> loose objects is worthwhile on systems where we could write out those
-> loose objects on a ramdisk, which is commonly available on e.g. Linux
-> distros these days out of the box. If you care about performance but not
-> about your transitory data using a ramdisk is generally much better than
-> any other potential I/O optimization.
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 623f8fc3194..980c26e3b25 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -598,23 +598,30 @@ static int fsck_loose(const struct object_id *oid=
+, const char *path, void *data)
+>  	struct object *obj;
+>  	enum object_type type;
+>  	unsigned long size;
+> -	void *contents;
+> +	unsigned char *contents =3D NULL;
+>  	int eaten;
+>  	struct strbuf sb =3D STRBUF_INIT;
+>  	struct object_info oi =3D OBJECT_INFO_INIT;
+> -	int err =3D 0;
+> +	struct object_id real_oid =3D *null_oid();
+> +	int ret;
+> =20
+>  	oi.type_name =3D &sb;
+>  	oi.sizep =3D &size;
+>  	oi.typep =3D &type;
+> =20
+> -	if (read_loose_object(path, oid, &contents, &oi) < 0)
+> -		err =3D error(_("%s: object corrupt or missing: %s"),
+> -			    oid_to_hex(oid), path);
+> +	ret =3D read_loose_object(path, oid, &real_oid, (void **)&contents, &=
+oi);
+> +	if (ret < 0) {
+> +		if (contents && !oideq(&real_oid, oid))
+> +			error(_("%s: hash-path mismatch, found at: %s"),
+> +			      oid_to_hex(&real_oid), path);
+> +		else
+> +			error(_("%s: object corrupt or missing: %s"),
+> +			      oid_to_hex(oid), path);
+> +	}
+>  	if (type < 0)
+> -		err =3D error(_("%s: object is of unknown type '%s': %s"),
+> -			    oid_to_hex(oid), sb.buf, path);
+> -	if (err) {
+> +		ret =3D error(_("%s: object is of unknown type '%s': %s"),
+> +			    oid_to_hex(&real_oid), sb.buf, path);
+> +	if (ret < 0) {
+>  		errors_found |=3D ERROR_OBJECT;
+>  		goto cleanup;
+>  	}
 
-I'd think in general we won't be using a ramdisk, because tmp_objdir is
-putting its directory inside $GIT_DIR/objects. It doesn't _have_ to, but
-using a ramdisk works against its original purpose (which was to store
-potentially quite a lot of data from an incoming push, and to be able to
-rename it cheaply into its final resting place).
+This is immediately touching up what 16/17 has introduced, which is
+making it a bit harder to follow than necessary, so let's take the
+whole postimage of 16+17.
 
-It would probably not be too hard to provide a flag that indicates the
-intended use, though (and then we decide where to create the temporary
-directory based on that).
+> static int fsck_loose(const struct object_id *oid, const char *path, vo=
+id *data)
+> {
+> 	struct object *obj;
+> 	enum object_type type;
+> 	unsigned long size;
+> 	unsigned char *contents =3D NULL;
+> 	int eaten;
+> 	struct strbuf sb =3D STRBUF_INIT;
+> 	struct object_info oi =3D OBJECT_INFO_INIT;
+> 	struct object_id real_oid =3D *null_oid();
+> 	int ret;
+>=20
+> 	oi.type_name =3D &sb;
+> 	oi.sizep =3D &size;
+> 	oi.typep =3D &type;
+>=20
+> 	ret =3D read_loose_object(path, oid, &real_oid, (void **)&contents, &o=
+i);
+> 	if (ret < 0) {
+> 		if (contents && !oideq(&real_oid, oid))
+> 			error(_("%s: hash-path mismatch, found at: %s"),
+> 			      oid_to_hex(&real_oid), path);
+> 		else
+> 			error(_("%s: object corrupt or missing: %s"),
+> 			      oid_to_hex(oid), path);
 
-> Finally, and I don't mean to throw a monkey wrench into this whole
-> discussion, so take this as a random musing: I wonder how much faster
-> this thing could be on its second run if instead of avoiding writing to
-> the store & cleaning up, it just wrote to the store, and then wrote
-> another object keyed on the git version and any revision paramaters
-> etc., and then pretty much just had to do a "git cat-file -p <that-obj>"
-> to present the result to the user :)
-> 
-> I suppose that would be throwing a lot more work at an eventual "git gc"
-> than we ever do now, so maybe it's a bit crazy, but I think it might be
-> an interesting direction in general to (ab)use either the primary or
-> some secondary store in the .git dir as a semi-permanent cache of
-> resolved queries from the likes of "git log".
+We can emit an error() message from either one of these.  contents
+may or may not be NULL, ret is negative, and we continue.  Do we
+know anything about the value of type at this point?  IOW, will we
+get into the body of the next "if (type < 0)" statement to overwrite
+ret with -1?
 
-I don't think it's crazy to just write the objects to the main object
-store. We already generate cruft objects for some other operations
-(Junio asked elsewhere in the thread about virtual trees for recursive
-merges; I don't know the answer offhand, but I'd guess we do there).
-They do get cleaned up eventually.
+> 	}
+> 	if (type < 0)
+> 		ret =3D error(_("%s: object is of unknown type '%s': %s"),
+> 			    oid_to_hex(&real_oid), sb.buf, path);
+> 	if (ret < 0) {
+> 		errors_found |=3D ERROR_OBJECT;
+> 		goto cleanup;
 
-I'm not sure it helps performance much by itself. In a merge (or even
-just writing a tree out from the index), by the time you realize you
-already have the object, you've done most of the work to generate it.
+In any case, we'd jump to clean-up if any of the above hold, so we'd
+avoid hittign the next BUG().
 
-I think what you're describing is to make some kind of cache structure
-on top. That might be sensible (and indeed, the index already does this
-with the cachetree extension). But it can also easily come later if the
-objects are just in the regular odb.
+> 	}
+>=20
+> 	if (!contents && type !=3D OBJ_BLOB)
+> 		BUG("read_loose_object streamed a non-blob");
+>=20
+> 	obj =3D parse_object_buffer(the_repository, oid, type, size,
+> 				  contents, &eaten);
+>=20
+> 	if (!obj) {
+> 		errors_found |=3D ERROR_OBJECT;
+> 		error(_("%s: object could not be parsed: %s"),
+> 		      oid_to_hex(oid), path);
+> 		goto cleanup_eaten;
+> 	}
+>=20
+> 	obj->flags &=3D ~(REACHABLE | SEEN);
+> 	obj->flags |=3D HAS_OBJ;
+> 	if (fsck_obj(obj, contents, size))
+> 		errors_found |=3D ERROR_OBJECT;
+>=20
+> cleanup_eaten:
+> 	if (!eaten)
+> 		free(contents);
+> cleanup:
+> 	strbuf_release(&sb);
 
--Peff
+In the "goto cleanup" error case above, we haven't done anything
+that would have caused the object contents eaten, and contents may
+either point at an allocated memory or NULL (in the "hash-path
+mismatch" case, we may have contents allocated but nobody has freed
+it yet, leaking it).
+
+I am wondering if we initialized "eaten" to false, we can get rid of
+one of the two labels we added in this series, which would fix this
+leak as well, no?
+
+> 	return 0; /* keep checking other objects, even if we saw an error */
+> }
