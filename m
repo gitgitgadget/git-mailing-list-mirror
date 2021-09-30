@@ -2,117 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5BA4C433F5
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 00:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB582C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 03:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B354615E2
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 00:49:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A08B561452
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 03:10:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346306AbhI3AvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Sep 2021 20:51:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45402 "EHLO
+        id S1347711AbhI3DMW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Sep 2021 23:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232383AbhI3AvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Sep 2021 20:51:12 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92EC0C06161C
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 17:49:30 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id z24so17965665lfu.13
-        for <git@vger.kernel.org>; Wed, 29 Sep 2021 17:49:30 -0700 (PDT)
+        with ESMTP id S1347001AbhI3DMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Sep 2021 23:12:21 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DBDC06161C
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id n64so5566227oih.2
+        for <git@vger.kernel.org>; Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitpod.io; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=VdDIzX+sZzEJ5wdd9AxroEHrEoqKOM4eNE+8Ng06vYU=;
-        b=dy3wgiUDL1f0R9rcVbAU98xiqqPQhsz8pynCYS5vUQ6bnPK/5gXCUk/nisVdMgol8T
-         urbjAs/AkGWnvqPTYtoORCAK4SUcLlbeOvc83Vz6fOw5DVfRohzFp/quof+S6CfiGUXG
-         K+5b5uJalQQsDb+MR0+U4twCHg8h8wo7Iqgl4=
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8UbVoCACzz4yoGpFa+zLqhdSnIuiXuESCmnwThF50/A=;
+        b=MFLtrTPS6mkeAE/HEWTuov/23K5GYJRMJdQMOymoG9zzEG5ByG91UEx0lkpHlrM/ec
+         ozRWE0IOui3IRCWbvv37LJHan4iU1ReDoN2Ya+Xq75RDoZ8d/gz5MDVeThh9kGmqbg5d
+         6CPwn/fS4YrhCfkBoRzi5wEe6t1gnSX0Z1cSDSl2KCdQ7JNDJ1v/MN+zzM7HlcIoMjHN
+         GFeEwbavM1Da/GJRGEkbBpoiPMgOEsechXT+IBg0fPkpgYRG70+cYd52ZkKS/j8NmT8M
+         TYKa3xNRp2fYNakTFoFgLYqXB+uxmBvoLZjGKnFrhrbZP4lVr2Ey9Exqx88uvyDOz14C
+         WFVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=VdDIzX+sZzEJ5wdd9AxroEHrEoqKOM4eNE+8Ng06vYU=;
-        b=InjZFsRCh0LSKULcJ3kxIWf9v0HT0UqyEXnSD8TR2c41eFaG9OpwiIY3Dk2Aa3a2js
-         fPnQ/gNZKiZD8s9tI9SQS268i2qe8Ch8tGI/zl7oqV23Io+g40JoJIjluD34cYSrSf6X
-         muH2MuZWgv4ZT2IcPnD3J585cnQYmiM6KqOKeKyJv5992sucPuOeTo87kFEOTjuhtTa4
-         3eXiIwc2mf8jo7rDEEIrit2KkOHoA6ChjOThcWH5kSTMmFSTgJn4MKtE5U2BvsyqApjk
-         lt2IeomRNryWYy6ndHDRb2hmDbNI8YM7brgfrCrQJZc2vP/aXJkKrzSbteL2tqdwE7BH
-         TQAg==
-X-Gm-Message-State: AOAM532wHVqvqN//+h+QQQ6rMTp+uLfJ1XIKqxCDAjep2qqKIdnT1O9A
-        X+lqJ3jm2O15+4/OOf10OBQ2fT5t+u54P84hmyKN0ceFYu6HOQ==
-X-Google-Smtp-Source: ABdhPJw3E4ptc89ATKpicvg/NFXqbXoWWTytNfINSyqCh01Oro2Dy2zh1FFtosh1HINMia0w1GJzVzM2fOuzs0NOnIY=
-X-Received: by 2002:a2e:7804:: with SMTP id t4mr3076280ljc.346.1632962968757;
- Wed, 29 Sep 2021 17:49:28 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8UbVoCACzz4yoGpFa+zLqhdSnIuiXuESCmnwThF50/A=;
+        b=mhPPggRHZrOIPFgNNyonVMjkn5hkftDLt4giroFIENu6BSX2CJhO9iDYTiMEMcU/e6
+         GjzqGJYY0RE1AsS6NQLlpw7mL6EBqvTFxGoVkcVnb1TLG5ws1ZuNsx5jZCRsXE8lEqJK
+         ALx/XLXhy+p2U0Ke7UcVAD8DKZnNHxicEGAtdPvsAlQpMP70y0R/hWYGTnfeil81+5tk
+         MecwoA/4Hx7k2ZjFwCV90S396ZT4S/GhNqqy/KRt4XGqOTD4ZkR0u5M0OpcwqAhFBQ/D
+         zeqztkciQLqRTZcwdcGMiaJECrWHVyNTz7y9q1dMNFfN7JNpSirDEms1C4iqOUMQXglA
+         tEow==
+X-Gm-Message-State: AOAM533trnUGM/7hov1BwvUC3nWy4XYi670jjHYR1Hs1msUddTaoUt3b
+        hPRSFe6jC+pNpErsngx+bzb8xQQN7hM/zbzzG3X8qVuk4AU=
+X-Google-Smtp-Source: ABdhPJwrIKZJnSHc5pFHqoxzI0ekHZ6CUbBb8ZLGjpqIo5vWiovdXxai9BzjpUL3WKxbKjqL51xxg4yy1BTQezqX/yA=
+X-Received: by 2002:aca:aace:: with SMTP id t197mr255044oie.167.1632971439158;
+ Wed, 29 Sep 2021 20:10:39 -0700 (PDT)
 MIME-Version: 1.0
-From:   Robert Leftwich <robert@gitpod.io>
-Date:   Thu, 30 Sep 2021 10:49:20 +1000
-Message-ID: <CACr9BXmP1vQMK4b27Uc4R-3WWYHUYfCEEMN+hnth4yUg+UN7Zg@mail.gmail.com>
-Subject: Bug/regression report - 'git stash push -u' fatal errors when
- sub-repo present
-To:     git@vger.kernel.org
+References: <87zgs34ccx.fsf@evledraar.gmail.com> <20210924024606.20542-1-tbperrotta@gmail.com>
+ <87bl4h3fgv.fsf@evledraar.gmail.com>
+In-Reply-To: <87bl4h3fgv.fsf@evledraar.gmail.com>
+From:   Thiago Perrotta <tbperrotta@gmail.com>
+Date:   Wed, 29 Sep 2021 23:10:23 -0400
+Message-ID: <CABOtWuqXS_kJk2md=kgg-ReaWtKermpUW_Dk_bc0pMXQL+xMeA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] send-email: shell completion improvements
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Carlo Arenas <carenas@gmail.com>, gitster@pobox.com,
+        bagasdotme@gmail.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Fri, 24 Sept 2021 at 16:07, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-  Initialised a repo and added a file or cloned a repo inside an existing
-repo (think dependencies).
-  See https://github.com/gitpod-io/gitpod/issues/5675 for background.
+> I meant something like the below patch, feel free to incorporate it if
+> you'd like with my signed-off-by, i.e. there's no reason to parse the
+> usage message, or hardcode another set of options, we've got it right
+> there as structured program data being fed to the GetOptions() function.
+>
+> All we need to do is to assign that to a hash, and use it both for
+> emitting the help and to call GetOptions().
+>
+> What I have doesn't *quite* work, i.e. the --git-completion-helper
+> expects "--foo=3D" I think for things that are "foo=3Ds" in perl, so the
+> regex needs adjusting, but that should be an easy addition on top.
 
-  In an existing repo:
-    $ mkdir sub_test && cd sub_test/ && git init . && touch test.txt && git
-add test.txt
-    OR
-    $ git clone https://github.com/stencila/test.git sub_test
-    THEN
-    $ git stash push -u
+1)
+Thanks =C3=86var, I get the gist of it. Your approach revealed a few issues
+with the current usage string:
 
-What did you expect to happen? (Expected behavior)
-  Command should complete without error but ignore the directory (this is
-the existing behavior prior to v2.31)
-    $ git stash push -u
-    Ignoring path sub_test
-    Saved working directory and index state WIP on (no branch): 94f6e3e283
-Git 2.30.2
+The following options exist in GetOptions but not in the usage string:
 
-What happened instead? (Actual behavior)
-  Command failed
-    $ git stash push -u
-    error: sub_test/: is a directory - add files inside instead
-    fatal: Unable to process path sub_test/
-    Cannot save the untracked files
+--git-completion-helper
+--no-signed-off-cc
+--sender
+--signed-off-cc
 
-What's different between what you expected and what actually happened?
-  Command failed
+Out of these, I'd argue --git-completion-helper is intentionally omitted,
+however --sender and --signed-off-cc were overlooked.
 
-Anything else you want to add:
-  It happens on all versions from v2.31 to current master.
-  It is specifically related to this change:
+2)
+Also, your patch misses --dump-aliases and --identity; that's because
+they are in other GetOptions functions in the file.
 
-https://github.com/git/git/commit/6e773527b6b03976cefbb0f9571bd40dd5995e6c#diff-70525b6b89c7cac91e520085d954a68671038d218b77d22855e938ab075a68d8L1006
+The two obvious possibilities here are either (i) hard-code them directly, =
+i.e.:
 
-  If this is the new expected behavior perhaps it can result in a better
-error message and related documentation?
+-my @options =3D sort @gse_options, @fpa_options;
++my @options =3D sort @gse_options, @fpa_options, "--dump-aliases", "--send=
+er";
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+or (ii) refactor the other two GetOptions like you did in your patch,
+so that `sub completion_helper` ends up receiving all three hashes
+(or maybe a single hash as a result of all three merged).
+
+Any preference between (i) or (ii)? I am leaning towards (i).
+
+3)
+Finally, I noticed that "sort @gse_options, @fpa_options" doesn't
+really sort fpa_options.
+
+If sorting is really intended, it would be better to modify the source
+of format-patch to
+emit sorted output.
+
+Otherwise, we may as well leave it untouched. AFAIK from a completion
+perspective it
+seems that it doesn't matter: both bash and zsh emit `git format-patch
+--<TAB>` sorted
+today, even though the output of `git format-patch
+--git-completion-helper` isn't sorted.
+The only benefit of sorting I see would be to deduplicate ('uniq') flags.
+
+Do you agree with this rationale?
+Either way, let me know whether or not it's preferable to sort.
+I'll probably sort `send-email` options anyway just to deduplicate a
+few flags such as --to-cover,
+but `format-patch` could remain as is.
 
 
-[System Info]
-git version:
-git version 2.33.0.610.gcefe983a32
-cpu: x86_64
-built from commit: cefe983a320c03d7843ac78e73bd513a27806845
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.4.0-1051-gke #54-Ubuntu SMP Thu Aug 5 18:52:13 UTC 2021
-x86_64
-compiler info: gnuc: 9.3
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+I'll wait for replies before sending another patch (on top of your
+original one).
