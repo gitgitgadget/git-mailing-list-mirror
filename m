@@ -2,123 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6658AC433EF
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C846C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:23:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44A4F61A54
-	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:00:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDF7761A08
+	for <git@archiver.kernel.org>; Thu, 30 Sep 2021 23:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346254AbhI3XBu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 19:01:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41310 "EHLO
+        id S1345610AbhI3XZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 19:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344543AbhI3XBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 19:01:50 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3A2C06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:00:06 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id a14so4565588qvb.6
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:00:06 -0700 (PDT)
+        with ESMTP id S230167AbhI3XZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 19:25:07 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FEBC06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:23:24 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id s17so27409885edd.8
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 16:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bt26eKhu+1Xdt2CfQIb8Xv3CI3N8VDmok2152HdArPw=;
-        b=iJjM5KkIhQQWsBRwK8dUVtEhpVrv9+efGe/Y99pIyuUXH0W8/b8JT3O38qN7pyaxVR
-         AYmKAZMz7YhnyjnOCu+NZ7SYc+vnVhboMBQKVfdE1dLI3NnYqOd60BKr1PLMA/jhQEX3
-         gacpLeXy2KV6/qtY1iVuSGydgn5DfKk8lA4fIPti7WvGHZwHh1Kc1pjSIMOPKJNPvsHY
-         3OxH59vVKtS04f1uFqZKAPcZ6bqQaieQagVMUjBBsS6Uful1Bb6dCDlXnLveRku+GU9A
-         yzCRVcvBZ7c7QizXz0k4hW5p2nwaJJXGov2qLsr7x+cbkTRMXBN5su9f9OUi7iFpBPNR
-         xUpw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=cacP9MVDNxDqECaQtsfEiBYXoy37wz/FBM+zOtIkWqM=;
+        b=LPoU7GpqYevhabQ3dSd7uKt+ZbD+UNfpGiqylbUJC8Ec0VkykpfxlkznClH4XwRVTz
+         DuWUmUx7J1O7SE7uiNGCGZAwrDDjc47UPZAC3AxlHxZ0zAn3pYlPMF8T9t+UyPcjroOG
+         YUoWRl4vV+e3NFi6C7RKtMQfktYXjnl5g8LEYHgk2ETqrdJTbYBUe3rYxPA8kGHamsrR
+         keVCpwcUg5c3ABm5LhOaY8nLlB7WvQ3jE1O6WraAPeIu9zCIlk3O6BYM3xaT4jPjKUUa
+         MlChWAZ8S8Dl+Ji9lwJkZ7jj4fvVb9hh0ObUOrKBg3UoHoO2blS1wEmk7149t1nZbMmB
+         JRUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bt26eKhu+1Xdt2CfQIb8Xv3CI3N8VDmok2152HdArPw=;
-        b=6guzigaJokO9xoXcOmw92vbRVGsJmH6EniPOXQdDZ2Dun5AQaYVpMUu4dp4uKK03GB
-         ZSBHSnxTdeh0swDhRhKS016DQENhI9ovwyZWR+CC08IfUMFrW8NzZTEY69j/sABekkNt
-         +xmUN32ov2/1eA3hqjzT+kLnEjNdN9LTcOcvlm2z/gkjmc8Dzs2DJgyiA3BtKa89Xqx2
-         5r2w9ZageNwAGAWdcQ/6B7XygblB5Lkn2uEG4xMNCqrPpcwzkHl3fdaIbK/2mKjUglE3
-         I2kOhN7lsroZZWfqVF+krY1cdNfEZTc6NxnicLbkpblCNiqaWQPizfLCnzSj87l0SbgO
-         5DhQ==
-X-Gm-Message-State: AOAM531ILiGoNzMV6Br/dC9gHGvZO2RHGTWdOHfm2ipSh4dUAaOXz5g9
-        vt6Oni817ooCKl2PQPgJmkQ6
-X-Google-Smtp-Source: ABdhPJwZL955h2haIDOIhUTlJvtxB49tyED3dfFrZ7cSlpJrw8Bw19uf+VIPUdJUyj0XKLYf9VwAug==
-X-Received: by 2002:a0c:b30f:: with SMTP id s15mr6178924qve.23.1633042806049;
-        Thu, 30 Sep 2021 16:00:06 -0700 (PDT)
-Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id d14sm2308915qkg.49.2021.09.30.16.00.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Sep 2021 16:00:05 -0700 (PDT)
-Message-ID: <e6049a17-c721-c596-51a6-101cb6065829@github.com>
-Date:   Thu, 30 Sep 2021 18:59:57 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=cacP9MVDNxDqECaQtsfEiBYXoy37wz/FBM+zOtIkWqM=;
+        b=7UFT9nptR7cUgnDbM87+zqFSyjAri1/pPcgc/0zIs1NKgQ+Ke6GJf3cXTzku8exWuH
+         /5M+kLEUFrnnP5BJfznngTbDdYuhEOSP5Pjt5/S6JY26qGyQuoCJK4EtOgeGIgBqQJ2j
+         jOsBAEhVi2srZbXpQns2ZKG+pjqkEToHyn+1GQ/WON48jGiRjhrIe7yi3dKTitFTm5iJ
+         261NFXkqnRnPHx9cb8trm9UUXRQKZPmXfc7za36SR+QCLoyZnuyWIqfodE8TkOTu1toV
+         5ofFkEwIP5FHLCjjYm7eyuznAg0FcEyFqcsfuq328DYAxSzI6kzR7Vv6j8/J6/RmBLsS
+         YD+w==
+X-Gm-Message-State: AOAM5315GGEV9ZIQydb+6m58CecgErkOtGmDMlpHDatzuBZysYKlQyge
+        +TOt6DxsbjL0ltw2S0nclARhJEibI9RE4w==
+X-Google-Smtp-Source: ABdhPJwSNipZEas3h2awyxEbh6A4ytqSYD8VyqNft2ICW/1sqQf5SfT63KgG4NmVJkP5BmrG/lkIrw==
+X-Received: by 2002:a17:906:401:: with SMTP id d1mr2469959eja.242.1633044202264;
+        Thu, 30 Sep 2021 16:23:22 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e22sm2371291edu.35.2021.09.30.16.23.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Sep 2021 16:23:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Brian Bartels <bartels.desmond@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Should help.autocorrect be on by default?
+Date:   Fri, 01 Oct 2021 01:16:40 +0200
+References: <CAEWW4VdL0N9DmJ7jwGY0WNN6SR75v-RR2HU-uFn7qDkod8o7Sg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <CAEWW4VdL0N9DmJ7jwGY0WNN6SR75v-RR2HU-uFn7qDkod8o7Sg@mail.gmail.com>
+Message-ID: <875yuhtzpz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.1.2
-Subject: Re: [PATCH 2/7] sparse-index: update command for expand/collapse test
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, newren@gmail.com
-References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
- <a1fa7c080aed2056afaad6415186c125c04a80cb.1633013461.git.gitgitgadget@gmail.com>
- <YVYNW13aVADaR+g6@nand.local>
- <6e9843d5-bc04-e69c-9e53-7bf18ca30fc8@github.com>
- <xmqqk0ixagw8.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqk0ixagw8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Victoria Dye <vdye@github.com> writes:
-> 
->> Taylor Blau wrote:
->>> On Thu, Sep 30, 2021 at 02:50:56PM +0000, Victoria Dye via GitGitGadget wrote:
->>>> From: Victoria Dye <vdye@github.com>
->>>>
->>>> In anticipation of multiple commands being fully integrated with sparse
->>>> index, update the test for index expand and collapse for non-sparse index
->>>> integrated commands to use `mv`.
->>>> ...
->>>>  	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->>>> -		git -C sparse-index -c core.fsmonitor="" reset --hard &&
->>>> +		git -C sparse-index -c core.fsmonitor="" mv a b &&
->>>
->>> Double-checking my understanding as somebody who is not so familiar with
->>> t1092: this test is to ensure that commands which don't yet understand
->>> the sparse index can temporarily expand it in order to do their work?
->>
->> Exactly - if a command doesn't explicitly enable use of the sparse index by
->> setting `command_requires_full_index` to 0, the index is expanded if/when it
->> is first read during the command's execution and collapsed if/when it is
->> written to disk. This test makes sure that mechanism works as intended.
-> 
-> Sorry, I do not quite follow.  
-> 
-> So is this "before this series of patches, 'reset --hard' can be
-> used to as a sample of a command that expands and then collapses,
-> but because it no longer is a good sample of a command so we replace
-> it with 'mv a b'"?
 
-Yes, because this series enables sparse index integration in `git reset`,
-the test no longer applies to that command (but it does apply to `git mv`).
+On Thu, Sep 30 2021, Brian Bartels wrote:
 
-> Do we need to update this further when "mv a b"
-> learns to expand and then collapse?
+> This would save developers precious inner loop time. I looked at the
+> code and it already handles cases where the environment isn't
+> interactive. So this should be a pretty minor configuration change.
+>
+> Let me know what you think,
+> Brian
 
-Unfortunately, yes. `git mv` was picked more-or-less at random from the set
-of commands that read the index and don't already have sparse index
-integrations (excluding those I know are planned for sparse index
-integration in the near future). If `git mv` were to be updated to disable
-`command_requires_full_index`, the command in the test would need to change
-again.
+I haven't looked myself, but it's very informative to browse the list
+archives at https://lore.kernel.org/git/ (search for help.autocorrect)
+to see if this has been brought up before, whether there were any
+arguments for/against, or if it was just an arbitrary (or careful due to
+a new feature) default at the time.
 
-For what it's worth, I do think the test itself is valuable, since it makes
-sure a command's capability to use the sparse index is always the result of
-an intentional update to (and review of) the code.
+That and trying your hand at flipping the default via a patch, running
+the tests, seeing if any fail & fixing them is also a good way to both
+get the ball rolling, and to discover any past opinions about what
+should/shouldn't be the default added as code/tests at the time.
