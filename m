@@ -2,146 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D80C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 02:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6EDC433F5
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 02:08:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58A8061A4F
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 02:08:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E50AF61242
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 02:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351470AbhJACJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 22:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54366 "EHLO
+        id S1351512AbhJACKC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 22:10:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbhJACJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 22:09:18 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E590C06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 19:07:35 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id v10so29347789edj.10
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 19:07:35 -0700 (PDT)
+        with ESMTP id S230293AbhJACJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 22:09:58 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C46C06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 19:08:15 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id l7so5354851edq.3
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 19:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UtiGo2+E5CAcjTYtU8Xt6WFAukCIJ2YMXVcTvU9DPW8=;
-        b=WUIeHewh3ZjW2b6/QAqWjUW2a58UuoSFzF2QYS+Jg+r0O0kMddmHwYmMPr0hDzEcnW
-         wjVO1kFjCpI4FqT65YVVrUpLICyVZcj+sBkU+CrdgeF+wmdqVYPMA4M5qL7plwYcQ97u
-         EasBn7XZF9Dv2mZZUDZ719xmAn0VeRFXO3AfgOG6lDXKhWaLaOLuxJVuSXTbenYuKxq6
-         hai+U7ThhKU1Uq03a2VJN7YJilnLFOD/09lqETu+pr23B+KmZRafRzLYy7URLlmiJQGD
-         uK6pP1Pg9SUo52o+zSOznN1qdQMwbdd/mhU0lKEVyEOP5HUGM5PY7wFWKajnSDQSuczw
-         9+Jw==
+        bh=WOnzhM/4+SNSv081L2tPOKhoH3476TsybrHiR5bTRNA=;
+        b=dtkUVTI22KQ1HGEkSxLm1/gPP1L+sLzayAJSZvvHyboK/X9xnIdwAtmA61/pH5Msom
+         VmTAzLx8SGQG5TGFDePa8GcMJR9oz9jNI1yFzo3/liFXLC32kR76TknQn9LKtDRx/f5D
+         b0AeT3p8Cg6m3UeBIISaFkvdjrn/Sf79Tc3HHDAcZwLt22sI4KEqXPSqs/6SoMUIVCL4
+         PDR3XNjXgEJwpEBsloCsT9qprI9eSv307mTJIJw6GLo0Dr1TlEZZzj8QTozsqoOL4Wvj
+         tNejzukL2VBIqUetA5cfYYhP/nwLPpIIT0EdG7E0JVbd4VM4Y9QrjfTy478QfmODmAYw
+         MvlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UtiGo2+E5CAcjTYtU8Xt6WFAukCIJ2YMXVcTvU9DPW8=;
-        b=Fks0rzi1eQAQZLU8jKVZf6izJxpg4smMRIfKD2Irnvnp4/HuUSrlR97d7GN0zLVd8m
-         BDNJDO6qEmPVe9hriOTfHIuGm0W964ZyhwH2FzqoXWT9SLRVuJ6vqZ6KTaO/phDBIh8c
-         WZKxyr11CA+khNSu3ASpp+bBAcS9uxviBngoncovnqyHXqmKvwbWocp6ooajO3VPNuNJ
-         zfAIqHtIjlmWHCqBxfH68SEsBSoigWajP5NmVPR2hvbz4vyVYArsx5HReiOjsOg9E8rI
-         4cVYbNnEj3sOQ6T8vzkoyDJnRxV4FV/TsYRIdugM8uTU3VxaRiKEh+bjsg0/Apb0SMdK
-         Vtog==
-X-Gm-Message-State: AOAM530pcbDCrUNVX/uvcKQm1DLA+KtPDDRXuKjRJf85UcbKyi6mJa2I
-        W4Pulv80/WYaqQUFo0GW48Rd5lzCOGAqHv2KcIX6dAUGQx0=
-X-Google-Smtp-Source: ABdhPJxtaM5bLsAjYZlUEu6y3k/gWi6G+TiFFrH17veNGXiuJ5eZLzqP3dVhGyksYN602KMqBILowIyf0icAasGp1gI=
-X-Received: by 2002:a17:906:2f10:: with SMTP id v16mr3221420eji.434.1633054053765;
- Thu, 30 Sep 2021 19:07:33 -0700 (PDT)
+        bh=WOnzhM/4+SNSv081L2tPOKhoH3476TsybrHiR5bTRNA=;
+        b=tl098VJ2SrCVLwHuCDR1P6in37SUWuOLI4FC1n//UhlzeIGZNkcvSzliV4EMwXiGpq
+         Cm8pm5zHNTtUMHW8P0S6K43DNcuXRTHCZsSda3rU0y0XT5kXR3dFFhZI5prF6CCgCnvO
+         hu1ecKxa80qvz9L36p6kfww87QZZ8aZh7RoydBS2rB15MZbHlqXuBWFp2o9oiTNio/8I
+         xgiMMiWFAyzzk+Qn40pjT2zp2iwD006Iu0fAyRpV8dPGmh9z/lyp/Ne3ag/lDzVchGLu
+         yVSQxnQNjxBjphuVlMpJyYgi1/O5s3FY6cvEhWsDwyagp2N1ODoYa9Hob6ScK1aSMSjt
+         wGIA==
+X-Gm-Message-State: AOAM533GWZ+fgcuoI0fsfnOVWt4rvawy+RRVf3Rt7cO92o5drQyuEJMg
+        fBs7Tkkq0vgIq/czus7x6TmqE65xUAYPNS8FTTaEZFGjCA8=
+X-Google-Smtp-Source: ABdhPJyEVdk6LuBIZFq7gpvbqt2Tyil0Ddr1QQV06WAOf0hAkK6Ri3og8obi1VoPW/dYM0vdiXAtsBCqCLP/Inu3RJ0=
+X-Received: by 2002:a05:6402:1d9c:: with SMTP id dk28mr6159452edb.241.1633054093654;
+ Thu, 30 Sep 2021 19:08:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <ed71913886e19ccc276b382de707b4bab7834d12.1630376800.git.gitgitgadget@gmail.com>
- <YVOXPTjsp9lrxmS6@coredump.intra.peff.net> <CABPp-BEioOUJRd6FSsmsDtYHhUy7xhr4YabdEmVKzkduo4g9TQ@mail.gmail.com>
- <YVVuP8ReqaPi/Z5E@coredump.intra.peff.net>
-In-Reply-To: <YVVuP8ReqaPi/Z5E@coredump.intra.peff.net>
+References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
+ <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <aaa8ea3b-0902-f9e6-c1a4-0ca2b1b2f57b@gmail.com>
+In-Reply-To: <aaa8ea3b-0902-f9e6-c1a4-0ca2b1b2f57b@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Sep 2021 19:07:21 -0700
-Message-ID: <CABPp-BFimGLnP331aFqLx0x-uQG7wHwSoN25fcYrPzWU93fn6Q@mail.gmail.com>
-Subject: Re: [PATCH 2/7] merge-ort: add ability to record conflict messages in
- a file
-To:     Jeff King <peff@peff.net>
+Date:   Thu, 30 Sep 2021 19:08:01 -0700
+Message-ID: <CABPp-BHLyGP_V0P3jav2d6WR4CUpzZ4QwgazQJggG1diDJEaww@mail.gmail.com>
+Subject: Re: [PATCH v3 00/11] Fix various issues around removal of untracked files/directories
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 30, 2021 at 12:58 AM Jeff King <peff@peff.net> wrote:
+Hi Phillip,
+
+On Thu, Sep 30, 2021 at 3:08 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> On Tue, Sep 28, 2021 at 11:25:20PM -0700, Elijah Newren wrote:
+> Hi Elijah
 >
-> > > Just brainstorming some alternatives:
-> > >
-> > >  - we have diff.orderFile, etc. Could we stuff this data into a less
-> > >    confusing name (even just "$filename.conflict_msg"), and then provide
-> > >    a custom ordering to the diff code? I think it could be done by
-> > >    generating a static ordering ahead of time, but it might even just be
-> > >    possible to tell diffcore_order() to take the ".conflict_msg"
-> > >    extension into account in its comparison function.
+> On 27/09/2021 17:33, Elijah Newren via GitGitGadget wrote:
+> > We have multiple codepaths that delete untracked files/directories but
+> > shouldn't. There are also some codepaths where we delete untracked
+> > files/directories intentionally (based on mailing list discussion), but
+> > where that intent is not documented. We also have some codepaths that
+> > preserve ignored files, which shouldn't. Fix the documentation, add several
+> > new (mostly failing) testcases, fix some of the new testcases, and add
+> > comments about some potential remaining problems. (I found these as a
+> > side-effect of looking at [1], though [2] pointed out one explicitly while I
+> > was working on it.)
 > >
-> > I can't just go on the ".conflict_msg" extension.  As you noted above,
-> > this scheme is not sufficient for avoiding collisions.  So I need to
-> > append extra "cruft" to the name in the case of collisions -- meaning
-> > we can't special case on just that extension.
->
-> Sure, but we can call it filename.conflict_msg.1, etc, and the sort code
-> can pattern-match. It can never be fully robust (if you really did have
-> a foo.conflict_msg, we'd sort it differently), but I think it's OK if
-> the worst-case is that pathological trees get ordered slightly
-> sub-optimally).
->
-> That said, I think it could also make sense to annotate the conflict
-> files by giving them an unusual set of mode bits. That would be easier
-> to recognize (and while real trees _could_ have silly modes, we do
-> complain about them in fsck, so it shouldn't happen in practice).
-
-I tried giving things unusual mode bits in early versions of merge-ort
-for other reasons.  It doesn't work: canon_mode() will "fix" the
-unusualness so there's no way for the reader to know that they had
-unusual bits.
-
-But, as you said later, avoiding these pseudo-files is going to be
-cleaner anyway, so let's just do that.
-
-
-
-> > I also don't like how diff.orderFile provides a global ordering of the
-> > files listed, rather than providing some scheme for relative
-> > orderings.  That'd either force me to precompute the diff to determine
-> > all the files that were different so I can list _all_ of them, or put
-> > up with the fact that the files with non-content conflicts will be
-> > listed very first in the output, even if their name is
-> > 'zee-last-file.c' -- surprising users at the output ordering.
+> > Note that I'm using Junio's declaration about checkout -f and reset --hard
+> > (and also presuming that since read-tree --reset is porcelain that its
+> > behavior should be left alone)[3] in this series.
 > >
-> > This also means that if the user had their own ordering defined, then
-> > I'm overriding it and messing up their ordering, which might be
-> > problematic.
 >
-> Agreed. I do think it may be too horrible unless you teach
-> diffcore_order() to actually understand your annotations in code.  But
-> that wouldn't be too hard if it's done in the mode bits.
->
-> But I do think anything that avoids these pseudo-files is going to be a
-> lot cleaner overall.
->
-> > >  - there can be other non-diff data between the individual segments. For
-> > >    example, "patch" will skip over non-diff lines. And certainly in Git
-> > >    we have our own custom headers. I'm wondering if we could attach
-> > >    these annotations to the diff-pair somehow, and then show something
-> > >    like:
-> > >
-> > >      diff --git a/foo.c b/foo.c
-> > >      index 1234abcd..5678cdef 100644
-> > >      conflict modify/delete foo.c
-> >
-> > A couple things here...
->
-> I think Junio already indicated that we can pretty much make this look
-> like whatever we want. As soon as any reader sees "conflict", it should
-> happily ignore the rest as something it doesn't know about. And my short
-> example here was just meant to be illustrative. I agree it probably
-> needs more details (and the whole CONFLICT line that usually goes to
-> stderr is probably the best thing).
->
-> -Peff
+> I've had a read through and I don't have any specific comments, I like
+> the way you have simplified adding the standard excludes for callers and
+> making the existing value of reset invalid when converting to an enum. I
+> think there is a small risk someone will complain about read-tree
+> changing how it handles ignored files, but hopefully everyone was just
+> passing ".gitignore" to --exclude-per-directory and they wont mind
+> 'read-tree -m -u' removing ignored files now.
+
+Thanks for taking a look!
