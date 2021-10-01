@@ -2,111 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E4ECC433F5
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0716FC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6C5A6134F
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:07:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D96DB61A82
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:17:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbhJAKHK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 06:07:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
+        id S1353520AbhJAKTR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 06:19:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353348AbhJAKG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 06:06:57 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD6AC06177E
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:05:13 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id j27so6839504wms.0
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:05:13 -0700 (PDT)
+        with ESMTP id S1353453AbhJAKTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 06:19:10 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88C2C061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:17:26 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id dj4so33913521edb.5
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:17:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3kTtfa/DmY9ZtEc0Lvb3lNHSoshMcsAlDzPm3Fhv4a4=;
-        b=cuV66aC3qcyRAKfaYzAN+AiugWs1a86JbY+T8XyNZfWLQPtiNHly85bDLdaFwpGq4K
-         GxQxw6T6jlceBPnDvtUGrFI4DcGh/aY8Ys+KdX9sFj5NBD8sibkeRMW0JaYMdB1hTiiy
-         vE8gYkwc5DnwOBo4UPptFtClE1907F+HGUS9qAIcgAX8giORFkpBg8FTiihzhEYftlyz
-         AnRUehPxwfGVvTRN31Fed7b5B0EIsQvMqbn3Vlf5vGf3PF+rp+8zD5xYVwYAxXOlb9Oh
-         ZLPOrw76bK8esGOWhR12JoT5oyDfge5C6En9vCJyfrLBcntoFpX5HbOMCTsFHrtoQyKA
-         d4Hg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=PMjw3nmEZAm9Q2ZBAtzjkmnd9HV4eUsgFGHEtP8Q6Sk=;
+        b=fcLvIiQBmri9pKZf929Nv4ruxBUV9fqzTQb3WF65ckrWZuQGQ8mkQDTzglc5jyvFHn
+         TpNF6nMih+9OIaoL25Pl0hwzjCaLtvyHFY7+rsS6VSCMhdQ6BugEQtJDn7xP/CPxd9if
+         u+5qWLmIujFeqbOUOSUXA70A4yFFOfwOEPk9MZEfp1qWZu7MZmwMUnL2Zev+PZKvMVva
+         GES757s1OKAPYwpdP+xV+gGQEZLW3afPFyUwFmzTMwF45WcN1+UiTPKMFjK48bxs4oZW
+         +K5mhp66JHFaUt7ZZD8MsJ7cuA+lKb12R6gZvAEFshIRRncpKtJTux3+GzE2xs8Coobi
+         hGhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3kTtfa/DmY9ZtEc0Lvb3lNHSoshMcsAlDzPm3Fhv4a4=;
-        b=JlkyRdrtfQQNAxTDahoiFdZbbjHlPDUicON/mAwub5pYAwGlpDqjqEWBbpVoxc62PN
-         WorTzutw/I5Pdx8s4Hm6VT7t5e5VNvcFb0MW/nbYiutS+JmqlaUW61aqauE/N+1gAuTm
-         g2OljSO023Xi/A5/1CnLzpcSAfulVIBt4L3Zm2X9J7VLJvvQ64K/NctbpchwZ4xtE2RH
-         JK2OMy+gwIyWdZ04Dxb3T9zDPvdBY0z2bpKbLmQMH2sFsrQ0xmzd29EmfjEnB8w4+nh2
-         4EKIPwco2TUd+JT/4i2TwlCreRoN3d7mpMekpCFVChUe2M4tvxEWZg7uUzSpKPXakFf7
-         WpjA==
-X-Gm-Message-State: AOAM5331hLk4h96Hks6ZmM42cd7WGewUd06JunXwDDZ77wobjTettL1b
-        5x24zKZPYHnE0fpNIt6NvzJhUrsCVbc=
-X-Google-Smtp-Source: ABdhPJylGrGr7GIQUyIaUbhSS5J9r09Zu0qnyVM8g3rubaBipewJlPA0kk5qiSm6ZtV3RZR7gKaQlQ==
-X-Received: by 2002:a05:600c:350f:: with SMTP id h15mr3460727wmq.123.1633082708679;
-        Fri, 01 Oct 2021 03:05:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z17sm5379633wrr.49.2021.10.01.03.05.08
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=PMjw3nmEZAm9Q2ZBAtzjkmnd9HV4eUsgFGHEtP8Q6Sk=;
+        b=qB7fgYytRUipXHiIlL59y/Wl0pHMGR0zMZWZn3OZD4++9fIiv0De2cCau/J0xcSD+u
+         66s1Aak04UWrJjoXH7oRJLxkAWDUwJI8z1iWNH4uyfJFZJtsnyU4gl3EkrNOFmCEVkFY
+         B7uLiPZqOMtYiRNcNJA36b5tqTY/a8VpZirp42IWeadKb/2nODzsFTTQNeRanbg9Kv6L
+         i1OJqYZGejZXuI5qobc9zQgzEckiKMO8MMbROQZpp21I8VMBjEucpNBOblAhOnyPivwb
+         Wn9nm9aDTCFJH4InUWaeQAi9niKVsrTEynFTZa5zkP7OUFLrQP8iO2Bwj+KOv/rVn2JE
+         AbjA==
+X-Gm-Message-State: AOAM533OXTJcZyfLFCtFZtB29ggleCHNOaxpHisVR3gtZISrdqmUX7Pm
+        DzGZz0Ocf263FeGrrncvUd6HmhhNtkqbfw==
+X-Google-Smtp-Source: ABdhPJx5YJ1t2Z50XR0L051DJh0INSRnM5I+ZnWDRo9iShcsyfBAdVKz1/lbncjm29P70WU2d5JRog==
+X-Received: by 2002:a17:906:36d6:: with SMTP id b22mr5101509ejc.387.1633083444800;
+        Fri, 01 Oct 2021 03:17:24 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j5sm2699642ejb.96.2021.10.01.03.17.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 03:05:08 -0700 (PDT)
-Message-Id: <5ffc7e64ff1cb306dc96abf3b0fa65c0662994d8.1633082702.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
-References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Oct 2021 10:04:58 +0000
-Subject: [PATCH 07/11] rebase: cleanup reset_head() calls
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 01 Oct 2021 03:17:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to
+ unpack_trees_options
+Date:   Fri, 01 Oct 2021 11:53:43 +0200
+References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
+ <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
+ <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
+ <87ilyjviiy.fsf@evledraar.gmail.com>
+ <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
+ <87ee97utaq.fsf@evledraar.gmail.com>
+ <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
+ <87lf3etaih.fsf@evledraar.gmail.com>
+ <CABPp-BGi03JunRaMF_8SJKC00byOnq1kL3JyYhKWatz8-B4RsA@mail.gmail.com>
+ <87k0ixrv23.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <87k0ixrv23.fsf@evledraar.gmail.com>
+Message-ID: <877dexrqvg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If ORIG_HEAD is not set by passing RESET_ORIG_HEAD then there is no
-need to pass anything for reflog_orig_head. In addition to the callers
-fixed in this commit move_to_original_branch() also passes
-reflog_orig_head without setting ORIG_HEAD. That caller is mistakenly
-passing the message it wants to put in the branch reflog which is not
-currently possible so we delay fixing that caller until we can pass
-the message as the branch reflog.
+On Fri, Oct 01 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/rebase.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Aside about safety: One thing I'll sometimes do when I'm unsure about
+> those sorts of fixes is to have my new INIT set a new "sentinel" field
+> to "12345" or whatever, then just BUG() out in an entry point in the API
+> that you can't avoid calling if it's not set like that, e.g. dir_clear()
+> or whatever the setup/work function is.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1a6af508f49..89b348ffa75 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -881,7 +881,7 @@ static int run_am(struct rebase_options *opts)
- 
- 		reset_head(the_repository, &opts->orig_head,
- 			   opts->head_name, 0,
--			   "HEAD", NULL, DEFAULT_REFLOG_ACTION);
-+			   NULL, NULL, DEFAULT_REFLOG_ACTION);
- 		error(_("\ngit encountered an error while preparing the "
- 			"patches to replay\n"
- 			"these revisions:\n"
-@@ -2082,7 +2082,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			options.head_name ? options.head_name : "detached HEAD",
- 			oid_to_hex(&options.onto->object.oid));
- 		reset_head(the_repository, NULL, options.head_name,
--			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf, NULL);
-+			   RESET_HEAD_REFS_ONLY, NULL, msg.buf, NULL);
- 		strbuf_release(&msg);
- 		ret = finish_rebase(&options);
- 		goto cleanup;
--- 
-gitgitgadget
+For reference: Something like the below, which passes with my WIP
+patches. Showing that no non-static entry point can reach the code in
+unpack-trees.c without "foo" being 12345, which can only be the case if
+callers have used the macro (and the code internal to unpack-trees.c is
+easy enough to audit).
 
+ unpack-trees.c | 25 +++++++++++++++++++++++++
+ unpack-trees.h |  2 ++
+ 2 files changed, 27 insertions(+)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d40af221e1c..f2365ecf215 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -199,6 +199,8 @@ void clear_unpack_trees_porcelain(struct unpack_trees_o=
+ptions *opts)
+ {
+ 	strvec_clear(&opts->msgs_to_free);
+ 	dir_clear(&opts->dir);
++	if (opts->foo !=3D 12345)
++		BUG("noes");
+ 	memset(opts->msgs, 0, sizeof(opts->msgs));
+ }
+=20
+@@ -1702,6 +1704,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, s=
+truct unpack_trees_options
+ 	struct pattern_list pl;
+ 	int free_pattern_list =3D 0;
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	if (len > MAX_UNPACK_TREES)
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+=20
+@@ -1903,6 +1908,9 @@ enum update_sparsity_result update_sparsity(struct un=
+pack_trees_options *o)
+ 	unsigned old_show_all_errors;
+ 	int free_pattern_list =3D 0;
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	old_show_all_errors =3D o->show_all_errors;
+ 	o->show_all_errors =3D 1;
+=20
+@@ -2033,6 +2041,8 @@ static int verify_uptodate_1(const struct cache_entry=
+ *ce,
+ int verify_uptodate(const struct cache_entry *ce,
+ 		    struct unpack_trees_options *o)
+ {
++	if (o->foo !=3D 12345)
++		BUG("noes");
+ 	if (!o->skip_sparse_checkout && (ce->ce_flags & CE_NEW_SKIP_WORKTREE))
+ 		return 0;
+ 	return verify_uptodate_1(ce, o, ERROR_NOT_UPTODATE_FILE);
+@@ -2417,6 +2427,9 @@ int threeway_merge(const struct cache_entry * const *=
+stages,
+ 	int no_anc_exists =3D 1;
+ 	int i;
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	for (i =3D 1; i < o->head_idx; i++) {
+ 		if (!stages[i] || stages[i] =3D=3D o->df_conflict_entry)
+ 			any_anc_missing =3D 1;
+@@ -2580,6 +2593,9 @@ int twoway_merge(const struct cache_entry * const *sr=
+c,
+ 	const struct cache_entry *oldtree =3D src[1];
+ 	const struct cache_entry *newtree =3D src[2];
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	if (o->merge_size !=3D 2)
+ 		return error("Cannot do a twoway merge of %d trees",
+ 			     o->merge_size);
+@@ -2654,6 +2670,9 @@ int bind_merge(const struct cache_entry * const *src,
+ 	const struct cache_entry *old =3D src[0];
+ 	const struct cache_entry *a =3D src[1];
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	if (o->merge_size !=3D 1)
+ 		return error("Cannot do a bind merge of %d trees",
+ 			     o->merge_size);
+@@ -2680,6 +2699,9 @@ int oneway_merge(const struct cache_entry * const *sr=
+c,
+ 	const struct cache_entry *old =3D src[0];
+ 	const struct cache_entry *a =3D src[1];
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	if (o->merge_size !=3D 1)
+ 		return error("Cannot do a oneway merge of %d trees",
+ 			     o->merge_size);
+@@ -2717,6 +2739,9 @@ int stash_worktree_untracked_merge(const struct cache=
+_entry * const *src,
+ 	const struct cache_entry *worktree =3D src[1];
+ 	const struct cache_entry *untracked =3D src[2];
+=20
++	if (o->foo !=3D 12345)
++		BUG("noes");
++
+ 	if (o->merge_size !=3D 2)
+ 		BUG("invalid merge_size: %d", o->merge_size);
+=20
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 75b67f90ccd..8dae0938ad1 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -90,10 +90,12 @@ struct unpack_trees_options {
+=20
+ 	struct pattern_list *pl; /* for internal use */
+ 	struct checkout_metadata meta;
++	int foo;
+ };
+ #define UNPACK_TREES_OPTIONS_INIT { \
+ 	.msgs_to_free =3D STRVEC_INIT, \
+ 	.dir =3D DIR_INIT, \
++	.foo =3D 12345, \
+ }
+=20
+ void unpack_trees_init(struct unpack_trees_options *options);
