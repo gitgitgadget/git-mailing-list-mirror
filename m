@@ -2,218 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0716FC433EF
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28C74C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:27:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D96DB61A82
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:17:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE7AC61A6F
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353520AbhJAKTR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 06:19:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51242 "EHLO
+        id S1353570AbhJAK33 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 06:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353453AbhJAKTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 06:19:10 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88C2C061775
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:17:26 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id dj4so33913521edb.5
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:17:26 -0700 (PDT)
+        with ESMTP id S230008AbhJAK32 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 06:29:28 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D716FC061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:27:44 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id d6so14639993wrc.11
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PMjw3nmEZAm9Q2ZBAtzjkmnd9HV4eUsgFGHEtP8Q6Sk=;
-        b=fcLvIiQBmri9pKZf929Nv4ruxBUV9fqzTQb3WF65ckrWZuQGQ8mkQDTzglc5jyvFHn
-         TpNF6nMih+9OIaoL25Pl0hwzjCaLtvyHFY7+rsS6VSCMhdQ6BugEQtJDn7xP/CPxd9if
-         u+5qWLmIujFeqbOUOSUXA70A4yFFOfwOEPk9MZEfp1qWZu7MZmwMUnL2Zev+PZKvMVva
-         GES757s1OKAPYwpdP+xV+gGQEZLW3afPFyUwFmzTMwF45WcN1+UiTPKMFjK48bxs4oZW
-         +K5mhp66JHFaUt7ZZD8MsJ7cuA+lKb12R6gZvAEFshIRRncpKtJTux3+GzE2xs8Coobi
-         hGhA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nEZ+CiLMX9A8WNPRMVocLFWENLyOXJKAIX3T9UhuYYw=;
+        b=Fa2To/Ivs0AJJzHadLhsauQFzmazcfdPvPtEF1sLnNUZh/HfZrwseqtkx8Yy5p4VGl
+         ADgqEs1yhVTjKygBkURwXrahKr82i6iaZLULMIqcfBEiT1lXZJ1kHUnzNp38dd5G5q3r
+         WlYwj0XLJK4JXm78ctaQFYFmMHyQZvHXWCmgLmF/GKYPs1JYCVpyLt4lZKz20Gu2i20l
+         rLEGBT6/VdYjyzdFttKBdEpu8SpeYsboW1d60iSj7N4iAeW1OYm4i9k2jb52fFL88inZ
+         m1bVj3/YInWuW4svBHeb8WuJUx8AzTV0iUcdTs8LgYTVXWP/pEsXBu1XH86h/cCf3X4s
+         uLuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=PMjw3nmEZAm9Q2ZBAtzjkmnd9HV4eUsgFGHEtP8Q6Sk=;
-        b=qB7fgYytRUipXHiIlL59y/Wl0pHMGR0zMZWZn3OZD4++9fIiv0De2cCau/J0xcSD+u
-         66s1Aak04UWrJjoXH7oRJLxkAWDUwJI8z1iWNH4uyfJFZJtsnyU4gl3EkrNOFmCEVkFY
-         B7uLiPZqOMtYiRNcNJA36b5tqTY/a8VpZirp42IWeadKb/2nODzsFTTQNeRanbg9Kv6L
-         i1OJqYZGejZXuI5qobc9zQgzEckiKMO8MMbROQZpp21I8VMBjEucpNBOblAhOnyPivwb
-         Wn9nm9aDTCFJH4InUWaeQAi9niKVsrTEynFTZa5zkP7OUFLrQP8iO2Bwj+KOv/rVn2JE
-         AbjA==
-X-Gm-Message-State: AOAM533OXTJcZyfLFCtFZtB29ggleCHNOaxpHisVR3gtZISrdqmUX7Pm
-        DzGZz0Ocf263FeGrrncvUd6HmhhNtkqbfw==
-X-Google-Smtp-Source: ABdhPJx5YJ1t2Z50XR0L051DJh0INSRnM5I+ZnWDRo9iShcsyfBAdVKz1/lbncjm29P70WU2d5JRog==
-X-Received: by 2002:a17:906:36d6:: with SMTP id b22mr5101509ejc.387.1633083444800;
-        Fri, 01 Oct 2021 03:17:24 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id j5sm2699642ejb.96.2021.10.01.03.17.24
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nEZ+CiLMX9A8WNPRMVocLFWENLyOXJKAIX3T9UhuYYw=;
+        b=EWMhssCoxU+y1JvMql3BubFOOAItcyZfRAVTMJFpcPF1uZOX8vjW1CYtOJb/AaHIs2
+         ljxy0ROtwPakPptMzUKSMoI2c096KaM12yMrJ/2nuSW18RGB4+FZadouxCLqynZqvLky
+         CQYNKnZ7egSbOwYimX0LlMIYHS3k/i71fs4E6HUcjYygAhNl2LTQOn65O3yEGPQ7wwfG
+         CIr7zp7afXIn8gAFt3n1NUpT7w4atvBEr2NqKAYDHBMUwjgsVQgDJAur+kFeIJ/WbsTj
+         s83EKmXBazSxbIYoM0E/+WEJk7l/JrxGqQJWWc+ue5dyMjIH8N/DBxvwJvjMuZ1TGJIW
+         W9mA==
+X-Gm-Message-State: AOAM533LCGlXx643x2FwA1u4wFsjEESG91GtT3D9ZkPe1tUm3vQF3iER
+        yFl3jKvIgxnYbGGWixyZmqPmG/gW3Eqx4Q==
+X-Google-Smtp-Source: ABdhPJw+4qyuzMcMMzplvOLEhtN5zuGGyzsmWgY6wXMMV6P9nPbRezDIe8xwXsZMABejo0No4KEdDQ==
+X-Received: by 2002:adf:fb04:: with SMTP id c4mr11575495wrr.244.1633084063136;
+        Fri, 01 Oct 2021 03:27:43 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id h7sm5398952wrx.14.2021.10.01.03.27.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 03:17:24 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
+        Fri, 01 Oct 2021 03:27:42 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to
- unpack_trees_options
-Date:   Fri, 01 Oct 2021 11:53:43 +0200
-References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
- <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
- <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
- <87ilyjviiy.fsf@evledraar.gmail.com>
- <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
- <87ee97utaq.fsf@evledraar.gmail.com>
- <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
- <87lf3etaih.fsf@evledraar.gmail.com>
- <CABPp-BGi03JunRaMF_8SJKC00byOnq1kL3JyYhKWatz8-B4RsA@mail.gmail.com>
- <87k0ixrv23.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <87k0ixrv23.fsf@evledraar.gmail.com>
-Message-ID: <877dexrqvg.fsf@evledraar.gmail.com>
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/6] Non-trivial designated initializer conversion
+Date:   Fri,  1 Oct 2021 12:27:30 +0200
+Message-Id: <cover-v3-0.6-00000000000-20211001T102056Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1375.gbbd823cc90f
+In-Reply-To: <cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com>
+References: <cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+See
+http://lore.kernel.org/git/cover-0.6-00000000000-20210927T004920Z-avarab@gmail.com
+for the v1 & goals, and
+https://lore.kernel.org/git/cover-v2-0.5-00000000000-20210927T125715Z-avarab@gmail.com/
+for the v2.
 
-On Fri, Oct 01 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+This v3:
 
-> Aside about safety: One thing I'll sometimes do when I'm unsure about
-> those sorts of fixes is to have my new INIT set a new "sentinel" field
-> to "12345" or whatever, then just BUG() out in an entry point in the API
-> that you can't avoid calling if it's not set like that, e.g. dir_clear()
-> or whatever the setup/work function is.
+ * Addresses Junio's comments about URLMATCH_CONFIG_INIT use, I'm no
+   longer removing explicit assignments to NULL related to it.
 
-For reference: Something like the below, which passes with my WIP
-patches. Showing that no non-static entry point can reach the code in
-unpack-trees.c without "foo" being 12345, which can only be the case if
-callers have used the macro (and the code internal to unpack-trees.c is
-easy enough to audit).
+ * Updates the commit message of 5/6 for the discussion ending at
+   https://lore.kernel.org/git/xmqqv92lmv2b.fsf@gitster.g/
 
- unpack-trees.c | 25 +++++++++++++++++++++++++
- unpack-trees.h |  2 ++
- 2 files changed, 27 insertions(+)
+ * I've added a new 6/6 with an UNPACK_TREES_OPTIONS_INIT. It's
+   related to the discussion about how unpack-trees.[ch] memory
+   management happens at [1], but is really orthagonal to the points
+   Elijah and I were discussing there.
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d40af221e1c..f2365ecf215 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -199,6 +199,8 @@ void clear_unpack_trees_porcelain(struct unpack_trees_o=
-ptions *opts)
- {
- 	strvec_clear(&opts->msgs_to_free);
- 	dir_clear(&opts->dir);
-+	if (opts->foo !=3D 12345)
-+		BUG("noes");
- 	memset(opts->msgs, 0, sizeof(opts->msgs));
- }
-=20
-@@ -1702,6 +1704,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, s=
-truct unpack_trees_options
- 	struct pattern_list pl;
- 	int free_pattern_list =3D 0;
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	if (len > MAX_UNPACK_TREES)
- 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
-=20
-@@ -1903,6 +1908,9 @@ enum update_sparsity_result update_sparsity(struct un=
-pack_trees_options *o)
- 	unsigned old_show_all_errors;
- 	int free_pattern_list =3D 0;
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	old_show_all_errors =3D o->show_all_errors;
- 	o->show_all_errors =3D 1;
-=20
-@@ -2033,6 +2041,8 @@ static int verify_uptodate_1(const struct cache_entry=
- *ce,
- int verify_uptodate(const struct cache_entry *ce,
- 		    struct unpack_trees_options *o)
- {
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
- 	if (!o->skip_sparse_checkout && (ce->ce_flags & CE_NEW_SKIP_WORKTREE))
- 		return 0;
- 	return verify_uptodate_1(ce, o, ERROR_NOT_UPTODATE_FILE);
-@@ -2417,6 +2427,9 @@ int threeway_merge(const struct cache_entry * const *=
-stages,
- 	int no_anc_exists =3D 1;
- 	int i;
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	for (i =3D 1; i < o->head_idx; i++) {
- 		if (!stages[i] || stages[i] =3D=3D o->df_conflict_entry)
- 			any_anc_missing =3D 1;
-@@ -2580,6 +2593,9 @@ int twoway_merge(const struct cache_entry * const *sr=
-c,
- 	const struct cache_entry *oldtree =3D src[1];
- 	const struct cache_entry *newtree =3D src[2];
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	if (o->merge_size !=3D 2)
- 		return error("Cannot do a twoway merge of %d trees",
- 			     o->merge_size);
-@@ -2654,6 +2670,9 @@ int bind_merge(const struct cache_entry * const *src,
- 	const struct cache_entry *old =3D src[0];
- 	const struct cache_entry *a =3D src[1];
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	if (o->merge_size !=3D 1)
- 		return error("Cannot do a bind merge of %d trees",
- 			     o->merge_size);
-@@ -2680,6 +2699,9 @@ int oneway_merge(const struct cache_entry * const *sr=
-c,
- 	const struct cache_entry *old =3D src[0];
- 	const struct cache_entry *a =3D src[1];
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	if (o->merge_size !=3D 1)
- 		return error("Cannot do a oneway merge of %d trees",
- 			     o->merge_size);
-@@ -2717,6 +2739,9 @@ int stash_worktree_untracked_merge(const struct cache=
-_entry * const *src,
- 	const struct cache_entry *worktree =3D src[1];
- 	const struct cache_entry *untracked =3D src[2];
-=20
-+	if (o->foo !=3D 12345)
-+		BUG("noes");
-+
- 	if (o->merge_size !=3D 2)
- 		BUG("invalid merge_size: %d", o->merge_size);
-=20
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 75b67f90ccd..8dae0938ad1 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -90,10 +90,12 @@ struct unpack_trees_options {
-=20
- 	struct pattern_list *pl; /* for internal use */
- 	struct checkout_metadata meta;
-+	int foo;
- };
- #define UNPACK_TREES_OPTIONS_INIT { \
- 	.msgs_to_free =3D STRVEC_INIT, \
- 	.dir =3D DIR_INIT, \
-+	.foo =3D 12345, \
- }
-=20
- void unpack_trees_init(struct unpack_trees_options *options);
+   I think whatever approach we'd decide to go with (his in
+   en/removing-untracked-fixes, or my WIP suggestion) the move to an
+   UNPACK_TREES_OPTIONS_INIT makes sense, and would be the same either
+   way.
+
+   It does make the WIP patches I've got at[1] to solve memory leaks &
+   simplify the setup in unpack-trees.[ch] much smaller, and is like
+   the other *_INIT changes here, so I've included it.
+
+1. https://lore.kernel.org/git/87fstlrumj.fsf@evledraar.gmail.com/
+2. https://github.com/avar/git/compare/avar/post-sanitize-leak-test-mode-add-and-use-revisions-release...avar/post-sanitize-leak-test-mode-unpack-trees-and-dir
+
+Ævar Arnfjörð Bjarmason (6):
+  daemon.c: refactor hostinfo_init() to HOSTINFO_INIT macro
+  builtin/blame.c: refactor commit_info_init() to COMMIT_INFO_INIT macro
+  urlmatch.[ch]: add and use URLMATCH_CONFIG_INIT
+  builtin/remote.c: add and use a REF_STATES_INIT
+  builtin/remote.c: add and use SHOW_INFO_INIT
+  unpack-trees.[ch]: define and use a UNPACK_TREES_OPTIONS_INIT
+
+ archive.c                 |   3 +-
+ builtin/am.c              |   6 +--
+ builtin/blame.c           |  30 +++++------
+ builtin/checkout.c        |   6 +--
+ builtin/clone.c           |   3 +-
+ builtin/commit.c          |   3 +-
+ builtin/config.c          |   2 +-
+ builtin/merge.c           |   3 +-
+ builtin/read-tree.c       |   3 +-
+ builtin/remote.c          | 111 +++++++++++++++++++-------------------
+ builtin/reset.c           |   3 +-
+ builtin/sparse-checkout.c |   3 +-
+ builtin/stash.c           |   6 +--
+ credential.c              |   2 +-
+ daemon.c                  |  19 +++----
+ diff-lib.c                |   3 +-
+ http.c                    |   2 +-
+ merge-ort.c               |   3 +-
+ merge-recursive.c         |   4 +-
+ reset.c                   |   2 +-
+ sequencer.c               |   3 +-
+ unpack-trees.h            |   1 +
+ urlmatch.h                |   4 ++
+ 23 files changed, 103 insertions(+), 122 deletions(-)
+
+Range-diff against v2:
+1:  3130693b416 = 1:  8f3f3f97fcb daemon.c: refactor hostinfo_init() to HOSTINFO_INIT macro
+2:  65c5295c1ac = 2:  ced1d581f15 builtin/blame.c: refactor commit_info_init() to COMMIT_INFO_INIT macro
+3:  3783788b553 ! 3:  266948e604c urlmatch.[ch]: add and use URLMATCH_CONFIG_INIT
+    @@ Commit message
+         urlmatch.[ch]: add and use URLMATCH_CONFIG_INIT
+     
+         Change the initialization pattern of "struct urlmatch_config" to use
+    -    an *_INIT macro and designated initializers.
+    +    an *_INIT macro and designated initializers. Right now there's no
+    +    other "struct" member of "struct urlmatch_config" which would require
+    +    its own *_INIT, but it's good practice not to assume that. Let's also
+    +    change this to a designated initializer while we're at it.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ builtin/config.c: static int get_urlmatch(const char *var, const char *url)
+      	struct string_list values = STRING_LIST_INIT_DUP;
+      
+      	config.collect_fn = urlmatch_collect_fn;
+    --	config.cascade_fn = NULL;
+    - 	config.cb = &values;
+    - 
+    - 	if (!url_normalize(url, &config.url))
+     
+      ## credential.c ##
+     @@ credential.c: static int match_partial_url(const char *url, void *cb)
+    @@ credential.c: static int match_partial_url(const char *url, void *cb)
+      	struct strbuf url = STRBUF_INIT;
+      
+      	if (!c->host)
+    -@@ credential.c: static void credential_apply_config(struct credential *c)
+    - 		return;
+    - 
+    - 	config.section = "credential";
+    --	config.key = NULL;
+    - 	config.collect_fn = credential_config_callback;
+    --	config.cascade_fn = NULL;
+    - 	config.select_fn = select_all;
+    - 	config.fallback_match_fn = match_partial_url;
+    - 	config.cb = c;
+     
+      ## http.c ##
+     @@ http.c: void http_init(struct remote *remote, const char *url, int proactive_auth)
+    @@ http.c: void http_init(struct remote *remote, const char *url, int proactive_aut
+     +	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
+      
+      	config.section = "http";
+    --	config.key = NULL;
+    - 	config.collect_fn = http_options;
+    - 	config.cascade_fn = git_default_config;
+    --	config.cb = NULL;
+    - 
+    - 	http_is_verbose = 0;
+    - 	normalized_url = url_normalize(url, &config.url);
+    + 	config.key = NULL;
+     
+      ## urlmatch.h ##
+     @@ urlmatch.h: struct urlmatch_config {
+4:  13ef9566903 ! 4:  41fcb0a45e5 builtin/remote.c: add and use a REF_STATES_INIT
+    @@ Commit message
+         initialize it in those three places, skip the memset(), and pass those
+         structs down appropriately.
+     
+    +    This would be a behavior change if we had codepaths that relied say on
+    +    implicitly having had "new_refs" initialized to STRING_LIST_INIT_NODUP
+    +    with the memset(), but only set the "strdup_strings" on some other
+    +    struct, but then called string_list_append() on "new_refs". There
+    +    isn't any such codepath, all of the late assignments to
+    +    "strdup_strings" assigned to those structs that we'd use for those
+    +    codepaths.
+    +
+    +    So just initializing them all up-front makes for easier to understand
+    +    code, i.e. in the pre-image it looked as though we had that tricky
+    +    edge case, but we didn't.
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/remote.c ##
+5:  b78a9ec0846 = 5:  25fec54877b builtin/remote.c: add and use SHOW_INFO_INIT
+-:  ----------- > 6:  18358f5d57a unpack-trees.[ch]: define and use a UNPACK_TREES_OPTIONS_INIT
+-- 
+2.33.0.1375.gbbd823cc90f
+
