@@ -2,115 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49707C433F5
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 17:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBBC3C433F5
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 17:29:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D84961A81
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 17:12:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9CE761AAB
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 17:29:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232019AbhJAROJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 13:14:09 -0400
-Received: from mout.web.de ([212.227.15.4]:46749 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231186AbhJAROI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 13:14:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1633108329;
-        bh=tmU7Se2UXZBAIolP3kFlKLUDOCrbdJ+XJVzHCDa144o=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=EXbQTsd5rsxATqI8aNqNbOnosDhZspmOimTiiSgUx34i+nAelQEUzax3BlvzVPpwK
-         4qk/K/vH95Je98LIgpv6Dxq8W3wFDyQIldHp/IeOToExcY7WQ/pszheu9/Uq6bRBk8
-         diPuDzAS9WVON3bXyaMnZbkLVuHNxelhYekAGLxE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0Le4js-1nBFrh19yO-00pplD; Fri, 01 Oct 2021 19:12:09 +0200
-Subject: Re: [PATCH v2 08/11] commit-graph: stop using optname()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>
-References: <cover-00.10-00000000000-20210928T130905Z-avarab@gmail.com>
- <cover-v2-00.11-00000000000-20211001T142631Z-avarab@gmail.com>
- <patch-v2-08.11-58683b3d89d-20211001T142631Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fffcb0ac-5952-c8c5-2c8f-c546ef5e3b1f@web.de>
-Date:   Fri, 1 Oct 2021 19:12:08 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <patch-v2-08.11-58683b3d89d-20211001T142631Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:fYqe7ilVik0/AIXF653XeFG4ayEBVDPXW/+iaDkEF/Ec/cAzDnc
- W9XhVkzNVCFSQhUQuvPcBJgzA+oby4peN6CmR5VYPb6sG8pmEteF7cEgXgEM26lAKJWCEKW
- 8iNmjEVZe02fE7FlXernOQuvjUnqdQ/1awL1iLAFfIivgnVHZHLyEetpvjFLNX6AOvH/AzI
- cXY5NsdyMhRCNKawdaO7Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3joLgNR+CN0=:f+oDXRJjUf8IImOAQIVYah
- uadKIFkNzH2hHYhIUSPu97vwxRaP6UMH77wcx45LIw9N5Q4FHkvJN7t0qMgh98q8RNUQaisQp
- 9YjvKd7FsMxKst83OD06iZCSDaL4HiafMwe303kLSY3j+TL4JW7TqrEkUyK6jrkv6SyJcFCsl
- qj82YgWaLHr5olNV8NvChWxUHUssRLC8RZTgHHDoX5YTBNkvr7PEq83yUvAB1oGywaP9k06Qu
- 4WC6jMs3j4/9jlIIgwRttrIrvrJhwHxL8EU9aT3JCuMFyfvXJ1zrtYYvp34CfGwEMIQz2mFbG
- wq3Td84ELwKcRRTU77SLenTtzfxfnibAaJ0YV2cdy+JHeAHO4NsCh15ZCQ1gsweDPWJ4poc3z
- 8Q0Oe69j9elRM4CHWVXv+ch42/sADxJzwdvUDVn9fgk0MsJR0S19yV3PuV3erIaZsUHjQCtqH
- cQFVchzUQLyucKIi3IOFUmqocMEdo5wdPyZ20xrJ7zRMVz2wlacl8YmtHrSBabGd6SbvDOR7l
- pjnoDM1C1jjYL5t0Jv4vQOXs0NXbitmXBrLrqm8rfv6UbRhpJ9K4gdQcbuN79BEepudBUbKz7
- wSuUgXbPnUfRuvgFXrI1MWj4J1yGA/rpMw6jOWrojYs9AViQIRiR1Wq3KvdP9nxz1RCkBfO/M
- ssYFfpdydB2mFBeIkgwkiDVa4YjLM9M9l/HQvV+d2dcCBKSLMeN0XzkTpke1l/WAeSZp5nrug
- H22Le/ofc668WVRFObykVLlMuK8sU4CvIZajYsLrL1At+/bOIADvGuuijX91SECWLRJcwBCrt
- RlsfeN+SNOooG+ADrGeQBBxbPWHmsOSQSO1xtwa1jK00D9wpwATURCrqpz92QHKxAKifwQ1dj
- vmcuTsLfklwDEY+TlUlfhxMZ6d8VGPuFhrQzD7UhCGP6juFXl8qMIzV2Jy15Bp0XhY6mkbX0q
- HJ5CiLeVijglhtsz75q/qoNVWhi9uBt7Bwgt3piqOIOLu7fK/f6rJpZ57IE9nZgVF3A/8FmYP
- FOj7FPd3C8bl3p2fhZpKeSaHULx7K+ky3Ue/bv9h3oEWIYATXTU9HDwONG9ESGXyQ2JLTpoTw
- dcDDuvlkaSGXSk=
+        id S1355416AbhJARat (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 13:30:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354178AbhJARas (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 13:30:48 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29AF3C061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 10:29:04 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id f8-20020a2585480000b02905937897e3daso14537071ybn.2
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 10:29:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=qXRVsjkvh9/zaml9uWA7yJHdHwBThojO3QkgPd6eqXo=;
+        b=K4gS1qon+sxo5XLv7+qRvGpfG8Lac8Bh9iRmSSXoCDo3qN6NfjyQA2LuwMAc31GHzd
+         mp71JuORddrh2/RiZCphtnvt1JHfWjBiFjzub/Dtne1PNEPngcndO2Az0D1WPbux9xmL
+         4pJ1QSf+GsOzfzxHOEzrA3GUybh8xBZK0QjnFLUmR4brRR1vNvIuVcYd9+RGLmsIMrDb
+         UntB6FSA5RfCJHEVbYuTaM0c0cXR/U1ptTP849eVhmywzkNTmU2mUBBApDZGQHlDJeoe
+         coXbKuu93tYW6Wmd7MyQOIgMKXkoif/ZYepzL9rX+5vW3yLdHuqRzkOpuKqLIfdnI5O8
+         kJIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=qXRVsjkvh9/zaml9uWA7yJHdHwBThojO3QkgPd6eqXo=;
+        b=7xNwEva1GsgXfFuDRuhbrG/emUzbUHL+Ke6koJWC3Ww0vLAfm4SN2f+SOr0aquM0W3
+         5SXTfedWD38OxwYmqev+tNcFUeEbA30JmlYcU/35YFAYXMsrMzyCY81pZYs4QnT4RDCs
+         3wGt9Ao0VuF7+UMntPMQzG2xaRqaFSAdj6Qpd7xtAGuLgUDKvDpoo2BkUfseFmRvwXiq
+         4SNOX/Ssp1DyfcR2dKLl2wy38AqGyNqM10GR1OgtKqxWRCHcUMW3RNjcyv7MA54ckeu+
+         GxcVsNxXn5s2Mf3RCx2iHNTNkKcm3xJTdbmeco5L08nWoBbfqpVnfdOYDvBNRF257HTW
+         vqow==
+X-Gm-Message-State: AOAM5323fJuh2wNT29ErGn/+M/9TPFbJv2eK9JoTMNWpsftyGz7dwzKc
+        v5fj9xtJvofs1wYXbMh0LCkoXakPXRfmTQ==
+X-Google-Smtp-Source: ABdhPJwf/QYWfL3nwUqPEdXl/7X2bAKGm43aqQ4T3BbMqiqBm3z+VFb8sVj63WTv1EfFC1Nt1g3mxeDSxfosKA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a25:cf8f:: with SMTP id
+ f137mr621868ybg.338.1633109343445; Fri, 01 Oct 2021 10:29:03 -0700 (PDT)
+Date:   Fri, 01 Oct 2021 10:28:55 -0700
+In-Reply-To: <CAPig+cSTEwObVOajvtVA0BQo0vB74BDN4-f6Gi1tYrEt-BzceQ@mail.gmail.com>
+Message-Id: <kl6lpmsoac2w.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20210913181221.42635-1-chooglen@google.com> <20210917225459.68086-1-chooglen@google.com>
+ <20210917225459.68086-2-chooglen@google.com> <e1447d0e-091d-c659-b702-c5b33fffdb59@sunshineco.com>
+ <kl6lmtnu7xle.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lk0ix9aju.fsf@chooglen-macbookpro.roam.corp.google.com> <CAPig+cSTEwObVOajvtVA0BQo0vB74BDN4-f6Gi1tYrEt-BzceQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] fsck: verify commit graph when implicitly enabled
+From:   Glen Choo <chooglen@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.10.21 um 16:29 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Stop using optname() in builtin/commit-graph.c to emit an error with
-> the --max-new-filters option. This changes code added in 809e0327f57
-> (builtin/commit-graph.c: introduce '--max-new-filters=3D<n>',
-> 2020-09-18).
->
-> See 9440b831ad5 (parse-options: replace opterror() with optname(),
-> 2018-11-10) for why using optname() like this is considered bad,
-> i.e. it's assembling human-readable output piecemeal, and the "option
-> `X'" at the start can't be translated.
->
-> It didn't matter in this case, but this code was also buggy in its use
-> of "opt->flags" to optname(), that function expects flags, but not
-> *those* flags.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/commit-graph.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index 0386f5c7755..36552db89fe 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -172,8 +172,7 @@ static int write_option_max_new_filters(const struct=
- option *opt,
->  		const char *s;
->  		*to =3D strtol(arg, (char **)&s, 10);
->  		if (*s)
-> -			return error(_("%s expects a numerical value"),
-> -				     optname(opt, opt->flags));
-> +			return error(_("option `max-new-filters' expects a numerical value")=
-);
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-The option name itself is untranslatable.  parse_opt_abbrev_cb() has code
-like this:
+> That was my thought, as well. (I wasn't quite sure why Taylor
+> recommended test_config() over `-c` which you used originally. It may
+> just be his personal preference. Perhaps he can chime in?)
 
-			return error(_("option `%s' expects a numerical value"),
-				     opt->long_name);
+I'd also appreciate thoughts on test_config() over `-c` :). I won't
+re-roll this series yet in case there's more to the test_config() story,
+but I've included a patch that shows the `-c` work that we discussed.
 
-This would work here as well.  Advantage: One less string to translate.
+---
+ t/t5318-commit-graph.sh | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
->  	}
->  	return 0;
->  }
->
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 42e785cb6e..4fcfc2ebbc 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -680,7 +680,7 @@ test_expect_success 'git fsck (checks commit-graph when config set to true)' '
+ 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
+ 		"incorrect checksum" &&
+ 	cp commit-graph-pre-write-test $objdir/info/commit-graph &&
+-	test_must_fail git fsck
++	test_must_fail git -c core.commitGraph=true fsck
+ '
+ 
+ test_expect_success 'git fsck (ignores commit-graph when config set to false)' '
+@@ -689,14 +689,13 @@ test_expect_success 'git fsck (ignores commit-graph when config set to false)' '
+ 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
+ 		"incorrect checksum" &&
+ 	cp commit-graph-pre-write-test $objdir/info/commit-graph &&
+-	test_config core.commitGraph false &&
+-	git fsck
++	git -c core.commitGraph=false fsck
+ '
+ 
+ test_expect_success 'git fsck (checks commit-graph when config unset)' '
++	cd "$TRASH_DIRECTORY/full" &&
+ 	test_when_finished "git config core.commitGraph true" &&
+ 
+-	cd "$TRASH_DIRECTORY/full" &&
+ 	git fsck &&
+ 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
+ 		"incorrect checksum" &&
+-- 
+2.33.0.800.g4c38ced690-goog
+
