@@ -2,90 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDAC5C433F5
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 01:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC687C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 01:54:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7B78615A2
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 01:38:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8EF9E61A56
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 01:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351530AbhJABjv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Sep 2021 21:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47956 "EHLO
+        id S1351428AbhJAB4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Sep 2021 21:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351503AbhJABju (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Sep 2021 21:39:50 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76CBC06176A
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 18:38:07 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id w11so5251967plz.13
-        for <git@vger.kernel.org>; Thu, 30 Sep 2021 18:38:07 -0700 (PDT)
+        with ESMTP id S230283AbhJAB4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Sep 2021 21:56:07 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353E7C06176A
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 18:54:24 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id l7so5265592edq.3
+        for <git@vger.kernel.org>; Thu, 30 Sep 2021 18:54:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6aixAOXBJJ5fKizWpV+Cy+SxgD/6vyTKaWdagEmFZu8=;
-        b=dO5Ky8Srrfw3OZ0CtQJI4cVRqfAga/ZeqL3eOdXaQN6Jrf3Yf2fh0shYDn8hqxfIQs
-         8/odfLZgjSXwx2+wCjky2NXATzes28QitCuMX++LWH9LpBn9QPgTAIATDNbXspsQxkl+
-         rvnypIQ44EdKH/cZ+6Im7n9FCwlGRolUhlbnHE1dgm282yVJnoBR2RKhz70b6Eh5ipwR
-         hq1P9EJ9teqE4NH8efbA+8pHUF9x924S01JKOqBEVVKLLCzmdFprpqII7QN4tAPW5Xzc
-         J4mLVw2PCg87ZJvVvoOS1orQKN56CmifiGjMTp24LAUMaElXN+VOW+5UbsEpzrvtZLHw
-         mI6Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nQRIWVm4kP5s1MAm17GJG3PWG5WWLXumVc+WyqEOfYc=;
+        b=MS7Sjvl7ycDr63KOnL3n7EeEt0ol6ucyQ8sA507MQrSSKDPbrhAQx0MqgMN/kMYwsq
+         WT3kz+d6Blk1CrWgHQz8HYl4UUcxleJE4gX98pbuMv8wj1aGBdQgIK7sxSgdMgmFq+D2
+         qJgrcdfZ5nC748ZITM9AGcoSBEmFE72/FDrYf1jPAQKIvM6QmKVLpley9NKsoLyyxOn3
+         4liq6MeO/M1N9NO58xhGiHds3DNdR8YPgh75h8igA8vDZj/PDN6WYZv20KfGTGKGWdzP
+         MeX5O5EyJLCKqKEmsIIQUgu6q3OmwNPSQ3aEo0OtFVQOnTo8UrbWiamaB4crTP0h6wxm
+         xBZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6aixAOXBJJ5fKizWpV+Cy+SxgD/6vyTKaWdagEmFZu8=;
-        b=BdtowqHQ0yEfi2SZ8LfnZDPbM16povtJbjkzI2UvwEQYN0OuhH4xqNYT0cg1gRlJ85
-         aqDM9XboqDVL1tlTJ1V0ddEtdLKVc/hunTT02Nlztl+Fr+rpvkwvJdQBenqp18RwUMby
-         dEli/ymfOB0igeD7xMDwiOpp7X/1b31i0HWaN0N8KY4wU3odYzHShss5slBPTUX+gSuD
-         SQcvAhnWN7xZuuAeGrGBwzj3VOQrCIkfej4PqkZKZAHfb2a+uJaoTpPlbH3xCvqOKNYY
-         ohFv45jshRcyy33CRTJfIqr36b5EV3sY6Qoe3tLP85odkh62SvIT2WnYPCFjJDHc4iUa
-         SX0w==
-X-Gm-Message-State: AOAM532NeM4S+up7jEt9Lcuz7k2sIyPnKkFWwFIzbM+j3yXx84NgMn0J
-        mEdz3wtyklZfTy/wKzKXEPfVeKEwzP8=
-X-Google-Smtp-Source: ABdhPJwzOqVQM4RSSBEjMVI6vTHqn8sp8V99i7sX6gBLEIEBa37Tu0UCFukVgngi35ZIPVFTiU5+xg==
-X-Received: by 2002:a17:902:ab43:b0:13e:6f69:d34d with SMTP id ij3-20020a170902ab4300b0013e6f69d34dmr5482424plb.33.1633052286948;
-        Thu, 30 Sep 2021 18:38:06 -0700 (PDT)
-Received: from sarawiggum.fas.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id c25sm4268199pfn.159.2021.09.30.18.38.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Sep 2021 18:38:06 -0700 (PDT)
-From:   David Aguilar <davvid@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v7 4/4] difftool: add a missing space to the run_dir_diff() comments
-Date:   Thu, 30 Sep 2021 18:37:56 -0700
-Message-Id: <20211001013756.37586-5-davvid@gmail.com>
-X-Mailer: git-send-email 2.33.0.886.g5b6dfe5e5c
-In-Reply-To: <20211001013756.37586-1-davvid@gmail.com>
-References: <20211001013756.37586-1-davvid@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nQRIWVm4kP5s1MAm17GJG3PWG5WWLXumVc+WyqEOfYc=;
+        b=Akh5E8EhjOhfcElx0WezMxFt/hkufIYoEprIALX+z9qtDNaxVo+dU8ZwvwQZOYaGQQ
+         dwf6QMjW02zdJZ5k210psatEOG9/9rnpw7VuMh1AzOLsMDzX1VOKhccMZNs4XsZf9xla
+         +mmP8/Cytr+/ldtvVCoIp8P+pGynyJirxC4XaARhIMFbVHQjCTMk3af92pAvAqg3rz89
+         3TTr5kFTJY/RJKfJTcbhO5c1q/FxdurlK1DbL49UuFd5RXRsDCSQYJ/GPH0Ijgqkl3O+
+         lMA9OlB6lYROZ+60suBBMdiXLSH/OqIOmWhPCRvRQEetkvQLWtzuFemmH2lgPSWbfHgd
+         ZWyw==
+X-Gm-Message-State: AOAM531JHwGAnyO2WzBEu8EUUdzrq2f/x247ZAeao3gK6bJbprzrEVgL
+        3Ee0e8pBNzpLmQ0tLvufspo1PzSjoF+KLN6maB6cDb1Gip4=
+X-Google-Smtp-Source: ABdhPJxs+Nbsbec+4kLlFtAZAw9172JpVvKey+yqO7Ihm5vK9AvHbdJ0Dg3GSz15xV6TlQDQsMKQ7qdMoYb1opZ9W4o=
+X-Received: by 2002:a17:906:6696:: with SMTP id z22mr3000128ejo.443.1633053262747;
+ Thu, 30 Sep 2021 18:54:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+ <ce95b82fc492d48fa6022df424f9a303a1c70ad4.1630376800.git.gitgitgadget@gmail.com>
+ <87a6jut36p.fsf@evledraar.gmail.com>
+In-Reply-To: <87a6jut36p.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 30 Sep 2021 18:54:10 -0700
+Message-ID: <CABPp-BFyh239+7FLuUuoRJJbcE8NxHZABPTXPmSQhvRSPCiGvQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] merge-ort: capture and print ll-merge warnings in our
+ preferred fashion
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- builtin/difftool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Sep 30, 2021 at 9:53 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Tue, Aug 31 2021, Elijah Newren via GitGitGadget wrote:
+>
+> > @@ -108,8 +108,14 @@ test_expect_success 'refuse to merge binary files'=
+ '
+> >       printf "\0\0" >binary-file &&
+> >       git add binary-file &&
+> >       git commit -m binary2 &&
+> > -     test_must_fail git merge F >merge.out 2>merge.err &&
+> > -     grep "Cannot merge binary files: binary-file (HEAD vs. F)" merge.=
+err
+> > +     if test "$GIT_TEST_MERGE_ALGORITHM" =3D ort
+> > +     then
+> > +             test_must_fail git merge F >merge.out &&
+> > +             grep "Cannot merge binary files: binary-file (HEAD vs. F)=
+" merge.out
+> > +     else
+> > +             test_must_fail git merge F >merge.out 2>merge.err &&
+> > +             grep "Cannot merge binary files: binary-file (HEAD vs. F)=
+" merge.err
+> > +     fi
+> >  '
+>
+> To save readers from eyeballing if a single character has changed here,
+> which I don't think it has, just do:
+>
+> if ...
+> then
+>         cmd >actual
+> else
+>         other cmd >actual
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 437474fea0..4931c10845 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -558,7 +558,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	}
- 
- 	/*
--	 * Symbolic links require special treatment.The standard "git diff"
-+	 * Symbolic links require special treatment. The standard "git diff"
- 	 * shows only the link itself, not the contents of the link target.
- 	 * This loop replicates that behavior.
- 	 */
--- 
-2.33.0.886.g5b6dfe5e5c
+Do you mean
+   other cmd >/dev/null 2>actual
+?
 
+
+> fi &&
+> grep [...]
+>
+> I.e. no need to duplicate the "grep" here just because of merge.out v.s. =
+merge.err.
+>
+> [...]
+>
+> > -     test_must_fail git merge bin-main 2>stderr &&
+> > -     grep -i "warning.*cannot merge.*HEAD vs. bin-main" stderr
+> > +     if test "$GIT_TEST_MERGE_ALGORITHM" =3D ort
+> > +     then
+> > +             test_must_fail git merge bin-main >stdout &&
+> > +             grep -i "warning.*cannot merge.*HEAD vs. bin-main" stdout
+> > +     else
+> > +             test_must_fail git merge bin-main 2>stderr &&
+> > +             grep -i "warning.*cannot merge.*HEAD vs. bin-main" stderr
+> > +     fi
+>
+>
+> ditto.
