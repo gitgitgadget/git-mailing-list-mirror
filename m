@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0416C433FE
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C42C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:05:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE4106134F
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:05:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1BD66134F
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 10:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353354AbhJAKG6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 06:06:58 -0400
+        id S1353381AbhJAKHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 06:07:00 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353289AbhJAKGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 06:06:54 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E44C0613E2
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:05:09 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id u18so14617507wrg.5
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:05:09 -0700 (PDT)
+        with ESMTP id S1353305AbhJAKGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 06:06:55 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41ED6C06177C
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 03:05:11 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id u18so14617640wrg.5
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 03:05:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0nlpRJOEtdCL+KzTLQluG+wbpMPJe/FBhyqKzosYL80=;
-        b=otZkR36Gn0dlIcmwhuX511LxomoLJzdCdHChtR+iO8CeXXwyvY6L3t3Hp4xrEbrcFR
-         pI5P41wKMSYBELvltcBMjImZ5ab1kXDb+DKnOPTzc2IrXAWsonngBd9jqIj+pdTsgg72
-         g0zzKzSO3IsVJyV9qzRn6EKbplZd8UoTPuW0o0rUwrA0biMtVbpujyTFvQ1svQ1GXmyB
-         4DodejiL29M79Q/Lf1he3u+1k/E0nfhD31Kjtbeg8HVKMJD8dg3rz6g4V2DierzYQjE7
-         WhpCUr3i242uLye+MG+57c3LzldQQJpOOBU4JKKWNLzxtg9ZYxseob/QbyDTVhGKS7DN
-         AnJQ==
+        bh=VcfVJ4dV5con/lrNmc4N1kdzm1Xh75SKejjks+zK+lw=;
+        b=QzIXQgmNTprvCm96UQVunfjEylqQ5v3liHMomXfXn9ZyBXspQoM31NdWeXSSCtyI+P
+         xwf6kRGQHALrnU7TrD5Nwc/plkb3juw+mcsXa7DWGh28EWJktJSDMjTyB4ITEU2mEddI
+         0L/9N/nDHHo6SFrnHpnmVtG5TOPmMBBn6uzG1d7/gMyE7zRwmGEHY6iQaIJBeujDtQBD
+         r0eQmV3zYfipV3uEulKInItuTJIFgHcdyg6e+t95bHiJdOfZySEGDQCRpu+9z4Sk2klO
+         Qr+xzPJt3QcBlVKa2BwCcUpdoKLmMlHRDVQ1ZWCJrDU25K36SmLzgW7jxsJrUCgzfEYu
+         dUgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0nlpRJOEtdCL+KzTLQluG+wbpMPJe/FBhyqKzosYL80=;
-        b=NK5n9YP6dFznQm2k1f9mBYep5SP/490L6hwBpvUQvRXfQXLsxUihmojhkGGyWGlO+m
-         rEg9dFl4bc7oytwHup0w3YbjVZESUZ/rC7POI982wV+u/kuoE98ciB2+rC60vdAOBAyq
-         QKPdaRaYsmVmBYqBRo1rchqvx0GP8WN6r5LHD0T6q0AflBlaqLyepmRlQv5nudNsQGRk
-         +0Eh3vUwDEofRXeTVK7zP/0sPMx9cbyWi/H2mloreVleG+ITjVlBcvwMcIMjKCxQ9QKl
-         1uVCFnXNHX1eiNmT0oXKosDcV7FNi3sdtYN0w+ra+HrpYPfsenDDPBWSttv84XT2CM9a
-         ADhg==
-X-Gm-Message-State: AOAM533yfyubLzb9tao9/YmLRL+FNrE8IYiPTcpowXNl89zjVeiMv5sK
-        yG4yXuu3iBuWnFqznExaOPqzz2XyyY8=
-X-Google-Smtp-Source: ABdhPJxGLmLejxD8FLe6o3qEe4Wj99tt2MJuiGUAYhMNAw4n8LUEEgbXVKAZTXmqmJiMtN6wUCf9iA==
-X-Received: by 2002:adf:a3c7:: with SMTP id m7mr11208277wrb.339.1633082708083;
-        Fri, 01 Oct 2021 03:05:08 -0700 (PDT)
+        bh=VcfVJ4dV5con/lrNmc4N1kdzm1Xh75SKejjks+zK+lw=;
+        b=NQZnPW/zwqVoALsNSxu9+G4eZYCzi8QaH9YoGsWvu9mwVi5IGY2YLbgZuY258WA3rm
+         7Dn4o9N1uESPw6x6apGICMQDtobGlWzc7ousFCw9Q30KivC2kdavrKf1j9H59bjUTzM4
+         MnVqxW47GvjW57/3FwIyuc6CXEypV7caFP7y7v5pwCcOnTPjKH2c9jqJ9zgJvYSLQjDi
+         tII2rPpMya4DO1jRZO0hy8TqXAkDNYUzD8U9J6AF3SVW/7W07usClasMJYOtO6awTado
+         E439jl9k6/iCuJG6SWoXmtWmBpgCasY9Xz6T7HAN+XG933+QW5yTjp7cOh4vZIS8j5s0
+         zxJQ==
+X-Gm-Message-State: AOAM5337CMUzngkOLCi4MORDFjOPwLlIi99FqXYSZgxItaTDd+ikTJ6g
+        YiyGgm4B2ln+lbadlHplpNvFS5nM5sY=
+X-Google-Smtp-Source: ABdhPJyTv1+FstI3urzRv7GxIjDRgXtBdvtUy8LYIpfRGSN1sFCaVBdjXQOfkJFNuKW6UyENGeWTVg==
+X-Received: by 2002:a5d:6d03:: with SMTP id e3mr11111920wrq.383.1633082709844;
+        Fri, 01 Oct 2021 03:05:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w17sm5156114wmi.42.2021.10.01.03.05.07
+        by smtp.gmail.com with ESMTPSA id n15sm5443550wrg.58.2021.10.01.03.05.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 03:05:07 -0700 (PDT)
-Message-Id: <4503defe5912aecc4e6a50ac82a31aa7b230456b.1633082702.git.gitgitgadget@gmail.com>
+        Fri, 01 Oct 2021 03:05:09 -0700 (PDT)
+Message-Id: <cdb0de221d56d7087146a43a393cffd66c06a5e8.1633082702.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
 References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Oct 2021 10:04:57 +0000
-Subject: [PATCH 06/11] reset_head(): make default_reflog_action optional
+Date:   Fri, 01 Oct 2021 10:05:00 +0000
+Subject: [PATCH 09/11] rebase --apply: fix reflog
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,177 +72,141 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This parameter is only needed when a ref is going to be updated and
-the caller does not pass an explicit reflog message. Callers that are
-just discarding changes in the working tree like create_autostash() do
-not update any refs so should not have to worry about passing this
-parameter.
+move_to_original_branch() passes the message intended for the branch
+reflog as `orig_head_msg`. Fix this by adding a `branch_msg` member to
+struct reset_head_opts and add a regression test.  Note that these
+reflog messages do not respect GIT_REFLOG_ACTION. They are not alone
+in that and will be fixed in a future series.
+
+The "merge" backend already has tests that check both the branch and
+HEAD reflogs.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/merge.c  |  6 ++----
- builtin/rebase.c | 14 ++++++--------
- reset.c          | 16 ++++++++++++----
- sequencer.c      |  6 +++---
- sequencer.h      |  3 +--
- 5 files changed, 24 insertions(+), 21 deletions(-)
+ builtin/rebase.c          |  8 ++++----
+ reset.c                   | 12 ++++++++++--
+ reset.h                   |  2 ++
+ t/t3406-rebase-message.sh | 23 +++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d2c52b6e971..35833a963fc 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1561,8 +1561,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 		if (autostash)
- 			create_autostash(the_repository,
--					 git_path_merge_autostash(the_repository),
--					 "merge");
-+					 git_path_merge_autostash(the_repository));
- 		if (checkout_fast_forward(the_repository,
- 					  &head_commit->object.oid,
- 					  &commit->object.oid,
-@@ -1632,8 +1631,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 	if (autostash)
- 		create_autostash(the_repository,
--				 git_path_merge_autostash(the_repository),
--				 "merge");
-+				 git_path_merge_autostash(the_repository));
- 
- 	/* We are going to make a new commit. */
- 	git_committer_info(IDENT_STRICT);
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 26f53c55cc4..1a6af508f49 100644
+index ae5de271e9a..c40a8b843f4 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -791,8 +791,7 @@ static int move_to_original_branch(struct rebase_options *opts)
- 		    opts->head_name);
- 	ret = reset_head(the_repository, NULL, opts->head_name,
- 			 RESET_HEAD_REFS_ONLY,
--			 orig_head_reflog.buf, head_reflog.buf,
--			 DEFAULT_REFLOG_ACTION);
-+			 orig_head_reflog.buf, head_reflog.buf, NULL);
+@@ -776,7 +776,7 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
  
- 	strbuf_release(&orig_head_reflog);
- 	strbuf_release(&head_reflog);
-@@ -1109,7 +1108,7 @@ static int checkout_up_to_date(struct rebase_options *options)
- 		    options->switch_to);
- 	if (reset_head(the_repository, &options->orig_head,
- 		       options->head_name, RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
--		       NULL, buf.buf, DEFAULT_REFLOG_ACTION) < 0)
-+		       NULL, buf.buf, NULL) < 0)
- 		ret = error(_("could not switch to %s"), options->switch_to);
- 	strbuf_release(&buf);
- 
-@@ -1558,7 +1557,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		string_list_clear(&merge_rr, 1);
- 
- 		if (reset_head(the_repository, NULL, NULL, RESET_HEAD_HARD,
--			       NULL, NULL, DEFAULT_REFLOG_ACTION) < 0)
-+			       NULL, NULL, NULL) < 0)
- 			die(_("could not discard worktree changes"));
- 		remove_branch_state(the_repository, 0);
- 		if (read_basic_state(&options))
-@@ -1964,8 +1963,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		die(_("could not read index"));
- 
- 	if (options.autostash) {
--		create_autostash(the_repository, state_dir_path("autostash", &options),
--				 DEFAULT_REFLOG_ACTION);
-+		create_autostash(the_repository,
-+				 state_dir_path("autostash", &options));
- 	}
- 
- 	if (require_clean_work_tree(the_repository, "rebase",
-@@ -2083,8 +2082,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			options.head_name ? options.head_name : "detached HEAD",
- 			oid_to_hex(&options.onto->object.oid));
- 		reset_head(the_repository, NULL, options.head_name,
--			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf,
--			   DEFAULT_REFLOG_ACTION);
-+			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf, NULL);
- 		strbuf_release(&msg);
- 		ret = finish_rebase(&options);
- 		goto cleanup;
-diff --git a/reset.c b/reset.c
-index 668c7639127..be4e18eed98 100644
---- a/reset.c
-+++ b/reset.c
-@@ -21,8 +21,13 @@ static int update_refs(const struct object_id *oid, const char *switch_to_branch
- 	size_t prefix_len;
+ static int move_to_original_branch(struct rebase_options *opts)
+ {
+-	struct strbuf orig_head_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
++	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+ 	struct reset_head_opts ropts = { 0 };
  	int ret;
  
--	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
--	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : default_reflog_action);
-+	if ((update_orig_head && !reflog_orig_head) || !reflog_head) {
-+		if (!default_reflog_action)
-+			BUG("default_reflog_action must be given when reflog messages are omitted");
-+		reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-+		strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action :
-+							  default_reflog_action);
-+	}
- 	prefix_len = msg.len;
+@@ -786,17 +786,17 @@ static int move_to_original_branch(struct rebase_options *opts)
+ 	if (!opts->onto)
+ 		BUG("move_to_original_branch without onto");
  
- 	if (update_orig_head) {
-@@ -71,6 +76,7 @@ int reset_head(struct repository *r, struct object_id *oid,
- {
- 	unsigned reset_hard = flags & RESET_HEAD_HARD;
- 	unsigned refs_only = flags & RESET_HEAD_REFS_ONLY;
-+	unsigned update_orig_head = flags & RESET_ORIG_HEAD;
- 	struct object_id head_oid;
- 	struct tree_desc desc[2] = { { NULL }, { NULL } };
- 	struct lock_file lock = LOCK_INIT;
-@@ -141,8 +147,10 @@ int reset_head(struct repository *r, struct object_id *oid,
- 		goto leave_reset_head;
- 	}
+-	strbuf_addf(&orig_head_reflog, "rebase finished: %s onto %s",
++	strbuf_addf(&branch_reflog, "rebase finished: %s onto %s",
+ 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+ 	strbuf_addf(&head_reflog, "rebase finished: returning to %s",
+ 		    opts->head_name);
+ 	ropts.branch = opts->head_name;
+ 	ropts.flags = RESET_HEAD_REFS_ONLY;
+-	ropts.orig_head_msg = orig_head_reflog.buf;
++	ropts.branch_msg = branch_reflog.buf;
+ 	ropts.head_msg = head_reflog.buf;
+ 	ret = reset_head(the_repository, &ropts);
  
--	ret = update_refs(oid, switch_to_branch, reflog_head, reflog_orig_head,
--			  default_reflog_action, flags);
-+	if (oid != &head_oid || update_orig_head || switch_to_branch)
-+		ret = update_refs(oid, switch_to_branch, reflog_head,
-+				  reflog_orig_head, default_reflog_action,
-+				  flags);
- 
- leave_reset_head:
- 	rollback_lock_file(&lock);
-diff --git a/sequencer.c b/sequencer.c
-index 07d2a582d39..56a204f18c5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4093,8 +4093,8 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 	return -1;
+-	strbuf_release(&orig_head_reflog);
++	strbuf_release(&branch_reflog);
+ 	strbuf_release(&head_reflog);
+ 	return ret;
  }
+diff --git a/reset.c b/reset.c
+index e77a8ac423d..2c32600234d 100644
+--- a/reset.c
++++ b/reset.c
+@@ -15,6 +15,7 @@ static int update_refs(const struct reset_head_opts *opts,
+ 	unsigned run_hook = opts->flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+ 	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
+ 	const char *switch_to_branch = opts->branch;
++	const char *reflog_branch = opts->branch_msg;
+ 	const char *reflog_head = opts->head_msg;
+ 	const char *reflog_orig_head = opts->orig_head_msg;
+ 	const char *default_reflog_action = opts->default_reflog_action;
+@@ -58,8 +59,9 @@ static int update_refs(const struct reset_head_opts *opts,
+ 				 detach_head ? REF_NO_DEREF : 0,
+ 				 UPDATE_REFS_MSG_ON_ERR);
+ 	else {
+-		ret = update_ref(reflog_head, switch_to_branch, oid,
+-				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
++		ret = update_ref(reflog_branch ? reflog_branch : reflog_head,
++				 switch_to_branch, oid, NULL, 0,
++				 UPDATE_REFS_MSG_ON_ERR);
+ 		if (!ret)
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+@@ -90,6 +92,12 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+ 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
+ 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
  
--void create_autostash(struct repository *r, const char *path,
--		      const char *default_reflog_action)
-+void create_autostash(struct repository *r, const char *path)
++	if (opts->orig_head_msg && !update_orig_head)
++		BUG("ORIG_HEAD reflog message given without updating ORIG_HEAD");
 +
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -4131,7 +4131,7 @@ void create_autostash(struct repository *r, const char *path,
- 		write_file(path, "%s", oid_to_hex(&oid));
- 		printf(_("Created autostash: %s\n"), buf.buf);
- 		if (reset_head(r, NULL, NULL, RESET_HEAD_HARD, NULL, NULL,
--			       default_reflog_action) < 0)
-+			       NULL) < 0)
- 			die(_("could not reset --hard"));
++	if (opts->branch_msg && !opts->branch)
++		BUG("branch reflog message given without a branch");
++
+ 	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+ 		ret = -1;
+ 		goto leave_reset_head;
+diff --git a/reset.h b/reset.h
+index 996d7f569b6..c0f4e99a3be 100644
+--- a/reset.h
++++ b/reset.h
+@@ -19,6 +19,8 @@ struct reset_head_opts {
+ 	const char *branch;
+ 	/* Flags defined above */
+ 	unsigned flags;
++	 /* Optional reflog message for branch, defaults to head_msg. */
++	const char *branch_msg;
+ 	 /*
+ 	  * Optional reflog message for HEAD, if this is not set then
+ 	  * default_reflog_action must be.
+diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+index 77a313f62eb..d17b450e811 100755
+--- a/t/t3406-rebase-message.sh
++++ b/t/t3406-rebase-message.sh
+@@ -105,6 +105,29 @@ test_expect_success 'GIT_REFLOG_ACTION' '
+ 	test_cmp expect actual
+ '
  
- 		if (discard_index(r->index) < 0 ||
-diff --git a/sequencer.h b/sequencer.h
-index 2088344cb37..92357536ff4 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -198,8 +198,7 @@ void commit_post_rewrite(struct repository *r,
- 			 const struct commit *current_head,
- 			 const struct object_id *new_head);
- 
--void create_autostash(struct repository *r, const char *path,
--		      const char *default_reflog_action);
-+void create_autostash(struct repository *r, const char *path);
- int save_autostash(const char *path);
- int apply_autostash(const char *path);
- int apply_autostash_oid(const char *stash_oid);
++test_expect_success 'rebase --apply reflog' '
++	git checkout -b reflog-apply start &&
++	old_head_reflog="$(git log -g --format=%gs -1 HEAD)" &&
++
++	git rebase --apply Y &&
++
++	git log -g --format=%gs -4 HEAD >actual &&
++	cat >expect <<-EOF &&
++	rebase finished: returning to refs/heads/reflog-apply
++	rebase: Z
++	rebase: checkout Y
++	$old_head_reflog
++	EOF
++	test_cmp expect actual &&
++
++	git log -g --format=%gs -2 reflog-apply >actual &&
++	cat >expect <<-EOF &&
++	rebase finished: refs/heads/reflog-apply onto $(git rev-parse Y)
++	branch: Created from start
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'rebase -i onto unrelated history' '
+ 	git init unrelated &&
+ 	test_commit -C unrelated 1 &&
 -- 
 gitgitgadget
 
