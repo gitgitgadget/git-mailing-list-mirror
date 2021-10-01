@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC67FC433F5
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55FABC433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:17:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0845610C8
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:17:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38752610C8
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:17:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352935AbhJAJS5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 05:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37108 "EHLO
+        id S1352965AbhJAJS6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 05:18:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352909AbhJAJSv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 05:18:51 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEC8C0613E2
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 02:17:04 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id j27so6740359wms.0
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 02:17:04 -0700 (PDT)
+        with ESMTP id S1352915AbhJAJSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 05:18:49 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B2D3C06177B
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 02:17:03 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id q17-20020a7bce91000000b0030d4e298215so730182wmj.0
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 02:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T7v8TdyQ32Cu9JcLQY3VyGyq9zySMfN56Hxa7Ls+Ras=;
-        b=YYeuw2foAJK3jjSS/je0QNCNNvoaXzJob7UfQRFR7kDmtUS8h21Wha1Lpr2dsE6fg2
-         /HmkMyp7B7S5MWcb77zrqXJrQrxZjbgTPlHGJAbtwH0NvUr4cf1GK17FJvZGJemEVShD
-         0QAgM8iC6GS1splVNguh1RX0R3gp0Hdv2D3nkXQAJVpZyjHdBs4yY+G42J8LaxwKTRZV
-         1MnA1wfFNJmKcRXX4SHoqU8E8NoACiMHxRyR2X3j0Nq1r6W6S3V8a2fHJ6JQVUdYUsUC
-         B3JeqwfOq4Bg6QpkFZ8guUlcPY6X9dCxOgfwx3j+kMV8zO77xabyNzZcH9KowGWRR7NJ
-         2xzA==
+        bh=u/kZVGaHdt9Pow4L0kVNsM0cKr+aE3rOPJbriFA3iqs=;
+        b=UFK5yVz9tvKRAHEcbHsnZcpoK+24UfkeuOk+qHgDbmCqauPyMtb/A56HBl1nHYNJms
+         enGAjtRYn+8kYIffsm60XGWdNimsb3TuOYQ3rFpvSn9PbxY311WSQkcfOtnTv2yVhDAU
+         WDKRmgMwDqT34hc7V84m/BC2PspnonSOtGTdW8xgNRSdaMVMm7oWq7hWGJ/4W1pj2gz/
+         +hVTfpLyQvyujpZj/QqLWAYyagCeAEOR2jlL5tenw3R571dxjCtLD6jEJPiWDDKyhSon
+         TW1ZxFtsvTI/uUGt8K1VQbsihcJ8zd+sQEWDltl/iKOknqWF6EA+n/lZgcza4RB4WaQr
+         nZ3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T7v8TdyQ32Cu9JcLQY3VyGyq9zySMfN56Hxa7Ls+Ras=;
-        b=hBYjTSBscEfIk50OvCbtmmymEDiJTjgVql0Cy5rkp/SMXYukQoXkycSU20qTFVEVAw
-         G4rs16g5Y458ri5/vIuD13Lb1rd9Kv8+Z46oArjV1eDDnQ1cg1VlDdqhOua4qzm7mPeV
-         EGbxUWT4N0uqqMgKo3D9cij6t3FfRA0YsE3W3YlkhWklgvXHBqnrPJgCoDfo3rXmdkfQ
-         mMTsS+mCCkSvkavVD1pIKM5A+bjf0zDis4AHbLxe2zjXfxjPHxjCYnmKUOU0XyNO29se
-         YktyAB6TNsHOEXOGMZyLA64+OO4ygBXgANiHXL7exq3HpAHk1T/Jg/cARGBi3+CCaGJy
-         TGEQ==
-X-Gm-Message-State: AOAM530AvutqFnSFBrucrvS1buIr4LtOa1qZhlzLGw5ImtQeo0M5cL7R
-        x91Me+YAjZSQeXI0Jam8axI0jwKoxqrItg==
-X-Google-Smtp-Source: ABdhPJxCSCIiAp/k3PCSPHCFEuAJWQpqzPkA7YkXISPwUNdga4hN1N/gwMLI+EMEsOrJO0FuyIR8YA==
-X-Received: by 2002:a1c:98d1:: with SMTP id a200mr3412308wme.86.1633079823039;
-        Fri, 01 Oct 2021 02:17:03 -0700 (PDT)
+        bh=u/kZVGaHdt9Pow4L0kVNsM0cKr+aE3rOPJbriFA3iqs=;
+        b=oY/vy/HjXwIUiSW0D89437X5GQSDX+7thAz2434dqsxNToiYpxHAP4E4KmK9qES3Pb
+         ofJ7p7xm078HUvUKDf4BEpirelAA8Q3tqXTAvKzzDtDRtbUR2X66yRS367pqx2UAYJSs
+         aG+gIVo6Pug9Txg4Mg6ZOkwRNJ9iKSkYkN4xr6pzMK36UXVMmW1FFNjINclVFxtRtGdc
+         Dexe1hFYt8vyGQuBDtOcSSp11pQyx0PEAYFAwwJTS3Hbzjq7EhchP3RUYgEhU4XZ2px4
+         g8AKgLtoxwk11tFCpAVNXtwDdy6ZXQlXuxBrQk5XD4FI4ceiONVBhjKvtWp4LiXEoRV1
+         uKrQ==
+X-Gm-Message-State: AOAM532FJzP8qPxpk72gUzaGoCO6a2RUrFocy4YSPdzBxXuQjL0CiFTb
+        NpiwZValz56XJe69WmeyF3evIg8RSJzERw==
+X-Google-Smtp-Source: ABdhPJy2I7me500dZ6xCfWe43u9AqpbmBGUMkk7EeMFLVc2LXZh2o/jJ1wtEq1XPboB7sGmKSivpsA==
+X-Received: by 2002:a1c:f201:: with SMTP id s1mr3362907wmc.101.1633079821080;
+        Fri, 01 Oct 2021 02:17:01 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j4sm5301346wrt.67.2021.10.01.02.17.01
+        by smtp.gmail.com with ESMTPSA id j4sm5301346wrt.67.2021.10.01.02.17.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 02:17:02 -0700 (PDT)
+        Fri, 01 Oct 2021 02:17:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v10 06/17] cat-file tests: test for missing/bogus object with -t, -s and -p
-Date:   Fri,  1 Oct 2021 11:16:42 +0200
-Message-Id: <patch-v10-06.17-a563c7efe1c-20211001T091051Z-avarab@gmail.com>
+Subject: [PATCH v10 04/17] fsck tests: test for garbage appended to a loose object
+Date:   Fri,  1 Oct 2021 11:16:40 +0200
+Message-Id: <patch-v10-04.17-a527e3b262c-20211001T091051Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1375.g5eed55aa1b5
 In-Reply-To: <cover-v10-00.17-00000000000-20211001T091051Z-avarab@gmail.com>
 References: <cover-v9-00.17-00000000000-20210930T133300Z-avarab@gmail.com> <cover-v10-00.17-00000000000-20211001T091051Z-avarab@gmail.com>
@@ -72,129 +72,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we look up a missing object with cat_one_file() what error we
-print out currently depends on whether we'll error out early in
-get_oid_with_context(), or if we'll get an error later from
-oid_object_info_extended().
-
-The --allow-unknown-type flag then changes whether we pass the
-"OBJECT_INFO_ALLOW_UNKNOWN_TYPE" flag to get_oid_with_context() or
-not.
-
-The "-p" flag is yet another special-case in printing the same output
-on the deadbeef OID as we'd emit on the deadbeef_short OID for the
-"-s" and "-t" options, it also doesn't support the
-"--allow-unknown-type" flag at all.
-
-Let's test the combination of the two sets of [-t, -s, -p] and
-[--{no-}allow-unknown-type] (the --no-allow-unknown-type is implicit
-in not supplying it), as well as a [missing,bogus] object pair.
-
-This extends tests added in 3e370f9faf0 (t1006: add tests for git
-cat-file --allow-unknown-type, 2015-05-03).
+There wasn't any output tests for this scenario, let's ensure that we
+don't regress on it in the changes that come after this.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/oid-info/oid      |  2 ++
- t/t1006-cat-file.sh | 75 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 77 insertions(+)
+ t/t1450-fsck.sh | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/t/oid-info/oid b/t/oid-info/oid
-index a754970523c..7547d2c7903 100644
---- a/t/oid-info/oid
-+++ b/t/oid-info/oid
-@@ -27,3 +27,5 @@ numeric		sha1:0123456789012345678901234567890123456789
- numeric		sha256:0123456789012345678901234567890123456789012345678901234567890123
- deadbeef	sha1:deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
- deadbeef	sha256:deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
-+deadbeef_short	sha1:deadbeefdeadbeefdeadbeefdeadbeefdeadbee
-+deadbeef_short	sha256:deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbee
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index ea6a53d425b..abf57339a29 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -327,6 +327,81 @@ test_expect_success 'setup bogus data' '
- 	bogus_long_sha1=$(echo_without_newline "$bogus_long_content" | git hash-object -t $bogus_long_type --literally -w --stdin)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index f9cabcecd14..281ff8bdd8e 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -93,6 +93,26 @@ test_expect_success 'object with hash and type mismatch' '
+ 	)
  '
  
-+for arg1 in '' --allow-unknown-type
-+do
-+	for arg2 in -s -t -p
-+	do
-+		if test "$arg1" = "--allow-unknown-type" && test "$arg2" = "-p"
-+		then
-+			continue
-+		fi
++test_expect_success POSIXPERM 'zlib corrupt loose object output ' '
++	git init --bare corrupt-loose-output &&
++	(
++		cd corrupt-loose-output &&
++		oid=$(git hash-object -w --stdin --literally </dev/null) &&
++		oidf=objects/$(test_oid_to_path "$oid") &&
++		chmod 755 $oidf &&
++		echo extra garbage >>$oidf &&
 +
++		cat >expect.error <<-EOF &&
++		error: garbage at end of loose object '\''$oid'\''
++		error: unable to unpack contents of ./$oidf
++		error: $oid: object corrupt or missing: ./$oidf
++		EOF
++		test_must_fail git fsck 2>actual &&
++		grep ^error: actual >error &&
++		test_cmp expect.error error
++	)
++'
 +
-+		test_expect_success "cat-file $arg1 $arg2 error on bogus short OID" '
-+			cat >expect <<-\EOF &&
-+			fatal: invalid object type
-+			EOF
-+
-+			if test "$arg1" = "--allow-unknown-type"
-+			then
-+				git cat-file $arg1 $arg2 $bogus_short_sha1
-+			else
-+				test_must_fail git cat-file $arg1 $arg2 $bogus_short_sha1 >out 2>actual &&
-+				test_must_be_empty out &&
-+				test_cmp expect actual
-+			fi
-+		'
-+
-+		test_expect_success "cat-file $arg1 $arg2 error on bogus full OID" '
-+			if test "$arg2" = "-p"
-+			then
-+				cat >expect <<-EOF
-+				error: unable to unpack $bogus_long_sha1 header
-+				fatal: Not a valid object name $bogus_long_sha1
-+				EOF
-+			else
-+				cat >expect <<-EOF
-+				error: unable to unpack $bogus_long_sha1 header
-+				fatal: git cat-file: could not get object info
-+				EOF
-+			fi &&
-+
-+			if test "$arg1" = "--allow-unknown-type"
-+			then
-+				git cat-file $arg1 $arg2 $bogus_short_sha1
-+			else
-+				test_must_fail git cat-file $arg1 $arg2 $bogus_long_sha1 >out 2>actual &&
-+				test_must_be_empty out &&
-+				test_cmp expect actual
-+			fi
-+		'
-+
-+		test_expect_success "cat-file $arg1 $arg2 error on missing short OID" '
-+			cat >expect.err <<-EOF &&
-+			fatal: Not a valid object name $(test_oid deadbeef_short)
-+			EOF
-+			test_must_fail git cat-file $arg1 $arg2 $(test_oid deadbeef_short) >out 2>err.actual &&
-+			test_must_be_empty out
-+		'
-+
-+		test_expect_success "cat-file $arg1 $arg2 error on missing full OID" '
-+			if test "$arg2" = "-p"
-+			then
-+				cat >expect.err <<-EOF
-+				fatal: Not a valid object name $(test_oid deadbeef)
-+				EOF
-+			else
-+				cat >expect.err <<-\EOF
-+				fatal: git cat-file: could not get object info
-+				EOF
-+			fi &&
-+			test_must_fail git cat-file $arg1 $arg2 $(test_oid deadbeef) >out 2>err.actual &&
-+			test_must_be_empty out &&
-+			test_cmp expect.err err.actual
-+		'
-+	done
-+done
-+
- test_expect_success "Type of broken object is correct" '
- 	echo $bogus_short_type >expect &&
- 	git cat-file -t --allow-unknown-type $bogus_short_sha1 >actual &&
+ test_expect_success 'branch pointing to non-commit' '
+ 	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
+ 	test_when_finished "git update-ref -d refs/heads/invalid" &&
 -- 
 2.33.0.1375.g5eed55aa1b5
 
