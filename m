@@ -2,294 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61AF7C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 263FEC433F5
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:05:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4396961A55
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:04:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0980B61A7F
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352653AbhJAIGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 04:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48776 "EHLO
+        id S1352667AbhJAIGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 04:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352658AbhJAIGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 04:06:01 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 634C5C0613E2
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 01:04:11 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id dn26so31578766edb.13
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 01:04:11 -0700 (PDT)
+        with ESMTP id S1352633AbhJAIGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 04:06:53 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B85DCC061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 01:05:09 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id dj4so32685823edb.5
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 01:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=IYk6TdWXeGqE9ZCccLaBihu2jRb77UIP9/uEFZytjX0=;
-        b=iJqypvxwRI3906JMDF1HGWpgpHtW/1klWv4TUjCyESWWHx/GzftO84OjGEpZW6j5jN
-         DhjKEyqp5dBC6bfbOb3kbEag+DCvbKJ71v41cSbkWxtLIwiTX4psOn7RJgZQSYDxSHlp
-         uKkrEvpHC27XFT4FVwMyfyG2qvZccY48ZeoxhB5z1MoK02bLTAev+qKVyHOxUXaJcQkn
-         NMpUDG3xXSLemib+5m/ctC0f9S1yTU/ZguIsTmwnbnjzjS7pVL9mIeahJO0fNPnVe1xD
-         QXFrDfGHmpdqzWPE7fZo+IrgwIs6P4Me/nBmtLLAxcoIVi28jkgBytVpBg7q/+LjNw4D
-         za0w==
+        bh=/+oleqwYmz74B9KQPaniLb06VXF7afLYR99Uc9148ig=;
+        b=hcStiE2TUgAUPeXAVAuRA4fZOxS8W/GdEl/UPeByEse52hJsuAOct3Zd+JZlytG4wQ
+         zZghnWFx/LDr/TdwqrkS28+t/97yoGmFu9uvF8k9vmnJvwjhwOgjfl5bhKdbxpSGA1Xj
+         zRrYKe3bOqvmK9HlcBxF09609V096edUivrc1UiPaMydWan22+Z1NcusDYL4Q1b644ni
+         pi4Q7mHgOabTxUrXUx5GM5lGoJOynU4rmJkUockGyIvbhvzLuyWlJIgCkIrEsH4ijpMj
+         cvG0zHNOjIyzU4+E5fIL5UmQzDOJiVtWbgEQjxfg2JaYICYJ3ptR83IQwNXyRjf2guGs
+         vFqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IYk6TdWXeGqE9ZCccLaBihu2jRb77UIP9/uEFZytjX0=;
-        b=lptgkfMp1dPXO6+5N3/WT/jFX/i5ZMH8CxXdxuy1W541IEn5w+OrmqIOEQJ52NAUUk
-         v9tKF8gPBk3TY+lG6JcQ0yJPGyNmTnzSeAAIjGpfYqtBVP/vfasM14HmWzfwxLQj45yb
-         +zeJu4P4ggDfQxbFXcJeN0VcbRNsS9dkXOa7EY3tMRz0L9JfQv8eg2tCZ74NgLfhrtz4
-         U7eT4hmtmmbkH24ZMkTYix9m+1F+/cOyR45JmIzFqVlTC3wC3eSLdDEBVkj+k5O/Zzv7
-         hOfy0xqPL20Ubmckwy0+sVKZKjJZYRCahSkAdxboaxutT5BMyWnGZk2tWKdLjGzmTrCI
-         ppJQ==
-X-Gm-Message-State: AOAM531iT3/a3eUcqiFGleomNIM2bQ1KOWAgKCASwGEm2AOreDk9Ut+h
-        VWbHupfjt5kaEmCr0RPeBnAzUUjBIOH+1D9n/1mfAmo5VsJAXw==
-X-Google-Smtp-Source: ABdhPJzEYnRL21F6CHuJn2jsQXuPwjUq4VMyJ8FzQKJkFRg1vTexMurlais/NrEGCoOopLDYTKHapLBKkJnGvuuPZJQ=
-X-Received: by 2002:a05:6402:1d9c:: with SMTP id dk28mr7704111edb.241.1633075449754;
- Fri, 01 Oct 2021 01:04:09 -0700 (PDT)
+        bh=/+oleqwYmz74B9KQPaniLb06VXF7afLYR99Uc9148ig=;
+        b=yWO0jEsV0c2TfOM4/eNquCb1SVuV8WN5Jmfy4KaacDI6Wr/CMJdsSvxSJf5hiIfOvg
+         jQxTCBHdHepnk/Po3O5OaNJdPLdokJnyXPUceedmUqaAdtcuFu+DCkGtbNooH+AxZmI2
+         +1KGf2jl0cLJ/zc+7ZpbPvLkX4gM8AJKcxw4gjjA//Gb/48LFyZvm6sDJRCusVm4Jmxf
+         ebGtUkNHwy+7w2TEtkOT3ExMc7Wlzi3s7JrI4JHlRR0ayDWWaFRFIEayOq2wDOxZ5U3R
+         hRyiOm3sHHToBOFmJtQlVxNIRWzeRuFaZhDcWW7MjTCbaqWuLfzs9rARWswufBmw9b3A
+         h8FQ==
+X-Gm-Message-State: AOAM533LaBweZ4N31FqsoKrwgs/bRezg6v98pa7/u0EcefNfF78RnaSA
+        1gVubQ1Rpozw5azydbTx0EvRSlmdgEdg6sr1Cy/dXWoZRi8=
+X-Google-Smtp-Source: ABdhPJxDsPuOh0nQ5b+VWxsd4tlwjuATP4ThuKwG+I3nye+UgAatbzRHWUqX/R0qD0fQq/qvIIczTEbqtiM6bc9YI7E=
+X-Received: by 2002:a17:906:544f:: with SMTP id d15mr4736684ejp.520.1633075508206;
+ Fri, 01 Oct 2021 01:05:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
- <YVOiggCWAdZcxAb6@coredump.intra.peff.net> <xmqqsfxof2hr.fsf@gitster.g>
- <YVVoXJo3DlPQd1A3@coredump.intra.peff.net> <87tui2tckn.fsf@evledraar.gmail.com>
- <CABPp-BGsjq3ts4A6wKLYcopD9rknM+LXXi8qR_SLEpmU+x7KNQ@mail.gmail.com> <87wnmxry3e.fsf@evledraar.gmail.com>
-In-Reply-To: <87wnmxry3e.fsf@evledraar.gmail.com>
+References: <CANgfOPtz9JqCs-7z1DJnOqxnsGiQS6BBPD6tKTWnTpC0K3qZ9Q@mail.gmail.com>
+ <CABPp-BGv=+R1trGZq7r+-VneVUSoH_nOhS9sh3P7WSCiSVZksQ@mail.gmail.com> <CANgfOPvBy+v4hMDt7uNjawvEC5F-daSm2TTvk=3oBJPrj2KNYA@mail.gmail.com>
+In-Reply-To: <CANgfOPvBy+v4hMDt7uNjawvEC5F-daSm2TTvk=3oBJPrj2KNYA@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 1 Oct 2021 01:03:57 -0700
-Message-ID: <CABPp-BEh3w8DxyLuc5GtowFKeNx7h7joDarUfoFjXihvMEzp-g@mail.gmail.com>
-Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing primary
- object dirs
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
+Date:   Fri, 1 Oct 2021 01:04:55 -0700
+Message-ID: <CABPp-BFFbt_1v9P7bpkP5tZ3KJDOaTTSBC+hFCyw08FSSWOwhA@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Question_about_git_merge_=2Ds_ort_command=E2=80=8F=E2=80=8F?=
+To:     Ariel Man <arielman22@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 1, 2021 at 12:41 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Sep 30 2021, Elijah Newren wrote:
->
-> > On Thu, Sep 30, 2021 at 6:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-> >> On Thu, Sep 30 2021, Jeff King wrote:
-> >>
-> >> > On Tue, Sep 28, 2021 at 09:08:00PM -0700, Junio C Hamano wrote:
-> >> >
-> >> >> Jeff King <peff@peff.net> writes:
-> >> >>
-> >> >> >   Side note: The pretend_object_file() approach is actually even =
-better,
-> >> >> >   because we know the object is fake. So it does not confuse
-> >> >> >   write_object_file()'s "do we already have this object" fresheni=
-ng
-> >> >> >   check.
-> >> >> >
-> >> >> >   I suspect it could even be made faster than the tmp_objdir appr=
-oach.
-> >> >> >   From our perspective, these objects really are tempfiles. So we=
- could
-> >> >> >   write them as such, not worrying about things like fsyncing the=
-m,
-> >> >> >   naming them into place, etc. We could just write them out, then=
- mmap
-> >> >> >   the results, and put the pointers into cached_objects (currentl=
-y it
-> >> >> >   insists on malloc-ing a copy of the input buffer, but that seem=
-s like
-> >> >> >   an easy extension to add).
-> >> >> >
-> >> >> >   In fact, I think you could get away with just _one_ tempfile pe=
-r
-> >> >> >   merge. Open up one tempfile. Write out all of the objects you w=
-ant to
-> >> >> >   "store" into it in sequence, and record the lseek() offsets bef=
-ore and
-> >> >> >   after for each object. Then mmap the whole result, and stuff th=
-e
-> >> >> >   appropriate pointers (based on arithmetic with the offsets) int=
-o the
-> >> >> >   cached_objects list.
-> >> >>
-> >> >> Cute.  The remerge diff code path creates a full tree that records
-> >> >> the mechanical merge result.  By hooking into the lowest layer of
-> >> >> write_object() interface, we'd serialize all objects in such a tree
-> >> >> in the order they are computed (bottom up from the leaf level, I'd
-> >> >> presume) into a single flat file ;-)
-> >> >
-> >> > I do still like this approach, but just two possible gotchas I was
-> >> > thinking of:
-> >> >
-> >> >  - This side-steps all of our usual code for getting object data int=
-o
-> >> >    memory. In general, I'd expect this content to not be too enormou=
-s,
-> >> >    but it _could_ be if there are many / large blobs in the result. =
-So
-> >> >    we may end up with large maps. Probably not a big deal on modern
-> >> >    64-bit systems. Maybe an issue on 32-bit systems, just because of
-> >> >    virtual address space.
-> >> >
-> >> >    Likewise, we do support systems with NO_MMAP. They'd work here, b=
-ut
-> >> >    it would probably mean putting all that object data into the heap=
-. I
-> >> >    could live with that, given how rare such systems are these days,=
- and
-> >> >    that it only matters if you're using --remerge-diff with big blob=
-s.
-> >> >
-> >> >  - I wonder to what degree --remerge-diff benefits from omitting wri=
-tes
-> >> >    for objects we already have. I.e., if you are writing out a whole
-> >> >    tree representing the conflicted state, then you don't want to wr=
-ite
-> >> >    all of the trees that aren't interesting. Hopefully the code is
-> >> >    already figuring out which paths the merge even touched, and igno=
-ring
-> >> >    the rest. It probably benefits performance-wise from
-> >> >    write_object_file() deciding to skip some object writes, as well
-> >> >    (e.g., for resolutions which the final tree already took, as they=
-'d
-> >> >    be in the merge commit). The whole pretend-we-have-this-object th=
-ing
-> >> >    may want to likewise make sure we don't write out objects that we
-> >> >    already have in the real odb.
-> >>
-> >> I haven't benchmarked since my core.checkCollisions RFC patch[1]
-> >> resulted in the somewhat related loose object cache patch from you, an=
-d
-> >> not with something like the midx, but just a note that on some setups
-> >> just writing things out is faster than exhaustively checking if we
-> >> absolutely need to write things out.
-> >>
-> >> I also wonder how much if anything writing out the one file v.s. lots =
-of
-> >> loose objects is worthwhile on systems where we could write out those
-> >> loose objects on a ramdisk, which is commonly available on e.g. Linux
-> >> distros these days out of the box. If you care about performance but n=
-ot
-> >> about your transitory data using a ramdisk is generally much better th=
-an
-> >> any other potential I/O optimization.
-> >>
-> >> Finally, and I don't mean to throw a monkey wrench into this whole
-> >> discussion, so take this as a random musing: I wonder how much faster
-> >> this thing could be on its second run if instead of avoiding writing t=
-o
-> >> the store & cleaning up, it just wrote to the store, and then wrote
-> >
-> > It'd be _much_ slower.  My first implementation in fact did that; it
-> > just wrote objects to the store, left them there, and didn't bother to
-> > do any auto-gcs.  It slowed down quite a bit as it ran.  Adding
-> > auto-gc's during the run were really slow too. But stepping back,
-> > gc'ing objects that I already knew were garbage seemed like a waste;
-> > why not just prune them pre-emptively?  To do so, though, I'd have to
-> > track all the individual objects I added to make sure I didn't prune
-> > something else.  Following that idea and a few different attempts
-> > eventually led me to the discovery of tmp_objdir.
-> >
-> > In case it's not clear to you why just writing all the objects to the
-> > normal store and leaving them there slows things down so much...
-> >
-> > Let's say 1 in 10 merges had originally needed some kind of conflict
-> > resolution (either in the outer merge or in the inner merge for the
-> > virtual merge bases), meaning that 9 out of 10 merges traversed by
-> > --remerge-diff don't write any objects.  Now for each merge for which
-> > --remerge-diff does need to create conflicted blobs and new trees,
-> > let's say it writes on average 3 blobs and 7 trees.  (I don't know the
-> > real average numbers, it could well be ~5 total, but ~10 seems a
-> > realistic first order approximation and it makes the math easy.)
-> > Then, if we keep all objects we write, then `git log --remerge-diff`
-> > on a history with 100,000 merge commits, will have added 100,000 loose
-> > objects by the time it finishes.  That means that all diff and merge
-> > operations slow down considerably as it runs due to all the extra
-> > loose objects.
->
-> ...
->
-> >> another object keyed on the git version and any revision paramaters
-> >> etc., and then pretty much just had to do a "git cat-file -p <that-obj=
->"
-> >> to present the result to the user :)
-> >
-> > So caching the full `git log ...` output, based on a hash of the
-> > command line flags, and then merely re-showing it later?  And having
-> > that output be invalidated as soon as any head advances?  Or are you
-> > thinking of caching the output per-commit based on a hash of the other
-> > command line flags...potentially slowing non-log operations down with
-> > the huge number of loose objects?
->
-> Yeah I meant caching the full 'git log' output. Anyway, I think what you
-> said above about number of loose objects clearly makes that a stupid
-> suggestion on my part.
+Hi,
 
-Most my ideas for merge-ort were stupid.  I didn't know until I tried
-them, and then I just discarded them and only showed off the good
-ideas.  :-)
+Please do not top-post on this mailing list.
 
-Brainstorming new ways of doing things is a useful exercise, I think.
+On Wed, Sep 29, 2021 at 11:58 PM Ariel Man <arielman22@gmail.com> wrote:
+>
+> Hi,
+> Thanks for the detailed answer, but just to clarify, my main question
+> is regarding ORT strategy, and not recursive.
 
-> FWIW I meant that more as a "maybe in the future we can ..." musing than
-> anything for this series. I.e. in general I've often wanted say the
-> second run of a 'git log -G<rx>"' to be faster than it is, which could
-> use such on-the-fly caching.
->
-> But if we had such caching then something like --remerge-diff would need
-> to (from my understanding of what you're saying) need both this
-> temporary staging area for objects and perhaps to cache the output in
-> the main (or some cache) store. I.e. they're orthagonal.
->
-> >> I suppose that would be throwing a lot more work at an eventual "git g=
-c"
-> >> than we ever do now, so maybe it's a bit crazy, but I think it might b=
-e
-> >> an interesting direction in general to (ab)use either the primary or
-> >> some secondary store in the .git dir as a semi-permanent cache of
-> >> resolved queries from the likes of "git log".
-> >
-> > If you do per-commit caching, and the user scrolls through enough
-> > output (not hard to do, just searching the output for some string
-> > often is enough), that "eventual" git-gc will be the very next git
-> > operation.  If you cache the entire output, it'll be invalidated
-> > pretty quickly.  So I don't see how this works.  Or am I
-> > misunderstanding something you're suggesting here?
->
-> With the caveat above that I think this is all a pretty stupid
-> suggestion on my part:
->
-> Just on the narrow aspect of how "git gc" behaves in that scenario: We'd
-> keep those objects around for 2 weeks by default, or whatever you have
-> gc.pruneExpire set to.
->
-> So such a setup would certainly cause lots of pathological issues (see
-> my [1] for one), but I don't think over-eager expiry of loose objects
-> would be one.
->
-> I'm not sure but are you referring to "invalidated pretty quickly"
-> because it would go over the gc.auto limit? If so that's now how it
-> works in this scenario, see [2]. I.e. it's moderated by the
-> gc.pruneExpire setting.
+Since you simply linked to three posts in your original email, and the
+first showed a segfault, this wasn't at all clear.
 
-By "invalidated pretty quickly" I meant that if the user ran "git log
---all" and you cached the entire output in a single cache file, then
-as soon as any ref is updated, that cached output is invalid because
-"git log --all" should now show different output than before.
-
-It seems to be a case of pick your poison: either (a) cache output per
-commit so that it can be re-used, and suffer from extreme numbers of
-loose objects, OR (b) cache the entire output to avoid the large
-number of loose objects, resulting in the cache only being useful if
-the user passed the _exact_ same arguments and revisions to git-log --
-and also having the cache become stale as soon as any involved ref is
-updated.
-
+> Mainly in this case, where ORT didn't behave as I expected:
+> https://stackoverflow.com/questions/69150777/git-mv-doesnt-work-as-expect=
+ed-wrong-files-location#:~:text=3Dtest3.py%0A%E2%94%82%20%20%20%E2%94%94%E2=
+%94%80%E2%94%80%20dir3-,UPDATE,-I%27m%20adding%20one
 >
-> 1. https://lore.kernel.org/git/87fu6bmr0j.fsf@evledraar.gmail.com/
-> 2. https://lore.kernel.org/git/87inc89j38.fsf@evledraar.gmail.com/
+> As I wrote, this specific case is where new folder and files were
+> created after the consolidation (and not new files under the existing
+> folder). As you can see, when only new files were added to the
+> existing folder, the git ORT recognized it and moved the folder
+> python1 with its files test1.py and test4.py to the right place
+> (dir2). But when new folder was created on the target (new_test with
+> the file test5.py), when I ran the ORT command, the GIT didn't
+> recognized it and created again the folder python1 on the old path
+> (dir1-->python1-->new_test-->test5.py).
+
+Yes, I read through that and pointed out your examples weren't fully
+specified.  You haven't stated what else exists in all these
+directories, what kind of contents files had, if there were big
+binaries, etc.
+
+> I believe you can reproduce it yourself on your repository and see the
+> behaviour.
+
+Nope, I can't.  I went through the trouble of setting up the testcases
+as close as I could from your diagrams.  When using the recursive
+strategy, I do see that test4.py and test5.py are left behind in dir1,
+but when using the ort strategy, it behaves exactly as you said you
+wanted (with *both* test4.py and test5.py appearing somewhere under
+dir2 rather than dir1).
+
+Here's the output from my script showing all the files that exist in
+each of the relevant commits:
+
+=3D=3D=3D Original =3D=3D=3D
+dir1/otherfile
+dir1/python1/test1.py
+dir2/otherfile
+dir2/python2/test2.py
+dir3/otherfile
+dir3/python3/test3.py
+
+=3D=3D=3D Consolidated =3D=3D=3D
+dir1/otherfile
+dir2/otherfile
+dir2/python1/test1.py
+dir2/python2/test2.py
+dir2/python3/test3.py
+dir3/otherfile
+
+=3D=3D=3D New files =3D=3D=3D
+dir1/otherfile
+dir1/python1/new_test/test5.py
+dir1/python1/test1.py
+dir1/python1/test4.py
+dir2/otherfile
+dir2/python2/test2.py
+dir3/otherfile
+dir3/python3/test3.py
+
+=3D=3D=3D Merged result =3D=3D=3D
+dir1/otherfile
+dir2/otherfile
+dir2/python1/new_test/test5.py
+dir2/python1/test1.py
+dir2/python1/test4.py
+dir2/python2/test2.py
+dir2/python3/test3.py
+dir3/otherfile
+
+
+and here's the script I used to run this testcase and generate the above ou=
+tput:
+
+#!/bin/bash
+
+git init -b main nukeme
+cd nukeme
+
+echo '''
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir1
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python1
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test1.py
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir2
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python2
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test2.py
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir3
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python3
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test3.py
+''' >/dev/null
+for i in $(seq 1 3); do
+    mkdir -p dir$i/python$i
+    echo $i >dir$i/python$i/test$i.py
+    >dir$i/otherfile
+done
+
+git add .
+git commit -qm "Initial"
+
+git branch consolidated
+git branch newfiles
+
+git checkout consolidated
+echo '''
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir1
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir2
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python1
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test1.py
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python2
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test2.py
+=E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 python3
+=E2=94=82   =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 test3.py
+=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 dir3
+''' >/dev/null
+git mv dir1/python1 dir2/
+git mv dir3/python3 dir2/
+git commit -qm consolidated
+
+git checkout newfiles
+echo 4 >dir1/python1/test4.py
+git add dir1/python1/test4.py
+mkdir dir1/python1/new_test
+echo 5 >dir1/python1/new_test/test5.py
+git add dir1/python1/new_test/test5.py
+git commit -qm newfiles
+
+git checkout -qb merged consolidated
+git merge --no-edit -s ort newfiles
+
+echo
+echo "=3D=3D=3D Original =3D=3D=3D"
+git ls-tree -r --name-only main
+echo
+echo "=3D=3D=3D Consolidated =3D=3D=3D"
+git ls-tree -r --name-only consolidated
+echo
+echo "=3D=3D=3D New files =3D=3D=3D"
+git ls-tree -r --name-only newfiles
+echo
+echo "=3D=3D=3D Merged result =3D=3D=3D"
+git ls-tree -r --name-only merged
