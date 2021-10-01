@@ -2,131 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD537C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 07:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 215C2C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 07:50:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA6E161390
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 07:47:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED4D061A55
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 07:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352584AbhJAHtH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 03:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45044 "EHLO
+        id S1352600AbhJAHwN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 03:52:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352560AbhJAHtG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 03:49:06 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45ED4C061775
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 00:47:22 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id dn26so31423199edb.13
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 00:47:22 -0700 (PDT)
+        with ESMTP id S1352547AbhJAHwM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 03:52:12 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6357BC061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 00:50:28 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id dj4so32545211edb.5
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 00:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=1zEESvvVdSjbOSdaWL74vrBlCiMuMAogXlDDubhl/W8=;
-        b=MZZPNgo7DskxNUQArRRfk0Rf5zFqCBZf47qr/Yy1Q9ilB2D8egJTSsfJ8QvMvpvmqd
-         uD7m3thOdQkH5QHjJIa0+HBDgjwHyX3Iaomw6+46JPlxmHCjt/xDcaWCUxJxknrpQ5ue
-         Wtya61rGTlZzTKtAqmGnwUpoXUYpEpa/REe2tJ12mls13QVwosMzMiF5F5q+mnra6o2E
-         EMLvaXIIkTl1zG6btDqTj9/NZMZ/CtJmwiEYX2HBiAobZ0Xx8VEZlFmDL8Ja4VhpysWP
-         krBt8x2S2mkszuRcwwpHyVulvbk+8ui2jwtt2IOZzaZHiR80djUq0XUX2GZhvPA2+jGP
-         oDjA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LA0Uipf/9ju9K3K0+LTYSyLiR1qiQ0ntJv0wuZ9JV6k=;
+        b=B3SAEZ9xTlp+i/p5LUgODiEYDo95+7ULMJAVLJ6vn99ehv5FpR3ODoEkGxSXGX0hwb
+         zHFxpNgxQlB07ao8OmFEXMG/VKzAbOT6J5e1PcT2lPok2NR1nKUDlTMEU4chqX+BsHs6
+         YvSYzJPxWb/VqkkfRdNZ2eJN2NRRO9ohvMOWEx5WRqDqFnxWhgJtiKZJ82vH64azpSDA
+         iuiXIAQhafvlidnOLRYIREIJgN+/SuUfVRHRAn1SnnUu4da6m5A0tRMKjfADRFCHvteR
+         X/RMtk9ufpoAKw/U2R+GZu7VgNJoYl1Mnl8mIqgDp32xiMMDNsi+ZXh5yTzHNhtTOH6E
+         sNUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=1zEESvvVdSjbOSdaWL74vrBlCiMuMAogXlDDubhl/W8=;
-        b=FKPLOOxixCDc+X6GV43bfQwHYfXuHbZAKGkLyraDRa1vaPN5sprkIMR/QoDkPQAG9A
-         84rDQBTqyNkJE4/b12Oo/vAgbcpgKumPWQGiLi0wGOyVJR3H9HCOgUjDeDjzJYIpJQKk
-         tvFqiGV3ScUabefBRzpFfLyz2E1NBiWFCpL4f2+DDvg3wLjpBtK0GseRRlBqb+zlRC7h
-         4WWEDnka3ptjzmtNfftOMLM2CTn3hAXK6+El/pWfUTvvWlF4HDbjn98xyV1mFdbhUsOu
-         PtfSv43N2oMGkkIZtnBH1n2Y3GL0BrANfl6owrCz8bxVp76lA1jrzjFWejIFpYaUTFX/
-         LdQg==
-X-Gm-Message-State: AOAM5337PS3Onb9wUZ9XPIQQlgnjYh/GH6A5tiznl3vnUaXoYQcW2FEd
-        m36PEr3pmJF0urR1DuP7fUs=
-X-Google-Smtp-Source: ABdhPJz0PWERVF2yotQJT/7h37sbdmrQKYgJz3U7QHZx89m+kFXoFzb3jyVaelpbYjar/xvpz8DjKg==
-X-Received: by 2002:a50:cf87:: with SMTP id h7mr12970572edk.152.1633074440777;
-        Fri, 01 Oct 2021 00:47:20 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k18sm2725385edv.41.2021.10.01.00.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 00:47:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH 5/7] tmp-objdir: new API for creating and removing
- primary object dirs
-Date:   Fri, 01 Oct 2021 09:43:48 +0200
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
- <67d3b2b09f9ddda616cdd0d1b12ab7afc73670ed.1630376800.git.gitgitgadget@gmail.com>
- <YVOiggCWAdZcxAb6@coredump.intra.peff.net> <xmqqsfxof2hr.fsf@gitster.g>
- <YVVoXJo3DlPQd1A3@coredump.intra.peff.net>
- <CABPp-BF20vpC4m5V4JtS91fuA+PMiEN78J9OpVEPDpnKsTcP8A@mail.gmail.com>
- <YVacUCcl6USJSY5T@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YVacUCcl6USJSY5T@coredump.intra.peff.net>
-Message-ID: <87sfxlrxtk.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LA0Uipf/9ju9K3K0+LTYSyLiR1qiQ0ntJv0wuZ9JV6k=;
+        b=v+1Smv2yZaXwp+36lj4k3/Jb4jd7Cvx2WKP+YRkbG51BSn83b6l5CzsnXhvYhDfpMZ
+         7IRcHGq7ylHu/skvk3Ej3W5oHws7Ydg9S8+JahjuhUJvcm5EbEfl4xnJ85SR8B78w8Hx
+         /T6O80b8EMk3vWomaS8Q/oRcYFD6+Zvh6iBWfQuZqk5iJoaNu8EOWrD0vHvQNAs6ZfEo
+         eshE6wPo/wDY11ARL+8BGqmY6GFEj87VmS7JbVTCidPIgNNnjpQUl6q//Nj1bQBR+8Oj
+         /75T489RX6Oylegf19SUb4ILtfRiCt+ft/xdMxvsOQ+QOXfwtlFOaQPdJV62SyDTZ5g2
+         +5yg==
+X-Gm-Message-State: AOAM531AUIJXyXfRgt6ZaUJPEXpqdcFDeElaE5K1fAWofnGnkiP0tCTo
+        p7+zloLrxjpezygUQ7HXZP8JodNnA3PNMjnKCiw=
+X-Google-Smtp-Source: ABdhPJziuQsvqsAhSwfWpqN09csdyu7Anpap9hKvF/8KnXKXycP5c+lVfZXmZfZZ0f3FDpw0uKnkF/+cO92autKRe/I=
+X-Received: by 2002:a17:906:8cd:: with SMTP id o13mr4453722eje.341.1633074626858;
+ Fri, 01 Oct 2021 00:50:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqq8rzhmsi7.fsf@gitster.g> <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+ <YVOn3hDsb5pnxR53@coredump.intra.peff.net> <20210929184339.GA19712@neerajsi-x1.localdomain>
+ <YVVyUkwYNfkEqNfU@coredump.intra.peff.net>
+In-Reply-To: <YVVyUkwYNfkEqNfU@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 1 Oct 2021 00:50:14 -0700
+Message-ID: <CABPp-BH6ZzC9p94xda3SqfL0JjxoVAb3oV57a9cpg2ZDc=5NNA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+To:     Jeff King <peff@peff.net>
+Cc:     Neeraj Singh <nksingh85@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Oct 01 2021, Jeff King wrote:
-
-> On Thu, Sep 30, 2021 at 09:26:37PM -0700, Elijah Newren wrote:
+On Thu, Sep 30, 2021 at 1:16 AM Jeff King <peff@peff.net> wrote:
 >
->> >  - This side-steps all of our usual code for getting object data into
->> >    memory. In general, I'd expect this content to not be too enormous,
->> >    but it _could_ be if there are many / large blobs in the result. So
->> >    we may end up with large maps. Probably not a big deal on modern
->> >    64-bit systems. Maybe an issue on 32-bit systems, just because of
->> >    virtual address space.
->> >
->> >    Likewise, we do support systems with NO_MMAP. They'd work here, but
->> >    it would probably mean putting all that object data into the heap. I
->> >    could live with that, given how rare such systems are these days, and
->> >    that it only matters if you're using --remerge-diff with big blobs.
->> 
->> Um, I'm starting to get uncomfortable with this pretend_object stuff.
->> Part of the reason that merge-ort isn't truly "in memory" despite
->> attempting to do exactly that, was because for large enough repos with
->> enough files modified on both sides, I wasn't comfortable assuming
->> that all new files from three-way content merges and all new trees fit
->> into memory.  I'm sure we'd be fine with current-day linux kernel
->> sized repos.  No big deal.  In fact, most merges probably don't add
->> more than a few dozen new files.  But for microsoft-sized repos, and
->> with repos tending to grow over time, more so when the tools
->> themselves scale nicely (which we've all been working on enabling),
->> makes me worry there might be enough new objects within a single merge
->> (especially given the recursive inner merges) that we might need to
->> worry about this.
+> On Wed, Sep 29, 2021 at 11:43:39AM -0700, Neeraj Singh wrote:
 >
-> I do think we need to consider that the content might be larger than
-> will comfortably fit in memory. But the point of using mmap is that we
-> don't have to care. The OS is taking care of it for us (just like it
-> would in regular object files).
+> > It seems to me that one problem is that the new "primary" objdir code doesn't
+> > disable ref updates since the GIT_QUARANTINE_ENVIRONMENT setting isn't set.
+> > If we fix that we should be forbidding ref updates.
+> >
+> > I've included a path that fixes my test case. This is on top of:
+> > https://lore.kernel.org/git/CANQDOddqwVtWfC4eEP3fJB4sUiszGX8bLqoEVLcMf=v+jzx19g@mail.gmail.com/
 >
-> The question is just whether we're comfortable assuming that mmap
-> exists if you're working on such a large repository. I'd guess that big
-> repos are pretty painful with out it (and again, I'm not even clear
-> which systems Git runs on even lack mmap these days). So IMHO this isn't
-> really a blocker for going in this direction.
+> Ah, right, I forgot we had that "forbid ref updates in quarantine" magic
+> (despite being the one who added it).
+>
+> I do think this improves the safety, but things are still a bit more
+> dangerous because we're handling it all in a single process, which sees
+> both the quarantine and non-quarantine states. I wrote more details in
+> this reply a few minutes ago:
+>
+>   https://lore.kernel.org/git/YVVmssXlaFM6yD5W@coredump.intra.peff.net/
+>
+> (sorry, it's long; search for the paragraph starting with "Whereas doing
+> it in-process").
+>
+> > When creating a subprocess with a temporary ODB, we set the
+> > GIT_QUARANTINE_ENVIRONMENT env var to tell child Git processes not
+> > to update refs, since the tmp-objdir may go away.
+> >
+> > Introduce a similar mechanism for in-process temporary ODBs when
+> > we call tmp_objdir_replace_primary_odb.
+> >
+> > Peff's test case was invoking ref updates via the cachetextconv
+> > setting. That particular code silently does nothing when a ref
+> > update is forbidden
+>
+> Oh good. I was worried that it would generate ugly errors, rather than
+> silently skipping the update.
+>
+> > @@ -2126,7 +2146,7 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
+> >               break;
+> >       }
+> >
+> > -     if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
+> > +     if (getenv(GIT_QUARANTINE_ENVIRONMENT) || !ref_updates_are_enabled()) {
+> >               strbuf_addstr(err,
+> >                             _("ref updates forbidden inside quarantine environment"));
+> >               return -1;
+>
+> I think the overall goal of this patch makes sense, but this
+> conditional, along with tmp-objdir reaching out to the refs code, feels
+> funny. Should we perhaps have a single:
+>
+>   int tmp_objdir_is_primary(struct repository *r)
+>   {
+>         if (the_tmp_objdir &&
+>             !strcmp(the_tmp_objdir->path.buf, r->objects->odb->path))
+>                 return 1; /* our temporary is the primary */
+>
+>         if (getenv(GIT_QUARANTINE_PATH))
+>                 return 1; /* our caller put us in quarantine */
+>
+>         return 0;
+>   }
+>
+> Then it's all nicely abstracted and the ref code does not have to know
+> the details of GIT_QUARANTINE_PATH in the first place.
+>
+> If you do got that route, the strcmp() might need to be a little more
+> careful about whether r->objects can be NULL (I didn't check).
+> Alternatively, I kind of wonder if "struct object_directory" should just
+> have a flag that says "is_temporary".
 
-On the not a blocker: Even without mmap() such a user also has the out
-of increasing the size of their swap/page file.
+Actually, wouldn't this be the safest approach, for my particular
+usecase?  By having the quarantine in place, no refs will be updated,
+which removes the risk of new refs mentioning objects that will go
+away.  The only issue that could arise would be from new objects
+referencing objects that will go away.  But the new objects are also
+written to the temporary object store when it remains the primary, and
+thus those new objects will also be deleted when the temporary object
+store is.
 
-And generally I agree that it's fair for us to say that if you've got
-such outsized performance needs you're going to need something more than
-the lowest common denominator git can be ported to.
+In contrast, moving the temporary object store to the end of the
+alternates list would allow new objects to be written that reference
+the objects that will go away.  Using pretend_object_file() will also
+allow new objects to be written that reference the objects that will
+go away.
 
-I also wouldn't be surprised if in that scenario we'd run faster if we
-were using memory (and no mmap) than if we tried to fallback to the FS,
-i.e. your suggestion of replacing N loose objects with one file with
-index offsets is basically what the OS would be doing for you as it
-pages out memory it can't fit in RAM to disk.
+Said another way, I don't think anything should be writing a critical
+file that needs to be durable when we're in the middle of a
+"read-only" process like git-log.  The only things written should be
+temporary stuff, like the automatic remerge calculation from
+merge-ort, the textconv cache optimization stuff, or perhaps future
+gitattributes transformation caching.  All that stuff can safely be
+blown away at the completion of each merge.
