@@ -2,88 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 682C1C433EF
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B9F4C433EF
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:10:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A0A361A51
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:07:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DADC961A51
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352905AbhJAJIz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 05:08:55 -0400
-Received: from mout.web.de ([212.227.17.11]:36951 "EHLO mout.web.de"
+        id S229874AbhJAJME (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 05:12:04 -0400
+Received: from mout.web.de ([212.227.17.12]:49643 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1352896AbhJAJIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 05:08:50 -0400
+        id S229702AbhJAJL7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 05:11:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1633079222;
-        bh=w6HjZ+K/jNEaIES22m+jNUdliTE6sA9zhOo9EhDfDSs=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=GJlL2Nfwdanb+DLWLZsWeQjhhuplTQp3SWlZ6vuGiL0RlpkZ+1ZqqadQHX7xtvig/
-         ypmH4kEgxWbIFD0n9iuaqM5OPvXHeJGo7wHQSZLhKZ3RFT/Qn+byGg73Vzp5ri4Tdm
-         2/S+uP+65yHubDU18jDTm2noSHIMCZwfCqQzBMMs=
+        s=dbaedf251592; t=1633079410;
+        bh=0JPtoY5xDq3tgkgxexgL/nQg9/XjMjc+CvhgAi0iljI=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=ZknzkCPbizIZbCwQUVrwq084dcANEc+ae6i29FWYYuzFm/Jf+auIp+RXbRD/h9e1z
+         15keBp3iDgeqek1V0zcDOnPASUgwC5MXE9LAQT4yyMCZ4T+joxM/38sLtXqK11A+HD
+         nNeZAuBqUE3YyeQhAu/Tsm2q46pMYYL0xCwqrPVc=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0MgO8g-1m8WiO0Of8-00Nioc; Fri, 01 Oct 2021 11:07:02 +0200
+ (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0LyDlZ-1mrDwF1sft-015c5d; Fri, 01 Oct 2021 11:10:10 +0200
+Subject: [PATCH 1/9] test-mergesort: use strbuf_getline()
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 0/9] mergesort: improve tests and performance
-Message-ID: <943b1e01-465e-5def-a766-0adf667690de@web.de>
-Date:   Fri, 1 Oct 2021 11:07:00 +0200
+References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
+Message-ID: <928cb42c-c45b-c90a-c71b-2f6669e03251@web.de>
+Date:   Fri, 1 Oct 2021 11:10:09 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <943b1e01-465e-5def-a766-0adf667690de@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:cpF4Z0QbSr55bVOI9rkHXazakXDv4cUZCejdAtacU4fw3k1RPc0
- YEoxubZBZsqBWfPwQYRSoKKX1txOPN94YDB9xevIX8/5hCZPoKdVhXSRrxG4Y47GHF9VuaN
- u+cGta9l2LpWOE5KPEmGG6/szBmxIRtGYCL7/jmQKr6TYHTaHK6lkoFNU9UwfCHERviJNe0
- nuctlkpEqULSM1W/Svyhg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SdkUn+3jSEo=:gobrS5JisSOODgbJ2YB263
- EWaqj/8G/pNHtzTdgJ+YmCJ+FAwHt6q3U+ixyYk0wo8enH0g+y0KAbfm69HONDpyqcTTlirD0
- +fjhz4yk6kXK+B0vVkmyAW0tf17AW8AD7jQ/gc91Ty7fhZM+D9TxGL+dtyrK6pEZPCRxqgOyg
- VhNNvPaNLap+87sBYVAPBFFOSqVP7PrHQLGWmej4M/vj15r4MR/PPNZaJcTfa5tnhknF/2Lep
- KzZQECvzan+4TUvN/rNn2OKfAj2cSlbSsPnV476HPPhbuV+CwzeQdBSUl+iw31h/csBLNyzCo
- neyOdGyKzYMaHsFlXmoVzyA7vRSOkwgXuxtsc3SOvDzbjbqJoj1izdkLoaN6vLWpZNeNdMY9/
- nHI/keVXcE8L2vHcRkxcDOFiRRT96d5JZLEVZO9HX5GOYEaQnbcJq22AoWYgr0SH6UCaqFQmy
- po11mj7Y/8K7cYiMipTNG+BSL2tNfT5DNZZRVZPm/Jtr4M4VeDYQwlI99SHdg5ZE5Hd6rE4dc
- jJ7lhQaiIZ6Z4+Yq8i9UkkKqi021erUiu7T3YinVIfQ34Vm2VsGqEowPwx9zFVu5dkTc4m6rz
- AYDspppJe1oz+VW1QH8l/6+kAdfofWiIOF5+GYoPiYBRYxjJg5PWh1EkM8ClLMHHSeT2YwDY+
- D7sRcZhnLSrVolTv5QHFULbzcaOIrPHaZHy01WlNCHlvL7KzSnhUnEmjByGbQV5jEPvqNfSPH
- uGK2UJvMEc5wg22kvlrgqo1lL+PkIiyQx/k0kp33GGbNxcDPfh7zElgh6ffK/I02HrAzt8EF1
- 4Q5v3h3qauzljeyvL67ioEaLcZ/UAjt4mijwOZrnfxrnckZVWVUu8uy4eNxneG3CSAQIYgkqS
- 5Y6urL7iVqMJ+3xDCls8oQFmE2n6XuqP3Lu1csgWbEIEhMuXHWFcUG15YKvhBPom+bODGj2O5
- QTw80SxmKGc+D2kLy0SsLlI9OUKm1pTGDBQ5wI4QuoC1/2hDVmQtxQfnHn0qIGgA8VJO5/+ag
- 9RQ988yzNiQHwikH/34QbcIJzzljyZHmw0Qe3pj0BFGvKUV1hAHJWqRHInXd/xxHew==
+X-Provags-ID: V03:K1:obHIWkUGR86Ec+d7uVtTCydtwTQwoRF7rQjmLL0jcJfGSvIUftY
+ rws3NUrj7WRMAKop+YBZikeOmozpFnehEFiquWIYYJTcs/9mEpDJ0NAy7ea8OjOZOyPGK0l
+ TkSfBFZzbuSP+SykKwZEu+hu6/dVcOU4KwMJ5Ef2H+F1yaFZYGgDJPIRWonZb5cR15gKgOC
+ yoJZmY1GjmFC7Y4unYUjQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uN/nnY+5Vyw=:Lltu63VQi6mcMm4xIXN7Yv
+ RfbWiKG5iV2JTLg5bMUtH/0BjgAm/SenYdouxNJ3G3YzZJyP34N9BjuCjCFgy+zJkA7SJRlf5
+ nKCW0HVjR7+46rrRWon50KsmWy6J3j6ddtGLyjpg90mgy9yYHSJ9qelTKOERT3Wvn0QJ3wg8T
+ EfbqX9K2BVVldEeAKfKGJBq+tSz5Z9ad//s0Mw0AgQOCotH2ZbSKgnn+D32PvBI2szBqyZR7a
+ ByNaZrfTgRJxjkjaP7WZnuMAvRGtM1/SApIXxsdQtbhGu6yl0zpYdzKaFpmEtuPkxfwAHEPCS
+ 9INIHgYCuwbPhCXRCdKFNazfDVoaXZk2MiV6F1G6qBAhHybbOUQWPbdE/lXhuJOeJ2wgkNEor
+ w+EnEWW4G98RGqHFI6dcT2V+eMlOrbovI1CaJEd5OQ072HcDQxW/dLObDu/VvSokJDtwZ/4HX
+ cIIDM0qjpMWLaktXK2Q2lfoCj6uabw2cNR6jEZ6sLzIIePKpbsveoTFgvBzMiOlZGOgSQaqac
+ ItEvzpkLd9KgPd4xki7hWssN1tl6GDUCERkA5/70rUIgTegW4RuOvi0z+3cHxS0FwiqnL+KKl
+ howVlq8C4ZqT4zaM4YLHtLXZf2jWQjzu4+xBQkQ+ovS1XV39l7lrNrpsu91lCQFDKPJf53+Jb
+ i53gfEVW0SlmpCJKqn2jq3FrzUHzsrOB8CyODxDyR5Zg4URV9vbFtBmGnsTr29sLEdGQ7XyhU
+ vkHayZhIBxjz4OxUu+E2b7ebcRc8QPHlvgZ6RDCZBntRpC9WFpCtT5JWpzwcpB3YlLJI7jmuH
+ S7aUA7aCGYMenimWUND1jT9r7L4BIoNKZIWjeaQ4qfb3hKldANHX5eNXsqiy5oxV6RPTBv7ou
+ GllEIwL1vl2FlC76QlYPwkHHgIJ5lrk58pPVtytZdMY4dDUORBIKy750DbiuqtqZ2JwE2/w6O
+ E9MUjeYCkMe0+FmYHeYAaPofqmGcUZXDNBDsTbpr1gOHXlK3sZjoJY7mMbLk4S5nGDXFUpPLW
+ z+Xvmn9qCJTCsXCVh1OyJ6r2TkO7hVcF9X8YBpy3WpEcpklrtEwxdMSrjWGmME8POw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our mergesort for linked lists doesn't allocate temporary memory, which
-is nice.  It is traversing the list multiple times from start to finish,
-though.  This series teaches it to avoid that, which speeds it up
-considerably.  But first it improves the associated test helper to
-exercise the code harder and to make the effect of the changes visible
-in terms of saved operations.
+Strip line ending characters to make sure empty lines are sorted like
+sort(1) does.
 
-  test-mergesort: use strbuf_getline()
-  test-mergesort: add sort subcommand
-  test-mergesort: add test subcommand
-  test-mergesort: add generate subcommand
-  test-mergesort: add unriffle mode
-  test-mergesort: add unriffle_skewed mode
-  p0071: measure sorting of already sorted and reversed files
-  p0071: test performance of llist_mergesort()
-  mergesort: use ranks stack
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/helper/test-mergesort.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
- mergesort.c               | 121 +++++++------
- t/helper/test-mergesort.c | 360 +++++++++++++++++++++++++++++++++++++-
- t/perf/p0071-sort.sh      |  40 ++++-
- t/t0071-sort.sh           |  11 ++
- 4 files changed, 465 insertions(+), 67 deletions(-)
- create mode 100755 t/t0071-sort.sh
+diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
+index c5cffaa4b7..621e2a5197 100644
+=2D-- a/t/helper/test-mergesort.c
++++ b/t/helper/test-mergesort.c
+@@ -28,9 +28,7 @@ int cmd__mergesort(int argc, const char **argv)
+ 	struct line *line, *p =3D NULL, *lines =3D NULL;
+ 	struct strbuf sb =3D STRBUF_INIT;
 
+-	for (;;) {
+-		if (strbuf_getwholeline(&sb, stdin, '\n'))
+-			break;
++	while (!strbuf_getline(&sb, stdin)) {
+ 		line =3D xmalloc(sizeof(struct line));
+ 		line->text =3D strbuf_detach(&sb, NULL);
+ 		if (p) {
+@@ -46,7 +44,7 @@ int cmd__mergesort(int argc, const char **argv)
+ 	lines =3D llist_mergesort(lines, get_next, set_next, compare_strings);
+
+ 	while (lines) {
+-		printf("%s", lines->text);
++		puts(lines->text);
+ 		lines =3D lines->next;
+ 	}
+ 	return 0;
 =2D-
 2.33.0
+
