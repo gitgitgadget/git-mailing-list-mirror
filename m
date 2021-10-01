@@ -2,66 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A04BC433F5
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 801DAC433F5
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79CEF61A7F
-	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 08:56:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61CF461361
+	for <git@archiver.kernel.org>; Fri,  1 Oct 2021 09:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352519AbhJAI6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Oct 2021 04:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S1352899AbhJAJIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Oct 2021 05:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231324AbhJAI6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Oct 2021 04:58:06 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEEDBC061775
-        for <git@vger.kernel.org>; Fri,  1 Oct 2021 01:56:22 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id r18so32061337edv.12
-        for <git@vger.kernel.org>; Fri, 01 Oct 2021 01:56:22 -0700 (PDT)
+        with ESMTP id S1352895AbhJAJIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Oct 2021 05:08:45 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4547CC061775
+        for <git@vger.kernel.org>; Fri,  1 Oct 2021 02:07:01 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id v10so32556039edj.10
+        for <git@vger.kernel.org>; Fri, 01 Oct 2021 02:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=c29JKR+dl77Q4Yl70jIkfAKnx/3EAahQp87EMxJ1W1M=;
-        b=nuYaRBG14wJpHNsp2VHkgKUSf10wYO2lgafzN11TRqYbTS1xx4iXjROx/J1NtYoBXg
-         4lXhg2lffVloUXU51M2VEXUiQGHFougNx6KexDs3IROjUG0fvWUBCanVRqu05tji6LKI
-         OUzpp8p37QHiKsQ1LEWBiTdSWmi7J/PERg4J2+Wd7SAbJKbTzi+ymFWM+HCShfSFEjnf
-         Y2XZXp4Jw25GEMCS1CrVpyVyq8iQUPuV9kt5FsR1fZHcV+cBqK9sPRs+mMzKC/sFbA78
-         2OMh4GN+/YzXLgO27+udwR+mxH94zJDWMbVWn7Hn0ghia/ka2BdKQby8sx3KNc0dxDCt
-         Zrhg==
+        bh=soXOPKHwq9d4GpSGtJLEGEFaPaDgAiDrXZ2Www+Ayv0=;
+        b=g4kMo+4/o5UqoKi727I7RoihIuEF5P26/gboNmSFIu+OVG7Db+Wec1luiCMunjglor
+         sqzUikzc1gc9D1YAseDWyA/zsDdJJZyTTrpBnDeuEhJXnVhOR1NvQ/nMVBk5lHZkXTCd
+         JxsmzF7ipqor/LUYTk6t78ZUKvOwP91LgQaa2FMcOCAdCDWu6YOQnWvbBJOSGG9yvSOc
+         Dqg2zuAvsIrz6CWHCiPrfAxdC2koOdUc01C6yJCRtoGY1ZpO4mRYo4CzzQwP96Y4is6M
+         n4ZUSDyiCZ1K4iszAnqhcz9+7P98GW4WJZjw/DUjMtifv8lUZohzi8QUSlqeRwCylvIz
+         Xd2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=c29JKR+dl77Q4Yl70jIkfAKnx/3EAahQp87EMxJ1W1M=;
-        b=HawtjK5TC9yCudRaotR0asWsaYcP2LmS6jP047f67sZ9z4fvVVmORkQo+QNH2qeqRC
-         Zw8ARK4O73AKHbjiHeZbIvEd7WuDVeU51SPoMJoXTC2prOL/tOm+c9HfO39N2Zc1mgXM
-         CUb28MSkmkyahFeUhZugf+tY96Ih7cCSqkXZBmphfnUa8PPZaQHVVpMeY199Zvp46xDd
-         4ROrwLvTxKGA07jhyeegbEB9EpJ0SOmHrvFyTJtn1ah1XPtpn9C6/t2YxdICKvmcWAQB
-         VbWDh0+cpOjPSmGK2ThJU+qcordYiCd+vHD48fda0yWXzgMbVL6qHIxo1D/trTm4QV5L
-         cINw==
-X-Gm-Message-State: AOAM5334ZsnOD9NyTtTeRzTrODVy8P6v5AGKjUKuGy51iZHUr7mXJnKD
-        TYuiEKipLS5WsDmgGadqbYA8mSoL6PRTHw==
-X-Google-Smtp-Source: ABdhPJziJF8PdD1rflbtaK85iQw/EiZQM6KvWTel8eXTjSkKc9qB7DfWzPOw7KqSTPEqyUlWYBv7Og==
-X-Received: by 2002:a17:906:7c86:: with SMTP id w6mr4746527ejo.215.1633078581280;
-        Fri, 01 Oct 2021 01:56:21 -0700 (PDT)
+        bh=soXOPKHwq9d4GpSGtJLEGEFaPaDgAiDrXZ2Www+Ayv0=;
+        b=br2avRm5AzJ3ByxHhgTzSJp99NAbKp08alerXoeqirnlYuI0kvzQ/WtkpQlVnTLUPm
+         tzwNe9FEDfPHlVhd4Fh0fBkWB3QZzz5+nYydckZByppmxtWOP/z/bSjOJ4HFknW2YPmd
+         DeSg5gg/LFOwooXKxjtiKurrhThNpyP6DEUK2PrsZUz1+VPMwGiD8lRNpcMcZL5Rqsgx
+         6DMirUSUhBXWWjMtRuWRJgCEEEr6dUWLTXYW5P0OIFHYT15FUrVK9wD0HBqc18fOZ/vU
+         kk/O7Hn6IaliqqbVq2FMM0O7Vm70D0R1NFqG8Jl+dbLnq23wL8TqpwUCuULZtrWHZ5fr
+         myjQ==
+X-Gm-Message-State: AOAM533bOpOhl+972f+x/tuSOojRnl+xPQnCtjRS/IzsjtcYEiaDvSjj
+        jIoYfZX/j059t5KuHDYNo4A=
+X-Google-Smtp-Source: ABdhPJzgLMSm1noSoXH2RvlpMXQZE7v0xmPrLO9KaUjjAOTTt25MYS8nALMwL+WCIGXTr0zX+og6Dw==
+X-Received: by 2002:a50:bf02:: with SMTP id f2mr13043296edk.226.1633079219674;
+        Fri, 01 Oct 2021 02:06:59 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id de9sm2793931edb.8.2021.10.01.01.56.20
+        by smtp.gmail.com with ESMTPSA id 6sm2688996ejx.82.2021.10.01.02.06.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 01:56:20 -0700 (PDT)
+        Fri, 01 Oct 2021 02:06:58 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: en/removing-untracked-fixes [Was: Re: What's cooking in git.git
- (Sep 2021, #09; Thu, 30)]
-Date:   Fri, 01 Oct 2021 10:51:33 +0200
-References: <xmqqh7e18soj.fsf@gitster.g>
- <CABPp-BHKOt+x+B3DGh3BJV_voP64pvTrL5B-w4hWqHNKfr2K3w@mail.gmail.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v9 01/17] fsck tests: add test for fsck-ing an unknown type
+Date:   Fri, 01 Oct 2021 11:05:35 +0200
+References: <cover-v8-00.17-00000000000-20210928T021616Z-avarab@gmail.com>
+ <cover-v9-00.17-00000000000-20210930T133300Z-avarab@gmail.com>
+ <patch-v9-01.17-520732612f7-20210930T133300Z-avarab@gmail.com>
+ <78bab348-ba3a-7a27-e32e-6b75f91178db@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CABPp-BHKOt+x+B3DGh3BJV_voP64pvTrL5B-w4hWqHNKfr2K3w@mail.gmail.com>
-Message-ID: <87fstlrumj.fsf@evledraar.gmail.com>
+In-reply-to: <78bab348-ba3a-7a27-e32e-6b75f91178db@gmail.com>
+Message-ID: <87bl49ru4t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -70,65 +73,48 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Sep 30 2021, Elijah Newren wrote:
+On Thu, Sep 30 2021, Andrei Rybak wrote:
 
-> On Thu, Sep 30, 2021 at 6:09 PM Junio C Hamano <gitster@pobox.com> wrote:
+> On 30/09/2021 15:37, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Fix a blindspot in the fsck tests by checking what we do when we
+>> encounter an unknown "garbage" type produced with hash-object's
+>> --literally option.
+>> This behavior needs to be improved, which'll be done in subsequent
+>> patches, but for now let's test for the current behavior.
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>   t/t1450-fsck.sh | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+>> index 5071ac63a5b..969bfbbdd8f 100755
+>> --- a/t/t1450-fsck.sh
+>> +++ b/t/t1450-fsck.sh
+>> @@ -865,4 +865,21 @@ test_expect_success 'detect corrupt index file in f=
+sck' '
+>>   	test_i18ngrep "bad index file" errors
+>>   '
+>>   +test_expect_success 'fsck hard errors on an invalid object type'
+>> '
+>> +	git init --bare garbage-type &&
+>> +	(
+>> +		cd garbage-type &&
+>> +
+>> +		empty=3D$(git hash-object --stdin -w -t blob </dev/null) &&
+>> +		garbage=3D$(git hash-object --stdin -w -t garbage --literally </dev/n=
+ull) &&
 >
->> * en/removing-untracked-fixes (2021-09-27) 12 commits
->>  - Documentation: call out commands that nuke untracked files/directories
->>  - Comment important codepaths regarding nuking untracked files/dirs
->>  - unpack-trees: avoid nuking untracked dir in way of locally deleted fi=
-le
->>  - unpack-trees: avoid nuking untracked dir in way of unmerged file
->>  - Change unpack_trees' 'reset' flag into an enum
->>  - Remove ignored files by default when they are in the way
->>  - unpack-trees: make dir an internal-only struct
->>  - unpack-trees: introduce preserve_ignored to unpack_trees_options
->>  - read-tree, merge-recursive: overwrite ignored files by default
->>  - checkout, read-tree: fix leak of unpack_trees_options.dir
->>  - t2500: add various tests for nuking untracked files
->>  - Merge branch 'en/am-abort-fix' into en/removing-untracked-fixes
->>
->>  Various fixes in code paths that move untracked files away to make room.
->>
->>  Will merge to 'next'?
->
-> Phillip (Wood) just recently acked the series[1].
->
-> =C3=86var made multiple good suggestions on an earlier round that I
-> incorporated.  A few others commented as well and I incorporated each
-> or responded why it didn't make sense, I believe to the individuals'
-> satisfaction.
->
-> However, on the latest series, =C3=86var has tried to suggest some changes
-> around the 'dir' member that he seems to want to see squashed in.
-> There's multiple reasons I don't like those changes, and even if we
-> ended up adopting them, I think they'd need a separate commit with a
-> good explanation of the assumptions being added by those changes[2].
-> I think such a change, if others want it, could and likely should be
-> submitted separately from this series.  And I suspect he's struggling
-> just as hard to see my point of view as I am to see his.
->
-> So...maybe I reroll the series with Phillip's Acked-by, and give it a
-> few days to see if either =C3=86var or I can convince the other?
->
-> [1] https://lore.kernel.org/git/b23bb983-39e6-75ad-0cb5-d9a5ba2cd4d8@gmai=
-l.com/
-> [2] https://lore.kernel.org/git/CABPp-BGi03JunRaMF_8SJKC00byOnq1kL3JyYhKW=
-atz8-B4RsA@mail.gmail.com/
+> Patch 01/17 introduces two unused variables: "garbage" and "empty".
+> However, patch 16/17 introduces grep checks for "garbage_blob" and
+> "empty_blob". Aside from that, 't/test-lib.sh' already defines
+> $EMPTY_BLOB.
 
-A tl;dr of the relevant reply from me[1] is that I'm fine with this
-being merged down as-is.
+Will fix in the v10 re-roll.
 
-As noted I should have been clearer from the beginning, it was really a
-"oh interesting, on my larger topic of memory leaks I did XYZ
-differently" than "your XYZ here needs to be an ABC". Should the "ABC"
-be worthwhile I can submit that on top.
+I think this is from an earlier version where I used the $empty, FWIW
+you do need it (or to write it) even with $EMPTY_BLOB since that's just
+the OID, but doesn't give you the object. You can write the /dev/null
+input and then use $EMPTY_BLOB, but I thought using the output of
+hash-object was less confusing.
 
-I did suggest in [1] that maybe the question of "ABC" v.s. "XYZ" would
-be better dealt with in some other series, i.e. just ejecting (if
-possible) the memory leak fixes while at it from this larger
-mostly-unrelated topic. But again, I'll leave whether you'd like to do
-that to your judgement after you've caught up on mail.
-
-1. https://lore.kernel.org/git/87k0ixrv23.fsf@evledraar.gmail.com/
+But in any case it isn't needed herea as you point out, we just need to
+write the garbage object, we don't need either variable. Thanks!
