@@ -2,143 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B33B0C4332F
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 444F0C433F5
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:33:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92F3C60F4F
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:16:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 286D461B1C
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233985AbhJBUSS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 16:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233966AbhJBUSK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 16:18:10 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E4FC061714
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 13:16:24 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id g198-20020a1c20cf000000b0030d60cd7fd6so999325wmg.0
-        for <git@vger.kernel.org>; Sat, 02 Oct 2021 13:16:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mdvztQa66XnY/Soy3w3qC5vSdXiCFM23ng+RutHiTwY=;
-        b=jW5OWVUbf8LCUkRkzYNZbDckjfhgKJganJPq4SjYz2hB+rcsQl+0V2QFngWMS4pNNX
-         3l8wePwPbBlBu7tO4BljnlSUPEcO/02YLLA2LvIxC4c/iP6aVC8Ht3IKM+rHBIxU80hG
-         KdA0UYvAxDUuKjpEJnyIpph6SP40JV02lQym3hNja7y/PUXp+LJry3W0hQea+4fo4Hrg
-         tQDFDDlwtaPh20xz1mtBeY7ZVwAQwyHHOBYoOnB0at/yn8ixkOt9V2g6dUgXAIFxFKIy
-         FKeN3UdLihh5ubSfqzskcY2wvEgo8ceXQu8AL8lywJ60H+CSiYDtDldGKWrq1ngNZ5Dn
-         rLIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mdvztQa66XnY/Soy3w3qC5vSdXiCFM23ng+RutHiTwY=;
-        b=GBXG7Tqz1FJrShk6X8Ir+t70+i85nPDaSCHqKhyAziL8R7v+7DLucYxvM1MYEKG3sQ
-         tnL5JicMdHDdBWRNi77CwbdG7EAVrXgKh80irCMqS2HUx6gXF9yZRZ+tnAIReA3KQ4N9
-         HPly6UvW05SoHKYwHXvzgKFLZBPnK02sb/v6gHomP/Jyc+1WR19a94Xa7wSLKpHV1VgA
-         qr1+mjzejiDCrTe6R49uB3Rg3wW7fezwDeTPqusbZ06uh7tJljPIXOCaVjqXiJ/ikuR6
-         ACNLU/l6qqjVUomefn9NyENNj9hMhKtPQW5emRC4I3DkFXhLTNcgB0HETAPvG4+YIU59
-         GLbg==
-X-Gm-Message-State: AOAM531EcnLwU5/Nko2KPZF2PbwG+kw7UfLbT1FegoUOAui+ltgRkj/R
-        luikt+kYGnOV7jaW4GtSQZZl6qwXb+cuOA==
-X-Google-Smtp-Source: ABdhPJyZGXijMDXjgXIUqiQDN19OQnYDz26WaGo9pNmuWiIePsvvHeKiePGlR85LopriZStYSRzylg==
-X-Received: by 2002:a1c:ac86:: with SMTP id v128mr10721078wme.3.1633205782373;
-        Sat, 02 Oct 2021 13:16:22 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g2sm9946009wrb.20.2021.10.02.13.16.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Oct 2021 13:16:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 3/5] urlmatch.[ch]: add and use URLMATCH_CONFIG_INIT
-Date:   Sat,  2 Oct 2021 22:16:15 +0200
-Message-Id: <patch-v4-3.5-266948e604c-20211002T201434Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1380.g193143c62ce
-In-Reply-To: <cover-v4-0.5-00000000000-20211002T201434Z-avarab@gmail.com>
-References: <cover-v3-0.6-00000000000-20211001T102056Z-avarab@gmail.com> <cover-v4-0.5-00000000000-20211002T201434Z-avarab@gmail.com>
+        id S233980AbhJBUfT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 16:35:19 -0400
+Received: from mout.web.de ([212.227.15.4]:57737 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229503AbhJBUfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Oct 2021 16:35:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1633206799;
+        bh=r3/0ZpSEsX+2aaM9C3ew1qQht/VqQi0/upA+0gXfBfk=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=Q0+L57Tzbhivq+8jJkvBl4AZIGEi5KcqDQ9lsfqJ/dBt5bbdFXmKLlOqofqyXRvpU
+         SfQumhxV9cqOOM9YR6rWudFf6pS82/NFYxkJ/Qg0D5arlc9+58/r19xA6Q6Z71vPsq
+         b+OBsSpBVflCV0mAvxifO57CPm/YZhtrN+lCBBmQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0Lg3bv-1n8ufs18hv-00pb7m; Sat, 02 Oct 2021 22:33:19 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] p5311: handle spaces in wc(1) output
+Message-ID: <a682e2c8-fecc-906e-0ff6-93de2b311d14@web.de>
+Date:   Sat, 2 Oct 2021 22:33:18 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fgqE5lEWAZG+f1CHcHoD0Ar4VHQ69EQWX5BxEMid9JMZJqVz+eY
+ 6DMNotlIy4Yi+s3SYwSrj2T4y4O4Jrfwq4MdXo8737r6BIQ3T4eb3VQj7E4TYGEfwb+Lz4q
+ 8AP9KSCaCMZQfnohULkv/zypQi9mLhXBb7mSyHP3aLXlcFiEmUknuvSMda7wXBxqUDEPeL2
+ M/LSuq2liIbBvj4AiUoqw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rg23ZTaGZ78=:vWF/4EYKSExcRdwJ4rA/wK
+ voVX0vxCd97Lq4Ba6VoICI+ul0k9Jp3dOEoltQ99pld90mCF1KpLO+cJjUnyfAqt0v5BG3pc/
+ azLnJXRBHgu5UGsQHnaB3FGZe1e4PgRruAn8k06xcZFQSj6qGQcuHra6cukISiNjN0aso+oRG
+ il/AvsVQ3yA2hzNDYlPZTeNHxENhfuBZ98cLy7JXgeylYOFi+PWnkMWRlihNLNmE4ld2Uj+pC
+ J286UhEs4txEkPlkF4jafUSrnCuhzar86M1DfujgwyA5Sz8lM0u25atG88AI2qFefkowuXFVf
+ oNTFM/5QyRWGED1RaoisUc3FSOo1uCdqWbKmCXbJdDT7Sh7QuzoNNTQ+Ujv6WRDGZzs6kr/XY
+ 84XV9H6frqYDWGLifZZyjPKW//5N0JgYHCoLlmeTRvIll5VAqY3O1f/WPJ6ZWefqkUSSP6rFG
+ 0dQ6tHUQxd28P2vIArIlfpPqxyuHQ87iiobctD24zqQIL1rcUT8adPS7a7qS89+mBYUbUBI1h
+ eYtlVPJVvNjy4sNCVlzXxFKWx6ZZ7NBVbtFtl8G4YeGoEKWHhUQTzeT3PPu2q/ita8u4JB141
+ mMQ22xZemPanxW/+bV7Dybk8/O+e3P92a1FlNQNPq7lqwU9U/JU0ZwXKH8pBNTU2p8Oy2Nq0Y
+ 0awaFOChxmFsyloiUOYr9PvQk3oqcWO1zIgm7OISjrBEcrSbpbQFI2KHJO/vVSL0GgLE4Bruj
+ kkcizDUSHeog75EAV67hJhp4PVDreNKn65Y1ExdIOiT2wWVq2B/Yn0XEsKcvMGNKbaJPdZAoV
+ 0EIrI86PXEZGrBl/3VpJcu57qsQnKA8b3ny5XwwQjRvHK8KTqLeCw5TV8Xkaj8RImwV4Tv7Mn
+ PWEzeUdK7yBqKdtksr8z7hDoaGF96vthhwArR4zPqBtnjACHFxkCAoDLFjQrJegnrNJiCZ1vh
+ kb/HsNf4mHHHWuAZ5WN7on14g4S24Ru3xYpJobTP3eHcvHxjjhBmadff7ztGjSe4VT33KFxA7
+ pwC9BTiukU7ur4ClVr73QbOT+MXweZkCsDGcg6XrHS/fI35nEYjsTTzPqo+o3WaUYa4eBvTBS
+ cebzV4WuScsFmw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the initialization pattern of "struct urlmatch_config" to use
-an *_INIT macro and designated initializers. Right now there's no
-other "struct" member of "struct urlmatch_config" which would require
-its own *_INIT, but it's good practice not to assume that. Let's also
-change this to a designated initializer while we're at it.
+Some implementations of wc(1) align their output with leading spaces,
+even when just a single number is requested, e.g. with "wc -c".  p5311
+runs all tests successfully on such a platform, but fails to aggregate
+their results and reports:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/config.c | 2 +-
- credential.c     | 2 +-
- http.c           | 2 +-
- urlmatch.h       | 4 ++++
- 4 files changed, 7 insertions(+), 3 deletions(-)
+   # passed all 33 test(s)
+   1..33
+   bad input line:    57144
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 865fddd6ce8..542d8d02b2b 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -575,7 +575,7 @@ static int get_urlmatch(const char *var, const char *url)
- 	int ret;
- 	char *section_tail;
- 	struct string_list_item *item;
--	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
-+	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
- 	struct string_list values = STRING_LIST_INIT_DUP;
- 
- 	config.collect_fn = urlmatch_collect_fn;
-diff --git a/credential.c b/credential.c
-index 000ac7a8d43..e7240f3f636 100644
---- a/credential.c
-+++ b/credential.c
-@@ -105,7 +105,7 @@ static int match_partial_url(const char *url, void *cb)
- static void credential_apply_config(struct credential *c)
- {
- 	char *normalized_url;
--	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
-+	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
- 	struct strbuf url = STRBUF_INIT;
- 
- 	if (!c->host)
-diff --git a/http.c b/http.c
-index d7c20493d7f..da12471c242 100644
---- a/http.c
-+++ b/http.c
-@@ -990,7 +990,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	char *low_speed_limit;
- 	char *low_speed_time;
- 	char *normalized_url;
--	struct urlmatch_config config = { STRING_LIST_INIT_DUP };
-+	struct urlmatch_config config = URLMATCH_CONFIG_INIT;
- 
- 	config.section = "http";
- 	config.key = NULL;
-diff --git a/urlmatch.h b/urlmatch.h
-index 6ff42f81b0c..34a3ba6d197 100644
---- a/urlmatch.h
-+++ b/urlmatch.h
-@@ -66,6 +66,10 @@ struct urlmatch_config {
- 	int (*fallback_match_fn)(const char *url, void *cb);
- };
- 
-+#define URLMATCH_CONFIG_INIT { \
-+	.vars = STRING_LIST_INIT_DUP, \
-+}
-+
- int urlmatch_config_entry(const char *var, const char *value, void *cb);
- 
- #endif /* URL_MATCH_H */
--- 
-2.33.0.1380.g193143c62ce
+Use the helper function test_file_size to get the number without any
+spaces in a portable way to avoid the issue.
 
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/perf/README                      | 2 +-
+ t/perf/p5311-pack-bitmaps-fetch.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/perf/README b/t/perf/README
+index fb9127a66f..802402d738 100644
+=2D-- a/t/perf/README
++++ b/t/perf/README
+@@ -190,7 +190,7 @@ shown in the aggregated output. For example:
+ 	'
+
+ 	test_size 'output size'
+-		wc -c <foo.out
++		test_file_size foo.out
+ 	'
+
+ might produce output like:
+diff --git a/t/perf/p5311-pack-bitmaps-fetch.sh b/t/perf/p5311-pack-bitmap=
+s-fetch.sh
+index 47c3fd7581..ed0c7570d7 100755
+=2D-- a/t/perf/p5311-pack-bitmaps-fetch.sh
++++ b/t/perf/p5311-pack-bitmaps-fetch.sh
+@@ -33,7 +33,7 @@ for days in 1 2 4 8 16 32 64 128; do
+ 	'
+
+ 	test_size "size   $title" '
+-		wc -c <tmp.pack
++		test_file_size tmp.pack
+ 	'
+
+ 	test_perf "client $title" '
+=2D-
+2.33.0
