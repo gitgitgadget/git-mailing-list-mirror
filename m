@@ -2,78 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C577C433EF
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71FD4C433EF
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E86EA61AFD
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:08:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5591A61A81
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbhJBJKg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 05:10:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51060 "EHLO
+        id S232674AbhJBJVM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 05:21:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232618AbhJBJKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 05:10:33 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B59FC061570
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:08:47 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id p13so15388325edw.0
-        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:08:47 -0700 (PDT)
+        with ESMTP id S232673AbhJBJVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Oct 2021 05:21:12 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91EA9C061775
+        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:19:26 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id z184-20020a1c7ec1000000b003065f0bc631so13223649wmc.0
+        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=CEupdcnHzp+AlFIrVDi6TpbeNDKTEUgKwHzswCayYOU=;
-        b=X9TAOZoVuXM0bcNDMTr6wWF3Hkkx4hQksIRFQTZNeOJccITr5lTV2kRs7txdWP1O/p
-         nxv2mj5ERl1Kyvh9JDd0+t7u2NizgnkvtT+hYSTuJ2lrHuH19FX9uiNH9WZZ1X1I8IAd
-         1VdSiDtyDnb/TM9Eepl1zuughn1PeqffUQRT1J5xWGsduV1w9L1QXxSQJYpPRu0L4e8l
-         ng2GBBLzkKl04ul1iOPiSLk5ygXbriLNOHaGyAx2ek4pR6H5g++CiM56RTdM1nshdla8
-         cb9gEt45bGaIMPmSmPQZOurJmzfhQNDESs8NoQ+M4ctcaIvkROat2ahayo4BV04PoyNH
-         cDWg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Tsj/CdPrcMCcstAGlcvv1VnKBV9aOzBJ6NaGP3wA4mw=;
+        b=azaQrbt3pjoGeZoRd0C8KFDkTJ4XeI6kwWuEDKqhUEBlo2cD7BMMPI9Wq2BzlSI9sk
+         LfnqQ9I3I+kfofVHQPreNsXcgsR3vT3LogH6PmUX3f/aThMcpc1xfxbcAJL39Pbe90pc
+         I1RfPVbh7/9qX77fq/pR7O08cCaNNQNhh0xscHcww0RBzp3BR3WUCEiGUIynAn6YVtWM
+         nh+vFnDt/yaVYcnfE5EttZcIW3Ve0AftGQ8xDD6fK6awEebW5JTEj4e1kg9OuMExpYIp
+         Fk5oAWkqbkBIwKbUIQ12GDtPdRx3nG01qcTM0DifJ2iqKoclfjWT/BNXuJiS7APO/mqs
+         uszw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=CEupdcnHzp+AlFIrVDi6TpbeNDKTEUgKwHzswCayYOU=;
-        b=KtEgZ7NYLWfBCVJIziHMjFJIZhSyWEfDcFWVIG0bPFBx48zi/rvhdLGvAqpDzLMaRU
-         f34mGShpgttJTcfX6M4MbGUNTsHPv9iC5yCc5+rI+su3iS9Ht7Ew7TSPIXIMbPr+QFKE
-         xZYxlzBgL1OwfhLOuW4Sp9mgzWN3orkCIeT6U/LmQjakxWplDy7QZ0Hs+WTdm6gGVd0j
-         IQYZb7qQ+Ynvgis3jvVxnnnrMwhlZ+FoptPq2NKX3J92Kq9jiFHLv9DIDCvjtEzaQZvI
-         aFbkaP4e1Dc8W/By+sUJPwyBI9fgxOaPRF5HxCXe2Q5x3ES1WNDSGy40SzQ6BUa9Zi+1
-         BhrA==
-X-Gm-Message-State: AOAM530dM4Ginz3vtw5bYgU7HtjEpKUR5hKSAoy7vlLVgqoa4fwZcftQ
-        on+fobEsKCVP1LfheWwzQtgDNXrf9+3K/w==
-X-Google-Smtp-Source: ABdhPJymxiSQvtB8CQe/VO7z+B2A775q1/SVcEn6f9AHFpj09/tKchfq5s/Yp5P3QMIXBzu0jByReg==
-X-Received: by 2002:a50:da48:: with SMTP id a8mr2718718edk.155.1633165725975;
-        Sat, 02 Oct 2021 02:08:45 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ox9sm996029ejb.66.2021.10.02.02.08.45
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Tsj/CdPrcMCcstAGlcvv1VnKBV9aOzBJ6NaGP3wA4mw=;
+        b=SpoEzcTnuRYZaLvRg2/PjdhZU5SjIcu1Us6lYqZBMNT8KBdzCVhUHmwgydlFWKviBy
+         M+wPQddRRBqiJ5phSZ6382EP/Fba9SRpldIqS3D3HMwe7uV05l16ta+KfDN4OZDj6HbE
+         RWYkLUXbVw6af7ShUiXEjnj4jhiDnJsByKcD04J126nuyeobnkc5/2K0hm3WWhSHD1gl
+         AzG2oJKbk6mU86wbievrm/jZbk32YFjWoyGIKDk3ayeEtUZ5qhR4OYOjJHIaDfGg60+q
+         tUKCRg2EUSnF9rkSKjKIoR21CgrfBSMLTugmpwJsme8f9G0OPFdPOVDKmqehaHQDrUow
+         0V+g==
+X-Gm-Message-State: AOAM5316v+BcYdPt+S0hgX9zAB/1ihQkPIl0SHE/aopjyX70ttS9sbiy
+        QfBuGWPhlCNbyUJptn7+nb1pKi3/i03ysg==
+X-Google-Smtp-Source: ABdhPJz8wxwBa3Wws57iZrD2S2P7feM6QAuS7EK3XVX63nb/P6HVCYLImSFZ8ij9WFNreI01VPodwA==
+X-Received: by 2002:a1c:7f11:: with SMTP id a17mr8722927wmd.166.1633166364980;
+        Sat, 02 Oct 2021 02:19:24 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id s13sm6735805wrv.97.2021.10.02.02.19.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Oct 2021 02:08:45 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9] test-mergesort: use strbuf_getline()
-Date:   Sat, 02 Oct 2021 11:08:19 +0200
-References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
- <928cb42c-c45b-c90a-c71b-2f6669e03251@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <928cb42c-c45b-c90a-c71b-2f6669e03251@web.de>
-Message-ID: <87fstjpzdu.fsf@evledraar.gmail.com>
+        Sat, 02 Oct 2021 02:19:24 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mauro Carvalho Chehab <mchehab@s-opensource.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/5] COPYING: modernize, steal boilerplate from linux.git
+Date:   Sat,  2 Oct 2021 11:19:15 +0200
+Message-Id: <cover-0.5-00000000000-20211002T091212Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1380.g193143c62ce
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There's patches to git.git to add a BSD-licensed reftable/ directory
+with its own "COPYING" file[1]. I think that for such a thing to be
+in-tree we should have some note in the top-level "COPYING" explaining
+git's license, but that subdirectories or other files could be under
+their own licenses.
 
-On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
+This series reaches the end-state of pretty much stealing linux.git's
+"COPYING" file, including specific wording they have. linux.git used
+to have pretty much git.git's "COPYING" file (as git.git's was derived
+from an older version), but has since diverged.
 
->  	while (lines) {
-> -		printf("%s", lines->text);
-> +		puts(lines->text);
->  		lines =3D lines->next;
+In linux.git there's a reference to
+"Documentation/process/license-rules.rst", this new COPYING file
+covers the relevant parts inline, but like linux.git's the end-state
+is that the GPLv2 is not inline in the "COPYING" file anymore, instead
+it's split into a GPL-2.0" and referenced by it.
 
-Aside: I wonder if we should have a coccicheck for that (not as part of
-this series), but maybe it would generate too much noise.
+The "meaty" part of this series (which I've CC'd Linus, Greg & Mauro,
+who were involved in the linux.git changes) is 3-5/5. The first two
+patches are just dealing with the implementation detail that git.git's
+"COPYING" file happened to be used by its test suite as test data, it
+couldn't be changed significantly without changing those (mostly "git
+diffdiff") tests.
+
+1. https://lore.kernel.org/git/xmqqtui4k1j5.fsf@gitster.g/
+
+Ævar Arnfjörð Bjarmason (5):
+  "lib-diff" tests: make "README" and "COPYING" test data smaller
+  tests: stop using top-level "README" and "COPYING" files
+  COPYING: remove mention of GPLv3, clarify sub-project COPYING
+  COPYING: move GPL text to a "GPL-2.0" file
+  GPL-2.0: update to byte-for-byte match the FSF's version
+
+ COPYING                           | 377 ++----------------------------
+ t/lib-diff/COPYING => GPL-2.0     |  60 ++---
+ t/.gitattributes                  |   1 -
+ t/lib-diff-data.sh                |  22 ++
+ t/lib-diff.sh                     |   2 +
+ t/lib-diff/README                 |  46 ----
+ t/t4003-diff-rename-1.sh          |   4 +-
+ t/t4005-diff-rename-2.sh          |   4 +-
+ t/t4007-rename-3.sh               |   5 +-
+ t/t4008-diff-break-rewrite.sh     |   4 +-
+ t/t4009-diff-rename-4.sh          |   4 +-
+ t/t4022-diff-rewrite.sh           |   6 +-
+ t/t4023-diff-rename-typechange.sh |  11 +-
+ t/t7001-mv.sh                     |   5 +-
+ t/t7101-reset-empty-subdirs.sh    |  11 +-
+ 15 files changed, 89 insertions(+), 473 deletions(-)
+ rename t/lib-diff/COPYING => GPL-2.0 (92%)
+ create mode 100644 t/lib-diff-data.sh
+ delete mode 100644 t/lib-diff/README
+
+-- 
+2.33.0.1380.g193143c62ce
+
