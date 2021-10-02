@@ -2,90 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61253C433EF
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE02BC433EF
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:03:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38661611EF
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 20:41:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91A806124F
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234001AbhJBUnW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 16:43:22 -0400
-Received: from smtpout2.vodafonemail.de ([145.253.239.133]:37102 "EHLO
-        smtpout2.vodafonemail.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233975AbhJBUnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 16:43:21 -0400
-Received: from mailbackend01 (balancer6.mediabeam.com [10.110.254.6])
-        by smtpout2.vodafonemail.de (Postfix) with ESMTP id 144C8613BB
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 22:41:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vodafonemail.de;
-        s=vfde-smtpout-mb-15sep; t=1633207294;
-        bh=1dWhjAWVQIdEUyc1j3AXm6cSLootpIPJfdWYlZmD7gE=;
-        h=From:To:Date:Subject;
-        b=HRMQDECSiXxFkJZb576UdW2W9/1x0lnMLc9HQkOiUvlGGsfc6+Jdz/VosHiRe7sYP
-         +k6LtNflC8xInVVpKRXyMuVxgly3YgtP2+UdGFjxIiXNqTyr2fxmJDECB3fSO7QU01
-         i1VtYI/j0fru1qOJM00ttiHlk9EhHSJhvDlzRSck=
-From:   some-java-user-99206970363698485155@vodafonemail.de
-To:     git@vger.kernel.org
-Message-ID: <07ae9b61a42346a0b49744586d4496bd@vodafonemail.de>
-Date:   Sat, 02 Oct 2021 22:41:32 +0200
-X-Priority: 3
-Subject: Bug: Failed checkout causes index to be in incorrect state
+        id S234060AbhJBVFP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 17:05:15 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53004 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234044AbhJBVEl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Oct 2021 17:04:41 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A234860457;
+        Sat,  2 Oct 2021 21:02:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1633208544;
+        bh=cVdOAE/2CEFOxj8fRdM/1I/39/8dkKcPj9a69yHE/14=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=TV3DDYMPdSF/qbDTHHWowDC9e5pB+KJH7nMQw6mPL9fxSDajvTPuOTweT2D9dmubG
+         sWRPh27XC6IMt9bfgCnDMvka3ylM3umhkpvZd9McYFbARQadkSnp1PPAual+yhFEwz
+         hPvOsjzzOR/jKiwsUGr4ejOmzt/e+y5/ZkcjbENvcdHWhHGxSmdo715tmJERrYkmkj
+         FVcfVWqFnwH8ZaGB+OYj60wKOqNSBXuRGaXAsRD7uC+IWZk/6mRfkRNlN6Oo2zTRi9
+         jQrEsSMvdooLznUeQ+30QiLlvDCuVRxPsMZosGbjE7OOBwnCyHYJPtoR87HbYYA87l
+         jKv4wgWSLBn1Yqv2akzup6jAxeMHGJ2808XLT/AIRP7oMsuOL3wdH864W2lENDCh3O
+         h1QN2IIErX440p3M+HrZT3f4khsQmOZVv5gLhl2QEVCnyGehVLUtIErcRWluWyuKp4
+         2HDDM2bpP9oX5MOksJK/SmJRpWJqSpmNI4+Pwf0uE4FaAh2m26F
+Date:   Sat, 2 Oct 2021 21:02:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] perf: fix test_export with SHELL=zsh
+Message-ID: <YVjI3AgD7SK4zxy+@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <8b70d04f-0ad1-6e68-f5a2-2d8ec3bb98ea@web.de>
 MIME-Version: 1.0
-Content-type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JD3GwHGu4PujEafA"
+Content-Disposition: inline
+In-Reply-To: <8b70d04f-0ad1-6e68-f5a2-2d8ec3bb98ea@web.de>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-this originally occurred with Git for Windows (see https://github=2Ecom=
-/git-for-windows/git/issues/3411)
-but it appears the underlying issue is within Git itself, see Johannes =
-Schindelin's comment
-(https://github=2Ecom/git-for-windows/git/issues/3411#issuecomment-9141=
-88040)=2E
+--JD3GwHGu4PujEafA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-## Description
-When Git fails to check out files (during `git clone`) the index seems =
-to be in an incomplete state afterwards=2E
-The files which could not be checked out are erroneously staged as "del=
-eted", and files which were checked out
-successfully are marked as untracked=2E This renders the suggested `git=
- restore --source=3DHEAD :/` command to retry
-the checkout ineffective=2E
+On 2021-10-02 at 09:40:02, Ren=C3=A9 Scharfe wrote:
+> Unlike other shells, zsh doesn't do word-splitting on variables.  This
+> is documented in https://zsh.sourceforge.io/FAQ/zshfaq03.html#31.  That
+> breaks the perf function test_export because it uses a space-separated
+> variable as a poor man's array, and as a consequence p0000 fails with
+> "not ok 3 - test_export works".  Pass the value through an unquoted
+> command substitution to force word-splitting even in zsh.
 
-## Reproduction steps (Windows)
-Preconditions:
-- Long Windows file paths are not enabled
-  (https://docs=2Emicrosoft=2Ecom/en-us/windows/win32/fileio/maximum-fi=
-le-path-limitation?tabs=3Dcmd#enable-long-paths-in-windows-10-version-1=
-607-and-later)
-- `git config core=2Elongpaths` is not set
+There are a variety of places in our testsuite where zsh is broken in
+zsh mode.  I recently sent a patch to make it do the right thing for
+subshells in sh mode which has not yet been released, and as far as I'm
+aware, with that patch, our testsuite is fully functional with zsh when
+it's run in sh mode.
 
-1=2E `git clone https://github=2Ecom/dependabot/dependabot-core --depth=
-=3D1 file-name-test`
-   (should fail due to too long file names)
-2=2E `cd file-name-test`
-3=2E `git status`
-   (should claim that files for which checkout failed are staged as "de=
-leted")
-4=2E `git config core=2Elongpaths true`
-5=2E Run the command suggested by the error message from step 1: `git r=
-estore --source=3DHEAD :/`
-6=2E `git status`
-   (you should see that `git restore` had no effect)
+Note that in sh mode, zsh enables the SH_WORD_SPLIT option, and this
+should work just fine.  The easiest way to do that is to create a
+symlink to zsh called "sh" and invoke that.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-## System information
-Microsoft Windows [Version 10=2E0=2E19043=2E1237]
-git version 2=2E33=2E0=2Ewindows=2E2
+--JD3GwHGu4PujEafA
+Content-Type: application/pgp-signature; name="signature.asc"
 
-All reproduction steps up to, including, step 3 can also be reproduced =
-with WSL 2=2E
-You might need to use a different Git repository with longer files name=
-s though, such as
-https://github=2Ecom/Marcono1234/git-file-length-test
-WSL 2: 5=2E4=2E72-microsoft-standard-WSL2
-git version 2=2E25=2E1
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYVjI2wAKCRB8DEliiIei
+gcOcAP0Reubzk1afMSIJ7Ek1UnPaqYIWyMG6ocpJ58I0rP6EkQEAhsYHSJCxCOZr
+rIDjc/l5hkarzutqYml4UMO4orfC9Qg=
+=iV/+
+-----END PGP SIGNATURE-----
 
+--JD3GwHGu4PujEafA--
