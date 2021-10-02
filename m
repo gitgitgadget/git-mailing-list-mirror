@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EF57C433FE
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9E05C433EF
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66A8261A81
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 921BC61B06
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232684AbhJBJVQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 05:21:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53360 "EHLO
+        id S232694AbhJBJVS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 05:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232677AbhJBJVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 05:21:14 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A8B4C061775
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:19:28 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id o20so1373638wro.3
-        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:19:28 -0700 (PDT)
+        with ESMTP id S232681AbhJBJVP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Oct 2021 05:21:15 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4DCC0613E9
+        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:19:29 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r7so3848837wrc.10
+        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AyB2LNIvUfxxA/T7QkQZpGCxucj8R6/ePoEwYQ/0hCw=;
-        b=NIx3cBOGR7s2agVqN79nXe/S4eYQubOGMzb6aPH+5F58A2QTNNQgjbK9M1TDHmvGmG
-         Ce6PRgcvca8y7aSMx/HAbUYXJU9GJAhtxp7YWk63+g53ygiBnyh0qf9YbfcELf+Iet48
-         Dt4BNjqsoqNUeyz3dev6FBujvTyCFQQgH8dmO6I5o676yrwTPSRZnp9albq+bvQuul7y
-         sX8jDUkcCi7vX9IJS/9dp1/+qyOzE9HQaVSm89rnetfhQP2z7fVgiB1J6U7zv0AG/z69
-         dYrxRV/0kfiLUupDvsf1NPooCMbiuWp0JtkQqte7uuFD6W7fQjWEuFU8ERtxad+5UmN+
-         vscA==
+        bh=iJxjO04Fv1Zibpib3Iuz1FkFzIfD7NE1CJpf8WGhtBg=;
+        b=YebSBEjbRT64swafIx0E9EXXY+juFAN+Fru71G+oBrtqpFaRJlCQ15zGrg44b4z8yO
+         DPGNPLZj/qmYoRR+Izreo5vocufxneIdoU/iiQk6AdSW2vDdZarIISDCd0axHq7QMyvK
+         9f5LoaLlvXsjRt7fM/lLxUbY1dhmgNDBjZhNplyji4aft2iWVJYljsf7a7pkIL+/PzSU
+         h5+oh6EPLprHjkD5J8iNjWmDSqfA7DoCej12x+wxiCx7/+fHa0gRQG1dn26/2atITt+1
+         0yh/L9vq85XdfBorqzrUlBSxjSWEdnPj9yyxhSX6TcNXsAcxV+8FKu395zyFeI+8ZUrw
+         WoLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AyB2LNIvUfxxA/T7QkQZpGCxucj8R6/ePoEwYQ/0hCw=;
-        b=wm5VhYEMbE9psOdRk2ABpyThiF8xAjaZGmYwD5eev3HncK1AczznZwMZYpCvvNbpY8
-         iwhCygF2K4cPAeTiYAuReI8xDoqqPIaKdImopOrPI8CzxTQQFKnHAEgVCM70CMDzuRPH
-         Z+6mx8WaZ7Xse9Tm5bJutntopSUfqAmQR/UlaeRNSAKWBRJy9EqjJj1gy0t4/E9/XMgg
-         AEXIKGNsucErtopNvcXSA+247dVTEk2JAFRQpg9Dx361uqSw1K2LT0epB1NzN1Ihov3y
-         mlNgbFliGj4pVEFTbki+pUp00HOCka1tdDyVIOurdaqBKqqfncmqEkPG3eRenOc2aL/r
-         z63g==
-X-Gm-Message-State: AOAM530aZPPzuOYrPupQEBBL2e6efjp1PXR3NxiB4pm5PHnksv1HYw8h
-        4ivbADR3+9S5nst1zcW/DPLGhFZzVKvBoQ==
-X-Google-Smtp-Source: ABdhPJx5fLs892lzrgrQFeeIWK9crU/VPiUDdsFZrCgj8ML/KdVwPT4bCalPdlUbcuyHokTc8fey9A==
-X-Received: by 2002:adf:f4c6:: with SMTP id h6mr2615773wrp.397.1633166366701;
-        Sat, 02 Oct 2021 02:19:26 -0700 (PDT)
+        bh=iJxjO04Fv1Zibpib3Iuz1FkFzIfD7NE1CJpf8WGhtBg=;
+        b=2f3WOJthTIL8iv3kiSlXBVtS+bP4h5b9Yvf2jP5XZf0uWHSfufS/6V0SW5nVoY/m8t
+         jd3HIyRN/b33gmLp+OP9+v5z5Cl+xXB3gCoNpFI0Xz+X1ZElFgcliYXtaC0P9lY0ANqO
+         xiYcNQQRYUCrjf1C19kB62uB1qi63yGrR9T3MiB+sNLpw+xYGnocFI/L4Dn5EBb9ZuKo
+         k5MOAb5dEkwSdSLNYVMwVnQlneMkXSEnguRP1D5TksjSlk3He9H017GJtTqMYaL18KkK
+         6wT8yfXPdgf7DiEjimH4yi0o/QJJGAVUDb9WVQfOTA4lOtO13Wxgx+6nfiosaaXSjvqn
+         YxpA==
+X-Gm-Message-State: AOAM533Rdl5dZDBIVuiJAlod58m0EpcZKhsvJOOs5ApHtJN9zk7E+mHq
+        ACTgEUpb+jhg3U5vs/tdxEdpq6zh1qSOSw==
+X-Google-Smtp-Source: ABdhPJzr8kjvRtBI29+sy7YfKUhhHak/Yy6lIuq8/FVgo31Em4cKT9+ra76d1E+nSDT/hVx5FLuobw==
+X-Received: by 2002:a5d:6288:: with SMTP id k8mr2579015wru.137.1633166367694;
+        Sat, 02 Oct 2021 02:19:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s13sm6735805wrv.97.2021.10.02.02.19.25
+        by smtp.gmail.com with ESMTPSA id s13sm6735805wrv.97.2021.10.02.02.19.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Oct 2021 02:19:26 -0700 (PDT)
+        Sat, 02 Oct 2021 02:19:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Han-Wen Nienhuys <hanwen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/5] tests: stop using top-level "README" and "COPYING" files
-Date:   Sat,  2 Oct 2021 11:19:17 +0200
-Message-Id: <patch-2.5-f07025682e1-20211002T091212Z-avarab@gmail.com>
+Subject: [PATCH 3/5] COPYING: remove mention of GPLv3, clarify sub-project COPYING
+Date:   Sat,  2 Oct 2021 11:19:18 +0200
+Message-Id: <patch-3.5-e91f8ce6984-20211002T091212Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1380.g193143c62ce
 In-Reply-To: <cover-0.5-00000000000-20211002T091212Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20211002T091212Z-avarab@gmail.com>
@@ -73,162 +73,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 459b8d22e54 (tests: do not borrow from COPYING and README from the
-real source, 2015-02-15) tests that used "lib-diff.sh" (called
-"diff-lib.sh" then) were made to stop relying on the top-level COPYING
-file, but we still had other tests that referenced it.
+The COPYING file added in [1] is a product of its era, at the time
+discussions around the GPLv3 were quite active. Since then we have had
+almost on "GPL v2 or later" notices anywhere.
 
-Let's move them over to use the "COPYING_test_data" utility function
-introduced in the preceding commit, and in the case of the one test
-that needed the "README" file use a ROT 13 version of that "COPYING"
-test data. That test added in afd222967c6 (Extend testing git-mv for
-renaming of subdirectories, 2006-07-26) just needs more test data that's not the same as the "COPYING" test data, so a ROT 13 version will do.
+Since then[2][3] linux.git has replaced its version of almost the
+identical wording with something that's a bit more formal, and which
+isn't mostly addressing a hypothetical future GPL v3 migratin. Let's
+do the same. Now we:
 
-This change removes the last references to ../{README,COPYING} in the
-test suite.
+A. Let it suffice to say that things are licensed under GPL v2 unless
+   explicitly otherwise stated. The new wording is an amalgamation of
+   the start of Linux's "COPYING" file[4] and the end of our pre-image
+   first paragraph added in[1].
+
+B. Add some brief wording about how the licenses of subdirectories
+   such as "sha1dc/" and "compat/regex/" should be discovered. This is
+   also intended to cover future in-tree additions such as the
+   "reftable" directory[5][6].
+
+C. Include the same "subject to this COPYING file" wording as
+   linux.git has used since[7].
+
+1. 075b845a857 (Add a COPYING notice, making it explicit that the
+   license is GPLv2., 2005-04-11)
+2. torvalds/linux@bf02d491237e (COPYING: use the new text with points
+   to the license files, 2018-03-23)
+3. torvalds/linux@74835c7db032 (COPYING: state that all contributions
+   really are covered by this file, 2020-02-06)
+4. torvalds/linux@88de995ccf48 (COPYING: create a new file with points
+   to the Kernel license files, 2018-03-23)
+5. https://lore.kernel.org/git/2597ddfeae1d9da8695151f62379c85621ad0fcb.1632841817.git.gitgitgadget@gmail.com/
+6. https://lore.kernel.org/git/xmqqtui4k1j5.fsf@gitster.g/
+7. torvalds/linux@74835c7db032 (COPYING: state that all contributions
+   really are covered by this file, 2020-02-06)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4022-diff-rewrite.sh           |  6 ++++--
- t/t4023-diff-rename-typechange.sh | 11 ++++++-----
- t/t7001-mv.sh                     |  5 +++--
- t/t7101-reset-empty-subdirs.sh    | 11 ++++++-----
- 4 files changed, 19 insertions(+), 14 deletions(-)
+ COPYING | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
-index 6d1c3d949c7..1c89050a974 100755
---- a/t/t4022-diff-rewrite.sh
-+++ b/t/t4022-diff-rewrite.sh
-@@ -3,15 +3,17 @@
- test_description='rewrite diff'
+diff --git a/COPYING b/COPYING
+index 536e55524db..19de8f2ea1b 100644
+--- a/COPYING
++++ b/COPYING
+@@ -1,21 +1,20 @@
+-
+- Note that the only valid version of the GPL as far as this project
+- is concerned is _this_ particular version of the license (ie v2, not
+- v2.2 or v3.x or whatever), unless explicitly otherwise stated.
+-
+- HOWEVER, in order to allow a migration to GPLv3 if that seems like
+- a good idea, I also ask that people involved with the project make
+- their preferences known. In particular, if you trust me to make that
+- decision, you might note so in your copyright message, ie something
+- like
+-
+-	This file is licensed under the GPL v2, or a later version
+-	at the discretion of Linus.
+-
+-  might avoid issues. But we can also just decide to synchronize and
+-  contact all copyright holders on record if/when the occasion arises.
+-
+-			Linus Torvalds
++Git is provided under the terms of the GNU General Public License
++version 2 only (GPL-2.0), unless explicitly otherwise stated.
++
++The license described in this COPYING file applies to Git's source as
++a whole, though individual source files can have a different license
++which is required to be compatible with the GPL-2.0. All contributions
++to Git are subject to this COPYING file.
++
++Different but compatible licenses may apply to individual files or
++directories. Defer to files matching "*COPYING*" or "*LICENSE*" in
++subdirectories for the license of files therein, or to copyright
++notices at the top of individual files.
++
++Examples include "sha1dc/LICENSE.txt" covering the imported "sha1dc/"
++directory (and optional "sha1collisiondetection/" submodule), the
++"xdiff/" directory licensed under the LGPL v2.1 (see the "LGPL-2.1"
++file), and imported external code such as "compat/regex/".
  
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-diff-data.sh
+ ----------------------------------------
  
- test_expect_success setup '
- 
--	cat "$TEST_DIRECTORY"/../COPYING >test &&
-+	COPYING_test_data >test.data &&
-+	cp test.data test &&
- 	git add test &&
- 	tr \
- 	  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" \
- 	  "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM" \
--	  <"$TEST_DIRECTORY"/../COPYING >test &&
-+	  <test.data >test &&
- 	echo "to be deleted" >test2 &&
- 	blob=$(git hash-object test2) &&
- 	blob=$(git rev-parse --short $blob) &&
-diff --git a/t/t4023-diff-rename-typechange.sh b/t/t4023-diff-rename-typechange.sh
-index 8c9823765e6..47d6f35dcc4 100755
---- a/t/t4023-diff-rename-typechange.sh
-+++ b/t/t4023-diff-rename-typechange.sh
-@@ -3,25 +3,26 @@
- test_description='typechange rename detection'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-diff.sh
- 
- test_expect_success setup '
- 
- 	rm -f foo bar &&
--	cat "$TEST_DIRECTORY"/../COPYING >foo &&
-+	COPYING_test_data >foo &&
- 	test_ln_s_add linklink bar &&
- 	git add foo &&
- 	git commit -a -m Initial &&
- 	git tag one &&
- 
- 	git rm -f foo bar &&
--	cat "$TEST_DIRECTORY"/../COPYING >bar &&
-+	COPYING_test_data >bar &&
- 	test_ln_s_add linklink foo &&
- 	git add bar &&
- 	git commit -a -m Second &&
- 	git tag two &&
- 
- 	git rm -f foo bar &&
--	cat "$TEST_DIRECTORY"/../COPYING >foo &&
-+	COPYING_test_data >foo &&
- 	git add foo &&
- 	git commit -a -m Third &&
- 	git tag three &&
-@@ -35,7 +36,7 @@ test_expect_success setup '
- 	# This is purely for sanity check
- 
- 	git rm -f foo bar &&
--	cat "$TEST_DIRECTORY"/../COPYING >foo &&
-+	COPYING_test_data >foo &&
- 	cat "$TEST_DIRECTORY"/../Makefile >bar &&
- 	git add foo bar &&
- 	git commit -a -m Fifth &&
-@@ -43,7 +44,7 @@ test_expect_success setup '
- 
- 	git rm -f foo bar &&
- 	cat "$TEST_DIRECTORY"/../Makefile >foo &&
--	cat "$TEST_DIRECTORY"/../COPYING >bar &&
-+	COPYING_test_data >bar &&
- 	git add foo bar &&
- 	git commit -a -m Sixth &&
- 	git tag six
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 25bb9bbb899..963356ba5f9 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -2,10 +2,11 @@
- 
- test_description='git mv in subdirs'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-diff-data.sh
- 
- test_expect_success 'prepare reference tree' '
- 	mkdir path0 path1 &&
--	cp "$TEST_DIRECTORY"/../COPYING path0/COPYING &&
-+	COPYING_test_data >path0/COPYING &&
- 	git add path0/COPYING &&
- 	git commit -m add -a
- '
-@@ -107,7 +108,7 @@ test_expect_success 'clean up' '
- '
- 
- test_expect_success 'adding another file' '
--	cp "$TEST_DIRECTORY"/../README.md path0/README &&
-+	COPYING_test_data | tr A-Za-z N-ZA-Mn-za-m >path0/README &&
- 	git add path0/README &&
- 	git commit -m add2 -a
- '
-diff --git a/t/t7101-reset-empty-subdirs.sh b/t/t7101-reset-empty-subdirs.sh
-index bfce05ac5de..5530651eea4 100755
---- a/t/t7101-reset-empty-subdirs.sh
-+++ b/t/t7101-reset-empty-subdirs.sh
-@@ -5,10 +5,11 @@
- 
- test_description='git reset should cull empty subdirs'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-diff-data.sh
- 
- test_expect_success 'creating initial files' '
-      mkdir path0 &&
--     cp "$TEST_DIRECTORY"/../COPYING path0/COPYING &&
-+     COPYING_test_data >path0/COPYING &&
-      git add path0/COPYING &&
-      git commit -m add -a
- '
-@@ -16,10 +17,10 @@ test_expect_success 'creating initial files' '
- test_expect_success 'creating second files' '
-      mkdir path1 &&
-      mkdir path1/path2 &&
--     cp "$TEST_DIRECTORY"/../COPYING path1/path2/COPYING &&
--     cp "$TEST_DIRECTORY"/../COPYING path1/COPYING &&
--     cp "$TEST_DIRECTORY"/../COPYING COPYING &&
--     cp "$TEST_DIRECTORY"/../COPYING path0/COPYING-TOO &&
-+     COPYING_test_data >path1/path2/COPYING &&
-+     COPYING_test_data >path1/COPYING &&
-+     COPYING_test_data >COPYING &&
-+     COPYING_test_data >path0/COPYING-TOO &&
-      git add path1/path2/COPYING &&
-      git add path1/COPYING &&
-      git add COPYING &&
 -- 
 2.33.0.1380.g193143c62ce
 
