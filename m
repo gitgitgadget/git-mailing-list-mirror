@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9E05C433EF
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C842FC433F5
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 921BC61B06
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF7E061A81
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 09:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbhJBJVS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 05:21:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53364 "EHLO
+        id S232690AbhJBJVV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 05:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232681AbhJBJVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 05:21:15 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4DCC0613E9
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:19:29 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id r7so3848837wrc.10
-        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:19:29 -0700 (PDT)
+        with ESMTP id S232688AbhJBJVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Oct 2021 05:21:17 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16B3C0613E9
+        for <git@vger.kernel.org>; Sat,  2 Oct 2021 02:19:31 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id m22so13910137wrb.0
+        for <git@vger.kernel.org>; Sat, 02 Oct 2021 02:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iJxjO04Fv1Zibpib3Iuz1FkFzIfD7NE1CJpf8WGhtBg=;
-        b=YebSBEjbRT64swafIx0E9EXXY+juFAN+Fru71G+oBrtqpFaRJlCQ15zGrg44b4z8yO
-         DPGNPLZj/qmYoRR+Izreo5vocufxneIdoU/iiQk6AdSW2vDdZarIISDCd0axHq7QMyvK
-         9f5LoaLlvXsjRt7fM/lLxUbY1dhmgNDBjZhNplyji4aft2iWVJYljsf7a7pkIL+/PzSU
-         h5+oh6EPLprHjkD5J8iNjWmDSqfA7DoCej12x+wxiCx7/+fHa0gRQG1dn26/2atITt+1
-         0yh/L9vq85XdfBorqzrUlBSxjSWEdnPj9yyxhSX6TcNXsAcxV+8FKu395zyFeI+8ZUrw
-         WoLQ==
+        bh=yj58g5H1DIwVZqx73iEpbd1wBmLLWMXekbyL2wD+2RE=;
+        b=Gc+a21cbvvth+yLMzKABp9DUbBCnNRM0yRp44IAJAG2ns6B4qEzzoqIXGPoUFlDMRa
+         I60wM0MSG+yUMPd08cDJlrFDlEiQ04AY5MjMOzUdfUoEL/gnjlM0AE+e91O01pTcis8Q
+         AeWrQLujPvXIIGyPX3UNPWTa2gL5rxko30lhoROUFamzUGLYymyDfRE/RCmD1jLdd2LY
+         J/ie/5lysgQmV4DKqGtZfJsfB3oTVkPyhAmVEtvays9WmFWaJWHtCmBX6oOfL+MgjafT
+         3Xl/dKfR+ZBlRls6cNwk1Z5wavl7cHik5KWLE4HLMIlirEuRtayw0+wXawcLo7I2Ojtq
+         tEmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iJxjO04Fv1Zibpib3Iuz1FkFzIfD7NE1CJpf8WGhtBg=;
-        b=2f3WOJthTIL8iv3kiSlXBVtS+bP4h5b9Yvf2jP5XZf0uWHSfufS/6V0SW5nVoY/m8t
-         jd3HIyRN/b33gmLp+OP9+v5z5Cl+xXB3gCoNpFI0Xz+X1ZElFgcliYXtaC0P9lY0ANqO
-         xiYcNQQRYUCrjf1C19kB62uB1qi63yGrR9T3MiB+sNLpw+xYGnocFI/L4Dn5EBb9ZuKo
-         k5MOAb5dEkwSdSLNYVMwVnQlneMkXSEnguRP1D5TksjSlk3He9H017GJtTqMYaL18KkK
-         6wT8yfXPdgf7DiEjimH4yi0o/QJJGAVUDb9WVQfOTA4lOtO13Wxgx+6nfiosaaXSjvqn
-         YxpA==
-X-Gm-Message-State: AOAM533Rdl5dZDBIVuiJAlod58m0EpcZKhsvJOOs5ApHtJN9zk7E+mHq
-        ACTgEUpb+jhg3U5vs/tdxEdpq6zh1qSOSw==
-X-Google-Smtp-Source: ABdhPJzr8kjvRtBI29+sy7YfKUhhHak/Yy6lIuq8/FVgo31Em4cKT9+ra76d1E+nSDT/hVx5FLuobw==
-X-Received: by 2002:a5d:6288:: with SMTP id k8mr2579015wru.137.1633166367694;
-        Sat, 02 Oct 2021 02:19:27 -0700 (PDT)
+        bh=yj58g5H1DIwVZqx73iEpbd1wBmLLWMXekbyL2wD+2RE=;
+        b=WJqCzmPbccECO1Yg465HnWoAoH94DXAUJb0DpqUeKQaCnjcy5BI/piatrMzh6Fsj0c
+         StgXJXKU7RgK8YW3YImphkV85iDLA9VCJdQlznnTfwvUZr8SU+ibcSABx9MaMS31KJBX
+         Yfn3JAw/sEgQ9E8BVsNFLdY7sG3cNxUz+tenqCjDNCz6K5prY8DtWuG4yh2Q99BuHfWT
+         lgHv/PwVQzVHUKcl4+9wRm9qN6n4Wr3P5Wbtoik82ywSa9tF7ZzExPhQWWYph7FqSZqv
+         M6jmzw9hYnDfg38NvpUUhTvEz8rRbrrKngLFQ5Ur1du25dVPccPlMAZsUTgxGhb4CZNI
+         m93A==
+X-Gm-Message-State: AOAM530ag589xUnhOqgOHOaBqP++CFqMciqRMp/J2e6q0rXZYX32KBs1
+        2cBW2boeNokeI/x+8Ty4aVue2RGzLIK5rA==
+X-Google-Smtp-Source: ABdhPJwgNL2ksHVrQ25fEP1SyjLZttxnTkPbxnHcBeurJfrchp6BSiTnmS/QrgCKivGsOkOhtAbPPA==
+X-Received: by 2002:adf:b185:: with SMTP id q5mr302337wra.213.1633166370191;
+        Sat, 02 Oct 2021 02:19:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s13sm6735805wrv.97.2021.10.02.02.19.26
+        by smtp.gmail.com with ESMTPSA id s13sm6735805wrv.97.2021.10.02.02.19.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Oct 2021 02:19:27 -0700 (PDT)
+        Sat, 02 Oct 2021 02:19:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Han-Wen Nienhuys <hanwen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] COPYING: remove mention of GPLv3, clarify sub-project COPYING
-Date:   Sat,  2 Oct 2021 11:19:18 +0200
-Message-Id: <patch-3.5-e91f8ce6984-20211002T091212Z-avarab@gmail.com>
+Subject: [PATCH 5/5] GPL-2.0: update to byte-for-byte match the FSF's version
+Date:   Sat,  2 Oct 2021 11:19:20 +0200
+Message-Id: <patch-5.5-0545fd06cac-20211002T091212Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1380.g193143c62ce
 In-Reply-To: <cover-0.5-00000000000-20211002T091212Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20211002T091212Z-avarab@gmail.com>
@@ -73,89 +73,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The COPYING file added in [1] is a product of its era, at the time
-discussions around the GPLv3 were quite active. Since then we have had
-almost on "GPL v2 or later" notices anywhere.
+Retrieve current version of the GPL-2.0 file from
+https://gnu.org/licenses/old-licenses/gpl-2.0.txt. This is a
+whitespace-only change, but yields the following SHA-1 and SHA-256
+hashes, which as an online seach will show are the well-known
+canonical hashes of this file:
 
-Since then[2][3] linux.git has replaced its version of almost the
-identical wording with something that's a bit more formal, and which
-isn't mostly addressing a hypothetical future GPL v3 migratin. Let's
-do the same. Now we:
-
-A. Let it suffice to say that things are licensed under GPL v2 unless
-   explicitly otherwise stated. The new wording is an amalgamation of
-   the start of Linux's "COPYING" file[4] and the end of our pre-image
-   first paragraph added in[1].
-
-B. Add some brief wording about how the licenses of subdirectories
-   such as "sha1dc/" and "compat/regex/" should be discovered. This is
-   also intended to cover future in-tree additions such as the
-   "reftable" directory[5][6].
-
-C. Include the same "subject to this COPYING file" wording as
-   linux.git has used since[7].
-
-1. 075b845a857 (Add a COPYING notice, making it explicit that the
-   license is GPLv2., 2005-04-11)
-2. torvalds/linux@bf02d491237e (COPYING: use the new text with points
-   to the license files, 2018-03-23)
-3. torvalds/linux@74835c7db032 (COPYING: state that all contributions
-   really are covered by this file, 2020-02-06)
-4. torvalds/linux@88de995ccf48 (COPYING: create a new file with points
-   to the Kernel license files, 2018-03-23)
-5. https://lore.kernel.org/git/2597ddfeae1d9da8695151f62379c85621ad0fcb.1632841817.git.gitgitgadget@gmail.com/
-6. https://lore.kernel.org/git/xmqqtui4k1j5.fsf@gitster.g/
-7. torvalds/linux@74835c7db032 (COPYING: state that all contributions
-   really are covered by this file, 2020-02-06)
+    4cc77b90af91e615a64ae04893fdffa7939db84c  GPL-2.0
+    8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643  GPL-2.0
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- COPYING | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ GPL-2.0 | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/COPYING b/COPYING
-index 536e55524db..19de8f2ea1b 100644
---- a/COPYING
-+++ b/COPYING
-@@ -1,21 +1,20 @@
--
-- Note that the only valid version of the GPL as far as this project
-- is concerned is _this_ particular version of the license (ie v2, not
-- v2.2 or v3.x or whatever), unless explicitly otherwise stated.
--
-- HOWEVER, in order to allow a migration to GPLv3 if that seems like
-- a good idea, I also ask that people involved with the project make
-- their preferences known. In particular, if you trust me to make that
-- decision, you might note so in your copyright message, ie something
-- like
--
--	This file is licensed under the GPL v2, or a later version
--	at the discretion of Linus.
--
--  might avoid issues. But we can also just decide to synchronize and
--  contact all copyright holders on record if/when the occasion arises.
--
--			Linus Torvalds
-+Git is provided under the terms of the GNU General Public License
-+version 2 only (GPL-2.0), unless explicitly otherwise stated.
-+
-+The license described in this COPYING file applies to Git's source as
-+a whole, though individual source files can have a different license
-+which is required to be compatible with the GPL-2.0. All contributions
-+to Git are subject to this COPYING file.
-+
-+Different but compatible licenses may apply to individual files or
-+directories. Defer to files matching "*COPYING*" or "*LICENSE*" in
-+subdirectories for the license of files therein, or to copyright
-+notices at the top of individual files.
-+
-+Examples include "sha1dc/LICENSE.txt" covering the imported "sha1dc/"
-+directory (and optional "sha1collisiondetection/" submodule), the
-+"xdiff/" directory licensed under the LGPL v2.1 (see the "LGPL-2.1"
-+file), and imported external code such as "compat/regex/".
+diff --git a/GPL-2.0 b/GPL-2.0
+index d511905c164..d159169d105 100644
+--- a/GPL-2.0
++++ b/GPL-2.0
+@@ -1,12 +1,12 @@
+-		    GNU GENERAL PUBLIC LICENSE
+-		       Version 2, June 1991
++                    GNU GENERAL PUBLIC LICENSE
++                       Version 2, June 1991
  
- ----------------------------------------
+  Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
  
+-			    Preamble
++                            Preamble
+ 
+   The licenses for most software are designed to take away your
+ freedom to share and change it.  By contrast, the GNU General Public
+@@ -56,7 +56,7 @@ patent must be licensed for everyone's free use or not licensed at all.
+   The precise terms and conditions for copying, distribution and
+ modification follow.
+ 
+-		    GNU GENERAL PUBLIC LICENSE
++                    GNU GENERAL PUBLIC LICENSE
+    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ 
+   0. This License applies to any program or other work which contains
+@@ -255,7 +255,7 @@ make exceptions for this.  Our decision will be guided by the two goals
+ of preserving the free status of all derivatives of our free software and
+ of promoting the sharing and reuse of software generally.
+ 
+-			    NO WARRANTY
++                            NO WARRANTY
+ 
+   11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+ FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN
+@@ -277,9 +277,9 @@ YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER
+ PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGES.
+ 
+-		     END OF TERMS AND CONDITIONS
++                     END OF TERMS AND CONDITIONS
+ 
+-	    How to Apply These Terms to Your New Programs
++            How to Apply These Terms to Your New Programs
+ 
+   If you develop a new program, and you want it to be of the greatest
+ possible use to the public, the best way to achieve this is to make it
 -- 
 2.33.0.1380.g193143c62ce
 
