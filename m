@@ -2,126 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B13C433FE
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F9DC433F5
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:33:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54DD361247
-	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:31:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 972D961247
+	for <git@archiver.kernel.org>; Sat,  2 Oct 2021 21:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234056AbhJBVdC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Oct 2021 17:33:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44208 "EHLO
+        id S234100AbhJBVfG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Oct 2021 17:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhJBVdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Oct 2021 17:33:01 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BA6C061714
-        for <git@vger.kernel.org>; Sat,  2 Oct 2021 14:31:15 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id o20so3725810wro.3
-        for <git@vger.kernel.org>; Sat, 02 Oct 2021 14:31:15 -0700 (PDT)
+        with ESMTP id S234098AbhJBVfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Oct 2021 17:35:05 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE0F8C061714
+        for <git@vger.kernel.org>; Sat,  2 Oct 2021 14:33:18 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id v18so47475041edc.11
+        for <git@vger.kernel.org>; Sat, 02 Oct 2021 14:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5HpEFRgJq0O69ZuRNMCvE6ly2Jp9QU5AuKvOo2VI9fk=;
-        b=QqenQjjL44TRb+6YzRISUvNXOTci1uxGr0KpntV0xXXkPU6ecnyWW17fbaNPEYa4cb
-         v6SsfojKfqUMABKJ5wzJLMytrS+l8VtJv2GlEPU55HnyDSfdvFaNHwTOkF9zDPapTleu
-         ijujmQZe8sDYIkoa5zFbRYArfDwBMxqiuU6oIexqhP3D+FjWHZCjwNujv7CFDXz0B003
-         /YdKYl4VXAbAfCxfiisiDe2+ntUpXBrHAoJ2Sptl41KZobuT2oTJiZHEO/JYgl95gZkx
-         hhNZCKuHJ2mUdISLQP+DX2SRt7fJ6IFCLTRE95VK8bNBZKDXtlt5uYFAMWZZPOD8mzWM
-         BV2A==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wot/qJK/VbkFYgea46684B06rZ8/8kRLCUri0L7G1U0=;
+        b=J3gP+7/kT5/F/Dhpo0m7/43SGcN6IH8cCaORjRl4Q/hGwSCpIfji94XYRjPhrttf9V
+         MOV/dhYmFWbfPEtgLUxibNO1eS/1JHwRj4AONnLEUlQ9HC1jYLAyNvSH1xbzkjyPWL/D
+         vTpTVgYh9P6KIjq6cxfdYq4bQkpyAe+Efhh9A4kFtHUoK3Fyk6A0fxO1/QVSme/JZHm9
+         g6s+GxvReOnlkrFHqvA35+v+eEac2HJhTgoH0+IiJGg4njkTQ9UG89k6A7341Nv5/RdT
+         qzbEpat2LIrHu14IjlMu4D6yAAN279+FyDYLvRJxy1wUkDy2rKShzHFHgWQ2IwAPo5hK
+         Mejw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5HpEFRgJq0O69ZuRNMCvE6ly2Jp9QU5AuKvOo2VI9fk=;
-        b=AhMOYSEdJ82Kzq6warYkhGNtGdNd93yfPTZ1Ke/p6CQs79rJbpDsuYGRM1YDI92cjg
-         z7hpCFD4hbUsHTcGCKM22uXOxE2Lpju/0xFzPXLLT2OLdVfffukOZssqkXTYymC5rVBS
-         K4rdiVGnSoSLg8B9KbOx5bC38lUBGi5vldNiEv/jqKND/m1jeYe6JPal8wq1iYNoJhX4
-         T4tCzxiQ9TrnchV3pI8rSVaAO7kn1cN2wAtUzSPT8C2OV0h0IVUE4huKCt91RQH2uzSq
-         Ek8Al5c1W0cIH3auGtkwXGjFGepAyruKqtRc+38C3GjOyauKs8ZKH8QUaOJDBPRLwrE6
-         ZG7Q==
-X-Gm-Message-State: AOAM533aqu+iA1BPfVGzLXD1qxoLGOJZoOT7f70ZaCwSXTPH82yzIW/T
-        KS1BvzC5gyrgIew6q0/9o/v1vDpro4c=
-X-Google-Smtp-Source: ABdhPJzqCZmX79T5ZeNjhZesFx9kQfuGjDnZ9YxWlx7Zlock9Le36/Q/sMFej+5vbfsDmuK7dVXA2Q==
-X-Received: by 2002:a5d:6c65:: with SMTP id r5mr5136652wrz.85.1633210273435;
-        Sat, 02 Oct 2021 14:31:13 -0700 (PDT)
-Received: from localhost.localdomain (77.119.208.5.wireless.dyn.drei.com. [77.119.208.5])
-        by smtp.gmail.com with ESMTPSA id e5sm9607297wrd.1.2021.10.02.14.31.12
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wot/qJK/VbkFYgea46684B06rZ8/8kRLCUri0L7G1U0=;
+        b=K+vw2gHYUN5lRF9PbgxowTcnomO3pQbyMIXrdm1EaV6f8CjFh3HI4RmwIL9UK4HcjH
+         wmI+mN0NmMYu9xu1nJfd7rSxidQXHUVd9RYepBduhQho1yXImOhJsJ+vVFzvZWMri1wC
+         6qza2s6JciM52saHDUYSRBRdSV7+HF/3+VCN3RJfzjLzZpOZm1YoJyux4FBdsX1kPsek
+         X4k25ZPGhZii+mKuARAin7oC3vMMCoDtN1NacmIRLUoElh7eZMa8F022Vr6f+QaXipwC
+         E6q/dSLh4DDgm0hrDWpVbY5D6bEZ//Gbp7RlC1U39sHyPF+jDvkJz2qYnxR0fQMhSHMy
+         fNvw==
+X-Gm-Message-State: AOAM531C89TCuVMkKm224s4+LW9vUTzzaPBZE4fz/HRtOkBQCZRNvIki
+        Z5fd8REHtOsIlr7ayIUkLeZ0ay2an/4=
+X-Google-Smtp-Source: ABdhPJy8YxpuvlBFV+k0wxdEUVeT0tR2kxvniWdZIrop0a0Nh4iuE36qvIvmrIPKao6HY2Z7LT9tsQ==
+X-Received: by 2002:a17:906:5282:: with SMTP id c2mr6706854ejm.162.1633210397461;
+        Sat, 02 Oct 2021 14:33:17 -0700 (PDT)
+Received: from gmail.com (77.119.208.5.wireless.dyn.drei.com. [77.119.208.5])
+        by smtp.gmail.com with ESMTPSA id o4sm2561418edq.38.2021.10.02.14.33.16
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Oct 2021 14:31:13 -0700 (PDT)
+        Sat, 02 Oct 2021 14:33:17 -0700 (PDT)
+Date:   Sat, 2 Oct 2021 23:33:14 +0200
 From:   Johannes Altmanninger <aclopte@gmail.com>
 To:     git@vger.kernel.org
-Cc:     aclopte@gmail.com
-Subject: [PATCH 2/2] Documentation/git-status: document porcelain status T (typechange)
-Date:   Sat,  2 Oct 2021 23:30:46 +0200
-Message-Id: <20211002213046.725892-2-aclopte@gmail.com>
-X-Mailer: git-send-email 2.33.0.rc2.dirty
-In-Reply-To: <20211002213046.725892-1-aclopte@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation/git-status: document porcelain status
+ T (typechange)
+Message-ID: <20211002213314.kvc27qsbi7q42n6s@gmail.com>
 References: <20211002213046.725892-1-aclopte@gmail.com>
+ <20211002213046.725892-2-aclopte@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211002213046.725892-2-aclopte@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As reported in [1], T is missing from the description of porcelain
-status letters in git-status(1) (whereas T is documented in
-git-diff-files(1) and friends). Document T right after M (modified)
-because the two are very similar.
+In case anyone is curious and lazy, here is a script that generates all
+possible status letters containing T:
 
-A porcelain status containing C (copied) is impossible because "git
-status" does not detect copies, only renames. I was going to delete
-mentions of C from git-status.txt because it keeps confusing users [2]
-but a discussion from 2014 suggests that "git status" should re-learn
-to detect copies, which was disabled in 2005 for (obsolete) performance
-reasons [3].
+#!/bin/sh
 
-[1] https://github.com/fish-shell/fish-shell/issues/8311
-[2] https://www.reddit.com/r/git/comments/ppc2l9/how_to_get_a_file_with_copied_status/
-[3] https://marc.info/?l=git&m=141755095826447&w=2
+set -e
 
-Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
----
- Documentation/git-status.txt | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+_T() {
+	touch file-1.T
+	git add file-1.T
+	git commit -q -m add
+	rm file-1.T
+	ln -s /dev/null file-1.T
+}
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 83f38e3198..40f308c6a6 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -207,6 +207,7 @@ show tracked paths:
- 
- * ' ' = unmodified
- * 'M' = modified
-+* 'T' = file type changed (regular file, symbolic link or submodule)
- * 'A' = added
- * 'D' = deleted
- * 'R' = renamed
-@@ -217,14 +218,16 @@ show tracked paths:
- X          Y     Meaning
- -------------------------------------------------
- 	 [AMD]   not updated
--M        [ MD]   updated in index
--A        [ MD]   added to index
-+M        [ MTD]  updated in index
-+T        [ MTD]  type changed in index
-+A        [ MTD]  added to index
- D                deleted from index
--R        [ MD]   renamed in index
--C        [ MD]   copied in index
--[MARC]           index and work tree matches
--[ MARC]     M    work tree changed since index
--[ MARC]     D    deleted in work tree
-+R        [ MTD]  renamed in index
-+C        [ MTD]  copied in index
-+[MTARC]          index and work tree matches
-+[ MTARC]    M    work tree changed since index
-+[ MTARC]    T    type changed in work tree since index
-+[ MTARC]    D    deleted in work tree
- [ D]        R    renamed in work tree
- [ D]        C    copied in work tree
- -------------------------------------------------
--- 
-2.33.0.rc2.dirty
+MT() {
+	touch file-1MT
+	git add file-1MT
+	git commit -q -m add
+	echo modify > file-1MT
+	git add file-1MT
+	ln -sf /dev/null file-1MT
+}
 
+TM() {
+	ln -sf /dev/null file-1TM
+	git add file-1TM
+	git commit -q -m add
+	rm file-1TM
+	touch file-1TM
+	git add file-1TM
+	echo modify > file-1TM
+}
+
+TT() {
+	touch file-1TT
+	git add file-1TT
+	git commit -q -m add
+	ln -sf /dev/null file-1TT
+	git add file-1TT
+	rm file-1TT
+	touch file-1TT
+}
+
+TD() {
+	touch file-1TD
+	git add file-1TD
+	git commit -q -m add
+	ln -sf /dev/null file-1TD
+	git add file-1TD
+	rm file-1TD
+}
+
+AT() {
+	touch file-1AT
+	git add file-1AT
+	git commit -q -m add
+	ln -sf /dev/null file-1AT
+}
+
+RT() {
+	touch file-2RT
+	git add file-2RT
+	git commit -q -m add
+	git mv file-2RT new-file-2RT
+	ln -sf /dev/null new-file-2RT
+}
+
+T_() {
+	touch file-1T.
+	git add file-1T.
+	git commit -q -m add
+	ln -sf /dev/null file-1T.
+	git add file-1T.
+}
+
+cd "$(mktemp -d)"
+git init -q
+git commit -q --allow-empty -m initial\ commit
+
+for state in _T MT TM TT TD AT RT T_
+do
+	git reset -q --hard :/initial.commit
+	"$state"
+	git status --porcelain=2
+done
