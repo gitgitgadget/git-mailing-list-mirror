@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9479C433F5
-	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 12:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B68C433EF
+	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 12:30:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A844B61B31
-	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 12:29:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FA8361B31
+	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 12:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbhJCMbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Oct 2021 08:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41688 "EHLO
+        id S230229AbhJCMbs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Oct 2021 08:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbhJCMbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Oct 2021 08:31:43 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D491AC0613EC
-        for <git@vger.kernel.org>; Sun,  3 Oct 2021 05:29:55 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id rj12-20020a17090b3e8c00b0019f88e44d85so3628601pjb.4
-        for <git@vger.kernel.org>; Sun, 03 Oct 2021 05:29:55 -0700 (PDT)
+        with ESMTP id S230215AbhJCMbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Oct 2021 08:31:47 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16568C061781
+        for <git@vger.kernel.org>; Sun,  3 Oct 2021 05:30:00 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id oa12-20020a17090b1bcc00b0019f715462a8so4903934pjb.3
+        for <git@vger.kernel.org>; Sun, 03 Oct 2021 05:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=A6FYBdq6zC89oXjnPnKchxhMnsagoeSJO63WkxkYaOM=;
-        b=ZMcv7YnKBj/woeT792+zpeE2e3fWEkD7dqmouStABfth24QUL5xAC9sZd062QAcxgG
-         4QNmT/bVFf5yzSakCj1lPwQUUhaZWOCBtPZ7SCU2yruBPrr1W93PpUiWU5nx3vaQO5bW
-         AXJDM2Guf6s6NAWokk/X4upSTqsV7854Ux0VPFSQs02yFggzmKEV8iDVolqxOQeIy5Fq
-         qGsjmI1IorbFOmkO+WP49dtFGTs6vSEKPurlGK+0Gb9mWPYgoOOGp0CVKttfu4Rq8A0o
-         t6Qqv5lM6Z+HmPjtMzHH+UDemJGC58CNd0ajAb8IZ4qe9KteQncjkT9O4I21aR56cQxB
-         6CYg==
+        bh=1zzYB649SUQeFEv+CNLZnMiewbejrWDe3PrP3+EPyo0=;
+        b=pywQkngJeBT3dy9e8173UGyvFqAQxYRCqNHfIfuzfjAdKTTtL/VV6mfRLrbMRp3Sag
+         a0GZAxsLaQ71KnSJC9C8iY3etC2MP/vhDdnDQ6ytmVwbl0S0ZcZr2kCNVvNrSH1OXxB6
+         7Kpu9ZefXrqYKbTX4Spx7cZdJbKJna9bDMWH36hnniMFBoLRLqvNNI14hhTVMMQRihPK
+         i376Zx+SZHF5MXx+AQ3tUVBxC4qjiK2hlmMs33Q7oku84VPf7Rzo20bV7a/j3hx3Y4IN
+         M6YwpIuM1OOzkIHxPqT15+18++0VWIrFovplyXHeaatK23lujQ211NJC8llJLl6ssbgZ
+         aPpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=A6FYBdq6zC89oXjnPnKchxhMnsagoeSJO63WkxkYaOM=;
-        b=AQ5suulqcmO0dZ5XLRtF8NynkvkSaRRPgzDbaJAKgKC+iLMUDa8hMzAxzjJZsn9Lsq
-         pt2Qa57RvWrfuoIExfvAWTod/W9VBmNyqwmAvUxXrYKbQy3GkKdjo6HRdW+gYw6X3YGm
-         dsYt6WevdSFn7LxmpTPwYI1hq0Ac775nTBA7rOJX8pKewzthRHtyzpaLYWY1mrtDCyBf
-         XGtUDPSoFexpvmvi9rHXo9RirRof8r/kLB4GB0wSctK82cnWLJsNC7ELr7Pn1AP+1Wy0
-         9wTVWsoCxZtFBpkUesFlIhUV5DYmbCiE5SMrP1c/FRFx0qRZknSfbTu+q2xQeYVMeDBY
-         IvDg==
-X-Gm-Message-State: AOAM532uBJSJkzZoOkzBbwg7Lc/XozAUC77slYfEN6rhWaKKTc5dxE34
-        wC2X0aOfxAITYEgrXTxjMsqLhcxVdW2Qbw==
-X-Google-Smtp-Source: ABdhPJyPYcvbwI8i2wcoiOR48zcF/bayNHg/4S6a1jS9ep85MQFCwW0DRNzqKJFlG1K85qLl+EWC9Q==
-X-Received: by 2002:a17:902:ab17:b0:13e:b2e0:58b with SMTP id ik23-20020a170902ab1700b0013eb2e0058bmr3226683plb.9.1633264195213;
-        Sun, 03 Oct 2021 05:29:55 -0700 (PDT)
+        bh=1zzYB649SUQeFEv+CNLZnMiewbejrWDe3PrP3+EPyo0=;
+        b=qoP4wAhW+kef5mS3K3Esurggsg4PirCZmVvYD02BtyDrSPTR/KWl0qaTvZ9GQ8jDEV
+         SiFAf9kDWJtJVLqUZznBnDzo4pDEgvJjm/XhjlXyYFweirK6xw/aVSg4t2jRT67iuH/v
+         czyhqvAgTJrwQivCWfL4fkyKT6matPvkR8vscgUt7CYr0+6T7HsMXE7YDUq0Zhwz/9aM
+         Gcq6E7KK/R9y3+lQ4vzZQhqCJ6RbIib1k3YSqFl+maXm9IX9K9Kij7jYEXyQIRQJI7pk
+         icVgV9BRLeEAS6mSagnEoSP+cRcZSgrI8tG1FVo2+fzy4gXES3FaHpvz+9/9pJmNu3Aw
+         DAqQ==
+X-Gm-Message-State: AOAM530SYFSfE6QUD/BnE8w01fqmD2g/ThZZN+TkbBkxcpqHstv5e03S
+        6NZzEY0kAd5FbD/2GhSeCbP5wPTmGxlmWQ==
+X-Google-Smtp-Source: ABdhPJwGOA7e77u4ars2ADtzHujYAqYncPioMFzCysCyn6nDp8Uk+G0kupZavpnRG6ALCXdocujGcw==
+X-Received: by 2002:a17:902:bcc6:b0:138:d3ca:c356 with SMTP id o6-20020a170902bcc600b00138d3cac356mr18091028pls.6.1633264199410;
+        Sun, 03 Oct 2021 05:29:59 -0700 (PDT)
 Received: from ubuntu.mate (subs09b-223-255-225-231.three.co.id. [223.255.225.231])
-        by smtp.gmail.com with ESMTPSA id k17sm8476394pfu.82.2021.10.03.05.29.53
+        by smtp.gmail.com with ESMTPSA id k17sm8476394pfu.82.2021.10.03.05.29.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Oct 2021 05:29:55 -0700 (PDT)
+        Sun, 03 Oct 2021 05:29:59 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Ryan Anderson <ryan@michonline.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 1/3] request-pull: introduce display_message() function
-Date:   Sun,  3 Oct 2021 19:29:41 +0700
-Message-Id: <20211003122943.338199-2-bagasdotme@gmail.com>
+Subject: [PATCH 3/3] request-pull: document -o/--output
+Date:   Sun,  3 Oct 2021 19:29:43 +0700
+Message-Id: <20211003122943.338199-4-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211003122943.338199-1-bagasdotme@gmail.com>
 References: <20211003122943.338199-1-bagasdotme@gmail.com>
@@ -66,92 +66,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move displaying PR message logic into display_message. While at it, use
-local variable $format and $dashline to shorten argument typing to git
-show.
+Document the option in git-request-pull(1), as well as usage example
+(along with shell redirection method).
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- git-request-pull.sh | 57 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 35 insertions(+), 22 deletions(-)
+ Documentation/git-request-pull.txt | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 2d0e44656c..88a7a9cf0d 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -136,37 +136,50 @@ fi
+diff --git a/Documentation/git-request-pull.txt b/Documentation/git-request-pull.txt
+index 4d4392d0f8..4bb07d8865 100644
+--- a/Documentation/git-request-pull.txt
++++ b/Documentation/git-request-pull.txt
+@@ -8,7 +8,7 @@ git-request-pull - Generates a summary of pending changes
+ SYNOPSIS
+ --------
+ [verse]
+-'git request-pull' [-p] <start> <url> [<end>]
++'git request-pull' [-p] [-o | --output <file>] <start> <url> [<end>]
  
- url=$(git ls-remote --get-url "$url")
+ DESCRIPTION
+ -----------
+@@ -29,6 +29,10 @@ OPTIONS
+ -p::
+ 	Include patch text in the output.
  
--git show -s --format='The following changes since commit %H:
-+display_message() {
-+	local format
-+	local dash_line
++-o <file>::
++--output <file>::
++	Write the request to the specified file.
 +
-+	dash_line="----------------------------------------------------------------"
-+	format='The following changes since commit %H:
+ <start>::
+ 	Commit to start at.  This names a commit that is already in
+ 	the upstream history.
+@@ -64,6 +68,15 @@ which will produce a request to the upstream, summarizing the
+ changes between the `v1.0` release and your `master`, to pull it
+ from your public repository.
  
-   %s (%ci)
- 
- are available in the Git repository at:
--' $merge_base &&
--echo "  $url $pretty_remote" &&
--git show -s --format='
--for you to fetch changes up to %H:
-+'
++To generate the request to a file for later editing, you can either
++use shell redirection:
 +
-+	git show -s --format="$format" $merge_base &&
-+	echo "  $url $pretty_remote" &&
-+	format='for you to fetch changes up to %H:
- 
-   %s (%ci)
-+'
-+	git show -s --format="
-+$format
-+$dash_line" $headrev &&
- 
------------------------------------------------------------------' $headrev &&
-+	if test $(git cat-file -t "$head") = tag
-+	then
-+		git cat-file tag "$head" |
-+		sed -n -e '1,/^$/d' -e '/^-----BEGIN PGP /q' -e p
-+		echo
-+		echo "$dash_line"
-+	fi &&
- 
--if test $(git cat-file -t "$head") = tag
--then
--	git cat-file tag "$head" |
--	sed -n -e '1,/^$/d' -e '/^-----BEGIN PGP /q' -e p
--	echo
--	echo "----------------------------------------------------------------"
--fi &&
-+	if test -n "$branch_name"
-+	then
-+		echo "(from the branch description for $branch_name local branch)"
-+		echo
-+		git config "branch.$branch_name.description"
-+		echo "$dash_line"
-+	fi &&
- 
--if test -n "$branch_name"
--then
--	echo "(from the branch description for $branch_name local branch)"
--	echo
--	git config "branch.$branch_name.description"
--	echo "----------------------------------------------------------------"
--fi &&
-+	git shortlog ^$baserev $headrev &&
-+	git diff -M --stat --summary $patch $merge_base..$headrev
-+}
- 
--git shortlog ^$baserev $headrev &&
--git diff -M --stat --summary $patch $merge_base..$headrev || status=1
-+message=$(display_message) || status=1
++	git request-pull v1.0 https://git.ko.xz/project master > request
 +
-+echo "$message"
++or with `-o` option:
++
++	git request-pull -o request v1.0 https://git.ko.xz/project master
++
+ If you pushed your change to a branch whose name is different from
+ the one you have locally, e.g.
  
- exit $status
+@@ -73,7 +86,6 @@ then you can ask that to be pulled with
+ 
+ 	git request-pull v1.0 https://git.ko.xz/project master:for-linus
+ 
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
 An old man doll... just what I always wanted! - Clara
 
