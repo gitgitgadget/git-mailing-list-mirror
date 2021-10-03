@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE15DC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3413C433EF
 	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 10:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B30061B30
+	by mail.kernel.org (Postfix) with ESMTP id 7A3786187D
 	for <git@archiver.kernel.org>; Sun,  3 Oct 2021 10:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbhJCK4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Oct 2021 06:56:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
+        id S230025AbhJCK4V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Oct 2021 06:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbhJCK4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Oct 2021 06:56:23 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267ACC0613EC
-        for <git@vger.kernel.org>; Sun,  3 Oct 2021 03:54:36 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id r2so13815061pgl.10
-        for <git@vger.kernel.org>; Sun, 03 Oct 2021 03:54:36 -0700 (PDT)
+        with ESMTP id S229994AbhJCK4U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Oct 2021 06:56:20 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAD6C0613EC
+        for <git@vger.kernel.org>; Sun,  3 Oct 2021 03:54:33 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id u7so11969509pfg.13
+        for <git@vger.kernel.org>; Sun, 03 Oct 2021 03:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bvvqHjr1wnifEIbWSWxB1Y+hVY30eZCIDzqqw6u3iPI=;
-        b=AOL+NpHXL5t6qEem7tBCPXSc0RvLQ4nwfYvgSDZ/2ZkSyn2vg1lTFjEhizCZioFXZ3
-         /aZ7A61GPgUU34ayYvXiZarnXkGZNWMnGIitnrg7KtcHdltrbW4GWc5KYie2gsVzF1bA
-         POmsCpaI172hiNAj9kUg7EXQs46mgE5VA412R/sgvzyUx+yrEFIL2Ti+Cp6FVt57499A
-         gbcYbumBAZ5GOksqOQ7842A+pO57lzXfNQ9zATtDqaIdADYFCyI5mNX/yyl24yJR/21p
-         keVSYf/jqs15OAk0YaV/KBDG3qMGSI5/VyydQRQbGnjl/plWH2KZGTGvxFYttugH5nkx
-         c8JA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ok0mNwfQLFVlg+LFfFDC/1UGO2g/lVsfjmL+3KkFV9Y=;
+        b=dotKvhXP9kDWL9u3WaSfw1AL7QgEWYHX96WwETsLmcGBa+2SVIWjojzUow2+lDYgkU
+         d99Xsi1IHW6PXdEZBwDyfAH0lhhbcwsHBpdAfIiTh/ipBJ+l5Mo6rgYlCQauseR2JXhh
+         INXDiY5Mi20sZkme2PjetC13ta3vf9WvDSB1gO9r9tdqq2Zol1amIG+t4vseb8d2yOJt
+         qYSPKHYlCLEX7RmH4GK4ncms5JyxBP2TRTN+1m5H/H+Ac28ZzfAC7uGXRkbT/5VqCGfc
+         8qF5vxZlJTkpO2i0M9w+McPbCmlxlp38ZYX2aRgARO1eY7aX4kp4wjPsATlLHWQWNlnO
+         YrYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bvvqHjr1wnifEIbWSWxB1Y+hVY30eZCIDzqqw6u3iPI=;
-        b=ANpprK5nSRKNimsSB5st7CLNqERAC0+frn/wvFUlfJ0IKduy39OiTVZ+5+PhwNxwqs
-         lKvfv/ZhyAf3vt9hv14iHCq7ZQUUyEfeqZu+xDcpxrsynSIUnLhjtcDBS9//TqZlvyRn
-         6d/eIHAchdpTQJzQp/Kcheg5acZRB4fQbkDXVudns4m1Fn2mlVpKwH4mAGJMecAPZh6c
-         XAdQWILDMga+ZG/TyPYpw7QIPNPaVe6Fk2VU1XgxTyvJAylzIFRQBSpPGBqpsZA4M65Y
-         p8YK5C+lZCijC1i2avtPUI7tS2mvUUXiijuSjnzdRRtTAp/6Yc21Sc+d6NpLe7tQxxgA
-         d8dg==
-X-Gm-Message-State: AOAM533Azb/Le/yM4lmdUs/b58i09xS1DQkQVHrXTo+K9PA6BPV3f7/B
-        RxD/tyxO3MCpEP52EXnPznv+W710BEGAAg==
-X-Google-Smtp-Source: ABdhPJx59nsD+jrpvWGXT2oZhbkFw0UjCb/dQhEA3CBA52oQYf7rb568j+B0VX3Cyp7AcS15QFX4kA==
-X-Received: by 2002:a62:2c51:0:b029:329:932b:9484 with SMTP id s78-20020a622c510000b0290329932b9484mr19004794pfs.13.1633258475498;
-        Sun, 03 Oct 2021 03:54:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ok0mNwfQLFVlg+LFfFDC/1UGO2g/lVsfjmL+3KkFV9Y=;
+        b=IBQVSAR4UL7Gy4qUO3HgsFbD7J/4bCs5fYxAa5NtNb4NVyE5q+xlc3TU4RNCNdlEYK
+         fhCWtroJjkdFLM2RsFGaKPbAgUydhuwjP/g4fDDr9UyplPG5u61PQtYWPQpAnFInemtL
+         N3ZQFUdr8+KfE+LDh0Tdk5U2Kbp+T6yPCcsTFmpWzyTeuRtv8uNWbBahE7yvwBvJjNhK
+         ODR3w9K7XtNUrpP/oc5V3/cSELi6GDIFdvglAF2M9ecZ1XQPCgOrCpb5+xhvnEnmXQlt
+         s4ltNFTjb3O0kq4WQpNWxLMdilJGPk8Cp8RhxGzDU2Vp1RLX8pT56Rfv1MT0JueDCasr
+         lK4w==
+X-Gm-Message-State: AOAM531fwbwZong+jwbSGvL6QKL9S69Ojw9zHYoxZwyuOg1Zhs10h7Pt
+        /UNOOdlMuBnqlWzO7oK1n9EmSrr8Nlgriw==
+X-Google-Smtp-Source: ABdhPJxFuNtiZfIqjvnxJ1kFrmg67S2VaaD0/ORVMvMUxdUJJMMYt1o5SJAHT5XVrypyVmIHTLyuRw==
+X-Received: by 2002:a05:6a00:c3:b0:43d:e6be:b2a6 with SMTP id e3-20020a056a0000c300b0043de6beb2a6mr19477124pfj.34.1633258473142;
+        Sun, 03 Oct 2021 03:54:33 -0700 (PDT)
 Received: from ubuntu.mate (subs03-180-214-233-29.three.co.id. [180.214.233.29])
-        by smtp.gmail.com with ESMTPSA id u1sm11263163pju.2.2021.10.03.03.54.33
+        by smtp.gmail.com with ESMTPSA id u1sm11263163pju.2.2021.10.03.03.54.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Oct 2021 03:54:35 -0700 (PDT)
+        Sun, 03 Oct 2021 03:54:32 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -57,51 +57,59 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         "Dr . Matthias St . Pierre" <m.st.pierre@ncp-e.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v4 1/2] blame: describe default output format
-Date:   Sun,  3 Oct 2021 17:53:27 +0700
-Message-Id: <20211003105327.215996-2-bagasdotme@gmail.com>
+Subject: [PATCH v4 0/2] blame: documentation update
+Date:   Sun,  3 Oct 2021 17:53:26 +0700
+Message-Id: <20211003105327.215996-1-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211003105327.215996-1-bagasdotme@gmail.com>
-References: <20211003105327.215996-1-bagasdotme@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While there is descriptions for porcelain and incremental output
-formats, the default format isn't described. Describe that format for
-the sake of completeness.
+Document the default output format for git-blame(1), as well as the
+--color-* options which are currently undocumented but mentioned in
+usage help.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/git-blame.txt | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Changes since v3 [1]:
+  - grammatical and wording fixes (suggested by Eric and Junio)
+ 
+Bagas Sanjaya (2):
+  blame: describe default output format
+  blame: document --color-* options
 
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 3bf5d5d8b4..08008f4a60 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -93,6 +93,19 @@ include::blame-options.txt[]
- 	is used for a caret to mark the boundary commit.
- 
- 
-+THE DEFAULT FORMAT
-+------------------
-+
-+When neither `--porcelain` nor `--incremental` option is specified,
-+`git blame` will output annotation for each line with:
-+
-+- abbreviated object name for the commit the line came from;
-+- author ident (by default author name and date, unless `-s` or `-e` is
-+specified); and
-+- line number
-+
-+before the line contents.
-+
- THE PORCELAIN FORMAT
- --------------------
- 
+ Documentation/blame-options.txt | 13 +++++++++++++
+ Documentation/config/color.txt  | 33 ++++++++++++++++++---------------
+ Documentation/git-blame.txt     | 17 +++++++++++++++--
+ 3 files changed, 46 insertions(+), 17 deletions(-)
+
+Range-diff against v3:
+1:  2478909d67 ! 1:  976c17a485 blame: Describe default output format
+    @@ Metadata
+     Author: Bagas Sanjaya <bagasdotme@gmail.com>
+     
+      ## Commit message ##
+    -    blame: Describe default output format
+    +    blame: describe default output format
+     
+         While there is descriptions for porcelain and incremental output
+         formats, the default format isn't described. Describe that format for
+    @@ Documentation/git-blame.txt: include::blame-options.txt[]
+     +`git blame` will output annotation for each line with:
+     +
+     +- abbreviated object name for the commit the line came from;
+    -+- author ident (by default author name and date unless `-s` or `-e` is
+    ++- author ident (by default author name and date, unless `-s` or `-e` is
+     +specified); and
+     +- line number
+     +
+2:  a6f75786ec < -:  ---------- blame: document --color-* options
+-:  ---------- > 2:  517dc2cb3d blame: document --color-* options
+
+[1]:
+https://lore.kernel.org/git/20211001113725.13354-1-bagasdotme@gmail.com/T/#t
+
+base-commit: cefe983a320c03d7843ac78e73bd513a27806845
 -- 
 An old man doll... just what I always wanted! - Clara
 
