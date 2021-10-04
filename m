@@ -2,80 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C5EC433F5
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 18:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36AF1C433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 18:33:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 353856120C
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 18:17:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15226613B5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 18:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235271AbhJDSTR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 14:19:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64928 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232577AbhJDSTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 14:19:16 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E798CEBCC9;
-        Mon,  4 Oct 2021 14:17:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ihtua6Dzrr9cBsq5Rdmw7cOykdc7ZwvGKrE7Ht
-        0gCq0=; b=Y7Yu5lRl/n9a57zPVEosX7doon7XaGUg4m8qTCJ3yLmzfmw8aa/62R
-        rEAdEY5Bx99ted5Wo4TKEUBEZ0tEj+qZ2F6aH3YdD4ReRcsW6y88MOQgqAa34Pk1
-        nHr6i4D+nCd5m9796NZS/1pKGeVjCqulcLnJ1wHHQ39Ik+4Rn7KRY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D7393EBCC8;
-        Mon,  4 Oct 2021 14:17:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C785EBCC7;
-        Mon,  4 Oct 2021 14:17:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [RFC PATCH v4 00/10] Fix various issues around removal of
- untracked files/directories
-References: <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
-        <RFC-cover-v4-00.10-00000000000-20211004T004902Z-avarab@gmail.com>
-        <CABPp-BEaJAG=pqyjCR93YUoqj06WwSqjiPENDHjgSTWwzd_C2A@mail.gmail.com>
-Date:   Mon, 04 Oct 2021 11:17:25 -0700
-In-Reply-To: <CABPp-BEaJAG=pqyjCR93YUoqj06WwSqjiPENDHjgSTWwzd_C2A@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 4 Oct 2021 07:38:17 -0700")
-Message-ID: <xmqqh7dwwt6y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237550AbhJDSfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 14:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229487AbhJDSfI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 14:35:08 -0400
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99CCDC061745
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 11:33:19 -0700 (PDT)
+Received: by mail-ua1-x931.google.com with SMTP id t36so13090955uad.4
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 11:33:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BSe4BeYEK0otn6i+xaAYeRRe6O1LoFbSFAapBVFsTsU=;
+        b=YG3xPAz5zGSe4GXqfD9btOWp+QrLpg9okYn+GHbFo6l6yZgZf1cuYcZ7ryemDsa/Z5
+         EmMJUWD6AScBuTeXentdRbW2B9I9iWxgDM6eLnJ8Sel4QF+9fnFEC2uLyGRN59P4hwLq
+         0LQvVPsacWj0A6l4xsyL87z6uoagG5T2gNO9CBelLO41AjtmpbXl/MK949S+YY98PMz2
+         KUuAwJExEhghksm3FIVS6Q1ePJ53x4TRO2J/L2U4Qca8VKUMFJvFDt3OOft9kzwyFsBG
+         YmTh9Xff6lbaa9D1RB/AKyb5DLVUST/eBzEyUS3Jsh4zw+OueCAqZy7FsL9ePaFeuKKf
+         ozlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BSe4BeYEK0otn6i+xaAYeRRe6O1LoFbSFAapBVFsTsU=;
+        b=LdSorAS483S6bFVwmagNWQM1d/ZjkLL6HtvnSPNG4sr7/41OK9zaPhEaEzIH/yrvyS
+         AOEa7olZs+bU62BgdrYvE3gSlQGsTNA1c58AYy2cboa4Ij72JJ2jGP9z06lWPY7CGrfa
+         3fIwzAuGKMVdwaTx+zhVrUqn/gUFAq/oi9wxKtUJO62Mgzvcke/M1S6tZRN78anEiuZI
+         9sdpYpeIl+hkVCjiG9vKGjzYwDNx5PrRM/MQC9/PsBaZEmsyNOEFKX66obwXJ3ZMcbCP
+         SmVQdYvhmXUf0kgL2MLo2TxBhUxXPpzyV7HOYbrvqG/VOsvR2Ajvd8/kpzI3SHE7CVjZ
+         o3Iw==
+X-Gm-Message-State: AOAM533AM5ovT1B1MdKnL/UybGLufPniBlPJ03LwhKvUj6EQjKxA1upJ
+        RHW0GxktSx2Inv9Xs/p2WBdZ8OvRo+J2FKSOFF/F0PrcBpI=
+X-Google-Smtp-Source: ABdhPJw1VHKXNlxI+6jTtEZW0F014R5i6N7CfCuaVquYYIBuPGCKEI4s1U/oIkATLVHvLwwsNa3+rtBotXUer4NcEME=
+X-Received: by 2002:ab0:63d9:: with SMTP id i25mr5333488uap.138.1633372398684;
+ Mon, 04 Oct 2021 11:33:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53EA6F32-253F-11EC-85E1-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20211002153654.52443-1-carenas@gmail.com> <20211004072600.74241-1-carenas@gmail.com>
+ <20211004072600.74241-2-carenas@gmail.com> <xmqq1r50ycgf.fsf@gitster.g>
+ <CAPUEsph_Aqaveur4qZ+Z+85gw1z2CvPOkzbkqW9zt56RoHhUJw@mail.gmail.com> <xmqqlf38wthy.fsf@gitster.g>
+In-Reply-To: <xmqqlf38wthy.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 4 Oct 2021 11:33:07 -0700
+Message-ID: <CAPUEspiQrGDyYrBUmeMh0C1uPDjUE5d--5zT4vZZUdNr+xtAxA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] terminal: teach git how to save/restore its terminal settings
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Mon, Oct 4, 2021 at 11:10 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Carlo Arenas <carenas@gmail.com> writes:
+> > On Mon, Oct 4, 2021 at 9:36 AM Junio C Hamano <gitster@pobox.com> wrote=
+:
+> >> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+> >> > diff --git a/compat/terminal.c b/compat/terminal.c
+> >> > index 43b73ddc75..1fadbfd6b6 100644
+> >> > --- a/compat/terminal.c
+> >> > +++ b/compat/terminal.c
+> >> > @@ -8,7 +8,7 @@
+> >> >
+> >> >  #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
+> >> >
+> >> > -static void restore_term(void);
+> >> > +void restore_term(void);
+> >>
+> >> Curious why you need this because (1) we do not have the same for
+> >> save_term() here, and (2) we include compat/terminal.h where these
+> >> two are declared next to each other.
+> >
+> > It is in preparation for the next patch where we will call these newly
+> > public functions from editor.c
+> > I'll be reusing restore_term(), while save_term() is new, hence why
+> > only one had this change.
+>
+> I think I understand all that correctly.
+>
+> I was curious why the patch left a forward declaration, instead of
+> just removing it, which it can do because now we have the necessary
+> declaration in the header file it includes.
 
-> So, I guess trying to distill what bugs me, I'd say: it seems to me
-> that you have ignored what Junio said about taking my series, and then
-> you rebased my series on top of unrelated stylistic churn, with that
-> churn containing three issues that trigger ongoing misgivings I have
-> about the care being put behind these refactorings, especially
-> considering their value compared to the features and bugfixes we are
-> getting, and you seem to fail to try to understand my changes and
-> misrepresent them in the process.  I hope I'm not overreacting but
-> something feels wrong to me here.
+of course, just sloppy coding on my part; will remove in a reroll
 
-Just one thing.  It is fairly easy to rebase and merge and generally
-muck with somebody else's changes without fully understanding it.  I
-do that all the time ;-)
+thanks,
 
-I would prefer to see us assume misunderstanding by incompetence,
-rather than misrepresentation by malice to further one's own agenda.
+Carlo
