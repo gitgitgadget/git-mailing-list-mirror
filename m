@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77633C4332F
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AFDC433EF
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DAF9613CF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7898B613CF
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237897AbhJDQ7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 12:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56960 "EHLO
+        id S237877AbhJDQ7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 12:59:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237877AbhJDQ7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 12:59:41 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151ACC061745
+        with ESMTP id S237878AbhJDQ7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 12:59:42 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978F4C061746
         for <git@vger.kernel.org>; Mon,  4 Oct 2021 09:57:52 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id o20so13935194wro.3
+Received: by mail-wm1-x334.google.com with SMTP id t16-20020a1c7710000000b003049690d882so20216802wmi.5
         for <git@vger.kernel.org>; Mon, 04 Oct 2021 09:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RM2kaD4zPcEkoFHN9UJthugd2LTz0cfzsm58mTjVpOw=;
-        b=FHa3Ihb3WyWkqL7zpJUfdRpxCJSyCt3vAv0eIhkC6Lr09zAYB3DVSqUQb2p2r0Lv2m
-         42s7Gt6DskEo5T8eM6HRzlBmioBYjZy/N/2wgp8MXjDtcQVuzmCFOmjZ7qY4Md9R8R8r
-         Nw1spDMf2YCxfnQ0N4TcFy/T5eIMSlkV6vrNYkegpnN8UZROkKz9oqfmFQ5kmvdNRrhV
-         hMwjhTQ48luJ5Rms3KlzmiRMOxZoIcaWySKNx7MPtS7qIQhZLEpD5UNDWk36bobUydGN
-         w8tXqWu76ejla9jh17iafxyXUeK9Y6G4Q0jt2bmq+cQevul6D8yGV9y87J3PHrmus0/6
-         cKIA==
+        bh=0YFH/7O9dujfKmmu6ZRk/KJCH7LOCPzTEaGTMr5K95k=;
+        b=dbtWF86oX7UdSpUukdxEKgC1IYhk/Oz5U86Z/GB4z/vTIkAEPlWdiE3vJGrwneEIFE
+         Crz532JdtDJZXqzX2hALBjCBHgKuIE/VgbKqJpKWX3FFH0oKH26zW+0/VXs8YGR4+R68
+         H3diBCX0C91Dpyjv6nULLJMGagmNuvazy0skeNhAXiX4X2tasZ+6KI2GFQit6aHNKsDD
+         4dju8TVZB7Ytks1ehtSYQWkV1J6T0VdLd4XkP0hkNvYbELreZEH3g1TYS6AukMSQedKY
+         T1CG1ELIPXpTOuRHoHsDSv/cJ8Z+sNN4pdyMDIB9lRJG6k4aShD/BXhROgReeyITZbbt
+         cLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RM2kaD4zPcEkoFHN9UJthugd2LTz0cfzsm58mTjVpOw=;
-        b=koGYdFgQ2Yx6TuTb9X1hpW/uv6PrhEotXoX6ZQ1opQ9dggSHa30dVMNqweocNl0kbo
-         vCypM/AsbR4urfOncXPtTWst+6IoNjVBV3BH50rCKdPIpkgArBwuQWNI1ya1P7hG9uSH
-         WKou2KW8AcZYWYdN4+Pwc8IFgg3Ih6GXwR+NNNnkrYxwU8uissw4W1rwIqBz7o/bS+95
-         idH5diMbtH3ooh8uvBUFu9v1O0wY6TlFbvoQm1cXv4zbPPny5rOix0aJmv0Z9XBlemBH
-         0OFqoA2njgjJuzTVHSi3z8xs4TizUUes6XEdgjfc980l62AEstofMiwif0vyr/JfDdiF
-         gRUA==
-X-Gm-Message-State: AOAM531PZT5Xkx4eWBn1QI5axWxVuz/yavYPejPAdhZf7bLxqzX0g2DA
-        jRA6mWtWkF1DpAeKMCk3bHYY/gki2aE=
-X-Google-Smtp-Source: ABdhPJz+1kDDy2vD9HPh3pP4bCLZbMK/6teVLW4GfW7BGtBjyoW2luNeWWJ7TARro43bLI4Szx+9AA==
-X-Received: by 2002:adf:bd8a:: with SMTP id l10mr4221728wrh.159.1633366670722;
-        Mon, 04 Oct 2021 09:57:50 -0700 (PDT)
+        bh=0YFH/7O9dujfKmmu6ZRk/KJCH7LOCPzTEaGTMr5K95k=;
+        b=Eojm1A7FW6yQoM4DpoqoduL/0Xa1HKXgiQICxnbMqc72IGtOIY9j/kLUfGWYMOEJUH
+         L9jWwBDciHSnRS3XvJwQF/HQyILuvKYH044I5Ei3/QOGJttVmcmrmEU3vydDQq43/+Vk
+         9fCeUaknfrIyLENZ9CvE0TX1my60QipKQan9yIG+SfMever0tHVMOCv9UrRDQkJ45PEH
+         JXouV581zEupeJ6/vX5qjHroNJfjpYFPK7DQQ8MY6OYrjZ2eK8AMew1z3/sZYkXr0z8I
+         ty/DOWty97GPaMJTAkggZ9ik9KlDfx+2rK9mIl4dhqRFjLv+QjB2zSLDaGzFBNixuWjx
+         KGpA==
+X-Gm-Message-State: AOAM532LjVqfDaup6321CKOvGGou+t4y2h0l5eoeR9nV08PgrHeTpMHc
+        mO5EFRgsnonL/EXdZHhest/s1xJrDy4=
+X-Google-Smtp-Source: ABdhPJxzblJRs+AEUcIbZYHKdhDyC8O9uB+rHRSSZOhiH0nxYidaq0U4RXy63Qurhk9b+nmJp7M7aw==
+X-Received: by 2002:a05:600c:350a:: with SMTP id h10mr19444070wmq.163.1633366671245;
+        Mon, 04 Oct 2021 09:57:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g21sm14666949wmk.10.2021.10.04.09.57.50
+        by smtp.gmail.com with ESMTPSA id o8sm8494727wme.38.2021.10.04.09.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 04 Oct 2021 09:57:50 -0700 (PDT)
-Message-Id: <bc08513734099decc96e7e4d8747e6e93aa435c6.1633366667.git.gitgitgadget@gmail.com>
+Message-Id: <9335646ed91d3472191b8be233839b3a583c9718.1633366667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
 References: <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com>
         <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Oct 2021 16:57:40 +0000
-Subject: [PATCH v8 2/9] tmp-objdir: disable ref updates when replacing the
- primary odb
+Date:   Mon, 04 Oct 2021 16:57:41 +0000
+Subject: [PATCH v8 3/9] bulk-checkin: rename 'state' variable and separate
+ 'plugged' boolean
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,131 +80,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-When creating a subprocess with a temporary ODB, we set the
-GIT_QUARANTINE_ENVIRONMENT env var to tell child Git processes not
-to update refs, since the tmp-objdir may go away.
+Preparation for adding bulk-fsync to the bulk-checkin.c infrastructure.
 
-Introduce a similar mechanism for in-process temporary ODBs when
-we call tmp_objdir_replace_primary_odb. Now both mechanisms set
-the disable_ref_updates flag on the odb, which is queried by
-the ref_transaction_prepare function.
+* Rename 'state' variable to 'bulk_checkin_state', since we will later
+  be adding 'bulk_fsync_state'.  This also makes the variable easier to
+  find in the debugger, since the name is more unique.
 
-Note: This change adds an assumption that the state of
-the_repository is relevant for any ref transaction that might
-be initiated. Unwinding this assumption should be straightforward
-by saving the relevant repository to query in the transaction or
-the ref_store.
-
-Peff's test case was invoking ref updates via the cachetextconv
-setting. That particular code silently does nothing when a ref
-update is forbidden. See the call to notes_cache_put in
-fill_textconv where errors are ignored.
-
-Reported-by: Jeff King <peff@peff.net>
+* Move the 'plugged' data member of 'bulk_checkin_state' into a separate
+  static variable. Doing this avoids resetting the variable in
+  finish_bulk_checkin when zeroing the 'bulk_checkin_state'. As-is, we
+  seem to unintentionally disable the plugging functionality the first
+  time a new packfile must be created due to packfile size limits. While
+  disabling the plugging state only results in suboptimal behavior for
+  the current code, it would be fatal for the bulk-fsync functionality
+  later in this patch series.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- environment.c  | 4 ++++
- object-file.c  | 6 ++++++
- object-store.h | 9 ++++++++-
- refs.c         | 2 +-
- repository.c   | 2 ++
- repository.h   | 1 +
- 6 files changed, 22 insertions(+), 2 deletions(-)
+ bulk-checkin.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index b4ba4fa22db..46ec5072c05 100644
---- a/environment.c
-+++ b/environment.c
-@@ -176,6 +176,10 @@ void setup_git_env(const char *git_dir)
- 	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
- 	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
- 	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
-+	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+		args.disable_ref_updates = 1;
-+	}
-+
- 	repo_set_gitdir(the_repository, git_dir, &args);
- 	strvec_clear(&to_free);
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 8785b2ac806..6ae18401e04 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -10,9 +10,9 @@
+ #include "packfile.h"
+ #include "object-store.h"
  
-diff --git a/object-file.c b/object-file.c
-index 990381abee5..f16441afb93 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -767,6 +767,12 @@ struct object_directory *set_temporary_primary_odb(const char *dir, int will_des
- 	 */
- 	new_odb = xcalloc(1, sizeof(*new_odb));
- 	new_odb->path = xstrdup(dir);
-+
-+	/*
-+	 * Disable ref updates while a temporary odb is active, since
-+	 * the objects in the database may roll back.
-+	 */
-+	new_odb->disable_ref_updates = 1;
- 	new_odb->will_destroy = will_destroy;
- 	new_odb->next = the_repository->objects->odb;
- 	the_repository->objects->odb = new_odb;
-diff --git a/object-store.h b/object-store.h
-index 74b1b5872a6..bd53bdf2f2e 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -27,10 +27,17 @@ struct object_directory {
- 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
- 	struct oidtree *loose_objects_cache;
+-static struct bulk_checkin_state {
+-	unsigned plugged:1;
++static int bulk_checkin_plugged;
  
-+	/*
-+	 * This is a temporary object store created by the tmp_objdir
-+	 * facility. Disable ref updates since the objects in the store
-+	 * might be discarded on rollback.
-+	 */
-+	unsigned int disable_ref_updates : 1;
-+
- 	/*
- 	 * This object store is ephemeral, so there is no need to fsync.
- 	 */
--	int will_destroy;
-+	unsigned int will_destroy : 1;
++static struct bulk_checkin_state {
+ 	char *pack_tmp_name;
+ 	struct hashfile *f;
+ 	off_t offset;
+@@ -21,7 +21,7 @@ static struct bulk_checkin_state {
+ 	struct pack_idx_entry **written;
+ 	uint32_t alloc_written;
+ 	uint32_t nr_written;
+-} state;
++} bulk_checkin_state;
  
- 	/*
- 	 * Path to the alternative object store. If this is a relative path,
-diff --git a/refs.c b/refs.c
-index 8b9f7c3a80a..7c182607dcf 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2126,7 +2126,7 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 		break;
- 	}
+ static void finish_tmp_packfile(struct strbuf *basename,
+ 				const char *pack_tmp_name,
+@@ -277,21 +277,23 @@ int index_bulk_checkin(struct object_id *oid,
+ 		       int fd, size_t size, enum object_type type,
+ 		       const char *path, unsigned flags)
+ {
+-	int status = deflate_to_pack(&state, oid, fd, size, type,
++	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
+ 				     path, flags);
+-	if (!state.plugged)
+-		finish_bulk_checkin(&state);
++	if (!bulk_checkin_plugged)
++		finish_bulk_checkin(&bulk_checkin_state);
+ 	return status;
+ }
  
--	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+	if (the_repository->objects->odb->disable_ref_updates) {
- 		strbuf_addstr(err,
- 			      _("ref updates forbidden inside quarantine environment"));
- 		return -1;
-diff --git a/repository.c b/repository.c
-index 710a3b4bf87..18e0526da01 100644
---- a/repository.c
-+++ b/repository.c
-@@ -80,6 +80,8 @@ void repo_set_gitdir(struct repository *repo,
- 	expand_base_dir(&repo->objects->odb->path, o->object_dir,
- 			repo->commondir, "objects");
+ void plug_bulk_checkin(void)
+ {
+-	state.plugged = 1;
++	assert(!bulk_checkin_plugged);
++	bulk_checkin_plugged = 1;
+ }
  
-+	repo->objects->odb->disable_ref_updates = o->disable_ref_updates;
-+
- 	free(repo->objects->alternate_db);
- 	repo->objects->alternate_db = xstrdup_or_null(o->alternate_db);
- 	expand_base_dir(&repo->graft_file, o->graft_file,
-diff --git a/repository.h b/repository.h
-index 3740c93bc0f..77316367d99 100644
---- a/repository.h
-+++ b/repository.h
-@@ -162,6 +162,7 @@ struct set_gitdir_args {
- 	const char *graft_file;
- 	const char *index_file;
- 	const char *alternate_db;
-+	int disable_ref_updates;
- };
- 
- void repo_set_gitdir(struct repository *repo, const char *root,
+ void unplug_bulk_checkin(void)
+ {
+-	state.plugged = 0;
+-	if (state.f)
+-		finish_bulk_checkin(&state);
++	assert(bulk_checkin_plugged);
++	bulk_checkin_plugged = 0;
++	if (bulk_checkin_state.f)
++		finish_bulk_checkin(&bulk_checkin_state);
+ }
 -- 
 gitgitgadget
 
