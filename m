@@ -2,108 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9A75C433F5
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 20:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C4ABC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 22:29:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B234561360
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 20:52:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 707B461058
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 22:29:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234829AbhJDUyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 16:54:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65521 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232836AbhJDUyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:54:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3AADC15BC1F;
-        Mon,  4 Oct 2021 16:52:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fySz6gAea9uSuH3++7bYvz7YTvkuSEr3iU0k69
-        AUipk=; b=CAvVezktgBGg8gYaeNTJk2r5BatQJim13KWs4Ix+Yma+ppNI7IuQVY
-        sQpsqnyJg4VFkCmNszl5S8OS/gk0nRvBxbXKcHB+93Agn6Tg7Weh0No1Yv1f+RFN
-        sZMsZLvZ9r6nqcJoxeIxJySb8/QSRcnm/9FG0J+5XV8C7FLRD5D5g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 32A7F15BC1D;
-        Mon,  4 Oct 2021 16:52:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8A11615BC1C;
-        Mon,  4 Oct 2021 16:52:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Robert Leftwich <robert@gitpod.io>, git@vger.kernel.org,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: Bug/regression report - 'git stash push -u' fatal errors when
- sub-repo present
-References: <CACr9BXmP1vQMK4b27Uc4R-3WWYHUYfCEEMN+hnth4yUg+UN7Zg@mail.gmail.com>
-        <7b83c77e-dd87-f688-3da1-7826cf6b0d4e@web.de>
-        <xmqqk0iydns7.fsf@gitster.g>
-        <1d26a9f3-dcb5-408a-581e-40411e6a2179@web.de>
-        <6df361a5-8e15-63a7-dbb8-77405c6edf0e@gmail.com>
-Date:   Mon, 04 Oct 2021 13:52:29 -0700
-In-Reply-To: <6df361a5-8e15-63a7-dbb8-77405c6edf0e@gmail.com> (Derrick
-        Stolee's message of "Mon, 4 Oct 2021 16:06:22 -0400")
-Message-ID: <xmqqzgrov7g2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234870AbhJDWa5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 18:30:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234175AbhJDWa4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 18:30:56 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C78D1C061745
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 15:29:06 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r18so6219696wrg.6
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 15:29:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=ziv1KkkO0XOiHO+S1aR+RSF4l/LYA9W6WWF0AaoThh8=;
+        b=GQL750fpA0uhUJd+2+nk/CXiezMApVvIXg/yk37uLicbkbxq8N3gp8p+4vJxh9x9qi
+         hDUKF9jsJjm0n98tTDOVtloYGeZ2EccyV6E36+0FoELehICMBjqjr/4IofzRl4888znS
+         1we1rwyl37S8V2YlzLulkBbG72obUBLpajqzXZtEgtlA2T0mE3wGue0PPSppN/+M5YcE
+         silivNJOYirJC/1+7vitx/DS+jUJcAb3ysR0IrBvLujyOEyV57i6B2tIB7BEUfIk8goG
+         GrNpJ+E7unX077wtFNEvLt8bgyM0SZeWOoYl6mouMfjZFX7BN3ijDWj1zAbS8HZJIAbl
+         5rCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ziv1KkkO0XOiHO+S1aR+RSF4l/LYA9W6WWF0AaoThh8=;
+        b=6VZqTj1GkwhMlEh4CS+yKPQlTFpGRSOOa5A9WCLMD/RFgmUYrQGtMhv+idE1h+Dent
+         XnfqUVPqogYitZOmka04wkR4t5yTUTJKiI7C/Uhvc7VVoZpVi1chVEe+vsFd+iHavJ7l
+         dkV5EAYVc92S2HEUfXeL4MxZNLSaIXZGokVKwj6CBqgnLVGW8w/TOvDTbAU+ICo6xeiw
+         9EpuKaX9INHeX9PDMe1TgNtp3M+s4H9RuJEQ41bZB62UUYC5+DKPfWL/E/RKXzQzQEFT
+         9S3lLfLBjBOLfeW8HX4aiBqJK1+EJ1Emgqg7QX5W6F0hETOM9mFWkoAEGBkeEuEIl11E
+         NIeQ==
+X-Gm-Message-State: AOAM532nRKUN0rxfvm0GXYMryFkQmuilw7mSAQjbmVJIYMlf+IGj9Fj0
+        xDLQtGdxltuA1PW2zKVMvH6GhgiccH8=
+X-Google-Smtp-Source: ABdhPJyMPEvgqnZ5KBPpLaKGV/xzhhdRjSdEO+8/Dvsad9s0YqfCyoLaN0P+9EGQaBvsfOeUo3r08A==
+X-Received: by 2002:adf:a347:: with SMTP id d7mr17794976wrb.139.1633386545389;
+        Mon, 04 Oct 2021 15:29:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i92sm15290443wri.28.2021.10.04.15.29.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 15:29:04 -0700 (PDT)
+Message-Id: <pull.1051.git.1633386543759.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 Oct 2021 22:29:03 +0000
+Subject: [PATCH] t/perf/perf-lib.sh: remove test_times.* at the end
+ test_perf_()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FDB82152-2554-11EC-8408-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-> And yes, I believe that make_cache_entry() and add_index_entry_with_check()
-> are the only places that need this internal version. If we find others,
-> then we can add them as necessary. The tests in t1092 are getting rather
-> robust, although they don't do much for this test case:
->> +test_expect_success 'stash -u ignores sub-repository' '
->> +	test_when_finished "rm -rf sub-repo" &&
->> +	git init sub-repo &&
->> +	git stash -u
->> +'
->
-> Seems like a good test to have, anyway.
->
-> I look forward to seeing this as a full patch.
+Teach test_perf_() to remove the temporary test_times.* files
+at the end of each test.
 
-Just one thing I want to pick your brains for ;-)
+test_perf_() runs a particular GIT_PERF_REPEAT_COUNT times and creates
+./test_times.[123...].  It then uses a perl script to find the minimum
+over "./test_times.*" (note the wildcard) and writes that time to
+"test-results/<testname>.<testnumber>.result".
 
-I said this earlier ...
+If the repeat count is changed during the pXXXX test script, stale
+test_times.* files (from previous steps) may be included in the min()
+computation.  For example:
 
->>> "git update-index" should never allow to create a "tree" kind of
->>> cache entry (making it sparse again should be the task of systems
->>> internal, and should not be done by end-user feeding a pre-shrunk
->>> "tree" kind of entry to record a sparsely populated state, if I
->>> understand correctly), so its call to verify_path(), if it ends with
->>> a directory separator, should say "that's not a good path".
+...
+GIT_PERF_REPEAT_COUNT=3 \
+test_perf "status" "
+	git status
+"
 
-... without knowing what you had in mind when you did the "tree kind
-of entry in the index".  Are we on the same page, or do we think it
-might be beneficial to give end-users a long-enough rope
-to hang themselves, aka get into the lower details of
-implementation?
+GIT_PERF_REPEAT_COUNT=1 \
+test_perf "checkout other" "
+	git checkout other
+"
+...
 
-One _could_ imagine that allowing
+The time reported in the summary for "XXXX.2 checkout other" would
+be "min( checkout[1], status[2], status[3] )".
 
- $ git update-index --cacheinfo 40000,609869396314577e5a,t/
+We prevent that error by removing the test_times.* files at the end of
+each test.
 
-given by the end user to drop all entries under t/* and replace them
-with a single sparse-dir-entry might be a good way to allow
-scripters the same power as the C-code to take advantage of the
-sparse checkout feature.  It needs to be paired with some mechanism
-to allow sparse-dir-entry observed by the end users with a plumbing,
-e.g. even though ls-files unconditionally calls ensure_full_index(),
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+    t/perf/perf-lib.sh: remove test_times.* at the end test_perf_()
+    
+    Teach test_perf_() to remove the temporary test_times.* files at the end
+    of each test.
+    
+    test_perf_() runs a particular GIT_PERF_REPEAT_COUNT times and creates
+    ./test_times.[123...]. It then uses a perl script to find the minimum
+    over "./test_times.*" (note the wildcard) and writes that time to
+    "test-results/..result".
+    
+    If the repeat count is changed during the pXXXX test script, stale
+    test_times.* files (from previous steps) may be included in the min()
+    computation. For example:
+    
+    ... GIT_PERF_REPEAT_COUNT=3
+    test_perf "status" " git status "
+    
+    GIT_PERF_REPEAT_COUNT=1
+    test_perf "checkout other" " git checkout other " ...
+    
+    The time reported in the summary for "XXXX.2 checkout other" would be
+    "min( checkout[1], status[2], status[3] )".
+    
+    We prevent that error by removing the test_times.* files at the end of
+    each test.
+    
+    Signed-off-by: Jeff Hostetler jeffhost@microsoft.com
 
- $ git ls-files --show-sparse
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1051%2Fjeffhostetler%2Fperf-test-remove-test-times-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1051/jeffhostetler/perf-test-remove-test-times-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1051
 
-may show the sparse-dir-entry by bypassing the call.
+ t/perf/perf-lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks.
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index f5ed092ee59..a1b5d2804dc 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -230,6 +230,7 @@ test_perf_ () {
+ 		test_ok_ "$1"
+ 	fi
+ 	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".result
++	rm test_time.*
+ }
+ 
+ test_perf () {
+
+base-commit: 0785eb769886ae81e346df10e88bc49ffc0ac64e
+-- 
+gitgitgadget
