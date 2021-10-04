@@ -2,196 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D56C433F5
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E82EC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 615AC61248
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7215F6121F
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235737AbhJDN4h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 09:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S238441AbhJDN4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 09:56:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234956AbhJDN40 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239011AbhJDN40 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Oct 2021 09:56:26 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB16DC061753
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:45:32 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id l6so11125993plh.9
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:45:32 -0700 (PDT)
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C3CC061783
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:45:39 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id rj12-20020a17090b3e8c00b0019f88e44d85so5667744pjb.4
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Aez3N+OTuuAnxAsXVLCTbOQgXNm7zjoOtBzb2YSF62Q=;
-        b=DKg1Tt+ZAZdQmq/V3U/e+dlesrOuYRt7WkIE5gqZzO0wFoEw+jHC14xsz+ln+XqTPq
-         wm8QervOgvJiS+BSrC4NIxbeV0OmP43FL0eAvZnyiDxc4lYYdPEARMcv/viTZ8qSgFtX
-         UD2GHbO2pqwC+KsJvJ1wfTTFponEKEoKE/BVHbzqZ+K90F8WU9LKfohEn0RLDFRoIx3y
-         k0inYlpce624+d+VJ6+NUe3QeGH5YWIU0uH5r6mM6N6YJMLi0XamYSqq7AJaBw/9qWJ7
-         6ekzUVK1svV62RhqgZ4W8x6ZeVrTNI3lHD0dYje7Ag7MepUJr4rA/K/t+lYIqZKXywqH
-         W88w==
+         :cc:content-transfer-encoding;
+        bh=mJm7dUr8fBXAQ9XOrRBZqf6M9BKOBgOY6kY43MR0GQ8=;
+        b=Dn+8ZrMx5hYCvuFwkhFS6cHcTdLb4jZNeQJE9CdnXrPs0ijYOkoiGSYqiHjQBR3F/x
+         u8ipMnyi1vbVz1d1mzgv1g0fCEqPOT/06fHmTGvgnr7LZgtPYBElHcdZ47SNr9dlCVus
+         f8kKE7A5MqL4MHE19FVHIJmDYErnnPrv8c5XPp2Ig2BewJyWoXvIxwpp1rh451IOjrA+
+         A8TgrXCsOvs2PyQspc2GP11hn0FWcjkS0f7L5jbGM/OS7ugph3LuST3YjrsQd0cXQ7jN
+         /+mHMDLeAcqhIisvAD543gJnT1AYANm5b30TrPsp+/TYz7Z02QusQaiIczgtS1rWT0tq
+         +x9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Aez3N+OTuuAnxAsXVLCTbOQgXNm7zjoOtBzb2YSF62Q=;
-        b=oqJQj3S23dISjJ0LpRU5pgJa7o1sl/rMp7HnD2jA+18MEqU8LVXVBW2fvisYbGLgnN
-         QMGhA2YpzJPCPD2dtdBnq/eV1OkhAUaEagVqide2RsQs53kgbSgtft+XSi+b2pEu6+fi
-         wKD1z83tjkZRF7vfLOE2xo69m3IcGKyiFG57IXc+BoBduNwDHdQJY560ujmZ3zH2Ceha
-         Ftl21Rt7j3tN2dL7sqNPy+SnjsEXjY8Kcnb9Spna++o/ENwWHX6WM7OCHyqNygSYJab9
-         kCmdpL6GUqzxig5maR3fxiB+jrFOBDaNLNzNh45/O68azvR0TfAOZKniPZsgSiDWtFtd
-         Xz5g==
-X-Gm-Message-State: AOAM533DEya7u859KRefJXKj2wsHGuOW+eLieNR1JpwdxmngYHJcw49n
-        a4VXjMowC1hysSNMJgPbxEuoJxojfOpi2rGajJ4=
-X-Google-Smtp-Source: ABdhPJySAHaZytJADR0xf5cuwIEG7IfMZzXiWkkYhG3XyCSwmh5t5jZ9uwJeygRyEzorlbkaYTkph1MUmbpUmp2J7ro=
-X-Received: by 2002:a17:902:9687:b0:13d:b848:479d with SMTP id
- n7-20020a170902968700b0013db848479dmr24511604plp.59.1633355132141; Mon, 04
- Oct 2021 06:45:32 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mJm7dUr8fBXAQ9XOrRBZqf6M9BKOBgOY6kY43MR0GQ8=;
+        b=LbL8amKKyo2c7VBYgqieEMgQMt88+q3WW/EnXwTuaymzQzQkbkkf3BcQW/ozMiyWnu
+         rn7W4SgGuaaJDXpkM8oa9YNkwlu3T7tGz0CY+8Waehcw3OLjnCp8BdbOphZSE4VfeDnU
+         fiZKmQAfzzbndNfOZbgSU1eQLwnkS0udCxnJZknWneEBYGyjv4L0RgdU11Gxh8KSR7fL
+         lONAqzJqrI5/YJRPsQr9H4TJQnw4MdXOmEMkq1bOCWMq4eo0NtnzRdQk/r/bq/Y+wVbc
+         IZACAFvb/xXDyDgW4C/H92lqyqi+NsF16+PG91n5v9/fRiEoqVe0aH+L0L30EBKga0u/
+         RkDg==
+X-Gm-Message-State: AOAM530ZB8gl5jIkWktuayyIA0sI/QzwjRsKgz9fzM0IB9d8Y8H4muhr
+        bgL0voCEIheSzS5WRgr8iUU2DOVWQkW2Rrpj/TToazs/dBc=
+X-Google-Smtp-Source: ABdhPJxvhAzTLI3p1aqV2av3ubX4T8OXxMODZ8PjSiPxQ7CKyFNDAubVwFFcsdroN9FnicK0Tt2x62m3NNZzlv1kMqs=
+X-Received: by 2002:a17:90a:e453:: with SMTP id jp19mr15094321pjb.11.1633355138760;
+ Mon, 04 Oct 2021 06:45:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq8rzhmsi7.fsf@gitster.g> <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
- <YVOn3hDsb5pnxR53@coredump.intra.peff.net>
-In-Reply-To: <YVOn3hDsb5pnxR53@coredump.intra.peff.net>
+References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com> <patch-05.10-042080b8d6d-20211004T002226Z-avarab@gmail.com>
+In-Reply-To: <patch-05.10-042080b8d6d-20211004T002226Z-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
 Date:   Mon, 4 Oct 2021 06:45:00 -0700
-Message-ID: <CABPp-BE4jXyPVAWo7h7fuVHDuatr+mw6CgcWQ1rF7oT0RPMqXg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Message-ID: <CABPp-BHZZ4ETPAwf_jBZDZfHCvOUsL5Xnz8Ai0dHWAzazz7nnA@mail.gmail.com>
+Subject: Re: [PATCH 05/10] dir.[ch]: make DIR_INIT mandatory
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 4:40 PM Jeff King <peff@peff.net> wrote:
->
-> I just left a rather long-ish mail in the thread, but the gist of it is
-> that I'm worried that there's some possibility of corruption there if
-> the diff code writes objects. I didn't do a proof-of-concept there, but
-> I worked one up just now. Try this:
+On Sun, Oct 3, 2021 at 5:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 
-Thanks for the testcase; it's very helpful.
-
-Let's make it a little more interesting, though...
+The subject seems misleading; this patch doesn't make DIR_INIT
+mandatory, it is just updating the docs to reflect that and updating
+an out-of-date callsite.
 
 >
->   # make a repo
->   git init repo
->   cd repo
->   echo base >file
->   git add file
->   git commit -m base
+> The dir_init() initializer has been documented as being mandatory
+> since eceba532141 (dir: fix problematic API to avoid memory leaks,
+> 2020-08-18), but both it and my ce93a4c6127 (dir.[ch]: replace
+> dir_init() with DIR_INIT, 2021-07-01) managed to miss this callsite in
+> "add-interactive.c" added before those two commits in
+> ab1e1cccaf6 (built-in add -i: re-implement `add-untracked` in C,
+> 2019-11-29).
 >
->   # two diverging branches
->   echo main >file
->   git commit -am main
->   git checkout -b side HEAD^
->   echo side >file
->   git commit -am side
+> In addition my change to remove dir_init() neglected to update this
+> documentation. Let's use "must be initialized with" in reference to
+> "DIR_INIT". We have one lazy initialization which pre-dates
+> eceba532141 in dir.c. Adjusting this callsite is a prerequisite for
+> removing it in favor of trusting the macro to initialize the "struct
+> dir_struct" correctly.
 >
->   # we get a conflict, and we resolve
->   git merge main
->   echo resolved >file
->   git commit -am merged
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  add-interactive.c | 2 +-
+>  dir.h             | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
->   # now imagine we had a file with a diff driver. I stuffed it
->   # in here after the fact, but it could have been here all along,
->   # or come as part of the merge, etc.
->   echo whatever >unrelated
->   echo "unrelated diff=foo" >.gitattributes
-
-If we change this line to:
-
-  echo "file diff=foo" >.gitattributes
-
-Then the userdiff will fire on the file involved in the remerge-diff,
-including on the file included in the automatic 3-way content
-conflict, giving us a diff that looks like this:
-
-diff --git a/file b/file
-index 5c66bc5..2ab19ae 100644
---- a/file
-+++ b/file
-@@ -1,7 +1 @@
--<<<<<<< 7D4147C (SIDE)
--SIDE
--||||||| BE54C04
--BASE
--=======
--MAIN
-->>>>>>> 03FC4E3 (MAIN)
-+RESOLVED
-
->   git add .
->   git commit --amend --no-edit
+> diff --git a/add-interactive.c b/add-interactive.c
+> index 6498ae196f1..27daea8d1b3 100644
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -826,7 +826,7 @@ static int get_untracked_files(struct repository *r,
+>                                struct prefix_item_list *files,
+>                                const struct pathspec *ps)
+>  {
+> -       struct dir_struct dir =3D { 0 };
+> +       struct dir_struct dir =3D DIR_INIT;
+>         size_t i;
+>         struct strbuf buf =3D STRBUF_INIT;
 >
->   # set up the diff driver not just to do a textconv, but to cache the
->   # result. This will require writing out new objects for the cache
->   # as part of the diff operation.
->   git config diff.foo.textconv "$PWD/upcase"
->   git config diff.foo.cachetextconv true
->   cat >upcase <<\EOF &&
->   #!/bin/sh
->   tr a-z A-Z <$1
->   EOF
->   chmod +x upcase
->
->   # now show the diff
->   git log -1 --remerge-diff
->
->   # and make sure the repo is still OK
->   git fsck
->
-> The remerge diff will correctly show the textconv'd content (because
-> it's not in either parent, and hence an evil merge):
->
->   diff --git a/unrelated b/unrelated
->   new file mode 100644
->   index 0000000..982793c
->   --- /dev/null
->   +++ b/unrelated
->   @@ -0,0 +1 @@
->   +WHATEVER
->
-> but then fsck shows that our cache is corrupted:
->
->   Checking object directories: 100% (256/256), done.
->   error: refs/notes/textconv/foo: invalid sha1 pointer 1e9b3ecffca73411001043fe914a7ec0e7291043
->   error: refs/notes/textconv/foo: invalid reflog entry 1e9b3ecffca73411001043fe914a7ec0e7291043
->   dangling tree 569b6e414203d2f50bdaafc1585eae11e28afc37
+> diff --git a/dir.h b/dir.h
+> index 83f46c0fb4c..ff3b4a7f602 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -19,7 +19,7 @@
+>   * CE_SKIP_WORKTREE marked. If you want to exclude files, make sure you =
+have
+>   * loaded the index first.
+>   *
+> - * - Prepare `struct dir_struct dir` using `dir_init()` function.
+> + * - The `struct dir_struct dir` must be initialized with `DIR_INIT`.
+>   *
+>   * - To add single exclude pattern, call `add_pattern_list()` and then
+>   *   `add_pattern()`.
+> --
+> 2.33.0.1404.g83021034c5d
 
-
-> Now I'll admit the textconv-cache is a pretty seldom-used feature. And
-> that there _probably_ aren't a lot of other ways that the diff code
-> would try to write objects or references. But I think it speaks to the
-> kind of subtle interactions we should worry about (and certainly
-> corrupting the repository is a pretty bad outcome, though at least in
-> this case it's "just" a cache and we could blow away that ref manually).
-
-
-I implemented the pretend_object_file() solution on Saturday and tried
-this out, and found with the above change that it has corruption
-problems as well.  This really doesn't feel much safer too me.
-
-The move-the-tmp-objdir-to-just-being-an-alternate-instead-of-a-primary
-solution, as suggested at
-https://lore.kernel.org/git/YVOiggCWAdZcxAb6@coredump.intra.peff.net/
-has the same problem.
-
-But, more importantly, neither of these solutions can be made safe.
-Even if we adopt the GIT_QUARANTINE_PATH suggestion from Neeraj
-(https://lore.kernel.org/git/20210929184339.GA19712@neerajsi-x1.localdomain/),
-we still have objects referencing now-missing objects.
-
-*However*, if we use the tmp-objdir-as-primary solution, and leave it
-as a primary, and use your modification to the GIT_QUARANTINE_PATH
-idea from Neeraj (i.e. create a "the-tmp-objdir" and have the refs
-code check for it and turn on the quarantine automatically when one
-exists), then we prevent adding or modifying refs to point to bad
-objects, and any new objects that textconv might write that could
-depend on transient objects, will themselves be transient and go away.
-So, this solution is safe from corruption.  I'll be implementing it.
-
-(not sure how quickly I'll get it done, as my time is mostly limited
-to early mornings or evenings or Saturdays right now...)
+...other than the subject, the patch looks good
