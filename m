@@ -2,129 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63718C433EF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DAFDC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4755561184
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08CB56121F
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238718AbhJDN4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 09:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39224 "EHLO
+        id S238691AbhJDN44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 09:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234263AbhJDN4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 09:56:38 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B6BC0619C0
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:46:29 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id p11so12121916edy.10
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:46:29 -0700 (PDT)
+        with ESMTP id S238333AbhJDN4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 09:56:41 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C863C0619C1
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:46:36 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id n2so11115286plk.12
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=gZKS78GyuCr7oN+oL9tpIH8hYAWx18+hbevEU85m2Qg=;
-        b=RraT2/7EsQ4KVaODhNHZj1+VKprJCQfQzO0VTgVzRPan/ir0x9+CNwqZbCuCjlNGvA
-         RJWtMCXFrOPjt1AkTAyeDehqX7zKmm6jh+DIQgJzuDUpyjJ1YrJiqsufFSajDCpLo+iP
-         dtXzjF4qSRx6OMXuO+HIBnYvlV+u2oRRhXjsT6UZYLc28vO+HNIfyV4nFkc7D8DNVB8e
-         sl7y9U7OCA6O2yqml6NZnnQy1nMWjrOsgL0+EuwBc9NaIXxV7okK0/n/lojenmi685lF
-         VcVw0mXgKGsx22pIjYNqudBAnx0X7UnF+D40qCG0+1CCAHbbMQqZRFxOhNtyPWMKIa92
-         CUAg==
+        bh=ghYlWORcIedKPVVvLx4sp49uLX2dH7jtY43pT1xEr3U=;
+        b=D9iC7Id966YNAYh22hxpmu3uL03NDBjoR9zllTQPdheRknJYCzICKpIOrs6YnpW5XY
+         oqY7G3GFTlTR98jxadDSh1tovgd8V1lNkCkuuydAng4KT+H0XQNCOG8GBx9I10vZDGXP
+         xLQX7Ws0jJ8qG4AjkncfztncE8rzhHBBszDoBIfzxdttmU0SeWgUYW+8jgjvWgMOnT3Y
+         7rGDcRschvvUHONGKdBZGx8Rl6MKE3C2cZjUcZl4YQXEfi652n1NXeeyAgUC0AndXGtN
+         uJkc88t9q1PEKnv9BxA8FiJeM5tsLrKcCoPvfyAw1RgNNvUHpj3Ah4wbY19MaLn20SpG
+         cZzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gZKS78GyuCr7oN+oL9tpIH8hYAWx18+hbevEU85m2Qg=;
-        b=hztIQs756N/kUf7PbOALjJj2jZdsZBnEdG4bG4ISRInDTy3ljM8SSIqcRg5ijiYHWd
-         ur9WO5lfMLa3SdBko1WOqinsKY0wO0dHNfPfyfnvVn0yaRarA6TZcDb82TrZMnDU7Gd0
-         46X05W8RQR/QMhNFjBBMQADS7wiOLQY+6mAw0Mq/oHPvrgBJWRg6GpNTn+js3hWP76eT
-         Yfb7+YA9cBGPj6ob6VoQ6SnIjQJm5FYTsy73/5C4gJX/ygKWKdb+bNti9+OjLpDFmPyR
-         9XltMcAJjvxTeVQD7wTE9UzToF1y2utQSxma4RKcfGiLWpFqGIrxjvdyyPl26ep2Tdu2
-         KZ4w==
-X-Gm-Message-State: AOAM532iIowg6Ose62qqfMMKZAmxQA619UGTUsHcISSWnUUvwB5A5XOH
-        /AqIgg1e9AX7H4iaG5Jxu1gHB+sa7RxcpAAc8xU=
-X-Google-Smtp-Source: ABdhPJxb1xBJgWdRgSDELa/Kt98UJvzTsZh99fjNf8a0AgXSaPsf8RESjvNIesd+hlS18UpDVStJ26Fxvkq+ZyDoAIU=
-X-Received: by 2002:a05:6402:1848:: with SMTP id v8mr15764714edy.0.1633355103282;
- Mon, 04 Oct 2021 06:45:03 -0700 (PDT)
+        bh=ghYlWORcIedKPVVvLx4sp49uLX2dH7jtY43pT1xEr3U=;
+        b=2n0RuguRy5+ErAnkLdRsWFrSTFVD3riNRF7MN5ctckO1T0d+aIPsZa7e9froaAu4jv
+         DuZiSKfZJGax+sRYgpzfw2NIqt8v2Gnyl58UvNA3Dsqtrv9sVd6EinsFDw1CMsvyPhuK
+         v7SSmtWQQugHnD/2yDJtYD1tb53QFxlscCzwhn7JjSRCKDAii6FHhTqcIdaDSbtcuGDR
+         Y1qEgKYas91hSfh9NTWhK9QlSsPvVySXDqI/gaaBAMR8aRUH/3LBe+VVQIbHfa9nF3ZH
+         mgnJzDxhGrP/UvAMiMmQJt9kgByid0cA2aeSeV/8GN6JwI1m1b/I4yePAIsX3g4bu3Mm
+         bjZw==
+X-Gm-Message-State: AOAM531YwRjCbzM5CUSMe3sdSe1BkykwAGiUoxUf8kWigRMhgaYPoD/6
+        /TtTUUAcfbkH3IdTrJ1zsy85sQpbEDgQjagQ8zw9UIJH1UA=
+X-Google-Smtp-Source: ABdhPJy92CYKDMQ1QPK3kmFmpTbt06HMhFJFOepA4aSyl7zsWcAsN6NR6XKkLHGkJ8XNgufzecqmemnpBqrmIKC53SE=
+X-Received: by 2002:a17:902:9687:b0:13d:b848:479d with SMTP id
+ n7-20020a170902968700b0013db848479dmr24516397plp.59.1633355195548; Mon, 04
+ Oct 2021 06:46:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com> <patch-09.10-aa2bec76f6e-20211004T002226Z-avarab@gmail.com>
-In-Reply-To: <patch-09.10-aa2bec76f6e-20211004T002226Z-avarab@gmail.com>
+References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
+ <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
+ <87ilyjviiy.fsf@evledraar.gmail.com> <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
+ <87ee97utaq.fsf@evledraar.gmail.com> <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
+ <87lf3etaih.fsf@evledraar.gmail.com> <CABPp-BGi03JunRaMF_8SJKC00byOnq1kL3JyYhKWatz8-B4RsA@mail.gmail.com>
+ <87k0ixrv23.fsf@evledraar.gmail.com> <CABPp-BE_aY4smj_b0+Zz=YrURKMniS=DmyMWVc=q2mVDL8zUOg@mail.gmail.com>
+ <87k0ivpzfx.fsf@evledraar.gmail.com> <87sfxhohsj.fsf@evledraar.gmail.com>
+In-Reply-To: <87sfxhohsj.fsf@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
 Date:   Mon, 4 Oct 2021 06:45:00 -0700
-Message-ID: <CABPp-BHqzRXxatAuMn8rNDPSuN5nAWJFVNziLL3+LS+YJ98V-w@mail.gmail.com>
-Subject: Re: [PATCH 09/10] merge.c: avoid duplicate unpack_trees_options_release()
- code
+Message-ID: <CABPp-BFSFN3WM6q7KzkD5mhrwsz--St_-ej5LbaY8Yr2sZzj=w@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to unpack_trees_options
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Fedor Biryukov <fedor.birjukov@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 3, 2021 at 5:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+On Sun, Oct 3, 2021 at 3:38 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
 ab@gmail.com> wrote:
 >
-> Refactor code added in 1c41d2805e4 (unpack_trees_options: free
-> messages when done, 2018-05-21) to use a ret/goto pattern, rather than
-> duplicating the end cleanup in the function.
+> On Sat, Oct 02 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> This control flow will be matched in subsequent commits by various
-> other similar code, which often needs to do more than just call
-> unpack_trees_options_release(). Let's change this to consistently use
-> the same pattern everywhere.
+> > On Fri, Oct 01 2021, Elijah Newren wrote:
+> >
+> >> On Fri, Oct 1, 2021 at 1:47 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+<avarab@gmail.com> wrote:
+> >>>
+> >>> On Thu, Sep 30 2021, Elijah Newren wrote:
+> >>>
+> >>> > On Thu, Sep 30, 2021 at 7:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarma=
+son
+> >>> > <avarab@gmail.com> wrote:
+> >>> >>
+> >>> >> On Wed, Sep 29 2021, Elijah Newren wrote:
+> [...]
+> >>> > I might be going on a tangent here, but looking at that patch, I'm
+> >>> > worried that dir_init() was buggy and that you perpetuated that bug
+> >>> > with DIR_INIT.  Note that dir_struct has a struct strbuf basebuf
+> >>> > member, which neither dir_init() or DIR_INIT initialize properly
+> >>> > (using either strbuf_init() or STRBUF_INIT).  As far as I can tell,
+> >>> > dir.c relies on either strbuf_add() calls to just happen to work wi=
+th
+> >>> > this incorrectly initialized strbuf, or else use the strbuf_init()
+> >>> > call in prep_exclude() to do so, using the following snippet:
+> >>> >
+> >>> >     if (!dir->basebuf.buf)
+> >>> >         strbuf_init(&dir->basebuf, PATH_MAX);
+> >>> >
+> >>> > However, earlier in that same function we see
+> >>> >
+> >>> >     if (stk->baselen <=3D baselen &&
+> >>> >         !strncmp(dir->basebuf.buf, base, stk->baselen))
+> >>> >             break;
+> >>> >
+> >>> > So either that function can never have dir->basebuf.buf be NULL and
+> >>> > the strbuf_init() is dead code, or else it's possible for us to
+> >>> > trigger a segfault.  If it's the former, it may just be a ticking t=
+ime
+> >>> > bomb that will transform into the latter with some other change,
+> >>> > because it's not at all obvious to me how dir->basebuf gets
+> >>> > initialized appropriately to avoid that strncmp call.  Perhaps ther=
+e
+> >>> > is some invariant where exclude_stack is only set up by previous ca=
+lls
+> >>> > to prep_exclude() and those won't set up exclude_stack until first
+> >>> > initializing basebuf.  But that really at least deserves a comment
+> >>> > about how we're abusing basebuf, and would probably be cleaner if w=
+e
+> >>> > initialized basebuf to STRBUF_INIT.
+> >>>
+> >>> ...because yes, I forgot about that when sending you the diff-on-top,
+> >>> sorry. Yes that's buggy with the diff-on-top I sent you.
+> >>
+> >> That bug didn't come from the diff-on-top you sent me, it came from
+> >> the commit already merged to master -- ce93a4c6127  (dir.[ch]: replace
+> >> dir_init() with DIR_INIT, 2021-07-01), merged as part of
+> >> ab/struct-init on Jul 16.
+> >
+> > Ah, I misunderstood you there. I'll look at that / fix it. Sorry.
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  merge.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+> Just to tie up this loose end: Yes this control flow suck, and I've got
+> some patches to unpack-trees.[ch] & dir.[ch] I'm about to submit to fix
+> it. But just to comment on the existing behavior of the code, i.e. your
+> (above):
 >
-> diff --git a/merge.c b/merge.c
-> index 2f618425aff..2e3714ccaa0 100644
-> --- a/merge.c
-> +++ b/merge.c
-> @@ -54,6 +54,7 @@ int checkout_fast_forward(struct repository *r,
->         struct tree_desc t[MAX_UNPACK_TREES];
->         int i, nr_trees =3D 0;
->         struct lock_file lock_file =3D LOCK_INIT;
-> +       int ret =3D 0;
+>     "So either that function can never have dir->basebuf.buf be NULL and
+>     the strbuf_init() is dead code, or else it's possible for us to
+>     trigger a segfault.".
 >
->         refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+> I hadn't had time to look into it when I said I'd fix it, but now that I
+> have I found thath there's nothing to fix, and this code wasn't buggy
+> either before or after my ce93a4c6127 (dir.[ch]: replace dir_init() with
+> DIR_INIT, 2021-07-01). I.e. we do have the invariant you mentioned.
 >
-> @@ -95,12 +96,14 @@ int checkout_fast_forward(struct repository *r,
+> The dir.[ch] API has always relied on the "struct dir_struct" being
+> zero'd out. First with memset() before your eceba532141 (dir: fix
+> problematic API to avoid memory leaks, 2020-08-18), and after my
+> ce93a4c6127 with the DIR_INIT, which both amount to the same thing.
 >
->         if (unpack_trees(nr_trees, t, &opts)) {
->                 rollback_lock_file(&lock_file);
-> -               unpack_trees_options_release(&opts);
-> -               return -1;
-> +               ret =3D -1;
-> +               goto cleanup;
->         }
-> -       unpack_trees_options_release(&opts);
+> We both missed a caller that used neither dir_init() nor uses DIR_INIT
+> now, but it uses "{ 0 }", so it's always zero'd.
 >
->         if (write_locked_index(r->index, &lock_file, COMMIT_LOCK))
-> -               return error(_("unable to write new index file"));
-> -       return 0;
-> +               ret =3D error(_("unable to write new index file"));
-> +
-> +cleanup:
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
-> --
-> 2.33.0.1404.g83021034c5d
+> Now, of course it being zero'd *would* segfault if you feed
+> "dir->basebuf.buf" to strncmp() as you note above, but that code isn't
+> reachable. The structure of that function is (pseudocode):
+>
+> void prep_exclude(...)
+> {
+>         struct exclude_stack *stk =3D NULL;
+>         [...]
+>
+>         while ((stk =3D dir->exclude_stack) !=3D NULL)
+>                 /* the strncmp() against "dir->basebuf.buf" is here */
+>
+>         /* maybe we'll early return here */
+>
+>         if (!dir->basebuf.buf)
+>                 strbuf_init(&dir->basebuf, PATH_MAX);
+>
+>         /*
+>          * Code that sets dir->exclude_stack to non-NULL for the first
+>          * time follows...
+>          */
+> }
+>
+> I.e. dir->exclude_stack is *only* referenced in this function and
+> dir_clear() (where we also check it for NULL first).
+>
+> It's state management between calls to prep_exclude(). So that that
+> initial while-loop can only be entered the the >1th time prep_exclude()
+> is called.
+>
+> We'll then either have reached that strbuf_init() already, or if we took
+> an early return before the strbuf_init() we couldn't have set
+> dir->exclude_stack either. So that "dir->basebuf.buf" dereference is
+> safe in either case.
 
-I would say 'meh'...but the commit message is downright confusing.  It
-suggests that subsequent commits, plural, will be modifying this code
-further.  There is only one more commit in this series, and looking
-ahead, it doesn't even touch this file.  So, there actually isn't any
-reason for these changes beyond what we see in this file, at least not
-for this series.  And as far as this series is concerned, I think it's
-actually less readable.  If there's a subsequent series that will use
-this and make further changes I could be convinced, but then I'd say
-this commit belongs as part of the later series, not this one.
+Thanks for digging into this.  I wonder if dir_struct could use some
+separation of putting things inside an embedded internal struct as
+well, similar to our discussions with unpack_trees_options.
