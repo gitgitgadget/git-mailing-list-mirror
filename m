@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81042C4167D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A966C41535
 	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 00:46:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 760666103B
+	by mail.kernel.org (Postfix) with ESMTP id 818D9610CC
 	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 00:46:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232030AbhJDAsR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Oct 2021 20:48:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S232049AbhJDAsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Oct 2021 20:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232008AbhJDAsM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232011AbhJDAsM (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 3 Oct 2021 20:48:12 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E933C061780
-        for <git@vger.kernel.org>; Sun,  3 Oct 2021 17:46:21 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id s198-20020a1ca9cf000000b0030d6986ea9fso2162897wme.1
-        for <git@vger.kernel.org>; Sun, 03 Oct 2021 17:46:21 -0700 (PDT)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33F99C061783
+        for <git@vger.kernel.org>; Sun,  3 Oct 2021 17:46:22 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id d6so27451099wrc.11
+        for <git@vger.kernel.org>; Sun, 03 Oct 2021 17:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mReH4798/aXY2sjYDQgIWxChOSmQ7Mc1m37pt0wf3KY=;
-        b=e3HVO+UQO0iGpKiDtU+WVp8E1C87ooGWde1QqaLcGbPyjqzdoBlyS7zAB/5Fuhi/w2
-         AN+KM1NWRaQ/HnkxXoAwlCoe3RjGS0LL42y3d9jRlLnTzmC/IVUMBqgw4akvAeVi6CrG
-         HsSV3L2UiG1mt4IXwQ2nSwvUt0XASJ+fe/htKRQ5Pl0hfqqPtk6sl6fBRsKSiAaYD3UP
-         ojmtsZnhzm+wn6+WOjuXQBCYxfRUCLvl6krqGHL5i3f2b066iyAVBuBmAQxQ/L+uneVc
-         RWIAeS2e2Co7BSaiVhpUZ0LqKd+Xhu5k/v/fldnp5LImPzwmzlClu90kNsKFiPYGiFOO
-         lvlQ==
+        bh=GWUdVnEpZXSuQnFu/I6N6ig92Hm2queX9QSH/S3rsSY=;
+        b=YunObwZ6WPkO5H7tUDvqN4tC1c5FcAfgHp8yOx2XX4b3ul24ukcu9zcX7Azq47QVtg
+         S+TrmmQc5i3dgXzMH+/ss7Y0ZmPc0gdQqtYbQf+8rxn7yI5AEQg4S+m1cMF9jWj5aTOy
+         JTW9cR+0AuOMKUA9/BN81lFUKS3eyHya8Jthy8WeKhm+oIO5KHsdfPXEb0F+r4vv7s8i
+         SX9CERzEP7bKLGqUOy+28+3LSpSH+D8LWyTEW6lMK7HzUCl+yG2h9Xr+FklVBeCD2OJG
+         OAIWN58yRxICfUlGv9Q/AcGNmCdeR1gqJ0JAw4sbM7WGaBO6mSt1Lr1UmXbNwxCIFEPf
+         UcPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mReH4798/aXY2sjYDQgIWxChOSmQ7Mc1m37pt0wf3KY=;
-        b=i1NOdEAAR3LERAGcNE++nC55q2DOfFchC3pwXFMcjvvj7f6cPotTXsb9d5E61O2KQW
-         9ZRN8+DSsBnYRxBSVlW1sJxZSc4bTZ909Htg5puCssWgz5sDLQfmb+nUDqS8NBWCFwLw
-         vn5sUdAdGTXSFLs8YoBYaHVnZISzawaGmuncHZGM2K6KLBrjF3sJoT4ZY9ZnJTPYnxCi
-         8w8a2Dgj5Y/9J9mv7lO80ozlaG3E0IjjJAryhGRNVM7U99bS7WF0ahjnEFf3jDLeVdZJ
-         w4O97y6QkR8h18x5PLHCF22Sa3QOSN6BPccNU5HzpHgC389gXyTKyKI6m4EC4BqVR/vj
-         rdbg==
-X-Gm-Message-State: AOAM533g/yCeWtAOkFRni0IPZXX9f8sn6wksly0M/3CCrDQ3JFFF4Exp
-        BKeur2PcxwwumAil59rU++NhLv1m7tpGYA==
-X-Google-Smtp-Source: ABdhPJwaZylArgXxvduuSKwSkaCJiV9kepVUuy1yRTq7uFEuvBbhwWfYfPrWPYy0txXxE1MQrJBLAA==
-X-Received: by 2002:a1c:21d7:: with SMTP id h206mr10620164wmh.163.1633308379558;
-        Sun, 03 Oct 2021 17:46:19 -0700 (PDT)
+        bh=GWUdVnEpZXSuQnFu/I6N6ig92Hm2queX9QSH/S3rsSY=;
+        b=be3GbMpBd1m6djbJ0bif6HGD+46lB7j69goyMfKpRmL6BNs1j43QOu5xBK6ZA0OtrM
+         GN95cytEKlx/ZtvxJUfbmAyXI5+/66BRm53K0Bul/nr/NrjKXuklJ0UQAgd0sCXrl0MH
+         Wh/5JWazX5KHuKyjHiyLC42Z7RI2b1Q1YkIBBnB4yjyN0tC0dlwqE0xglLyxrKx88DHW
+         OgGTFHUAof6wdcGRs+vpPzXH9LDgTUUvQJXwgxhUTzZlQzsKmSMOKYfcyn9FEoOK747I
+         7HxkRYWrIsHWtxmewgHLr+M7AbIFdu28ib1zNW1O2AQ3X/nB+XGnOm0Q8w/WYYkoFawZ
+         3Ulg==
+X-Gm-Message-State: AOAM530y4yLpZ4e0FUdcb4gQvICfJcU7/TgZaqGHI778gZZDqm7JvKUU
+        7NGppUs4r5v/XPY1uLvxaRUqaOEfrGGBBw==
+X-Google-Smtp-Source: ABdhPJycnyBbGXFCZmPpv4ofiSadzskf+WfM5TF3aM96K17vLm+3kJwiHK++Brux3QeJu1/N21TRGA==
+X-Received: by 2002:adf:8bd2:: with SMTP id w18mr11024820wra.432.1633308380548;
+        Sun, 03 Oct 2021 17:46:20 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q7sm13526773wrc.55.2021.10.03.17.46.18
+        by smtp.gmail.com with ESMTPSA id q7sm13526773wrc.55.2021.10.03.17.46.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 03 Oct 2021 17:46:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 05/10] dir.[ch]: make DIR_INIT mandatory
-Date:   Mon,  4 Oct 2021 02:46:06 +0200
-Message-Id: <patch-05.10-042080b8d6d-20211004T002226Z-avarab@gmail.com>
+Subject: [PATCH 06/10] dir.c: get rid of lazy initialization
+Date:   Mon,  4 Oct 2021 02:46:07 +0200
+Message-Id: <patch-06.10-2b243d91696-20211004T002226Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1404.g83021034c5d
 In-Reply-To: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com>
@@ -74,53 +74,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The dir_init() initializer has been documented as being mandatory
-since eceba532141 (dir: fix problematic API to avoid memory leaks,
-2020-08-18), but both it and my ce93a4c6127 (dir.[ch]: replace
-dir_init() with DIR_INIT, 2021-07-01) managed to miss this callsite in
-"add-interactive.c" added before those two commits in
-ab1e1cccaf6 (built-in add -i: re-implement `add-untracked` in C,
-2019-11-29).
+Remove the "Lazy initialization" in prep_exclude() left behind by
+aceb9429b37 (prep_exclude: remove the artificial PATH_MAX limit,
+2014-07-14).
 
-In addition my change to remove dir_init() neglected to update this
-documentation. Let's use "must be initialized with" in reference to
-"DIR_INIT". We have one lazy initialization which pre-dates
-eceba532141 in dir.c. Adjusting this callsite is a prerequisite for
-removing it in favor of trusting the macro to initialize the "struct
-dir_struct" correctly.
+Now that every caller who sets up a "struct dir_struct" is using the
+DIR_INIT macro we can rely on it to have done the initialization. As
+noted in an analysis of the previous control flow[1] an earlier
+passing of of "dir->basebuf.buf" to strncmp() wasn't buggy, as we'd
+only reach that code on subsequent invocations of prep_exclude(),
+i.e. after this strbuf_init() had been run. But keeping track of that
+makes for hard-to-read code. Let's just rely on the initialization
+instead.
+
+This does change the behavior of this code in that it won't be
+pre-growing the strbuf to a size of PATH_MAX. I think that's OK.
+
+That we were using PATH_MAX at all is just a relic from this being a
+fixed buffer from way back in f87f9497486 (git-ls-files: --exclude
+mechanism updates., 2005-07-24).
+
+Pre-allocating PATH_MAX was the opposite of an optimization in this
+case. I logged all "basebuf.buf" values when running the test suite,
+and by far the most common one (around 80%) is "", which we now won't
+allocate at all for, and just use the "strbuf_slopbuf".
+
+The second most common one was "a/", followed by other common cases of
+short relative paths. So using the default "struct strbuf" growth
+pattern is a much better allocation optimization in this case.
+
+1. https://lore.kernel.org/git/87sfxhohsj.fsf@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- add-interactive.c | 2 +-
- dir.h             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ dir.c | 8 --------
+ dir.h | 4 +++-
+ 2 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 6498ae196f1..27daea8d1b3 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -826,7 +826,7 @@ static int get_untracked_files(struct repository *r,
- 			       struct prefix_item_list *files,
- 			       const struct pathspec *ps)
- {
--	struct dir_struct dir = { 0 };
-+	struct dir_struct dir = DIR_INIT;
- 	size_t i;
- 	struct strbuf buf = STRBUF_INIT;
+diff --git a/dir.c b/dir.c
+index 39fce3bcba7..efc87c2e405 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1550,14 +1550,6 @@ static void prep_exclude(struct dir_struct *dir,
+ 	if (dir->pattern)
+ 		return;
  
+-	/*
+-	 * Lazy initialization. All call sites currently just
+-	 * memset(dir, 0, sizeof(*dir)) before use. Changing all of
+-	 * them seems lots of work for little benefit.
+-	 */
+-	if (!dir->basebuf.buf)
+-		strbuf_init(&dir->basebuf, PATH_MAX);
+-
+ 	/* Read from the parent directories and push them down. */
+ 	current = stk ? stk->baselen : -1;
+ 	strbuf_setlen(&dir->basebuf, current < 0 ? 0 : current);
 diff --git a/dir.h b/dir.h
-index 83f46c0fb4c..ff3b4a7f602 100644
+index ff3b4a7f602..e3757c6099e 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -19,7 +19,7 @@
-  * CE_SKIP_WORKTREE marked. If you want to exclude files, make sure you have
-  * loaded the index first.
-  *
-- * - Prepare `struct dir_struct dir` using `dir_init()` function.
-+ * - The `struct dir_struct dir` must be initialized with `DIR_INIT`.
-  *
-  * - To add single exclude pattern, call `add_pattern_list()` and then
-  *   `add_pattern()`.
+@@ -342,7 +342,9 @@ struct dir_struct {
+ 	unsigned visited_directories;
+ };
+ 
+-#define DIR_INIT { 0 }
++#define DIR_INIT { \
++	.basebuf = STRBUF_INIT, \
++}
+ 
+ struct dirent *readdir_skip_dot_and_dotdot(DIR *dirp);
+ 
 -- 
 2.33.0.1404.g83021034c5d
 
