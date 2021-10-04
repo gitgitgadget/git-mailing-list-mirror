@@ -2,62 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E6B4C433FE
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D24DC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 719FA61357
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25E67613DB
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237882AbhJDQ7m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 12:59:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56952 "EHLO
+        id S237876AbhJDQ7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 12:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237868AbhJDQ7k (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235803AbhJDQ7k (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Oct 2021 12:59:40 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4ADC061749
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1906FC061745
         for <git@vger.kernel.org>; Mon,  4 Oct 2021 09:57:51 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id p21so4255181wmq.1
+Received: by mail-wr1-x435.google.com with SMTP id o20so13935145wro.3
         for <git@vger.kernel.org>; Mon, 04 Oct 2021 09:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bRdReQSxU0phNxYyS0xHl7/Uw1JEvVeHEIF6saI/aGw=;
-        b=cA058F1sRlTF2u+qyPDBv7/IDQh5wnnS3VBKQwuyzM1/wb/TWiQC3NErz1RDi+y5AX
-         BHzJWw51yon/FYYmmQdIa9hrYc9s4vqLpuY60SJL8Sldqz8SSKQkXYnHAMdoU6jXpXyX
-         7iKbWkRp0s48DSvQqabRiztn/VscRj9nZhQUsK7u8F+FkFUTeABg6uCtcZ+wrdFWybk6
-         q+gZqWFlse6Sm9i5ZhCXaeSKCp71Z+d8BpYs/Q7D3w13PC5Z4aqi7IpZv/CvGQLlvN41
-         COMQNHKhv8dOIvsFLUWbxQQ3NBUvwc0ix9GXNYyNfBRRKe2jM7HDYxiGw27zULML/3FY
-         NKOA==
+        bh=GxdzkoeGP3yo1XXP4GyZPO63ARBAEGhzZH4nee017+0=;
+        b=CM1GuoWjiMQowdO1WooKl8q/pLLtDIo71otomO3+dzfAdtFmGNHnp0SnAkQ5pfMbIa
+         OBxLwvefU3OErYItWPh55XWcH0zg5FkisbLJ5i0j7MbEineYiOYVqcEafmu++4YeBsCu
+         +HQOQx7O5UcBSVeGjy0jEKvytALAYCuW60Wh+OusWFzZYWfbE8E3Kmhlm1o9SO9uiDlI
+         tHAE5YG5sEMI1WYQS2RPRUKa+kaMOCCr/+9zye9Nz+rtO4XBrUJcbKQIxtMz9X2wYZQf
+         uGUmXK5K22rODTzhpmjLZiIywv4exZXqiwGh7BZPAn/Sz1W9xF9YBzQuTuc6w9rUf1U0
+         0p7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bRdReQSxU0phNxYyS0xHl7/Uw1JEvVeHEIF6saI/aGw=;
-        b=llGHb2Mra1RfzR/u6MVTfJhmq7d8DLETVtChlMv9fE3AhMUqz9Hh1JJBtoaEAmHjwq
-         m4ZzT1w4yzjxCi8UKrUC+MzM5lpLHJYdSg2X8DQf5g0r6wfVNV7AromzpUB9dGI7jrMG
-         KiHa7XomoORxn3irHxE4R6EJyUNJJCr4KZYMWDuU/v3fGOB2aIVizYYhgB/MLdPZ70np
-         Ti8p51ykRlzmwLpXRqnnrC+Ktm/pysAM2JJgByn8KdA+DqGC29Dv2+yplQd5Azz6Igho
-         yb89NTJRNARy3U6En/QJEB0m5ETDQF9m178K3iVEtFqx2tBJL60Iu2EfxYrM8hCEd8JD
-         XTEg==
-X-Gm-Message-State: AOAM533rzuE/1Feb34sNrBMTQl/qswW17BmB5Zn6ouIUydhlQx5vc7IH
-        MAdfxdOV7caqz5tT2q2n+0YO0eWFWYE=
-X-Google-Smtp-Source: ABdhPJyXjbH/bA73IvAVq/oBiBMcrzknhyIxnGD+5bRtRV8yN8c48o0rDrEAKpvyU1jIAUgKJHoX7g==
-X-Received: by 2002:a1c:1d92:: with SMTP id d140mr20290350wmd.17.1633366670084;
-        Mon, 04 Oct 2021 09:57:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 61sm14960771wrl.94.2021.10.04.09.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=GxdzkoeGP3yo1XXP4GyZPO63ARBAEGhzZH4nee017+0=;
+        b=D5XWCVWQHpjZu8S4zLWnoZtiKrsD9946V8d8bFXmViLOcBLzXoANZJiV83lXv2qnvZ
+         5Ph55R0Is2D5pkJ8DT5egCh0uXk1TJ7YFO9Bs55ziOx0QR6lTCoBgeWUFO/62HVMP6Df
+         2J5zppfbAKr9n0xCxWfRGC1v/b7M1ezUoYU82mNQMKj62q70h0dHxjGW4DfuK5WXfvJS
+         9DIhyWudvozO2u0o8FJnQ1Rp/kSIWLu7nqVWX1lqRoVMvvtbs5yuBumHlPa7RJ8z588C
+         +6D6hn9xuNePkGGSDvAHjwgQgea4+FB0gvbj2zrS0bI9YDOo6q6X7lOD7b84QV+Lx+gD
+         N/Kg==
+X-Gm-Message-State: AOAM530wtzx5z8cguxL2I6fPJEhc2uyFD5O+ks30DoqEaRKjAf2TShfN
+        l8H3jg/XVbjrYxbxCtLCf6IYIn6g2gk=
+X-Google-Smtp-Source: ABdhPJzXiiKBC3ZsEtp6CcKSA+oD/cLxdkNt+dxre5ok753Xal0LMD5b9ox2XZcaIOdMTsuXinv+iw==
+X-Received: by 2002:adf:f1c7:: with SMTP id z7mr15115881wro.425.1633366669359;
         Mon, 04 Oct 2021 09:57:49 -0700 (PDT)
-Message-Id: <f03797fd80daf519f26b93eab06142fe9a0b2b94.1633366667.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k22sm15319078wrd.59.2021.10.04.09.57.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 09:57:48 -0700 (PDT)
+Message-Id: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com>
 References: <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com>
-        <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
-From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Oct 2021 16:57:39 +0000
-Subject: [PATCH v8 1/9] tmp-objdir: new API for creating temporary writable
- databases
+From:   "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 Oct 2021 16:57:38 +0000
+Subject: [PATCH v8 0/9] Implement a batched fsync option for core.fsyncObjectFiles
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,352 +70,512 @@ Cc:     Neeraj-Personal <nksingh85@gmail.com>,
         <avarab@gmail.com>, "Randall S. Becker" <rsbecker@nexbridge.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Neeraj Singh <neerajsi@microsoft.com>
+Thanks to everyone for review so far!
 
-The tmp_objdir API provides the ability to create temporary object
-directories, but was designed with the goal of having subprocesses
-access these object stores, followed by the main process migrating
-objects from it to the main object store or just deleting it.  The
-subprocesses would view it as their primary datastore and write to it.
+This series shares the base tmp-objdir patches with my merged version of
+Elijah Newren's remerge-diff series at:
+https://github.com/neerajsi-msft/git/tree/neerajsi/remerge-diff.
 
-Here we add the tmp_objdir_replace_primary_odb function that replaces
-the current process's writable "main" object directory with the
-specified one. The previous main object directory is restored in either
-tmp_objdir_migrate or tmp_objdir_destroy.
+The patch is now at version 8: changes since v7:
 
-For the --remerge-diff usecase, add a new `will_destroy` flag in `struct
-object_database` to mark ephemeral object databases that do not require
-fsync durability.
+ * Dropped the tmp-objdir patch to avoid renaming in a quarantine/temporary
+   objdir, as suggested by Jeff King. This wasn't a good idea because we
+   don't really know that there's only a single reader/writer. Avoiding the
+   rename was a relatively minor perf optimization so it's okay to drop.
 
-Add 'git prune' support for removing temporary object databases, and
-make sure that they have a name starting with tmp_ and containing an
-operation-specific name.
+ * Added disable_ref_updates logic (as a flag on the odb) which is set when
+   we're in a quarantine or when a tmp objdir is active. I believe this
+   roughly follows the strategy suggested by Jeff King.
 
-Based-on-patch-by: Elijah Newren <newren@gmail.com>
+The patch is now at version 7: changes since v6:
 
-Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
----
- builtin/prune.c        | 22 +++++++++++++++++----
- builtin/receive-pack.c |  2 +-
- object-file.c          | 44 ++++++++++++++++++++++++++++++++++++++++--
- object-store.h         | 19 ++++++++++++++++++
- object.c               |  2 +-
- tmp-objdir.c           | 30 +++++++++++++++++++++++++---
- tmp-objdir.h           | 14 +++++++++++---
- 7 files changed, 119 insertions(+), 14 deletions(-)
+ * Rebased onto current upstream master
 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 02c6ab7cbaa..9c72ecf5a58 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -18,6 +18,7 @@ static int show_only;
- static int verbose;
- static timestamp_t expire;
- static int show_progress = -1;
-+static struct strbuf remove_dir_buf = STRBUF_INIT;
- 
- static int prune_tmp_file(const char *fullpath)
- {
-@@ -26,10 +27,19 @@ static int prune_tmp_file(const char *fullpath)
- 		return error("Could not stat '%s'", fullpath);
- 	if (st.st_mtime > expire)
- 		return 0;
--	if (show_only || verbose)
--		printf("Removing stale temporary file %s\n", fullpath);
--	if (!show_only)
--		unlink_or_warn(fullpath);
-+	if (S_ISDIR(st.st_mode)) {
-+		if (show_only || verbose)
-+			printf("Removing stale temporary directory %s\n", fullpath);
-+		if (!show_only) {
-+			strbuf_addstr(&remove_dir_buf, fullpath);
-+			remove_dir_recursively(&remove_dir_buf, 0);
-+		}
-+	} else {
-+		if (show_only || verbose)
-+			printf("Removing stale temporary file %s\n", fullpath);
-+		if (!show_only)
-+			unlink_or_warn(fullpath);
-+	}
- 	return 0;
- }
- 
-@@ -97,6 +107,9 @@ static int prune_cruft(const char *basename, const char *path, void *data)
- 
- static int prune_subdir(unsigned int nr, const char *path, void *data)
- {
-+	if (verbose)
-+		printf("Removing directory %s\n", path);
-+
- 	if (!show_only)
- 		rmdir(path);
- 	return 0;
-@@ -185,5 +198,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 		prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
- 	}
- 
-+	strbuf_release(&remove_dir_buf);
- 	return 0;
- }
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 48960a9575b..418a42ca069 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2208,7 +2208,7 @@ static const char *unpack(int err_fd, struct shallow_info *si)
- 		strvec_push(&child.args, alt_shallow_file);
- 	}
- 
--	tmp_objdir = tmp_objdir_create();
-+	tmp_objdir = tmp_objdir_create("incoming");
- 	if (!tmp_objdir) {
- 		if (err_fd > 0)
- 			close(err_fd);
-diff --git a/object-file.c b/object-file.c
-index be4f94ecf3b..990381abee5 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -751,6 +751,43 @@ void add_to_alternates_memory(const char *reference)
- 			     '\n', NULL, 0);
- }
- 
-+struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy)
-+{
-+	struct object_directory *new_odb;
-+
-+	/*
-+	 * Make sure alternates are initialized, or else our entry may be
-+	 * overwritten when they are.
-+	 */
-+	prepare_alt_odb(the_repository);
-+
-+	/*
-+	 * Make a new primary odb and link the old primary ODB in as an
-+	 * alternate
-+	 */
-+	new_odb = xcalloc(1, sizeof(*new_odb));
-+	new_odb->path = xstrdup(dir);
-+	new_odb->will_destroy = will_destroy;
-+	new_odb->next = the_repository->objects->odb;
-+	the_repository->objects->odb = new_odb;
-+	return new_odb->next;
-+}
-+
-+void restore_primary_odb(struct object_directory *restore_odb, const char *old_path)
-+{
-+	struct object_directory *cur_odb = the_repository->objects->odb;
-+
-+	if (strcmp(old_path, cur_odb->path))
-+		BUG("expected %s as primary object store; found %s",
-+		    old_path, cur_odb->path);
-+
-+	if (cur_odb->next != restore_odb)
-+		BUG("we expect the old primary object store to be the first alternate");
-+
-+	the_repository->objects->odb = restore_odb;
-+	free_object_directory(cur_odb);
-+}
-+
- /*
-  * Compute the exact path an alternate is at and returns it. In case of
-  * error NULL is returned and the human readable error is added to `err`
-@@ -1888,8 +1925,11 @@ int hash_object_file(const struct git_hash_algo *algo, const void *buf,
- /* Finalize a file on disk, and close it. */
- static void close_loose_object(int fd)
- {
--	if (fsync_object_files)
--		fsync_or_die(fd, "loose object file");
-+	if (!the_repository->objects->odb->will_destroy) {
-+		if (fsync_object_files)
-+			fsync_or_die(fd, "loose object file");
-+	}
-+
- 	if (close(fd) != 0)
- 		die_errno(_("error when closing loose object file"));
- }
-diff --git a/object-store.h b/object-store.h
-index c5130d8baea..74b1b5872a6 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -27,6 +27,11 @@ struct object_directory {
- 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
- 	struct oidtree *loose_objects_cache;
- 
-+	/*
-+	 * This object store is ephemeral, so there is no need to fsync.
-+	 */
-+	int will_destroy;
-+
- 	/*
- 	 * Path to the alternative object store. If this is a relative path,
- 	 * it is relative to the current working directory.
-@@ -58,6 +63,17 @@ void add_to_alternates_file(const char *dir);
-  */
- void add_to_alternates_memory(const char *dir);
- 
-+/*
-+ * Replace the current writable object directory with the specified temporary
-+ * object directory; returns the former primary object directory.
-+ */
-+struct object_directory *set_temporary_primary_odb(const char *dir, int will_destroy);
-+
-+/*
-+ * Restore a previous ODB replaced by set_temporary_main_odb.
-+ */
-+void restore_primary_odb(struct object_directory *restore_odb, const char *old_path);
-+
- /*
-  * Populate and return the loose object cache array corresponding to the
-  * given object ID.
-@@ -68,6 +84,9 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
- /* Empty the loose object cache for the specified object directory. */
- void odb_clear_loose_cache(struct object_directory *odb);
- 
-+/* Clear and free the specified object directory */
-+void free_object_directory(struct object_directory *odb);
-+
- struct packed_git {
- 	struct hashmap_entry packmap_ent;
- 	struct packed_git *next;
-diff --git a/object.c b/object.c
-index 4e85955a941..98635bc4043 100644
---- a/object.c
-+++ b/object.c
-@@ -513,7 +513,7 @@ struct raw_object_store *raw_object_store_new(void)
- 	return o;
- }
- 
--static void free_object_directory(struct object_directory *odb)
-+void free_object_directory(struct object_directory *odb)
- {
- 	free(odb->path);
- 	odb_clear_loose_cache(odb);
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index b8d880e3626..45d42a7bcf0 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -11,6 +11,7 @@
- struct tmp_objdir {
- 	struct strbuf path;
- 	struct strvec env;
-+	struct object_directory *prev_odb;
- };
- 
- /*
-@@ -38,6 +39,9 @@ static int tmp_objdir_destroy_1(struct tmp_objdir *t, int on_signal)
- 	if (t == the_tmp_objdir)
- 		the_tmp_objdir = NULL;
- 
-+	if (!on_signal && t->prev_odb)
-+		restore_primary_odb(t->prev_odb, t->path.buf);
-+
- 	/*
- 	 * This may use malloc via strbuf_grow(), but we should
- 	 * have pre-grown t->path sufficiently so that this
-@@ -52,6 +56,7 @@ static int tmp_objdir_destroy_1(struct tmp_objdir *t, int on_signal)
- 	 */
- 	if (!on_signal)
- 		tmp_objdir_free(t);
-+
- 	return err;
- }
- 
-@@ -121,7 +126,7 @@ static int setup_tmp_objdir(const char *root)
- 	return ret;
- }
- 
--struct tmp_objdir *tmp_objdir_create(void)
-+struct tmp_objdir *tmp_objdir_create(const char *prefix)
- {
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
-@@ -129,11 +134,16 @@ struct tmp_objdir *tmp_objdir_create(void)
- 	if (the_tmp_objdir)
- 		BUG("only one tmp_objdir can be used at a time");
- 
--	t = xmalloc(sizeof(*t));
-+	t = xcalloc(1, sizeof(*t));
- 	strbuf_init(&t->path, 0);
- 	strvec_init(&t->env);
- 
--	strbuf_addf(&t->path, "%s/incoming-XXXXXX", get_object_directory());
-+	/*
-+	 * Use a string starting with tmp_ so that the builtin/prune.c code
-+	 * can recognize any stale objdirs left behind by a crash and delete
-+	 * them.
-+	 */
-+	strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
- 
- 	/*
- 	 * Grow the strbuf beyond any filename we expect to be placed in it.
-@@ -269,6 +279,13 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
- 	if (!t)
- 		return 0;
- 
-+	if (t->prev_odb) {
-+		if (the_repository->objects->odb->will_destroy)
-+			BUG("migrating an ODB that was marked for destruction");
-+		restore_primary_odb(t->prev_odb, t->path.buf);
-+		t->prev_odb = NULL;
-+	}
-+
- 	strbuf_addbuf(&src, &t->path);
- 	strbuf_addstr(&dst, get_object_directory());
- 
-@@ -292,3 +309,10 @@ void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
- {
- 	add_to_alternates_memory(t->path.buf);
- }
-+
-+void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
-+{
-+	if (t->prev_odb)
-+		BUG("the primary object database is already replaced");
-+	t->prev_odb = set_temporary_primary_odb(t->path.buf, will_destroy);
-+}
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index b1e45b4c75d..75754cbfba6 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -10,7 +10,7 @@
-  *
-  * Example:
-  *
-- *	struct tmp_objdir *t = tmp_objdir_create();
-+ *	struct tmp_objdir *t = tmp_objdir_create("incoming");
-  *	if (!run_command_v_opt_cd_env(cmd, 0, NULL, tmp_objdir_env(t)) &&
-  *	    !tmp_objdir_migrate(t))
-  *		printf("success!\n");
-@@ -22,9 +22,10 @@
- struct tmp_objdir;
- 
- /*
-- * Create a new temporary object directory; returns NULL on failure.
-+ * Create a new temporary object directory with the specified prefix;
-+ * returns NULL on failure.
-  */
--struct tmp_objdir *tmp_objdir_create(void);
-+struct tmp_objdir *tmp_objdir_create(const char *prefix);
- 
- /*
-  * Return a list of environment strings, suitable for use with
-@@ -51,4 +52,11 @@ int tmp_objdir_destroy(struct tmp_objdir *);
-  */
- void tmp_objdir_add_as_alternate(const struct tmp_objdir *);
- 
-+/*
-+ * Replaces the main object store in the current process with the temporary
-+ * object directory and makes the former main object store an alternate.
-+ * If will_destroy is nonzero, the object directory may not be migrated.
-+ */
-+void tmp_objdir_replace_primary_odb(struct tmp_objdir *, int will_destroy);
-+
- #endif /* TMP_OBJDIR_H */
+ * Separate the tmp-objdir changes and move to the beginning of the series
+   so that Elijah Newren's similar changes can be merged.
+
+ * Use some of Elijah's implementation for replacing the primary ODB. I was
+   doing some unnecessarily complex copying for no good reason.
+
+ * Make the tmp objdir code use a name beginning with tmp_ and having a
+   operation-specific prefix.
+
+ * Add git-prune support for removing a stale object directory.
+
+v5 was a bit of a dud, with some issues that I only noticed after
+submitting. v6 changes:
+
+ * re-add Windows support
+ * fix minor formatting issues
+ * reset git author and commit dates which got messed up
+
+Changes since v4, all in response to review feedback from Ævar Arnfjörð
+Bjarmason:
+
+ * Update core.fsyncobjectfiles documentation to specify 'loose' objects and
+   to add a statement about not fsyncing parent directories.
+   
+   * I still don't want to make any promises on behalf of the Linux FS developers
+     in the documentation. However, according to [v4.1] and my understanding
+     of how XFS journals are documented to work, it looks like recent versions
+     of Linux running on XFS should be as safe as Windows or macOS in 'batch'
+     mode. I don't know about ext4, since it's not clear to me when metadata
+     updates are made visible to the journal.
+   
+
+ * Rewrite the core batched fsync change to use the tmp-objdir lib. As Ævar
+   pointed out, this lets us access the added loose objects immediately,
+   rather than only after unplugging the bulk checkin. This is a hard
+   requirement in unpack-objects for resolving OBJ_REF_DELTA packed objects.
+   
+   * As a preparatory patch, the object-file code now doesn't do a rename if it's in a
+     tmp objdir (as determined by the quarantine environment variable).
+   
+   * I added support to the tmp-objdir lib to replace the 'main' writable odb.
+   
+   * Instead of using a lockfile for the final full fsync, we now use a new dummy
+     temp file. Doing that makes the below unpack-objects change easier.
+   
+
+ * Add bulk-checkin support to unpack-objects, which is used in fetch and
+   push. In addition to making those operations faster, it allows us to
+   directly compare performance of packfiles against loose objects. Please
+   see [v4.2] for a measurement of 'git push' to a local upstream with
+   different numbers of unique new files.
+
+ * Rename FSYNC_OBJECT_FILES_MODE to fsync_object_files_mode.
+
+ * Remove comment with link to NtFlushBuffersFileEx documentation.
+
+ * Make t/lib-unique-files.sh a bit cleaner. We are still creating unique
+   contents, but now this uses test_tick, so it should be deterministic from
+   run to run.
+
+ * Ensure there are tests for all of the modified commands. Make the
+   unpack-objects tests validate that the unpacked objects are really
+   available in the ODB.
+
+References for v4: [v4.1]
+https://lore.kernel.org/linux-fsdevel/20190419072938.31320-1-amir73il@gmail.com/#t
+
+[v4.2]
+https://docs.google.com/spreadsheets/d/1uxMBkEXFFnQ1Y3lXKqcKpw6Mq44BzhpCAcPex14T-QQ/edit#gid=1898936117
+
+Changes since v3:
+
+ * Fix core.fsyncobjectfiles option parsing as suggested by Junio: We now
+   accept no value to mean "true" and we require 'batch' to be lowercase.
+
+ * Leave the default fsync mode as 'false'. Git for windows can change its
+   default when this series makes it over to that fork.
+
+ * Use a switch statement in git_fsync, as suggested by Junio.
+
+ * Add regression test cases for core.fsyncobjectfiles=batch. This should
+   keep the batch functionality basically working in upstream git even if
+   few users adopt batch mode initially. I expect git-for-windows will
+   provide a good baking area for the new mode.
+
+Neeraj Singh (9):
+  tmp-objdir: new API for creating temporary writable databases
+  tmp-objdir: disable ref updates when replacing the primary odb
+  bulk-checkin: rename 'state' variable and separate 'plugged' boolean
+  core.fsyncobjectfiles: batched disk flushes
+  core.fsyncobjectfiles: add windows support for batch mode
+  update-index: use the bulk-checkin infrastructure
+  unpack-objects: use the bulk-checkin infrastructure
+  core.fsyncobjectfiles: tests for batch mode
+  core.fsyncobjectfiles: performance tests for add and stash
+
+ Documentation/config/core.txt       | 29 ++++++++--
+ Makefile                            |  6 ++
+ builtin/prune.c                     | 22 +++++--
+ builtin/receive-pack.c              |  2 +-
+ builtin/unpack-objects.c            |  3 +
+ builtin/update-index.c              |  6 ++
+ bulk-checkin.c                      | 90 +++++++++++++++++++++++++----
+ bulk-checkin.h                      |  2 +
+ cache.h                             |  8 ++-
+ compat/mingw.h                      |  3 +
+ compat/win32/flush.c                | 28 +++++++++
+ config.c                            |  7 ++-
+ config.mak.uname                    |  3 +
+ configure.ac                        |  8 +++
+ contrib/buildsystems/CMakeLists.txt |  3 +-
+ environment.c                       |  6 +-
+ git-compat-util.h                   |  7 +++
+ object-file.c                       | 60 ++++++++++++++++++-
+ object-store.h                      | 26 +++++++++
+ object.c                            |  2 +-
+ refs.c                              |  2 +-
+ repository.c                        |  2 +
+ repository.h                        |  1 +
+ t/lib-unique-files.sh               | 36 ++++++++++++
+ t/perf/p3700-add.sh                 | 43 ++++++++++++++
+ t/perf/p3900-stash.sh               | 46 +++++++++++++++
+ t/t3700-add.sh                      | 20 +++++++
+ t/t3903-stash.sh                    | 14 +++++
+ t/t5300-pack-object.sh              | 30 ++++++----
+ tmp-objdir.c                        | 30 +++++++++-
+ tmp-objdir.h                        | 14 ++++-
+ wrapper.c                           | 48 +++++++++++++++
+ write-or-die.c                      |  2 +-
+ 33 files changed, 562 insertions(+), 47 deletions(-)
+ create mode 100644 compat/win32/flush.c
+ create mode 100644 t/lib-unique-files.sh
+ create mode 100755 t/perf/p3700-add.sh
+ create mode 100755 t/perf/p3900-stash.sh
+
+
+base-commit: cefe983a320c03d7843ac78e73bd513a27806845
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1076%2Fneerajsi-msft%2Fneerajsi%2Fbulk-fsync-object-files-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1076/neerajsi-msft/neerajsi/bulk-fsync-object-files-v8
+Pull-Request: https://github.com/git/git/pull/1076
+
+Range-diff vs v7:
+
+  2:  6ce72a709a1 !  1:  f03797fd80d tmp-objdir: new API for creating temporary writable databases
+     @@ Metadata
+       ## Commit message ##
+          tmp-objdir: new API for creating temporary writable databases
+      
+     -    This patch is based on work by Elijah Newren. Any bugs however are my
+     -    own.
+     -
+          The tmp_objdir API provides the ability to create temporary object
+          directories, but was designed with the goal of having subprocesses
+          access these object stores, followed by the main process migrating
+     @@ Commit message
+          make sure that they have a name starting with tmp_ and containing an
+          operation-specific name.
+      
+     +    Based-on-patch-by: Elijah Newren <newren@gmail.com>
+     +
+          Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+      
+       ## builtin/prune.c ##
+     @@ object-file.c: void add_to_alternates_memory(const char *reference)
+      +	 */
+      +	new_odb = xcalloc(1, sizeof(*new_odb));
+      +	new_odb->path = xstrdup(dir);
+     -+	new_odb->is_temp = 1;
+      +	new_odb->will_destroy = will_destroy;
+      +	new_odb->next = the_repository->objects->odb;
+      +	the_repository->objects->odb = new_odb;
+     @@ object-file.c: int hash_object_file(const struct git_hash_algo *algo, const void
+      
+       ## object-store.h ##
+      @@ object-store.h: struct object_directory {
+     - 	 * This is a temporary object store, so there is no need to
+     - 	 * create new objects via rename.
+     - 	 */
+     --	int is_temp;
+     -+	int is_temp : 8;
+     -+
+     + 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
+     + 	struct oidtree *loose_objects_cache;
+     + 
+      +	/*
+      +	 * This object store is ephemeral, so there is no need to fsync.
+      +	 */
+     -+	int will_destroy : 8;
+     - 
+     ++	int will_destroy;
+     ++
+       	/*
+       	 * Path to the alternative object store. If this is a relative path,
+     + 	 * it is relative to the current working directory.
+      @@ object-store.h: void add_to_alternates_file(const char *dir);
+        */
+       void add_to_alternates_memory(const char *dir);
+     @@ tmp-objdir.c: int tmp_objdir_migrate(struct tmp_objdir *t)
+       	if (!t)
+       		return 0;
+       
+     -+
+     -+
+      +	if (t->prev_odb) {
+      +		if (the_repository->objects->odb->will_destroy)
+     -+			BUG("migrating and ODB that was marked for destruction");
+     ++			BUG("migrating an ODB that was marked for destruction");
+      +		restore_primary_odb(t->prev_odb, t->path.buf);
+      +		t->prev_odb = NULL;
+      +	}
+  1:  6e65f68fd6d !  2:  bc085137340 object-file.c: do not rename in a temp odb
+     @@ Metadata
+      Author: Neeraj Singh <neerajsi@microsoft.com>
+      
+       ## Commit message ##
+     -    object-file.c: do not rename in a temp odb
+     +    tmp-objdir: disable ref updates when replacing the primary odb
+      
+     -    If a temporary ODB is active, as determined by GIT_QUARANTINE_PATH
+     -    being set, create object files with their final names. This avoids
+     -    an extra rename beyond what is needed to merge the temporary ODB in
+     -    tmp_objdir_migrate.
+     +    When creating a subprocess with a temporary ODB, we set the
+     +    GIT_QUARANTINE_ENVIRONMENT env var to tell child Git processes not
+     +    to update refs, since the tmp-objdir may go away.
+      
+     -    Creating an object file with the expected final name should be okay
+     -    since the git process writing to the temporary object store is the
+     -    only writer, and it only invokes write_loose_object/create_object_file
+     -    after checking that the object doesn't exist.
+     +    Introduce a similar mechanism for in-process temporary ODBs when
+     +    we call tmp_objdir_replace_primary_odb. Now both mechanisms set
+     +    the disable_ref_updates flag on the odb, which is queried by
+     +    the ref_transaction_prepare function.
+     +
+     +    Note: This change adds an assumption that the state of
+     +    the_repository is relevant for any ref transaction that might
+     +    be initiated. Unwinding this assumption should be straightforward
+     +    by saving the relevant repository to query in the transaction or
+     +    the ref_store.
+     +
+     +    Peff's test case was invoking ref updates via the cachetextconv
+     +    setting. That particular code silently does nothing when a ref
+     +    update is forbidden. See the call to notes_cache_put in
+     +    fill_textconv where errors are ignored.
+     +
+     +    Reported-by: Jeff King <peff@peff.net>
+      
+          Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+      
+     @@ environment.c: void setup_git_env(const char *git_dir)
+       	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
+       	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
+      +	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
+     -+		args.object_dir_is_temp = 1;
+     ++		args.disable_ref_updates = 1;
+      +	}
+      +
+       	repo_set_gitdir(the_repository, git_dir, &args);
+     @@ environment.c: void setup_git_env(const char *git_dir)
+       
+      
+       ## object-file.c ##
+     -@@ object-file.c: static void write_object_file_prepare(const struct git_hash_algo *algo,
+     - }
+     - 
+     - /*
+     -- * Move the just written object into its final resting place.
+     -+ * Move the just written object into its final resting place,
+     -+ * unless it is already there, as indicated by an empty string for
+     -+ * tmpfile.
+     -  */
+     - int finalize_object_file(const char *tmpfile, const char *filename)
+     - {
+     - 	int ret = 0;
+     - 
+     -+	if (!*tmpfile)
+     -+		goto out;
+     +@@ object-file.c: struct object_directory *set_temporary_primary_odb(const char *dir, int will_des
+     + 	 */
+     + 	new_odb = xcalloc(1, sizeof(*new_odb));
+     + 	new_odb->path = xstrdup(dir);
+      +
+     - 	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
+     - 		goto try_rename;
+     - 	else if (link(tmpfile, filename))
+     -@@ object-file.c: static inline int directory_size(const char *filename)
+     - }
+     - 
+     - /*
+     -- * This creates a temporary file in the same directory as the final
+     -- * 'filename'
+     -+ * This creates a loose object file for the specified object id.
+     -+ * If we're working in a temporary object directory, the file is
+     -+ * created with its final filename, otherwise it is created with
+     -+ * a temporary name and renamed by finalize_object_file.
+     -+ * If no rename is required, an empty string is returned in tmp.
+     -  *
+     -  * We want to avoid cross-directory filename renames, because those
+     -  * can have problems on various filesystems (FAT, NFS, Coda).
+     -  */
+     --static int create_tmpfile(struct strbuf *tmp, const char *filename)
+     -+static int create_objfile(const struct object_id *oid, struct strbuf *tmp,
+     -+			  struct strbuf *filename)
+     - {
+     --	int fd, dirlen = directory_size(filename);
+     -+	int fd, dirlen, is_retrying = 0;
+     -+	const char *object_name;
+     -+	static const int object_mode = 0444;
+     - 
+     -+	loose_object_path(the_repository, filename, oid);
+     -+	dirlen = directory_size(filename->buf);
+     -+
+     -+retry_create:
+     - 	strbuf_reset(tmp);
+     --	strbuf_add(tmp, filename, dirlen);
+     --	strbuf_addstr(tmp, "tmp_obj_XXXXXX");
+     --	fd = git_mkstemp_mode(tmp->buf, 0444);
+     --	if (fd < 0 && dirlen && errno == ENOENT) {
+     -+	if (!the_repository->objects->odb->is_temp) {
+     -+		strbuf_add(tmp, filename->buf, dirlen);
+     -+		object_name = "tmp_obj_XXXXXX";
+     -+		strbuf_addstr(tmp, object_name);
+     -+		fd = git_mkstemp_mode(tmp->buf, object_mode);
+     -+	} else {
+     -+		fd = open(filename->buf, O_CREAT | O_EXCL | O_RDWR, object_mode);
+     -+	}
+     -+
+     -+	if (fd < 0 && dirlen && errno == ENOENT && !is_retrying) {
+     - 		/*
+     - 		 * Make sure the directory exists; note that the contents
+     - 		 * of the buffer are undefined after mkstemp returns an
+     -@@ object-file.c: static int create_tmpfile(struct strbuf *tmp, const char *filename)
+     - 		 * scratch.
+     - 		 */
+     - 		strbuf_reset(tmp);
+     --		strbuf_add(tmp, filename, dirlen - 1);
+     -+		strbuf_add(tmp, filename->buf, dirlen - 1);
+     - 		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
+     - 			return -1;
+     - 		if (adjust_shared_perm(tmp->buf))
+     - 			return -1;
+     - 
+     - 		/* Try again */
+     --		strbuf_addstr(tmp, "/tmp_obj_XXXXXX");
+     --		fd = git_mkstemp_mode(tmp->buf, 0444);
+     -+		is_retrying = 1;
+     -+		goto retry_create;
+     - 	}
+     - 	return fd;
+     - }
+     -@@ object-file.c: static int write_loose_object(const struct object_id *oid, char *hdr,
+     - 	static struct strbuf tmp_file = STRBUF_INIT;
+     - 	static struct strbuf filename = STRBUF_INIT;
+     - 
+     --	loose_object_path(the_repository, &filename, oid);
+     --
+     --	fd = create_tmpfile(&tmp_file, filename.buf);
+     -+	fd = create_objfile(oid, &tmp_file, &filename);
+     - 	if (fd < 0) {
+     - 		if (errno == EACCES)
+     - 			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
+     - 		else
+     --			return error_errno(_("unable to create temporary file"));
+     -+			return error_errno(_("unable to create object file"));
+     - 	}
+     - 
+     - 	/* Set it up */
+     ++	/*
+     ++	 * Disable ref updates while a temporary odb is active, since
+     ++	 * the objects in the database may roll back.
+     ++	 */
+     ++	new_odb->disable_ref_updates = 1;
+     + 	new_odb->will_destroy = will_destroy;
+     + 	new_odb->next = the_repository->objects->odb;
+     + 	the_repository->objects->odb = new_odb;
+      
+       ## object-store.h ##
+      @@ object-store.h: struct object_directory {
+     @@ object-store.h: struct object_directory {
+       	struct oidtree *loose_objects_cache;
+       
+      +	/*
+     -+	 * This is a temporary object store, so there is no need to
+     -+	 * create new objects via rename.
+     ++	 * This is a temporary object store created by the tmp_objdir
+     ++	 * facility. Disable ref updates since the objects in the store
+     ++	 * might be discarded on rollback.
+      +	 */
+     -+	int is_temp;
+     ++	unsigned int disable_ref_updates : 1;
+      +
+     + 	/*
+     + 	 * This object store is ephemeral, so there is no need to fsync.
+     + 	 */
+     +-	int will_destroy;
+     ++	unsigned int will_destroy : 1;
+     + 
+       	/*
+       	 * Path to the alternative object store. If this is a relative path,
+     - 	 * it is relative to the current working directory.
+     +
+     + ## refs.c ##
+     +@@ refs.c: int ref_transaction_prepare(struct ref_transaction *transaction,
+     + 		break;
+     + 	}
+     + 
+     +-	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
+     ++	if (the_repository->objects->odb->disable_ref_updates) {
+     + 		strbuf_addstr(err,
+     + 			      _("ref updates forbidden inside quarantine environment"));
+     + 		return -1;
+      
+       ## repository.c ##
+      @@ repository.c: void repo_set_gitdir(struct repository *repo,
+       	expand_base_dir(&repo->objects->odb->path, o->object_dir,
+       			repo->commondir, "objects");
+       
+     -+	repo->objects->odb->is_temp = o->object_dir_is_temp;
+     ++	repo->objects->odb->disable_ref_updates = o->disable_ref_updates;
+      +
+       	free(repo->objects->alternate_db);
+       	repo->objects->alternate_db = xstrdup_or_null(o->alternate_db);
+     @@ repository.h: struct set_gitdir_args {
+       	const char *graft_file;
+       	const char *index_file;
+       	const char *alternate_db;
+     -+	int object_dir_is_temp;
+     ++	int disable_ref_updates;
+       };
+       
+       void repo_set_gitdir(struct repository *repo, const char *root,
+  3:  c272f8776fa =  3:  9335646ed91 bulk-checkin: rename 'state' variable and separate 'plugged' boolean
+  4:  55556bb3e90 !  4:  b9d3d874432 core.fsyncobjectfiles: batched disk flushes
+     @@ bulk-checkin.c: static int deflate_to_pack(struct bulk_checkin_state *state,
+      +	 */
+      +	if (bulk_checkin_plugged &&
+      +	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) >= 0) {
+     -+		assert(the_repository->objects->odb->is_temp);
+      +		if (!needs_batch_fsync)
+      +			needs_batch_fsync = 1;
+      +	} else {
+     @@ bulk-checkin.c: int index_bulk_checkin(struct object_id *oid,
+       	assert(!bulk_checkin_plugged);
+      +
+      +	/*
+     -+	 * Create a temporary object directory if the current
+     -+	 * object directory is not already temporary.
+     ++	 * A temporary object directory is used to hold the files
+     ++	 * while they are not fsynced.
+      +	 */
+     -+	if (fsync_object_files == FSYNC_OBJECT_FILES_BATCH &&
+     -+	    !the_repository->objects->odb->is_temp) {
+     ++	if (fsync_object_files == FSYNC_OBJECT_FILES_BATCH) {
+      +		bulk_fsync_objdir = tmp_objdir_create("bulk-fsync");
+      +		if (!bulk_fsync_objdir)
+      +			die(_("Could not create temporary object directory for core.fsyncobjectfiles=batch"));
+     @@ object-file.c: int hash_object_file(const struct git_hash_algo *algo, const void
+       
+       	if (close(fd) != 0)
+      
+     - ## tmp-objdir.c ##
+     -@@ tmp-objdir.c: int tmp_objdir_migrate(struct tmp_objdir *t)
+     - 	if (!t)
+     - 		return 0;
+     - 
+     --
+     --
+     - 	if (t->prev_odb) {
+     - 		if (the_repository->objects->odb->will_destroy)
+     - 			BUG("migrating and ODB that was marked for destruction");
+     -
+       ## wrapper.c ##
+      @@ wrapper.c: int xmkstemp_mode(char *filename_template, int mode)
+       	return fd;
+  5:  6c33e79d6f0 =  5:  8df32eaaa9a core.fsyncobjectfiles: add windows support for batch mode
+  6:  09dbff1004e =  6:  15767270984 update-index: use the bulk-checkin infrastructure
+  7:  1eced9f9f9a =  7:  e88bab809a2 unpack-objects: use the bulk-checkin infrastructure
+  8:  7aaa08d5f5f =  8:  811d6d31509 core.fsyncobjectfiles: tests for batch mode
+  9:  ff286fb461a =  9:  f4fa20f591e core.fsyncobjectfiles: performance tests for add and stash
+
 -- 
 gitgitgadget
-
