@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E4AFC433EF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5D59C433EF
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D6C061244
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B9B26121F
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235712AbhJDN45 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 09:56:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39198 "EHLO
+        id S233093AbhJDN5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 09:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238683AbhJDN4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 09:56:41 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76B1C0617AB
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:46:36 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id j15so11138721plh.7
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:46:36 -0700 (PDT)
+        with ESMTP id S239038AbhJDN4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 09:56:30 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F8FC06125A
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:46:18 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id g14so14579762pfm.1
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:46:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=rR5Isto0N10kRglfx4AVUFFQIEdTvUVqLBunlqyvNGE=;
-        b=YrJyiRXmDYipuUvrdMZNAk59bCmlokZ3Kbh45sNqLOsZw/a+23s3jNrd3YDIOKdybT
-         JZTibBCtQQT7toUwSUC5LrL+czhD14vWjHZ3HB1fpKRtLZrX8DUhQ3odBm0zyPpHRz3h
-         LSpTDZR8a1mnph6++ybT3/auJDQ0SHcli+TweUf7g8G1OOH5v+eEUOGVMAu3spddQFMt
-         iCxtk1uRPSvgfhOzAVj8/c3ifYKozPFqx0n/KzgxKSHuSO8jcR0xUjoTlE50A1R2QMh6
-         RisF8zfYVltPYcstjP0jXF1T4f2+N7oJFLRvVMMMWtHWBKZ+8ZgdMYC/UH9heozkr2Ys
-         8fug==
+        bh=YB1fGiDxu1sW+ILqfEyxqkO5Ng+TFWrhJovkxkj/z00=;
+        b=ma+lO9H0T8hZxh+aJBC5b8odPiCdM7z1r5SlpxsRfL5fGODRLHC4XXBo5hgZsTcTL9
+         P5xtBARswUG+8qTVddwHFMdyUaNHE3/4mCMeoO1EsXVqpwjmoOX27iLzg6fbjCwK8yvY
+         ICf7F4AEcL67B9w0nFlJWMZKpDPSErmN+nI8GY2c/lCdXjrXaAd7dNUM6nW9uLSX5HiP
+         cxCZOs17W0RuWill5LS/vD7z7mdThTdBob5J4WJvhImJ9P0aNpxaxziTyCQCE5pSgjC6
+         FyEqlzIzA3sh+pA58UYmoTbxVj5MbuUtbKp69ZydpbYIZZ6ZPGAEpyOZaAfPQciOu0bB
+         QGMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rR5Isto0N10kRglfx4AVUFFQIEdTvUVqLBunlqyvNGE=;
-        b=XY9cZB2AddTdrtmx5m5kDo5P+ExxyUKCj1MpHN/+LoiRuXMaPjW0WGTTwaFaipQDoA
-         IgwfeACHQgCy2MHOsorFYa8RL6VuwzEbrL0vqm9jXpaWOM+2nIOJ6YylM09UCiH/WFeu
-         UVLYss/DIOUVIN+F/B2KxlHYbN3sNMXRFbBp52vtf7cA5thK76KWJKJazyFZ0IjYjUIM
-         hmE3RRQG56dbrnzEOe1dzhDpV1oqwCfLJJNrmIKMHfn9uLm3nIMMFA2rDcHr3gYBsczn
-         NUzksdGM7+tRtdgyw0ZBSZdTSFcsfkuk/G8y7lTVPvoY7pg86w8sYhuwGgyl0MG+ALV8
-         HL4A==
-X-Gm-Message-State: AOAM530HnvVkWTJ9yuOYXJ1wLo8QyOdfNipB0eiRNEe2T14eTUai+D3E
-        VvtSfT3Kj2oWBNWw/CjHkMxDu1+buqV0L/FfbiQ=
-X-Google-Smtp-Source: ABdhPJxfJjLMzRXGZnBNJw/RvMLnXV/YZgZQ2Li3WtNuMPrEKmAXqHuu5Bi3XuB2Svh1enjZhTgZ0I1YJpxs7lOhSIA=
-X-Received: by 2002:a17:90b:1642:: with SMTP id il2mr37284309pjb.133.1633355196346;
- Mon, 04 Oct 2021 06:46:36 -0700 (PDT)
+        bh=YB1fGiDxu1sW+ILqfEyxqkO5Ng+TFWrhJovkxkj/z00=;
+        b=BoVkzJbTOzNPv1SvLsJr20WFeCo7/ihun6/99SM/3lmF37M7887rV0idAvnkH7AzNQ
+         y0aRqKPt8V8INPuMoGSfyjTb1DuhC88WGmP41yAE3mCrf3D+iqNdJEL4H6vfzSja31T4
+         SldRZBdlfP7D46BqSqRKZx5c5QdllXX4jwH+vjoT6mvDDGhGWj/EF2pXL4J48yN4XFfD
+         o4AdFVmdzWuQ/yeDl1kGWvDy/xzEAWV20LWtRvNGDpCzWkiMxPFm/YrpA4UACc0MCxHe
+         L6Cb7K32cWK1w1Lekks2r0yzw1NxnL/AS1lK20NGD98bQFDlxnrm10r5qjCMXqXLhYUg
+         MURA==
+X-Gm-Message-State: AOAM531vAT/pOqI9W543i4MEP8Zcx0PVJzMsdz/iG8eWwznpMNloK1Ny
+        yDHKZ7FJujDGt5TQTM2tFyjJJQU6vqxfrGIFfP4=
+X-Google-Smtp-Source: ABdhPJw/VbAjjr2+bi79VFdI6wJpAL0wF+K19ofcuyJ4B1WCCDe+voM46Xm2WLXvYmodrqufXj8Aqe1CPSXEgtYBda8=
+X-Received: by 2002:a62:17d3:0:b0:44c:6022:9428 with SMTP id
+ 202-20020a6217d3000000b0044c60229428mr5616276pfx.65.1633355177822; Mon, 04
+ Oct 2021 06:46:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com> <patch-02.10-050399cbfbf-20211004T002226Z-avarab@gmail.com>
-In-Reply-To: <patch-02.10-050399cbfbf-20211004T002226Z-avarab@gmail.com>
+References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com>
+In-Reply-To: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
 Date:   Mon, 4 Oct 2021 06:45:00 -0700
-Message-ID: <CABPp-BFYxWXZQXvDSrM1Y1ZaQ1d2TENQDvx1cyawvrDO1OvExA@mail.gmail.com>
-Subject: Re: [PATCH 02/10] merge-recursive.c: call a new unpack_trees_options_init()
- function
+Message-ID: <CABPp-BEr28xzbpEZc5dq-RVDupXy+h-+PH6CoANF4e0kmxqf0Q@mail.gmail.com>
+Subject: Re: [PATCH 00/10] unpack-trees & dir APIs: fix memory leaks
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -70,134 +70,130 @@ X-Mailing-List: git@vger.kernel.org
 On Sun, Oct 3, 2021 at 5:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
 ab@gmail.com> wrote:
 >
-> In the preceding commit we introduced a new UNPACK_TREES_OPTIONS_INIT
-> macro, but "merge-recursive.c" could not be converted to it since
-> it (re-)initializes a "struct unpack_trees_options" on the heap.
->
-> In order to convert use the macro as the source of truth for
-> initialization we need to not only convert the initialization in
-> unpack_trees_start(), but also call the new
-> unpack_trees_options_init() just after the CALLOC_ARRAY() in
-> merge_start().
+> This series fixes memory leaks in the unpack-trees and dir APIs for
+> all their callers.
 
-Um...why?
+There are several good fixes in this series.  Thanks for working on them!
 
-> When we call merge_trees() we'll call merge_start() followed by
-> merge_trees_internal(), and it will call unpack_trees_start() before
-> it does much of anything. So it's covered by an initialization in
-> unpack_trees_start().
->
-> But when merge_recursive() is called it will call merge_start()
-> followed by merge_recursive_internal(), which won't call
-> unpack_trees_start() until its own call call to
-> merge_trees_internal(), but in the meantime it might end up using that
-> calloc'd "struct unpack_trees_options".
+> There's been a discussion between myself & Elijah
+> on his en/removing-untracked-fixes series[1] about the memory leak
+> fixing aspect of his series.
 
-Nothing in merge-recursive.c usings unpack_opts before
-unpack_trees_start() or after unpack_trees_finish().  If anyone
-attempts to use it elsewhere, that would itself be a bug.  So, I'd
-replace the above three paragraphs with:
+Not really, the memory leak fixing aspect of my series was patch 2;
+most of our discussion was on patch 4, including your footnote link.
+Patch 4 did not in any way involve fixing a memory leak, which you
+yourself later acknowledged.  So most of our discussion was mostly
+about aspects _other_ than leak fixing.
 
-"Change the initialization of opt->priv_unpack_opts from using memset
-to 0, with unpack_trees_options_init()."
+> I've got locally queued patches that fix widespread memory leaks in
+> the test suite and make much of it pass under SANITIZE=3Dleak, once the
+> common leaks in revisions.c (git rev-list/show/log etc.), "checkout",
+> "dir" and "unpack-trees" are fixed a lot of tests become entirely
+> leak-free, as much code that needs to setup various basic things will
+> require one of those commands.
 
-or something like that, and then drop your change to merge_start().
+Yaay!  This is great stuff!
 
-> This was OK before, as setup_unpack_trees_porcelain() would call
-> strvec_init(), and our "struct dir_struct" in turn is OK with being
-> NULL'd. Let's convert the former to macro initialization, we'll deal
-> with the latter in a subsequent commit.
+> I think that the more narrow fixes[2] to the memory leaks around
+> unpack-trees in Elijah's series[3] are better skipped and that series
+> rebased on top of this one (I'll submit an RFC version of his that is
+> rebased on this as a follow-up).
 
-This is quite confusing; it's really hard to understand how this
-relates to the rest of the commit message.  I have to read the code to
-see what you're doing, and then write my own commit message in my head
-because the wording in this paragraph still doesn't parse.
+I *strongly* disagree.
 
-I'd make the change strvec_init/STRVEC_INIT changes be a separate
-patch.  I suspect it'll be easier to write the commit message for it
-as a standalone commit as well.
+> I.e. his solves a very small amount of the memory leaks in this area,
+> whereas this is something I've got running as part of end-to-end
+> SANITIZE=3Dleak testing, so I think that the difference in approaches we
+> picked when it comes to fixing them is likely because of that.
+>
+> E.g. continuing to allocate the "struct dir_struct" on the heap in his
+> version[4] in his is, I think, something that makes more sense for
+> fixes that haven't pulled at the thread of how much merge-recursive.c
+> is making that question of ownerhip confusing. There's also changen in
+> his that'll become simpler as the complexity of the underlying APIs
+> has gone away, e.g. [6].
 
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  merge-recursive.c | 3 ++-
->  unpack-trees.c    | 8 ++++++--
->  unpack-trees.h    | 5 ++++-
->  3 files changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index e594d4c3fa1..d24a4903f1d 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -405,7 +405,7 @@ static int unpack_trees_start(struct merge_options *o=
-pt,
->         struct tree_desc t[3];
->         struct index_state tmp_index =3D { NULL };
->
-> -       memset(&opt->priv->unpack_opts, 0, sizeof(opt->priv->unpack_opts)=
-);
-> +       unpack_trees_options_init(&opt->priv->unpack_opts);
->         if (opt->priv->call_depth)
->                 opt->priv->unpack_opts.index_only =3D 1;
->         else
-> @@ -3704,6 +3704,7 @@ static int merge_start(struct merge_options *opt, s=
-truct tree *head)
->
->         CALLOC_ARRAY(opt->priv, 1);
->         string_list_init_dup(&opt->priv->df_conflict_file_set);
-> +       unpack_trees_options_init(&opt->priv->unpack_opts);
+*Sigh*.  unpack_trees_options->dir is not allocated on the heap at the
+end of my series.  I could understand missing that in the patches, but
+I've also pointed it out to you two additional times in discussions on
+the patches so far.  And you supposedly looked at all the patches
+again while rebasing and adding your signed-off-by.
 
-Drop this hunk.
+You also continue to refer to our discussion as though it was about
+leakfixes, even though the patch we discussed in my series did not
+involve any leak fixing.  I pointed that out and you said you stood
+corrected (last comment at
+https://lore.kernel.org/git/87k0ivpzfx.fsf@evledraar.gmail.com/), but
+now you're referring to it that way again?  Even after rebasing my
+series and adding your Signed-off-by, suggesting you should understand
+it?  The leakfix was a different patch of the series, namely patch #2.
+
+I agree that merge-recursive.c has confusing points.  I totally agree.
+Unfortunately, both your patches that touch merge-recursive.c make it
+worse; more so than the problems you were trying to fix in that file.
+
+> 1. https://lore.kernel.org/git/87ilyjviiy.fsf@evledraar.gmail.com/
+> 2. https://lore.kernel.org/git/0c74285b25311c83bb158cf89a551160a0f3a5d3.1=
+632760428.git.gitgitgadget@gmail.com/
+> 3. https://lore.kernel.org/git/pull.1036.v3.git.1632760428.gitgitgadget@g=
+mail.com/
+> 4. https://lore.kernel.org/git/0d119142778dce8617dd9b2c102b5f5bfdc9dc0f.1=
+632760428.git.gitgitgadget@gmail.com/
+> 6. https://lore.kernel.org/git/f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1=
+632760428.git.gitgitgadget@gmail.com/
+>
+...
+>   merge-recursive.c: call a new unpack_trees_options_init() function
+>
+> Details how merge-recursive.c calls unpack_trees() differently than
+> every other caller when it comes to "struct unpack_trees_options"
+> setup.
+
+Saying:
+
+"merge-recursive.c has a heap-allocated unpack_trees_options, and thus
+can't naturally use UNPACK_TREES_OPTIONS_INIT"
+
+would have been shorter, and also explained things in full detail.
+Your version makes it sound like it's doing something really weird and
+needs a much more expansive explanation.
+
+>   unpack-trees.[ch]: embed "dir" in "struct unpack_trees_options"
+>
+> Elijah's series ends up with a "dir" still heap-allocated in "struct
+> unpack_trees_options", just dynamically and "privately".
+
+As noted above, this is not true.  I'm confused why you try to claim
+otherwise.  (I mean, it's really not all that important, I'm just
+confused why you find it important to call out, especially when the
+stack-based point was highlighted multiple times before but you still
+insist on referring to it as heap-allocated.)
+
+...
+>   unpack-trees: don't leak memory in verify_clean_subdirectory()
+>   merge.c: avoid duplicate unpack_trees_options_release() code
+>   built-ins: plug memory leaks with unpack_trees_options_release()
+>
+> A lot of memory leak fixes both in unpack-trees.c and its users, only
+> a subset of this is in Elijah's series.
+
+Not sure why you feel the need to include the final phrase there; it
+almost feels like you're trying to portray my series as a leakfix,
+which feels misleading.  My series wasn't even about fixing leaks.  In
+my first round, I knew of leaks, and intentionally attempted to avoid
+fixing them because it was orthogonal to the point of my series (I
+figured I could come back in a follow-on series and deal with it).  In
+a subsequent round, I fixed one leak incidentally, in part because you
+called it out, but more so because otherwise when I attempted to
+consolidate code into one place it would appear to reviewers that the
+consolidated code didn't match some of the callers.  In particular,
+some of the sites had a leak and others didn't.  Adding a preparatory
+leakfix (again, patch #2, NOT patch #4) made clear that the later
+consolidation (in patch #4) really was just that -- moving several
+identical code chunks into a single place.
 
 
->         return 0;
->  }
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 8ea0a542da8..393c1f35a5d 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -108,8 +108,6 @@ void setup_unpack_trees_porcelain(struct unpack_trees=
-_options *opts,
->         const char **msgs =3D opts->msgs;
->         const char *msg;
->
-> -       strvec_init(&opts->msgs_to_free);
-> -
->         if (!strcmp(cmd, "checkout"))
->                 msg =3D advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
->                       ? _("Your local changes to the following files woul=
-d be overwritten by checkout:\n%%s"
-> @@ -189,6 +187,12 @@ void setup_unpack_trees_porcelain(struct unpack_tree=
-s_options *opts,
->                 opts->unpack_rejects[i].strdup_strings =3D 1;
->  }
->
-> +void unpack_trees_options_init(struct unpack_trees_options *o)
-> +{
-> +       struct unpack_trees_options blank =3D UNPACK_TREES_OPTIONS_INIT;
-> +       memcpy(o, &blank, sizeof(*o));
-> +}
-> +
->  void clear_unpack_trees_porcelain(struct unpack_trees_options *opts)
->  {
->         strvec_clear(&opts->msgs_to_free);
-> diff --git a/unpack-trees.h b/unpack-trees.h
-> index ecf256cbcea..892b65ea623 100644
-> --- a/unpack-trees.h
-> +++ b/unpack-trees.h
-> @@ -91,7 +91,10 @@ struct unpack_trees_options {
->         struct checkout_metadata meta;
->  };
->
-> -#define UNPACK_TREES_OPTIONS_INIT { 0 }
-> +#define UNPACK_TREES_OPTIONS_INIT { \
-> +       .msgs_to_free =3D STRVEC_INIT, \
-> +}
-> +void unpack_trees_options_init(struct unpack_trees_options *o);
->
->  int unpack_trees(unsigned n, struct tree_desc *t,
->                  struct unpack_trees_options *options);
-> --
-> 2.33.0.1404.g83021034c5d
->
+....anyway, all that said, you've got some good fixes in this series.
+You've also got three very problematic bits that need to be ripped
+out.  And you should rebase this series on top of v3 of
+en/removing-untracked-fixes.
