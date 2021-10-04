@@ -2,437 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6905C433EF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D56C433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A67DE61184
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 615AC61248
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 13:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238806AbhJDN4g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 09:56:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39176 "EHLO
+        id S235737AbhJDN4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 09:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234955AbhJDN40 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234956AbhJDN40 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Oct 2021 09:56:26 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8211EC061749
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:45:31 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id y1so11116996plk.10
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:45:31 -0700 (PDT)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB16DC061753
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 06:45:32 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id l6so11125993plh.9
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 06:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x+WPl3Y6yN6Hoj6+Tgp2hFtxfBDy4L4kDMqbfKxelTU=;
-        b=n8lvea0spEHT55nE2nNMoxO2c3Zfhz/Mcvrwo2Qlmhcbpso2JbuHudgO205QsJIyUn
-         uOTWmKoCA9VVNcN6twbs74U+vJ66BF+N8qwaZTJMV1oYhHo2Ld6hz0jVhCiZdw0EiH7R
-         7ONfeVfWnWhAqa2QUbd6Wo69mDg8ejQ6+djJ0hkczVaAHIiIDmv+f0us0QDAbMWuwhZv
-         ywg5vsEikLjiprVpKwGyprnATGrB6Zt+XuWnAfQTvVBy9ICHscT/ASzQW3SACo2HsV9L
-         7Y6jJUZUhyW8qoEj6kjnBIds7RkuSknDct3r0WBu2sEzg/h9xV38eilt5ZLGsGkg45de
-         ZEDQ==
+         :cc;
+        bh=Aez3N+OTuuAnxAsXVLCTbOQgXNm7zjoOtBzb2YSF62Q=;
+        b=DKg1Tt+ZAZdQmq/V3U/e+dlesrOuYRt7WkIE5gqZzO0wFoEw+jHC14xsz+ln+XqTPq
+         wm8QervOgvJiS+BSrC4NIxbeV0OmP43FL0eAvZnyiDxc4lYYdPEARMcv/viTZ8qSgFtX
+         UD2GHbO2pqwC+KsJvJ1wfTTFponEKEoKE/BVHbzqZ+K90F8WU9LKfohEn0RLDFRoIx3y
+         k0inYlpce624+d+VJ6+NUe3QeGH5YWIU0uH5r6mM6N6YJMLi0XamYSqq7AJaBw/9qWJ7
+         6ekzUVK1svV62RhqgZ4W8x6ZeVrTNI3lHD0dYje7Ag7MepUJr4rA/K/t+lYIqZKXywqH
+         W88w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x+WPl3Y6yN6Hoj6+Tgp2hFtxfBDy4L4kDMqbfKxelTU=;
-        b=8EwJNBB4B6UtQKG027g0t+4P4jWJHpIMKgeFbQk2GKNZnJRr4/6OVDykeZFp45GQ91
-         /Fxui4fc4kEdfB1egVWb5n3LcUlzUCayWaqZ2qHV7/XtCeB1uNw+7FFxQz1axrPCtUHK
-         856v8ImKlT6iZNTyoCMryFJMs18cM0y0YIzZkk9gxZHII20OpWHS3eGY285gbfZ0mAnv
-         eqyj7Sn/dY1bUMwmitwiIZzTa7sSlErJuCFBLXp35ynbkKL1eMDgWPX83+wAdy7YFiya
-         L2SjnITAuelE6VBGGN1+gH4/rK/mMyTJiTfBPLYfRwwRDZBPcVBWmKAudN6mpTABBaYM
-         yxeA==
-X-Gm-Message-State: AOAM5329TKDiwJqAUAPy+bg7ASjIVaxy9lvNx8XybMewez4/5+IF7C+j
-        26xTL0IryfoWqW+GCHpeSvxVSFimz2QMCq2LZy0=
-X-Google-Smtp-Source: ABdhPJx2PSHZmLjLXS3M14L3TLRm9Gl9fSJzTU6wvO3bv4hRnxDXyZLW8WFQZORRPd5gdgiVp8oUCHQ8U/gcZNLcjvU=
-X-Received: by 2002:a17:902:7144:b0:13c:8d49:fc46 with SMTP id
- u4-20020a170902714400b0013c8d49fc46mr23000344plm.45.1633355130824; Mon, 04
- Oct 2021 06:45:30 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Aez3N+OTuuAnxAsXVLCTbOQgXNm7zjoOtBzb2YSF62Q=;
+        b=oqJQj3S23dISjJ0LpRU5pgJa7o1sl/rMp7HnD2jA+18MEqU8LVXVBW2fvisYbGLgnN
+         QMGhA2YpzJPCPD2dtdBnq/eV1OkhAUaEagVqide2RsQs53kgbSgtft+XSi+b2pEu6+fi
+         wKD1z83tjkZRF7vfLOE2xo69m3IcGKyiFG57IXc+BoBduNwDHdQJY560ujmZ3zH2Ceha
+         Ftl21Rt7j3tN2dL7sqNPy+SnjsEXjY8Kcnb9Spna++o/ENwWHX6WM7OCHyqNygSYJab9
+         kCmdpL6GUqzxig5maR3fxiB+jrFOBDaNLNzNh45/O68azvR0TfAOZKniPZsgSiDWtFtd
+         Xz5g==
+X-Gm-Message-State: AOAM533DEya7u859KRefJXKj2wsHGuOW+eLieNR1JpwdxmngYHJcw49n
+        a4VXjMowC1hysSNMJgPbxEuoJxojfOpi2rGajJ4=
+X-Google-Smtp-Source: ABdhPJySAHaZytJADR0xf5cuwIEG7IfMZzXiWkkYhG3XyCSwmh5t5jZ9uwJeygRyEzorlbkaYTkph1MUmbpUmp2J7ro=
+X-Received: by 2002:a17:902:9687:b0:13d:b848:479d with SMTP id
+ n7-20020a170902968700b0013db848479dmr24511604plp.59.1633355132141; Mon, 04
+ Oct 2021 06:45:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com> <patch-10.10-06ad6baf566-20211004T002226Z-avarab@gmail.com>
-In-Reply-To: <patch-10.10-06ad6baf566-20211004T002226Z-avarab@gmail.com>
+References: <xmqq8rzhmsi7.fsf@gitster.g> <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+ <YVOn3hDsb5pnxR53@coredump.intra.peff.net>
+In-Reply-To: <YVOn3hDsb5pnxR53@coredump.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
 Date:   Mon, 4 Oct 2021 06:45:00 -0700
-Message-ID: <CABPp-BFr7R_swdxswmoGRF3=uu0s8HgppfrnFEQ+NvS1oh+_og@mail.gmail.com>
-Subject: Re: [PATCH 10/10] built-ins: plug memory leaks with unpack_trees_options_release()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
+Message-ID: <CABPp-BE4jXyPVAWo7h7fuVHDuatr+mw6CgcWQ1rF7oT0RPMqXg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 3, 2021 at 5:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Tue, Sep 28, 2021 at 4:40 PM Jeff King <peff@peff.net> wrote:
 >
-> Plug memory leaks in various built-ins that were missing
-> unpack_trees_options_release() calls. In an earlier commit these
-> functions were all made to use the "UNPACK_TREES_OPTIONS_INIT" macro,
-> now let's have the ones that didn't clean up their memory do so.
+> I just left a rather long-ish mail in the thread, but the gist of it is
+> that I'm worried that there's some possibility of corruption there if
+> the diff code writes objects. I didn't do a proof-of-concept there, but
+> I worked one up just now. Try this:
 
-This commit message doesn't say anything about what was leaking.  You
-should really bring up that it was the dir_clear() you added to
-unpack_trees_options_release() earlier in the series that is important
-here (or at least that's what I presume is the important fix).
+Thanks for the testcase; it's very helpful.
+
+Let's make it a little more interesting, though...
 
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  archive.c           |  9 +++++++--
->  builtin/am.c        | 17 ++++++++++++-----
->  builtin/checkout.c  |  9 +++++++--
->  builtin/clone.c     |  1 +
->  builtin/commit.c    |  6 +++++-
->  builtin/merge.c     |  6 ++++--
->  builtin/read-tree.c | 14 ++++++++++----
->  builtin/reset.c     | 13 +++++++++----
->  builtin/stash.c     | 14 ++++++++++----
->  diff-lib.c          |  5 ++++-
->  10 files changed, 69 insertions(+), 25 deletions(-)
+>   # make a repo
+>   git init repo
+>   cd repo
+>   echo base >file
+>   git add file
+>   git commit -m base
 >
-> diff --git a/archive.c b/archive.c
-> index 210d7235c5a..003db7d355d 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -306,8 +306,10 @@ int write_archive_entries(struct archiver_args *args=
-,
->                 opts.dst_index =3D args->repo->index;
->                 opts.fn =3D oneway_merge;
->                 init_tree_desc(&t, args->tree->buffer, args->tree->size);
-> -               if (unpack_trees(1, &t, &opts))
-> -                       return -1;
-> +               if (unpack_trees(1, &t, &opts)) {
-> +                       err =3D -1;
-> +                       goto cleanup;
-> +               }
->                 git_attr_set_direction(GIT_ATTR_INDEX);
->         }
+>   # two diverging branches
+>   echo main >file
+>   git commit -am main
+>   git checkout -b side HEAD^
+>   echo side >file
+>   git commit -am side
 >
-> @@ -346,8 +348,11 @@ int write_archive_entries(struct archiver_args *args=
-,
->                 if (err)
->                         break;
->         }
-> +
-> +cleanup:
->         strbuf_release(&path_in_archive);
->         strbuf_release(&content);
-> +       unpack_trees_options_release(&opts);
+>   # we get a conflict, and we resolve
+>   git merge main
+>   echo resolved >file
+>   git commit -am merged
 >
->         return err;
->  }
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 82641ce68ec..4d4bb473c0f 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -1903,6 +1903,7 @@ static int fast_forward_to(struct tree *head, struc=
-t tree *remote, int reset)
->         struct lock_file lock_file =3D LOCK_INIT;
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
->         struct tree_desc t[2];
-> +       int ret =3D 0;
->
->         if (parse_tree(head) || parse_tree(remote))
->                 return -1;
-> @@ -1923,13 +1924,15 @@ static int fast_forward_to(struct tree *head, str=
-uct tree *remote, int reset)
->
->         if (unpack_trees(2, t, &opts)) {
->                 rollback_lock_file(&lock_file);
-> -               return -1;
-> +               ret =3D -1;
-> +               goto cleanup;
->         }
->
->         if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->                 die(_("unable to write new index file"));
-> -
-> -       return 0;
-> +cleanup:
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  /**
-> @@ -1941,6 +1944,7 @@ static int merge_tree(struct tree *tree)
->         struct lock_file lock_file =3D LOCK_INIT;
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
->         struct tree_desc t[1];
-> +       int ret =3D 0;
->
->         if (parse_tree(tree))
->                 return -1;
-> @@ -1956,13 +1960,16 @@ static int merge_tree(struct tree *tree)
->
->         if (unpack_trees(1, t, &opts)) {
->                 rollback_lock_file(&lock_file);
-> -               return -1;
-> +               ret =3D -1;
-> +               goto cleanup;
->         }
->
->         if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->                 die(_("unable to write new index file"));
->
-> -       return 0;
-> +cleanup:
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  /**
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 482d17676a0..fd76b504861 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -641,6 +641,7 @@ static int reset_tree(struct tree *tree, const struct=
- checkout_opts *o,
->  {
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
->         struct tree_desc tree_desc;
-> +       int ret;
->
->         opts.head_idx =3D -1;
->         opts.update =3D worktree;
-> @@ -667,10 +668,14 @@ static int reset_tree(struct tree *tree, const stru=
-ct checkout_opts *o,
->                  */
->                 /* fallthrough */
->         case 0:
-> -               return 0;
-> +               ret =3D 0;
-> +               break;
->         default:
-> -               return 128;
-> +               ret =3D 128;
->         }
-> +
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  static void setup_branch_path(struct branch_info *branch)
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 0df820c5970..df3bb9a7884 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -697,6 +697,7 @@ static int checkout(int submodule_progress)
->         init_tree_desc(&t, tree->buffer, tree->size);
->         if (unpack_trees(1, &t, &opts) < 0)
->                 die(_("unable to checkout working tree"));
-> +       unpack_trees_options_release(&opts);
->
->         free(head);
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 6cc7313bad8..84c79ecb5a5 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -305,6 +305,7 @@ static void create_base_index(const struct commit *cu=
-rrent_head)
->         struct tree *tree;
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
->         struct tree_desc t;
-> +       int exit_early =3D 0;
->
->         if (!current_head) {
->                 discard_cache();
-> @@ -324,7 +325,10 @@ static void create_base_index(const struct commit *c=
-urrent_head)
->         parse_tree(tree);
->         init_tree_desc(&t, tree->buffer, tree->size);
->         if (unpack_trees(1, &t, &opts))
-> -               exit(128); /* We've already reported the error, finish dy=
-ing */
-> +               exit_early =3D 1; /* We've already reported the error, fi=
-nish dying */
-> +       unpack_trees_options_release(&opts);
-> +       if (exit_early)
-> +               exit(128);
->  }
->
->  static void refresh_cache_or_die(int refresh_flags)
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 73290a07fcc..28089e2c5ed 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -671,6 +671,7 @@ static int read_tree_trivial(struct object_id *common=
-, struct object_id *head,
->         struct tree *trees[MAX_UNPACK_TREES];
->         struct tree_desc t[MAX_UNPACK_TREES];
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
-> +       int ret =3D 0;
->
->         opts.head_idx =3D 2;
->         opts.src_index =3D &the_index;
-> @@ -695,8 +696,9 @@ static int read_tree_trivial(struct object_id *common=
-, struct object_id *head,
->                 init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
->         }
->         if (unpack_trees(nr_trees, t, &opts))
-> -               return -1;
-> -       return 0;
-> +               ret =3D -1;
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  static void write_tree_trivial(struct object_id *oid)
-> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-> index 06f3b97ac05..8f1b8a7e74c 100644
-> --- a/builtin/read-tree.c
-> +++ b/builtin/read-tree.c
-> @@ -154,6 +154,7 @@ int cmd_read_tree(int argc, const char **argv, const =
-char *cmd_prefix)
->                 OPT__QUIET(&opts.quiet, N_("suppress feedback messages"))=
-,
->                 OPT_END()
->         };
-> +       int ret =3D 0;
->
->         opts.head_idx =3D -1;
->         opts.src_index =3D &the_index;
-> @@ -243,11 +244,13 @@ int cmd_read_tree(int argc, const char **argv, cons=
-t char *cmd_prefix)
->                 parse_tree(tree);
->                 init_tree_desc(t+i, tree->buffer, tree->size);
->         }
-> -       if (unpack_trees(nr_trees, t, &opts))
-> -               return 128;
-> +       if (unpack_trees(nr_trees, t, &opts)) {
-> +               ret =3D 128;
-> +               goto cleanup;
-> +       }
->
->         if (opts.debug_unpack || opts.dry_run)
-> -               return 0; /* do not write the index out */
-> +               goto cleanup; /* do not write the index out */
->
->         /*
->          * When reading only one tree (either the most basic form,
-> @@ -262,5 +265,8 @@ int cmd_read_tree(int argc, const char **argv, const =
-char *cmd_prefix)
->
->         if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->                 die("unable to write new index file");
-> -       return 0;
-> +
-> +cleanup:
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 86c604b21e9..713d084c3eb 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -78,10 +78,14 @@ static int reset_index(const char *ref, const struct =
-object_id *oid, int reset_t
->
->         if (reset_type =3D=3D KEEP) {
->                 struct object_id head_oid;
-> -               if (get_oid("HEAD", &head_oid))
-> -                       return error(_("You do not have a valid HEAD."));
-> -               if (!fill_tree_descriptor(the_repository, desc + nr, &hea=
-d_oid))
-> -                       return error(_("Failed to find tree of HEAD."));
-> +               if (get_oid("HEAD", &head_oid)) {
-> +                       error(_("You do not have a valid HEAD."));
-> +                       goto out;
-> +               }
-> +               if (!fill_tree_descriptor(the_repository, desc + nr, &hea=
-d_oid)) {
-> +                       error(_("Failed to find tree of HEAD."));
-> +                       goto out;
-> +               }
->                 nr++;
->                 opts.fn =3D twoway_merge;
->         }
-> @@ -103,6 +107,7 @@ static int reset_index(const char *ref, const struct =
-object_id *oid, int reset_t
->         ret =3D 0;
->
->  out:
-> +       unpack_trees_options_release(&opts);
->         for (i =3D 0; i < nr; i++)
->                 free((void *)desc[i].buffer);
->         return ret;
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 1137e5fcbe8..be6ecb1ae11 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -237,6 +237,7 @@ static int reset_tree(struct object_id *i_tree, int u=
-pdate, int reset)
->         struct tree_desc t[MAX_UNPACK_TREES];
->         struct tree *tree;
->         struct lock_file lock_file =3D LOCK_INIT;
-> +       int ret =3D 0;
->
->         read_cache_preload(NULL);
->         if (refresh_cache(REFRESH_QUIET))
-> @@ -258,13 +259,17 @@ static int reset_tree(struct object_id *i_tree, int=
- update, int reset)
->         opts.update =3D update;
->         opts.fn =3D oneway_merge;
->
-> -       if (unpack_trees(nr_trees, t, &opts))
-> -               return -1;
-> +       if (unpack_trees(nr_trees, t, &opts)) {
-> +               ret =3D -1;
-> +               goto cleanup;
-> +       }
->
->         if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
-> -               return error(_("unable to write new index file"));
-> +               ret =3D error(_("unable to write new index file"));
->
-> -       return 0;
-> +cleanup:
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  static int diff_tree_binary(struct strbuf *out, struct object_id *w_comm=
-it)
-> @@ -815,6 +820,7 @@ static void diff_include_untracked(const struct stash=
-_info *info, struct diff_op
->
->         if (unpack_trees(ARRAY_SIZE(tree_desc), tree_desc, &unpack_tree_o=
-pt))
->                 die(_("failed to unpack trees"));
-> +       unpack_trees_options_release(&unpack_tree_opt);
->
->         do_diff_cache(&info->b_commit, diff_opt);
->  }
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 8a08d9af4eb..2d8a90a51b2 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -527,6 +527,7 @@ static int diff_cache(struct rev_info *revs,
->         struct tree *tree;
->         struct tree_desc t;
->         struct unpack_trees_options opts =3D UNPACK_TREES_OPTIONS_INIT;
-> +       int ret;
->
->         tree =3D parse_tree_indirect(tree_oid);
->         if (!tree)
-> @@ -545,7 +546,9 @@ static int diff_cache(struct rev_info *revs,
->         opts.pathspec->recursive =3D 1;
->
->         init_tree_desc(&t, tree->buffer, tree->size);
-> -       return unpack_trees(1, &t, &opts);
-> +       ret =3D unpack_trees(1, &t, &opts);
-> +       unpack_trees_options_release(&opts);
-> +       return ret;
->  }
->
->  void diff_get_merge_base(const struct rev_info *revs, struct object_id *=
-mb)
-> --
-> 2.33.0.1404.g83021034c5d
+>   # now imagine we had a file with a diff driver. I stuffed it
+>   # in here after the fact, but it could have been here all along,
+>   # or come as part of the merge, etc.
+>   echo whatever >unrelated
+>   echo "unrelated diff=foo" >.gitattributes
 
-Looks good to me; thanks for catching and fixing these leaks.
+If we change this line to:
+
+  echo "file diff=foo" >.gitattributes
+
+Then the userdiff will fire on the file involved in the remerge-diff,
+including on the file included in the automatic 3-way content
+conflict, giving us a diff that looks like this:
+
+diff --git a/file b/file
+index 5c66bc5..2ab19ae 100644
+--- a/file
++++ b/file
+@@ -1,7 +1 @@
+-<<<<<<< 7D4147C (SIDE)
+-SIDE
+-||||||| BE54C04
+-BASE
+-=======
+-MAIN
+->>>>>>> 03FC4E3 (MAIN)
++RESOLVED
+
+>   git add .
+>   git commit --amend --no-edit
+>
+>   # set up the diff driver not just to do a textconv, but to cache the
+>   # result. This will require writing out new objects for the cache
+>   # as part of the diff operation.
+>   git config diff.foo.textconv "$PWD/upcase"
+>   git config diff.foo.cachetextconv true
+>   cat >upcase <<\EOF &&
+>   #!/bin/sh
+>   tr a-z A-Z <$1
+>   EOF
+>   chmod +x upcase
+>
+>   # now show the diff
+>   git log -1 --remerge-diff
+>
+>   # and make sure the repo is still OK
+>   git fsck
+>
+> The remerge diff will correctly show the textconv'd content (because
+> it's not in either parent, and hence an evil merge):
+>
+>   diff --git a/unrelated b/unrelated
+>   new file mode 100644
+>   index 0000000..982793c
+>   --- /dev/null
+>   +++ b/unrelated
+>   @@ -0,0 +1 @@
+>   +WHATEVER
+>
+> but then fsck shows that our cache is corrupted:
+>
+>   Checking object directories: 100% (256/256), done.
+>   error: refs/notes/textconv/foo: invalid sha1 pointer 1e9b3ecffca73411001043fe914a7ec0e7291043
+>   error: refs/notes/textconv/foo: invalid reflog entry 1e9b3ecffca73411001043fe914a7ec0e7291043
+>   dangling tree 569b6e414203d2f50bdaafc1585eae11e28afc37
+
+
+> Now I'll admit the textconv-cache is a pretty seldom-used feature. And
+> that there _probably_ aren't a lot of other ways that the diff code
+> would try to write objects or references. But I think it speaks to the
+> kind of subtle interactions we should worry about (and certainly
+> corrupting the repository is a pretty bad outcome, though at least in
+> this case it's "just" a cache and we could blow away that ref manually).
+
+
+I implemented the pretend_object_file() solution on Saturday and tried
+this out, and found with the above change that it has corruption
+problems as well.  This really doesn't feel much safer too me.
+
+The move-the-tmp-objdir-to-just-being-an-alternate-instead-of-a-primary
+solution, as suggested at
+https://lore.kernel.org/git/YVOiggCWAdZcxAb6@coredump.intra.peff.net/
+has the same problem.
+
+But, more importantly, neither of these solutions can be made safe.
+Even if we adopt the GIT_QUARANTINE_PATH suggestion from Neeraj
+(https://lore.kernel.org/git/20210929184339.GA19712@neerajsi-x1.localdomain/),
+we still have objects referencing now-missing objects.
+
+*However*, if we use the tmp-objdir-as-primary solution, and leave it
+as a primary, and use your modification to the GIT_QUARANTINE_PATH
+idea from Neeraj (i.e. create a "the-tmp-objdir" and have the refs
+code check for it and turn on the quarantine automatically when one
+exists), then we prevent adding or modifying refs to point to bad
+objects, and any new objects that textconv might write that could
+depend on transient objects, will themselves be transient and go away.
+So, this solution is safe from corruption.  I'll be implementing it.
+
+(not sure how quickly I'll get it done, as my time is mostly limited
+to early mornings or evenings or Saturdays right now...)
