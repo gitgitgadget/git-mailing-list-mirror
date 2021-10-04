@@ -2,211 +2,404 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89475C433FE
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F0DC433F5
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:27:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7359961264
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:13:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A9CF61354
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233422AbhJDOOw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 10:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45084 "EHLO
+        id S233789AbhJDO24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 10:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233350AbhJDOOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 10:14:50 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80277C061745
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 07:13:01 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id p11so12463015edy.10
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 07:13:01 -0700 (PDT)
+        with ESMTP id S233705AbhJDO2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 10:28:55 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48139C061745
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 07:27:06 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id p21so3889293wmq.1
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 07:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=KgNbPrb9fF2f6u3OOATGEH2UQZyiJJowD4ccBSHA8EE=;
-        b=dPC43B7Q6zcW2kgNtrX5kH3uckmYLdwwGlXoE/dFYAM2ekL0zll29j09bodM0dG3pw
-         Yg1izoFEDJgslG3ECjLHH4jSeI00jjhmK1vlWDcgaEdPPQFV0xwj7SW0iX20Rgu+9oyT
-         0NKu9cVU7l8lFJx5ztIIzas4ghhhZrEmA/MDE1K/sWkuu5obgvVGSC7ImcW9KXd4Bajv
-         XSIBVQE6/JaVT+RGCwWQxgQ2jWiDFnGN7s7A/Ygdtn5lufNNQWHr0WkeRgv/v2YP/nZU
-         uMSXkmMiX6x9XFMwSDdZoms0vwRVsAXQcaXuRwOFznNMe5Pzs85L4SBtVitfX1OYG6uj
-         MK6Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0eQ8OGoZA51lQ//no172XmqvAHDIxKe5C8VpufenF3w=;
+        b=ai3zBpukAFN+5dly4lHJeGfX2R5chSiEZFKYEUJH6ix9rpraPh1VklMjigwNyMHDP9
+         3/IEX5OUa3CZA+hifYSX/s08Wc4fYUyUoc/+LebU605ObVfMqrCLPjyafemOu90xzKtb
+         X3zFQObC1lez/2+uEowDtV8KWzNl+mkxT2g2aeMARcOrjeti4OnAEM5iiOVVWMGfFlYQ
+         FZIXh+JbCCRwfWN2pecwgBNrm6zmgc54aL0QeKXfXvWausha3yKGVm6+iYGGZ9Np0JNn
+         jnw7vaMMFFLEZxuahwcqMXVsZLBDuyWdXLzbVy1zTvntKpV2UdhoOOomjWUfLcVMqRSH
+         GMMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=KgNbPrb9fF2f6u3OOATGEH2UQZyiJJowD4ccBSHA8EE=;
-        b=HEWc8yyG7PHAxc4qWslrwt9Rb1Na9wa5iAslHdqLUGlAnsEBC4Wbcmsh/3GvFiU53a
-         yvnnvBq6XKDpOXy8Iev4M8D2l1R7u5hJeRI8Y8YuKtOlqrWe/xL71+5NtOenJOAmbxpc
-         HBMldc8DTIX7Cx+hHmZXcV4ON2AuSmGTGKxTSTrzavMfMl62evadZaJRkm8ahTRGxMgN
-         K1zDZ1WmJ0P73qsRb7wcjuluoyT+60JwJSLKV18ldjl5NbqmCsSAaLM3bD5rYfccArR0
-         /D30+92V6FeFimROLz1Z17cVxhc+/Tp6H48pTRtq2gwdb2+9iUdyhjx8CJcUn1pCFdGV
-         3XrA==
-X-Gm-Message-State: AOAM531DZnzPTuBYliRkIEfO8AkueFFKW5rJLJ8TbX4brKYxeExurzYo
-        wa0wittoJg0u60edHcRppCAWG7Bms1qicQ==
-X-Google-Smtp-Source: ABdhPJwSuLyVb5ymu1Cqnp3lgsjROx0XdkbcPDCBdD7vd0ITu0kpIeVOkx9MBhDRc1wXGyWzuJQ9lA==
-X-Received: by 2002:a05:6402:4249:: with SMTP id g9mr6853637edb.395.1633356726212;
-        Mon, 04 Oct 2021 07:12:06 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bx11sm6724797ejb.107.2021.10.04.07.12.05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0eQ8OGoZA51lQ//no172XmqvAHDIxKe5C8VpufenF3w=;
+        b=hTwGg8Ut2BvS2gGVbQt+m6iIvPCl5beedMkAyZE2a2EWsESlrJIcHetuF4MQFEsvrj
+         zbCPxDxyZRoHqC7mJEuTnG8jJC55IJVJbY6LOLh+fCSkfvXiY1a68fph0ooMHSOK0Oey
+         xiHOfy3lCFP3FUwtr779NSrGPnLGcTcx8Bismrn009i5qSNSmM/rF0fX2Cc+Kfr5UZ/+
+         1OSZHLvaj2PmtSGnPWCYY03F71OYEYQbNlHHR6leBe1eNreOuI5U+4djiQ8O6HPz8Rct
+         crseXU+8P6BXygh2sibLBMxcqDXGco6a3u+MX0sYP0gUjklYXPzdu8e/ABoYMMoZw99R
+         iHRA==
+X-Gm-Message-State: AOAM532G4e05Y23heEtJ7PZJChFHj5cZfl06D3fny1/VKvzue2zJP/eD
+        LmZlZhk6KLr0wmVA4/ff3I7f9b7e7hS8Cg==
+X-Google-Smtp-Source: ABdhPJzEVnzBUkbATHU2GWFyddRBCO99ZkfghEXsIJnJZZSUedSc9Me7iMiAtx/V3RB3gbEJY8hl4g==
+X-Received: by 2002:a05:600c:3543:: with SMTP id i3mr18630488wmq.64.1633357624121;
+        Mon, 04 Oct 2021 07:27:04 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id f9sm17368315wmf.3.2021.10.04.07.27.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 07:12:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 04/11] unpack-trees: introduce preserve_ignored to
- unpack_trees_options
-Date:   Mon, 04 Oct 2021 16:07:31 +0200
-References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
- <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com>
- <f1a0700e598e52d6cdb507fe8a09c4fa9291c982.1632760428.git.gitgitgadget@gmail.com>
- <87ilyjviiy.fsf@evledraar.gmail.com>
- <CABPp-BEnGfxqKpqXGKopXFBBshY0tuimQLtwt58wKf9CJS8n5g@mail.gmail.com>
- <87ee97utaq.fsf@evledraar.gmail.com>
- <CABPp-BEEWPF6oBN69PH_GtmqqvAj1HMtDX5ipQxa2bLzyCCu0g@mail.gmail.com>
- <87lf3etaih.fsf@evledraar.gmail.com>
- <CABPp-BGi03JunRaMF_8SJKC00byOnq1kL3JyYhKWatz8-B4RsA@mail.gmail.com>
- <87k0ixrv23.fsf@evledraar.gmail.com>
- <CABPp-BE_aY4smj_b0+Zz=YrURKMniS=DmyMWVc=q2mVDL8zUOg@mail.gmail.com>
- <87k0ivpzfx.fsf@evledraar.gmail.com>
- <CABPp-BFE_5zPCZY8adJSQchdQzxq3uH-oma-S=_Sw0OUXx03OQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <CABPp-BFE_5zPCZY8adJSQchdQzxq3uH-oma-S=_Sw0OUXx03OQ@mail.gmail.com>
-Message-ID: <8735pgop57.fsf@evledraar.gmail.com>
+        Mon, 04 Oct 2021 07:27:03 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/2] i18n: improve translatability of ambiguous object output
+Date:   Mon,  4 Oct 2021 16:27:00 +0200
+Message-Id: <cover-v2-0.2-00000000000-20211004T142523Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1409.ge73c1ecc5b4
+In-Reply-To: <cover-0.2-00000000000-20211004T013611Z-avarab@gmail.com>
+References: <cover-0.2-00000000000-20211004T013611Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A mostly-rewritten version in response to the discussion concluding at
+http://lore.kernel.org/git/YVrudGOcUxblsfPY@coredump.intra.peff.net;
+thanks a lot for the thorough review Jeff!
 
-On Mon, Oct 04 2021, Elijah Newren wrote:
+Ævar Arnfjörð Bjarmason (2):
+  object.[ch]: mark object type names for translation
+  object-name: make ambiguous object output translatable
 
-> On Sat, Oct 2, 2021 at 2:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
-arab@gmail.com> wrote:
->>
->> On Fri, Oct 01 2021, Elijah Newren wrote:
->>
-> ...
->> > So maybe I'll submit some patches on top that rip these direct members
->> > out of of unpack_trees_options and push them inside some opaque
->> > struct.
->>
->> Sure, that sounds good. I only had a mild objection to doing it in a way
->> where you'll need that sort of code I removed in the linked commit in
->> prep_exclude() because you were trying not to expose that at any cost,
->> including via some *_INIT macro. I.e. if it's private we can just name
->> it "priv_*" or have a :
->>
->>     struct dont_touch_this {
->>         struct dir_struct dir;
->>     };
->>
->> Which are both ways of /messaging/ that it's private, and since the
->> target audience is just the rest of the git.git codebase I think that
->> ultimately something that 1) sends the right message 2) makes accidents
->> pretty much impossible suffices. I.e. you don't accidentally introduce a
->> new API user accessing a field called "->priv_*" or
->> "->private_*". Someone will review those patches...
->
-> An internal struct with all the members meant to be internal-only
-> provides nearly all the advantages that I was going for with the
-> opaque struct, while also being a smaller change than what I was
-> thinking of doing.  I like that idea; thanks for the suggestion.
+ object-name.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++-----
+ object.c      | 27 ++++++++++++++++---
+ object.h      |  1 +
+ 3 files changed, 90 insertions(+), 10 deletions(-)
 
-Yeah, just to provide an explicit example something like the below. It
-compiles to the same assembly (at least under -O3, didn't exhaustively
-try other optimization levels).
+Range-diff against v1:
+1:  7085f951a12 ! 1:  55bde16aa23 object-name tests: tighten up advise() output test
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    object-name tests: tighten up advise() output test
+    +    object.[ch]: mark object type names for translation
+     
+    -    Change tests added in 1ffa26c4614 (get_short_sha1: list ambiguous
+    -    objects on error, 2016-09-26) to only care about the OIDs that are
+    -    listed, which is what the test is trying to check for.
+    +    Mark the "commit", "tree", "blob" and "tag" types for translation, and
+    +    add an extern "unknown type" string for the OBJ_NONE case.
+     
+    -    This isn't needed by the subsequent commit, which won't change any of
+    -    the output, but a mere tightening of the tests assertions to more
+    -    closely match what we really want to test for here.
+    +    It is usually bad practice to translate individual words like this,
+    +    but for e.g. the list list output emitted by the "short object ID dead
+    +    is ambiguous" advice it makes sense.
+     
+    -    Now if the advise() message itself were change the phrasing around the
+    -    list of OIDs we won't have this test break. We're assuming that such
+    -    output won't have a need to indent anything except the OIDs.
+    +    A subsequent commit will make that output translatable, and use these
+    +    translation markings to do so. Well, we won't use "commit", but let's
+    +    mark it up anyway for consistency. It'll probably come in handy sooner
+    +    than later to have it already be translated, and it's to much of a
+    +    burden to place on translators if they're translating the other three
+    +    object types anyway.
+    +
+    +    Aside: I think it would probably make sense to change the "NULL" entry
+    +    for type_name() to be the "unknown type". I've ran into cases where
+    +    type_name() was unconditionally interpolated in e.g. an sprintf()
+    +    format, but let's leave that for #leftoverbits as that would be
+    +    changing the behavior of the type_name() function.
+    +
+    +    All of these will be new in the git.pot file, except "blob" which will
+    +    be shared with a "cat-file" command-line option, see
+    +    7bcf3414535 (cat-file --textconv/--filters: allow specifying the path
+    +    separately, 2016-09-09) for its introduction.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    - ## t/t1512-rev-parse-disambiguation.sh ##
+    -@@ t/t1512-rev-parse-disambiguation.sh: test_expect_success 'ambiguity errors are not repeated (peel)' '
+    + ## object.c ##
+    +@@ object.c: struct object *get_indexed_object(unsigned int idx)
+      
+    - test_expect_success 'ambiguity hints' '
+    - 	test_must_fail git rev-parse 000000000 2>stderr &&
+    --	grep ^hint: stderr >hints &&
+    --	# 16 candidates, plus one intro line
+    --	test_line_count = 17 hints
+    -+	grep "^hint:   " stderr >hints &&
+    -+	# 16 candidates, minus surrounding prose
+    -+	test_line_count = 16 hints
+    - '
+    + static const char *object_type_strings[] = {
+    + 	NULL,		/* OBJ_NONE = 0 */
+    +-	"commit",	/* OBJ_COMMIT = 1 */
+    +-	"tree",		/* OBJ_TREE = 2 */
+    +-	"blob",		/* OBJ_BLOB = 3 */
+    +-	"tag",		/* OBJ_TAG = 4 */
+    ++	/*
+    ++	 * TRANSLATORS: "commit", "tree", "blob" and "tag" are the
+    ++	 * name of Git's object types. These names are interpolated
+    ++	 * stand-alone when doing so is unambiguous for translation
+    ++	 * and doesn't require extra context. E.g. as part of an
+    ++	 * already-translated string that needs to have a type name
+    ++	 * quoted verbatim, or the short description of a command-line
+    ++	 * option expecting a given type.
+    ++	 */
+    ++	N_("commit"),	/* OBJ_COMMIT = 1 */
+    ++	N_("tree"),	/* OBJ_TREE = 2 */
+    ++	N_("blob"),	/* OBJ_BLOB = 3 */
+    ++	N_("tag"),	/* OBJ_TAG = 4 */
+    + };
+      
+    - test_expect_success 'ambiguity hints respect type' '
+    - 	test_must_fail git rev-parse 000000000^{commit} 2>stderr &&
+    --	grep ^hint: stderr >hints &&
+    --	# 5 commits, 1 tag (which is a committish), plus intro line
+    --	test_line_count = 7 hints
+    -+	grep "^hint:   " stderr >hints &&
+    -+	# 5 commits, 1 tag (which is a committish), minus surrounding prose
+    -+	test_line_count = 6 hints
+    - '
+    - 
+    - test_expect_success 'failed type-selector still shows hint' '
+    -@@ t/t1512-rev-parse-disambiguation.sh: test_expect_success 'failed type-selector still shows hint' '
+    - 	echo 851 | git hash-object --stdin -w &&
+    - 	echo 872 | git hash-object --stdin -w &&
+    - 	test_must_fail git rev-parse ee3d^{commit} 2>stderr &&
+    --	grep ^hint: stderr >hints &&
+    --	test_line_count = 3 hints
+    -+	grep "^hint:   " stderr >hints &&
+    -+	test_line_count = 2 hints
+    - '
+    ++/*
+    ++ * TRANSLATORS: This is the short type name of an object that's not
+    ++ * one of Git's known object types, as opposed to "commit", "tree",
+    ++ * "blob" and "tag" above.
+    ++ *
+    ++ * A user is unlikely to ever encounter these, but they can be
+    ++ * manually created with "git hash-object --literally".
+    ++ */
+    ++const char *unknown_type = N_("unknown type");
+    ++
+    + const char *type_name(unsigned int type)
+    + {
+    + 	if (type >= ARRAY_SIZE(object_type_strings))
+    +
+    + ## object.h ##
+    +@@ object.h: struct object {
+    + 	struct object_id oid;
+    + };
+      
+    - test_expect_success 'core.disambiguate config can prefer types' '
+    ++extern const char *unknown_type;
+    + const char *type_name(unsigned int type);
+    + int type_from_string_gently(const char *str, ssize_t, int gentle);
+    + #define type_from_string(str) type_from_string_gently(str, -1, 0)
+2:  b6136380c28 ! 2:  c0e873543f5 object-name: make ambiguous object output translatable
+    @@ Commit message
+         tweaked in [2] to be more friendly to translators. By being able to
+         customize the sprintf formats we're even ready for RTL languages.
+     
+    -    1. ef9b0370da6 (sha1-name.c: store and use repo in struct
+    -       disambiguate_state, 2019-04-16)
+    +    The "unknown type" message here is unreachable, and has been since
+    +    [1], i.e. that code has never worked. If we craft an object of a bogus
+    +    type with a conflicting prefix we'll just die:
+    +
+    +        $ git rev-parse 8315
+    +        error: short object ID 8315 is ambiguous
+    +        hint: The candidates are:
+    +        fatal: invalid object type
+    +
+    +    But let's continue to pretend that this works, we can eventually use
+    +    the API improvements in my ab/fsck-unexpected-type (once it lands) to
+    +    inspect these objects and emit the actual type here, or at least not
+    +    die as we emit "unknown type".
+    +
+    +    1. 1ffa26c461 (get_short_sha1: list ambiguous objects on error,
+    +       2016-09-26)
+         2. 5cc044e0257 (get_short_oid: sort ambiguous objects by type,
+            then SHA-1, 2018-05-10)
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## object-name.c ##
+    -@@ object-name.c: static int init_object_disambiguation(struct repository *r,
+    - 	return 0;
+    - }
+    - 
+    -+struct show_ambiguous_state {
+    -+	const struct disambiguate_state *ds;
+    -+	struct strbuf *advice;
+    -+};
+    -+
+    - static int show_ambiguous_object(const struct object_id *oid, void *data)
+    +@@ object-name.c: static int show_ambiguous_object(const struct object_id *oid, void *data)
+      {
+    --	const struct disambiguate_state *ds = data;
+    -+	struct show_ambiguous_state *state = data;
+    -+	const struct disambiguate_state *ds = state->ds;
+    -+	struct strbuf *advice = state->advice;
+    + 	const struct disambiguate_state *ds = data;
+      	struct strbuf desc = STRBUF_INIT;
+    ++	struct strbuf ci_ad = STRBUF_INIT;
+    ++	struct strbuf ci_s = STRBUF_INIT;
+      	int type;
+    ++	const char *tag_desc = NULL;
+    ++	const char *abbrev;
+      
+    + 	if (ds->fn && !ds->fn(ds->repo, oid, ds->cb_data))
+    + 		return 0;
+     @@ object-name.c: static int show_ambiguous_object(const struct object_id *oid, void *data)
+      		if (commit) {
+      			struct pretty_print_context pp = {0};
+      			pp.date_mode.type = DATE_SHORT;
+     -			format_commit_message(commit, " %ad - %s", &desc, &pp);
+    -+			format_commit_message(commit, _(" %ad - %s"), &desc, &pp);
+    ++			format_commit_message(commit, "%ad", &ci_ad, &pp);
+    ++			format_commit_message(commit, "%s", &ci_s, &pp);
+      		}
+      	} else if (type == OBJ_TAG) {
+      		struct tag *tag = lookup_tag(ds->repo, oid);
+      		if (!parse_tag(tag) && tag->tag)
+     -			strbuf_addf(&desc, " %s", tag->tag);
+    -+			strbuf_addf(&desc, _(" %s"), tag->tag);
+    ++			tag_desc = tag->tag;
+      	}
+      
+     -	advise("  %s %s%s",
+     -	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
+     -	       type_name(type) ? type_name(type) : "unknown type",
+     -	       desc.buf);
+    -+	strbuf_addf(advice,
+    -+		    /*
+    -+		     * TRANSLATORS: This is a line of ambiguous object
+    -+		     * output. E.g.:
+    -+		     *
+    -+		     *    "deadbeef commit 2021-01-01 - Some Commit Message\n"
+    -+		     *    "deadbeef tag Some Tag Message\n"
+    -+		     *    "deadbeef tree\n"
+    -+		     *
+    -+		     * I.e. the first argument is a short OID, the
+    -+		     * second is the type name of the object, and the
+    -+		     * third a description of the object, if it's a
+    -+		     * commit or tag. In that case the " %ad - %s" and
+    -+		     * " %s" formats above will be used for the third
+    -+		     * argument.
+    -+		     */
+    -+		    _("  %s %s%s\n"),
+    -+		    repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
+    -+		    type_name(type) ? type_name(type) : "unknown type",
+    -+		    desc.buf);
+    - 
+    - 	strbuf_release(&desc);
+    - 	return 0;
+    -@@ object-name.c: static enum get_oid_result get_short_oid(struct repository *r,
+    - 	}
+    - 
+    - 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
+    -+		struct strbuf sb = STRBUF_INIT;
+    - 		struct oid_array collect = OID_ARRAY_INIT;
+    -+		struct show_ambiguous_state as = {
+    -+			.ds = &ds,
+    -+			.advice = &sb,
+    -+		};
+    - 
+    - 		error(_("short object ID %s is ambiguous"), ds.hex_pfx);
+    - 
+    -@@ object-name.c: static enum get_oid_result get_short_oid(struct repository *r,
+    - 		if (!ds.ambiguous)
+    - 			ds.fn = NULL;
+    - 
+    --		advise(_("The candidates are:"));
+    - 		repo_for_each_abbrev(r, ds.hex_pfx, collect_ambiguous, &collect);
+    - 		sort_ambiguous_oid_array(r, &collect);
+    - 
+    --		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
+    -+		if (oid_array_for_each(&collect, show_ambiguous_object, &as))
+    - 			BUG("show_ambiguous_object shouldn't return non-zero");
+    -+
+    ++	abbrev = repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV);
+    ++	if (type == OBJ_COMMIT) {
+     +		/*
+    -+		 * TRANSLATORS: The argument is the list of ambiguous
+    -+		 * objects composed in show_ambiguous_object(). See
+    -+		 * its "TRANSLATORS" comment for details.
+    ++		 * TRANSLATORS: This is a line of ambiguous commit
+    ++		 * object output. E.g.:
+    ++		 *
+    ++		 *    "deadbeef commit 2021-01-01 - Some Commit Message"
+    ++		 *
+    ++		 * The second argument is the "commit" string from
+    ++		 * object.c, it should (hopefully) already be
+    ++		 * translated.
+     +		 */
+    -+		advise(_("The candidates are:\n\n%s"), sb.buf);
+    ++		strbuf_addf(&desc, _("%s %s %s - %s"), abbrev, ci_ad.buf,
+    ++			    _(type_name(type)), ci_s.buf);
+    ++	} else if (tag_desc) {
+    ++		/*
+    ++		 * TRANSLATORS: This is a line of
+    ++		 * ambiguous tag object output. E.g.:
+    ++		 *
+    ++		 *    "deadbeef tag Some Tag Message"
+    ++		 *
+    ++		 * The second argument is the "tag" string from
+    ++		 * object.c, it should (hopefully) already be
+    ++		 * translated.
+    ++		 */
+    ++		strbuf_addf(&desc, _("%s %s %s"), abbrev, _(type_name(type)),
+    ++			    tag_desc);
+    ++	} else {
+    ++		const char *tname = type_name(type) ? _(type_name(type)) :
+    ++			_(unknown_type);
+    ++		/*
+    ++		 * TRANSLATORS: This is a line of ambiguous <type>
+    ++		 * object output. Where <type> is one of the object
+    ++		 * types of "tree", "blob", "tag" ("commit" is handled
+    ++		 * above).
+    ++		 *
+    ++		 *    "deadbeef tree"
+    ++		 *    "deadbeef blob"
+    ++		 *    "deadbeef tag"
+    ++		 *    "deadbeef unknown type"
+    ++		 *
+    ++		 * Note that annotated tags use a separate format
+    ++		 * outlined above.
+    ++		 *
+    ++		 * The second argument is the "tree", "blob" or "tag"
+    ++		 * string from object.c, or the "unknown type" string
+    ++		 * in the case of an unknown type. All of them should
+    ++		 * (hopefully) already be translated.
+    ++		 */
+    ++		strbuf_addf(&desc, _("%s %s"), abbrev, tname);
+    ++	}
+     +
+    - 		oid_array_clear(&collect);
+    - 	}
+    ++	/*
+    ++	 * TRANSLATORS: This is line item of ambiguous object output,
+    ++	 * translated above.
+    ++	 */
+    ++	advise(_("  %s\n"), desc.buf);
+    + 
+    + 	strbuf_release(&desc);
+    ++	strbuf_release(&ci_ad);
+    ++	strbuf_release(&ci_s);
+    + 	return 0;
+    + }
+      
+-- 
+2.33.0.1409.ge73c1ecc5b4
 
-I'm rather "meh" on it v.s. just prefixing the relevant member names
-with "priv_" or "private_", but it results in the same semantics &
-machine code, so it's effectively just a way of doing the labeling for
-human consumption.
-
-diff --git a/dir.c b/dir.c
-index 39fce3bcba7..a714640e782 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1533,12 +1533,12 @@ static void prep_exclude(struct dir_struct *dir,
- 	 * which originate from directories not in the prefix of the
- 	 * path being checked.
- 	 */
--	while ((stk =3D dir->exclude_stack) !=3D NULL) {
-+	while ((stk =3D dir->private.exclude_stack) !=3D NULL) {
- 		if (stk->baselen <=3D baselen &&
- 		    !strncmp(dir->basebuf.buf, base, stk->baselen))
- 			break;
--		pl =3D &group->pl[dir->exclude_stack->exclude_ix];
--		dir->exclude_stack =3D stk->prev;
-+		pl =3D &group->pl[dir->private.exclude_stack->exclude_ix];
-+		dir->private.exclude_stack =3D stk->prev;
- 		dir->pattern =3D NULL;
- 		free((char *)pl->src); /* see strbuf_detach() below */
- 		clear_pattern_list(pl);
-@@ -1584,7 +1584,7 @@ static void prep_exclude(struct dir_struct *dir,
- 						 base + current,
- 						 cp - base - current);
- 		}
--		stk->prev =3D dir->exclude_stack;
-+		stk->prev =3D dir->private.exclude_stack;
- 		stk->baselen =3D cp - base;
- 		stk->exclude_ix =3D group->nr;
- 		stk->ucd =3D untracked;
-@@ -1605,7 +1605,7 @@ static void prep_exclude(struct dir_struct *dir,
- 			    dir->pattern->flags & PATTERN_FLAG_NEGATIVE)
- 				dir->pattern =3D NULL;
- 			if (dir->pattern) {
--				dir->exclude_stack =3D stk;
-+				dir->private.exclude_stack =3D stk;
- 				return;
- 			}
- 		}
-@@ -1662,7 +1662,7 @@ static void prep_exclude(struct dir_struct *dir,
- 			invalidate_gitignore(dir->untracked, untracked);
- 			oidcpy(&untracked->exclude_oid, &oid_stat.oid);
- 		}
--		dir->exclude_stack =3D stk;
-+		dir->private.exclude_stack =3D stk;
- 		current =3D stk->baselen;
- 	}
- 	strbuf_setlen(&dir->basebuf, baselen);
-@@ -3302,7 +3302,7 @@ void dir_clear(struct dir_struct *dir)
- 	free(dir->ignored);
- 	free(dir->entries);
-=20
--	stk =3D dir->exclude_stack;
-+	stk =3D dir->private.exclude_stack;
- 	while (stk) {
- 		struct exclude_stack *prev =3D stk->prev;
- 		free(stk);
-diff --git a/dir.h b/dir.h
-index 83f46c0fb4c..d30d294308d 100644
---- a/dir.h
-+++ b/dir.h
-@@ -209,6 +209,11 @@ struct untracked_cache {
-  * record the paths discovered. A single `struct dir_struct` is used regar=
-dless
-  * of whether or not the traversal recursively descends into subdirectorie=
-s.
-  */
-+
-+struct dir_struct_private {
-+	struct exclude_stack *exclude_stack;
-+};
-+
- struct dir_struct {
-=20
- 	/* The number of members in `entries[]` array. */
-@@ -327,7 +332,7 @@ struct dir_struct {
- 	 * (sub)directory in the traversal. Exclude points to the
- 	 * matching exclude struct if the directory is excluded.
- 	 */
--	struct exclude_stack *exclude_stack;
-+	struct dir_struct_private private;
- 	struct path_pattern *pattern;
- 	struct strbuf basebuf;
-=20
