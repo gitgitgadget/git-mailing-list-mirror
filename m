@@ -2,185 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74A2BC433F5
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B4DC433EF
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:52:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55D206136F
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:40:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E077611C0
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 14:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234645AbhJDOmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 10:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        id S235260AbhJDOxs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 10:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233336AbhJDOmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 10:42:01 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE2C7C061745
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 07:40:12 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id g8so65890262edt.7
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 07:40:12 -0700 (PDT)
+        with ESMTP id S234608AbhJDOxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 10:53:47 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A40C5C061745
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 07:51:58 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id bm13so15831991edb.8
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 07:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DhNP635U0MYP1KY0JydXxgmD0F2S0eAafF6Ob8ERVTM=;
-        b=ahUEyPNkVLpPYXLTenMpmEy5PMgUR1qNIwmHIl+whSqBgBG1D6IzcmBlA9mamwd6Hi
-         VE+NfcKZ6gphE1m2XZwdQhI7YwqmhM019gFYwFwcV9EdBLwbzbY9t0wnOZQWCQ7iY9nq
-         mHE5C62q/o/og58RhnAiBlpusgCAF84SEm6M7Zr8q8a2p5+IaJFOAYVpOZpP70KG0/UE
-         APjxQMG/hqcxMCmLgy7zXpJqkexC/+Co6LA+MUok2rB7kqtWoEjCk7uzc5qEWCLAdTYs
-         RkIb/rEV1mpOZWWI9reeNbaBItjO/whUHGW26vS9vI6SPAMxTNF0NZ+XlGjrlASVsfhi
-         Q9tA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=35Z2tu/PlTiqb8oJ22f/8D1Nif0XKubhnGp/6x/6ZCA=;
+        b=Fxp9PDUHXN3huidLlJl4OI/DfuzW+fFMdJ/9neI1ctD8Qb8cVXMREzWO0JkiTiFIvG
+         wjw3b6qdKLXq99SMjAFMUbea4bZIGSy/GjlVTmhcAIqFhxUauahWUgPvZonU1GOYg9sZ
+         kXU84+A6Ka3nUz1HdUVFwLOnnRY7bFcfHF8thOMJzeIw1QHKOIehvvHkxq44GNgcE7JJ
+         iOoPuK0LW4Yg/5pAzVsZ5nJawJIoU/ZhwYmvG60SAG+eX1g8lVma+AgPKNeuGFAheNSW
+         EQazMYsA3YTQ8kYQuUpkwoOOVnwgZ8pLfjCX8tv1pflyDYtaiXWoP6CBXTXd15GuCoQX
+         943A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DhNP635U0MYP1KY0JydXxgmD0F2S0eAafF6Ob8ERVTM=;
-        b=ZhmQHbBxAMLnYcGlXLlIOuU4YGT5HIewpPs+XWmiR3+JvsLcbR4WiXFLAJUlWUjmnb
-         8lLONdeG35wzgWZ4bAZsmNNJQoZuIwAWkpFvV7JiQCQ7ywQvRpi/t0Re15d0V8hfwAdn
-         f46eDwtzaWZ1vV8hDnQd/YczmKLCKCoJaoe1lU5HejY5nLgsZSSUzCdWewyBZVaQU6QI
-         YNAL5w5gdjVPdxs1YBNVAQqxNrVuvfD6U8ZS613EJCvNzG5n1+pw+0yiGBzTc7e3DqXB
-         LiQ+Q0EKcPp+ZHUWHgTnRCVYWOizAe8d0GopuCRUw+SGBYQ7v56LiJtsh7Rdc9QriC9g
-         v7Gw==
-X-Gm-Message-State: AOAM531a8YzJhu74/77blXXl5ENBbclzmc+EwBHnG+DIlCc18Z6ssheD
-        HkRdip2oy9aS87bk7TvRbvRxGGvIpb33rRy/5yM=
-X-Google-Smtp-Source: ABdhPJxKfUmjj16eUEntMNWYa8fWfH1I93tAIKO51WOUzLlIsd/Ks5GFOV7Hy05WR+eYrYxmuPCnsE0wn0VaM8l3fm0=
-X-Received: by 2002:a50:be82:: with SMTP id b2mr18337444edk.56.1633358309507;
- Mon, 04 Oct 2021 07:38:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <RFC-cover-v4-00.10-00000000000-20211004T004902Z-avarab@gmail.com>
-In-Reply-To: <RFC-cover-v4-00.10-00000000000-20211004T004902Z-avarab@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 4 Oct 2021 07:38:17 -0700
-Message-ID: <CABPp-BEaJAG=pqyjCR93YUoqj06WwSqjiPENDHjgSTWwzd_C2A@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 00/10] Fix various issues around removal of
- untracked files/directories
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=35Z2tu/PlTiqb8oJ22f/8D1Nif0XKubhnGp/6x/6ZCA=;
+        b=poy+p6lu/08Oi9mhZKuw1RE4KiwD8fGq+d5al2Yj1uhXIXSyX/NgF3Kj1gWhFxz90N
+         y+lSMcecF5jv9RdYH28nJWH4x1ingzjYcCgnn8e7n9rTfeG4FbFPVytIJJbUuQxbYjek
+         u2wT+aR4dche8pXanvmvnuBOAXEErDj7qSx2V4JKaaeK0Lq0lrDuj07WnfmSaSowbhRH
+         Fazey9GJcI4eIEvAQ+KMqze9znZ3+6t8FDmgpHKXqzQbixHiHl/su8YtI/0Imx3pD2Rz
+         UhyiNt1jikvz+F/Sl9avO/PvSHIwuFBKlMVvH/ZtKRLt1859fwvPhMYcBwEZkYhmOUCY
+         yPxg==
+X-Gm-Message-State: AOAM533c4XBrasGB7DLvZAo3Hld+fqY2c1TLB5Y8velSYYUONHsJ/OZq
+        IVXz7MHlCUjt2G1L+zveKl3nslxrPnrNXg==
+X-Google-Smtp-Source: ABdhPJz6PUKUtWgi/ByFKcQPefPnGUW46xZKPWEQHJWFUiE8hTKEOwpMx4DRf2pVfIuClgDuwKaMAw==
+X-Received: by 2002:a17:906:9501:: with SMTP id u1mr17655076ejx.496.1633358991681;
+        Mon, 04 Oct 2021 07:49:51 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id q9sm6658905ejf.70.2021.10.04.07.49.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 07:49:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
-        Fedor Biryukov <fedor.birjukov@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 02/10] merge-recursive.c: call a new
+ unpack_trees_options_init() function
+Date:   Mon, 04 Oct 2021 16:41:00 +0200
+References: <cover-00.10-00000000000-20211004T002226Z-avarab@gmail.com>
+ <patch-02.10-050399cbfbf-20211004T002226Z-avarab@gmail.com>
+ <CABPp-BFYxWXZQXvDSrM1Y1ZaQ1d2TENQDvx1cyawvrDO1OvExA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <CABPp-BFYxWXZQXvDSrM1Y1ZaQ1d2TENQDvx1cyawvrDO1OvExA@mail.gmail.com>
+Message-ID: <87y278n8tt.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 3, 2021 at 6:12 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+
+On Mon, Oct 04 2021, Elijah Newren wrote:
+
+> On Sun, Oct 3, 2021 at 5:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com> wrote:
+>>
+>> In the preceding commit we introduced a new UNPACK_TREES_OPTIONS_INIT
+>> macro, but "merge-recursive.c" could not be converted to it since
+>> it (re-)initializes a "struct unpack_trees_options" on the heap.
+>>
+>> In order to convert use the macro as the source of truth for
+>> initialization we need to not only convert the initialization in
+>> unpack_trees_start(), but also call the new
+>> unpack_trees_options_init() just after the CALLOC_ARRAY() in
+>> merge_start().
 >
-> This is an RFC proposed v4 of Elijah's en/removing-untracked-fixes
-> series[1] based on top of my memory leak fixes in the "unpack-trees" &
-> "dir" APIs[2].
+> Um...why?
+
+Replied below.
+
+>> When we call merge_trees() we'll call merge_start() followed by
+>> merge_trees_internal(), and it will call unpack_trees_start() before
+>> it does much of anything. So it's covered by an initialization in
+>> unpack_trees_start().
+>>
+>> But when merge_recursive() is called it will call merge_start()
+>> followed by merge_recursive_internal(), which won't call
+>> unpack_trees_start() until its own call call to
+>> merge_trees_internal(), but in the meantime it might end up using that
+>> calloc'd "struct unpack_trees_options".
 >
-> As noted in [2] Elijah and I have been having a back & forth about the
-> approach his series takes to fixing memory leaks in those APIs. I
-> think submitting working code is more productive than continuing that
-> point-by-point discussion, so here we are.
+> Nothing in merge-recursive.c usings unpack_opts before
+> unpack_trees_start() or after unpack_trees_finish().  If anyone
+> attempts to use it elsewhere, that would itself be a bug.  So, I'd
+> replace the above three paragraphs with:
 >
-> I've avoided making any changes to this series except those narrowly
-> required to rebase it on top of mine, and to those parts of Elijah's
-> commit messages that became outdated as a result. In particular
-> 3/10[3]'s is significantly changed, as much of its commit message
-> dicusses complexities that have gone away due to my preceding
-> series[2].
+> "Change the initialization of opt->priv_unpack_opts from using memset
+> to 0, with unpack_trees_options_init()."
 >
-> The "make dir an internal-only struct" has been replaced by a commit
-> that renames that struct member from "dir" to "private_dir". I think
-> even that is unnecessary as argued in [4], but I think the judgement
-> that something must be done to address that is Elijah's design
-> decision, so I did my best to retain it.
+> or something like that, and then drop your change to merge_start().
+
+Sure, I'll defer to you about being confident about that. I didn't want
+to leave a copy if it hanging without the proper initialization in case
+there were new callers.
+
+>> This was OK before, as setup_unpack_trees_porcelain() would call
+>> strvec_init(), and our "struct dir_struct" in turn is OK with being
+>> NULL'd. Let's convert the former to macro initialization, we'll deal
+>> with the latter in a subsequent commit.
 >
-> I did drop the dynamic allocation & it being a pointer, since with my
-> preceding [2] and subsequent unsubmitted memory leak fixes I've got on
-> top having it be embedded in "struct unpack_trees_options" makes
-> things easier to manage.
+> This is quite confusing; it's really hard to understand how this
+> relates to the rest of the commit message.  I have to read the code to
+> see what you're doing, and then write my own commit message in my head
+> because the wording in this paragraph still doesn't parse.
 >
-> Havingn read through all this code quite thoroughly at this point I do
-> have other comments on it, but I'll reserve those until we've found
-> out what direction we're going forward with vis-a-vis what this will
-> be based on top of.
+> I'd make the change strvec_init/STRVEC_INIT changes be a separate
+> patch.  I suspect it'll be easier to write the commit message for it
+> as a standalone commit as well.
+
+Sure, FWIW I had it split up locally, and figured it would be easier to
+explain if the API usage change came with the initialization change that
+made it possible.
+
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  merge-recursive.c | 3 ++-
+>>  unpack-trees.c    | 8 ++++++--
+>>  unpack-trees.h    | 5 ++++-
+>>  3 files changed, 12 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/merge-recursive.c b/merge-recursive.c
+>> index e594d4c3fa1..d24a4903f1d 100644
+>> --- a/merge-recursive.c
+>> +++ b/merge-recursive.c
+>> @@ -405,7 +405,7 @@ static int unpack_trees_start(struct merge_options *=
+opt,
+>>         struct tree_desc t[3];
+>>         struct index_state tmp_index =3D { NULL };
+>>
+>> -       memset(&opt->priv->unpack_opts, 0, sizeof(opt->priv->unpack_opts=
+));
+>> +       unpack_trees_options_init(&opt->priv->unpack_opts);
+>>         if (opt->priv->call_depth)
+>>                 opt->priv->unpack_opts.index_only =3D 1;
+>>         else
+>> @@ -3704,6 +3704,7 @@ static int merge_start(struct merge_options *opt, =
+struct tree *head)
+>>
+>>         CALLOC_ARRAY(opt->priv, 1);
+>>         string_list_init_dup(&opt->priv->df_conflict_file_set);
+>> +       unpack_trees_options_init(&opt->priv->unpack_opts);
 >
-> I'm (obviously) hoping for an answer of either on top of my series[2],
-> or alternatively that Elijah's series can stick to introducing the
-> "preserve_ignored" flag, but not change how the memory
-> management/name/type of the embedded "dir" happens (and we could thus
-> proceed in parallel).
+> Drop this hunk.
 
-???
-
-This really bothers me.  I'm not quite sure how to put this into
-words, so let me just try my best.  Let me start out by saying that I
-think you often provide good feedback and ideas.  Sure, I sometimes
-don't agree with some of the feedback or ideas, but overall your
-feedback and contributions are definitely valuable.  I also think your
-other series you rebased this on has some good ideas and some good
-bugfixes.  There is something that seems off here, though.
-
-In this particular case, to start with, Junio already said let's take
-v3 as-is[1].  So your series should be rebased on mine, not
-vice-versa.
-
-Further while your other series that you are basing this on has some
-memory leak fixes; to me, it mostly looks like refactorings for
-stylistic code changes. Even though some of those stylistic changes
-are good, making a series such as mine that includes bugfixes (to a
-user reported bug no less), after multiple rounds and most reviewers
-are fine with it, suddenly depend on a new big and unrelated treewide
-stylistic refactoring series feels very off to me.  But that doesn't
-quite fully explain my misgivings either; there's a bit more:
-
-  * Junio has referred to several of your series as "Meh" and "code
-churn".  That makes me think we'd have a higher than normal chance of
-a user-reported bug ending up blocked on unrelated stylistic changes.
-(Two of them actually, since I have another series depending on this
-one that I've waited to submit until this merges to next.)
-  * Your stylistic refactorings also manage to confuse the code in
-merge-recursive.c, overall making the code potentially much harder to
-understand[2][3].  And you open a foot-gun in
-clear_unpack_trees_porcelain[3].
-  * At least half the series of yours I've reviewed have had
-significant bugs[4][5][6] (in addition to [2] and [3]).  This would be
-fine if it was complex code that had bugs we were fixing, or if we
-were adding new features, but:
-  * You submit a huge volume of patches, with a very
-disproportionately high ratio of stylistic refactorings rather than
-bugfixes and new features.  (This is by no means bad on its own, it's
-the combination of this with other factors.)
-  * You misrepresent my changes in multiple ways, including ways I had
-pointed out corrections for in our previous discussions (including
-some of which you acknowledged and agreed with), and you do so even
-after you have rebased my patches and added your signed-off-by to them
-suggesting you ought to be familiar with them[7].
-
-So, I guess trying to distill what bugs me, I'd say: it seems to me
-that you have ignored what Junio said about taking my series, and then
-you rebased my series on top of unrelated stylistic churn, with that
-churn containing three issues that trigger ongoing misgivings I have
-about the care being put behind these refactorings, especially
-considering their value compared to the features and bugfixes we are
-getting, and you seem to fail to try to understand my changes and
-misrepresent them in the process.  I hope I'm not overreacting but
-something feels wrong to me here.
-
-
-A big thumbs down on this reroll.
-
-[1] https://lore.kernel.org/git/xmqq35pk8ylz.fsf@gitster.g/
-[2] https://lore.kernel.org/git/CABPp-BFYxWXZQXvDSrM1Y1ZaQ1d2TENQDvx1cyawvr=
-DO1OvExA@mail.gmail.com/
-[3] https://lore.kernel.org/git/CABPp-BH4ubjJ98Nvgp2iyKxmU9X+ypw4m1o=3DiL9Z=
-4vSNZ-QTDw@mail.gmail.com/
-[4] https://lore.kernel.org/git/CABPp-BGE+e1er6qFuG90j9+eVG34O8TN=3DimX=3Dj=
-tcb+jbQjN1QQ@mail.gmail.com/
-[5] https://lore.kernel.org/git/CABPp-BEPkukGz32rrro1hzMvSQzX4v7U17CAcV-G2N=
-S6v0u55g@mail.gmail.com/
-[6] https://lore.kernel.org/git/xmqqfstppxzm.fsf@gitster.g/  [Note:
-problem was flagged by j6t; I was about to flag the same problem when
-I noticed he had already done so.]
-[7] https://lore.kernel.org/git/CABPp-BEr28xzbpEZc5dq-RVDupXy+h-+PH6CoANF4e=
-0kmxqf0Q@mail.gmail.com/
+Speaking of splitting things up in more understandable ways: If we're
+going to hard rely on the interaction between merge_start() and
+unpack_trees_start() wouldn't it make sense to lead with a change that
+dropped that memset, which if this invariant holds is also redundant to
+the CALLOC() of opt->priv in merge_start() in the pre-image.
