@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AFDC433EF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D822C433EF
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7898B613CF
-	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B68A61357
+	for <git@archiver.kernel.org>; Mon,  4 Oct 2021 16:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237877AbhJDQ7v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Oct 2021 12:59:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56962 "EHLO
+        id S237960AbhJDQ7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Oct 2021 12:59:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237878AbhJDQ7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Oct 2021 12:59:42 -0400
+        with ESMTP id S237889AbhJDQ7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Oct 2021 12:59:43 -0400
 Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978F4C061746
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 09:57:52 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id t16-20020a1c7710000000b003049690d882so20216802wmi.5
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 09:57:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE22C061753
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 09:57:53 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id s24so13980361wmh.4
+        for <git@vger.kernel.org>; Mon, 04 Oct 2021 09:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0YFH/7O9dujfKmmu6ZRk/KJCH7LOCPzTEaGTMr5K95k=;
-        b=dbtWF86oX7UdSpUukdxEKgC1IYhk/Oz5U86Z/GB4z/vTIkAEPlWdiE3vJGrwneEIFE
-         Crz532JdtDJZXqzX2hALBjCBHgKuIE/VgbKqJpKWX3FFH0oKH26zW+0/VXs8YGR4+R68
-         H3diBCX0C91Dpyjv6nULLJMGagmNuvazy0skeNhAXiX4X2tasZ+6KI2GFQit6aHNKsDD
-         4dju8TVZB7Ytks1ehtSYQWkV1J6T0VdLd4XkP0hkNvYbELreZEH3g1TYS6AukMSQedKY
-         T1CG1ELIPXpTOuRHoHsDSv/cJ8Z+sNN4pdyMDIB9lRJG6k4aShD/BXhROgReeyITZbbt
-         cLVQ==
+        bh=fv7nQ5ZUwa4uFFNumJcqLSj/tyOInbTAFP+n8tQn3ko=;
+        b=LZ/LYkNqQ3O9dyC60IxG2iRCgYz0XAor8wzW0gw684NiJU6BLyr2b6reyJ1rPO1oMZ
+         h+NkFjUrXudHUqBe4SyvepFjIRsQEV9UZT115it8gu4j71ZGdmrmhxkI2KU9WE2Ms9p6
+         n4GZfA8oU56mX9pbrF7wxjChX5Af8+8D11vofYdhSVPFOhVyehPLGiKfRIerCmGocQn8
+         xv7G7PyPlrtn5tQVGhbBlsKItwPSKuQNK0wLeTYTkExw34rDGAcQ10NmlzF8mpwj1hav
+         C09MwzqPWANIl8aCaoXnxupCJW6hyoS9+AL2/d8x3ire3foooHUXyvkMS3bp/v0fcu/G
+         O8kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0YFH/7O9dujfKmmu6ZRk/KJCH7LOCPzTEaGTMr5K95k=;
-        b=Eojm1A7FW6yQoM4DpoqoduL/0Xa1HKXgiQICxnbMqc72IGtOIY9j/kLUfGWYMOEJUH
-         L9jWwBDciHSnRS3XvJwQF/HQyILuvKYH044I5Ei3/QOGJttVmcmrmEU3vydDQq43/+Vk
-         9fCeUaknfrIyLENZ9CvE0TX1my60QipKQan9yIG+SfMever0tHVMOCv9UrRDQkJ45PEH
-         JXouV581zEupeJ6/vX5qjHroNJfjpYFPK7DQQ8MY6OYrjZ2eK8AMew1z3/sZYkXr0z8I
-         ty/DOWty97GPaMJTAkggZ9ik9KlDfx+2rK9mIl4dhqRFjLv+QjB2zSLDaGzFBNixuWjx
-         KGpA==
-X-Gm-Message-State: AOAM532LjVqfDaup6321CKOvGGou+t4y2h0l5eoeR9nV08PgrHeTpMHc
-        mO5EFRgsnonL/EXdZHhest/s1xJrDy4=
-X-Google-Smtp-Source: ABdhPJxzblJRs+AEUcIbZYHKdhDyC8O9uB+rHRSSZOhiH0nxYidaq0U4RXy63Qurhk9b+nmJp7M7aw==
-X-Received: by 2002:a05:600c:350a:: with SMTP id h10mr19444070wmq.163.1633366671245;
-        Mon, 04 Oct 2021 09:57:51 -0700 (PDT)
+        bh=fv7nQ5ZUwa4uFFNumJcqLSj/tyOInbTAFP+n8tQn3ko=;
+        b=TyLVRqV8Jpe7mNkmoFnEWkcEV64PiuRbNaI6CXRfbkNt7jwKmkbX+njXVBjpKYJd5m
+         E+S7POwx8ZyYzg2pDnybko/rdHffamT7qSg+bqN1K8sazpQekNePkL2izA3pWw+OiMt3
+         Dm6UTMbg7SjWkObB9fAKONOyM8HVe8Dj3xalK2nFkm8383q7N8Qvdg2ObHCpI5m2gA65
+         i9mO4Y60Tb31iEKTt5JoJ27B7BYtPQAgA5sDsFswLrGNJjQJye6URiP5E/PUEz/bySDl
+         I49QLfMMXhoqCcbDScQOvPB4X2VO3gRN/pXfZhXlkVyone5Oh6D3w0gfBIXT88bvhRV5
+         OEgg==
+X-Gm-Message-State: AOAM530U7/15ot5K6xrpjPpZ2hTioJJiDonQ9jZZ3D3xb1f8gIftgzB9
+        qn03juzBlRmcMmruCZ/Qhc9e9dlDM88=
+X-Google-Smtp-Source: ABdhPJzSvIW+3O+cfFFsf2YkujGCYfKRs9tQ8q3RfyWkBr+rYb9JpMGNsc3kf9RsBP1T8H5BxsNxvw==
+X-Received: by 2002:a05:600c:21ca:: with SMTP id x10mr13281615wmj.106.1633366672559;
+        Mon, 04 Oct 2021 09:57:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o8sm8494727wme.38.2021.10.04.09.57.50
+        by smtp.gmail.com with ESMTPSA id i14sm2110824wmq.29.2021.10.04.09.57.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 09:57:50 -0700 (PDT)
-Message-Id: <9335646ed91d3472191b8be233839b3a583c9718.1633366667.git.gitgitgadget@gmail.com>
+        Mon, 04 Oct 2021 09:57:52 -0700 (PDT)
+Message-Id: <8df32eaaa9a9c41b6d9d49a50630952f14f33495.1633366667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
 References: <pull.1076.v7.git.git.1632871971.gitgitgadget@gmail.com>
         <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Oct 2021 16:57:41 +0000
-Subject: [PATCH v8 3/9] bulk-checkin: rename 'state' variable and separate
- 'plugged' boolean
+Date:   Mon, 04 Oct 2021 16:57:43 +0000
+Subject: [PATCH v8 5/9] core.fsyncobjectfiles: add windows support for batch
+ mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,82 +80,126 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Preparation for adding bulk-fsync to the bulk-checkin.c infrastructure.
+This commit adds a win32 implementation for fsync_no_flush that is
+called git_fsync. The 'NtFlushBuffersFileEx' function being called is
+available since Windows 8. If the function is not available, we
+return -1 and Git falls back to doing a full fsync.
 
-* Rename 'state' variable to 'bulk_checkin_state', since we will later
-  be adding 'bulk_fsync_state'.  This also makes the variable easier to
-  find in the debugger, since the name is more unique.
+The operating system is told to flush data only without a hardware
+flush primitive. A later full fsync will cause the metadata log
+to be flushed and then the disk cache to be flushed on NTFS and
+ReFS. Other filesystems will treat this as a full flush operation.
 
-* Move the 'plugged' data member of 'bulk_checkin_state' into a separate
-  static variable. Doing this avoids resetting the variable in
-  finish_bulk_checkin when zeroing the 'bulk_checkin_state'. As-is, we
-  seem to unintentionally disable the plugging functionality the first
-  time a new packfile must be created due to packfile size limits. While
-  disabling the plugging state only results in suboptimal behavior for
-  the current code, it would be fatal for the bulk-fsync functionality
-  later in this patch series.
+I added a new file here for this system call so as not to conflict with
+downstream changes in the git-for-windows repository related to fscache.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- bulk-checkin.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ compat/mingw.h                      |  3 +++
+ compat/win32/flush.c                | 28 ++++++++++++++++++++++++++++
+ config.mak.uname                    |  2 ++
+ contrib/buildsystems/CMakeLists.txt |  3 ++-
+ wrapper.c                           |  4 ++++
+ 5 files changed, 39 insertions(+), 1 deletion(-)
+ create mode 100644 compat/win32/flush.c
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 8785b2ac806..6ae18401e04 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -10,9 +10,9 @@
- #include "packfile.h"
- #include "object-store.h"
+diff --git a/compat/mingw.h b/compat/mingw.h
+index c9a52ad64a6..6074a3d3ced 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -329,6 +329,9 @@ int mingw_getpagesize(void);
+ #define getpagesize mingw_getpagesize
+ #endif
  
--static struct bulk_checkin_state {
--	unsigned plugged:1;
-+static int bulk_checkin_plugged;
++int win32_fsync_no_flush(int fd);
++#define fsync_no_flush win32_fsync_no_flush
++
+ struct rlimit {
+ 	unsigned int rlim_cur;
+ };
+diff --git a/compat/win32/flush.c b/compat/win32/flush.c
+new file mode 100644
+index 00000000000..75324c24ee7
+--- /dev/null
++++ b/compat/win32/flush.c
+@@ -0,0 +1,28 @@
++#include "../../git-compat-util.h"
++#include <winternl.h>
++#include "lazyload.h"
++
++int win32_fsync_no_flush(int fd)
++{
++       IO_STATUS_BLOCK io_status;
++
++#define FLUSH_FLAGS_FILE_DATA_ONLY 1
++
++       DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NtFlushBuffersFileEx,
++			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSize,
++			 PIO_STATUS_BLOCK IoStatusBlock);
++
++       if (!INIT_PROC_ADDR(NtFlushBuffersFileEx)) {
++		errno = ENOSYS;
++		return -1;
++       }
++
++       memset(&io_status, 0, sizeof(io_status));
++       if (NtFlushBuffersFileEx((HANDLE)_get_osfhandle(fd), FLUSH_FLAGS_FILE_DATA_ONLY,
++				NULL, 0, &io_status)) {
++		errno = EINVAL;
++		return -1;
++       }
++
++       return 0;
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index e6d482fbcc6..34c93314a50 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -451,6 +451,7 @@ endif
+ 	CFLAGS =
+ 	BASIC_CFLAGS = -nologo -I. -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+ 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
++		compat/win32/flush.o \
+ 		compat/win32/path-utils.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/trace2_win32_process_info.o \
+@@ -626,6 +627,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ 		compat/win32/trace2_win32_process_info.o \
++		compat/win32/flush.o \
+ 		compat/win32/path-utils.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 171b4124afe..b573a5ee122 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -261,7 +261,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
+ 				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
+ 				UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET)
+-	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c compat/win32/path-utils.c
++	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c
++		compat/win32/flush.c compat/win32/path-utils.c
+ 		compat/win32/pthread.c compat/win32mmap.c compat/win32/syslog.c
+ 		compat/win32/trace2_win32_process_info.c compat/win32/dirent.c
+ 		compat/nedmalloc/nedmalloc.c compat/strdup.c)
+diff --git a/wrapper.c b/wrapper.c
+index bb4f9f043ce..1a1e2fba9c9 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -567,6 +567,10 @@ int git_fsync(int fd, enum fsync_action action)
+ 						 SYNC_FILE_RANGE_WAIT_AFTER);
+ #endif
  
-+static struct bulk_checkin_state {
- 	char *pack_tmp_name;
- 	struct hashfile *f;
- 	off_t offset;
-@@ -21,7 +21,7 @@ static struct bulk_checkin_state {
- 	struct pack_idx_entry **written;
- 	uint32_t alloc_written;
- 	uint32_t nr_written;
--} state;
-+} bulk_checkin_state;
++#ifdef fsync_no_flush
++		return fsync_no_flush(fd);
++#endif
++
+ 		errno = ENOSYS;
+ 		return -1;
  
- static void finish_tmp_packfile(struct strbuf *basename,
- 				const char *pack_tmp_name,
-@@ -277,21 +277,23 @@ int index_bulk_checkin(struct object_id *oid,
- 		       int fd, size_t size, enum object_type type,
- 		       const char *path, unsigned flags)
- {
--	int status = deflate_to_pack(&state, oid, fd, size, type,
-+	int status = deflate_to_pack(&bulk_checkin_state, oid, fd, size, type,
- 				     path, flags);
--	if (!state.plugged)
--		finish_bulk_checkin(&state);
-+	if (!bulk_checkin_plugged)
-+		finish_bulk_checkin(&bulk_checkin_state);
- 	return status;
- }
- 
- void plug_bulk_checkin(void)
- {
--	state.plugged = 1;
-+	assert(!bulk_checkin_plugged);
-+	bulk_checkin_plugged = 1;
- }
- 
- void unplug_bulk_checkin(void)
- {
--	state.plugged = 0;
--	if (state.f)
--		finish_bulk_checkin(&state);
-+	assert(bulk_checkin_plugged);
-+	bulk_checkin_plugged = 0;
-+	if (bulk_checkin_state.f)
-+		finish_bulk_checkin(&bulk_checkin_state);
- }
 -- 
 gitgitgadget
 
