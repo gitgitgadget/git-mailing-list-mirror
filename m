@@ -2,56 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41C78C433F5
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B7DC433EF
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:30:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 217FE60E94
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:29:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7043560E94
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:30:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235490AbhJEUbc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 16:31:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33346 "EHLO cloud.peff.net"
+        id S235976AbhJEUc3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 16:32:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33348 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235715AbhJEUbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 16:31:31 -0400
-Received: (qmail 17622 invoked by uid 109); 5 Oct 2021 20:29:40 -0000
+        id S230019AbhJEUc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 16:32:28 -0400
+Received: (qmail 17626 invoked by uid 109); 5 Oct 2021 20:30:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 20:29:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 20:30:37 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6414 invoked by uid 111); 5 Oct 2021 20:29:40 -0000
+Received: (qmail 6449 invoked by uid 111); 5 Oct 2021 20:30:37 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 16:29:40 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 16:30:37 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Oct 2021 16:29:39 -0400
+Date:   Tue, 5 Oct 2021 16:30:36 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/5] cat-file replace handling and optimization
-Message-ID: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
+Subject: [PATCH 1/5] t1006: clean up broken objects
+Message-ID: <YVy17IsgNNyl4Dvh@coredump.intra.peff.net>
+References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This started as an optimization to have cat-file use the pack/offset
-info it gets during --batch-all-objects to avoid extra object lookups.
-And that does happen in the final patch.
+A few of the tests create intentionally broken objects with broken
+types. Let's clean them up after we're done with them, so that later
+tests don't get confused (we hadn't noticed because this only affects
+tests which use --batch-all-objects, but I'm about to add more).
 
-But there was an interesting interaction with replace refs there, which
-led me to patch 3.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I was puzzled why the existing --batch-all-objects tests didn't get
+confused by this, but it's because they operate in a sub-repo. My new
+tests _could_ do that, too, but this seemed like confusion waiting to
+happen.
 
-The other patches are relevant prep/cleanup.
+ t/t1006-cat-file.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-  [1/5]: t1006: clean up broken objects
-  [2/5]: cat-file: mention --unordered along with --batch-all-objects
-  [3/5]: cat-file: disable refs/replace with --batch-all-objects
-  [4/5]: cat-file: split ordered/unordered batch-all-objects callbacks
-  [5/5]: cat-file: use packed_object_info() for --batch-all-objects
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 18b3779ccb..c77db35728 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -331,6 +331,11 @@ test_expect_success "Size of broken object is correct" '
+ 	git cat-file -s --allow-unknown-type $bogus_sha1 >actual &&
+ 	test_cmp expect actual
+ '
++
++test_expect_success 'clean up broken object' '
++	rm .git/objects/$(test_oid_to_path $bogus_sha1)
++'
++
+ bogus_type="abcdefghijklmnopqrstuvwxyz1234679"
+ bogus_content="bogus"
+ bogus_size=$(strlen "$bogus_content")
+@@ -348,6 +353,10 @@ test_expect_success "Size of large broken object is correct when type is large"
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'clean up broken object' '
++	rm .git/objects/$(test_oid_to_path $bogus_sha1)
++'
++
+ # Tests for git cat-file --follow-symlinks
+ test_expect_success 'prep for symlink tests' '
+ 	echo_without_newline "$hello_content" >morx &&
+-- 
+2.33.0.1231.g45ae28b974
 
- Documentation/git-cat-file.txt |  6 ++-
- builtin/cat-file.c             | 49 +++++++++++++++-------
- t/t1006-cat-file.sh            | 75 ++++++++++++++++++++++++++++++++++
- 3 files changed, 114 insertions(+), 16 deletions(-)
-
--Peff
