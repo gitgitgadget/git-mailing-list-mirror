@@ -2,31 +2,32 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B7DC433EF
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D631C433EF
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:31:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7043560E94
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:30:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4691161423
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 20:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235976AbhJEUc3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 16:32:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33348 "EHLO cloud.peff.net"
+        id S236464AbhJEUdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 16:33:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33350 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230019AbhJEUc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 16:32:28 -0400
-Received: (qmail 17626 invoked by uid 109); 5 Oct 2021 20:30:37 -0000
+        id S236314AbhJEUdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 16:33:00 -0400
+Received: (qmail 17629 invoked by uid 109); 5 Oct 2021 20:31:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 20:30:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 20:31:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6449 invoked by uid 111); 5 Oct 2021 20:30:37 -0000
+Received: (qmail 6461 invoked by uid 111); 5 Oct 2021 20:31:08 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 16:30:37 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 16:31:08 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Oct 2021 16:30:36 -0400
+Date:   Tue, 5 Oct 2021 16:31:08 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/5] t1006: clean up broken objects
-Message-ID: <YVy17IsgNNyl4Dvh@coredump.intra.peff.net>
+Subject: [PATCH 2/5] cat-file: mention --unordered along with
+ --batch-all-objects
+Message-ID: <YVy2DNd+XemykKE0@coredump.intra.peff.net>
 References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -36,48 +37,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few of the tests create intentionally broken objects with broken
-types. Let's clean them up after we're done with them, so that later
-tests don't get confused (we hadn't noticed because this only affects
-tests which use --batch-all-objects, but I'm about to add more).
+The note on ordering for --batch-all-objects was written when that was
+the only possible ordering. These days we have --unordered, too, so
+let's point to it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I was puzzled why the existing --batch-all-objects tests didn't get
-confused by this, but it's because they operate in a sub-repo. My new
-tests _could_ do that, too, but this seemed like confusion waiting to
-happen.
+Not strictly related to this series, but I noticed it while I was in the
+area, and I'm about to touch these same lines, so it seemed better than
+spinning it off into its own series.
 
- t/t1006-cat-file.sh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/git-cat-file.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 18b3779ccb..c77db35728 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -331,6 +331,11 @@ test_expect_success "Size of broken object is correct" '
- 	git cat-file -s --allow-unknown-type $bogus_sha1 >actual &&
- 	test_cmp expect actual
- '
-+
-+test_expect_success 'clean up broken object' '
-+	rm .git/objects/$(test_oid_to_path $bogus_sha1)
-+'
-+
- bogus_type="abcdefghijklmnopqrstuvwxyz1234679"
- bogus_content="bogus"
- bogus_size=$(strlen "$bogus_content")
-@@ -348,6 +353,10 @@ test_expect_success "Size of large broken object is correct when type is large"
- 	test_cmp expect actual
- '
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 4eb0421b3f..6467707c6e 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -94,8 +94,9 @@ OPTIONS
+ 	Instead of reading a list of objects on stdin, perform the
+ 	requested batch operation on all objects in the repository and
+ 	any alternate object stores (not just reachable objects).
+-	Requires `--batch` or `--batch-check` be specified. Note that
+-	the objects are visited in order sorted by their hashes.
++	Requires `--batch` or `--batch-check` be specified. By default,
++	the objects are visited in order sorted by their hashes; see
++	also `--unordered` below.
  
-+test_expect_success 'clean up broken object' '
-+	rm .git/objects/$(test_oid_to_path $bogus_sha1)
-+'
-+
- # Tests for git cat-file --follow-symlinks
- test_expect_success 'prep for symlink tests' '
- 	echo_without_newline "$hello_content" >morx &&
+ --buffer::
+ 	Normally batch output is flushed after each object is output, so
 -- 
 2.33.0.1231.g45ae28b974
 
