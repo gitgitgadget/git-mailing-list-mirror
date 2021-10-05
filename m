@@ -2,77 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64C9AC433EF
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 06:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABBE5C433EF
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 07:12:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4AD706138F
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 06:55:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 861D661502
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 07:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232538AbhJEG4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 02:56:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
+        id S232130AbhJEHOP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 03:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231816AbhJEG4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 02:56:51 -0400
-Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 233DCC061745
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 23:55:01 -0700 (PDT)
-Received: from [2400:4160:1877:2b00:410a:fd15:2718:8b5d] (helo=glandium.org)
-        by vuizook.err.no with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <glandium@glandium.org>)
-        id 1mXeLo-0004bz-9O; Tue, 05 Oct 2021 06:54:57 +0000
-Received: from glandium by goemon.lan with local (Exim 4.94.2)
-        (envelope-from <glandium@goemon>)
-        id 1mXe78-002TCA-Fx; Tue, 05 Oct 2021 15:39:46 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Use mingw.h declarations for gmtime_r/localtime_r on msys2
-Date:   Tue,  5 Oct 2021 15:39:36 +0900
-Message-Id: <20211005063936.588874-1-mh@glandium.org>
-X-Mailer: git-send-email 2.33.0
+        with ESMTP id S230526AbhJEHOO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 03:14:14 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8269C061745
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 00:12:24 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id p2so89123vst.10
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 00:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JoiaFIoZoofQip47oggBW5GxQle41cXvc9xlzIBgWT8=;
+        b=WPf6+Dj2CyBILvZTo95nChr2k/G2uv9Qeb+Rtvr8y/pe21wiAncVGgP6slThEQnK/8
+         5LSLSPBCA/lHSspEpnBx7NKsTGa7KwNxCayGbhCn8jKuADdFaEROjmfCHhyQIWnubLnz
+         iKuu9TEiGKnK68tlZ/jDwbimQK9zTN+yZfzH09G9WDIckHWXYFZhu0TKgGsNUMQKLoQc
+         bNTWOhtcBdhaDCgZUbGt6wjsgfjyZVghVE4yraTTQfotZlYj4hTe3NBN/IUnevJKKdKz
+         W9PmQ9UdXHA3qqSMVn+SgHh3gVa/H405rvVgGqJvE9DEInqR7N5HuoZowFRPFBc068Ki
+         1SRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JoiaFIoZoofQip47oggBW5GxQle41cXvc9xlzIBgWT8=;
+        b=juSnAr7wGl4QggZycKRh9bkTgEWHISo9n7I2Yj0px0x+pVZ/pEtSg13Qx2LivWw2YC
+         AvRLPt8RDJKyQmO0Nb+cSk+EbvXY7ZBYf9V/ifUGsHc+wx+CHuoceqaMMSpTjKCoo/u5
+         UoMhe4G6i4VcmNLQF1YvogvQHbvws/PHR4XAAbxnIB1kMCRqnm49U4iUGbtJqFSoyinY
+         BpAPlQQnQr82iotEn9TgJyYkshrKL/FMJgXjMNlgH+lNh150TusAKCGRDLCDWmR18Ea2
+         vc1ZDh58B6dzcRm40QW6E387Dj1VuCQduD11itMcEyLg+M/KH1Ie+TdFVjO0x6sX+LkA
+         J47A==
+X-Gm-Message-State: AOAM533sMQ79VzKHg88Nex+NHqBmDzN6Hr7ni7Gi1jnd6C769U1jXh2u
+        gpFDBePC/KyoH+VIHiu+0bO6Uc0aaXJbKoAKWDLdRV694xVQdw==
+X-Google-Smtp-Source: ABdhPJzuDpMJSheiWjCjF5SuUFFTLeUMHdEWN+Gkn4F23ICA+5FSdXRRL0tnjxb46dwgFTzxcPBwmFFaV8A2ls1lL6A=
+X-Received: by 2002:a67:d51d:: with SMTP id l29mr16824753vsj.46.1633417943771;
+ Tue, 05 Oct 2021 00:12:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211005063936.588874-1-mh@glandium.org>
+In-Reply-To: <20211005063936.588874-1-mh@glandium.org>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 5 Oct 2021 00:12:12 -0700
+Message-ID: <CAPUEspgLwLxavP3bC9OEJQTphoemQ+jxv+9Nkcvbf51uaBEpww@mail.gmail.com>
+Subject: Re: [PATCH] Use mingw.h declarations for gmtime_r/localtime_r on msys2
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Older versions of msys2 had _POSIX_THREAD_SAFE_FUNCTIONS set in
-pthread_unistd.h, included from unistd.h. That would enable the
-declarations for gmtime_r and localtime_r in time.h.
+On Mon, Oct 4, 2021 at 11:57 PM Mike Hommey <mh@glandium.org> wrote:
+> A possible alternative fix would be to e.g. add `#define _POSIX_C_SOURCE
+> 200112L` to git-compat-util.h and add `ifndef __MINGW64_VERSION_MAJOR`
+> around the definitions of `gmtime_r` and `localtime_r` in
+> compat/mingw.c, since, after all, they are available there.
 
-That's not the case anymore, and gmtime_r and localtime_r end up
-being undeclared, which subsequently leads to "miscompilations", for
-example, in datestamp(), where the result of localtime_r would be
-truncated and sign-extended before being passed to tm_to_time_t, leading
-to segfaults at runtime.
+something like that was merged to "main"[1] a few months ago, would
+that work for you?
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- compat/mingw.h | 2 --
- 1 file changed, 2 deletions(-)
+Carlo
 
-A possible alternative fix would be to e.g. add `#define _POSIX_C_SOURCE
-200112L` to git-compat-util.h and add `ifndef __MINGW64_VERSION_MAJOR`
-around the definitions of `gmtime_r` and `localtime_r` in
-compat/mingw.c, since, after all, they are available there.
-
-diff --git a/compat/mingw.h b/compat/mingw.h
-index c9a52ad64a..4fd989980c 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -204,10 +204,8 @@ int pipe(int filedes[2]);
- unsigned int sleep (unsigned int seconds);
- int mkstemp(char *template);
- int gettimeofday(struct timeval *tv, void *tz);
--#ifndef __MINGW64_VERSION_MAJOR
- struct tm *gmtime_r(const time_t *timep, struct tm *result);
- struct tm *localtime_r(const time_t *timep, struct tm *result);
--#endif
- int getpagesize(void);	/* defined in MinGW's libgcc.a */
- struct passwd *getpwuid(uid_t uid);
- int setitimer(int type, struct itimerval *in, struct itimerval *out);
--- 
-2.33.0
-
+[1] https://github.com/git-for-windows/git/commit/9e52042d4a4ee2d91808dda71e7f2fdf74c83862
