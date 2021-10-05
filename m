@@ -2,89 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95CD8C433EF
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 21:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B39C4332F
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 21:50:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D259611CA
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 21:41:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14992611C1
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 21:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236085AbhJEVnE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 17:43:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33414 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235957AbhJEVnE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 17:43:04 -0400
-Received: (qmail 17754 invoked by uid 109); 5 Oct 2021 21:41:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 21:41:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8166 invoked by uid 111); 5 Oct 2021 21:41:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 17:41:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Oct 2021 17:41:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
- --batch-all-objects
-Message-ID: <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
-References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
- <YVy2DNd+XemykKE0@coredump.intra.peff.net>
- <877derjia9.fsf@evledraar.gmail.com>
+        id S236554AbhJEVw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 17:52:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233576AbhJEVwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 17:52:25 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A68C061749
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 14:50:34 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id x7so2033457edd.6
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 14:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5V+aDsZNNIUq7nwX883p6pKtWO19uV+oeEH6ObJOwBM=;
+        b=KqJLHVz+209gipE6+TMMFY2SPs4UTi4YmsVt0CwhTKIK4Ghenh7IOSqcBOKGMvgKzd
+         uuAsOfXqBvR6zA5FLaZVsoNeqp+u0+pmkr2Tyu80b2F63dfHEqFO/d+QaBOuY3G/QyEG
+         qC3E6jb4BNJ7r5KqbEgIpS62eyC0cA/JrL1lFhZu23gGyIpBcstsZmHa6BrFRdlqylTe
+         AEZC7NXsssaqfoFit5tbec/hkP1bZoIng6mfBfwfiUGESbNShQC/rvuloVVqh+htBDfN
+         fSY0LGHmPR88/2grOFQpXDOXYMzORhIutY6oExN0nxzGtVeW8vFoUI89Ts2Q7qfBEbBo
+         IklA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=5V+aDsZNNIUq7nwX883p6pKtWO19uV+oeEH6ObJOwBM=;
+        b=r/bNC80KCm/Yi1Bxn5JIwJbSBSm39T6HdykBpWscXjTwsEuPd+HvOE+qep2amvcQr7
+         q3dJj7X7HhliItarxP56161UNyj3pYpuvVUf2SLkpwggJt1GisXb2wmvkoIpeqdVLwMC
+         elan4VnTmc2HTNgmVTIE4vn/HVsNMAD7QgTxAKtoYvj3tTgH7oqQLms6NxWHwpufgMbd
+         ViGSgtICXV0965GbzHvfIhOc+biP91GRrjg2mRSbeYUmLHICEjbmTERBpSB4Zg4a3WIy
+         o3j0ygDPL0mNIo7Zub89y6lm9ClYGikarqRmfKTNNoiDbFjIMNGjapvHZsNHJsnMeOpO
+         itVQ==
+X-Gm-Message-State: AOAM530bMswvgZFIo8zQStaOGBgdMbmIC5Etm1tAC+SSZ42cEasSX4EC
+        FvXiFFx0Q8RqwDE/cqrhqHafgvka5nvGNw==
+X-Google-Smtp-Source: ABdhPJyDmnYbd3HxSAqv8rBew92maKNODANfuBZUu5ZMV9Xygk5wngXNJoRhb1xePEvaPagILlI9Ig==
+X-Received: by 2002:a17:907:6283:: with SMTP id nd3mr26141722ejc.362.1633470633124;
+        Tue, 05 Oct 2021 14:50:33 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i2sm9242794edu.48.2021.10.05.14.50.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Oct 2021 14:50:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: p2000 failure due to empty reflog
+Date:   Tue, 05 Oct 2021 23:38:09 +0200
+References: <b25ac1cc-8e77-17e6-602a-b289c1e1cfeb@web.de>
+ <30df5e39-3f2a-00d8-541b-347c43f36b38@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <30df5e39-3f2a-00d8-541b-347c43f36b38@gmail.com>
+Message-ID: <8735pfjg47.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877derjia9.fsf@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 05, 2021 at 11:02:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> > diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-> > index 4eb0421b3f..6467707c6e 100644
-> > --- a/Documentation/git-cat-file.txt
-> > +++ b/Documentation/git-cat-file.txt
-> > @@ -94,8 +94,9 @@ OPTIONS
-> >  	Instead of reading a list of objects on stdin, perform the
-> >  	requested batch operation on all objects in the repository and
-> >  	any alternate object stores (not just reachable objects).
-> > -	Requires `--batch` or `--batch-check` be specified. Note that
-> > -	the objects are visited in order sorted by their hashes.
-> > +	Requires `--batch` or `--batch-check` be specified. By default,
-> > +	the objects are visited in order sorted by their hashes; see
-> > +	also `--unordered` below.
-> >  
-> >  --buffer::
-> >  	Normally batch output is flushed after each object is output, so
-> 
-> Since you're doing while-you're-at-it anyway: Isn't the --unordered
-> documentation also incorrect to reference --batch, which I take as it
-> lazily using as a shorthand for --batch-all-objects.
+On Mon, Oct 04 2021, Derrick Stolee wrote:
 
-I don't think so. It says:
+> On 10/2/2021 1:37 PM, Ren=C3=A9 Scharfe wrote:
+>> p2000 fails for me and reports:
+>>=20
+>>    perf 18 - git checkout -f - (full-v3):
+>>    running:
+>>    			(
+>>    				cd full-v3 &&
+>>    				echo >>f2/f4/a &&
+>>    				git checkout -f -
+>>    			)
+>>=20
+>>    error: pathspec '-' did not match any file(s) known to git
+>>=20
+>> checkout fails because the reflog is empty, so the "-" can't be
+>> resolved.  The pathspec error message is confusing, though.
+>>=20
+>> The patch below adds a reflog entry and allows the script to
+>> succeed.
+>>=20
+>> Before the "test_perf_on_all git commit -a -m A", there are two
+>> reflog entries in each of the five clones, after it there are
+>> none.  How is that even possible?
+>
+> That is certainly confusing. Is there something about your global
+> (or local to your test repo) GC settings that cause an auto-GC to
+> prune the reflog aggressively?
 
---unordered::
-        When `--batch-all-objects` is in use, visit objects in an
-        order which may be more efficient for accessing the object
-        contents than hash order. The exact details of the order are
-        unspecified, but if you do not require a specific order, this
-        should generally result in faster output, especially with
-        `--batch`.  Note that `cat-file` will still show each object
-        only once, even if it is stored multiple times in the
-        repository.
+Perhaps something to do with certain parts of the code doing a
+time(NULL), and other parts faking up times to be 2005-something?
 
-So it correctly mentions that it is affecting --batch-all-objects in the
-first sentence. The "especially with --batch" is correct, too. The
-ordering has more of an effect if you are accessing the full object,
-since there we are increasing the locality which the delta-base cache
-relies on.  Whereas with --batch-check, even with size or type, that
-locality is much less important (it might help disk or even RAM caches a
-bit, but we are examining each object independently, even if it's a
-delta, and not caching the intermediate results in any way ourselves).
+I have some WIP patches that run concurrent "git gc --auto" with a
+detach across the whole test suite, and IIRC I had to search/replace all
+time(NULL) with my own time() that faked up (looks it up) an epoch of
+1113465166 to avoid this exact issue.
 
-Does that answer your question, or were you thinking of something else?
+If you try doing that across our tests I think you'll find that the
+@{-1} syntax (reflog-powered) will start failing.
 
--Peff
+But that's from vague memory, but perhaps it'll point you in the right
+direction...
