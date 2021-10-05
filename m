@@ -2,88 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EC59C433EF
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 19:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0500C433F5
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 19:42:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AA10611C5
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 19:38:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C417E611CC
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 19:42:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234830AbhJETkI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 15:40:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33310 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229671AbhJETkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 15:40:07 -0400
-Received: (qmail 17548 invoked by uid 109); 5 Oct 2021 19:38:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Oct 2021 19:38:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5071 invoked by uid 111); 5 Oct 2021 19:38:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Oct 2021 15:38:15 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Oct 2021 15:38:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Kevin Willford <Kevin.Willford@microsoft.com>
-Subject: Re: [PATCH] p3400: stop using tac(1)
-Message-ID: <YVyppmEGkNCxZ+5L@coredump.intra.peff.net>
-References: <85831cc2-307f-1be8-9bb3-c44028ad07fa@web.de>
- <YVq752xjzYz+LTq6@coredump.intra.peff.net>
- <f6a1296f-f524-9042-7f88-9591522971af@web.de>
+        id S235277AbhJETn6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 15:43:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34096 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231343AbhJETn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 15:43:57 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89AB1C061749
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 12:42:06 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id a3so767283oid.6
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 12:42:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:to:from
+         :subject:content-transfer-encoding;
+        bh=LNQjisVtIowjl9Tc5Bs246H+AOxvq4upj+kSQ2RuQkI=;
+        b=Vr59O/+vt6B1G9MTHhvuwNa5ICURJu822cgOheIJKo50qbsVanJQxuVFA1yqf8uWjO
+         JPzALcb27ZnedM7KbiCaOJpXUUmZKRXT7ald+MBu1ugZBLuMa42/AD3QCzXSfwz/jCuq
+         DI2SFDKV4DYzSsQM8XpsRg3xGFiHFVR8/yZX4bunyFymexLaIuIFkMi5aceIQPsyd8Ks
+         HKhz3fWulj0oeXu+eygCDOPlqQu8qcs8CFxVRm9oqBCae0YKLJCe247oqpUBaoIH6zNE
+         FesMHJc3hwnfct1V4kws/bEGMGaCu4kLOHQjpkTYdZ4aCkxNzs5g9pUOYbz4WJmPHCWh
+         ZcqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:from:subject:content-transfer-encoding;
+        bh=LNQjisVtIowjl9Tc5Bs246H+AOxvq4upj+kSQ2RuQkI=;
+        b=xQOdhLN5rQRt8myozrikyWXcrbR62ha9orkxUgPdvmU2KxDcsPNk4rN2hD/v/vD7VI
+         BHM1iBIcVuTC0NWvq8DQX/EpbgkL9ovgf3l1IGdPhUOR0LP3xc4v6EJhqTjvx9n75wuV
+         KyRnqZ/vxg4otV+lW1FSuVoNePJKr3myXvXs1Yu/J71DF4L0yHGAEj2XbwnPtoEOUjrj
+         oCQmg2TA7eT9+RenPkE2lb5gwh9BwgaGMOddQTytXjF5w2vNnSPp6ay+WC+RfedT3nan
+         E+ANrbnCGJhZpAY72zi85njkha2MbkQkFxo2Dl10DavhptlAeVC0wfzTesPJ8k9a7Aik
+         F70g==
+X-Gm-Message-State: AOAM5302q+RpT1WNkhne4lNF8Yc4bTovSznGXd6oK8Y/jBVt9Js04bN+
+        9nk1CJUVmwVAWe1fHT/aS4gZ0fE2lN5Ltg==
+X-Google-Smtp-Source: ABdhPJwe4N1LS9NcTScBhjcDjiQba6E7gl+kwgNkrMaIkYy2XA+1wxriCOjPS2hso1kCW3CQIdX38w==
+X-Received: by 2002:aca:af0c:: with SMTP id y12mr3972459oie.88.1633462923844;
+        Tue, 05 Oct 2021 12:42:03 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:5589:eba2:f5ec:ffb9? ([2600:1700:e72:80a0:5589:eba2:f5ec:ffb9])
+        by smtp.gmail.com with ESMTPSA id l25sm3444828oic.54.2021.10.05.12.42.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Oct 2021 12:42:03 -0700 (PDT)
+Message-ID: <9e4411aa-e757-0653-0c2a-24894b13158f@gmail.com>
+Date:   Tue, 5 Oct 2021 15:42:01 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f6a1296f-f524-9042-7f88-9591522971af@web.de>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Content-Language: en-US
+To:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: Merge ORT performance in the wild
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 05, 2021 at 08:45:38PM +0200, René Scharfe wrote:
+Hello all, especially Elijah.
 
-> Am 04.10.21 um 10:31 schrieb Jeff King:
-> > On Sat, Oct 02, 2021 at 07:44:14PM +0200, René Scharfe wrote:
-> >
-> >> b3dfeebb92 (rebase: avoid computing unnecessary patch IDs, 2016-07-29)
-> >> added a perf test that calls tac(1) from GNU core utilities.  Support
-> >> systems without it by reversing the generated list using sort -nr
-> >> instead.  sort(1) with options -n and -r is already used in other tests.
-> >
-> > Cute fix. With regular seq(1), this whole thing can become:
-> >
-> >   seq 1000 -1 1
-> >
-> > without the extra process, but our test_seq doesn't understand non-1
-> > increments (nor comparisons besides -le). It wouldn't be that hard to
-> > teach it, but given that this is the first time we've wanted it, it may
-> > not be worth the effort.
-> 
-> Right.  The original also allows "seq 1000 1", by the way.  Not sure we
-> need that either.
+We finally shipped Git 2.33.0 (with VFS for Git) to the Windows OS
+engineers, and the microsoft/git fork enables the ORT merge strategy
+by default in this version.
 
-I'm not sure what you mean by "original" here. "seq 1000 1" produces no
-output for me (nor does it work with test_seq).
+I know that we are queued to include the ORT merge strategy as on
+by default in Git 2.34.0, and to further support that change (and
+thank Elijah for working hard on the feature), I wanted to share
+some early data on our users interacting with it.
 
-> But when you say "without the extra process", I think:
+We have about 250 users who have upgraded, relative to ~2,300 users
+who were active on the previous version. However, we saw sufficiently
+high use of 'git cherry-pick' and 'git merge' in these early users to
+share these results for how they are experiencing the new world:
 
-I meant without the extra tac/sort process.
+| Builtin     | Percentile | Recursive | ORT   |
+|-------------|------------|-----------|-------|
+| cherry-pick | 50         |  18.4s    | 14.1s |
+| cherry-pick | 80         |  34.9s    | 15.4s |
+| cherry-pick | 95         | 117.9s    | 17.7s |
+| merge       | 50         |   7.7s    |  1.2s |
+| merge       | 80         |  17.9s    | 12.7s |
+| merge       | 95         |  58.9s    | 22.3s |
 
-> test_seq () {
-> 	set_step='END {step = first < last ? 1 : -1}'
-> 	loop='END {for (; first <= last && step > 0 || first >= last && step < 0; first += step) print first}'
-> 	case $# in
-> 	1)      awk -v first=1    -v last="$1"    "$set_step $loop" ;;
-> 	2)      awk -v first="$1" -v last="$2"    "$set_step $loop" ;;
-> 	3)      awk -v first="$1" -v last="$3" -v step="$2" "$loop" ;;
-> 	*)      BUG "not 1, 2, or 3 parameters to test_seq" ;;
-> 	esac </dev/null
-> }
+This matches the results from a synthetic performance test I ran
+in our monorepos: ORT is always faster, but its outlier performance
+is far faster than the outlier performance of the 'recursive'
+strategy.
 
-Right, that works. It does introduce an extra awk process per
-invocation, though I doubt that really matters all that much. The diff I
-showed in my earlier response works totally in shell, like the current
-test_seq().
-
--Peff
+Thanks!
+-Stolee
