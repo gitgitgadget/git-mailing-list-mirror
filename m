@@ -2,113 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8685FC433EF
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 04:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1B7BC433EF
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 05:15:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A7AD60FD8
-	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 04:54:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B866761350
+	for <git@archiver.kernel.org>; Tue,  5 Oct 2021 05:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231637AbhJEEzt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 00:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51746 "EHLO
+        id S231682AbhJEFRX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 01:17:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbhJEEzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 00:55:48 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D421AC061745
-        for <git@vger.kernel.org>; Mon,  4 Oct 2021 21:53:58 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id h9-20020a9d2f09000000b005453f95356cso24403476otb.11
-        for <git@vger.kernel.org>; Mon, 04 Oct 2021 21:53:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=wlFG8x+rJ+50IaN9pexqXr8ju5B/OJZknjMIvj+2F4A=;
-        b=b75MRfrOr7Z+09Yx7Bns06FyZuWJR+F1laKW1mdosiNB4yBYEL5bz0LU2TaF+ahoBK
-         t/uYOl/eivs32pnXXfBtfXVvgXyqFBKG2rC84qY8tP2o1cnVbSPJ+mkVoqODHXiG+cnj
-         3crEEMy6QkNIYSfiHwxgUW5C/5RZOzxYgx7HpCwnS1c7E+z4ON6IAb+W4mQMfDdDIrDD
-         ppZNVDpoVhOOjFNJGvlJ/wkqpXl4rNZSJB6zmJMQwftxgg7OcdP9MnIJMIUBXYu0rIBk
-         Pg0006Lv2jsYYCvtMHrFMr6v3X9M6yJejgW01bMlc+fzujtPHID/kIGaU7QST2tQTWFb
-         B4RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=wlFG8x+rJ+50IaN9pexqXr8ju5B/OJZknjMIvj+2F4A=;
-        b=t3rnl8uRe8F8ZxdfiL1CqEuazIDXwOoKvR2ORC0jM4EpIda5GY954G14+TktwGJRmo
-         qnTi+V5mVZuVrn9MajoYRKZlWMBY8eJrNS/xgVQKByW3vR3LtmMdikSwGthuwXBQVGAa
-         fWQM0uKmMfe6N0Su5EFfVo0jY0/R+h/tUPhMg9Xr+G+22PjkcQKd7rL/yK7z/nuEM+/w
-         61rhUM1X0iPoinXp1tGBnFCGWODxFfLj4Sz3ztUY0g8bK5EhbMb0qX3Gkfr60QZymrbL
-         RUM5zIkpkOS2PAaowfDQCOEgj5REr4uJiBDULQaU+cPZKlzXjdRGtjaofcFBFcHF7XJs
-         KaFA==
-X-Gm-Message-State: AOAM5309XdHnR8FbDLLMu6PufXJEwjESwa6AXJHwX9iwHeeoyfzxeWNY
-        SrEo1FTNHXRf1ckRiQsAg7fQjTRP3M6sRL4t7Dn2vHd+6QQ=
-X-Google-Smtp-Source: ABdhPJyIBx9gcFInQ+XEYnB4kXKyhzU4JTWfpkHg2sBv8+u8Z/1OrVFrz2+fTWGZQlGWE4ZBcjQjX18Rd+BEWLYLhd0=
-X-Received: by 2002:a05:6830:18d0:: with SMTP id v16mr12467581ote.177.1633409637988;
- Mon, 04 Oct 2021 21:53:57 -0700 (PDT)
+        with ESMTP id S229979AbhJEFRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 01:17:22 -0400
+X-Greylist: delayed 1266 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 04 Oct 2021 22:15:32 PDT
+Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F33C061745
+        for <git@vger.kernel.org>; Mon,  4 Oct 2021 22:15:32 -0700 (PDT)
+Received: from [2400:4160:1877:2b00:410a:fd15:2718:8b5d] (helo=glandium.org)
+        by vuizook.err.no with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1mXcT3-0002iW-OO; Tue, 05 Oct 2021 04:54:21 +0000
+Received: from glandium by goemon.lan with local (Exim 4.94.2)
+        (envelope-from <mh@glandium.org>)
+        id 1mXcSy-002Rgh-OA; Tue, 05 Oct 2021 13:54:12 +0900
+Date:   Tue, 5 Oct 2021 13:54:12 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] Don't ignore transport_disconnect error codes in fetch
+ and clone
+Message-ID: <20211005045412.pqwsid6gpprxajbw@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <20210928001726.2592734-1-mh@glandium.org>
+ <874ka5z9pz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Eddie Ridwan <eddie.ridwan@gmail.com>
-Date:   Tue, 5 Oct 2021 15:53:47 +1100
-Message-ID: <CANcBuaZstymNMvbPX553kgr=FsrFFcDEivfiDPsPe3uyGLb78g@mail.gmail.com>
-Subject: Git push subtree fail unknown revision or path possibly due to
- missing git-subtree-split commit
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-15
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874ka5z9pz.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Hi,
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-git pull/push subtree as normal, although it is possible that one of
-the contributors to the subtree repo may have done a force push.
+Sorry for the delay, I managed to miss this reply.
 
-What did you expect to happen? (Expected behavior)
-git push subtree to update the remote subtree repo.
+On Tue, Sep 28, 2021 at 04:56:37AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Sep 28 2021, Mike Hommey wrote:
+> 
+> > When a remote-helper fails in a way that is not directly visible in the
+> > remote-helper protocol, the helper failure is ignored by git during
+> > fetch or clone.
+> >
+> > For example, a helper cannot directly report an error during an `import`
+> > command (short of sending `feature done` to the fast-import file
+> > descriptor and not sending a `done` later on).
+> >
+> > Or if the helper crashes at the wrong moment, git doesn't notice and
+> > thinks everything went well.
+> >
+> > Signed-off-by: Mike Hommey <mh@glandium.org>
+> > ---
+> >  builtin/clone.c | 5 +++--
+> >  builtin/fetch.c | 6 +++---
+> >  2 files changed, 6 insertions(+), 5 deletions(-)
+> >
+> > What I'm not sure about is whether a message should be explicitly
+> > printed by git itself in those cases.
+> >
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index 66fe66679c..f26fa027c5 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -1398,7 +1398,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+> >  	submodule_progress = transport->progress;
+> >  
+> >  	transport_unlock_pack(transport);
+> > -	transport_disconnect(transport);
+> > +	err = transport_disconnect(transport);
+> >  
+> >  	if (option_dissociate) {
+> >  		close_object_store(the_repository->objects);
+> > @@ -1406,7 +1406,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+> >  	}
+> >  
+> >  	junk_mode = JUNK_LEAVE_REPO;
+> > -	err = checkout(submodule_progress);
+> > +	if (!err)
+> > +		err = checkout(submodule_progress);
+> >  
+> >  	free(remote_name);
+> >  	strbuf_release(&reflog_msg);
+> 
+> This seems buggy in some cases, e.g. just because we couldn't close()
+> some final socket we should just not run the checkout at all? Shouldn't
+> we note the disconnect status, but still see if we can do the checkout
+> etc?
 
-What happened instead? (Actual behavior)
-Failed to update the remote subtree repo. Error message:
+I guess it could be seen both ways. In my particular use case, I do want
+automated testing to be able to catch Leak Sanitizer failures from a
+remote-helper.
 
-       fatal: ambiguous argument
-'3f44cc87ceb87df1d9171096596a824fc3050a27^{commit}': unknown revision
-or path not in the working tree.
-    Use '--' to separate paths from revisions, like this:
-    'git <command> [<revision>...] -- [<file>...]'
-    could not rev-parse split hash
-3f44cc87ceb87df1d9171096596a824fc3050a27 from commit
-8577911bf6183497cc246aa620e7be1b6becec29
+> > diff --git a/builtin/fetch.c b/builtin/fetch.c
+> > index 25740c13df..66bccf6f50 100644
+> > --- a/builtin/fetch.c
+> > +++ b/builtin/fetch.c
+> > @@ -1886,7 +1886,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+> >  {
+> >  	struct refspec rs = REFSPEC_INIT_FETCH;
+> >  	int i;
+> > -	int exit_code;
+> > +	int exit_code, disconnect_code;
+> >  	int maybe_prune_tags;
+> >  	int remote_via_config = remote_is_configured(remote, 0);
+> >  
+> 
+> 
+> > @@ -1952,9 +1952,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+> >  	exit_code = do_fetch(gtransport, &rs);
+> >  	sigchain_pop(SIGPIPE);
+> >  	refspec_clear(&rs);
+> > -	transport_disconnect(gtransport);
+> > +	disconnect_code = transport_disconnect(gtransport);
+> >  	gtransport = NULL;
+> > -	return exit_code;
+> > +	return exit_code || disconnect_code;
+> >  }
+> >  
+> >  int cmd_fetch(int argc, const char **argv, const char *prefix)
+> 
+> This seems like it really needs fixes in other areas,
+> i.e. disconnect_git() returns 0 unconditionally, but should check at
+> least finish_connect(), no?
+> 
+> Also once that's done you'll have a logic error here where you're
+> conflating exit and error codes, we should not return -1 from main() (we
+> do in a few cases, but it's nasty)>
 
-What's different between what you expected and what actually happened?
+transport_disconnect returns the remote-helper exit code for external
+helpers, though, but I guess we don't necessarily need to return that
+particular exit code.
 
-Failed to update the subtree repo, as expected;
-
-Anything else you want to add:
-
-I am not able to find the commit/hash
-3f44cc87ceb87df1d9171096596a824fc3050a27 in the repo. In gitx, I can
-see that the commit is a git-subtree-split. But it appears to no
-longer exist in the repo.
-
-How can I bypass or recover from this apparent missing commit? Any
-help would be greatly appreciated.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.33.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Jun 22 19:49:55
-PDT 2021; root:xnu-6153.141.35~1/RELEASE_X86_64 x86_64
-compiler info: clang: 12.0.0 (clang-1200.0.32.29)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+Mike
