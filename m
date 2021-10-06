@@ -2,123 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AE4C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5874CC433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:48:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A87461152
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:43:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39385610E5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239377AbhJFUpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 16:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40886 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239515AbhJFUpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 16:45:43 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7362C061753
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 13:43:49 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id u20-20020a9d7214000000b0054e170300adso4688711otj.13
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 13:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ai61waABQCOWCFYw+Fg78GEjMMwuP7jkP1ppolz1fq8=;
-        b=L+Vaya55j/aCmYJPzntKQQjTh2W79fN0d7tmylxLmUhJfd+NTXUbRczhXKXef3Vg7j
-         cRKnc7macCHsnWC6LDbljGsS/Evu7covBwIGoO+gP3iclAxAyghQLu9zIeq4KHmSUMuq
-         G6nk18q9zciri4Zhywe3ZkHFPR/LtqKLsMTMbRg2hqjeMTw9B3017iE+ZE35aEzDJnDi
-         MqmqdQojgwp+hqL6XKIkuzfc0n2+M3L8qELXi6z0+Dwlk9Cng4/COAgrtVucGfRbb6MR
-         sN9FgdUruRvsJsHgx2QqHUJk8sYGXKnXo7mk/amM1Ti0VpuI0zvsxBmeU3Y3zNEOaAiN
-         hXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ai61waABQCOWCFYw+Fg78GEjMMwuP7jkP1ppolz1fq8=;
-        b=fWPCoUy+pea9fpVRXtxIwtyL+TYiGmpvBu4UVqccIg3FbVNhJXHkYeTDOIMa71KZaT
-         75hwnSMtBJQPWG8l8q3vVFtUDB03tQVRBt7qM+NXqZyANVDD8jqsUTmHzlzjXImTy+vb
-         G44TcPZQMmMZkS4USSV5rXyYt3HC4WuUnNvdRZ7bspDio/kHQSffkqOTd6y/0OS5gY3L
-         crot97KdflWlcJceT3vOrttDvzZnW6ObKOkwFpns5LbS6MAqDpLxGL3clY2O6fUOXG9r
-         FyDQ4Vh4WrynPGQBMMsEcy9jc7JiKcVjnoQcfF0CFLBDAckhT2hGMkBAVW0MlUNBdw/g
-         3PiQ==
-X-Gm-Message-State: AOAM533fcmwk2JmW+nqeQVcnkMwtuHH/KEUQrCpTkHi5c0uYeZW3D8Q8
-        DIasuScaCL800a9vnOYeo+o=
-X-Google-Smtp-Source: ABdhPJyjxRaojMO12yQRwkTLSRNTLmeSCc0PLxQBfdaf4KOq4RCZ6jpiLzUkXZu6UXIH7+G93GnMFA==
-X-Received: by 2002:a05:6830:1212:: with SMTP id r18mr337596otp.212.1633553028907;
-        Wed, 06 Oct 2021 13:43:48 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:a5f2:2ad3:7396:8f96? ([2600:1700:e72:80a0:a5f2:2ad3:7396:8f96])
-        by smtp.gmail.com with ESMTPSA id h18sm4369565otg.2.2021.10.06.13.43.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Oct 2021 13:43:48 -0700 (PDT)
-Message-ID: <7ef4f68c-8c32-86ea-f8a6-cd673ed281c7@gmail.com>
-Date:   Wed, 6 Oct 2021 16:43:45 -0400
+        id S239419AbhJFUuh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 16:50:37 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55605 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231749AbhJFUug (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 16:50:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1633553313;
+        bh=c0kgMRrQVXJeBuVf8cXfpod4CpqmgIxjRhf5d2pnN9U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FOmY7x7I8DjSPzGmanAXj+o0O1FMA2kKS6S7vuLgsv95shON8bUBv87RMfmAVOeTl
+         1cAKiMCEuYUoDsdIVDVfQP4Bceh7AChvrPARDZF9a8bkx1mFxBkgTmgmZadoq+NbhL
+         jskaoOjk7fEBV9fpMzH3aviA9Tuq0gQrjMxoYvJ0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.23.42] ([46.183.103.8]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1ML9yS-1mG8l10E4I-00IAzJ; Wed, 06
+ Oct 2021 22:48:33 +0200
+Date:   Wed, 6 Oct 2021 22:48:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Matthew Cheetham <mjcheetham@outlook.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Matthew John Cheetham via GitGitGadget 
+        <gitgitgadget@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v4 13/15] scalar: implement the `delete` command
+In-Reply-To: <468CE4B8-D2C9-4FBC-B801-739F86C88ACB@outlook.com>
+Message-ID: <nycvar.QRO.7.76.6.2110062243420.395@tvgsbejvaqbjf.bet>
+References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com> <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com> <914c16c7fcd948374fb2c0582c435d0d6ac775a0.1631630356.git.gitgitgadget@gmail.com> <CABPp-BGzw4XUhEnUSnp5C1q-7qHcLP-8owbpqTfnbrCuwVkMQw@mail.gmail.com>
+ <468CE4B8-D2C9-4FBC-B801-739F86C88ACB@outlook.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCH] [RFC] sparse index: fix use-after-free bug in
- cache_tree_verify()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
- <xmqq1r4yrmhp.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq1r4yrmhp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:AEICRzoHDq1OF9wQJ7EDkWt1FuYSxZwg4tCtUt0VlORe8oZxz+/
+ 3sY9cCcQnuI4PvEEnLiUglAixTFtu+r4g+05sqBgE2usq8afa8YnB8WyiYuJmdGJNi86OyV
+ gu6z2JTtYmvsvX/BWfhx34T025kRlMS0YySJVTqI1sC/8I5kfkaTw50UdkylF/OKOWUKwm1
+ 0m682C2aJd3QOLrIRC2qA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XUbvcWFHy4o=:wxCLgIO5YuJZnU8mzNt6yr
+ ztJBK3OtIktJlaCOh4U3M8t9pmn0//0/Vw5EDBvfncjetJBaz7zsDTI67fZN+rZMaEt30+oOP
+ H3mSLleMVm21RWDrxb5Zage5E60FY4ZDw9r9ugqKE0qDGseqa0lY1P2RsSZpV8xnhwOJ6T/o6
+ l9xo/ZuhRQPCEhZfEPF+niLRf5xEmhvit/xzGakEqT3DPKtqZ7yNcdxnuhyBgtH1riCqfcX10
+ 4jJ6w4M//AJRzGYkqrIdnKyDIWss9SffRpxqNycRW3K/iWEemg7yyKW8KniLsdmWcN9rwYsAX
+ nHJg/IGb89rQ6XAmfY2Zy1VHL79hrjgddDUF9t2esPHkCgh9MXS7J4tw2/yzeoPvMleo7mjPC
+ aEEZIKzhK8HOzf8Hfj0bqLlfkvsk+zDGCY9bEd7KgBD1kF/tmYBR0njLal3C/Db9d01ERg8BT
+ UxVuOFH6mqo3mKEP4DScHqfe8OVLs7v11tZ018IaLyFpVslTzI0UzvVaQjZUOCzzJXYL4soTa
+ mMtZBd3sedMpaQ/BR8aSDojPAX5bwuqmf7HN0jAXHMLDDN0OoDjeSqiNJ3pv+LyxaTIBm8Fjm
+ 4eC2xGnS1Tura3OdOUcUvZxJVKOrUJ9/vSXqnoHNWldZ+1B8/SskARnqkdeyCSpBokroETipD
+ PgXgdR1QcJ+7d/9ORErHwPr4JFhOQuZSy9o4lK6trDSjISixlYyfexJh3vxOe8kR0umTVnRyo
+ xek1i8A+iLbni+IU8crDf/O+kliLlVsij126xmm6k+JNf9r3qqO1q6VGHPYdfgUDOjZavy+n9
+ mEHqvfmGpHqWRMD4ZjGoPvrY9TYwG3q69fqehPpA/B4reyoZEhnGZcmq+CeTH7zVL8bj5+ajm
+ QBJBQLDW8TNJYIHeinpn6fUUfhazDspLWZ3jQqWNhjPhZP48+H8AkZQ9gGJbHPF40i9A7y+iZ
+ ZAuDcz5Lw12mrmiD5EZ4nG1gol3fRuAoCEXeMSK7UUL/oEC1wBejSeas7oNLtb3uX7hfbuc/9
+ SopKJNaq7MkZUA95X4HuIwTbxyqejcVnYGx775XLyojFNR+h3Ut7qR1u9JPlDRnFsry3IVTbp
+ tC6/hjm1iAX0YmHmTHwrvt9TeByMNhK64PF
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/6/2021 3:17 PM, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> @@ -907,6 +917,9 @@ void cache_tree_verify(struct repository *r, struct index_state *istate)
->>  
->>  	if (!istate->cache_tree)
->>  		return;
->> -	verify_one(r, istate, istate->cache_tree, &path);
->> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
->> +		strbuf_reset(&path);
->> +		verify_one(r, istate, istate->cache_tree, &path);
->> +	}
->>  	strbuf_release(&path);
->>  }
-> 
-> This is just a style thing, but I would find it easier to follow if
-> it just recursed into itself, i.e.
-> 
-> -	verify_one(...);
-> +	if (verify_one(...))
-> +		cache_tree_verify(r, istate);
-> 
-> or
-> 
-> -	verify_one(...);
-> +	again:
-> +	if (verify_one(...))
-> +		strbuf_reset(&path);
-> +		goto again;
-> }	}
-> 
-> On the other hand, if the new code wants to say "I would retry at
-> most once, otherwise there is something wrong in me", then
-> 
->> -	verify_one(r, istate, istate->cache_tree, &path);
->> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
->> +		strbuf_reset(&path);
->> +		if (verify_one(r, istate, istate->cache_tree, &path))
->> +			BUG("...");
->> +	}
-> 
-> would be better.
+Hi Matthew and Elijah,
 
-I'm in favor of this second option.
+On Mon, 4 Oct 2021, Matthew Cheetham wrote:
 
-Thanks,
--Stolee
+> On 28 Sep 2021, at 7:24 am, Elijah Newren <newren@gmail.com> wrote:
+>
+> > But if the current directory is inside the enlistment's directory,
+> > didn't that happen because the parent process' current directory was
+> > inside the enlistment directory?  Or was there some kind of directory
+> > switching that scalar itself was doing causing it to be inside the
+> > enlistment directory?
+>
+> Yes to the latter. `setup_enlistment_directory` changes the current
+> directory much like `setup_git_directory`.
+>
+> > If the the current directory was inside the enlistment's directory
+> > because it inherited a parent process' current directory, wouldn't
+> > that also prevent deleting it?  If so, should there be a special check
+> > for that case and pre-emptively returning an error rather than
+> > attempting the recursive directory deletion and just spitting out an
+> > error when it fails?
+>
+> You are correct. Speaking to Johannes about this I believe he is looking
+> to add a check/error in a new patch series revision.
+
+Indeed, I did notice GGG#1037, and I changed the code so that it detects
+whether `scalar delete` was called from within the enlistment, and refuses
+to run in that case. Users will have to call `scalar delete <path>` from
+outside the enlistment.
+
+Ciao,
+Dscho
