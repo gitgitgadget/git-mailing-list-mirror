@@ -2,122 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EECA5C433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 11:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED033C433FE
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 11:20:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D332D610CC
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 11:12:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD45A61151
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 11:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238101AbhJFLOV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 07:14:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47842 "EHLO
+        id S238251AbhJFLWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 07:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237836AbhJFLOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 07:14:21 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0B0C061749
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 04:12:27 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id d8so8404208edx.9
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 04:12:27 -0700 (PDT)
+        with ESMTP id S238138AbhJFLWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 07:22:15 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE4BC061749
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 04:20:23 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so2649424otx.3
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 04:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=1iqExXEzf2x4/9GMygCn9AQ9vmPdeayIDTBCgm5byrE=;
-        b=BxhTA5K0s6WBChMJD6xXf+MhTMJXX9h+T3s8r7WengAjih+dFl0FaIwJunkbqqO1//
-         +zqDExJqODZ9tPagJOg36pSiu+F3oF2qeINiWQAcYtC/aqDJHv4w0nWiPxq6A9LtAu5u
-         xBGADPUXau1qZHbwjrOlc7iGni77Hu2DQjAh/aYSapePFVn3TBfAwpDWH+AbTNTfHk6g
-         BlVYaQq5XjKLQdX/Pewo8NktmMuxvKBg4EYlss+mkRypAuW3gRlL/VA32v/VeVpTC/Yr
-         XQk6szn1H4inQ+eHg35p/M9PoxRqvvValLbW3lgsCoeoZWrHg2yFhYeeykbtkfSV0wjU
-         W6iw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yXXVYicju93GFeLyAvv/vHhmPCCRJJmTIdffJRk/tdU=;
+        b=QQ61gKQRlDTrWV3zE0uNhbLFuPoHPNVpdxGxhxsUbr2s4r4bLY3mWJND/vOVCIYPGL
+         D80hLvr9SfMouPWd2m3l5baURkFXXEBv4NG4qVU+W3rYV9EizEKbhoSnzh8UJNIpRlbg
+         g+jUYoRwS5l0FD+OT/jeh6eTSxPCjeX9QFRs8kAQRpxw95tf7ijbzCPwSusxxyBpfnfp
+         pJJyEM8XT1Y1KddrMYHYzuGtMq8GuVWyM0hi2C1qfWu4HyeWW6xzxR7d5EJ5bj8GGurG
+         06F/Ra5Bg79gXURrbHSmZ/Jwv4D89QV67pPk7BQyMuRrUdRp6nElyCqPdykTjLcZn9c8
+         hbkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=1iqExXEzf2x4/9GMygCn9AQ9vmPdeayIDTBCgm5byrE=;
-        b=VtgGrMOLIyDUDixf+xvfvUP8H/XzYPxpdlcEBehkUcsL+rjDRUGWlb0CmD5+d3zPhi
-         AvUrBGTCbedmU7T+snR5D+3iB4ViS1P0XUIVK6OyV9HD3m7kWFJw0T12c2nt1nxf7tcn
-         EyS8FCLAe76szW4OZU15nwu1Q0JTiPDpHsESvklxxs8vgHNv+Uu03VS3x7b7I6TrinnE
-         64nEz45TT6gE/AWKarIhUc+g4Rl8uC6F45sV/iq4nxr/7i3rcF4Z+m8X1G8XFCXAPFAv
-         4FidhLBaFmF0KccH+5iA9apkGPM1mjGPQyeK9cQBDMmHakU+eyyfDEGw/b7mDDaj9x4w
-         AVzA==
-X-Gm-Message-State: AOAM532FwYpHE7nfvak9i6MZ/Em3AFGOpfl50OC/yKOYBVu49GcfU4Qp
-        rKyKcblBVHiBj16O8Vm4X6s=
-X-Google-Smtp-Source: ABdhPJy4OlyoYVKpDY/2VURggwqCrufN6pi4DpbvTjRcadGixrTB3/EYX5PF6CBl5b4j6vk1ddSdEw==
-X-Received: by 2002:a17:906:3cb:: with SMTP id c11mr29295208eja.404.1633518746197;
-        Wed, 06 Oct 2021 04:12:26 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u19sm10124729edv.40.2021.10.06.04.12.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 04:12:25 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: ab/config-based-hooks-N status (was Re: [PATCH v5 24/36]
- run-command: add stdin callback for parallelization)
-Date:   Wed, 06 Oct 2021 13:03:38 +0200
-References: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
- <cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com>
- <patch-v5-24.36-bb119fa7cc0-20210902T125110Z-avarab@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <patch-v5-24.36-bb119fa7cc0-20210902T125110Z-avarab@gmail.com>
-Message-ID: <87a6jmiezr.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yXXVYicju93GFeLyAvv/vHhmPCCRJJmTIdffJRk/tdU=;
+        b=RrQd0y22FKXGJP1DhV3mcDpyd0o88ceJcp/b5sHLOMEVbDYCmKSTJwWiTwDoshxDPp
+         yvCPSXjiLPBpPL8PhNRj6hC3xLM4/feXu8eYhe/Y4mPKvmYl3O5BWVpSqnPcJWyYyr0Q
+         0H1yctbYmpKsVnSNqouaW0KfGjb2dyN8w8LLbMDBwLtYeNFUCPKfmOVThMr+Dp0SqFxA
+         9HeGsgNsah9Lw6nmn4C8RWRLx27JV/yOQU9o2OC0XYYa9vnTkLunt6ewh9SM6BsPy9XJ
+         outM3UkIHCmqddNfxO8CPmQVmzt/ixveNZ5EqhhY55oGSdCzSbuGq13/mBj+tk8FRpnS
+         4NVg==
+X-Gm-Message-State: AOAM5335htnCG/nXHWLs2dlpp2Sjj6KeIaRpOyBuAPvQEcs1qstL6ALY
+        qCOM41hwh8XXU0kIjvfL3Ug=
+X-Google-Smtp-Source: ABdhPJysPt2l2tpR2w0NXZE1qLmG+UYjVp/5Grf2et+nb6R3CxYx6NzyAPZGCP1WLJ0nYi6Sx2bGoA==
+X-Received: by 2002:a9d:135:: with SMTP id 50mr18844692otu.295.1633519223073;
+        Wed, 06 Oct 2021 04:20:23 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9408:42d7:3932:900f? ([2600:1700:e72:80a0:9408:42d7:3932:900f])
+        by smtp.gmail.com with ESMTPSA id 4sm4196275ota.48.2021.10.06.04.20.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Oct 2021 04:20:22 -0700 (PDT)
+Message-ID: <2b1f0e56-5bb4-7f41-5a1e-d8a21096084a@gmail.com>
+Date:   Wed, 6 Oct 2021 07:20:19 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCH] [RFC] sparse index: fix use-after-free bug in
+ cache_tree_verify()
+Content-Language: en-US
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, vdye@github.com
+References: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/6/2021 5:29 AM, Phillip Wood via GitGitGadget wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> In a sparse index it is possible for the tree that is being verified
+> to be freed while it is being verified. This happens when
+> index_name_pos() looks up a entry that is missing from the index and
+> that would be a descendant of a sparse entry. That triggers a call to
+> ensure_full_index() which frees the cache tree that is being verified.
+> Carrying on trying to verify the tree after this results in a
+> use-after-free bug. Instead restart the verification if a sparse index
+> is converted to a full index. This bug is triggered by a call to
+> reset_head() in "git rebase --apply". Thanks to René Scharfe for his
+> help analyzing the problem.
 
-On Thu, Sep 02 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Thank you for identifying an interesting case! I hadn't thought to
+change the mode from --merge to --apply.
 
-Emily, there's a...:
+>     In a sparse index it is possible for the tree that is being verified to
+>     be freed while it is being verified. This is an RFC as I'm not familiar
+>     with the cache tree code. I'm confused as to why this bug is triggered
+>     by the sequence
+>     
+>     unpack_trees()
+>     prime_cache_tree()
+>     write_locked_index()
+>     
+>     but not
+>     
+>     unpack_trees()
+>     write_locked_index()
+>     
+>     
+>     as unpack_trees() appears to update the cache tree with
+>     
+>     if (!cache_tree_fully_valid(o->result.cache_tree))
+>                 cache_tree_update(&o->result,
+>                           WRITE_TREE_SILENT |
+>                           WRITE_TREE_REPAIR);
+>     
+>     
+>     and I don't understand why the cache tree from prime_cache_tree()
+>     results in different behavior. It concerns me that this fix is hiding
+>     another bug.
 
-> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-> index 7ae03dc7123..9348184d303 100644
-> --- a/t/helper/test-run-command.c
-> +++ b/t/helper/test-run-command.c
-> @@ -32,8 +32,13 @@ static int parallel_next(struct child_process *cp,
->  		return 0;
->=20=20
->  	strvec_pushv(&cp->args, d->argv);
-> +	cp->in =3D d->in;
-> +	cp->no_stdin =3D d->no_stdin;
->  	strbuf_addstr(err, "preloaded output of a child\n");
->  	number_callbacks++;
-> +
-> +	*task_cb =3D xmalloc(sizeof(int));
-> +	*(int*)(*task_cb) =3D 2;
->  	return 1;
+prime_cache_tree() appears to clear the cache tree and start from scratch
+from a tree object instead of using the index.
+
+In particular, prime_cache_tree_rec() does not stop at the sparse-checkout
+cone, so the cache tree is the full size at that point.
+
+When the verify_one() method reaches these nodes that are outside of the
+cone, index_name_pos() triggers the index expansion in a way that the
+cache-tree that is restricted to the sparse-checkout cone does not.
+
+Hopefully that helps clear up _why_ this happens.
+
+There is a remaining issue that "git rebase --apply" will be a lot slower
+than "git rebase --merge" because of this construction of a cache-tree
+that is much larger than necessary.
+
+I will make note of this as a potential improvement for the future.
+
+> -static void verify_one(struct repository *r,
+> -		       struct index_state *istate,
+> -		       struct cache_tree *it,
+> -		       struct strbuf *path)
+> +static int verify_one(struct repository *r,
+> +		      struct index_state *istate,
+> +		      struct cache_tree *it,
+> +		      struct strbuf *path)
+>  {
+>  	int i, pos, len = path->len;
+>  	struct strbuf tree_buf = STRBUF_INIT;
+> @@ -837,21 +837,30 @@ static void verify_one(struct repository *r,
+>  
+>  	for (i = 0; i < it->subtree_nr; i++) {
+>  		strbuf_addf(path, "%s/", it->down[i]->name);
+> -		verify_one(r, istate, it->down[i]->cache_tree, path);
+> +		if (verify_one(r, istate, it->down[i]->cache_tree, path))
+> +			return 1;
+>  		strbuf_setlen(path, len);
+>  	}
+>  
+>  	if (it->entry_count < 0 ||
+>  	    /* no verification on tests (t7003) that replace trees */
+>  	    lookup_replace_object(r, &it->oid) != &it->oid)
+> -		return;
+> +		return 0;
+>  
+>  	if (path->len) {
+> +		/*
+> +		 * If the index is sparse index_name_pos() may trigger
+> +		 * ensure_full_index() which will free the tree that is being
+> +		 * verified.
+> +		 */
+> +		int is_sparse = istate->sparse_index;
+>  		pos = index_name_pos(istate, path->buf, path->len);
+> +		if (is_sparse && !istate->sparse_index)
+> +			return 1;
+
+I think this guard is good to have, even if we fix prime_cache_tree() to
+avoid triggering expansion here in most cases.
+
+>  		if (pos >= 0) {
+>  			verify_one_sparse(r, istate, it, path, pos);
+> -			return;
+> +			return 0;
+>  		}
+>  
+>  		pos = -pos - 1;
+> @@ -899,6 +908,7 @@ static void verify_one(struct repository *r,
+>  		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
+>  	strbuf_setlen(path, len);
+>  	strbuf_release(&tree_buf);
+> +	return 0;
 >  }
+>  
+>  void cache_tree_verify(struct repository *r, struct index_state *istate)
+> @@ -907,6 +917,9 @@ void cache_tree_verify(struct repository *r, struct index_state *istate)
+>  
+>  	if (!istate->cache_tree)
+>  		return;
+> -	verify_one(r, istate, istate->cache_tree, &path);
+> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
+> +		strbuf_reset(&path);
+> +		verify_one(r, istate, istate->cache_tree, &path);
+> +	}
 
-Probably trivial to solve failure here in t0061-run-command.sh if you
-compile with SANITIZE=3Dleak. This failed in combination with my[1] (but
-for anyone reading along, this patch has been ejected from "seen" a
-while ago).
+And this limits us to doing at most two passes. Good.
 
-More generally: The equivalent of 01-07/36 of this series is being
-merged into "next". As described in a plan to submit this topic
-incrementally I was hoping to do 08-20/36 next, i.e. up to "run-command:
-remove old run_hook_{le,ve}() hook API". See [2] for that plan.
+>  test_expect_success 'merge, cherry-pick, and rebase' '
+>  	init_repos &&
+>  
+> -	for OPERATION in "merge -m merge" cherry-pick rebase
+> +	for OPERATION in "merge -m merge" cherry-pick "rebase --apply" "rebase --merge"
 
-You've been inactive on-list recently, it would be nice to time this so
-that by the time it gets to 21-36/36 (which I was planning to split in
-two per [2]) that you'd have time to review/help with outstanding issues
-etc, for eventually re-submitting your "config based hooks" on top once
-this all lands.
+Thank you for the additional test!
 
-1. https://lore.kernel.org/git/patch-02.10-9a8804e1d9a-20211006T094705Z-ava=
-rab@gmail.com/
-2. https://lore.kernel.org/git/875yut8nns.fsf@evledraar.gmail.com/
+Thanks,
+-Stolee
