@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AE7C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EEE2C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 03:43:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95DE7611CC
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:16:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E91261248
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 03:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237059AbhJFCR7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 22:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S237173AbhJFDpT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 23:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229908AbhJFCR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 22:17:59 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0EF5C061749
-        for <git@vger.kernel.org>; Tue,  5 Oct 2021 19:16:07 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id l7so3885294edq.3
-        for <git@vger.kernel.org>; Tue, 05 Oct 2021 19:16:07 -0700 (PDT)
+        with ESMTP id S230261AbhJFDpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 23:45:17 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D473C061749
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 20:43:26 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id b8so4491804edk.2
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 20:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hLNm7DwSWGzZnCNyG9bwr1OutNzHQ4k39+Bj1D/wwPw=;
-        b=AVRtKOFTxXW9k7STv9Gs01M4KrCZt1GFDWFauo332F0duCzSF7ARAjohIwl+6U96lc
-         3vMXrLZ8XARVJvrEZMAxfoS3VnloHF9VLejgXcs3YwvRyEXKyIRF2uMISWkISt9P2FKo
-         c6hitNEVYlKXf/s2WFbqbZNApeTvrZYetn3yCkbG2QI29ktxODseLyvcxKCjD6aNt0/Y
-         b09zuBVyVa1khVIySSPLMdZr3+3cmUINgvEtzcYWGLW/jv4W16RNqNsa7dhy9hrhbfra
-         8MVWz09X7mi2YRyP4Xeozyji7ewFyDnGid0vtkuQ5DjgF1aqxR9c/65/Iq41isR6jLAN
-         ClZg==
+        bh=g1Uytodl8uKayARWo5HwNr5AQ6IHxOdH6WE3XLVo6Ao=;
+        b=KFHrK0lB7BUtlOLrthMP9nivT4St3X7uvzJQrXdP+pqsv9XBj/qKU9p5nTKVXlrlr8
+         Ooz8LC/pb2tuivWScerWI2GrsnWeDv193UBRtUemIrCVavdXZNJ/+GKs3BZ9tQO4jism
+         AMVoNB9d/LXQfZJqdYLTYVd6xrfiGjF5F2dIfW78Pj7mI+SJXKd8lykTH04XJoZsCzGl
+         vXeQRoIZoX4kRr6zymgO+zfc8eDwEtCp8EMqbxdK9moyCSKIXTztJ/piC2K41BEk0VKn
+         iTDzeMxytEi/97G4JDUZbqv+AlG3mmUA4I27aZCQixJ2wADyn5RechoeWy8EPB3EHqpL
+         wKAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hLNm7DwSWGzZnCNyG9bwr1OutNzHQ4k39+Bj1D/wwPw=;
-        b=SoJZRjoWUCsz4rfvtD1o/618jmsEBIMXZWBDVEpnMrl+95ft4IIPTpDez/83/H0h3B
-         i1UHly/834xzVV0lcu2fo4UntBmbmYUi0A3CSylHWhB62HKG9GY3Lkhm6KWkx1omUfbx
-         49jiWtl/UZePJZlnA2mPLjt9Ohjo4rdw0aNbpTvnPnGhqAuOX6lJbgJMjy3p42gQPwr8
-         hOviUzRBC6DvxYeJ/nGQBW6OfsUlow/Y8rsF9mggQ0LjWg49Bk0CHJL1utkYoUVVLGC0
-         IFVCvFyGR96iclXeUedNPldkM01zEoCeYCH35GAVCpTdTWk5PuO6sQBN3qM3oxBB7h8o
-         6R9Q==
-X-Gm-Message-State: AOAM531gix5ErnsjhMaxHcNSb5EsNob7QfJwRkb8JobHrcGk9yyoV57G
-        YMhke7KSM9YjY9Ow71gCWJo8ytrAqXNFtnNeyMc=
-X-Google-Smtp-Source: ABdhPJw82PkuXHFWvzRr9u/cLCKKIaUehQFjbgVYzNrUV/sCbAMF1PK7+1eTbxzMrR5EJlsaIL9XPXzDB9S8LFVqJLA=
-X-Received: by 2002:a17:906:544f:: with SMTP id d15mr29425253ejp.520.1633486566301;
- Tue, 05 Oct 2021 19:16:06 -0700 (PDT)
+        bh=g1Uytodl8uKayARWo5HwNr5AQ6IHxOdH6WE3XLVo6Ao=;
+        b=fIaoAAaAuSo5/S9yP3ExQqmv1uO9edwAmFaB1jbLYa7Y2hJdvIE7N2GSLZmL5rOrnS
+         bL6BOvIGYXv5nquTtxD5HYLCfAmB2n68glRVijGlpAZ9Rm0ikTcPMtyz7OVuiU4B99KB
+         xoio3WlsaER/nzkQNu1TQJnDSaW9Mjsc3GX7exePEArZlz+HHbc7jFgN+/+y75PoDLF0
+         ENy5lQofLyW9lkaw21bf3+F5YJZ4x6ya9W+qqkctw7XnaFx73hxe369ga6QJ4f+A6y+r
+         j5cr+lAhlFo7lwnWHezjFVEnbrdnvbGxbNoqHQTaoohWLC6O3pP2Bgj0GcS4xYzUFB7P
+         JTqA==
+X-Gm-Message-State: AOAM530OykAJwGWtaFnlYzgr/Hkue+HKn2svw+jN63nVrrZ/qCd0KzfJ
+        eOI0RUx+pwZP+Aogp+9IEyuFoOZXloCrSuza0qpTsMiKW20=
+X-Google-Smtp-Source: ABdhPJxO08uizJ82SOwasYTjVJdA54FiVLQRf1dHjgPfbdoWhIicMout9ESmf6VcJ2h56AWpqHwd7f5jyOYI7itLmCY=
+X-Received: by 2002:aa7:cfc4:: with SMTP id r4mr31215124edy.244.1633491804589;
+ Tue, 05 Oct 2021 20:43:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
- <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com> <49813c8d9ed94fd56f30eb204d346eb5a30473ca.1633440057.git.gitgitgadget@gmail.com>
-In-Reply-To: <49813c8d9ed94fd56f30eb204d346eb5a30473ca.1633440057.git.gitgitgadget@gmail.com>
+ <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com> <78cd85d8dcc790251ce8235e649902cf6adf091a.1633440057.git.gitgitgadget@gmail.com>
+In-Reply-To: <78cd85d8dcc790251ce8235e649902cf6adf091a.1633440057.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 5 Oct 2021 19:15:55 -0700
-Message-ID: <CABPp-BHKjLVpL_U5viVA++hCZmGKBHxnubGCk=1YhTkpFc-E-Q@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] reset: integrate with sparse index
+Date:   Tue, 5 Oct 2021 20:43:13 -0700
+Message-ID: <CABPp-BFHNOMTerrV2Bhufb5d9d6JuM+CWW_t1jYg1Uu7F1dhhA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] reset: make sparse-aware (except --mixed)
 To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
@@ -71,98 +71,272 @@ On Tue, Oct 5, 2021 at 6:21 AM Victoria Dye via GitGitGadget
 >
 > From: Victoria Dye <vdye@github.com>
 >
-> `reset --soft` does not modify the index, so no compatibility changes are
-> needed for it to function without expanding the index. For all other reset
-> modes (`--mixed`, `--hard`, `--keep`, `--merge`), the full index is
-> explicitly expanded with `ensure_full_index` to maintain current behavior.
-
-"to maintain current behavior"?  You are changing code here, which
-suggests some kind of behavior is changing, but that description seems
-to be claiming the opposite.  Is it some kind of preventative change
-to add ensure_full_index calls in an additional place, with a later
-patch in the series intending to remove the other one(s), so you're
-making sure that later changes won't cause unwanted behavioral
-changes?  Or was something else meant here?
-
-If the above wasn't what you meant, but you're adding
-ensure_full_index calls, does that suggest that we had some important
-code paths that were not protected by such calls?  I thought Stolee
-said we had them all covered (at least to the best of our knowledge),
-so I'm curious if we just discovered we missed some.  If so, are there
-other codepaths like this one where we missed protective
-ensure_full_index calls?
-
-> Additionally, the `read_cache()` check verifying an uncorrupted index is
-> moved after argument parsing and preparing the repo settings. The index is
-> not used by the preceding argument handling, but `read_cache()` does need to
-> be run after enabling sparse index for the command and before resetting.
-
-This seems to be discussing what code changes are being made, but not
-why.  I'm guessing at the reasoning, but is it something along the
-lines of:
-
-"""
-Also, make sure to read_cache() after setting
-command_requires_full_index = 0, so that we don't unnecessarily expand
-the index as part of our early index-corruption check.
-"""
-
-?
-
+> In order to accurately reconstruct the cache tree in `prime_cache_tree_rec`,
+> the function must determine whether the currently-processing directory in
+> the tree is sparse or not. If it is not sparse, the tree is parsed and
+> subtree recursively constructed. If it is sparse, no subtrees are added to
+> the tree and the entry count is set to 1 (representing the sparse directory
+> itself).
 >
 > Signed-off-by: Victoria Dye <vdye@github.com>
 > ---
->  builtin/reset.c | 10 +++++++---
->  cache-tree.c    |  1 +
->  2 files changed, 8 insertions(+), 3 deletions(-)
+>  cache-tree.c                             | 44 +++++++++++++++++++++---
+>  cache.h                                  | 10 ++++++
+>  read-cache.c                             | 22 ++++++++----
+>  t/t1092-sparse-checkout-compatibility.sh | 15 ++++++--
+>  4 files changed, 78 insertions(+), 13 deletions(-)
 >
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index 3b75d3b2f20..e1f2a2bb2c4 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -184,6 +184,7 @@ static int read_from_tree(const struct pathspec *pathspec,
->         opt.flags.override_submodule_config = 1;
->         opt.repo = the_repository;
->
-> +       ensure_full_index(&the_index);
->         if (do_diff_cache(tree_oid, &opt))
->                 return 1;
->         diffcore_std(&opt);
-> @@ -261,9 +262,6 @@ static void parse_args(struct pathspec *pathspec,
->         }
->         *rev_ret = rev;
->
-> -       if (read_cache() < 0)
-> -               die(_("index file corrupt"));
-> -
->         parse_pathspec(pathspec, 0,
->                        PATHSPEC_PREFER_FULL |
->                        (patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0),
-> @@ -409,6 +407,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->         if (intent_to_add && reset_type != MIXED)
->                 die(_("-N can only be used with --mixed"));
->
-> +       prepare_repo_settings(the_repository);
-> +       the_repository->settings.command_requires_full_index = 0;
-> +
-> +       if (read_cache() < 0)
-> +               die(_("index file corrupt"));
-> +
->         /* Soft reset does not touch the index file nor the working tree
->          * at all, but requires them in a good order.  Other resets reset
->          * the index file to the tree object we are switching to. */
 > diff --git a/cache-tree.c b/cache-tree.c
-> index 90919f9e345..9be19c85b66 100644
+> index 9be19c85b66..9021669d682 100644
 > --- a/cache-tree.c
 > +++ b/cache-tree.c
-> @@ -776,6 +776,7 @@ void prime_cache_tree(struct repository *r,
+> @@ -740,15 +740,29 @@ out:
+>         return ret;
+>  }
+>
+> +static void prime_cache_tree_sparse_dir(struct repository *r,
+> +                                       struct cache_tree *it,
+> +                                       struct tree *tree,
+> +                                       struct strbuf *tree_path)
+> +{
+> +
+> +       oidcpy(&it->oid, &tree->object.oid);
+> +       it->entry_count = 1;
+> +       return;
+
+Why are 'r' and 'tree_path' passed to this function?
+
+> +}
+> +
+>  static void prime_cache_tree_rec(struct repository *r,
+>                                  struct cache_tree *it,
+> -                                struct tree *tree)
+> +                                struct tree *tree,
+> +                                struct strbuf *tree_path)
+>  {
+> +       struct strbuf subtree_path = STRBUF_INIT;
+>         struct tree_desc desc;
+>         struct name_entry entry;
+>         int cnt;
+>
+>         oidcpy(&it->oid, &tree->object.oid);
+> +
+
+Why the blank line addition here?
+
+>         init_tree_desc(&desc, tree->buffer, tree->size);
+>         cnt = 0;
+>         while (tree_entry(&desc, &entry)) {
+> @@ -757,27 +771,49 @@ static void prime_cache_tree_rec(struct repository *r,
+>                 else {
+>                         struct cache_tree_sub *sub;
+>                         struct tree *subtree = lookup_tree(r, &entry.oid);
+> +
+>                         if (!subtree->object.parsed)
+>                                 parse_tree(subtree);
+>                         sub = cache_tree_sub(it, entry.path);
+>                         sub->cache_tree = cache_tree();
+> -                       prime_cache_tree_rec(r, sub->cache_tree, subtree);
+
+> +                       strbuf_reset(&subtree_path);
+> +                       strbuf_grow(&subtree_path, tree_path->len + entry.pathlen + 1);
+> +                       strbuf_addbuf(&subtree_path, tree_path);
+> +                       strbuf_add(&subtree_path, entry.path, entry.pathlen);
+> +                       strbuf_addch(&subtree_path, '/');
+
+Reconstructing the full path each time?  And despite only being useful
+for the sparse-index case?
+
+Would it be better to drop subtree_path from this function, then
+append entry.path + '/' here to tree_path, and then after the if-block
+below, call strbuf_setlen to remove the part that this function call
+added?  That way, we don't need subtree_path, and don't have to copy
+the leading path every time.
+
+Also, maybe it'd be better to only do this strbuf manipulation if
+r->index->sparse_index, since it's not ever used otherwise?
+
+> +
+> +                       /*
+> +                        * If a sparse index is in use, the directory being processed may be
+> +                        * sparse. To confirm that, we can check whether an entry with that
+> +                        * exact name exists in the index. If it does, the created subtree
+> +                        * should be sparse. Otherwise, cache tree expansion should continue
+> +                        * as normal.
+> +                        */
+> +                       if (r->index->sparse_index &&
+> +                           index_entry_exists(r->index, subtree_path.buf, subtree_path.len))
+> +                               prime_cache_tree_sparse_dir(r, sub->cache_tree, subtree, &subtree_path);
+> +                       else
+> +                               prime_cache_tree_rec(r, sub->cache_tree, subtree, &subtree_path);
+>                         cnt += sub->cache_tree->entry_count;
+>                 }
+>         }
+>         it->entry_count = cnt;
+> +
+> +       strbuf_release(&subtree_path);
+>  }
+>
+>  void prime_cache_tree(struct repository *r,
+>                       struct index_state *istate,
+>                       struct tree *tree)
+>  {
+> +       struct strbuf tree_path = STRBUF_INIT;
+> +
+>         trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
 >         cache_tree_free(&istate->cache_tree);
 >         istate->cache_tree = cache_tree();
 >
-> +       ensure_full_index(istate);
->         prime_cache_tree_rec(r, istate->cache_tree, tree);
+> -       ensure_full_index(istate);
+> -       prime_cache_tree_rec(r, istate->cache_tree, tree);
+> +       prime_cache_tree_rec(r, istate->cache_tree, tree, &tree_path);
+> +       strbuf_release(&tree_path);
 >         istate->cache_changed |= CACHE_TREE_CHANGED;
 >         trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
+>  }
+> diff --git a/cache.h b/cache.h
+> index f6295f3b048..1d3e4665562 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -816,6 +816,16 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
+>   */
+>  int index_name_pos(struct index_state *, const char *name, int namelen);
+>
+> +/*
+> + * Determines whether an entry with the given name exists within the
+> + * given index. The return value is 1 if an exact match is found, otherwise
+> + * it is 0. Note that, unlike index_name_pos, this function does not expand
+> + * the index if it is sparse. If an item exists within the full index but it
+> + * is contained within a sparse directory (and not in the sparse index), 0 is
+> + * returned.
+> + */
+> +int index_entry_exists(struct index_state *, const char *name, int namelen);
+> +
+>  /*
+>   * Some functions return the negative complement of an insert position when a
+>   * precise match was not found but a position was found where the entry would
+> diff --git a/read-cache.c b/read-cache.c
+> index f5d4385c408..ea1166895f8 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -551,7 +551,10 @@ int cache_name_stage_compare(const char *name1, int len1, int stage1, const char
+>         return 0;
+>  }
+>
+> -static int index_name_stage_pos(struct index_state *istate, const char *name, int namelen, int stage)
+> +static int index_name_stage_pos(struct index_state *istate,
+> +                               const char *name, int namelen,
+> +                               int stage,
+> +                               int search_sparse)
+
+It'd be nicer to make search_sparse an enum defined within this file, so that...
+
+>  {
+>         int first, last;
+>
+> @@ -570,7 +573,7 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
+>                 first = next+1;
+>         }
+>
+> -       if (istate->sparse_index &&
+> +       if (search_sparse && istate->sparse_index &&
+>             first > 0) {
+>                 /* Note: first <= istate->cache_nr */
+>                 struct cache_entry *ce = istate->cache[first - 1];
+> @@ -586,7 +589,7 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
+>                     ce_namelen(ce) < namelen &&
+>                     !strncmp(name, ce->name, ce_namelen(ce))) {
+>                         ensure_full_index(istate);
+> -                       return index_name_stage_pos(istate, name, namelen, stage);
+> +                       return index_name_stage_pos(istate, name, namelen, stage, search_sparse);
+>                 }
+>         }
+>
+> @@ -595,7 +598,12 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
+>
+>  int index_name_pos(struct index_state *istate, const char *name, int namelen)
+>  {
+> -       return index_name_stage_pos(istate, name, namelen, 0);
+> +       return index_name_stage_pos(istate, name, namelen, 0, 1);
+
+...this could use SEARCH_SPARSE or some name like that which is more
+meaningful than "1" here.
+
+> +}
+> +
+> +int index_entry_exists(struct index_state *istate, const char *name, int namelen)
+> +{
+> +       return index_name_stage_pos(istate, name, namelen, 0, 0) >= 0;
+
+...and likewise this spot could use SEARCH_FULL or some name like
+that, which is more meaningful than the second "0".
+
+Similarly for multiple call sites below...
+
+
+>  }
+>
+>  int remove_index_entry_at(struct index_state *istate, int pos)
+> @@ -1222,7 +1230,7 @@ static int has_dir_name(struct index_state *istate,
+>                          */
+>                 }
+>
+> -               pos = index_name_stage_pos(istate, name, len, stage);
+> +               pos = index_name_stage_pos(istate, name, len, stage, 1);
+>                 if (pos >= 0) {
+>                         /*
+>                          * Found one, but not so fast.  This could
+> @@ -1322,7 +1330,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+>                 strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
+>                 pos = index_pos_to_insert_pos(istate->cache_nr);
+>         else
+> -               pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+> +               pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), 1);
+>
+>         /* existing match? Just replace it. */
+>         if (pos >= 0) {
+> @@ -1357,7 +1365,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+>                 if (!ok_to_replace)
+>                         return error(_("'%s' appears as both a file and as a directory"),
+>                                      ce->name);
+> -               pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+> +               pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), 1);
+>                 pos = -pos-1;
+>         }
+>         return pos + 1;
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index f0723a6ac97..e301ef5633a 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -786,9 +786,9 @@ test_expect_success 'sparse-index is not expanded' '
+>         ensure_not_expanded checkout - &&
+>         ensure_not_expanded switch rename-out-to-out &&
+>         ensure_not_expanded switch - &&
+> -       git -C sparse-index reset --hard &&
+> +       ensure_not_expanded reset --hard &&
+>         ensure_not_expanded checkout rename-out-to-out -- deep/deeper1 &&
+> -       git -C sparse-index reset --hard &&
+> +       ensure_not_expanded reset --hard &&
+>         ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1 &&
+>
+>         echo >>sparse-index/README.md &&
+> @@ -798,6 +798,17 @@ test_expect_success 'sparse-index is not expanded' '
+>         echo >>sparse-index/untracked.txt &&
+>         ensure_not_expanded add . &&
+>
+> +       for ref in update-deep update-folder1 update-folder2 update-deep
+> +       do
+> +               echo >>sparse-index/README.md &&
+> +               ensure_not_expanded reset --hard $ref || return 1
+> +       done &&
+> +
+> +       ensure_not_expanded reset --hard update-deep &&
+> +       ensure_not_expanded reset --keep base &&
+> +       ensure_not_expanded reset --merge update-deep &&
+> +       ensure_not_expanded reset --hard &&
+> +
+>         ensure_not_expanded checkout -f update-deep &&
+>         test_config -C sparse-index pull.twohead ort &&
+>         (
 > --
 > gitgitgadget
->
