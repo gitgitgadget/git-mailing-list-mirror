@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFFC4C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8094C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:04:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF3CA610CE
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:00:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1D2F6113A
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 02:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237148AbhJFCCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Oct 2021 22:02:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36096 "EHLO
+        id S237181AbhJFCGm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Oct 2021 22:06:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233994AbhJFCCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Oct 2021 22:02:20 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C11E0C061749
-        for <git@vger.kernel.org>; Tue,  5 Oct 2021 19:00:28 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id p11so3640368edy.10
-        for <git@vger.kernel.org>; Tue, 05 Oct 2021 19:00:28 -0700 (PDT)
+        with ESMTP id S233994AbhJFCGl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Oct 2021 22:06:41 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0BBC061749
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 19:04:50 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z20so3601531edc.13
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 19:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=a4+sn9r5zjbQ9meyOwtHHDuOk6QZ/SW5QHRDQ/qyn2s=;
-        b=ntnj9WarfpnYB7J+2Z0AbzvzRKOToWG1mpuzcenHIIG0kPn9QLdo7H6fd86UlVd86l
-         cqK/WWmDk8jPtWP+0npdDjBMoH2Bk2SiRySABa5ngaQtj3tzoUwc73tehjHZJZEzT3aN
-         rnZUQYF1T83/ZfLdm7bAnKYZ/xbygHaYpDh9bKFPIDO9n6O8O14aFL5J0aVwefObX3IQ
-         M54gWFr9iwHIrJSGbVUpstQ+2dwuvUFyrYMTa5/tDEv4B1Z+zgVRGmzpz0g3qMw0CExp
-         yJc3ohLwkfPbtC1ZXR835CuK+Fyiv/EdWxtJBz/Ir8RMzpjQKWQEvKLZfozFqCimJfXs
-         tgNg==
+        bh=ll+6k6dJT5ELu4/vgGxnGEaTMPGFZ+qXrhcmwY4iCk0=;
+        b=XJPWWND06fVBEwUHEpJBJtgR8HYNmjIXaQmzMHw1xjmIQGWepj5awOL35GO7U5x2tP
+         6bX/ml/wV0hsrg1anIF9FLo0rgEa2oZ3tvHKwZ9Cau1LyUgBImXdgxddV/a2M7EDh+n7
+         IAxV23X9yDJsP6vzEJs5IH3TxLXcUqZkj7v6Lr8XgqW0BmfX/zK3JZEY31Re61sD2p+4
+         Kb6BWmN0siEU9fo7QMhePLcJxa1BQYatg2mSI0oNuBAMa86489pYy/0TeI4sst7sZrDv
+         P6wEgacEt+4AXxWXnztuWLnxNQRRQWOYVAFPFlj/KdC9psKLVjVCNJk/sPtn1CJRWpTR
+         7GAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=a4+sn9r5zjbQ9meyOwtHHDuOk6QZ/SW5QHRDQ/qyn2s=;
-        b=DrkZfhvn9lLVSkWjPAripNkJvbYjfUwotRX5hHHE7Ot39LeJDm92zFpZ7lPjogWitx
-         eYGcDCw9eZx9zthPGukyFRGEMPIcta5sXx/zTYnMv6ZzDZSGZA262tVkhWQUwF/bf3Mf
-         vA1PhPclcNJM4edOlqWF9UMzwuFshwYJXdXBMoAIG1mkb4E9FNyOR/LVxT8JNBnTzUf7
-         4MneiqXqG3tQxAbjwnPMvPlYQ9tRSKtN8jzPiF34dBeucZxoWM6uBhkWc5KAdmJGxUwo
-         ONElGkLHeUqTkSxRWJ8Lqm+u8AXn6/7D+40E2NxX83r1NYHlihMoILDbFKV0cYgBJZ7l
-         YS8Q==
-X-Gm-Message-State: AOAM531zMBN43SUrh3zuOCM0Lj+mYMZ7Qn3BUw5zzXqmKIF/lg4KsYrm
-        8PRf5xLRfzpl1tAXSNtkev4h//nlXAgcjzWHtGT2+ptIWY0=
-X-Google-Smtp-Source: ABdhPJxntWBr0n6QFphwuZR+MSahQcC2erSTLv/3GNt4/HKNooY328WLw/ut8ybl/UzJhWIgipqw1Y6tOHzowL9gMgk=
-X-Received: by 2002:a17:906:544f:: with SMTP id d15mr29350052ejp.520.1633485627203;
- Tue, 05 Oct 2021 19:00:27 -0700 (PDT)
+        bh=ll+6k6dJT5ELu4/vgGxnGEaTMPGFZ+qXrhcmwY4iCk0=;
+        b=IvJ4/ErMm+q8Q/20ftOGpFp94j6auIBhlISXNyl/0+9rkU19sn+gSXaeg1NXNBLMTy
+         BDnSk5P7VhutBKGuz1i/S50TIqZOBmYlFzWLbf4hXgz8aaG/456UA7Vhm9AyjkmBpzoT
+         7bPa3rjLm1OYPqHmASfg/TKQkr5o5pjExc6jq8iyt4PnNnvdIIIXhpnFlhVkkjIUVj5D
+         FBdznrJwLgP30Gkv0kMutiPhJWtwmW1+tbQJR+8/tfqD3yrHwBcMA+NsYHHfY9fZamZe
+         Da5t6Rdox4XRMSGiDGwK/x86eIjghHJtoUvR+aDbPmC+3Ocko5JlsQcK/taFZFujdHJe
+         LeJA==
+X-Gm-Message-State: AOAM533MTIW+Z2r7BQIdkJeT5YeNveKMMQtNdSRxve3Q/xI+ouBvPxi4
+        0/eBR2bBCZx6+HovUfhEYIXw/D9utH3IvMeNCnV8iCFKnM4=
+X-Google-Smtp-Source: ABdhPJxtu7IO8gRfQ5dAz7D4VNcVXpW+u0zmWF4WknqC0xDmsv7vQpxUT5WpAB0V951myiW5XFjQiYSHw4k1BO0FoWU=
+X-Received: by 2002:a17:906:2f10:: with SMTP id v16mr29017578eji.434.1633485888629;
+ Tue, 05 Oct 2021 19:04:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
- <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com> <f7cb9013d46731855c3ed42add62b021c0ad0c73.1633440057.git.gitgitgadget@gmail.com>
-In-Reply-To: <f7cb9013d46731855c3ed42add62b021c0ad0c73.1633440057.git.gitgitgadget@gmail.com>
+ <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com> <c7e9d9f4e03fe0dbd8a112460f0ac0864f087c8f.1633440057.git.gitgitgadget@gmail.com>
+In-Reply-To: <c7e9d9f4e03fe0dbd8a112460f0ac0864f087c8f.1633440057.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 5 Oct 2021 19:00:16 -0700
-Message-ID: <CABPp-BHD3khX+q7crk4JnNbGd9fN-vJW0L1x=5JdzkFL6X1BBg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] update-index: add --force-full-index option for
- expand/collapse test
+Date:   Tue, 5 Oct 2021 19:04:37 -0700
+Message-ID: <CABPp-BFAiPsHZPjJtuuqfuxt950yo-pqpKD8TG9sNWDs-bEbEw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/7] reset: expand test coverage for sparse checkouts
 To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
@@ -67,116 +66,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 5, 2021 at 6:20 AM Victoria Dye via GitGitGadget
+On Tue, Oct 5, 2021 at 6:21 AM Victoria Dye via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Victoria Dye <vdye@github.com>
 >
-> Add a new `--force-full-index` option to `git update-index`, which skips
-> explicitly setting `command_requires_full_index`. This lets `git
-> update-index --force-full-index` run as a command without sparse index
-> compatibility implemented, even after it receives sparse index compatibility
-> updates.
+> Add new tests for `--merge` and `--keep` modes, as well as mixed reset with
+> pathspecs both inside and outside of the sparse checkout definition. New
+> performance test cases exercise various execution paths for `reset`.
 >
-> By using `git update-index --force-full-index` in the `t1092` test
-> `sparse-index is expanded and converted back`, commands can continue to
-> integrate with the sparse index without the need to keep modifying the
-> command used in the test.
-
-So...we're adding a permanent user-facing command line flag, whose
-purpose is just to help us with the transition work of implementing
-sparse indexes everywhere?  Am I reading that right, or is that just
-the reason for t1092 and there are more reasons for it elsewhere?
-
-Also, I'm curious if update-index is the right place to add this.  If
-you don't want a sparse index anymore, wouldn't a user want to run
-   git sparse-checkout disable
-?  Or is the point that you do want to keep the sparse checkout, but
-you just don't want the index to also be sparse?  Still, even in that
-case, it seems like adding a subcommand or flag to an existing
-sparse-checkout subcommand would feel more natural, since
-sparse-checkout is the command the user uses to request to get into a
-sparse-checkout and sparse index.
-
-
+> Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > Signed-off-by: Victoria Dye <vdye@github.com>
 > ---
->  Documentation/git-update-index.txt       |  5 +++++
->  builtin/update-index.c                   | 11 +++++++++++
->  t/t1092-sparse-checkout-compatibility.sh |  2 +-
->  3 files changed, 17 insertions(+), 1 deletion(-)
+>  t/perf/p2000-sparse-operations.sh        |   3 +
+>  t/t1092-sparse-checkout-compatibility.sh | 107 +++++++++++++++++++++++
+>  2 files changed, 110 insertions(+)
 >
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index 2853f168d97..06255e321a3 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -24,6 +24,7 @@ SYNOPSIS
->              [--[no-]fsmonitor]
->              [--really-refresh] [--unresolve] [--again | -g]
->              [--info-only] [--index-info]
-> +            [--force-full-index]
->              [-z] [--stdin] [--index-version <n>]
->              [--verbose]
->              [--] [<file>...]
-> @@ -170,6 +171,10 @@ time. Version 4 is relatively young (first released in 1.8.0 in
->  October 2012). Other Git implementations such as JGit and libgit2
->  may not support it yet.
+> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+> index 597626276fb..bfd332120c8 100755
+> --- a/t/perf/p2000-sparse-operations.sh
+> +++ b/t/perf/p2000-sparse-operations.sh
+> @@ -110,5 +110,8 @@ test_perf_on_all git add -A
+>  test_perf_on_all git add .
+>  test_perf_on_all git commit -a -m A
+>  test_perf_on_all git checkout -f -
+> +test_perf_on_all git reset
+> +test_perf_on_all git reset --hard
+> +test_perf_on_all git reset -- does-not-exist
 >
-> +--force-full-index::
-> +       Force the command to operate on a full index, expanding a sparse
-> +       index if necessary.
-> +
->  -z::
->         Only meaningful with `--stdin` or `--index-info`; paths are
->         separated with NUL character instead of LF.
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 187203e8bb5..32ada3ead77 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -964,6 +964,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->         int split_index = -1;
->         int force_write = 0;
->         int fsmonitor = -1;
-> +       int use_default_full_index = 0;
->         struct lock_file lock_file = LOCK_INIT;
->         struct parse_opt_ctx_t ctx;
->         strbuf_getline_fn getline_fn;
-> @@ -1069,6 +1070,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                 {OPTION_SET_INT, 0, "no-fsmonitor-valid", &mark_fsmonitor_only, NULL,
->                         N_("clear fsmonitor valid bit"),
->                         PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
-> +               OPT_SET_INT(0, "force-full-index", &use_default_full_index,
-> +                       N_("run with full index explicitly required"), 1),
->                 OPT_END()
->         };
->
-> @@ -1082,6 +1085,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->         if (newfd < 0)
->                 lock_error = errno;
->
-> +       /*
-> +        * If --force-full-index is set, the command should skip manually
-> +        * setting `command_requires_full_index`.
-> +        */
-> +       prepare_repo_settings(r);
-> +       if (!use_default_full_index)
-> +               r->settings.command_requires_full_index = 1;
-> +
->         entries = read_cache();
->         if (entries < 0)
->                 die("cache corrupted");
+>  test_done
 > diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index c5977152661..b3c0d3b98ee 100755
+> index b3c0d3b98ee..f0723a6ac97 100755
 > --- a/t/t1092-sparse-checkout-compatibility.sh
 > +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -642,7 +642,7 @@ test_expect_success 'sparse-index is expanded and converted back' '
+> @@ -479,6 +479,113 @@ test_expect_success 'checkout and reset (mixed) [sparse]' '
+>         test_sparse_match git reset update-folder2
+>  '
+>
+> +# NEEDSWORK: with mixed reset, files with differences between HEAD and <commit>
+> +# will be added to the work tree even if outside the sparse checkout
+> +# definition, and even if the file is modified to a state of having no local
+> +# changes. The file is "re-ignored" if a hard reset is executed. We may want to
+> +# change this behavior in the future and enforce that files are not written
+> +# outside of the sparse checkout definition.
+
+Yeah, I think this comment highlights some of the reasons that writing
+the file to the working directory for those files isn't the way I'd
+prefer to resolve the inconsistency between the skip-worktree bit and
+the presence of the file in the working directory.
+
+> +test_expect_success 'checkout and mixed reset file tracking [sparse]' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       test_all_match git reset update-folder1 &&
+> +       test_all_match git reset update-deep &&
+> +
+> +       # At this point, there are no changes in the working tree. However,
+> +       # folder1/a now exists locally (even though it is outside of the sparse
+> +       # paths).
+> +       run_on_sparse test_path_exists folder1 &&
+> +
+> +       run_on_all rm folder1/a &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git reset --hard update-deep &&
+> +       run_on_sparse test_path_is_missing folder1 &&
+> +       test_path_exists full-checkout/folder1
+> +'
+> +
+> +test_expect_success 'checkout and reset (merge)' '
+> +       init_repos &&
+> +
+> +       write_script edit-contents <<-\EOF &&
+> +       echo text >>$1
+> +       EOF
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       run_on_all ../edit-contents a &&
+> +       test_all_match git reset --merge deepest &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git reset --hard update-deep &&
+> +       run_on_all ../edit-contents deep/a &&
+> +       test_all_match test_must_fail git reset --merge deepest
+> +'
+> +
+> +test_expect_success 'checkout and reset (keep)' '
+> +       init_repos &&
+> +
+> +       write_script edit-contents <<-\EOF &&
+> +       echo text >>$1
+> +       EOF
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       run_on_all ../edit-contents a &&
+> +       test_all_match git reset --keep deepest &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git reset --hard update-deep &&
+> +       run_on_all ../edit-contents deep/a &&
+> +       test_all_match test_must_fail git reset --keep deepest
+> +'
+> +
+> +test_expect_success 'reset with pathspecs inside sparse definition' '
+> +       init_repos &&
+> +
+> +       write_script edit-contents <<-\EOF &&
+> +       echo text >>$1
+> +       EOF
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       run_on_all ../edit-contents deep/a &&
+> +
+> +       test_all_match git reset base -- deep/a &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git reset base -- nonexistent-file &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git reset deepest -- deep &&
+> +       test_all_match git status --porcelain=v2
+> +'
+> +
+> +test_expect_success 'reset with sparse directory pathspec outside definition' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       test_all_match git reset --hard update-folder1 &&
+> +       test_all_match git reset base -- folder1 &&
+> +       test_all_match git status --porcelain=v2
+> +'
+> +
+> +test_expect_success 'reset with pathspec match in sparse directory' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       test_all_match git reset --hard update-folder1 &&
+> +       test_all_match git reset base -- folder1/a &&
+> +       test_all_match git status --porcelain=v2
+> +'
+> +
+> +test_expect_success 'reset with wildcard pathspec' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       test_all_match git reset --hard update-folder1 &&
+> +       test_all_match git reset base -- \*/a &&
+> +       test_all_match git status --porcelain=v2
+> +'
+> +
+>  test_expect_success 'merge, cherry-pick, and rebase' '
 >         init_repos &&
 >
->         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> -               git -C sparse-index -c core.fsmonitor="" reset --hard &&
-> +               git -C sparse-index -c core.fsmonitor="" update-index --force-full-index &&
->         test_region index convert_to_sparse trace2.txt &&
->         test_region index ensure_full_index trace2.txt
->  '
 > --
 > gitgitgadget
+>
