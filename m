@@ -2,246 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3495C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51E16C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:33:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9507C60F5D
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:32:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A08A61151
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 20:33:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239483AbhJFUev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 16:34:51 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56357 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229737AbhJFUeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 16:34:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1633552368;
-        bh=3zN/GNowWxkVEO8IGMXf0Kbx8JkGsaUZQViUg08bEc0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RKYk5uASD5wPBmhl35MsGhJPYTHgMdGlI8AbUH5eZPe6A4AP5eV1ep9LxJWTYyEa6
-         zrOB3igqefT8jioi0S/Tmi9RBmvJTuQQtcKRw8Z/9TWKHvD4L3rid74ZWCxvBsM35f
-         44bmqD5FmOU4cAGrNXp+v0FarsJfo0rikBaCHmmc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.23.42] ([46.183.103.8]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvbBu-1moMlU3WUQ-00safX; Wed, 06
- Oct 2021 22:32:48 +0200
-Date:   Wed, 6 Oct 2021 22:32:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 04/15] scalar: 'register' sets recommended config and
- starts maintenance
-In-Reply-To: <CABPp-BG_wupp1o5bBSYOJSvF3eJjf=TbX0RBHqqKuD+3F8s6hw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2110062211500.395@tvgsbejvaqbjf.bet>
-References: <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com> <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com> <bbbc4c3339043bcd718dd2defcbaaaac2092227a.1631630356.git.gitgitgadget@gmail.com>
- <CABPp-BG_wupp1o5bBSYOJSvF3eJjf=TbX0RBHqqKuD+3F8s6hw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S239461AbhJFUfi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 16:35:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239490AbhJFUff (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 16:35:35 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD1DC061760
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 13:33:43 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id c20so4041865qtb.2
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 13:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=qsdruNHxgcnZb3nZVVn4a07mL0/5WWiNxcKsqpclHSo=;
+        b=APwZwGZ2QjrGFExD+/NVxIfLm40KTt+TBUL7JyGUNjxjzOXtM2NzFPryun+safyrSt
+         PSbXCNRTQjygLhv4pH7w6RfCE/KPm5+Do3xOKZ4h9WP596GuovLgOAP6LA6yV7Z+C3X6
+         K23x+sKmMmyc0HDhieOAm6PuN5hy5+tl33nYXazrtXgGydvxbY4fvLxgLB0OnIZ/7eOv
+         Kt1GVrpsvPRXTXenqQrbf/OWGcgNwNdVC+2l5WK0fZIYzkeYwLT+Y5p4FZDZiCvDN+bY
+         NVU6mluMSL5v6hFeTMl70dnuH8U145Pz4k9wjoh1HW4U34IHZZpVD3kSjtq9qTJ8pL/s
+         N6pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=qsdruNHxgcnZb3nZVVn4a07mL0/5WWiNxcKsqpclHSo=;
+        b=ED0zk1XLZWO8mViCSwxmm7COszuzzKjMe5n/1YR8UyuH1+hMQWfqvUVvSRD31/1/5P
+         JZAran97O0lII9yMzutalFv6LbCFDQ1HcYxc9A/PZsSmq6+fb7HGPyJHVlTeW0h62tZm
+         59l1XY95Rr1s39MfudUx20SYiepuKHgccMpYHFd+LyZNuiobqaMYzSmJNx0AcDW4wHKP
+         RagxcayV5gVr4VBni2/X9PitgPi2aFTDiKGfqlaVBhqDNHIY7v4f2FBF8Wyia92cMQpW
+         cAzH0+xkjQHFBtztLzrjFN2s4dDiiAsKDACq0eYAkKglxLABYDXu1fxrT0PhnY4UFy1R
+         3iYw==
+X-Gm-Message-State: AOAM532aU/2nJz4HrT/fnZVCXFBT4wqWSZo349tPwawNcbW+YN3A4f16
+        x6azxV+nMo14qgktQxo1+63whVBJjS8=
+X-Google-Smtp-Source: ABdhPJzc7u1ayx2qRL5HBBJktnzXcKuQR1W9hG5Q6xYKi3ktVtfvpvdbrGQfSK90PPtBGMYPUSxMTQ==
+X-Received: by 2002:a05:622a:144b:: with SMTP id v11mr332960qtx.320.1633552422110;
+        Wed, 06 Oct 2021 13:33:42 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:a5f2:2ad3:7396:8f96? ([2600:1700:e72:80a0:a5f2:2ad3:7396:8f96])
+        by smtp.gmail.com with ESMTPSA id w185sm12582450qkd.30.2021.10.06.13.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Oct 2021 13:33:41 -0700 (PDT)
+Message-ID: <adfa8780-197f-56a7-4977-d9ff96280ab4@gmail.com>
+Date:   Wed, 6 Oct 2021 16:33:38 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Lnp3TkImKNZiyrDta7PdIobT4lLr6SaqFWT/fJUrhVL1WydC9gx
- E7QmTqxZHfH7lhRJxdt1DGuxcQZWHQZI4ZiJ3NddxBlRVmOGr57liP60DVF2lXRajLKc3KQ
- N3PhtmO1FrgJenvCq9wE/cXf+R+moz+/r4Xnp+J/CsCux76t9nbZDzGWdECNtWcxhbCtLdB
- 3UenoGVDfmp92wkrn9KeA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EDIFLr8/y1I=:wK3L5e3FLIpvAfbe5cp+Ml
- 0hkP8F1rLdq/J0C0PztekAkPL9OtOgigkPVW3Xg+S3qh7/jKaGfTImrF1vV/5fN5pztMLqTSb
- 2FzQOILaHsy3pefeS9+ImhPdUQE8ebLk2aKAlSVV+dIsWPjGVY9KIOw0erSRCgPPJ0ChWlgTN
- TKwHd9uJZus78s2ZuwljcUEqm/rxyFsAlCK0DGxd33meu8bihPhAfvzZ3LvBPAYLsw6f67Ii1
- ddK8yQQnuWe20zGKc65MZgLW1wCscwxLQNqK2hOfm+f58Db4HQvjs0WW59HfPLfYTZ76DP7zB
- nGT9S6IW4QnFdGnIAXiphadIUTmsHs7Qu+yhblRA9XF/PsU1mDEH7rKy10QPj20xZyDU+BvGY
- e1oHVhfct9Sf2UOFL2hBRpXzwPLHCJUony5aUCBrFVDJKOZ+RcmCKK5RF/03vJEhDuJKMaPIJ
- AvWDSdiHtwmPx7oTsChb2Xu/UURdAGqnOWAufxiNrjeuree77Z1P/1q+sZviMPITD3k2cYl4E
- mfhF07sn8SIaluvnkf5m4RHG9ljO6or2zW5VKih9tAubdqjjBh/qFF+VITc4CDHgC20d9CTvF
- LJ5s2E1K7QrNcTMAT5o7XxcA54zVAfnAI1WheX2DOl2qdSxb37eI5HlQOFgQsacxU3FhVxUn9
- GgQseSkyMBez7oxq2PGJiIf/lahwvaz6F1cAXk6H+oyhyBoFctFC+30NMzLE5dQN0+NpGYtpQ
- PtOsPj30JBAKygak2A+ODhoy6HcPwe/reyKx13d9h4GfqvnJhCLydrKWYy5YR9JVBqcQb4vyd
- n+yYHLIHGlyXeEoGsUw870xCeX8AJ4zHM64uZW7deIXo9HuNn3+DgobmEM9j4njr1ch1Ie+vz
- amtEdL18vhUyhXnJGinWTKxFSCNa4nMDO5jHKHqJmeYo0pX2VQn3d5L8ie0Dtdw5lyGlD5pDV
- S3w9z6mAy1wtYpy1mRc6w8yQQUbGGdhaMhHLsnHqQfrssnEPQbknCAglJntme4jWfe1Lg3sBg
- yAWvo89Nx1FR12/yP1yojlx8Vh80/icqmSOThGZScHdLzXUA59KwIzI983LIs3UYTZmQnB1Dc
- ri6EOypjXfGTm8M66XG2q5X1P9mDxutAFlu
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCH 3/5] cat-file: disable refs/replace with
+ --batch-all-objects
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
+ <YVy3N7ZX+s6Mi93y@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <YVy3N7ZX+s6Mi93y@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On 10/5/2021 4:36 PM, Jeff King wrote:
+> When we're enumerating all objects in the object database, it doesn't
+> make sense to respect refs/replace. The point of this option is to
+> enumerate all of the objects in the database at a low level. By
+> definition we'd already show the replacement object's contents (under
+> its real oid), and showing those contents under another oid is almost
+> certainly working against what the user is trying to do.
+...
+> So it has worked reliably this way for over 7 years, and we should make
+> sure it continues to do so. That could also be an argument that
+> --batch-all-objects should not change behavior (which this patch is
+> doing), but I really consider the current behavior to be an unintended
+> bug. It's a side effect of how the code is implemented (feeding the oids
+> back into oid_object_info() rather than looking at what we found while
+> reading the loose and packed object storage).
 
-On Mon, 27 Sep 2021, Elijah Newren wrote:
+I'm with you on thinking this is a bug.
 
-> On Tue, Sep 14, 2021 at 7:39 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> ...
-> > +static int set_recommended_config(void)
-> > +{
-> > +       struct {
-> > +               const char *key;
-> > +               const char *value;
-> > +       } config[] =3D {
-> > +               { "am.keepCR", "true" },
-> > +               { "core.FSCache", "true" },
-> > +               { "core.multiPackIndex", "true" },
-> > +               { "core.preloadIndex", "true" },
-> > +#ifndef WIN32
-> > +               { "core.untrackedCache", "true" },
-> > +#else
-> > +               /*
-> > +                * Unfortunately, Scalar's Functional Tests demonstrat=
-ed
-> > +                * that the untracked cache feature is unreliable on W=
-indows
-> > +                * (which is a bummer because that platform would bene=
-fit the
-> > +                * most from it). For some reason, freshly created fil=
-es seem
-> > +                * not to update the directory's `lastModified` time
-> > +                * immediately, but the untracked cache would need to =
-rely on
-> > +                * that.
-> > +                *
-> > +                * Therefore, with a sad heart, we disable this very u=
-seful
-> > +                * feature on Windows.
-> > +                */
-> > +               { "core.untrackedCache", "false" },
-> > +#endif
->
-> Interesting.  (I'm somewhat leery of the untrackedCache just knowing
-> that it used to operate despite an exponential number of visits to
-> files (exponential in depth of directories) and getting different
-> answers with different visits, making me feel like it was black magic
-> that it ever worked and wondering what kind of corner case issues
-> still lurk with it.  See e.g.
-> https://lore.kernel.org/git/CABPp-BFiwzzUgiTj_zu+vF5x20L0=3D1cf25cHwk7KZ=
-Qj2YkVzXw@mail.gmail.com/)
+> The implementation is straight-forward: we just disable the global
+> read_replace_refs flag when we're in --batch-all-objects mode. It would
+> perhaps be a little cleaner to change the flag we pass to
+> oid_object_info_extended(), but that's not enough. We also read objects
+> via read_object_file() and stream_blob_to_fd(). The former could switch
+> to its _extended() form, but the streaming code has no mechanism for
+> disabling replace refs. Setting the global flag works, and as a bonus,
+> it's impossible to have any "oops, we're sometimes replacing the object
+> and sometimes not" bugs in the output (like the ones caused by
+> 98e2092b50 above).
+...
+> Reading between the lines, you might guess that I also introduced a
+> "whoops, our size/content do not match" bug while trying the other
+> approach. ;)
 
-The implementation of the untracked cache certainly is quite a challenge
-to wrap one's head around, for sure. However, it does manage to speed up
-operations substantially (when it works).
+I understand this perspective. Turning the feature off is the only
+way to be sure.
 
-The real fun starts when you turn on the FSMonitor, though. Then it is
-reliable, all of a sudden! The reason seems to be some sort of delayed
-lastModified (AKA mtime) evaluation which is somehow triggered by
-FSMonitor ;-)
+Patch makes sense. I just wanted to :+1: your reasoning.
 
-So in microsoft/git, where we include FSMonitor and turn it on as part of
-`scalar clone`, we also enable the untracked cache, for noticeably happier
-users.
-
-> > +               { "core.logAllRefUpdates", "true" },
-> > +               { "credential.https://dev.azure.com.useHttpPath", "tru=
-e" },
->
-> Not only opinionated, but special configuration for certain sites?
-> I'm not complaining, just slightly surprised.
-
-Yes. I am not aware of other sites where you would want to use different
-credentials depending on the URL path, but Azure DevOps definitely is such
-a site, and therefore needs `useHttpPath`. Rather than requiring users to
-know this, we set it for them.
-
-> > +               { "credential.validate", "false" }, /* GCM4W-only */
-> > +               { "gc.auto", "0" },
-> > +               { "gui.GCWarning", "false" },
-> > +               { "index.threads", "true" },
-> > +               { "index.version", "4" },
->
-> I take it your users don't make use of jgit?
-
-Nope ;-) I doubt that the features we use to make Git scalable are
-implemented in JGit.
-
-> (Users aren't using jgit directly here, at least not to my knowledge,
-> but multiple gradle plugins do.)  I tried turning this on a while back,
-> and quickly got multiple reports of problems because jgit didn't
-> understand the index. I had to turn it off and send out various PSAs on
-> how to recover.
-
-TBH it gives me shivers of dread thinking about large
-repositories/worktrees being handled within a Java VM. The amount of,
-let's call it "non-canonical" code, required by JGit to make it somewhat
-performant, is staggering. Just think about the way you have to emulate
-mmap()ing part of a packfile and interpreting it as a packed C struct. I
-forgot the details, of course, and I am quite glad that I did.
-
-> > +               { "merge.stat", "false" },
-> > +               { "merge.renames", "false" },
->
-> Is this just historical and not needed anymore, is it here just for a
-> little longer and you are planning on transitioning away from this, or
-> are you still set on this setting?
-
-It is here mostly for historical reasons.
-
-> > +               { "pack.useBitmaps", "false" },
->
-> I don't understand anything bitmap related, but I thought they were
-> performance related, so I'm surprised by this one.  Is there a reason
-> for this one?  (Is it handled by maintenance instead?)
-
-Again, this is here for historical reasons. Scalar sets this, and my goal
-with this patch series is to port it from .NET to C. So I did not question
-the reasoning.
-
-My _guess_ however is that bitmaps really only work well when everything
-is in one single pack. Which is rather not the case with Scalar
-enlistments: they are way too large to be repacked all the time.
-
-> > +               { "pack.useSparse", "true" },
-> > +               { "receive.autoGC", "false" },
-> > +               { "reset.quiet", "true" },
-> > +               { "feature.manyFiles", "false" },
->
-> If you simply set core.untrackedCache to false _after_ setting
-> feature.manyFiles to true, would it make sense to switch this?  (Or
-> does it matter, since you've already individually set all the config
-> settings that this one would set?)
-
-Frankly, I was a bit puzzled why `feature.manyFiles` was set to `false`.
-The rationale is explained in
-https://github.com/microsoft/scalar/commit/2fc84dba9c95:
-
-	The feature.* config settings change the defaults for some other
-	config settings. We already monitor config settings pretty carefully,
-	so let's disable these.
-
-As to switching this, it shouldn't matter. The idea of `feature.*` is to
-set defaults, but not override any explicitly configured settings.
-
-> > +               { "feature.experimental", "false" },
-> > +               { "fetch.unpackLimit", "1" },
-> > +               { "fetch.writeCommitGraph", "false" },
-> > +#ifdef WIN32
-> > +               { "http.sslBackend", "schannel" },
-> > +#endif
-> > +               { "status.aheadBehind", "false" },
-> > +               { "commitGraph.generationVersion", "1" },
-> > +               { "core.autoCRLF", "false" },
-> > +               { "core.safeCRLF", "false" },
-> > +               { NULL, NULL },
-> > +       };
->
-> Are there easy-ish ways for other groups of users to adopt scalar but
-> change the list of config settings (e.g. index.version and
-> merge.renames) in some common way for all those users?
-
-Not in Scalar.
-
-I would hope, however, that we could figure out ways to make this more
-configurable when re-implementing this functionality in core Git. I have a
-couple ideas, but nothing fleshed out, and besides, I do not want to think
-too far ahead, I already made that mistake and then got bogged down in
-discussions about minimal vs non-minimal changes in the top-level Makefile
-;-)
-
-So yeah, good point, but it's probably not a good time yet to discuss this
-tangent.
-
-Thank you for reviewing,
-Dscho
+Thanks,
+-Stolee
