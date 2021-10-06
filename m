@@ -2,68 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2721FC433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 624B9C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:46:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0759F610A1
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:28:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48B4E610C7
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239239AbhJFTa3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 15:30:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34406 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229992AbhJFTa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 15:30:29 -0400
-Received: (qmail 26825 invoked by uid 109); 6 Oct 2021 19:28:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Oct 2021 19:28:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 431 invoked by uid 111); 6 Oct 2021 19:28:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Oct 2021 15:28:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 6 Oct 2021 15:28:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Alexander Mills <alexander.d.mills@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: add/init all git submodules that are referenced in .gitmodules
-Message-ID: <YV3444Bvvfzp37Di@coredump.intra.peff.net>
-References: <CA+KyZp75fjj9T0LjkpEjLMVf5KNguNZ1Ycxbb26ZnCGrK5zLAQ@mail.gmail.com>
+        id S239481AbhJFTsK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 15:48:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55754 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239360AbhJFTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 15:48:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A626015B649;
+        Wed,  6 Oct 2021 15:46:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7tgxcJAy/15XLUaOP+pgVicpXRq68x5mTy+V1V
+        mbWTo=; b=tdvblKvjlnsYxSNhYPAyzvVcf/gfH6d20uQkPaxpboykmTuhMPRJUG
+        LBit0LBt6U4OIGs7+P59VLxSVkWlSylp0or2+bKnWQ8RP2OV2yAjupo+dEtMCutZ
+        oZ+DoGnpbWDlYjruuG1q53DleY536C+mjZeteNcuPtM4K79Qduv3c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E5EB15B648;
+        Wed,  6 Oct 2021 15:46:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0752715B646;
+        Wed,  6 Oct 2021 15:46:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] object.[ch]: mark object type names for translation
+References: <cover-0.2-00000000000-20211004T013611Z-avarab@gmail.com>
+        <cover-v2-0.2-00000000000-20211004T142523Z-avarab@gmail.com>
+        <patch-v2-1.2-55bde16aa23-20211004T142523Z-avarab@gmail.com>
+        <YV3zZFOJd6blVGXn@coredump.intra.peff.net>
+Date:   Wed, 06 Oct 2021 12:46:12 -0700
+In-Reply-To: <YV3zZFOJd6blVGXn@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 6 Oct 2021 15:05:08 -0400")
+Message-ID: <xmqqv92aq6m3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+KyZp75fjj9T0LjkpEjLMVf5KNguNZ1Ycxbb26ZnCGrK5zLAQ@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 105841F4-26DE-11EC-B6F6-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 05, 2021 at 04:52:00PM -0700, Alexander Mills wrote:
+Jeff King <peff@peff.net> writes:
 
-> I am looking for this feature:
-> 
-> https://stackoverflow.com/a/69458406/1223975
-> 
-> it is really confusing as to why it doesn't exist
+> They all appear to want is as a noun. So maybe this is just
+> mis-translated for Spanish. It does feel like an accident in the making,
+> though.
 
-I'm not sure I understand what is being asked for.
+Probably we need pgettext().
 
-If you just want to initialize and populate all of the modules in
-.gitmodules (which is what I thought your subject line was asking for),
-then:
+https://www.gnu.org/software/gettext/manual/html_node/Contexts.html
 
-  git submodule update --init
+> I do wonder how useful it is to translate these type names in general.
+> Especially as used in this series, they're really technical terms, and
+> you are not going to escape the name "git commit" as a command.
 
-will do that (though of course if you are cloning anyway, you can just
-say "--recurse-submodules).
+I share the same feeling (I do not use translated git, either).
 
-But reading the original SO question, it is about finding repositories
-in the current directory that _aren't_ submodules, and then adding them.
-But those ones wouldn't be referenced in .gitmodules.
+> Now if you introduced type_name_human(), which auto-translated and
+> converted NULL to "unknown", then that would be easy to plug in
+> appropriately as you audited the callers.
 
-For that problem, no, I don't think there's an easy command, and you
-have to dig for them (though "git ls-files -o --exclude-standard" is
-perhaps a good way to locate them). But it's also not something I'd
-expect to be a very common operation, which is why there's not an
-existing command to do it.
+Yes.
 
--Peff
+>
+>>  static const char *object_type_strings[] = {
+>> ...
+>> +	N_("commit"),	/* OBJ_COMMIT = 1 */
+>> +	N_("tree"),	/* OBJ_TREE = 2 */
+>> +	N_("blob"),	/* OBJ_BLOB = 3 */
+>> +	N_("tag"),	/* OBJ_TAG = 4 */
+>>  };
+>
+> This does make me feel slightly uneasy, just because so many parts of
+> Git rely on these _not_ being translated. But I see in your other
+> response that N_() really does nothing. So aside from possibly
+> misleading readers of the code, I think this is probably OK.
+
+Yes, this may be scary looking but the least risky part of this
+patch, as N_() is no-op at runtime ;-).
+
