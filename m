@@ -2,121 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F4171C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 12:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2230C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 14:01:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD60961177
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 12:44:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC59F60E74
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 14:01:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238439AbhJFMqL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 08:46:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62290 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbhJFMqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 08:46:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B317EE75C6;
-        Wed,  6 Oct 2021 08:44:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=JfIFXrdQdLlx81Rwttnkzg/CGM/YIGUcjtrF/penQEg=; b=TM54
-        snk6w1aCElSaIVgjGKN7XlGb/OoWod0nhp/LP3LiG1NpcbbQNxV0bqLV5uurIeoa
-        kfkNARxyfQDo6xm1lA8oR2eAh8rQxANtF81RdLFKd/bFteRsGzKfONbEIiwf2/qF
-        FTHMiv3BeiXDOwf2V2xI9JdhrCJcWXTvIIxueoo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA6DEE75C5;
-        Wed,  6 Oct 2021 08:44:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10140E75C4;
-        Wed,  6 Oct 2021 08:44:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Kevin Willford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH v2 1/7] reset: behave correctly with sparse-checkout
-References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
-        <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
-        <22c69bc60308fef13acd7c3aab4e11e175c89440.1633440057.git.gitgitgadget@gmail.com>
-        <xmqqfstftgk6.fsf@gitster.g>
-        <9b99e856-24cc-03fd-7871-de92dc6e39b6@github.com>
-Date:   Wed, 06 Oct 2021 05:44:14 -0700
-Message-ID: <xmqq4k9utja9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231659AbhJFODQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 10:03:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238226AbhJFODP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 10:03:15 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661D3C061749
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 07:01:22 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id s15so9174813wrv.11
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 07:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=N3cslW84CyM68ivmphUrrwd7oxpuYRdBxhesyFeQHt4=;
+        b=ec3vMF8YHsrgG2PF4YS/JwICvS0pdht4l5WFQogutzzLd0xmKA5JRM06D2iFmr3o8k
+         El2LpjepHfqz/T95flbPiaqaAMfQNQpaucGw3ov8X57ytOUXqUFWaJyhGSKgbi1rN8A9
+         7YuAmKuRsPOvupz9JcHIoDkcvNmg1SPh2F+ngoKoNqGTM1CSmY9ChBMJtyN2x/69cKHX
+         EzIqQc2I9AtwVTGUsVY7OD1XAqcxIr1zTJx2POVC7+SddRI4NA55N8ATRLShMPCUEZM7
+         1SpIcKzRBPX0z4ha+smAiNx1NZZb5Y0pheXA64+Lb7o7TVfhkY6ncLPQeLQwz//ooJEp
+         ydBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=N3cslW84CyM68ivmphUrrwd7oxpuYRdBxhesyFeQHt4=;
+        b=eS+B73iYAeZyYjCcvn+SE9bubLQAUn/5j08P9cT4SmyP1i+Kkx+vft4AYKbeTcsQxN
+         uCkuifXBUilyh2fo7TSv2jv9uBV8aCdd0bwdDNttWfUpXS4XUD8d5yaOUqxAfw4q8xs1
+         I9QauV9u7kPMsP0+SnsY9LfTYiVeeEf5q1xNH+ANnN3ZV2kIcQNPlgNDaIDEdq9aNuAM
+         6hqzpe2SIo8OpQYrvnNLWGbjSOmOhUCYEUV4NIYHqjNSu1h9y6o0eLryryR9hivBFBJ8
+         GVCmajlb6INN5CDrP1B5BqE1MZ6GLkWJTQZ8cstNLZec71EiKgLcs1svCcp+oFKmBkm/
+         oHjQ==
+X-Gm-Message-State: AOAM532+ZhlIf9ATXRRpvbLUyZTWl+a5wDRska6+fy+Lz7PwG6rV/OBk
+        GAUJj3VwiCLbCmfx/31F5VA=
+X-Google-Smtp-Source: ABdhPJyQp1cdpWcjXGYipXRSqut90D6P19LvdUrvNgEsSbSFZaTdtH3pxF3IUIt3V8kUe9GTefa+kg==
+X-Received: by 2002:a1c:43c3:: with SMTP id q186mr9856443wma.143.1633528880983;
+        Wed, 06 Oct 2021 07:01:20 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id k188sm5501193wme.44.2021.10.06.07.01.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Oct 2021 07:01:20 -0700 (PDT)
+Message-ID: <cfd6f82d-01c3-d6be-a535-76255e599c89@gmail.com>
+Date:   Wed, 6 Oct 2021 15:01:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1DAA0E0E-26A3-11EC-9ED6-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] [RFC] sparse index: fix use-after-free bug in
+ cache_tree_verify()
+Content-Language: en-GB-large
+To:     Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, vdye@github.com
+References: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
+ <2b1f0e56-5bb4-7f41-5a1e-d8a21096084a@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <2b1f0e56-5bb4-7f41-5a1e-d8a21096084a@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+Hi Stolee
 
-> Thanks for the thorough explanation, I'm on-board with your approach (and
-> will re-roll the series with that implemented). A lot of my thought process
-> (and confusion) came from a comment in e5ca291076 (t1092: document bad
-> sparse-checkout behavior, 2021-07-14) suggesting that full and sparse
-> checkouts should have the same result in scenarios like the one you
-> outlined above.
+On 06/10/2021 12:20, Derrick Stolee wrote:
+> On 10/6/2021 5:29 AM, Phillip Wood via GitGitGadget wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> In a sparse index it is possible for the tree that is being verified
+>> to be freed while it is being verified. This happens when
+>> index_name_pos() looks up a entry that is missing from the index and
+>> that would be a descendant of a sparse entry. That triggers a call to
+>> ensure_full_index() which frees the cache tree that is being verified.
+>> Carrying on trying to verify the tree after this results in a
+>> use-after-free bug. Instead restart the verification if a sparse index
+>> is converted to a full index. This bug is triggered by a call to
+>> reset_head() in "git rebase --apply". Thanks to René Scharfe for his
+>> help analyzing the problem.
+> 
+> Thank you for identifying an interesting case! I hadn't thought to
+> change the mode from --merge to --apply.
 
-Thanks for bringing this up.  I agree that it is crucial to clarify
-what use case we are aiming for.  If the objective were to make a
-sparse checkout behave just like full checkout, the desired
-behaviour would be very different from a system whose objective is
-to allow users to pretend as if the hidden parts of sparse checkout
-do not even exist, which was the model my example was after.  I
-agree with you that the "comment" in an earlier commit may have been
-unhelpful in that they stopped at "should behave the same but they
-shouldn't" without saying "why they should behave the same".
+Thanks, I can't really take much credit for that though - Junio pointed 
+out that my patch converting the merge based rebase to use the same 
+checkout code as the apply based rebase broke a test in seen and René 
+diagnosed the problem.
 
-If the goal were to make sparse behave like full, continuing with
-the previous example, after a
+>>      In a sparse index it is possible for the tree that is being verified to
+>>      be freed while it is being verified. This is an RFC as I'm not familiar
+>>      with the cache tree code. I'm confused as to why this bug is triggered
+>>      by the sequence
+>>      
+>>      unpack_trees()
+>>      prime_cache_tree()
+>>      write_locked_index()
+>>      
+>>      but not
+>>      
+>>      unpack_trees()
+>>      write_locked_index()
+>>      
+>>      
+>>      as unpack_trees() appears to update the cache tree with
+>>      
+>>      if (!cache_tree_fully_valid(o->result.cache_tree))
+>>                  cache_tree_update(&o->result,
+>>                            WRITE_TREE_SILENT |
+>>                            WRITE_TREE_REPAIR);
+>>      
+>>      
+>>      and I don't understand why the cache tree from prime_cache_tree()
+>>      results in different behavior. It concerns me that this fix is hiding
+>>      another bug.
+> 
+> prime_cache_tree() appears to clear the cache tree and start from scratch
+> from a tree object instead of using the index.
+> 
+> In particular, prime_cache_tree_rec() does not stop at the sparse-checkout
+> cone, so the cache tree is the full size at that point.
+> 
+> When the verify_one() method reaches these nodes that are outside of the
+> cone, index_name_pos() triggers the index expansion in a way that the
+> cache-tree that is restricted to the sparse-checkout cone does not.
+> 
+> Hopefully that helps clear up _why_ this happens.
 
-    $ git reset --mixed HEAD^
+It does thanks - we end up with a full cache tree but a sparse index
 
-the user should be able to say
+> There is a remaining issue that "git rebase --apply" will be a lot slower
+> than "git rebase --merge" because of this construction of a cache-tree
+> that is much larger than necessary.
+> 
+> I will make note of this as a potential improvement for the future.
 
-    $ git commit -a --amend
+I think I'm going to remove the call to prime_cache_tree(). Correct me 
+if I'm wrong but as I understand it unpack_trees() updates the cache 
+tree so the call to prime_cache_tree() is not needed (I think it was 
+copied from builtin/rebase.c which does need to call prime_cache_tree() 
+if it has updated a few paths rather than the whole top-level tree). In 
+any case I've just noticed that one of Victoria's patches[1] looks like 
+it fixes prime_cache_tree() with a sparse index.
 
-to replace the original two-commit history with a single commit
-history that records the same resulting tree.  If the path "skip"
-were to be reset to the blob from the first commit, just like the
-path "no-skip" is, for such a "commit -a --amend" to work, we would
-need to have a working tree file for "skip" magically materialized
-with the contents from the *second* commit.  After all, the whole
-point of mixed (and soft) reset is that they do not (logically)
-change the files in the working tree, so if you are resetting from
-the second commit to the first, if you were to have a working tree
-file, it should come from the second commit, so that both "skip"
-and "no-skip" should show "changed in the working tree relative to
-the index", i.e.
+[1] 
+https://lore.kernel.org/git/78cd85d8dcc790251ce8235e649902cf6adf091a.1633440057.git.gitgitgadget@gmail.com/
 
-    $ git reset --mixed HEAD^
-    $ git ls-files -t
-    M no-skip
-    M skip
+>> -static void verify_one(struct repository *r,
+>> -		       struct index_state *istate,
+>> -		       struct cache_tree *it,
+>> -		       struct strbuf *path)
+>> +static int verify_one(struct repository *r,
+>> +		      struct index_state *istate,
+>> +		      struct cache_tree *it,
+>> +		      struct strbuf *path)
+>>   {
+>>   	int i, pos, len = path->len;
+>>   	struct strbuf tree_buf = STRBUF_INIT;
+>> @@ -837,21 +837,30 @@ static void verify_one(struct repository *r,
+>>   
+>>   	for (i = 0; i < it->subtree_nr; i++) {
+>>   		strbuf_addf(path, "%s/", it->down[i]->name);
+>> -		verify_one(r, istate, it->down[i]->cache_tree, path);
+>> +		if (verify_one(r, istate, it->down[i]->cache_tree, path))
+>> +			return 1;
+>>   		strbuf_setlen(path, len);
+>>   	}
+>>   
+>>   	if (it->entry_count < 0 ||
+>>   	    /* no verification on tests (t7003) that replace trees */
+>>   	    lookup_replace_object(r, &it->oid) != &it->oid)
+>> -		return;
+>> +		return 0;
+>>   
+>>   	if (path->len) {
+>> +		/*
+>> +		 * If the index is sparse index_name_pos() may trigger
+>> +		 * ensure_full_index() which will free the tree that is being
+>> +		 * verified.
+>> +		 */
+>> +		int is_sparse = istate->sparse_index;
+>>   		pos = index_name_pos(istate, path->buf, path->len);
+>> +		if (is_sparse && !istate->sparse_index)
+>> +			return 1;
+> 
+> I think this guard is good to have, even if we fix prime_cache_tree() to
+> avoid triggering expansion here in most cases.
+> 
+>>   		if (pos >= 0) {
+>>   			verify_one_sparse(r, istate, it, path, pos);
+>> -			return;
+>> +			return 0;
+>>   		}
+>>   
+>>   		pos = -pos - 1;
+>> @@ -899,6 +908,7 @@ static void verify_one(struct repository *r,
+>>   		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
+>>   	strbuf_setlen(path, len);
+>>   	strbuf_release(&tree_buf);
+>> +	return 0;
+>>   }
+>>   
+>>   void cache_tree_verify(struct repository *r, struct index_state *istate)
+>> @@ -907,6 +917,9 @@ void cache_tree_verify(struct repository *r, struct index_state *istate)
+>>   
+>>   	if (!istate->cache_tree)
+>>   		return;
+>> -	verify_one(r, istate, istate->cache_tree, &path);
+>> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
+>> +		strbuf_reset(&path);
+>> +		verify_one(r, istate, istate->cache_tree, &path);
+>> +	}
+> 
+> And this limits us to doing at most two passes. Good.
 
-While such a "make sparse behave the same way as full" can be made
-internally consistent, however, as the above example shows, it would
-make the resulting "sparse checkout" practically unusable.
+In theory ensure_full_index() will only ever be called once but I wanted 
+to make sure we could not get into an infinite loop.
 
-By stepping back a bit and realizing that the reason why the user
-wanted to mark some path as "skip-worktree" was because the user had
-no intention to make any change to them, we can make it usable again,
-by not insisting that sparse should behave the same way as full.
+>>   test_expect_success 'merge, cherry-pick, and rebase' '
+>>   	init_repos &&
+>>   
+>> -	for OPERATION in "merge -m merge" cherry-pick rebase
+>> +	for OPERATION in "merge -m merge" cherry-pick "rebase --apply" "rebase --merge"
+> 
+> Thank you for the additional test!
 
-When we redesign these patches, I would like to see what we failed
-short the last time gets improved.  Instead of saying "skip-worktree
-entries should stay so" and stopping there, we should leave a note
-for later readers to explain why they should.
+Thanks for your explanation and looking at the patch
 
-Thanks.
+Best Wishes
 
+Phillip
 
+> Thanks,
+> -Stolee
+> 
