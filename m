@@ -2,302 +2,276 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80B4CC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75915C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:29:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CAEF61163
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:13:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FD3961181
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:29:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237802AbhJFJPo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 05:15:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48678 "EHLO
+        id S237819AbhJFJbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 05:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbhJFJPn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 05:15:43 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8149C061749
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 02:13:51 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z20so7095857edc.13
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 02:13:51 -0700 (PDT)
+        with ESMTP id S237766AbhJFJbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 05:31:46 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18381C061749
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 02:29:54 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id o20so6820240wro.3
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 02:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8IymETce5Fo04ns77Gm4sGHHWURAyWUGPIP8QJz4gew=;
-        b=A3jtYHTDR/1vM5Zi6W84o6lUAxLkRUeS44ZxHo61sH/eV959Tl2DToNSKRtjFkUU7w
-         N/MmIGqIlhY/On1w87P6+GGsuBrmWc0fY1WRhJ8zfvPXaV7bRh8zxICJgAzSnVub6i0V
-         6KCjccpmKHEDec5LVrrYyMVuVXdTbwouxlkIBaPobZSDQKchcdS9I/TmM4KxtbTHpkUo
-         z42KyBW6PJP8/RNGx6mypkLIkY0vChOVtTV0qEVgwjS/m4PSrlhGWbOlVWTwGyKbvfuV
-         jfvrN6PyhVFGafWZ7i7PrJoNK8zMaM0SkefTdNREBXn/4nSkPZcgwQzN0w8ehB9URcN7
-         IKOQ==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=j3HNeHHkMS6vuMnB/TsXQCjZgezhqexl4WoG+KmOMzU=;
+        b=SLE4tAxYKla8OmWlcLtTkGOBOdiY2GSdBfbESGLCE9VSTpT8GiFs25mxnrbNdv9DFl
+         kfneyiAduLh/WZRmz//MFkvxeu6ezEgMBzN6Z0MDaRCM9pWhFA3OUAEBhFpXFr3ko0EB
+         vzOhKXgjJOzkS06RPxwIIywCTStgcaRakhUaj7tNvPuuDrzRKM/07eivbLCud2+ze2La
+         KHx8dP0Nv4m3gz/8VW6pUWfDP3ammWZn/pEX6xfoQDqcOJTEo8PtBIOXphY5NVmCClea
+         HEqR2G9mmR0t+Ukv5FQs56FAL9JO2xSFyrUZnOWTgsUEcF5pPS6tBXDlPLGVmlq4OSvS
+         xRCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=8IymETce5Fo04ns77Gm4sGHHWURAyWUGPIP8QJz4gew=;
-        b=jIZYDZEPnfgi7sDRaeSihgT0Rf5ENH2+TDIzs+ns938jEnzGXUxaAKfoOyH7iXbg2u
-         5plJ8f8a558vTZaEo3zGXOFkfDd8tK9R5Ef1pfh3dAyC5/cc0n5DAi/iiDyYmB+zcYwO
-         1Tv9/HNYdPbJpz+t49N/v66i6uxAtZ0yxhCnc+Udy7agRSlN9eqFQb00AeNTgy1/VuUi
-         tuSZzi4WRkbb5vSPY15UD5FKAwEugQtHFYfeU/wTEVlDdhpBpT3eMPgsEslzR2oa9rPs
-         azexWL02ytyVAuK/fNhQsDIYd8jmtcwi2myVcBy0OdB6MsQsebtW5HVzaTRdSjwSQ9/8
-         cvUw==
-X-Gm-Message-State: AOAM532Y2RlwUEiOI2Hyq3TliFmR5l77TPX5vBc6Hje332vutjxp9foo
-        fkxNLzfniefT6uSaCzqsdwvK6tum1hYMWA==
-X-Google-Smtp-Source: ABdhPJxzr6QvVmw0Ue2s+gf8RbJLE0oRI5+GJETyJ1Za6/9JkD3KYvLd6xlsl37shvwPcR1gO3IYgg==
-X-Received: by 2002:a50:fc83:: with SMTP id f3mr20845768edq.134.1633511630230;
-        Wed, 06 Oct 2021 02:13:50 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d17sm5552001edv.58.2021.10.06.02.13.49
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=j3HNeHHkMS6vuMnB/TsXQCjZgezhqexl4WoG+KmOMzU=;
+        b=l+gXo1M+q9ibyXKiDNGegOyNIwwuqyO5++ejmySWtrAQPJQVx3cYxVq3QgVI+vomuL
+         dKyOWIUa8+ABvSY+80okzDyOllS6dQ4Nwi+Ub4ccjKZNdXVeGX1aGvS1wv7PbNDn+2DD
+         6CO4wcQZvphxnkHNkXdb/zhBZZJgBhvh/3IQ8s/c63Ymf5dETe3+C2pzGTf0GoKQGAbe
+         tYj2YUX4E/BOXA+HQlpcpMVYcvee3qhXQ1isarmKM3FZUDtTw7YI7UddorBnuNkz/Zoi
+         zAxuVvUTTUPLZo6wTQ1xY0uUhGKJPbbhFPds+WG5ugKadMl/ppw4o9u8I836E2DqitjK
+         jgmg==
+X-Gm-Message-State: AOAM5313EgQKg+nKQOL4W4Pk30ebOJtMJTSMy1d+B1AT7VxZlZNZ5Wm3
+        KwxDXrNmcttHwRbKCx5mJUgmZlShbvc=
+X-Google-Smtp-Source: ABdhPJx9e11xsShf2eI/B/WPmIn10gBaOMyESmUo3TfiC07lxqrjaDGEWAsoW7mj2Q8UZIkYmJ5taw==
+X-Received: by 2002:a7b:c7ca:: with SMTP id z10mr1241176wmk.143.1633512592669;
+        Wed, 06 Oct 2021 02:29:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v6sm12925756wrd.71.2021.10.06.02.29.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 02:13:49 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
- --batch-all-objects
-Date:   Wed, 06 Oct 2021 11:02:59 +0200
-References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
- <YVy2DNd+XemykKE0@coredump.intra.peff.net>
- <877derjia9.fsf@evledraar.gmail.com>
- <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
-Message-ID: <87tuhuikhf.fsf@evledraar.gmail.com>
+        Wed, 06 Oct 2021 02:29:52 -0700 (PDT)
+Message-Id: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Oct 2021 09:29:51 +0000
+Subject: [PATCH] [RFC] sparse index: fix use-after-free bug in
+ cache_tree_verify()
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Tue, Oct 05 2021, Jeff King wrote:
+In a sparse index it is possible for the tree that is being verified
+to be freed while it is being verified. This happens when
+index_name_pos() looks up a entry that is missing from the index and
+that would be a descendant of a sparse entry. That triggers a call to
+ensure_full_index() which frees the cache tree that is being verified.
+Carrying on trying to verify the tree after this results in a
+use-after-free bug. Instead restart the verification if a sparse index
+is converted to a full index. This bug is triggered by a call to
+reset_head() in "git rebase --apply". Thanks to René Scharfe for his
+help analyzing the problem.
 
-> On Tue, Oct 05, 2021 at 11:02:38PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fi=
-le.txt
->> > index 4eb0421b3f..6467707c6e 100644
->> > --- a/Documentation/git-cat-file.txt
->> > +++ b/Documentation/git-cat-file.txt
->> > @@ -94,8 +94,9 @@ OPTIONS
->> >  	Instead of reading a list of objects on stdin, perform the
->> >  	requested batch operation on all objects in the repository and
->> >  	any alternate object stores (not just reachable objects).
->> > -	Requires `--batch` or `--batch-check` be specified. Note that
->> > -	the objects are visited in order sorted by their hashes.
->> > +	Requires `--batch` or `--batch-check` be specified. By default,
->> > +	the objects are visited in order sorted by their hashes; see
->> > +	also `--unordered` below.
->> >=20=20
->> >  --buffer::
->> >  	Normally batch output is flushed after each object is output, so
->>=20
->> Since you're doing while-you're-at-it anyway: Isn't the --unordered
->> documentation also incorrect to reference --batch, which I take as it
->> lazily using as a shorthand for --batch-all-objects.
->
-> I don't think so. It says:
->
-> --unordered::
->         When `--batch-all-objects` is in use, visit objects in an
->         order which may be more efficient for accessing the object
->         contents than hash order. The exact details of the order are
->         unspecified, but if you do not require a specific order, this
->         should generally result in faster output, especially with
->         `--batch`.  Note that `cat-file` will still show each object
->         only once, even if it is stored multiple times in the
->         repository.
->
-> So it correctly mentions that it is affecting --batch-all-objects in the
-> first sentence. The "especially with --batch" is correct, too. The
-> ordering has more of an effect if you are accessing the full object,
-> since there we are increasing the locality which the delta-base cache
-> relies on.  Whereas with --batch-check, even with size or type, that
-> locality is much less important (it might help disk or even RAM caches a
-> bit, but we are examining each object independently, even if it's a
-> delta, and not caching the intermediate results in any way ourselves).
->
-> Does that answer your question, or were you thinking of something else?
+==74345==ERROR: AddressSanitizer: heap-use-after-free on address 0x606000001b20 at pc 0x557cbe82d3a2 bp 0x7ffdfee08090 sp 0x7ffdfee08080
+READ of size 4 at 0x606000001b20 thread T0
+    #0 0x557cbe82d3a1 in verify_one /home/phil/src/git/cache-tree.c:863
+    #1 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #2 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #3 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #4 0x557cbe830a2b in cache_tree_verify /home/phil/src/git/cache-tree.c:910
+    #5 0x557cbea53741 in write_locked_index /home/phil/src/git/read-cache.c:3250
+    #6 0x557cbeab7fdd in reset_head /home/phil/src/git/reset.c:87
+    #7 0x557cbe72147f in cmd_rebase builtin/rebase.c:2074
+    #8 0x557cbe5bd151 in run_builtin /home/phil/src/git/git.c:461
+    #9 0x557cbe5bd151 in handle_builtin /home/phil/src/git/git.c:714
+    #10 0x557cbe5c0503 in run_argv /home/phil/src/git/git.c:781
+    #11 0x557cbe5c0503 in cmd_main /home/phil/src/git/git.c:912
+    #12 0x557cbe5bad28 in main /home/phil/src/git/common-main.c:52
+    #13 0x7fdd4b82eb24 in __libc_start_main (/usr/lib/libc.so.6+0x27b24)
+    #14 0x557cbe5bcb8d in _start (/home/phil/src/git/git+0x1b9b8d)
 
-Urgh.
+0x606000001b20 is located 0 bytes inside of 56-byte region [0x606000001b20,0x606000001b58)
+freed by thread T0 here:
+    #0 0x7fdd4bacff19 in __interceptor_free /build/gcc/src/gcc/libsanitizer/asan/asan_malloc_linux.cpp:127
+    #1 0x557cbe82af60 in cache_tree_free /home/phil/src/git/cache-tree.c:35
+    #2 0x557cbe82aee5 in cache_tree_free /home/phil/src/git/cache-tree.c:31
+    #3 0x557cbe82aee5 in cache_tree_free /home/phil/src/git/cache-tree.c:31
+    #4 0x557cbe82aee5 in cache_tree_free /home/phil/src/git/cache-tree.c:31
+    #5 0x557cbeb2557a in ensure_full_index /home/phil/src/git/sparse-index.c:310
+    #6 0x557cbea45c4a in index_name_stage_pos /home/phil/src/git/read-cache.c:588
+    #7 0x557cbe82ce37 in verify_one /home/phil/src/git/cache-tree.c:850
+    #8 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #9 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #10 0x557cbe82ca9d in verify_one /home/phil/src/git/cache-tree.c:840
+    #11 0x557cbe830a2b in cache_tree_verify /home/phil/src/git/cache-tree.c:910
+    #12 0x557cbea53741 in write_locked_index /home/phil/src/git/read-cache.c:3250
+    #13 0x557cbeab7fdd in reset_head /home/phil/src/git/reset.c:87
+    #14 0x557cbe72147f in cmd_rebase builtin/rebase.c:2074
+    #15 0x557cbe5bd151 in run_builtin /home/phil/src/git/git.c:461
+    #16 0x557cbe5bd151 in handle_builtin /home/phil/src/git/git.c:714
+    #17 0x557cbe5c0503 in run_argv /home/phil/src/git/git.c:781
+    #18 0x557cbe5c0503 in cmd_main /home/phil/src/git/git.c:912
+    #19 0x557cbe5bad28 in main /home/phil/src/git/common-main.c:52
+    #20 0x7fdd4b82eb24 in __libc_start_main (/usr/lib/libc.so.6+0x27b24)
 
-This is the Nth time I've completely failed to mentally model how this
-command works, after having hacked on it extensively.
+previously allocated by thread T0 here:
+    #0 0x7fdd4bad0459 in __interceptor_calloc /build/gcc/src/gcc/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x557cbebc1807 in xcalloc /home/phil/src/git/wrapper.c:140
+    #2 0x557cbe82b7d8 in cache_tree /home/phil/src/git/cache-tree.c:17
+    #3 0x557cbe82b7d8 in prime_cache_tree_rec /home/phil/src/git/cache-tree.c:763
+    #4 0x557cbe82b837 in prime_cache_tree_rec /home/phil/src/git/cache-tree.c:764
+    #5 0x557cbe82b837 in prime_cache_tree_rec /home/phil/src/git/cache-tree.c:764
+    #6 0x557cbe8304e1 in prime_cache_tree /home/phil/src/git/cache-tree.c:779
+    #7 0x557cbeab7fa7 in reset_head /home/phil/src/git/reset.c:85
+    #8 0x557cbe72147f in cmd_rebase builtin/rebase.c:2074
+    #9 0x557cbe5bd151 in run_builtin /home/phil/src/git/git.c:461
+    #10 0x557cbe5bd151 in handle_builtin /home/phil/src/git/git.c:714
+    #11 0x557cbe5c0503 in run_argv /home/phil/src/git/git.c:781
+    #12 0x557cbe5c0503 in cmd_main /home/phil/src/git/git.c:912
+    #13 0x557cbe5bad28 in main /home/phil/src/git/common-main.c:52
+    #14 0x7fdd4b82eb24 in __libc_start_main (/usr/lib/libc.so.6+0x27b24)
 
-I thought that --batch-all-objects and --batch were mutually exclusive,
-but they're obviously not.
-
-In my defense I think the help/code is very confusing. I hacked up some
-WIP changes to change it from:
-=20=20=20=20
-    $ git cat-file -h
-    usage: git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-ty=
-pe] | -e | -p | <type> | --textconv | --filters) [--path=3D<path>] <object>
-       or: git cat-file (--batch[=3D<format>] | --batch-check[=3D<format>])=
- [--follow-symlinks] [--textconv | --filters]
-=20=20=20=20
-    <type> can be one of: blob, tree, commit, tag
-        -t                    show object type
-        -s                    show object size
-        -e                    exit with zero when there's no error
-        -p                    pretty-print object's content
-        --textconv            for blob objects, run textconv on object's co=
-ntent
-        --filters             for blob objects, run filters on object's con=
-tent
-        --path <blob>         use a specific path for --textconv/--filters
-        --allow-unknown-type  allow -s and -t to work with broken/corrupt o=
-bjects
-        --buffer              buffer --batch output
-        --batch[=3D<format>]    show info and content of objects fed from t=
-he standard input
-        --batch-check[=3D<format>]
-                              show info about objects fed from the standard=
- input
-        --follow-symlinks     follow in-tree symlinks (used with --batch or=
- --batch-check)
-        --batch-all-objects   show all objects with --batch or --batch-check
-        --unordered           do not order --batch-all-objects output
-=20=20=20=20
-To:
-=20=20=20=20
-    usage: git cat-file (-e | -p) <object>
-       or: git cat-file ( -t | -s ) [--allow-unknown-type] <object>
-       or: git cat-file [--batch-all-objects] [--batch | --batch-check] [--=
-buffer] [--follow-symlinks] [--unordered]
-       or: git cat-file [--textconv|--filters] [--path=3D<path|tree-ish> <r=
-ev> | <rev>:<path|tree-ish>]
-=20=20=20=20
-    Check object existence or emit object contents
-        -e                    check if <object> exists
-        -p                    pretty-print <object> content
-=20=20=20=20
-    Emit [broken] object attributes
-        -t                    show object type (one of 'blob', 'tree', 'com=
-mit', 'tag', ...)
-        -s                    show object size
-        --allow-unknown-type  allow -s and -t to work with broken/corrupt o=
-bjects
-=20=20=20=20
-    Run <rev>:<blobs|tree> via conversion or filter
-        --textconv            for blob objects, run textconv on object's co=
-ntent
-        --filters             for blob objects, run filters on object's con=
-tent
-        --path <blob>         use a specific path for --textconv/--filters
-=20=20=20=20
-    Emit objects in batch via requests on STDIN, or --batch-all-objects
-        --batch-all-objects   Emit all objects in the repository, instead o=
-f taking requests on STDIN
-        --buffer              buffer --batch output
-        --batch[=3D<format>]    show info and content of objects fed from t=
-he standard input
-        --batch-check[=3D<format>]
-                              show info about objects fed from the standard=
- input
-        --follow-symlinks     follow in-tree symlinks
-        --unordered           do not order objects before emitting them
-
-Which actually reflects reality, i.e. half of the options aren't
-accepted by the batch mode, so grouping them makes sense, and the
-current help gives the impression that e.g. --textconv can be used with
---batch, but it's effectively a CMDMODE.
-
-Then we don't document that [--textconv|--filters] will fallback to -p
-if given <tree-ish>, I'm not sure if that's intentional (but a
-"fallthrough" comment suggests so).
-
-And we silentnly accept --buffer etc. without the batch mode, but it
-should die.
-
-Looking at the history it seems you added --batch-all-objects around the
-same time as the OPT_CMDMODE() was used in the command, so we should
-probably have something like this to start with:
-
--- >8 --
-Subject: [PATCH] cat-file: make --batch-all-objects a CMDMODE
-
-The usage of OPT_CMDMODE() in "cat-file"[1] was added in parallel with
-the development of[3] the --batch-all-objects option[4], so we've
-since grown[5] checks that it can't be combined with other command
-modes, when it should just be made a top-level command-mode
-instead. It doesn't combine with --filters, --textconv etc.
-
-1. b48158ac94c (cat-file: make the options mutually exclusive, 2015-05-03)
-2. https://lore.kernel.org/git/xmqqtwspgusf.fsf@gitster.dls.corp.google.com/
-3. https://lore.kernel.org/git/20150622104559.GG14475@peff.net/
-4. 6a951937ae1 (cat-file: add --batch-all-objects option, 2015-06-22)
-5. 321459439e1 (cat-file: support --textconv/--filters in batch mode, 2016-=
-09-09)
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/cat-file.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+    [RFC] sparse index: fix use-after-free bug in cache_tree_verify()
+    
+    In a sparse index it is possible for the tree that is being verified to
+    be freed while it is being verified. This is an RFC as I'm not familiar
+    with the cache tree code. I'm confused as to why this bug is triggered
+    by the sequence
+    
+    unpack_trees()
+    prime_cache_tree()
+    write_locked_index()
+    
+    
+    but not
+    
+    unpack_trees()
+    write_locked_index()
+    
+    
+    as unpack_trees() appears to update the cache tree with
+    
+    if (!cache_tree_fully_valid(o->result.cache_tree))
+                cache_tree_update(&o->result,
+                          WRITE_TREE_SILENT |
+                          WRITE_TREE_REPAIR);
+    
+    
+    and I don't understand why the cache tree from prime_cache_tree()
+    results in different behavior. It concerns me that this fix is hiding
+    another bug.
+    
+    Best Wishes
+    
+    Phillip
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 243fe6844bc..50861bb02da 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -643,6 +643,8 @@ int cmd_cat_file(int argc, const char **argv, const cha=
-r *prefix)
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
- 		OPT_CMDMODE(0, "filters", &opt,
- 			    N_("for blob objects, run filters on object's content"), 'w'),
-+		OPT_CMDMODE(0, "batch-all-objects", &opt,
-+			    N_("show all objects with --batch or --batch-check"), 'b'),
- 		OPT_STRING(0, "path", &force_path, N_("blob"),
- 			   N_("use a specific path for --textconv/--filters")),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
-@@ -658,8 +660,6 @@ int cmd_cat_file(int argc, const char **argv, const cha=
-r *prefix)
- 			batch_option_callback),
- 		OPT_BOOL(0, "follow-symlinks", &batch.follow_symlinks,
- 			 N_("follow in-tree symlinks (used with --batch or --batch-check)")),
--		OPT_BOOL(0, "batch-all-objects", &batch.all_objects,
--			 N_("show all objects with --batch or --batch-check")),
- 		OPT_BOOL(0, "unordered", &batch.unordered,
- 			 N_("do not order --batch-all-objects output")),
- 		OPT_END()
-@@ -669,28 +669,25 @@ int cmd_cat_file(int argc, const char **argv, const c=
-har *prefix)
-=20
- 	batch.buffer_output =3D -1;
- 	argc =3D parse_options(argc, argv, prefix, options, cat_file_usage, 0);
--
--	if (opt) {
-+	if (argc && batch.enabled)
-+		usage_with_options(cat_file_usage, options);
-+	if (opt =3D=3D 'b') {
-+		batch.all_objects =3D 1;
-+	} else if (opt) {
- 		if (batch.enabled && (opt =3D=3D 'c' || opt =3D=3D 'w'))
- 			batch.cmdmode =3D opt;
- 		else if (argc =3D=3D 1)
- 			obj_name =3D argv[0];
- 		else
- 			usage_with_options(cat_file_usage, options);
--	}
--	if (!opt && !batch.enabled) {
-+	} else if (!opt && !batch.enabled) {
- 		if (argc =3D=3D 2) {
- 			exp_type =3D argv[0];
- 			obj_name =3D argv[1];
- 		} else
- 			usage_with_options(cat_file_usage, options);
--	}
--	if (batch.enabled) {
--		if (batch.cmdmode !=3D opt || argc)
--			usage_with_options(cat_file_usage, options);
--		if (batch.cmdmode && batch.all_objects)
--			die("--batch-all-objects cannot be combined with "
--			    "--textconv nor with --filters");
-+	} else if (batch.enabled && batch.cmdmode !=3D opt) {
-+		usage_with_options(cat_file_usage, options);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1053%2Fphillipwood%2Fwip%2Fsparse-index-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1053/phillipwood/wip/sparse-index-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1053
+
+ cache-tree.c                             | 29 +++++++++++++++++-------
+ t/t1092-sparse-checkout-compatibility.sh |  2 +-
+ 2 files changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index 90919f9e345..7bdbbc24268 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -826,10 +826,10 @@ static void verify_one_sparse(struct repository *r,
+ 		    path->buf);
+ }
+ 
+-static void verify_one(struct repository *r,
+-		       struct index_state *istate,
+-		       struct cache_tree *it,
+-		       struct strbuf *path)
++static int verify_one(struct repository *r,
++		      struct index_state *istate,
++		      struct cache_tree *it,
++		      struct strbuf *path)
+ {
+ 	int i, pos, len = path->len;
+ 	struct strbuf tree_buf = STRBUF_INIT;
+@@ -837,21 +837,30 @@ static void verify_one(struct repository *r,
+ 
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		strbuf_addf(path, "%s/", it->down[i]->name);
+-		verify_one(r, istate, it->down[i]->cache_tree, path);
++		if (verify_one(r, istate, it->down[i]->cache_tree, path))
++			return 1;
+ 		strbuf_setlen(path, len);
  	}
-=20
- 	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
---=20
-2.33.0.1441.gbbcdb4c3c66
+ 
+ 	if (it->entry_count < 0 ||
+ 	    /* no verification on tests (t7003) that replace trees */
+ 	    lookup_replace_object(r, &it->oid) != &it->oid)
+-		return;
++		return 0;
+ 
+ 	if (path->len) {
++		/*
++		 * If the index is sparse index_name_pos() may trigger
++		 * ensure_full_index() which will free the tree that is being
++		 * verified.
++		 */
++		int is_sparse = istate->sparse_index;
+ 		pos = index_name_pos(istate, path->buf, path->len);
++		if (is_sparse && !istate->sparse_index)
++			return 1;
+ 
+ 		if (pos >= 0) {
+ 			verify_one_sparse(r, istate, it, path, pos);
+-			return;
++			return 0;
+ 		}
+ 
+ 		pos = -pos - 1;
+@@ -899,6 +908,7 @@ static void verify_one(struct repository *r,
+ 		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
+ 	strbuf_setlen(path, len);
+ 	strbuf_release(&tree_buf);
++	return 0;
+ }
+ 
+ void cache_tree_verify(struct repository *r, struct index_state *istate)
+@@ -907,6 +917,9 @@ void cache_tree_verify(struct repository *r, struct index_state *istate)
+ 
+ 	if (!istate->cache_tree)
+ 		return;
+-	verify_one(r, istate, istate->cache_tree, &path);
++	if (verify_one(r, istate, istate->cache_tree, &path)) {
++		strbuf_reset(&path);
++		verify_one(r, istate, istate->cache_tree, &path);
++	}
+ 	strbuf_release(&path);
+ }
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 886e78715fe..85d5279b33c 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -484,7 +484,7 @@ test_expect_success 'checkout and reset (mixed) [sparse]' '
+ test_expect_success 'merge, cherry-pick, and rebase' '
+ 	init_repos &&
+ 
+-	for OPERATION in "merge -m merge" cherry-pick rebase
++	for OPERATION in "merge -m merge" cherry-pick "rebase --apply" "rebase --merge"
+ 	do
+ 		test_all_match git checkout -B temp update-deep &&
+ 		test_all_match git $OPERATION update-folder1 &&
+
+base-commit: cefe983a320c03d7843ac78e73bd513a27806845
+-- 
+gitgitgadget
