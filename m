@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B0EC4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DE9EC433FE
 	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:02:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03A8461181
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:02:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 781F66113E
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237989AbhJFKEd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 06:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60048 "EHLO
+        id S238020AbhJFKEe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 06:04:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238045AbhJFKE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238047AbhJFKE3 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 6 Oct 2021 06:04:29 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8B7C061765
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 03:02:32 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id v17so7061804wrv.9
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04050C061766
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 03:02:33 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id r18so7115244wrg.6
         for <git@vger.kernel.org>; Wed, 06 Oct 2021 03:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0NyFKyVnHCqw4XdUcSmJBVzDDnnykS+lfVTAXF54LJQ=;
-        b=T2YkS3qhE3D8YXCPL2FvMeeLTHjf8UQQcJTBEvVv+OSViyc1uMG2pPdxyfO0YF3NpF
-         TLC4SN8LGvoz4F/8Li43hMD0wTKGL/uu8PvEE2VdbAiWA9iwaserXmykE1g6WyunRnrX
-         M2XXrB2y7bb4L7qBRZItI58JUcJSGd5av2uUii5POszmItciLNO+HSF56/2PRH7PwFcP
-         T8dHiWIi5cpRK8rv/fDpQIWrJMX1V0T4I3N1Ko1po5CwHgdSDtgzzP0KZ9KFDXqk+iAC
-         +83zA1d9qpYiee8KsonjN2y5eY4q+BxFfHNXZpvC24fgXZnjGZryTfd0/86NtVA5FR5T
-         n4Mw==
+        bh=HqBxnBdJDc811wYka34z0oCiqNFjsR27o10Wypv7ACE=;
+        b=aB5TKXac35fRqgoRg9YjWRZxnbxjY6ocCHxO3pwpYJ1mnvIb1qQu2a2A7M2qNh1Eys
+         s+Eay1HVxb5MUpq6BRKEPo+3WA7oSq1P8JtQGjb3chDiKfcz2Qr6to/g9ErpXkEvXQbx
+         t+soqHXkrgcCM+ur8xJrOB+5ubcR0mYvOnquLkNWcuz/jbtFYrqb3hHa495lLG8GAiqG
+         npic4bB3EdmoGJUxXOf4lL3Vq02IapZaeoTU5tD6e4FzdVIQNLJZxkL0U2p2Fa+Ei56i
+         822vkn4tZm6YZZPLvUWAr0wAsAc1qERlYOK7riBvsS/ex7F0NyltzPFnQl/l+2/OO8Jl
+         rzvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0NyFKyVnHCqw4XdUcSmJBVzDDnnykS+lfVTAXF54LJQ=;
-        b=bML0E1Qlwap2+BkgZKTOZtw+5tVSO15S0psl6crc/GvvpSx3Ux2CsyQaw1XKjapHuw
-         5pHdgOGwJasFCGcekiDJw+u9pQgp37jSCNANDliRWisQlXEXBs2ciUkT1oirzmT57Z23
-         n1QEFiBXjKN+iejk8uXdSnxAK6URfkotTu3l1ZwU9MlwjJzGnQpxAO7gkiarT3L+se6r
-         pJwg4VPFUnaJD7Ymdjc4wUNopVvlGNKA3FmcjHueRDQCryzxrGJQ4hUB2qmtNIM+EhfS
-         0LC+Jd/1oxdCy/AylBlOxOLwZW5Kn1sV2uLoMMykG75Z2qwpsV3tP5niUZjc0gkw/11e
-         UHFQ==
-X-Gm-Message-State: AOAM533Fk1EQlCy8uJmh2Rnn+knBXDF/ljeHTNs+Zu6DAk9p2kHvdT6x
-        n343gwjWXhexqs48q52TOuKbj3KsQO7IDw==
-X-Google-Smtp-Source: ABdhPJzlzSmwbELN/21tLazxe4MHXztZS5w2NlYsqIZqOYdq1WbgFZsbhy2btNhB9/CQ2MampsN36g==
-X-Received: by 2002:adf:bb08:: with SMTP id r8mr18173580wrg.247.1633514550365;
-        Wed, 06 Oct 2021 03:02:30 -0700 (PDT)
+        bh=HqBxnBdJDc811wYka34z0oCiqNFjsR27o10Wypv7ACE=;
+        b=fz/WwJsJ3x3hjYWFJ1k4apqOcfGknXj723Q/0hS/JpjrDC0T285YJqn1nuEYvYvj3R
+         1jWNp+zxLmdZth6La+TehfSjsQJ8Vu7ZDRoITFM6QzEPPB0pEHxOazfcyZNX7UwgEeab
+         qxKkrfvxsl1t8Nt8SJd22Cy9qM6DGnNZm37Jzg9hqTftWdJtVjO32xy4Z+iMJvkLR+Nv
+         PPQVfJV93X7Fhqd0Y44MMhNA18KQJUfmRABYp3c7KkOhb1QZNGK4AEOnKPSUtOQ+W6Yr
+         7Wx3tKbWmGrMCkFgwxY+jSWrSWyigbQrqBDTDVtN/ofgwoSN3p7s1wx7q/rKmAvb5EFh
+         4VVg==
+X-Gm-Message-State: AOAM530tybMTcXRY8nsz9WVicGm+js2NBE3yhq9rpc3vkw6bgxhpmHwf
+        xni4vmk3xao0MUcG9S8sW62zxPOtPJAtjQ==
+X-Google-Smtp-Source: ABdhPJwiEcBpS2PSdUL9y1jOUYmF3gDbAUr4Do8B84DBGqxTjmpL+3n/vJnHLhCXOBAmDVUTl/Zf9Q==
+X-Received: by 2002:a1c:791a:: with SMTP id l26mr8840496wme.22.1633514551367;
+        Wed, 06 Oct 2021 03:02:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h18sm5515279wmq.23.2021.10.06.03.02.29
+        by smtp.gmail.com with ESMTPSA id h18sm5515279wmq.23.2021.10.06.03.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 03:02:29 -0700 (PDT)
+        Wed, 06 Oct 2021 03:02:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/7] tests: fix a memory leak in test-parse-options.c
-Date:   Wed,  6 Oct 2021 12:02:20 +0200
-Message-Id: <patch-2.7-c24e115aa49-20211006T095426Z-avarab@gmail.com>
+Subject: [PATCH 3/7] tests: fix a memory leak in test-oidtree.c
+Date:   Wed,  6 Oct 2021 12:02:21 +0200
+Message-Id: <patch-3.7-a216297aba1-20211006T095426Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1441.gbbcdb4c3c66
 In-Reply-To: <cover-0.7-00000000000-20211006T095426Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211006T095426Z-avarab@gmail.com>
@@ -72,69 +72,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in t/helper/test-parse-options.c, we were not
-freeing the allocated "struct string_list" or its items. While I'm at
-it move the declaration of the "list" string_list the
-cmd__parse_options() function.
+Fix a memory leak in t/helper/test-oidtree.c, we were not freeing the
+"struct strbuf" we used for the stdin input we parsed. This leak has
+been here ever since 92d8ed8ac10 (oidtree: a crit-bit tree for
+odb_loose_cache, 2021-07-07).
 
-In c8ba1639165 (parse-options: add OPT_STRING_LIST helper, 2011-06-09)
-the "list" variable was added, and later on in
-c8ba1639165 (parse-options: add OPT_STRING_LIST helper, 2011-06-09)
-the "expect" was added.
-
-The "list" variable was last touched in 2721ce21e43 (use string_list
-initializer consistently, 2016-06-13), but it was still left at the
-static scope, it's better to move it to the function for consistency.
+Now that it's fixed we can declare that t0069-oidtree.sh will pass
+under GIT_TEST_PASSING_SANITIZE_LEAK=true.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/helper/test-parse-options.c | 7 ++++++-
- t/t0040-parse-options.sh      | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ t/helper/test-oidtree.c | 3 +++
+ t/t0069-oidtree.sh      | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index a282b6ff13e..48d3cf6692d 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -14,7 +14,6 @@ static int dry_run = 0, quiet = 0;
- static char *string = NULL;
- static char *file = NULL;
- static int ambiguous;
--static struct string_list list = STRING_LIST_INIT_NODUP;
- 
- static struct {
- 	int called;
-@@ -107,6 +106,8 @@ int cmd__parse_options(int argc, const char **argv)
- 		NULL
- 	};
- 	struct string_list expect = STRING_LIST_INIT_NODUP;
-+	struct string_list list = STRING_LIST_INIT_NODUP;
+diff --git a/t/helper/test-oidtree.c b/t/helper/test-oidtree.c
+index 180ee28dd93..d48a409f4e4 100644
+--- a/t/helper/test-oidtree.c
++++ b/t/helper/test-oidtree.c
+@@ -45,5 +45,8 @@ int cmd__oidtree(int argc, const char **argv)
+ 			die("unknown command: %s", line.buf);
+ 		}
+ 	}
 +
- 	struct option options[] = {
- 		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
- 		OPT_BOOL('D', "no-doubt", &boolean, "begins with 'no-'"),
-@@ -185,5 +186,9 @@ int cmd__parse_options(int argc, const char **argv)
- 	for (i = 0; i < argc; i++)
- 		show(&expect, &ret, "arg %02d: %s", i, argv[i]);
- 
-+	expect.strdup_strings = 1;
-+	string_list_clear(&expect, 0);
-+	string_list_clear(&list, 0);
++	strbuf_release(&line);
 +
- 	return ret;
+ 	return 0;
  }
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index da310ed29b1..ed422a1a616 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -5,6 +5,7 @@
+diff --git a/t/t0069-oidtree.sh b/t/t0069-oidtree.sh
+index bfb1397d7b2..74cc59bf8a7 100755
+--- a/t/t0069-oidtree.sh
++++ b/t/t0069-oidtree.sh
+@@ -1,6 +1,7 @@
+ #!/bin/sh
  
- test_description='our own option parser'
- 
+ test_description='basic tests for the oidtree implementation'
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- cat >expect <<\EOF
+ maxhexsz=$(test_oid hexsz)
 -- 
 2.33.0.1441.gbbcdb4c3c66
 
