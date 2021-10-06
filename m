@@ -2,140 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D40DC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 05:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39FD2C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 06:05:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E7D9610A8
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 05:46:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1975B61151
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 06:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234450AbhJFFsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 01:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
+        id S233888AbhJFGGv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 02:06:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbhJFFsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 01:48:04 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37457C061749
-        for <git@vger.kernel.org>; Tue,  5 Oct 2021 22:46:13 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id z1so5274893edb.8
-        for <git@vger.kernel.org>; Tue, 05 Oct 2021 22:46:13 -0700 (PDT)
+        with ESMTP id S229797AbhJFGGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 02:06:50 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD931C061749
+        for <git@vger.kernel.org>; Tue,  5 Oct 2021 23:04:58 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z20so5316462edc.13
+        for <git@vger.kernel.org>; Tue, 05 Oct 2021 23:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wnUTwBKRcZI7BnCEABU5xV1mHJY8FGlsB6zSE5pIV6k=;
-        b=YJtSDB4/4xeEiL6hCjcO7ChyAq9doRIEuvzYPA7YCe+s90qGnUjAOm3XrE1/kgBlY9
-         +TidF6q8dDy9o8y3y8e07ZaZTj1U5iuLNk8ivQEP3EwSj/SH+FOr88tkiMoNSeQ4GQec
-         Is3uqhAVl3rAd3yXI+ipiQDrfYGKiQ1cMXUf2UojECmop7wvVM8Ps6Fp+6o3euTVcITO
-         JBC4ZlgzkGI6jZZ147eJQYAqeYitMQ/ECwhce1LCWO/uSxITwRkYEdbv+J9B46NLTTa/
-         K/2mRCZ6UdsiG93UVm0Knvu0suwnjbwX+pvLsU6MqkLrFa9AhrHvXBH2Up+3oP7Z/22p
-         dUDQ==
+        bh=ZrUXqmRqG3QSRXt/V6OtF10t4oMeRxe6pekwxlbDJKo=;
+        b=nFm3uKUcMboGATYzEpj56qy3XBHh18AoSIvzsMfVPNmuueP4x0qdfT7zfzPNLOryJj
+         aYAO70VCRpVtIUd7tfbN0hjlxzWj5ifWO1JZpsomXbWN0ZwY4pgQHAkhvui3ilgdmCSn
+         JuOy2QmosdmOy3GI6gKyAm38UdEk0CwTgeEV+YzXZOty4OUFa4cc4vD7A2WSOeV6/Hi7
+         aGaD4PT4zVtn9gjI/OQGCDA0xH0SfERe3cz+hEGGz8HQ5Y63RUFPYO9Hm41JApA5llJY
+         QwviOK75H/XHYUXoatm+hb/HSfmc/Yyoy4LKwsgPcBJ/1lQOXgsv7hbLZN97aSwDrq5l
+         ovxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wnUTwBKRcZI7BnCEABU5xV1mHJY8FGlsB6zSE5pIV6k=;
-        b=oZxmgtqSxbpXBFFe6xrTaJhBHWgwCL6aI1geZ9sjCD9z1J0cFUu6ZTBC7jtjMQdGu1
-         SHQUOsiTehsdIwq/y56YTB+HeO/BRHDNwdlYsEtSEbZ1RFAk/2B/EaTfXzvrmVH8cHrg
-         m6uEirS0tD6iPD0WfgeVJ0jwdnGi+RNHoNRkGXcPbcZjvpja0lEhLRVAPcaDsHM4Dmyo
-         FhrLwRtgjWVbCdi+sfCDMnYSqeQtGq6Mz84b6YCRTEm0LMRz0LZbzenea63X+RzVlgBg
-         BLtfZviSxE+E6InRmRrVxLHKB/ypIUabCMp27qzTxTWw8exwmv6LTpdkTt7Q3pk1piSW
-         3tng==
-X-Gm-Message-State: AOAM532voK+ZDGmMXhcvcjLH+cgwqwO54WBnVI2uvN6StZSBFLRJQOMv
-        J8tdd2LgccSMwcbVPxu2jZ7m5TskQgfNWEZqeCPfdQpdwWw=
-X-Google-Smtp-Source: ABdhPJxUkg/hmGy/rEWMaFxvtJ47DTe0okpJge0Y83TTmAFGKqIruK235TfjyCSiEXLIiUMXBqeEL5cBJPctyKSUPwY=
-X-Received: by 2002:a05:6402:1848:: with SMTP id v8mr29319468edy.0.1633499171794;
- Tue, 05 Oct 2021 22:46:11 -0700 (PDT)
+        bh=ZrUXqmRqG3QSRXt/V6OtF10t4oMeRxe6pekwxlbDJKo=;
+        b=KlM+NtldEFhCUpNHAnY9LEY8wyElR0S5TRLFSfblPP3Ix2LHU6Yn9ZQ2m34IsM/iH9
+         4FijKt7Rwbfa8HoZhMEZq+bVeKZNVTmV+cStOG4A9+cdKkY1GUEq00i26mHdsGhpaPMx
+         2hjhVci5IA1CCQchnTtzCSoWcKGfzwVeYgCM8QFB2mCWDZGeI48HJACVvRkGiCCyWkvI
+         ABU6VNyI+Iw/OREvowFgJlZBH3bAn2H6zUC836beaFAr/VjVnwSK/FjTOVwxK2BAJINs
+         2pHYCm0+1nCwGzJYbKYmopBU65cW43NCvhi0En9mu0Z36Idm12tIk2H+7nYNQikj3neH
+         l3EA==
+X-Gm-Message-State: AOAM533PTzEU0ZFj048aHhdeCarOoiBBVJLTF7DBX0j32lEzMj0HB1va
+        iGYm1H/Rmm46JU1OqM7dvm1evNGv98xbrOEf74M=
+X-Google-Smtp-Source: ABdhPJyGOaH8GI5U9SN4nyKvhAHA+47t9/E8jKHXjRjkxJfVd4EC1ODzPMzQHKjSL4QcpC4LHVmNxTL8IXy+Btb8Y4w=
+X-Received: by 2002:a17:906:c205:: with SMTP id d5mr30251626ejz.74.1633500297362;
+ Tue, 05 Oct 2021 23:04:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1048.git.1633013461.gitgitgadget@gmail.com> <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
+References: <CABPp-BFqJi0q0844NKfU8K5HRpAJ7yP2OkyBUiFQSAw-ZjNoyw@mail.gmail.com>
+ <20211004190050.921109-1-aclopte@gmail.com> <20211004190050.921109-4-aclopte@gmail.com>
+ <31f46980-7e40-46c0-87b7-f5ea7034af2b@gmail.com> <20211005194224.qcblxih5rlehzo4d@gmail.com>
+ <88adcdf1-7b10-c834-84ad-52fe273c0ced@gmail.com>
+In-Reply-To: <88adcdf1-7b10-c834-84ad-52fe273c0ced@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 5 Oct 2021 22:46:00 -0700
-Message-ID: <CABPp-BE+rc9_V9AHrXGRCJZJ9nG8FzVxTqmB+-nA+GuNboonDg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Sparse Index: integrate with reset
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Victoria Dye <vdye@github.com>
+Date:   Tue, 5 Oct 2021 23:04:46 -0700
+Message-ID: <CABPp-BHRw811_9M3hOEKUDVJkcY_BTYViH3ctsu6CDz9h-cCPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] Documentation/git-status: mention how to detect copies
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Johannes Altmanninger <aclopte@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria,
+On Tue, Oct 5, 2021 at 10:05 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>
+> On 06/10/21 02.42, Johannes Altmanninger wrote:
+> > I wasn't sure whether to add backticks to status.renames because we are
+> > already inconsistent in this file (search for "config option").
+> > Anyway I agree that backticks look better here (makes it bold in the man page).
+> >
+> > Maybe we should automate this? We can write a test that makes sure that we
+> > always use backticks around config keys, at least for new changes.
+> >
+> > ---
+> >
+> > I didn't add backticks to "copies" to be consistent with this part before the context
+> >
+> >       Ignore changes to submodules when looking for changes. <when> can be
+> >       either "none", "untracked", "dirty" or "all", which is the default.
+> >
+>
+> I think for consistency, we can go with automated style changes that use
+> backticks to monospace:
+>      - file name and paths
+>      - daemons/services
+>      - configuration names and values
+>      - file content (use ```...``` block unless inline)
+>      - command-line
+>      - keyboard keys (dunno?)
+>      - any other inline text that needs to be written exactly
+>
+> I have seen many times articles that say `Run "foo bar" (no quotes)`
+> when they mean `Run `foo bar``.
+>
+> For the exception you mentioned above it can be monospaced as part of
+> automated change above.
 
-On Tue, Oct 5, 2021 at 6:20 AM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series integrates the sparse index with git reset and provides
-> miscellaneous fixes and improvements to the command in sparse checkouts.
-> This includes:
->
->  1. tests added to t1092 and p2000 to establish the baseline functionality
->     of the command
->  2. repository settings to enable the sparse index with ensure_full_index
->     guarding any code paths that break tests without other compatibility
->     updates.
->  3. modifications to remove or reduce the scope in which ensure_full_index
->     must be called.
->
-> The sparse index updates are predicated on a fix originating from the
-> microsoft/git fork [1], correcting how git reset --mixed handles resetting
-> entries outside the sparse checkout definition. Additionally, a performance
-> "bug" in next_cache_entry with sparse index is corrected, preventing
-> repeatedly looping over already-searched entries.
->
-> The p2000 tests demonstrate an overall ~70% execution time reduction across
-> all tested usages of git reset using a sparse index:
->
-> Test                                               before   after
-> ------------------------------------------------------------------------
-> 2000.22: git reset (full-v3)                       0.48     0.51 +6.3%
-> 2000.23: git reset (full-v4)                       0.47     0.50 +6.4%
-> 2000.24: git reset (sparse-v3)                     0.93     0.30 -67.7%
-> 2000.25: git reset (sparse-v4)                     0.94     0.29 -69.1%
-> 2000.26: git reset --hard (full-v3)                0.69     0.68 -1.4%
-> 2000.27: git reset --hard (full-v4)                0.75     0.68 -9.3%
-> 2000.28: git reset --hard (sparse-v3)              1.29     0.34 -73.6%
-> 2000.29: git reset --hard (sparse-v4)              1.31     0.34 -74.0%
-> 2000.30: git reset -- does-not-exist (full-v3)     0.54     0.51 -5.6%
-> 2000.31: git reset -- does-not-exist (full-v4)     0.54     0.52 -3.7%
-> 2000.32: git reset -- does-not-exist (sparse-v3)   1.02     0.31 -69.6%
-> 2000.33: git reset -- does-not-exist (sparse-v4)   1.07     0.30 -72.0%
->
->
->
-> Changes since V1
-> ================
->
->  * Add --force-full-index option to update-index. The option is used
->    circumvent changing command_requires_full_index from its default value -
->    right now this is effectively a no-op, but will change once update-index
->    is integrated with sparse index. By using this option in the t1092
->    expand/collapse test, the command used to test will not need to be
->    updated with subsequent sparse index integrations.
->  * Update implementation of mixed reset for entries outside sparse checkout
->    definition. The condition in which a file should be checked out before
->    index reset is simplified to "if it has skip-worktree enabled and a reset
->    would change the file, check it out".
->    * After checking the behavior of update_index_from_diff with renames,
->      found that the diff used by reset does not produce diff queue entries
->      with different pathnames for one and two. Because of this, and that
->      nothing in the implementation seems to rely on identical path names, no
->      BUG check is added.
->  * Correct a bug in the sparse index is not expanded tests in t1092 where
->    failure of a git reset --mixed test was not being reported. Test now
->    verifies an appropriate scenario with corrected failure-checking.
-
-I read over the first six patches.  I tried to read over the seventh,
-but I've never figured out cache_bottom for some reason and I did
-nothing beyond spot checking when Stolee touched that area either.
-
-Anyway, I had lots of little comments, tweaks to the way to fix the
-inconsistency in patch 1, various questions, etc.  It probably adds up
-to a lot, but it's all small fixable stuff; overall it looks like you
-(and Kevin) are making a solid contribution on the sparse-checkout
-stuff; I look forward to reading the next round.
+Doing some cleanup passes on the documentation files would probably be
+a good thing, but it'd probably belong in a different series.  Better
+to keep this one focused on the fixes being proposed.
