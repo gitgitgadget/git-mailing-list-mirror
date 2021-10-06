@@ -2,143 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13969C433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BEDEC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:48:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFF55610E6
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:45:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B105610EA
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:48:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238905AbhJFRqw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 13:46:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238476AbhJFRqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 13:46:49 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90892C08C5E7
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 10:42:35 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 207-20020a2503d8000000b005b6fc088578so4426361ybd.0
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 10:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=v95BLknFysbLk+nVopLa55GP8VoLhV8EAaQA9UaUjV8=;
-        b=B5eGiGRuYPi6EBCB+iUwo0q8NYeJJo8TljpAcIt0FtKy1xkjnf17pSyok7JYf1WKU3
-         FE4uRcUnuxhh//VNooSiOXh4yiKxslAa4m2JhchjMTEaqU2ud81lYylPzIhDC+9bqxsM
-         /rEwDGqkfdNVS9IyaLaUvQBUjKviwCpOkG2Oj0sxoPUt5xLD9wBuoXccGjz/vKWk29Hl
-         Bib95OOMulBTyA9LDYPX4pjbrBMveFKijJRgsYb2RNt3RQLfVfjC5JJ2X9aIMiaQNAKr
-         ySp/VK4WYykG5Zab5r/HJBPvpEdcu3H8kFM1+E83cSaSp25eaGBIQawS8wGzwPWjqmd4
-         l26w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=v95BLknFysbLk+nVopLa55GP8VoLhV8EAaQA9UaUjV8=;
-        b=4WUYE6fxQQcd553fpyb11K0aX8gi0LGLkHiJQN6f7jvR8hXa43SbmRaId2tcp+kXap
-         GwWGJsJrhpyvx+EpF2S7vM/fQcGwiICzKet24QHsPKeFtGMKAS7TJVDQeYkSk0MKeHOf
-         VvK7hLvuDhBnKbyT0Uyr6FPEMfOjz4ayAP24uN7OowaXERUT/+0mVgF9zF4xw/5Z6CFy
-         pPHDDWo7kdxWDBTBVqauuEAYiE+1Ux/KZGBbf68wMJWFsKF5HRd1XdcZ9B9/VegwfKkw
-         J2Z60gWPr1Flkz9+YirwFOjvG7Wbc/JWwpKLRR/rqxhOFIIlzCKmu9Fc0CGsuGCw3au7
-         c9ag==
-X-Gm-Message-State: AOAM530oIKz/XlAwtPfSimNgkYXwo+wcxewapOZvKp7XyU3tSxXLGbVz
-        ttiodQgB+u2wzZ31wI2bI4h8zaOrc0eTk5INj8oSq1EMZLUx5Nmi5EIpuxq43aYhUmRa+H0uMSY
-        7aw2JZkPMqLgTLgdipE9e++HyJAskVbv3JFq4+NoT4JlIQbmUmb9FcoI4B6+XJDY=
-X-Google-Smtp-Source: ABdhPJyTxnWgicL93MDpYLXCcNOipd/bT6nBsF+pW+vXaFQVbY6VpbxvT+zflegCAMDmB8LrXRXr08IiliTrbQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a25:e792:: with SMTP id
- e140mr30049362ybh.416.1633542154712; Wed, 06 Oct 2021 10:42:34 -0700 (PDT)
-Date:   Wed,  6 Oct 2021 10:42:31 -0700
-In-Reply-To: <80673975382af534cafaec3fdc034966d6f41105.1632956589.git.jonathantanmy@google.com>
-Message-Id: <20211006174231.80434-1-chooglen@google.com>
-Mime-Version: 1.0
-References: <80673975382af534cafaec3fdc034966d6f41105.1632956589.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.33.0.800.g4c38ced690-goog
-Subject: [PATCH] fixup! refs: plumb repo into ref stores
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S234302AbhJFRuu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 13:50:50 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65485 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234560AbhJFRus (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 13:50:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 611D415AB72;
+        Wed,  6 Oct 2021 13:48:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uuBwBwSS3XGN/AWR7cdDmKULIAKXPjGwiTuXsG
+        hNsT4=; b=JZlpBZ7W2CfrIXQGe42f1Cz09vJvDq9NnKEUZIs5v3xq8XJv8IhSmP
+        eq3yycRu/WiDygOvE7I9HBZCQ+p77DO+4Q8W45OBZiVrhplUa5WXYmUq/LnLsCei
+        57/hHklXJRBdKbyQ20nWq2NM6wVbRnxOGTDWmzTIXRSBrzyT4xP4I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5AA8615AB71;
+        Wed,  6 Oct 2021 13:48:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B15D215AB70;
+        Wed,  6 Oct 2021 13:48:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 4/7] reset: integrate with sparse index
+References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
+        <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
+        <49813c8d9ed94fd56f30eb204d346eb5a30473ca.1633440057.git.gitgitgadget@gmail.com>
+        <CABPp-BHKjLVpL_U5viVA++hCZmGKBHxnubGCk=1YhTkpFc-E-Q@mail.gmail.com>
+Date:   Wed, 06 Oct 2021 10:48:51 -0700
+In-Reply-To: <CABPp-BHKjLVpL_U5viVA++hCZmGKBHxnubGCk=1YhTkpFc-E-Q@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 5 Oct 2021 19:15:55 -0700")
+Message-ID: <xmqqo882rqm4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AB66BC5E-26CD-11EC-945A-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we are plumbing repo into ref stores, it makes sense to get rid of
-the_repository in refs/files-backend.c and use ref_store.repo instead.
+Elijah Newren <newren@gmail.com> writes:
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
-In [1], I made some changes to refs/files-backend.c to get rid of
-the_repository and accept struct repository as a parameter instead. But,
-if we're changing ref stores to contain their own repository, it makes
-sense to use this new interface.
+> On Tue, Oct 5, 2021 at 6:21 AM Victoria Dye via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> `reset --soft` does not modify the index, so no compatibility changes are
+>> needed for it to function without expanding the index. For all other reset
+>> modes (`--mixed`, `--hard`, `--keep`, `--merge`), the full index is
+>> explicitly expanded with `ensure_full_index` to maintain current behavior.
+>
+> "to maintain current behavior"?  You are changing code here, which
+> suggests some kind of behavior is changing, but that description seems
+> to be claiming the opposite.  Is it some kind of preventative change
+> to add ensure_full_index calls in an additional place, with a later
+> patch in the series intending to remove the other one(s), so you're
+> making sure that later changes won't cause unwanted behavioral
+> changes?  Or was something else meant here?
+>
+> If the above wasn't what you meant, but you're adding
+> ensure_full_index calls, does that suggest that we had some important
+> code paths that were not protected by such calls?
 
-I think the most natural place for this is this series. Let me know what
-you think :)
+The original called read_cache() before we know which mode we
+operate in, near the end of parse_args(), which resulted in an
+unconditional call to ensure_full_index() in repo_read_index().
 
-[1] https://lore.kernel.org/git/20210921232529.81811-2-chooglen@google.com/
+This patch delays the call to read_cache().  If parse_pathspec()
+and everything the original called after the point where it called
+read_cache() needed to have a populated in-core index, the change
+can break things---I didn't check thoroughly, but I am guessing
+it is OK.
 
- refs/files-backend.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+>> Additionally, the `read_cache()` check verifying an uncorrupted index is
+>> moved after argument parsing and preparing the repo settings. The index is
+>> not used by the preceding argument handling, but `read_cache()` does need to
+>> be run after enabling sparse index for the command and before resetting.
+>
+> This seems to be discussing what code changes are being made, but not
+> why.  I'm guessing at the reasoning, but is it something along the
+> lines of:
+>
+> """
+> Also, make sure to read_cache() after setting
+> command_requires_full_index = 0, so that we don't unnecessarily expand
+> the index as part of our early index-corruption check.
+> """
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 9d50fc91f8..0358268aba 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1347,7 +1347,7 @@ static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
- 	return ret;
- }
- 
--static int write_ref_to_lockfile(struct ref_lock *lock,
-+static int write_ref_to_lockfile(struct repository *repo, struct ref_lock *lock,
- 				 const struct object_id *oid, struct strbuf *err);
- static int commit_ref_update(struct files_ref_store *refs,
- 			     struct ref_lock *lock,
-@@ -1465,7 +1465,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	}
- 	oidcpy(&lock->old_oid, &orig_oid);
- 
--	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
-+	if (write_ref_to_lockfile(ref_store->repo, lock, &orig_oid, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
- 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1485,7 +1485,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 
- 	flag = log_all_ref_updates;
- 	log_all_ref_updates = LOG_REFS_NONE;
--	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
-+	if (write_ref_to_lockfile(ref_store->repo, lock, &orig_oid, &err) ||
- 	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
- 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1720,14 +1720,14 @@ static int files_log_ref_write(struct files_ref_store *refs,
-  * Write oid into the open lockfile, then close the lockfile. On
-  * errors, rollback the lockfile, fill in *err and return -1.
-  */
--static int write_ref_to_lockfile(struct ref_lock *lock,
-+static int write_ref_to_lockfile(struct repository *repo, struct ref_lock *lock,
- 				 const struct object_id *oid, struct strbuf *err)
- {
- 	static char term = '\n';
- 	struct object *o;
- 	int fd;
- 
--	o = parse_object(the_repository, oid);
-+	o = parse_object(repo, oid);
- 	if (!o) {
- 		strbuf_addf(err,
- 			    "trying to write ref '%s' with nonexistent object %s",
-@@ -2531,7 +2531,8 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 			 * The reference already has the desired
- 			 * value, so we don't need to write it.
- 			 */
--		} else if (write_ref_to_lockfile(lock, &update->new_oid,
-+		} else if (write_ref_to_lockfile(refs->base.repo, lock,
-+						 &update->new_oid,
- 						 err)) {
- 			char *write_err = strbuf_detach(err, NULL);
- 
--- 
-2.33.0.800.g4c38ced690-goog
+I think it is more like "we used to expand very early for all modes,
+but with this change we move the read_cache() call to much later,
+and force it not to expand.  The modes that call read_from_tree()
+needs in-core index fully expanded, so we do so there, but the soft
+reset does not call it and would stop expanding."
 
