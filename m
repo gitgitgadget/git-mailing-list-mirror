@@ -2,137 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C6E6C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3D1FC433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:24:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1187960E08
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:18:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CD74611C3
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 19:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239230AbhJFTTv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 15:19:51 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56935 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229926AbhJFTTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 15:19:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45C5215B32F;
-        Wed,  6 Oct 2021 15:17:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RPUE/q6EM74fg2URapkCysNUCPxaKAnyMyQQCj
-        qwhM8=; b=tH3JkEsZwLosIVXtauPVCsnmVmWUrwju8ZtD6Xp83hcoehCeOST+zk
-        aV0xh3mJN/e0Eo0x8YYe0MSVAn+6eI5g8hq0DyWxQXET5oec0B+PkVPGKoL3Z7Ke
-        ozjtB7fLVp+K0NAKYABqw2mJpIl2wBdlpFnpPhvRHJ77A8P8hpFdM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E8B615B32E;
-        Wed,  6 Oct 2021 15:17:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5901515B329;
-        Wed,  6 Oct 2021 15:17:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] [RFC] sparse index: fix use-after-free bug in
- cache_tree_verify()
-References: <pull.1053.git.1633512591608.gitgitgadget@gmail.com>
-Date:   Wed, 06 Oct 2021 12:17:54 -0700
-In-Reply-To: <pull.1053.git.1633512591608.gitgitgadget@gmail.com> (Phillip
-        Wood via GitGitGadget's message of "Wed, 06 Oct 2021 09:29:51 +0000")
-Message-ID: <xmqq1r4yrmhp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239170AbhJFT0B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 15:26:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34392 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229926AbhJFT0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 15:26:00 -0400
+Received: (qmail 26810 invoked by uid 109); 6 Oct 2021 19:24:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Oct 2021 19:24:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 353 invoked by uid 111); 6 Oct 2021 19:24:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Oct 2021 15:24:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 6 Oct 2021 15:24:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] t/perf/perf-lib.sh: remove test_times.* at the end
+ test_perf_()
+Message-ID: <YV3314Dnhj7srFZ4@coredump.intra.peff.net>
+References: <pull.1051.git.1633386543759.gitgitgadget@gmail.com>
+ <YVyPH59LpxFLHep0@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1BDCA53C-26DA-11EC-B6BB-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YVyPH59LpxFLHep0@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Oct 05, 2021 at 01:45:03PM -0400, Taylor Blau wrote:
 
-/*
- * Please document what the values that can be returned from
- * this function are and what they mean, just before this
- * funciton.  I am guessing that this is "all bets are off and
- * you need to redo the computation again over the full in-core
- * index"?  It is not an error and I think it makes sense to use
- * positive 1 like this patch does instead of -1.
- */
->  
-> -static void verify_one(struct repository *r,
-> -		       struct index_state *istate,
-> -		       struct cache_tree *it,
-> -		       struct strbuf *path)
-> +static int verify_one(struct repository *r,
-> +		      struct index_state *istate,
-> +		      struct cache_tree *it,
-> +		      struct strbuf *path)
->  {
+> > GIT_PERF_REPEAT_COUNT=3 \
+> > test_perf "status" "
+> > 	git status
+> > "
+> >
+> > GIT_PERF_REPEAT_COUNT=1 \
+> > test_perf "checkout other" "
+> > 	git checkout other
+> > "
+> [...]
+> 
+> Well explained, and makes sense to me. I didn't know we set
+> GIT_PERF_REPEAT_COUNT inline with the performance tests themselves, but
+> grepping shows that we do it in the fsmonitor tests.
 
+Neither did I. IMHO that is a hack that we would do better to avoid, as
+the point of it is to let the user drive the decision of time versus
+quality of results. So the first example above is spending extra time
+that the user may have asked us not to, and the second is getting less
+significant results by not repeating the trial.
 
+Presumably the issue in the second one is that the test modifies state.
+The "right" solution there is to give test_perf() a way to set up the
+state between trials (you can do it in the test_perf block, but you'd
+want to avoid letting the setup step affect the timing).
 
-> @@ -907,6 +917,9 @@ void cache_tree_verify(struct repository *r, struct index_state *istate)
->  
->  	if (!istate->cache_tree)
->  		return;
-> -	verify_one(r, istate, istate->cache_tree, &path);
-> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
-> +		strbuf_reset(&path);
-> +		verify_one(r, istate, istate->cache_tree, &path);
-> +	}
->  	strbuf_release(&path);
->  }
+I'd also note that
 
-This is just a style thing, but I would find it easier to follow if
-it just recursed into itself, i.e.
+  GIT_PERF_REPEAT_COUNT=1 \
+  test_perf ...
 
--	verify_one(...);
-+	if (verify_one(...))
-+		cache_tree_verify(r, istate);
+in the commit message is a bad pattern. On some shells, the one-shot
+variable before a function will persist after the function returns (so
+it would accidentally tweak the count for later tests, too).
 
-or
+All that said, I do think cleaning up the test_time files after each
+test_perf is a good precuation, even if I don't think it's a good idea
+in general to flip the REPEAT_COUNT variable in the middle of a test.
 
--	verify_one(...);
-+	again:
-+	if (verify_one(...))
-+		strbuf_reset(&path);
-+		goto again;
-}	}
-
-On the other hand, if the new code wants to say "I would retry at
-most once, otherwise there is something wrong in me", then
-
-> -	verify_one(r, istate, istate->cache_tree, &path);
-> +	if (verify_one(r, istate, istate->cache_tree, &path)) {
-> +		strbuf_reset(&path);
-> +		if (verify_one(r, istate, istate->cache_tree, &path))
-> +			BUG("...");
-> +	}
-
-would be better.
-
-Other than that, nicely done.
-
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 886e78715fe..85d5279b33c 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -484,7 +484,7 @@ test_expect_success 'checkout and reset (mixed) [sparse]' '
->  test_expect_success 'merge, cherry-pick, and rebase' '
->  	init_repos &&
->  
-> -	for OPERATION in "merge -m merge" cherry-pick rebase
-> +	for OPERATION in "merge -m merge" cherry-pick "rebase --apply" "rebase --merge"
->  	do
->  		test_all_match git checkout -B temp update-deep &&
->  		test_all_match git $OPERATION update-folder1 &&
->
-> base-commit: cefe983a320c03d7843ac78e73bd513a27806845
+-Peff
