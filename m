@@ -2,139 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12035C433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 16:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EACD8C433F5
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 16:44:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAC1A61019
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 16:38:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D35CA61154
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 16:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbhJFQjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 12:39:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbhJFQjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 12:39:51 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52464C061746
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 09:37:59 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id r18so12154708edv.12
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 09:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=j9kn7ux0s5il+1rSwprFsifxliXlyS3SOF3tEveI8MM=;
-        b=j8CQpNmspW9PvQV09luRn01EfBhZqHtyLzqmBhlIpTbjI4sYGGkl2tSdiy65XGMDtX
-         MeG5/ytTXcdnA4M/1HUOgwCzkVQGNdv7IVWPg5ZaDQERpvQ2sW5jyzLY49eATDXqlSsr
-         nVvejJVoRJCoHnjkfvxlZxKUqU6lOnbWNVQgtUQFXzTEWxKD6OqELTtks4ZV8uQSQyk5
-         T/WAQAu6dFcfvmcOmWSEmlhAcsMApuMe94RPmwymlgRNaq9TDjeH2UpgsmKEUqK/ANhX
-         PIEpQ3BYjzceQwIK+jRGoGSWEWxPwCB4Q5MKgz9z1gyIyTJDzZk2N+u0a4XiyPJmGuhu
-         rRIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j9kn7ux0s5il+1rSwprFsifxliXlyS3SOF3tEveI8MM=;
-        b=mVMwqg88gqIi8zDSEzWCqyBuSHJHmvtXMm0QzDcrXUJsnRT3LVk0+YepOpjPISe0Wj
-         5pGyIHRYodaSG+jlwLD/B2LDvDLXweFeUy3NaJ8ncZhkZqM3Mti41h7OxveMbp46hgo2
-         7edDXhDKU6QLm+96RDPX5ecRa+v8ql6oE2jggq5qc/1osdQHufql1kXOn2MvhYaAB5Sd
-         fLA6pC7fP5UgCotKhgx6U+FG1BtDVORQP34mt4Cj3sDg4nOpuEJr+Ss0UF153ybTquG9
-         VGaE9SVGiIec4dyfrhEW99NIrTiHY5N3Vt3INjy9CMlxEsjlmMxM5Fh1PAk/sSbGLzIV
-         AVeA==
-X-Gm-Message-State: AOAM532AgXqz/wRJvZVEs4GWce614zUN5firnY+kGZmoMtpQKGpDRxwb
-        0XznQBX+qJqQU/etAua4nnbdDdVH4QYrKrzr8jBYrjoO5ZQ=
-X-Google-Smtp-Source: ABdhPJzV8uEuEAj1o86LcF18IkdiTGHHMLKpD8emzxwoFkEVFnrvDog6LuhI6wqRO2sPmRCGI/qccgMkQnWgfr7m80g=
-X-Received: by 2002:a17:906:544f:: with SMTP id d15mr33773453ejp.520.1633538277850;
- Wed, 06 Oct 2021 09:37:57 -0700 (PDT)
+        id S239412AbhJFQqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 12:46:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62470 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239456AbhJFQqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 12:46:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A74CDC29C;
+        Wed,  6 Oct 2021 12:44:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cl57B3splDhC
+        N+gP/Bmh31ikWrXWMTfuVCokiZOPfc0=; b=jor+gQvxnoZt0kpxSIZ3i3x98q47
+        YDXK48zqS6NHceKQdi2YNBB6cjLFk/hBoSnhWh/FQG0ig2jlqMwkseke4NbZTxsN
+        5hfvdTIIGXiXD0CLlq7vDAUQhUpeBAZhul3YzULMksxaB6iMwD58DJTdVzAMWwPG
+        vP6aYf4+a2sSngE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 31A42DC29A;
+        Wed,  6 Oct 2021 12:44:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75433DC299;
+        Wed,  6 Oct 2021 12:44:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ab/parse-options-cleanup & ab/align-parse-options-help &
+ ab/help-config-vars
+References: <xmqqo884tkxd.fsf@gitster.g> <87ilyaihdd.fsf@evledraar.gmail.com>
+Date:   Wed, 06 Oct 2021 09:44:05 -0700
+In-Reply-To: <87ilyaihdd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 06 Oct 2021 12:17:29 +0200")
+Message-ID: <xmqqzgrmrtm2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover-0.7-00000000000-20211006T095426Z-avarab@gmail.com> <patch-2.7-c24e115aa49-20211006T095426Z-avarab@gmail.com>
-In-Reply-To: <patch-2.7-c24e115aa49-20211006T095426Z-avarab@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 6 Oct 2021 09:37:46 -0700
-Message-ID: <CABPp-BFgsAKX1nxaX5Rk0XvOjsSxUveEXbqRgrm3n_ZG4Skd7g@mail.gmail.com>
-Subject: Re: [PATCH 2/7] tests: fix a memory leak in test-parse-options.c
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9F049868-26C4-11EC-B7FE-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 6, 2021 at 3:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
-> Fix a memory leak in t/helper/test-parse-options.c, we were not
-> freeing the allocated "struct string_list" or its items. While I'm at
-> it move the declaration of the "list" string_list the
-> cmd__parse_options() function.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-missing verb after the final "string_list"?  I'm having trouble
-parsing this paragraph.
+> On Mon, Oct 04 2021, Junio C Hamano wrote:
+>
+>> * ab/parse-options-cleanup (2021-10-01) 11 commits
+>>  - parse-options: change OPT_{SHORT,UNSET} to an enum
+>>  - parse-options tests: test optname() output
+>>  - parse-options.[ch]: make opt{bug,name}() "static"
+>>  - commit-graph: stop using optname()
+>>  - parse-options.c: move optname() earlier in the file
+>>  - parse-options.h: make the "flags" in "struct option" an enum
+>>  - parse-options.c: use exhaustive "case" arms for "enum parse_opt_typ=
+e"
+>>  - parse-options.c: use exhaustive "case" arms for "enum parse_opt_res=
+ult"
+>>  - parse-options.[ch]: consistently use "enum parse_opt_result"
+>>  - parse-options.[ch]: consistently use "enum parse_opt_flags"
+>>  - parse-options.h: move PARSE_OPT_SHELL_EVAL between enums
+>>
+>>  Random changes to parse-options implementation.
+>>
+>>  Will merge to 'next'?
 
-> In c8ba1639165 (parse-options: add OPT_STRING_LIST helper, 2011-06-09)
-> the "list" variable was added, and later on in
-> c8ba1639165 (parse-options: add OPT_STRING_LIST helper, 2011-06-09)
-> the "expect" was added.
->
-> The "list" variable was last touched in 2721ce21e43 (use string_list
-> initializer consistently, 2016-06-13), but it was still left at the
-> static scope, it's better to move it to the function for consistency.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  t/helper/test-parse-options.c | 7 ++++++-
->  t/t0040-parse-options.sh      | 1 +
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.=
-c
-> index a282b6ff13e..48d3cf6692d 100644
-> --- a/t/helper/test-parse-options.c
-> +++ b/t/helper/test-parse-options.c
-> @@ -14,7 +14,6 @@ static int dry_run =3D 0, quiet =3D 0;
->  static char *string =3D NULL;
->  static char *file =3D NULL;
->  static int ambiguous;
-> -static struct string_list list =3D STRING_LIST_INIT_NODUP;
->
->  static struct {
->         int called;
-> @@ -107,6 +106,8 @@ int cmd__parse_options(int argc, const char **argv)
->                 NULL
->         };
->         struct string_list expect =3D STRING_LIST_INIT_NODUP;
-> +       struct string_list list =3D STRING_LIST_INIT_NODUP;
-> +
->         struct option options[] =3D {
->                 OPT_BOOL(0, "yes", &boolean, "get a boolean"),
->                 OPT_BOOL('D', "no-doubt", &boolean, "begins with 'no-'"),
-> @@ -185,5 +186,9 @@ int cmd__parse_options(int argc, const char **argv)
->         for (i =3D 0; i < argc; i++)
->                 show(&expect, &ret, "arg %02d: %s", i, argv[i]);
->
-> +       expect.strdup_strings =3D 1;
-> +       string_list_clear(&expect, 0);
-> +       string_list_clear(&list, 0);
-> +
->         return ret;
->  }
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index da310ed29b1..ed422a1a616 100755
-> --- a/t/t0040-parse-options.sh
-> +++ b/t/t0040-parse-options.sh
-> @@ -5,6 +5,7 @@
->
->  test_description=3D'our own option parser'
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  cat >expect <<\EOF
-> --
-> 2.33.0.1441.gbbcdb4c3c66
+As I already said, I am not convinced by the "exhaustive case"
+thing.  Other than that, I think this is OK.
 
-Otherwise, looks good.
+>> * ab/align-parse-options-help (2021-09-22) 4 commits
+>>  - parse-options: properly align continued usage output
+>>  - git rev-parse --parseopt tests: add more usagestr tests
+>>  - send-pack: properly use parse_options() API for usage string
+>>  - parse-options API users: align usage output in C-strings
+>>
+>>  When "git cmd -h" shows more than one line of usage text (e.g.
+>>  the cmd subcommand may take sub-sub-command), parse-options API
+>>  learned to align these lines, even across i18n/l10n.
+>>
+>>  Will merge to 'next'?
+
+This was more or less "Meh" for me.
+
+>> * ab/help-config-vars (2021-09-23) 9 commits
+>>  - help: move column config discovery to help.c library
+>>  - help / completion: make "git help" do the hard work
+>>  - help tests: test --config-for-completion option & output
+>>  - help: simplify by moving to OPT_CMDMODE()
+>>  - help: correct logic error in combining --all and --guides
+>>  - help: correct logic error in combining --all and --config
+>>  - help tests: add test for --config output
+>>  - help: correct usage & behavior of "git help --guides"
+>>  - help: correct the usage string in -h and documentation
+>>
+>>  Teach "git help -c" into helping the command line completion of
+>>  configuration variables.
+>>
+>>  Will merge to 'next'?
+
+This is probably a good thing to do.  I do not remember what
+implementation nits were still there offhand.
+
