@@ -2,106 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA07CC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 15:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC88C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 15:58:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0E3961166
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 15:01:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C09A861076
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 15:58:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239191AbhJFPDM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 11:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44752 "EHLO
+        id S231955AbhJFQAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 12:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239125AbhJFPBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 11:01:12 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DBBC061760
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 07:59:19 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id d8so10943268edx.9
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 07:59:19 -0700 (PDT)
+        with ESMTP id S230101AbhJFQAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 12:00:50 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE19C061746
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 08:58:57 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id z20so11579975edc.13
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 08:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Z8iixKXELMTWlZdJtmkP8lSyc//nzf9HzxWcj3KBPsU=;
-        b=bb/c/Y74gG5PnuSBOoGuATze2NMBvlXYVJTHyHhhq4UOjd43fr0LPviFccq5Rn1qF3
-         gDYMhkEFo+H/lvGhjxZKefHglTK7812xB0pN84FgGsN30qPgTwQozQeWBcg9fFX3Y1tS
-         MtVN2qfOlTj8DqoGfKEn5pN302UTFsUxHLkGqU90xXXpHwTD0/8inM11L/O3cKk+WZxL
-         cq5NB48m5v9jbaKFdstz0yqgiyG5X6/SW03GTkw+PRNXg08qDrrEhLMLL5Prn486bDc4
-         qzgoJIhW+nF5O29Ygzhh+vreAh4bj2cUtBYzIv3a8rEqH2YzJixYjZUCnYlMF/Y2L+Q1
-         NgHw==
+         :cc:content-transfer-encoding;
+        bh=UrrodMsqw5qaXZieFFAut0nBJMyeHj5kamInnvkT0Cg=;
+        b=IxVqfgpYGp6xy0P13937Z2tMIw5uFrkippoTFx0m9gWsZ5MszVUMMME7R30rMlQtyu
+         B2xHCMJUa/CqeAl5ZCKdlWEht8Q1xtragqBMxYNbT3ojKQYdAbv2HvE6Izos5KgaeXa6
+         Hw9qB2jhL2PvMldSDmtOk5+LyQkKDr4gMHLc0dwh3/7a/ooS0HQVxMrrNo6b/0L5fvHh
+         k36LUGD6sL5rpFWCLVbCkOAaMmnBNkRZBy6+qsn3GBTWzEfFBQD3683Vfs/N6sMyoZ5W
+         uJcw/q8MWT1gWEAYlUABRXO62VW/+7wwpxtxxRZETE2FPZT8Pb78uHJ0wdTTEo4pVAf3
+         mAaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Z8iixKXELMTWlZdJtmkP8lSyc//nzf9HzxWcj3KBPsU=;
-        b=noJwktZn4sGt9AG3Mf5mXFM4iWlNneS400gQoFuREMBcA4MzFRIzzX8BuYdHMTffRc
-         WV4dYM80pVdS4+/8Q88N12GlUvKPEIH3s4u2smeFo9wE7H6pP1cDKn3LVCeN6oekF9qh
-         UhKrKUSSsXrlVebAGdd4ICbN2jwQTT//+rSOshpvRq7FTJzQEnoPux0nNZ17JCjtAMHz
-         yd9ljMMpKE+P0suemOe1wyUcDMANVR+cDVWfC8c/soNdCMopZm5GoQqvCV7G78BcQPaW
-         g35qQHNMniSSD1hHFpZh8ay9YxaPjoeYyBLyvVPLzPj1KVdmNfRlM9CazxLqFeaNojPD
-         aKzw==
-X-Gm-Message-State: AOAM533XEL2I+qAA/NPKG7aSQmAyYZdZ4e5d6NFRuDPndRN2bHK0Hanw
-        fDOykX4uDzcowjq4FG8Nm2358wQmODAhrxfWIDTzXIT1gUM=
-X-Google-Smtp-Source: ABdhPJyU6kte1ZQ/wKZRqjFiAjlbb2QduPi2R4BANqIS96UraLD7v8XtRrAQlzF+eiQ2N9paLrmAUzDIHKxyMmt/y4A=
-X-Received: by 2002:a17:906:38c8:: with SMTP id r8mr32485265ejd.172.1633532333638;
- Wed, 06 Oct 2021 07:58:53 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UrrodMsqw5qaXZieFFAut0nBJMyeHj5kamInnvkT0Cg=;
+        b=k1s8csK9/LwZCyzXU2Y7I90GJ1rMCSNiZupfZdoZgs9vi5sbYFv8MJMXgwFFUhD453
+         FwrrUid9HbZFI1yC3Rdw/sAmTdU1mbA58NSWIeQc7nablfevR4yMlCkJBm9kOo2XUmvi
+         GRQCVqlhsSnSwu+xQgiWMfdASGUiVlRIw/RJEiQ8Kvh4Vua/rNvagwTRtkhZj9t7613x
+         K1TCDJqGGJOAfGgdb7lm2KrlK5LzIk2Pm2vsRewUKeR7lcSnXM8yTVHYAtjgIDCrgU30
+         wbYPHPb2r+PRGOuTO5JFeLnfW7pYblXSk1YG8T5CTL83IUVhPREK/VYZG0R1HjfbFnYM
+         /txw==
+X-Gm-Message-State: AOAM5321Vq8gl60Grjr4DghXQkMaJI1Qu4HeKtDuuG8OBNCFVGTGaZ+x
+        9El0PJrArA2ZIL0w7qnFLSI0P/WdOsEEL8/TVQSlRjzZbIg=
+X-Google-Smtp-Source: ABdhPJwsSo9CYpxsWPwXr4EfDcnI9lzfdkbnmUApQn02xyuaIG0zmtvtsTEB/hk9TeSrmFBHO79z6butooSqYDBiy9c=
+X-Received: by 2002:a05:6402:7d0:: with SMTP id u16mr10534722edy.62.1633535936122;
+ Wed, 06 Oct 2021 08:58:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <9e4411aa-e757-0653-0c2a-24894b13158f@gmail.com>
-In-Reply-To: <9e4411aa-e757-0653-0c2a-24894b13158f@gmail.com>
+References: <cover-0.2-00000000000-20211006T093405Z-avarab@gmail.com> <patch-1.2-e5ef1be2aa9-20211006T093405Z-avarab@gmail.com>
+In-Reply-To: <patch-1.2-e5ef1be2aa9-20211006T093405Z-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 6 Oct 2021 07:58:41 -0700
-Message-ID: <CABPp-BF8R-i0CnYE9mQjvwTWuZCgW0VsTTajWTpi15fk9F48Lg@mail.gmail.com>
-Subject: Re: Merge ORT performance in the wild
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 6 Oct 2021 08:58:44 -0700
+Message-ID: <CABPp-BH0ca=kx85kfqh7GGRqEzUpzd4dUr58M5WrUmYXQs0e4w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] unpack-trees: don't leak memory in verify_clean_subdirectory()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 5, 2021 at 12:42 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Oct 6, 2021 at 2:40 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> Hello all, especially Elijah.
+> Fix two different but related memory leaks in
+> verify_clean_subdirectory(). We leaked both the "pathbuf" if
+> read_directory() returned non-zero, and we never cleaned up our own
+> "struct dir_struct" either.
 >
-> We finally shipped Git 2.33.0 (with VFS for Git) to the Windows OS
-> engineers, and the microsoft/git fork enables the ORT merge strategy
-> by default in this version.
+>  * "pathbuf": When the read_directory() call followed by the
+>    free(pathbuf) was added in c81935348be (Fix switching to a branch
+>    with D/F when current branch has file D., 2007-03-15) we didn't
+>    bother to free() before we called die().
 >
-> I know that we are queued to include the ORT merge strategy as on
-> by default in Git 2.34.0, and to further support that change (and
-> thank Elijah for working hard on the feature), I wanted to share
-> some early data on our users interacting with it.
+>    But when this code was later libified in 203a2fe1170 (Allow callers
+>    of unpack_trees() to handle failure, 2008-02-07) we started to leak
+>    as we returned data to the caller. This fixes that memory leak,
+>    which can be observed under SANITIZE=3Dleak with e.g. the
+>    "t1001-read-tree-m-2way.sh" test.
 >
-> We have about 250 users who have upgraded, relative to ~2,300 users
-> who were active on the previous version. However, we saw sufficiently
-> high use of 'git cherry-pick' and 'git merge' in these early users to
-> share these results for how they are experiencing the new world:
+>  * "struct dir_struct": We've leaked the dir_struct ever since this
+>    code was added back in c81935348be.
 >
-> | Builtin     | Percentile | Recursive | ORT   |
-> |-------------|------------|-----------|-------|
-> | cherry-pick | 50         |  18.4s    | 14.1s |
-> | cherry-pick | 80         |  34.9s    | 15.4s |
-> | cherry-pick | 95         | 117.9s    | 17.7s |
-> | merge       | 50         |   7.7s    |  1.2s |
-> | merge       | 80         |  17.9s    | 12.7s |
-> | merge       | 95         |  58.9s    | 22.3s |
+>    When that commit was written there wasn't an equivalent of
+>    dir_clear(). Since it was added in 270be816049 (dir.c: provide
+>    clear_directory() for reclaiming dir_struct memory, 2013-01-06)
+>    we've omitted freeing the memory allocated here.
 >
-> This matches the results from a synthetic performance test I ran
-> in our monorepos: ORT is always faster, but its outlier performance
-> is far faster than the outlier performance of the 'recursive'
-> strategy.
+>    This memory leak could also be observed under SANITIZE=3Dleak and the
+>    "t1001-read-tree-m-2way.sh" test.
+>
+> This makes all the test in "t1001-read-tree-m-2way.sh" pass under
+> "GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue", we'd previously die in tests
+> 25, 26 & 28.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  t/t1001-read-tree-m-2way.sh | 2 ++
+>  unpack-trees.c              | 3 ++-
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+> index 1057a96b249..d1115528cb9 100755
+> --- a/t/t1001-read-tree-m-2way.sh
+> +++ b/t/t1001-read-tree-m-2way.sh
+> @@ -20,6 +20,8 @@ In the test, these paths are used:
+>         rezrov  - in H, deleted in M
+>         yomin   - not in H or M
+>  '
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-read-tree.sh
+>
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index a7e1712d236..89ca95ce90b 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -2156,9 +2156,10 @@ static int verify_clean_subdirectory(const struct =
+cache_entry *ce,
+>         if (o->dir)
+>                 d.exclude_per_dir =3D o->dir->exclude_per_dir;
+>         i =3D read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
+> +       dir_clear(&d);
+> +       free(pathbuf);
+>         if (i)
+>                 return add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->n=
+ame);
+> -       free(pathbuf);
+>         return cnt;
+>  }
+>
+> --
+> 2.33.0.1441.gbbcdb4c3c66
 
-Great news, thanks for sharing.
-
-This is basically just testing one of the optimizations, too.  I'm
-still curious what the performance difference would be on your large
-repositories, comparing git <= v2.30's recursive (i.e. before my
-optimizations, some of which benefitted recursive) with rename
-detection _not_ turned off, and current ort.  I suspect you'd have a
-hard time convincing users to use the former, though.  IIRC, Ben
-reported one example merge took on the order of an hour, but I don't
-know which repository that was with or if it even had many renames.
-Anyway, it's nice to know that even without the consideration of
-rename detection in the old comparison numbers, you're still seeing
-nice speedups.
+Nicely explained; and nice clean patch.
