@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C86AEC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 08:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80B4CC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:13:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADD006115A
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 08:55:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CAEF61163
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 09:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237751AbhJFI5T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 04:57:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44548 "EHLO
+        id S237802AbhJFJPo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 05:15:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237593AbhJFI5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 04:57:15 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D17C061749
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 01:55:23 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id p11so6986806edy.10
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 01:55:23 -0700 (PDT)
+        with ESMTP id S230120AbhJFJPn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 05:15:43 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8149C061749
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 02:13:51 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id z20so7095857edc.13
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 02:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=/SieCaDYmcFP9/vn6d+T8oeVUfzyQklpE4BYTpGv+zs=;
-        b=qdNXaxsTfgicliU1R2K56hzVoRemFT03WY/eCN90D8vq5giW+2w3txNhk0+KVZZsjB
-         3LrepxNbtBelKt4Z1cV6sa9FqItWHblQTjyViu6q7SWR1tMwQ1AAvd2PwktNzyW08nYb
-         OmiLCr+BLLwfSV9IiNY0mkMkbwCNaCK1jMEBPbgDt0gQszN71fhXI7p59QP5BzkREf0m
-         5ujTqNyGgiD7IPE/NtkNfGWYgxDWttRT/WhT+tfyUeW4sU+zPrCjH/JYfVLKXrKFNy46
-         +5SjWCHxOmLcgn9SJRE6T6PX+RjMmYLnxVyr1DJOiaPO/gGPdchiDxioLDGHRjLM8FwK
-         4xsw==
+        bh=8IymETce5Fo04ns77Gm4sGHHWURAyWUGPIP8QJz4gew=;
+        b=A3jtYHTDR/1vM5Zi6W84o6lUAxLkRUeS44ZxHo61sH/eV959Tl2DToNSKRtjFkUU7w
+         N/MmIGqIlhY/On1w87P6+GGsuBrmWc0fY1WRhJ8zfvPXaV7bRh8zxICJgAzSnVub6i0V
+         6KCjccpmKHEDec5LVrrYyMVuVXdTbwouxlkIBaPobZSDQKchcdS9I/TmM4KxtbTHpkUo
+         z42KyBW6PJP8/RNGx6mypkLIkY0vChOVtTV0qEVgwjS/m4PSrlhGWbOlVWTwGyKbvfuV
+         jfvrN6PyhVFGafWZ7i7PrJoNK8zMaM0SkefTdNREBXn/4nSkPZcgwQzN0w8ehB9URcN7
+         IKOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=/SieCaDYmcFP9/vn6d+T8oeVUfzyQklpE4BYTpGv+zs=;
-        b=0xWPdR7BVVkySPKHGZlFUCOZMK8PEClVPxxJTnmnV9jlYJR3h6iL/4apDGHHXip43i
-         ZS56SH4z+PAoQ64N3rqkYY0ZWJ5gcToa9IHv/NnXprN36XeYVJ+fcTjN4fKMLmn0A+W7
-         oXzX5O6OgXS5Wx1sbcfz5plvpOwTnJs5I5HX9jP2G4War1ePl1lBU5WuP7YPCq0okc+z
-         BRQASdDzRopsiCl2Ol8ZUCeVXuiFYEZfYJUrG4sJB1lBWjuzbEoU1pmefRUyeeY9s5UM
-         XttznwkT3K9qKb8kMEdx+2AO7T66Nz+cB1J/oswmTpkY5X/uA/sGxv0amoNfOovbCnd6
-         GIqg==
-X-Gm-Message-State: AOAM531/KL/VGGMpnJyQgswQbW3/pLaM3KP4Tk1vQstvXDFACkmISeUf
-        UN91swMMehuWd5SMDHv/x2E=
-X-Google-Smtp-Source: ABdhPJzTSR0tExEDkKuRybaGxevSgPJc68XQYsmVpHwI0LCrRdn4h/YYq8xlB5lt9I2hIiqrl5AzAw==
-X-Received: by 2002:a05:6402:1250:: with SMTP id l16mr18067268edw.323.1633510522278;
-        Wed, 06 Oct 2021 01:55:22 -0700 (PDT)
+        bh=8IymETce5Fo04ns77Gm4sGHHWURAyWUGPIP8QJz4gew=;
+        b=jIZYDZEPnfgi7sDRaeSihgT0Rf5ENH2+TDIzs+ns938jEnzGXUxaAKfoOyH7iXbg2u
+         5plJ8f8a558vTZaEo3zGXOFkfDd8tK9R5Ef1pfh3dAyC5/cc0n5DAi/iiDyYmB+zcYwO
+         1Tv9/HNYdPbJpz+t49N/v66i6uxAtZ0yxhCnc+Udy7agRSlN9eqFQb00AeNTgy1/VuUi
+         tuSZzi4WRkbb5vSPY15UD5FKAwEugQtHFYfeU/wTEVlDdhpBpT3eMPgsEslzR2oa9rPs
+         azexWL02ytyVAuK/fNhQsDIYd8jmtcwi2myVcBy0OdB6MsQsebtW5HVzaTRdSjwSQ9/8
+         cvUw==
+X-Gm-Message-State: AOAM532Y2RlwUEiOI2Hyq3TliFmR5l77TPX5vBc6Hje332vutjxp9foo
+        fkxNLzfniefT6uSaCzqsdwvK6tum1hYMWA==
+X-Google-Smtp-Source: ABdhPJxzr6QvVmw0Ue2s+gf8RbJLE0oRI5+GJETyJ1Za6/9JkD3KYvLd6xlsl37shvwPcR1gO3IYgg==
+X-Received: by 2002:a50:fc83:: with SMTP id f3mr20845768edq.134.1633511630230;
+        Wed, 06 Oct 2021 02:13:50 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dx2sm1226962ejb.125.2021.10.06.01.55.21
+        by smtp.gmail.com with ESMTPSA id d17sm5552001edv.58.2021.10.06.02.13.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 01:55:21 -0700 (PDT)
+        Wed, 06 Oct 2021 02:13:49 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: ab/fsck-unexpected-type (and "cat-file replace handling and
- optimization")
-Date:   Wed, 06 Oct 2021 10:54:43 +0200
-References: <xmqqo884tkxd.fsf@gitster.g>
- <87bl43jit5.fsf@evledraar.gmail.com>
- <YVzLRSa9/vUWJPL0@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
+ --batch-all-objects
+Date:   Wed, 06 Oct 2021 11:02:59 +0200
+References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
+ <YVy2DNd+XemykKE0@coredump.intra.peff.net>
+ <877derjia9.fsf@evledraar.gmail.com>
+ <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YVzLRSa9/vUWJPL0@coredump.intra.peff.net>
-Message-ID: <87y276ilc8.fsf@evledraar.gmail.com>
+In-reply-to: <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
+Message-ID: <87tuhuikhf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -73,37 +73,231 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Oct 05 2021, Jeff King wrote:
 
-> On Tue, Oct 05, 2021 at 10:47:26PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+> On Tue, Oct 05, 2021 at 11:02:38PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
 armason wrote:
 >
->> > * ab/fsck-unexpected-type (2021-10-01) 17 commits
->> [...]
->> Note that Jeff's just-submitted cat-file series[3] will conflict with
->> this, as they both adjust the same "garbage" object tests. The semantic
->> conflict is minimal/none, but the textual one is probably annoying
->> (e.g. his 1/5 uses a variable I split/renamed).
+>> > diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fi=
+le.txt
+>> > index 4eb0421b3f..6467707c6e 100644
+>> > --- a/Documentation/git-cat-file.txt
+>> > +++ b/Documentation/git-cat-file.txt
+>> > @@ -94,8 +94,9 @@ OPTIONS
+>> >  	Instead of reading a list of objects on stdin, perform the
+>> >  	requested batch operation on all objects in the repository and
+>> >  	any alternate object stores (not just reachable objects).
+>> > -	Requires `--batch` or `--batch-check` be specified. Note that
+>> > -	the objects are visited in order sorted by their hashes.
+>> > +	Requires `--batch` or `--batch-check` be specified. By default,
+>> > +	the objects are visited in order sorted by their hashes; see
+>> > +	also `--unordered` below.
+>> >=20=20
+>> >  --buffer::
+>> >  	Normally batch output is flushed after each object is output, so
 >>=20
->> Jeff: Depending on what Junio thinks of queuing ab/fsck-unexpected-type
->> for next what do you think about rebasing your series on top, or perhaps
->> take a look at the v10[4] of it/ack it in case that helps with that (sin=
-ce
->> you've been looking at some related code just now...).
+>> Since you're doing while-you're-at-it anyway: Isn't the --unordered
+>> documentation also incorrect to reference --batch, which I take as it
+>> lazily using as a shorthand for --batch-all-objects.
 >
-> The conflict is pretty easy to resolve: just keep my new cleanup tests,
-> but swap out the variable name. The combined diff is below for
-> reference (this is more readable than a remerge diff, but I guess a
-> remerge diff could actually be applied).
+> I don't think so. It says:
 >
-> I don't mind rebasing on top if that's easier for Junio, but in that
-> case it may make sense to float the test cleanup to the front of the
-> series.
+> --unordered::
+>         When `--batch-all-objects` is in use, visit objects in an
+>         order which may be more efficient for accessing the object
+>         contents than hash order. The exact details of the order are
+>         unspecified, but if you do not require a specific order, this
+>         should generally result in faster output, especially with
+>         `--batch`.  Note that `cat-file` will still show each object
+>         only once, even if it is stored multiple times in the
+>         repository.
 >
-> I can also just change mine to do the --batch-all-objects tests in a
-> separate repository (which is what the existing ones do). That has the
-> minor advantage that we know all objects in the repository, so rather
-> than picking out the interesting object with perl, we could generate the
-> full expected output.
+> So it correctly mentions that it is affecting --batch-all-objects in the
+> first sentence. The "especially with --batch" is correct, too. The
+> ordering has more of an effect if you are accessing the full object,
+> since there we are increasing the locality which the delta-base cache
+> relies on.  Whereas with --batch-check, even with size or type, that
+> locality is much less important (it might help disk or even RAM caches a
+> bit, but we are examining each object independently, even if it's a
+> delta, and not caching the intermediate results in any way ourselves).
+>
+> Does that answer your question, or were you thinking of something else?
 
-Thanks, your plan sounds better. I hadn't tried the merge when I sent
-that E-Mail, just saw your series & that it would conflict, wanted to
-give you/Junio a headsup.
+Urgh.
+
+This is the Nth time I've completely failed to mentally model how this
+command works, after having hacked on it extensively.
+
+I thought that --batch-all-objects and --batch were mutually exclusive,
+but they're obviously not.
+
+In my defense I think the help/code is very confusing. I hacked up some
+WIP changes to change it from:
+=20=20=20=20
+    $ git cat-file -h
+    usage: git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-ty=
+pe] | -e | -p | <type> | --textconv | --filters) [--path=3D<path>] <object>
+       or: git cat-file (--batch[=3D<format>] | --batch-check[=3D<format>])=
+ [--follow-symlinks] [--textconv | --filters]
+=20=20=20=20
+    <type> can be one of: blob, tree, commit, tag
+        -t                    show object type
+        -s                    show object size
+        -e                    exit with zero when there's no error
+        -p                    pretty-print object's content
+        --textconv            for blob objects, run textconv on object's co=
+ntent
+        --filters             for blob objects, run filters on object's con=
+tent
+        --path <blob>         use a specific path for --textconv/--filters
+        --allow-unknown-type  allow -s and -t to work with broken/corrupt o=
+bjects
+        --buffer              buffer --batch output
+        --batch[=3D<format>]    show info and content of objects fed from t=
+he standard input
+        --batch-check[=3D<format>]
+                              show info about objects fed from the standard=
+ input
+        --follow-symlinks     follow in-tree symlinks (used with --batch or=
+ --batch-check)
+        --batch-all-objects   show all objects with --batch or --batch-check
+        --unordered           do not order --batch-all-objects output
+=20=20=20=20
+To:
+=20=20=20=20
+    usage: git cat-file (-e | -p) <object>
+       or: git cat-file ( -t | -s ) [--allow-unknown-type] <object>
+       or: git cat-file [--batch-all-objects] [--batch | --batch-check] [--=
+buffer] [--follow-symlinks] [--unordered]
+       or: git cat-file [--textconv|--filters] [--path=3D<path|tree-ish> <r=
+ev> | <rev>:<path|tree-ish>]
+=20=20=20=20
+    Check object existence or emit object contents
+        -e                    check if <object> exists
+        -p                    pretty-print <object> content
+=20=20=20=20
+    Emit [broken] object attributes
+        -t                    show object type (one of 'blob', 'tree', 'com=
+mit', 'tag', ...)
+        -s                    show object size
+        --allow-unknown-type  allow -s and -t to work with broken/corrupt o=
+bjects
+=20=20=20=20
+    Run <rev>:<blobs|tree> via conversion or filter
+        --textconv            for blob objects, run textconv on object's co=
+ntent
+        --filters             for blob objects, run filters on object's con=
+tent
+        --path <blob>         use a specific path for --textconv/--filters
+=20=20=20=20
+    Emit objects in batch via requests on STDIN, or --batch-all-objects
+        --batch-all-objects   Emit all objects in the repository, instead o=
+f taking requests on STDIN
+        --buffer              buffer --batch output
+        --batch[=3D<format>]    show info and content of objects fed from t=
+he standard input
+        --batch-check[=3D<format>]
+                              show info about objects fed from the standard=
+ input
+        --follow-symlinks     follow in-tree symlinks
+        --unordered           do not order objects before emitting them
+
+Which actually reflects reality, i.e. half of the options aren't
+accepted by the batch mode, so grouping them makes sense, and the
+current help gives the impression that e.g. --textconv can be used with
+--batch, but it's effectively a CMDMODE.
+
+Then we don't document that [--textconv|--filters] will fallback to -p
+if given <tree-ish>, I'm not sure if that's intentional (but a
+"fallthrough" comment suggests so).
+
+And we silentnly accept --buffer etc. without the batch mode, but it
+should die.
+
+Looking at the history it seems you added --batch-all-objects around the
+same time as the OPT_CMDMODE() was used in the command, so we should
+probably have something like this to start with:
+
+-- >8 --
+Subject: [PATCH] cat-file: make --batch-all-objects a CMDMODE
+
+The usage of OPT_CMDMODE() in "cat-file"[1] was added in parallel with
+the development of[3] the --batch-all-objects option[4], so we've
+since grown[5] checks that it can't be combined with other command
+modes, when it should just be made a top-level command-mode
+instead. It doesn't combine with --filters, --textconv etc.
+
+1. b48158ac94c (cat-file: make the options mutually exclusive, 2015-05-03)
+2. https://lore.kernel.org/git/xmqqtwspgusf.fsf@gitster.dls.corp.google.com/
+3. https://lore.kernel.org/git/20150622104559.GG14475@peff.net/
+4. 6a951937ae1 (cat-file: add --batch-all-objects option, 2015-06-22)
+5. 321459439e1 (cat-file: support --textconv/--filters in batch mode, 2016-=
+09-09)
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+---
+ builtin/cat-file.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 243fe6844bc..50861bb02da 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -643,6 +643,8 @@ int cmd_cat_file(int argc, const char **argv, const cha=
+r *prefix)
+ 			    N_("for blob objects, run textconv on object's content"), 'c'),
+ 		OPT_CMDMODE(0, "filters", &opt,
+ 			    N_("for blob objects, run filters on object's content"), 'w'),
++		OPT_CMDMODE(0, "batch-all-objects", &opt,
++			    N_("show all objects with --batch or --batch-check"), 'b'),
+ 		OPT_STRING(0, "path", &force_path, N_("blob"),
+ 			   N_("use a specific path for --textconv/--filters")),
+ 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
+@@ -658,8 +660,6 @@ int cmd_cat_file(int argc, const char **argv, const cha=
+r *prefix)
+ 			batch_option_callback),
+ 		OPT_BOOL(0, "follow-symlinks", &batch.follow_symlinks,
+ 			 N_("follow in-tree symlinks (used with --batch or --batch-check)")),
+-		OPT_BOOL(0, "batch-all-objects", &batch.all_objects,
+-			 N_("show all objects with --batch or --batch-check")),
+ 		OPT_BOOL(0, "unordered", &batch.unordered,
+ 			 N_("do not order --batch-all-objects output")),
+ 		OPT_END()
+@@ -669,28 +669,25 @@ int cmd_cat_file(int argc, const char **argv, const c=
+har *prefix)
+=20
+ 	batch.buffer_output =3D -1;
+ 	argc =3D parse_options(argc, argv, prefix, options, cat_file_usage, 0);
+-
+-	if (opt) {
++	if (argc && batch.enabled)
++		usage_with_options(cat_file_usage, options);
++	if (opt =3D=3D 'b') {
++		batch.all_objects =3D 1;
++	} else if (opt) {
+ 		if (batch.enabled && (opt =3D=3D 'c' || opt =3D=3D 'w'))
+ 			batch.cmdmode =3D opt;
+ 		else if (argc =3D=3D 1)
+ 			obj_name =3D argv[0];
+ 		else
+ 			usage_with_options(cat_file_usage, options);
+-	}
+-	if (!opt && !batch.enabled) {
++	} else if (!opt && !batch.enabled) {
+ 		if (argc =3D=3D 2) {
+ 			exp_type =3D argv[0];
+ 			obj_name =3D argv[1];
+ 		} else
+ 			usage_with_options(cat_file_usage, options);
+-	}
+-	if (batch.enabled) {
+-		if (batch.cmdmode !=3D opt || argc)
+-			usage_with_options(cat_file_usage, options);
+-		if (batch.cmdmode && batch.all_objects)
+-			die("--batch-all-objects cannot be combined with "
+-			    "--textconv nor with --filters");
++	} else if (batch.enabled && batch.cmdmode !=3D opt) {
++		usage_with_options(cat_file_usage, options);
+ 	}
+=20
+ 	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
+--=20
+2.33.0.1441.gbbcdb4c3c66
