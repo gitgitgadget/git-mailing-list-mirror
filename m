@@ -2,119 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E7DAC433F5
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D95CFC433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:31:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2074461184
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:21:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD44961177
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 10:31:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238089AbhJFKW6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 06:22:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36112 "EHLO
+        id S237991AbhJFKdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 06:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbhJFKW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 06:22:58 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6FAC061749
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 03:21:05 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id dj4so7950519edb.5
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 03:21:05 -0700 (PDT)
+        with ESMTP id S237856AbhJFKdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 06:33:09 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED7DC06174E
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 03:31:17 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id g2so1975874pfc.6
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 03:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=IdbGItdrsZlGRMqMH9zUc5IxiGs8OaytDS+QxvoiCHM=;
-        b=FPWcDoYJOZNoIaNcSBxzi08PSMRwMYcPG5cx7gRTJxQvPFl/FxwOWhb9mmpwcMMq6I
-         J7GOMKgEapAjyZhMZPCT79CoGefTu0OnvwWjMi+dubjMihFIGz+p92knSdRM+wK94gvq
-         CiWP6NkxzLIB9EsZgo1WzdMKWsGg5J3DVfCmXBD1K0q/C+tU0HsoY7dmelFXugzmiVGU
-         25DF7wVLW7vgfbpYwR/rONkQFlsgpkEei2PTSOwLOwnddj/A8s6Iw//ceF/d3+CtDJPQ
-         J6ERokqI7yyUvwSgZDKJ0JJuncA+Dw8zdLgcX1s8oklhIKnRCCGt0FOF4xF7j7Borkf1
-         ttvg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=V2RIagVQlElIvBj9COPrtVGYjY0u0m1azCr0z3GPfrc=;
+        b=kyayKSTIwmoR0ntJbZSkue9aclg3ybphxF0kdgULBsIcWjVCwugm0iP+hksLbnaH4D
+         OHVGTkKGLBT9KEa2guTRGl9QIDdRlaE3Nap1N04nJTxU14lfrHslin2m6wHxzW07USO5
+         7QrHnfAfCTioIVP2r0nowuw5F125VDRY+NRI3jm7Or+XAtFXrSlWhk4cBhMd25hV97fW
+         DKq5nqDl5jxyZ9b5KJvyUU5xYrESS+lCPhWuIlUIu6BgR10KtavsF8wtibfKDdmEY9FE
+         MXJyJQaaf/PmyZ8nJp/52a29gfWtsDwMUxG01m1G7Z5t2bW4jpaYF6wOiXhxPSdgAnPI
+         8J4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=IdbGItdrsZlGRMqMH9zUc5IxiGs8OaytDS+QxvoiCHM=;
-        b=Vm9kN1Ygff3UQvdZRhMSt8R8JjczeGSLMQeTdgzY6SGxShBTYxQZfs4K0tHCSzPABu
-         5b/qVulAcngcxdvTs+5mzhZphmV07GUMqQvR8oNeq01/cO9vUXlSKJIjsmBr0vdPM5vm
-         M26nIno+uouuZPgAdIz+ysZAV8kQqjmoHJYz6pC5/U0m6wVwb24HfIr+S+rUK1i0o7n9
-         /W+JxL29nekh3AgmT8GBJIfPhbqmPMFraOJM5CWFxcdHHDCvxu/ggpTWTIMIBw+TaYGJ
-         Ujpc0USKmWuc4K0gjpyUFZMG6xUbAVWF+FSvZic52yUHNDsvT3nKOkeGy47sx4+iTuDe
-         uNHw==
-X-Gm-Message-State: AOAM533RR2q33gAGsXIO/Rn1l7UOBpfLtLGAdGyzJ30zridXdNNSxmsa
-        La547RqYDs9onp7VTWc6T+g=
-X-Google-Smtp-Source: ABdhPJxg8Tti8OJgfGUiFNk3aDiGmCOQDD8NcToo2/kWO0quREZCq77dXZT8328myuAqIQulg7+hQw==
-X-Received: by 2002:a50:e006:: with SMTP id e6mr32304086edl.302.1633515664277;
-        Wed, 06 Oct 2021 03:21:04 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cr9sm9771115edb.17.2021.10.06.03.21.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 03:21:03 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/parse-options-cleanup & ab/align-parse-options-help &
- ab/help-config-vars
-Date:   Wed, 06 Oct 2021 12:17:29 +0200
-References: <xmqqo884tkxd.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqqo884tkxd.fsf@gitster.g>
-Message-ID: <87ilyaihdd.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=V2RIagVQlElIvBj9COPrtVGYjY0u0m1azCr0z3GPfrc=;
+        b=BSd5Ib7uSYrqj7+zV1SUC6QjW8lZRDYY0SaQ6Ff+ul/fTYxnMg7mBW068en0Ox5qsH
+         Qr98qEOV3OS313vKqaifGAeunN/l8aXvIZV6QPf9hRpFbcBR8+8SUG6PNPXL6Kn/wQh9
+         HMIkjhg8zoh2+xvkrxo9fnNwVS6alU9sS4cAenUJCefarIHrJaEH0StcAF5Dpkns+PGk
+         SWUIO6LIK7P0rFK0sSCXLcM4wmcXsBnXQmbNujmNf42sA24RPXzxcNlKCs1gTr1pw+4R
+         7LAmioPISZ0k1w9PxB3YBfmuF7rKBSpDytqfkC7OfQcxGeJrO1559+ekkv8i6cxgVt8p
+         BX8A==
+X-Gm-Message-State: AOAM532WsSfoDj/CJzwkz0lZkAN5KDGlhNz1mXIIQlrzy9s5DAfeGbi2
+        +OYoRv8D52TCvn24QbBEmCX9H6mrJ50cTQ==
+X-Google-Smtp-Source: ABdhPJzG8Cg85+ASHi3D412dtl5OVFEeRuUa1g3Ys4ItMc3/6tFhTGyS3sv7zoZDoDF7SHGuKnhBLw==
+X-Received: by 2002:a05:6a00:43:b0:43d:f06e:4f4a with SMTP id i3-20020a056a00004300b0043df06e4f4amr36559378pfk.20.1633516276435;
+        Wed, 06 Oct 2021 03:31:16 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-73.three.co.id. [180.214.233.73])
+        by smtp.gmail.com with ESMTPSA id ie13sm4657015pjb.20.2021.10.06.03.31.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Oct 2021 03:31:16 -0700 (PDT)
+Subject: Re: [PATCH v2 1/7] reset: behave correctly with sparse-checkout
+To:     Kevin Willford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>, Victoria Dye <vdye@github.com>,
+        Kevin Willford <kewillf@microsoft.com>
+References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
+ <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
+ <22c69bc60308fef13acd7c3aab4e11e175c89440.1633440057.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <f6ccec5f-1946-dc13-c19e-d6889f943bc2@gmail.com>
+Date:   Wed, 6 Oct 2021 17:31:12 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <22c69bc60308fef13acd7c3aab4e11e175c89440.1633440057.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 05/10/21 20.20, Kevin Willford via GitGitGadget wrote:
+> When using the sparse checkout feature, 'git reset' will add entries to
+> the index that will have the skip-worktree bit off but will leave the
+> working directory empty. File data is lost because the index version of
+> the files has been changed but there is nothing that is in the working
+> directory. This will cause the next 'git status' call to show either
+> deleted for files modified or deleting or nothing for files added. The
+> added files should be shown as untracked and modified files should be
+> shown as modified.
+> 
 
-On Mon, Oct 04 2021, Junio C Hamano wrote:
+Better say `... but there is nothing in the working directory`.
 
-> * ab/parse-options-cleanup (2021-10-01) 11 commits
->  - parse-options: change OPT_{SHORT,UNSET} to an enum
->  - parse-options tests: test optname() output
->  - parse-options.[ch]: make opt{bug,name}() "static"
->  - commit-graph: stop using optname()
->  - parse-options.c: move optname() earlier in the file
->  - parse-options.h: make the "flags" in "struct option" an enum
->  - parse-options.c: use exhaustive "case" arms for "enum parse_opt_type"
->  - parse-options.c: use exhaustive "case" arms for "enum parse_opt_result"
->  - parse-options.[ch]: consistently use "enum parse_opt_result"
->  - parse-options.[ch]: consistently use "enum parse_opt_flags"
->  - parse-options.h: move PARSE_OPT_SHELL_EVAL between enums
->
->  Random changes to parse-options implementation.
->
->  Will merge to 'next'?
-[...]
-> * ab/align-parse-options-help (2021-09-22) 4 commits
->  - parse-options: properly align continued usage output
->  - git rev-parse --parseopt tests: add more usagestr tests
->  - send-pack: properly use parse_options() API for usage string
->  - parse-options API users: align usage output in C-strings
->
->  When "git cmd -h" shows more than one line of usage text (e.g.
->  the cmd subcommand may take sub-sub-command), parse-options API
->  learned to align these lines, even across i18n/l10n.
->
->  Will merge to 'next'?
-[...]
-> * ab/help-config-vars (2021-09-23) 9 commits
->  - help: move column config discovery to help.c library
->  - help / completion: make "git help" do the hard work
->  - help tests: test --config-for-completion option & output
->  - help: simplify by moving to OPT_CMDMODE()
->  - help: correct logic error in combining --all and --guides
->  - help: correct logic error in combining --all and --config
->  - help tests: add test for --config output
->  - help: correct usage & behavior of "git help --guides"
->  - help: correct the usage string in -h and documentation
->
->  Teach "git help -c" into helping the command line completion of
->  configuration variables.
->
->  Will merge to 'next'?
+> To fix this when the reset is running if there is not a file in the
+> working directory and if it will be missing with the new index entry or
+> was not missing in the previous version, we create the previous index
+> version of the file in the working directory so that status will report
+> correctly and the files will be availble for the user to deal with.
+> 
 
-There were some nits on all of these but I think they're OK to move
-forward in their current state, and I'd like to focur on some improved
-UX that can be done/I've got queued up once these land. So unless you
-think there's blockers...
+s/availble/available
+
+-- 
+An old man doll... just what I always wanted! - Clara
