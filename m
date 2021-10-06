@@ -2,115 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BEDEC433EF
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6619C433EF
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 18:03:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B105610EA
-	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 17:48:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90AFA61027
+	for <git@archiver.kernel.org>; Wed,  6 Oct 2021 18:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234302AbhJFRuu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 13:50:50 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65485 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234560AbhJFRus (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 13:50:48 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 611D415AB72;
-        Wed,  6 Oct 2021 13:48:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uuBwBwSS3XGN/AWR7cdDmKULIAKXPjGwiTuXsG
-        hNsT4=; b=JZlpBZ7W2CfrIXQGe42f1Cz09vJvDq9NnKEUZIs5v3xq8XJv8IhSmP
-        eq3yycRu/WiDygOvE7I9HBZCQ+p77DO+4Q8W45OBZiVrhplUa5WXYmUq/LnLsCei
-        57/hHklXJRBdKbyQ20nWq2NM6wVbRnxOGTDWmzTIXRSBrzyT4xP4I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5AA8615AB71;
-        Wed,  6 Oct 2021 13:48:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B15D215AB70;
-        Wed,  6 Oct 2021 13:48:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
+        id S238664AbhJFSFq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 14:05:46 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:36301 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238578AbhJFSFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 14:05:45 -0400
+Received: (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 63D49200004;
+        Wed,  6 Oct 2021 18:03:50 +0000 (UTC)
+Date:   Wed, 6 Oct 2021 23:33:48 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Sashank Bandi <bandi.rao999@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 4/7] reset: integrate with sparse index
-References: <pull.1048.git.1633013461.gitgitgadget@gmail.com>
-        <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
-        <49813c8d9ed94fd56f30eb204d346eb5a30473ca.1633440057.git.gitgitgadget@gmail.com>
-        <CABPp-BHKjLVpL_U5viVA++hCZmGKBHxnubGCk=1YhTkpFc-E-Q@mail.gmail.com>
-Date:   Wed, 06 Oct 2021 10:48:51 -0700
-In-Reply-To: <CABPp-BHKjLVpL_U5viVA++hCZmGKBHxnubGCk=1YhTkpFc-E-Q@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 5 Oct 2021 19:15:55 -0700")
-Message-ID: <xmqqo882rqm4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        David Aguilar <davvid@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
+Message-ID: <20211006180348.22e5c2z4pqkwtokx@yadavpratyush.com>
+References: <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
+ <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
+ <135f854b-7975-a6a0-69ea-8697583a87b2@gmail.com>
+ <CAJDDKr7itDvy1WPoC=kBPpT4_qm6MKWWfxwt96wQJKnGBGW5ng@mail.gmail.com>
+ <CABkJDHFMy6yS40jn-NJ8mwrv6jxdjgNWQ6mJmEK1FYV0gvpLEQ@mail.gmail.com>
+ <CABkJDHEZuZSun0spZ8SAcgQQvu-zamnJiqGk7VnS6agU-_KqqA@mail.gmail.com>
+ <20211004075600.5lbqed4mnwfsy4al@yadavpratyush.com>
+ <CABkJDHGdzOFW5yP43LZtuUrV7WsDTvAi+kxka84-5P7ShbV9FQ@mail.gmail.com>
+ <20211006113912.n7xpnuzd25256cjm@yadavpratyush.com>
+ <CABkJDHFap2DmjMr1Ri-Mrud+msChB3uEGRKYyczAxfmaLnF6jA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB66BC5E-26CD-11EC-945A-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABkJDHFap2DmjMr1Ri-Mrud+msChB3uEGRKYyczAxfmaLnF6jA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On 06/10/21 08:15PM, Sashank Bandi wrote:
+> > Does the Windows installation come with any other themes? You can use
+> > `ttk::style theme names` to list all available themes.
+> It contains all these themes in Windows 10 x64.
+> "winnative clam alt default classic vista xpnative"
+> Based of [0] (the best source I could find),
+> "winnative", "vista", "xpnative" are Windows-only but built-in themes and
+> "clam", "alt", "default", "classic" are built-in themes for all OSes.
+> And this is part of the reason I am considering "default" to be the
+> base of the new theme that I want to create instead of "vista".
 
-> On Tue, Oct 5, 2021 at 6:21 AM Victoria Dye via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Victoria Dye <vdye@github.com>
->>
->> `reset --soft` does not modify the index, so no compatibility changes are
->> needed for it to function without expanding the index. For all other reset
->> modes (`--mixed`, `--hard`, `--keep`, `--merge`), the full index is
->> explicitly expanded with `ensure_full_index` to maintain current behavior.
->
-> "to maintain current behavior"?  You are changing code here, which
-> suggests some kind of behavior is changing, but that description seems
-> to be claiming the opposite.  Is it some kind of preventative change
-> to add ensure_full_index calls in an additional place, with a later
-> patch in the series intending to remove the other one(s), so you're
-> making sure that later changes won't cause unwanted behavioral
-> changes?  Or was something else meant here?
->
-> If the above wasn't what you meant, but you're adding
-> ensure_full_index calls, does that suggest that we had some important
-> code paths that were not protected by such calls?
+You are of course free to design your own theme, but I would suggest you 
+try all these themes already available first and see if any of them fit 
+your needs.
 
-The original called read_cache() before we know which mode we
-operate in, near the end of parse_args(), which resulted in an
-unconditional call to ensure_full_index() in repo_read_index().
+> 
+> > > > I think it would be nice if we can have a theme picker in the options
+> > > > menu though, so that is something you might want to look into.
+> > > Yes, I thought of adding a menu between "Tools" and "Help". It will
+> > > contain 3 options(system, light, dark) as I said before.
+> >
+> > I think it would be better to put it in the "options" dialog.
+> Ok.
+> 
+> > I don't mind carrying themes in the git-gui repo since Tk theming
+> > support is not very well documented or standardized. But please do be
+> > careful of licence compatibility when porting code.
+> No, I want to imitate the look. And I don't actually know much about
+> the license or legal side of the software so I try to avoid it at all
+> costs and start from scratch.
+> Kinda like "Linux is Unix-like, but it doesn't contain Unix's code" -
+> The great Linus Torvalds.
 
-This patch delays the call to read_cache().  If parse_pathspec()
-and everything the original called after the point where it called
-read_cache() needed to have a populated in-core index, the change
-can break things---I didn't check thoroughly, but I am guessing
-it is OK.
+Well, I am not expert on software licenses either. Though using a quick 
+Google search for license compatibility generally does the trick for me.
 
->> Additionally, the `read_cache()` check verifying an uncorrupted index is
->> moved after argument parsing and preparing the repo settings. The index is
->> not used by the preceding argument handling, but `read_cache()` does need to
->> be run after enabling sparse index for the command and before resetting.
->
-> This seems to be discussing what code changes are being made, but not
-> why.  I'm guessing at the reasoning, but is it something along the
-> lines of:
->
-> """
-> Also, make sure to read_cache() after setting
-> command_requires_full_index = 0, so that we don't unnecessarily expand
-> the index as part of our early index-corruption check.
-> """
+> 
+> The "equilux" theme is GPLv3, but I didn't find a license file in the
+> repo. In the "Help > About" part of Git GUI, you mentioned it being
+> GPL(I think v1). Please include it in the repo too.
 
-I think it is more like "we used to expand very early for all modes,
-but with this change we move the read_cache() call to much later,
-and force it not to expand.  The modes that call read_from_tree()
-needs in-core index fully expanded, so we do so there, but the soft
-reset does not call it and would stop expanding."
+git-gui is GPL v2 or later. So I would assume it is compatible with GPL 
+v3 but I am not entirely sure.
 
+Anyway, I came up with a quick proof of concept for a theme selector. It 
+has many limitations and is not fit to apply just yet, but it should 
+help you get started.
+
+-- 8< --
+Subject: [PATCH] git-gui: Add a very crude theme selector
+
+Tk themeing is not very well documented and is not easy to get right.
+Ideally one would want to set the theme for a toolkit in one standard,
+but it is hard to find that standard config for Tk and even harder to
+get it to work consistently.
+
+Add a theme selection menu to make the lives of the user easier. Those
+who would wish to use the Tk provided theme should be able to do so.
+
+This is a very crude patch and it does not really ensure that. This is
+more of a proof of concept.
+
+Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+---
+ git-gui.sh     | 4 ++++
+ lib/option.tcl | 1 +
+ 2 files changed, 5 insertions(+)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 201524c..ff2ec1b 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -862,6 +862,9 @@ proc apply_config {} {
+ 			set NS ttk
+ 			bind [winfo class .] <<ThemeChanged>> [list InitTheme]
+ 			pave_toplevel .
++			if {[get_config gui.theme] != {}} {
++				ttk::style theme use [get_config gui.theme]
++			}
+ 			color::sync_with_theme
+ 		}
+ 	}
+@@ -895,6 +898,7 @@ set default_config(gui.fontdiff) [font configure font_diff]
+ # TODO: this option should be added to the git-config documentation
+ set default_config(gui.maxfilesdisplayed) 5000
+ set default_config(gui.usettk) 1
++set default_config(gui.theme) "default"
+ set default_config(gui.warndetachedcommit) 1
+ set default_config(gui.tabsize) 8
+ set font_descs {
+diff --git a/lib/option.tcl b/lib/option.tcl
+index e43971b..acce160 100644
+--- a/lib/option.tcl
++++ b/lib/option.tcl
+@@ -160,6 +160,7 @@ proc do_options {} {
+ 		{c gui.encoding {mc "Default File Contents Encoding"}}
+ 		{b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
+ 		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
++		{s gui.theme {mc "GUI theme"} {ttk::style theme names}}
+ 		{b gui.displayuntracked {mc "Show untracked files"}}
+ 		{i-1..99 gui.tabsize {mc "Tab spacing"}}
+ 		} {
+-- 
+Regards,
+Pratyush Yadav
