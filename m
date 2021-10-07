@@ -2,135 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B1E3C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34B29C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:42:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3562B60F22
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:32:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19AFC6101E
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242246AbhJGUeE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 16:34:04 -0400
-Received: from mout.web.de ([212.227.15.14]:40353 "EHLO mout.web.de"
+        id S233223AbhJGUoQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 16:44:16 -0400
+Received: from mout.web.de ([212.227.15.14]:41489 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242624AbhJGUd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 16:33:57 -0400
+        id S232894AbhJGUoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 16:44:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1633638719;
-        bh=m6DIhPWVz1Bux0/ieEVCmXk1q0HC/M4bL+orY0KktCw=;
-        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=U40znknlYW9OvnVWTVxIvXwhH2bJQR9psnOTPwuWJrjjwpZVRlVnM7EIMcA/+UE5v
-         66ZNeQiqcQRqpJX1f0f2nSA2txIUvI8lLr0KlkFQSakUE73jGvrMkGZCvU6p6m2LCs
-         Jm73xoipwr2d2FP9UQ8YK52oX/KIZR8gK1e7vMpQ=
+        s=dbaedf251592; t=1633639329;
+        bh=xIJce2ToWs3B+lROISY2EeC4KOWsFPnZPli9/cw7/7g=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Yf64cxb/oGKPFLaLawb5O/nm2tAeynrPENvKrN85DxT54AMmb/VfVkbhcT+sNtEs9
+         6QUbAeYfc5AR3iK9QhcNESoCFEVXkc893D+WXcjbh5YpnSoUzhCdQP+RWAUsiH/vbV
+         pDFYuDK2X0a3nM3xRzzTVG/32bTudbEbJOEId78k=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0M6UiB-1mindk1Ltz-00yT4d; Thu, 07 Oct 2021 22:31:59 +0200
-Subject: [PATCH 3/3] read-cache: let verify_path() reject trailing dir
- separators again
-To:     git@vger.kernel.org
-References: <CACr9BXmP1vQMK4b27Uc4R-3WWYHUYfCEEMN+hnth4yUg+UN7Zg@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Robert Leftwich <robert@gitpod.io>
+ (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0Lcxw8-1nGkef1xJY-00iBPS; Thu, 07 Oct 2021 22:42:09 +0200
+Subject: Re: [PATCH] p3400: stop using tac(1)
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Kevin Willford <Kevin.Willford@microsoft.com>
+References: <85831cc2-307f-1be8-9bb3-c44028ad07fa@web.de>
+ <YVq752xjzYz+LTq6@coredump.intra.peff.net>
+ <f6a1296f-f524-9042-7f88-9591522971af@web.de>
+ <YVyppmEGkNCxZ+5L@coredump.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5e6fafa9-f155-61af-6906-05fec27808e6@web.de>
-Date:   Thu, 7 Oct 2021 22:31:58 +0200
+Message-ID: <a3377973-4f4a-376a-f02e-94a3b20dd9ad@web.de>
+Date:   Thu, 7 Oct 2021 22:42:08 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CACr9BXmP1vQMK4b27Uc4R-3WWYHUYfCEEMN+hnth4yUg+UN7Zg@mail.gmail.com>
+In-Reply-To: <YVyppmEGkNCxZ+5L@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:VV8hB4BVMMROHL7K0ISls4UPsD9AzMMJux1ul7Q7qKAas9QSndn
- fo0I5FeHOPq8H49h5FAsH8irsmtG4Lgh9rNSdXxlJd+3yLV2v5zTlquifZwJWmm5hoCaA30
- TWLmerPOu6e82rwh83cne1s73ipPaiXE+MGZk5oBIDOAH+hEkPMkOJZcQHAs/Vt+CYjD9sO
- 84Xye6HsCEyc9HsOrpB6A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UB44buz+v+Y=:bfEVECwbbCd9z86n/U1oRg
- rmM5T73MNLraMtneyEVdffhIG3cB+gGvDE1zF3jcpHsZSWUvekXw9XUmtvQuyLepeKMxlU8Ge
- PdNMVDVqdlRN2hcn/MMndR0mibH2tHbLzVgDDbwZjmhZzLhc5AOL8Z9CKthAgo981scuP//Oj
- X43U4DvTbeb3KEq7ZQm1ZBaYh8D+ZNfw6eavc71LhFD7B6yr8e1V+BEy91BnCRBwdQrf1aqPg
- mquqoGHAHndfBwCM9jcsf/l0byfxFf6o6lcVTwMXP6bMWC3FW4DuotBJvD3F2XvPbWQLyaUbB
- rSqT5KOCjz1GKZQlTFKIZB2ZpNXM5uPjNQ/Td9ohbxYkd+BbziOBUF+03JmMizxJrYAMM16QR
- gjHXLyZ2NOvOurpEHb9f7DJJ3ZyIWsLLGrKLWa6e3OTYmKYw2knpr3R/Yksj5R7AZSW8MpP3N
- Kcti799Z9zPGDzyy7lx7/6UNZoGPZpqljTCJuWob8Caav25d52EpQF+ho1p2VGcrtmyg+AE6t
- AlUktUYy2/GxYxeYlkZgrcsc3jNrIgN20raFQa3+exFCdr1p0uX5SiObTwJsuggTmEMJi/JAf
- 0Ovh4Z1cj2CAJEmV+nGciaPR3HeO10A2RsavupkzypLWh+Da17TtCBLVpqNTFlxVIoOwzOhbI
- PImHa/zvXUHmiz3sHgUN1xzP5E5GfYI97hXZvyliH/Ea/FT6qtE/i/ElY+z3uvsDfVL9XIpd4
- UpYfGs08xOd5Po8hbciVQxhdq8ewiD+qIxVv7izl9ZSWH8JpV5Q/bt4sxprgaEjTkVvir0LdZ
- MA1XmEc9t6Ha1MiqzMxgYhw9TG5bEKXu8WWczO5RW+gh+wypD+d/g4QMNt+VjIndyFOTKPC1G
- f6Dw4Oi4EaNDeqPSoTyMhP5NhlW1y+VvE3DzmeKhDB8IZPhtTBvvcj907FcecPv1VaEc2wDUm
- dlJzQA20dsIKGIb18UJ5uFs7sUKff4T1qPVgm6Niad+5XAjupYun4VUPtFiFpRzKA52bsS1pR
- P/UJy/ApAhzXRHXzyCoMJ5kHAmmAdA/6ab9fMVhv1HWj6xiliDdAwC/Zv3xzkvCT3dAIx7WPj
- P9DplRimmvKF6w=
+X-Provags-ID: V03:K1:AZorpM+HBnr9SE8edso9dI50/jadKOX6o56Sodc8F6a4aXcRlt4
+ hZugpxteX248t6LVph+EM1tx63xPaf0mTbefKqG4j3Qh4CYJUtmVJHF9NC/guowXOlMR8OA
+ ypuidivMKHU6r5wjKF2f7aqX2SMt3Tpnmu11hIK6yhVMvI9xxjDVTKr6hC85aNKbe2yxinZ
+ EW/z0mc5opHBhWjKkWPBw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6d+aYoh1Ew4=:oz6LNbKmECGFvfhgCWuzWs
+ fO+w1ENQlxBTT5B+mup3+DphIw0VlQtq4fSRieWho4fYG6zlsFE3dPR3zVHh0U0KNRgJWk6JR
+ xzVEjQw0muijO1Emi1yPwrQsQxb3Kwl/r58LhCp7sTpLjhyPPcL8vWHoKn5nF8JO3NLUYHPii
+ IjqJO5RfRSqaHY4+EJH3VmdLFJLutoX0dZ3hxDI626HR6Kg8rxPGefisokdMEbEYk0xMgfCVP
+ XtcNECY8eSWA1h1RDnO/iw6hr4kksNft1IDkrBQ9M/I9aqJ2BzLTPygdQ4afyXkRk2J9WG1ab
+ gxMaiUt25N80FsaojzpfnrXybArUOitAXBgX4P1ajQ1Vg9iDHvtLCBx2Tub6xcomfccvUJM3c
+ YDUl8BBbAWcrkZL8dKHwqTv2XAzKngS+5bg4pFQXHC/ttkEwrRFZPlkDwY+IKrBq2tSbtnNa8
+ CpwnY3h/dDG8vRlls1Y3DUqWtt18/cIKbiTWDH7ceXn/YCJAiXM5IWMey2UQ4uZspBNi/MQoF
+ 9iK9sC7ZYXGW1c8QccLFxsxphlfQUzCPtha6kW5+EkSKpyZwNYzErPBvoF0u9y3lf1EyjbWKh
+ cQ4Y/BD8Nu+BQOpZdTg3l/tPRcB3ztXBe8JYlNPMSxZZbwMiwq4Bn2W3Z94aba7LamL5yA3CC
+ WFBaLP+nIyXqC/JOIY4UKZhRQZu+wNM1mgfIRdVtF5FVHA9r6KjNa00woSiVYWV1NXkn+FJpm
+ DQIvOC87VDfGOZXKyiPAxL7iHL/yOzRAyJaCiPwU7WTkg9BduSxE2mCuXXEiJzL0vRxeuoMVT
+ 8Tec3MAb92/uStdgh6qI+rIIh6HOiGB/Bt+8v4jOdHcbLxzEtLuSE1v0aKKp1iJsPlA1oQYDD
+ 9CfEb9V+ZNnd6WFSyy/Wf01ZbexXBZ2q6mhN8Q1vPo0OwWSJDGpkJEtB+i2FV7RWItYwi5Tvu
+ 9flH9MPHwRcQl2xphjqIjxIo0wF96Hrs40SvWurxUNZ6itqv+sKEYxDKQOHeK+fUblBtL3632
+ zypLYQTuTZ205trM3rjFHx6AA/1K7M/qXeUmo0N6TrcyoeYosESn8o+cxB+CyPk12/rchyMUd
+ 3ygmMchYRaJAqs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-6e773527b6 (sparse-index: convert from full to sparse, 2021-03-30) made
-verify_path() accept trailing directory separators for directories,
-which is necessary for sparse directory entries.  This clemency causes
-"git stash" to stumble over sub-repositories, though, and there may be
-more unintended side-effects.
+Am 05.10.21 um 21:38 schrieb Jeff King:
+> Right, that works. It does introduce an extra awk process per
+> invocation, though I doubt that really matters all that much. The diff I
+> showed in my earlier response works totally in shell, like the current
+> test_seq().
 
-Avoid them by restoring the old verify_path() behavior and accepting
-trailing directory separators only in places that are supposed to handle
-sparse directory entries.
+In my mind, test is an external command.  Wikipedia [1] says it has been
+a builtin since the early 80ies, and I couldn't find a shell without it.
+I wonder where I picked up that outdated assumption -- I'm not actually
+_that_ old.  Time for an update..
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- read-cache.c                       | 6 +++---
- t/t3905-stash-include-untracked.sh | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Ren=C3=A9
 
-diff --git a/read-cache.c b/read-cache.c
-index 5b6fc08e46..f1aabc47b6 100644
-=2D-- a/read-cache.c
-+++ b/read-cache.c
-@@ -859,7 +859,7 @@ static enum verify_path_result verify_path_internal(co=
-nst char *, unsigned);
 
- int verify_path(const char *path, unsigned mode)
- {
--	return verify_path_internal(path, mode) !=3D PATH_INVALID;
-+	return verify_path_internal(path, mode) =3D=3D PATH_OK;
- }
-
- struct cache_entry *make_cache_entry(struct index_state *istate,
-@@ -872,7 +872,7 @@ struct cache_entry *make_cache_entry(struct index_stat=
-e *istate,
- 	struct cache_entry *ce, *ret;
- 	int len;
-
--	if (!verify_path(path, mode)) {
-+	if (verify_path_internal(path, mode) =3D=3D PATH_INVALID) {
- 		error(_("invalid path '%s'"), path);
- 		return NULL;
- 	}
-@@ -1364,7 +1364,7 @@ static int add_index_entry_with_check(struct index_s=
-tate *istate, struct cache_e
-
- 	if (!ok_to_add)
- 		return -1;
--	if (!verify_path(ce->name, ce->ce_mode))
-+	if (verify_path_internal(ce->name, ce->ce_mode) =3D=3D PATH_INVALID)
- 		return error(_("invalid path '%s'"), ce->name);
-
- 	if (!skip_df_check &&
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-un=
-tracked.sh
-index 19da46b7fb..5390eec4e3 100755
-=2D-- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -422,7 +422,7 @@ test_expect_success 'stash show --{include,only}-untra=
-cked on stashes without un
- 	test_must_be_empty actual
- '
-
--test_expect_failure 'stash -u ignores sub-repository' '
-+test_expect_success 'stash -u ignores sub-repository' '
- 	test_when_finished "rm -rf sub-repo" &&
- 	git init sub-repo &&
- 	git stash -u
-=2D-
-2.33.0
+[1] https://en.wikipedia.org/wiki/Test_(Unix)
