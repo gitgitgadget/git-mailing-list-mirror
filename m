@@ -2,143 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6656C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB12DC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 12:19:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B510160FD7
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:27:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B733F6124A
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 12:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240708AbhJGL3k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 07:29:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41646 "EHLO
+        id S241217AbhJGMVD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 08:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbhJGL3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 07:29:39 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73156C061746
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 04:27:46 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id z3so3893949qvl.9
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 04:27:46 -0700 (PDT)
+        with ESMTP id S241169AbhJGMVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 08:21:01 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B197C061746
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 05:19:08 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id a25so6689141edx.8
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 05:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NwDPAXXs8CfonqfYtN3DyAbQIjd2HorZkvTwLxDmbVU=;
-        b=jk3VdgMVkeid+ce4sa7a6QgSy4JVoz1YoCKMQBf2AnnzVpXlXET7t9tukQlwDcHl3r
-         3oHT0N5r5KT85fdnTugtcAtwYnatMVUzVCnTsXxQ22sXl+scFJ26gqSDjWxepNGY6ERC
-         y/qmLE2HsEyrWjvaCt8y/wJHtVuPsiaBKREhvHx6acNTUzkjNQBrRqMFuDbs6EFYtnJM
-         pciBQ7ogNaT4X97YbRYYV7nqbtkk5lniN8a8nxychIF96cnNK/2BIASGUDNvdXfYi48S
-         //EgkJC2eDVK/oY4aCjs8P7oOQQrO5bW64GCcQb1MzYIkVC8AuninOa8O2I7gmvh+fV7
-         OiHA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=kMjJG89S8ly094hht/A0LuTU279qL53x0SvDECr0O6E=;
+        b=DY+VQdmCrhKPjRPlF7f5M9alLL6QCitWFqZwexWGBzVfJgzMiDWRkQUNX0QIE9kVSV
+         jI+EMyg0GwErs88lt02Ka8r6gBjhABaRflxSFjA/RYGTIjdOJF+HDtPYSyH45GUnTqtd
+         W/r2dZXrmgcqpd2ONXRNkKX3M72jJPZat3fgsxdPmBlQZpZ6z4AdU5x/a67rCNAUrkdz
+         klk47K7gpvnFNwATmG42ayofVNOZv9vfYAbFT4ulGwihpMuALHEMd5elNU7HRy1VV4pk
+         vqk9Xsa80Zigaci5JFUoJn532GzRd6AbzN9wACYRBIwbruInjQ+T5MU7Y29D/+W1i0jp
+         FeRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NwDPAXXs8CfonqfYtN3DyAbQIjd2HorZkvTwLxDmbVU=;
-        b=lyeA2AXluj7OCaaOCenRna5vrxSFWls7gxqLjlWGQ4h1890LYf8wolful7EkBStLic
-         hdmqsKnbspmTksZDZULaYbSW89NObJ+DXk4xEh0xMydUupk3Dfz9LO/eg9DcwIoX7hT4
-         7TsPd6NbEBwPJsFfGdbS6zYtWwZFn+olpkZUJImOMSbv0TSfbC+no8u+Ek9CrFgpnneV
-         zIxpNhaQWBNjzg8FNsO8VNT98yV5ups10O3pdnLRCBiDHp8tadlma+pXRWYY5cIiFy1L
-         7rbieQGocKaJnm9Gv4mbMjjaagD7HMfheS4lOGz4iUxAyG587W2QvfDtK+H/4SJ2k+ip
-         pqEA==
-X-Gm-Message-State: AOAM532fo9Mt3I/ry34fyYvT2HTb5oGk5ptE6r+QVqDjHekmInVufxkV
-        oawV+PYAJJKDOhol5NOLDFXU4/h9JKTRV9scCagJAzw3NRXqHyL3
-X-Google-Smtp-Source: ABdhPJxh9p0lfx446y2nbEL88kHSiH0sBxxBGUPBg52aCeBB8dBijSEcNXLSIpHIN2zm+xxHOsqZ9hOfcOSdnLHYYbE=
-X-Received: by 2002:a0c:f0c4:: with SMTP id d4mr3357142qvl.38.1633606065585;
- Thu, 07 Oct 2021 04:27:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
- <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
- <135f854b-7975-a6a0-69ea-8697583a87b2@gmail.com> <CAJDDKr7itDvy1WPoC=kBPpT4_qm6MKWWfxwt96wQJKnGBGW5ng@mail.gmail.com>
- <CABkJDHFMy6yS40jn-NJ8mwrv6jxdjgNWQ6mJmEK1FYV0gvpLEQ@mail.gmail.com>
- <CABkJDHEZuZSun0spZ8SAcgQQvu-zamnJiqGk7VnS6agU-_KqqA@mail.gmail.com>
- <20211004075600.5lbqed4mnwfsy4al@yadavpratyush.com> <CABkJDHGdzOFW5yP43LZtuUrV7WsDTvAi+kxka84-5P7ShbV9FQ@mail.gmail.com>
- <20211006113912.n7xpnuzd25256cjm@yadavpratyush.com> <CABkJDHFap2DmjMr1Ri-Mrud+msChB3uEGRKYyczAxfmaLnF6jA@mail.gmail.com>
- <20211006180348.22e5c2z4pqkwtokx@yadavpratyush.com>
-In-Reply-To: <20211006180348.22e5c2z4pqkwtokx@yadavpratyush.com>
-From:   Sashank Bandi <bandi.rao999@gmail.com>
-Date:   Thu, 7 Oct 2021 16:57:37 +0530
-Message-ID: <CABkJDHFadi60bbwN758f2qov5dMXV2nWOwYHYVPtdfScze1XmQ@mail.gmail.com>
-Subject: Re: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=kMjJG89S8ly094hht/A0LuTU279qL53x0SvDECr0O6E=;
+        b=hQi+uSeqFKGskO/rnjiBcPHR3d9pYS4ncqWJIdih7jFH/JCqU1j87n+dkhyKaM3z2H
+         /idPdwLACgxXXTmYDlxKtcRO3h5puYYTqJFAlDYNmPeTTrwsLAZ1MDw/r7oOeL65muut
+         u5P5yDM8m2LHHB3tJ+wt+uFJoClGj5OvTHibzRn2TYlPN/iWqVUaSYv5VBLHtgLVnSxf
+         A6kT4chzNvnGjozNpsvLdhf84DjYrF+MfCmJdkmLyrPO130cLAPFzRDxsfTtDdfLf8r1
+         NAfoKz+3iA97V1UoyH60hIvmR/25NjyRSk3j+FftAnU+YKBGDHjesEAGponDs40DKElI
+         T58w==
+X-Gm-Message-State: AOAM533whEFI4TqpGnm6g4eIaQf7BYY9rSH1vtL0ITuzy+TY3dpzz+g7
+        F+fdh2puXokgQaUeJHqL3Mfuq3gFIGYMIQ==
+X-Google-Smtp-Source: ABdhPJzse2SiCvoBUs7OWJwrhsATA6aL3kbnG5NQf5uJtD5P+QYJCUDg8ScZ9PjfNtzcWz/r+Azwgw==
+X-Received: by 2002:a17:906:4cc1:: with SMTP id q1mr5072006ejt.415.1633609146359;
+        Thu, 07 Oct 2021 05:19:06 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id d6sm6419963ejd.116.2021.10.07.05.19.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Oct 2021 05:19:05 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        Theodore Ts'o <tytso@mit.edu>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 00/15] Upstreaming the Scalar command
+Date:   Thu, 07 Oct 2021 13:28:07 +0200
+References: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
+ <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
+Message-ID: <87fstdgh8m.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> You are of course free to design your own theme, but I would suggest you
-> try all these themes already available first and see if any of them fit
-> your needs.
-I have tried all of these themes. "default" seems like it will fit. I
-have some color changes and a preview linked at the bottom. If you
-agree with that, I will work on other pages/sections too.
 
-> Anyway, I came up with a quick proof of concept for a theme selector. It
-> has many limitations and is not fit to apply just yet, but it should
-> help you get started.
->
-> -- 8< --
-> Subject: [PATCH] git-gui: Add a very crude theme selector
->
-> Tk themeing is not very well documented and is not easy to get right.
-> Ideally one would want to set the theme for a toolkit in one standard,
-> but it is hard to find that standard config for Tk and even harder to
-> get it to work consistently.
->
-> Add a theme selection menu to make the lives of the user easier. Those
-> who would wish to use the Tk provided theme should be able to do so.
->
-> This is a very crude patch and it does not really ensure that. This is
-> more of a proof of concept.
->
-> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
-> ---
->  git-gui.sh     | 4 ++++
->  lib/option.tcl | 1 +
->  2 files changed, 5 insertions(+)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 201524c..ff2ec1b 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -862,6 +862,9 @@ proc apply_config {} {
->                         set NS ttk
->                         bind [winfo class .] <<ThemeChanged>> [list InitTheme]
->                         pave_toplevel .
-> +                       if {[get_config gui.theme] != {}} {
-> +                               ttk::style theme use [get_config gui.theme]
-> +                       }
->                         color::sync_with_theme
->                 }
->         }
-> @@ -895,6 +898,7 @@ set default_config(gui.fontdiff) [font configure font_diff]
->  # TODO: this option should be added to the git-config documentation
->  set default_config(gui.maxfilesdisplayed) 5000
->  set default_config(gui.usettk) 1
-> +set default_config(gui.theme) "default"
->  set default_config(gui.warndetachedcommit) 1
->  set default_config(gui.tabsize) 8
->  set font_descs {
-> diff --git a/lib/option.tcl b/lib/option.tcl
-> index e43971b..acce160 100644
-> --- a/lib/option.tcl
-> +++ b/lib/option.tcl
-> @@ -160,6 +160,7 @@ proc do_options {} {
->                 {c gui.encoding {mc "Default File Contents Encoding"}}
->                 {b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
->                 {s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
-> +               {s gui.theme {mc "GUI theme"} {ttk::style theme names}}
->                 {b gui.displayuntracked {mc "Show untracked files"}}
->                 {i-1..99 gui.tabsize {mc "Tab spacing"}}
->                 } {
-> --
-Thank you. This helps me find the location of the options. I will
-further improve this.
+On Thu, Oct 07 2021, Johannes Schindelin via GitGitGadget wrote:
 
-Here is the preview I said: https://pasteboard.co/rwUBvWbX6m66.png .
-The checkbox needs some tinkering.
-Looking forward to any suggestions.
+>  * The OBJECTS list in the Makefile will now include Scalar.
+
+So that looks like a partial fix for what I brought up in [1] [...]
+
+> Range-diff vs v4:
+>
+>   1:  852ec003109 !  1:  7119a8efc21 scalar: create a rudimentary executable
+>      @@ Commit message
+>           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>       
+>        ## Makefile ##
+>      -@@ Makefile: endif
+>      - .PHONY: objects
+>      - objects: $(OBJECTS)
+>      - 
+>      +@@ Makefile: OBJECTS += $(FUZZ_OBJS)
+>      + ifndef NO_CURL
+>      + 	OBJECTS += http.o http-walker.o remote-curl.o
+>      + endif
+>      ++
+>       +SCALAR_SOURCES := contrib/scalar/scalar.c
+>       +SCALAR_OBJECTS := $(SCALAR_SOURCES:c=o)
+>       +OBJECTS += $(SCALAR_OBJECTS)
+>       +
+>      - dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+>      - dep_dirs := $(addsuffix .depend,$(sort $(dir $(OBJECTS))))
+>      + .PHONY: objects
+>      + objects: $(OBJECTS)
+
+Except that this & contrib/scalar/Makefile is still broken in multiple
+ways. We now have two Makefiles that can build contrib/scalar/scalar:
+
+    touch advice.h; make -j8 contrib/scalar/scalar
+
+But try:
+
+    $ touch advice.h; (cd contrib/scalar 2>/dev/null && make scalar)
+    make: 'scalar' is up to date.
+
+I.e. (I'm presuming in response to what I brought up in [1]) the
+depenency graph in the top-level Makefile is correct in this specific
+area. But it understands the ".depends" files (depending on
+COMPUTE_HEADER_DEPENDENCIES), your sub-Makefile doesn't.
+
+There's similar whack-a-mole issues in other areas, e.g.:
+
+    make -C contrib/scalar/ test
+
+Will break or not depending on whether you've built the top-level
+git.
+
+I noticed at least one other subtle breakage (first thing I checked
+after those two).
+
+I'm happy to send you a working patch to integrate that fixes all these
+issues, it also integrates with "make install", this series leaves us
+with a "scalar" binary, but no way to install it, if we just piggy-back
+on the existing installation procedure.
+
+The side-thread on the v3[3] that you most recently replied to is
+conflating some suggestion of shipping this as a built-in, with the
+purely build-system implementation details I'm suggesting here.
+
+I did mention using it as a built-in in [4], but for the semi-related
+issue of scalar.c copy/pasting less code from git.c. But that was in the
+context of such a thing being purely a non-visible implementation
+detail. I.e. it would still be "scalar", not "git scalar".
+
+*That* suggestion is just a side-musing about whether it would be easier
+to teach git.c to inspects its argv and have a special-case for
+dispatching to cmd_scalar(), a user would never know the difference. I
+think that might also be worthwhile, but I care *way* less about that
+than making maintaining the Makefile a hassle, and it's an entirely
+orthogonal suggestion.
+
+1. https://lore.kernel.org/git/875yu9iolf.fsf@evledraar.gmail.com/
+2. https://lore.kernel.org/git/87mtofnzv1.fsf@evledraar.gmail.com/
+3. https://lore.kernel.org/git/xmqq1r5qzv35.fsf@gitster.g
+4. https://lore.kernel.org/git/87k0jhn0p9.fsf@evledraar.gmail.com/
