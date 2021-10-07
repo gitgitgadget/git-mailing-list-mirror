@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F8D9C433FE
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E4FEC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40DD96103B
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DC0F6103B
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233978AbhJGU1j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 16:27:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56110 "EHLO
+        id S242277AbhJGU1h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 16:27:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241993AbhJGU1X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 16:27:23 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4FEDC061764
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 13:25:28 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id r10so22757355wra.12
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 13:25:28 -0700 (PDT)
+        with ESMTP id S242051AbhJGU1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 16:27:19 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7CEC061767
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 13:25:24 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r18so22795669wrg.6
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 13:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yaYWjTLqgHXIeRTzD0IK66e1c66nLquQI0h+7Kt/THk=;
-        b=OHiyerPg8ZwZLiL2aPUoo61Ze94/p3h9Tv5WbyfSFN9sFKlgiTnchyvUrpIx/BHP4Q
-         MtGLH9mPHGrOxxJugE5zALHp0+bxVnTHKDelFCUYPK7WL2PI9bb2sbiIIrk5x9+fC0u0
-         K1r3kuSwpF9LhKElkOlBp/Nt934Q6CfjAIW92H0S5AdEGVcXi8MXdPing9LTeboyzRoY
-         f3gAq9GlLAek8NY2iANqT+HxuRrnA3fT5D2FrOpuqje+K0UkY4UewRmn0BAczLUGnjed
-         pFtAKrEp5XdKywZJSUwRWJgvPq22f1JNAwUt9fN3bwYmJrhbjz0Ok3br65F+wNN34/et
-         A5FA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=JOqUYR1gNN5dC4l619qnJyUVRtWrOcX2QPtEtyfe8Fs=;
+        b=pKmeKJdWDMAqFBPXZNB4KaIZicudIe15QqlOBABWpqyBUvRh6mTKm5+agcD9+7WAL/
+         aOvOHdnldaEhhp94Q90Ts13Cy4xpem0LX6iCm9qobn4QIMfaFKXL8Et8DX8FccLpUORh
+         XAIOMKngpSDSDFst/KtPYbBsiyaWG5pGd7Mx4lp75RZNaBcKUmINVEqH9TY6TY2qWk++
+         f/B/VlqwIIRVWXyToJgPH8fVM2sZ6PFpf69ufKV1i+OjOwwBYBTG2/NqWxINLQbGE4wc
+         vLmLbSrO1bcHS/N19TnST91mJS2zbLO+yLKgh4qrBDiphHwclmkF1zSzSHnwavpDpNkh
+         Dzcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yaYWjTLqgHXIeRTzD0IK66e1c66nLquQI0h+7Kt/THk=;
-        b=3tDN/9s8Y185IbPFBj9rdQQNXRMpI7G+DQ+kqQuMIMWFw4vFHntcd2N9zz5M/lLzGj
-         WwKlfHMmv8QG0Rump46uVxGcyGGnVwwV6oVbJmcdKgtlMlNilgm6Qn+vshexeMzPiBTF
-         AQ0FdxRnxQdgQxXW8V6kygKoXGiWT+MeDjH9SoLJUYgXDKGSdJ2oIKcDV0RX45wKMTsp
-         6eoo9JIOD316DvntlIK0g0QabKCYSh8Havfxc9xZf26PwaD/FEV6iRlcCa3ouMf8Anhb
-         aOFATQGLsPe/dIcKNzCUDsoeLYWskUY/PfcssvNH7HSkycTVLM+hZ/NYkWE6eNnigFPi
-         ZL0w==
-X-Gm-Message-State: AOAM533J0DHErtooVLeSs8fDADok+zyVbXIxh77emP1zLHRf379miSnK
-        fDvu8PPzaFpoj3T/y92N7fPddD9n0JI=
-X-Google-Smtp-Source: ABdhPJyEAcVGSAdHp1oYh0R9OxMD6BqDggik78+475MKEhBhtDW4sFQ/9RkOVirTAXsN1ugpkgQizg==
-X-Received: by 2002:a1c:7515:: with SMTP id o21mr6940674wmc.76.1633638327152;
-        Thu, 07 Oct 2021 13:25:27 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=JOqUYR1gNN5dC4l619qnJyUVRtWrOcX2QPtEtyfe8Fs=;
+        b=AcW/3uR8aPf9nksuW2dzl7VMdGW9nBwrC/zVQ9ymzfL/nsgukqRXQtxOWExmIYM0Sr
+         yGCJI58L1B//amQXBozDSLZ+kK4M40qfIeoor6DoUOXTVGhboejUqWimFt7uK/ai9NLz
+         mLdeZunjMmvFNLWp70eHf96lmjnWL725ZHU+GyB4r2n12mkMGREoZ2QnmQiUwP9h3epE
+         Mu9hjHnJJjVfOc1w374w9GvhH4A9SaT2Ox2zhRr/wUAgjXhIis/Eu/qD1zKrSiY5+m7r
+         Hhij3+R4BYF/O7O9eM/tQReyk0lAqvLkSFq3oeytq2W1WLy0cTixUN3j4FypTjI/0655
+         pCIg==
+X-Gm-Message-State: AOAM531RoYdEuZP6woIOF12P3lXKRB1ICOhks3lHqh91Y8zf8kIu4IAV
+        ckIEZRcRDlvsmKhguh0q5nqw3jIVgvk=
+X-Google-Smtp-Source: ABdhPJzddBZyCamb249JhDbucpnCTi6BGnkz2D5Wzswg+sZxBj2DRkMk6jAWb7iYJZk1ESSPlibSXg==
+X-Received: by 2002:a05:600c:240a:: with SMTP id 10mr18514271wmp.170.1633638322946;
+        Thu, 07 Oct 2021 13:25:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c185sm408621wma.8.2021.10.07.13.25.26
+        by smtp.gmail.com with ESMTPSA id c17sm9049677wmr.15.2021.10.07.13.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 13:25:26 -0700 (PDT)
-Message-Id: <c0d0427d52ce6a7f7f1e75840045f61a0a95ec55.1633638316.git.gitgitgadget@gmail.com>
+        Thu, 07 Oct 2021 13:25:22 -0700 (PDT)
+Message-Id: <6cbc2f758dfbfba4363fbdbf1a7a8102c52842ad.1633638316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1081.v4.git.git.1633638315.gitgitgadget@gmail.com>
 References: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
         <pull.1081.v4.git.git.1633638315.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 20:25:09 +0000
-Subject: [PATCH v4 13/19] reftable: reftable file level tests
-Fcc:    Sent
+Date:   Thu, 07 Oct 2021 20:25:03 +0000
+Subject: [PATCH v4 07/19] Provide zlib's uncompress2 from compat/zlib-compat.c
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>,
         Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= 
@@ -74,716 +74,216 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-With support for reading and writing files in place, we can construct files (in
-memory) and attempt to read them back.
+This will be needed for reading reflog blocks in reftable.
 
-Because some sections of the format are optional (eg. indices, log entries), we
-have to exercise this code using multiple sizes of input data
-
+Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                  |   1 +
- reftable/readwrite_test.c | 652 ++++++++++++++++++++++++++++++++++++++
- reftable/reftable-tests.h |   2 +-
- t/helper/test-reftable.c  |   1 +
- 4 files changed, 655 insertions(+), 1 deletion(-)
- create mode 100644 reftable/readwrite_test.c
+ Makefile                  |  7 +++
+ ci/lib.sh                 |  1 +
+ compat/.gitattributes     |  1 +
+ compat/zlib-uncompress2.c | 95 +++++++++++++++++++++++++++++++++++++++
+ config.mak.uname          |  5 +++
+ configure.ac              | 13 ++++++
+ 6 files changed, 122 insertions(+)
+ create mode 100644 compat/.gitattributes
+ create mode 100644 compat/zlib-uncompress2.c
 
 diff --git a/Makefile b/Makefile
-index f6b344cd8ac..65d3856aaea 100644
+index b57b2b0e78e..9dfab70f79b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2453,6 +2453,7 @@ REFTABLE_OBJS += reftable/writer.o
- REFTABLE_TEST_OBJS += reftable/basics_test.o
- REFTABLE_TEST_OBJS += reftable/block_test.o
- REFTABLE_TEST_OBJS += reftable/record_test.o
-+REFTABLE_TEST_OBJS += reftable/readwrite_test.o
- REFTABLE_TEST_OBJS += reftable/test_framework.o
- REFTABLE_TEST_OBJS += reftable/tree_test.o
+@@ -256,6 +256,8 @@ all::
+ #
+ # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
+ #
++# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
++#
+ # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
+ # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
+ #
+@@ -1718,6 +1720,11 @@ ifdef NO_DEFLATE_BOUND
+ 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
+ endif
  
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-new file mode 100644
-index 00000000000..5f6bcc2f775
---- /dev/null
-+++ b/reftable/readwrite_test.c
-@@ -0,0 +1,652 @@
-+/*
-+Copyright 2020 Google LLC
++ifdef NO_UNCOMPRESS2
++	BASIC_CFLAGS += -DNO_UNCOMPRESS2
++	REFTABLE_OBJS += compat/zlib-uncompress2.o
++endif
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
+ ifdef NO_POSIX_GOODIES
+ 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
+ endif
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 476c3f369f5..5711c63979d 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -224,6 +224,7 @@ linux-gcc-default)
+ 	;;
+ Linux32)
+ 	CC=gcc
++	MAKEFLAGS="$MAKEFLAGS NO_UNCOMPRESS2=1"
+ 	;;
+ linux-musl)
+ 	CC=gcc
+diff --git a/compat/.gitattributes b/compat/.gitattributes
+new file mode 100644
+index 00000000000..40dbfb170da
+--- /dev/null
++++ b/compat/.gitattributes
+@@ -0,0 +1 @@
++/zlib-uncompress2.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
+new file mode 100644
+index 00000000000..3dcb90b2839
+--- /dev/null
++++ b/compat/zlib-uncompress2.c
+@@ -0,0 +1,95 @@
++/* taken from zlib's uncompr.c
++
++   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
++   Author: Mark Adler <madler@alumni.caltech.edu>
++   Date:   Sun Jan 15 09:18:46 2017 -0800
++
++       zlib 1.2.11
++
 +*/
 +
-+#include "system.h"
++#include "../reftable/system.h"
++#define z_const
 +
-+#include "basics.h"
-+#include "block.h"
-+#include "blocksource.h"
-+#include "constants.h"
-+#include "reader.h"
-+#include "record.h"
-+#include "test_framework.h"
-+#include "reftable-tests.h"
-+#include "reftable-writer.h"
++/*
++ * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
++ * For conditions of distribution and use, see copyright notice in zlib.h
++ */
 +
-+static const int update_index = 5;
++#include <zlib.h>
 +
-+static void test_buffer(void)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_block_source source = { NULL };
-+	struct reftable_block out = { NULL };
-+	int n;
-+	uint8_t in[] = "hello";
-+	strbuf_add(&buf, in, sizeof(in));
-+	block_source_from_strbuf(&source, &buf);
-+	EXPECT(block_source_size(&source) == 6);
-+	n = block_source_read_block(&source, &out, 0, sizeof(in));
-+	EXPECT(n == sizeof(in));
-+	EXPECT(!memcmp(in, out.data, n));
-+	reftable_block_done(&out);
++/* clang-format off */
 +
-+	n = block_source_read_block(&source, &out, 1, 2);
-+	EXPECT(n == 2);
-+	EXPECT(!memcmp(out.data, "el", 2));
++/* ===========================================================================
++     Decompresses the source buffer into the destination buffer.  *sourceLen is
++   the byte length of the source buffer. Upon entry, *destLen is the total size
++   of the destination buffer, which must be large enough to hold the entire
++   uncompressed data. (The size of the uncompressed data must have been saved
++   previously by the compressor and transmitted to the decompressor by some
++   mechanism outside the scope of this compression library.) Upon exit,
++   *destLen is the size of the decompressed data and *sourceLen is the number
++   of source bytes consumed. Upon return, source + *sourceLen points to the
++   first unused input byte.
 +
-+	reftable_block_done(&out);
-+	block_source_close(&source);
-+	strbuf_release(&buf);
++     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
++   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
++   Z_DATA_ERROR if the input data was corrupted, including if the input data is
++   an incomplete zlib stream.
++*/
++int ZEXPORT uncompress2 (
++    Bytef *dest,
++    uLongf *destLen,
++    const Bytef *source,
++    uLong *sourceLen) {
++    z_stream stream;
++    int err;
++    const uInt max = (uInt)-1;
++    uLong len, left;
++    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
++
++    len = *sourceLen;
++    if (*destLen) {
++        left = *destLen;
++        *destLen = 0;
++    }
++    else {
++        left = 1;
++        dest = buf;
++    }
++
++    stream.next_in = (z_const Bytef *)source;
++    stream.avail_in = 0;
++    stream.zalloc = (alloc_func)0;
++    stream.zfree = (free_func)0;
++    stream.opaque = (voidpf)0;
++
++    err = inflateInit(&stream);
++    if (err != Z_OK) return err;
++
++    stream.next_out = dest;
++    stream.avail_out = 0;
++
++    do {
++        if (stream.avail_out == 0) {
++            stream.avail_out = left > (uLong)max ? max : (uInt)left;
++            left -= stream.avail_out;
++        }
++        if (stream.avail_in == 0) {
++            stream.avail_in = len > (uLong)max ? max : (uInt)len;
++            len -= stream.avail_in;
++        }
++        err = inflate(&stream, Z_NO_FLUSH);
++    } while (err == Z_OK);
++
++    *sourceLen -= len + stream.avail_in;
++    if (dest != buf)
++        *destLen = stream.total_out;
++    else if (stream.total_out && err == Z_BUF_ERROR)
++        left = 1;
++
++    inflateEnd(&stream);
++    return err == Z_STREAM_END ? Z_OK :
++           err == Z_NEED_DICT ? Z_DATA_ERROR  :
++           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
++           err;
 +}
-+
-+static void write_table(char ***names, struct strbuf *buf, int N,
-+			int block_size, uint32_t hash_id)
-+{
-+	struct reftable_write_options opts = {
-+		.block_size = block_size,
-+		.hash_id = hash_id,
-+	};
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, buf, &opts);
-+	struct reftable_ref_record ref = { NULL };
-+	int i = 0, n;
-+	struct reftable_log_record log = { NULL };
-+	const struct reftable_stats *stats = NULL;
-+	*names = reftable_calloc(sizeof(char *) * (N + 1));
-+	reftable_writer_set_limits(w, update_index, update_index);
-+	for (i = 0; i < N; i++) {
-+		uint8_t hash[GIT_SHA256_RAWSZ] = { 0 };
-+		char name[100];
-+		int n;
-+
-+		set_test_hash(hash, i);
-+
-+		snprintf(name, sizeof(name), "refs/heads/branch%02d", i);
-+
-+		ref.refname = name;
-+		ref.update_index = update_index;
-+		ref.value_type = REFTABLE_REF_VAL1;
-+		ref.value.val1 = hash;
-+		(*names)[i] = xstrdup(name);
-+
-+		n = reftable_writer_add_ref(w, &ref);
-+		EXPECT(n == 0);
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		uint8_t hash[GIT_SHA256_RAWSZ] = { 0 };
-+		char name[100];
-+		int n;
-+
-+		set_test_hash(hash, i);
-+
-+		snprintf(name, sizeof(name), "refs/heads/branch%02d", i);
-+
-+		log.refname = name;
-+		log.update_index = update_index;
-+		log.value_type = REFTABLE_LOG_UPDATE;
-+		log.value.update.new_hash = hash;
-+		log.value.update.message = "message";
-+
-+		n = reftable_writer_add_log(w, &log);
-+		EXPECT(n == 0);
-+	}
-+
-+	n = reftable_writer_close(w);
-+	EXPECT(n == 0);
-+
-+	stats = writer_stats(w);
-+	for (i = 0; i < stats->ref_stats.blocks; i++) {
-+		int off = i * opts.block_size;
-+		if (off == 0) {
-+			off = header_size(
-+				(hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
-+		}
-+		EXPECT(buf->buf[off] == 'r');
-+	}
-+
-+	EXPECT(stats->log_stats.blocks > 0);
-+	reftable_writer_free(w);
-+}
-+
-+static void test_log_buffer_size(void)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_write_options opts = {
-+		.block_size = 4096,
-+	};
-+	int err;
-+	int i;
-+	struct reftable_log_record
-+		log = { .refname = "refs/heads/master",
-+			.update_index = 0xa,
-+			.value_type = REFTABLE_LOG_UPDATE,
-+			.value = { .update = {
-+					   .name = "Han-Wen Nienhuys",
-+					   .email = "hanwen@google.com",
-+					   .tz_offset = 100,
-+					   .time = 0x5e430672,
-+					   .message = "commit: 9\n",
-+				   } } };
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+
-+	/* This tests buffer extension for log compression. Must use a random
-+	   hash, to ensure that the compressed part is larger than the original.
-+	*/
-+	uint8_t hash1[GIT_SHA1_RAWSZ], hash2[GIT_SHA1_RAWSZ];
-+	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
-+		hash1[i] = (uint8_t)(rand() % 256);
-+		hash2[i] = (uint8_t)(rand() % 256);
-+	}
-+	log.value.update.old_hash = hash1;
-+	log.value.update.new_hash = hash2;
-+	reftable_writer_set_limits(w, update_index, update_index);
-+	err = reftable_writer_add_log(w, &log);
-+	EXPECT_ERR(err);
-+	err = reftable_writer_close(w);
-+	EXPECT_ERR(err);
-+	reftable_writer_free(w);
-+	strbuf_release(&buf);
-+}
-+
-+static void test_log_write_read(void)
-+{
-+	int N = 2;
-+	char **names = reftable_calloc(sizeof(char *) * (N + 1));
-+	int err;
-+	struct reftable_write_options opts = {
-+		.block_size = 256,
-+	};
-+	struct reftable_ref_record ref = { NULL };
-+	int i = 0;
-+	struct reftable_log_record log = { NULL };
-+	int n;
-+	struct reftable_iterator it = { NULL };
-+	struct reftable_reader rd = { NULL };
-+	struct reftable_block_source source = { NULL };
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+	const struct reftable_stats *stats = NULL;
-+	reftable_writer_set_limits(w, 0, N);
-+	for (i = 0; i < N; i++) {
-+		char name[256];
-+		struct reftable_ref_record ref = { NULL };
-+		snprintf(name, sizeof(name), "b%02d%0*d", i, 130, 7);
-+		names[i] = xstrdup(name);
-+		ref.refname = name;
-+		ref.update_index = i;
-+
-+		err = reftable_writer_add_ref(w, &ref);
-+		EXPECT_ERR(err);
-+	}
-+	for (i = 0; i < N; i++) {
-+		uint8_t hash1[GIT_SHA1_RAWSZ], hash2[GIT_SHA1_RAWSZ];
-+		struct reftable_log_record log = { NULL };
-+		set_test_hash(hash1, i);
-+		set_test_hash(hash2, i + 1);
-+
-+		log.refname = names[i];
-+		log.update_index = i;
-+		log.value_type = REFTABLE_LOG_UPDATE;
-+		log.value.update.old_hash = hash1;
-+		log.value.update.new_hash = hash2;
-+
-+		err = reftable_writer_add_log(w, &log);
-+		EXPECT_ERR(err);
-+	}
-+
-+	n = reftable_writer_close(w);
-+	EXPECT(n == 0);
-+
-+	stats = writer_stats(w);
-+	EXPECT(stats->log_stats.blocks > 0);
-+	reftable_writer_free(w);
-+	w = NULL;
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = init_reader(&rd, &source, "file.log");
-+	EXPECT_ERR(err);
-+
-+	err = reftable_reader_seek_ref(&rd, &it, names[N - 1]);
-+	EXPECT_ERR(err);
-+
-+	err = reftable_iterator_next_ref(&it, &ref);
-+	EXPECT_ERR(err);
-+
-+	/* end of iteration. */
-+	err = reftable_iterator_next_ref(&it, &ref);
-+	EXPECT(0 < err);
-+
-+	reftable_iterator_destroy(&it);
-+	reftable_ref_record_release(&ref);
-+
-+	err = reftable_reader_seek_log(&rd, &it, "");
-+	EXPECT_ERR(err);
-+
-+	i = 0;
-+	while (1) {
-+		int err = reftable_iterator_next_log(&it, &log);
-+		if (err > 0) {
-+			break;
-+		}
-+
-+		EXPECT_ERR(err);
-+		EXPECT_STREQ(names[i], log.refname);
-+		EXPECT(i == log.update_index);
-+		i++;
-+		reftable_log_record_release(&log);
-+	}
-+
-+	EXPECT(i == N);
-+	reftable_iterator_destroy(&it);
-+
-+	/* cleanup. */
-+	strbuf_release(&buf);
-+	free_names(names);
-+	reader_close(&rd);
-+}
-+
-+static void test_table_read_write_sequential(void)
-+{
-+	char **names;
-+	struct strbuf buf = STRBUF_INIT;
-+	int N = 50;
-+	struct reftable_iterator it = { NULL };
-+	struct reftable_block_source source = { NULL };
-+	struct reftable_reader rd = { NULL };
-+	int err = 0;
-+	int j = 0;
-+
-+	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = init_reader(&rd, &source, "file.ref");
-+	EXPECT_ERR(err);
-+
-+	err = reftable_reader_seek_ref(&rd, &it, "");
-+	EXPECT_ERR(err);
-+
-+	while (1) {
-+		struct reftable_ref_record ref = { NULL };
-+		int r = reftable_iterator_next_ref(&it, &ref);
-+		EXPECT(r >= 0);
-+		if (r > 0) {
-+			break;
-+		}
-+		EXPECT(0 == strcmp(names[j], ref.refname));
-+		EXPECT(update_index == ref.update_index);
-+
-+		j++;
-+		reftable_ref_record_release(&ref);
-+	}
-+	EXPECT(j == N);
-+	reftable_iterator_destroy(&it);
-+	strbuf_release(&buf);
-+	free_names(names);
-+
-+	reader_close(&rd);
-+}
-+
-+static void test_table_write_small_table(void)
-+{
-+	char **names;
-+	struct strbuf buf = STRBUF_INIT;
-+	int N = 1;
-+	write_table(&names, &buf, N, 4096, GIT_SHA1_FORMAT_ID);
-+	EXPECT(buf.len < 200);
-+	strbuf_release(&buf);
-+	free_names(names);
-+}
-+
-+static void test_table_read_api(void)
-+{
-+	char **names;
-+	struct strbuf buf = STRBUF_INIT;
-+	int N = 50;
-+	struct reftable_reader rd = { NULL };
-+	struct reftable_block_source source = { NULL };
-+	int err;
-+	int i;
-+	struct reftable_log_record log = { NULL };
-+	struct reftable_iterator it = { NULL };
-+
-+	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = init_reader(&rd, &source, "file.ref");
-+	EXPECT_ERR(err);
-+
-+	err = reftable_reader_seek_ref(&rd, &it, names[0]);
-+	EXPECT_ERR(err);
-+
-+	err = reftable_iterator_next_log(&it, &log);
-+	EXPECT(err == REFTABLE_API_ERROR);
-+
-+	strbuf_release(&buf);
-+	for (i = 0; i < N; i++) {
-+		reftable_free(names[i]);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_free(names);
-+	reader_close(&rd);
-+	strbuf_release(&buf);
-+}
-+
-+static void test_table_read_write_seek(int index, int hash_id)
-+{
-+	char **names;
-+	struct strbuf buf = STRBUF_INIT;
-+	int N = 50;
-+	struct reftable_reader rd = { NULL };
-+	struct reftable_block_source source = { NULL };
-+	int err;
-+	int i = 0;
-+
-+	struct reftable_iterator it = { NULL };
-+	struct strbuf pastLast = STRBUF_INIT;
-+	struct reftable_ref_record ref = { NULL };
-+
-+	write_table(&names, &buf, N, 256, hash_id);
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = init_reader(&rd, &source, "file.ref");
-+	EXPECT_ERR(err);
-+	EXPECT(hash_id == reftable_reader_hash_id(&rd));
-+
-+	if (!index) {
-+		rd.ref_offsets.index_offset = 0;
-+	} else {
-+		EXPECT(rd.ref_offsets.index_offset > 0);
-+	}
-+
-+	for (i = 1; i < N; i++) {
-+		int err = reftable_reader_seek_ref(&rd, &it, names[i]);
-+		EXPECT_ERR(err);
-+		err = reftable_iterator_next_ref(&it, &ref);
-+		EXPECT_ERR(err);
-+		EXPECT(0 == strcmp(names[i], ref.refname));
-+		EXPECT(REFTABLE_REF_VAL1 == ref.value_type);
-+		EXPECT(i == ref.value.val1[0]);
-+
-+		reftable_ref_record_release(&ref);
-+		reftable_iterator_destroy(&it);
-+	}
-+
-+	strbuf_addstr(&pastLast, names[N - 1]);
-+	strbuf_addstr(&pastLast, "/");
-+
-+	err = reftable_reader_seek_ref(&rd, &it, pastLast.buf);
-+	if (err == 0) {
-+		struct reftable_ref_record ref = { NULL };
-+		int err = reftable_iterator_next_ref(&it, &ref);
-+		EXPECT(err > 0);
-+	} else {
-+		EXPECT(err > 0);
-+	}
-+
-+	strbuf_release(&pastLast);
-+	reftable_iterator_destroy(&it);
-+
-+	strbuf_release(&buf);
-+	for (i = 0; i < N; i++) {
-+		reftable_free(names[i]);
-+	}
-+	reftable_free(names);
-+	reader_close(&rd);
-+}
-+
-+static void test_table_read_write_seek_linear(void)
-+{
-+	test_table_read_write_seek(0, GIT_SHA1_FORMAT_ID);
-+}
-+
-+static void test_table_read_write_seek_linear_sha256(void)
-+{
-+	test_table_read_write_seek(0, GIT_SHA256_FORMAT_ID);
-+}
-+
-+static void test_table_read_write_seek_index(void)
-+{
-+	test_table_read_write_seek(1, GIT_SHA1_FORMAT_ID);
-+}
-+
-+static void test_table_refs_for(int indexed)
-+{
-+	int N = 50;
-+	char **want_names = reftable_calloc(sizeof(char *) * (N + 1));
-+	int want_names_len = 0;
-+	uint8_t want_hash[GIT_SHA1_RAWSZ];
-+
-+	struct reftable_write_options opts = {
-+		.block_size = 256,
-+	};
-+	struct reftable_ref_record ref = { NULL };
-+	int i = 0;
-+	int n;
-+	int err;
-+	struct reftable_reader rd;
-+	struct reftable_block_source source = { NULL };
-+
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+
-+	struct reftable_iterator it = { NULL };
-+	int j;
-+
-+	set_test_hash(want_hash, 4);
-+
-+	for (i = 0; i < N; i++) {
-+		uint8_t hash[GIT_SHA1_RAWSZ];
-+		char fill[51] = { 0 };
-+		char name[100];
-+		uint8_t hash1[GIT_SHA1_RAWSZ];
-+		uint8_t hash2[GIT_SHA1_RAWSZ];
-+		struct reftable_ref_record ref = { NULL };
-+
-+		memset(hash, i, sizeof(hash));
-+		memset(fill, 'x', 50);
-+		/* Put the variable part in the start */
-+		snprintf(name, sizeof(name), "br%02d%s", i, fill);
-+		name[40] = 0;
-+		ref.refname = name;
-+
-+		set_test_hash(hash1, i / 4);
-+		set_test_hash(hash2, 3 + i / 4);
-+		ref.value_type = REFTABLE_REF_VAL2;
-+		ref.value.val2.value = hash1;
-+		ref.value.val2.target_value = hash2;
-+
-+		/* 80 bytes / entry, so 3 entries per block. Yields 17
-+		 */
-+		/* blocks. */
-+		n = reftable_writer_add_ref(w, &ref);
-+		EXPECT(n == 0);
-+
-+		if (!memcmp(hash1, want_hash, GIT_SHA1_RAWSZ) ||
-+		    !memcmp(hash2, want_hash, GIT_SHA1_RAWSZ)) {
-+			want_names[want_names_len++] = xstrdup(name);
-+		}
-+	}
-+
-+	n = reftable_writer_close(w);
-+	EXPECT(n == 0);
-+
-+	reftable_writer_free(w);
-+	w = NULL;
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = init_reader(&rd, &source, "file.ref");
-+	EXPECT_ERR(err);
-+	if (!indexed) {
-+		rd.obj_offsets.is_present = 0;
-+	}
-+
-+	err = reftable_reader_seek_ref(&rd, &it, "");
-+	EXPECT_ERR(err);
-+	reftable_iterator_destroy(&it);
-+
-+	err = reftable_reader_refs_for(&rd, &it, want_hash);
-+	EXPECT_ERR(err);
-+
-+	j = 0;
-+	while (1) {
-+		int err = reftable_iterator_next_ref(&it, &ref);
-+		EXPECT(err >= 0);
-+		if (err > 0) {
-+			break;
-+		}
-+
-+		EXPECT(j < want_names_len);
-+		EXPECT(0 == strcmp(ref.refname, want_names[j]));
-+		j++;
-+		reftable_ref_record_release(&ref);
-+	}
-+	EXPECT(j == want_names_len);
-+
-+	strbuf_release(&buf);
-+	free_names(want_names);
-+	reftable_iterator_destroy(&it);
-+	reader_close(&rd);
-+}
-+
-+static void test_table_refs_for_no_index(void)
-+{
-+	test_table_refs_for(0);
-+}
-+
-+static void test_table_refs_for_obj_index(void)
-+{
-+	test_table_refs_for(1);
-+}
-+
-+static void test_write_empty_table(void)
-+{
-+	struct reftable_write_options opts = { 0 };
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+	struct reftable_block_source source = { NULL };
-+	struct reftable_reader *rd = NULL;
-+	struct reftable_ref_record rec = { NULL };
-+	struct reftable_iterator it = { NULL };
-+	int err;
-+
-+	reftable_writer_set_limits(w, 1, 1);
-+
-+	err = reftable_writer_close(w);
-+	EXPECT(err == REFTABLE_EMPTY_TABLE_ERROR);
-+	reftable_writer_free(w);
-+
-+	EXPECT(buf.len == header_size(1) + footer_size(1));
-+
-+	block_source_from_strbuf(&source, &buf);
-+
-+	err = reftable_new_reader(&rd, &source, "filename");
-+	EXPECT_ERR(err);
-+
-+	err = reftable_reader_seek_ref(rd, &it, "");
-+	EXPECT_ERR(err);
-+
-+	err = reftable_iterator_next_ref(&it, &rec);
-+	EXPECT(err > 0);
-+
-+	reftable_iterator_destroy(&it);
-+	reftable_reader_free(rd);
-+	strbuf_release(&buf);
-+}
-+
-+static void test_write_key_order(void)
-+{
-+	struct reftable_write_options opts = { 0 };
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_writer *w =
-+		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+	struct reftable_ref_record refs[2] = {
-+		{
-+			.refname = "b",
-+			.update_index = 1,
-+			.value_type = REFTABLE_REF_SYMREF,
-+			.value = {
-+				.symref = "target",
-+			},
-+		}, {
-+			.refname = "a",
-+			.update_index = 1,
-+			.value_type = REFTABLE_REF_SYMREF,
-+			.value = {
-+				.symref = "target",
-+			},
-+		}
-+	};
-+	int err;
-+
-+	reftable_writer_set_limits(w, 1, 1);
-+	err = reftable_writer_add_ref(w, &refs[0]);
-+	EXPECT_ERR(err);
-+	err = reftable_writer_add_ref(w, &refs[1]);
-+	printf("%d\n", err);
-+	EXPECT(err == REFTABLE_API_ERROR);
-+	reftable_writer_close(w);
-+	reftable_writer_free(w);
-+	strbuf_release(&buf);
-+}
-+
-+static void test_corrupt_table_empty(void)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_block_source source = { NULL };
-+	struct reftable_reader rd = { NULL };
-+	int err;
-+
-+	block_source_from_strbuf(&source, &buf);
-+	err = init_reader(&rd, &source, "file.log");
-+	EXPECT(err == REFTABLE_FORMAT_ERROR);
-+}
-+
-+static void test_corrupt_table(void)
-+{
-+	uint8_t zeros[1024] = { 0 };
-+	struct strbuf buf = STRBUF_INIT;
-+	struct reftable_block_source source = { NULL };
-+	struct reftable_reader rd = { NULL };
-+	int err;
-+	strbuf_add(&buf, zeros, sizeof(zeros));
-+
-+	block_source_from_strbuf(&source, &buf);
-+	err = init_reader(&rd, &source, "file.log");
-+	EXPECT(err == REFTABLE_FORMAT_ERROR);
-+	strbuf_release(&buf);
-+}
-+
-+int readwrite_test_main(int argc, const char *argv[])
-+{
-+	RUN_TEST(test_corrupt_table);
-+	RUN_TEST(test_corrupt_table_empty);
-+	RUN_TEST(test_log_write_read);
-+	RUN_TEST(test_write_key_order);
-+	RUN_TEST(test_table_read_write_seek_linear_sha256);
-+	RUN_TEST(test_log_buffer_size);
-+	RUN_TEST(test_table_write_small_table);
-+	RUN_TEST(test_buffer);
-+	RUN_TEST(test_table_read_api);
-+	RUN_TEST(test_table_read_write_sequential);
-+	RUN_TEST(test_table_read_write_seek_linear);
-+	RUN_TEST(test_table_read_write_seek_index);
-+	RUN_TEST(test_table_refs_for_no_index);
-+	RUN_TEST(test_table_refs_for_obj_index);
-+	RUN_TEST(test_write_empty_table);
-+	return 0;
-+}
-diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
-index 5e7698ae654..3d541fa5c0c 100644
---- a/reftable/reftable-tests.h
-+++ b/reftable/reftable-tests.h
-@@ -14,7 +14,7 @@ int block_test_main(int argc, const char **argv);
- int merged_test_main(int argc, const char **argv);
- int record_test_main(int argc, const char **argv);
- int refname_test_main(int argc, const char **argv);
--int reftable_test_main(int argc, const char **argv);
-+int readwrite_test_main(int argc, const char **argv);
- int stack_test_main(int argc, const char **argv);
- int tree_test_main(int argc, const char **argv);
- int reftable_dump_main(int argc, char *const *argv);
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 050551fa698..898aba836fd 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -6,6 +6,7 @@ int cmd__reftable(int argc, const char **argv)
- 	basics_test_main(argc, argv);
- 	block_test_main(argc, argv);
- 	record_test_main(argc, argv);
-+	readwrite_test_main(argc, argv);
- 	tree_test_main(argc, argv);
- 	return 0;
- }
+diff --git a/config.mak.uname b/config.mak.uname
+index 76516aaa9a5..9399247cbb3 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -258,6 +258,10 @@ ifeq ($(uname_S),FreeBSD)
+ 	FILENO_IS_A_MACRO = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),OpenBSD)
++	# Versions < 7.0 need compatibility layer
++	ifeq ($(shell expr "$(uname_R)" : "[1-6]\."),2)
++		NO_UNCOMPRESS2 = UnfortunatelyYes
++	endif
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	USE_ST_TIMESPEC = YesPlease
+@@ -513,6 +517,7 @@ ifeq ($(uname_S),Interix)
+ 	endif
+ endif
+ ifeq ($(uname_S),Minix)
++	NO_UNCOMPRESS2 = YesPlease
+ 	NO_IPV6 = YesPlease
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+ 	NO_NSEC = YesPlease
+diff --git a/configure.ac b/configure.ac
+index 031e8d3fee8..c3a913103d0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -672,9 +672,22 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
+ 	NO_DEFLATE_BOUND=yes])
+ LIBS="$old_LIBS"
+ 
++AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
++AC_LANG_PROGRAM([#include <zlib.h>],
++ [uncompress2(NULL,NULL,NULL,NULL);])])
++AC_MSG_CHECKING([for uncompress2 in -lz])
++old_LIBS="$LIBS"
++LIBS="$LIBS -lz"
++AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
++	[AC_MSG_RESULT([yes])],
++	[AC_MSG_RESULT([no])
++	NO_UNCOMPRESS2=yes])
++LIBS="$old_LIBS"
++
+ GIT_UNSTASH_FLAGS($ZLIB_PATH)
+ 
+ GIT_CONF_SUBST([NO_DEFLATE_BOUND])
++GIT_CONF_SUBST([NO_UNCOMPRESS2])
+ 
+ #
+ # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
 -- 
 gitgitgadget
 
