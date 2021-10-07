@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C52C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 260D5C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E100610E6
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BA80610A2
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240831AbhJGKD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 06:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50112 "EHLO
+        id S240791AbhJGKEC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 06:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240771AbhJGKDr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240770AbhJGKDr (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 7 Oct 2021 06:03:47 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0134BC061755
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:01:52 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id u18so17344050wrg.5
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:01:51 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9025C061746
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:01:50 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id s15so17342946wrv.11
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AN1AIWQCUFRhS3mKmfAn4+sELbMSyOhU+N4C2UODX8g=;
-        b=CIL1L2z3y8/FiFN3wt7aHwUcJ60Zfpr+3B3MYIHYHijSjsBMAsITL5ekt+XWg4Lwjd
-         3r7lMU4GA3qr50Yke9xSBdF95ganM7bdTEblufwXrBtLdoYbqZG8XcknQunXrB1ofvtZ
-         QVuBkLn2c9GhoCSBTX9fCp6+6u+1Kp5VU5E4QEf91FX/FO0CUmEXCnMTFLo17P9tUdi9
-         7Mx05cb/nJoRcdpA/iLTnY8gVN7JaDqP7HWeD0X35AgbiAdetyOnikWKKySy89yzZroL
-         ZfCo3FN2bTpAUUQXPogaLQNUBwK7LHoXUyX9f3O1mT5ZSGQeLsNm32F0t09nkefXi17C
-         C8gg==
+        bh=lLwdtBxAy3TuMS8O0Q2YjANTkopE8aeEZv9gddah1GU=;
+        b=kk8G98L7p+5q4PoSyz4nqjsVWVl/C78qE1v7U1ORQrn4eAtSnflozfo4mkghfxq2Vr
+         wgyy9Dc+8NxL5c7jzvZtIV+7AdHI4A9+RKCWudJgr3zNt8ZmoazrI1yLlHpLjfHIxhH6
+         m/j7N4xkAsuRo/WFvh1gJYIgaq3c+u36h5J1EW3WrZ3vA8VyWB8H2XzyPh6uDqCGI02p
+         JQ6sBCWYJ7Xr7aqsklzSWr5Df8WxAZLdkkod2P4QzDUCs8gIlXS8MHXzXst43GTF018g
+         8g4btWQO1Mjp5p/QIK5DsqKofdHz6HVJ+W77HyC1Iy234XDa17ifa1+woLIaA4tMNzD0
+         yUIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AN1AIWQCUFRhS3mKmfAn4+sELbMSyOhU+N4C2UODX8g=;
-        b=4kELXNBryz2HKVZw3W1dF7tI4gPP6e6Jzv7psrHJKmt2UtQ6Ah5HfyBJrTDYwVVn6y
-         hOU9y0lxZoFQ3r92VYwdkzBC0zr+dPJ/kzmiu2h6735dvls2lyH3c/bTeJnUmtkA9ybJ
-         3uTVC6tXBny1MrucIKxlrX3bIaf/uJQgG31CL1fA+p9FnDgYh7trh8Fex2NwDrKoofv9
-         B94J2cOKhrNfwalZiZbnuMIxiOb8PzvVQjecpAPIve6PrmZORTe0iMs8J8HtCeqZ6hNK
-         eru+BCVedxDRUGsliBrGk8SDzAdkugY/wNcX8Jvjm/ocVYoWLQm6lnwKklVK21fRIiCE
-         p/Zw==
-X-Gm-Message-State: AOAM5305cmgtnlNuHAMxw90AD9RccxodxqC47ZCHLUUZno3cON97t/M1
-        3tR/LP5BVFDe8fErALbgr9ee6TRXUZYKzg==
-X-Google-Smtp-Source: ABdhPJxijtrteznNUzXi/nupej6PqwbAEK9tU9oF6UR1m3qRBs8Kb3xxxcs6Caipkvk5SIJlvoonkw==
-X-Received: by 2002:a1c:8054:: with SMTP id b81mr3617718wmd.87.1633600910344;
-        Thu, 07 Oct 2021 03:01:50 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f16sm628559wrr.53.2021.10.07.03.01.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=lLwdtBxAy3TuMS8O0Q2YjANTkopE8aeEZv9gddah1GU=;
+        b=hc36wTWiCxt7973nd5eHDXrJxjS8y3jn0wySbuL5BxXktLLTsX3loFEJUle6rvDPMq
+         Jr5qRhsyIcMUuN7oFmBx1weztg4kZEdmsu6M5sB7Q1W2zqvLmAwqEDfvc1GM2h85eGDR
+         boaZw3gp5Us5PGd90ghtAWtk6P5gm9tr+Ji29JNYL9/hvjyptyeEX+2Ah0Vp/WlVaFqg
+         LC+QiICE1ZHqnOsNPiY/q6b1SXPbWI4He8I9zJygqQFMkiWmQScCfCVkee5zxykFwCfX
+         yUlkFqZgbqkMNmwa+vy+Ql9ZGYasXxYkL/4826w9OTtE2P0jqiOxUXI/jj983UHY5gBd
+         WHCg==
+X-Gm-Message-State: AOAM531X2yrhAMWPE7suat2AySEnfcKX9CIXH3sD1ar+vMJA9LhCvb4a
+        Z94HtV/YSjWbMh2brzagTyEfzoMJmhq2Ow==
+X-Google-Smtp-Source: ABdhPJzi21+asQG2Ag5cnO8s5dbSPkdHFjwRMboZkKTrsBm6bIYdBEPz+VEqkq7Qlhy/iBB2peJqsA==
+X-Received: by 2002:a05:600c:296:: with SMTP id 22mr2815739wmk.113.1633600909285;
         Thu, 07 Oct 2021 03:01:49 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id f16sm628559wrr.53.2021.10.07.03.01.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Oct 2021 03:01:48 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 6/7] ls-files: add missing string_list_clear()
-Date:   Thu,  7 Oct 2021 12:01:36 +0200
-Message-Id: <patch-v2-6.7-fc10353c0c5-20211007T100014Z-avarab@gmail.com>
+Subject: [PATCH v2 5/7] ls-files: fix a trivial dir_clear() leak
+Date:   Thu,  7 Oct 2021 12:01:35 +0200
+Message-Id: <patch-v2-5.7-73cf1018953-20211007T100014Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1446.g6af949f83bd
 In-Reply-To: <cover-v2-0.7-00000000000-20211007T100014Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211006T095426Z-avarab@gmail.com> <cover-v2-0.7-00000000000-20211007T100014Z-avarab@gmail.com>
@@ -72,66 +72,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak that's been here ever since 72aeb18772d (clean.c,
-ls-files.c: respect encapsulation of exclude_list_groups, 2013-01-16),
-we dup'd the argument in option_parse_exclude(), but never freed the
-string_list.
+Fix an edge case that was missed when the dir_clear() call was added
+in eceba532141 (dir: fix problematic API to avoid memory leaks,
+2020-08-18), we need to also clean up when we're about to exit with
+non-zero.
 
-This makes almost all of t3001-ls-files-others-exclude.sh pass (it had
-a lot of failures before). Let's mark it as passing with
-TEST_PASSES_SANITIZE_LEAK=true, and then exclude the tests that still
-failed with a !SANITIZE_LEAK prerequisite check until we fix those
-leaks. We can still see the failed tests under
-GIT_TEST_FAIL_PREREQS=true.
+That commit says, on the topic of the dir_clear() API and UNLEAK():
+
+    [...]two of them clearly thought about leaks since they had an
+    UNLEAK(dir) directive, which to me suggests that the method to
+    free the data was too unclear.
+
+I think that 0e5bba53af7 (add UNLEAK annotation for reducing leak
+false positives, 2017-09-08) which added the UNLEAK() makes it clear
+that that wasn't the case, rather it was the desire to avoid the
+complexity of freeing the memory at the end of the program.
+
+This does add a bit of complexity, but I think it's worth it to just
+fix these leaks when it's easy in built-ins. It allows them to serve
+as canaries for underlying APIs that shouldn't be leaking, it
+encourages us to make those freeing APIs nicer for all their users,
+and it prevents other leaking regressions by being able to mark the
+entire test as TEST_PASSES_SANITIZE_LEAK=true.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/ls-files.c                 | 1 +
- t/t3001-ls-files-others-exclude.sh | 5 +++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ builtin/ls-files.c                | 13 +++++--------
+ t/t3005-ls-files-relative.sh      |  1 +
+ t/t3020-ls-files-error-unmatch.sh |  2 ++
+ t/t3700-add.sh                    |  1 +
+ t/t7104-reset-hard.sh             |  1 +
+ 5 files changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index fcc685947f9..031fef1bcaa 100644
+index a2000ed6bf2..fcc685947f9 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -781,6 +781,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		ret = 1;
+@@ -672,6 +672,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			 N_("suppress duplicate entries")),
+ 		OPT_END()
+ 	};
++	int ret = 0;
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(ls_files_usage, builtin_ls_files_options);
+@@ -775,16 +776,12 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (show_resolve_undo)
+ 		show_ru_info(the_repository->index);
+ 
+-	if (ps_matched) {
+-		int bad;
+-		bad = report_path_error(ps_matched, &pathspec);
+-		if (bad)
+-			fprintf(stderr, "Did you forget to 'git add'?\n");
+-
+-		return bad ? 1 : 0;
++	if (ps_matched && report_path_error(ps_matched, &pathspec)) {
++		fprintf(stderr, "Did you forget to 'git add'?\n");
++		ret = 1;
  	}
  
-+	string_list_clear(&exclude_list, 0);
  	dir_clear(&dir);
  	free(max_prefix);
- 	return ret;
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-index 516c95ea0e8..48cec4e5f88 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -8,6 +8,7 @@ test_description='git ls-files --others --exclude
- This test runs git ls-files --others and tests --exclude patterns.
+-	return 0;
++	return ret;
+ }
+diff --git a/t/t3005-ls-files-relative.sh b/t/t3005-ls-files-relative.sh
+index 727e9ae1a44..6ba8b589cd0 100755
+--- a/t/t3005-ls-files-relative.sh
++++ b/t/t3005-ls-files-relative.sh
+@@ -5,6 +5,7 @@ test_description='ls-files tests with relative paths
+ This test runs git ls-files with various relative path arguments.
  '
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- rm -fr one three
-@@ -102,7 +103,7 @@ test_expect_success \
-        >output &&
-      test_cmp expect output'
- 
--test_expect_success 'restore gitignore' '
-+test_expect_success !SANITIZE_LEAK 'restore gitignore' '
- 	git checkout --ignore-skip-worktree-bits $allignores &&
- 	rm .git/index
+ test_expect_success 'prepare' '
+diff --git a/t/t3020-ls-files-error-unmatch.sh b/t/t3020-ls-files-error-unmatch.sh
+index 124e73b8e60..2cbcbc0721b 100755
+--- a/t/t3020-ls-files-error-unmatch.sh
++++ b/t/t3020-ls-files-error-unmatch.sh
+@@ -9,6 +9,8 @@ This test runs git ls-files --error-unmatch to ensure it correctly
+ returns an error when a non-existent path is provided on the command
+ line.
  '
-@@ -125,7 +126,7 @@ cat > expect << EOF
- #	three/
- EOF
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
--test_expect_success 'git status honors core.excludesfile' \
-+test_expect_success !SANITIZE_LEAK 'git status honors core.excludesfile' \
- 	'test_cmp expect output'
+ test_expect_success 'setup' '
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 4086e1ebbc9..283a66955d6 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -5,6 +5,7 @@
  
- test_expect_success 'trailing slash in exclude allows directory match(1)' '
+ test_description='Test of git add, including the -- option.'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # Test the file mode "$1" of the file "$2" in the index.
+diff --git a/t/t7104-reset-hard.sh b/t/t7104-reset-hard.sh
+index 7948ec392b3..cf9697eba9a 100755
+--- a/t/t7104-reset-hard.sh
++++ b/t/t7104-reset-hard.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='reset --hard unmerged'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
 -- 
 2.33.0.1446.g6af949f83bd
 
