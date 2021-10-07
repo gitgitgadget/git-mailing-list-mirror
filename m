@@ -2,150 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F4F9C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0D8AC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:52:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E968C61175
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:38:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC06A6103C
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232223AbhJGCkM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 22:40:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34678 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230489AbhJGCkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 22:40:12 -0400
-Received: (qmail 27667 invoked by uid 109); 7 Oct 2021 02:38:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Oct 2021 02:38:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6493 invoked by uid 111); 7 Oct 2021 02:38:18 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Oct 2021 22:38:18 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 6 Oct 2021 22:38:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
-Message-ID: <YV5dmkkuCqAY2qqG@coredump.intra.peff.net>
-References: <xmqqfstdr8b5.fsf@gitster.g>
- <YV5aaD418SyZqS/1@coredump.intra.peff.net>
+        id S232683AbhJGCyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 22:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232191AbhJGCyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 22:54:23 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5BBC061746
+        for <git@vger.kernel.org>; Wed,  6 Oct 2021 19:52:30 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id z40so3271794qko.7
+        for <git@vger.kernel.org>; Wed, 06 Oct 2021 19:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=ejLLag36e6dDhRoCGJ+SQFY1xRv0dcDJFxmUmU8bqhg=;
+        b=HhEi3OLOP0WbFMYtcpIjCGjZisP3rSZSf+L1KWUGs+i4IZ0fB46XnTa/OM6vUTYrjV
+         +8SAilocO6f9/5F0uLfUf//qxWqtxEcJ9e5xArC0kFGLX8y9+ubduE21B6ByHEZoFBd9
+         rIyJOY+aexa71nujn62UPzNd8dvRbiqLw5Zw7wggTWAzjd1QmoEux56+edmkxkradOgh
+         MXa4zTdNYCnNhl3ScVDHMoBRcLa9lL1HWfgUq0F6GNczkh7H3f4NqNHb0AH32nebe6ZI
+         DrN+SMTcjhP9veeXYSw7GK5bes5RRy5MqNe1/qlDvVE4iFWCLh15FEhFiaSTpOsFT98q
+         ERqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ejLLag36e6dDhRoCGJ+SQFY1xRv0dcDJFxmUmU8bqhg=;
+        b=orKxNVp/5KS/HZ5cT47P+XbA8RjUW4Vmo/MqmduMP4HjzEkNDLny2M1iCDgkNIpAma
+         9qLJAwvJJwR2HLsMfbdXXoHp7u7PG/iOXQfPu3oD59JIqShIIKsVw8hMkhqbXukYJjT9
+         pvBS5giwJb6PaqJ/89gAt8BthTZYZQ3vjFdkGEkUBOQVDIYok6DKrcHM11Z+wrpq5Kt1
+         On+FxHk9g8Qm5HMxrSbjAJ+4PC+mStoft41NMW3p9WTe2dMjDUQayQ88BR8Wk8XNBOMP
+         UTiqCtGkLE+CddvMQsd21i57iEYr/r/6bPC3D0tpdEAN6Hs6c/U8Rhg5lSmGFVLiaapN
+         Chrg==
+X-Gm-Message-State: AOAM533YGKn566U1RRKJkZ63HL9T3Eu0TjYTm4CdDGFRrj74FFJh1x6o
+        iP0SaxgKtYaU3bUirH+ugnkWm2y8mSw=
+X-Google-Smtp-Source: ABdhPJzOEIm3FSCEsS4gqpVM0tYbr4Omb/L5ubZE5KPc/3ITA01jYUXT03aklegCC4fknSAQw/vYqA==
+X-Received: by 2002:a37:2e82:: with SMTP id u124mr1442118qkh.58.1633575149166;
+        Wed, 06 Oct 2021 19:52:29 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id 6sm12596407qkc.123.2021.10.06.19.52.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Oct 2021 19:52:28 -0700 (PDT)
+Subject: Re: Git push subtree fail unknown revision or path possibly due to
+ missing git-subtree-split commit
+To:     Eddie Ridwan <eddie.ridwan@gmail.com>, git@vger.kernel.org
+References: <CANcBuaZstymNMvbPX553kgr=FsrFFcDEivfiDPsPe3uyGLb78g@mail.gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <61ee8bec-1e6c-e3c7-2cef-7520f376c18c@gmail.com>
+Date:   Wed, 6 Oct 2021 22:52:27 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YV5aaD418SyZqS/1@coredump.intra.peff.net>
+In-Reply-To: <CANcBuaZstymNMvbPX553kgr=FsrFFcDEivfiDPsPe3uyGLb78g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 06, 2021 at 10:24:40PM -0400, Jeff King wrote:
+Hi Eddie,
 
-> On Wed, Oct 06, 2021 at 05:24:14PM -0700, Junio C Hamano wrote:
+Le 2021-10-05 à 00:53, Eddie Ridwan a écrit :
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 > 
-> > * tb/repack-write-midx (2021-10-01) 9 commits
-> >   (merged to 'next' on 2021-10-06 at ccdd5aaf2a)
-> >  + builtin/repack.c: pass `--refs-snapshot` when writing bitmaps
-> >  + builtin/repack.c: make largest pack preferred
-> >  + builtin/repack.c: support writing a MIDX while repacking
-> >  + builtin/repack.c: extract showing progress to a variable
-> >  + builtin/repack.c: rename variables that deal with non-kept packs
-> >  + builtin/repack.c: keep track of existing packs unconditionally
-> >  + midx: preliminary support for `--refs-snapshot`
-> >  + builtin/multi-pack-index.c: support `--stdin-packs` mode
-> >  + midx: expose `write_midx_file_only()` publicly
-> > 
-> >  "git repack" has been taught to generate multi-pack reachability
-> >  bitmaps.
-> > 
-> >  Will merge to 'master'.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> git pull/push subtree as normal, although it is possible that one of
+> the contributors to the subtree repo may have done a force push.
+
+I think that is indeed what happened (see below).
+
 > 
-> Sorry not to catch this before it hit 'next', but there's a small leak
-> in the test helper. This patch can go on top to fix it.
+> What did you expect to happen? (Expected behavior)
+> git push subtree to update the remote subtree repo.
+> 
+> What happened instead? (Actual behavior)
+> Failed to update the remote subtree repo. Error message:
+> 
+>         fatal: ambiguous argument
+> '3f44cc87ceb87df1d9171096596a824fc3050a27^{commit}': unknown revision
+> or path not in the working tree.
+>      Use '--' to separate paths from revisions, like this:
+>      'git <command> [<revision>...] -- [<file>...]'
+>      could not rev-parse split hash
+> 3f44cc87ceb87df1d9171096596a824fc3050a27 from commit
+> 8577911bf6183497cc246aa620e7be1b6becec29
 
-The reason for that is that I didn't find it by inspection; I've started
-running my personal builds through coverity. It wasn't too bad to set up
-with a GitHub Action, like so:
+It would be easier to help you if you gave a URL for your repository :)
+(or at least for the subtree). I managed to find you Stack Overflow
+post [1] by Googling these commit hashes (!). Fortunately you mention
+the subtree URL in your question, and that's enough to go by in this case.
 
----
- .github/workflows/coverity.yml | 35 ++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
- create mode 100644 .github/workflows/coverity.yml
+> 
+> What's different between what you expected and what actually happened?
+> 
+> Failed to update the subtree repo, as expected;
+> 
+> Anything else you want to add:
+> 
+> I am not able to find the commit/hash
+> 3f44cc87ceb87df1d9171096596a824fc3050a27 in the repo. In gitx, I can
+> see that the commit is a git-subtree-split. But it appears to no
+> longer exist in the repo.
 
-diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-new file mode 100644
-index 0000000000..bfd4dff275
---- /dev/null
-+++ b/.github/workflows/coverity.yml
-@@ -0,0 +1,35 @@
-+name: coverity-scan
-+on: push
-+
-+jobs:
-+  latest:
-+    runs-on: ubuntu-latest
-+    steps:
-+      - uses: actions/checkout@v2
-+      - run: ci/install-dependencies.sh
-+      - name: Download Coverity Build Tool
-+        run: |
-+          wget -q https://scan.coverity.com/download/linux64 --post-data "token=$TOKEN&project=peff/git" -O cov-analysis-linux64.tar.gz
-+          mkdir cov-analysis-linux64
-+          tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
-+        env:
-+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
-+
-+      - name: Build with cov-build
-+        run: |
-+          export PATH=$(pwd)/cov-analysis-linux64/bin:$PATH
-+          cov-build --dir cov-int make
-+
-+      - name: Submit the result to Coverity Scan
-+        run: |
-+          tar czvf git.tgz cov-int
-+          curl \
-+            --form project=peff/git \
-+            --form token=$TOKEN \
-+            --form email=peff@peff.net \
-+            --form file=@git.tgz \
-+            --form version=$(git rev-parse HEAD) \
-+            --form description="$(./git version)" \
-+            https://scan.coverity.com/builds?project=peff/git
-+        env:
-+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+Here, I'm assuming that by "in the repo" you mean in a clone of the subtree
+repo, i.e. a clone of https://github.com/OpenSID/tema-natra.
 
-Is there interest in having something like this in the main repo? We'd
-need to tweak some values:
+Indeed the commit with hash 3f44cc87ceb87df1d9171096596a824fc3050a27 does not exist in
+such a clone. But, it still exists on GitHub:
 
-  - we have to send the project name (here peff/git); we can presumably
-    get this on the fly from the Actions environment
+https://github.com/OpenSID/tema-natra/commit/3f44cc87ceb87df1d9171096596a824fc3050a27
 
-  - any repo which wants to use this has to set up the secret token
-    (COVERITY_SCAN_TOKEN here). That involves creating a coverity
-    account, and then setting the token in the GitHub web interface.
-    Presumably we'd just bail immediately if that token isn't set, so
-    forks aside from git/git would have to enable it independently.
+GitHub almost never removes commits in practice. This is good news, because
+it means you can fetch it locally.
 
-  - likewise it needs the email address for the coverity account. That
-    could probably be set in the environment, too.
+> How can I bypass or recover from this apparent missing commit? Any
+> help would be greatly appreciated.
 
-  - we'd probably want to only run it for integration branches, since
-    coverity sets some limits on how often it runs. This could probably
-    be set in another environment variable, so people could tweak it for
-    their forks if they wanted to (or we could use the ci-config hacks,
-    but I put those together mostly because these environment variables
-    didn't exist back then; I suspect we could switch off of them now).
+The git-subtree script does need the commit locally to work. So, just fetch
+the commit by its hash. In your project repository (the one which uses tema-natra as
+a subtree), run:
 
-There are tons of existing warnings, many of which are false positives.
-But it keeps track of which problems are new, and emails out a summary
-of only the new ones (which is how I saw the leak here, which just hit
-next). I don't care all that much about leaks here (we have other
-techniques for finding them), but when Stefan used to do regular
-coverity builds in the past, it routinely found useful errors.
+git fetch https://github.com/OpenSID/tema-natra.git 3f44cc87ceb87df1d9171096596a824fc3050a27
 
-If we had it running on git/git, it's possible for people to subscribe
-to those notifications (or view them on the site; both require the
-people to have coverity accounts, but they're free).
+This will download the needed objects. After that, you *should* be able to
+run your 'git subtree push' command.
 
-Thoughts?
+Note: I think that the 'premium' branch (mentioned in your Stack Overflow question)
+was indeed force-pushed, since 'git log --oneline dadcd0167^..' does not show the two
+commits that appear in your image [2] that read "Update statistik_pengunjung.php"
 
--Peff
+Hope that helps,
+
+Philippe.
+
+[1] https://stackoverflow.com/questions/69431546/git-push-subtree-fail-unknown-revision-or-path-possibly-due-to-missing-git-subtr
+[2] https://i.stack.imgur.com/1tMln.jpg
