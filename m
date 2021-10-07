@@ -2,65 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E4FEC433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E4C9C4332F
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DC0F6103B
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 396416103B
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242277AbhJGU1h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 16:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
+        id S242162AbhJGU1k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 16:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242051AbhJGU1T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 16:27:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7CEC061767
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 13:25:24 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r18so22795669wrg.6
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 13:25:24 -0700 (PDT)
+        with ESMTP id S242140AbhJGU1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 16:27:23 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A91C061765
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 13:25:29 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id o20so22698527wro.3
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 13:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=JOqUYR1gNN5dC4l619qnJyUVRtWrOcX2QPtEtyfe8Fs=;
-        b=pKmeKJdWDMAqFBPXZNB4KaIZicudIe15QqlOBABWpqyBUvRh6mTKm5+agcD9+7WAL/
-         aOvOHdnldaEhhp94Q90Ts13Cy4xpem0LX6iCm9qobn4QIMfaFKXL8Et8DX8FccLpUORh
-         XAIOMKngpSDSDFst/KtPYbBsiyaWG5pGd7Mx4lp75RZNaBcKUmINVEqH9TY6TY2qWk++
-         f/B/VlqwIIRVWXyToJgPH8fVM2sZ6PFpf69ufKV1i+OjOwwBYBTG2/NqWxINLQbGE4wc
-         vLmLbSrO1bcHS/N19TnST91mJS2zbLO+yLKgh4qrBDiphHwclmkF1zSzSHnwavpDpNkh
-         Dzcg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GpwNID0VrzrfwftFoVvo6TxZhM1AX2ihEq23nc2JbuU=;
+        b=Sr0MLsvemA6/4bRKhS7zlc1G+vb6kq4aATZ0KTTF73pM4wQudwVGC3fkabVYOOA+RP
+         ZIg8NbHkQYFso1XJQ6XqKz54mpgR4Pjr43oEFcF9Z2Du61SGYSIBkkBMNCXtxUBVGpvJ
+         5AH72KbKKqmjuO/9hcBh9dlf6K+xMaTZSBpHvWClT3OVMsIMRHm0goYvqmtQdOhvA6GT
+         9FXYpfSrI4pslsWaqqLWW44XQT9zxp74mJRtixT5savxZ3sKWAdo2GWE9CngtKCiBQs1
+         XEVks+28ETwo/R5y/TxggcaVq9d62JLga3qM3gARLo2Da87UCQuU84VtmP2OGVxR9/0d
+         LUkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=JOqUYR1gNN5dC4l619qnJyUVRtWrOcX2QPtEtyfe8Fs=;
-        b=AcW/3uR8aPf9nksuW2dzl7VMdGW9nBwrC/zVQ9ymzfL/nsgukqRXQtxOWExmIYM0Sr
-         yGCJI58L1B//amQXBozDSLZ+kK4M40qfIeoor6DoUOXTVGhboejUqWimFt7uK/ai9NLz
-         mLdeZunjMmvFNLWp70eHf96lmjnWL725ZHU+GyB4r2n12mkMGREoZ2QnmQiUwP9h3epE
-         Mu9hjHnJJjVfOc1w374w9GvhH4A9SaT2Ox2zhRr/wUAgjXhIis/Eu/qD1zKrSiY5+m7r
-         Hhij3+R4BYF/O7O9eM/tQReyk0lAqvLkSFq3oeytq2W1WLy0cTixUN3j4FypTjI/0655
-         pCIg==
-X-Gm-Message-State: AOAM531RoYdEuZP6woIOF12P3lXKRB1ICOhks3lHqh91Y8zf8kIu4IAV
-        ckIEZRcRDlvsmKhguh0q5nqw3jIVgvk=
-X-Google-Smtp-Source: ABdhPJzddBZyCamb249JhDbucpnCTi6BGnkz2D5Wzswg+sZxBj2DRkMk6jAWb7iYJZk1ESSPlibSXg==
-X-Received: by 2002:a05:600c:240a:: with SMTP id 10mr18514271wmp.170.1633638322946;
-        Thu, 07 Oct 2021 13:25:22 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=GpwNID0VrzrfwftFoVvo6TxZhM1AX2ihEq23nc2JbuU=;
+        b=P7mzAbCLqwkJ9UwwuzlVqtRIEDVD+IqRCMNx6KGZJS0K4MOsebJ3nts8VFje9Y38ki
+         TUc7mX2rW5jmSHRgYAeAfVgCR2IGTPFMCVQUL5MYoLi9puWCsghkruI1+7pB5Q7CTSCa
+         2B5J4Quq0ad8q6AgCkvElC+F5wxjSNUvZan2XrRXbYJJHKaSZZyIc86/4gKTGsA62a8F
+         LUkL6y6pl9kAq6IjD/U1Not3ml8MzZA54YWz9c31JmPL5OoZKNi/lfsV4t3jP/LMk5Xl
+         ZA8c+MLw6AFugXf6iRN5gVqK/MO8Y32FFT5NhTSMPyleRIR5DiwwPGtluWlHhDWKUu7r
+         1img==
+X-Gm-Message-State: AOAM530dqyCfCXi4qyBjWsxJcV1udf9IUC56+BmFsgpK6spIhuup/RWo
+        EAIiPFHakddiRFnNlnsMO3v+v16IwZE=
+X-Google-Smtp-Source: ABdhPJw10A5ls32A+tHbxYaGqRyOwmWcUAlNf9cy/uMQ919jXMmrtHGTaOnQd6EvWhDW2JK5+O2XcA==
+X-Received: by 2002:a05:6000:2c2:: with SMTP id o2mr8074325wry.194.1633638327802;
+        Thu, 07 Oct 2021 13:25:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c17sm9049677wmr.15.2021.10.07.13.25.22
+        by smtp.gmail.com with ESMTPSA id g25sm326338wrc.88.2021.10.07.13.25.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 13:25:22 -0700 (PDT)
-Message-Id: <6cbc2f758dfbfba4363fbdbf1a7a8102c52842ad.1633638316.git.gitgitgadget@gmail.com>
+        Thu, 07 Oct 2021 13:25:27 -0700 (PDT)
+Message-Id: <6e5ee04308370885e280fa17c19b64c6d34b4f6e.1633638316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1081.v4.git.git.1633638315.gitgitgadget@gmail.com>
 References: <pull.1081.v3.git.git.1632841817.gitgitgadget@gmail.com>
         <pull.1081.v4.git.git.1633638315.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 20:25:03 +0000
-Subject: [PATCH v4 07/19] Provide zlib's uncompress2 from compat/zlib-compat.c
-MIME-Version: 1.0
+Date:   Thu, 07 Oct 2021 20:25:10 +0000
+Subject: [PATCH v4 14/19] reftable: add a heap-based priority queue for
+ reftable records
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>,
         Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= 
@@ -74,216 +75,303 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This will be needed for reading reflog blocks in reftable.
+This is needed to create a merged view multiple reftables
 
-Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                  |  7 +++
- ci/lib.sh                 |  1 +
- compat/.gitattributes     |  1 +
- compat/zlib-uncompress2.c | 95 +++++++++++++++++++++++++++++++++++++++
- config.mak.uname          |  5 +++
- configure.ac              | 13 ++++++
- 6 files changed, 122 insertions(+)
- create mode 100644 compat/.gitattributes
- create mode 100644 compat/zlib-uncompress2.c
+ Makefile                  |   2 +
+ reftable/pq.c             | 105 ++++++++++++++++++++++++++++++++++++++
+ reftable/pq.h             |  33 ++++++++++++
+ reftable/pq_test.c        |  82 +++++++++++++++++++++++++++++
+ reftable/reftable-tests.h |   1 +
+ t/helper/test-reftable.c  |   1 +
+ 6 files changed, 224 insertions(+)
+ create mode 100644 reftable/pq.c
+ create mode 100644 reftable/pq.h
+ create mode 100644 reftable/pq_test.c
 
 diff --git a/Makefile b/Makefile
-index b57b2b0e78e..9dfab70f79b 100644
+index 65d3856aaea..cdfde13b584 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -256,6 +256,8 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
-+# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
-+#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-@@ -1718,6 +1720,11 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
- endif
+@@ -2442,6 +2442,7 @@ REFTABLE_OBJS += reftable/block.o
+ REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/iter.o
+ REFTABLE_OBJS += reftable/publicbasics.o
++REFTABLE_OBJS += reftable/pq.o
+ REFTABLE_OBJS += reftable/reader.o
+ REFTABLE_OBJS += reftable/record.o
+ REFTABLE_OBJS += reftable/refname.o
+@@ -2452,6 +2453,7 @@ REFTABLE_OBJS += reftable/writer.o
  
-+ifdef NO_UNCOMPRESS2
-+	BASIC_CFLAGS += -DNO_UNCOMPRESS2
-+	REFTABLE_OBJS += compat/zlib-uncompress2.o
-+endif
-+
- ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
- endif
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 476c3f369f5..5711c63979d 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -224,6 +224,7 @@ linux-gcc-default)
- 	;;
- Linux32)
- 	CC=gcc
-+	MAKEFLAGS="$MAKEFLAGS NO_UNCOMPRESS2=1"
- 	;;
- linux-musl)
- 	CC=gcc
-diff --git a/compat/.gitattributes b/compat/.gitattributes
+ REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
++REFTABLE_TEST_OBJS += reftable/pq_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
+ REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+diff --git a/reftable/pq.c b/reftable/pq.c
 new file mode 100644
-index 00000000000..40dbfb170da
+index 00000000000..efc474017a2
 --- /dev/null
-+++ b/compat/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-uncompress2.c	whitespace=-indent-with-non-tab,-trailing-space
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-new file mode 100644
-index 00000000000..3dcb90b2839
---- /dev/null
-+++ b/compat/zlib-uncompress2.c
-@@ -0,0 +1,95 @@
-+/* taken from zlib's uncompr.c
-+
-+   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
-+   Author: Mark Adler <madler@alumni.caltech.edu>
-+   Date:   Sun Jan 15 09:18:46 2017 -0800
-+
-+       zlib 1.2.11
-+
-+*/
-+
-+#include "../reftable/system.h"
-+#define z_const
-+
++++ b/reftable/pq.c
+@@ -0,0 +1,105 @@
 +/*
-+ * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-+ * For conditions of distribution and use, see copyright notice in zlib.h
-+ */
++Copyright 2020 Google LLC
 +
-+#include <zlib.h>
-+
-+/* clang-format off */
-+
-+/* ===========================================================================
-+     Decompresses the source buffer into the destination buffer.  *sourceLen is
-+   the byte length of the source buffer. Upon entry, *destLen is the total size
-+   of the destination buffer, which must be large enough to hold the entire
-+   uncompressed data. (The size of the uncompressed data must have been saved
-+   previously by the compressor and transmitted to the decompressor by some
-+   mechanism outside the scope of this compression library.) Upon exit,
-+   *destLen is the size of the decompressed data and *sourceLen is the number
-+   of source bytes consumed. Upon return, source + *sourceLen points to the
-+   first unused input byte.
-+
-+     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
-+   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
-+   Z_DATA_ERROR if the input data was corrupted, including if the input data is
-+   an incomplete zlib stream.
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
 +*/
-+int ZEXPORT uncompress2 (
-+    Bytef *dest,
-+    uLongf *destLen,
-+    const Bytef *source,
-+    uLong *sourceLen) {
-+    z_stream stream;
-+    int err;
-+    const uInt max = (uInt)-1;
-+    uLong len, left;
-+    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
 +
-+    len = *sourceLen;
-+    if (*destLen) {
-+        left = *destLen;
-+        *destLen = 0;
-+    }
-+    else {
-+        left = 1;
-+        dest = buf;
-+    }
++#include "pq.h"
 +
-+    stream.next_in = (z_const Bytef *)source;
-+    stream.avail_in = 0;
-+    stream.zalloc = (alloc_func)0;
-+    stream.zfree = (free_func)0;
-+    stream.opaque = (voidpf)0;
++#include "reftable-record.h"
++#include "system.h"
++#include "basics.h"
 +
-+    err = inflateInit(&stream);
-+    if (err != Z_OK) return err;
++int pq_less(struct pq_entry *a, struct pq_entry *b)
++{
++	struct strbuf ak = STRBUF_INIT;
++	struct strbuf bk = STRBUF_INIT;
++	int cmp = 0;
++	reftable_record_key(&a->rec, &ak);
++	reftable_record_key(&b->rec, &bk);
 +
-+    stream.next_out = dest;
-+    stream.avail_out = 0;
++	cmp = strbuf_cmp(&ak, &bk);
 +
-+    do {
-+        if (stream.avail_out == 0) {
-+            stream.avail_out = left > (uLong)max ? max : (uInt)left;
-+            left -= stream.avail_out;
-+        }
-+        if (stream.avail_in == 0) {
-+            stream.avail_in = len > (uLong)max ? max : (uInt)len;
-+            len -= stream.avail_in;
-+        }
-+        err = inflate(&stream, Z_NO_FLUSH);
-+    } while (err == Z_OK);
++	strbuf_release(&ak);
++	strbuf_release(&bk);
 +
-+    *sourceLen -= len + stream.avail_in;
-+    if (dest != buf)
-+        *destLen = stream.total_out;
-+    else if (stream.total_out && err == Z_BUF_ERROR)
-+        left = 1;
++	if (cmp == 0)
++		return a->index > b->index;
 +
-+    inflateEnd(&stream);
-+    return err == Z_STREAM_END ? Z_OK :
-+           err == Z_NEED_DICT ? Z_DATA_ERROR  :
-+           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
-+           err;
++	return cmp < 0;
 +}
-diff --git a/config.mak.uname b/config.mak.uname
-index 76516aaa9a5..9399247cbb3 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -258,6 +258,10 @@ ifeq ($(uname_S),FreeBSD)
- 	FILENO_IS_A_MACRO = UnfortunatelyYes
- endif
- ifeq ($(uname_S),OpenBSD)
-+	# Versions < 7.0 need compatibility layer
-+	ifeq ($(shell expr "$(uname_R)" : "[1-6]\."),2)
-+		NO_UNCOMPRESS2 = UnfortunatelyYes
-+	endif
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
-@@ -513,6 +517,7 @@ ifeq ($(uname_S),Interix)
- 	endif
- endif
- ifeq ($(uname_S),Minix)
-+	NO_UNCOMPRESS2 = YesPlease
- 	NO_IPV6 = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	NO_NSEC = YesPlease
-diff --git a/configure.ac b/configure.ac
-index 031e8d3fee8..c3a913103d0 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -672,9 +672,22 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
- 	NO_DEFLATE_BOUND=yes])
- LIBS="$old_LIBS"
- 
-+AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
-+AC_LANG_PROGRAM([#include <zlib.h>],
-+ [uncompress2(NULL,NULL,NULL,NULL);])])
-+AC_MSG_CHECKING([for uncompress2 in -lz])
-+old_LIBS="$LIBS"
-+LIBS="$LIBS -lz"
-+AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
-+	[AC_MSG_RESULT([yes])],
-+	[AC_MSG_RESULT([no])
-+	NO_UNCOMPRESS2=yes])
-+LIBS="$old_LIBS"
 +
- GIT_UNSTASH_FLAGS($ZLIB_PATH)
- 
- GIT_CONF_SUBST([NO_DEFLATE_BOUND])
-+GIT_CONF_SUBST([NO_UNCOMPRESS2])
- 
- #
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
++struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq)
++{
++	return pq.heap[0];
++}
++
++int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq)
++{
++	return pq.len == 0;
++}
++
++struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
++{
++	int i = 0;
++	struct pq_entry e = pq->heap[0];
++	pq->heap[0] = pq->heap[pq->len - 1];
++	pq->len--;
++
++	i = 0;
++	while (i < pq->len) {
++		int min = i;
++		int j = 2 * i + 1;
++		int k = 2 * i + 2;
++		if (j < pq->len && pq_less(&pq->heap[j], &pq->heap[i])) {
++			min = j;
++		}
++		if (k < pq->len && pq_less(&pq->heap[k], &pq->heap[min])) {
++			min = k;
++		}
++
++		if (min == i) {
++			break;
++		}
++
++		SWAP(pq->heap[i], pq->heap[min]);
++		i = min;
++	}
++
++	return e;
++}
++
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
++{
++	int i = 0;
++	if (pq->len == pq->cap) {
++		pq->cap = 2 * pq->cap + 1;
++		pq->heap = reftable_realloc(pq->heap,
++					    pq->cap * sizeof(struct pq_entry));
++	}
++
++	pq->heap[pq->len++] = e;
++	i = pq->len - 1;
++	while (i > 0) {
++		int j = (i - 1) / 2;
++		if (pq_less(&pq->heap[j], &pq->heap[i])) {
++			break;
++		}
++
++		SWAP(pq->heap[j], pq->heap[i]);
++
++		i = j;
++	}
++}
++
++void merged_iter_pqueue_release(struct merged_iter_pqueue *pq)
++{
++	int i = 0;
++	for (i = 0; i < pq->len; i++) {
++		reftable_record_destroy(&pq->heap[i].rec);
++	}
++	FREE_AND_NULL(pq->heap);
++	pq->len = pq->cap = 0;
++}
+diff --git a/reftable/pq.h b/reftable/pq.h
+new file mode 100644
+index 00000000000..56fc1b6d873
+--- /dev/null
++++ b/reftable/pq.h
+@@ -0,0 +1,33 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef PQ_H
++#define PQ_H
++
++#include "record.h"
++
++struct pq_entry {
++	int index;
++	struct reftable_record rec;
++};
++
++struct merged_iter_pqueue {
++	struct pq_entry *heap;
++	size_t len;
++	size_t cap;
++};
++
++struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq);
++int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq);
++void merged_iter_pqueue_check(struct merged_iter_pqueue pq);
++struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e);
++void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
++int pq_less(struct pq_entry *a, struct pq_entry *b);
++
++#endif
+diff --git a/reftable/pq_test.c b/reftable/pq_test.c
+new file mode 100644
+index 00000000000..c9bb05e37b7
+--- /dev/null
++++ b/reftable/pq_test.c
+@@ -0,0 +1,82 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "system.h"
++
++#include "basics.h"
++#include "constants.h"
++#include "pq.h"
++#include "record.h"
++#include "reftable-tests.h"
++#include "test_framework.h"
++
++void merged_iter_pqueue_check(struct merged_iter_pqueue pq)
++{
++	int i;
++	for (i = 1; i < pq.len; i++) {
++		int parent = (i - 1) / 2;
++
++		EXPECT(pq_less(&pq.heap[parent], &pq.heap[i]));
++	}
++}
++
++static void test_pq(void)
++{
++	char *names[54] = { NULL };
++	int N = ARRAY_SIZE(names) - 1;
++
++	struct merged_iter_pqueue pq = { NULL };
++	const char *last = NULL;
++
++	int i = 0;
++	for (i = 0; i < N; i++) {
++		char name[100];
++		snprintf(name, sizeof(name), "%02d", i);
++		names[i] = xstrdup(name);
++	}
++
++	i = 1;
++	do {
++		struct reftable_record rec =
++			reftable_new_record(BLOCK_TYPE_REF);
++		struct pq_entry e = { 0 };
++
++		reftable_record_as_ref(&rec)->refname = names[i];
++		e.rec = rec;
++		merged_iter_pqueue_add(&pq, e);
++		merged_iter_pqueue_check(pq);
++		i = (i * 7) % N;
++	} while (i != 1);
++
++	while (!merged_iter_pqueue_is_empty(pq)) {
++		struct pq_entry e = merged_iter_pqueue_remove(&pq);
++		struct reftable_ref_record *ref =
++			reftable_record_as_ref(&e.rec);
++
++		merged_iter_pqueue_check(pq);
++
++		if (last) {
++			EXPECT(strcmp(last, ref->refname) < 0);
++		}
++		last = ref->refname;
++		ref->refname = NULL;
++		reftable_free(ref);
++	}
++
++	for (i = 0; i < N; i++) {
++		reftable_free(names[i]);
++	}
++
++	merged_iter_pqueue_release(&pq);
++}
++
++int pq_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_pq);
++	return 0;
++}
+diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
+index 3d541fa5c0c..0019cbcfa49 100644
+--- a/reftable/reftable-tests.h
++++ b/reftable/reftable-tests.h
+@@ -12,6 +12,7 @@ https://developers.google.com/open-source/licenses/bsd
+ int basics_test_main(int argc, const char **argv);
+ int block_test_main(int argc, const char **argv);
+ int merged_test_main(int argc, const char **argv);
++int pq_test_main(int argc, const char **argv);
+ int record_test_main(int argc, const char **argv);
+ int refname_test_main(int argc, const char **argv);
+ int readwrite_test_main(int argc, const char **argv);
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 898aba836fd..0b5a1701df1 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -5,6 +5,7 @@ int cmd__reftable(int argc, const char **argv)
+ {
+ 	basics_test_main(argc, argv);
+ 	block_test_main(argc, argv);
++	pq_test_main(argc, argv);
+ 	record_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
+ 	tree_test_main(argc, argv);
 -- 
 gitgitgadget
 
