@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E86E5C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A632C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCB0F6117A
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B238610E6
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240799AbhJGKDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 06:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
+        id S240811AbhJGKD4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 06:03:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240763AbhJGKDn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 06:03:43 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 224D5C061746
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:01:50 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v25so17268830wra.2
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:01:50 -0700 (PDT)
+        with ESMTP id S240776AbhJGKDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 06:03:47 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E1FC061760
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:01:53 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id v25so17269323wra.2
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=f6NQEeT/pN+bjaaPpeUiMoZ7ljb1rZNuzKqQeS7Gs3U=;
-        b=NhQfsBWKZSrjtzXrIYNFBTaKuT6zlxsonGMhqM4xmVU2BUXnfQ2w2MshZ1xgufxlZ/
-         oQe8pN8QQASMtAA0ILP5OHHtcCPdLGrT/rcBLOIkkB2iHZMkz+NFpFct319+TDYi586K
-         DlBHiv3LhppDcM5qRpwALHm/PLwSK6bBBXYwa08yt4LaymMxIG+aaTovOsrG7Wd8SXfV
-         mkbCBOxQA6x1ppQm3KU3Whl+xAX3Gc2KXFrA0O0oy9Przg9pJS3IvPqhVP6MPiLkFU7z
-         c28SJ50n50W+ysNsC7a0sDXdzPybnkV37bbAaztkZ/WGG6oDodPMVGysWaNYPKZzZhVE
-         boLg==
+        bh=gzFMSQqzoAGFMNjVhcT35IuyMOWnSj3q4N2fPk6d8hQ=;
+        b=GpQZFenS+MKhgHvkFdyHbF8kKwfGgq2AwOJXQADl6qjNlrlro8tSheGyC7AGIwp3OG
+         D8sjD6I53+1unoZh8a7CawsdogxaRargMEM6tTvtjWCfgdAPZXayT3Vns2Nus2w1C2hI
+         WyBbLl/x1Ft6uRFQmTtozGNHd3csejjyavNGzlEHJFPF2Erk+G+Gjfe84+M1itNpmY+I
+         0UYrjpodrHwCgBfx0kxtCPR4nMOK0taTuG9bOfcTAmCL/KnEniXRLxYetBjfXM0vXmq4
+         Jm2al7tlMxMgTg+qWfFALfvWJB3nCK616wQBXE48qqnfuZ9nTKpyvNlWHFBdNzZ+JV2r
+         bPRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=f6NQEeT/pN+bjaaPpeUiMoZ7ljb1rZNuzKqQeS7Gs3U=;
-        b=boH7hJxwMcRFydXKS0fGkkCFkAA8UdJdgfKNJol6OATBF3fJ767sMg/bgrvJzB7pLA
-         KNo8MXj/1A2YABk1vIpTxd9zSnxdd+yopfIyonYdc/HNn9Xt8YhU0JPpEMaeah2Bn1aR
-         U1QJwcbChmZPBob6hcS6fkS/iiTYYBzUhvWIPl+S+LQ+6EHQg6J8cVQ2EcNWNzUTxW0T
-         92zZ8u3xIocM6e0VQSkNNAetF0hMz8bZ/xYIledlxXmDQEilEcvQfaBasKHoUAbNtDfT
-         g0Xg7S5MVG9OL5vhNG+tvAEAF8MbxJs6Hf7vfnrXLSkcuDwopX3+SXjwHEXHJUyWQiF7
-         QZJg==
-X-Gm-Message-State: AOAM531/iDRoLgta/sxIE+EsqBYew71FtCKMmWA64BAt3VzsIO0rovft
-        pjECEvCbK14ge7qCb6HjxGtmlfLwfPqxIA==
-X-Google-Smtp-Source: ABdhPJwPlu60XSkpAHNaZk1V7YQsK9OOlRzWUL6FPpI2PUNW7tdTQVH7A4ZZnjnJdsC09GoXXtlCPA==
-X-Received: by 2002:adf:c78d:: with SMTP id l13mr4170902wrg.134.1633600908453;
-        Thu, 07 Oct 2021 03:01:48 -0700 (PDT)
+        bh=gzFMSQqzoAGFMNjVhcT35IuyMOWnSj3q4N2fPk6d8hQ=;
+        b=AcTScl/c1WDnQVUJIv7N3gFsSxB57vRFKNPT5d+ak5bTs8zJ6rmpZYebN4THrCZn9B
+         3mPXOwdUByG1aCetyvcoo+g87gpKZnpvX4TmK0z1STlgJBaGeyr+8rzko0gIO3yRkQr8
+         iSoopVqnBx5ap1e4N5mVfBh/jxL1svMy1gbu6PA/ZB8E3pKCfmvs8ZeEbt3QOAvKWoRT
+         spfB2iLepzKwIFse1NPDBMIof+nEu1GhNG5sR2kBUGZptzr8Ci3/9BQaKPriPNP41TK6
+         fwurcPhdfD7y2XxJsONHee2WNglt1vmZiagbO4mkFC6yWBDPSw45/2dSZSrgH2sLXa+M
+         rGzA==
+X-Gm-Message-State: AOAM531fSQDbd1CO1CGjcqVPiKr3AUG2zjaeE8BHHQ7U/J0w6ncyzhcU
+        dREchbwVA6liXtLd2Oc/SxEWn6erNT6ysQ==
+X-Google-Smtp-Source: ABdhPJxx13cBGM0csvj/pzxVvPbJikEI8lOOlCaXzQS8lI+TwxO6YsaTs/GSLQ8H1MITEUXpI4xEmg==
+X-Received: by 2002:adf:a34b:: with SMTP id d11mr4199016wrb.107.1633600911350;
+        Thu, 07 Oct 2021 03:01:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f16sm628559wrr.53.2021.10.07.03.01.47
+        by smtp.gmail.com with ESMTPSA id f16sm628559wrr.53.2021.10.07.03.01.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 03:01:47 -0700 (PDT)
+        Thu, 07 Oct 2021 03:01:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/7] tests: fix test-oid-array leak, test in SANITIZE=leak
-Date:   Thu,  7 Oct 2021 12:01:34 +0200
-Message-Id: <patch-v2-4.7-b8ce8d7e972-20211007T100014Z-avarab@gmail.com>
+Subject: [PATCH v2 7/7] merge: add missing strbuf_release()
+Date:   Thu,  7 Oct 2021 12:01:37 +0200
+Message-Id: <patch-v2-7.7-9942c084244-20211007T100014Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1446.g6af949f83bd
 In-Reply-To: <cover-v2-0.7-00000000000-20211007T100014Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211006T095426Z-avarab@gmail.com> <cover-v2-0.7-00000000000-20211007T100014Z-avarab@gmail.com>
@@ -72,43 +72,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a trivial memory leak present ever since 38d905bf585 (sha1-array:
-add test-sha1-array and basic tests, 2014-10-01), now that that's
-fixed we can test this under GIT_TEST_PASSING_SANITIZE_LEAK=true.
+We strbuf_reset() this "struct strbuf" in a loop earlier, but never
+freed it. Plugs a memory leak that's been here ever since this code
+got introduced in 1c7b76be7d6 (Build in merge, 2008-07-07).
+
+This takes us from 68 failed tests in "t7600-merge.sh" to 59 under
+SANITIZE=leak, and makes "t7604-merge-custom-message.sh" pass!
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/helper/test-oid-array.c | 4 ++++
- t/t0064-oid-array.sh      | 2 ++
- 2 files changed, 6 insertions(+)
+ builtin/merge.c                 | 2 ++
+ t/t7604-merge-custom-message.sh | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/t/helper/test-oid-array.c b/t/helper/test-oid-array.c
-index b16cd0b11b1..d1324d086a2 100644
---- a/t/helper/test-oid-array.c
-+++ b/t/helper/test-oid-array.c
-@@ -35,5 +35,9 @@ int cmd__oid_array(int argc, const char **argv)
- 		else
- 			die("unknown command: %s", line.buf);
- 	}
-+
-+	strbuf_release(&line);
-+	oid_array_clear(&array);
-+
- 	return 0;
- }
-diff --git a/t/t0064-oid-array.sh b/t/t0064-oid-array.sh
-index 2e5438ccdac..88c89e8f48a 100755
---- a/t/t0064-oid-array.sh
-+++ b/t/t0064-oid-array.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 0ccd5e1ac83..84d76780f0d 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1577,6 +1577,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
  
- test_description='basic tests for the oid array implementation'
-+
+ 		finish(head_commit, remoteheads, &commit->object.oid, msg.buf);
+ 		remove_merge_branch_state(the_repository);
++		strbuf_release(&msg);
+ 		goto done;
+ 	} else if (!remoteheads->next && common->next)
+ 		;
+@@ -1747,6 +1748,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		ret = suggest_conflicts();
+ 
+ done:
++	strbuf_release(&buf);
+ 	free(branch_to_free);
+ 	return ret;
+ }
+diff --git a/t/t7604-merge-custom-message.sh b/t/t7604-merge-custom-message.sh
+index cd4f9607dc1..eca75551016 100755
+--- a/t/t7604-merge-custom-message.sh
++++ b/t/t7604-merge-custom-message.sh
+@@ -4,6 +4,7 @@ test_description='git merge
+ 
+ Testing merge when using a custom message for the merge commit.'
+ 
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- echoid () {
+ create_merge_msgs() {
 -- 
 2.33.0.1446.g6af949f83bd
 
