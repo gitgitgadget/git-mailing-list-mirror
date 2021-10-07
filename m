@@ -2,129 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C94C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 21:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46ADCC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 22:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72A8261152
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 21:39:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DD8F60FC1
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 22:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242465AbhJGVl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 17:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235665AbhJGVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 17:41:29 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3219C061755
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 14:39:34 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id m22so23377730wrb.0
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 14:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=zuS217l7Jj14/TC5bE6Uud8T70TzB5BgHfbF6kfDw/8=;
-        b=UP4SgdX/F1vuEGcZ/lFv8dCCPKiSwTHVGf0zw7ZADZOLkiJF/6B/9JGEyZAkw5rT8K
-         vtK7/F2/Ff5buR7Cg3/VKWNSNUAEojjmt/JockEfkQqK8VpfETyndRiDj5M8qL5hIkkf
-         VsLUO13k7VqLBqRhNWs6FScxoc2hgR4Vfwn2hobS8kk/aqCKMirXCRUGRcoqRkGpnka8
-         QasrDrG7VXSeAGod3OEEBjXPMrmN9tzNPE0urrGJC9N6n9wpNMpvozH802QyH0ziDxgA
-         US1QvThqdS9uh6hsGSE2m7tfqNeaM4lIS+36ZhWMygCL46lH3FOKcBXwlzipJIJyv4wc
-         rIvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=zuS217l7Jj14/TC5bE6Uud8T70TzB5BgHfbF6kfDw/8=;
-        b=JmD7itw+QGNyzXC5mvUwY3v2cANuuih6HN0JCV5R9WxgfHE3NYHhbGObnailHiHb1s
-         N7HbP63vdh+889vau4k/2hi0R+qMsCvEMpJxr79cbaEfavhplNQ2tsZJTiDT08Oge6tQ
-         0XVHeXiFRCNgFL5ey8GFfUAYpfU7IgNo4cxaAOcw1XwW/HMm4QhuLjqqnxwWpO824Byb
-         X5wr7+W1lWfqn7jTONmZn2Y+jsTBaXeCYHpfcJBK6cwvxOSZZXL5ka53bPd8gmojhWg0
-         XUcP5JcF/y8vA/+pCVThbnEvxJ+SPCty2epNb6ONJGwRR5kE1zhKHJ/srB/yc5UYbF/3
-         l0sw==
-X-Gm-Message-State: AOAM530wbOJpIYFGCZQ2fAN4BrJ3+D4JVOq0Fkucio+15rEGHtGVzGt1
-        nV4Q6v1YicrjZ55EU9hQmHQwjLk/9cs=
-X-Google-Smtp-Source: ABdhPJwRJpkzIcgYjX3WxbZCSD2UiH5l29GaoJ3pVGX7WGvhydCSeNjS+mAjEg4QSHn+deG7KBeFpg==
-X-Received: by 2002:adf:a3d9:: with SMTP id m25mr8460331wrb.27.1633642773408;
-        Thu, 07 Oct 2021 14:39:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b15sm492247wrr.90.2021.10.07.14.39.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 14:39:33 -0700 (PDT)
-Message-Id: <pull.1096.git.git.1633642772432.gitgitgadget@gmail.com>
-From:   "Robert Estelle via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 21:39:32 +0000
-Subject: [PATCH] completion: fix incorrect bash/zsh string equality check
+        id S229588AbhJGWDp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 18:03:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59689 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241216AbhJGWDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 18:03:39 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB1FCF3883;
+        Thu,  7 Oct 2021 18:01:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WF9WkPLhqIRN7HpXRwxW5bVmbJNi0b+8TuepGJ
+        RMk5A=; b=JlLWzIAKilVnLf1GTkM1YKE12hsJyFBwwZH50m2JDaCuXfcxinoS6l
+        xPiMN+9P54720Q0aGo6PmbjjXK4mwuBFLxqlyDLymzRbwX0G09fT6fQisXccmazn
+        mstRG22QHj2YoLz6iIbN2SFwpc09ph2VKYFAaEF8MED+3xUbCpzD0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E21F2F3882;
+        Thu,  7 Oct 2021 18:01:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 52539F387C;
+        Thu,  7 Oct 2021 18:01:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
+References: <xmqq8rzhmsi7.fsf@gitster.g>
+        <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
+        <87v92lxhh4.fsf@evledraar.gmail.com> <xmqqilykliiz.fsf@gitster.g>
+        <20210928210059.vy5isvmcj75vufdu@neerajsi-x1.localdomain>
+        <xmqq8rzgi8a7.fsf@gitster.g>
+        <CANQDOddZ-KYTB4q0nYNDinis8aKktm6Ek6F+mJouTV-yRtTpUw@mail.gmail.com>
+Date:   Thu, 07 Oct 2021 15:01:42 -0700
+In-Reply-To: <CANQDOddZ-KYTB4q0nYNDinis8aKktm6Ek6F+mJouTV-yRtTpUw@mail.gmail.com>
+        (Neeraj Singh's message of "Tue, 28 Sep 2021 16:53:13 -0700")
+Message-ID: <xmqq4k9spk8p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Robert Estelle <robert.estelle@gmail.com>,
-        Robert Estelle <robertestelle@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 283426B2-27BA-11EC-84E8-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Robert Estelle <robertestelle@gmail.com>
+Neeraj Singh <nksingh85@gmail.com> writes:
 
-In the basic `[`/`test` command, the string equality operator is a
-single `=`. The `==` operator is only available in `[[`, which is a
-bash-ism also supported by zsh.
+> Elijah,
+>
+> Here's a branch of your changes based on the amalgamated tmp-objdir code:
+> https://github.com/neerajsi-msft/git/commits/neerajsi/remerge-diff
+>
+> This commit adapts your code to use the amalgamated API:
+> https://github.com/neerajsi-msft/git/commit/725328fe1d8be8326d2ddef78e164ca21450b100
 
-This mix-up was causing the following completion error in zsh:
-> __git_ls_files_helper:7: = not found
+It seems that the discussion petered out at this point.
 
-(That message refers to the extraneous symbol in `==` ← `=`).
+Right now I have a version of ns/remerge-diff before this adjustment
+in 'seen', and Neeraj's latest version is kept out of 'seen' as they
+do not play well together without an adjustment like that.
 
-This updates that comparison to use the extended `[[ … ]]` conditional
-for consistency with the other checks in this file.
+What's the good way forward?  I do not deeply care which one goes
+first, but I have a feeling that the need by remerge-diff that wants
+to discard temporary objects would involve more work to make it safe
+than the need by batched fsync where newly created objects will not
+be discarded but merely moved to the primary store before the end of
+the operation, so from that point of view, it seems simpler and
+safer to queue ns/batched-fsync topic first (especially given that
+it is a no-op until the end-user opts into the experiment), and have
+a remerge-diff that uses the infrastructure from Neeraj's topic.
 
-Signed-off-by: Robert Estelle <robertestelle@gmail.com>
----
-    completion: Fix incorrect bash/zsh string equality check
-    
-    This fixes an error in contrib/completion/git-completion.bash caused by
-    the incorrect use of == (vs. single =) inside a basic [/test command.
-    Double-equals == should only be used with the extended [[ comparison.
-    
-    This was causing the following completion error in zsh:
-    
-    > __git_ls_files_helper:7: = not found
-    
-    
-    That message refers to the extraneous = symbol in ==.
-    
-    This updates that comparison to use the extended [[ … ]] conditional for
-    consistency with the other checks in this file.
-    
-    Note that there may be some contributing cause to this error related to
-    emulation mode inheritance/stickiness, since it seems that the function
-    is intended to run with emulate ksh and that does not appear to be
-    happening properly. Nevertheless, fixing this comparison fixes this
-    particular error in a compatible way, and I have not observed any other
-    errors.
+What's your take on the rebase Neeraj made, Elijah (at the URL
+above)?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1096%2Frwe%2Ffix-completion-sh-eq-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1096/rwe/fix-completion-sh-eq-v1
-Pull-Request: https://github.com/git/git/pull/1096
+Thanks.
 
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4bdd27ddc87..14de5efa734 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -515,7 +515,7 @@ __gitcomp_file ()
- # argument, and using the options specified in the second argument.
- __git_ls_files_helper ()
- {
--	if [ "$2" == "--committable" ]; then
-+	if [[ "$2" == "--committable" ]]; then
- 		__git -C "$1" -c core.quotePath=false diff-index \
- 			--name-only --relative HEAD -- "${3//\\/\\\\}*"
- 	else
 
-base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
--- 
-gitgitgadget
+
