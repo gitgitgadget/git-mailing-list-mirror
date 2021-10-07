@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8017FC4332F
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A543C43217
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:59:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 673DB61037
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:59:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C2EA61037
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233691AbhJGLBH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 07:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35166 "EHLO
+        id S240477AbhJGLBJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 07:01:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232555AbhJGLBG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232709AbhJGLBG (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 7 Oct 2021 07:01:06 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B6EC061755
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:59:12 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u18so17820325wrg.5
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:59:12 -0700 (PDT)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34668C061746
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:59:13 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id t8so17907051wri.1
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d7tE7OKJnf1/1FO5mmq9qQzcQMwNEj8WJ6NJNRAMJTk=;
-        b=TswI9F5P9JKVg/4Swad5nUe47HlpfsznaVhkS1mydGuMfLw/7hk3NaJ8nZknDnl+r4
-         qahNWCrR6NvjIgr4vvJdGJvjf4G8ouYJaTjFt49F/9gbYbYg2MOYe75Bso90Okp+b9rI
-         B/VLB0vZIpu2zad26RdVUSYF5v3Y7CxlfzyjQ5h6o2FbHpCZOuf8kmTBAZG9eHWcUNrQ
-         6Xhes4BFrEop8aJQGWncW8ukGKEWkt/r91IOYnO2YvFWyWN+Sqqyf/0ms3PiUk8w1vh9
-         XTyUeGxRY3y6pANMXeq4HWSsiDItljgSxdIhLgKOecJOQTaQyVlsi3EzLe6Dl6OpWhQ8
-         Q98Q==
+        bh=j2bGVjqPT7Pn8kjChLvmqQS0Jlg6df0AQr+Wz7oQLNA=;
+        b=FuFUjrih1uom7nc1pblDQqKxyO1yn3Vu6nJGoImkmTUMaxpN8Woanadly83tqm09yH
+         XTIXiG2c56v2NLkLxr8Pe//DUYqtsug6TnLCT2evGeE66X2dVZoJIR+6R7lvFety+ENI
+         xfkkFpuXAgsOf//3uYtIbxG1GOUaZZStPkrTi8l40hRxVJvzgcNmav/gAH4jpqMCH4Wi
+         dcDp98eX8sQwg3LG+xaTCfN/VxGYERQ9JhdcVn/5oICTrx7GhD6N2CfRE8qgKGq3UKJw
+         2BHRsOK6bdBttU5nwTX+n3Xhc1WxDsJcvqfYs30Jk5n0U1O0WdjkfL4Pvj3AeN4cPKE+
+         BV4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d7tE7OKJnf1/1FO5mmq9qQzcQMwNEj8WJ6NJNRAMJTk=;
-        b=M5mqIHhyI+j5Cyt7SnOUsvpC0AtAePBJG6foOnLWvPqwu8Bl01nN4TecwBKr0h2rjf
-         iNfuy7Zjc4D6XKvy/Ec1lp8rJlM+I3wSBjYfXk25r4f/cMU04fp8JmXzlgLWLlln2HxM
-         F4mZHQQd6zT4/YuGFNgO2/h6XEiVOIDWeWjAGX50eIZgELR2tA1y4eMlLSuaD2ZOcMjc
-         RgYGtVzd8femxDhsfHgK7MjkzTtxEJ2ZkKNr1Szy0Lh6v075sabVa2TrgZ+phR49bY1I
-         5BB9+9iAFEu8TkygbUojFwTJyaSB3EI+T44i+isxb7eV+stPuRtkJkZrqF7hQIPyc8fC
-         digA==
-X-Gm-Message-State: AOAM532J0bqipzYpf6yPD0B6f5w0QOuPWlyFo5YIRXd02SXrYCOCl68e
-        85ukVIVN09hs2blRj3ySwFyp+XmrFGI=
-X-Google-Smtp-Source: ABdhPJwgiE1i4ebqhraOmWC90bncAqey4Sdv+R6+aLY9/Uz8pUfyoq9dx/vd9gdtNk0uxmeek9TiWA==
-X-Received: by 2002:a1c:f402:: with SMTP id z2mr15697149wma.53.1633604351198;
+        bh=j2bGVjqPT7Pn8kjChLvmqQS0Jlg6df0AQr+Wz7oQLNA=;
+        b=dcMckdvRgaGVtUp4BS+nJAJH0cG77WfEUMi+bWRdLcwiXVe7YU6cRjBes3niqk2M4r
+         RYERM7xixO3O6vhjtNfDX8ha8q2VP7c219rbvsUk/tFaj46JiQzbJKgeWAE9R4NQ2h42
+         vVdzVCbC3HJ80m1Qk1gk3aIXIMR1FF6Uh1UvJjOoG6ItcjGx/SH5rVPiId2Uw9rNyEqY
+         KMu1Wqo/8+omnm2FFVjASSUSyPtgxfY1ENrBv4u5k/vYUbdnDj14rG322ureuN/vWVNQ
+         DR1lnGD7UR0BG3DCa6lYH/aNklEDt4DDbVTodFtoKPAQ101O7NyhAuu7B0mt1b7qAGDO
+         sCng==
+X-Gm-Message-State: AOAM531pD4KXOPSyw6sEk6JETj0B5c0zb8v+DGxARDaGFjmFhXD5HiXm
+        Rro7gQfiBC6icrBdE0bxZTwe7bBWuPs=
+X-Google-Smtp-Source: ABdhPJxdQbJMGKVerE29Z7aaO+2ItEd+9oBKSJ+InavbfJTC5dBAGRw4/TxEHw/aKJRr0rNAQwYRLQ==
+X-Received: by 2002:a7b:c056:: with SMTP id u22mr3892321wmc.15.1633604351797;
         Thu, 07 Oct 2021 03:59:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c9sm8369373wmb.41.2021.10.07.03.59.10
+        by smtp.gmail.com with ESMTPSA id w5sm23360256wra.87.2021.10.07.03.59.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 03:59:10 -0700 (PDT)
-Message-Id: <7119a8efc214ada2c372693731193043ea97dabc.1633604349.git.gitgitgadget@gmail.com>
+        Thu, 07 Oct 2021 03:59:11 -0700 (PDT)
+Message-Id: <edc1e5f73bd852478f82873c3039388dee652683.1633604349.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
 References: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
         <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 10:58:55 +0000
-Subject: [PATCH v5 01/15] scalar: create a rudimentary executable
+Date:   Thu, 07 Oct 2021 10:58:56 +0000
+Subject: [PATCH v5 02/15] scalar: start documenting the command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,198 +76,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The idea of Scalar (https://github.com/microsoft/scalar), and before
-that, of VFS for Git, has always been to prove that Git _can_ scale, and
-to upstream whatever strategies have been demonstrated to help.
-
-With this patch, we start the journey from that C# project to move what
-is left to Git's own `contrib/` directory, reimplementing it in pure C,
-with the intention to facilitate integrating the functionality into core
-Git all while maintaining backwards-compatibility for existing Scalar
-users (which will be much easier when both live in the same worktree).
-It has always been the plan to contribute all of the proven strategies
-back to core Git.
-
-For example, while the virtual filesystem provided by VFS for Git helped
-the team developing the Windows operating system to move onto Git, while
-trying to upstream it we realized that it cannot be done: getting the
-virtual filesystem to work (which we only managed to implement fully on
-Windows, but not on, say, macOS or Linux), and the required server-side
-support for the GVFS protocol, made this not quite feasible.
-
-The Scalar project learned from that and tackled the problem with
-different tactics: instead of pretending to Git that the working
-directory is fully populated, it _specifically_ teaches Git about
-partial clone (which is based on VFS for Git's cache server), about
-sparse checkout (which VFS for Git tried to do transparently, in the
-file system layer), and regularly runs maintenance tasks to keep the
-repository in a healthy state.
-
-With partial clone, sparse checkout and `git maintenance` having been
-upstreamed, there is little left that `scalar.exe` does which `git.exe`
-cannot do. One such thing is that `scalar clone <url>` will
-automatically set up a partial, sparse clone, and configure
-known-helpful settings from the start.
-
-So let's bring this convenience into Git's tree.
-
-The idea here is that you can (optionally) build Scalar via
-
-	make -C contrib/scalar/Makefile
-
-This will build the `scalar` executable and put it into the
-contrib/scalar/ subdirectory.
-
-The slightly awkward addition of the `contrib/scalar/*` bits to the
-top-level `Makefile` are actually really required: we want to link to
-`libgit.a`, which means that we will need to use the very same `CFLAGS`
-and `LDFLAGS` as the rest of Git.
-
-An early development version of this patch tried to replicate all the
-conditional code in `contrib/scalar/Makefile` (e.g. `NO_POLL`) just like
-`contrib/svn-fe/Makefile` used to do before it was retired. It turned
-out to be quite the whack-a-mole game: the SHA-1-related flags, the
-flags enabling/disabling `compat/poll/`, `compat/regex/`,
-`compat/win32mmap.c` & friends depending on the current platform... To
-put it mildly: it was a major mess.
-
-Instead, this patch makes minimal changes to the top-level `Makefile` so
-that the bits in `contrib/scalar/` can be compiled and linked, and
-adds a `contrib/scalar/Makefile` that uses the top-level `Makefile` in a
-most minimal way to do the actual compiling.
-
-Note: With this commit, we only establish the infrastructure, no
-Scalar functionality is implemented yet; We will do that incrementally
-over the next few commits.
+This commit establishes the infrastructure to build the manual page for
+the `scalar` command.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                  |  9 +++++++++
- contrib/scalar/.gitignore |  2 ++
- contrib/scalar/Makefile   | 34 ++++++++++++++++++++++++++++++++++
- contrib/scalar/scalar.c   | 36 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 81 insertions(+)
- create mode 100644 contrib/scalar/.gitignore
- create mode 100644 contrib/scalar/Makefile
- create mode 100644 contrib/scalar/scalar.c
+ contrib/scalar/.gitignore |  3 +++
+ contrib/scalar/Makefile   | 14 +++++++++++++-
+ contrib/scalar/scalar.txt | 38 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+), 1 deletion(-)
+ create mode 100644 contrib/scalar/scalar.txt
 
-diff --git a/Makefile b/Makefile
-index c3565fc0f8f..a12cac1b68b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2444,6 +2444,11 @@ OBJECTS += $(FUZZ_OBJS)
- ifndef NO_CURL
- 	OBJECTS += http.o http-walker.o remote-curl.o
- endif
-+
-+SCALAR_SOURCES := contrib/scalar/scalar.c
-+SCALAR_OBJECTS := $(SCALAR_SOURCES:c=o)
-+OBJECTS += $(SCALAR_OBJECTS)
-+
- .PHONY: objects
- objects: $(OBJECTS)
- 
-@@ -2586,6 +2591,10 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
-+contrib/scalar/scalar$X: $(SCALAR_OBJECTS) GIT-LDFLAGS $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-+		$(filter %.o,$^) $(LIBS)
-+
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
 diff --git a/contrib/scalar/.gitignore b/contrib/scalar/.gitignore
-new file mode 100644
-index 00000000000..ff3d47e84d0
---- /dev/null
+index ff3d47e84d0..00441073f59 100644
+--- a/contrib/scalar/.gitignore
 +++ b/contrib/scalar/.gitignore
-@@ -0,0 +1,2 @@
-+/*.exe
-+/scalar
+@@ -1,2 +1,5 @@
++/*.xml
++/*.1
++/*.html
+ /*.exe
+ /scalar
 diff --git a/contrib/scalar/Makefile b/contrib/scalar/Makefile
-new file mode 100644
-index 00000000000..40c03ad10e1
---- /dev/null
+index 40c03ad10e1..85c186634e9 100644
+--- a/contrib/scalar/Makefile
 +++ b/contrib/scalar/Makefile
-@@ -0,0 +1,34 @@
-+QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
-+QUIET_SUBDIR1  =
+@@ -6,6 +6,7 @@ ifndef V
+ 	QUIET_SUBDIR0  = +@subdir=
+ 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+ 			 $(MAKE) $(PRINT_DIR) -C $$subdir
++	QUIET          = @
+ else
+ 	export V
+ endif
+@@ -30,5 +31,16 @@ $(TARGETS): $(GITLIBS) scalar.c
+ 
+ clean:
+ 	$(RM) $(TARGETS)
++	$(RM) scalar.1 scalar.html scalar.xml
+ 
+-.PHONY: all clean FORCE
++docs: scalar.html scalar.1
 +
-+ifneq ($(findstring s,$(MAKEFLAGS)),s)
-+ifndef V
-+	QUIET_SUBDIR0  = +@subdir=
-+	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
-+			 $(MAKE) $(PRINT_DIR) -C $$subdir
-+else
-+	export V
-+endif
-+endif
++scalar.html: | scalar.1 # prevent them from trying to build `doc.dep` in parallel
 +
-+all:
++scalar.html scalar.1: scalar.txt
++	$(QUIET_SUBDIR0)../../Documentation$(QUIET_SUBDIR1) \
++		MAN_TXT=../contrib/scalar/scalar.txt \
++		../contrib/scalar/$@
++	$(QUIET)test scalar.1 != "$@" || mv ../../Documentation/$@ .
 +
-+include ../../config.mak.uname
-+-include ../../config.mak.autogen
-+-include ../../config.mak
-+
-+TARGETS = scalar$(X) scalar.o
-+GITLIBS = ../../common-main.o ../../libgit.a ../../xdiff/lib.a
-+
-+all: scalar$X
-+
-+$(GITLIBS):
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(subst ../../,,$@)
-+
-+$(TARGETS): $(GITLIBS) scalar.c
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(patsubst %,contrib/scalar/%,$@)
-+
-+clean:
-+	$(RM) $(TARGETS)
-+
-+.PHONY: all clean FORCE
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
++.PHONY: all clean docs FORCE
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
 new file mode 100644
-index 00000000000..7cff29e0fcd
+index 00000000000..5f7131861a5
 --- /dev/null
-+++ b/contrib/scalar/scalar.c
-@@ -0,0 +1,36 @@
-+/*
-+ * The Scalar command-line interface.
-+ */
++++ b/contrib/scalar/scalar.txt
+@@ -0,0 +1,38 @@
++scalar(1)
++=========
 +
-+#include "cache.h"
-+#include "gettext.h"
-+#include "parse-options.h"
++NAME
++----
++scalar - an opinionated repository management tool
 +
-+static struct {
-+	const char *name;
-+	int (*fn)(int, const char **);
-+} builtins[] = {
-+	{ NULL, NULL},
-+};
++SYNOPSIS
++--------
++[verse]
++scalar <command> [<options>]
 +
-+int cmd_main(int argc, const char **argv)
-+{
-+	struct strbuf scalar_usage = STRBUF_INIT;
-+	int i;
++DESCRIPTION
++-----------
 +
-+	if (argc > 1) {
-+		argv++;
-+		argc--;
++Scalar is an opinionated repository management tool. By creating new
++repositories or registering existing repositories with Scalar, your Git
++experience will speed up. Scalar sets advanced Git config settings,
++maintains your repositories in the background, and helps reduce data sent
++across the network.
 +
-+		for (i = 0; builtins[i].name; i++)
-+			if (!strcmp(builtins[i].name, argv[0]))
-+				return !!builtins[i].fn(argc, argv);
-+	}
++An important Scalar concept is the enlistment: this is the top-level directory
++of the project. It usually contains the subdirectory `src/` which is a Git
++worktree. This encourages the separation between tracked files (inside `src/`)
++and untracked files, such as build artifacts (outside `src/`). When registering
++an existing Git worktree with Scalar whose name is not `src`, the enlistment
++will be identical to the worktree.
 +
-+	strbuf_addstr(&scalar_usage,
-+		      N_("scalar <command> [<options>]\n\nCommands:\n"));
-+	for (i = 0; builtins[i].name; i++)
-+		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
++The `scalar` command implements various subcommands, and different options
++depending on the subcommand.
 +
-+	usage(scalar_usage.buf);
-+}
++SEE ALSO
++--------
++linkgit:git-maintenance[1].
++
++Scalar
++---
++Associated with the linkgit:git[1] suite
 -- 
 gitgitgadget
 
