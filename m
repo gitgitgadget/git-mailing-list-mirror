@@ -2,161 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5BDDC433EF
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2052BC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:58:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA58261090
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:29:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 047CC61037
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240827AbhJGKb1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 06:31:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232781AbhJGKb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 06:31:26 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003E4C061746
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:29:31 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id p13so21671899edw.0
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3iiz4fZtRK+AqKXKg5OYhuwaws/TEmIp4j9rTYsf8Bc=;
-        b=Z8UO/BnJECsKNZFV3HQNxgSNYJe/guDpZlorRoZpX8XWrIS42xZSsLfqu9ofE3t5Ef
-         OwKPMJrn3witWkOja44c/CLzdWfDR1btwjlZ+v7dixU9UUDjLnUx0bzEK6ZCcBvTUQIi
-         3x8flGssT10JVXAMjOBFZHfu6nZwngHYNfoEQDkjRLym0h2W/kM3KZu6zcc6Ace81Dfe
-         3JZ3be67DJZkMmYtDEE0+t+rrt5NMkENbiPIp5xDBDwQ+VcF9IdkuwKPsmCBS4LqnKAh
-         iykig165zyQ9LtgywI6S6Cu8G8yuc/RgNYCLom3IUXxrWd4bqqSP4iLo0k0fTgGbfoZM
-         +fpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=3iiz4fZtRK+AqKXKg5OYhuwaws/TEmIp4j9rTYsf8Bc=;
-        b=lV5/HGxaJXu5JwdOwUZJtb/0AOz+poxaTMjWltmJ0uDyhfnZmnG2I1M2ccHGWt1ty4
-         7djLg600yCPWqs2/J5scmVkA0dTivHp+zSHV4tur4XLlGgdylowzI7l7nFrtQbCmAAAo
-         dvA9VIkpWXDn1kgAaAdGkuig2dtETsHeIN5vyKVJWUWYz4dlyBftpJ1o60jaAyO9NIVo
-         BpCggdnqeRsAcJGhdzRBeMXvsswsuUhfVbBLElcnAHLSDZH5dq/wcHP/zKvVbhHxqNcV
-         SLUCkkQ0krdLgT0NR4i8WLmqatzZumar82nE+3qDHMKWDGk6FGhSkrrP6JAJJh9ZnkrF
-         qfhw==
-X-Gm-Message-State: AOAM533dIRbxmTJICzr49f8V+BiMpu4385TdvdhHqDj3iLgMNw98e1D8
-        W4mNXlXfWrBS1eLodGgO9wQ=
-X-Google-Smtp-Source: ABdhPJzF+bKJN/5n8p4ykcwwuYsKnmQADNcyFaoUCptisEXTsSrMQGIR9gZK5wUTUY1cR5cA2ZS3ZQ==
-X-Received: by 2002:a17:906:5789:: with SMTP id k9mr3048272ejq.107.1633602570074;
-        Thu, 07 Oct 2021 03:29:30 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ee13sm9066975edb.14.2021.10.07.03.29.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 03:29:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
- --batch-all-objects
-Date:   Thu, 07 Oct 2021 12:18:45 +0200
-References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
- <YVy2DNd+XemykKE0@coredump.intra.peff.net>
- <877derjia9.fsf@evledraar.gmail.com>
- <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
- <87tuhuikhf.fsf@evledraar.gmail.com>
- <YV3LonbeIS8DrMsN@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YV3LonbeIS8DrMsN@coredump.intra.peff.net>
-Message-ID: <87k0ipgmbb.fsf@evledraar.gmail.com>
+        id S232827AbhJGLAX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 07:00:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53031 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232418AbhJGLAW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 07:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1633604284;
+        bh=qRsMhghD8+xSnYKZPtNihf7jb+0hehZNB8thgjaPW/Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=kQ1nmYTU4MgHzxBJNDF137NJKMoJAvHGQWBkFqV3ZI8ibBEvvhDYoSTDC81mKevGh
+         2nfts5IheYRUZTNbEd8xl6EqBpS/8PRZvF7y7APMC2hXY1R7r5VzLY+5JNXsq2BcSq
+         /Df0TG4kWgtJruWinSa4G+iolSJtYqjhfaKekPi8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.23.42] ([217.197.83.193]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWASe-1mIRSz3FHu-00Xb8t; Thu, 07
+ Oct 2021 12:58:03 +0200
+Date:   Thu, 7 Oct 2021 12:58:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: Train station analogy, was Re: [PATCH v3 00/15] [RFC] Upstreaming
+ the Scalar command
+In-Reply-To: <xmqqr1cxrjdl.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2110071256110.395@tvgsbejvaqbjf.bet>
+References: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com> <pull.1005.v3.git.1631129086.gitgitgadget@gmail.com> <87r1dydp4m.fsf@evledraar.gmail.com> <87ilz44kdk.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2109131914080.55@tvgsbejvaqbjf.bet>
+ <87mtofnzv1.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2109141432520.59@tvgsbejvaqbjf.bet> <xmqqilz32hhr.fsf@gitster.g> <xmqq1r5qzv35.fsf@gitster.g> <nycvar.QRO.7.76.6.2110062139040.395@tvgsbejvaqbjf.bet> <xmqqr1cxrjdl.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cjqbkKzRc9vQu9SBKWYP+BdXdNVMWV5MWQ9kcAsN3bvq308Ot+G
+ uQ9hpQViE/qCd9Ao3y1vOhTF2jdfEf0jeL/VOXJiX3DwoPIbR8L4KlYnf37I5KjmJfF9wW0
+ VzHpOyQ0qsSma6j2cz4NK4PB4AjRPzkpa2gpHbilF/Edq75w/3c5reL5YrQT3u5TJGLcUuu
+ Ys8ZmdZfk0LxRoli0HPZQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WohB3CF8UEU=:6nWyUbHCNljN/5E7lBaQry
+ hwPNhDpyNKvy2pJEF5mhrXCuEL/Cbzcj3YZQH2B8FPzLzTSk2u0LaSTz1RCrDsSgi38IFbs75
+ A0DPqhnKOdri6DbBRhSTa8cvHKBsFqf++DIEhx0MYqwD7f5jQN5q4Q84CdCmEPekITrHUZifi
+ OMs9FEg9rHomq92AtZUr+WelXzUPbPW7hV32JFC9l0a+UralEn1m0ff2YDvJMJT9JTJmSnUQE
+ IWquFGXw7Z2dxaFvasPcJ+nEbNEvT+rxmhOzxBo/QZT6wGaQlcGf6tWvcGx1FdTV8mcNa4X+5
+ bDG4OveFDsiyc3Wiej6ZfOArggfk0o1ON/383c+oSm4ayK83d4Gt4aVv/S06f3sJKSsi70F+h
+ vsUk6i9Gl61updpqhU30SU4LvMtvIBkBByEYU95CLPekhvjKHngsGaDB5f1tfCsXrSXvf6umU
+ 8v0HbnLpMkQSuqvYknfk4mT880lHXKpyhlGIEcXRHQBSI2RmWz8CEPAQKiKiz+qdSC7RWolV3
+ nTpamsxJr8e6eITiETBpVStyb55W3kqAh8/0ZhIojrGBb+mNhkKrIrJXW894tCqGE7On2MU0K
+ V2UvbXP3Ld8xJK3lEodK03oqvILUkNEXLA/JGs64n7MNjTK72I3nPtiwV/EjGMbeUW7Hx0HtC
+ lZCkz62sf9VDx1BskX1xI3RqeDxocYwCGvn+nwpcRLGpRDH7NBEOouhzvGEEbmcmhqABb/ZN8
+ 5meER5nyfEcvB+kTmIhKdwLJXoBETCU0JWF1Xe1Jtj3eSV8AzGgrHvghCpAUK4WsmpGRTbiFg
+ hFunByNNoozk/MmIPw7Bhb7NrRs0oHNLEYqi5QePJ8xWJR/HmFU2v1nm6SAgC8VNmpqTodxsV
+ El156dmYiLAXMxp4cTyt3Lps6yUjkR6+rKhCZ5Ff5GAtjvt0V0S4NCxd9bvLxUwCVAiCaVway
+ hMWMXSYlrVrGZCzrjBbg7ttKZd5n/xWsGJ1c5pb/nayEtdGQxh7jDIWssnOHFJUsOTBrYtTsa
+ J7ItPEbmMOhoFFvK4cYB/48zedCjF0zlbxfiKmOw04wfji2xS9ifz0VC9dLuMK84mh9lFFaz7
+ /2yAMdBVzHwdrI=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Wed, Oct 06 2021, Jeff King wrote:
+On Wed, 6 Oct 2021, Junio C Hamano wrote:
 
-> On Wed, Oct 06, 2021 at 11:02:59AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->> I thought that --batch-all-objects and --batch were mutually exclusive,
->> but they're obviously not.
+> > I don't think that there is a lot of sense in that. The main benefits =
+of
+> > `scalar` are in the `register` and the `clone` part, and the most natu=
+ral
+> > end game would hence be for `git init` and `git clone` to sprout new
+> > options to support Scalar's features, in a Git-native way.
 >
-> Right. In fact, the former is useless without the latter (or
-> --batch-check).
->
->> In my defense I think the help/code is very confusing. I hacked up some
->> WIP changes to change it from:
->
-> That's fair, but...
->
->> Looking at the history it seems you added --batch-all-objects around the
->> same time as the OPT_CMDMODE() was used in the command, so we should
->> probably have something like this to start with:
->>=20
->> -- >8 --
->> Subject: [PATCH] cat-file: make --batch-all-objects a CMDMODE
->>=20
->> The usage of OPT_CMDMODE() in "cat-file"[1] was added in parallel with
->> the development of[3] the --batch-all-objects option[4], so we've
->> since grown[5] checks that it can't be combined with other command
->> modes, when it should just be made a top-level command-mode
->> instead. It doesn't combine with --filters, --textconv etc.
->
-> This is not right. --batch-all-objects does not provide a mode exclusive
-> with "-t", etc, by itself.
+> Yes, that is even better.  An endgame where everybody benefits
+> natively would be highly desirable.
 
-Yes it does. See the "if (opt) {" branch on master. We just don't
-implement it via a cmdmode, but --batch-all-objects can definitely be a
-CMDMODE (I see you found that out below...)
+I am glad that this question is now resolved.
 
-> Those in theory should be OPT_CMDMODE, but I don't think they can be,
-> because they also take an argument. So we'd need some OPT_CMDMODE_ARG()
-> or something, but then it needs _two_ value fields. So I think it would
-> require major surgery to parse-options.
+> Now you are back, do you think we can have the "no more preserve
+> merges backend" topic graduate to 'master', or do you prefer to cook
+> it over the cycle (or even two)?
 
-Aside: I think it would be worth it to teach it a general concept that
-option X is incompatible with option Y, or group X, Y, Z and declare
-those as incompatible with another group.
+I did not see _any_ problems with it, so I'd be in favor of promoting it
+to `master`. But if you want to play the game more carefully, I would be
+fine with that, too.
 
-The current CMDMODE check is rather cryptic seemingly because it's
-trying to avoid re-looping over the list while it emits an error.
-
-> Using --batch-all-objects without --batch or --batch-check would be an
-> error, and we do flag it as such.
-
-*nod*
-
-> So you are not wrong that using --batch-all-objects with -t is nonsense,
-> and we do indeed error on it currently. But it is not because the two
-> are themselves exclusive, but because of the chaining of the two rules.
-
-Isn't it nonsense? I think so. I suppose we could make it a a synonym of
-some --batch=3D<fmt> in that context, but that just seems like complexity
-for no good reason.
-
-> The groupings you showed in your larger output mostly make sense, but...
->
->>     Run <rev>:<blobs|tree> via conversion or filter
->>         --textconv            for blob objects, run textconv on object's=
- content
->>         --filters             for blob objects, run filters on object's =
-content
->>         --path <blob>         use a specific path for --textconv/--filte=
-rs
->>=20=20=20=20=20
->>     Emit objects in batch via requests on STDIN, or --batch-all-objects
->>         --batch-all-objects   Emit all objects in the repository, instea=
-d of taking requests on STDIN
->>         --buffer              buffer --batch output
->>         --batch[=3D<format>]    show info and content of objects fed fro=
-m the standard input
->>         --batch-check[=3D<format>]
->> [...]
->
-> These groups aren't mutually exclusive. You can use --textconv in batch
-> mode. Which further muddies the CMDMODE waters; --batch is a mode that
-> overrides "-t", but _not_ "--textconv", where it is a modifier.
-
-Indeed, I conflated --batch* there again, those two are mutually
-exclusive with --batch-all-objects, but not the other two. Will update
-if I get to submitting this...
+Ciao,
+Dscho
