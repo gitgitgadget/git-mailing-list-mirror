@@ -2,84 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34B29C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 262D5C433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:48:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19AFC6101E
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:42:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1225160FDC
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233223AbhJGUoQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 16:44:16 -0400
-Received: from mout.web.de ([212.227.15.14]:41489 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232894AbhJGUoP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 16:44:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1633639329;
-        bh=xIJce2ToWs3B+lROISY2EeC4KOWsFPnZPli9/cw7/7g=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Yf64cxb/oGKPFLaLawb5O/nm2tAeynrPENvKrN85DxT54AMmb/VfVkbhcT+sNtEs9
-         6QUbAeYfc5AR3iK9QhcNESoCFEVXkc893D+WXcjbh5YpnSoUzhCdQP+RWAUsiH/vbV
-         pDFYuDK2X0a3nM3xRzzTVG/32bTudbEbJOEId78k=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0Lcxw8-1nGkef1xJY-00iBPS; Thu, 07 Oct 2021 22:42:09 +0200
-Subject: Re: [PATCH] p3400: stop using tac(1)
+        id S242128AbhJGUuD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 16:50:03 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53262 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241986AbhJGUuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 16:50:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 759F9163EB3;
+        Thu,  7 Oct 2021 16:48:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8N1NJaCw0W+G47pVu/MRtL8BSoKuow0CgkDehF
+        cAp4A=; b=deY1OauDe6etGHRSsOHJ4UC1o5X5eSYsysdTu02QgzPRHwMBUZAaIZ
+        96BK5hn1XVudftYS4ngC9FTsHUePTVDP0UPUmbPphyRs4Ft79YcbtYAKucu3Glhs
+        zfDFy9XJKg1Sqw7i2+FMbBJdC0Xwu25PTxoRNXF2Uzax1tqdBE3So=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E6FF163EB1;
+        Thu,  7 Oct 2021 16:48:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BCC2A163EAE;
+        Thu,  7 Oct 2021 16:48:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Kevin Willford <Kevin.Willford@microsoft.com>
-References: <85831cc2-307f-1be8-9bb3-c44028ad07fa@web.de>
- <YVq752xjzYz+LTq6@coredump.intra.peff.net>
- <f6a1296f-f524-9042-7f88-9591522971af@web.de>
- <YVyppmEGkNCxZ+5L@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a3377973-4f4a-376a-f02e-94a3b20dd9ad@web.de>
-Date:   Thu, 7 Oct 2021 22:42:08 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/5] cat-file: disable refs/replace with
+ --batch-all-objects
+References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
+        <YVy3N7ZX+s6Mi93y@coredump.intra.peff.net>
+Date:   Thu, 07 Oct 2021 13:48:03 -0700
+In-Reply-To: <YVy3N7ZX+s6Mi93y@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 5 Oct 2021 16:36:07 -0400")
+Message-ID: <xmqqo880pnng.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <YVyppmEGkNCxZ+5L@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:AZorpM+HBnr9SE8edso9dI50/jadKOX6o56Sodc8F6a4aXcRlt4
- hZugpxteX248t6LVph+EM1tx63xPaf0mTbefKqG4j3Qh4CYJUtmVJHF9NC/guowXOlMR8OA
- ypuidivMKHU6r5wjKF2f7aqX2SMt3Tpnmu11hIK6yhVMvI9xxjDVTKr6hC85aNKbe2yxinZ
- EW/z0mc5opHBhWjKkWPBw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6d+aYoh1Ew4=:oz6LNbKmECGFvfhgCWuzWs
- fO+w1ENQlxBTT5B+mup3+DphIw0VlQtq4fSRieWho4fYG6zlsFE3dPR3zVHh0U0KNRgJWk6JR
- xzVEjQw0muijO1Emi1yPwrQsQxb3Kwl/r58LhCp7sTpLjhyPPcL8vWHoKn5nF8JO3NLUYHPii
- IjqJO5RfRSqaHY4+EJH3VmdLFJLutoX0dZ3hxDI626HR6Kg8rxPGefisokdMEbEYk0xMgfCVP
- XtcNECY8eSWA1h1RDnO/iw6hr4kksNft1IDkrBQ9M/I9aqJ2BzLTPygdQ4afyXkRk2J9WG1ab
- gxMaiUt25N80FsaojzpfnrXybArUOitAXBgX4P1ajQ1Vg9iDHvtLCBx2Tub6xcomfccvUJM3c
- YDUl8BBbAWcrkZL8dKHwqTv2XAzKngS+5bg4pFQXHC/ttkEwrRFZPlkDwY+IKrBq2tSbtnNa8
- CpwnY3h/dDG8vRlls1Y3DUqWtt18/cIKbiTWDH7ceXn/YCJAiXM5IWMey2UQ4uZspBNi/MQoF
- 9iK9sC7ZYXGW1c8QccLFxsxphlfQUzCPtha6kW5+EkSKpyZwNYzErPBvoF0u9y3lf1EyjbWKh
- cQ4Y/BD8Nu+BQOpZdTg3l/tPRcB3ztXBe8JYlNPMSxZZbwMiwq4Bn2W3Z94aba7LamL5yA3CC
- WFBaLP+nIyXqC/JOIY4UKZhRQZu+wNM1mgfIRdVtF5FVHA9r6KjNa00woSiVYWV1NXkn+FJpm
- DQIvOC87VDfGOZXKyiPAxL7iHL/yOzRAyJaCiPwU7WTkg9BduSxE2mCuXXEiJzL0vRxeuoMVT
- 8Tec3MAb92/uStdgh6qI+rIIh6HOiGB/Bt+8v4jOdHcbLxzEtLuSE1v0aKKp1iJsPlA1oQYDD
- 9CfEb9V+ZNnd6WFSyy/Wf01ZbexXBZ2q6mhN8Q1vPo0OwWSJDGpkJEtB+i2FV7RWItYwi5Tvu
- 9flH9MPHwRcQl2xphjqIjxIo0wF96Hrs40SvWurxUNZ6itqv+sKEYxDKQOHeK+fUblBtL3632
- zypLYQTuTZ205trM3rjFHx6AA/1K7M/qXeUmo0N6TrcyoeYosESn8o+cxB+CyPk12/rchyMUd
- 3ygmMchYRaJAqs=
+Content-Type: text/plain
+X-Pobox-Relay-ID: DE889318-27AF-11EC-A281-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.10.21 um 21:38 schrieb Jeff King:
-> Right, that works. It does introduce an extra awk process per
-> invocation, though I doubt that really matters all that much. The diff I
-> showed in my earlier response works totally in shell, like the current
-> test_seq().
+Jeff King <peff@peff.net> writes:
 
-In my mind, test is an external command.  Wikipedia [1] says it has been
-a builtin since the early 80ies, and I couldn't find a shell without it.
-I wonder where I picked up that outdated assumption -- I'm not actually
-_that_ old.  Time for an update..
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index 6467707c6e..27b27e2b30 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -96,7 +96,8 @@ OPTIONS
+>  	any alternate object stores (not just reachable objects).
+>  	Requires `--batch` or `--batch-check` be specified. By default,
+>  	the objects are visited in order sorted by their hashes; see
+> -	also `--unordered` below.
+> +	also `--unordered` below. Objects are presented as-is, without
+> +	respecting the "replace" mechanism of linkgit:git-replace[1].
 
-Ren=C3=A9
+OK.
 
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 243fe6844b..b713be545e 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -529,6 +529,8 @@ static int batch_objects(struct batch_options *opt)
+>  		if (has_promisor_remote())
+>  			warning("This repository uses promisor remotes. Some objects may not be loaded.");
+>  
+> +		read_replace_refs = 0;
+> +
+>  		cb.opt = opt;
+>  		cb.expand = &data;
+>  		cb.scratch = &output;
 
-[1] https://en.wikipedia.org/wiki/Test_(Unix)
+This is still early enough in the codeflow that we wouldn't have
+looked up any object under the different name up to this point,
+which is good.
+
