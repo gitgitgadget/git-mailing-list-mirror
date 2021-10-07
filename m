@@ -2,98 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDB2C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5BDDC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:29:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C33A4610FB
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:22:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA58261090
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 10:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240779AbhJGKYL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 06:24:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54744 "EHLO
+        id S240827AbhJGKb1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 06:31:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231825AbhJGKYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 06:24:10 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F685C061746
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:22:17 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id y1so3578535plk.10
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:22:17 -0700 (PDT)
+        with ESMTP id S232781AbhJGKb0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 06:31:26 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003E4C061746
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:29:31 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id p13so21671899edw.0
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=8vimf4S3apxCAFUKJJ/mBCX0IsxzjMvb7fnLfpmsFas=;
-        b=Pw/sVYVBr8ciu1JiYup9mED6J/EOchvT1USeIu6lr/y5KjiM70mPHfrNssRiKCJhi+
-         PJb0rRsAuxHrQ4hgBs1ORKzldXG4KaZja/kK22ReZyfHhIy/Puugh97q3XHwJTx80F3s
-         6MTGYZlzmt7eFQRDYShKXrS7+LNNbVInBORZZJ92sOD4ED8pKcAnkcbOim0YQBmH5hbF
-         TqBJ13/2rbeS6AsFOV2MWl7zpQAL9OShy9C7Ab0554DML27sekWPOSOPKMSbs0KUnYXV
-         ahDhKdPoDRVWSk4IzadWag4K8EWDBkn2wN2n+UaFYi2e9cxaogt3/1b06TzSxQuccvs4
-         jNQQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3iiz4fZtRK+AqKXKg5OYhuwaws/TEmIp4j9rTYsf8Bc=;
+        b=Z8UO/BnJECsKNZFV3HQNxgSNYJe/guDpZlorRoZpX8XWrIS42xZSsLfqu9ofE3t5Ef
+         OwKPMJrn3witWkOja44c/CLzdWfDR1btwjlZ+v7dixU9UUDjLnUx0bzEK6ZCcBvTUQIi
+         3x8flGssT10JVXAMjOBFZHfu6nZwngHYNfoEQDkjRLym0h2W/kM3KZu6zcc6Ace81Dfe
+         3JZ3be67DJZkMmYtDEE0+t+rrt5NMkENbiPIp5xDBDwQ+VcF9IdkuwKPsmCBS4LqnKAh
+         iykig165zyQ9LtgywI6S6Cu8G8yuc/RgNYCLom3IUXxrWd4bqqSP4iLo0k0fTgGbfoZM
+         +fpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=8vimf4S3apxCAFUKJJ/mBCX0IsxzjMvb7fnLfpmsFas=;
-        b=dIQ/oj2cvV1jwRg5MAkVfjYoybjzdNyAWJ4LXULgLsBfodcNgWvk5e9q/lF57RprZM
-         zPxVaSa22HkT+KGTNvzJRnbCzMD0gtlGC6yoFftXGcIJBfMImabDNoE6/U5paG6aLTye
-         0cGiEShb+472Ybqenq2KOjUqPtUZ7PzS1SMToR7qRyoHB0FPFV0ZH2BTQnxFnU7UwAFH
-         VHpfvXkJTKvLTZd5O8vh3yJ9z7BDupMC8w3mUy2gbQ3vYGs4gUy5O4wJNgSlcP/t4Z6e
-         IXP3++0TqDpDD+QC6/79u/wYIGX2E2o4qjkLzzOBKBA4/4XenJClDI7Ll3X4WH2Dffrh
-         Fgvw==
-X-Gm-Message-State: AOAM5331EiXQePiTDP+NdyEBlXnAMkYRvEDVG7jbQmCo0iiJxQ2qxZDo
-        4c6g/cq8dB09MsvbU7UKXpfKcQNkLeuUglC6tLdrERWNLsc=
-X-Google-Smtp-Source: ABdhPJwcP/xGrUQnsIPiZlEpHy2q8WcWSo0yzd2vLHl6u3MNdm+7WSkHiz53edF6H3UQq6auGLIKvzJz1YUaOJmcRlU=
-X-Received: by 2002:a17:902:8bc1:b0:13d:e884:125a with SMTP id
- r1-20020a1709028bc100b0013de884125amr2949114plo.38.1633602136523; Thu, 07 Oct
- 2021 03:22:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=3iiz4fZtRK+AqKXKg5OYhuwaws/TEmIp4j9rTYsf8Bc=;
+        b=lV5/HGxaJXu5JwdOwUZJtb/0AOz+poxaTMjWltmJ0uDyhfnZmnG2I1M2ccHGWt1ty4
+         7djLg600yCPWqs2/J5scmVkA0dTivHp+zSHV4tur4XLlGgdylowzI7l7nFrtQbCmAAAo
+         dvA9VIkpWXDn1kgAaAdGkuig2dtETsHeIN5vyKVJWUWYz4dlyBftpJ1o60jaAyO9NIVo
+         BpCggdnqeRsAcJGhdzRBeMXvsswsuUhfVbBLElcnAHLSDZH5dq/wcHP/zKvVbhHxqNcV
+         SLUCkkQ0krdLgT0NR4i8WLmqatzZumar82nE+3qDHMKWDGk6FGhSkrrP6JAJJh9ZnkrF
+         qfhw==
+X-Gm-Message-State: AOAM533dIRbxmTJICzr49f8V+BiMpu4385TdvdhHqDj3iLgMNw98e1D8
+        W4mNXlXfWrBS1eLodGgO9wQ=
+X-Google-Smtp-Source: ABdhPJzF+bKJN/5n8p4ykcwwuYsKnmQADNcyFaoUCptisEXTsSrMQGIR9gZK5wUTUY1cR5cA2ZS3ZQ==
+X-Received: by 2002:a17:906:5789:: with SMTP id k9mr3048272ejq.107.1633602570074;
+        Thu, 07 Oct 2021 03:29:30 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ee13sm9066975edb.14.2021.10.07.03.29.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Oct 2021 03:29:29 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
+ --batch-all-objects
+Date:   Thu, 07 Oct 2021 12:18:45 +0200
+References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
+ <YVy2DNd+XemykKE0@coredump.intra.peff.net>
+ <877derjia9.fsf@evledraar.gmail.com>
+ <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
+ <87tuhuikhf.fsf@evledraar.gmail.com>
+ <YV3LonbeIS8DrMsN@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YV3LonbeIS8DrMsN@coredump.intra.peff.net>
+Message-ID: <87k0ipgmbb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAP_xbc=PZq2Qs8KUVYJVofpTxucf43TeSm8Bk4Pxcb0wn70KjQ@mail.gmail.com>
-In-Reply-To: <CAP_xbc=PZq2Qs8KUVYJVofpTxucf43TeSm8Bk4Pxcb0wn70KjQ@mail.gmail.com>
-From:   Rene Hutschenreuter <rene.hutschi@gmail.com>
-Date:   Thu, 7 Oct 2021 12:22:05 +0200
-Message-ID: <CAP_xbc=ag3+Bkvwtou4ZaYrnVm67kb37=oZEc5eTx8FsufhV=Q@mail.gmail.com>
-Subject: Re: Security issues with openssl.exe
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Sir or Madam,
 
-in our company we currently use GIT for programming tasks. Furthermore
-we use a VPN to connect to the company network.
+On Wed, Oct 06 2021, Jeff King wrote:
 
-This VPN now prevents this connection due to a security problem with
-the "openssl.exe" in the GIT installation folder:
-- C:\Program Files\Git\mingw64\bin\openssl.exe
+> On Wed, Oct 06, 2021 at 11:02:59AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> I thought that --batch-all-objects and --batch were mutually exclusive,
+>> but they're obviously not.
+>
+> Right. In fact, the former is useless without the latter (or
+> --batch-check).
+>
+>> In my defense I think the help/code is very confusing. I hacked up some
+>> WIP changes to change it from:
+>
+> That's fair, but...
+>
+>> Looking at the history it seems you added --batch-all-objects around the
+>> same time as the OPT_CMDMODE() was used in the command, so we should
+>> probably have something like this to start with:
+>>=20
+>> -- >8 --
+>> Subject: [PATCH] cat-file: make --batch-all-objects a CMDMODE
+>>=20
+>> The usage of OPT_CMDMODE() in "cat-file"[1] was added in parallel with
+>> the development of[3] the --batch-all-objects option[4], so we've
+>> since grown[5] checks that it can't be combined with other command
+>> modes, when it should just be made a top-level command-mode
+>> instead. It doesn't combine with --filters, --textconv etc.
+>
+> This is not right. --batch-all-objects does not provide a mode exclusive
+> with "-t", etc, by itself.
 
-Description-Text: In order to decrypt SM2 encrypted data an
-application is expected to call the API function EVP_PKEY_decrypt().
-Typically an application will call this function twice. The first
-time, on entry, the \"out\" parameter can be NULL and, on exit, the
-\"outlen\" parameter is populated with the buffer size required to
-hold the decrypted plaintext. The application can then allocate a
-sufficiently sized buffer and call EVP_PKEY_decrypt() again, but this
-time passing a non-NULL value for the \"out\" parameter. A bug in the
-implementation of the SM2 decryption code means that the calculation
-of the buffer size required to hold the plaintext returned by the
-first call to EVP_PKEY_decrypt() can be smaller than the actual size
-required by the second call. This can lead to a buffer overflow when
-EVP_PKEY_decrypt() is called by the application a second time with a
-buffer that is too small. A malicious attacker who is able present SM2
-content for decryption to an application could cause attacker chosen
-data to overflow the buffer by up to a maximum of 62 bytes altering
-the contents of other data held after the buffer, possibly changing
-application behaviour or causing the application to crash. The
-location of the buffer is application dependent but is typically heap
-allocated. Fixed in OpenSSL 1.1.1l (Affected 1.1.1-1.1.1k).
+Yes it does. See the "if (opt) {" branch on master. We just don't
+implement it via a cmdmode, but --batch-all-objects can definitely be a
+CMDMODE (I see you found that out below...)
 
-Could you please provide a new Git version with an updated openssl.exe
-to fix this security issues?
+> Those in theory should be OPT_CMDMODE, but I don't think they can be,
+> because they also take an argument. So we'd need some OPT_CMDMODE_ARG()
+> or something, but then it needs _two_ value fields. So I think it would
+> require major surgery to parse-options.
 
-Best regards
-Ren=C3=A9 Hutschenreuter
-Developer
+Aside: I think it would be worth it to teach it a general concept that
+option X is incompatible with option Y, or group X, Y, Z and declare
+those as incompatible with another group.
+
+The current CMDMODE check is rather cryptic seemingly because it's
+trying to avoid re-looping over the list while it emits an error.
+
+> Using --batch-all-objects without --batch or --batch-check would be an
+> error, and we do flag it as such.
+
+*nod*
+
+> So you are not wrong that using --batch-all-objects with -t is nonsense,
+> and we do indeed error on it currently. But it is not because the two
+> are themselves exclusive, but because of the chaining of the two rules.
+
+Isn't it nonsense? I think so. I suppose we could make it a a synonym of
+some --batch=3D<fmt> in that context, but that just seems like complexity
+for no good reason.
+
+> The groupings you showed in your larger output mostly make sense, but...
+>
+>>     Run <rev>:<blobs|tree> via conversion or filter
+>>         --textconv            for blob objects, run textconv on object's=
+ content
+>>         --filters             for blob objects, run filters on object's =
+content
+>>         --path <blob>         use a specific path for --textconv/--filte=
+rs
+>>=20=20=20=20=20
+>>     Emit objects in batch via requests on STDIN, or --batch-all-objects
+>>         --batch-all-objects   Emit all objects in the repository, instea=
+d of taking requests on STDIN
+>>         --buffer              buffer --batch output
+>>         --batch[=3D<format>]    show info and content of objects fed fro=
+m the standard input
+>>         --batch-check[=3D<format>]
+>> [...]
+>
+> These groups aren't mutually exclusive. You can use --textconv in batch
+> mode. Which further muddies the CMDMODE waters; --batch is a mode that
+> overrides "-t", but _not_ "--textconv", where it is a modifier.
+
+Indeed, I conflated --batch* there again, those two are mutually
+exclusive with --batch-all-objects, but not the other two. Will update
+if I get to submitting this...
