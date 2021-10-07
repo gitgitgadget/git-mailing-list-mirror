@@ -2,158 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF57C433FE
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6656C433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:27:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7EB660F58
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:00:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B510160FD7
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 11:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241103AbhJGLBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 07:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35254 "EHLO
+        id S240708AbhJGL3k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 07:29:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241037AbhJGLBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 07:01:33 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB04FC06177C
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 03:59:21 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id m22so17895455wrb.0
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 03:59:21 -0700 (PDT)
+        with ESMTP id S230087AbhJGL3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 07:29:39 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73156C061746
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 04:27:46 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id z3so3893949qvl.9
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 04:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HBNrd8h57EHcdKdkPIOTjFextPdmOMJpWyQiiEj8UK8=;
-        b=AfjQviz+f0ERne/L/DYtjD7LME0F261U2q4zqA2/gkdkfXT8M9sXLSuoNMuUTdWhbq
-         aHPb5JKJVH6JlPYG4CVndAI3D5+fLdbyi5wlaIy/usgDK4gD4WWYoEOVJ9+JJIufP0BS
-         lElYer92zuldDmOC7XjlrdKjhxAkxTU0P7umLBibWHT6oL4RkaI5zarUpmsHUczwW1Lk
-         Ledvy5FIIt1Zr3h/2crirGdZXm7dsdJbIagkgovbEzN0Gq8FDCFplOetqLR1B9Oc5Wc3
-         Idu/Qt1ERBzE39WpX6dXq2DUCK+aQV1ua9YTb/5l9pDGE/V/PLW4hHTiqLQVmrbLBaCd
-         V5Og==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NwDPAXXs8CfonqfYtN3DyAbQIjd2HorZkvTwLxDmbVU=;
+        b=jk3VdgMVkeid+ce4sa7a6QgSy4JVoz1YoCKMQBf2AnnzVpXlXET7t9tukQlwDcHl3r
+         3oHT0N5r5KT85fdnTugtcAtwYnatMVUzVCnTsXxQ22sXl+scFJ26gqSDjWxepNGY6ERC
+         y/qmLE2HsEyrWjvaCt8y/wJHtVuPsiaBKREhvHx6acNTUzkjNQBrRqMFuDbs6EFYtnJM
+         pciBQ7ogNaT4X97YbRYYV7nqbtkk5lniN8a8nxychIF96cnNK/2BIASGUDNvdXfYi48S
+         //EgkJC2eDVK/oY4aCjs8P7oOQQrO5bW64GCcQb1MzYIkVC8AuninOa8O2I7gmvh+fV7
+         OiHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HBNrd8h57EHcdKdkPIOTjFextPdmOMJpWyQiiEj8UK8=;
-        b=PVNprEQrSU66wXeE5lF4juBKyrMFHE6ZVthDEFcVbcA4UUxxrgfO9jvdKw2xCmDXKp
-         HXlxk5IVZ4DSwDGxON7ha3IxzmcnFLebEKhCB2WJdf8oDIgRb0CuDVSvIkFLwOCyb+5W
-         5DIjMhZSaWnHhEoZzJzksbhy6iwtY8qPYEbUysHmsbFaYkv/sdbHd0xyzasAwSZxEYg3
-         lKPDBLK3wWl5McDlANklgMA/Oo2chkKsjiYwigvSfZUoXNCdQzDOa1fZGAxw94zLsAP8
-         2Yg9kpW+3ArlXX34FCa0Eyfk8tr+sH9mDHmsJrZKgRhX37X84EXBNVvPRpQgbH9v0RMX
-         Jghw==
-X-Gm-Message-State: AOAM530He5HnZXCGyqRKZTK0DnF3Nq6BlNSb7+E3e7oYUF7NsrHye5pQ
-        Phhs/Z5UqBLb8msCJX6ns8zLij9U5Z0=
-X-Google-Smtp-Source: ABdhPJzezEkLDGjmy+8uTprBNFTR4pIvZn4KYMeJl9uiC7oaBCTLvNTprpUpR0jX8IJh8ZAZEQIsTw==
-X-Received: by 2002:a1c:f002:: with SMTP id a2mr15425519wmb.79.1633604360426;
-        Thu, 07 Oct 2021 03:59:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m14sm7765523wmi.47.2021.10.07.03.59.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 03:59:20 -0700 (PDT)
-Message-Id: <f81e8b3bcf1b8972bc5214b31fdb092bb975b457.1633604349.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
-References: <pull.1005.v4.git.1631630356.gitgitgadget@gmail.com>
-        <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 10:59:09 +0000
-Subject: [PATCH v5 15/15] scalar: accept -C and -c options before the
- subcommand
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NwDPAXXs8CfonqfYtN3DyAbQIjd2HorZkvTwLxDmbVU=;
+        b=lyeA2AXluj7OCaaOCenRna5vrxSFWls7gxqLjlWGQ4h1890LYf8wolful7EkBStLic
+         hdmqsKnbspmTksZDZULaYbSW89NObJ+DXk4xEh0xMydUupk3Dfz9LO/eg9DcwIoX7hT4
+         7TsPd6NbEBwPJsFfGdbS6zYtWwZFn+olpkZUJImOMSbv0TSfbC+no8u+Ek9CrFgpnneV
+         zIxpNhaQWBNjzg8FNsO8VNT98yV5ups10O3pdnLRCBiDHp8tadlma+pXRWYY5cIiFy1L
+         7rbieQGocKaJnm9Gv4mbMjjaagD7HMfheS4lOGz4iUxAyG587W2QvfDtK+H/4SJ2k+ip
+         pqEA==
+X-Gm-Message-State: AOAM532fo9Mt3I/ry34fyYvT2HTb5oGk5ptE6r+QVqDjHekmInVufxkV
+        oawV+PYAJJKDOhol5NOLDFXU4/h9JKTRV9scCagJAzw3NRXqHyL3
+X-Google-Smtp-Source: ABdhPJxh9p0lfx446y2nbEL88kHSiH0sBxxBGUPBg52aCeBB8dBijSEcNXLSIpHIN2zm+xxHOsqZ9hOfcOSdnLHYYbE=
+X-Received: by 2002:a0c:f0c4:: with SMTP id d4mr3357142qvl.38.1633606065585;
+ Thu, 07 Oct 2021 04:27:45 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+References: <7b4b59a4-7e58-3db2-d934-d570cdebbf31@gmail.com>
+ <CABkJDHHDjwviVmCR=tu3JBx+7BMmbmesOrkymq0fH4PXE5=i1g@mail.gmail.com>
+ <135f854b-7975-a6a0-69ea-8697583a87b2@gmail.com> <CAJDDKr7itDvy1WPoC=kBPpT4_qm6MKWWfxwt96wQJKnGBGW5ng@mail.gmail.com>
+ <CABkJDHFMy6yS40jn-NJ8mwrv6jxdjgNWQ6mJmEK1FYV0gvpLEQ@mail.gmail.com>
+ <CABkJDHEZuZSun0spZ8SAcgQQvu-zamnJiqGk7VnS6agU-_KqqA@mail.gmail.com>
+ <20211004075600.5lbqed4mnwfsy4al@yadavpratyush.com> <CABkJDHGdzOFW5yP43LZtuUrV7WsDTvAi+kxka84-5P7ShbV9FQ@mail.gmail.com>
+ <20211006113912.n7xpnuzd25256cjm@yadavpratyush.com> <CABkJDHFap2DmjMr1Ri-Mrud+msChB3uEGRKYyczAxfmaLnF6jA@mail.gmail.com>
+ <20211006180348.22e5c2z4pqkwtokx@yadavpratyush.com>
+In-Reply-To: <20211006180348.22e5c2z4pqkwtokx@yadavpratyush.com>
+From:   Sashank Bandi <bandi.rao999@gmail.com>
+Date:   Thu, 7 Oct 2021 16:57:37 +0530
+Message-ID: <CABkJDHFadi60bbwN758f2qov5dMXV2nWOwYHYVPtdfScze1XmQ@mail.gmail.com>
+Subject: Re: [INFO] Does Git GUI support Dark Mode on Windows 10 ?
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        David Aguilar <davvid@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> You are of course free to design your own theme, but I would suggest you
+> try all these themes already available first and see if any of them fit
+> your needs.
+I have tried all of these themes. "default" seems like it will fit. I
+have some color changes and a preview linked at the bottom. If you
+agree with that, I will work on other pages/sections too.
 
-The `git` executable has these two very useful options:
+> Anyway, I came up with a quick proof of concept for a theme selector. It
+> has many limitations and is not fit to apply just yet, but it should
+> help you get started.
+>
+> -- 8< --
+> Subject: [PATCH] git-gui: Add a very crude theme selector
+>
+> Tk themeing is not very well documented and is not easy to get right.
+> Ideally one would want to set the theme for a toolkit in one standard,
+> but it is hard to find that standard config for Tk and even harder to
+> get it to work consistently.
+>
+> Add a theme selection menu to make the lives of the user easier. Those
+> who would wish to use the Tk provided theme should be able to do so.
+>
+> This is a very crude patch and it does not really ensure that. This is
+> more of a proof of concept.
+>
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> ---
+>  git-gui.sh     | 4 ++++
+>  lib/option.tcl | 1 +
+>  2 files changed, 5 insertions(+)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 201524c..ff2ec1b 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -862,6 +862,9 @@ proc apply_config {} {
+>                         set NS ttk
+>                         bind [winfo class .] <<ThemeChanged>> [list InitTheme]
+>                         pave_toplevel .
+> +                       if {[get_config gui.theme] != {}} {
+> +                               ttk::style theme use [get_config gui.theme]
+> +                       }
+>                         color::sync_with_theme
+>                 }
+>         }
+> @@ -895,6 +898,7 @@ set default_config(gui.fontdiff) [font configure font_diff]
+>  # TODO: this option should be added to the git-config documentation
+>  set default_config(gui.maxfilesdisplayed) 5000
+>  set default_config(gui.usettk) 1
+> +set default_config(gui.theme) "default"
+>  set default_config(gui.warndetachedcommit) 1
+>  set default_config(gui.tabsize) 8
+>  set font_descs {
+> diff --git a/lib/option.tcl b/lib/option.tcl
+> index e43971b..acce160 100644
+> --- a/lib/option.tcl
+> +++ b/lib/option.tcl
+> @@ -160,6 +160,7 @@ proc do_options {} {
+>                 {c gui.encoding {mc "Default File Contents Encoding"}}
+>                 {b gui.warndetachedcommit {mc "Warn before committing to a detached head"}}
+>                 {s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
+> +               {s gui.theme {mc "GUI theme"} {ttk::style theme names}}
+>                 {b gui.displayuntracked {mc "Show untracked files"}}
+>                 {i-1..99 gui.tabsize {mc "Tab spacing"}}
+>                 } {
+> --
+Thank you. This helps me find the location of the options. I will
+further improve this.
 
--C <directory>:
-	switch to the specified directory before performing any actions
-
--c <key>=<value>:
-	temporarily configure this setting for the duration of the
-	specified scalar subcommand
-
-With this commit, we teach the `scalar` executable the same trick.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
- contrib/scalar/scalar.txt | 10 ++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index b2e92cf63b5..6c496318bd4 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -807,6 +807,25 @@ int cmd_main(int argc, const char **argv)
- 	struct strbuf scalar_usage = STRBUF_INIT;
- 	int i;
- 
-+	while (argc > 1 && *argv[1] == '-') {
-+		if (!strcmp(argv[1], "-C")) {
-+			if (argc < 3)
-+				die(_("-C requires a <directory>"));
-+			if (chdir(argv[2]) < 0)
-+				die_errno(_("could not change to '%s'"),
-+					  argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else if (!strcmp(argv[1], "-c")) {
-+			if (argc < 3)
-+				die(_("-c requires a <key>=<value> argument"));
-+			git_config_push_parameter(argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else
-+			break;
-+	}
-+
- 	if (argc > 1) {
- 		argv++;
- 		argc--;
-@@ -817,7 +836,8 @@ int cmd_main(int argc, const char **argv)
- 	}
- 
- 	strbuf_addstr(&scalar_usage,
--		      N_("scalar <command> [<options>]\n\nCommands:\n"));
-+		      N_("scalar [-C <directory>] [-c <key>=<value>] "
-+			 "<command> [<options>]\n\nCommands:\n"));
- 	for (i = 0; builtins[i].name; i++)
- 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
- 
-diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 6fc57707718..3a80f829edc 100644
---- a/contrib/scalar/scalar.txt
-+++ b/contrib/scalar/scalar.txt
-@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
- depending on the subcommand. With the exception of `clone`, `list` and
- `reconfigure --all`, all subcommands expect to be run in an enlistment.
- 
-+The following options can be specified _before_ the subcommand:
-+
-+-C <directory>::
-+	Before running the subcommand, change the working directory. This
-+	option imitates the same option of linkgit:git[1].
-+
-+-c <key>=<value>::
-+	For the duration of running the specified subcommand, configure this
-+	setting. This option imitates the same option of linkgit:git[1].
-+
- COMMANDS
- --------
- 
--- 
-gitgitgadget
+Here is the preview I said: https://pasteboard.co/rwUBvWbX6m66.png .
+The checkbox needs some tinkering.
+Looking forward to any suggestions.
