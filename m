@@ -2,172 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84AF8C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 19:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D958BC433EF
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:00:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D7C260FA0
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 19:41:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3BB6610C7
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 20:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241289AbhJGTn2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 15:43:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55756 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232870AbhJGTnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 15:43:20 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD653F2A21;
-        Thu,  7 Oct 2021 15:41:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SztpyIT8SVbVEcr44tMkZDrQZfHEU7wqIZVNe2
-        HyScs=; b=cGyVfgLd0Gc8Id8tXzqPJsutFAp90D6BOT80SVSlH5F9aem1rMWege
-        8XYj+hX5qaQ8CxAle8x1gzbaxwV8DIV6olQZu4e0ITEXeR9s+02RL9NS1FGxwWXD
-        El8ABcBGfLkhuidpbghuKRa/HavK3heI0WWAzQtU1QEw9NQUX7qaQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1F51F2A20;
-        Thu,  7 Oct 2021 15:41:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F3EDDF2A1E;
-        Thu,  7 Oct 2021 15:41:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Mugdha Pattnaik via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Mugdha Pattnaik <mugdhapattnaik@gmail.com>
-Subject: Re: [PATCH v6] submodule: absorb git dir instead of dying on deinit
-References: <pull.1078.v5.git.git.1633521772731.gitgitgadget@gmail.com>
-        <pull.1078.v6.git.git.1633523057369.gitgitgadget@gmail.com>
-Date:   Thu, 07 Oct 2021 12:41:23 -0700
-In-Reply-To: <pull.1078.v6.git.git.1633523057369.gitgitgadget@gmail.com>
-        (Mugdha Pattnaik via GitGitGadget's message of "Wed, 06 Oct 2021
-        12:24:17 +0000")
-Message-ID: <xmqqwnmopqqk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S241787AbhJGUCG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 16:02:06 -0400
+Received: from mout.web.de ([212.227.15.3]:55843 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241535AbhJGUCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 16:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1633636805;
+        bh=Nygl2AOxX8Fq49/qNchkRMXEh/ig4nvwM9gxhDyK01k=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Do346v70t7CvqwX6MuERUilI4n8z1fSFitd8X0JZ6Qw0QLoI9ePqwHeewSX0t2K1W
+         P8Op+LXsXnjyNkkxLpa70dXtip9IBCW5Yz7jlPthCnD+M9bGTA5qTihlODE7zmsNJz
+         Ad1diR2akyx64BrHqog/NVshLG7cEhr89MNxFOvI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MkVwo-1nCuGR2aD8-00ltP0; Thu, 07 Oct 2021 22:00:05 +0200
+Subject: Re: [PATCH 3/9] test-mergesort: add test subcommand
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
+ <522fba5e-1048-3377-45c1-7107b55dc6e1@web.de> <xmqq7dew7aqd.fsf@gitster.g>
+ <87o887q0s9.fsf@evledraar.gmail.com>
+ <850aa059-61d9-0eba-5809-e0c27a19dfb4@web.de> <xmqqee9210a1.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a3eeb255-56e3-eb22-ebf7-e9f04c95fa44@web.de>
+Date:   Thu, 7 Oct 2021 22:00:04 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E7CEF44-27A6-11EC-9AFB-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqee9210a1.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:A7QlMVeRAY3jCsTxSw2j9YJ0y2Tssc+OwS3DGqgG5Mgbwz4wtXv
+ rW9+Ufi+egNEDzqDN9L15ycSCY4O+A/e3/i1sD8rS4p/uh/r9PBxOUH3W89hMsKTrmTvyDT
+ Dl1zY9CZ1ZbTjecBMpecSk3Yf7f/hEASj/XZg859LJfWTfYzogcNFUGPjjc+ZJRExnpWlPa
+ ni25upeRs2Q9Yx9zzJ5tg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sIT5wIO2HWQ=:CrTwh2Ek0Qs4yeoK3BxmNO
+ dnUxN0xpJW5B5cviH2zgtlEiIcfcW0kdPKpTi8gCzZpDACT4a3iKK2ynTQzIYX2aiLdJ3Wvmi
+ QJjdnl0H+SrFnWArnwVmpP/zo+tuyCfGHHbQYflxymvV8ZqCntcGkePtIPGRe5DxjhbzzS3tA
+ RuF9PitKWZJDQ7m1567Ga1RAlwefo2iZqdso4logyAWVS5u+2IkGDfruxdROFg7gW8ncYfPUq
+ mwV4gA1tbcrVhAXodXq7SmDfLn8RVOS1AZJiwUJaR+UPhmgo40hwqHC4VkHILcpIzpgYLzIfB
+ PxF23BVuBBFkwCmdpZ/EFjKlyus3731viTJo05p8tzJmwrp+izzIkX1/OonWLkaVHLTqN5jtW
+ LJ4kpxOhNlvJ9IQK661po7D3EV1gZ5EEzn/3y6MHO1DjfiN8WAIHpDA5fHzLN7YgH+0gG1leZ
+ tBUHRmm6Ggp+joRiJPAhQNxUT9zkV0D5Kfgq93ef/M0a3v2XSsYQ+UOGog6BUQKuEQStuyJaY
+ KhqifkcRxTvKABVLbKvmPoCVvRjb6d0Bv9pOzTlpzlznJfyBq3JPXItq76Ii9v/PpRtm/M8+v
+ ShQi0af2uo7TztCUaIz9X9kWe/PzwSzVqAitdIhwbO9gid1ed0SF+LHJ8KAn65Bu1Hmd0D/ZI
+ k+/PNZc+5z3h3ux/iiRbMvniwXICiktqGKKS1FpwS/aPPHFxYmx9m94ZsMyGMvtd4pEKhJ0wM
+ p9HBbJ6zwUXPAS5vluZn2/aNMbVZR/PSF4itf1KkdSWAZueXVEFQ7ZQ9hvJf4+Cyg0c8KRr1W
+ Sdr96Qg39kJyGdZj+VUelS0Y7TyDgVQKIUNUZQzTRWY8NJsybgDrdBxMXP1apavHST1qlP4dF
+ aCiJUeabwagouegNhanYzwiDJ9qgIyMIobY5TLqb3B/AYDmO+bmfQQijPSuFKgJAHfs/zhTnc
+ ucQ299VhrlRdMZNyUnyLqCS0Po1/W8BV/Nz/VbzdYpvdGRQs4oTE360gJQ15oL1piQakigu0T
+ fDGB6IteU+byoLGVOnnZMbGUcmInRoNGyY5gUfNix7Wa+HbZqze1xOaKH7z+gBGiAw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Mugdha Pattnaik via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Am 03.10.21 um 19:33 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Repeatable tests are not essential (the original paper didn't mention
+>> seeding), but shouldn't be much trouble to implement and would simplify
+>> comparisons across versions, systems and among testers.
+>>
+>> The only downside I can think of is that it may perhaps also simplify
+>> over-fitting, i.e. I might find micro-tweaks that only work for our
+>> specific rand() sequence and then misinterpret them as general
+>> improvements..
+>
+> Yup, I think you summarized the pros-and-cons nicely.
 
-> From: mugdha <mugdhapattnaik@gmail.com>
+Seeing that the series is in next already, here's a bonus patch for
+that.
 
-This line is called "in-body header" that is used to override the
-author name that is automatically obtained from the e-mail's "From:"
-header (which is set to "Mugdha Pattnaik via GitGitGadget" by GGG,
-which is obviously not your name, hence we use an in-body header to
-override it).  It should match what you use to sign off your patches,
-the one we see below.
+=2D-- >8 ---
+Subject: [PATCH 10/9] test-mergesort: use repeatable random numbers
 
-I'll hand-edit so that "git show" will say that the author is
-"Mugdha Pattnaik", not "mugdha", while applying, but please make
-sure your further submissions will not have this problem.
+Use MINSTD to generate pseudo-random numbers consistently instead of
+using rand(3), whose output can vary from system to system, and reset
+its seed before filling in the test values.  This gives repeatable
+results across versions and systems, which simplifies sharing and
+comparing of results between developers.
 
-> Currently, running 'git submodule deinit' on repos where the
-> submodule's '.git' is a directory, aborts with a message that is not
-> exactly user friendly. Let's change this to instead warn the user
-> to rerun the command with '--force'.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/helper/test-mergesort.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-OK.  That sounds like an improvement, albeit possibly an overly
-cautious one, as a casual "deinit" user will get an error as before
-without "--force", which may or may not be a good thing.  Requiring
-"--force" means it is safer by default by not changing the on-disk
-data.  But requiring "--force" also means we end up training users
-to say "--force" when it shouldn't have to be.
+diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
+index 43ec74e2d3..8d128ae437 100644
+=2D-- a/t/helper/test-mergesort.c
++++ b/t/helper/test-mergesort.c
+@@ -2,6 +2,12 @@
+ #include "cache.h"
+ #include "mergesort.h"
 
-A plausible alternative is to always absorb but with a warning "we
-absorbed it for you", without requiring "--force".  If we didn't
-have "git submodule deinit" command now and were designing it from
-scratch, would we design it to fail because the submodule's git
-directory is not absorbed?  I doubt it, as I do not think of a good
-reason to do so offhand.
++static unsigned int minstd_rand(unsigned int *state)
++{
++	*state =3D (uint64_t)*state * 48271 % 2147483647;
++	return *state;
++}
++
+ struct line {
+ 	char *text;
+ 	struct line *next;
+@@ -60,8 +66,9 @@ static void dist_sawtooth(int *arr, int n, int m)
+ static void dist_rand(int *arr, int n, int m)
+ {
+ 	int i;
++	unsigned int seed =3D 1;
+ 	for (i =3D 0; i < n; i++)
+-		arr[i] =3D rand() % m;
++		arr[i] =3D minstd_rand(&seed) % m;
+ }
 
-Does "git submodule" currently reject a "deinit" request due to some
-_other_ conditions or safety concerns and require the "--force"
-option to continue?  Requiring the "--force" option to resolve ".git
-is a directory, and the user wants to make it absorbed" means that
-the user will be _forced_ to bypass these _other_ safety valves only
-to save the submodule repository from destruction when running
-"deinit", which may not be a good trade-off between the safety
-requirements of these _other_ conditions, if exists, and the one we
-are dealing with.
+ static void dist_stagger(int *arr, int n, int m)
+@@ -81,8 +88,9 @@ static void dist_plateau(int *arr, int n, int m)
+ static void dist_shuffle(int *arr, int n, int m)
+ {
+ 	int i, j, k;
++	unsigned int seed =3D 1;
+ 	for (i =3D j =3D 0, k =3D 1; i < n; i++)
+-		arr[i] =3D (rand() % m) ? (j +=3D 2) : (k +=3D 2);
++		arr[i] =3D minstd_rand(&seed) % m ? (j +=3D 2) : (k +=3D 2);
+ }
 
-> This internally calls 'absorb_git_dir_into_superproject()', which
-> moves the git dir into the superproject and replaces it with
-> a '.git' file. The rest of the deinit function can operate as it
-> already does with new-style submodules.
+ #define DIST(name) { #name, dist_##name }
+=2D-
+2.33.0
 
-This is not wrong per-se, but such an implementation detail is
-something best left for the patch.  
-
-> We also edit a test case such that it matches the new behaviour of
-> deinit.
-
-"match the new behaviour" in what way?
-
-    In one test, we used to require "git submodule deinit" to fail
-    even with the "--force" option when the submodule's .git/
-    directory is not absorbed.  Adjust it to expect the operation to
-    pass.
-
-would be a description at the right level of detail, I think.
-
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index ef2776a9e45..040b26f149d 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1539,16 +1539,24 @@ static void deinit_submodule(const char *path, const char *prefix,
->  		struct strbuf sb_rm = STRBUF_INIT;
->  		const char *format;
->  
-> -		/*
-> -		 * protect submodules containing a .git directory
-> -		 * NEEDSWORK: instead of dying, automatically call
-> -		 * absorbgitdirs and (possibly) warn.
-> -		 */
-> -		if (is_directory(sub_git_dir))
-> -			die(_("Submodule work tree '%s' contains a .git "
-> -			      "directory (use 'rm -rf' if you really want "
-> -			      "to remove it including all of its history)"),
-> -			    displaypath);
-> +		if (is_directory(sub_git_dir)) {
-> +			if (!(flags & OPT_FORCE))
-> +				die(_("Submodule work tree '%s' contains a "
-> +				      ".git directory.\nUse --force if you want "
-> +				      "to move its contents to superproject's "
-> +				      "module directory and convert .git to a file "
-> +				      "and then proceed with deinit."),
-> +				    displaypath);
-> +
-> +			if (!(flags & OPT_QUIET))
-> +				warning(_("Submodule work tree '%s' contains a .git "
-> +					  "directory. This will be replaced with a "
-> +					  ".git file by using absorbgitdirs."),
-> +					displaypath);
-> +
-> +			absorb_git_dir_into_superproject(displaypath, flags);
-
-Shouldn't the first argument to this call be "path" not
-"displaypath"?  The paths in messages may want to have the path from
-the top to the submodule location prefixed for human consumption,
-but the called function only cares about the path to the submodule
-from the current directory, no?
-
-The second parameter of this call seems totally bogus to me.  What
-is the vocabulary of bits the called function takes?  Is that from
-the same set the flags this function takes?  Does the called
-function even understand OPT_QUIET, or does the bitpattern that
-happens to correspond to OPT_QUIET have a totally different meaning
-to the called function and we will trigger a behaviour that this
-caller does not expect at all?
-
-Thanks.
