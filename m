@@ -2,83 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70E72C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 16:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A291CC433FE
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 16:40:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55DED61074
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 16:34:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8989561090
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 16:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241886AbhJGQgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 12:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57836 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbhJGQgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 12:36:37 -0400
-Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com [IPv6:2607:f8b0:4864:20::a34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E79FBC061570
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 09:34:43 -0700 (PDT)
-Received: by mail-vk1-xa34.google.com with SMTP id h132so2979671vke.8
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 09:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jjU4txzAWC7H82FxvooA4Qv0zqfQ8+CtFTrdffYtdI0=;
-        b=c1/kLaRvy4DB/NBxo9T/c2eH2chDGBhBL40+HShhJYKDk4U5LCHraBgGiWu4vPqJfh
-         Dau/Ewccp/iu7X3MCiu/Le/W2MhMBRlgwMWmiqd4G4qpLeuO56MuXlCjl+hHx4juGjeM
-         Xkb3sovJFUAWWnv9zYmLGgM8o+YiGddHxB83fir5u5nkWIZQXAYuJBuLQkV2NEJvMyyg
-         oJkD4uij+tMTqs83gKkU3pAiS7lXCU+BCCWwgjUmbH3XAUY6EG13t17dagvSbwYuuCZ3
-         Iky7fUcD7cdkOregOEf0XuzEYVDPpwnrDZeudd8m2ioT7SsawmfaxFjpLcLu9bSamcyV
-         nirQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jjU4txzAWC7H82FxvooA4Qv0zqfQ8+CtFTrdffYtdI0=;
-        b=FRTaUiZSCYlhS2Z4bplW9R/5LxUXt88ojLfMARy73HSQdky2z9FDCy20P20WbomAPi
-         RmOfSuol7UkXMCKlVnU+6oXlDLAGRG5q/ZIAFnd1YCpgPA2iDBHKjjmWEfJdImBdZrCp
-         NLlAvsK85oyG2ZM0QchuoS5php0kFPoWf57sOoMMPoCe+ya3R+C0/8wMnUXjPTgb7n7O
-         b5ypdbdwIzE6hR0W36TVBRbCW/DB/5PmfBRLYham52/JWcX9P7+MkxXOqARThlLm0DNy
-         KNcQc5oGjraZO1SQujUOuij9HOaZVZEeTBBiPUxeyk2TkOsoEx9P3bwoMgovjh1dhvDS
-         BiWg==
-X-Gm-Message-State: AOAM530I9+ZfLbKgJDoVYovLEwrFllh66DYXIcDQh/rU9tB5hVcOcqfQ
-        2EpH5HqXHMoSABZq9v0BBDCpB8fub6JqStcDrWnVKg==
-X-Google-Smtp-Source: ABdhPJyh4nKtL9eo4C3X+VKNR3jP3lTzIfgmVQwXoj0iIJeqImiW5be7KGC8NPJwDuCLc7unSPzt5IB0JIdNiyFx2xE=
-X-Received: by 2002:ac5:c922:: with SMTP id u2mr4528193vkl.9.1633624482806;
- Thu, 07 Oct 2021 09:34:42 -0700 (PDT)
+        id S242771AbhJGQmt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 12:42:49 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:28117 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242761AbhJGQms (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 12:42:48 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4HQHBY0PfYz5tlG;
+        Thu,  7 Oct 2021 18:40:52 +0200 (CEST)
+Subject: Re: [PATCH 0/3] Fun with cpp word regex
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1054.git.1633589461.gitgitgadget@gmail.com>
+ <87o881gpq7.fsf@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <ebfe018b-b4e7-0dc8-e535-5cac9cf3d106@kdbg.org>
+Date:   Thu, 7 Oct 2021 18:40:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-References: <04f2d74df5189f473bc7a6395b9e194a1929f623.1632841817.git.gitgitgadget@gmail.com>
- <20210930122352.26505-1-carenas@gmail.com>
-In-Reply-To: <20210930122352.26505-1-carenas@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 7 Oct 2021 18:34:31 +0200
-Message-ID: <CAFQ2z_PoRTOZDmZyWObeL3CC4Y5SvJhaVAMfkV-nT4NnMdL6zQ@mail.gmail.com>
-Subject: Re: [PATCH] squash! reftable: reading/writing blocks
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87o881gpq7.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 30, 2021 at 2:24 PM Carlo Marcelo Arenas Bel=C3=B3n
-<carenas@gmail.com> wrote:
-> Avoid a possible infinite loop in platforms where size_t > long
-> by using instead the required type and checking for overflow
-> before doubling.
+Am 07.10.21 um 11:14 schrieb Ævar Arnfjörð Bjarmason:
+> But some tests in t/t4034/cpp/* would be great, and seem from the files
+> easy to add. E.g. wouldn't changing:
 
-Thanks for your attention to detail. Folded in.
+Ah, I didn't notice that we actually have tests for word-diff. I'll look
+into it and resubmit.
 
-I think the loop is rather hypothetical, though: the block size is
-limited to 2=C2=B2=E2=81=B4, so I think you can=C2=B4t make blocks that lar=
-ge.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-- Hannes
