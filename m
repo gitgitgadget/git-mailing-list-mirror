@@ -2,90 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8C48C433F5
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9504CC433F5
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:24:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83D366105A
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:13:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 657736124C
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 02:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232174AbhJGCKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Oct 2021 22:10:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230443AbhJGCKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Oct 2021 22:10:08 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14403C061746
-        for <git@vger.kernel.org>; Wed,  6 Oct 2021 19:08:15 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id v18so16955667edc.11
-        for <git@vger.kernel.org>; Wed, 06 Oct 2021 19:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=nQ8OG8r/skIMMCcEgtpMz3KQuyhxLsiM2sRQvLoAkpE=;
-        b=AZTH89NL8kn4EV4tx4KLp6M6vUgGxvqCswtvzgZJWadEF4sApOeEYxnUl5twTghlu6
-         qEsebOAiKnDCAVDxpVXgMtlxDUCIR1hqyUIQTWqI9tcwHJiurcIz+EuGUnoGtUH34y6w
-         qQb/4anTG0GUiA/1usuQFLb5RaA1rIvv2gQkRI4q0yiaSnRjWbCTqWEOt8K9VP4OvGO+
-         b8qAH2XmfG/+L1Ejqyd2FZD8/CgyBcEyjrrwbQhSeFHFmmD2vcwSOGmHAoUMDumVPUr1
-         QNVw+RKqf8e+TwMn963fFxxeoYUaFaEHF9nrn8sAqcySo6dAfEd5Y2wPAIT+lIMMU2FQ
-         ckOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=nQ8OG8r/skIMMCcEgtpMz3KQuyhxLsiM2sRQvLoAkpE=;
-        b=UHCf3OqGLiwnQ5SPOMZNGjifTYTT4GYJCRwmEoj2bahDU/1KqgVGvMdILwy7ogE43/
-         CEYLNXQT5PGFINU+RloOsHLyWqDje/BKGS33vvryDawFY46zrTD47Hms8eTg7kgOHLf2
-         9sG2mUxtutXc8+JacilMX8jsN9hrE6baM5wlgaOmVWOeykqTFMrWsnqaMdpI1TJ+YOiC
-         xI/6mhS2uH1Nm6jy6vEQhvMw7O59lp8zbMePvdg9cWrwyqHqq4wkFturFE8cOFwJdh9c
-         MBMGwiVWprfFPH7qqhu74Zb77Vst3GvvrjfYVjTpb0i9aAjfsYCCagLvMuMoZFM/FNAe
-         40dQ==
-X-Gm-Message-State: AOAM533ZCszoxS/id6O+ibuha3dce7qOJw6vvBHJYzOfvDhqnGco4kNb
-        p3b12FYLBKSnsyztAaHW9hAI+vW8fcJVUw==
-X-Google-Smtp-Source: ABdhPJxsuZ9EVomBPqiPUZrSxIGQZQpVFBehGTTFY1EmTOwNxRoWn3Q/NwqFD0WEDQNXdKj5tcIL2A==
-X-Received: by 2002:a17:906:5808:: with SMTP id m8mr2220101ejq.195.1633572493597;
-        Wed, 06 Oct 2021 19:08:13 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ee13sm8595627edb.14.2021.10.06.19.08.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 19:08:12 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S232182AbhJGC0f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Oct 2021 22:26:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34668 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230489AbhJGC0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Oct 2021 22:26:34 -0400
+Received: (qmail 27641 invoked by uid 109); 7 Oct 2021 02:24:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Oct 2021 02:24:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6266 invoked by uid 111); 7 Oct 2021 02:24:41 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Oct 2021 22:24:40 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 6 Oct 2021 22:24:40 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: ab/make-sparse-for-real
-Date:   Thu, 07 Oct 2021 04:01:41 +0200
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
+Message-ID: <YV5aaD418SyZqS/1@coredump.intra.peff.net>
 References: <xmqqfstdr8b5.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqqfstdr8b5.fsf@gitster.g>
-Message-ID: <871r4xio37.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfstdr8b5.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Oct 06, 2021 at 05:24:14PM -0700, Junio C Hamano wrote:
 
-On Wed, Oct 06 2021, Junio C Hamano wrote:
-
-> * ab/make-sparse-for-real (2021-09-22) 1 commit
->   (merged to 'next' on 2021-10-06 at 10e3c31d6a)
->  + Makefile: make the "sparse" target non-.PHONY
->
->  Prevent "make sparse" from running for the source files that
->  haven't been modified.
->
+> * tb/repack-write-midx (2021-10-01) 9 commits
+>   (merged to 'next' on 2021-10-06 at ccdd5aaf2a)
+>  + builtin/repack.c: pass `--refs-snapshot` when writing bitmaps
+>  + builtin/repack.c: make largest pack preferred
+>  + builtin/repack.c: support writing a MIDX while repacking
+>  + builtin/repack.c: extract showing progress to a variable
+>  + builtin/repack.c: rename variables that deal with non-kept packs
+>  + builtin/repack.c: keep track of existing packs unconditionally
+>  + midx: preliminary support for `--refs-snapshot`
+>  + builtin/multi-pack-index.c: support `--stdin-packs` mode
+>  + midx: expose `write_midx_file_only()` publicly
+> 
+>  "git repack" has been taught to generate multi-pack reachability
+>  bitmaps.
+> 
 >  Will merge to 'master'.
 
-I see you merged down the v2 of this[1], not the v3[2], thanks!
+Sorry not to catch this before it hit 'next', but there's a small leak
+in the test helper. This patch can go on top to fix it.
 
-I'm personally happier with the v2, but the v3 is just as useful for my
-purposes, and I understood that you/Ramsey had some flows/finger memory
-depending on the semantics of the existing "sparse" target.
+-- >8 --
+Subject: [PATCH] test-read-midx: fix leak of bitmap_index struct
 
-If it was a mistake I'm happy to submit a version of the v3 on top
-(since it's in "next" already), or if it was intended I'm happy to leave
-it be. Just checking.
+In read_midx_preferred_pack(), we open the bitmap index but never free
+it. This isn't a big deal since this is just a test helper, and we exit
+immediately after, but since we're trying to keep our leak-checking tidy
+now, it's worth fixing.
 
-1. https://lore.kernel.org/git/patch-v2-1.1-059829f2195-20210923T000654Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/patch-v3-1.1-b6ba99ca4cc-20210928T011319Z-avarab@gmail.com/
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/helper/test-read-midx.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index 0038559129..9d6fa7a377 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -85,11 +85,15 @@ static int read_midx_preferred_pack(const char *object_dir)
+ 		return 1;
+ 
+ 	bitmap = prepare_bitmap_git(the_repository);
+-	if (!(bitmap && bitmap_is_midx(bitmap)))
++	if (!bitmap)
+ 		return 1;
+-
++	if (!bitmap_is_midx(bitmap)) {
++		free_bitmap_index(bitmap);
++		return 1;
++	}
+ 
+ 	printf("%s\n", midx->pack_names[midx_preferred_pack(bitmap)]);
++	free_bitmap_index(bitmap);
+ 	return 0;
+ }
+ 
+-- 
+2.33.0.1340.gfe2cb2531f
+
