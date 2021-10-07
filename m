@@ -2,98 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A319C433EF
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 17:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF86C433FE
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 17:49:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00FD86121F
-	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 17:38:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B99BA61260
+	for <git@archiver.kernel.org>; Thu,  7 Oct 2021 17:49:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243314AbhJGRk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 13:40:29 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64464 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242882AbhJGRk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 13:40:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 084AA162BA3;
-        Thu,  7 Oct 2021 13:38:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1m2rFzlOiJ33oVxkT3mbvM4qLrgwrKQW0AAE5X
-        PiE6A=; b=IsOJkWFWBly9TkxzPwDZ1EY6K4m5DxN7sZdrMRCXWzMnFDUlQz3WwG
-        3whymhFkPa9P3eUG2WDfd8Kqn9GbA2RJd4yPf0Pt1qi2LQ9uotq+kdSIR87Z/43G
-        8S4HnYJwLMpBOh/J81eRKzTXDpRSsYh9JtbYGaHHbMYLScNAZcGW4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 00F1E162BA2;
-        Thu,  7 Oct 2021 13:38:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S243156AbhJGRvL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 13:51:11 -0400
+Received: from siwi.pair.com ([209.68.5.199]:42101 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243073AbhJGRvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 13:51:11 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id AA20A3F404F;
+        Thu,  7 Oct 2021 13:49:16 -0400 (EDT)
+Received: from WIN10-A.eucom.mil (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68060162BA1;
-        Thu,  7 Oct 2021 13:38:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v3 0/7] Gets rid of "if reflog exists, append to it
- regardless of config settings"
-References: <pull.1067.v2.git.git.1630947142.gitgitgadget@gmail.com>
-        <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
-        <CAFQ2z_PAs3fG1h31KWVXJ=02t1i9UvWPuD4tCK-ZWfewkPQJEw@mail.gmail.com>
-        <xmqqk0iqrp4q.fsf@gitster.g> <xmqqfsterotr.fsf@gitster.g>
-Date:   Thu, 07 Oct 2021 10:38:27 -0700
-In-Reply-To: <xmqqfsterotr.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        06 Oct 2021 11:27:28 -0700")
-Message-ID: <xmqqbl40razw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 6FF5A3F4047;
+        Thu,  7 Oct 2021 13:49:16 -0400 (EDT)
+Subject: Re: [PATCH] t/perf/perf-lib.sh: remove test_times.* at the end
+ test_perf_()
+To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1051.git.1633386543759.gitgitgadget@gmail.com>
+ <YVyPH59LpxFLHep0@nand.local> <YV3314Dnhj7srFZ4@coredump.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3f03ed89-d3db-32ba-3c1f-b8fac7cfb097@jeffhostetler.com>
+Date:   Thu, 7 Oct 2021 13:49:15 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 61B32AFC-2795-11EC-A191-98D80D944F46-77302942!pb-smtp21.pobox.com
+In-Reply-To: <YV3314Dnhj7srFZ4@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Not really.  I think the comment on the RFC still stands, and I do
-> not recall seeing a response to the point.
->
->     One potential harm this change will bring to us is what happens to
->     people who disable core.logAllRefUpdates manually after using the
->     repository for a while.  Their @{4} will point at the same commit no
->     matter how many operations are done on the current branch after they
->     do so.  I wouldn't mind if "git reflog disable" command is given to
->     the users prominently and core.logAllRefUpdates becomes a mere
->     implementation detail nobody has to care about---in such a world, we
->     could set the configuration and drop the existing reflog records at
->     the same time and nobody will be hurt.
->
->     If we keep the current behaviour, what are we harming instead?
->     Growth of diskspace usage is an obvious one, but disks are cheaper
->     compared to human brainwave cycles cost.
 
-IIRC, the only reason why reftable implementation may want to change
-the behaviour we have to avoid getting blamed for breaking is
-because it cannot implement "a reflog exists, and we need to record
-further ref movements by appending to it, no matter what the
-configuration says" when the existing reflog is empty, because its
-data structure lacks support for expressing "exists but empty".
+On 10/6/21 3:24 PM, Jeff King wrote:
+> On Tue, Oct 05, 2021 at 01:45:03PM -0400, Taylor Blau wrote:
+> 
+>>> GIT_PERF_REPEAT_COUNT=3 \
+>>> test_perf "status" "
+>>> 	git status
+>>> "
+>>>
+>>> GIT_PERF_REPEAT_COUNT=1 \
+>>> test_perf "checkout other" "
+>>> 	git checkout other
+>>> "
+>> [...]
+>>
+>> Well explained, and makes sense to me. I didn't know we set
+>> GIT_PERF_REPEAT_COUNT inline with the performance tests themselves, but
+>> grepping shows that we do it in the fsmonitor tests.
+> 
+> Neither did I. IMHO that is a hack that we would do better to avoid, as
+> the point of it is to let the user drive the decision of time versus
+> quality of results. So the first example above is spending extra time
+> that the user may have asked us not to, and the second is getting less
+> significant results by not repeating the trial.
+> 
+> Presumably the issue in the second one is that the test modifies state.
+> The "right" solution there is to give test_perf() a way to set up the
+> state between trials (you can do it in the test_perf block, but you'd
+> want to avoid letting the setup step affect the timing).
+> 
+> I'd also note that
+> 
+>    GIT_PERF_REPEAT_COUNT=1 \
+>    test_perf ...
+> 
+> in the commit message is a bad pattern. On some shells, the one-shot
+> variable before a function will persist after the function returns (so
+> it would accidentally tweak the count for later tests, too).
+> 
+> All that said, I do think cleaning up the test_time files after each
+> test_perf is a good precuation, even if I don't think it's a good idea
+> in general to flip the REPEAT_COUNT variable in the middle of a test.
+> 
+> -Peff
+> 
 
-I think the behaviour change described in the title of this message
-can be limited in the scope to hurt users a lot less, and can still
-satisfy the goal of helping reftable not getting blamed for
-breakage, perhaps by making the behaviour for an empty but existing
-reflog unspecified or implementation defined per backend.
+Yeah, I don't think I want to keep switching the value of _REPEAT_COUNT
+in the body of the test.  (It did feel a little "against the spirit" of
+the framework.)  I'm in the process of redoing the test to not need
+that.
 
-That would allow us to avoid situation where a user can say foo@{1}
-but it does not refer to the point where the branch's tip pointed
-just before the most recent update to it. As an empty but existing
-reflog would not give foo@{$n} for any value of $n, there is much
-less risk of confusing users if we did not append new entries to it,
-I would hope.
+
+
+There's a problem with the perf test assumptions here and I'm curious
+if there's a better way to use the perf-lib that I'm not thinking of.
+
+When working with big repos (in this case 100K files), the actual
+checkout takes 33 seconds, but the repetitions are fast -- since they
+just print a warning and stop.  In the 1M file case that number is ~7
+minutes for the first instance.)  With the code in min_time.perl
+silently taking the min() of the runs, it looks like the checkout was
+really fast when it wasn't.  That fact gets hidden in the summary report
+printed at the end.
+
+$ time ~/work/core/git checkout p0006-ballast
+Updating files: 100% (100000/100000), done.
+Switched to branch 'p0006-ballast'
+
+real	0m33.510s
+user	0m2.757s
+sys	0m15.565s
+
+$ time ~/work/core/git checkout p0006-ballast
+Already on 'p0006-ballast'
+
+real	0m0.745s
+user	0m0.214s
+sys	0m4.705s
+
+$ time ~/work/core/git checkout p0006-ballast
+Already on 'p0006-ballast'
+
+real	0m0.738s
+user	0m0.134s
+sys	0m6.850s
+
+
+I could use test_expect_success() for anything that does want
+to change state, and then save test_perf() for status calls
+and other read-only tests, but I think we lose some opportunities
+here.
+
+I'm open to suggestions here.
+
+Thanks,
+Jeff
 
