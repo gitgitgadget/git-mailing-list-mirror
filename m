@@ -2,124 +2,226 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A3DBC433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2286BC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:49:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D89660F35
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:30:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 032AE60EB6
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243683AbhJHWcc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 18:32:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243610AbhJHWcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 18:32:31 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE51C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 15:30:35 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id t9so43704499lfd.1
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 15:30:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WCB/5929vTCFKOoPkAVXo1hkQYDFPUkBNXHLFAGhTDQ=;
-        b=qP7K84TjYqt2puTwSAJ5wPRwhVXCnA2f4dHQpI1CMppjQtxCq85mFVGUHxKsWw6dDQ
-         xLGOTgofHNCCzHLohxSYiujp/AC9B3dJ9WKbwtpnEWaOw7jfO+F+yh6jLeO/eWQEIF0T
-         VyuTvv3MTOSH915wm1KQKuaA0Ej5uF4MW77kclw9iouqtLpzgTlcb+JTcxWdDcuP2ZjJ
-         tyPLI7/uyKGHNGK7mm1mNetxfZkFeK62zkjk7baL7J1yo6WipkMhYPq9wJKHLXWs9bYB
-         eJUPh+q/67it4mL20B8UYxcwxGrswtosWHVN+57Z+Hhpbv5IvMirD3Zv7G/bk4V9GbVt
-         DKPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WCB/5929vTCFKOoPkAVXo1hkQYDFPUkBNXHLFAGhTDQ=;
-        b=I0P8g/qCDzvcUi9YAglDfmkP/E7c1Z2L/5RjGrymF2hp0xmHAwMwMzIYK3eL8g9Xre
-         ECTsUHNKilgEfY0c9FLEvT5ZLdNrNDuC7hFfnMwwd/6oimNWZAmqcpoFaCHOQ3PgUt3+
-         BvRzQjAweVQIIEVz3WI6eIK3c49neY2cw99f805SffKXjRYhobjnGh1xmTpMkdHvjyu1
-         AP5ieajEEaeX+HbpIx8MTGAtzR2HYarscwfzQBvpoUl2AGFkk8PEaMgv482khJqxsOmZ
-         kbZRDs8ff6mvgNdlKgPnuL6KqYvpMkR1Ej6LqZA2bw8An5lZNYjmWaVy6YhljuMco+iY
-         A1KQ==
-X-Gm-Message-State: AOAM5319Q/+ho+X0LplpD3mcolZwXdP7aLwmix8E3c73CeBJL6K2rgBw
-        xsQL74PQC89v6MZeeqIs6W6DwtU0rdUzlKqcyWlHcbX0
-X-Google-Smtp-Source: ABdhPJzNiqr+yOjxYODqr0FOEpXs6A20ikogNvrfqR9+HO1a+8/pSQePJ2HrKYtTo+7tIjYrDkRicf8fEF4CTlrL0+E=
-X-Received: by 2002:a19:6b04:: with SMTP id d4mr12917310lfa.74.1633732233737;
- Fri, 08 Oct 2021 15:30:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqq8rzhmsi7.fsf@gitster.g> <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
- <87v92lxhh4.fsf@evledraar.gmail.com> <xmqqilykliiz.fsf@gitster.g>
- <20210928210059.vy5isvmcj75vufdu@neerajsi-x1.localdomain> <xmqq8rzgi8a7.fsf@gitster.g>
- <CANQDOddZ-KYTB4q0nYNDinis8aKktm6Ek6F+mJouTV-yRtTpUw@mail.gmail.com>
- <xmqq4k9spk8p.fsf@gitster.g> <CABPp-BE=7+XifO3mAzNB90Y0vatvhwk7wwM4ptBrg79BhiFqSg@mail.gmail.com>
-In-Reply-To: <CABPp-BE=7+XifO3mAzNB90Y0vatvhwk7wwM4ptBrg79BhiFqSg@mail.gmail.com>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Fri, 8 Oct 2021 15:30:22 -0700
-Message-ID: <CANQDOdeSjKsGUYacGwx-fnigqiocbyDOfz2O8im6-7txDCuZzQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-To:     Elijah Newren <newren@gmail.com>
+        id S231941AbhJHWvU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 18:51:20 -0400
+Received: from mta-05-3.privateemail.com ([68.65.122.15]:32797 "EHLO
+        MTA-05-3.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231876AbhJHWvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 18:51:19 -0400
+Received: from mta-05.privateemail.com (localhost [127.0.0.1])
+        by mta-05.privateemail.com (Postfix) with ESMTP id 45CE71800315;
+        Fri,  8 Oct 2021 18:49:23 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.238])
+        by mta-05.privateemail.com (Postfix) with ESMTPA id C63D5180030E;
+        Fri,  8 Oct 2021 18:49:22 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: [PATCH v12 1/3] grep: refactor next_match() and match_one_pattern() for external use
+Date:   Fri,  8 Oct 2021 18:49:16 -0400
+Message-Id: <20211008224918.603392-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Junio.  I'd be happy to have my change go in first.  I'm hoping
-that we'll be able to get a lot of mileage with batch mode in Git For
-Windows early on.
+These changes are made in preparation of, the colorization support for the
+"git log" subcommands that, rely on regex functionality (i.e. "--author",
+"--committer" and "--grep"). These changes are necessary primarily because
+match_one_pattern() expects header lines to be prefixed, however, in
+pretty, the prefixes are stripped from the lines because the name-email
+pairs need to go through additional parsing, before they can be printed and
+because next_match() doesn't handle the case of
+"ctx == GREP_CONTEXT_HEAD" at all. So, teach next_match() how to handle the
+new case and move match_one_pattern()'s core logic to
+headerless_match_one_pattern() while preserving match_one_pattern()'s uses
+that depend on the additional processing.
 
-Thanks,
-Neeraj
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+---
+v5: separate grep changes from pretty changes.
 
-On Thu, Oct 7, 2021 at 11:52 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Thu, Oct 7, 2021 at 3:01 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Neeraj Singh <nksingh85@gmail.com> writes:
-> >
-> > > Elijah,
-> > >
-> > > Here's a branch of your changes based on the amalgamated tmp-objdir code:
-> > > https://github.com/neerajsi-msft/git/commits/neerajsi/remerge-diff
-> > >
-> > > This commit adapts your code to use the amalgamated API:
-> > > https://github.com/neerajsi-msft/git/commit/725328fe1d8be8326d2ddef78e164ca21450b100
-> >
-> > It seems that the discussion petered out at this point.
-> >
-> > Right now I have a version of ns/remerge-diff before this adjustment
-> > in 'seen', and Neeraj's latest version is kept out of 'seen' as they
-> > do not play well together without an adjustment like that.
-> >
-> > What's the good way forward?  I do not deeply care which one goes
-> > first, but I have a feeling that the need by remerge-diff that wants
-> > to discard temporary objects would involve more work to make it safe
-> > than the need by batched fsync where newly created objects will not
-> > be discarded but merely moved to the primary store before the end of
-> > the operation, so from that point of view, it seems simpler and
-> > safer to queue ns/batched-fsync topic first (especially given that
-> > it is a no-op until the end-user opts into the experiment), and have
-> > a remerge-diff that uses the infrastructure from Neeraj's topic.
-> >
-> > What's your take on the rebase Neeraj made, Elijah (at the URL
-> > above)?
->
-> I meant to dig further, but nearly all my git time in the last week
-> and a half was attempting to keep up with other patch reviews.  My git
-> time is fast disappearing in the near term, and it's not clear how
-> much, if any, time I'll have to work on patches (or even continued
-> reviewing) before, say, mid-November.  I most likely won't be able to
-> do any discussion-prep work in advance of the Git Contributor's
-> Summit, and might not even be able to attend anymore.
->
-> I had looked over Neeraj's patches and they looked reasonable.  I
-> thought there might be some tweaks that I could try out, but at this
-> point, just take what he has and keep my topic as expecting an update.
-> I'll circle back eventually.
->
-> Sorry for the delay.
+v6: rescope some variables.
+
+v7: export header_field[] and allow for subsequent matches on header lines
+    in match_one_pattern().
+
+v8: add headerless_match_one_pattern() and move header_field[] back.
+
+v9: get rid of the new check in headerless_match_one_pattern(), move the
+    header pattern filtering logic in grep_next_match() and document
+    grep_next_match() in grep.h.
+
+v10: add a "magic" comment in grep_next_match() to signify a fall through
+     in the switch statement.
+---
+ grep.c | 79 ++++++++++++++++++++++++++++++++++++----------------------
+ grep.h |  9 +++++++
+ 2 files changed, 58 insertions(+), 30 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 14fe8a0fd2..fe847a0111 100644
+--- a/grep.c
++++ b/grep.c
+@@ -944,10 +944,10 @@ static struct {
+ 	{ "reflog ", 7 },
+ };
+ 
+-static int match_one_pattern(struct grep_pat *p,
+-			     const char *bol, const char *eol,
+-			     enum grep_context ctx,
+-			     regmatch_t *pmatch, int eflags)
++static int headerless_match_one_pattern(struct grep_pat *p,
++					const char *bol, const char *eol,
++					enum grep_context ctx,
++					regmatch_t *pmatch, int eflags)
+ {
+ 	int hit = 0;
+ 	const char *start = bol;
+@@ -956,25 +956,6 @@ static int match_one_pattern(struct grep_pat *p,
+ 	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
+ 		return 0;
+ 
+-	if (p->token == GREP_PATTERN_HEAD) {
+-		const char *field;
+-		size_t len;
+-		assert(p->field < ARRAY_SIZE(header_field));
+-		field = header_field[p->field].field;
+-		len = header_field[p->field].len;
+-		if (strncmp(bol, field, len))
+-			return 0;
+-		bol += len;
+-		switch (p->field) {
+-		case GREP_HEADER_AUTHOR:
+-		case GREP_HEADER_COMMITTER:
+-			strip_timestamp(bol, &eol);
+-			break;
+-		default:
+-			break;
+-		}
+-	}
+-
+  again:
+ 	hit = patmatch(p, bol, eol, pmatch, eflags);
+ 
+@@ -1025,6 +1006,36 @@ static int match_one_pattern(struct grep_pat *p,
+ 	return hit;
+ }
+ 
++static int match_one_pattern(struct grep_pat *p,
++			     const char *bol, const char *eol,
++			     enum grep_context ctx, regmatch_t *pmatch,
++			     int eflags)
++{
++	const char *field;
++	size_t len;
++
++	if (p->token == GREP_PATTERN_HEAD) {
++		assert(p->field < ARRAY_SIZE(header_field));
++		field = header_field[p->field].field;
++		len = header_field[p->field].len;
++		if (strncmp(bol, field, len))
++			return 0;
++		bol += len;
++
++		switch (p->field) {
++		case GREP_HEADER_AUTHOR:
++		case GREP_HEADER_COMMITTER:
++			strip_timestamp(bol, &eol);
++			break;
++		default:
++			break;
++		}
++	}
++
++	return headerless_match_one_pattern(p, bol, eol, ctx, pmatch, eflags);
++}
++
++
+ static int match_expr_eval(struct grep_opt *opt, struct grep_expr *x,
+ 			   const char *bol, const char *eol,
+ 			   enum grep_context ctx, ssize_t *col,
+@@ -1143,7 +1154,7 @@ static int match_next_pattern(struct grep_pat *p,
+ {
+ 	regmatch_t match;
+ 
+-	if (!match_one_pattern(p, bol, eol, ctx, &match, eflags))
++	if (!headerless_match_one_pattern(p, bol, eol, ctx, &match, eflags))
+ 		return 0;
+ 	if (match.rm_so < 0 || match.rm_eo < 0)
+ 		return 0;
+@@ -1158,19 +1169,26 @@ static int match_next_pattern(struct grep_pat *p,
+ 	return 1;
+ }
+ 
+-static int next_match(struct grep_opt *opt,
+-		      const char *bol, const char *eol,
+-		      enum grep_context ctx, regmatch_t *pmatch, int eflags)
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags)
+ {
+ 	struct grep_pat *p;
+ 	int hit = 0;
+ 
+ 	pmatch->rm_so = pmatch->rm_eo = -1;
+ 	if (bol < eol) {
+-		for (p = opt->pattern_list; p; p = p->next) {
++		for (p = ((ctx == GREP_CONTEXT_HEAD)
++			   ? opt->header_list : opt->pattern_list);
++			  p; p = p->next) {
+ 			switch (p->token) {
+-			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_HEAD:
++				if ((field != GREP_HEADER_FIELD_MAX) &&
++				    (p->field != field))
++					continue;
++				/* fall thru */
++			case GREP_PATTERN: /* atom */
+ 			case GREP_PATTERN_BODY:
+ 				hit |= match_next_pattern(p, bol, eol, ctx,
+ 							  pmatch, eflags);
+@@ -1261,7 +1279,8 @@ static void show_line(struct grep_opt *opt,
+ 			else if (sign == '=')
+ 				line_color = opt->colors[GREP_COLOR_FUNCTION];
+ 		}
+-		while (next_match(opt, bol, eol, ctx, &match, eflags)) {
++		while (grep_next_match(opt, bol, eol, ctx, &match,
++				       GREP_HEADER_FIELD_MAX, eflags)) {
+ 			if (match.rm_so == match.rm_eo)
+ 				break;
+ 
+diff --git a/grep.h b/grep.h
+index 3cb8a83ae8..808ad76f0c 100644
+--- a/grep.h
++++ b/grep.h
+@@ -191,6 +191,15 @@ void compile_grep_patterns(struct grep_opt *opt);
+ void free_grep_patterns(struct grep_opt *opt);
+ int grep_buffer(struct grep_opt *opt, const char *buf, unsigned long size);
+ 
++/* The field parameter is only used to filter header patterns
++ * (where appropriate). If filtering isn't desirable
++ * GREP_HEADER_FIELD_MAX should be supplied.
++ */
++int grep_next_match(struct grep_opt *opt,
++		    const char *bol, const char *eol,
++		    enum grep_context ctx, regmatch_t *pmatch,
++		    enum grep_header_field field, int eflags);
++
+ struct grep_source {
+ 	char *name;
+ 
+-- 
+2.33.0
+
