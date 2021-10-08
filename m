@@ -2,117 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC32DC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 09:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C73CEC433F5
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 09:16:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DEDD60F6E
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 09:09:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB1B460F6C
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 09:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbhJHJLo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 05:11:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58158 "EHLO
+        id S237104AbhJHJS0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 05:18:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhJHJLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 05:11:44 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC914C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 02:09:48 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id s15so27662088wrv.11
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 02:09:48 -0700 (PDT)
+        with ESMTP id S236957AbhJHJSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 05:18:24 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DD4C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 02:16:29 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id k23so7121895pji.0
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 02:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sWPP6vWfoIZX7ih3tcHVj39Ovmiga1ioR6BG9/HgBl4=;
-        b=RocZtw30FmLiFqJNbR11KS6e4TSFR0K7sYOpIXsCAn1Egp1Zwtsv9r86+aY2iWcm6Z
-         bHcm4xCsVRgSDQLs7/0ltD1sVa3GCIHjUR8utUY96ItGxotxND8GCqJZdvPu7jJIbI+u
-         5iryIEtaM73TSfyJL0/D+UlMdDtodH9POchWnVZspAPOc4dc5pERP8XpeOs5pA7iw0HD
-         Lucbc8DhLuPW9pWbUvsh3wrp0C0/y6SEz7t3BtpKxURLXQNQhJ4Rl3pa9tyhvp9FtU06
-         1oCz99ChlA8iID/g3gvkzYZayguXvhd4xKR7bL4+fnphHxwIDo8JJdRZQNE/XxprOrFS
-         K77w==
+        bh=77fDDclkZ0uPeVoZdicBnKC29McFXjmXp18oCeIaCb4=;
+        b=RVzOzF05OWwoKixNpES7o4PjFSc5w3Vyq4DY5t5oUp7ajFgiFEObrdUuwoUnI8OwwE
+         VQ//p5wviSVv1Kwbvpau9C/y6OIcK9h9iSzYXqF8Mg4zry3pDF6JgTP/tak3rMeeNvCn
+         T03HSqAHSoEvfThPVLBlzKEuZ1MKsJmVauOCR4VsAk/vUzzrxcTU4Brkjip3O1TjQVpu
+         hwEREWSMdbxUn9xCs1ZtLNGHv7HpZCQLj9q/0jjuegCcPx14vqolRO/Ij//N5Spg93cw
+         +SHAQnkkmxPVt1hT1J1+V7Lnlu42JTbMTy1+bB6BBRORnAg9G7oi8qcQgfDnANl+jGBW
+         5FrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sWPP6vWfoIZX7ih3tcHVj39Ovmiga1ioR6BG9/HgBl4=;
-        b=F6UAPkzL0F9u5WXG7sgAvdKRlOlW0CbYV6ys/dnqcp5E3TqEraBPAfikQc9dm6tt3u
-         Q16T9icMZ8oCai1KmdHgPKNZ1mfGaTIFQB3fsqUSKvH3jirZq7zGM5jZYVfj7Af6G8a0
-         VEe2B0v+GSCwROoRlS9HGURjwgV91nTCjSYP9YeBZ+zOsPgHo3h7RrFKufuD3Phk0pR1
-         Zy2jbZJi7q8g6ZKtYVax1s7LD97UMs8EDTTvUPTEpeadxtoqfV0744McPWD+rhxM1sf8
-         uC2iXu6qqlI0AcN9cChfL4v960AVGX+5TuQKrwWcEpsLPpdWTHTSRmR9lwPeFo+sVz0T
-         /eww==
-X-Gm-Message-State: AOAM532A1ZW3PVMoQQtegTesrYskXRC8M8ie35nO8ERQwFgEpTdKcuME
-        vta0NUW8CFbvII06Bq62ZZk=
-X-Google-Smtp-Source: ABdhPJwdBn9fgNBtB/OFZ34SDIIsUQuuKlA3FuVYbxcMgh4HbxDcrdHvQzi0bXPwEd6WKH0i1HLvjQ==
-X-Received: by 2002:a5d:64af:: with SMTP id m15mr2486943wrp.117.1633684187518;
-        Fri, 08 Oct 2021 02:09:47 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id h17sm1900920wrx.55.2021.10.08.02.09.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Oct 2021 02:09:47 -0700 (PDT)
-Message-ID: <4ccaad06-a1ae-bd1b-f25d-bfa899ffa98f@gmail.com>
-Date:   Fri, 8 Oct 2021 10:09:46 +0100
+        bh=77fDDclkZ0uPeVoZdicBnKC29McFXjmXp18oCeIaCb4=;
+        b=xprdcXC2UcENLDPMpK9u01LDJ8hkOxisfnXrTMXHxJl7Y5O00N0h8Bxw/94cKVGH6y
+         YamNjWpMphkPrCuLtPXyGo0rmbIjEE3kfEAgGfFYKL8u4RYcsAzpgAPEYDoaPhuUiZ+P
+         xS7b+q+jiEoMIzvgtVw1X2kYieJBqYXcnEImce5d2VjySDHNT8R2pxJLhbhv41aF2Pe+
+         5/2jju+5tnoqkF71wA9+1paQfFEZkdBQtXigyUGQq0kkMajA+8c+gYOw3fgdFL1Wm7Nf
+         Gw2vI565IpLJHTA1K8FSEjXUSxUoEusPgPtXjw0cDJEDmc+iJ+Ms9jhphu/01G6OxLxa
+         O8VA==
+X-Gm-Message-State: AOAM530BnGt14mFxpGRTrecQ1NqhLt+fh4+blaL8S/u9OZXE81GHcP5M
+        7qYaIp/QeB6TR95SJM0aw7XXORzdsEU=
+X-Google-Smtp-Source: ABdhPJxUmuyekWY/29eNTMVeu+RImGUXVk1vwgjGksWOyzJuwZblWsnPblW9eaHkuIWJf1O2KBAmVg==
+X-Received: by 2002:a17:902:bd8d:b0:13a:8c8:a2b2 with SMTP id q13-20020a170902bd8d00b0013a08c8a2b2mr8346392pls.89.1633684588751;
+        Fri, 08 Oct 2021 02:16:28 -0700 (PDT)
+Received: from ubuntu.mate (subs28-116-206-12-49.three.co.id. [116.206.12.49])
+        by smtp.gmail.com with ESMTPSA id q2sm10495908pjo.27.2021.10.08.02.16.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 02:16:28 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        "Dr . Matthias St . Pierre" <m.st.pierre@ncp-e.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v5 0/2] blame: documentation update
+Date:   Fri,  8 Oct 2021 16:16:12 +0700
+Message-Id: <20211008091614.732584-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] sparse index: fix use-after-free bug in
- cache_tree_verify()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1053.v2.git.1633600244854.gitgitgadget@gmail.com>
- <pull.1053.v3.git.1633630041829.gitgitgadget@gmail.com>
- <xmqqee8wpm0u.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqee8wpm0u.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/10/2021 22:23, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>       * Fixed the spelling of Stolee's name (sorry Stolee)
->>       * Added "-q" to the test to prevent a failure on Microsoft's fork[1]
->>      
->>      [1]
->>      https://lore.kernel.org/git/ebbe8616-0863-812b-e112-103680f7298b@gmail.com/
-> 
-> I've seen the exchange, but ...
-> 
->> -	for OPERATION in "merge -m merge" cherry-pick rebase
->> +	for OPERATION in "merge -m merge" cherry-pick "rebase --apply -q" "rebase --merge"
->>   	do
-> 
-> ... it looks too strange that only one of them requires a "--quiet"
-> option.  Is it a possibility to get whoever's fork corrected so that
-> it behaves sensibly without requiring the "-q" option only for the
-> particular rebase backend?
+Document the default output format for git-blame(1), as well as the
+--color-* options which are currently undocumented but mentioned in
+usage help.
 
-The issue is caused by a patch that Microsoft is carrying that stops 
-apply from creating paths with the skip-worktree bit set. As they're 
-upstreaming their sparse index and checkout work I expect it will show 
-up on the list sooner or later. I agree the "-q" is odd and it also 
-means the test is weaker but I'm not sure what else we can do.
+Bagas Sanjaya (2):
+  blame: describe default output format
+  blame: document --color-* options
 
-> In the meantime, I'll queue the patch as-is (I actually queued the
-> previous round with namefix already).
+ Documentation/blame-options.txt | 11 +++++++++++
+ Documentation/config/color.txt  | 33 ++++++++++++++++++---------------
+ Documentation/git-blame.txt     | 17 +++++++++++++++--
+ 3 files changed, 44 insertions(+), 17 deletions(-)
 
-Thanks
+(NOTE: This is resend of
+https://lore.kernel.org/git/20211008043343.189651-1-bagasdotme@gmail.com/T/#t,
+due to forgetting to mark the linked patchset as v5. Sorry for that).
 
-Phillip
-
-> Thanks.
-> 
+base-commit: 106298f7f9cca4158a980de149ef217751e1f943
+-- 
+An old man doll... just what I always wanted! - Clara
 
