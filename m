@@ -2,74 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5541C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE3FBC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:03:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C638160F57
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:02:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6E4D610E7
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241460AbhJHUEp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 16:04:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36114 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231408AbhJHUEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 16:04:44 -0400
-Received: (qmail 6169 invoked by uid 109); 8 Oct 2021 20:02:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Oct 2021 20:02:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16641 invoked by uid 111); 8 Oct 2021 20:02:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Oct 2021 16:02:48 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 8 Oct 2021 16:02:48 -0400
-From:   Jeff King <peff@peff.net>
-To:     Alan Mackenzie <acm@muc.de>
-Cc:     git@vger.kernel.org
-Subject: Re: How do I get the file contents from an arbitrary revision to
- stdout?
-Message-ID: <YWCj6NqMrxksN1V8@coredump.intra.peff.net>
-References: <YWCFFcNeNVTYcELN@ACM>
+        id S241939AbhJHUFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 16:05:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58395 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231589AbhJHUFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 16:05:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57593E311E;
+        Fri,  8 Oct 2021 16:03:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZbZxmHP4Cc0s5MB9ZnU2/Qs2QM9rV3qrBpHS1C
+        B9dHs=; b=Tl5eN14mH8rMTvdNcUnAPeLCCzpxcxswT9Ic9y26+RVf7cx0HeqfXt
+        Mn6YFWsz1/y7hNZfUgy7FFi7gDu9hXP1pKJ0bE/AVBXc1zFY64EE61efLVgrMxxH
+        Omrv8TAggY3nkvARPxYPoOxb4hV9F98/N/UVDkTlx23sRHg6y1KLA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EC1EE3116;
+        Fri,  8 Oct 2021 16:03:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 996BAE3115;
+        Fri,  8 Oct 2021 16:03:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
+References: <xmqqfstdr8b5.fsf@gitster.g>
+        <YV5aaD418SyZqS/1@coredump.intra.peff.net>
+        <YV5dmkkuCqAY2qqG@coredump.intra.peff.net>
+        <87sfxdgtpu.fsf@evledraar.gmail.com>
+        <YV/EnxkTvWWZ6xVD@coredump.intra.peff.net>
+Date:   Fri, 08 Oct 2021 13:03:08 -0700
+In-Reply-To: <YV/EnxkTvWWZ6xVD@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 8 Oct 2021 00:10:07 -0400")
+Message-ID: <xmqqsfxbjncz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YWCFFcNeNVTYcELN@ACM>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C28688D2-2872-11EC-9FDC-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 08, 2021 at 05:51:17PM +0000, Alan Mackenzie wrote:
+Jeff King <peff@peff.net> writes:
 
-> I would like there to be a command something like:
-> 
->     $ git cat bar-branch -- foo.c
-> 
-> ..  Is there such a command, and if so, what's it called and how do I use
-> it?  I assumed it might be git cat-file, but I couldn't get it to work,
-> and couldn't understand it's man page.
+> They do have some limits posted here:
+>
+>   https://scan.coverity.com/faq#frequency
+>
+> It's on the order of 3 builds per day for a code base of our size. Which
+> is plenty for our integration branches, but not enough to test every
+> topic branch.
 
-Konstantin pointed you at git-show, which is what I would have used. But
-I just wanted to mention that you were on the right track. The
-invocation you wanted was:
-
-  git cat-file blob bar-branch:foo.c
-
-or:
-
-  git cat-file -p bar-branch:foo.c
-
-(the "-p" is "pretty-print based on the object's type", so the two are
-equivalent).
-
-> Where might I have found this information for myself?
-
-You found the cat-file manpage, which I agree is a bit thick. An
-Examples section would probably help a lot.
-
-The other thing that might have helped is the gitrevisions(7) page,
-especially the <rev>:<path> entry. Your example above to use "<revs> --
-<pathspec>" was a good thought, but the path there is for limiting diffs
-and traversals. What you want here is to specify the name of a single
-object, and gitrevisions gives all the ways to do that.
-
--Peff
+I usually have at least two pushout of 'seen' (one with the full set
+of 'seen' including known-to-be-broken topic integrations, the other
+with seen~$some_hopefully_small_number that I didn't see brekaage in
+my local build), and then on graduation days 'next' and 'master' are
+also updated, so 3 is cutting very close ;-)
