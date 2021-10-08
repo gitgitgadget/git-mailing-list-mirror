@@ -2,77 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5BBC433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CF2C433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:19:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5244610E5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:19:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A345A61073
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231971AbhJHUVH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 16:21:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43504 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbhJHUVG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 16:21:06 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F3E7C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 13:19:11 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id z2-20020a254c02000000b005b68ef4fe24so14053579yba.11
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 13:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=WGkLO9J6iU+sQy44FnsGWMCSfUpJIeeUfT6AelnHVJY=;
-        b=hdZXMw8aZnl6RwEpJ6SPe7ZMD/P3HAGgebs4qpjWFRF2uPVeAPIkSa22hlwzRIBJLe
-         zvA//eVmSAyL4CQheHrBjhD5MlKeYbKJ0NVKAFSxYdTOKXPWybwXeDk51h6W5yge+iQm
-         s7Dq/qP6RarTPJnPox9FtaBppndbfFKCChHmG2E8iVwKtfWuQgImmr0HP+G8yu6nQPvD
-         +VfO4haEqDP2HHuGUHFuKuqDfSfafBpYRosmZ5+5oDHBH/QQB0HO/Tt71/NiOn2npTl7
-         wSt6wXe287pNk2z6Av7awuiL3EsMzKoaNjlODq5aGfVUZ6yl/4lUDVjfTwuB5kL6YCGG
-         W9uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=WGkLO9J6iU+sQy44FnsGWMCSfUpJIeeUfT6AelnHVJY=;
-        b=OsQdXgOKhpWVNyVzGcGT0zBoDdC0o/YcHlcTd5wur8GNwzD44ZuqoPdNC8V1Ludo/t
-         GBZAKspiH9BOLZc+p7KIO7NWkxL7MDw40rMsQegx6pr7OmJOD40YT8ZiM4sy1lKJz860
-         4LQfXGHWjNlkQ3raXmZxLpvdPjGNOXPZP3PVZVy7ELxAkN7B1s8HV+L0qxBlffARHPqx
-         CmHlwtQNSCasxqZBY4W7gbNNtI8cUMqXKEPcv8dUbmEQqlJ3rNm4DWErV9unUTyXWdsY
-         oL1Nx8YUyircf/FEnWxXiJxPWT1GH4TNr6v5GV6puPcbYE4DFKHe9Ps/u/5DMRgBAlj4
-         MVnw==
-X-Gm-Message-State: AOAM530RibSLc/6dXP+HZnv/J5j26KUBTIogacLmTfuQs5kJFsAO/Lgo
-        B0GTpBG4SoheohgqNT/amK96Q0bsx1d9V9wQgndV
-X-Google-Smtp-Source: ABdhPJw95YJIRXuUEhKZr5d5nZiBZLw0G8ksOMUHhotr8XLQYwzcF0KzNBp5E1QHdArXNzNsAbJ/ptrMXQcahuZP0P0u
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:bb49:: with SMTP id
- b9mr6049977ybk.362.1633724350320; Fri, 08 Oct 2021 13:19:10 -0700 (PDT)
-Date:   Fri,  8 Oct 2021 13:19:08 -0700
-In-Reply-To: <YV89pOZh+qj/oplL@google.com>
-Message-Id: <20211008201908.1325631-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <YV89pOZh+qj/oplL@google.com>
-X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
-Subject: Re: [PATCH v3 4/7] merge-{ort,recursive}: remove add_submodule_odb()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     steadmon@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S231986AbhJHUVn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 16:21:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36134 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230091AbhJHUVm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 16:21:42 -0400
+Received: (qmail 6204 invoked by uid 109); 8 Oct 2021 20:19:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Oct 2021 20:19:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17021 invoked by uid 111); 8 Oct 2021 20:19:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Oct 2021 16:19:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 8 Oct 2021 16:19:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
+Message-ID: <YWCn4tpr9RWsRxvr@coredump.intra.peff.net>
+References: <xmqqfstdr8b5.fsf@gitster.g>
+ <YV5aaD418SyZqS/1@coredump.intra.peff.net>
+ <YV5dmkkuCqAY2qqG@coredump.intra.peff.net>
+ <87sfxdgtpu.fsf@evledraar.gmail.com>
+ <YV/EnxkTvWWZ6xVD@coredump.intra.peff.net>
+ <xmqqsfxbjncz.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsfxbjncz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
-> > +			      int abbrev_len)
-> > +{
-> > +	strbuf_repo_add_unique_abbrev(sb, the_repository, oid, abbrev_len);
-> > +}
-> > +
-> 
-> Should strbuf_add_unique_abbrev() be inlined and moved to the header?
+On Fri, Oct 08, 2021 at 01:03:08PM -0700, Junio C Hamano wrote:
 
-I felt that it wasn't worth writing '#include "repository.h"' in
-strbuf.h just so that I could inline it. (The function signature just
-uses "struct repository" opaquely so "struct repository;" is fine, but
-the function definition itself will require full information about
-the_repository so we would need to include the file.)
+> Jeff King <peff@peff.net> writes:
+> 
+> > They do have some limits posted here:
+> >
+> >   https://scan.coverity.com/faq#frequency
+> >
+> > It's on the order of 3 builds per day for a code base of our size. Which
+> > is plenty for our integration branches, but not enough to test every
+> > topic branch.
+> 
+> I usually have at least two pushout of 'seen' (one with the full set
+> of 'seen' including known-to-be-broken topic integrations, the other
+> with seen~$some_hopefully_small_number that I didn't see brekaage in
+> my local build), and then on graduation days 'next' and 'master' are
+> also updated, so 3 is cutting very close ;-)
+
+Hmm, yeah. They say "21 builds per week", which would be plenty (you
+don't push out integrations every day), but I think they may also have a
+per-day limit.
+
+I'm not sure what happens when you hit the limit. If it just silently
+skips the analysis, that's fine (we'll pick up the changes the next
+day). If it causes a CI failure that nags you, that is less good. But
+probably something we could work around in the Actions commands.
+
+TBH, though, I think just building "seen" would be sufficient for this
+kind of analysis. Most CI is about "make sure we pass the tests and do
+not graduate topics if it doesn't". This is much more about "generate a
+set of possibly-bogus annotations for some human to look at". Given the
+topic branch flow you use, it's pretty unlikely for a problem to
+_appear_ in master or next. And even if they do, it will be detected the
+next time seen is run.
+
+-Peff
