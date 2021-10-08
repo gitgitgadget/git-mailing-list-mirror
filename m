@@ -2,114 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1601EC433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 06:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44657C433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:14:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD0AE6101E
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 06:52:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D51E60FD9
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbhJHGyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 02:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55140 "EHLO
+        id S232088AbhJHHQm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 03:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbhJHGyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 02:54:05 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C027C061570
-        for <git@vger.kernel.org>; Thu,  7 Oct 2021 23:52:10 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id a25so16662004edx.8
-        for <git@vger.kernel.org>; Thu, 07 Oct 2021 23:52:10 -0700 (PDT)
+        with ESMTP id S229490AbhJHHQk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 03:16:40 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A765C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 00:14:45 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id d3so5277572edp.3
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 00:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gGLjfFpv8XocPLW8PIxS/zwu+PwXJUhgV19tVCzqPmU=;
-        b=HlZmqcnog4L+sFgoPN0fw5Ir3Tu5Y1iAmFEj6356lR0jgmc4Zhx7/sHCoJYt2HRh6P
-         J3pBeFuSIgUqjAPej75q3ET9NVUt1oQLINNwrGxrA8Ag1Mg2wK+SLZ/8sna6iDo7jMjP
-         4qLeXGqBzgbIqyJ2imCvMfqpjWc8qnlRll5OqWptfvhrd3Dm/jZTV0+li3Szp161apt5
-         W4ATGqBdCSEfTs06emTDmVAduX6qHtqMDysm6cMmnol5Iq7P4LqwQOjnw/nUddcD29RZ
-         U0Fv0ZBTcKcOIJD4yH5jPLC6ftAIezySleXYNxYV/rQXJBE0Sx2pPMbFvnyOdu4Twlrb
-         zfDQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=IOKq9xl1XQF8WfvxWV+gtL1fkz6pTODZzcUPA4r0UVo=;
+        b=lVDw8ZU+mG/B1NoznArLwMuE0rm0mIYrTkJltXFPvzq8Z/6Y7gHpyQjIT1jKjNMO17
+         gdQcaL9LQj4Z+jWy6ezDG0sISH6w5lb+STeRqoEC8V1CWkOzVqblSVipgqTPD5j2aQf9
+         RdIbTpF7hFa2nS5mi88XdDmOG//l6I0kXVNxbHcTMZZxLv/H+xOpG2mTYDq4hBSFbcJz
+         6rTEE8xqIh/JLl8oHt/e1/eS5JibO83/MsYqoFZQ+EWRR8BJD522/N/L9Jp3pOrasoab
+         J6lKIFDu2/3SjeyMmhCo+cVySsaKcguSxZTlBuYzYqU2gMD8U69rM9HvTsGtR3PE6mKp
+         BzjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gGLjfFpv8XocPLW8PIxS/zwu+PwXJUhgV19tVCzqPmU=;
-        b=beltKChP9XdHef8Nblqb79XcPngKhWORj2bGYSoDzsCbQbdQODDfoJ5jA/1a9zqdTn
-         O+QGS9BrUjW4tROQ23Hk6DTKW/4yx8GcbH63ncoKNWEGoRYz3+ilLlXPP0L108VkETYF
-         JoKprsUgnbrZU/1nvJRdKZRvXj6NxyfKjzUIWFzgZmohHpZcsEEbWXKINtphAiMgf31k
-         nRPhs9Fepg/kwrGwd9dvpKzVzryQMLzyQC4pUVJUQe9zxM4MV/hTQIrFDPIq2iw6VqE3
-         WwEDMm1RzuLZPs5tbdmrRuiWI5z++NeTHrzRK/GtZh4hhpdfKWtZrgSlrd2U+6zkPrZL
-         L6JA==
-X-Gm-Message-State: AOAM533AWlAbmjnSKn67drDpPARu4+Dz08bCdQLAnwiVv7oNQ2xf16hR
-        4OygpYLR/wfYzwmoA+qxasIKMg0462XwFRLCi9g=
-X-Google-Smtp-Source: ABdhPJw2m0FcJ7Y1dWxjdt6rRcJxY0yd70srsCUzGToQ0B+bFqkGhjrpyuYAN+WhryYgJAaTwmlfAYN9gGFWd4ZgF+g=
-X-Received: by 2002:a05:6402:7d0:: with SMTP id u16mr12625310edy.62.1633675929113;
- Thu, 07 Oct 2021 23:52:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=IOKq9xl1XQF8WfvxWV+gtL1fkz6pTODZzcUPA4r0UVo=;
+        b=lE3QYRDS1fSKT9OTKut6W+bpk1+/DfZTbWJydiRd6M0Bp/tb3OOWkW+HDntLrNZCXv
+         LQor9oCmBvukrNDbp+oVkG3DLZAFZ3FnImkIwYW3lypwqybapyank7+S3KK9+5i/MCSd
+         b0s822C2cQnAtyWvAYbzQyu/trB1q3+eBAMxv/1t647/MebUbGjmQBTfRqbk7uFJtKIQ
+         4MDaImDiunQsVk8a8u9yDzDQstlhnUOnAPx5XmjeZRprqJILITr1Ru6+grAJ3DzqtAsL
+         2lQ7SJS+VhjrFdHn5ohm4fqrljjnLRqOwXDZpeoOdavXXDYPLoQIGdJ+AnbS1ooYw1M5
+         5giw==
+X-Gm-Message-State: AOAM530t98REXbXKollGnzsUueaTE44J16JkVJzYDB6dvyxFeKati0gQ
+        /jWyWpGmuEfcd3gbtTI/LNQ=
+X-Google-Smtp-Source: ABdhPJzg7uVGNij5JFbk/g0sFj1d5HxqrfoDHUhxeLT+S9O242QRUdciP9z2nyM3DTVrnMoT/TwIzA==
+X-Received: by 2002:a17:907:62a2:: with SMTP id nd34mr2089275ejc.356.1633677284069;
+        Fri, 08 Oct 2021 00:14:44 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id x13sm601767ejv.64.2021.10.08.00.14.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 00:14:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2 5/8] progress.c: stop eagerly fflush(stderr) when not
+ a terminal
+Date:   Fri, 08 Oct 2021 09:01:43 +0200
+References: <cover-0.8-0000000000-20210722T125012Z-avarab@gmail.com>
+ <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+ <patch-v2-5.8-250e50667c2-20210920T225701Z-avarab@gmail.com>
+ <YV/CNSdntvm1QetC@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YV/CNSdntvm1QetC@google.com>
+Message-ID: <8735pcgf8c.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <xmqq8rzhmsi7.fsf@gitster.g> <CABPp-BGuzd_TH57-1RvwJQD5r3S3ZkJcuiPnU8aWee8pgzUBEw@mail.gmail.com>
- <87v92lxhh4.fsf@evledraar.gmail.com> <xmqqilykliiz.fsf@gitster.g>
- <20210928210059.vy5isvmcj75vufdu@neerajsi-x1.localdomain> <xmqq8rzgi8a7.fsf@gitster.g>
- <CANQDOddZ-KYTB4q0nYNDinis8aKktm6Ek6F+mJouTV-yRtTpUw@mail.gmail.com> <xmqq4k9spk8p.fsf@gitster.g>
-In-Reply-To: <xmqq4k9spk8p.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 7 Oct 2021 23:51:57 -0700
-Message-ID: <CABPp-BE=7+XifO3mAzNB90Y0vatvhwk7wwM4ptBrg79BhiFqSg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2021, #08; Mon, 27)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh <nksingh85@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 7, 2021 at 3:01 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Neeraj Singh <nksingh85@gmail.com> writes:
->
-> > Elijah,
-> >
-> > Here's a branch of your changes based on the amalgamated tmp-objdir code:
-> > https://github.com/neerajsi-msft/git/commits/neerajsi/remerge-diff
-> >
-> > This commit adapts your code to use the amalgamated API:
-> > https://github.com/neerajsi-msft/git/commit/725328fe1d8be8326d2ddef78e164ca21450b100
->
-> It seems that the discussion petered out at this point.
->
-> Right now I have a version of ns/remerge-diff before this adjustment
-> in 'seen', and Neeraj's latest version is kept out of 'seen' as they
-> do not play well together without an adjustment like that.
->
-> What's the good way forward?  I do not deeply care which one goes
-> first, but I have a feeling that the need by remerge-diff that wants
-> to discard temporary objects would involve more work to make it safe
-> than the need by batched fsync where newly created objects will not
-> be discarded but merely moved to the primary store before the end of
-> the operation, so from that point of view, it seems simpler and
-> safer to queue ns/batched-fsync topic first (especially given that
-> it is a no-op until the end-user opts into the experiment), and have
-> a remerge-diff that uses the infrastructure from Neeraj's topic.
->
-> What's your take on the rebase Neeraj made, Elijah (at the URL
-> above)?
 
-I meant to dig further, but nearly all my git time in the last week
-and a half was attempting to keep up with other patch reviews.  My git
-time is fast disappearing in the near term, and it's not clear how
-much, if any, time I'll have to work on patches (or even continued
-reviewing) before, say, mid-November.  I most likely won't be able to
-do any discussion-prep work in advance of the Git Contributor's
-Summit, and might not even be able to attend anymore.
+On Thu, Oct 07 2021, Emily Shaffer wrote:
 
-I had looked over Neeraj's patches and they looked reasonable.  I
-thought there might be some tweaks that I could try out, but at this
-point, just take what he has and keep my topic as expecting an update.
-I'll circle back eventually.
+> On Tue, Sep 21, 2021 at 01:09:26AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> It's the clear intention of the combination of 137a0d0ef56 (Flush
+>> progress message buffer in display()., 2007-11-19) and
+>> 85cb8906f0e (progress: no progress in background, 2015-04-13) to call
+>> fflush(stderr) when we have a stderr in the foreground, but we ended
+>> up always calling fflush(stderr) seemingly by omission. Let's not.
+>>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  progress.c | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/progress.c b/progress.c
+>> index 7fcc513717a..1fade5808de 100644
+>> --- a/progress.c
+>> +++ b/progress.c
+>> @@ -91,7 +91,8 @@ static void display(struct progress *progress, uint64_=
+t n, const char *done)
+>>  	}
+>>=20=20
+>>  	if (show_update) {
+>> -		if (is_foreground_fd(fileno(stderr)) || done) {
+>> +		int stderr_is_foreground_fd =3D is_foreground_fd(fileno(stderr));
+>> +		if (stderr_is_foreground_fd || done) {
+>>  			const char *eol =3D done ? done : "\r";
+>>  			size_t clear_len =3D counters_sb->len < last_count_len ?
+>>  					last_count_len - counters_sb->len + 1 :
+>> @@ -115,7 +116,8 @@ static void display(struct progress *progress, uint6=
+4_t n, const char *done)
+>>  				fprintf(stderr, "%s: %s%*s", progress->title,
+>>  					counters_sb->buf, (int) clear_len, eol);
+>>  			}
+>> -			fflush(stderr);
+>> +			if (stderr_is_foreground_fd)
+>> +				fflush(stderr);
+>
+> Looks like a straightforward refactor, although I wonder what's the
+> difference between is_foreground_fd(fileno(stderr)) and isatty() in
+> practice.
 
-Sorry for the delay.
+Good question. Whether you have a TTY is different from if it's in the
+foreground. In this case we don't want progress bars to display their
+full output if they're not in the foreground, just the summary line.
+
+I.e.:
+=20=20=20=20
+    perl -MPOSIX=3Dtcgetpgrp,isatty,getpgrp -wE '
+            say "TTY: ", isatty(1) ? "yes" : "no";
+            open my $tty, "/dev/tty";
+            my $tpgrp =3D tcgetpgrp(fileno($tty));
+            my $pgrp =3D getpgrp();
+            say "Foreground?: ",  $tpgrp =3D=3D $pgrp ? "yes" : "no"
+    '
+=20=20=20=20
+Then:
+=20=20=20=20
+    $ <that>
+    TTY: yes
+    Foreground?: yes
+    $ <that> &
+    TTY: yes
+    Foreground?: no
+    $ <that> >f && cat f
+    TTY: no
+    Foreground?: yes
+    $ (<that> >f &); sleep 1; cat f;
+    TTY: no
+    Foreground?: no
+
+But having written that I can see that this commit of mine is buggy,
+because when I wrote it I conflated the two. I.e. we don't want to defer
+eager flushing in that "&" case. I.e. to have our line-buffered summary
+line be held up by I/O buffered flushing.
+
+> Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+>
+>>  		}
+>>  		progress_update =3D 0;
+>>  	}
+>> --=20
+>> 2.33.0.1098.gf02a64c1a2d
+>>=20
+
