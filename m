@@ -2,81 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B43C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD58DC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:32:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C04D60FC2
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:26:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC636600CD
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:32:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243426AbhJHV23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 17:28:29 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60178 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243452AbhJHV22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 17:28:28 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6593D14CBED;
-        Fri,  8 Oct 2021 17:26:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Qeat1PXNq09AdMQ0A2aGdoRQ2wGBAUrHxkGzww
-        MOn+U=; b=R+YNAwgQO+cXjGAFhdSCCUtaK5RUC0dt68eTiT6O8If2PQNotQ8t8y
-        PKk1dBNTeWIP2rPG85ATTptjdA+dSrq+1Z+A3IRx7o+ftL0/6HewW5vaZqyjiuIL
-        lTuxhmDT47johhIT2mWsmPXSRsWs778CxVY/9I30DzsOwIE3U1GVM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CD4D14CBEC;
-        Fri,  8 Oct 2021 17:26:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BDEE214CBEB;
-        Fri,  8 Oct 2021 17:26:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v11 3/3] grep: fix an edge case concerning ascii
- patterns and UTF-8 data
-References: <20211007203148.23888-1-someguy@effective-light.com>
-        <20211007203148.23888-3-someguy@effective-light.com>
-Date:   Fri, 08 Oct 2021 14:26:28 -0700
-In-Reply-To: <20211007203148.23888-3-someguy@effective-light.com> (Hamza
-        Mahfooz's message of "Thu, 7 Oct 2021 16:31:48 -0400")
-Message-ID: <xmqq1r4vjji3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243433AbhJHVeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 17:34:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36164 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230384AbhJHVeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 17:34:36 -0400
+Received: (qmail 6384 invoked by uid 109); 8 Oct 2021 21:32:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Oct 2021 21:32:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19004 invoked by uid 111); 8 Oct 2021 21:32:40 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Oct 2021 17:32:40 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 8 Oct 2021 17:32:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
+Message-ID: <YWC49+xCh+zum8Ms@coredump.intra.peff.net>
+References: <xmqqfstdr8b5.fsf@gitster.g>
+ <YV5aaD418SyZqS/1@coredump.intra.peff.net>
+ <YV5dmkkuCqAY2qqG@coredump.intra.peff.net>
+ <YV5yi+AejPGO9qOi@nand.local>
+ <YV/BMkZrj4xQyvUL@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2110080946060.395@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 66D6222A-287E-11EC-8BF4-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2110080946060.395@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hamza Mahfooz <someguy@effective-light.com> writes:
+On Fri, Oct 08, 2021 at 09:51:33AM +0200, Johannes Schindelin wrote:
 
-> If we attempt to grep non-ascii log message text with an ascii pattern, we
-> run into the following issue:
->
->     $ git log --color --author='.var.*Bjar' -1 origin/master | grep ^Author
->     grep: (standard input): binary file matches
->
-> So, to fix this teach the grep code to mark the pattern as UTF-8 (even if
-> the pattern is composed of only ascii characters), so long as the log
-> output is encoded using UTF-8.
+> > Sort of. They basically wrap the "make" invocation to intercept "cc". My
+> > understanding is that their faux-compiler is mostly about gathering data
+> > about the code. That gets stuffed into a tarball and uploaded to their
+> > servers, where the real analysis happens.
+> >
+> > It's very black-box, which I don't love. But in my experience it
+> > produces by far the most useful static-analysis output of any tool I've
+> > seen.
+> 
+> It is pretty black box, but I have to disagree that the static analysis
+> output is very useful. The majority are false positives about
+> strbuf/strvec type usage of a static, fixed-size array that is dynamically
+> replaced by a dynamically-allocated array. Coverity misses that subtlety
+> and reports out-of-bounds accesses.
 
-We'd need this only if we are using pcre2 backend, no?  If that is
-the case, that fact needs to be recorded in the proposed log message
-to help later developers, when they wonder why this "all-the-things"
-knob exists.
+Yes, I remember skipping past quite a few of those.
 
-And if it is the case that this bit is needed only to work around a
-glitch while using pcre2 backend, I'd rather want to see a solution
-that does not need to contaminate the more generic "struct grep_opt"
-data and "setup_revisions()" codepath.
+To be clear, I don't claim that its output is amazing. Only that it has
+produced actionable output on many occasions. Grepping commit messages
+for "Coverity" turns up several hits (many from you :) ). Most of those
+are leak fixes, and I do think we have better options there. But I
+recall it detecting some hard-to-find memory and logic errors, too.
 
-In other words, can't the function compile_pcre2_pattern() make the
-"is log output encoding utf8?" decision locally and act accordingly?
+> Granted, I worked around those (I thought) by using the
+> `-DFLEX_ARRAY=65536` trick, but I guess that is either not working as
+> designed, or it stopped working at some stage.
+> 
+> FWIW I have set up an Azure Pipeline to keep Git for Windows' `main`
+> branch covered by Coverity:
+> 
+> https://dev.azure.com/git-for-windows/git/_build?definitionId=35
+> 
+> It essentially calls into this scripted code:
+> https://github.com/git-for-windows/build-extra/blob/4676f286a1ec830a5038b32400808a353dc6c48d/please.sh#L1820-L1915
 
-Thanks.
+Do you have any objection to adding something like the Action I showed
+eariler? It would do nothing in git-for-windows/git unless you set up
+the right environment, so there shouldn't be any downside.
+
+I admit I was not really planning to try to suppress the false positives
+as you've done here; my plan was to just keep an eye on the "new"
+entries (having already gone through the existing ones years ago).
+
+-Peff
