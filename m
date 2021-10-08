@@ -2,78 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45EBAC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF2BC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:16:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A48D60FDC
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:11:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E86061027
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243570AbhJHWNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 18:13:42 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:13628 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243591AbhJHWNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 18:13:41 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 4HR2Tr20ZSz5tlC;
-        Sat,  9 Oct 2021 00:11:44 +0200 (CEST)
-Subject: Re: [PATCH v2 0/5] Fun with cpp word regex
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1054.git.1633589461.gitgitgadget@gmail.com>
- <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
- <87r1cvmg0c.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <25363715-dc39-1f18-a937-f715b106f529@kdbg.org>
-Date:   Sat, 9 Oct 2021 00:11:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S243593AbhJHWSl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 18:18:41 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56871 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243563AbhJHWSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 18:18:39 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 614D714D1EF;
+        Fri,  8 Oct 2021 18:16:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z1pncngFMSQRiOnGC0x8A/5daxbkQLsr23XnVY
+        e4Gic=; b=kiOfhDMVbvi2HaOnhvSHV0jSSMa1TadROWdK+Ye+eZ08q9qMK5/1lZ
+        dvJHHViTRdL/NM/9TgAn0Km6liv0I0tinDEdRHpbey4KX5RuX96gVPoAJgjl44Jv
+        mub30zHDba388WlTT7ufiPWUmpxja8RsnT3Lk3mWk8+h3poypFKss=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A10314D1EE;
+        Fri,  8 Oct 2021 18:16:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A6B6214D1ED;
+        Fri,  8 Oct 2021 18:16:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Estelle <robertestelle@gmail.com>
+Cc:     Robert Estelle via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] completion: fix incorrect bash/zsh string equality check
+References: <pull.1096.git.git.1633642772432.gitgitgadget@gmail.com>
+        <xmqqbl3zjl5y.fsf@gitster.g>
+        <CAMmwyQpP0m6dTdC-L9abZqk9nJkcYy=j4_s0+EdGDr__pykeXQ@mail.gmail.com>
+Date:   Fri, 08 Oct 2021 15:16:38 -0700
+In-Reply-To: <CAMmwyQpP0m6dTdC-L9abZqk9nJkcYy=j4_s0+EdGDr__pykeXQ@mail.gmail.com>
+        (Robert Estelle's message of "Fri, 8 Oct 2021 15:05:15 -0700")
+Message-ID: <xmqqh7dri2m1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87r1cvmg0c.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68E12AB8-2885-11EC-B76C-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.10.21 um 22:07 schrieb Ævar Arnfjörð Bjarmason:
->  * I wonder if it isn't time to split up "cpp" into a "c" driver,
->    e.g. git.git's .gitattributes has "cpp" for *.[ch] files, but as C++
->    adds more syntax sugar.
-> 
->    So e.g. if you use "<=>" after this series we'll tokenize it
->    differently in *.c files, but it's a C++-only operator, on the other
->    hand probably nobody cares that much...
+Robert Estelle <robertestelle@gmail.com> writes:
 
-Yes, it is that: <=> won't appear in a correct C file (outside of
-comments), so no-one will care. As far as tokenization is concerned, C
-is a subset of C++. I don't think we need to separate the drivers.
+> On Fri, Oct 8, 2021 at 1:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Would it be equally a valid fix to use "=" instead of "==", or would
+>> that change the meaning? This is a bash-only piece of code, so use
+>> of [[ ... ]] is not technically incorrect, but if the basic [] works
+>> well enough with "=", we should prefer that.
+>
+> Yes, `[` is preferable for portability and they'd behave the same in
+> this case. I consciously chose to use `[[` because that's what all the
+> other comparisons in that script use. (I think I noted that in the
+> commit message, maybe). I think there's value in consistency, and not
+> enough value of `[` over `[[` to justify changing all the other lines.
 
->  * I found myself back-porting some of your tests (manually mostly),
->    maybe you disagree, but in cases like 123'123, <=> etc. I'd find it
->    easier to follow if we first added the test data, and then the
->    changed behavior.
-> 
->    Because after all, we're going to change how we highlight existing
->    data, so testing for that would be informative.
+I do not know if we mind eventual consistency using [] not [[]], but
+this topic is certainly not about aiming for consistency.
 
-Good point. I'll work a bit more on that.
+If the difference affects correctness, as brian mentioned, that is a
+different matter.  We should use [ x = y ] in this patch while
+leaving the existing uses of [[ x == y ]].
 
->  * This pre-dates your much improved tests, but these test files could
->    really use some test comments, as in:
-> 
->    /* Now that we're going to understand the "'" character somehow, will any of this change? */
->    /* We haven't written code like this since the 1960's ... */
->    /* Run & free */
-> 
->    I.e. we don't just highlight code the compiler likes to eat, but also
->    comments. So particularly for smaller tokens that also occur in
->    natural language like "'" and "&" are we getting expected results?
+Later in a separate patch series, we may need to examine other uses
+of [[ x == y ]] and correct the ones that do not need/want the
+pattern matching semantics to use [ x = y ].
 
-Comments are free text. Anything can happen. There is no such thing as
-"correct tokenization" in comments. Not interested.
-
-Thank you for the review.
--- Hannes
