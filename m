@@ -2,105 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE99C433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CF2AC433F5
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E63D60F6D
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 20:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 124EF60FF2
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243266AbhJHVAI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 17:00:08 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57264 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S243261AbhJHVAD (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Oct 2021 17:00:03 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6F27D6048E;
-        Fri,  8 Oct 2021 20:57:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1633726657;
-        bh=87C9PZJVQot6AIvVgiBeMpCoSXEgxpyzGodKtIqkENA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Y6gLEWs2fhj5R/dEPvLxsU3DOL//gC0PIcg5tNSVuXNqpmY032WuoEheLbdRnGyAl
-         EJFFbPDlz0XTZXMBeBF5mu78AL/m42VEn33R8oSwZ6+lbg2gALzoHHshN9qsWqLfqa
-         feMtVmj7CZhoNh+rp+DeNVGs/7kZIA5qv/BSdDHW3+9VlShUzfVa2GMM/vEfHAl/qR
-         Lb/2P3A+4OUW5RptKNEanN1VqnJ2eVS3Ue2CMYardSMH3ZgYYbwxjbT5R6TCHloB0d
-         daVZKDQdJy9OOZqTj4AVeEdu8onLQ6dCuRAwMFuLuS+9oHYF4N38asDN+AcSshN1I5
-         d8kA2setdEQPp/C8I8rtcSvoL4sokL+ih7YdCvfT0RB2JXHCK/0ZMpUPEwaKU68JMQ
-         TDS1N1jPw2sOXYVwR9WAwPYxGWhuMCl9zBjRdPr7xDmtgNhZBv1UtoQR1BDrrQTMfb
-         HvWGDlNDwY+0gqf8eeIHDe8Seu8/XG3yr0xoiEFp8e9g6DjJq3F
-Date:   Fri, 8 Oct 2021 20:57:32 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Estelle via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Robert Estelle <robert.estelle@gmail.com>,
-        Robert Estelle <robertestelle@gmail.com>
-Subject: Re: [PATCH] completion: fix incorrect bash/zsh string equality check
-Message-ID: <YWCwvOdW/L5aMpr7@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Robert Estelle via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Robert Estelle <robert.estelle@gmail.com>,
-        Robert Estelle <robertestelle@gmail.com>
-References: <pull.1096.git.git.1633642772432.gitgitgadget@gmail.com>
- <xmqqbl3zjl5y.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pxZwfRlqUAPei/8Q"
-Content-Disposition: inline
-In-Reply-To: <xmqqbl3zjl5y.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+        id S243369AbhJHVKW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 17:10:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55096 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243261AbhJHVKV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 17:10:21 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 922B9C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 14:08:25 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id x61-20020a17090a6c4300b0019f789f61bdso8230562pjj.0
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 14:08:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=EaTst7AXo8+NOR7cepzwDxPg+y2kLs4h6ZPm614S3ZE=;
+        b=p3/gJbk/Ix3F8CEheCuwsmoCEPitjahiXvh0Jp5NvFWoQEagVcUHTrd/Eb93brb5pg
+         ynRJtWkIkqC82VZN9gskAEYG/9yU6xNBEU2zkl46QAoLU64BCUAbqHg4kH6vjM1PLYb+
+         hUosdSJOW7sJmkQmdmohMMF2FqiZ5D+lE0lkGFfL/EEXfl4xhlTqJgYsZJcS/6UlCs8X
+         lKEoO95iboqGssEEumZgamEilOg7DUspDTzxqhxgP1eweJ2febQoqcS1ujNuBNTT7glN
+         3pO2PhsTIOwbSMq2SuMezWjdM01Wp42S560koSaPbNQC0uTx/h1rF38GpLjx5N2mp4Iu
+         R8xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=EaTst7AXo8+NOR7cepzwDxPg+y2kLs4h6ZPm614S3ZE=;
+        b=tpToKqeVYuP6sfFyEHUUaiBDafxoPa+Dn+af2JHc55MsYYgZQAXKhsovNzOIPRJTpi
+         32jo2ZWI9cRXqsXOiR/azM4avI7TmLdbZQ7P9Vzblc+C8rNhAiPZY0pNto0K3kc0eu02
+         JyCRY2UUVcTXt0NrFOLc7BW+zCuQfAwhCoedUCYKZ7BGMUE9zbf7+o6naSscNWs0EnbZ
+         0UEqVgimMl9RGM5wGsaGD9mwTGE+UOIzwKOb8ly2XRjIeo8h/zSxGmMWkcPJVe2Tl1kN
+         Ne6tC1CMS7+FW7LYTlMuvt9X96jfw/ItbDUdYgBlwfJUFc6cu+k8BC6FiAiD+XWmTN2B
+         yYhA==
+X-Gm-Message-State: AOAM531hnpB8sVhh5GhPhgpdNTh03S3Dt0i4Cp6+bCaL9RLCVS5sumum
+        PJWk8NepY95FyyKw8nTL+zimYRA+9ibYvhaM+BdPY2r9JUS2bWMF6Dy345UgbQxV/zi5FSkHU17
+        G5SSjtEPB8SU0CIfkdhgDtvJXowVuElg4RmzusrwCc+aw5aQ8GdgFaCom1aPPoH09kuqv/vQjWy
+        iK
+X-Google-Smtp-Source: ABdhPJzonb2My/ftyKD0QNowVAnvOB99tbzIneROC/62agLEqV5yoPe03oudLl4VoT9NEunGp2gCCP41iOuteCXsBCrS
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:e544:b0:13e:e863:6cd2 with
+ SMTP id n4-20020a170902e54400b0013ee8636cd2mr11316825plf.41.1633727305016;
+ Fri, 08 Oct 2021 14:08:25 -0700 (PDT)
+Date:   Fri,  8 Oct 2021 14:08:13 -0700
+In-Reply-To: <cover.1632242495.git.jonathantanmy@google.com>
+Message-Id: <cover.1633727270.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1632242495.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
+Subject: [PATCH v4 0/7] No more adding submodule ODB as alternate
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, carenas@gmail.com,
+        chooglen@google.com, steadmon@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks everyone for your reviews. Here's an updated patch set, including
+Carlo's fixup squashed.
 
---pxZwfRlqUAPei/8Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jonathan Tan (7):
+  refs: plumb repo into ref stores
+  refs: teach arbitrary repo support to iterators
+  refs: peeling non-the_repository iterators is BUG
+  merge-{ort,recursive}: remove add_submodule_odb()
+  object-file: only register submodule ODB if needed
+  submodule: pass repo to check_has_commit()
+  submodule: trace adding submodule ODB as alternate
 
-On 2021-10-08 at 20:50:33, Junio C Hamano wrote:
-> "Robert Estelle via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
-> >     This fixes an error in contrib/completion/git-completion.bash cause=
-d by
-> >     the incorrect use of =3D=3D (vs. single =3D) inside a basic [/test =
-command.
-> >     Double-equals =3D=3D should only be used with the extended [[ compa=
-rison.
->=20
-> Curious.
->=20
-> Would it be equally a valid fix to use "=3D" instead of "=3D=3D", or would
-> that change the meaning?  This is a bash-only piece of code, so use
-> of [[ ... ]] is not technically incorrect, but if the basic [] works
-> well enough with "=3D", we should prefer that.
+ merge-ort.c                            | 18 +++--------
+ merge-recursive.c                      | 41 +++++++++++++-------------
+ object-file.c                          |  9 +++++-
+ refs.c                                 | 32 +++++++++++++++-----
+ refs/files-backend.c                   | 16 ++++++----
+ refs/packed-backend.c                  | 13 ++++++--
+ refs/packed-backend.h                  |  4 ++-
+ refs/ref-cache.c                       | 10 +++++++
+ refs/ref-cache.h                       |  1 +
+ refs/refs-internal.h                   | 11 +++++--
+ strbuf.c                               | 12 ++++++--
+ strbuf.h                               |  6 ++--
+ submodule.c                            | 18 +++++++++--
+ t/README                               |  7 ++---
+ t/t5526-fetch-submodules.sh            |  3 ++
+ t/t5531-deep-submodule-push.sh         |  3 ++
+ t/t5545-push-options.sh                |  3 ++
+ t/t5572-pull-submodule.sh              |  3 ++
+ t/t6437-submodule-merge.sh             |  3 ++
+ t/t7418-submodule-sparse-gitmodules.sh |  3 ++
+ 20 files changed, 148 insertions(+), 68 deletions(-)
 
-It's actually preferable in most cases to use [ and =3D rather than [[ and
-=3D=3D, because the former looks for strict equality and the latter looks
-for pattern matching.  If one is placing a glob pattern on the right
-side, then [[ and =3D=3D can be desirable, but otherwise it's better to
-stick to the POSIX syntax.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Range-diff against v3:
+1:  878c4dd288 ! 1:  f050191d4c refs: plumb repo into ref stores
+    @@ Commit message
+         arbitrary repositories to ref iterators, plumb a repository into all ref
+         stores. There are no changes to program logic.
+     
+    -    (The repository is plumbed into the ref stores instead of directly into
+    -    the ref iterators themselves, so that existing code that operates on ref
+    -    stores do not need to be modified to also handle repositories.)
+    -
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+    @@ refs/packed-backend.c: static int release_snapshot(struct snapshot *snapshot)
+      
+     
+      ## refs/packed-backend.h ##
+    +@@
+    + #ifndef REFS_PACKED_BACKEND_H
+    + #define REFS_PACKED_BACKEND_H
+    + 
+    ++struct repository;
+    + struct ref_transaction;
+    + 
+    + /*
+     @@ refs/packed-backend.h: struct ref_transaction;
+       * even among packed refs.
+       */
+2:  7180f622b1 = 2:  6418256919 refs: teach arbitrary repo support to iterators
+3:  1a2e2e3e08 = 3:  d624c198d6 refs: peeling non-the_repository iterators is BUG
+4:  89347503af = 4:  f3df7a31cb merge-{ort,recursive}: remove add_submodule_odb()
+5:  17d6c0a793 ! 5:  78473b0f89 object-file: only register submodule ODB if needed
+    @@ object-file.c: static int do_oid_object_info_extended(struct repository *r,
+      		}
+      
+     -		if (register_all_submodule_odb_as_alternates())
+    ++		/*
+    ++		 * If r is the_repository, this might be an attempt at
+    ++		 * accessing a submodule object as if it were in the_repository
+    ++		 * (having called add_submodule_odb() on that submodule's ODB).
+    ++		 * If any such ODBs exist, register them and try again.
+    ++		 */
+     +		if (r == the_repository &&
+     +		    register_all_submodule_odb_as_alternates())
+      			/* We added some alternates; retry */
+6:  1eb2dda2dc = 6:  f4241ea2e7 submodule: pass repo to check_has_commit()
+7:  36e741dda8 ! 7:  8922bf48a2 submodule: trace adding submodule ODB as alternate
+    @@ submodule.c: int register_all_submodule_odb_as_alternates(void)
+      		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
+      			BUG("register_all_submodule_odb_as_alternates() called");
+      	}
+    +
+    + ## t/README ##
+    +@@ t/README: GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=<boolean>, when true, makes
+    + registering submodule ODBs as alternates a fatal action. Support for
+    + this environment variable can be removed once the migration to
+    + explicitly providing repositories when accessing submodule objects is
+    +-complete (in which case we might want to replace this with a trace2
+    +-call so that users can make it visible if accessing submodule objects
+    +-without an explicit repository still happens) or needs to be abandoned
+    +-for whatever reason (in which case the migrated codepaths still retain
+    +-their performance benefits).
+    ++complete or needs to be abandoned for whatever reason (in which case the
+    ++migrated codepaths still retain their performance benefits).
+    + 
+    + Naming Tests
+    + ------------
+-- 
+2.33.0.882.g93a45727a2-goog
 
---pxZwfRlqUAPei/8Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYWCwuwAKCRB8DEliiIei
-gd14AP440oWmna0Ot1QNKzUjean9SIxQ3mduQ9QRPNztMAnXWQEAy19PHnrOoTOM
-iOAxYEUCzNzxCAajujUYAxZk8f3Vbw8=
-=EP5E
------END PGP SIGNATURE-----
-
---pxZwfRlqUAPei/8Q--
