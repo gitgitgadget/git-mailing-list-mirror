@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78CEEC4332F
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C66DDC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B99E60F9E
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AABA860F5E
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 21:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243400AbhJHVK3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 17:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
+        id S243409AbhJHVKa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 17:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243392AbhJHVK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 17:10:27 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2873EC061762
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 14:08:32 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 15-20020a630d4f000000b00287c5b3f77bso2257795pgn.11
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 14:08:32 -0700 (PDT)
+        with ESMTP id S243398AbhJHVK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 17:10:29 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A705C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 14:08:33 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id 2-20020aa79102000000b0044c216dd8ecso4975943pfh.18
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 14:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=bNnNZe8DvIbePyYjKDiiPKA4oTAH7gMmrR6jn+/5hWc=;
-        b=K7SAxQZ/ZlSUJrZfcX8a0wRBKHHQL+DFKSMXmpo0ECZI+qMRHgUBCBrQzpfME16Ssv
-         eU5N+TDgdcPs+JgNB6pgvpQJqODIbjMtjF9cjRvZk9jGcc9qNMWFqNyYGRbtO17+JbEq
-         IcIByheAC+RkLu98cL/fR5V/JVVNzPlxYUhY4jF+1UDNORlccn3s/HqkyGKnS519tEO4
-         gxsybXbxrYOpZwcaQADxDZnIcKS/ZNgiU5iFxUvtGfaLiUxu8v8X8Xda8ao2TDvnwoCI
-         l8bWj56zZq+kAKZnAklmOuIfo86iRBl9yWhPqmOneQ/GyONXNWpr9uxTzjA4nA2xDnSR
-         iWoA==
+        bh=2Bg6Smsefxe/mCrHnotq+16z95fJQIxNbww+rLENA70=;
+        b=CjfVElZadedZDmGcB7HqNIInwVLLG67NWjR7oc6pSub1arAxWs1/hplk77GP1tKxnV
+         XFFKRwvhqWB0/dHTos+Frm7c/xO55j2bmPFmhTwTWSmAH3/ODn4nek1tMn/trRsifop7
+         MMeympt0BIer7RjHTB9b4vd1B+E72ubs52c2WfOKtTaqxEOyIQjGPXG3MtBR4bI1FISk
+         RBJOZtlDqw+1C57xHal4595+kkRXqsFLH1gclbakDvA6CQ02+enaizFeLa5ptBsVsSCY
+         uBi0Npbn9mSPdrcMLEHO6/xeiIny7+nD0/Efw3bQFeYbtvsryw8XIM5+sEj7ARnoTJ3l
+         HSOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=bNnNZe8DvIbePyYjKDiiPKA4oTAH7gMmrR6jn+/5hWc=;
-        b=Q6bihFa8AgkwfYpoK7Z6BuyFodlT9VKcbt2kWwEZ+1WL4xoBUDmfxhVxE872OlbskW
-         1t5FrtHjh96cAcHMb7PW1naApWTzfLfxYx0yVVMudFmeWUL06FUBDmUVhKbjponTeKoh
-         fLw+dQ+lzT5JZIn9RbBQPSYLt34jkkBeLfJicA4wqH9IMEswFQg7EW4MMo0lEZfMxtmz
-         37b87JR9rzPk2/GcoJUnwnMcOpd5fUm1eeNWyHulf0t9DFMYbM6+On4Gb/NHDATEK+qm
-         x+oVQ3MfEHzv8Pec2YSJlA++4QMz7jHA2qcPbBnd+Y5rBPs58XdkDQ10pewIZconOdS1
-         tBrA==
-X-Gm-Message-State: AOAM531ARfiYlH6G8JkP0C2I1HgELFln4aW0D4TSAO+vJ+KGYdB0L0b8
-        jMt7k/2nCGuk4T+iaIlZA/N5bvjrQ7pzL4RN9li+8nmKtP2dxXWP/84JCs231Ar9amF8uD9G7Oo
-        aRKlrgjHOfQtxlZcZfTAP7cqyivROesCXI4L51Idzl+cJgkUJIpUVbACIRigx7EZe8NKVGhwWeO
-        zi
-X-Google-Smtp-Source: ABdhPJzARcsVxG0DtMjApI4aStO+UjyA0XzTaZEAzAn8wylpeC9f/YzB3fgizvAmClEDX0vvXP7KwAZ80FaYpgJ87jB3
+        bh=2Bg6Smsefxe/mCrHnotq+16z95fJQIxNbww+rLENA70=;
+        b=3dtjU9FCG7NcYTqG3Cs6Muk09DHvMJHlomplJdAesliED70tYc6Bi6ZGo+Z+D53Kzg
+         DqykWDEq9uHy/d67jJCyHHeSKFFaEyLAmsSqk9f9oMhqvScroIyglAYbgQPrTXggICTy
+         fmfkANaDTC7xEOm6sGtuREKW96cAZDIdvHAORlC04jCh1eUBAlW4KTyOAjniWH+JQ2T6
+         pmktptjH4p9dHHGhj6yktnHyqGH3U5W8rgJlSAvDicp5RH/CoxtzdDZi6fB9Ekd8lUAT
+         pFOYHow236dx4Y3h/Bj8g/PQftJUaXVzGlf3kZ9mkrTQm76n+9dyMwU18Mvftconhbmr
+         vPFg==
+X-Gm-Message-State: AOAM532wu4nUHiXA+K0EAoBYFvqOOe+0kS8kHod6mTFBi/eEARbrv07u
+        Ljhr8d/l83nbLhdtrmdo0g+73TSWjf3h7jcN97jFJiatJZRfG0KZpTLLCy/bZ/SKvdO/VSYkV1A
+        Bj0z/eZXLArOhom9acPlR30GIQMLRT4S+DgbIcxa5sdBY0e7/OwJciMcXM/IF+nRxNOcecATscE
+        vL
+X-Google-Smtp-Source: ABdhPJxgnSEHF4QfWQWANLvLG0+He0Z6pzB7Poy324Wp40hlrZq41pYcLM6aeKiI7T7m7g68zch8fJPYMIuwAZ4BEy76
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:8b8d:: with SMTP id
- z13mr591497pjn.0.1633727311187; Fri, 08 Oct 2021 14:08:31 -0700 (PDT)
-Date:   Fri,  8 Oct 2021 14:08:17 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:8ec5:b0:13a:2789:cbb0 with
+ SMTP id x5-20020a1709028ec500b0013a2789cbb0mr11473586plo.60.1633727312880;
+ Fri, 08 Oct 2021 14:08:32 -0700 (PDT)
+Date:   Fri,  8 Oct 2021 14:08:18 -0700
 In-Reply-To: <cover.1633727270.git.jonathantanmy@google.com>
-Message-Id: <f3df7a31cb73ed12c5ecb83e430a3e015fe365ad.1633727270.git.jonathantanmy@google.com>
+Message-Id: <78473b0f892da8f69b334e88208321b277c33c3c.1633727270.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1632242495.git.jonathantanmy@google.com> <cover.1633727270.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
-Subject: [PATCH v4 4/7] merge-{ort,recursive}: remove add_submodule_odb()
+Subject: [PATCH v4 5/7] object-file: only register submodule ODB if needed
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, carenas@gmail.com,
@@ -66,256 +67,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After the parent commit and some of its ancestors, the only place
-commits are being accessed through alternates is in the user-facing
-message formatting code. Fix those, and remove the add_submodule_odb()
-calls.
+In a35e03dee0 ("submodule: lazily add submodule ODBs as alternates",
+2021-09-08), Git was taught to add all known submodule ODBs as
+alternates when attempting to read an object that doesn't exist, as a
+fallback for when a submodule object is read as if it were in
+the_repository. However, this behavior wasn't restricted to happen only
+when reading from the_repository. Fix this.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-ort.c                | 18 ++++-------------
- merge-recursive.c          | 41 +++++++++++++++++++-------------------
- strbuf.c                   | 12 ++++++++---
- strbuf.h                   |  6 ++++--
- t/t6437-submodule-merge.sh |  3 +++
- 5 files changed, 40 insertions(+), 40 deletions(-)
+ object-file.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index b88475475d..fbc5c204c1 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -609,6 +609,7 @@ static int err(struct merge_options *opt, const char *err, ...)
- 
- static void format_commit(struct strbuf *sb,
- 			  int indent,
-+			  struct repository *repo,
- 			  struct commit *commit)
- {
- 	struct merge_remote_desc *desc;
-@@ -622,7 +623,7 @@ static void format_commit(struct strbuf *sb,
- 		return;
- 	}
- 
--	format_commit_message(commit, "%h %s", sb, &ctx);
-+	repo_format_commit_message(repo, commit, "%h %s", sb, &ctx);
- 	strbuf_addch(sb, '\n');
- }
- 
-@@ -1578,17 +1579,6 @@ static int merge_submodule(struct merge_options *opt,
- 	if (is_null_oid(b))
- 		return 0;
- 
--	/*
--	 * NEEDSWORK: Remove this when all submodule object accesses are
--	 * through explicitly specified repositores.
--	 */
--	if (add_submodule_odb(path)) {
--		path_msg(opt, path, 0,
--			 _("Failed to merge submodule %s (not checked out)"),
--			 path);
--		return 0;
--	}
--
- 	if (repo_submodule_init(&subrepo, opt->repo, path, null_oid())) {
- 		path_msg(opt, path, 0,
- 				_("Failed to merge submodule %s (not checked out)"),
-@@ -1653,7 +1643,7 @@ static int merge_submodule(struct merge_options *opt,
- 		break;
- 
- 	case 1:
--		format_commit(&sb, 4,
-+		format_commit(&sb, 4, &subrepo,
- 			      (struct commit *)merges.objects[0].item);
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s, but a possible merge "
-@@ -1670,7 +1660,7 @@ static int merge_submodule(struct merge_options *opt,
- 		break;
- 	default:
- 		for (i = 0; i < merges.nr; i++)
--			format_commit(&sb, 4,
-+			format_commit(&sb, 4, &subrepo,
- 				      (struct commit *)merges.objects[i].item);
- 		path_msg(opt, path, 0,
- 			 _("Failed to merge submodule %s, but multiple "
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 5a2d8a60c0..80594153f1 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -334,7 +334,9 @@ static void output(struct merge_options *opt, int v, const char *fmt, ...)
- 		flush_output(opt);
- }
- 
--static void output_commit_title(struct merge_options *opt, struct commit *commit)
-+static void repo_output_commit_title(struct merge_options *opt,
-+				     struct repository *repo,
-+				     struct commit *commit)
- {
- 	struct merge_remote_desc *desc;
- 
-@@ -343,23 +345,29 @@ static void output_commit_title(struct merge_options *opt, struct commit *commit
- 	if (desc)
- 		strbuf_addf(&opt->obuf, "virtual %s\n", desc->name);
- 	else {
--		strbuf_add_unique_abbrev(&opt->obuf, &commit->object.oid,
--					 DEFAULT_ABBREV);
-+		strbuf_repo_add_unique_abbrev(&opt->obuf, repo,
-+					      &commit->object.oid,
-+					      DEFAULT_ABBREV);
- 		strbuf_addch(&opt->obuf, ' ');
--		if (parse_commit(commit) != 0)
-+		if (repo_parse_commit(repo, commit) != 0)
- 			strbuf_addstr(&opt->obuf, _("(bad commit)\n"));
- 		else {
- 			const char *title;
--			const char *msg = get_commit_buffer(commit, NULL);
-+			const char *msg = repo_get_commit_buffer(repo, commit, NULL);
- 			int len = find_commit_subject(msg, &title);
- 			if (len)
- 				strbuf_addf(&opt->obuf, "%.*s\n", len, title);
--			unuse_commit_buffer(commit, msg);
-+			repo_unuse_commit_buffer(repo, commit, msg);
+diff --git a/object-file.c b/object-file.c
+index be4f94ecf3..0a1835fe30 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1614,7 +1614,14 @@ static int do_oid_object_info_extended(struct repository *r,
+ 				break;
  		}
- 	}
- 	flush_output(opt);
- }
  
-+static void output_commit_title(struct merge_options *opt, struct commit *commit)
-+{
-+	repo_output_commit_title(opt, the_repository, commit);
-+}
-+
- static int add_cacheinfo(struct merge_options *opt,
- 			 const struct diff_filespec *blob,
- 			 const char *path, int stage, int refresh, int options)
-@@ -1149,14 +1157,14 @@ static int find_first_merges(struct repository *repo,
- 	return result->nr;
- }
- 
--static void print_commit(struct commit *commit)
-+static void print_commit(struct repository *repo, struct commit *commit)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
- 	ctx.date_mode.type = DATE_NORMAL;
- 	/* FIXME: Merge this with output_commit_title() */
- 	assert(!merge_remote_util(commit));
--	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
-+	repo_format_commit_message(repo, commit, " %h: %m %s", &sb, &ctx);
- 	fprintf(stderr, "%s\n", sb.buf);
- 	strbuf_release(&sb);
- }
-@@ -1196,15 +1204,6 @@ static int merge_submodule(struct merge_options *opt,
- 	if (is_null_oid(b))
- 		return 0;
- 
--	/*
--	 * NEEDSWORK: Remove this when all submodule object accesses are
--	 * through explicitly specified repositores.
--	 */
--	if (add_submodule_odb(path)) {
--		output(opt, 1, _("Failed to merge submodule %s (not checked out)"), path);
--		return 0;
--	}
--
- 	if (repo_submodule_init(&subrepo, opt->repo, path, null_oid())) {
- 		output(opt, 1, _("Failed to merge submodule %s (not checked out)"), path);
- 		return 0;
-@@ -1229,7 +1228,7 @@ static int merge_submodule(struct merge_options *opt,
- 		oidcpy(result, b);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
--			output_commit_title(opt, commit_b);
-+			repo_output_commit_title(opt, &subrepo, commit_b);
- 		} else if (show(opt, 2))
- 			output(opt, 2, _("Fast-forwarding submodule %s"), path);
- 		else
-@@ -1242,7 +1241,7 @@ static int merge_submodule(struct merge_options *opt,
- 		oidcpy(result, a);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
--			output_commit_title(opt, commit_a);
-+			repo_output_commit_title(opt, &subrepo, commit_a);
- 		} else if (show(opt, 2))
- 			output(opt, 2, _("Fast-forwarding submodule %s"), path);
- 		else
-@@ -1274,7 +1273,7 @@ static int merge_submodule(struct merge_options *opt,
- 	case 1:
- 		output(opt, 1, _("Failed to merge submodule %s (not fast-forward)"), path);
- 		output(opt, 2, _("Found a possible merge resolution for the submodule:\n"));
--		print_commit((struct commit *) merges.objects[0].item);
-+		print_commit(&subrepo, (struct commit *) merges.objects[0].item);
- 		output(opt, 2, _(
- 		       "If this is correct simply add it to the index "
- 		       "for example\n"
-@@ -1287,7 +1286,7 @@ static int merge_submodule(struct merge_options *opt,
- 	default:
- 		output(opt, 1, _("Failed to merge submodule %s (multiple merges found)"), path);
- 		for (i = 0; i < merges.nr; i++)
--			print_commit((struct commit *) merges.objects[i].item);
-+			print_commit(&subrepo, (struct commit *) merges.objects[i].item);
- 	}
- 
- 	object_array_clear(&merges);
-diff --git a/strbuf.c b/strbuf.c
-index c8a5789694..b22e981655 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1059,15 +1059,21 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
- 	strbuf_setlen(sb, sb->len + len);
- }
- 
--void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
--			      int abbrev_len)
-+void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
-+				   const struct object_id *oid, int abbrev_len)
- {
- 	int r;
- 	strbuf_grow(sb, GIT_MAX_HEXSZ + 1);
--	r = find_unique_abbrev_r(sb->buf + sb->len, oid, abbrev_len);
-+	r = repo_find_unique_abbrev_r(repo, sb->buf + sb->len, oid, abbrev_len);
- 	strbuf_setlen(sb, sb->len + r);
- }
- 
-+void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
-+			      int abbrev_len)
-+{
-+	strbuf_repo_add_unique_abbrev(sb, the_repository, oid, abbrev_len);
-+}
-+
- /*
-  * Returns the length of a line, without trailing spaces.
-  *
-diff --git a/strbuf.h b/strbuf.h
-index 5b1113abf8..2d9e01c16f 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -634,8 +634,10 @@ void strbuf_list_free(struct strbuf **list);
-  * Add the abbreviation, as generated by find_unique_abbrev, of `sha1` to
-  * the strbuf `sb`.
-  */
--void strbuf_add_unique_abbrev(struct strbuf *sb,
--			      const struct object_id *oid,
-+struct repository;
-+void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
-+				   const struct object_id *oid, int abbrev_len);
-+void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
- 			      int abbrev_len);
- 
- /**
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index e5e89c2045..178413c22f 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
-@@ -5,6 +5,9 @@ test_description='merging with submodules'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
-+export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
-+
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-merge.sh
+-		if (register_all_submodule_odb_as_alternates())
++		/*
++		 * If r is the_repository, this might be an attempt at
++		 * accessing a submodule object as if it were in the_repository
++		 * (having called add_submodule_odb() on that submodule's ODB).
++		 * If any such ODBs exist, register them and try again.
++		 */
++		if (r == the_repository &&
++		    register_all_submodule_odb_as_alternates())
+ 			/* We added some alternates; retry */
+ 			continue;
  
 -- 
 2.33.0.882.g93a45727a2-goog
