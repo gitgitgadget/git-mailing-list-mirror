@@ -2,144 +2,266 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A810BC433FE
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25367C433F5
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:34:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A39B60F4F
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F386760FF2
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240962AbhJHTMH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 15:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55786 "EHLO
+        id S231480AbhJHTgv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 15:36:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240776AbhJHTL5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 15:11:57 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB235C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 12:10:01 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id i12so20042709wrb.7
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 12:10:01 -0700 (PDT)
+        with ESMTP id S231316AbhJHTgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 15:36:51 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445ADC061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 12:34:55 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id v17so32803242wrv.9
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 12:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tKWx5XFWAWGUG2fX/3dZLci7iB3dxtBBhmwN1/cOdiw=;
-        b=S8L39ahdtAL/rM8LNXPScKzNOjLayzSGRZ/EaCU08QyFABBVpX/TO1FtFx8ZkPsDvL
-         iWKoLw45LblX8ygkdDJEkbIzMyYAGTd+hjF9ufaTa2gU24snpt3WYRBJuL+UUu8niNv7
-         k144+MVZoS8qCmr0+xBSoAQP1pX5EmF6092yLBSlzX3IjbtnzqWL4tFxPpm2P22WlWvj
-         lQemMn0orNfR4lUFjmIUG3NEQY2EPuQ1HlE0NGQL1iVRl9ZcruhvNXT4r2fInjwW37NV
-         I+2Iv6RBa5SWn3KHh41t31S3ef0pltdR8fVCqN4+wVfOqxDF1no9pztGUrA1aDWhnEwb
-         MoyQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=j2xw+L+Wgn6yNVt0KBhb22YvbBVytVuLHY/XkGLCgYk=;
+        b=az0MGf9wQt7vb2JDa7QL2SVKlpbeBuUvLQLC+jVBe48C5RpHgs/6tCirQcT3sZX4D5
+         sFZkBHvt3akQkY1ghUc95R1OxuDVq3/67zEpvF6pRsdIDyCCwMAp33Op055UFNKE8Ghd
+         HfMG56USsQ+/QfnHjaO5mpFAYVuuNVsgirYxRd7IE7AWT/rUuHBLa/Md6C+O8+BaXHzZ
+         qCKesQuxITYZ23LzAHEV50To8DFu4EqRUc+AqsVnWdOv7IObHSpUCU73JbYbFpJU0cvM
+         YRjvRB1Iibeh5UIPgCMcVl1MI7N0s7Zoh2LcolY0CPiyPSdZz8FlBGwG7GutE09XL894
+         8SxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tKWx5XFWAWGUG2fX/3dZLci7iB3dxtBBhmwN1/cOdiw=;
-        b=Zsxjv4/9rPueTT95I4JxemDn9/37m06/Bo5dQXFV+mW+x2z2b5t/6fcWOgQxeESNwX
-         oaemjuH1qwNn8mxV5UNbm3w/T+JLym1H7Z3wAi5yiUBus3W68ErZQK90f51NoffktnOM
-         ExNVoa8b6hZjUk3GUv/7PHcNUsew8g5zrbY/Bef3MVVPNacce3OK6Kq9/yebVK4YKLrD
-         ZoZn7QM/SN23M2LvBNrjU9NZHDTQVG2qvBIp6d+0aQ0s4zgCSRzw1UKoHZPoFcIKfobg
-         WeRpOAXWGoUYzZz9U8Nxmjdrqj6nGD2NqAUukLjK2DCLtOTn+a9401TOZPSbG03cddQS
-         eJUw==
-X-Gm-Message-State: AOAM530W0OL1u7L7tbRngl3sjZoWB65Kz6GrsmrbzbzXvtlxXLsoMJ0j
-        aXQWf1axejNMd/4/zi1dVZfmUvOR5bg=
-X-Google-Smtp-Source: ABdhPJygMKIB3uB08n6KQ9/a6DPXYl59uR8FMiL7PY2iBpxW4Pnv2NLwTUfmkwHjuOu9KOY+/kzfXA==
-X-Received: by 2002:a5d:6b46:: with SMTP id x6mr6293323wrw.192.1633720200538;
-        Fri, 08 Oct 2021 12:10:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c132sm13009381wma.22.2021.10.08.12.10.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=j2xw+L+Wgn6yNVt0KBhb22YvbBVytVuLHY/XkGLCgYk=;
+        b=MRwXVxBpEsHAni6ZT63qdBt218MEDaeCECNr5uNOUD+WXRlFjij0DcnBpfN/RUUJ5n
+         2iJXhiYJxGNc2avAFDgExx8UcjxcfdS634RRs3vcMzxdeL4E4RaMw2s4wc9IjRvfH80O
+         EBFZ2Zseqw5KBa181Jjo1hV8ilxLBy0wEwkymKNPk3zLmVgG3I2BL8e5jp0+lEgSiSCz
+         l76B0knRg5YBV32kGlU32wXG/bSeb0kV4obA6W1YmJe7z/ko724Q8cUT51iVqePMW13w
+         +ClLlCULm9kH5inQGHVDQBBRJSRzMSNu72ubKFZw9bUyPWJhYZ7dNukV+2mvzB3NLkaZ
+         k5Hg==
+X-Gm-Message-State: AOAM533rnZlaTGwq6agNyR4pSCIaXxnq9hk2MvqZLIP1WG8aG2JlgnyH
+        4Fxaw9wOWbsowAG8LBjwpn8un8LcnQ/rHA==
+X-Google-Smtp-Source: ABdhPJwFbk3scr4mJ69FK/99L7sXZYju18ENGXD4bpn5iPstcoKJHEDZR8mB+fYIewXHdrCL9Fnl7g==
+X-Received: by 2002:a7b:c351:: with SMTP id l17mr5531630wmj.120.1633721693598;
+        Fri, 08 Oct 2021 12:34:53 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c204sm13056157wme.11.2021.10.08.12.34.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 12:10:00 -0700 (PDT)
-Message-Id: <43a701f5ffd899ae56b2db0fb865e37dd2bb4e07.1633720197.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
-References: <pull.1054.git.1633589461.gitgitgadget@gmail.com>
-        <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
-From:   "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Oct 2021 19:09:57 +0000
-Subject: [PATCH v2 5/5] userdiff-cpp: learn the C++ spaceship operator
-Fcc:    Sent
+        Fri, 08 Oct 2021 12:34:53 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/3] i18n: improve translatability of ambiguous object output
+Date:   Fri,  8 Oct 2021 21:34:45 +0200
+Message-Id: <cover-v3-0.3-00000000000-20211008T193041Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1492.g76eb1af92bc
+In-Reply-To: <cover-v2-0.2-00000000000-20211004T142523Z-avarab@gmail.com>
+References: <cover-v2-0.2-00000000000-20211004T142523Z-avarab@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Sixt <j6t@kdbg.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Sixt <j6t@kdbg.org>
+Since v2 the "commit", "tag" etc. types in object.c are no longer
+marked for translation.
 
-Since C++20, the language has a generalized comparison operator <=>.
-Teach the cpp driver not to separate it into <= and > tokens.
+There's a new 1/3 where we lead with an assert() and commit message
+showing that the existing "unknown type" code is gone, which makes
+what comes after simpler.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t4034/cpp/expect | 4 ++--
- t/t4034/cpp/post   | 2 +-
- t/t4034/cpp/pre    | 2 +-
- userdiff.c         | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+In 2/3 we no longer have to deal with special-cases related to corrupt
+or otherwise bad objects, which makes for less work for translators.
 
-diff --git a/t/t4034/cpp/expect b/t/t4034/cpp/expect
-index a3a234f5461..bf3cd2abc74 100644
---- a/t/t4034/cpp/expect
-+++ b/t/t4034/cpp/expect
-@@ -1,5 +1,5 @@
- <BOLD>diff --git a/pre b/post<RESET>
--<BOLD>index 60f3640..f6fbf7b 100644<RESET>
-+<BOLD>index 144cd98..244f79c 100644<RESET>
- <BOLD>--- a/pre<RESET>
- <BOLD>+++ b/post<RESET>
- <CYAN>@@ -1,30 +1,30 @@<RESET>
-@@ -25,7 +25,7 @@ str.e+<RED>65<RESET><GREEN>75<RESET>
- a<RED>*<RESET><GREEN>*=<RESET>b c<RED>/<RESET><GREEN>/=<RESET>d e<RED>%<RESET><GREEN>%=<RESET>f
- a<RED>+<RESET><GREEN>++<RESET>b c<RED>-<RESET><GREEN>--<RESET>d
- a<RED><<<RESET><GREEN><<=<RESET>b c<RED>>><RESET><GREEN>>>=<RESET>d
--a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h
-+a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h i<RED><=<RESET><GREEN><=><RESET>j
- a<RED>==<RESET><GREEN>!=<RESET>b c<RED>!=<RESET><GREEN>=<RESET>d
- a<RED>^<RESET><GREEN>^=<RESET>b c<RED>|<RESET><GREEN>|=<RESET>d e<RED>&&<RESET><GREEN>&=<RESET>f
- a<RED>||<RESET><GREEN>|<RESET>b
-diff --git a/t/t4034/cpp/post b/t/t4034/cpp/post
-index f6fbf7bc04c..244f79c9900 100644
---- a/t/t4034/cpp/post
-+++ b/t/t4034/cpp/post
-@@ -20,7 +20,7 @@ str.e+75
- a*=b c/=d e%=f
- a++b c--d
- a<<=b c>>=d
--a<=b c<d e>=f g>h
-+a<=b c<d e>=f g>h i<=>j
- a!=b c=d
- a^=b c|=d e&=f
- a|b
-diff --git a/t/t4034/cpp/pre b/t/t4034/cpp/pre
-index 60f3640d773..144cd980d6b 100644
---- a/t/t4034/cpp/pre
-+++ b/t/t4034/cpp/pre
-@@ -20,7 +20,7 @@ str.e+65
- a*b c/d e%f
- a+b c-d
- a<<b c>>d
--a<b c<=d e>f g>=h
-+a<b c<=d e>f g>=h i<=j
- a==b c!=d
- a^b c|d e&&f
- a||b
-diff --git a/userdiff.c b/userdiff.c
-index 1b640c7df79..13cec0b48db 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -62,7 +62,7 @@ PATTERNS("cpp",
- 	 "|0[xXbB][0-9a-fA-F']+[lLuU]*"
- 	 /* floatingpoint numbers that begin with a decimal point */
- 	 "|\\.[0-9']+([Ee][-+]?[0-9]+)?[fFlL]?"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
- PATTERNS("csharp",
- 	 /* Keywords */
- 	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
+In 3/3 I added the tag date to ambiguous tag objects, which is now
+consistent with how commit objects are shown.
+
+Ævar Arnfjörð Bjarmason (3):
+  object-name: remove unreachable "unknown type" handling
+  object-name: make ambiguous object output translatable
+  object-name: show date for ambiguous tag objects
+
+ object-name.c | 68 +++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 7 deletions(-)
+
+Range-diff against v2:
+1:  55bde16aa23 < -:  ----------- object.[ch]: mark object type names for translation
+-:  ----------- > 1:  fb29e10ee35 object-name: remove unreachable "unknown type" handling
+2:  c0e873543f5 ! 2:  587a5717e47 object-name: make ambiguous object output translatable
+    @@ Commit message
+         object-name: make ambiguous object output translatable
+     
+         Change the output of show_ambiguous_object() added in [1] and last
+    -    tweaked in [2] to be more friendly to translators. By being able to
+    -    customize the sprintf formats we're even ready for RTL languages.
+    -
+    -    The "unknown type" message here is unreachable, and has been since
+    -    [1], i.e. that code has never worked. If we craft an object of a bogus
+    -    type with a conflicting prefix we'll just die:
+    -
+    -        $ git rev-parse 8315
+    -        error: short object ID 8315 is ambiguous
+    -        hint: The candidates are:
+    -        fatal: invalid object type
+    -
+    -    But let's continue to pretend that this works, we can eventually use
+    -    the API improvements in my ab/fsck-unexpected-type (once it lands) to
+    -    inspect these objects and emit the actual type here, or at least not
+    -    die as we emit "unknown type".
+    +    tweaked in [2] and the preceding commit to be more friendly to
+    +    translators. By being able to customize the "<SP><SP>%s\n" format
+    +    we're even ready for RTL languages, who'd presumably like to change
+    +    that to "%s<SP><SP>\n".
+     
+         1. 1ffa26c461 (get_short_sha1: list ambiguous objects on error,
+            2016-09-26)
+    @@ Commit message
+     
+      ## object-name.c ##
+     @@ object-name.c: static int show_ambiguous_object(const struct object_id *oid, void *data)
+    - {
+      	const struct disambiguate_state *ds = data;
+      	struct strbuf desc = STRBUF_INIT;
+    -+	struct strbuf ci_ad = STRBUF_INIT;
+    -+	struct strbuf ci_s = STRBUF_INIT;
+      	int type;
+    -+	const char *tag_desc = NULL;
+    -+	const char *abbrev;
+    ++	const char *hash;
+      
+      	if (ds->fn && !ds->fn(ds->repo, oid, ds->cb_data))
+      		return 0;
+     @@ object-name.c: static int show_ambiguous_object(const struct object_id *oid, void *data)
+    + 	type = oid_object_info(ds->repo, oid, NULL);
+    + 	assert(type == OBJ_TREE || type == OBJ_COMMIT ||
+    + 	       type == OBJ_BLOB || type == OBJ_TAG);
+    ++	hash = repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV);
+    ++
+    + 	if (type == OBJ_COMMIT) {
+    ++		struct strbuf ad = STRBUF_INIT;
+    ++		struct strbuf s = STRBUF_INIT;
+    + 		struct commit *commit = lookup_commit(ds->repo, oid);
+    ++
+      		if (commit) {
+      			struct pretty_print_context pp = {0};
+      			pp.date_mode.type = DATE_SHORT;
+     -			format_commit_message(commit, " %ad - %s", &desc, &pp);
+    -+			format_commit_message(commit, "%ad", &ci_ad, &pp);
+    -+			format_commit_message(commit, "%s", &ci_s, &pp);
+    ++			format_commit_message(commit, "%ad", &ad, &pp);
+    ++			format_commit_message(commit, "%s", &s, &pp);
+      		}
+    - 	} else if (type == OBJ_TAG) {
+    - 		struct tag *tag = lookup_tag(ds->repo, oid);
+    - 		if (!parse_tag(tag) && tag->tag)
+    --			strbuf_addf(&desc, " %s", tag->tag);
+    -+			tag_desc = tag->tag;
+    - 	}
+    - 
+    --	advise("  %s %s%s",
+    --	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
+    --	       type_name(type) ? type_name(type) : "unknown type",
+    --	       desc.buf);
+    -+	abbrev = repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV);
+    -+	if (type == OBJ_COMMIT) {
+    ++
+     +		/*
+     +		 * TRANSLATORS: This is a line of ambiguous commit
+     +		 * object output. E.g.:
+     +		 *
+     +		 *    "deadbeef commit 2021-01-01 - Some Commit Message"
+    -+		 *
+    -+		 * The second argument is the "commit" string from
+    -+		 * object.c, it should (hopefully) already be
+    -+		 * translated.
+     +		 */
+    -+		strbuf_addf(&desc, _("%s %s %s - %s"), abbrev, ci_ad.buf,
+    -+			    _(type_name(type)), ci_s.buf);
+    -+	} else if (tag_desc) {
+    ++		strbuf_addf(&desc, _("%s commit %s - %s"), hash, ad.buf, s.buf);
+    ++
+    ++		strbuf_release(&ad);
+    ++		strbuf_release(&s);
+    + 	} else if (type == OBJ_TAG) {
+    + 		struct tag *tag = lookup_tag(ds->repo, oid);
+    ++		const char *tag_tag = "";
+    ++
+    + 		if (!parse_tag(tag) && tag->tag)
+    +-			strbuf_addf(&desc, " %s", tag->tag);
+    ++			tag_tag = tag->tag;
+    ++
+     +		/*
+     +		 * TRANSLATORS: This is a line of
+     +		 * ambiguous tag object output. E.g.:
+    @@ object-name.c: static int show_ambiguous_object(const struct object_id *oid, voi
+     +		 * object.c, it should (hopefully) already be
+     +		 * translated.
+     +		 */
+    -+		strbuf_addf(&desc, _("%s %s %s"), abbrev, _(type_name(type)),
+    -+			    tag_desc);
+    -+	} else {
+    -+		const char *tname = type_name(type) ? _(type_name(type)) :
+    -+			_(unknown_type);
+    ++		strbuf_addf(&desc, _("%s tag %s"), hash, tag_tag);
+    ++	} else if (type == OBJ_TREE) {
+     +		/*
+     +		 * TRANSLATORS: This is a line of ambiguous <type>
+    -+		 * object output. Where <type> is one of the object
+    -+		 * types of "tree", "blob", "tag" ("commit" is handled
+    -+		 * above).
+    -+		 *
+    -+		 *    "deadbeef tree"
+    -+		 *    "deadbeef blob"
+    -+		 *    "deadbeef tag"
+    -+		 *    "deadbeef unknown type"
+    -+		 *
+    -+		 * Note that annotated tags use a separate format
+    -+		 * outlined above.
+    -+		 *
+    -+		 * The second argument is the "tree", "blob" or "tag"
+    -+		 * string from object.c, or the "unknown type" string
+    -+		 * in the case of an unknown type. All of them should
+    -+		 * (hopefully) already be translated.
+    ++		 * object output. E.g. "deadbeef tree".
+     +		 */
+    -+		strbuf_addf(&desc, _("%s %s"), abbrev, tname);
+    -+	}
+    -+
+    ++		strbuf_addf(&desc, _("%s tree"), hash);
+    ++	} else if (type == OBJ_BLOB) {
+    ++		/*
+    ++		 * TRANSLATORS: This is a line of ambiguous <type>
+    ++		 * object output. E.g. "deadbeef blob".
+    ++		 */
+    ++		strbuf_addf(&desc, _("%s blob"), hash);
+    ++	} else {
+    ++		BUG("unreachable");
+    + 	}
+    + 
+    +-	advise("  %s %s%s",
+    +-	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
+    +-	       type_name(type), desc.buf);
+     +	/*
+     +	 * TRANSLATORS: This is line item of ambiguous object output,
+     +	 * translated above.
+     +	 */
+    -+	advise(_("  %s\n"), desc.buf);
+    ++	advise(_("  %s"), desc.buf);
+      
+      	strbuf_release(&desc);
+    -+	strbuf_release(&ci_ad);
+    -+	strbuf_release(&ci_s);
+      	return 0;
+    - }
+    - 
+-:  ----------- > 3:  8bde4e174b7 object-name: show date for ambiguous tag objects
 -- 
-gitgitgadget
+2.33.0.1492.g76eb1af92bc
+
