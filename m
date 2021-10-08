@@ -2,120 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2284C433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E5D4C433F5
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FD6560FE8
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:02:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3505960F9C
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 19:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbhJHTEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 15:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53872 "EHLO
+        id S240180AbhJHTJq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 15:09:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240659AbhJHTEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 15:04:11 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6768FC061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 12:02:15 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id p13so40556626edw.0
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 12:02:15 -0700 (PDT)
+        with ESMTP id S231407AbhJHTJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 15:09:46 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A6FC061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 12:07:50 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id o20so32571445wro.3
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 12:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=gXa4y2MQ6UDeLVzNZ6fS2ZRyuOLXReXcibPkYBl8nJ8=;
-        b=bdXPBYPodKyn9WELUjHW8s0WhPwRPi8e93bLy97LrfOzb4CADPZMlY8v3+Uh3+C/S9
-         b1qFydZe1q/XyivQkjRUQKNsJwacbIa5OJfM1TGpsebKmB1lUoJEXfmOaw76KDMiMewE
-         nBYNIXl6cOn7s1Tc8hvhNcRg6MZzCSfUCAAq8WE+AADH02Ig2aI7Wp0UhPQT+pNFhIJQ
-         A8Xy7LA0pIbQBaHPwaF5Zr/WeyCn8NyGKG/fGfY5QeGjcQWZXPp3zx7AWXS8QGGeRuQc
-         0Smhnn+kF8XdZq6ZNgqdhgev5Y4mtpQdS42+u6MitKaY1QqMYipPsAIABEupA1KqhTpp
-         nESQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HsvH4Wk7ZgVFpGqFCejGU41TeEzjrrF+hCVJQ0koyFk=;
+        b=GiIEpXVVBC0TAUCv0LduSXElePGZncv2Ap8mN0+FJ9ADzQ21zldxeuFoVAug7lJGVD
+         DMe5kaTqeKBbUkG43MXQ4YJCCENi4AmF6bnOCHa00b5Z40Nn+dbitFH0XNWBjPj+th9b
+         yL2JidGc5WFwWZcdgTfgy4w84pTX18rWwGpEiXtCtwlZUY5KWwQSrYXjzucE6qD+g5QT
+         h4nQrNLEOV+/M4A2sGmfJHn3+BenhpTiqDjmMFUt2oFES9HGtld+RobJP/yLiZayparH
+         g43K51fheAq2Xcytl3Bqk1qaKa8Kh+eSpAjV7/YdAI5o9TBP9en2f7xIpMghtgupi9lZ
+         yL9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=gXa4y2MQ6UDeLVzNZ6fS2ZRyuOLXReXcibPkYBl8nJ8=;
-        b=hNUg8wiNPl00L3iqLjp82g7mX7xicIn3eamXXPHntAbRqGwiooCd0D2EetkiUn3SX4
-         ahMjDGWACV4avVh7oqGsYwVXJQHQV7p5nRQXudzYteL3rOXXwta3FWFpiukdDL3n6RBZ
-         1ihdAwO2w6W/oSlU37xnadmr9srVy/bYLk8wUASu4XJOdMmBj/CzWQSpjEO3XnCe2+w/
-         5KJYWmfJjA4vLVnuPna9gBL0FCBMqtUT6mPMWEMV/uEeCpJUOo8K9Re+5T9m2bxsROw8
-         XkzqP52+qyU3ATLrmZ/H/L+2cooe2dmIini2IOd7pJf7zBX68ZAtaQ/Tn7yKRL/pUT4D
-         yxSQ==
-X-Gm-Message-State: AOAM533YqkeWBrZgYAbdZGd5v0sj4Wz7VH+EoanhmQ73moh0NVXP99mn
-        Ay5DKUkfzs0Y+vC/x4I2m2E=
-X-Google-Smtp-Source: ABdhPJxH/Nah76x+d5eAfTqFyNczDZ3bhNlbpLTlLCYpDnLFFfInoJuYKqGx4A0q0fnd3Sj62P5RuQ==
-X-Received: by 2002:a17:906:71d4:: with SMTP id i20mr6526202ejk.390.1633719733923;
-        Fri, 08 Oct 2021 12:02:13 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l13sm65145eds.92.2021.10.08.12.02.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HsvH4Wk7ZgVFpGqFCejGU41TeEzjrrF+hCVJQ0koyFk=;
+        b=lRMARbO4wX8Ctoxfl5x0afblARqgFr9YAXAx3E7EyouOCJSvHsvMDXJCCwKat7BPos
+         lORM5s60nSnt2jjW5Rs6oGiZs42FUAdylN8ytoMqfOQ47j/ESLPu9vwis6l347NeFL7t
+         0taP3WBzrUmdgMBaPnqzDbMywgqWSrRaj6Oj9nrVaiLYjhCScf1pwfmP3ZoxblWHq5lh
+         XMCR2b7oe6MXOwnxsd0EUI13UcwSBLyaV/XvaJsPHlmyaqjQQkKQ9R1MoY88QnRuYspP
+         dkfsprmiVuilPttI1/VAdFnZwdsTMX8LbtpEI3XM6LCJoUhWaflCTN++RFruhCHBgRZ5
+         2Y/A==
+X-Gm-Message-State: AOAM530YeNiKBDFzeAcCBryruR1RTHRC/kV+iuoAflAM3dKB7fUJugAq
+        5jR3KStegQz2arZ7yJsqTtHntaNy5jw=
+X-Google-Smtp-Source: ABdhPJzogvTJ0w1VvdfrIt2UvpkmoASmsmXguQ3mfFBgIRN39KtvUaVcOadMGmHVwIJpZrssvbt+Zg==
+X-Received: by 2002:a05:600c:4fd0:: with SMTP id o16mr5240303wmq.73.1633720068289;
+        Fri, 08 Oct 2021 12:07:48 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x17sm169882wrc.51.2021.10.08.12.07.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 12:02:13 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 10/9 v2] test-mergesort: use repeatable random numbers
-Date:   Fri, 08 Oct 2021 21:00:13 +0200
-References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
- <522fba5e-1048-3377-45c1-7107b55dc6e1@web.de> <xmqq7dew7aqd.fsf@gitster.g>
- <87o887q0s9.fsf@evledraar.gmail.com>
- <850aa059-61d9-0eba-5809-e0c27a19dfb4@web.de> <xmqqee9210a1.fsf@gitster.g>
- <a3eeb255-56e3-eb22-ebf7-e9f04c95fa44@web.de>
- <b73452fa-f5b0-0ab4-25e8-7494637c49f5@web.de>
- <87tuhsez93.fsf@evledraar.gmail.com>
- <c43ce422-0eba-0c7e-af01-a85cd948b0bb@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <c43ce422-0eba-0c7e-af01-a85cd948b0bb@web.de>
-Message-ID: <874k9rnxvv.fsf@evledraar.gmail.com>
+        Fri, 08 Oct 2021 12:07:47 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 00/10] fix bug, use more enums
+Date:   Fri,  8 Oct 2021 21:07:36 +0200
+Message-Id: <cover-v3-00.10-00000000000-20211008T190536Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.1446.g6af949f83bd
+In-Reply-To: <cover-v2-00.11-00000000000-20211001T142631Z-avarab@gmail.com>
+References: <cover-v2-00.11-00000000000-20211001T142631Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A re-roll of
+https://lore.kernel.org/git/cover-v2-00.11-00000000000-20211001T142631Z-avarab@gmail.com/;
+I dropped the addition of exhaustive enum arms for parse_opt_type.
 
-On Fri, Oct 08 2021, Ren=C3=A9 Scharfe wrote:
+There's other tweaks here pointed out by Junio & René, thanks both!
+The "enum parse_opt_flags flags" change in the range-diff below was
+there before, but it was (incorrectly, to begin with) in the
+now-dropped patch.
 
-> Am 08.10.21 um 09:23 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> Also generally: If you'd like "portable" rand() for a test just shell
->> out to perl. I ran this on various Perl versions (oldest 5.12) on Debian
->> Linux, OSX, Solaris & OpenBSD, all returned the same number for both:
->>
->>     ruby -e 'srand(1); puts rand'; perl -E 'srand(1); say $^V; say rand'
->>
->> Whereas a C program doing the same:
->>
->>     #include <stdio.h>
->>     #include <stdlib.h>
->>
->>     int main(void)
->>     {
->>             srand(1);
->>             printf("rand =3D %d\n", rand());
->>             return 0;
->>     }
->>
->> Returns different numbers an all, and on OpenBSD the number is different
->> each time, per their well-known non-standard srand()/rand() behavior.
->
-> For test shell code that needs only a few random numbers this would
-> be fine.
->
-> For test-genrandom it would also work, but I don't see any benefit in
-> converting it to a scripting language.
->
-> Shelling out to a script to avoid a multiplication and a modulo in
-> test-mergesort is not interesting, to put it mildly.  A mode that sorts
-> input from stdin like the sort subcommand, but returns the operation
-> counts, might be useful if you want to test distributions generated by
-> a Perl script or other data source of your choice.
+Ævar Arnfjörð Bjarmason (10):
+  parse-options.h: move PARSE_OPT_SHELL_EVAL between enums
+  parse-options.[ch]: consistently use "enum parse_opt_flags"
+  parse-options.[ch]: consistently use "enum parse_opt_result"
+  parse-options.c: use exhaustive "case" arms for "enum
+    parse_opt_result"
+  parse-options.h: make the "flags" in "struct option" an enum
+  parse-options.c: move optname() earlier in the file
+  commit-graph: stop using optname()
+  parse-options.[ch]: make opt{bug,name}() "static"
+  parse-options tests: test optname() output
+  parse-options: change OPT_{SHORT,UNSET} to an enum
 
-Yes, it has zero applicablility here.
+ builtin/blame.c          |  3 ++
+ builtin/commit-graph.c   |  4 +-
+ builtin/shortlog.c       |  3 ++
+ parse-options.c          | 87 ++++++++++++++++++++++------------------
+ parse-options.h          | 26 ++++++------
+ t/t0040-parse-options.sh | 42 +++++++++++++++++--
+ 6 files changed, 109 insertions(+), 56 deletions(-)
 
-It was just an aside/FYI since we were on the topic of the
-cross-platformness of rand().
+Range-diff against v2:
+ 1:  553931702df =  1:  59195845497 parse-options.h: move PARSE_OPT_SHELL_EVAL between enums
+ 2:  99f5251c557 !  2:  d4aaaa645de parse-options.[ch]: consistently use "enum parse_opt_flags"
+    @@ Commit message
+         Use the "enum parse_opt_flags" instead of an "int flags" as arguments
+         to the various functions in parse-options.c.
+     
+    -    In C enums aren't first-class types, and the "enum
+    -    parse_opt_option_flag" uses a enum-as-bitfield pattern. So unlike
+    -    exhaustively enumerated "case" arms we're not going to get validation
+    -    that we used the "right" enum labels.
+    -
+    -    I.e. this won't catch the sort of bug that was fixed with
+    -    "PARSE_OPT_SHELL_EVAL" in the preceding commit.
+    -
+    -    But there's still a benefit to doing this when it comes to the wider C
+    -    ecosystem. E.g. the GNU debugger (gdb) will helpfully detect and print
+    -    out meaningful enum labels in this case. Here's the output before and
+    -    after when breaking in "parse_options()" after invoking "git stash
+    -    show":
+    +    Even though this is an enum bitfield there's there's a benefit to
+    +    doing this when it comes to the wider C ecosystem. E.g. the GNU
+    +    debugger (gdb) will helpfully detect and print out meaningful enum
+    +    labels in this case. Here's the output before and after when breaking
+    +    in "parse_options()" after invoking "git stash show":
+     
+         Before:
+     
+    @@ parse-options.h: struct option {
+      NORETURN void usage_with_options(const char * const *usagestr,
+      				 const struct option *options);
+     @@ parse-options.h: struct parse_opt_ctx_t {
+    + 	const char **out;
+    + 	int argc, cpidx, total;
+    + 	const char *opt;
+    +-	int flags;
+    ++	enum parse_opt_flags flags;
+    + 	const char *prefix;
+    + 	const char **alias_groups; /* must be in groups of 3 elements! */
+    + 	struct option *updated_options;
+    +@@ parse-options.h: struct parse_opt_ctx_t {
+      
+      void parse_options_start(struct parse_opt_ctx_t *ctx,
+      			 int argc, const char **argv, const char *prefix,
+ 3:  be198e42df9 =  3:  828e8b96574 parse-options.[ch]: consistently use "enum parse_opt_result"
+ 4:  a253db7a60d =  4:  bebf3448c49 parse-options.c: use exhaustive "case" arms for "enum parse_opt_result"
+ 5:  467828780d0 <  -:  ----------- parse-options.c: use exhaustive "case" arms for "enum parse_opt_type"
+ 6:  34669327550 =  5:  23e62d4139f parse-options.h: make the "flags" in "struct option" an enum
+ 7:  e82a4e477d5 =  6:  7afdb22885d parse-options.c: move optname() earlier in the file
+ 8:  58683b3d89d !  7:  67a9b38f66c commit-graph: stop using optname()
+    @@ Commit message
+         of "opt->flags" to optname(), that function expects flags, but not
+         *those* flags.
+     
+    +    Let's pass "max-new-filters" to the new error because the option name
+    +    isn't translatable, and because we can re-use a translation added in
+    +    f7e68a08780 (parse-options: check empty value in OPT_INTEGER and
+    +    OPT_ABBREV, 2019-05-29).
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/commit-graph.c ##
+    @@ builtin/commit-graph.c: static int write_option_max_new_filters(const struct opt
+      		if (*s)
+     -			return error(_("%s expects a numerical value"),
+     -				     optname(opt, opt->flags));
+    -+			return error(_("option `max-new-filters' expects a numerical value"));
+    ++			return error(_("option `%s' expects a numerical value"),
+    ++				     "max-new-filters");
+      	}
+      	return 0;
+      }
+ 9:  8cbee660174 =  8:  520cc5a8dc0 parse-options.[ch]: make opt{bug,name}() "static"
+10:  f727f683eb1 =  9:  a82987a03c7 parse-options tests: test optname() output
+11:  4fbc07fc7fd = 10:  e05627d3634 parse-options: change OPT_{SHORT,UNSET} to an enum
+-- 
+2.33.0.1446.g6af949f83bd
 
-I.e. one might assume that for the general problem of seeding something
-randomly cross-platform one had to ship a rand(), but usually at least
-perl is there ahead of you, and since it has its own rand()...
