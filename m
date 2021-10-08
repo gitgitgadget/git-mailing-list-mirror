@@ -2,171 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 384E0C433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4749FC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:51:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D55361029
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:45:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 242D161037
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 07:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232842AbhJHHrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 03:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232726AbhJHHrK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 03:47:10 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37064C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 00:45:15 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id r18so32970891edv.12
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 00:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=YaO8DELHiQ310fzjYuCrM1F/0eFbAV3DHa2N3FkjPR4=;
-        b=jmRigb4Kfqm4oPKkY0HaUZnO0EB8PzxiWimXIKwLczqpvpIqIGNvmnzK+OxehCsF58
-         VbgWT7ce5iYXS+g8sB6GR5xW7chkH29bM6Pz62Fvoask6x/GxgpL97FAV+YDS50AYxX2
-         Ve5qWLEbKEmN5iHBDjJOsWM+lIMx1ghJ3UfQPUxQMY4cY8tEtyN0ghiUAkEiptb8Xqdo
-         6BPOl2hjZmje2ftM50u6aJN2uOiX4SNfJi7brve8DrMbTRcnv1p7y5m4GZSgXVLWuVer
-         vDYK4y2ZZOrJ+HGmqafth0lqMiHZ8ywD9LLiKs+HE3v7KJpx0IuuMNQBAnUyNxBecrES
-         Tjxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=YaO8DELHiQ310fzjYuCrM1F/0eFbAV3DHa2N3FkjPR4=;
-        b=2ulrS4HSbkVTkbsA9t8jKJZ8iOz+ExvikiQCT4alHCqSipBnH8t+MCM4MWZ4REFpWi
-         aKh/g0iImPbGfVSQxpOBzGNVMhCUokJGiTOSqAYZUBLv2QLZH8/B6Co7S5qUBz8UNZY1
-         ZI/GkhQ2a5X/FqGf3cjVk+xPQasYerxVmNQxoURZsrbKp16okEMjhTFqpARXllSMWO2q
-         hQ6JpBcCGxgdHEt9niXSu6UwS7k5DrAaemjmHF+NA06eHRu8RVVLKz6WyjnPbQBTBJLv
-         H/OwnreuG7xUpgAhASVYs2GcXUmQm05/n4KUxoVFHjZD6J/TTVVTMwmx6fTv0DIIMrXF
-         F6Vg==
-X-Gm-Message-State: AOAM53126E+i9dOmTB+vkuKyqLIAWAFVbnmf72ynRJkrC6r92WQZHyzJ
-        iwCIJPRxs0JlrtoP8HE+Idc=
-X-Google-Smtp-Source: ABdhPJzN+o0sywYdgrtwvElipkcxkX9pmNT0bQiLdu4vwK7w7kJCxSIvaDKQ4ocO+G8VJwxlTY2+jQ==
-X-Received: by 2002:a17:906:32d9:: with SMTP id k25mr2343975ejk.290.1633679113574;
-        Fri, 08 Oct 2021 00:45:13 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id r6sm698372edd.89.2021.10.08.00.45.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 00:45:12 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 10/9 v2] test-mergesort: use repeatable random numbers
-Date:   Fri, 08 Oct 2021 09:23:21 +0200
-References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
- <522fba5e-1048-3377-45c1-7107b55dc6e1@web.de> <xmqq7dew7aqd.fsf@gitster.g>
- <87o887q0s9.fsf@evledraar.gmail.com>
- <850aa059-61d9-0eba-5809-e0c27a19dfb4@web.de> <xmqqee9210a1.fsf@gitster.g>
- <a3eeb255-56e3-eb22-ebf7-e9f04c95fa44@web.de>
- <b73452fa-f5b0-0ab4-25e8-7494637c49f5@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <b73452fa-f5b0-0ab4-25e8-7494637c49f5@web.de>
-Message-ID: <87tuhsez93.fsf@evledraar.gmail.com>
+        id S229939AbhJHHxm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 03:53:42 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51257 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229788AbhJHHxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 03:53:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1633679497;
+        bh=d/qAnv2h+hLGOoz5GhuDIeOqTrjTmjWEM7jTukSdZSo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=OADeoR7v8s61Yv6xr2s4mkUCpmDo9Sd0lmXq9ZQCg2gza+RWjH+3tkE2BNZeHtRhZ
+         8gZgZhbYd6/+xggQZV/1FJxjNq8ziuBLZol/Tq/7vLm9HxH2JbeTxb1i5iJF4DXA9U
+         4l5+j91O2Mt/wygLjm/iiA5Kf1PGhRsYWiFDFAsA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.23.42] ([195.63.203.190]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mplc7-1n8a8543O1-00q9su; Fri, 08
+ Oct 2021 09:51:37 +0200
+Date:   Fri, 8 Oct 2021 09:51:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #02; Wed, 6)
+In-Reply-To: <YV/BMkZrj4xQyvUL@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2110080946060.395@tvgsbejvaqbjf.bet>
+References: <xmqqfstdr8b5.fsf@gitster.g> <YV5aaD418SyZqS/1@coredump.intra.peff.net> <YV5dmkkuCqAY2qqG@coredump.intra.peff.net> <YV5yi+AejPGO9qOi@nand.local> <YV/BMkZrj4xQyvUL@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Pgy7fIheaCaTos68k/cU30OI04Hyc7fILRnsBbWVjbD8GBvQZ0j
+ PUyY2dIdf6pqEYptYOUsyU+fmQ0O8RFtrkQw71avmlZd6s3/o2sb+7AIUUJdK0Bbiyxjjog
+ AmP+0VUoSxQhSN3gBPPk4EMh4AOmsqsfIVSUPN7M2//UbLHY6xEFSwlZzad1llFjKh044cn
+ 5Kxp0mlU8kbIZyomqRxdQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:02f+HBh1z3A=:dmWxf9u5Mx6fXLRwVj8XII
+ zLOmFzyeLVO8fNKgBRRFB1M6NztsBzwfIa0gwh7cQ7z8E9TJg1WS7wEpv3HvLwuVll2wG7tta
+ UaRY0lHm+i/og9Bf+32ayzXS/FJ59r6vXLMq+5395Y1uQsUsS3+HekCjC1X3Fa84l0ls+CbSz
+ qo5n3FO65VchquoTeIu8kpFcFFAikJBBQR2x+pjC8ynuOldSPayAQI0tB932lAMSbawwV8ctH
+ j6acGyzDumvjJuycYtpw1jBhUMblrKpj3Y8iA4ceXlZfCoiHD/kZhmBnW2VpAR13FXI+PH/wV
+ tpSYsxNMpJ5wAPQ3i66B6p8Y1kqj3i0fecC8E5l+L/t9rsdWOx4N7D3GcweZtMB5k4jkXE0Y4
+ 4Ds974voFBG5azfBjcG8qSgdX6Cp9wRWU2sjCq/AReaS0UmLMs/HrHAwyL0dJk6FscxlNdJH0
+ 9ocBNejSc/F/X9OzJIs/SPj5DqnBLt6JGDdcIaR4uTvpHk6fbgJEB/GyMmR82dlW+EXhhrF19
+ LEHrg3Z68UgYoF3UHxrN1CInamzh3uMplbIqs31bECRxPYz/xQViwKJxLENIUKkcLopi0voQ/
+ L7bxrBdqV0boqj8nKW5Icc0jV0VkZEIHYeOyGnTSTp0tQXCjQUhGhXmgt8RhvFM/mtaabHIJC
+ 8LfpsBQc+lfg1OPM6tT5hgFdZL+f0bq0b5Fm0OFRRke5KBLL2vZXLfhZBfbArMMR7Cz3OtNA4
+ 6ay2IA/2yXM8AVG5cufxu2926lPS77fSq/qtOnzHUW7Xro7uG2myWh+EPbSL9kTJvWk48OwSa
+ rhgra7MqJqMVjJKhzyh/DdUEOhtvdH6rJiRYQhRtSoLEB+X59yH64cQ8IgxbCX7G6GgL47/HT
+ uyjYYeNQdrImVeAV05sHbKBFkmIOD1NsYprFmF9Dw8fV8Q5Wq6JIgCXibZxnQylwy6oWnISGV
+ pmzsb/DhD4mB4aLB///sjGQPPx6ZPAmKEtmkfdv/Oc4D49ZwtRgIu3jrUChKPFD2vYUjbBckr
+ 7JoRea+Ezz7ZEVx5aSmQT2eSujcFSl2yA4zNBpN/aMDuduAGp3Rt0GXVbvnAg0zGHvjZCy25w
+ EBEg7+lwkTIXYA=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff & Taylor,
 
-On Fri, Oct 08 2021, Ren=C3=A9 Scharfe wrote:
+On Thu, 7 Oct 2021, Jeff King wrote:
 
-> Use MINSTD to generate pseudo-random numbers consistently instead of
-> using rand(3), whose output can vary from system to system, and reset
-> its seed before filling in the test values.  This gives repeatable
-> results across versions and systems, which simplifies sharing and
-> comparing of results between developers.
+> On Thu, Oct 07, 2021 at 12:07:39AM -0400, Taylor Blau wrote:
 >
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> Change: Use uint32_t to avoid relying on unsigned int being exactly
-> 4 bytes wide.  D'oh!
+> > On Wed, Oct 06, 2021 at 10:38:18PM -0400, Jeff King wrote:
+> > > The reason for that is that I didn't find it by inspection; I've sta=
+rted
+> > > running my personal builds through coverity. It wasn't too bad to se=
+t up
+> > > with a GitHub Action, like so:
+> > >
+> > > [...]
+> >
+> > It looks like this would never cause the build to fail, but is merely
+> > responsible for sending any warnings off to Coverity's UI?
 >
->  t/helper/test-mergesort.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+> Sort of. They basically wrap the "make" invocation to intercept "cc". My
+> understanding is that their faux-compiler is mostly about gathering data
+> about the code. That gets stuffed into a tarball and uploaded to their
+> servers, where the real analysis happens.
 >
-> diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
-> index 29758cf89b..c6fa816be3 100644
-> --- a/t/helper/test-mergesort.c
-> +++ b/t/helper/test-mergesort.c
-> @@ -2,6 +2,12 @@
->  #include "cache.h"
->  #include "mergesort.h"
->
-> +static uint32_t minstd_rand(uint32_t *state)
-> +{
-> +	*state =3D (uint64_t)*state * 48271 % 2147483647;
-> +	return *state;
-> +}
-> +
->  struct line {
->  	char *text;
->  	struct line *next;
-> @@ -60,8 +66,9 @@ static void dist_sawtooth(int *arr, int n, int m)
->  static void dist_rand(int *arr, int n, int m)
->  {
->  	int i;
-> +	uint32_t seed =3D 1;
->  	for (i =3D 0; i < n; i++)
-> -		arr[i] =3D rand() % m;
-> +		arr[i] =3D minstd_rand(&seed) % m;
->  }
->
->  static void dist_stagger(int *arr, int n, int m)
-> @@ -81,8 +88,9 @@ static void dist_plateau(int *arr, int n, int m)
->  static void dist_shuffle(int *arr, int n, int m)
->  {
->  	int i, j, k;
-> +	uint32_t seed =3D 1;
->  	for (i =3D j =3D 0, k =3D 1; i < n; i++)
-> -		arr[i] =3D (rand() % m) ? (j +=3D 2) : (k +=3D 2);
-> +		arr[i] =3D minstd_rand(&seed) % m ? (j +=3D 2) : (k +=3D 2);
->  }
->
->  #define DIST(name) { #name, dist_##name }
+> It's very black-box, which I don't love. But in my experience it
+> produces by far the most useful static-analysis output of any tool I've
+> seen.
 
-Just to your upthread:
+It is pretty black box, but I have to disagree that the static analysis
+output is very useful. The majority are false positives about
+strbuf/strvec type usage of a static, fixed-size array that is dynamically
+replaced by a dynamically-allocated array. Coverity misses that subtlety
+and reports out-of-bounds accesses.
 
-    "Right, so we'd need to ship our own random number generator."
+Granted, I worked around those (I thought) by using the
+`-DFLEX_ARRAY=3D65536` trick, but I guess that is either not working as
+designed, or it stopped working at some stage.
 
-I don't really think this matters in either case here, and if anything a
-flaky failure in this test would quickly point us in the right
-direction, as opposed to say having the N test_expect_success being run
-in rand() order or whatever.
+FWIW I have set up an Azure Pipeline to keep Git for Windows' `main`
+branch covered by Coverity:
 
-If we'd like results we can compare across platforms we're surely better
-of here running this in a loop with different per-platform srand()
-values N times for some high value of N, than we are in picking one
-"golden" distribution.
+https://dev.azure.com/git-for-windows/git/_build?definitionId=3D35
 
-But just on srand() and rand() use more generally in the test suite: I
-think it's fine to just assume that we can call srand()/rand() and get
-"predictable" results, because what we're really after in most cases is
-to avoid hard-to-diagnose flakyness. If as a result of random
-distribution we'll get a consistent failure on one OS (or the flakyness
-is just OpenBSD...).
+It essentially calls into this scripted code:
+https://github.com/git-for-windows/build-extra/blob/4676f286a1ec830a5038b3=
+2400808a353dc6c48d/please.sh#L1820-L1915
 
-Also generally: If you'd like "portable" rand() for a test just shell
-out to perl. I ran this on various Perl versions (oldest 5.12) on Debian
-Linux, OSX, Solaris & OpenBSD, all returned the same number for both:
-
-    ruby -e 'srand(1); puts rand'; perl -E 'srand(1); say $^V; say rand'
-
-Whereas a C program doing the same:
-=20=20=20=20
-    #include <stdio.h>
-    #include <stdlib.h>
-=20=20=20=20
-    int main(void)
-    {
-            srand(1);
-            printf("rand =3D %d\n", rand());
-            return 0;
-    }
-
-Returns different numbers an all, and on OpenBSD the number is different
-each time, per their well-known non-standard srand()/rand() behavior.
+Ciao,
+Dscho
