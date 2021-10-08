@@ -2,86 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFEEFC433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 396A5C433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:05:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 858FC60FDC
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 125E360F11
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243530AbhJHWG2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 18:06:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64725 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231774AbhJHWG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 18:06:27 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11D63E3F01;
-        Fri,  8 Oct 2021 18:04:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TbnQQfBQlYzazlX2OiCdBKd+gQ8MOXzEaSLeO1
-        CZ508=; b=cGwHQSZzAO09k+hJj6uVSQvGrv/fIJYhi7HkGR5FdNIyJUqUThbly/
-        L1nyZYmgLZf5jgpDmn43BlL3lAshfLau7/pKSW5hsctV4gFuJgqDV983tL+DJGFz
-        yGKXJIqegg5nQ8DGUfOrQpOJHcTXcUNhxhh2VdDIwUqLzFJBbaddM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09427E3F00;
-        Fri,  8 Oct 2021 18:04:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FE32E3EFE;
-        Fri,  8 Oct 2021 18:04:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] cat-file: mention --unordered along with
- --batch-all-objects
-References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
-        <YVy2DNd+XemykKE0@coredump.intra.peff.net>
-        <877derjia9.fsf@evledraar.gmail.com>
-        <YVzGeE1T/Kp8DDZD@coredump.intra.peff.net>
-        <87tuhuikhf.fsf@evledraar.gmail.com>
-        <YV3LonbeIS8DrMsN@coredump.intra.peff.net>
-        <87k0ipgmbb.fsf@evledraar.gmail.com>
-        <YV+tXVWVuy/rZn/l@coredump.intra.peff.net>
-        <87lf34ey5a.fsf@evledraar.gmail.com> <xmqqo87zjlwt.fsf@gitster.g>
-        <YWC7rF4mpU9W6CbI@coredump.intra.peff.net>
-Date:   Fri, 08 Oct 2021 15:04:29 -0700
-In-Reply-To: <YWC7rF4mpU9W6CbI@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 8 Oct 2021 17:44:12 -0400")
-Message-ID: <xmqqlf33i36a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231811AbhJHWHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 18:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243533AbhJHWHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 18:07:39 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C10C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 15:05:43 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id q205so12267468iod.8
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 15:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2f5gMxbaIUMper557oX8QPzAS2Xcz5J7QvQClMrlZbk=;
+        b=P4zmgzTa1TSYOM6TlU5ApPM8P51KcG6B+cyfzCWY3u7YMMaGhkK43v7m8a4WdYpi3z
+         S8QpdsXq4tuU3P4xgVukdfj4eZBtw2ZeNKHrIAQcdAxwzcdxpYmJeV90UeW2Bj7nP76w
+         verUsEhnmFK61zTsN0b6ISr5CrQdxtexf4o/eoX9iC6FYKOPzUvQ6ofF4LsmaQknWqB+
+         LoQOiiVBDclVdVLCOy1QLO41Q7G6WL+rmk6lcBBtzN8bSlpOFAM2mpxzFItdKx6Qnmqw
+         YCvecpvNBrhTLqc4yb1CZo/zh4Vi0ZW1Hw9tg9/rG0XpntwHs04NIWL4O1jhs4tKsJiC
+         kulQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2f5gMxbaIUMper557oX8QPzAS2Xcz5J7QvQClMrlZbk=;
+        b=paX7ajpy+fgIE5Yb8ZJij10Yj45GC2BDLPiYaVYgIblNUasdW6zPUsdEysA5q2IWR+
+         h8M2T3cp4+LoNGk/wX7ZpayW+aVubVVAG/GAr+TXSy3U8H7VWHh0fiWQ9JCJmGB4qk4J
+         NauDp4WjKjl+xsMWgw6FaClS2pJdTHfmF1oXIPNZ5FD3zP1gkAvJR6574JMJkDlPoKhc
+         DdvpMbRvECjfYicd+us6hHPHPRxfy9WWBXoWMnV9tVsC5k+WiLBazjK4QjxpMuQ15Ccs
+         RwiePwt7EXezzyfsnT6q5HxLjuOnOlIv977D5vvIcZq3ZtOcAilEh3qjVOWwkFZ4hz+3
+         sB+Q==
+X-Gm-Message-State: AOAM531o0DzkQ3h8DvnXRbeGMbkAo7ySmuiNQUKhM4T9Vcl54CJa7ovy
+        WFkbyazzvfE6uco/wAg9hB6jensn35q6u/EkmH/CyDs4ue4=
+X-Google-Smtp-Source: ABdhPJyb47g5QuV5p53TR1av4tz8BK0t+0+zK41HuDNyvkKfJOpNOactBxumK7sIGzVOxeTHB/IWRPUgxEoQSqpCPts=
+X-Received: by 2002:a05:6602:2d86:: with SMTP id k6mr5516031iow.130.1633730742400;
+ Fri, 08 Oct 2021 15:05:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B63120B8-2883-11EC-85B4-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.1096.git.git.1633642772432.gitgitgadget@gmail.com> <xmqqbl3zjl5y.fsf@gitster.g>
+In-Reply-To: <xmqqbl3zjl5y.fsf@gitster.g>
+From:   Robert Estelle <robertestelle@gmail.com>
+Date:   Fri, 8 Oct 2021 15:05:15 -0700
+Message-ID: <CAMmwyQpP0m6dTdC-L9abZqk9nJkcYy=j4_s0+EdGDr__pykeXQ@mail.gmail.com>
+Subject: Re: [PATCH] completion: fix incorrect bash/zsh string equality check
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Robert Estelle via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Oct 8, 2021 at 1:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Would it be equally a valid fix to use "=" instead of "==", or would
+> that change the meaning? This is a bash-only piece of code, so use
+> of [[ ... ]] is not technically incorrect, but if the basic [] works
+> well enough with "=", we should prefer that.
 
-> Yes, it would definitely need that extension. But it's also weirder than
-> that. --textconv is an OPT_CMDMODE(), because it is mutually exclusive
-> with "-t", etc.
-
-Yeah, in hindsight, we should have made "--textconv" a modifier for
-"-p", because it is not a true cmdmode.  It is much easier to
-understand if you imagine "--textconv", without a command mode,
-implies the "-p" mode, but when a command mode like "--batch" is
-given, that would apply.  And it is job of other individual command
-modes to notice that "--textconv" modifier does not make sense in
-their context and issue a warning.
-
-> The current code uses OPT_CMDMODE() for (1) and (2), and then manually
-> enforces the exclusion between (1) and (3). But IMHO it is (2) that is
-> the odd-man out, in that it can be its own mode or a modifier, and it
-> probably should not be OPT_CMDMODE() (but from the end-user perspective,
-> that is OK, though it may influence how we document or group things).
-
-I guess we are exactly on the same page (see "'textconv' is a
-modifier, which implies '-p' command mode unless otherwise
-specified" above).
+Yes, `[` is preferable for portability and they'd behave the same in
+this case. I consciously chose to use `[[` because that's what all the
+other comparisons in that script use. (I think I noted that in the
+commit message, maybe). I think there's value in consistency, and not
+enough value of `[` over `[[` to justify changing all the other lines.
