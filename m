@@ -2,84 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5FFFC433F5
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 02:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D6DC433F5
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 02:50:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 969E061053
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 02:35:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D1EF610CC
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 02:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235571AbhJHChU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Oct 2021 22:37:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35514 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229501AbhJHChT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Oct 2021 22:37:19 -0400
-Received: (qmail 31572 invoked by uid 109); 8 Oct 2021 02:35:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Oct 2021 02:35:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29828 invoked by uid 111); 8 Oct 2021 02:35:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Oct 2021 22:35:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 Oct 2021 22:35:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] cat-file: use packed_object_info() for
- --batch-all-objects
-Message-ID: <YV+ua3FlGzeflEPi@coredump.intra.peff.net>
-References: <YVy1sx8Xb1xMLFQT@coredump.intra.peff.net>
- <YVy3rPuUal0+9iJs@coredump.intra.peff.net>
- <xmqqily8pn9h.fsf@gitster.g>
+        id S230012AbhJHCwE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Oct 2021 22:52:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57646 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229469AbhJHCwE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Oct 2021 22:52:04 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F6AC061570
+        for <git@vger.kernel.org>; Thu,  7 Oct 2021 19:50:09 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id n11so4799834plf.4
+        for <git@vger.kernel.org>; Thu, 07 Oct 2021 19:50:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nPr5IJA+cPGzhsMxdRm6+X7J+7Vq6AOfGlef7PrzQhc=;
+        b=T1335ZgGcAOgCSs5SQg98z1PcrcvdToKe0vgi1VKjN/20W4dYyu6YQ+cz7pc3RUd/e
+         RV4BpQe68UWGkLCVtmr/tnR0TCPnjziEOatxRoVMPoL6AK5oBssPXMUKJcyslfKI6Ssn
+         erhCtEgppzYwuOccru7MTUosK68l1PwXtIVwyTJXAg0eDLrmYZFNeXVNiE/GHmHKzaH/
+         1VkQbuOT1XusEPnU8KG5hT3Y7NGvAqW81L1zwVkR6KDtLzMNrUmanArtUngr9lifUonY
+         gJo2urlFkrCzMxNsfUIELfjJZlUvH7r1wMkhOznPyKNnOUjYZtjtuJ9W0zroEvvr5QjE
+         dGaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nPr5IJA+cPGzhsMxdRm6+X7J+7Vq6AOfGlef7PrzQhc=;
+        b=SgHgjAXnOKkoIrD4h3v3MzxoWd5GpNgNSbeJEzk7I9k0Eq0+Puj7sFnl3o3RBXkdOI
+         OOXT4YKqJx6kDbFWm9zYA42+IsuFjpNB1PLRneCQ3Y6e4iyMeevsvg0Q5rJCZd4tc84j
+         LRBy36fM/ZgONroF5XXJTjcVtsTLPU+ta+bSScy0+Xi/Gfgdlh1GgYRrDFZd7AXZEP+K
+         WwjxdXgYfyIfc3Ok3DXI5pfYFqpqqEuXEcfTYy7PZs+p9sknlfXb+qtwOcVHCbBKf1md
+         zlGd5Sizzx42MfPEQ6+DeuSAgYbuHugFePIlhqVnD7LCvaOEo4+b303pnflQ5e8kpdQK
+         YW6g==
+X-Gm-Message-State: AOAM5307A4o2guPxlv/NICxPbJ80tY8TF3xwXgownSvH6GoBLfWQJ7kZ
+        yzLIHcDe4havxRt6d60l17U=
+X-Google-Smtp-Source: ABdhPJyhuaGj4/A1MsF9yf/Y+FVzBWyGPTa1y/ux4/SRiBtOZh6hvHvfZFJwgwXsuCjlaN0zEW6/AQ==
+X-Received: by 2002:a17:90a:9d81:: with SMTP id k1mr608767pjp.153.1633661409342;
+        Thu, 07 Oct 2021 19:50:09 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-35.three.co.id. [116.206.28.35])
+        by smtp.gmail.com with ESMTPSA id o2sm649542pgc.47.2021.10.07.19.50.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Oct 2021 19:50:08 -0700 (PDT)
+Subject: Re: [PATCH v3 3/8] update-index: add --force-full-index option for
+ expand/collapse test
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Victoria Dye <vdye@github.com>
+References: <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
+ <pull.1048.v3.git.1633641339.gitgitgadget@gmail.com>
+ <014a408ea5d9894197c60f8d712749ea3cc39c9d.1633641339.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <45a1e0aa-4857-6647-cc60-bc47f32ae0c0@gmail.com>
+Date:   Fri, 8 Oct 2021 09:50:03 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqily8pn9h.fsf@gitster.g>
+In-Reply-To: <014a408ea5d9894197c60f8d712749ea3cc39c9d.1633641339.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 07, 2021 at 01:56:26PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On 08/10/21 04.15, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
 > 
-> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> > index b533935d5c..219ff5628d 100644
-> > --- a/builtin/cat-file.c
-> > +++ b/builtin/cat-file.c
-> > @@ -358,15 +358,26 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+> Add a new `--force-full-index` option to `git update-index`, which skips
+> explicitly setting `command_requires_full_index`. This option, intended for
+> use in internal testing purposes only, lets `git update-index` run as a
+> command without sparse index compatibility implemented, even after it
+> receives updates to otherwise use the sparse index.
 > 
-> The two new parameters might deserve a comment in front of the
-> function as to the calling convention (namely, offset can be any
-> garbage when the caller signals "unknown" with pack==NULL).
+> The specific test `--force-full-index` is intended for - `t1092 -
+> sparse-index is expanded and converted back` - verifies index compatibility
+> in commands that do not change the default (enabled)
+> `command_requires_full_index` repo setting. In the past, the test used `git
+> reset`. However, as `reset` and other commands are integrated with the
+> sparse index, the command used in the test would need to keep changing.
+> Conversely, the `--force-full-index` option makes `git update-index` behave
+> like a not-yet-sparse-aware command, and can be used in the test
+> indefinitely without interfering with future sparse index integrations.
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Victoria Dye <vdye@github.com>
 
-Yes, though I'd hope everyone would just pass NULL/0. :)
+Grammar looks OK.
 
-I wasn't too worried about it as this is a static-local function, but
-perhaps it's worth squashing the patch below into the final patch.
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-The "we may also look at the oid" thing is perhaps a bit subtle. It
-happens because we may still print %(objectname), of course, but also
-the current code will use read_object_file(oid) when printing the actual
-contents.
-
--Peff
-
----
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 219ff5628d..86fc03242b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -355,6 +355,11 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 	}
- }
- 
-+/*
-+ * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
-+ * which the object may be accessed (though note that we may also rely on
-+ * data->oid, too). If "pack" is NULL, then offset is ignored.
-+ */
- static void batch_object_write(const char *obj_name,
- 			       struct strbuf *scratch,
- 			       struct batch_options *opt,
+-- 
+An old man doll... just what I always wanted! - Clara
