@@ -2,73 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 396A5C433EF
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45EBAC433EF
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:11:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 125E360F11
-	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A48D60FDC
+	for <git@archiver.kernel.org>; Fri,  8 Oct 2021 22:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231811AbhJHWHj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 18:07:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243533AbhJHWHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 18:07:39 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C10C061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 15:05:43 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id q205so12267468iod.8
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 15:05:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2f5gMxbaIUMper557oX8QPzAS2Xcz5J7QvQClMrlZbk=;
-        b=P4zmgzTa1TSYOM6TlU5ApPM8P51KcG6B+cyfzCWY3u7YMMaGhkK43v7m8a4WdYpi3z
-         S8QpdsXq4tuU3P4xgVukdfj4eZBtw2ZeNKHrIAQcdAxwzcdxpYmJeV90UeW2Bj7nP76w
-         verUsEhnmFK61zTsN0b6ISr5CrQdxtexf4o/eoX9iC6FYKOPzUvQ6ofF4LsmaQknWqB+
-         LoQOiiVBDclVdVLCOy1QLO41Q7G6WL+rmk6lcBBtzN8bSlpOFAM2mpxzFItdKx6Qnmqw
-         YCvecpvNBrhTLqc4yb1CZo/zh4Vi0ZW1Hw9tg9/rG0XpntwHs04NIWL4O1jhs4tKsJiC
-         kulQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2f5gMxbaIUMper557oX8QPzAS2Xcz5J7QvQClMrlZbk=;
-        b=paX7ajpy+fgIE5Yb8ZJij10Yj45GC2BDLPiYaVYgIblNUasdW6zPUsdEysA5q2IWR+
-         h8M2T3cp4+LoNGk/wX7ZpayW+aVubVVAG/GAr+TXSy3U8H7VWHh0fiWQ9JCJmGB4qk4J
-         NauDp4WjKjl+xsMWgw6FaClS2pJdTHfmF1oXIPNZ5FD3zP1gkAvJR6574JMJkDlPoKhc
-         DdvpMbRvECjfYicd+us6hHPHPRxfy9WWBXoWMnV9tVsC5k+WiLBazjK4QjxpMuQ15Ccs
-         RwiePwt7EXezzyfsnT6q5HxLjuOnOlIv977D5vvIcZq3ZtOcAilEh3qjVOWwkFZ4hz+3
-         sB+Q==
-X-Gm-Message-State: AOAM531o0DzkQ3h8DvnXRbeGMbkAo7ySmuiNQUKhM4T9Vcl54CJa7ovy
-        WFkbyazzvfE6uco/wAg9hB6jensn35q6u/EkmH/CyDs4ue4=
-X-Google-Smtp-Source: ABdhPJyb47g5QuV5p53TR1av4tz8BK0t+0+zK41HuDNyvkKfJOpNOactBxumK7sIGzVOxeTHB/IWRPUgxEoQSqpCPts=
-X-Received: by 2002:a05:6602:2d86:: with SMTP id k6mr5516031iow.130.1633730742400;
- Fri, 08 Oct 2021 15:05:42 -0700 (PDT)
+        id S243570AbhJHWNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 18:13:42 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:13628 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243591AbhJHWNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 18:13:41 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4HR2Tr20ZSz5tlC;
+        Sat,  9 Oct 2021 00:11:44 +0200 (CEST)
+Subject: Re: [PATCH v2 0/5] Fun with cpp word regex
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Sixt via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1054.git.1633589461.gitgitgadget@gmail.com>
+ <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
+ <87r1cvmg0c.fsf@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <25363715-dc39-1f18-a937-f715b106f529@kdbg.org>
+Date:   Sat, 9 Oct 2021 00:11:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-References: <pull.1096.git.git.1633642772432.gitgitgadget@gmail.com> <xmqqbl3zjl5y.fsf@gitster.g>
-In-Reply-To: <xmqqbl3zjl5y.fsf@gitster.g>
-From:   Robert Estelle <robertestelle@gmail.com>
-Date:   Fri, 8 Oct 2021 15:05:15 -0700
-Message-ID: <CAMmwyQpP0m6dTdC-L9abZqk9nJkcYy=j4_s0+EdGDr__pykeXQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: fix incorrect bash/zsh string equality check
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Estelle via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87r1cvmg0c.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 8, 2021 at 1:50 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Would it be equally a valid fix to use "=" instead of "==", or would
-> that change the meaning? This is a bash-only piece of code, so use
-> of [[ ... ]] is not technically incorrect, but if the basic [] works
-> well enough with "=", we should prefer that.
+Am 08.10.21 um 22:07 schrieb Ævar Arnfjörð Bjarmason:
+>  * I wonder if it isn't time to split up "cpp" into a "c" driver,
+>    e.g. git.git's .gitattributes has "cpp" for *.[ch] files, but as C++
+>    adds more syntax sugar.
+> 
+>    So e.g. if you use "<=>" after this series we'll tokenize it
+>    differently in *.c files, but it's a C++-only operator, on the other
+>    hand probably nobody cares that much...
 
-Yes, `[` is preferable for portability and they'd behave the same in
-this case. I consciously chose to use `[[` because that's what all the
-other comparisons in that script use. (I think I noted that in the
-commit message, maybe). I think there's value in consistency, and not
-enough value of `[` over `[[` to justify changing all the other lines.
+Yes, it is that: <=> won't appear in a correct C file (outside of
+comments), so no-one will care. As far as tokenization is concerned, C
+is a subset of C++. I don't think we need to separate the drivers.
+
+>  * I found myself back-porting some of your tests (manually mostly),
+>    maybe you disagree, but in cases like 123'123, <=> etc. I'd find it
+>    easier to follow if we first added the test data, and then the
+>    changed behavior.
+> 
+>    Because after all, we're going to change how we highlight existing
+>    data, so testing for that would be informative.
+
+Good point. I'll work a bit more on that.
+
+>  * This pre-dates your much improved tests, but these test files could
+>    really use some test comments, as in:
+> 
+>    /* Now that we're going to understand the "'" character somehow, will any of this change? */
+>    /* We haven't written code like this since the 1960's ... */
+>    /* Run & free */
+> 
+>    I.e. we don't just highlight code the compiler likes to eat, but also
+>    comments. So particularly for smaller tokens that also occur in
+>    natural language like "'" and "&" are we getting expected results?
+
+Comments are free text. Anything can happen. There is no such thing as
+"correct tokenization" in comments. Not interested.
+
+Thank you for the review.
+-- Hannes
