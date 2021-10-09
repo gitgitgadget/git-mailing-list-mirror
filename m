@@ -2,125 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B87EEC433EF
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 08:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1130AC433EF
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 09:12:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B59760F3A
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 08:57:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0FCF60F6D
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 09:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233010AbhJII7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Oct 2021 04:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41932 "EHLO
+        id S232912AbhJIJOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Oct 2021 05:14:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231529AbhJII7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Oct 2021 04:59:33 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45DDC061570
-        for <git@vger.kernel.org>; Sat,  9 Oct 2021 01:57:36 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id v20so605626plo.7
-        for <git@vger.kernel.org>; Sat, 09 Oct 2021 01:57:36 -0700 (PDT)
+        with ESMTP id S230521AbhJIJOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Oct 2021 05:14:18 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72687C061570
+        for <git@vger.kernel.org>; Sat,  9 Oct 2021 02:12:22 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id c4so7728154pls.6
+        for <git@vger.kernel.org>; Sat, 09 Oct 2021 02:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=3M70ZLBPyUQSTBfztufPQK0acan5WrjJmEZ9GlD685o=;
-        b=TgCxOF3B+TV46FtMajmcysIZR8AbIHVC1KlG5yp7JIz1wr/q11h8SvXUWWAqWrnyA1
-         dgK1Yc+xhDon+e0O9lraBD1Y3SXAtCG6S9p/ucl0yb+cxwG4VeR47SjVSufOkgV9T1z6
-         o9gKu9PiSxPzuw3TRJi9FNViMy6z9JYuJZC/WfLBOTvaI1IVtcfZ9zV12pvyqo8YhsuC
-         H2JBz4DB1W0u6MT0R1YQ23+k6ecDeWWKirdbxGrPir+5zTcFitYBCOiUXVCapwVWjskb
-         92uBZ5ydbvR+DjZ73VgzTiXTf5SL5SYmoeY9ztTX1TSLV91gJIdA1owoCvpF5BPnUsE7
-         SNiw==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=bdA6/9IKDJ8nelT2VtvwCo8bP562z6ARYeBaSkab3YU=;
+        b=LQgWIWa+tMsW9vMrxJRzUq5CJutFZsWKikAaYt6YGn/9YdJxNs5mz9WQvAYR28HxOY
+         voUYWJgxgBaxS8XaEZSXz/RSXr/s/0uLR8WuDsHwim9treR4zQCBi6I1DWVFkX3hs19B
+         4Pba+15win0zc3KWO/p0WH8L5za62uUF3ZDAs7kZ3N7bQenLQlNrfPQS8FyZH2N7G+a3
+         y8eYrhN5VlNItcOFONjXEQJqjy2AHYyKzhQRVrisNvi3lG8qbGBFe5f4/ej/oUse6pIA
+         mzfma6ibpgCfwsXlJNwYCMfehZOi3O3lC/m+ojPUaLYD2abhfuvnSTDxnmr/arB5zZj0
+         WZWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=3M70ZLBPyUQSTBfztufPQK0acan5WrjJmEZ9GlD685o=;
-        b=bNhI4He0s306wPFdkIq/TIW66GFa3jT78VcAu0XaF+kr+HRiaNErl22S81oRbS6kIo
-         nVHANhDeMRA4dlcfFJU3Z+TAn20dwvaukoB0d4gp5akFwZyalkaOXeZcON2AY8rD+6x6
-         oRkD8x+FZRoLJascanTXOnGo2wofYBbUSQfrKsof63QzgA8RpXNuhYF0S6ctoyppTMox
-         iKFCM8ECVoUTnA5qw9u/knMWiI1+y25/H5UBMlKC99ZfY3FU7JfUUA2c6piVhhs9CNHR
-         n6cS03sqRQOXxeIwCFeE1vTNYDs0U559niFfh2NbJ2LBdh9QcVoj9A4WQSL6rbwY2cke
-         gryQ==
-X-Gm-Message-State: AOAM532EeUyqDV4ppBU4WzZvEkR/2DMGBc8nCblkNZkjOblUQCRVJazi
-        ijjZdDFVVfCeEMBSMFTmp1jRm8B85MTrgQ==
-X-Google-Smtp-Source: ABdhPJz+nyeDW11hBGZoVzWuktrH641XOAod+uIZdN3MTvMQyeGSA2pePW3nEBw+uvd761frb2HxCg==
-X-Received: by 2002:a17:90a:b117:: with SMTP id z23mr1354408pjq.74.1633769856343;
-        Sat, 09 Oct 2021 01:57:36 -0700 (PDT)
+        bh=bdA6/9IKDJ8nelT2VtvwCo8bP562z6ARYeBaSkab3YU=;
+        b=hpQEO0LogE2hnJ9kFqr+a64n3zFsZNjKNGdv60Ah6RNY9YT1yUCUke+EVUUZ2QV3rX
+         57Ay2DUhednHfevDq9U7rlUAJMLhvyFqxzb4/quWRYrIWzyBdzcBZwTzO/npkjaeRQdw
+         aEkHBCiMDL7p7nNFmlSllx0oe919mqLXvT3e8P1ScRaHydcKRpb2kRdLHhaT+Dx2zav/
+         Lhzt7i1GZM5iKo0a7wCFOOWIogYfMuTNBDhsi+xAZ/Tu5AgHuQfC7cBGipxtLEIP6FId
+         1kmBQxNgpjvdyXpbDKBVrF85GvnjxZCdgShVXppaPR9X7L4uR/a4zbmlrjq79yzdBXsR
+         27dQ==
+X-Gm-Message-State: AOAM532+IZqF06GGX9k6Xv52ZH2G5oVPu/V3RNyPotLZtPeY6V9P0nHc
+        HTXMznHGWbwYqAXorVkWH2U=
+X-Google-Smtp-Source: ABdhPJyjfQaaU6eQfV6LVkgBD0natMD9a9Fid+HnNv23VmgiqZzfR4KJ8ElPI9swM71VP+a7L0cWmw==
+X-Received: by 2002:a17:903:31cd:b0:134:5b6f:2ff8 with SMTP id v13-20020a17090331cd00b001345b6f2ff8mr13696764ple.46.1633770741852;
+        Sat, 09 Oct 2021 02:12:21 -0700 (PDT)
 Received: from [192.168.43.80] (subs02-180-214-232-90.three.co.id. [180.214.232.90])
-        by smtp.gmail.com with ESMTPSA id z9sm1427383pji.42.2021.10.09.01.57.34
+        by smtp.gmail.com with ESMTPSA id z11sm1607587pfk.204.2021.10.09.02.12.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Oct 2021 01:57:36 -0700 (PDT)
-Message-ID: <1d6ec04f-6f89-5da6-75a9-3099e2437df5@gmail.com>
-Date:   Sat, 9 Oct 2021 15:57:32 +0700
+        Sat, 09 Oct 2021 02:12:21 -0700 (PDT)
+Message-ID: <ffe633c5-151a-8646-20ef-be4f50c5f59e@gmail.com>
+Date:   Sat, 9 Oct 2021 16:12:19 +0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.2.0
-Subject: Re: [RFC PATCH] Documentation: better document format-patch options
- in send-email
+Subject: Re: Some problems for git beginners
 Content-Language: en-US
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     tbperrotta@gmail.com, gitster@pobox.com, avarab@gmail.com
-References: <20211007033652.80793-4-tbperrotta@gmail.com>
- <20211009083133.4446-1-carenas@gmail.com>
+To:     ZhangJinbao <zhang709787793@icloud.com>, git@vger.kernel.org
+References: <2EC9E24E-A8FD-4851-9F6A-F3D104465A23@icloud.com>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <20211009083133.4446-1-carenas@gmail.com>
+In-Reply-To: <2EC9E24E-A8FD-4851-9F6A-F3D104465A23@icloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/10/21 15.31, Carlo Marcelo Arenas Belón wrote:
-> -2. Generic <revision range> expression (see "SPECIFYING
-> -   REVISIONS" section in linkgit:gitrevisions[7]) means the
-> -   commits in the specified range.
-> -
-> -The first rule takes precedence in the case of a single <commit>.  To
-> -apply the second rule, i.e., format everything since the beginning of
-> -history up until <commit>, use the `--root` option: `git format-patch
-> ---root <commit>`.  If you want to format only <commit> itself, you
-> -can do this with `git format-patch -1 <commit>`.
-> +2. A Generic <revision range> expression that describes with
-> +   options and revisions a range of commits.
-> +
-> +If you give a single <commit> and nothing else, it is taken as the
-> +<since> of the first form.  If you want to format everything since the
-> +beginning of history up until <commit>, use the `--root` option:
-> +`git format-patch --root <commit>`.  If you want to format only the
-> +<commit> itself, use instead `git format-patch -1 <commit>`.
-> +
-> +If you want to affect a set of commits, provide a range (see
-> +"SPECIFYING RANGES" section in linkgit:gitrevisions[7]).
->   
+On 09/10/21 14.43, ZhangJinbao wrote:
 
-Supposed that we have following commit graph:
-
-a --- b --- c --- d --- e --- f (main)
-             \
-              --- g --- h --- i (mywork, HEAD)
-
-According to your edit, `git format-patch <c>` and `git format-patch 
---root <i>` are equivalent, right?
-
-I think for the third case, s/affect/format/.
-
-> @@ -18,8 +19,8 @@ DESCRIPTION
->   Takes the patches given on the command line and emails them out.
->   Patches can be specified as files, directories (which will send all
->   files in the directory), or directly as a revision list.  In the
-> -last case, any format accepted by linkgit:git-format-patch[1] can
-> -be passed to git send-email.
-> +last case, a revision in a format accepted by linkgit:git-format-patch[1]
-> +as well as relevant options must be provided to git send-email.
->   
->   The header of the email is configurable via command-line options.  If not
->   specified on the command line, the user will be prompted with a ReadLine
+> Third, when a commit event occurs, the current blob file stores the full amount of data, while the previous version stores the incremental data
 > 
 
-Did you mean that in the second form of git send-email, only 
-format-patch options are accepted?
+When you `git commit`, Git will initially write objects related to the 
+commit (blob, tree, and commit) as loose objects. Some point on the 
+time, Git will repack many loose objects into one big packfile and write 
+the corresponding pack index. Delta compression is applied when writing 
+the packfile.
 
 -- 
 An old man doll... just what I always wanted! - Clara
