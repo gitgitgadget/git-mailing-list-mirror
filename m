@@ -2,94 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 419B4C433F5
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B149CC433F5
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 06:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1626E60EFE
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:42:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94CC960F5D
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 06:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244182AbhJICoa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 22:44:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36310 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244102AbhJICo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 22:44:29 -0400
-Received: (qmail 7230 invoked by uid 109); 9 Oct 2021 02:42:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 09 Oct 2021 02:42:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28049 invoked by uid 111); 9 Oct 2021 02:42:33 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Oct 2021 22:42:33 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 8 Oct 2021 22:42:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Krzysztof =?utf-8?Q?=C5=BBelechowski?= <giecrilj@stegny.2a.pl>,
-        git@vger.kernel.org, Hamza Mahfooz <someguy@effective-light.com>
-Subject: Re: *Really* noisy encoding warnings post-v2.33.0
-Message-ID: <YWEBmJk0aENR5Yeo@coredump.intra.peff.net>
-References: <9896630.2IqcCWsCYL@localhost.localdomain>
- <YSWVi8uLHZCTtG0l@coredump.intra.peff.net>
- <xmqqeeahjxj4.fsf@gitster.g>
- <YSkvNyR4uT52de13@coredump.intra.peff.net>
- <87ily7m1mv.fsf@evledraar.gmail.com>
- <YWEAEjIN0HVHbIpg@coredump.intra.peff.net>
+        id S229538AbhJIGkR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Oct 2021 02:40:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244309AbhJIGkP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Oct 2021 02:40:15 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7ECAC061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 23:38:18 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id u69so4218234oie.3
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 23:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ofVHzLQbCSY0fQnA4Q3OIJKgRp9m49rkJzKkRX921IY=;
+        b=BkTgNE/phWq98kWDuhfR50/TAXp4AOozNOkSJ1EsE2FeCIEZAx//XCeO4ZO7J1WmnR
+         Sj9aI79CC0I16Qc6R236KJz9wpj6Pn8JrUNv/mifCF9ReQ7bd/R1grlyG4zlP/g0W9nO
+         bV+VYK73HosmBJk5yACRRKdW6Sti4AaMj74fqDrcPEpqL6VNExKrv4HWZExlao6WjEwK
+         bWYfL3hdpubBYh139Q756OVQDuwyELFOhcaymdq5OnXHM2tjb3ekOiV8XMebE58G7rZT
+         e/MC4NnvgDNjYBJNWrhBGHPAG0yZMQMoJIfWEyOiSaweHrsfwvyUbZTpY1nkpFJuXwLH
+         /bqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ofVHzLQbCSY0fQnA4Q3OIJKgRp9m49rkJzKkRX921IY=;
+        b=bHscx1Ly3xirskooWIewC2/5hXJ/P7qsHFs/qEPVo/6YfR5fUgFmXRjXj0gWgtGR+G
+         w0bE/jj3Pfus1ZIPVw12/1derRCBgc1ueZmf6ZBfpHSyxO6Wx+ZorzFqcSysG+DRO0sH
+         aKWu4UlRVsyMtf9hX6YDWNzdO6CTbI9UB7WQ2HAl+4WsaIzQMcZOaP1eRwwmVAEGFVsM
+         xHhMuEW1FJtX5C7dBBRQPO/dLKSe5jyPf/IyF2o8DIBpzwa5FXs5jcipZGefD5aDR9YL
+         uV1xTzphubZDaw5lVn5cepSQryeRDhGsNyobC98vVxhHLVLgDQcUqaWwp6yqOy72P4qF
+         1UOw==
+X-Gm-Message-State: AOAM531qnNoTOUDWK8ouP5P8L2Lynpqj06tspshnJQBDsixtE86nAn2b
+        pGe3pWgpXCOftwRcX65P7GIokLIkR3lKtQ==
+X-Google-Smtp-Source: ABdhPJytylHSBBA+I6K2BxJ+eOGllxeUKpf22C2QONx9I+tVd9xKmAXz4eOsQrrZQXM5CGUUyJ0+qQ==
+X-Received: by 2002:aca:dec4:: with SMTP id v187mr10288604oig.5.1633761498070;
+        Fri, 08 Oct 2021 23:38:18 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id j65sm393584oif.5.2021.10.08.23.38.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 23:38:17 -0700 (PDT)
+Date:   Fri, 8 Oct 2021 23:38:15 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Thiago Perrotta <tbperrotta@gmail.com>
+Cc:     gitster@pobox.com, bagasdotme@gmail.com, avarab@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v6 2/3] send-email: programmatically generate bash
+ completions
+Message-ID: <YWE41xTLhBFWqUFl@carlos-mbp.lan>
+References: <CABOtWuqXS_kJk2md=kgg-ReaWtKermpUW_Dk_bc0pMXQL+xMeA@mail.gmail.com>
+ <20211007033652.80793-3-tbperrotta@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YWEAEjIN0HVHbIpg@coredump.intra.peff.net>
+In-Reply-To: <20211007033652.80793-3-tbperrotta@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 08, 2021 at 10:36:02PM -0400, Jeff King wrote:
+On Wed, Oct 06, 2021 at 11:36:51PM -0400, Thiago Perrotta wrote:
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index d1731c1755..465e9867b9 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -40,7 +40,7 @@ package main;
+>  
+>  sub usage {
+>  	print <<EOT;
+> -git send-email [options] <file | directory | rev-list options >
+> +git send-email [options] <file | directory | rev-list options>
 
-> If that were coupled with, say, an advise() call to explain that output
-> and matching might be inaccurate (and show that _once_), that might
-> might it more clear what's going on.
-> 
-> Now I am sympathetic to flooding the user with too many messages, and
-> maybe reducing this to a single instance of "some commit messages could
-> not be re-encoded; output and matching might be inaccurate" is the right
-> thing. But in a sense, it's also working as designed: what you asked for
-> is producing wrong output over and over, and Git is saying so.
+this change isn't really needed now that you are not using the usage()
+to get the options, and should probably go into an independent patch,
+or even better, as part of patch 3 so it is consistent.
 
-The single-output version would perhaps be something like this:
+> @@ -113,8 +113,23 @@ sub usage {
+>  	exit(1);
+>  }
+>  
+> +sub uniq {
+> +    my %seen;
+> +    grep !$seen{$_}++, @_;
+> +}
 
-diff --git a/pretty.c b/pretty.c
-index 708b618cfe..c86f41bae7 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -606,6 +606,21 @@ static char *replace_encoding_header(char *buf, const char *encoding)
- 	return strbuf_detach(&tmp, NULL);
+indentation in this file is a little odd, but will be better if you use the
+most common one (tab), instead of your own version here (4 or 2 spaces) and
+in the rest of the code.
+
+>  sub completion_helper {
+> -    print Git::command('format-patch', '--git-completion-helper'), "\n";
+> +    my ($options) = @_;
+> +    my @send_email_opts = map {
+> +      "--$_"
+> +    } map {
+> +      s/(?:[:=][si]|!)$//;
+> +      split /\|/, $_;
+> +    } keys %$options;
+> +    my @format_patch_opts = Git::command('format-patch', '--git-completion-helper');
+> +    my @options = uniq @send_email_opts, @format_patch_opts;
+
+reusing "options" here makes this code more confusing than it needs to be
+maybe something like :
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index a1338dd774..d47543bc0d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -119,13 +119,13 @@ sub uniq {
  }
- 
-+static void show_encoding_warning(const char *output_encoding)
-+{
-+	static int seen_warning;
-+
-+	if (seen_warning)
-+		return;
-+
-+	seen_warning = 1;
-+	warning("one or more commits could not be re-encoded to '%s'",
-+		output_encoding);
-+	advise("When re-encoding fails, some output may be in an unexpected\n"
-+	       "encoding, and pattern matches against commit data may be\n"
-+	       "inaccurate.");
-+}
-+
- const char *repo_logmsg_reencode(struct repository *r,
- 				 const struct commit *commit,
- 				 char **commit_encoding,
-@@ -673,7 +688,7 @@ const char *repo_logmsg_reencode(struct repository *r,
- 	 * case we just return the commit message verbatim.
- 	 */
- 	if (!out) {
--		warning("unable to reencode commit to '%s'", output_encoding);
-+		show_encoding_warning(output_encoding);
- 		return msg;
- 	}
- 	return out;
+
+ sub completion_helper {
+-    my ($options) = @_;
++    my ($original_opts) = @_;
+     my @send_email_opts = map {
+       "--$_"
+     } map {
+       s/(?:[:=][si]|!)$//;
+-      split /\|/, $_;
+-    } keys %$options;
++      split /\|/;
++    } keys %$original_opts;
+     my @format_patch_opts = Git::command('format-patch', '--git-completion-helper');
+     my @options = uniq @send_email_opts, @format_patch_opts;
+     @options = grep !/--git-completion-helper|--h/, @options;
+
+might help on top
+
+Carlo
