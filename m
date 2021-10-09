@@ -2,163 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DE4C433F5
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 549F9C433EF
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:08:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B51AE60F55
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:00:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3194F60F51
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 02:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244092AbhJICCD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Oct 2021 22:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35316 "EHLO
+        id S232159AbhJICKi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Oct 2021 22:10:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231947AbhJICCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Oct 2021 22:02:02 -0400
+        with ESMTP id S231947AbhJICKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Oct 2021 22:10:37 -0400
 Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823CBC061570
-        for <git@vger.kernel.org>; Fri,  8 Oct 2021 19:00:05 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id v18so43267264edc.11
-        for <git@vger.kernel.org>; Fri, 08 Oct 2021 19:00:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C03C061570
+        for <git@vger.kernel.org>; Fri,  8 Oct 2021 19:08:41 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g10so42083986edj.1
+        for <git@vger.kernel.org>; Fri, 08 Oct 2021 19:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XW/U+x/fXppkUZLn7mjrL8pV36eMhF8zFEnWFzfDlPY=;
-        b=IF94cNR6JbMb1H8sHvdsxHbQCbvLkm5gmGLLKXls2DzIB9x707zmT9N9mLmntd5QGr
-         OFKB++D3AsQq7zxdc4GIuaBLjm7PAcYqFETKSNHzAkzJbf1lzJqF5g6TcL0l+HGPMF0c
-         uZkFbZxvsb8vCqCm277ByyS3gMDRv7lX1oTENSf+TI/Q+2hVjJsiczuNo+9Ntqp0SJ5i
-         Y4USBAyqBuF8C11GK4zjmiI7HO54MsB55HuosQaCnM4vBGKi+3bgh2pZFhNgvomRWmRi
-         YnYd/BolAqOtJgk65ZuPYnu0AKDjjGOQ5bFalR6/U2iZC8+y8E9vh8bQx6TrwMnSGS4A
-         yMgQ==
+         :message-id:mime-version;
+        bh=s9gLHvP1QZj+iVsVQbkkXGZb0PxOkg+nTKNyn2pAmYI=;
+        b=EDK19SRTw4PO3CBtdrpWKMHvAYpCkwKmFpb54FI/yv+6oi0wS9vBAOND27HlKxxtBo
+         B7XXVSXQ9D3ZgSiTCTZwDDJe9bmsVli206wsh67119lB6qtgRb4aL6pl6VjFhnfiuoQi
+         S7516VuidmpiBoded7CGjd7/84Io2x57CZ/Y4igIazvwvb+A47TEfK4M9jrugA1oyyhg
+         s/vraYUh+NxHE/4kC+2KgVwqyTO4MT4XdtjptRS0p94188Um60neYbZL1B9NEWxyZ6F8
+         jz2KSKfIpE5r6BGwbjp5G/bUELLCN5qUqh6rKN3eKMbuYaTyzAEwO1JbA8Td3vgiMjNz
+         glXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=XW/U+x/fXppkUZLn7mjrL8pV36eMhF8zFEnWFzfDlPY=;
-        b=vv1zYK4uWBc3rnh8b59mas1iBudgnLUCGTR6da2My/UQgI2dYJTQeBC5MzYoL1/wdC
-         oXxMqaADS3XThee3rjqWR6rhHj/P2a/Y2Ty3EwaxMf6Rblylli127ZWLlyckIBuzIsxL
-         um51G+gYydJUBSbRFd3FoE8vtRJOEuH9Ubdr7ycSy8t2DMF4sWrcU4oWqj0oGNMyJTFX
-         JP7bLctyuyIh3CzoE8gbERhJDTUq11VH5KqmCAlacBVq/PsZlaUFykyuDc0lKjQC5OZC
-         an3olDZ/mKLFVEA0XasXveLleDJR0lLrVWXnAiM8O9BpW0R7ULrNswyHsHz153jaetSf
-         4k1A==
-X-Gm-Message-State: AOAM532oqqvowApSaf3nRb0liTLatA1JG0nL4GQn5rbyf7xM8ZCpZwlf
-        qJG/dxxgbf983q9m3D1wRxk=
-X-Google-Smtp-Source: ABdhPJxDZy7cwc4ApvUrG8W5f9k43T/zInwTINwE0+JOzfUXCG3/dltiWImvLE1Tard4bPwAEwlzuA==
-X-Received: by 2002:a05:6402:5186:: with SMTP id q6mr20311475edd.64.1633744803703;
-        Fri, 08 Oct 2021 19:00:03 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=s9gLHvP1QZj+iVsVQbkkXGZb0PxOkg+nTKNyn2pAmYI=;
+        b=MnVhFcX3GwssjwdqMtZakf/ZwDJ9FdbaLGr+CdLZQq95IinjS+6Ymt+ANzSfbjJf7P
+         HFDAwKgha5H4brUtmecAvVkAyvlSQn178m8XS8BjguhuMcITNtF6V/BEz4EFOcO3Ai1q
+         9gKhjD1Ij0srbtNZgHndz9iI6j76CKqlq5ZuTJX8R/le/UNGwgJqvWsvxPvTuFCH6zoO
+         gkRo1guT6DUQXH+hcxbdNCOPYvEOAbXtqDTGHO55hn/GYC24toq5USjeDvMsmMGz13k/
+         8XkJiwpQYZXhgSIP2tS8HYTseAQNqUu+w5C81mT4lVG9AIMVPHwx8XfnXAAAr27Eao5T
+         O51w==
+X-Gm-Message-State: AOAM531C8GDFlRQcFSnXAqZqrd6uJKDPsy0SQGHLQEWYxoHn1t47HIxd
+        lTMU3g2a1Tz0tHJj/jhvigw=
+X-Google-Smtp-Source: ABdhPJwQBSnT3JloBqgZsOADIle7DONXR3J3mMX5Sd572bpHFpyrZU90BxnhR/GECdKW8ZTqrnNDsw==
+X-Received: by 2002:a17:906:7250:: with SMTP id n16mr8448539ejk.147.1633745319959;
+        Fri, 08 Oct 2021 19:08:39 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id r1sm407862edp.56.2021.10.08.19.00.03
+        by smtp.gmail.com with ESMTPSA id v6sm419924edc.52.2021.10.08.19.08.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 19:00:03 -0700 (PDT)
+        Fri, 08 Oct 2021 19:08:39 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 3/3] grep: fix an edge case concerning ascii
- patterns and UTF-8 data
-Date:   Sat, 09 Oct 2021 03:37:58 +0200
-References: <20211008224918.603392-1-someguy@effective-light.com>
- <20211008224918.603392-3-someguy@effective-light.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        dstolee@microsoft.com, jeffhost@microsoft.com, peff@peff.net
+Subject: Re: [PATCH 4/4] midx.c: guard against commit_lock_file() failures
+Date:   Sat, 09 Oct 2021 04:07:16 +0200
+References: <cover.1633729502.git.me@ttaylorr.com>
+ <ed7407cefa89b973d1085973f4ddb39397597036.1633729502.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20211008224918.603392-3-someguy@effective-light.com>
-Message-ID: <87a6jjlzz1.fsf@evledraar.gmail.com>
+In-reply-to: <ed7407cefa89b973d1085973f4ddb39397597036.1633729502.git.me@ttaylorr.com>
+Message-ID: <875yu7lzkp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Oct 08 2021, Hamza Mahfooz wrote:
+On Fri, Oct 08 2021, Taylor Blau wrote:
 
-> If we attempt to grep non-ascii log message text with an ascii pattern, we
-> run into the following issue:
+> When writing a MIDX, we atomically move the new MIDX into place via
+> commit_lock_file(), but do not check to see if that call was successful.
 >
->     $ git log --color --author=3D'.var.*Bjar' -1 origin/master | grep ^Au=
-thor
->     grep: (standard input): binary file matches
+> Make sure that we do check in order to prevent us from incorrectly
+> reporting that we wrote a new MIDX if we actually encountered an error.
 >
-> So, to fix this teach the grep code to mark the pattern as UTF-8 (even if
-> the pattern is composed of only ascii characters), so long as the log
-> output is encoded using UTF-8.
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
-> v12: get rid of utf8_all_the_things and fix an issue with one of the unit
->      tests.
-> ---
->  grep.c                          |  6 +++--
->  t/t7812-grep-icase-non-ascii.sh | 48 +++++++++++++++++++++++++++++++++
->  2 files changed, 52 insertions(+), 2 deletions(-)
+>  midx.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/grep.c b/grep.c
-> index fe847a0111..f6e113e9f0 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -382,8 +382,10 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  		}
->  		options |=3D PCRE2_CASELESS;
->  	}
-> -	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern=
-) &&
-> -	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
-> +	if ((!opt->ignore_locale && !has_non_ascii(p->pattern)) ||
-> +	    (!opt->ignore_locale && is_utf8_locale() &&
-> +	     has_non_ascii(p->pattern) && !(!opt->ignore_case &&
-> +					    (p->fixed || p->is_fixed))))
->  		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+> diff --git a/midx.c b/midx.c
+> index 137af3fc67..e79fb4427d 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -1434,7 +1434,8 @@ static int write_midx_internal(const char *object_dir,
+>  	if (ctx.m)
+>  		close_object_store(the_repository->objects);
+>  
+> -	commit_lock_file(&lk);
+> +	if (commit_lock_file(&lk) < 0)
+> +		die_errno(_("could not write multi-pack-index"));
+>  
+>  	clear_midx_files_ext(object_dir, ".bitmap", midx_hash);
+>  	clear_midx_files_ext(object_dir, ".rev", midx_hash);
 
-I think at least some of that existing "if" is my fault, and I *think*
-your patch works here, but FWIW I'd find something like this way more
-readable:
-=09
-	@@ -382,8 +383,16 @@ static void compile_pcre2_pattern(struct grep_pat *p,=
- const struct grep_opt *opt
-	                }
-	                options |=3D PCRE2_CASELESS;
-	        }
-	+       if (opt->utf8_all_the_things) {
-	+               options |=3D PCRE2_UCP;
-	+               do_utf8 =3D 1;
-	+       }
-	+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-	        if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pa=
-ttern) &&
-	            !(!opt->ignore_case && (p->fixed || p->is_fixed)))
-	+               do_utf8 =3D 1;
-	+
-	+       if (do_utf8)
-	                options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+As an aside I've wondered with this API whether something like this
+wouldn't make sense (obviously with a better message):
 
-Well, without the "utf8_all_the_things" probably. That's a reference to
-a popular meme, probably better to name it differently, and the
-PCRE2_UCP is just something I was experimenting with.
+diff --git a/lockfile.c b/lockfile.c
+index cc9a4b84283..6632a634f00 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -175,6 +175,7 @@ int hold_lock_file_for_update_timeout_mode(struct lock_file *lk,
+ 					   long timeout_ms, int mode)
+ {
+ 	int fd = lock_file_timeout(lk, path, flags, timeout_ms, mode);
++	lk->flags = flags;
+ 	if (fd < 0) {
+ 		if (flags & LOCK_DIE_ON_ERROR)
+ 			unable_to_lock_die(path, errno);
+@@ -209,6 +210,8 @@ int commit_lock_file(struct lock_file *lk)
+ 		int save_errno = errno;
+ 		free(result_path);
+ 		errno = save_errno;
++		if (lk->flags & LOCK_DIE_ON_ERROR)
++			die_errno("noes");
+ 		return -1;
+ 	}
+ 	free(result_path);
+diff --git a/lockfile.h b/lockfile.h
+index db93e6ba73e..40a9d91a6c5 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -119,6 +119,7 @@
+ 
+ struct lock_file {
+ 	struct tempfile *tempfile;
++	int flags;
+ };
+ 
+ #define LOCK_INIT { NULL }
 
-It's late here, but I've got to admit that I'm still a bit confused by
-this. Let's see if I can try to sum up why:
-
-Ultimately whether we use PCRE2_UTF *should* have nothing do to with
-whether the pattern is UTF-8 or not, because even an expression like:
-
-    /.*/
-
-Will behave differently under UTF-8, i.e. character classes change, byte
-boundaries change to "character" boundaries etc.
-
-That the existing code has has_non_ascii() and the like is a trade-off
-that had to be made for the grep-a-file case, because you might run into
-arbitrary binary data, but logs are cleaner/encoded/re-encoded etc.
-
-If you run PCRE in UTF-8 mode it will die on some of that data (as
-you'll see from our test suite if you turn it on unconditionally).
-
-Are there cases where my "utf8_all_the_things" POC patch would have
-turned on PCRE2_UTF, but yours doesn't? IOW is there a 1=3D1 mapping still
-between the encoding mode log/revision.c thinks it's in & PCRE2_UTF?
-
-Anyway, I've tried to break things with this patch and haven't
-succeeded, so maybe it's all OK now, thanks a lot for working on this
-again, it's a really neat feature. Just wondering if there's any
-remaining edge cases we know about...
+But a quick grep of the users reveals that some die on lock failure, but
+are happy to ignore commit_lock_file() failures, or maybe those are also
+bugs similar to the one you're fixing here & we could fix the API more
+generally.
