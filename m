@@ -2,89 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECBCCC433F5
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 17:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27DFEC433F5
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 18:06:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C89CF60F94
-	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 17:50:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AE9E60EFE
+	for <git@archiver.kernel.org>; Sat,  9 Oct 2021 18:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbhJIRwT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Oct 2021 13:52:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62056 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhJIRwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Oct 2021 13:52:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 90FC2EA492;
-        Sat,  9 Oct 2021 13:50:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=DV/ajZW7UuwF
-        hm1QxQYfCRBCfevosamYMaZxV3aZR68=; b=ZbDgWBArdiaTzdurTQoSpHlOp8KQ
-        Mdp5MFc95CGxUGNaJRB8Rjr0zUwzenxkgxhDmxQ7cSDOlnjD6y2jhFfcaWVVC47b
-        QL8shDL2/lwZx9yFZhJuSelWFsM2KpivfkZQbqBuH6Dkg0xwpCb2KfzjDB8ALHfB
-        Zq2LhJKvxJ/frlI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8955EEA490;
-        Sat,  9 Oct 2021 13:50:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EC0ABEA48F;
-        Sat,  9 Oct 2021 13:50:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: "git reflog expire" blindly trusting timestamps in reflogs
-References: <b25ac1cc-8e77-17e6-602a-b289c1e1cfeb@web.de>
-        <30df5e39-3f2a-00d8-541b-347c43f36b38@gmail.com>
-        <581663a7-9b16-e464-ada7-368f20c99ff1@web.de>
-        <xmqqsfxersvy.fsf@gitster.g>
-        <ba3e16f7-bf9c-c5f3-4c0d-8288db6f44c7@web.de>
-        <87wnmmkzaa.fsf@evledraar.gmail.com>
-Date:   Sat, 09 Oct 2021 10:50:19 -0700
-In-Reply-To: <87wnmmkzaa.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 09 Oct 2021 16:57:20 +0200")
-Message-ID: <xmqqa6jif5pg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229637AbhJISH4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Oct 2021 14:07:56 -0400
+Received: from outboundhk.mxmail.xiaomi.com ([207.226.244.123]:21138 "EHLO
+        xiaomi.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229518AbhJISHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Oct 2021 14:07:55 -0400
+Received: from BJ-MBX04.mioffice.cn (10.237.8.124) by HK-MBX02.mioffice.cn
+ (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Sun, 10 Oct
+ 2021 02:05:57 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX04.mioffice.cn
+ (10.237.8.124) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Sun, 10 Oct
+ 2021 02:05:56 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e]) by
+ BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e%9]) with mapi id
+ 15.02.0858.015; Sun, 10 Oct 2021 02:05:56 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: why git is so slow for a tiny git push?
+Thread-Topic: why git is so slow for a tiny git push?
+Thread-Index: Ade84mmmstEBXQTRSsexpdzlhc8vnAAVTYYAAAAT7KA=
+Date:   Sat, 9 Oct 2021 18:05:56 +0000
+Message-ID: <576b2f3e162e4f86992d8f4e680d0881@xiaomi.com>
+References: <c5a8595658d6416684c2bbd317494c49@xiaomi.com>
+ <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
+In-Reply-To: <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5F3CABB4-2929-11EC-92BF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> I.e. shouldn't reflog expiry at least have the invariant that nothing
-> should expire in a given file if the tip commit is old enough to be
-> expired, *AND* the mtime of the file is more recent than the expiry
-> epoch, because such a scenario points to either git's own test suite
-> (and we should just fake up the time there), or that we're about to
-> corrupt some user's repository because they're either doing similar
-> import work, or their clock was screwy?
-
-A reflog whose entries (and possibly the containing file) have
-inconsistent timestamps might need some care when pruning.  If the
-time @{1} has is older than @{2}, there may be something fishy going
-on.  Expiring @{1}, keep @{2}, and expire @{3} in such a case where
-@{2} is exceptionally new but all others are older than expiry limit
-is one possibility, but "entries out of order detected---do you want
-to keep the one that is sandwiched between much older ones [y/N]?"
-might be worth asking.  In any case, a reflog with such unordered
-entries may not answer time-based @{1.week.ago} question correctly.
-
-I do not think, at least by default, we should care about file's
-mtime to the same degree, because it can easily be modified by
-accident and because the timestamps on entries and mtime can come
-from different time sources, and the local clock may be faster than
-the fileserver's clock, resulting in the tip entry having a more
-recent timestamp than the file's mtime.
+SSBoYXZlIGEgcmVhbGx5IGJpZyByZXBvc2l0b3J5IHdoaWNoIGhhcyA5bSBvYmplY3RzIGFuZCBt
+YXliZSAzMDBrIHJlZnMuDQpJIG5vdGljZWQgdGhhdCBnaXQgcHVzaCBpcyByZWFsbHkgc2xvdyBm
+b3IgYSB0aW55IGNoYW5nZS4gQW4gZXhhbXBsZSBzaG93cyBiZWxvdw0KDQozIG9iamVjdHMgd2hp
+Y2ggaXMgb25seSA3IGtiIHRha2VzIDM2IHNlY29uZHMgdG8gcGFjay1vYmplY3RzIChpdCdzIHRo
+ZSB0aW1lIGFmdGVyIGkgZW5hYmxlIHBhY2sudXNlc3BhcnNlKQ0KSG93ZXZlciBpZiBJIG1hbnVh
+bGx5IGNhbGwg4oCccGFjay1vYmplY3Rz4oCdIHdpdGggdGhlIGV4YWN0bHkgc2FtZSBvYmplY3Rz
+IFNIQTEuIEl0IG9ubHkgdGFrZSBsZXNzIHRoYW4gMC4wMDUgc2Vjb25kDQpXaGF0IGlzIHJlYWxs
+eSBwYXNzIHRvIOKAnHBhY2stb2JqZWN0c+KAnSB3aGVuIEkgY2FsbCDigJxnaXQgcHVzaOKAnT8N
+Cg0KSSByZWFkIGFuIGFydGljbGUgc2F5cyBnaXQgd2lsbCBlbnVtZXJhdGUgYWxsICJ1bmludGVy
+ZXN0aW5nIG9iamVjdHMiIHRvIGRldGVybWluZSB3aGF0IHRvIHNlbmQuIGJ1dCBpIGRvbid0IHVu
+ZGVyc3RhbmQsIGluIG15IGNhc2UgZ2l0IHNob3VsZCBvbmx5IGVudW1lcmF0ZSBvYmplY3RzIGJl
+dHdlZW4gIjFhMmQ0OTRiMWI3MTQ2OWVlYmJkNDJhZWFiZTE3MzZiZmE0YjUxZmEuLmRkZjNiODRk
+Y2ExYWE0ZmUyMDlhMjE4MzgwZGYxNDgyYWYwZDZiNDgiLiBJdCdzIGluc2FuZS4gSSBoYXZlIGEg
+bWFzdGVyIHNlcnZlciBhbmQgYSBzbGF2ZSBzZXJ2ZXIgc2VydmUgdGhpcyByZXBvc2l0b3J5IHRv
+IG15IHVzZXJzLiBBbmQgaSBoYXZlIGEgY3JvbiBqb2IgdG8gcHVzaCBldmVyeSBjaGFuZ2UgZnJv
+bSBtYXN0ZXIgdG8gc2xhdmUuIEFuZCBpIGZvdW5kIG15IG1hc3RlciBzZXJ2ZXIgQ1BVIGlzIGZ1
+bGwgYWxsIHRoZSB0aW1lIGJlY2F1c2Ugb2YgdGhlIHB1c2ggam9icw0KDQpJcyB0aGVyZSBhbnkg
+c29sdXRpb24/DQoNCg0KSGVyZSBpcyBteSBmdWxsIG91dHB1dA0KLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQp3b3JrQGM1LW1pdWktbWl1aWdpdC1zbGF2ZTE1
+On4vcmVwb3NpdG9yaWVzL21pdWkvcGxhdGZvcm0vZnJhbWV3b3Jrcy9iYXNlMi9iYXNlJCAgR0lU
+X1RSQUNFX1BFUkZPUk1BTkNFPTEgR0lUX1RSQUNFX1BBQ0tFVD0xIGdpdCBwdXNoIGdpdDovLzEw
+LjE3Mi4zMi4zMS9taXVpL3BsYXRmb3JtL2ZyYW1ld29ya3MvYmFzZS5naXQgYnNwLXFjb20tczpi
+c3AtcWNvbS1zDQouLi4uLg0KLi4uLi4NCi4uLi4uDQouLi4uLg0KMDE6NTM6MDAuNTk1OTEwIHBr
+dC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tldDogICAgICAgICBwdXNoPCAyZDVlYjNkMzdlMmFh
+NjY1OTkyMGJkYTY4ODMxMDU4NGM3MGEzN2QwIHJlZnMvcmVtb3Rlcy9vcmlnaW4vdjktbC1pZG8t
+c3RhYmxlMngNCjAxOjUzOjAwLjU5NTkxNyBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6
+ICAgICAgICAgcHVzaDwgMTIwZWJmOWI1OTNjOGY5MTQ5ODE1MDZiODM5MGRkMzE3ZmI4YzlmMSBy
+ZWZzL3JlbW90ZXMvb3JpZ2luL2MNCjAxOjUzOjAwLjU5NTk1NCBwa3QtbGluZS5jOjgwICAgICAg
+ICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaDwgOTA0MDMyNTZlNjc3NTQ3NmJkOGRlZTMxZjI4YjMx
+YWY5ZjdlYWM4OSByZWZzL3JlbW90ZXMvb3JpZ2luL3Y5LW8tZDFzLWRldi1iYWNrdXANCjAxOjUz
+OjAwLjU5NTk2MiBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaDwg
+OWE3OGRkZDVhNGQ2NzU5NTg1ZDI5NTQ5NDY2MTM4MjkxYjY2NWQzNSByZWZzL3JlbW90ZXMvb3Jp
+Z2luL3Y5LW8tZGlwcGVyLWRldg0KMDE6NTM6MDAuNTk1OTY5IHBrdC1saW5lLmM6ODAgICAgICAg
+ICAgIHBhY2tldDogICAgICAgICBwdXNoPCAzNDNkZmViNjEzZTQxMWUwZWRlNGVjNjMyN2UyYjE3
+MWUzOWZmNTIzIHJlZnMvcmVtb3Rlcy9vcmlnaW4vdjktby1uaXRyb2dlbi1kZXYNCjAxOjUzOjAw
+LjU5NTk3NiBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaDwgMzVl
+MjNlOTE2YzJkY2NkODYwM2E2ZmU0ODVlZTU2ZDY4ODAwM2ZmNSByZWZzL3JlbW90ZXMvb3JpZ2lu
+L3Y5LW8tc2FnaXQtZGV2DQowMTo1MzowMC41OTU5ODQgcGt0LWxpbmUuYzo4MCAgICAgICAgICAg
+cGFja2V0OiAgICAgICAgIHB1c2g8IGRjNjJhYjVjMjhmN2Y2MTU0ZDQxZDEzODMwMWZlN2Y1NTVk
+YjE2MGIgcmVmcy9yZW1vdGVzL29yaWdpbi92OS1vLXNha3VyYS1kZXYNCjAxOjUzOjAwLjU5NTk5
+MSBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaDwgMDBiNDc2M2U4
+MjE5ZGU2ZThhNzZiOWNlMjRlY2IzNDYwMDMwNzgzZiByZWZzL3JlbW90ZXMvb3JpZ2luL3Y5LW8t
+c2NvcnBpby1kZXYNCjAxOjUzOjAwLjU5NTk5OCBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNr
+ZXQ6ICAgICAgICAgcHVzaDwgMmY3YjNhMjY4NzEyYmExODdiYjFkMzk5YzY5OGNiMTgzNmM1ZDQ3
+YSByZWZzL3JlbW90ZXMvb3JpZ2luL3Y5LW8tc2lyaXVzLWRldg0KMDE6NTM6MDAuNTk2MDA1IHBr
+dC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tldDogICAgICAgICBwdXNoPCBlMTRmMjk4MTdlNDEy
+ODQ2M2NlZWNjYzUzMWYzMTNhZTFiMTM4NzgwIHJlZnMvcmVtb3Rlcy9vcmlnaW4vdjktby13aHly
+ZWQtZGV2DQowMTo1MzowMC41OTYwMTIgcGt0LWxpbmUuYzo4MCAgICAgICAgICAgcGFja2V0OiAg
+ICAgICAgIHB1c2g8IGM3NjIwYzIxY2YzYWFkZTc2NjZjNDQ4NDcxMzA2YzEyNjQwMzJjNWQgcmVm
+cy9yZW1vdGVzL29yaWdpbi92OS1vLXlzbC1kZXYNCjAxOjUzOjAwLjU5NjAyMiBwa3QtbGluZS5j
+OjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaDwgYzFjYmU0M2YxYmM1MGRjZDQyMmVm
+MzU0ZTY5NGVhNDVjYThhYTc5NyByZWZzL3JlbW90ZXMvb3JpZ2luL3d0LXAtbGF1cnVzLW5hdGl2
+ZQ0KMDE6NTM6MDAuNTk2MDI5IHBrdC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tldDogICAgICAg
+ICBwdXNoPCAzYzczNmM3YjcwMWI5MDIzZjA4YzM2NDFiY2M3NzA0MWUzNWQwZWNhIHJlZnMvcmVt
+b3Rlcy9vcmlnaW4vd3QtcS1sYXVydXMtbWl1aQ0KMDE6NTM6MDAuNTk2MDM2IHBrdC1saW5lLmM6
+ODAgICAgICAgICAgIHBhY2tldDogICAgICAgICBwdXNoPCAzZGMwMzUxZWZlNzk4MTdmNWM4YmYy
+MzU2NGUzYzQ4M2ZmMDU5ODMzIHJlZnMvcmVtb3Rlcy9vcmlnaW4vd3QtcS1sYXVydXMtbmF0aXZl
+DQowMTo1MzowMC41OTYwNDQgcGt0LWxpbmUuYzo4MCAgICAgICAgICAgcGFja2V0OiAgICAgICAg
+IHB1c2g8IDU4YWM5MDFmOTMwMmU3ZjUyMzI1ZjRjZTkwNWNjMmNiZGZhMzEwY2EgcmVmcy9yZW1v
+dGVzL29yaWdpbi93dC1yLWV2ZXJncmVlbg0KMDE6NTM6MDAuNTk2MDUzIHBrdC1saW5lLmM6ODAg
+ICAgICAgICAgIHBhY2tldDogICAgICAgICBwdXNoPCAwMDAwDQowMTo1MzowMC42MDE5MTAgcGt0
+LWxpbmUuYzo4MCAgICAgICAgICAgcGFja2V0OiAgICAgICAgIHB1c2g+IDFhMmQ0OTRiMWI3MTQ2
+OWVlYmJkNDJhZWFiZTE3MzZiZmE0YjUxZmEgZGRmM2I4NGRjYTFhYTRmZTIwOWEyMTgzODBkZjE0
+ODJhZjBkNmI0OCByZWZzL2hlYWRzL2JzcC1xY29tLXNcMCByZXBvcnQtc3RhdHVzLXYyIHNpZGUt
+YmFuZC02NGsgb2JqZWN0LWZvcm1hdD1zaGExIGFnZW50PWdpdC8yLjMyLjANCjAxOjUzOjAwLjYw
+MTk1OSBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAgICAgcHVzaD4gMDAwMA0K
+RW51bWVyYXRpbmcgb2JqZWN0czogMywgZG9uZS4NCkNvdW50aW5nIG9iamVjdHM6IDEwMCUgKDMv
+MyksIGRvbmUuDQpEZWx0YSBjb21wcmVzc2lvbiB1c2luZyB1cCB0byA0MCB0aHJlYWRzDQpDb21w
+cmVzc2luZyBvYmplY3RzOiAxMDAlICgzLzMpLCBkb25lLg0KV3JpdGluZyBvYmplY3RzOiAxMDAl
+ICgzLzMpLCA3LjI0IEtpQiB8IDcuMjQgTWlCL3MsIGRvbmUuDQpUb3RhbCAzIChkZWx0YSAwKSwg
+cmV1c2VkIDAgKGRlbHRhIDApLCBwYWNrLXJldXNlZCAwDQowMTo1MzoxOS4yNTY1MDYgdHJhY2Uu
+Yzo0ODcgICAgICAgICAgICAgcGVyZm9ybWFuY2U6IDE4LjY1MzMzNzc1NSBzOiBnaXQgY29tbWFu
+ZDogL3Vzci9saWJleGVjL2dpdC1jb3JlL2dpdCBwYWNrLW9iamVjdHMgLS1hbGwtcHJvZ3Jlc3Mt
+aW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0tZGVsdGEtYmFzZS1vZmZzZXQgLS1wcm9n
+cmVzcw0KMDE6NTM6MjIuMjk4Njk1IHBrdC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tldDogICAg
+IHNpZGViYW5kPCBcMTAwMGV1bnBhY2sgb2swMDFkb2sgcmVmcy9oZWFkcy9ic3AtcWNvbS1zMDAw
+MA0KMDE6NTM6MjIuMjk4NzM1IHBrdC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tldDogICAgIHNp
+ZGViYW5kPCAwMDAwDQowMTo1MzoyMi4yOTg3NDUgcGt0LWxpbmUuYzo4MCAgICAgICAgICAgcGFj
+a2V0OiAgICAgICAgIHB1c2g8IHVucGFjayBvaw0KMDE6NTM6MjIuMjk4NzcwIHBrdC1saW5lLmM6
+ODAgICAgICAgICAgIHBhY2tldDogICAgICAgICBwdXNoPCBvayByZWZzL2hlYWRzL2JzcC1xY29t
+LXMNCjAxOjUzOjIyLjI5ODc3OSBwa3QtbGluZS5jOjgwICAgICAgICAgICBwYWNrZXQ6ICAgICAg
+ICAgcHVzaDwgMDAwMA0KVG8gZ2l0Oi8vMTAuMTcyLjMyLjMxL21pdWkvcGxhdGZvcm0vZnJhbWV3
+b3Jrcy9iYXNlLmdpdA0KICAgMWEyZDQ5NGIxYjcxLi5kZGYzYjg0ZGNhMWEgIGJzcC1xY29tLXMg
+LT4gYnNwLXFjb20tcw0KMDE6NTM6MjIuMzE2NDQxIHRyYWNlLmM6NDg3ICAgICAgICAgICAgIHBl
+cmZvcm1hbmNlOiAyMi44ODM2ODg1NzMgczogZ2l0IGNvbW1hbmQ6IGdpdCBwdXNoIGdpdDovLzEw
+LjE3Mi4zMi4zMS9taXVpL3BsYXRmb3JtL2ZyYW1ld29ya3MvYmFzZS5naXQgYnNwLXFjb20tczpi
+c3AtcWNvbS1zDQp3b3JrQGM1LW1pdWktbWl1aWdpdC1zbGF2ZTE1On4vcmVwb3NpdG9yaWVzL21p
+dWkvcGxhdGZvcm0vZnJhbWV3b3Jrcy9iYXNlMi9iYXNlJCBlY2hvIDFhMmQ0OTRiMWI3MTQ2OWVl
+YmJkNDJhZWFiZTE3MzZiZmE0YjUxZmEuLmRkZjNiODRkY2ExYWE0ZmUyMDlhMjE4MzgwZGYxNDgy
+YWYwZDZiNDggPiAxDQp3b3JrQGM1LW1pdWktbWl1aWdpdC1zbGF2ZTE1On4vcmVwb3NpdG9yaWVz
+L21pdWkvcGxhdGZvcm0vZnJhbWV3b3Jrcy9iYXNlMi9iYXNlJCB0aW1lIC91c3IvbGliZXhlYy9n
+aXQtY29yZS9naXQgcGFjay1vYmplY3RzIC0tYWxsLXByb2dyZXNzLWltcGxpZWQgLS1yZXZzIC0t
+c3Rkb3V0IC0tdGhpbiAtLWRlbHRhLWJhc2Utb2Zmc2V0IC0tcHJvZ3Jlc3MgPCAxDQpFbnVtZXJh
+dGluZyBvYmplY3RzOiA1LCBkb25lLg0KQ291bnRpbmcgb2JqZWN0czogMTAwJSAoNS81KSwgZG9u
+ZS4NCkRlbHRhIGNvbXByZXNzaW9uIHVzaW5nIHVwIHRvIDQwIHRocmVhZHMNCkNvbXByZXNzaW5n
+IG9iamVjdHM6IDEwMCUgKDMvMyksIGRvbmUuDQpXcml0aW5nIG9iamVjdHM6IDEwMCUgKDMvMyks
+IDI5MiBieXRlcyB8IDI5Mi4wMCBLaUIvcywgZG9uZS4NCg0KVG90YWwgMyAoZGVsdGEgMiksIHJl
+dXNlZCAwIChkZWx0YSAwKSwgcGFjay1yZXVzZWQgMA0KDQpyZWFsICAgIDBtMC4wMDVzDQp1c2Vy
+ICAgIDBtMC4wMDBzDQpzeXMgMG0wLjAwNHMNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KIy8qKioqKirmnKzpgq7ku7blj4rlhbbpmYTk
+u7blkKvmnInlsI/nsbPlhazlj7jnmoTkv53lr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nk
+uIrpnaLlnLDlnYDkuK3liJflh7rnmoTkuKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbk
+u5bkurrku6Xku7vkvZXlvaLlvI/kvb/nlKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbp
+g6jliIblnLDms4TpnLLjgIHlpI3liLbjgIHmiJbmlaPlj5HvvInmnKzpgq7ku7bkuK3nmoTkv6Hm
+ga/jgILlpoLmnpzmgqjplJnmlLbkuobmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbp
+gq7ku7bpgJrnn6Xlj5Hku7bkurrlubbliKDpmaTmnKzpgq7ku7bvvIEgVGhpcyBlLW1haWwgYW5k
+IGl0cyBhdHRhY2htZW50cyBjb250YWluIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIFhJ
+QU9NSSwgd2hpY2ggaXMgaW50ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgd2hv
+c2UgYWRkcmVzcyBpcyBsaXN0ZWQgYWJvdmUuIEFueSB1c2Ugb2YgdGhlIGluZm9ybWF0aW9uIGNv
+bnRhaW5lZCBoZXJlaW4gaW4gYW55IHdheSAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8s
+IHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xvc3VyZSwgcmVwcm9kdWN0aW9uLCBvciBkaXNzZW1pbmF0
+aW9uKSBieSBwZXJzb25zIG90aGVyIHRoYW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBw
+cm9oaWJpdGVkLiBJZiB5b3UgcmVjZWl2ZSB0aGlzIGUtbWFpbCBpbiBlcnJvciwgcGxlYXNlIG5v
+dGlmeSB0aGUgc2VuZGVyIGJ5IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUg
+aXQhKioqKioqLyMNCg==
