@@ -2,303 +2,237 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9BABC433F5
-	for <git@archiver.kernel.org>; Sun, 10 Oct 2021 17:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04D0FC433EF
+	for <git@archiver.kernel.org>; Sun, 10 Oct 2021 17:03:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CB5D60F55
+	by mail.kernel.org (Postfix) with ESMTP id D583760F4B
 	for <git@archiver.kernel.org>; Sun, 10 Oct 2021 17:03:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231984AbhJJRFI (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S232020AbhJJRFI (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 10 Oct 2021 13:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39682 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbhJJRFH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231927AbhJJRFH (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 10 Oct 2021 13:05:07 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18363C061570
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CACEC06161C
         for <git@vger.kernel.org>; Sun, 10 Oct 2021 10:03:08 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i12so35175230wrb.7
+Received: by mail-wr1-x42a.google.com with SMTP id r7so47816906wrc.10
         for <git@vger.kernel.org>; Sun, 10 Oct 2021 10:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ixa8RAuREyZoK9YyglgUT+oVhW5rQJ3PEwngHspOJqg=;
-        b=WieuOvA9tqHejD32S7VcNG4lPpzFUUXhkbSsvsNcEVDyTTVzJPSav37MIS5ln5ErC4
-         kcNvjZtYNe9DMhQKmepzNqFnrwTp8Ru2CxKbLKmAMupstsqNXeCOtaJpskzMlM/8JZCl
-         pHR/ljquGKojyj0VAZCOHLOFtBaRfBUqmJeAqUfsmprdi1k6mqGrzvwltvDqNdF4FG3k
-         +Z3Fz+EF/OGwByLsxd2by8y59kJa/FA5VhrRo/ZjPrfX5YVnW2BqPqgwkTphkPVFuEJG
-         RF5LnpGdtMYGGsm4pyyyxmultCboiEePzffhxsGLOKb4R+wI53IIblhplmGLIDb1ps/9
-         hPBQ==
+        bh=yYJ/b49QpJ4fkZtCd4pL6lc0TKalwVrQgk6O0OkTjwk=;
+        b=YRrV8sC4Fd3F6VdjoE44LH2cXmSsMrUmgcfo3jc/p4Pc6kdc0IZG9BrQHJt+PZd4lU
+         iUQ49NWLkmFJbCnKZG4QbcQxm98pjhoQKelmbRole8kN2IfKOAjm5kR0fXgAqrvt+Cr7
+         K2w+lppnGuVHRkz0YQ6GKIyEkWhMoDQDsX2Qt9RskRZhgAmveQ7FXGnrIXV7xq/plS4l
+         DMAxlqg3RZ37hsUSXlbUAesmZlPAGFf1Fs3R/7lTNeXNALskyEcOyprrMMkZtwjXRAlm
+         +H0HwY0geo11ggzdW9hI4ERl6czkBxYc/b05VtLRSwg35xB99ohoXwSySgyKSVVEDElu
+         ML5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ixa8RAuREyZoK9YyglgUT+oVhW5rQJ3PEwngHspOJqg=;
-        b=by+DVZ4a8JCy/old9u0WE7rp0NMxJSg1OsopEAPFbRwF49E/QFm0lkjqy0X/5/oQyJ
-         Y2qqQD5EsQi8WaTs3pO9XndnC6gK3ojqftl9ZDMFNNtY5Zm8Ljofd2YlNH1nQkrjDOBC
-         M7y9wpjuwcYcPKuTKuxXBE2ojziJFBky+4rICQC3yMh3VmSlM0qg09JhLAvRT9YHLSrM
-         GhHjS2K1xuJ5gKSbteX/s0nZbaIwXXAFjKzbOQiQ4qTh92xa2GesOFZyV1Www+UiNOf/
-         QOwF0m5oCxELk5880ozU9XgL4XLa4XrdJpwMTteVpPecGwYT+MDHVxIR6E+O0AWO5WZL
-         oc9w==
-X-Gm-Message-State: AOAM5331WoI4BNyRr65hIAAXtGPw3wjHU9scjSTsAH6duYFu6ONVIlNx
-        4Sjj7syozA5j5gINratML/l6ft6TO6k=
-X-Google-Smtp-Source: ABdhPJyfareRrYsNTIlUkk/BO+hxZR83gZJdOZWV2VsJ7DzQktzv9Fj5xuZF4HdaUKCM+/6ZTP55vA==
-X-Received: by 2002:a05:6000:1b90:: with SMTP id r16mr18806587wru.250.1633885385407;
-        Sun, 10 Oct 2021 10:03:05 -0700 (PDT)
+        bh=yYJ/b49QpJ4fkZtCd4pL6lc0TKalwVrQgk6O0OkTjwk=;
+        b=E55teyt2U8B6rdKoKv0BUFN9zQV7lk8SE/YNaupqHtwMDNn6LIF7gTAvg5PU9o7HGB
+         JH+7wf+DqmTr/vx7rutdccPwqJqCx3tmq7tAy/lv0j13QscuDx/6r0avUT0N5HXVKNkQ
+         40a7XxB+iE0rLjYq57dp8W3hOwdE2uXI7hKGIAf6s8MSIXDnLpEtqgGloYjMxruCMtqY
+         YdBAuwR5la8srf0zWhE5/U/Q106t3E49e1vJZcpT2YQmrYrnCd7StZ0pSHR9HFP0rVB2
+         alGQwMT0CKIK92Ek6qs28kNGsU5wbD2WUpFt2bs0hRbxD6KF4Fy+A9khyp2mBYBjewTP
+         kSnA==
+X-Gm-Message-State: AOAM530JYI5zsGsIeTvo2XPAEHMTEVQwTeOeexDDAYiaYFS+Mdai8W2F
+        ojD7+9efRzrUuT+nYEmn2embE0+3Sr8=
+X-Google-Smtp-Source: ABdhPJy2+cqhlRbhJ9IyVII6wQ0/K3cbgk+FgtWk8CrZYHzi7XWhO/37J9xLDlTsCK32Tc2LP4wSsQ==
+X-Received: by 2002:a5d:6c62:: with SMTP id r2mr18986021wrz.412.1633885386020;
+        Sun, 10 Oct 2021 10:03:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e5sm5372051wrd.1.2021.10.10.10.03.04
+        by smtp.gmail.com with ESMTPSA id c204sm18447328wme.11.2021.10.10.10.03.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Oct 2021 10:03:04 -0700 (PDT)
-Message-Id: <pull.1054.v3.git.1633885384.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
+        Sun, 10 Oct 2021 10:03:05 -0700 (PDT)
+Message-Id: <dd9f82ba712f54245f19df95926050543d25b769.1633885384.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1054.v3.git.1633885384.gitgitgadget@gmail.com>
 References: <pull.1054.v2.git.1633720197.gitgitgadget@gmail.com>
+        <pull.1054.v3.git.1633885384.gitgitgadget@gmail.com>
 From:   "Johannes Sixt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 10 Oct 2021 17:02:58 +0000
-Subject: [PATCH v3 0/6] Fun with cpp word regex
+Date:   Sun, 10 Oct 2021 17:02:59 +0000
+Subject: [PATCH v3 1/6] t4034/cpp: actually test that operator tokens are not
+ split
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Sixt <j6t@kdbg.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The cpp word regex driver is a bit too loose and can match too much text
-where the intent is to match only a number.
+From: Johannes Sixt <j6t@kdbg.org>
 
-The first patch makes the cpp word regex tests more effective.
+8d96e7288f2b (t4034: bulk verify builtin word regex sanity, 2010-12-18)
+added many tests with the intent to verify that operators consisting of
+more than one symbol are kept together. These are tested by probing a
+transition from, e.g., a!=b to x!=y, which results in the word-diff
 
-The second patch adds problematic test cases. The third patch fixes these
-problems.
+  [-a-]{+x+}!=[-b-]{+y+}
 
-The remaining three patches add support for digit separators and the
-spaceship operator <=> (generalized comparison operator).
+But that proves only that the letters and operators are separate tokens.
+To prove that != is an unseparable token, we have to probe a transition
+from, e.g., a=b to a!=b having a word-diff
 
-I left out support for hexadecimal floating point constants because that
-would require to tighten the regex even more to avoid that entire
-expressions are treated as single tokens.
+  a[-=-]{+!=+}b
 
-Changes since V2:
+that proves that the ! is not separate from the =.
 
- * Add test cases for the new features in a separate commit so that the new
-   behavior is better visible.
- * Don't treat .' as in '.' as a token.
+In the post-image, add to or remove from operators a character that
+turns it into another valid operator.
 
-Changes since V1:
+Change the identifiers used around operators such that the diff
+algorithm does not have an incentive to match, e.g., a<b in one spot
+in the pre-image with a<b elsewhere in the post-image.
 
- * Tests, tests, tests.
- * Polished commit messages.
+Adjust the expected output to match the new differences. Notice that
+there are some undesirable tokenizations around e, ., and -.  This will
+be addressed in a later change.
 
-Johannes Sixt (6):
-  t4034/cpp: actually test that operator tokens are not split
-  t4034: add tests showing problematic cpp tokenizations
-  userdiff-cpp: tighten word regex
-  userdiff-cpp: prepare test cases with yet unsupported features
-  userdiff-cpp: permit the digit-separating single-quote in numbers
-  userdiff-cpp: learn the C++ spaceship operator
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t4034/cpp/expect | 45 +++++++++++++++------------------------------
+ t/t4034/cpp/post   | 29 +++++++++++++----------------
+ t/t4034/cpp/pre    | 25 +++++++++++--------------
+ 3 files changed, 39 insertions(+), 60 deletions(-)
 
- t/t4034/cpp/expect | 63 +++++++++++++++++++++++-----------------------
- t/t4034/cpp/post   | 47 +++++++++++++++++++++-------------
- t/t4034/cpp/pre    | 41 +++++++++++++++++++-----------
- userdiff.c         | 10 ++++++--
- 4 files changed, 94 insertions(+), 67 deletions(-)
-
-
-base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1054%2Fj6t%2Ffun-with-cpp-word-regex-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1054/j6t/fun-with-cpp-word-regex-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1054
-
-Range-diff vs v2:
-
- 1:  dd9f82ba712 = 1:  dd9f82ba712 t4034/cpp: actually test that operator tokens are not split
- 2:  5a84fc9cf71 = 2:  5a84fc9cf71 t4034: add tests showing problematic cpp tokenizations
- 3:  d4ebe45fddc = 3:  d4ebe45fddc userdiff-cpp: tighten word regex
- 4:  dd75d19cee9 ! 4:  c9f58b5e82f userdiff-cpp: permit the digit-separating single-quote in numbers
-     @@ Metadata
-      Author: Johannes Sixt <j6t@kdbg.org>
-      
-       ## Commit message ##
-     -    userdiff-cpp: permit the digit-separating single-quote in numbers
-     +    userdiff-cpp: prepare test cases with yet unsupported features
-      
-     -    Since C++17, the single-quote can be used as digit separator:
-     -
-     -       3.141'592'654
-     -       1'000'000
-     -       0xdead'beaf
-     -
-     -    Make it known to the word regex of the cpp driver, so that numbers are
-     -    not split into separate tokens at the single-quotes.
-     +    We are going to add support for C++'s digit-separating single-quote and
-     +    the spaceship operator. By adding the test cases in this separate
-     +    commit, the effect on the word highlighting will become more obvious
-     +    as the features are implemented and the file cpp/expect is updated.
-      
-          Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-      
-     @@ t/t4034/cpp/expect
-      @@
-       <BOLD>diff --git a/pre b/post<RESET>
-      -<BOLD>index 1229cdb..3feae6f 100644<RESET>
-     -+<BOLD>index 60f3640..f6fbf7b 100644<RESET>
-     ++<BOLD>index 144cd98..64e78af 100644<RESET>
-       <BOLD>--- a/pre<RESET>
-       <BOLD>+++ b/post<RESET>
-       <CYAN>@@ -1,30 +1,30 @@<RESET>
-     -@@ t/t4034/cpp/expect: Foo() : x(0<RED>&&1<RESET><GREEN>&42<RESET>) { <RED>foo0<RESET><GREEN>bar<RESET>
-     + Foo() : x(0<RED>&&1<RESET><GREEN>&42<RESET>) { <RED>foo0<RESET><GREEN>bar<RESET>(x.<RED>find<RESET><GREEN>Find<RESET>); }
-       cout<<"Hello World<RED>!<RESET><GREEN>?<RESET>\n"<<endl;
-     - <GREEN>(<RESET>1 <RED>-<RESET><GREEN>+<RESET>1e10 0xabcdef<GREEN>)<RESET> '<RED>x<RESET><GREEN>y<RESET>'
-     +-<GREEN>(<RESET>1 <RED>-<RESET><GREEN>+<RESET>1e10 0xabcdef<GREEN>)<RESET> '<RED>x<RESET><GREEN>y<RESET>'
-     ++<GREEN>(<RESET>1 <RED>-<RESET><GREEN>+<RESET>1e10 0xabcdef<GREEN>)<RESET> '<RED>x<RESET><GREEN>.<RESET>'
-       // long double<RESET>
-      -<RED>3.141592653e-10l<RESET><GREEN>3.141592654e+10l<RESET>
-     -+<RED>3.141'592'653e-10l<RESET><GREEN>3.141'592'654e+10l<RESET>
-     ++3.141'592'<RED>653e-10l<RESET><GREEN>654e+10l<RESET>
-       // float<RESET>
-       <RED>120E5f<RESET><GREEN>120E6f<RESET>
-       // hex<RESET>
-      -<RED>0xdeadbeaf<RESET><GREEN>0xdeadBeaf<RESET>+<RED>8ULL<RESET><GREEN>7ULL<RESET>
-     -+<RED>0xdead'beaf<RESET><GREEN>0xdead'Beaf<RESET>+<RED>8ULL<RESET><GREEN>7ULL<RESET>
-     ++0xdead'<RED>beaf<RESET><GREEN>Beaf<RESET>+<RED>8ULL<RESET><GREEN>7ULL<RESET>
-       // octal<RESET>
-      -<RED>01234567<RESET><GREEN>01234560<RESET>
-     -+<RED>0123'4567<RESET><GREEN>0123'4560<RESET>
-     ++0123'<RED>4567<RESET><GREEN>4560<RESET>
-       // binary<RESET>
-      -<RED>0b1000<RESET><GREEN>0b1100<RESET>+e1
-     -+<RED>0b10'00<RESET><GREEN>0b11'00<RESET>+e1
-     ++<RED>0b10<RESET><GREEN>0b11<RESET>'00+e1
-       // expression<RESET>
-       1.5-e+<RED>2<RESET><GREEN>3<RESET>+f
-       // another one<RESET>
-     +@@ t/t4034/cpp/expect: str.e+<RED>65<RESET><GREEN>75<RESET>
-     + a<RED>*<RESET><GREEN>*=<RESET>b c<RED>/<RESET><GREEN>/=<RESET>d e<RED>%<RESET><GREEN>%=<RESET>f
-     + a<RED>+<RESET><GREEN>++<RESET>b c<RED>-<RESET><GREEN>--<RESET>d
-     + a<RED><<<RESET><GREEN><<=<RESET>b c<RED>>><RESET><GREEN>>>=<RESET>d
-     +-a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h
-     ++a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h i<=<GREEN>><RESET>j
-     + a<RED>==<RESET><GREEN>!=<RESET>b c<RED>!=<RESET><GREEN>=<RESET>d
-     + a<RED>^<RESET><GREEN>^=<RESET>b c<RED>|<RESET><GREEN>|=<RESET>d e<RED>&&<RESET><GREEN>&=<RESET>f
-     + a<RED>||<RESET><GREEN>|<RESET>b
-      
-       ## t/t4034/cpp/post ##
-     -@@ t/t4034/cpp/post: Foo() : x(0&42) { bar(x.Find); }
-     +@@
-     + Foo() : x(0&42) { bar(x.Find); }
-       cout<<"Hello World?\n"<<endl;
-     - (1 +1e10 0xabcdef) 'y'
-     +-(1 +1e10 0xabcdef) 'y'
-     ++(1 +1e10 0xabcdef) '.'
-       // long double
-      -3.141592654e+10l
-      +3.141'592'654e+10l
-     @@ t/t4034/cpp/post: Foo() : x(0&42) { bar(x.Find); }
-       // expression
-       1.5-e+3+f
-       // another one
-     +@@ t/t4034/cpp/post: str.e+75
-     + a*=b c/=d e%=f
-     + a++b c--d
-     + a<<=b c>>=d
-     +-a<=b c<d e>=f g>h
-     ++a<=b c<d e>=f g>h i<=>j
-     + a!=b c=d
-     + a^=b c|=d e&=f
-     + a|b
-      
-       ## t/t4034/cpp/pre ##
-      @@ t/t4034/cpp/pre: Foo():x(0&&1){ foo0( x.find); }
-     @@ t/t4034/cpp/pre: Foo():x(0&&1){ foo0( x.find); }
-       // expression
-       1.5-e+2+f
-       // another one
-     -
-     - ## userdiff.c ##
-     -@@ userdiff.c: PATTERNS("cpp",
-     - 	 /* identifiers and keywords */
-     - 	 "[a-zA-Z_][a-zA-Z0-9_]*"
-     - 	 /* decimal and octal integers as well as floatingpoint numbers */
-     --	 "|[0-9][0-9.]*([Ee][-+]?[0-9]+)?[fFlLuU]*"
-     -+	 "|[0-9][0-9.']*([Ee][-+]?[0-9]+)?[fFlLuU]*"
-     - 	 /* hexadecimal and binary integers */
-     --	 "|0[xXbB][0-9a-fA-F]+[lLuU]*"
-     -+	 "|0[xXbB][0-9a-fA-F']+[lLuU]*"
-     - 	 /* floatingpoint numbers that begin with a decimal point */
-     --	 "|\\.[0-9]+([Ee][-+]?[0-9]+)?[fFlL]?"
-     -+	 "|\\.[0-9']+([Ee][-+]?[0-9]+)?[fFlL]?"
-     - 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
-     - PATTERNS("csharp",
-     - 	 /* Keywords */
-     +@@ t/t4034/cpp/pre: str.e+65
-     + a*b c/d e%f
-     + a+b c-d
-     + a<<b c>>d
-     +-a<b c<=d e>f g>=h
-     ++a<b c<=d e>f g>=h i<=j
-     + a==b c!=d
-     + a^b c|d e&&f
-     + a||b
- -:  ----------- > 5:  037c743d9e3 userdiff-cpp: permit the digit-separating single-quote in numbers
- 5:  43a701f5ffd ! 6:  cc9dc967f10 userdiff-cpp: learn the C++ spaceship operator
-     @@ Commit message
-          Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-      
-       ## t/t4034/cpp/expect ##
-     -@@
-     - <BOLD>diff --git a/pre b/post<RESET>
-     --<BOLD>index 60f3640..f6fbf7b 100644<RESET>
-     -+<BOLD>index 144cd98..244f79c 100644<RESET>
-     - <BOLD>--- a/pre<RESET>
-     - <BOLD>+++ b/post<RESET>
-     - <CYAN>@@ -1,30 +1,30 @@<RESET>
-      @@ t/t4034/cpp/expect: str.e+<RED>65<RESET><GREEN>75<RESET>
-       a<RED>*<RESET><GREEN>*=<RESET>b c<RED>/<RESET><GREEN>/=<RESET>d e<RED>%<RESET><GREEN>%=<RESET>f
-       a<RED>+<RESET><GREEN>++<RESET>b c<RED>-<RESET><GREEN>--<RESET>d
-       a<RED><<<RESET><GREEN><<=<RESET>b c<RED>>><RESET><GREEN>>>=<RESET>d
-     --a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h
-     +-a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h i<=<GREEN>><RESET>j
-      +a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h i<RED><=<RESET><GREEN><=><RESET>j
-       a<RED>==<RESET><GREEN>!=<RESET>b c<RED>!=<RESET><GREEN>=<RESET>d
-       a<RED>^<RESET><GREEN>^=<RESET>b c<RED>|<RESET><GREEN>|=<RESET>d e<RED>&&<RESET><GREEN>&=<RESET>f
-       a<RED>||<RESET><GREEN>|<RESET>b
-      
-     - ## t/t4034/cpp/post ##
-     -@@ t/t4034/cpp/post: str.e+75
-     - a*=b c/=d e%=f
-     - a++b c--d
-     - a<<=b c>>=d
-     --a<=b c<d e>=f g>h
-     -+a<=b c<d e>=f g>h i<=>j
-     - a!=b c=d
-     - a^=b c|=d e&=f
-     - a|b
-     -
-     - ## t/t4034/cpp/pre ##
-     -@@ t/t4034/cpp/pre: str.e+65
-     - a*b c/d e%f
-     - a+b c-d
-     - a<<b c>>d
-     --a<b c<=d e>f g>=h
-     -+a<b c<=d e>f g>=h i<=j
-     - a==b c!=d
-     - a^b c|d e&&f
-     - a||b
-     -
-       ## userdiff.c ##
-      @@ userdiff.c: PATTERNS("cpp",
-       	 "|0[xXbB][0-9a-fA-F']+[lLuU]*"
-       	 /* floatingpoint numbers that begin with a decimal point */
-     - 	 "|\\.[0-9']+([Ee][-+]?[0-9]+)?[fFlL]?"
-     + 	 "|\\.[0-9][0-9']*([Ee][-+]?[0-9]+)?[fFlL]?"
-      -	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
-      +	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
-       PATTERNS("csharp",
-
+diff --git a/t/t4034/cpp/expect b/t/t4034/cpp/expect
+index 37d1ea25870..41976971b93 100644
+--- a/t/t4034/cpp/expect
++++ b/t/t4034/cpp/expect
+@@ -1,36 +1,21 @@
+ <BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 23d5c8a..7e8c026 100644<RESET>
++<BOLD>index c5672a2..4229868 100644<RESET>
+ <BOLD>--- a/pre<RESET>
+ <BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,19 +1,19 @@<RESET>
++<CYAN>@@ -1,16 +1,16 @@<RESET>
+ Foo() : x(0<RED>&&1<RESET><GREEN>&42<RESET>) { <GREEN>bar(x);<RESET> }
+ cout<<"Hello World<RED>!<RESET><GREEN>?<RESET>\n"<<endl;
+ <GREEN>(<RESET>1<GREEN>) (<RESET>-1e10<GREEN>) (<RESET>0xabcdef<GREEN>)<RESET> '<RED>x<RESET><GREEN>y<RESET>'
+-[<RED>a<RESET><GREEN>x<RESET>] <RED>a<RESET><GREEN>x<RESET>-><RED>b a<RESET><GREEN>y x<RESET>.<RED>b<RESET><GREEN>y<RESET>
+-!<RED>a<RESET><GREEN>x<RESET> ~<RED>a a<RESET><GREEN>x x<RESET>++ <RED>a<RESET><GREEN>x<RESET>-- <RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>&<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>/<RED>b a<RESET><GREEN>y x<RESET>%<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>+<RED>b a<RESET><GREEN>y x<RESET>-<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET><<<RED>b a<RESET><GREEN>y x<RESET>>><RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET><<RED>b a<RESET><GREEN>y x<RESET><=<RED>b a<RESET><GREEN>y x<RESET>><RED>b a<RESET><GREEN>y x<RESET>>=<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>==<RED>b a<RESET><GREEN>y x<RESET>!=<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>&<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>^<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>|<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>&&<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>||<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>?<RED>b<RESET><GREEN>y<RESET>:z
+-<RED>a<RESET><GREEN>x<RESET>=<RED>b a<RESET><GREEN>y x<RESET>+=<RED>b a<RESET><GREEN>y x<RESET>-=<RED>b a<RESET><GREEN>y x<RESET>*=<RED>b a<RESET><GREEN>y x<RESET>/=<RED>b a<RESET><GREEN>y x<RESET>%=<RED>b a<RESET><GREEN>y x<RESET><<=<RED>b a<RESET><GREEN>y x<RESET>>>=<RED>b a<RESET><GREEN>y x<RESET>&=<RED>b a<RESET><GREEN>y x<RESET>^=<RED>b a<RESET><GREEN>y x<RESET>|=<RED>b<RESET>
+-<RED>a<RESET><GREEN>y<RESET>
+-<GREEN>x<RESET>,y
+-<RED>a<RESET><GREEN>x<RESET>::<RED>b<RESET><GREEN>y<RESET>
++[a] b<RED>-><RESET><GREEN>->*<RESET>v d<RED>.e<RESET><GREEN>.*e<RESET>
++<GREEN>~<RESET>!a <GREEN>!<RESET>~b c<RED>++<RESET><GREEN>+<RESET> d<RED>--<RESET><GREEN>-<RESET> e*<GREEN>*<RESET>f g<RED>&<RESET><GREEN>&&<RESET>h
++a<RED>*<RESET><GREEN>*=<RESET>b c<RED>/<RESET><GREEN>/=<RESET>d e<RED>%<RESET><GREEN>%=<RESET>f
++a<RED>+<RESET><GREEN>++<RESET>b c<RED>-<RESET><GREEN>--<RESET>d
++a<RED><<<RESET><GREEN><<=<RESET>b c<RED>>><RESET><GREEN>>>=<RESET>d
++a<RED><<RESET><GREEN><=<RESET>b c<RED><=<RESET><GREEN><<RESET>d e<RED>><RESET><GREEN>>=<RESET>f g<RED>>=<RESET><GREEN>><RESET>h
++a<RED>==<RESET><GREEN>!=<RESET>b c<RED>!=<RESET><GREEN>=<RESET>d
++a<RED>^<RESET><GREEN>^=<RESET>b c<RED>|<RESET><GREEN>|=<RESET>d e<RED>&&<RESET><GREEN>&=<RESET>f
++a<RED>||<RESET><GREEN>|<RESET>b
++a?<GREEN>:<RESET>b
++a<RED>=<RESET><GREEN>==<RESET>b c<RED>+=<RESET><GREEN>+<RESET>d <RED>e-=f<RESET><GREEN>e-f<RESET> g<RED>*=<RESET><GREEN>*<RESET>h i<RED>/=<RESET><GREEN>/<RESET>j k<RED>%=<RESET><GREEN>%<RESET>l m<RED><<=<RESET><GREEN><<<RESET>n o<RED>>>=<RESET><GREEN>>><RESET>p q<RED>&=<RESET><GREEN>&<RESET>r s<RED>^=<RESET><GREEN>^<RESET>t u<RED>|=<RESET><GREEN>|<RESET>v
++a,b<RESET>
++a<RED>::<RESET><GREEN>:<RESET>b
+diff --git a/t/t4034/cpp/post b/t/t4034/cpp/post
+index 7e8c026cefb..4229868ae62 100644
+--- a/t/t4034/cpp/post
++++ b/t/t4034/cpp/post
+@@ -1,19 +1,16 @@
+ Foo() : x(0&42) { bar(x); }
+ cout<<"Hello World?\n"<<endl;
+ (1) (-1e10) (0xabcdef) 'y'
+-[x] x->y x.y
+-!x ~x x++ x-- x*y x&y
+-x*y x/y x%y
+-x+y x-y
+-x<<y x>>y
+-x<y x<=y x>y x>=y
+-x==y x!=y
+-x&y
+-x^y
+-x|y
+-x&&y
+-x||y
+-x?y:z
+-x=y x+=y x-=y x*=y x/=y x%=y x<<=y x>>=y x&=y x^=y x|=y
+-x,y
+-x::y
++[a] b->*v d.*e
++~!a !~b c+ d- e**f g&&h
++a*=b c/=d e%=f
++a++b c--d
++a<<=b c>>=d
++a<=b c<d e>=f g>h
++a!=b c=d
++a^=b c|=d e&=f
++a|b
++a?:b
++a==b c+d e-f g*h i/j k%l m<<n o>>p q&r s^t u|v
++a,b
++a:b
+diff --git a/t/t4034/cpp/pre b/t/t4034/cpp/pre
+index 23d5c8adf54..c5672a24cfc 100644
+--- a/t/t4034/cpp/pre
++++ b/t/t4034/cpp/pre
+@@ -1,19 +1,16 @@
+ Foo():x(0&&1){}
+ cout<<"Hello World!\n"<<endl;
+ 1 -1e10 0xabcdef 'x'
+-[a] a->b a.b
+-!a ~a a++ a-- a*b a&b
+-a*b a/b a%b
+-a+b a-b
+-a<<b a>>b
+-a<b a<=b a>b a>=b
+-a==b a!=b
+-a&b
+-a^b
+-a|b
+-a&&b
++[a] b->v d.e
++!a ~b c++ d-- e*f g&h
++a*b c/d e%f
++a+b c-d
++a<<b c>>d
++a<b c<=d e>f g>=h
++a==b c!=d
++a^b c|d e&&f
+ a||b
+-a?b:z
+-a=b a+=b a-=b a*=b a/=b a%=b a<<=b a>>=b a&=b a^=b a|=b
+-a,y
++a?b
++a=b c+=d e-=f g*=h i/=j k%=l m<<=n o>>=p q&=r s^=t u|=v
++a,b
+ a::b
 -- 
 gitgitgadget
+
