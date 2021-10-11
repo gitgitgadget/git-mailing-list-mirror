@@ -2,144 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C819EC433F5
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9D53C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 14:29:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5B1861078
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:52:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D053C60E74
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 14:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237618AbhJKNyC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 09:54:02 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:55695 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237312AbhJKNwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 09:52:42 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mZvhQ-000BGN-8G; Mon, 11 Oct 2021 14:50:41 +0100
-Subject: Re: Some problems for git beginners
-To:     ZhangJinbao <zhang709787793@icloud.com>,
-        Git List <git@vger.kernel.org>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>
-References: <2EC9E24E-A8FD-4851-9F6A-F3D104465A23@icloud.com>
- <ffe633c5-151a-8646-20ef-be4f50c5f59e@gmail.com>
- <4ef81a4e-e832-1968-3f31-5f15cd0c7320@iee.email>
- <AD10E128-A820-4F84-9173-776DA90686EF@icloud.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <282709c2-3a58-d986-5a57-6174a4849782@iee.email>
-Date:   Mon, 11 Oct 2021 14:50:40 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S237744AbhJKOb3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 10:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43776 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231722AbhJKObX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 10:31:23 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8506FC018DB3
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 07:09:57 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id y12so55425970eda.4
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 07:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=1Jj9WK6b9Q187+iTyU3+tXVNNSewz/Gt9rtsyNN/Vuc=;
+        b=Ay99JLRil5B6miMsIsC0v6MVuQ9qnFhgg1YCvc9kOvaaq4XA8R4I2KclCPqCO0YjAq
+         bIamIdfyYzAtfjUmKcqGX+boZVAZcq/BXRAIqtaoZ7KT2cgn4s4fvW7Qw0tofrW4v5OJ
+         x2a2n+r1u0gYzeuV9h6mEomXVJ5opsc7A2v+CVqOPmLdj4omORa2li6DBO5GTxeiPuXb
+         mxm3kfEjQb0l/WvqAWHt7Ob/GVWNLsYB70JfwE1U+9aEFQyO847UrSozc43yNYGzO6uA
+         TTmkxLe4CO75l2m/+dUsNeUZkSF4RnrJiW3rSARP65KWMvSFqb6TLaENQ5iUjdLZ/K3w
+         mvsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=1Jj9WK6b9Q187+iTyU3+tXVNNSewz/Gt9rtsyNN/Vuc=;
+        b=ylDBOC0kk3PvlRnNp+vKZqWtz3+YxapWIrsV7e7jDixaA/lQMJ7ZPHJe3ToFqVTlim
+         f8IwelQz9+9nI/S+uFsqkFv55m6CbyPaXHTA1Ji+kC5kbSLc4q7IXiQ+teQbF2EEnGHh
+         D2/ZJoLm4FwzRFaREt/YmQTMv3h4EdhCnsNkSDcFCtymeMPkSVH1SuPP2lIUmt4H5Q21
+         rOBSRwdRQWATIJU77rsCZDUMiSKV+N4MGpTS2/lZNGm2Qwo2I4+zqTxjCzCfSU7N/9hR
+         KqklOt7D2J0M2VIsc17EtssqwvevuCS9gLsCCSuKv1DAbyFb6/+bJw7jzyNAiMmu96pY
+         l4AA==
+X-Gm-Message-State: AOAM532TRzRF0bywGaSiWutvOmcmLMa6yBYpIP3QNAPUwHjgsTIDscZA
+        vFLygbjFbUaqamP1WXN3RhtYo7OfgQH8qDtQ
+X-Google-Smtp-Source: ABdhPJzVM0WdtshCY5PwhncrywnBGcS/6n7y9+sibLZPQXZQ6lOMji79cVM+oeQu8rxVSpcXx4+Zuw==
+X-Received: by 2002:a17:906:5e01:: with SMTP id n1mr27046313eju.385.1633961395822;
+        Mon, 11 Oct 2021 07:09:55 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id 6sm3589830ejx.82.2021.10.11.07.09.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Oct 2021 07:09:55 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Thiago Perrotta <tbperrotta@gmail.com>
+Cc:     carenas@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v7 0/3] send-email: shell completion improvements
+Date:   Mon, 11 Oct 2021 15:46:20 +0200
+References: <YWE41xTLhBFWqUFl@carlos-mbp.lan>
+ <20211011041033.20004-1-tbperrotta@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20211011041033.20004-1-tbperrotta@gmail.com>
+Message-ID: <87fst7lkjx.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <AD10E128-A820-4F84-9173-776DA90686EF@icloud.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please don't drop the list...
 
-On 11/10/2021 04:00, ZhangJinbao wrote:
->
->
->> 2021年10月9日 下午6:32，Philip Oakley <philipoakley@iee.email
->> <mailto:philipoakley@iee.email>> 写道：
->>
->> On 09/10/2021 10:12, Bagas Sanjaya wrote:
->>> On 09/10/21 14.43, ZhangJinbao wrote:
->>>
->>>> Third, when a commit event occurs, the current blob file stores the
->>>> full amount of data, while the previous version stores the
->>>> incremental data
->>>>
->>>
->>> When you `git commit`, Git will initially write objects related to the
->>> commit (blob, tree, and commit) as loose objects. Some point on the
->>> time, Git will repack many loose objects into one big packfile and
->>> write the corresponding pack index. Delta compression is applied when
->>> writing the packfile.
->>>
->> Git is multi-layered, and multi-faceted. So often the impression given
->> isn't the same as what happens internally.
->>
->> All commits are full snapshots, even if git (normally) shows only the
->> changes for previous diffs.
->>
->> But then git will, at a convenient point 'pack' all those snapshots
->> (fairly efficiently) so that the local git storage of the whole
->> repository, with full history, (typically) is no bigger than the checked
->> out files. The packing is part of that layering.
->>
->> There are similar facet/layer effects from the Staging area ("index") /
->> Object store viewpoints.
->>
->> The
->> https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
->> <https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain>
->> is worth a read, along with other descriptions.
->>
->> Philip
->>
->
-> I'm very glad to hear from you
->
-> After further study and practice in recent days, there are still
-> several questions to confirm
->
-> As the article says: 
-> What is also interesting is that the second version of the file is the
-> one that is stored intact, whereas the original version is stored as a
-> delta — this is because you’re most likely to need faster access to
-> the most recent version of the file.
->
-> Practice has proved that:
-> Using the repo.rb(22KB) file, you can store the original version as a
-> delta. But using the test.txt(22B) file, you cannot store the original
-> version as a delta. 
-> Does this algorithm depend on the size of the file? If so, what is the
-> file size boundary?
->
-> ——————————————————————————————————————————————————————————
-> zhangjinbao@Jinbao test % ls   
-> repo.rb
-> zhangjinbao@Jinbao test % echo "version 1" > test.txt
-> zhangjinbao@Jinbao test % git add .
-> zhangjinbao@Jinbao test % git commit -m "Create test.txt"
-> [master b4a4c9d] Create test.txt
->  1 file changed, 1 insertion(+)
->  create mode 100644 test.txt
-> zhangjinbao@Jinbao test % echo "# version 2" >> test.txt 
-> zhangjinbao@Jinbao test % git commit -am "modify test.txt"
-> [master c454823] modify test.txt
->  1 file changed, 1 insertion(+)
-> zhangjinbao@Jinbao test % git gc
-> ...
-> zhangjinbao@Jinbao test % git verify-pack -v
-> .git/objects/pack/pack-17ceeb7d325a4eb7dab3f6f04dda67daa7515feb.idx 
-> c45482367fb06750398339597be1c0679af8ee9a commit 226 157 12
-> b4a4c9de03421e9e49eaae3c67cf43c699eb5b98 commit 226 157 169
-> bcb782fa38f8b016b263a129d3960f409f285215 commit 231 161 326
-> 228b55de49116a358ec7c15ccb291678a014fcc8 commit 175 124 487
-> b042a60ef7dff760008df33cee372b945b6e884e blob   22054 5799 611
-> d25a248172e09b2ef61bcf45b5ec29435da23241 blob   22 26 6410
-> aef683d9d2619240c4fa1dcb5a04ea8cbe1de89a tree   71 79 6436
-> fdd7ee840023b632768fdcdc08a3465a0c4d46ed tree   71 78 6515
-> 83baae61804e65cc73a7201a7252750c76066a30 blob   10 19 6593
-> a1ca41f02e3519c32aafb8f4d4d9f465c8ce587a tree   35 46 6612
-> 38feecbdf638935287fd920e8f2d694aa8c28d9f tree   35 46 6658
-> 033b4468fa6b2a9547a70d88d1bbe8bf3f9ed0d5 blob   9 20 6704 1
-> b042a60ef7dff760008df33cee372b945b6e884e
-> 非 delta：11 个对象
-> 链长 = 1: 1 对象
-> .git/objects/pack/pack-17ceeb7d325a4eb7dab3f6f04dda67daa7515feb.pack: ok
-> zhangjinbao@Jinbao test % 
->
-> --zhangjinbao
+On Mon, Oct 11 2021, Thiago Perrotta wrote:
 
-The packing is a heuristic, which is explained in narrative (story) form
-here: https://git-scm.com/docs/pack-heuristics
---
-Philip
+> Differences from V6:
+>
+> 2/3: Addresses all of Carlos's comments:
+>   - make indentation consistent (tabs): note that there's a giant diff
+>     for the largest GetOptions now, it adds a bit of noise to the patch
+
+I took Carlo's suggestion to mean to indent your uniq function, not to
+re-indent a bunch of existing code while at it...
+
+>   - do not reuse the options variable, for improved readability.
+
+...I think that re-indentation is better left alone for the patch
+readability.
+
+Anyway, sorry about not looking at this sooner after my off-the-cuff
+[1]; I think this looks mostly good-ish, but there's a few broken things
+here:
+
+First, in your 1/3 you're adding a \n, but in 2/3 we end up with \n\n. I
+think you can just skip 1/3, maybe mention "how it also has a "\n" in
+the commit message.
+
+I.e. you start implicitly picking up the newline because you changed
+from a "print" to a "split", and latter imposes Perl's scalar context on
+its argument, but the former doesn't. That's a combination of some Perl
+trivia and our own Git.pm being overly clever about wantarray(), but
+there you go.
+
+More importantly in [1] I meant that last paragraph as a "and as an
+excercise for the reader..".
+
+I.e. we should not simply strip the trailing "=" etc., we need to parse
+those out of the Perl GetOptions arguments, and come up with mapping to
+what we do in parse-options.c. I think that's basically adding a "=" at
+the end of all options that end with "=s", ":i", "=d", ":s" etc.
+
+You then strip out "--" arguments from the combined list, but isn't this
+something we do need to emit? I.e. it's used as syntax by the bash
+completion isn't it? (I just skimmed the relevant C code in
+parse-options.c).
+    
+    $ git clone --git-completion-helper | tr ' ' '\n' | grep -C2 -- ^--$
+    --hardlinks
+    --tags
+    --
+    --no-verbose
+    --no-quiet
+
+For --no-foo arguments we emit both a --foo and --no-foo in it, that
+sort of (maybe entirely) works in your version because some/all (I
+haven't checked all) options have corresponding "foo" arguments for
+"no-foo", so maybe it sort of works out, but does the ordering
+before/after the "--", and that we strip out the "--" but e.g. "git
+clone" will emit it?
+
+We then don't want to emit "-h", but you strip out "--h", first we
+mapped "h" to "--h" in the loop above, so we should do that there. But
+better yet we have a "%dump_aliases_options" already, maybe it +
+"git-completion-helper" can be moved to another "%not_for_completion"
+hash or something.
+
+The map/map/keys loop also will silently do something odd if it starts
+getting input data it didn't expect, i.e. it would be more reliable as a
+regex check, and then die() if we start getting somethnig we don't
+expect, i.e. if someone adds an option not covered by our regex.
+
+That it's a map/map/keys is just some off-the-cuff Perl hacking on my
+part, I think for validation etc. it's usually better to just turn it
+into a plain old boring for-loop.
+
+1. https://lore.kernel.org/git/87bl4h3fgv.fsf@evledraar.gmail.com/
