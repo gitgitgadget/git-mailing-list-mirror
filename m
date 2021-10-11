@@ -2,120 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB839C433F5
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 04:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A72C433EF
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 04:35:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8696E60F3A
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 04:11:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC28260F38
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 04:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233932AbhJKENB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 00:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233643AbhJKEM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 00:12:56 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54130C06161C
-        for <git@vger.kernel.org>; Sun, 10 Oct 2021 21:10:57 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id c7so15446800qka.2
-        for <git@vger.kernel.org>; Sun, 10 Oct 2021 21:10:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ynkdkVHRY6E//M2JBm1V2tBxd3agh9DSpmrTzFaBVaM=;
-        b=EWsrFf5NIZWFKAWCw4lkhAw8J5k1eSeAN7NNwPK9IcuXPbe8kqCvAxlUf8j5qEviBl
-         7XOGIRL0PyRtz2YtqjUXnYr+t/noqcgTJw7/md2rjXZS/d1lKR1cgYgMr+d0HTia23VF
-         5An7ucMoVD11ExDJ8TOgfuG0TUQRRGwdA6A57GckC9EuQnFa1MUhA7VEq6mibwTCvWlN
-         KRsjqQHErgJw9UEQLJn3mbmvHfpyAliYayCW4XI4+wn//EVCZ+JTXREwtZ/yxHPaAHJ2
-         80kgrhIXjXF3DvvJ0AFGiqC407q+PcRfMpnYkJtGs0XEVkqYizqeq8Jf3VxA82bnctfu
-         BYiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ynkdkVHRY6E//M2JBm1V2tBxd3agh9DSpmrTzFaBVaM=;
-        b=Oso+lDuPWsmnjlrRBGg055k9RVy1Ng/yAvUaKLOjLGylrpQUhfuUrdrcBBWlr3VX6g
-         DGVe7qlYq7HMSB8h+oQOsALO1MF6Jdpn6EU4ppSbslVrYot+CKhc7By4p3DxpmJ89ALM
-         c1gSQvdH1+cl8Cp3lW+12hotpiL9/rtWJrv2LjTgpHcLrgCxCWqdvTDjYAdzNVIyVbyC
-         nPdp39zqVJbELXSbZBKrLNgyji4G1yaO3GeR4sWY6qgrXeQJJDunjurxggZpVu0Y5phL
-         UyBGrJEJbIElNXQ2MlrOQgiaQnzI7lfq6amzt/5ZDPlYQhoMBwxMQXCvNXJ5HHHQ0gad
-         Pp1g==
-X-Gm-Message-State: AOAM532lmwwgcJO2pz0cQ4SQIb4pv7KR9cHCqlXf6mxZpLskGpOGBKbo
-        LqAyj6Vk6XcCMYMuTZw+Zh+x21smQfc=
-X-Google-Smtp-Source: ABdhPJxlscgdaaFjbue2IGfqUIR8ftZRrEtH7zkgNDz0qPnygjMUcp0TqTcxoS/kc5JbiTggma9YmA==
-X-Received: by 2002:ae9:ddc7:: with SMTP id r190mr12913209qkf.362.1633925456519;
-        Sun, 10 Oct 2021 21:10:56 -0700 (PDT)
-Received: from valhalla.. (cpee03f49946310-cm589630b5b38a.cpe.net.cable.rogers.com. [99.250.23.181])
-        by smtp.gmail.com with ESMTPSA id 74sm3683814qke.109.2021.10.10.21.10.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Oct 2021 21:10:56 -0700 (PDT)
-From:   Thiago Perrotta <tbperrotta@gmail.com>
-To:     carenas@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
-        avarab@gmail.com
-Cc:     Thiago Perrotta <tbperrotta@gmail.com>, git@vger.kernel.org
-Subject: [PATCH v7 3/3] send-email docs: add format-patch options
-Date:   Mon, 11 Oct 2021 00:10:33 -0400
-Message-Id: <20211011041033.20004-4-tbperrotta@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <YWE41xTLhBFWqUFl@carlos-mbp.lan>
-References: <YWE41xTLhBFWqUFl@carlos-mbp.lan>
+        id S233312AbhJKEhA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 00:37:00 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55214 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230102AbhJKEg7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 00:36:59 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 853E51577C5;
+        Mon, 11 Oct 2021 00:34:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2F2Z7xF0c5C6fQVM8xn0gyL+2FGYhaMWyxOn6Q
+        a5nUA=; b=PAec5Mmhygl1qIumgnYFjf5mtvSN4bDUM7MHj82A5LIWKlKvzzQYKF
+        +9AwKr1eIIipvXcJ+PPkz80oI7WERyY25PuDxY7owz5RXJZiaATB4xNGkfHtRNc8
+        aiD0fImZy/1hNXLi4WsRRsc6U6CEnhsJhgMuG16F56PLrx24h8MZs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E09B1577C4;
+        Mon, 11 Oct 2021 00:34:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E48D71577C2;
+        Mon, 11 Oct 2021 00:34:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib.sh: try to re-chmod & retry on failed trash
+ removal
+References: <patch-1.1-d7e88a77fef-20211009T133043Z-avarab@gmail.com>
+        <xmqqee8seded.fsf@gitster.g>
+Date:   Sun, 10 Oct 2021 21:34:55 -0700
+In-Reply-To: <xmqqee8seded.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+        10 Oct 2021 15:14:02 -0700")
+Message-ID: <xmqqa6jgdvrk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96522FCE-2A4C-11EC-BDC6-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-send-email(1) does not mention that "git format-patch" options are
-accepted. Augment SYNOPSIS and DESCRIPTION to mention it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Update git-send-email.perl USAGE to be consistent with
-git-send-email(1).
+>> +		chmod -R u+w "$dir" 2>/dev/null
+>
+> If a test lost searchable bit from directories, "u+wx" may be
+> necessary to clean fully, no?
 
-Signed-off-by: Thiago Perrotta <tbperrotta@gmail.com>
----
- Documentation/git-send-email.txt | 6 ++++--
- git-send-email.perl              | 3 ++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+Sorry, but I was stupid.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3db4eab4ba..41cd8cb424 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -9,7 +9,8 @@ git-send-email - Send a collection of patches as emails
- SYNOPSIS
- --------
- [verse]
--'git send-email' [<options>] <file|directory|rev-list options>...
-+'git send-email' [<options>] <file|directory>...
-+'git send-email' [<options>] <format-patch options>
- 'git send-email' --dump-aliases
- 
- 
-@@ -19,7 +20,8 @@ Takes the patches given on the command line and emails them out.
- Patches can be specified as files, directories (which will send all
- files in the directory), or directly as a revision list.  In the
- last case, any format accepted by linkgit:git-format-patch[1] can
--be passed to git send-email.
-+be passed to git send-email, as well as options understood by
-+linkgit:git-format-patch[1].
- 
- The header of the email is configurable via command-line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 587e52d1d8..850c572dec 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -40,7 +40,8 @@ package main;
- 
- sub usage {
- 	print <<EOT;
--git send-email [options] <file | directory | rev-list options >
-+git send-email' [<options>] <file|directory>
-+git send-email' [<options>] <format-patch options>
- git send-email --dump-aliases
- 
-   Composing:
--- 
-2.33.0
+If we were to worry about losing the searchable bit, then I should
+considered the possibility that we may also lose the readable bit,
+too.
 
