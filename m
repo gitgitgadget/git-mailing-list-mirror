@@ -2,141 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6085DC433F5
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF7D4C433F5
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:23:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C0EE60C41
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:13:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB5CE60F4B
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236838AbhJKNP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 09:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54710 "EHLO
+        id S236877AbhJKNZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 09:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231538AbhJKNP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 09:15:56 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C421C061570
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:13:56 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id d131so38984167ybd.5
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:13:56 -0700 (PDT)
+        with ESMTP id S236854AbhJKNZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 09:25:57 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF104C061570
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:23:56 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id w19so7850625edd.2
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9IDt91eUcYcvyJVzQAeMM1FfzBIdKizN033Ww6vYIiY=;
-        b=MkEMz8h4k5FfpvFsNeZV5gwuFR1VFyiQkLHXUKM3b9iG6OyBE8QHLHaz6c2hi6JVTD
-         ndfpkJE3CWkIYCETo8bpqexjBckvckJrX0HskpMh+UGB1z69BRiDK+/up/uoWWv+TT1M
-         94KCWdd44uN/VbZMQnRJQ+06ZowNhBIPlkmQ5Iv43we9SGC95oPZh+lU2KZS/JHMglYN
-         fV0k3qbmmiW6bNoyfWMJIUmeKw/rh0ib+ySrDVIURjWjwU0imahEtCOXJ90AwkfW2L1n
-         yRhWZZsxIrY/Y92vyIu9e2ua8DYWTOGbO344bDk+1EEY7IIyzwng1OevQ+NAe6BIYAnU
-         fmLQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=hy23xRQcdft7RdY4Q13sp6FjyN89MHzIoHzRWglx34c=;
+        b=UKr77NXQJqL71aEKbzKvm+OeCBaK/7JHREtj7UK1KvHmNdGczwwfIfIaurBVOp5Oho
+         xQmwJEsnsXVacNDhw26HhNEMAk1NUsfmlcDo5dcCBleQq202hqCz8NNpv9bWceJcB++6
+         Ex2HU3ZtkCiu1QUSgD8DI5iHoKiZkZd3W23uwZMIHcMu03PcKZ/rc/riyhbZU9wMk9FS
+         91KaWSzMTgY6KsoMaV+6hYGYzOYsKwRlPojj7HpvC3Z8s0UjGeYKHQuz0ZVJiChNPBhO
+         Jydd1qsegiXuni4zk13D2WG5Zd9HUMzC/7ppZlqZBriUBsamu1PkS5ESXmp6Zwz7h835
+         Yr6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9IDt91eUcYcvyJVzQAeMM1FfzBIdKizN033Ww6vYIiY=;
-        b=C8brfxc2DTgiLuNXRmJYiuB5IpTuJcs/q/11DVwQHnnb0ntQWkfG18GFm5rfzRK6xR
-         No8TkTdIRjUEAPerHH88xZBNRYdI8G39PtF7yTJQU1le2h6/5owYuXctX+v66jlS7z8m
-         22ficnHdnaST2EN2GmVpeKt+oBqWQOYG0c0qBR4dBTOtI1u5uJZ42Az6I1wIeK1mDv7r
-         e90lbzcn6KNyH+egyH31djmmoZIG1GknrDvFlBLfgs9CEGN0r9vNL3tm1/9IsbTMG+YF
-         UF74jVxc3c2qgNZm4qW4vuFmo8lVIxsd5KZ1vvMdk+11eGD43otra8CgeamJ+cyPt26y
-         zyHw==
-X-Gm-Message-State: AOAM530VPQvuOAEO4k0MBryQMKOY+0QfdChCJJvAaO6McE2iLRj5HXp4
-        /glNsbxA76cOEtIvGC1OACCJsWc0tsG7evog8QL4q8eY+W0=
-X-Google-Smtp-Source: ABdhPJxI0kuXfE/NBmrVfqhUFAYSca5odt0bAWoMuuiZjWhrlPrVphcsxWhSIaW7zuN1lc1YY2V777AiYdhEpHEfVsI=
-X-Received: by 2002:a25:2205:: with SMTP id i5mr21611038ybi.203.1633958035330;
- Mon, 11 Oct 2021 06:13:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=hy23xRQcdft7RdY4Q13sp6FjyN89MHzIoHzRWglx34c=;
+        b=Mgr4i2viFJI2ITmfHbscjV0RwreF/O3/Fz9WmfO+50dGJQAaSxIhGuTXfi0FCIP8q9
+         LDtBFqLi0b0RdkOCNQctdZHu0XjE7qe7xcJs2C/T7dFPQ2o7B9hPtWUc+adFqRx7YI09
+         pa3cFtS83I5pV/A7+YE7wwmAQKA4/MX1e2Hkxe0YrkItZxRpfrZpA4zNoK7b7swxRE51
+         Px+ql2BX8wWPly7nV/Imc0rtWnwLyVPjixYFaUtoEUQfMCPJzFwgY/0H4bUmajhtopeg
+         62by1g0A7RxdveGyb0+GWYMsDVJ3VolcGI8MEogyefHuQdJyHuCEBTHKwpfMIjKNI+lJ
+         Quvw==
+X-Gm-Message-State: AOAM532lOTKpho8IHXf4ZozupR3lHHweH8+P//62bQQ8fnI8egre6qUv
+        WcYUr6MTk/+Y3KZObsKPPvQ=
+X-Google-Smtp-Source: ABdhPJzDXwGUd5UHrp4+X96hmC4+csZDy0VGbnrXcVnnmTmdQ+OzdVFFRj9AliH69/XSbv/ACzwygw==
+X-Received: by 2002:a17:906:4f82:: with SMTP id o2mr25714947eju.10.1633958633724;
+        Mon, 11 Oct 2021 06:23:53 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o3sm3493206ejg.52.2021.10.11.06.23.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Oct 2021 06:23:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http: check CURLE_SSL_PINNEDPUBKEYNOTMATCH when
+ emitting errors
+Date:   Mon, 11 Oct 2021 15:23:02 +0200
+References: <patch-1.1-6e65734cbce-20210924T100532Z-avarab@gmail.com>
+ <20211010214209.GE571180@szeder.dev> <87o87wl485.fsf@evledraar.gmail.com>
+ <20211011044730.GF571180@szeder.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <20211011044730.GF571180@szeder.dev>
+Message-ID: <87k0ijlmon.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <e257c62e-edff-f559-95e7-374b623a3f61@zoho.com>
- <CAP8UFD1_2g84epP+qjP2QW2g2bzdWcepPE60rY2vdKpTZFdEDg@mail.gmail.com>
- <a12adb98-d8c1-cd36-1760-343360a9ba85@zoho.com> <afd8890e-0042-8fc6-523d-f69aa6ed7af3@zoho.com>
-In-Reply-To: <afd8890e-0042-8fc6-523d-f69aa6ed7af3@zoho.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 11 Oct 2021 15:13:44 +0200
-Message-ID: <CAP8UFD0TBOkNU2g_OqpMiQyopBfae95nBwJQJ8F04+C1FcBRYQ@mail.gmail.com>
-Subject: Re: I just want the revision
-To:     ToddAndMargo <ToddAndMargo@zoho.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 11, 2021 at 12:24 PM ToddAndMargo <ToddAndMargo@zoho.com> wrote:
->
-> On 10/11/21 03:09, ToddAndMargo wrote:
-> > On 10/11/21 02:45, Christian Couder wrote:
-> >> Hi,
-> >>
-> >> On Mon, Oct 11, 2021 at 4:57 AM ToddAndMargo <ToddAndMargo@zoho.com>
-> >> wrote:
-> >>>
-> >>> Hi All,
-> >>>
-> >>> I am trying to write a script to tell me the latest revision
-> >>> showing on
-> >>>
-> >>> https://gitlab.freedesktop.org/spice/win32/spice-nsis/-/tree/master
-> >>>
-> >>> which is 'virtio-win: rebase on 0.164", but I can only see this
-> >>> from a web browser, as the page is dynamic.
-> >>>
-> >>> I do have access to the git link on that page:
-> >>>
-> >>> https://gitlab.freedesktop.org/spice/win32/spice-nsis.git
-> >>>
-> >>> Does git (or some other) have a way of telling me
-> >>> JUST the revision without having to download the turkey?
-> >>
-> >> If you just want the commit ID, you can use for example:
-> >>
-> >> $ git ls-remote
-> >> https://gitlab.freedesktop.org/spice/win32/spice-nsis.git
-> >> refs/heads/master
-> >> f6ad44f35f5caeec51b7002169977272d85701a3        refs/heads/master
-> >>
-> >>> If I could get something that contained
-> >>>          virtio-win: rebase on 0.164
-> >>> I could dig out the revision
-> >>
-> >> You might also want to take a look at the GitLab API docs, for example:
-> >>
-> >> https://docs.gitlab.com/ee/api/commits.html
-> >>
-> >> Best,
-> >> Christian.
-> >>
-> >
-> > Hi Christian,
-> >
-> > I do not mean to be dense, but how do I get
-> > "virtio-win: rebase on 0.164" out of:
-> > " f6ad44f35f5caeec51b7002169977272d85701a3  refs/heads/master"?
-> >
-> > Perplexed,
-> > -T
->
->
-> Found something that worked:
->
-> $ curl --silent
-> 'https://gitlab.freedesktop.org/spice/win32/spice-nsis/-/commits/master'
-> | grep  rebase
->
-> <a class="commit-row-message item-title js-onboarding-commit-item "
-> href="/spice/win32/spice-nsis/-/commit/f6ad44f35f5caeec51b7002169977272d85701a3">virtio-win:
-> rebase on 0.164</a>
->
-> <a class="commit-row-message item-title js-onboarding-commit-item "
-> href="/spice/win32/spice-nsis/-/commit/d6836f79ba8deeef5b7719fd94cc208b81eb70df">virtio-win:
-> rebase on 0.164</a>
 
-If I needed more information than just the commit ID, I would use the
-GitLab API, especially:
+On Mon, Oct 11 2021, SZEDER G=C3=A1bor wrote:
 
-https://docs.gitlab.com/ee/api/commits.html#get-a-single-commit
+> On Mon, Oct 11, 2021 at 03:49:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Sun, Oct 10 2021, SZEDER G=C3=A1bor wrote:
+>>=20
+>> > On Fri, Sep 24, 2021 at 12:08:20PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>> >> Change the error shown when a http.pinnedPubKey doesn't match to point
+>> >> the http.pinnedPubKey variable=20
+>> >
+>> > I'm not sure what this means.  Between the repeated
+>> > 'http.pinnedPubKey' config variable name and the "doesn't match to
+>> > point the ..." part I can't decipher it.
+>>=20
+>> It should be "point to the" (but this grammar error is already in
+>> "next").
+>
+> So it's supposed to be
+>
+>   ... a http.pinnedPubKey doesn't point to the http.pinnedPubKey
+>   variable ...
+>
+> ?  I still have no idea because of the repeated config variable name.
 
-So you might want to customize this example command:
+We emit this currently:
 
-$ curl --header "PRIVATE-TOKEN: <your_access_token>"
-"https://gitlab.example.com/api/v4/projects/5/repository/commits/master"
+    $ git -c http.pinnedPubKey=3Dsha256/someNonMatchingKey ls-remote https:=
+//github.com/git/git.git
+    fatal: unable to access 'https://github.com/git/git.git/': SSL: public =
+key does not match pinned public key!
+
+And with this change, this:
+
+    $ git -c http.pinnedPubKey=3Dsha256/someNonMatchingKey ls-remote https:=
+//github.com/git/git.git
+    fatal: unable to access 'https://github.com/git/git.git/' with http.pin=
+nedPubkey configuration: SSL: public key does not match pinned public key!
+
+I.e. this replaces a generic error message from curl with something that
+points the user at the config variable in question.
