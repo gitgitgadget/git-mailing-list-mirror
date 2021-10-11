@@ -2,73 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F9CEC433FE
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 15:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3CBC433F5
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 15:55:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29A4360C4B
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 15:53:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CEBA60C4B
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 15:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238136AbhJKPzW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 11:55:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54617 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230417AbhJKPzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 11:55:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64F1E161A73;
-        Mon, 11 Oct 2021 11:53:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=99jzrUASHet35kg120bI4DNGUCH7Gj/RD15ThX
-        kn4rk=; b=lcjFs+CPAE3oIFdBJJOFBRkHN6BcaaLyEpVtzPuzIbnj2U/yLuVnbc
-        ob/94Os4A+E6xiaY+OG8yOWCfEB8qIJM0WQF6yJtLMT8jdorn9oI0ejHNzdszMRU
-        AjMjYgIAM7GW7Q+y8c0P660Ob3oW0pMkeYWZPLA+ZYI0CfQ+M64g0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D587161A72;
-        Mon, 11 Oct 2021 11:53:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B409C161A71;
-        Mon, 11 Oct 2021 11:53:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] archive: add test testing MIME for created archive
- through compression filter
-References: <20211011112712.475306-1-bagasdotme@gmail.com>
-Date:   Mon, 11 Oct 2021 08:53:11 -0700
-In-Reply-To: <20211011112712.475306-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Mon, 11 Oct 2021 18:27:13 +0700")
-Message-ID: <xmqqlf2zd0d4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238636AbhJKP5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 11:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231766AbhJKP5D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 11:57:03 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D306FC061570
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 08:55:02 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id z40so15443591qko.7
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 08:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=YOhCjmT+sRezXtCXx14HWP8UiTjeUU7ovHSHRTJYDJ0=;
+        b=iKTSakV7zDQ2SoP3zs5SgqtUsrYshMKGCsFTrsMmQl6Hsp2o14uNd6o4Y7kKotzs1X
+         R5ru0ZkN9zMcIpD6+r3MFKatRRSU2E4v09PHrmuleMDycPG5dDlPVtarfjbCR3+nzlIx
+         c6LaNBEmryYenPJEJ0BQstofPFvFP/pL3/1gQl9GnUoacwY2HugiBSZy371ph98KXZfR
+         MCCNndp2qAJRgAz13qz2+Gx+GlE1RscIXrMBAu+k3FE/wfj3MO/4ZPOTC6LPIpCPF9KF
+         O/XB1Xf8fmoRF2NGuJBhdvVLO3xwAmz9oqQJdGEl/H3Aeig/qil+F0n5puq6tb5/WhbR
+         49fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YOhCjmT+sRezXtCXx14HWP8UiTjeUU7ovHSHRTJYDJ0=;
+        b=DRQ04EhMP4DAwIqwU9gHLEQIiPpVw1YyiWouCAFYiCJgoz7iqDvJzwepvW6lPu/OWt
+         GkvqSexL+PeXTEgNKY5bxHYZO86+7SfA67DaW+JJNQwKhbp7SI89hU6PHWmBHZlEDEQ8
+         15JlBctwKkWanj9B2+Qf/tZ/mAJrRj+P1Jm331btGiBVxuZK1D3768UNhx62xi+8Vgua
+         8GRGLvlMk6B7mrfZb0FyvPmEU/U12Q04qX/4Rzf1WT+0+DeFdT7kDxCxO/Tv/wR3Pvr+
+         VIIHwUxTtv9J3BAvOb1Lk/agmGHSMNxuZ7F/B4xK3hiZrahrBZHtE5BJnfR8jYTSmGk9
+         00RA==
+X-Gm-Message-State: AOAM532CeCYBzj3FwNUA1KnKgB+oFkGSb6So/oLjpye8TC8vzlRGKcXx
+        HjLIul/Zk6UfEAtYXbXERfqS6E6bhcw4
+X-Google-Smtp-Source: ABdhPJx8Tq5pWuAqvxWr/vGhRv/bIRtbnEOXXMkiYmkmI/br43gexevDdz9cO53uXKdFnnKhXqx0IQ==
+X-Received: by 2002:a37:5884:: with SMTP id m126mr14718970qkb.460.1633967702042;
+        Mon, 11 Oct 2021 08:55:02 -0700 (PDT)
+Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id t11sm2938994qkm.92.2021.10.11.08.55.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Oct 2021 08:55:01 -0700 (PDT)
+Message-ID: <4a002488-09ba-efed-ac70-c0ec16d7dbe2@github.com>
+Date:   Mon, 11 Oct 2021 11:55:00 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 56E92568-2AAB-11EC-9AB7-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.1.2
+Subject: Re: [PATCH v3 6/8] reset: make sparse-aware (except --mixed)
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
+ <pull.1048.v3.git.1633641339.gitgitgadget@gmail.com>
+ <330e0c0977480d0506801854fcaa6c9f2b014569.1633641339.git.gitgitgadget@gmail.com>
+ <c1dd1fef-2d48-cc18-5786-10e174b487a7@gmail.com>
+ <52768318-ef8a-b26f-d4bc-d5c91779ccdb@github.com>
+ <xmqq1r4vl65w.fsf@gitster.g> <47d4c810-0b56-45b0-944c-72c4d047f9b6@gmail.com>
+ <xmqqlf30edvf.fsf@gitster.g>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqlf30edvf.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Junio C Hamano wrote:
+> For most callers of prime_cache_tree(), like the ones in "git
+> read-tree" and "git reset", it is immediately obvious that we just
+> read from the same tree, and we should have everything from the tree
+> and nothing else in the resulting index, so it is clear that the
+> prime_cache_tree() call is recreating the same cache-tree
+> information that we already should have computed ourselves, and
+> these calls can go (or if "prime" is still cheaper than "update",
+> these callers can pass an option to tell unpack_trees() to skip the
+> cache_tree_update() call, because they will call "prime" immediately
+> after).
+> 
 
-> +test_expect_success GZIP,BZIP2,XZ 'git archive with gzip, bzip2, and xz filters creates compressed tar archive with proper MIME type' '
-> +	git config tar.tar.bz2.command "bzip2 -c" &&
-> +	git config tar.tar.xz.command "xz -c" &&
-> +	git archive --output HEAD.tar.gz --prefix=src/ HEAD &&
-
-I think a lot more portable and robust way to test the feature is to
-configure git config tar.tar.test.command (or come up with a name for
-a suffix to be used in the test), point it at a script created in this
-test script and run git archive with output filename that would trigger
-the command.  Then, arrange the test to notice if the "test" script was
-called with expected command line arguments and standard input.
-
-That way, you do not need to rely on prereqs and you do not have to
-resort to un-portable use of the "file" command.  After all, you are
-*not* testing if "bzip2 -c" the user happens to have on their $PATH
-produces output their "find" recognises as bzip2 compressed.
-
+After some basic performance testing of `git reset [--hard]`, it's not clear
+whether `cache_tree_update` is definitively faster or slower than
+`prime_cache_tree`; more conclusive results would indicate which of the two
+could be skipped. I'd like to defer this to a future patch (tracking it with
+an internal issue so I don't forget) where I can perform a more thorough
+analysis across all of the commands currently using `prime_cache_tree` and
+update its usage accordingly.
