@@ -2,90 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA92CC433F5
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 19:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B07BC433EF
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 19:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8358C60F43
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 19:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 433B261027
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 19:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234652AbhJKT2H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 15:28:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56656 "EHLO
+        id S234745AbhJKTt1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 15:49:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234612AbhJKT2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 15:28:06 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC7BC061570
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 12:26:05 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id e3so25843548wrc.11
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 12:26:05 -0700 (PDT)
+        with ESMTP id S234693AbhJKTtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 15:49:25 -0400
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E077C061570
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 12:47:25 -0700 (PDT)
+Received: by mail-ua1-x931.google.com with SMTP id r17so6637647uaf.8
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 12:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZANoYut8zipPZdwsIERSG1Oc9oru7+jYg+yvvaNhrJ8=;
-        b=hOjQ12GSIpj7iOtGTiBuM1CK2WTYuLfYfI8On2Ne6+tOp0hYPtLh9f0iAqcgUpYX5W
-         hgq1jZP0iatWM5wbXnMzHlRECZ9SOY27G3M97g6NACqJ090gC1jXUIQNnZQ5haqJUGoO
-         veZLXUWLvGK2N76ZJnuYcoxXxz9a9IiQkOqKZ6RAcYm/NMgY++ePfA4FQoTLqeRDjI1r
-         OvBkieM3CnIahM+IdprRUGorzir5Tb67mZ73dEErpe5ayL2GPv6E7yWhw/T+f2FBj1xx
-         4U0g7N8uyi5j3+TwZvVaZl3tLt34qcQ71Z5aiC2aDl7XP4pM4DkhrwP22hbieIE+2lho
-         3OHg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+UTNemJJXjAFMrEv1WLR/poj5pXHoGJAp1jmuQUvqtE=;
+        b=ZLxYDezLRkTw9zalU/69TD3nJUfvaFxS+dRDMpN48rBJd/ZHPlftPqyd27zrvLwBSi
+         R87vnPWUANHf6JjCInx8ecG02YMA6OPicxbzkJAntitrkIlHTn29nUziDvxOCkpcJ6Gd
+         QAe5slLHCbcvsBjSLeh8fNHlgXmCHc+6BcKZSQ5N0N7uMvcImuLMnI5K6jHYta42xUM/
+         oc+WmMobInV8uLyhYm4HRFFdQ/Lx6iCeX72xtqJv7xH7T+Ayf00jLT5mXNI0vu++930O
+         mQWW7TPuySN9VSWUQNdQwUt+7Mh6PNLzCaohW3JGgXNzjGhJ0V2VwrjFiRjGdPoMhIfj
+         t/Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZANoYut8zipPZdwsIERSG1Oc9oru7+jYg+yvvaNhrJ8=;
-        b=gfTHd2yy7fxijxJejhwAgi5vhXUHM/N59qeHntwozfwi1ntolKxKKisAb1FTdmAtGl
-         7rH9vE2fp6f5O8u7BZYY0hB/OsA2tZR0BVbW6u8CWd+h/WyRClnRDBYkXdYHy8rfF00k
-         ylv1flL8O4nlhXMjGeHwkk/iyG2QSKd7Z78Rwu7QJSFiAk9hjOjSBltf69bSFIf/nfHQ
-         oDR41Xk16b5II6upJGR/FYyyzItM6ue/NNkjnFHohklLvjn+0HzXutGyefbEdLxPblwW
-         1YCBOkPoKZyXgqtOtCevj1cujka0pf7j4oe7xyMRRq1Hzm6KrZQLOdQAqWpctVfZgWfc
-         7x+g==
-X-Gm-Message-State: AOAM533yQnVdwyC6mQRtgbplurVzKOCv6VYqbdo/yAEX5oSWCHjGypOy
-        IrSsvr4Gw7IpNV2qbkDs0F3k2yzc8/4=
-X-Google-Smtp-Source: ABdhPJy3HQkF0+Ug0mFeR30MFEtKw4qGOM6WdFmpZ9QN2wVH9cHso6SeuRsw4WHl4Tlo7QPfZCwAnA==
-X-Received: by 2002:a1c:ac03:: with SMTP id v3mr911625wme.13.1633980364130;
-        Mon, 11 Oct 2021 12:26:04 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:2c2:db70:6136:8fe1:d969:6eb6])
-        by smtp.gmail.com with ESMTPSA id b19sm423627wmb.1.2021.10.11.12.26.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Oct 2021 12:26:03 -0700 (PDT)
-From:   Robin Dupret <robin.dupret@gmail.com>
-X-Google-Original-From: Robin Dupret <robin.dupret@hey.com>
-To:     git@vger.kernel.org
-Cc:     Robin Dupret <robin.dupret@hey.com>
-Subject: [PATCH] http-backend: remove a duplicated code branch
-Date:   Mon, 11 Oct 2021 21:25:46 +0200
-Message-Id: <20211011192546.1571-2-robin.dupret@hey.com>
-X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20211011192546.1571-1-robin.dupret@hey.com>
-References: <20211011192546.1571-1-robin.dupret@hey.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+UTNemJJXjAFMrEv1WLR/poj5pXHoGJAp1jmuQUvqtE=;
+        b=ufz7cqKJgPUmu2JxND2E2suAw1JliEu1APVNkbsBTgg/vbEjBm4Y47Kk/Ijy0gArbC
+         Rz63y2HhW5cmtzqp9wNmS3/4/KihkHuPLtc+D/i/lK9VGT6oPEKGC3DyeSzABoQ+7ZEA
+         0r0LjETa52aphi1IzKMmRFygVdrx90j83F/7GnbcWDTcX/aegVHjq08Sev2nLvxQD8Uh
+         yjQSYI9wotLThyQ8c91zKGvYGdEjGhoG8bRfdDZt9NM6p63Ol0wYtNDylx7vWs6kpPkJ
+         zYT2Fp8zEW6e63k/MrslGta1kF/ORDvCGpjx8ssM56MrQTZmqm5tzHDCg73IONfaiEp3
+         ZYkQ==
+X-Gm-Message-State: AOAM531EjEJhwNT4/Yom2u+JHkkGm1V87cwv+Ka3Tqa2QR9nadEx4WI5
+        V9YdRq56QC/iGmNeRm8ePD50LxzgTpbaprxwo1CMLPAYL80e+A==
+X-Google-Smtp-Source: ABdhPJyF0vlIR5VkYmvrXyaRiUnGVakNoJePoCaWzKSKXDK3KKnk3dUE1YKFSV2Uurm1nm3aqdnlBqPFVtBFbyRYvic=
+X-Received: by 2002:a67:f5c3:: with SMTP id t3mr5228498vso.14.1633981644196;
+ Mon, 11 Oct 2021 12:47:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211011121757.627-1-carenas@gmail.com> <87bl3vlk0j.fsf@evledraar.gmail.com>
+In-Reply-To: <87bl3vlk0j.fsf@evledraar.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 11 Oct 2021 12:47:13 -0700
+Message-ID: <CAPUEspjFZDKtP8oJmuA6dCcX9XF1WBFvFikkZTNcKfHbOxJwPA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/4] git-gui: support SHA-256 repositories
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, angavrilov@gmail.com, me@yadavpratyush.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Robin Dupret <robin.dupret@hey.com>
----
- http-backend.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+On Mon, Oct 11, 2021 at 7:21 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Mon, Oct 11 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>
+> > [1] https://lore.kernel.org/git/20211011114723.204-1-carenas@gmail.com/
+> >
+> > Carlo Marcelo Arenas Bel=C3=B3n (4):
+> >   blame: prefer null_sha1 over nullid and retire later
+> >   rename all *_sha1 variables and make null_oid hash aware
+> >   expand regexp matching an oid to be hash agnostic
+> >   track oid_size to allow for checks that are hash agnostic
+> >
+> >  git-gui.sh                   | 30 ++++++++++++++++--------------
+> >  lib/blame.tcl                | 18 +++++++++---------
+> >  lib/checkout_op.tcl          |  4 ++--
+> >  lib/choose_repository.tcl    |  2 +-
+> >  lib/commit.tcl               |  3 ++-
+> >  lib/remote_branch_delete.tcl |  2 +-
+> >  6 files changed, 31 insertions(+), 28 deletions(-)
+>
+> There was a similar series earlier this year which didn't make it that
+> fixes some of the same issues:
+> https://lore.kernel.org/git/pull.979.git.1623687519832.gitgitgadget@gmail=
+.com/
 
-diff --git a/http-backend.c b/http-backend.c
-index e7c0eeab23..3d6e2ff17f 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -466,9 +466,7 @@ static void run_service(const char **argv, int buffer_input)
- 	struct child_process cld = CHILD_PROCESS_INIT;
- 	ssize_t req_len = get_content_length();
- 
--	if (encoding && !strcmp(encoding, "gzip"))
--		gzipped_request = 1;
--	else if (encoding && !strcmp(encoding, "x-gzip"))
-+	if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip")))
- 		gzipped_request = 1;
- 
- 	if (!user || !*user)
--- 
-2.30.1 (Apple Git-130)
+This specific series is for git-gui, and the one posted before is for gitk,
+but the code is still similar enough, and indeed the gitk part was
+included in a reference.
 
+> Just seems like a lot of needless work as opposed to just matching
+> x{40,64} or whatever.  Yes that's not the same regex semantically, but I
+> think the current code is just being overly strict, i.e. it's parsing
+> some plumbing output, we can trust that the thing that looks like the
+> OID in that position is the OID.
+>
+> If anything I'd think we could just match [0-9a-f]{4,} in most/all of
+> these cases, would make things like this easier to read:
+
+It makes me nervous though to see checks like the one I fixed on
+commit[1] that use logic to check the correct size of the SHA as an
+implication of it being a valid value.
+
+considering the code is very old, maybe that was relevant long ago?,
+but agree some checks seem to be unnecessarily strict.
+
+I have relaxed some of the checks in the gitk patch and will be
+posting it soon, so hopefully reviews from people that know the code
+better could be collected.
+
+Carlo
+
+[1] https://lore.kernel.org/git/20211011121757.627-5-carenas@gmail.com/
