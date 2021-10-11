@@ -2,74 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3644C433EF
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 21:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB1EC433F5
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 21:36:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9623E60E05
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 21:22:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C594560238
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 21:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235175AbhJKVYK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 17:24:10 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:38714 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbhJKVYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 17:24:07 -0400
-Received: by mail-ed1-f50.google.com with SMTP id d9so48817337edh.5
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 14:22:06 -0700 (PDT)
+        id S235332AbhJKVi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 17:38:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57674 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235301AbhJKViZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 17:38:25 -0400
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C29C061570
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 14:36:25 -0700 (PDT)
+Received: by mail-ua1-x929.google.com with SMTP id e7so15370008ual.11
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 14:36:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nianticlabs.com; s=google;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=dvmMH0ijtAnXgiicFySex++1nnV8npzYQEDv5lYjr+g=;
+        b=U2x0NxKcH+usx+ga5oyxFSlSJk+GlcvvfqF8Wi9wLJ3zHsoCj2ZqRppDu8arUERqeH
+         sACQgd/GMESZue7OF7kKKByab8aOkj8Tmuck7L0QLLrUhgHCoLepa1CVwM7H4Y9n3rmc
+         zFpcB2BETWhf4Om+0R7VXXGx0eMBr8gNBYfQg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ENwYXJ0eBZ67lGjsuCHABd+yNRaxOma9r3+rs0jSyJ8=;
-        b=z1AVwdjhgZA6KP+VZUOAroZMKRyz9DW0dWVAvXCC/Vo0/GPNlzDWKAfa1PEGqYUx9v
-         Pc+sacnD3phbm8c3SBWzbXF7FgpNsT9O5YK5BQ7fEtbV5q6YPEBeBkomhkyHlDZ9FW6Q
-         oWT/PIZ8ZCY345sI0Ov20kHURnhoa5nfXTDNJDG3Ts0ZfNqQWzB69t8AIrESnriEalxg
-         EN29sGR1I0kNHOXIraVGMYg+c8/gcPWsc5YvoMMXU44ZNfYqEdfVgc1SArpxHe+Ks7hb
-         yGgAa6Ka316/1GuWAwQyhCdn0Iz/wqzPK050HJGp5YOOBiQ3iuCFklwhPYUHVcaOkrxJ
-         CcIQ==
-X-Gm-Message-State: AOAM531tWdm/Bn1iiRAy4yLreMdXmls9b4sQ02fLbdUSDJEAKEpREHst
-        cDWrCb3LAR35p9s8gYoH9HAtnxA7amX+nBA04wA=
-X-Google-Smtp-Source: ABdhPJwrthW59xZ9QUNu7nlMFX3Te0OXHh+DjQ4Ewv/Z9OqDEplZjnmfNJs4yJRr4zk2z92WBw7rdyfQiAgij43x7E0=
-X-Received: by 2002:a17:906:998d:: with SMTP id af13mr25344426ejc.568.1633987326046;
- Mon, 11 Oct 2021 14:22:06 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=dvmMH0ijtAnXgiicFySex++1nnV8npzYQEDv5lYjr+g=;
+        b=R0Rpq/Tx6fjv/TSbJ/ngEoify13s/5ppzcR8KUmzMWgfgJ9XD+xrBZ23nrgSwHUzhj
+         7ImOui2Vx26keaTdymBos/4o6H3Opv67pNmhjW5Bja9e0SzN7AmxnUGrS0Eces+J1Ojj
+         EKyWQRoow18FUev1CLIZMdQV4fvulnN2wDQTBmpuxVG8MItTU7obZabk8cK0evqIB0/4
+         CvM1WErnEoEgdBr71O4BMWO9AGZFPKA6nTf7OdQrx1OIqoi7Z+b7+c5fE7DnZt/PHMgD
+         nYbI+rLg6zSXADLA/w03fUz4KfjT3QWMImm7MqYPWjy8Kt//sogT8aTNM3NzmXz40APE
+         vasA==
+X-Gm-Message-State: AOAM531sbP0wWLRaUPTZ0IFBe3SFL/E7Xxg3AdcOUcnwg3cjiJ5ZQtV+
+        anFdPuKNnIN8UOEvWBDr07SizcvP+N8ktAJjWNZNRozCBNNS8g==
+X-Google-Smtp-Source: ABdhPJw43yfoGUNygxih61ryyxEpEOlP88rp5dGxtgth+lVINr7EA9DJG220tjKnJooCAkub2OberTm7K/K8J74V3dc=
+X-Received: by 2002:a67:a247:: with SMTP id t7mr9079689vsh.46.1633988184006;
+ Mon, 11 Oct 2021 14:36:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
-In-Reply-To: <87lf2zz59w.fsf@osv.gnss.ru>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Oct 2021 17:21:54 -0400
-Message-ID: <CAPig+cQgZX5U0KThgSKjmgvOvEZWxPF_BovYYe=VfjDvUE5c9Q@mail.gmail.com>
-Subject: Re: [PATCH RFC v1] stash: implement '--staged' option for 'push' and 'save'
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Denton Liu <liu.denton@gmail.com>
+From:   Chris Chow <cchow@nianticlabs.com>
+Date:   Mon, 11 Oct 2021 14:36:13 -0700
+Message-ID: <CAH4DS54U-qN+NY2A50bBawbL1cwD74fdaZdQKdhXyZSzFS-Y+g@mail.gmail.com>
+Subject: Inconsistency in git credential helper docs
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-/On Mon, Oct 11, 2021 at 4:17 PM Sergey Organov <sorganov@gmail.com> wrote:
-> Stash only the changes that are staged.
->
-> This mode allows to easily stash-out for later reuse some changes
-> unrelated to the current work in progress.
->
-> Unlike 'stash push --patch', --staged supports using of any tool to
-> select the changes to stash-out, including, but not limited to 'git
-> add --interactive'.
+Hello,
 
-s/using of any/use of any/
-...or...
-s/using of any/using any/
+There appears to be a small inconsistency / bug in the documentation
+located at https://git-scm.com/docs/gitcredentials.
 
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> @@ -1656,6 +1716,8 @@ static int save_stash(int argc, const char **argv, const char *prefix)
-> +               OPT_BOOL('S', "staged", &only_staged,
-> +                        N_("stash in patch mode")),
->                 OPT_BOOL('p', "patch", &patch_mode,
->                          N_("stash in patch mode")),
->                 OPT__QUIET(&quiet, N_("quiet mode")),
+Under the "Custom Helpers" subhead, there's a line that reads
+> Generally speaking, rule (3) above is the simplest for users to specify. =
+Authors of credential helpers should make an effort to assist their users b=
+y naming their program "git-credential-$NAME", and putting it in the $PATH =
+or $GIT_EXEC_PATH during installation, which will allow a user to enable it=
+ with git config credential.helper $NAME.
 
-Copy/paste error in new help/description string?
+Earlier in the document, under "Configuration Options > helper", there
+is a line that reads
+> The name of an external credential helper, and any associated options. If=
+ the helper name is not an absolute path, then the string git credential- i=
+s prepended
+
+I think the latter text is correct. The maintainers of the google
+cloud SDK followed the advice in the first part, naming their cred
+helper `git-credential-gcloud.sh`, which is not accessible if you set
+the custom credential helper to `gcloud.sh`. I had to make a symlink
+at `credential-gcloud.sh`, following the instructions in the latter
+block, to make it work. One could of course just specify the full path
+in .gitconfig, but I figured it might be good to have these parts be
+consistent anyways.
+
+Best,
+Chris
