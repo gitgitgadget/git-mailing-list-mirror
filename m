@@ -2,114 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF7D4C433F5
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C819EC433F5
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:52:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB5CE60F4B
-	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:23:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5B1861078
+	for <git@archiver.kernel.org>; Mon, 11 Oct 2021 13:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236877AbhJKNZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 09:25:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236854AbhJKNZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 09:25:57 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF104C061570
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:23:56 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id w19so7850625edd.2
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 06:23:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=hy23xRQcdft7RdY4Q13sp6FjyN89MHzIoHzRWglx34c=;
-        b=UKr77NXQJqL71aEKbzKvm+OeCBaK/7JHREtj7UK1KvHmNdGczwwfIfIaurBVOp5Oho
-         xQmwJEsnsXVacNDhw26HhNEMAk1NUsfmlcDo5dcCBleQq202hqCz8NNpv9bWceJcB++6
-         Ex2HU3ZtkCiu1QUSgD8DI5iHoKiZkZd3W23uwZMIHcMu03PcKZ/rc/riyhbZU9wMk9FS
-         91KaWSzMTgY6KsoMaV+6hYGYzOYsKwRlPojj7HpvC3Z8s0UjGeYKHQuz0ZVJiChNPBhO
-         Jydd1qsegiXuni4zk13D2WG5Zd9HUMzC/7ppZlqZBriUBsamu1PkS5ESXmp6Zwz7h835
-         Yr6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=hy23xRQcdft7RdY4Q13sp6FjyN89MHzIoHzRWglx34c=;
-        b=Mgr4i2viFJI2ITmfHbscjV0RwreF/O3/Fz9WmfO+50dGJQAaSxIhGuTXfi0FCIP8q9
-         LDtBFqLi0b0RdkOCNQctdZHu0XjE7qe7xcJs2C/T7dFPQ2o7B9hPtWUc+adFqRx7YI09
-         pa3cFtS83I5pV/A7+YE7wwmAQKA4/MX1e2Hkxe0YrkItZxRpfrZpA4zNoK7b7swxRE51
-         Px+ql2BX8wWPly7nV/Imc0rtWnwLyVPjixYFaUtoEUQfMCPJzFwgY/0H4bUmajhtopeg
-         62by1g0A7RxdveGyb0+GWYMsDVJ3VolcGI8MEogyefHuQdJyHuCEBTHKwpfMIjKNI+lJ
-         Quvw==
-X-Gm-Message-State: AOAM532lOTKpho8IHXf4ZozupR3lHHweH8+P//62bQQ8fnI8egre6qUv
-        WcYUr6MTk/+Y3KZObsKPPvQ=
-X-Google-Smtp-Source: ABdhPJzDXwGUd5UHrp4+X96hmC4+csZDy0VGbnrXcVnnmTmdQ+OzdVFFRj9AliH69/XSbv/ACzwygw==
-X-Received: by 2002:a17:906:4f82:: with SMTP id o2mr25714947eju.10.1633958633724;
-        Mon, 11 Oct 2021 06:23:53 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o3sm3493206ejg.52.2021.10.11.06.23.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Oct 2021 06:23:53 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http: check CURLE_SSL_PINNEDPUBKEYNOTMATCH when
- emitting errors
-Date:   Mon, 11 Oct 2021 15:23:02 +0200
-References: <patch-1.1-6e65734cbce-20210924T100532Z-avarab@gmail.com>
- <20211010214209.GE571180@szeder.dev> <87o87wl485.fsf@evledraar.gmail.com>
- <20211011044730.GF571180@szeder.dev>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <20211011044730.GF571180@szeder.dev>
-Message-ID: <87k0ijlmon.fsf@evledraar.gmail.com>
+        id S237618AbhJKNyC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 09:54:02 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:55695 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237312AbhJKNwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 09:52:42 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mZvhQ-000BGN-8G; Mon, 11 Oct 2021 14:50:41 +0100
+Subject: Re: Some problems for git beginners
+To:     ZhangJinbao <zhang709787793@icloud.com>,
+        Git List <git@vger.kernel.org>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>
+References: <2EC9E24E-A8FD-4851-9F6A-F3D104465A23@icloud.com>
+ <ffe633c5-151a-8646-20ef-be4f50c5f59e@gmail.com>
+ <4ef81a4e-e832-1968-3f31-5f15cd0c7320@iee.email>
+ <AD10E128-A820-4F84-9173-776DA90686EF@icloud.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <282709c2-3a58-d986-5a57-6174a4849782@iee.email>
+Date:   Mon, 11 Oct 2021 14:50:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <AD10E128-A820-4F84-9173-776DA90686EF@icloud.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Please don't drop the list...
 
-On Mon, Oct 11 2021, SZEDER G=C3=A1bor wrote:
-
-> On Mon, Oct 11, 2021 at 03:49:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>=20
->> On Sun, Oct 10 2021, SZEDER G=C3=A1bor wrote:
->>=20
->> > On Fri, Sep 24, 2021 at 12:08:20PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->> >> Change the error shown when a http.pinnedPubKey doesn't match to point
->> >> the http.pinnedPubKey variable=20
->> >
->> > I'm not sure what this means.  Between the repeated
->> > 'http.pinnedPubKey' config variable name and the "doesn't match to
->> > point the ..." part I can't decipher it.
->>=20
->> It should be "point to the" (but this grammar error is already in
->> "next").
+On 11/10/2021 04:00, ZhangJinbao wrote:
 >
-> So it's supposed to be
 >
->   ... a http.pinnedPubKey doesn't point to the http.pinnedPubKey
->   variable ...
+>> 2021年10月9日 下午6:32，Philip Oakley <philipoakley@iee.email
+>> <mailto:philipoakley@iee.email>> 写道：
+>>
+>> On 09/10/2021 10:12, Bagas Sanjaya wrote:
+>>> On 09/10/21 14.43, ZhangJinbao wrote:
+>>>
+>>>> Third, when a commit event occurs, the current blob file stores the
+>>>> full amount of data, while the previous version stores the
+>>>> incremental data
+>>>>
+>>>
+>>> When you `git commit`, Git will initially write objects related to the
+>>> commit (blob, tree, and commit) as loose objects. Some point on the
+>>> time, Git will repack many loose objects into one big packfile and
+>>> write the corresponding pack index. Delta compression is applied when
+>>> writing the packfile.
+>>>
+>> Git is multi-layered, and multi-faceted. So often the impression given
+>> isn't the same as what happens internally.
+>>
+>> All commits are full snapshots, even if git (normally) shows only the
+>> changes for previous diffs.
+>>
+>> But then git will, at a convenient point 'pack' all those snapshots
+>> (fairly efficiently) so that the local git storage of the whole
+>> repository, with full history, (typically) is no bigger than the checked
+>> out files. The packing is part of that layering.
+>>
+>> There are similar facet/layer effects from the Staging area ("index") /
+>> Object store viewpoints.
+>>
+>> The
+>> https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
+>> <https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain>
+>> is worth a read, along with other descriptions.
+>>
+>> Philip
+>>
 >
-> ?  I still have no idea because of the repeated config variable name.
+> I'm very glad to hear from you
+>
+> After further study and practice in recent days, there are still
+> several questions to confirm
+>
+> As the article says: 
+> What is also interesting is that the second version of the file is the
+> one that is stored intact, whereas the original version is stored as a
+> delta — this is because you’re most likely to need faster access to
+> the most recent version of the file.
+>
+> Practice has proved that:
+> Using the repo.rb(22KB) file, you can store the original version as a
+> delta. But using the test.txt(22B) file, you cannot store the original
+> version as a delta. 
+> Does this algorithm depend on the size of the file? If so, what is the
+> file size boundary?
+>
+> ——————————————————————————————————————————————————————————
+> zhangjinbao@Jinbao test % ls   
+> repo.rb
+> zhangjinbao@Jinbao test % echo "version 1" > test.txt
+> zhangjinbao@Jinbao test % git add .
+> zhangjinbao@Jinbao test % git commit -m "Create test.txt"
+> [master b4a4c9d] Create test.txt
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 test.txt
+> zhangjinbao@Jinbao test % echo "# version 2" >> test.txt 
+> zhangjinbao@Jinbao test % git commit -am "modify test.txt"
+> [master c454823] modify test.txt
+>  1 file changed, 1 insertion(+)
+> zhangjinbao@Jinbao test % git gc
+> ...
+> zhangjinbao@Jinbao test % git verify-pack -v
+> .git/objects/pack/pack-17ceeb7d325a4eb7dab3f6f04dda67daa7515feb.idx 
+> c45482367fb06750398339597be1c0679af8ee9a commit 226 157 12
+> b4a4c9de03421e9e49eaae3c67cf43c699eb5b98 commit 226 157 169
+> bcb782fa38f8b016b263a129d3960f409f285215 commit 231 161 326
+> 228b55de49116a358ec7c15ccb291678a014fcc8 commit 175 124 487
+> b042a60ef7dff760008df33cee372b945b6e884e blob   22054 5799 611
+> d25a248172e09b2ef61bcf45b5ec29435da23241 blob   22 26 6410
+> aef683d9d2619240c4fa1dcb5a04ea8cbe1de89a tree   71 79 6436
+> fdd7ee840023b632768fdcdc08a3465a0c4d46ed tree   71 78 6515
+> 83baae61804e65cc73a7201a7252750c76066a30 blob   10 19 6593
+> a1ca41f02e3519c32aafb8f4d4d9f465c8ce587a tree   35 46 6612
+> 38feecbdf638935287fd920e8f2d694aa8c28d9f tree   35 46 6658
+> 033b4468fa6b2a9547a70d88d1bbe8bf3f9ed0d5 blob   9 20 6704 1
+> b042a60ef7dff760008df33cee372b945b6e884e
+> 非 delta：11 个对象
+> 链长 = 1: 1 对象
+> .git/objects/pack/pack-17ceeb7d325a4eb7dab3f6f04dda67daa7515feb.pack: ok
+> zhangjinbao@Jinbao test % 
+>
+> --zhangjinbao
 
-We emit this currently:
-
-    $ git -c http.pinnedPubKey=3Dsha256/someNonMatchingKey ls-remote https:=
-//github.com/git/git.git
-    fatal: unable to access 'https://github.com/git/git.git/': SSL: public =
-key does not match pinned public key!
-
-And with this change, this:
-
-    $ git -c http.pinnedPubKey=3Dsha256/someNonMatchingKey ls-remote https:=
-//github.com/git/git.git
-    fatal: unable to access 'https://github.com/git/git.git/' with http.pin=
-nedPubkey configuration: SSL: public key does not match pinned public key!
-
-I.e. this replaces a generic error message from curl with something that
-points the user at the config variable in question.
+The packing is a heuristic, which is explained in narrative (story) form
+here: https://git-scm.com/docs/pack-heuristics
+--
+Philip
