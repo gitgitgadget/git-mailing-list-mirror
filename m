@@ -2,119 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 774F5C433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AB6BC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54E9060F38
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:29:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B78F60D43
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234157AbhJLWbp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 18:31:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57250 "EHLO
+        id S233442AbhJLWe6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 18:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhJLWbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 18:31:44 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD69AC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:29:42 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id x25-20020aa79199000000b0044caf0d1ba8so401716pfa.1
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=TXUop9FQna/gArM9lt1/nifcSAazoGTUyIFVc28VVnI=;
-        b=Qf60YdL4c/XGmz1nh8UdR0ew0q7TbdUxoQaCM05s9NhIoWbXPOkcoXMDddOMBMN0mQ
-         s4n8WIU57dl9qif45/o6s85p5dFkkIPmnPpwpfYGptZgtVivuY2tJ5qRtA4q6TvYoPaR
-         mnV4FiSUlXyDxSlZsYuqyanbBQV1jvJNBENlp/ZI/oRwzGeHvg3Bnbm9EzaEYI8PiCwO
-         kHcAKvI1NwZ3Ihc2F+l6TGCMPry8mVUZowSCPib4ONmM/Szh0OlwW0LStR0GhT1bVY2Z
-         zrWztIBkpnO/NBIeTgLUrWu95N/5J/5C2bgJRc5BBZadoSuSVJ8PI9b9jr3qqnHRn0LV
-         eDIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=TXUop9FQna/gArM9lt1/nifcSAazoGTUyIFVc28VVnI=;
-        b=puWx/97l+BMWyRcm/vdZfcqnNtCtGTIgxbfUkn4bi1b5sd/rIbDzPzwTo6thJ+JNyr
-         ek/M0xu0yMFGY7tNqlPqt/daBL6upHeae+xrbjxT7mvE4fLFz0RTqCQLBono/7jqrvPB
-         kF2V/0q8qOiSZkhn3coiTx/H5kubPzIk1ENBPHDnbBJcWd/2SjUlc/b23e4Ev3znechp
-         kwLc9T4AZcy9kQnRUjN9vFwLOVjIdBqBsBB1HIgHA//HvO0vj+VVWdwUEsnbA9C7Hk0l
-         n7umKLaO7qPtAdfhYAxiOFno6M5IGRIoQBBLPSgHYxzzfKRPx0rj3+7VZTRGEt1FhJBu
-         UdPw==
-X-Gm-Message-State: AOAM530SW5uBBJ11LoAaXSqEq7tx0IMlNiMnO0lKRAO5NGlEnou0tOSp
-        3CNa59HdYoGRhz+05/mYSNnqyPGKoWLKAw==
-X-Google-Smtp-Source: ABdhPJzQ0CGJkbz9/1R2Ch4IWwwaaK3oANneCGVJN0DdoqNSKWE0bH91okXCjXO7uMw5U2ck25LloMnIa9xz2w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:e40a:0:b0:44d:a86:43ce with SMTP id
- r10-20020a62e40a000000b0044d0a8643cemr17725786pfh.69.1634077782167; Tue, 12
- Oct 2021 15:29:42 -0700 (PDT)
-Date:   Tue, 12 Oct 2021 15:29:40 -0700
-In-Reply-To: <87wnmihswp.fsf@evledraar.gmail.com>
-Message-Id: <kl6l1r4p3mi3.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211005001931.13932-1-chooglen@google.com> <20211012174208.95161-1-chooglen@google.com>
- <87wnmihswp.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH v4 0/3] Use default values from settings instead of config
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229588AbhJLWe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 18:34:58 -0400
+X-Greylist: delayed 463 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 12 Oct 2021 15:32:55 PDT
+Received: from pug.qqx.org (pug.qqx.org [IPv6:2600:3c02:e000:5::3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6227C061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:32:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schrab.com; s=mail;
+        t=1634077510; bh=yktHtORAScitrJAGkvgKaQs+WDPH0CqjQ7likXyIOUk=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=wNT9CzVjxelIbI8hqEbltvr1Gn9jNV2i/4WATp/j+sIRbwX3n2TRue9/Zn1fhwZsF
+         MNDu1pKMx+b1UkOyijtWR8/xlgijBH7yxskv183bMnGXLtsx8EAZLQKYhEEGNvm7JS
+         h7Py7MXlXEGTo8aGR5jHV2FM3T1WOn7eL/I+w1ZIqPdGPY3iN8S6L9di4+plGW4tWc
+         HdLxF6pbWV9AJ4ZpVGYAEFUEy5Jb7xtihEF+/oSKt4yq7y4SDq6IwsVPWyBxn0hu4J
+         K+U8tVDhlvrvNUETnCkrzW7+vBaS8LCkANAN36pUSKZmBb4CTM6jfC3CE9Y/b/0+7e
+         WsFQPBScMVyzA==
+Received: by pug.qqx.org (Postfix, from userid 1000)
+        id D21892D4A4; Tue, 12 Oct 2021 18:25:10 -0400 (EDT)
+Date:   Tue, 12 Oct 2021 18:25:10 -0400
+From:   Aaron Schrab <aaron@schrab.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Alex Waite <alex@waite.eu>, git@vger.kernel.org
+Subject: Re: [BUG] credential wildcard does not match hostnames containing an
+ underscore
+Message-ID: <YWYLRvUEkoudH5n0@pug.qqx.org>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Alex Waite <alex@waite.eu>, git@vger.kernel.org
+References: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
+ <xmqqk0ii3zl6.fsf@gitster.g>
+ <YWXzGeiUSMeq5Key@coredump.intra.peff.net>
+ <YWX8d/VTrkOz5tga@camp.crustytoothpaste.net>
+ <YWX+6OgzN4CDzomO@coredump.intra.peff.net>
+ <YWYCh3+37d27QNjW@camp.crustytoothpaste.net>
+ <YWYE2LZp/EfoBpN/@camp.crustytoothpaste.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Ln5gntavmcqVUu7J"
+Content-Disposition: inline
+In-Reply-To: <YWYE2LZp/EfoBpN/@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> ...how isn't disabling those t3800-mktag.sh tests just plasting over
-> corruption that we're noticing because of your changes to (rightly) fix
-> the bug where "fsck" wasn't checking the graph at all?
->
-> IOW haven't we just found exactly the sort of bug that
-> "GIT_TEST_COMMIT_GRAPH" is put in place to find for us, but now instead
-> of fixing it we're hiding it?
->
-> If I comment yout your addition of GIT_TEST_COMMIT_GRAPH=3D0 in that file
-> I see that we fail N number of tests, but all of them are actually
-> fallout of just this test:
->
->         git replace $head_parent $head &&=20
->         git replace -f $tree $blob=20
->
-> I.e. we've created a replacement object replacing a tree with a blob, as
-> part of tests I added to test how mktag handles those sorts of weird
-> edge cases.
->
-> This then causes the graph verify code to throw a hissy fit with:
->
->     root tree OID for commit 0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 in
->     commit-graph is da5497437fd67ca928333aab79c4b4b55036ea66 !=3D
->     0fbca9850869684085d654f9e1380c9780802570
->
-> I.e. when we wrote the graph we somehow didn't notice that the root tree
-> node we wrote is to an object that's not actually a tree? Isn't this a
-> bug where some part of the commit graph writing should be doing its own
-> extended OID lookup that's replacement-object aware, it didn't, and we
-> wrote a corrupt graph as a result?
->
-> If there is a legitimate reason why we're not just hiding a bug we've
-> turned up with these fixes let's disable that one test, not the entire
-> test file.
->
-> If you don't run the one test that fails (which is split up into 3
-> individual pieces) there's still 143 other tests that are run, all of
-> those presumably benefit from finding future bugs with
-> GIT_TEST_COMMIT_GRAPH=3Dtrue, particularly since the test file seems to
-> just have turned up one just now...
+--Ln5gntavmcqVUu7J
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-I think this falls on my shoulders. I assumed that the failures were
-expected behavior, not bugs. You are right that we shouldn't be
-plastering over bugs.
+At 21:57 +0000 12 Oct 2021, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+>I also just checked, and RFC 5280 specifies the rules for RFC 1123
+>regarding host names in certificates.  So even if we did accept this, no
+>publicly trusted CA could issue a certificate for such a domain, because
+>to do so would be misissuance.  So this at best could help people who
+>are either using plain HTTP or an internal CA using broken tools,
+>neither of which I think argue in favor of supporting this.
 
-I'll have to ask for help here because I don't know enough about mktag
-to distinguish between 'expected' and 'unexpected' failures. The best I
-can do is to add GIT_TEST_COMMIT_GRAPH=3D0 + NEEDSWORK for the failing
-tests. But if that's good enough for now, I'll just do that :)
+Or people using a wildcard certificate.
+
+--Ln5gntavmcqVUu7J
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJiBAABCgBMFiEE/uA+7ZsNcEQXIOCzxrrvXm21xyUFAmFmC0AuFIAAAAAAFQAQ
+cGthLWFkZHJlc3NAZ251cGcub3JnYWFyb25Ac2NocmFiLmNvbQAKCRDGuu9ebbXH
+JbNLEAChveE51QCddBogZFqSdDC/WtAatsIBzhjfBWfV3TlISAyQpCGRH+kKSAuX
+J73TRWEetHqXWb8M4DuVk/uCxPSXQ1sw2jv4JxUeTvSZ/iImKmereAClJDSlzRAY
+ppIgwZBSuP2TEGaQZpVmoqQ3Z+WF6JJSMsOGqoOjABoU07e9003WKiIOBNm0aByz
+me4YZk4bFoX2MfllCuKoZaCJFAYR7MV/mjyDXYjkSadA3oiNbCruHBRCGFIWskBi
+srY3MqHCgLkORp1zDdGBSbmw1euq5RFDAYgXCDuEAcTkfXIe2AVl2JQA4REzWYuG
+2bKlobe1m7JTO0tJPVDrZ7Wvmc6mfXPz5Mv0oHapjCug3SBqq0yRFP1xJn7qyH+8
+OEo4eJDZIUTw7GodzFhQJRS5b/xHQI7+2OtatjNVlt0DkfYhekX9iR1oEFatsTnO
+hKW0fM9jeP2WhNQfiCA4R2E4WxKdrEaMl3EVV5Ku4z93pws6QYx0L2K+6VIaSTIn
+3SVZ3OWoQ5jsxMMXK3YS7IQjANo9tnRGdBFBx6kwrw/JMiWM3mlbQa5Z3+7vCMkS
+5K6NhTPRZj3QugbKtvMVS72ATMGXHshic+gfHODiwR3tTqWEPRiAcK2R9Ye9pBfu
+GbuEQzB4V9Jjrn2xsbt1/FJTVk4zb/haQiAGGw9L+0/tUJKytw==
+=QMt6
+-----END PGP SIGNATURE-----
+
+--Ln5gntavmcqVUu7J--
