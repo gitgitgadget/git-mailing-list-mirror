@@ -2,125 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CD6CC433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57703C433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:07:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF576610CB
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:57:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28C1B60F92
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 22:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbhJLV7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 17:59:54 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60154 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232260AbhJLV7v (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Oct 2021 17:59:51 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B936260734;
-        Tue, 12 Oct 2021 21:57:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634075868;
-        bh=Lo+u/Yzesqi4N1ca+JwZnsh+b7zpgNO/ShCWc+9RgSE=;
-        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=eL1dkS2AaYr1C4F23xRE7eLzVd25YULoNb1UN+aAl9xb4rlswOvaLKcjbqU7dXEa7
-         hirdCcgG51wug+JzW7up5aEoIEBgATV8hXGxtklR1/4M7Lmc7SKT647612gBEyIvZz
-         exvaK7WG54KQbaYXl/D/5haB++nQV5kkK75cMybTFzPD5ZN2xHZShhNwKxsU99z+mm
-         BKomUwTrehv6NXzAu4fT1Oten+AR5dDa2bxZhiveZywc7QkCtrd7qNczs7y7TtEB2C
-         aMCtXMyYIS9nTHL/AobC3E0JYYBZIbPufS8laOuL09sWHxTEDUbwk17ymjufax1UA7
-         e1O43/Kpgve9bDbdx26XMaILdnESY39ELyQco2QDNhFSAFP1NUyoSvMC6CWXVlzK5E
-         5b8gqYmOfbAcftHvjedGZUJpk7PLS4Bq4T9LG2Kl4o9t8eQuf//xIw8KdZfvHO0hm5
-         ThR0EBOLziLqFpVJL8uS0uRe3KKylUg8ADm7zxQxMl7LgO2kMVd
-Date:   Tue, 12 Oct 2021 21:57:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Alex Waite <alex@waite.eu>, git@vger.kernel.org
-Subject: Re: [BUG] credential wildcard does not match hostnames containing an
- underscore
-Message-ID: <YWYE2LZp/EfoBpN/@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Alex Waite <alex@waite.eu>, git@vger.kernel.org
-References: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
- <xmqqk0ii3zl6.fsf@gitster.g>
- <YWXzGeiUSMeq5Key@coredump.intra.peff.net>
- <YWX8d/VTrkOz5tga@camp.crustytoothpaste.net>
- <YWX+6OgzN4CDzomO@coredump.intra.peff.net>
- <YWYCh3+37d27QNjW@camp.crustytoothpaste.net>
+        id S234845AbhJLWJQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 18:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232260AbhJLWJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 18:09:15 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27592C061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:07:13 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id c4so458255pls.6
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JlrrGGsZ2TVQV51s/nWkLWJINLqCZQ7xjqYmfBzrm5U=;
+        b=KeT0V+em58ABN1xp5Y2KujKziHKD0PZzuM7fxhhw7jANz5UFGBxDfSs5FfpTyhXaTM
+         eU5jFYZOcNnBSZ74ZL/LZw3NKwU2tQoH+3sQEskyOhEIG7x2RIsPIhmMwoiHl18Ox/6T
+         IY1NmlbJqakFmConT0PnUcQV7glIznBnLI63w684WJ46wnk2S/OBIAqKePjMb5I4+6Mi
+         fZ0RPKvk9gDpS5dBUja8Z1Nsb8ILupebLve9Kc2VAnnh1+lfIFJCydXdE1whup9nubct
+         ys4vlQo2xTK7B09JFo0S9/0T54zr17NLoaYg+5OHYI9o8OtVNIEh9yPFZbtdQ4SFxnZt
+         tC9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JlrrGGsZ2TVQV51s/nWkLWJINLqCZQ7xjqYmfBzrm5U=;
+        b=sfqqtW7aVT5CC/ZfZFxglO3tpfOzRk15Tr3IoYKXAzuLz0KzeQhO3VgA3JkKa7LCn4
+         sX90vDHCKtXncS6Y3WuageWLRD0YblyCLi7wcUpVUHhH9y6dHcytjbKrukG+Sjv0OdtE
+         4sqg//UymfnHRB3JU6hqM6egVeVvyiO784ZdKiUlJwTq2t3yvg25eo7GYYGbTzOEvQGc
+         1jRnO5MH/93GRLFlehubACX8y/xUvlFLiDcmDymBTEXufh8s1KLsiIQO13cvYSBQBJXo
+         VthrDs81jNcJ7CXndh+I3koQOLcALLy6WMwafwdK7XyKHXfAav0ZRddvztTLLZ0bahd8
+         4EXA==
+X-Gm-Message-State: AOAM531OZDltkFBzkX2sYeP6ovGj7KzSD5JBqgdYGDYYcXbAVmkHMwUu
+        jKAGah95qMdxgO33siRH/+wS8Q==
+X-Google-Smtp-Source: ABdhPJw5cV+9L7V9Zq4WoBUyV7GEPfmlZXXw9XfgS0zggev7kETqizpX3LfH7ZNR91cxhhYfI8qxPA==
+X-Received: by 2002:a17:90b:696:: with SMTP id m22mr9122407pjz.108.1634076432140;
+        Tue, 12 Oct 2021 15:07:12 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:58e0:23e7:f3b1:61b])
+        by smtp.gmail.com with ESMTPSA id p3sm11832247pfb.205.2021.10.12.15.07.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Oct 2021 15:07:11 -0700 (PDT)
+Date:   Tue, 12 Oct 2021 15:07:06 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, gitscale@google.com
+Subject: Submodules UX overhaul update (was: What's cooking in git.git (Oct
+ 2021, #03; Mon, 11))
+Message-ID: <YWYHCnpPnrjwTjhA@google.com>
+References: <xmqqv9239k15.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YV4+AtG6fO8Szbwy"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YWYCh3+37d27QNjW@camp.crustytoothpaste.net>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <xmqqv9239k15.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As I promised in IRC yesterday, here's an attempt to filter this into a
+submodules newsletter of sorts.
 
---YV4+AtG6fO8Szbwy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For context on the broader submodules effort I'm discussing in this
+note, please see the design doc:
+https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
 
-On 2021-10-12 at 21:48:33, brian m. carlson wrote:
-> On 2021-10-12 at 21:32:24, Jeff King wrote:
-> > On Tue, Oct 12, 2021 at 09:21:59PM +0000, brian m. carlson wrote:
-> > > I'm happy to put in a change to reject these hostnames altogether, bu=
-t I
-> > > won't get to it before Friday.
-> >=20
-> > IMHO _that_ is the thing that will produce breakage. People who are not
-> > using URL-specific config but are happily using foo_bar.example.com will
-> > now get a failure for something that used to work.
->=20
-> There's a well-known bug on Tumblr, where it allocated hostnames for
-> users that happened to start or end with a dash, which is not allowed.
-> This worked great on Windows systems, which don't care, but every Unix
-> system was broken.
->=20
-> When we decide to allow this particular case, we end up with the problem
-> that people won't see consistent behavior across systems and tools.  It
-> may be that libgit2 rejects this, or Git LFS, or some other tool in the
-> ecosystem, and then we'll have people complaining that "Well, Git
-> accepts it, so why don't you?" which I am not eager to see.  I, for
-> example, have absolutely zero control over the URL parsing library
-> that's used in Git LFS, and the Go team has demonstrated that they don't
-> care one bit about supporting Git-related tooling.  That doesn't even
-> include a variety of proprietary Unix systems that might have different
-> rules or resolvers.
->=20
-> I am also not eager to see additional bug reports for this case that
-> will need to be fixed under the precedent that we accepted a patch to
-> fix it before.  If there's a concern that rejecting these hostnames
-> altogether would break existing users, then we can just do nothing, and
-> tell users that their syntax is not valid and they need to fix their
-> hostnames.  This rule has been documented since before ISO standardized
-> C, so it shouldn't be new to anyone deploying systems or DNS.
+I'm aware there are other submodule efforts ongoing too, but in this
+letter I've highlighted ones that are necessary for the above-linked
+design doc. Selfish, I know. ;)
 
-I also just checked, and RFC 5280 specifies the rules for RFC 1123
-regarding host names in certificates.  So even if we did accept this, no
-publicly trusted CA could issue a certificate for such a domain, because
-to do so would be misissuance.  So this at best could help people who
-are either using plain HTTP or an internal CA using broken tools,
-neither of which I think argue in favor of supporting this.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+On Mon, Oct 11, 2021 at 05:14:14PM -0700, Junio C Hamano wrote:
+> [Stalled]
+> 
+> * ar/submodule-update (2021-09-20) 8 commits
+>  . submodule--helper: rename helper functions
+>  . submodule--helper: remove unused helpers
+>  . submodule--helper: remove update-clone subcommand
+>  . submodule: move core cmd_update() logic to C
+>  . submodule--helper: refactor get_submodule_displaypath()
+>  . submodule--helper: rename helpers for update-clone
+>  . submodule--helper: get remote names from any repository
+>  . submodule--helper: split up ensure_core_worktree()
+> 
+>  Rewrite of "git submodule update" in C.
+> 
+>  Kicked out of 'seen' to make room for es/superproject-aware-submodules
+>  which is among the topics this topic stomps on.
 
---YV4+AtG6fO8Szbwy
-Content-Type: application/pgp-signature; name="signature.asc"
+Mentioning this series in the "newsletter" since I'm aware that I'm
+blocking it with es/superproject-aware-submodules. I have it open in
+another tab as I type and plan to send a reroll today or tomorrow.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+> --------------------------------------------------
+> [Cooking]
+> 
+> * es/superproject-aware-submodules (2021-08-19) 5 commits
+>  - fixup! introduce submodule.superprojectGitDir record
+>  - submodule: record superproject gitdir during 'update'
+>  - submodule: record superproject gitdir during absorbgitdirs
+>  - introduce submodule.superprojectGitDir record
+>  - t7400-submodule-basic: modernize inspect() helper
+> 
+>  A configuration variable in a submodule points at the location of
+>  the superproject it is bound to (RFC).
+> 
+>  Brought back to 'seen' to see if it still plays well with the rest
+>  of 'seen', without the conflicting ar/submodule-update topic.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYWYE2AAKCRB8DEliiIei
-gSF5AP9muc+Jv6b7NOctYidy2aZEjGjT5h9qR3qz9QBB6gInWQEA0SFBy+LZAnnW
-gOtJ40mwQAAbjLBYQ+bzZN26ZBYOEwc=
-=x6dM
------END PGP SIGNATURE-----
+Like I said above - planning to send a reroll today or tomorrow.
 
---YV4+AtG6fO8Szbwy--
+> * ab/config-based-hooks-1 (2021-09-27) 8 commits
+>   (merged to 'next' on 2021-10-06 at d05325ed35)
+>  + hook-list.h: add a generated list of hooks, like config-list.h
+>  + hook.c users: use "hook_exists()" instead of "find_hook()"
+>  + hook.c: add a hook_exists() wrapper and use it in bugreport.c
+>  + hook.[ch]: move find_hook() from run-command.c to hook.c
+>  + Makefile: remove an out-of-date comment
+>  + Makefile: don't perform "mv $@+ $@" dance for $(GENERATED_H)
+>  + Makefile: stop hardcoding {command,config}-list.h
+>  + Makefile: mark "check" target as .PHONY
+> 
+>  Mostly preliminary clean-up in the hook API.
+> 
+>  Will merge to 'master'.
+
+We saw this make it in to 'next' last week - woohoo! (Yes, this is part
+of the critical path for the planned submodulesy work.)
+
+Looks like the next chunk is at
+https://lore.kernel.org/git/cover-00.13-00000000000-20211012T131934Z-avarab@gmail.com/
+- I will try and take a look this week (but probably cannot til ~Thursday).
+
+> * jt/no-abuse-alternate-odb-for-submodules (2021-10-08) 9 commits
+>  - submodule: trace adding submodule ODB as alternate
+>  - submodule: pass repo to check_has_commit()
+>  - object-file: only register submodule ODB if needed
+>  - merge-{ort,recursive}: remove add_submodule_odb()
+>  - refs: peeling non-the_repository iterators is BUG
+>  - refs: teach arbitrary repo support to iterators
+>  - refs: plumb repo into ref stores
+>  - Merge branch 'jk/ref-paranoia' into jt/no-abuse-alternate-odb-for-submodules
+>  - Merge branch 'jt/add-submodule-odb-clean-up' into jt/no-abuse-alternate-odb-for-submodules
+> 
+>  Follow through the work to use the repo interface to access
+>  submodule objects in-process, instead of abusing the alternate
+>  object database interface.
+> 
+>  Will merge to 'next'?
+
+I asked around and it seems like:
+ 1. Josh Steadmon will take a last pass at the latest;
+ 2. Jonathan Tan thinks it's pretty much ready.
+
+Thanks.
+
+Besides what was in the What's Cooking mail, we have a couple more
+series on our minds:
+
+https://lore.kernel.org/git/0346f447548cfd11307173aaa3284d86a2ef689c.1631319742.git.steadmon@google.com/
+
+ Introducing a new value for core.autosetupmerge, "inherit". This eases
+ our ability to push to the right place in submodules when running 'git
+ push' recursively from the superproject.
+
+ However, this topic is not ready for review - Josh is planning a
+ re-roll later in the week.
+
+https://lore.kernel.org/git/pull.1103.git.git.1633633635.gitgitgadget@gmail.com/
+
+ Pre-work for 'git branch --recurse-submodules' support. This one is
+ mostly plumbing through `struct repo` and replacing a few instances of
+ `the_repository`. Glen is planning a reroll shortly.
+
+Additionally, later this week Jonathan Tan is planning on sending an RFC
+to allow a config 'includeIf' to gate on remote URLs. This will be handy
+for us (Google) to do some pilot groups more efficiently, but I imagine
+will also be useful for external users (especially combined with the
+completed config-based-hooks feature).
+
+ - Emily
