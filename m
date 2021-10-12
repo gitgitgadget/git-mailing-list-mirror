@@ -2,132 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56069C433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 10:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2384FC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 10:20:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3319060231
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 10:17:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0615661039
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 10:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235798AbhJLKTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 06:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
+        id S235835AbhJLKW7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 06:22:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232638AbhJLKTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 06:19:35 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C4D9C061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 03:17:34 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id e12so65355973wra.4
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 03:17:34 -0700 (PDT)
+        with ESMTP id S232638AbhJLKW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 06:22:58 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F69EC061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 03:20:57 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id r18so79279536edv.12
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 03:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=H9lYvQsYKohXZaRp3+4MGzeWJIx7cUASTPFFRhMcZMs=;
-        b=pkMh0muIcdc3LuJ3URH9JhC/g8HKNJauOAct+SK7+M5of9A5KtAJBoclNr6oujkUzY
-         hHEi2rUvUWrHQmcwiUgZITMKllnVMrHRYVUBjAJ2CchrwJSAArVpX3xraeTuvXJfSA8S
-         ZDioYjw4YL1Fa4e1SKPiEmsShPE+wUHotZ0lC1OW66XramTIRapPxmiZukVxsZQSLDlZ
-         ANzhvx6kc+oNlEOu7wwrew0oYXq4CzXRJ5jBEc7hOQQl84J+MLg0Z4rq0mjAyZD69I5y
-         9ZkLJSIbrMx5+pAs9eiTz7c+CKgJ0qkjSJ25ePyjZJLQYeat5psmMSt9AKlwPK+ufGLZ
-         /kmQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=plqNTUg3dEzsIXnLcQP57+XGT3ZWOSrvkWaTD60x5QM=;
+        b=W8VVI0Ih4pnAv4vmbnLQENc1lk00GIfnPiU54X98411KBZ6piXr1Svv2w0+SNEZaZe
+         Qvvr6uoKm3h9gZXagLgbr9b7E/FYl/cGhToPLuXm7furjC2gU+ZWAiibAWGWaQf5CpdI
+         1TQObsSIpe9hFMsAWk6WQLwsTfoGVN/H0+ohtaB6N/25Suq8XM3ng2jcnk6j5YItDtMH
+         KDnSI5RvWB6r7gmb2Vaax/1zKN3yOMflyiGEZjXBG4fwat9bClzh0R5jsLHxsBhlGA8e
+         OYCiQ51fbIOdPZ+BWtDYNB1C8X3ONKRBenTg/GgbIjelVJs3O7vXH0YZcDpxwvGBEU0Z
+         WsoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=H9lYvQsYKohXZaRp3+4MGzeWJIx7cUASTPFFRhMcZMs=;
-        b=vlMHAHffpOXIy/asjG4UD2AwQqhM4nWsx3gSYN1sXfA/wEu8nfxffNf/4BdhHTmSnc
-         jYHnbsz6+NeWdgC3+6z3SzIvRrkmx93wzyRAXixYtrQXKjaM7HKcp46r9xO7BlLbL4AM
-         2a/oCnYkh01KmbNNMrI9l0ahHiywo4mGdxxLUIbeqO55eHTLZtIdSNnBBOollbKxs13L
-         2gc9xKBKx01hcrrXFu9f4qCA8klUo4NpufO1HlAA5qID+xKHVZGmk1MEdYAr3GC1t/0c
-         fwya25RwOLhuTzNFsCvUbzK1UFbCIvyPsFn5ZSp2L7sdkpjDQ2XKeyfwHy3RBKfweH2A
-         OKhw==
-X-Gm-Message-State: AOAM533xHsRmsKcd5mBYigLh9qXXhq4hKmLmFQ/I0hnC+pQfozkM3UG5
-        dhb7yQ4ENVqiWDz79LQqX9g=
-X-Google-Smtp-Source: ABdhPJytoVXzV8EI/nN6D9R9QAY0rV8jR6OCEaiV7OmMXphfVwqHMlYy8oodeqrbq8M0uMVao8csQg==
-X-Received: by 2002:adf:bb08:: with SMTP id r8mr31590931wrg.222.1634033852766;
-        Tue, 12 Oct 2021 03:17:32 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id a81sm2384257wmd.30.2021.10.12.03.17.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Oct 2021 03:17:32 -0700 (PDT)
-Message-ID: <600e5da3-6b30-4ce6-d8d2-984199d2aa35@gmail.com>
-Date:   Tue, 12 Oct 2021 11:17:30 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=plqNTUg3dEzsIXnLcQP57+XGT3ZWOSrvkWaTD60x5QM=;
+        b=PBbZ5MN5kE9CI5LYm7868SCHPY/kLCYCj8e/8JmM34hXMiCKbH7kIs1mlT4F3U9GAZ
+         xXbwMwxLTzZR6URo4/gxeI6YhstQ00cqbjoE7ZmgfhvbdA4ycxCL6reL7W0JJzPqZ6+H
+         8p//pSJ6IIn+KHMsdEhBS9+FAjhKzxfsjhJ7bnah2zqDvkUUEPBjYZ7i9ruOyu5ZZPzT
+         eKEBbmDs2qSbXzers5D4M3cm+Nwp+yGI8H91aozxm2K7u8JZhtRD/YBDWEwBoxWki4WU
+         rmI+SGJ5bQHQwzqbpWQkvMQ8/xqa+iGNy8/b+Fgl6U2I9Q4VFgplw2d8oYcyyonIx/ct
+         UWIQ==
+X-Gm-Message-State: AOAM531sTXvpQZqZFjxYN4hgEpaXX3NV886kv5OVCgpsKpQWSX2pFRf2
+        iVecyySRseVu5MQgRpZnbpA=
+X-Google-Smtp-Source: ABdhPJxwFU2hpHEIxnXvU6RF452lG1UewQ/tiM9+6CQw0EzZyQs/NI9mSh+/3o/El39eaCIeiDwOnA==
+X-Received: by 2002:a17:906:1290:: with SMTP id k16mr33453803ejb.566.1634034055723;
+        Tue, 12 Oct 2021 03:20:55 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id os19sm2292691ejb.16.2021.10.12.03.20.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Oct 2021 03:20:55 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [External Mail]Re: why git is so slow for a tiny git push?
+Date:   Tue, 12 Oct 2021 12:06:04 +0200
+References: <c5a8595658d6416684c2bbd317494c49@xiaomi.com>
+ <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
+ <576b2f3e162e4f86992d8f4e680d0881@xiaomi.com>
+ <YWRr9g32cMlIc37V@coredump.intra.peff.net>
+ <ef2aa0d3ea8a4d98b910abdfd55191d0@xiaomi.com>
+ <YWVJyRJhRTdg39tX@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YWVJyRJhRTdg39tX@coredump.intra.peff.net>
+Message-ID: <87pmsak0hl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 6/8] reset: make sparse-aware (except --mixed)
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>, phillip.wood@dunelm.org.uk,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
- <pull.1048.v3.git.1633641339.gitgitgadget@gmail.com>
- <330e0c0977480d0506801854fcaa6c9f2b014569.1633641339.git.gitgitgadget@gmail.com>
- <c1dd1fef-2d48-cc18-5786-10e174b487a7@gmail.com>
- <52768318-ef8a-b26f-d4bc-d5c91779ccdb@github.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <52768318-ef8a-b26f-d4bc-d5c91779ccdb@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/10/2021 18:14, Victoria Dye wrote:
-> Phillip Wood wrote:
->> Hi Victoria
->>
->> On 07/10/2021 22:15, Victoria Dye via GitGitGadget wrote:
->>> From: Victoria Dye <vdye@github.com>
->>>
->>> Remove `ensure_full_index` guard on `prime_cache_tree` and update
->>> `prime_cache_tree_rec` to correctly reconstruct sparse directory entries in
->>> the cache tree. While processing a tree's entries, `prime_cache_tree_rec`
->>> must determine whether a directory entry is sparse or not by searching for
->>> it in the index (*without* expanding the index). If a matching sparse
->>> directory index entry is found, no subtrees are added to the cache tree
->>> entry and the entry count is set to 1 (representing the sparse directory
->>> itself). Otherwise, the tree is assumed to not be sparse and its subtrees
->>> are recursively added to the cache tree.
->>
->> I was looking at the callers to prime_cache_tree() this morning and would like to suggest an alternative approach - just delete prime_cache_tree() and all of its callers! As far as I can see it is only ever called after a successful call to unpack_trees() and since 52fca2184d ("unpack-trees: populate cache-tree on successful merge", 2015-07-28) unpack_trees() updates the cache tree for the caller. All the call sites are pretty obvious apart from the one in t/help/test-fast-rebase.c where unpack_trees() is called by merge_switch_to_result()
->>
-> 
-> It looks like `prime_cache_tree` can be removed mostly without issue, but
-> it causes the two last tests in `t4058-diff-duplicates.sh` to fail. Those
-> tests document failure cases when dealing with duplicate tree entries [1],
-> and it looks like `prime_cache_tree` was creating the appearance of a
-> fully-reset index but was still leaving it in a state where subsequent
-> operations could fail.
-> 
-> I'm inclined to say the solution here would be to update the tests to
-> document the "new" failure behavior and proceed with removing
-> `prime_cache_tree`, because:
-> 
-> * the test using `git reset --hard` disables `GIT_TEST_CHECK_CACHE_TREE`,
->    indicating that `prime_cache_tree` already wasn't behaving correctly
-> * attempting to fix the overarching issues with duplicate tree entries will
->    substantially delay this patch series
-> * a duplicate entry fix is largely unrelated to the intended scope of the
->    series
 
-That sounds like a good way forward
+On Tue, Oct 12 2021, Jeff King wrote:
 
-Best Wishes
+> On Tue, Oct 12, 2021 at 08:04:44AM +0000, =E7=A8=8B=E6=B4=8B wrote:
+>
+>> I have bitmap indeed because my master server also serves as download se=
+rver.
+>> However I'm using git 2.17.0, and I didn't set repack.writeBitmaps
+>
+> On that version and without the config, then perhaps you (or somebody)
+> passed "-b" to git-repack.
+>
+>> But why bitmaps can cause push to be slow? Do you mean that if
+>> writeBitmaps is true, every push will regenerate bitmap file? If
+>> that's what you mean, what I see is the only bitmap file in my repo
+>> didn't change across time (the modify time is one month ago, long
+>> before I run the experiment)
+>
+> No, it is not regenerating the on-disk bitmaps. But when deciding the
+> set of objects to send, pack-objects will generate an internal bitmap
+> which is the set difference of objects reachable from the pushed refs,
+> minus objects reachable from the refs the other the other side told us
+> they had.
+>
+> It uses the on-disk bitmaps as much as possible, but there may be
+> commits not covered by bitmaps (either because they were pushed since
+> the last repack which built bitmaps, or simply because it's too
+> expensive to put a bitmap on every commit, so we sprinkle them
+> throughout the commit history). In those cases we have to traverse parts
+> of the object graph by walking commits and opening up trees. This can be
+> expensive, and is where your time is going.
+>
+> Reachability bitmaps _usually_ make things faster, but they have some
+> cases where they make things worse (especially if you have a ton of
+> refs, or haven't repacked recently).
+>
+> If bitmaps are causing a problem for your push, they are likely to be
+> causing problems for fetches, too. But if you want to keep them to serve
+> fetches, but not use them for push, you should be able to do:
+>
+>   git -c pack.usebitmaps=3Dfalse push
 
-Phillip
+For the last on-list discussion to (probably the same) problem, which in
+turn references an even earlier one:
+https://lore.kernel.org/git/878s6nfq54.fsf@evledraar.gmail.com/
 
-> Another option would be to leave `prime_cache_tree` as it is, but with it
-> being apparently useless outside of mostly-broken use cases in `t4058`, it
-> seems like a waste to keep it around.
-> 
-> [1] ac14de13b2 (t4058: explore duplicate tree entry handling in a bit more detail, 2020-12-11)
-> 
+I don't remember if my own report from mid-2019 said so or contradicts
+this (and I didn't re-read the thread), but FWIW I *vaguely* recall that
+the case I ran into *might* have had to do with a user running into this
+on a shared "staging" server.
 
+I.e. one where users logged in as their own user, cd'd to a shared git
+repo they got a lock on, and ran fetch/push/deploy commands. One user
+had a pack.useBitmaps=3Dtrue or equivalent in their config (or had
+manually run such a repack), so there were some very old stale bitmaps
+around.
+
+This was also a setup with a gc.bigPackThreshold configured, which now
+that I think about it might have made it much worse, i.e. we'd keep that
+*.bitmap on the "big pack" around forever.
+
+But more generally with these side-indexes it seems to me that the code
+involved might not be considering these sorts of edge cases, i.e. my
+understanding from you above is that if we have bitmaps anywhere we'll
+try to in-memory use them for all the objects in play? Or that otherwise
+having "partial" bitmaps leads to pathological behavior.
+
+tl;dr: We can't assume that a config of "I like to write side-index
+A/B/C/... when I repack" means that the repo is in that state *now*, but
+it seems that we do.
