@@ -2,111 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D95C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 09:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 228EDC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 09:16:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60D2D61039
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 09:08:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0A4B61056
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 09:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235263AbhJLJKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 05:10:37 -0400
-Received: from outboundhk.mxmail.xiaomi.com ([207.226.244.123]:46498 "EHLO
-        xiaomi.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S235175AbhJLJKg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 05:10:36 -0400
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by HK-MBX02.mioffice.cn
- (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Tue, 12 Oct
- 2021 17:08:09 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX01.mioffice.cn
- (10.237.8.121) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Tue, 12 Oct
- 2021 17:08:08 +0800
-Received: from BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e]) by
- BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e%9]) with mapi id
- 15.02.0858.015; Tue, 12 Oct 2021 17:08:08 +0800
-From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+        id S235534AbhJLJSM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 05:18:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235518AbhJLJSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 05:18:11 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709FEC061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 02:16:10 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id g8so78536210edt.7
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 02:16:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=G3C7iwabGBHDkoB8fROS6DqwdfDyLOFW/I4HgyfKz14=;
+        b=IxH6ebBKxMkFQWdNif4ksl8YgNEiDIkdk8V/PqTWj2fJ1r0Sxu8jkR+f+rT4UYi4PX
+         I8jc3fu4Bz5sqoyf0B7tlegXXyDKeF3z8KGxZUqaH3VUzmNU710lZE4pI5dDulIBBHhA
+         dzRh8NBrarVyo9KhPYRp6k0f++P9fvnXsW0qvtf7gXITwQJgPGi34KUtkRgCWJAKbz+u
+         6Zv88GN7789fYcfUJrbOh60Ni5SaNQ6gZUIaACWONk2iL9OOQQfrvnv0GhqFwDiwGl7N
+         eDMZxvrkDtTG12KK+c/T09qZuF+m0FrYv/J2Bz72C/PizqgZFGPkk8YcTSiSVaRIB/Wg
+         7Ngw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=G3C7iwabGBHDkoB8fROS6DqwdfDyLOFW/I4HgyfKz14=;
+        b=R4wkzMIMbpTImVnRZUbeZ5YX4KR6t88rkxEHyCvwYR1dGamjcFcorh8+smQN1Jk/Bc
+         G52vqt+2dHEkV5JFp9slDUO85z5URnHsr5tfdzfe1cTKmlKyuwdvfJpcC80LteL+BMwU
+         Y4WFCA/5+mOJDUb4AcEOI8UOCYQEYFSMK4rxPQT/l4P46fxKMyuk8TSles8kK/Ojv5aN
+         GSwlbTZND6fmBdve7CVE8I1Rur7ee2gryPz8woVBXbiLxVzzYRnOBJRz5I6WIJqV16Om
+         FdPeYaWNs4dS6PxPL3nECqfTLnTKd13kj8BfhABEbNm/7qs407yDHswZEbiWPNKitwWM
+         0MUw==
+X-Gm-Message-State: AOAM531UPk4DO9MqjGCLek6ImjuA7ARqRluOImkbBbrfVmQ/H8Zg8YAg
+        3s9xKVKA/ugef0oYMWwc3YA=
+X-Google-Smtp-Source: ABdhPJx8GWDT4jYS1nKtU0N1AX9T3UKbfj/fVgycOW1nx3EsssmCo1ab8UEXys+OWojw5h3hpNK4PQ==
+X-Received: by 2002:a17:906:e99:: with SMTP id p25mr32000391ejf.534.1634030168758;
+        Tue, 12 Oct 2021 02:16:08 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id yz9sm4637309ejb.51.2021.10.12.02.16.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Oct 2021 02:16:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [External Mail]Re: why git is so slow for a tiny git push?
-Thread-Topic: [External Mail]Re: why git is so slow for a tiny git push?
-Thread-Index: Ade84mmmstEBXQTRSsexpdzlhc8vnAAVTYYAAAAT7KAAUV7NAAAwVDmA//+FzYD//3VBcA==
-Date:   Tue, 12 Oct 2021 09:08:08 +0000
-Message-ID: <d8abab7fb5184a94a9e9e5b7c1f28695@xiaomi.com>
-References: <c5a8595658d6416684c2bbd317494c49@xiaomi.com>
- <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
- <576b2f3e162e4f86992d8f4e680d0881@xiaomi.com>
- <YWRr9g32cMlIc37V@coredump.intra.peff.net>
- <ef2aa0d3ea8a4d98b910abdfd55191d0@xiaomi.com>
- <YWVJyRJhRTdg39tX@coredump.intra.peff.net>
-In-Reply-To: <YWVJyRJhRTdg39tX@coredump.intra.peff.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Cc:     Robin Dupret <robin.dupret@gmail.com>, git@vger.kernel.org,
+        Robin Dupret <robin.dupret@hey.com>
+Subject: Re: [PATCH] http-backend: remove a duplicated code branch
+Date:   Tue, 12 Oct 2021 11:07:55 +0200
+References: <20211011192546.1571-1-robin.dupret@hey.com>
+ <20211011192546.1571-2-robin.dupret@hey.com>
+ <YWTyr6joJlyi1TPe@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <YWTyr6joJlyi1TPe@coredump.intra.peff.net>
+Message-ID: <8735p6li20.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-T2ggbXkgZ29kLg0KSmVzdXMuIEl0IHdvcmtzIGZvciBtZS4gQWZ0ZXIgZGlzYWJsZSB3cml0ZWJp
-dG1hcCwgdGltZSBjb3N0IGRlY3JlYXNlIGZyb20gMzMgc2Vjb25kcyB0byAwLjkgc2Vjb25kcy4N
-Cg0KQnV0IG5vdyBpdCB0dXJucyBvdXQgdGhhdCwgcmVtb3RlIHNpZGUgdGFrZXMgMTMgc2Vjb25k
-cyB0byByZWNlaXZlIHRoZSBwYWNrLCAgc2luY2UgZ2l0IHJlY2VpdmUtcGFjayBpcyB0cmlnZ2Vy
-ZWQgYXV0b21hdGljYWxseSBmcm9tIHJlbW90ZSBzaWRlLCBpcyB0aGVyZSBhbnl3YXkgdG8gZW5h
-YmxlIEdJVF9UUkFDRTJfUEVSRiBvbiBzZXJ2ZXIgc2lkZT8NCg0KLS0tLS1PcmlnaW5hbCBNZXNz
-YWdlLS0tLS0NCkZyb206IEplZmYgS2luZyA8cGVmZkBwZWZmLm5ldD4NClNlbnQ6IFR1ZXNkYXks
-IE9jdG9iZXIgMTIsIDIwMjEgNDo0MCBQTQ0KVG86IOeoi+a0iyA8Y2hlbmd5YW5nQHhpYW9taS5j
-b20+DQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IFtFeHRlcm5hbCBNYWls
-XVJlOiB3aHkgZ2l0IGlzIHNvIHNsb3cgZm9yIGEgdGlueSBnaXQgcHVzaD8NCg0KKlRoaXMgbWVz
-c2FnZSBvcmlnaW5hdGVkIGZyb20gb3V0c2lkZSBvZiBYSUFPTUkuIFBsZWFzZSB0cmVhdCB0aGlz
-IGVtYWlsIHdpdGggY2F1dGlvbioNCg0KDQpPbiBUdWUsIE9jdCAxMiwgMjAyMSBhdCAwODowNDo0
-NEFNICswMDAwLCDnqIvmtIsgd3JvdGU6DQoNCj4gSSBoYXZlIGJpdG1hcCBpbmRlZWQgYmVjYXVz
-ZSBteSBtYXN0ZXIgc2VydmVyIGFsc28gc2VydmVzIGFzIGRvd25sb2FkIHNlcnZlci4NCj4gSG93
-ZXZlciBJJ20gdXNpbmcgZ2l0IDIuMTcuMCwgYW5kIEkgZGlkbid0IHNldCByZXBhY2sud3JpdGVC
-aXRtYXBzDQoNCk9uIHRoYXQgdmVyc2lvbiBhbmQgd2l0aG91dCB0aGUgY29uZmlnLCB0aGVuIHBl
-cmhhcHMgeW91IChvciBzb21lYm9keSkgcGFzc2VkICItYiIgdG8gZ2l0LXJlcGFjay4NCg0KPiBC
-dXQgd2h5IGJpdG1hcHMgY2FuIGNhdXNlIHB1c2ggdG8gYmUgc2xvdz8gRG8geW91IG1lYW4gdGhh
-dCBpZg0KPiB3cml0ZUJpdG1hcHMgaXMgdHJ1ZSwgZXZlcnkgcHVzaCB3aWxsIHJlZ2VuZXJhdGUg
-Yml0bWFwIGZpbGU/IElmDQo+IHRoYXQncyB3aGF0IHlvdSBtZWFuLCB3aGF0IEkgc2VlIGlzIHRo
-ZSBvbmx5IGJpdG1hcCBmaWxlIGluIG15IHJlcG8NCj4gZGlkbid0IGNoYW5nZSBhY3Jvc3MgdGlt
-ZSAodGhlIG1vZGlmeSB0aW1lIGlzIG9uZSBtb250aCBhZ28sIGxvbmcNCj4gYmVmb3JlIEkgcnVu
-IHRoZSBleHBlcmltZW50KQ0KDQpObywgaXQgaXMgbm90IHJlZ2VuZXJhdGluZyB0aGUgb24tZGlz
-ayBiaXRtYXBzLiBCdXQgd2hlbiBkZWNpZGluZyB0aGUgc2V0IG9mIG9iamVjdHMgdG8gc2VuZCwg
-cGFjay1vYmplY3RzIHdpbGwgZ2VuZXJhdGUgYW4gaW50ZXJuYWwgYml0bWFwIHdoaWNoIGlzIHRo
-ZSBzZXQgZGlmZmVyZW5jZSBvZiBvYmplY3RzIHJlYWNoYWJsZSBmcm9tIHRoZSBwdXNoZWQgcmVm
-cywgbWludXMgb2JqZWN0cyByZWFjaGFibGUgZnJvbSB0aGUgcmVmcyB0aGUgb3RoZXIgdGhlIG90
-aGVyIHNpZGUgdG9sZCB1cyB0aGV5IGhhZC4NCg0KSXQgdXNlcyB0aGUgb24tZGlzayBiaXRtYXBz
-IGFzIG11Y2ggYXMgcG9zc2libGUsIGJ1dCB0aGVyZSBtYXkgYmUgY29tbWl0cyBub3QgY292ZXJl
-ZCBieSBiaXRtYXBzIChlaXRoZXIgYmVjYXVzZSB0aGV5IHdlcmUgcHVzaGVkIHNpbmNlIHRoZSBs
-YXN0IHJlcGFjayB3aGljaCBidWlsdCBiaXRtYXBzLCBvciBzaW1wbHkgYmVjYXVzZSBpdCdzIHRv
-byBleHBlbnNpdmUgdG8gcHV0IGEgYml0bWFwIG9uIGV2ZXJ5IGNvbW1pdCwgc28gd2Ugc3ByaW5r
-bGUgdGhlbSB0aHJvdWdob3V0IHRoZSBjb21taXQgaGlzdG9yeSkuIEluIHRob3NlIGNhc2VzIHdl
-IGhhdmUgdG8gdHJhdmVyc2UgcGFydHMgb2YgdGhlIG9iamVjdCBncmFwaCBieSB3YWxraW5nIGNv
-bW1pdHMgYW5kIG9wZW5pbmcgdXAgdHJlZXMuIFRoaXMgY2FuIGJlIGV4cGVuc2l2ZSwgYW5kIGlz
-IHdoZXJlIHlvdXIgdGltZSBpcyBnb2luZy4NCg0KUmVhY2hhYmlsaXR5IGJpdG1hcHMgX3VzdWFs
-bHlfIG1ha2UgdGhpbmdzIGZhc3RlciwgYnV0IHRoZXkgaGF2ZSBzb21lIGNhc2VzIHdoZXJlIHRo
-ZXkgbWFrZSB0aGluZ3Mgd29yc2UgKGVzcGVjaWFsbHkgaWYgeW91IGhhdmUgYSB0b24gb2YgcmVm
-cywgb3IgaGF2ZW4ndCByZXBhY2tlZCByZWNlbnRseSkuDQoNCklmIGJpdG1hcHMgYXJlIGNhdXNp
-bmcgYSBwcm9ibGVtIGZvciB5b3VyIHB1c2gsIHRoZXkgYXJlIGxpa2VseSB0byBiZSBjYXVzaW5n
-IHByb2JsZW1zIGZvciBmZXRjaGVzLCB0b28uIEJ1dCBpZiB5b3Ugd2FudCB0byBrZWVwIHRoZW0g
-dG8gc2VydmUgZmV0Y2hlcywgYnV0IG5vdCB1c2UgdGhlbSBmb3IgcHVzaCwgeW91IHNob3VsZCBi
-ZSBhYmxlIHRvIGRvOg0KDQogIGdpdCAtYyBwYWNrLnVzZWJpdG1hcHM9ZmFsc2UgcHVzaA0KDQot
-UGVmZg0KIy8qKioqKirmnKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInlsI/nsbPlhazlj7jnmoTk
-v53lr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLlnLDlnYDkuK3liJflh7rnmoTk
-uKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbku5bkurrku6Xku7vkvZXlvaLlvI/kvb/n
-lKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbpg6jliIblnLDms4TpnLLjgIHlpI3liLbj
-gIHmiJbmlaPlj5HvvInmnKzpgq7ku7bkuK3nmoTkv6Hmga/jgILlpoLmnpzmgqjplJnmlLbkuobm
-nKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbpgq7ku7bpgJrnn6Xlj5Hku7bkurrlubbl
-iKDpmaTmnKzpgq7ku7bvvIEgVGhpcyBlLW1haWwgYW5kIGl0cyBhdHRhY2htZW50cyBjb250YWlu
-IGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIFhJQU9NSSwgd2hpY2ggaXMgaW50ZW5kZWQg
-b25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgd2hvc2UgYWRkcmVzcyBpcyBsaXN0ZWQgYWJv
-dmUuIEFueSB1c2Ugb2YgdGhlIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBoZXJlaW4gaW4gYW55IHdh
-eSAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8sIHRvdGFsIG9yIHBhcnRpYWwgZGlzY2xv
-c3VyZSwgcmVwcm9kdWN0aW9uLCBvciBkaXNzZW1pbmF0aW9uKSBieSBwZXJzb25zIG90aGVyIHRo
-YW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBwcm9oaWJpdGVkLiBJZiB5b3UgcmVjZWl2
-ZSB0aGlzIGUtbWFpbCBpbiBlcnJvciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHBob25l
-IG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUgaXQhKioqKioqLyMNCg==
+
+On Mon, Oct 11 2021, Jeff King wrote:
+
+> On Mon, Oct 11, 2021 at 09:25:46PM +0200, Robin Dupret wrote:
+>
+>> Signed-off-by: Robin Dupret <robin.dupret@hey.com>
+>
+> You signed-off, which is good (and necessary for contributing a patch).
+> This is a good place to say "why". Even if it is "because it makes the
+> code more readable", it is good to say that rather than leave readers
+> guessing (though of course people won't necessarily agree ;) ).
+>
+>> ---
+>>  http-backend.c | 4 +---
+>>  1 file changed, 1 insertion(+), 3 deletions(-)
+>> 
+>> diff --git a/http-backend.c b/http-backend.c
+>> index e7c0eeab23..3d6e2ff17f 100644
+>> --- a/http-backend.c
+>> +++ b/http-backend.c
+>> @@ -466,9 +466,7 @@ static void run_service(const char **argv, int buffer_input)
+>>  	struct child_process cld = CHILD_PROCESS_INIT;
+>>  	ssize_t req_len = get_content_length();
+>>  
+>> -	if (encoding && !strcmp(encoding, "gzip"))
+>> -		gzipped_request = 1;
+>> -	else if (encoding && !strcmp(encoding, "x-gzip"))
+>> +	if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip")))
+>>  		gzipped_request = 1;
+>
+> I think this conversion is correct, and I do find the resulting slightly
+> easier to read. I wondered if the two conditions might have come
+> separately, but no, they were both there in the initial 556cfa3b6d
+> (Smart fetch and push over HTTP: server side, 2009-10-30).
+>
+> We do frown a bit on making small style changes like this. This kind of
+> churn isn't dramatically improving the quality of the code, and it
+> carries the risk of regression (if there is something subtle that you or
+> the reviewers missed) and creates a maintenance burden (it may conflict
+> with other patches, though I doubt it in this case, and it creates work
+> for reviewers and the maintainer to apply).
+>
+> So...I dunno. I don't mind it, but it is not a pattern we like to
+> encourage in general. Let's see what Junio thinks.
+
+Maybe the existence of this discussion is also why we frown on churn :)
+But not being able to resist: FWIW I think if this were refactored the
+below makes more sense (untested etc.):
+
+Because the pattern in that function is to:
+
+ 1. Get params via getenv
+ 2. Provide defaults in case those are NULL
+ 3. Set resulting structs/variables, use them
+
+The "encoding" and "gzipped_request" are the odd ones out there, this
+makes them consistent with the rest.
+
+It also has the effect of column-aligning the two strcmps, which along
+with avoiding indentation is why I general is why I've sometimes used
+this pattern of:
+
+    if (a && b)
+        ;
+    else if (a && c)
+        ;
+
+Over the obvious simplification of:
+
+    if (a && (b || c))
+        ;
+
+Although due to the "if" / "else if" in the pre-image that didn't apply
+here...
+
+diff --git a/http-backend.c b/http-backend.c
+index e7c0eeab230..13bc421b4e8 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -462,19 +462,19 @@ static void run_service(const char **argv, int buffer_input)
+ 	const char *encoding = getenv("HTTP_CONTENT_ENCODING");
+ 	const char *user = getenv("REMOTE_USER");
+ 	const char *host = getenv("REMOTE_ADDR");
+-	int gzipped_request = 0;
++	int gzipped_request;
+ 	struct child_process cld = CHILD_PROCESS_INIT;
+ 	ssize_t req_len = get_content_length();
+ 
+-	if (encoding && !strcmp(encoding, "gzip"))
+-		gzipped_request = 1;
+-	else if (encoding && !strcmp(encoding, "x-gzip"))
+-		gzipped_request = 1;
+-
+ 	if (!user || !*user)
+ 		user = "anonymous";
+ 	if (!host || !*host)
+ 		host = "(none)";
++	if (!encoding)
++		encoding = "";
++
++	gzipped_request = (!strcmp(encoding, "gzip") ||
++			   !strcmp(encoding, "x-gzip"))
+ 
+ 	if (!getenv("GIT_COMMITTER_NAME"))
+ 		strvec_pushf(&cld.env_array, "GIT_COMMITTER_NAME=%s", user);
