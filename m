@@ -2,91 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8569DC433EF
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B0EEC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:12:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 601E660EBB
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:04:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5464F60D43
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 21:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232797AbhJLVGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 17:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38224 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhJLVGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 17:06:17 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDFEBC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 14:04:15 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id x4so369379pln.5
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 14:04:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=LzBMWvWnz9pu3j21ON/2pPQglYfn9EcYkB9psxxocAw=;
-        b=aa1RR1ZffdTq7Y7xPUB8URM6M6yGcKg/zhCmM5crWx+XB2CZvUr3iLMdRwa3iSHs9q
-         ovnqstB/QQH8+BPaR2WtszU4xfLDZiahsxnTeWnt5kgnvgWiTvJ0udDLfLVhbgrDuBrS
-         hwlZSJzkxyOXqXI1h/rGcLzeZ9BX0YZXpu7jL6vZH2S2mRkC7N3zJ+VaaSWGUZ4t3140
-         TxHqdKzQOe0l1bPxcaYZ7Lfp2VJE62T238+wytjFSFLQks7ka4dYEArC9E8HtcAsr+ph
-         06QUiNovwJt5Kbp8Je0hh/xHVyUeE1OyaSK54Opp9JgM3GdS6BfApU855ns6/APOgFCu
-         2vAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=LzBMWvWnz9pu3j21ON/2pPQglYfn9EcYkB9psxxocAw=;
-        b=DkVvnV2xLznzIIquFBiCwrJUJe8hfS82cKdkwjCi6ig+sBMHysEWbYn6dGx3bZo/N6
-         phyWtXMh3kvKWVUU2LY0/yDbMIxHPqm0ZhKpbC1or6aKIyAFBvkZbAzYTeWiFBR5hY/F
-         A+En0kXLknYGk46sQ0X1TSFwGrbkFgGVEyAAgW2ROaVr7ARJoHOnAqaCVqn1hhZBuA3h
-         2PipB/IpQtPwWhw0wa5IutTX4lkPGpZ0FTPeoKv+Xlq7lO8L8YP5iBQ4/wlQUrffYMzK
-         upAOoxYzeAoAEodRV2lhTaUAI5c/+8Lt2b/scEtXQoftMtD+n2YGdAlxgdniVrvCMmkh
-         A1Jw==
-X-Gm-Message-State: AOAM531ykm9+mNc0mmy5zgHfwbIB1xw631uFN+2OXZO6ul7Nw/psa5Xf
-        PeROIYf3003or55mqmmCANysf53JkPQO6n0rpKeZv5UlA+0=
-X-Google-Smtp-Source: ABdhPJz5J61gg44NaGr2jBVbLinka5ZrVFO0ydtsh0+nep04pQrZtikNZcOTtoGvCB6O4w1alfr36biBEhkZ9taLoZU=
-X-Received: by 2002:a17:90a:c70d:: with SMTP id o13mr8739486pjt.143.1634072654924;
- Tue, 12 Oct 2021 14:04:14 -0700 (PDT)
+        id S233422AbhJLVOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 17:14:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38054 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233110AbhJLVO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 17:14:29 -0400
+Received: (qmail 1683 invoked by uid 109); 12 Oct 2021 21:12:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Oct 2021 21:12:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17591 invoked by uid 111); 12 Oct 2021 21:12:26 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Oct 2021 17:12:26 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Oct 2021 17:12:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Kyle J. McKay" <mackyle@gmail.com>, Alex Waite <alex@waite.eu>,
+        git@vger.kernel.org
+Subject: [PATCH] urlmatch: add underscore to URL_HOST_CHARS
+Message-ID: <YWX6OkJANJGN0RnT@coredump.intra.peff.net>
+References: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
+ <xmqqk0ii3zl6.fsf@gitster.g>
+ <YWXzGeiUSMeq5Key@coredump.intra.peff.net>
+ <YWX13C7xsLcu+jZA@coredump.intra.peff.net>
 MIME-Version: 1.0
-From:   "H.J. Lu" <hjl.tools@gmail.com>
-Date:   Tue, 12 Oct 2021 14:03:39 -0700
-Message-ID: <CAMe9rOrononRUYK0HmW_tknApUV+ZJeDBwOYMa1Ax-VHXZmoJQ@mail.gmail.com>
-Subject: Commit ae1a7eefff may have broken git behind a firewall
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YWX13C7xsLcu+jZA@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-https://github.com/git/git/commit/ae1a7eefff
+On Tue, Oct 12, 2021 at 04:53:48PM -0400, Jeff King wrote:
 
-may have broken git behind a firewall:
+> > because earlier we define URL_HOST_CHARS without underscore:
+> > 
+> >   #define URL_HOST_CHARS URL_ALPHADIGIT ".-[:]" /* IPv6 literals need [:] */
+> > 
+> > I'm not sure why, given that this otherwise seems to match according to
+> > the rfc. This code comes from 3402a8dc48 (config: add helper to
+> > normalize and match URLs, 2013-07-31), but there's no mention of
+> > underscore there. Possibly it came from earlier rules (rfc1738, for
+> > example, has a stricter grammar that allows only alphabit and dashes).
+> 
+> Sorry, I meant to cc the author of 3402a8dc48, which I've now done. It's
+> been a while, but maybe he remembers something (I couldn't find anything
+> digging in the archive, either).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=2013288
+Absent any other input, I'd propose the patch below.
 
-I am behind a firewall and using gitproxy:
+-- >8 --
+Subject: urlmatch: add underscore to URL_HOST_CHARS
 
-exec socat - socks4:proxy-server-name:$1:$2
+When parsing a URL to normalize it, we allow hostnames to contain only
+dot (".") or dash ("-"), plus brackets and colons for IPv6 literals.
+This matches the old URL standard in RFC 1738, which says:
 
-I got
+  host           = hostname | hostnumber
+  hostname       = *[ domainlabel "." ] toplabel
+  domainlabel    = alphadigit | alphadigit *[ alphadigit | "-" ] alphadigit
 
-$ git clone git://gcc.gnu.org/git/gcc.git
-Cloning into 'gcc'...
-fetch-pack: unexpected disconnect while reading sideband packet
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
-$
+But this was later updated by RFC 3986, which is more liberal:
 
-Both
+  host        = IP-literal / IPv4address / reg-name
+  reg-name    = *( unreserved / pct-encoded / sub-delims )
+  unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 
-$ git clone --depth 1 git://gcc.gnu.org/git/gcc.git
+While names with underscore in them are not common and possibly violate
+some DNS rules, they do work in practice, and we will happily contact
+them over http://, git://, or ssh://. It seems odd to ignore them for
+purposes of URL matching, especially when the URL RFC seems to allow
+them.
 
-and
+There shouldn't be any downside here. It's not a syntactically
+significant character in a URL, so we won't be confused about parsing;
+we'd have simply rejected such a URL previously (the test here checks
+the url code directly, but the obvious user-visible effect would be
+failing to match credential.http://foo_bar.example.com.helper, or
+similar config in http.<url>.*).
 
-$ git clone https://gcc.gnu.org/git/gcc.git
+Arguably we'd want to allow tilde ("~") here, too. There's likewise
+probably no downside, but I didn't add it simply because it seems like
+an even less likely character to appear in a hostname.
 
-work.
+Reported-by: Alex Waite <alex@waite.eu>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I'm on the fence regarding "~". I didn't actually test that things like
+curl even allow it (I did for underscore by creating a throwaway DNS
+name).
 
-$ git -c protocol.version=1 clone git://gcc.gnu.org/git/gcc.git
+ t/t0110-urlmatch-normalization.sh | 2 +-
+ urlmatch.c                        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-also works.
-
+diff --git a/t/t0110-urlmatch-normalization.sh b/t/t0110-urlmatch-normalization.sh
+index f99529d838..4dc9fecf72 100755
+--- a/t/t0110-urlmatch-normalization.sh
++++ b/t/t0110-urlmatch-normalization.sh
+@@ -47,7 +47,7 @@ test_expect_success 'url authority' '
+ 	test-tool urlmatch-normalization "scheme://@host" &&
+ 	test-tool urlmatch-normalization "scheme://%00@host" &&
+ 	! test-tool urlmatch-normalization "scheme://%%@host" &&
+-	! test-tool urlmatch-normalization "scheme://host_" &&
++	test-tool urlmatch-normalization "scheme://host_" &&
+ 	test-tool urlmatch-normalization "scheme://user:pass@host/" &&
+ 	test-tool urlmatch-normalization "scheme://@host/" &&
+ 	test-tool urlmatch-normalization "scheme://host/" &&
+diff --git a/urlmatch.c b/urlmatch.c
+index 33a2ccd306..03ad3f30a9 100644
+--- a/urlmatch.c
++++ b/urlmatch.c
+@@ -5,7 +5,7 @@
+ #define URL_DIGIT "0123456789"
+ #define URL_ALPHADIGIT URL_ALPHA URL_DIGIT
+ #define URL_SCHEME_CHARS URL_ALPHADIGIT "+.-"
+-#define URL_HOST_CHARS URL_ALPHADIGIT ".-[:]" /* IPv6 literals need [:] */
++#define URL_HOST_CHARS URL_ALPHADIGIT ".-_[:]" /* IPv6 literals need [:] */
+ #define URL_UNSAFE_CHARS " <>\"%{}|\\^`" /* plus 0x00-0x1F,0x7F-0xFF */
+ #define URL_GEN_RESERVED ":/?#[]@"
+ #define URL_SUB_RESERVED "!$&'()*+,;="
 -- 
-H.J.
+2.33.0.1387.g4e339dd0af
+
