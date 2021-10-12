@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07167C4332F
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E20FC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9D5160E94
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3830960EBB
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237167AbhJLN7J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 09:59:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52196 "EHLO
+        id S237176AbhJLN7K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 09:59:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236903AbhJLN66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 09:58:58 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB56C061762
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:56 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id e3so33609248wrc.11
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:56 -0700 (PDT)
+        with ESMTP id S237108AbhJLN67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 09:58:59 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D71DC061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:57 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id k7so67101853wrd.13
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cv+h3lVrZST3rwjjXDw4M6hw314+ZIHhnkGxQS8R03Y=;
-        b=hV8b1iPwkx7QSB7xTIW39TKYBA4URbzHLpC8SP3ZR9kdv0M3LGMgd/JP20C6lcs7Ai
-         ouMMOQX3TN+87BbIuY5T/MXqGKnGjsIJEwdhMroSEO75zazuSM+FquO1hhNCTD1WowY4
-         KPUMY7zHHU85FRPCejDY8cYNgf4t6c+6ygSjUzafxTZ4Cv85cgl8Qx8mmc0jm/DvB6ku
-         7LsjVKbN929N1OR70XLDKme7jkLdrfyswWD7wUAligXF7bBbV/aztqa0fV4rT/UCBIa0
-         Wvv76YRqNsip3r8Xx1Pz+KTxgyC6QaP7DVnbhFiD/xI1rgcQ1EsbzpCbFoz/wkdcDf+l
-         OwJQ==
+        bh=kGvF9Lx8tyOZBdFnvKsOlGfbb+jzFP2WqHQRso2a93k=;
+        b=cm27hyQZLaFpRCwt7C07NTOHx7F9Wpo8BH8iqh2tCjx1WbKrHCtDVnMWBaFXkGH8O/
+         tnxIS3vhVubL6UHXiBBohOnq0LDEuwJsNjAGTUvBRC9u+3c37P6XDBSrKmgNJxYbH+qF
+         P9K0fkFRlvIXSCwcqXQHyZIdqMRmVDNh5m8eHWyuUb/aUibTEgd60vwSwkICcj33AqL2
+         93ehrjyV+UoCRPbnnlQUNBToVsJdcBPlTvV2J4s22Lx/p4cnaKg3DpKTjbuFtai9pai0
+         nx4GvoQWHCNPrBHuM/ZfexqwjXS0W8iRHsUZtUuHJH8ElCCrC7hoPjiTkH1l6A02sa/x
+         Yp7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cv+h3lVrZST3rwjjXDw4M6hw314+ZIHhnkGxQS8R03Y=;
-        b=0L/H8werDeRM4tWyPiTHlyXbeEdEPhCziTgPvaip4bWGZmZGQv2JUGIFS19ytXFU0s
-         fN+s13mJTpKvMYlrHh7TqJsltz6cjS9FWKF+27t3l16G+RreUWzLBzntS258xd7yXHMO
-         rLyikE6gLL8G6KpbPGLttwZzKr1Y6UxX+/JjjH3wL+Z2WtxaVcMmttJ+f5VxJfSnf6Pf
-         qUGxJPszxFN2ujHd3/49NLiUENaBx/aIUty1LiFl3p8IUD5LZPyOGLq7B2nhxgr8u/q9
-         ihBr3VRL1HafWZVuVmiR0qDmPXOEADylt90RAy2DzZzHnri+a26I3KKaeI+qT9PXi2x9
-         P5ow==
-X-Gm-Message-State: AOAM530puh3n/lwjbt8YjkOgwO6QPmPswkmG2mdRaiY4dAdQFWywTatw
-        srUOeAEb6R0FBc2Dd7QOVijt3XB9KB5O+w==
-X-Google-Smtp-Source: ABdhPJyPvA85F1Z8hn/fJoZZaw8RIQsU/fxtlY39YYwW/CxIYXod06ztVveteQMqAsRYZDIEmdEUSA==
-X-Received: by 2002:a05:6000:551:: with SMTP id b17mr32046408wrf.18.1634047014894;
-        Tue, 12 Oct 2021 06:56:54 -0700 (PDT)
+        bh=kGvF9Lx8tyOZBdFnvKsOlGfbb+jzFP2WqHQRso2a93k=;
+        b=MZhLuX8ByPwFDPwTYx5iwE/KVxfR2do37NAOHptgi2GclEwlITwoyZojnqvlG2zJTr
+         f/p95cyoTNqGXnsJSc1H//CC6pz89O2s9iDUw6Gy9J+qc2vxDZug7zCDrDEQkcn+qj0V
+         TIc0yIr1pHHCCBQUaUk4MKJNKzbW5IMGv4CH2TaICF718eV1knGp2RQrJiv+RMDLpYIL
+         9Qgv8DIp7bLO0tgZh0uEe69M6WLSwzUTlXnE4NbF9ecmDivD6epwJXr8TGB9GZfTK4Pk
+         nmYV2EdZjdcbUoGEVR/5ZnoaVhVNzlO3zEXGUdnapqCcBOvJltlj1u2BqSxAWfGIvXZh
+         RRew==
+X-Gm-Message-State: AOAM530DE+uUH9VIv76T9zhVdfKU4WQ6jsCM1//PL6AWeEnn6ouYRaAh
+        k519rWA64eTxXs6Ptz449GDUBsOZaOMMvg==
+X-Google-Smtp-Source: ABdhPJw2jQIksFs9Lqf9m91h11AXwBokl2sW8aJJiHm7npJ/3FH4ZNBXpOLO8X16LwExIO3rQAqB6g==
+X-Received: by 2002:adf:f192:: with SMTP id h18mr9847750wro.33.1634047015662;
+        Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id z6sm4031950wmp.1.2021.10.12.06.56.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 06:56:54 -0700 (PDT)
+        Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 8/9] leak tests: mark various "generic" tests as passing with SANITIZE=leak
-Date:   Tue, 12 Oct 2021 15:56:44 +0200
-Message-Id: <patch-v2-8.9-a4843f35004-20211012T135343Z-avarab@gmail.com>
+Subject: [PATCH v2 9/9] leak tests: mark some misc tests as passing with SANITIZE=leak
+Date:   Tue, 12 Oct 2021 15:56:45 +0200
+Message-Id: <patch-v2-9.9-ba30265cb72-20211012T135343Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1567.g7b23ce7ed9e
 In-Reply-To: <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20211006T094705Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
@@ -72,202 +72,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark various "generic" tests as passing when git is compiled with
-SANITIZE=leak. These tests were subjectively picked from the lists of
-passing tests since they're all small, and test some generic feature
-such as wildmatch(), commonly used environment variables, ident
-parsing etc.
+Mark some tests that match "*{mktree,commit,diff,grep,rm,merge,hunk}*"
+as passing when git is compiled with SANITIZE=leak. They'll now be
+listed as running under the "GIT_TEST_PASSING_SANITIZE_LEAK=true" test
+mode (the "linux-leaks" CI target).
+
+These were picked because we still have a lot of failures in adjacent
+areas, and we didn't have much if any coverage of e.g. grep and diff
+before this change, we could still whitelist a lot more tests, but
+let's stop for now.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1430-bad-ref-name.sh       | 1 +
- t/t1504-ceiling-dirs.sh       | 2 ++
- t/t1510-repo-setup.sh         | 1 +
- t/t2050-git-dir-relative.sh   | 1 +
- t/t2300-cd-to-toplevel.sh     | 1 +
- t/t3070-wildmatch.sh          | 1 +
- t/t3205-branch-color.sh       | 1 +
- t/t3211-peel-ref.sh           | 1 +
- t/t3300-funny-names.sh        | 1 +
- t/t3902-quoted.sh             | 1 +
- t/t4026-color.sh              | 2 ++
- t/t5580-unc-paths.sh          | 1 +
- t/t5615-alternate-env.sh      | 2 ++
- t/t7518-ident-corner-cases.sh | 2 ++
- 14 files changed, 18 insertions(+)
+ t/t1010-mktree.sh              | 1 +
+ t/t1100-commit-tree-options.sh | 1 +
+ t/t3601-rm-pathspec-file.sh    | 1 +
+ t/t4002-diff-basic.sh          | 2 ++
+ t/t4016-diff-quote.sh          | 1 +
+ t/t4019-diff-wserror.sh        | 1 +
+ t/t4025-hunk-header.sh         | 1 +
+ t/t4300-merge-tree.sh          | 2 ++
+ t/t7813-grep-icase-iso.sh      | 1 +
+ t/t7816-grep-binary-pattern.sh | 1 +
+ 10 files changed, 12 insertions(+)
 
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index fa3aeb80f2c..4c77cf89a6c 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -4,6 +4,7 @@ test_description='Test handling of ref names that check-ref-format rejects'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
+index b946f876864..48bfad07abc 100755
+--- a/t/t1010-mktree.sh
++++ b/t/t1010-mktree.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git mktree'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success setup '
-diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
-index 3d51615e42d..0fafcf9dde3 100755
---- a/t/t1504-ceiling-dirs.sh
-+++ b/t/t1504-ceiling-dirs.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='test GIT_CEILING_DIRECTORIES'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_prefix() {
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index bbfe05b8e4a..591505a39c0 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -43,6 +43,7 @@ A few rules for repo setup:
- # This test heavily relies on the standard error of nested function calls.
- test_untraceable=UnfortunatelyYes
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- here=$(pwd)
-diff --git a/t/t2050-git-dir-relative.sh b/t/t2050-git-dir-relative.sh
-index 21f4659a9d1..1f193cde965 100755
---- a/t/t2050-git-dir-relative.sh
-+++ b/t/t2050-git-dir-relative.sh
-@@ -12,6 +12,7 @@ into the subdir while keeping the worktree location,
- and tries commits from the top and the subdir, checking
- that the commit-hook still gets called.'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- COMMIT_FILE="$(pwd)/output"
-diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
-index c8de6d8a190..b40eeb263fe 100755
---- a/t/t2300-cd-to-toplevel.sh
-+++ b/t/t2300-cd-to-toplevel.sh
-@@ -2,6 +2,7 @@
- 
- test_description='cd_to_toplevel'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- EXEC_PATH="$(git --exec-path)"
-diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index 56ea4bda133..72d5b014d82 100755
---- a/t/t3070-wildmatch.sh
-+++ b/t/t3070-wildmatch.sh
-@@ -2,6 +2,7 @@
- 
- test_description='wildmatch tests'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # Disable expensive chain-lint tests; all of the tests in this script
-diff --git a/t/t3205-branch-color.sh b/t/t3205-branch-color.sh
-index 08bd906173b..6a521c1a3e5 100755
---- a/t/t3205-branch-color.sh
-+++ b/t/t3205-branch-color.sh
-@@ -4,6 +4,7 @@ test_description='basic branch output coloring'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'set up some sample branches' '
-diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
-index 37b9d26f4b6..9cbc34fc583 100755
---- a/t/t3211-peel-ref.sh
-+++ b/t/t3211-peel-ref.sh
-@@ -4,6 +4,7 @@ test_description='tests for the peel_ref optimization of packed-refs'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'create annotated tag in refs/tags' '
-diff --git a/t/t3300-funny-names.sh b/t/t3300-funny-names.sh
-index f5bf16abcd8..d3ac826283e 100755
---- a/t/t3300-funny-names.sh
-+++ b/t/t3300-funny-names.sh
-@@ -9,6 +9,7 @@ This test tries pathnames with funny characters in the working
- tree, index, and tree objects.
+diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
+index ae66ba5babf..0f37a43fd3c 100755
+--- a/t/t1100-commit-tree-options.sh
++++ b/t/t1100-commit-tree-options.sh
+@@ -12,6 +12,7 @@ Also make sure that command line parser understands the normal
+ "flags first and then non flag arguments" command line.
  '
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- HT='	'
-diff --git a/t/t3902-quoted.sh b/t/t3902-quoted.sh
-index f528008c363..72a5a565e97 100755
---- a/t/t3902-quoted.sh
-+++ b/t/t3902-quoted.sh
-@@ -5,6 +5,7 @@
+ cat >expected <<EOF
+diff --git a/t/t3601-rm-pathspec-file.sh b/t/t3601-rm-pathspec-file.sh
+index 7de21f8bcff..b2a8db69afc 100755
+--- a/t/t3601-rm-pathspec-file.sh
++++ b/t/t3601-rm-pathspec-file.sh
+@@ -2,6 +2,7 @@
  
- test_description='quoted output'
+ test_description='rm --pathspec-from-file'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- FN='濱野'
-diff --git a/t/t4026-color.sh b/t/t4026-color.sh
-index c0b642c1ab0..cc73161b466 100755
---- a/t/t4026-color.sh
-+++ b/t/t4026-color.sh
+ test_tick
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index 6a9f010197c..ea52e5b91b7 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -6,6 +6,8 @@
+ test_description='Test diff raw-output.
+ 
+ '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ . "$TEST_DIRECTORY"/lib-read-tree-m-3way.sh
+diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
+index 876271d6826..5a8d8876831 100755
+--- a/t/t4016-diff-quote.sh
++++ b/t/t4016-diff-quote.sh
+@@ -6,6 +6,7 @@
+ test_description='Quoting paths in diff output.
+ '
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ P0='pathname'
+diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
+index c6135c75488..c68729ac098 100755
+--- a/t/t4019-diff-wserror.sh
++++ b/t/t4019-diff-wserror.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='diff whitespace error detection'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4025-hunk-header.sh b/t/t4025-hunk-header.sh
+index 35578f2bb91..6356961de46 100755
+--- a/t/t4025-hunk-header.sh
++++ b/t/t4025-hunk-header.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='diff hunk header truncation'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ N='日本語'
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+index e59601e5fe9..c52c8a21fae 100755
+--- a/t/t4300-merge-tree.sh
++++ b/t/t4300-merge-tree.sh
 @@ -4,6 +4,8 @@
  #
  
- test_description='Test diff/status color escape codes'
+ test_description='git merge-tree'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- ESC=$(printf '\033')
-diff --git a/t/t5580-unc-paths.sh b/t/t5580-unc-paths.sh
-index cd803ae8bf1..cd7604fff93 100755
---- a/t/t5580-unc-paths.sh
-+++ b/t/t5580-unc-paths.sh
-@@ -4,6 +4,7 @@ test_description='various Windows-only path tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ test_expect_success setup '
+diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
+index 701e08a8e59..1227885737b 100755
+--- a/t/t7813-grep-icase-iso.sh
++++ b/t/t7813-grep-icase-iso.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='grep icase on non-English locales'
  
 +TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+ . ./lib-gettext.sh
  
- if test_have_prereq CYGWIN
-diff --git a/t/t5615-alternate-env.sh b/t/t5615-alternate-env.sh
-index b4905b822c0..83513e46a35 100755
---- a/t/t5615-alternate-env.sh
-+++ b/t/t5615-alternate-env.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
+ test_expect_success GETTEXT_ISO_LOCALE 'setup' '
+diff --git a/t/t7816-grep-binary-pattern.sh b/t/t7816-grep-binary-pattern.sh
+index 9d67a5fc4cf..fdb2355649e 100755
+--- a/t/t7816-grep-binary-pattern.sh
++++ b/t/t7816-grep-binary-pattern.sh
+@@ -2,6 +2,7 @@
  
- test_description='handling of alternates in environment variables'
-+
+ test_description='git grep with a binary pattern files'
+ 
 +TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+ . ./lib-gettext.sh
  
- check_obj () {
-diff --git a/t/t7518-ident-corner-cases.sh b/t/t7518-ident-corner-cases.sh
-index 905957bd0a1..fffdb6ff2e7 100755
---- a/t/t7518-ident-corner-cases.sh
-+++ b/t/t7518-ident-corner-cases.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='corner cases in ident strings'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # confirm that we do not segfault _and_ that we do not say "(null)", as
+ nul_match_internal () {
 -- 
 2.33.0.1567.g7b23ce7ed9e
 
