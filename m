@@ -2,82 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4558C433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED82AC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 03:14:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8124A60D42
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:28:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE8EE608FE
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 03:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231586AbhJLCaB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 22:30:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37332 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231517AbhJLCaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 22:30:01 -0400
-Received: (qmail 30300 invoked by uid 109); 12 Oct 2021 02:28:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Oct 2021 02:28:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31218 invoked by uid 111); 12 Oct 2021 02:27:59 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Oct 2021 22:27:59 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 11 Oct 2021 22:27:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     Robin Dupret <robin.dupret@gmail.com>
-Cc:     git@vger.kernel.org, Robin Dupret <robin.dupret@hey.com>
-Subject: Re: [PATCH] http-backend: remove a duplicated code branch
-Message-ID: <YWTyr6joJlyi1TPe@coredump.intra.peff.net>
-References: <20211011192546.1571-1-robin.dupret@hey.com>
- <20211011192546.1571-2-robin.dupret@hey.com>
+        id S232018AbhJLDQy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 23:16:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231742AbhJLDQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 23:16:52 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A15C061570
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 20:14:51 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id q5so4517621pgr.7
+        for <git@vger.kernel.org>; Mon, 11 Oct 2021 20:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=mAjLDYOWS14KqmOjzTrPpHaOisGEReWo1xGOKQv3wS0=;
+        b=kpy3J5W0dq046Bpc1PUJy7SXWGDHSTrJglZU5ZQUez5EvyULZ4HdrA4uogQec99mIv
+         T0uISyx6CQUN/LJst4yYWReLjiKYuLOtDskHNhR3IbOneil7wJp8bHwhc8gRnMydAEH7
+         ySmy/ZTuIMxEunVTVt1r02VTdVtDqC1lZ1kgVPl/hTynLadCrq7s5hDjjAXCZ8cZfvX8
+         8EXHBSHhpp2zi0rm7bARUa1Km6RbszILwKm/7P552ZiAnduvXhQS/jGp5j61uc9DtB8/
+         eM84KthPYbWYW60HKOtYsHHoiTP7r9B5TFOt4Txy7a5RWD1blrghNsiG+3f/2VV+P7ia
+         TYOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=mAjLDYOWS14KqmOjzTrPpHaOisGEReWo1xGOKQv3wS0=;
+        b=QB/q7k9GVog0nwOMpzpRGsyq+ZMPEQRAFu0KXZ49aEiPfylfK8OlfC7oEKSqafCe/9
+         8BaXnDux9vKfGqWZXVbA4YgQZeJJDWCLAZHoBzol3nSFa0H6hgtaske2fGrXrKH07oKo
+         nRvuDmfgX6sizxiEJ8BL0rY+SsY9mxWo8Mrdy1UYXfkKFUgGEPl79trbwFO7O3xluowc
+         5odxyT3BfrG5aGchD0cZLe1EqICvuPc2n7NXubF4b4rIKDdREPYphzrDIF49KqP55dCV
+         R05h0ACPlKyQ5ks6W1LR29lRAfPJMN1/306PqY9lo+CzkBuiDH/4mki26wVqo7sXR/uq
+         jpkg==
+X-Gm-Message-State: AOAM530s1A/ifoWvpi3Ba5rJtPBrYaadmm5S97CPyPAY57oOhVtE847j
+        fglxpFDYzDA5fJE3IIXrmAI=
+X-Google-Smtp-Source: ABdhPJy25IFjqoc2hBCjcsJpE5a5Vob+nqtJFWAzee6+ELHsZ9upPgpAU7hoFTSHrj8AYhDTlWBOtQ==
+X-Received: by 2002:a62:bd09:0:b0:44c:8a7e:77a1 with SMTP id a9-20020a62bd09000000b0044c8a7e77a1mr29145742pff.66.1634008490638;
+        Mon, 11 Oct 2021 20:14:50 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-52.three.co.id. [116.206.12.52])
+        by smtp.gmail.com with ESMTPSA id rm6sm818339pjb.18.2021.10.11.20.14.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Oct 2021 20:14:50 -0700 (PDT)
+Message-ID: <fab92b70-8004-5765-1b8a-2cf1d12abb63@gmail.com>
+Date:   Tue, 12 Oct 2021 10:14:46 +0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211011192546.1571-2-robin.dupret@hey.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH] archive: add test testing MIME for created archive
+ through compression filter
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>
+References: <20211011112712.475306-1-bagasdotme@gmail.com>
+ <xmqqlf2zd0d4.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <xmqqlf2zd0d4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 11, 2021 at 09:25:46PM +0200, Robin Dupret wrote:
-
-> Signed-off-by: Robin Dupret <robin.dupret@hey.com>
-
-You signed-off, which is good (and necessary for contributing a patch).
-This is a good place to say "why". Even if it is "because it makes the
-code more readable", it is good to say that rather than leave readers
-guessing (though of course people won't necessarily agree ;) ).
-
-> ---
->  http-backend.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+On 11/10/21 22.53, Junio C Hamano wrote:
+> I think a lot more portable and robust way to test the feature is to
+> configure git config tar.tar.test.command (or come up with a name for
+> a suffix to be used in the test), point it at a script created in this
+> test script and run git archive with output filename that would trigger
+> the command.  Then, arrange the test to notice if the "test" script was
+> called with expected command line arguments and standard input.
 > 
-> diff --git a/http-backend.c b/http-backend.c
-> index e7c0eeab23..3d6e2ff17f 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -466,9 +466,7 @@ static void run_service(const char **argv, int buffer_input)
->  	struct child_process cld = CHILD_PROCESS_INIT;
->  	ssize_t req_len = get_content_length();
->  
-> -	if (encoding && !strcmp(encoding, "gzip"))
-> -		gzipped_request = 1;
-> -	else if (encoding && !strcmp(encoding, "x-gzip"))
-> +	if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip")))
->  		gzipped_request = 1;
+> That way, you do not need to rely on prereqs and you do not have to
+> resort to un-portable use of the "file" command.  After all, you are
+> *not* testing if "bzip2 -c" the user happens to have on their $PATH
+> produces output their "find" recognises as bzip2 compressed.
+> 
 
-I think this conversion is correct, and I do find the resulting slightly
-easier to read. I wondered if the two conditions might have come
-separately, but no, they were both there in the initial 556cfa3b6d
-(Smart fetch and push over HTTP: server side, 2009-10-30).
+The intent of this test is to ensure `git archive -o 
+something.tar.<format>` produces proper compressed tar archive that can 
+be decompressed with the corresponding decompression tool (such as 
+gunzip for gz files), and not just with `tar xvf`.
 
-We do frown a bit on making small style changes like this. This kind of
-churn isn't dramatically improving the quality of the code, and it
-carries the risk of regression (if there is something subtle that you or
-the reviewers missed) and creates a maintenance burden (it may conflict
-with other patches, though I doubt it in this case, and it creates work
-for reviewers and the maintainer to apply).
-
-So...I dunno. I don't mind it, but it is not a pattern we like to
-encourage in general. Let's see what Junio thinks.
-
--Peff
+-- 
+An old man doll... just what I always wanted! - Clara
