@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7609FC433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69BA3C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 608466101D
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5209860238
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237106AbhJLN7A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 09:59:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52178 "EHLO
+        id S237119AbhJLN7E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 09:59:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236847AbhJLN64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 09:58:56 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A0EC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:54 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id e3so33608834wrc.11
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:54 -0700 (PDT)
+        with ESMTP id S237062AbhJLN65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 09:58:57 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7AFC06161C
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id y3so34188968wrl.1
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wQhcbaSvWff1uMQtWebXvFrlJBrhC4YgnumYCexbcG0=;
-        b=jQ7Q+erwr/kNkPl5lzgHy1Bfs/ubMsy8dyhpxIqQ2HpZErYZvcZFKgecOe3gevCMI9
-         pri4KXY6+5m+VkpuCL4cv+DI1/Z+uN1NrcHr72Y6m1dF+nLYPdhkpDDkjz8aWdJQV3TY
-         gnhVFK3ChVI1hVNUFbYUo3AGx+LqwUKPjmHYpaTL3lZT/QXixFEKQiXTt0qj+mgIWdiX
-         v+ysgSVoYI+yomh32OF+mCfRMpWf+Akz2vxtu4RiyJKqfZYheOcYmjoeHsl2SSjf57lr
-         +CCGpbGGRdm6FoQZSt/sY9ToVhYZzO18hoaAnw/tfVv/fQ7ErSMUDnpjL+J1ipuB2KaV
-         tk2Q==
+        bh=F4t3mxyFv3n4UuJI5K6T0XnkGvww/nHBHQWevXpHxeU=;
+        b=HoFpGKm30VEM4Q5NnAybDGvqt4V7msYjR5LJ+VnTt5/UO/8tKaNbXOth7UtTns1pD0
+         /p+H2OMF3ZBpoUdj/TA6HDNsLdzUf3O4CyurfJSE6T4Nix6p6mH/sMBaPg+zyQVZzR7+
+         zFK442+Hy1SeXa57eKnuxCeqvQRcqp1L40WE6//Ax/kGYnwQdZj/RlWNlsBTjK0y7uDX
+         E4DkB0aWI3nyYBqXqBPh25Th4gLp+mPjfpyIQjLaSmVShybpTuwIJUP6iGuJtUkdc26M
+         rWJQ10WQzGvwKrr8qKUsoI/ANOPyZJOsW+bboDvPm/pb6zgPd9+q82hFusevxHqn+rjW
+         0GoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wQhcbaSvWff1uMQtWebXvFrlJBrhC4YgnumYCexbcG0=;
-        b=WAkkuBWpbwYTf9LeyasOBstvuIR4H0Ortoc9MguJueYRd4jhRftjfDIjpZbNQOm4m1
-         xPi4Yl2iDHy4Pz5NYrU1o1QiuHzWFDs/MJ6sG3ho2QSyy+8KUFj3WLVA+QyXe1bDpc0x
-         nYGhUZi7CfNCFO57CECo5MKC8qUF+vRgpuRGCHbwVwbF3rC0hYVv7DiqSOT8WUYfqVlo
-         /P2jx1UJECsiZjTHCQPOLjtX9ACZ5G/41K8/iaqSx9KP5UR+6ftbs4l7q2aQ6KZlGYqs
-         /ifZj4YAxA/s7FWiEJAMaXxNYnLSvWe4qfXgzqdyQtc5HAdD6AA6/NVuxbnJB1CsPZO4
-         bDog==
-X-Gm-Message-State: AOAM5303W6atDsnRfKkxlGZWYMGBl7Itcpr7q/1om0iSwB3ihvyhlBHT
-        DBUvWd32t5ip7dKbr67s/TQTEQ4DtuABjw==
-X-Google-Smtp-Source: ABdhPJy3DRo3gN1tIyxvArgRFz+E7AfHY5qmC66+jxoMaOgHo0mnEm4ICo6NJPcfkwvqd9196bBluA==
-X-Received: by 2002:a05:6000:186a:: with SMTP id d10mr20863046wri.279.1634047012493;
-        Tue, 12 Oct 2021 06:56:52 -0700 (PDT)
+        bh=F4t3mxyFv3n4UuJI5K6T0XnkGvww/nHBHQWevXpHxeU=;
+        b=DQjFTyI5Afik/TBENVDZrAEKMnS9wsELQ1cm/VN8FqMGMukQxG6t+cMxTmKw5wBGIU
+         znnXx5K6MyR/VdwSrA+A1NXrFhISNU6YUovUOS/SAx7jxHRiUpKUUNjJHVOjgGTth0Ja
+         B1FqXx8mPcKJbbppIOjcCZFycG9EW1edtfS1QQS1yPJTNGsIxNrOO9C1Dn+Dkhwka4o/
+         2oZp8dLzqQy8kwHJbxU5sbn8kgNoN6axWCIfwiJZwihIpOiaOqSEkQ2rHk98Yqyg/LFi
+         N1TOesPog7siq7xCvblQdIHSh8QGpxzoAr1XkX/904cAtEZL3hBguG+/ijImwwpPXlRY
+         Nnrg==
+X-Gm-Message-State: AOAM531w/Ety/civUeycOCvqv8dz95Xr1ppXddakabDK+LLKdHswlVYk
+        zmVJN2oZ15fJqWCKZeaXl0E86HZIyD/QgQ==
+X-Google-Smtp-Source: ABdhPJySzJjU3JYbb7keTnciUO3asHMvmB8c16kpd5+nuu2wiFv4x1pObJw4mOW1ph5Fw+JIATBPbQ==
+X-Received: by 2002:a05:6000:11:: with SMTP id h17mr10649496wrx.278.1634047013300;
+        Tue, 12 Oct 2021 06:56:53 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6sm4031950wmp.1.2021.10.12.06.56.51
+        by smtp.gmail.com with ESMTPSA id z6sm4031950wmp.1.2021.10.12.06.56.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 06:56:51 -0700 (PDT)
+        Tue, 12 Oct 2021 06:56:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 5/9] leak tests: mark all checkout-index tests as passing with SANITIZE=leak
-Date:   Tue, 12 Oct 2021 15:56:41 +0200
-Message-Id: <patch-v2-5.9-39a0199d5c6-20211012T135343Z-avarab@gmail.com>
+Subject: [PATCH v2 6/9] leak tests: mark some ls-files tests as passing with SANITIZE=leak
+Date:   Tue, 12 Oct 2021 15:56:42 +0200
+Message-Id: <patch-v2-6.9-45d3f07cd15-20211012T135343Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1567.g7b23ce7ed9e
 In-Reply-To: <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20211006T094705Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
@@ -72,84 +72,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark some tests that match "*{checkout,switch}*" as passing when git
-is compiled with SANITIZE=leak. They'll now be listed as running under
+Mark some tests that match "*ls-files*" as passing when git is
+compiled with SANITIZE=leak. They'll now be listed as running under
 the "GIT_TEST_PASSING_SANITIZE_LEAK=true" test mode (the "linux-leaks"
-CI target).
-
-Unfortunately almost all of those tests fail when compiled with
-SANITIZE=leak, these only pass because they run "checkout-index", not
-the main "checkout" command.
+CI target). We still have others that match '*ls-files*" that fail
+under SANITIZE=leak.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t2002-checkout-cache-u.sh             | 1 +
- t/t2003-checkout-cache-mkdir.sh         | 1 +
- t/t2004-checkout-cache-temp.sh          | 1 +
- t/t2005-checkout-index-symlinks.sh      | 1 +
- t/t2081-parallel-checkout-collisions.sh | 1 +
- 5 files changed, 5 insertions(+)
+ t/t3000-ls-files-others.sh              | 2 ++
+ t/t3002-ls-files-dashpath.sh            | 2 ++
+ t/t3003-ls-files-exclude.sh             | 2 ++
+ t/t3004-ls-files-basic.sh               | 1 +
+ t/t3006-ls-files-long.sh                | 2 ++
+ t/t3008-ls-files-lazy-init-name-hash.sh | 1 +
+ 6 files changed, 10 insertions(+)
 
-diff --git a/t/t2002-checkout-cache-u.sh b/t/t2002-checkout-cache-u.sh
-index 70361c806e1..fc95cf90485 100755
---- a/t/t2002-checkout-cache-u.sh
-+++ b/t/t2002-checkout-cache-u.sh
-@@ -8,6 +8,7 @@ test_description='git checkout-index -u test.
- With -u flag, git checkout-index internally runs the equivalent of
- git update-index --refresh on the checked out entry.'
+diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
+index 740ce56eab5..11af4552f74 100755
+--- a/t/t3000-ls-files-others.sh
++++ b/t/t3000-ls-files-others.sh
+@@ -15,6 +15,8 @@ filesystem.
+     path3/file3 - a file in a directory
+     path4       - an empty directory
+ '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
+ test_expect_success 'setup ' '
+diff --git a/t/t3002-ls-files-dashpath.sh b/t/t3002-ls-files-dashpath.sh
+index 8704b04e1b4..54d22a45dfb 100755
+--- a/t/t3002-ls-files-dashpath.sh
++++ b/t/t3002-ls-files-dashpath.sh
+@@ -12,6 +12,8 @@ filesystem.
+     -foo	- a file with a funny name.
+     --		- another file with a funny name.
+ '
++
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success \
-diff --git a/t/t2003-checkout-cache-mkdir.sh b/t/t2003-checkout-cache-mkdir.sh
-index ff163cf6750..f0fd441d810 100755
---- a/t/t2003-checkout-cache-mkdir.sh
-+++ b/t/t2003-checkout-cache-mkdir.sh
-@@ -10,6 +10,7 @@ also verifies that such leading path may contain symlinks, unlike
- the GIT controlled paths.
+diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
+index c41c4f046ab..7933dff9b38 100755
+--- a/t/t3003-ls-files-exclude.sh
++++ b/t/t3003-ls-files-exclude.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='ls-files --exclude does not affect index files'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'create repo with file' '
+diff --git a/t/t3004-ls-files-basic.sh b/t/t3004-ls-files-basic.sh
+index 9fd5a1f188a..a16e25c79bd 100755
+--- a/t/t3004-ls-files-basic.sh
++++ b/t/t3004-ls-files-basic.sh
+@@ -6,6 +6,7 @@ This test runs git ls-files with various unusual or malformed
+ command-line arguments.
  '
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'setup' '
-diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
-index a9352b08a8b..9bb503a9757 100755
---- a/t/t2004-checkout-cache-temp.sh
-+++ b/t/t2004-checkout-cache-temp.sh
-@@ -8,6 +8,7 @@ test_description='git checkout-index --temp test.
- With --temp flag, git checkout-index writes to temporary merge files
- rather than the tracked path.'
+ test_expect_success 'ls-files in empty repository' '
+diff --git a/t/t3006-ls-files-long.sh b/t/t3006-ls-files-long.sh
+index e109c3fbfb5..2aaf91ebc8c 100755
+--- a/t/t3006-ls-files-long.sh
++++ b/t/t3006-ls-files-long.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='overly long paths'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t3008-ls-files-lazy-init-name-hash.sh b/t/t3008-ls-files-lazy-init-name-hash.sh
+index 85f37049587..51d3dffaa66 100755
+--- a/t/t3008-ls-files-lazy-init-name-hash.sh
++++ b/t/t3008-ls-files-lazy-init-name-hash.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='Test the lazy init name hash with various folder structures'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'setup' '
-diff --git a/t/t2005-checkout-index-symlinks.sh b/t/t2005-checkout-index-symlinks.sh
-index 9fa56104743..112682a45a1 100755
---- a/t/t2005-checkout-index-symlinks.sh
-+++ b/t/t2005-checkout-index-symlinks.sh
-@@ -8,6 +8,7 @@ test_description='git checkout-index on filesystem w/o symlinks test.
- This tests that git checkout-index creates a symbolic link as a plain
- file if core.symlinks is false.'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success \
-diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
-index f6fcfc0c1e4..6acdb89d12b 100755
---- a/t/t2081-parallel-checkout-collisions.sh
-+++ b/t/t2081-parallel-checkout-collisions.sh
-@@ -11,6 +11,7 @@ The tests in this file exercise parallel checkout's collision detection code in
- both these mechanics.
- "
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-parallel-checkout.sh"
- 
+ if test 1 -eq $(test-tool online-cpus)
 -- 
 2.33.0.1567.g7b23ce7ed9e
 
