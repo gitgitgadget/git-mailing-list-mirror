@@ -2,99 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2603C433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 16:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E72F8C433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 17:15:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D8D6604DC
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 16:54:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C12B860F21
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 17:15:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbhJLQ4a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 12:56:30 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65167 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhJLQ43 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 12:56:29 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8560A14A1AA;
-        Tue, 12 Oct 2021 12:54:27 -0400 (EDT)
+        id S229810AbhJLRRU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 13:17:20 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52981 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229495AbhJLRRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 13:17:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 14BD3163ED7;
+        Tue, 12 Oct 2021 13:15:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GarzhM7K5mLHW/hYeWnhdqsL3MMeUEYK4Ua1L2
-        hcwwo=; b=t5cK22ZLuaDsQP7afCEG+gnVyVdZWqJrXY4eCGvfFD9+hM8yyF3HDd
-        hdw+rM17kuOjMprDPQsyyJV0OvBEaxrl+YTvmjWiobidqW7+gvt3tvsYEqAEbZgX
-        7AZAnJsUc7qoon5hKG3NlhZfirDTscJtjdKkuHLdC3g5a05Jh22I0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E04414A1A9;
-        Tue, 12 Oct 2021 12:54:27 -0400 (EDT)
+        :content-type; s=sasl; bh=KztniTeyppTEa2/Qqrl5ddD2KCwWy0+nrLHv4J
+        nC7b4=; b=KMzVAheIPUArn4s79GAqYCD1Da/TxYFir1gMmdrKsBs4J3cna8bpkA
+        2ICGo9mJuY5PP5ePQbmyiDs6t9duDoCSNtOplTrMLOy1gBA2dxIATPwHeS5P5YE3
+        xcbbHuhEZmNKM1IfN2jXUukbxuq611/SaiEB7NhZ3YOBcx7qxogvY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F2879163ED6;
+        Tue, 12 Oct 2021 13:15:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C0C014A1A7;
-        Tue, 12 Oct 2021 12:54:25 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 78D54163ECF;
+        Tue, 12 Oct 2021 13:15:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Rob Browning <rlb@defaultvalue.org>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] signature-format.txt: add space to fix gpgsig
- continuation line
-References: <20211009163338.2175170-1-rlb@defaultvalue.org>
-        <YWRpPw4eTwTmgVvC@coredump.intra.peff.net>
-        <xmqq4k9ncopr.fsf@gitster.g>
-        <YWTuAOjqK6fy9ZRT@coredump.intra.peff.net>
-Date:   Tue, 12 Oct 2021 09:54:24 -0700
-In-Reply-To: <YWTuAOjqK6fy9ZRT@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 11 Oct 2021 22:08:00 -0400")
-Message-ID: <xmqqzgre5glb.fsf@gitster.g>
+Cc:     Robin Dupret <robin.dupret@gmail.com>, git@vger.kernel.org,
+        Robin Dupret <robin.dupret@hey.com>
+Subject: Re: [PATCH] http-backend: remove a duplicated code branch
+References: <20211011192546.1571-1-robin.dupret@hey.com>
+        <20211011192546.1571-2-robin.dupret@hey.com>
+        <YWTyr6joJlyi1TPe@coredump.intra.peff.net>
+Date:   Tue, 12 Oct 2021 10:15:12 -0700
+In-Reply-To: <YWTyr6joJlyi1TPe@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 11 Oct 2021 22:27:59 -0400")
+Message-ID: <xmqqfst65fmn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0E3B4E18-2B7D-11EC-83AD-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: F652B20C-2B7F-11EC-BE87-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->>     In the following example, the end of line that ends with a
->>     whitespace letter is highlighted with a "$" sign; if you are
->>     trying to recreate these example by hand, do not cut and paste
->>     them---they are there primarily to highlight extra whitespace at
->>     the end of some lines.
->> 
->> before a displayed material like this:
->> 
->>   committer C O Mitter <committer@example.com> 1465981137 +0000
->>   gpgsig -----BEGIN PGP SIGNATURE-----
->>    Version: GnuPG v1
->>    $
->>    iQEcBAABAgAGBQJXYRjRAAoJEGEJLoW3InGJ3IwIAIY4SA6GxY3BjL60YyvsJPh/
->>    HRCJwH+w7wt3Yc/9/bW2F+gF72kdHOOs2jfv+OZhq0q4OAN6fvVSczISY/82LpS7
->>    DVdMQj2/YcHDT4xrDNBnXnviDO9G7am/9OE77kEbXrp7QPxvhjkicHNwy2rEflAA
->> 
->> perhaps?
+>> diff --git a/http-backend.c b/http-backend.c
+>> index e7c0eeab23..3d6e2ff17f 100644
+>> --- a/http-backend.c
+>> +++ b/http-backend.c
+>> @@ -466,9 +466,7 @@ static void run_service(const char **argv, int buffer_input)
+>>  	struct child_process cld = CHILD_PROCESS_INIT;
+>>  	ssize_t req_len = get_content_length();
+>>  
+>> -	if (encoding && !strcmp(encoding, "gzip"))
+>> -		gzipped_request = 1;
+>> -	else if (encoding && !strcmp(encoding, "x-gzip"))
+>> +	if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip")))
+>>  		gzipped_request = 1;
 >
-> ...coupled with the explanation you gave is not too bad. I had thought
-> to maybe do something like:
+> I think this conversion is correct, and I do find the resulting slightly
+> easier to read. I wondered if the two conditions might have come
+> separately, but no, they were both there in the initial 556cfa3b6d
+> (Smart fetch and push over HTTP: server side, 2009-10-30).
 >
->    gpgsig -----BEGIN PGP SIGNATURE-----
->    _Version: GnuPG v1
->    _
->    _iQEcBAABAgAGBQJXYRjRAAoJEGEJLoW3InGJ3IwIAIY4SA6GxY3BjL60YyvsJPh/
->    _HRCJwH+w7wt3Yc/9/bW2F+gF72kdHOOs2jfv+OZhq0q4OAN6fvVSczISY/82LpS7
->    _DVdMQj2/YcHDT4xrDNBnXnviDO9G7am/9OE77kEbXrp7QPxvhjkicHNwy2rEflAA
+> We do frown a bit on making small style changes like this. This kind of
+> churn isn't dramatically improving the quality of the code, and it
+> carries the risk of regression (if there is something subtle that you or
+> the reviewers missed) and creates a maintenance burden (it may conflict
+> with other patches, though I doubt it in this case, and it creates work
+> for reviewers and the maintainer to apply).
 >
-> but that is pretty ugly. I like yours much better.
+> So...I dunno. I don't mind it, but it is not a pattern we like to
+> encourage in general. Let's see what Junio thinks.
 
-Yes, I did consider a replacement for SP and rejected for the same
-reason as you did.  We could use the same "we only show the 'here is
-a SP' sign when the presence of the SP cannot be seen" convention to
-make it less distracting, but I think '$' taken from "cat -e"
-probably is easier to see and understand for those who are the
-target audience of anything in Documentation/technical/ hierarchy.
+This particular conversion is mostly "Meh", although if it were done
+in this way:
+
+	if (encoding) {
+		if (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip"))
+			gzipped_request = 1;
+	}
+
+the result may be a bit less "meh" by making it easier to adjust the
+code for other kinds of encoding in the future.
+
+My usual rule of thumb for such a single-hunk clean-up patch that is
+"obviously not incorrect" is to take it only once or twice per new
+contributor.  At some point, new contributors gain enough experience
+to know better, at which point I'd start frowning at them.
 
 Thanks.
-
-
-
