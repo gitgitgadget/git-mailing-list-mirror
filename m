@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE98AC433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FABCC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:31:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD75D60F23
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:30:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D6E160EB6
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236721AbhJLNc5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 09:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45870 "EHLO
+        id S236781AbhJLNdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 09:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236394AbhJLNc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 09:32:56 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D422FC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:30:54 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id a25so65266148edx.8
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:30:54 -0700 (PDT)
+        with ESMTP id S233296AbhJLNc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 09:32:59 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E3BC061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:30:57 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id d3so53495495edp.3
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xe0nkLpteO5UpPGluzcXIhGtDvn0FuG3208/vG09AaE=;
-        b=NjDjorgsGfxaRc3P8inrbLNvrRt2wzwhd7lInZUmCbayIsC13gRJfC/jV8X8ldilMk
-         Y+4rPRCp2V69g6gTr7gBUwKYjkxYJM2c1fhiMYZnP1ov6xqcxyW5jFpySbNvaTw3GX0Z
-         YEAhAxs31F6o6InpXWOsjKrZ0lhnWuNfmHbQF3pcfq2adRISPfeloE6E+PrD5330AW1/
-         e/irzFvmwY2YNBEcgrnMMcE9H0tsZo06fcIlbjd3KXGTU0Y8sGUpPmJlw+kgqtfcyfoL
-         VAm1cvGTA03kmA/Pe6PnfeK6rHl5+J6ea3dkiCjti4TPWdyn61qq3tT1fETLB8dgWfd+
-         jtwQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9GLpHuGbhe2M2R8zJwcIFHRXRnV6eD2bJ2zrB69DyMs=;
+        b=RzQApunXrdPCOZQz3mQnZvqYvsVfIyefRW5bZXl91S0LC3b8tg4rpFnAPWjm8Ole+G
+         PM+L/u3eoUFW5F/hHSpNxD2NvkeWiztfKC2zn5e7YWbHYRz18D7FaM0tR7/TPZ5lK1Cz
+         tI5ZDpLg3l33hWXQ97is39JYLKRbVAwOb8Sqju23r4BUU6CxFqVcK8dPGnF8gED6TLuS
+         HxBgBNX+bhdBmt6XUlJ7o1uhAmrIDWvmeWiCw6m2kPshlJ3MrW4JWlhXyucCb0l2vz8q
+         l6b/P+4KYhFOsMG3VfE5bOTFApN+5Zg5svxKNX+IF9KA5JuljIodedHmESjJaoAhiPt3
+         IJhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xe0nkLpteO5UpPGluzcXIhGtDvn0FuG3208/vG09AaE=;
-        b=v4hgUyIiuHBN+eK24Wum9X6kjN/36UR3IgNuY8HPOmQgCifUE7HoXhjE52Fykm2LCK
-         t2fSD1oiggoT0ArnDP2Uq5wGbpeyxzbY6XInzs5h5cpOKeoI/FF5RGHXfE6U90UeM/T0
-         vAuQMVcYLGtITWsWAGTeM3IfRbCQehT18v8Zmd0RVqOuVAWsg0yYZsHQ/4G4VnFyH8UG
-         BaveeX9viTSGnmtO1yyMqpzBbCwpUUesIjN4oiCalimtLMcWetBPP8z0AsGB/ZPOjx04
-         eQTEYolDJ7jPT+IPEw/kd5Fv0Imy2p+Az9NeC5Z0ii/q9ngQQQVWEvqAEOdm43pDFSa/
-         TC6A==
-X-Gm-Message-State: AOAM532JSkSTV7WSV74j7i9qoguFZMfxtU+VY33wm1Y5w9TlGVGeYws7
-        m2F5/47jhpVgYpgysHC7PaxvGxFYUCQ/YQ==
-X-Google-Smtp-Source: ABdhPJyOm1eHE96r1x2YWyrBKoQSWatKwrN7rLp/SV6/Nmg5rc2ip7/6F1gA97lyAh8Sq0gMLQdoPw==
-X-Received: by 2002:a05:6402:1356:: with SMTP id y22mr9565374edw.3.1634045449710;
-        Tue, 12 Oct 2021 06:30:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9GLpHuGbhe2M2R8zJwcIFHRXRnV6eD2bJ2zrB69DyMs=;
+        b=2HNsQk854Y8uYj2GmqeKlfDhfQlt7tzOGTGWHCEtKYtnKtibvAoMLNY8tJDv7yTAjX
+         7x3ac1l0vtGAz/3IIi+ylqm2aB7KsRbiDkOk6IQhbO9IY8RkaeGJXBLK1aZlXiZhuxI+
+         fegM11Ryg9mC7DGam+6sDU2thx4HxUEpB5LhB94IX4nW0a8TAyNQZJRqMcy68xuuRxUJ
+         GwEtuCybZbZeeYzzh9pOtIcxcDQZ2fsji09p7Axb/ea3V2EWL7pQz5WyyiOszMyMRerx
+         xEztABFG9kE7IObBlq0VMrvsJJFd3Kh5TLmOwr42afXxDD5CEamuScc23j5epfLSl4JU
+         NnEA==
+X-Gm-Message-State: AOAM531WMdK0HQLoiMTL/ANvck0Jpj1Tmyu7Sgj2cuN9FCet9E1aefbl
+        5Z0yADz2lg69FX/LNZlgMnrvmUsWQ7kOLw==
+X-Google-Smtp-Source: ABdhPJzdkcMHbWuvpAO1hccf1ItPB57mi215jSgjXzAhKBevLPdYbICCLNJ9Pz8zavhO8XRo4cOPvg==
+X-Received: by 2002:a17:906:5e52:: with SMTP id b18mr19867227eju.560.1634045451221;
+        Tue, 12 Oct 2021 06:30:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id bi23sm2016405ejb.122.2021.10.12.06.30.48
+        by smtp.gmail.com with ESMTPSA id bi23sm2016405ejb.122.2021.10.12.06.30.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 06:30:48 -0700 (PDT)
+        Tue, 12 Oct 2021 06:30:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,10 +62,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 00/13] hook.[ch]: new library to run hooks + simple hook conversion
-Date:   Tue, 12 Oct 2021 15:30:25 +0200
-Message-Id: <cover-00.13-00000000000-20211012T131934Z-avarab@gmail.com>
+Subject: [PATCH 01/13] hook: add 'run' subcommand
+Date:   Tue, 12 Oct 2021 15:30:26 +0200
+Message-Id: <patch-01.13-a39c0748d3f-20211012T131934Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.1567.g7b23ce7ed9e
+In-Reply-To: <cover-00.13-00000000000-20211012T131934Z-avarab@gmail.com>
+References: <cover-00.13-00000000000-20211012T131934Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,262 +75,559 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is part 2 of an incremental restart of the greater
-"config-based hooks" topic by Emily Shaffer that I've been helping
-with. See [1] for part 1, and [2] (search for "mark2") for a summary
-of parts to come.
+From: Emily Shaffer <emilyshaffer@google.com>
 
-This goes on top of the "ab/config-based-hooks-1" topic that's already
-in "next" and marked for graduation to "master".
+In order to enable hooks to be run as an external process, by a
+standalone Git command, or by tools which wrap Git, provide an external
+means to run all configured hook commands for a given hook event.
 
-In this topic we build upon the skeleton hook.[ch] library and build
-infrastructure added in part 1 and add a hook running library and new
-"git hook" command.
+Most of our hooks require more complex functionality than this, but
+let's start with the bare minimum required to support our simplest
+hooks.
 
-The new "git hook" command is (for now) only for the benefit of
-in-tree non-C programs that need to run hooks, and this series
-converts git-send-email and git-p4 to use it.
+In terms of implementation the usage_with_options() and "goto usage"
+pattern here mirrors that of
+builtin/{commit-graph,multi-pack-index}.c.
 
-At the end of the series we remove
-"run_hook_{le,ve}()" from run-command.c, as we've migrated all its
-callers.
-
-What we don't do is convert any of the more complex in-tree hooks that
-require input on stdin such as "pre-receive" and the like, that's in
-later parts once this lands.
-
-This series is approximately patch 6-20/36 of the previous 36 patch
-ab/config-based-hooks-base topic. A range-diff to that v5[3] is
-included below.
-
-The changes since that v5 are rather trivial, they are:
-
- * Formatting changes to reduce the diff to parts that come after this
-   (which Emily & I were juggling at the time), and re-flowing some
-   overly long lines.
-
- * The new test is now marked for SANITIZE=leak testing, with the new
-   test facility I've added recently (and which just landed in
-   "master"). They all pass, the new API doesn't leak.
-
- * I rewrote some of the git-send-email.perl code to avoid
-   de-duplication and hardcoding (just using intermediate variables).
-
-Things to focus on reviewing:
-
- * This should all be pretty solid and well tested, but the git-p4.py
-   part in particular I've never tested for real (not having access to
-   p4), and think Emily hasn't either[4].
-
-   The relevant patch looks trivially correct to me[5], and I've tried it
-   out in the Python REPL. But if any of the CC'd people active in
-   git-p4.py development could give it some end-to-end testing that
-   would be much appreciated.
-
- * Both Python and Perl code now calls the in-between "git hook run"
-   command rather than calling hooks directly. Will this behave
-   differently due to any special behavior running via a git built-in
-   adds?
-
-   I vaguely recall a third-party "git-foo" program breaking in the
-   past when invoked as "git foo" but not "git-foo", due to git
-   squatting on SIGINT, but none of that should be relevant here
-   (we're not starting a pager etc.).
-
-1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20210926T185800Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/875yut8nns.fsf@evledraar.gmail.com/
-3. https://lore.kernel.org/git/cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com/
-4. https://lore.kernel.org/git/20210311021037.3001235-26-emilyshaffer@google.com/
-5. https://lore.kernel.org/git/patch-09.13-69cc447a1e1-20211012T131934Z-avarab@gmail.com
-
-Emily Shaffer (12):
-  hook: add 'run' subcommand
-  gc: use hook library for pre-auto-gc hook
-  rebase: convert pre-rebase to use hook.h
-  am: convert applypatch to use hook.h
-  hooks: convert 'post-checkout' hook to hook library
-  merge: convert post-merge to use hook.h
-  send-email: use 'git hook run' for 'sendemail-validate'
-  git-p4: use 'git hook' to run hooks
-  commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
-  read-cache: convert post-index-change to use hook.h
-  receive-pack: convert push-to-checkout hook to hook.h
-  run-command: remove old run_hook_{le,ve}() hook API
-
-Ævar Arnfjörð Bjarmason (1):
-  git hook run: add an --ignore-missing flag
-
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
  .gitignore                 |   1 +
- Documentation/git-hook.txt |  46 +++++++++++++
+ Documentation/git-hook.txt |  38 +++++++++++
  Documentation/githooks.txt |   4 ++
  Makefile                   |   1 +
  builtin.h                  |   1 +
- builtin/am.c               |   8 ++-
- builtin/checkout.c         |  14 ++--
- builtin/clone.c            |   7 +-
- builtin/gc.c               |   3 +-
- builtin/hook.c             |  96 ++++++++++++++++++++++++++
- builtin/merge.c            |   4 +-
- builtin/rebase.c           |   8 ++-
- builtin/receive-pack.c     |   7 +-
- builtin/worktree.c         |  28 ++++----
+ builtin/hook.c             |  90 ++++++++++++++++++++++++++
  command-list.txt           |   1 +
- commit.c                   |  15 +++--
- git-p4.py                  |  72 ++------------------
- git-send-email.perl        |  22 +++---
  git.c                      |   1 +
- hook.c                     | 130 +++++++++++++++++++++++++++++++++++
- hook.h                     |  61 +++++++++++++++++
- read-cache.c               |  11 ++-
- reset.c                    |  14 ++--
- run-command.c              |  32 ---------
- run-command.h              |  17 -----
- t/t1800-hook.sh            | 134 +++++++++++++++++++++++++++++++++++++
- t/t9001-send-email.sh      |   4 +-
- 27 files changed, 572 insertions(+), 170 deletions(-)
+ hook.c                     | 101 +++++++++++++++++++++++++++++
+ hook.h                     |  39 +++++++++++
+ t/t1800-hook.sh            | 129 +++++++++++++++++++++++++++++++++++++
+ 11 files changed, 406 insertions(+)
  create mode 100644 Documentation/git-hook.txt
  create mode 100644 builtin/hook.c
  create mode 100755 t/t1800-hook.sh
 
-Range-diff:
- 1:  72dd1010f5b !  1:  a39c0748d3f hook: add 'run' subcommand
-    @@ hook.h
-     +	struct run_hooks_opt *options;
-     +};
-      
-    - /**
-    + /*
-       * Returns the path to the hook file, or NULL if the hook is missing
-     @@ hook.h: const char *find_hook(const char *name);
-       */
-    @@ t/t1800-hook.sh (new)
-     +
-     +test_description='git-hook command'
-     +
-    ++TEST_PASSES_SANITIZE_LEAK=true
-     +. ./test-lib.sh
-     +
-     +test_expect_success 'git hook usage' '
- 2:  821cc9bf11e !  2:  dbac4204f7b gc: use hook library for pre-auto-gc hook
-    @@ hook.c: int run_hooks(const char *hook_name, const char *hook_path,
-     +int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options)
-     +{
-     +	const char *hook_path;
-    -+	int ret;
-     +	struct run_hooks_opt hook_opt_scratch = RUN_HOOKS_OPT_INIT;
-    ++	int ret = 0;
-     +
-     +	if (!options)
-     +		options = &hook_opt_scratch;
-     +
-     +	hook_path = find_hook(hook_name);
-    -+	if (!hook_path) {
-    -+		ret = 0;
-    ++	if (!hook_path)
-     +		goto cleanup;
-    -+	}
-     +
-     +	ret = run_hooks(hook_name, hook_path, options);
-    -+
-     +cleanup:
-     +	run_hooks_opt_clear(options);
-     +
- 3:  d71c90254ea !  3:  ff306debcb8 rebase: convert pre-rebase to use hook.h
-    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
-      	}
-      
-      	/* If a hook exists, give it a chance to interrupt*/
-    -+	strvec_pushl(&hook_opt.args, options.upstream_arg, argc ? argv[0] : NULL, NULL);
-    ++	strvec_push(&hook_opt.args, options.upstream_arg);
-    ++	if (argc)
-    ++		strvec_push(&hook_opt.args, argv[0]);
-      	if (!ok_to_skip_pre_rebase &&
-     -	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
-     -			argc ? argv[0] : NULL, NULL))
- 4:  ea3af2ccc4d =  4:  b1d529ca485 am: convert applypatch to use hook.h
- 5:  fed0b52f88f !  5:  15d71fc210b hooks: convert 'post-checkout' hook to hook library
-    @@ builtin/clone.c: static int checkout(int submodule_progress)
-      
-     -	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(null_oid()),
-     -			   oid_to_hex(&oid), "1", NULL);
-    -+	strvec_pushl(&hook_opt.args, oid_to_hex(null_oid()), oid_to_hex(&oid), "1", NULL);
-    ++	strvec_pushl(&hook_opt.args, oid_to_hex(null_oid()), oid_to_hex(&oid),
-    ++		     "1", NULL);
-     +	err |= run_hooks_oneshot("post-checkout", &hook_opt);
-      
-      	if (!err && (option_recurse_submodules.nr > 0)) {
- 6:  53d8721a0e3 =  6:  08f27f0d6be merge: convert post-merge to use hook.h
- 7:  d60827a2856 !  7:  107c14d740f git hook run: add an --ignore-missing flag
-    @@ builtin/hook.c: static int run(int argc, const char **argv, const char *prefix)
-      	const char *hook_path;
-      	struct option run_options[] = {
-     +		OPT_BOOL(0, "ignore-missing", &ignore_missing,
-    -+			 N_("exit quietly with a zero exit code if the requested hook cannot be found")),
-    ++			 N_("silently ignore missing requested <hook-name>")),
-      		OPT_END(),
-      	};
-      	int ret;
- 8:  d4976a0821f !  8:  1d30e2dbbe0 send-email: use 'git hook run' for 'sendemail-validate'
-    @@ git-send-email.perl: sub validate_patch {
-      				or die("chdir: $!");
-      			local $ENV{"GIT_DIR"} = $repo->repo_path();
-     -			$hook_error = system_or_msg([$validate_hook, $target]);
-    -+			my @validate_hook = ("git", "hook", "run", "--ignore-missing", $hook_name, "--", $target);
-    -+			$hook_error = system_or_msg(\@validate_hook, undef,
-    -+						       "git hook run $hook_name -- <patch>");
-    ++			my @cmd = ("git", "hook", "run", "--ignore-missing",
-    ++				    $hook_name, "--");
-    ++			my @cmd_msg = (@cmd, "<patch>");
-    ++			my @cmd_run = (@cmd, $target);
-    ++			$hook_error = system_or_msg(\@cmd_run, undef, "@cmd_msg");
-      			chdir($cwd_save) or die("chdir: $!");
-      		}
-      		if ($hook_error) {
-    @@ t/t9001-send-email.sh: test_expect_success $PREREQ "--validate respects relative
-      	cat >expect <<-EOF &&
-      	fatal: longline.patch: rejected by sendemail-validate hook
-     -	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
-    -+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
-    ++	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
-      	warning: no patches were sent
-      	EOF
-      	test_cmp expect actual
-    @@ t/t9001-send-email.sh: test_expect_success $PREREQ "--validate respects absolute
-      	cat >expect <<-EOF &&
-      	fatal: longline.patch: rejected by sendemail-validate hook
-     -	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
-    -+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
-    ++	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
-      	warning: no patches were sent
-      	EOF
-      	test_cmp expect actual
- 9:  99f3dcd1945 =  9:  69cc447a1e1 git-p4: use 'git hook' to run hooks
-10:  509761454e6 = 10:  1c22b2992cf commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
-11:  e2c94d95427 ! 11:  e762fce32af read-cache: convert post-index-change to use hook.h
-    @@ Commit message
-         Move the post-index-change hook away from run-command.h to and over to
-         the new hook.h library.
-     
-    -    This removes the last direct user of run_hook_ve(), so we can make the
-    -    function static now. It'll be removed entirely soon.
-    +    This removes the last direct user of "run_hook_ve()" outside of
-    +    run-command.c ("run_hook_le()" still uses it). So we can make the
-    +    function static now. A subsequent commit will remove this code
-    +    entirely when "run_hook_le()" itself goes away.
-     
-         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    @@ read-cache.c: static int do_write_locked_index(struct index_state *istate, struc
-      	int was_full = !istate->sparse_index;
-     +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
-      
-    - 	ret = convert_to_sparse(istate);
-    + 	ret = convert_to_sparse(istate, 0);
-      
-     @@ read-cache.c: static int do_write_locked_index(struct index_state *istate, struct lock_file *l
-      	else
-12:  fa7d0d24ea2 = 12:  d63b91196ae receive-pack: convert push-to-checkout hook to hook.h
-13:  428bb5a6792 = 13:  fe8996dda3e run-command: remove old run_hook_{le,ve}() hook API
+diff --git a/.gitignore b/.gitignore
+index 6be9de41ae8..66189ca3cdc 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -77,6 +77,7 @@
+ /git-grep
+ /git-hash-object
+ /git-help
++/git-hook
+ /git-http-backend
+ /git-http-fetch
+ /git-http-push
+diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+new file mode 100644
+index 00000000000..660d6a992a0
+--- /dev/null
++++ b/Documentation/git-hook.txt
+@@ -0,0 +1,38 @@
++git-hook(1)
++===========
++
++NAME
++----
++git-hook - run git hooks
++
++SYNOPSIS
++--------
++[verse]
++'git hook' run <hook-name> [-- <hook-args>]
++
++DESCRIPTION
++-----------
++
++This command is an interface to git hooks (see linkgit:githooks[5]).
++Currently it only provides a convenience wrapper for running hooks for
++use by git itself. In the future it might gain other functionality.
++
++SUBCOMMANDS
++-----------
++
++run::
++	Run the `<hook-name>` hook. See linkgit:githooks[5] for
++	the hook names we support.
+++
++Any positional arguments to the hook should be passed after an
++optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
++arguments (if any) differ by hook name, see linkgit:githooks[5] for
++what those are.
++
++SEE ALSO
++--------
++linkgit:githooks[5]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b51959ff941..a16e62bc8c8 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -698,6 +698,10 @@ and "0" meaning they were not.
+ Only one parameter should be set to "1" when the hook runs.  The hook
+ running passing "1", "1" should not be possible.
+ 
++SEE ALSO
++--------
++linkgit:git-hook[1]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 877492386ee..12b481fdabe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1108,6 +1108,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
+ BUILTIN_OBJS += builtin/grep.o
+ BUILTIN_OBJS += builtin/hash-object.o
+ BUILTIN_OBJS += builtin/help.o
++BUILTIN_OBJS += builtin/hook.o
+ BUILTIN_OBJS += builtin/index-pack.o
+ BUILTIN_OBJS += builtin/init-db.o
+ BUILTIN_OBJS += builtin/interpret-trailers.o
+diff --git a/builtin.h b/builtin.h
+index 8a58743ed63..83379f3832c 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -164,6 +164,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
+ int cmd_grep(int argc, const char **argv, const char *prefix);
+ int cmd_hash_object(int argc, const char **argv, const char *prefix);
+ int cmd_help(int argc, const char **argv, const char *prefix);
++int cmd_hook(int argc, const char **argv, const char *prefix);
+ int cmd_index_pack(int argc, const char **argv, const char *prefix);
+ int cmd_init_db(int argc, const char **argv, const char *prefix);
+ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/hook.c b/builtin/hook.c
+new file mode 100644
+index 00000000000..012a2973b38
+--- /dev/null
++++ b/builtin/hook.c
+@@ -0,0 +1,90 @@
++#include "cache.h"
++#include "builtin.h"
++#include "config.h"
++#include "hook.h"
++#include "parse-options.h"
++#include "strbuf.h"
++#include "strvec.h"
++
++#define BUILTIN_HOOK_RUN_USAGE \
++	N_("git hook run <hook-name> [-- <hook-args>]")
++
++static const char * const builtin_hook_usage[] = {
++	BUILTIN_HOOK_RUN_USAGE,
++	NULL
++};
++
++static const char * const builtin_hook_run_usage[] = {
++	BUILTIN_HOOK_RUN_USAGE,
++	NULL
++};
++
++static int run(int argc, const char **argv, const char *prefix)
++{
++	int i;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	const char *hook_name;
++	const char *hook_path;
++	struct option run_options[] = {
++		OPT_END(),
++	};
++	int ret;
++
++	argc = parse_options(argc, argv, prefix, run_options,
++			     builtin_hook_run_usage,
++			     PARSE_OPT_KEEP_DASHDASH);
++
++	if (!argc)
++		goto usage;
++
++	/*
++	 * Having a -- for "run" when providing <hook-args> is
++	 * mandatory.
++	 */
++	if (argc > 1 && strcmp(argv[1], "--") &&
++	    strcmp(argv[1], "--end-of-options"))
++		goto usage;
++
++	/* Add our arguments, start after -- */
++	for (i = 2 ; i < argc; i++)
++		strvec_push(&opt.args, argv[i]);
++
++	/* Need to take into account core.hooksPath */
++	git_config(git_default_config, NULL);
++
++	/*
++	 * We are not using a plain run_hooks() because we'd like to
++	 * detect missing hooks. Let's find it ourselves and call
++	 * run_hooks() instead.
++	 */
++	hook_name = argv[0];
++	hook_path = find_hook(hook_name);
++	if (!hook_path) {
++		error("cannot find a hook named %s", hook_name);
++		return 1;
++	}
++
++	ret = run_hooks(hook_name, hook_path, &opt);
++	run_hooks_opt_clear(&opt);
++	return ret;
++usage:
++	usage_with_options(builtin_hook_run_usage, run_options);
++}
++
++int cmd_hook(int argc, const char **argv, const char *prefix)
++{
++	struct option builtin_hook_options[] = {
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, NULL, builtin_hook_options,
++			     builtin_hook_usage, PARSE_OPT_STOP_AT_NON_OPTION);
++	if (!argc)
++		goto usage;
++
++	if (!strcmp(argv[0], "run"))
++		return run(argc, argv, prefix);
++
++usage:
++	usage_with_options(builtin_hook_usage, builtin_hook_options);
++}
+diff --git a/command-list.txt b/command-list.txt
+index a289f09ed6f..9ccd8e5aebe 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -103,6 +103,7 @@ git-grep                                mainporcelain           info
+ git-gui                                 mainporcelain
+ git-hash-object                         plumbingmanipulators
+ git-help                                ancillaryinterrogators          complete
++git-hook                                mainporcelain
+ git-http-backend                        synchingrepositories
+ git-http-fetch                          synchelpers
+ git-http-push                           synchelpers
+diff --git a/git.c b/git.c
+index 60c2784be45..e5891e02021 100644
+--- a/git.c
++++ b/git.c
+@@ -538,6 +538,7 @@ static struct cmd_struct commands[] = {
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
+ 	{ "hash-object", cmd_hash_object },
+ 	{ "help", cmd_help },
++	{ "hook", cmd_hook, RUN_SETUP },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "init", cmd_init_db },
+ 	{ "init-db", cmd_init_db },
+diff --git a/hook.c b/hook.c
+index 55e1145a4b7..240270db64e 100644
+--- a/hook.c
++++ b/hook.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "hook.h"
+ #include "run-command.h"
++#include "config.h"
+ 
+ const char *find_hook(const char *name)
+ {
+@@ -40,3 +41,103 @@ int hook_exists(const char *name)
+ {
+ 	return !!find_hook(name);
+ }
++
++void run_hooks_opt_clear(struct run_hooks_opt *o)
++{
++	strvec_clear(&o->env);
++	strvec_clear(&o->args);
++}
++
++static int pick_next_hook(struct child_process *cp,
++			  struct strbuf *out,
++			  void *pp_cb,
++			  void **pp_task_cb)
++{
++	struct hook_cb_data *hook_cb = pp_cb;
++	struct hook *run_me = hook_cb->run_me;
++
++	if (!run_me)
++		return 0;
++
++	cp->no_stdin = 1;
++	cp->env = hook_cb->options->env.v;
++	cp->stdout_to_stderr = 1;
++	cp->trace2_hook_name = hook_cb->hook_name;
++
++	/* add command */
++	strvec_push(&cp->args, run_me->hook_path);
++
++	/*
++	 * add passed-in argv, without expanding - let the user get back
++	 * exactly what they put in
++	 */
++	strvec_pushv(&cp->args, hook_cb->options->args.v);
++
++	/* Provide context for errors if necessary */
++	*pp_task_cb = run_me;
++
++	/*
++	 * This pick_next_hook() will be called again, we're only
++	 * running one hook, so indicate that no more work will be
++	 * done.
++	 */
++	hook_cb->run_me = NULL;
++
++	return 1;
++}
++
++static int notify_start_failure(struct strbuf *out,
++				void *pp_cb,
++				void *pp_task_cp)
++{
++	struct hook_cb_data *hook_cb = pp_cb;
++	struct hook *attempted = pp_task_cp;
++
++	hook_cb->rc |= 1;
++
++	strbuf_addf(out, _("Couldn't start hook '%s'\n"),
++		    attempted->hook_path);
++
++	return 1;
++}
++
++static int notify_hook_finished(int result,
++				struct strbuf *out,
++				void *pp_cb,
++				void *pp_task_cb)
++{
++	struct hook_cb_data *hook_cb = pp_cb;
++
++	hook_cb->rc |= result;
++
++	return 0;
++}
++
++int run_hooks(const char *hook_name, const char *hook_path,
++	      struct run_hooks_opt *options)
++{
++	struct hook my_hook = {
++		.hook_path = hook_path,
++	};
++	struct hook_cb_data cb_data = {
++		.rc = 0,
++		.hook_name = hook_name,
++		.options = options,
++	};
++	int jobs = 1;
++
++	if (!options)
++		BUG("a struct run_hooks_opt must be provided to run_hooks");
++
++	cb_data.run_me = &my_hook;
++
++	run_processes_parallel_tr2(jobs,
++				   pick_next_hook,
++				   notify_start_failure,
++				   notify_hook_finished,
++				   &cb_data,
++				   "hook",
++				   hook_name);
++
++	return cb_data.rc;
++}
+diff --git a/hook.h b/hook.h
+index 6aa36fc7ff9..111c5cf9296 100644
+--- a/hook.h
++++ b/hook.h
+@@ -1,5 +1,33 @@
+ #ifndef HOOK_H
+ #define HOOK_H
++#include "strvec.h"
++
++struct hook {
++	/* The path to the hook */
++	const char *hook_path;
++};
++
++struct run_hooks_opt
++{
++	/* Environment vars to be set for each hook */
++	struct strvec env;
++
++	/* Args to be passed to each hook */
++	struct strvec args;
++};
++
++#define RUN_HOOKS_OPT_INIT { \
++	.env = STRVEC_INIT, \
++	.args = STRVEC_INIT, \
++}
++
++struct hook_cb_data {
++	/* rc reflects the cumulative failure state */
++	int rc;
++	const char *hook_name;
++	struct hook *run_me;
++	struct run_hooks_opt *options;
++};
+ 
+ /*
+  * Returns the path to the hook file, or NULL if the hook is missing
+@@ -13,4 +41,15 @@ const char *find_hook(const char *name);
+  */
+ int hook_exists(const char *hookname);
+ 
++/**
++ * Clear data from an initialized "struct run_hooks-opt".
++ */
++void run_hooks_opt_clear(struct run_hooks_opt *o);
++
++/**
++ * Takes an already resolved hook found via find_hook() and runs
++ * it. Does not call run_hooks_opt_clear() for you.
++ */
++int run_hooks(const char *hookname, const char *hook_path,
++	      struct run_hooks_opt *options);
+ #endif
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+new file mode 100755
+index 00000000000..3aea1b105f0
+--- /dev/null
++++ b/t/t1800-hook.sh
+@@ -0,0 +1,129 @@
++#!/bin/sh
++
++test_description='git-hook command'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++
++test_expect_success 'git hook usage' '
++	test_expect_code 129 git hook &&
++	test_expect_code 129 git hook run &&
++	test_expect_code 129 git hook run -h &&
++	test_expect_code 129 git hook run --unknown 2>err &&
++	grep "unknown option" err
++'
++
++test_expect_success 'git hook run: nonexistent hook' '
++	cat >stderr.expect <<-\EOF &&
++	error: cannot find a hook named test-hook
++	EOF
++	test_expect_code 1 git hook run test-hook 2>stderr.actual &&
++	test_cmp stderr.expect stderr.actual
++'
++
++test_expect_success 'git hook run: basic' '
++	write_script .git/hooks/test-hook <<-EOF &&
++	echo Test hook
++	EOF
++
++	cat >expect <<-\EOF &&
++	Test hook
++	EOF
++	git hook run test-hook 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git hook run: stdout and stderr both write to our stderr' '
++	write_script .git/hooks/test-hook <<-EOF &&
++	echo >&1 Will end up on stderr
++	echo >&2 Will end up on stderr
++	EOF
++
++	cat >stderr.expect <<-\EOF &&
++	Will end up on stderr
++	Will end up on stderr
++	EOF
++	git hook run test-hook >stdout.actual 2>stderr.actual &&
++	test_cmp stderr.expect stderr.actual &&
++	test_must_be_empty stdout.actual
++'
++
++test_expect_success 'git hook run: exit codes are passed along' '
++	write_script .git/hooks/test-hook <<-EOF &&
++	exit 1
++	EOF
++
++	test_expect_code 1 git hook run test-hook &&
++
++	write_script .git/hooks/test-hook <<-EOF &&
++	exit 2
++	EOF
++
++	test_expect_code 2 git hook run test-hook &&
++
++	write_script .git/hooks/test-hook <<-EOF &&
++	exit 128
++	EOF
++
++	test_expect_code 128 git hook run test-hook &&
++
++	write_script .git/hooks/test-hook <<-EOF &&
++	exit 129
++	EOF
++
++	test_expect_code 129 git hook run test-hook
++'
++
++test_expect_success 'git hook run arg u ments without -- is not allowed' '
++	test_expect_code 129 git hook run test-hook arg u ments
++'
++
++test_expect_success 'git hook run -- pass arguments' '
++	write_script .git/hooks/test-hook <<-\EOF &&
++	echo $1
++	echo $2
++	EOF
++
++	cat >expect <<-EOF &&
++	arg
++	u ments
++	EOF
++
++	git hook run test-hook -- arg "u ments" 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git hook run -- out-of-repo runs excluded' '
++	write_script .git/hooks/test-hook <<-EOF &&
++	echo Test hook
++	EOF
++
++	nongit test_must_fail git hook run test-hook
++'
++
++test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
++	mkdir my-hooks &&
++	write_script my-hooks/test-hook <<-\EOF &&
++	echo Hook ran $1 >>actual
++	EOF
++
++	cat >expect <<-\EOF &&
++	Test hook
++	Hook ran one
++	Hook ran two
++	Hook ran three
++	Hook ran four
++	EOF
++
++	# Test various ways of specifying the path. See also
++	# t1350-config-hooks-path.sh
++	>actual &&
++	git hook run test-hook -- ignored 2>>actual &&
++	git -c core.hooksPath=my-hooks hook run test-hook -- one 2>>actual &&
++	git -c core.hooksPath=my-hooks/ hook run test-hook -- two 2>>actual &&
++	git -c core.hooksPath="$PWD/my-hooks" hook run test-hook -- three 2>>actual &&
++	git -c core.hooksPath="$PWD/my-hooks/" hook run test-hook -- four 2>>actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 2.33.0.1567.g7b23ce7ed9e
 
