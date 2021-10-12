@@ -2,115 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EFCDC433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 14:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 277DAC433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 16:07:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3086461074
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 14:56:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F31F260F23
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 16:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237324AbhJLO6F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 10:58:05 -0400
-Received: from gourmet.spamgourmet.com ([216.75.62.102]:42107 "EHLO
-        gourmet8.spamgourmet.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S230195AbhJLO6E (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Oct 2021 10:58:04 -0400
-Received: from spamgourmet by gourmet7.spamgourmet.com with local (Exim 4.94.2)
-        (envelope-from <git.mexon@spamgourmet.com>)
-        id 1maJCE-0000xj-Dp
-        for git@vger.kernel.org; Tue, 12 Oct 2021 14:56:02 +0000
-Received: from exon.name ([209.97.141.204] helo=mail.exon.name)
-        by gourmet7.spamgourmet.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <git.mexon@spamgourmet.com>)
-        id 1maJCE-0000xM-4J
-        for git@vger.kernel.org; Tue, 12 Oct 2021 14:56:02 +0000
-Received: from [IPv6:2003:fb:ef0e:7b00:99a9:5743:1a42:383] (p200300fbef0e7b0099a957431a420383.dip0.t-ipconnect.de [IPv6:2003:fb:ef0e:7b00:99a9:5743:1a42:383])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mat)
-        by mail.exon.name (Postfix) with ESMTPSA id A757F3F872
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 15:56:00 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=exon.name; s=mail;
-        t=1634050560; bh=MMJWPLmRzCAgC8HVUIfd5liQ8nCMBqZx82jY02IPUIc=;
-        h=To:From:Subject:Date:From;
-        b=Nkl7XkZS/JoGee1nntDmEYfhcH/N/IQfMtOzjIwRfxuHIRknrVqcn2H+7AoKCbKAR
-         O/cYFjIPvpVaUDj8BukOKuYcVybmZXuheaMaVFrFx9CJ+8JweeYmu0vUxuCsGvYu65
-         F+Grt+2KEr+nY9hNOGJoD/FzUuLdwnIq0r3S0/imt3gSZzwGkt95TwwnhLubA269sW
-         P81YkF4chYxR4QL8txBnGRDi1Qgz+EhJqdDOwnLqLPVc0mkS5PZCf9PHuT1oFBuUlI
-         ixQDvDMTuhx5QCzCECu2hwA7eGa7Vp++3mq79nDkf2oaeLklujJgTAuDEZneyhp7+l
-         Cb425F9n0fY0A==
-To:     git@vger.kernel.org
-From:   git.mexon@spamgourmet.com
-Subject: [BUG] git add -A --dry-run adds files to .git directory
-Message-ID: <a2c0deed-fff3-6c1c-633f-af9dffea1e02@exon.name>
-Date:   Tue, 12 Oct 2021 16:55:59 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S229771AbhJLQJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 12:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229510AbhJLQJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 12:09:56 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C88C061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 09:07:54 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id y26so90546266lfa.11
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 09:07:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=46EuIhPsWNsD8X353S6QR/IJe8OqeqVFikhnARWJtHA=;
+        b=WCOwK/AUlFpQ1MajOspZKJuK7f3wkCcpMgNvrjZATAFcHp2kJU+S+CWogWJpH9P2Bv
+         Id5oP4UM1VJEILqbBkGx4xBQw7ifJYeLuK67rjigCnhnISXnP31/zzvM1cidEFInJnox
+         NqtD8O7chVtzI4kZQGlWsIeSxZQSuqSorQ0mKRWWxnIoI9DXLLf/thfHXi5y22cPPISm
+         oHnUUEqDHDhFRw+N5hodCs+5DoJRGCpc2QxlA2vpI7QafSdroyCm/qdj9lOLwzzwpAjy
+         gohNsdi9+xlmH5ENzTT1k1QRP9v3EM2ceKesGvVU5gOFyK6iCinEZVGtI3WILnyjEHHh
+         783A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=46EuIhPsWNsD8X353S6QR/IJe8OqeqVFikhnARWJtHA=;
+        b=d/XtsVDUuiKdaf+7m6es6Lmr8l+xTX3Jp08KdxBwjcQga8ASPnCymV2xvDtjySq8mR
+         dsb64E0aDUE++uS4SJiSkETYhM36EK/5g2PlpVKPj7TdUruG72eObt1Fe8UuSm5n7//F
+         KOvRhDjvQ4tCleTMvBcIlb+dXmZTkhwGLDbs+2WRLAJw3ASy4vGSGorUFejPcmgFYmTj
+         Ppbgpzwych0COuH0035b01mlWwc2FMgb4kkPBbxT47829QQaFXefgoXLeTXMIgC7gZth
+         GJeSFChr4s2LyZ52AOtwRe9YbbLpNH+sl+GGTP8dYYV+KjUxVLXZEvECAu3z3NUv/hWP
+         hUyw==
+X-Gm-Message-State: AOAM531q16Xng0TcmzSFWU+rNGOhlTCZ8sF+cYfp5efNI9jAhpoSTuyw
+        sWPs71vRFmYYXothkT1iwDXE1M/FNmQ=
+X-Google-Smtp-Source: ABdhPJzUiAXtozA7gJeL7Tt6ta5Ts4Fvg2X5mSzxFuPlGOWuNQSnUFqBMfzGhAyzdPv0jO5Fno+94Q==
+X-Received: by 2002:a2e:4a12:: with SMTP id x18mr32110758lja.309.1634054872525;
+        Tue, 12 Oct 2021 09:07:52 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id i27sm222399lfo.173.2021.10.12.09.07.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Oct 2021 09:07:52 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH RFC v1] stash: implement '--staged' option for 'push'
+ and 'save'
+References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
+        <CAPig+cQgZX5U0KThgSKjmgvOvEZWxPF_BovYYe=VfjDvUE5c9Q@mail.gmail.com>
+        <87fst7z0oa.fsf@osv.gnss.ru> <87y26yk35r.fsf@evledraar.gmail.com>
+        <xmqqa6je8n5c.fsf@gitster.g> <xmqqo87u777d.fsf@gitster.g>
+Date:   Tue, 12 Oct 2021 19:07:51 +0300
+In-Reply-To: <xmqqo87u777d.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        12 Oct 2021 05:34:14 -0700")
+Message-ID: <87k0ii446g.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Junio C Hamano <gitster@pobox.com> writes:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> More importantly...
+>>
+>> Whenever I think about a new "feature", I try to come up with a
+>> story in which the feature effectively improves the end-user's life,
+>> how it fits in the larger picture, and enables something that is
+>> hard to do by combining other tools.
+>>
+>> The kind of "story" I would aim for is like this.  Suppose we were
+>> selling not "git stash -S" but "git stash -k". ...
+>
 
-mat@charly:~$ git init repo
-mat@charly:~$ cat /dev/random | head -c 100000000 > repo/randomfile
-mat@charly:~$ git -C repo add -A -n
-mat@charly:~$ du -hs repo/.git
+[...]
 
-What did you expect to happen? (Expected behavior)
+> So in short, I do not think I am strongly opposed to "git stash -S"
+> existing, since I did find one use case story that it could be used,
+> but I do think it is redundant and unnecessary.
 
-  76K    repo/.git
+Redundant? Yes. Unnecessary? Yes. Useful? Yes. ;-)
 
-What happened instead? (Actual behavior)
+I took the steps to propose the new feature after yet another round of
+"how do I quickly store this tiny bit of changes I just figured I need
+for later, out of bunch of VIWIP changes?"
 
-  97M    repo/.git
+  git stash --staged
 
-What's different between what you expected and what actually happened?
+is exactly the (currently missing) answer for me, as I have pretty
+interactive tool to stage diff chunks always handy.
 
-Even though I specified -n on the command line to make a dry run, it 
-still added the large file as an object.
+What's your answer, I wonder?
 
-Anything else you want to add:
+That said, I'm also curious what story, if any, do you have for 'git
+stash --patch', as exactly the same story should be applicable to
+proposed 'git stash --staged', as far as I can see.
 
-This is counter-intuitive behaviour.  When the documentation says "Don't 
-actually add the file(s)", it's reasonable to expect that this command 
-will leave the repository state as it found it.  If there's a good 
-reason why these files should be added to the .git directory, that 
-behaviour should be made clear in the documentation, probably including 
-the reason why that counter-intuitive behaviour is necessary.
-
-This bit me due to a script that was using git add -A -n to detect if a 
-repository had been locally modified.  While I do have alternative 
-(actually better) ways to get this information, it wasn't an 
-unreasonable command to use in the first place, and it caused a real 
-issue in a production system.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.30.1 (Apple Git-130)
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Mon Aug 30 06:12:21 
-PDT 2021; root:xnu-7195.141.6~3/RELEASE_X86_64 x86_64
-compiler info: clang: 13.0.0 (clang-1300.0.29.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
-
+Thanks,
+-- Sergey Organov
