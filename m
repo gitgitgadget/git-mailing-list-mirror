@@ -2,91 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81134C433EF
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 20:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A53AC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 20:42:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58CF7610C9
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 20:37:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37A776023F
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 20:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234047AbhJLUj0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 16:39:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60989 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233690AbhJLUjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 16:39:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54D641015F7;
-        Tue, 12 Oct 2021 16:37:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eed2HTux5QiU
-        vgGxL8L5NKY/Pliz4C7BeiI9AoEuXc4=; b=gykkhWi84vv6Dzz0HSQg3DDm1xCC
-        hsFeBLNbfYoeh6ANzkkyVEdRVxD6F1ZtnbOIqY3P1J7jqY2vZYzGIn9nwkQNoI3U
-        M0QGQc91gT6tXZELFw3fAe2bZu0OuzHghX821IJqTwxugeCU1K2hk52L92kjWXb3
-        vM30fWZqqMDpxyY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C1AA1015F6;
-        Tue, 12 Oct 2021 16:37:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A140B1015F4;
-        Tue, 12 Oct 2021 16:37:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        git.mexon@spamgourmet.com, git@vger.kernel.org
-Subject: Re: [PATCH] add: don't write objects with --dry-run
-References: <a2c0deed-fff3-6c1c-633f-af9dffea1e02@exon.name>
-        <0131d21f-dabd-3da5-34bd-a570e990f9e0@web.de>
-        <871r4qj8mw.fsf@evledraar.gmail.com>
-Date:   Tue, 12 Oct 2021 13:37:21 -0700
-In-Reply-To: <871r4qj8mw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 12 Oct 2021 22:17:06 +0200")
-Message-ID: <xmqqfst62d4u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234486AbhJLUoE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 16:44:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38004 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232986AbhJLUoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 16:44:04 -0400
+Received: (qmail 1606 invoked by uid 109); 12 Oct 2021 20:42:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Oct 2021 20:42:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16371 invoked by uid 111); 12 Oct 2021 20:42:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Oct 2021 16:42:01 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Oct 2021 16:42:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Waite <alex@waite.eu>, git@vger.kernel.org
+Subject: Re: [BUG] credential wildcard does not match hostnames containing an
+ underscore
+Message-ID: <YWXzGeiUSMeq5Key@coredump.intra.peff.net>
+References: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
+ <xmqqk0ii3zl6.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 33DF9C90-2B9C-11EC-9F96-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqk0ii3zl6.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Oct 12, 2021 at 10:47:01AM -0700, Junio C Hamano wrote:
 
-> I think the "git fetch --dry-run" command behaves like this too,
-> i.e. doesn't update refs, but fetches and writes objects.
->
-> For the patch I hacked up I think it's easy to argue that it shouldn't
-> do compression etc.
->
-> For this sort of thing and "fetch" I'm not so sure. Do we really know
-> that there aren't people who rely on this for say the performance of
-> seeing what an operation would do, and then not pay as much for the
-> "real one" that updates the index/refs/etc. later? Is that subsequent
-> "fetch" cheaper because of the --dry-run?
+> "Alex Waite" <alex@waite.eu> writes:
+> 
+> >   This works for all tested subdomains /except/ for those which contain an
+> >   underscore.
+> >
+> >   authenticates without prompting:
+> >     git clone https://testA.example.com
+> >     git clone https://test-b.example.com
+> >
+> >   prompts for authentication:
+> >     git clone https://test_c.example.com
+> 
+> Hmph, given that hostnames cannot have '_' (cf. RFC1123 2.1 "Host
+> Names and Numbers", for example), the third URL seems invalid.  Is
+> this even a bug?
 
-The answer to the last one is an easy "yes".  Trying to gauge the
-time it would take for a real fetch with "--dry-run" is a losing
-battle, I would think, as the pre-fetching would make the "real" one
-cheaper, so from that point of view, I think we can ignore those who
-time "--dry-run" and try to figure out anything meaningful.
+That may be so for hostnames in general, but URLs seem to allow it. RFC
+3986 says:
 
-This in any case is an interesting area, as the definition of
-correctness of what "dry-run" does can be quite fuzzy.  As long as
-it does not change the index, "git add --dry-run", even if it writes
-objects or detects filesystem corruption by noticing I/O error while
-compressing the data taken from the working tree files, is still
-correct and the patch in question is not technically a bugfix (it is
-a performance thing).  "git fetch --dry-run" would fall into the
-same category, so would "git hash-object" without "-w".
+      host        = IP-literal / IPv4address / reg-name
+      reg-name    = *( unreserved / pct-encoded / sub-delims )
+      unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 
-All can use performance enhancement without breaking existing users,
-I would think.
+So underscore is definitely allowed in the host portion. Our code
+complains during url_normalize(), in this code:
 
-Thanks.
+          if (allow_globs)
+                  spanned = strspn(url, URL_HOST_CHARS "*");
+          else
+                  spanned = strspn(url, URL_HOST_CHARS);
+  
+          if (spanned < colon_ptr - url) {
+                  /* Host name has invalid characters */
+                  if (out_info) {
+                          out_info->url = NULL;
+                          out_info->err = _("invalid characters in host name");
+                  }
+                  strbuf_release(&norm);
+                  return NULL;
+          }
+
+because earlier we define URL_HOST_CHARS without underscore:
+
+  #define URL_HOST_CHARS URL_ALPHADIGIT ".-[:]" /* IPv6 literals need [:] */
+
+I'm not sure why, given that this otherwise seems to match according to
+the rfc. This code comes from 3402a8dc48 (config: add helper to
+normalize and match URLs, 2013-07-31), but there's no mention of
+underscore there. Possibly it came from earlier rules (rfc1738, for
+example, has a stricter grammar that allows only alphabit and dashes).
+
+I can't imagine it would cause any problems to allow it here (as noted,
+we're perfectly happy to use the name in other contexts, and I don't
+think there any syntactic gotchas here).
+
+Adding "_" to that #define does make it work as expected.
+
+-Peff
