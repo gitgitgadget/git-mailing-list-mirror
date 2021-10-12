@@ -2,94 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED82AC433EF
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 03:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABDF6C433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 08:05:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE8EE608FE
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 03:14:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9278260F21
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 08:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232018AbhJLDQy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 23:16:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47696 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231742AbhJLDQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 23:16:52 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A15C061570
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 20:14:51 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id q5so4517621pgr.7
-        for <git@vger.kernel.org>; Mon, 11 Oct 2021 20:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=mAjLDYOWS14KqmOjzTrPpHaOisGEReWo1xGOKQv3wS0=;
-        b=kpy3J5W0dq046Bpc1PUJy7SXWGDHSTrJglZU5ZQUez5EvyULZ4HdrA4uogQec99mIv
-         T0uISyx6CQUN/LJst4yYWReLjiKYuLOtDskHNhR3IbOneil7wJp8bHwhc8gRnMydAEH7
-         ySmy/ZTuIMxEunVTVt1r02VTdVtDqC1lZ1kgVPl/hTynLadCrq7s5hDjjAXCZ8cZfvX8
-         8EXHBSHhpp2zi0rm7bARUa1Km6RbszILwKm/7P552ZiAnduvXhQS/jGp5j61uc9DtB8/
-         eM84KthPYbWYW60HKOtYsHHoiTP7r9B5TFOt4Txy7a5RWD1blrghNsiG+3f/2VV+P7ia
-         TYOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=mAjLDYOWS14KqmOjzTrPpHaOisGEReWo1xGOKQv3wS0=;
-        b=QB/q7k9GVog0nwOMpzpRGsyq+ZMPEQRAFu0KXZ49aEiPfylfK8OlfC7oEKSqafCe/9
-         8BaXnDux9vKfGqWZXVbA4YgQZeJJDWCLAZHoBzol3nSFa0H6hgtaske2fGrXrKH07oKo
-         nRvuDmfgX6sizxiEJ8BL0rY+SsY9mxWo8Mrdy1UYXfkKFUgGEPl79trbwFO7O3xluowc
-         5odxyT3BfrG5aGchD0cZLe1EqICvuPc2n7NXubF4b4rIKDdREPYphzrDIF49KqP55dCV
-         R05h0ACPlKyQ5ks6W1LR29lRAfPJMN1/306PqY9lo+CzkBuiDH/4mki26wVqo7sXR/uq
-         jpkg==
-X-Gm-Message-State: AOAM530s1A/ifoWvpi3Ba5rJtPBrYaadmm5S97CPyPAY57oOhVtE847j
-        fglxpFDYzDA5fJE3IIXrmAI=
-X-Google-Smtp-Source: ABdhPJy25IFjqoc2hBCjcsJpE5a5Vob+nqtJFWAzee6+ELHsZ9upPgpAU7hoFTSHrj8AYhDTlWBOtQ==
-X-Received: by 2002:a62:bd09:0:b0:44c:8a7e:77a1 with SMTP id a9-20020a62bd09000000b0044c8a7e77a1mr29145742pff.66.1634008490638;
-        Mon, 11 Oct 2021 20:14:50 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-52.three.co.id. [116.206.12.52])
-        by smtp.gmail.com with ESMTPSA id rm6sm818339pjb.18.2021.10.11.20.14.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Oct 2021 20:14:50 -0700 (PDT)
-Message-ID: <fab92b70-8004-5765-1b8a-2cf1d12abb63@gmail.com>
-Date:   Tue, 12 Oct 2021 10:14:46 +0700
+        id S234845AbhJLIHS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 04:07:18 -0400
+Received: from outboundhk.mxmail.xiaomi.com ([207.226.244.123]:35766 "EHLO
+        xiaomi.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S234460AbhJLIHO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Oct 2021 04:07:14 -0400
+Received: from BJ-MBX02.mioffice.cn (10.237.8.122) by HK-MBX02.mioffice.cn
+ (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Tue, 12 Oct
+ 2021 16:04:45 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX02.mioffice.cn
+ (10.237.8.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Tue, 12 Oct
+ 2021 16:04:44 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e]) by
+ BJ-MBX01.mioffice.cn ([fe80::a533:b6ba:b457:de9e%9]) with mapi id
+ 15.02.0858.015; Tue, 12 Oct 2021 16:04:44 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [External Mail]Re: why git is so slow for a tiny git push?
+Thread-Topic: [External Mail]Re: why git is so slow for a tiny git push?
+Thread-Index: Ade84mmmstEBXQTRSsexpdzlhc8vnAAVTYYAAAAT7KAAUV7NAAAwVDmA
+Date:   Tue, 12 Oct 2021 08:04:44 +0000
+Message-ID: <ef2aa0d3ea8a4d98b910abdfd55191d0@xiaomi.com>
+References: <c5a8595658d6416684c2bbd317494c49@xiaomi.com>
+ <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
+ <576b2f3e162e4f86992d8f4e680d0881@xiaomi.com>
+ <YWRr9g32cMlIc37V@coredump.intra.peff.net>
+In-Reply-To: <YWRr9g32cMlIc37V@coredump.intra.peff.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH] archive: add test testing MIME for created archive
- through compression filter
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
-References: <20211011112712.475306-1-bagasdotme@gmail.com>
- <xmqqlf2zd0d4.fsf@gitster.g>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <xmqqlf2zd0d4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/21 22.53, Junio C Hamano wrote:
-> I think a lot more portable and robust way to test the feature is to
-> configure git config tar.tar.test.command (or come up with a name for
-> a suffix to be used in the test), point it at a script created in this
-> test script and run git archive with output filename that would trigger
-> the command.  Then, arrange the test to notice if the "test" script was
-> called with expected command line arguments and standard input.
-> 
-> That way, you do not need to rely on prereqs and you do not have to
-> resort to un-portable use of the "file" command.  After all, you are
-> *not* testing if "bzip2 -c" the user happens to have on their $PATH
-> produces output their "find" recognises as bzip2 compressed.
-> 
-
-The intent of this test is to ensure `git archive -o 
-something.tar.<format>` produces proper compressed tar archive that can 
-be decompressed with the corresponding decompression tool (such as 
-gunzip for gz files), and not just with `tar xvf`.
-
--- 
-An old man doll... just what I always wanted! - Clara
+SSBoYXZlIGJpdG1hcCBpbmRlZWQgYmVjYXVzZSBteSBtYXN0ZXIgc2VydmVyIGFsc28gc2VydmVz
+IGFzIGRvd25sb2FkIHNlcnZlci4NCkhvd2V2ZXIgSSdtIHVzaW5nIGdpdCAyLjE3LjAsIGFuZCBJ
+IGRpZG4ndCBzZXQgcmVwYWNrLndyaXRlQml0bWFwcw0KDQpBbHNvIEkgdHJpZWQgIkdJVF9UUkFD
+RTJfUEVSRiIgYW5kIHRoZSBpdCBpcyAiZW51bWVyYXRpbmcgb2JqZWN0cyIgY29zdCBtb3N0IG9m
+IHRoZSB0aW1lLg0KQnV0IHdoeSBiaXRtYXBzIGNhbiBjYXVzZSBwdXNoIHRvIGJlIHNsb3c/IERv
+IHlvdSBtZWFuIHRoYXQgaWYgd3JpdGVCaXRtYXBzIGlzIHRydWUsIGV2ZXJ5IHB1c2ggd2lsbCBy
+ZWdlbmVyYXRlIGJpdG1hcCBmaWxlPyBJZiB0aGF0J3Mgd2hhdCB5b3UgbWVhbiwgd2hhdCBJIHNl
+ZSBpcyB0aGUgb25seSBiaXRtYXAgZmlsZSBpbiBteSByZXBvIGRpZG4ndCBjaGFuZ2UgYWNyb3Nz
+IHRpbWUgKHRoZSBtb2RpZnkgdGltZSBpcyBvbmUgbW9udGggYWdvLCBsb25nIGJlZm9yZSBJIHJ1
+biB0aGUgZXhwZXJpbWVudCkNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KDQpJIGNhbWUgdXAgd2l0aCBhbiBpZGVhLCBzaW5jZSBJIGZvdW5kIGlm
+IEkgZGVjcmVhc2UgdGhlIHJlZnMgbnVtYmVyLCBwdXNoIGdvZXMgbXVjaCBmYXN0ZXIgdGhhbiBi
+ZWZvcmUuDQpTbyBJIHVzZSByZWNlaXZlLmhpZGVyZWZzIHRvIGhpZGUgbW9zdCBvZiByZWZzLiBB
+bmQgSSBjb21tZW50ICJyZWplY3RfdXBkYXRlc190b19oaWRkZW4iIGluIHJlY2VpdmUtcGFjay5j
+IChiZWNhdXNlIEkgbmVlZCB0byB1cGRhdGUgdGhvc2UgaGlkZSByZWZzLCBvciBhZGQgbmV3IHJl
+ZnMpDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgPHBlZmZA
+cGVmZi5uZXQ+DQpTZW50OiBUdWVzZGF5LCBPY3RvYmVyIDEyLCAyMDIxIDEyOjUzIEFNDQpUbzog
+56iL5rSLIDxjaGVuZ3lhbmdAeGlhb21pLmNvbT4NCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnDQpT
+dWJqZWN0OiBbRXh0ZXJuYWwgTWFpbF1SZTogd2h5IGdpdCBpcyBzbyBzbG93IGZvciBhIHRpbnkg
+Z2l0IHB1c2g/DQoNCipUaGlzIG1lc3NhZ2Ugb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgWElB
+T01JLiBQbGVhc2UgdHJlYXQgdGhpcyBlbWFpbCB3aXRoIGNhdXRpb24qDQoNCg0KT24gU2F0LCBP
+Y3QgMDksIDIwMjEgYXQgMDY6MDU6NTZQTSArMDAwMCwg56iL5rSLIHdyb3RlOg0KDQo+IEkgaGF2
+ZSBhIHJlYWxseSBiaWcgcmVwb3NpdG9yeSB3aGljaCBoYXMgOW0gb2JqZWN0cyBhbmQgbWF5YmUg
+MzAwayByZWZzLg0KPiBJIG5vdGljZWQgdGhhdCBnaXQgcHVzaCBpcyByZWFsbHkgc2xvdyBmb3Ig
+YSB0aW55IGNoYW5nZS4gQW4gZXhhbXBsZQ0KPiBzaG93cyBiZWxvdw0KPg0KPiAzIG9iamVjdHMg
+d2hpY2ggaXMgb25seSA3IGtiIHRha2VzIDM2IHNlY29uZHMgdG8gcGFjay1vYmplY3RzIChpdCdz
+DQo+IHRoZSB0aW1lIGFmdGVyIGkgZW5hYmxlIHBhY2sudXNlc3BhcnNlKSBIb3dldmVyIGlmIEkg
+bWFudWFsbHkgY2FsbA0KPiDigJxwYWNrLW9iamVjdHPigJ0gd2l0aCB0aGUgZXhhY3RseSBzYW1l
+IG9iamVjdHMgU0hBMS4gSXQgb25seSB0YWtlIGxlc3MgdGhhbiAwLjAwNSBzZWNvbmQgV2hhdCBp
+cyByZWFsbHkgcGFzcyB0byDigJxwYWNrLW9iamVjdHPigJ0gd2hlbiBJIGNhbGwg4oCcZ2l0IHB1
+c2jigJ0/DQoNCkRvIHlvdSBoYXZlIGFuIG9iamVjdHMvcGFjay9wYWNrLSouYml0bWFwIGZpbGUg
+b24gdGhlIHNlbmRpbmcgc2lkZT8NCg0KVGhlIGJpdG1hcCBjb2RlIGlzIGVhZ2VyIHRvIHByb2R1
+Y2UgYW4gZXhhY3Qgc2V0IGRpZmZlcmVuY2UgYmV0d2VlbiB3aGF0IGlzIGJlaW5nIHNlbnQgYW5k
+IHdoYXQgdGhlIG90aGVyIHNpZGUgaGFzLiBJZiB5b3UgaGF2ZSBpbmNvbXBsZXRlIGJpdG1hcCBj
+b3ZlcmFnZSAod2hpY2ggaXMgYWxtb3N0IGEgY2VydGFpbnR5IGlmIHlvdSBoYXZlIDMwMGsgcmVm
+cyksIGl0IG1heSBkbyBhIGxvdCBvZiB0cmF2ZXJzYWwgZmlsbGluZyBpbiB0aGUgIndoYXQgdGhl
+IG90aGVyIHNpZGUgaGFzIiBwYXJ0IG9mIHRoZSBiaXRtYXAsIGV2ZW4gdGhvdWdoIGl0IGRvZXMg
+bm90IGVuZCB1cCBoZWxwaW5nIHRoZSBmaW5hbCByZXN1bHQgaW4gdGhpcyBjYXNlLg0KDQpCaXRt
+YXBzIGFyZSBlbmFibGVkIGJ5IGRlZmF1bHQgb24gYmFyZSByZXBvcyBzaW5jZSBHaXQgdjIuMjIu
+MC4gWW91IGNhbiBvdmVycmlkZSB0aGlzIHdpdGg6DQoNCiAgZ2l0IGNvbmZpZyByZXBhY2sud3Jp
+dGVCaXRtYXBzIGZhbHNlDQogIGdpdCBnYw0KDQoob3IgaWYgeW91IGRvbid0IHdhbnQgdG8gZG8g
+dGhlIGdjLCB5b3UgY2FuIHNhZmVseSByZW1vdmUgdGhlICcuYml0bWFwJw0KZmlsZSkuDQoNCkkg
+bm90aWNlIHlvdSB1c2VkIEdJVF9UUkFDRV9QRVJGT1JNQU5DRSBiZWxvdy4gVHJ5IEdJVF9UUkFD
+RTJfUEVSRiBpbnN0ZWFkLCB3aGljaCBnb2VzIGludG8gZGV0YWlsIHdpdGhpbiBwYXJ0aWN1bGFy
+IHByb2Nlc3Nlcy4gSWYgdGhpcyBpcyByZWxhdGVkIHRvIGJpdG1hcHMsIEknZCBleHBlY3QgdGhl
+IHRpbWUgdG8gZ28gdG8gdGhlICJlbnVtZXJhdGUtb2JqZWN0cyINCnJlZ2lvbi4NCg0KLVBlZmYN
+CiMvKioqKioq5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ5bCP57Gz5YWs5Y+455qE5L+d5a+G
+5L+h5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A5Lit5YiX5Ye655qE5Liq5Lq6
+5oiW576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu75L2V5b2i5byP5L2/55So77yI
+5YyF5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE6Zyy44CB5aSN5Yi244CB5oiW
+5pWj5Y+R77yJ5pys6YKu5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c5oKo6ZSZ5pS25LqG5pys6YKu
+5Lu277yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l5Y+R5Lu25Lq65bm25Yig6Zmk
+5pys6YKu5Lu277yBIFRoaXMgZS1tYWlsIGFuZCBpdHMgYXR0YWNobWVudHMgY29udGFpbiBjb25m
+aWRlbnRpYWwgaW5mb3JtYXRpb24gZnJvbSBYSUFPTUksIHdoaWNoIGlzIGludGVuZGVkIG9ubHkg
+Zm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3MgaXMgbGlzdGVkIGFib3ZlLiBB
+bnkgdXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVyZWluIGluIGFueSB3YXkgKGlu
+Y2x1ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBwYXJ0aWFsIGRpc2Nsb3N1cmUs
+IHJlcHJvZHVjdGlvbiwgb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVyc29ucyBvdGhlciB0aGFuIHRo
+ZSBpbnRlbmRlZCByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUgdGhp
+cyBlLW1haWwgaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSBwaG9uZSBvciBl
+bWFpbCBpbW1lZGlhdGVseSBhbmQgZGVsZXRlIGl0ISoqKioqKi8jDQo=
