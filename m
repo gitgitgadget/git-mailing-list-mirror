@@ -2,222 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E20FC433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAEFCC433EF
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 14:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3830960EBB
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 13:57:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90C4D6108F
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 14:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237176AbhJLN7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Oct 2021 09:59:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237108AbhJLN67 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Oct 2021 09:58:59 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D71DC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:57 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k7so67101853wrd.13
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 06:56:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kGvF9Lx8tyOZBdFnvKsOlGfbb+jzFP2WqHQRso2a93k=;
-        b=cm27hyQZLaFpRCwt7C07NTOHx7F9Wpo8BH8iqh2tCjx1WbKrHCtDVnMWBaFXkGH8O/
-         tnxIS3vhVubL6UHXiBBohOnq0LDEuwJsNjAGTUvBRC9u+3c37P6XDBSrKmgNJxYbH+qF
-         P9K0fkFRlvIXSCwcqXQHyZIdqMRmVDNh5m8eHWyuUb/aUibTEgd60vwSwkICcj33AqL2
-         93ehrjyV+UoCRPbnnlQUNBToVsJdcBPlTvV2J4s22Lx/p4cnaKg3DpKTjbuFtai9pai0
-         nx4GvoQWHCNPrBHuM/ZfexqwjXS0W8iRHsUZtUuHJH8ElCCrC7hoPjiTkH1l6A02sa/x
-         Yp7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kGvF9Lx8tyOZBdFnvKsOlGfbb+jzFP2WqHQRso2a93k=;
-        b=MZhLuX8ByPwFDPwTYx5iwE/KVxfR2do37NAOHptgi2GclEwlITwoyZojnqvlG2zJTr
-         f/p95cyoTNqGXnsJSc1H//CC6pz89O2s9iDUw6Gy9J+qc2vxDZug7zCDrDEQkcn+qj0V
-         TIc0yIr1pHHCCBQUaUk4MKJNKzbW5IMGv4CH2TaICF718eV1knGp2RQrJiv+RMDLpYIL
-         9Qgv8DIp7bLO0tgZh0uEe69M6WLSwzUTlXnE4NbF9ecmDivD6epwJXr8TGB9GZfTK4Pk
-         nmYV2EdZjdcbUoGEVR/5ZnoaVhVNzlO3zEXGUdnapqCcBOvJltlj1u2BqSxAWfGIvXZh
-         RRew==
-X-Gm-Message-State: AOAM530DE+uUH9VIv76T9zhVdfKU4WQ6jsCM1//PL6AWeEnn6ouYRaAh
-        k519rWA64eTxXs6Ptz449GDUBsOZaOMMvg==
-X-Google-Smtp-Source: ABdhPJw2jQIksFs9Lqf9m91h11AXwBokl2sW8aJJiHm7npJ/3FH4ZNBXpOLO8X16LwExIO3rQAqB6g==
-X-Received: by 2002:adf:f192:: with SMTP id h18mr9847750wro.33.1634047015662;
-        Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6sm4031950wmp.1.2021.10.12.06.56.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 06:56:55 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S237223AbhJLO13 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Oct 2021 10:27:29 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:36387 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230195AbhJLO12 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Oct 2021 10:27:28 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 985065C00DB
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 10:25:26 -0400 (EDT)
+Received: from imap42 ([10.202.2.92])
+  by compute6.internal (MEProxy); Tue, 12 Oct 2021 10:25:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=waite.eu; h=
+        mime-version:message-id:date:from:to:subject:content-type; s=
+        fm1; bh=N79GHBEHK5dMe+eLPzDSpGbN1EmpQC1Ksu8JOHdvQno=; b=rAp/RBp0
+        5vR2aDb8BcvDQZ/veeI4tQ+tC7oddMRkc8J9j7jT1MiFjCb+1BoF1RsJatZu8582
+        9MGrw68hv2LZCdfSTqbHlx/NSD5eXxzbrgdovhEKpjF438/jXEBw36uWcLKNTB3c
+        lXN43YnBV5pTMK7bah0u9VFBdQPTql7XxfAA+f9dLhZqSHP6GLnBbs2To3LYY9gF
+        cGh8+I44Eg/uJH1uon4MAtrmSN2I/NTfpdAoM2TeSrz/Oegf4q5SAmw6iCydNWPJ
+        a5+QWCIgYyGwgZDYzDpvVZHujLmfUwnoG237LORjFq/A+S3BARY2ipHhYDAauz2v
+        3GEwErjeYGdUtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=N79GHBEHK5dMe+eLPzDSpGbN1EmpQ
+        C1Ksu8JOHdvQno=; b=Uw7NQZ5Y8XrDyKp0dkza17E5Hc5coRBKI1T0z+rXHhNOX
+        d2TI0dNn/7GZ+gmbigSmirfVrzOmrTATkN0qefsR9NkfiXrmx7mbsGg8eDCLTyI1
+        g5y8HUJhQBWjqgVyJ/938t50aR/lNtsOf4IIU0kSHHPzjAzgQqNSJKQc2UQB0lKa
+        gflqiThp2WG5v7xcmqadkZj9uDVpBtGoCF1xYuMitLYgObbLX+bTm/Re9VeprDdR
+        COSjlLTrzIscRQ93LypE9g9oGYHb4oafTHhaCYbTTzgfuJO2BGDOuar8CEYcB3Bk
+        kD0nk1mCE/pNEcKRmTlpYr9buMjwW0KM9NrDmF6xQ==
+X-ME-Sender: <xms:1pplYU_cO8V_ppuNd7HSabq7p6iAdAFAR_1xoCx3h6-Eoy78PfcpNw>
+    <xme:1pplYcvjNaVl5MVVrURp7OUJlfrffkVH6co79wQ4sr71myIgLWiBly__AW7av1nld
+    7YvmqK7HXNth_G3CQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddtkedgjeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+    erredtnecuhfhrohhmpedftehlvgigucghrghithgvfdcuoegrlhgvgiesfigrihhtvgdr
+    vghuqeenucggtffrrghtthgvrhhnpedvjefffeeiffefhfdvtdfhkeeileduveehjeefle
+    ekjeefteffleelhffgudetgfenucffohhmrghinhepghhithdqshgtmhdrtghomhdpvgig
+    rghmphhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpegrlhgvgiesfigrihhtvgdrvghu
+X-ME-Proxy: <xmx:1pplYaC3HsNypcTZyIBAuGcBITmKRebaftS00H58GVLCXKyj8phk4w>
+    <xmx:1pplYUdbcfm2w9xgwj02AxHoIzpe3nvr5OFuaRnrWQYDk9YNsgy9aw>
+    <xmx:1pplYZNr_QAJtXXqBav8U0F02kc_AamUJKJ30YScyqS9b6lUKfgUWg>
+    <xmx:1pplYfbhRw_Ca-BIYn0HFz-yDsG-YNvuZzangNKZVZkuglv7iIYuJA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 72AD82180075; Tue, 12 Oct 2021 10:25:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1345-g8441cd7852-fm-20211006.001-g8441cd78
+Mime-Version: 1.0
+Message-Id: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
+Date:   Tue, 12 Oct 2021 16:25:04 +0200
+From:   "Alex Waite" <alex@waite.eu>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 9/9] leak tests: mark some misc tests as passing with SANITIZE=leak
-Date:   Tue, 12 Oct 2021 15:56:45 +0200
-Message-Id: <patch-v2-9.9-ba30265cb72-20211012T135343Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.1567.g7b23ce7ed9e
-In-Reply-To: <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20211006T094705Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211012T135343Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [BUG] credential wildcard does not match hostnames containing an underscore
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark some tests that match "*{mktree,commit,diff,grep,rm,merge,hunk}*"
-as passing when git is compiled with SANITIZE=leak. They'll now be
-listed as running under the "GIT_TEST_PASSING_SANITIZE_LEAK=true" test
-mode (the "linux-leaks" CI target).
+Hey Everyone,
 
-These were picked because we still have a lot of failures in adjacent
-areas, and we didn't have much if any coverage of e.g. grep and diff
-before this change, we could still whitelist a lot more tests, but
-let's stop for now.
+This is my first time reporting a bug to this list. I attempted to follow the direction on the git website [1], and have followed the template provided by "git bugreport".
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t1010-mktree.sh              | 1 +
- t/t1100-commit-tree-options.sh | 1 +
- t/t3601-rm-pathspec-file.sh    | 1 +
- t/t4002-diff-basic.sh          | 2 ++
- t/t4016-diff-quote.sh          | 1 +
- t/t4019-diff-wserror.sh        | 1 +
- t/t4025-hunk-header.sh         | 1 +
- t/t4300-merge-tree.sh          | 2 ++
- t/t7813-grep-icase-iso.sh      | 1 +
- t/t7816-grep-binary-pattern.sh | 1 +
- 10 files changed, 12 insertions(+)
+If my report should be formatted differently, or reported elsewhere, please let me know. :-)
 
-diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
-index b946f876864..48bfad07abc 100755
---- a/t/t1010-mktree.sh
-+++ b/t/t1010-mktree.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git mktree'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
-index ae66ba5babf..0f37a43fd3c 100755
---- a/t/t1100-commit-tree-options.sh
-+++ b/t/t1100-commit-tree-options.sh
-@@ -12,6 +12,7 @@ Also make sure that command line parser understands the normal
- "flags first and then non flag arguments" command line.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- cat >expected <<EOF
-diff --git a/t/t3601-rm-pathspec-file.sh b/t/t3601-rm-pathspec-file.sh
-index 7de21f8bcff..b2a8db69afc 100755
---- a/t/t3601-rm-pathspec-file.sh
-+++ b/t/t3601-rm-pathspec-file.sh
-@@ -2,6 +2,7 @@
- 
- test_description='rm --pathspec-from-file'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_tick
-diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-index 6a9f010197c..ea52e5b91b7 100755
---- a/t/t4002-diff-basic.sh
-+++ b/t/t4002-diff-basic.sh
-@@ -6,6 +6,8 @@
- test_description='Test diff raw-output.
- 
- '
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- . "$TEST_DIRECTORY"/lib-read-tree-m-3way.sh
-diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
-index 876271d6826..5a8d8876831 100755
---- a/t/t4016-diff-quote.sh
-+++ b/t/t4016-diff-quote.sh
-@@ -6,6 +6,7 @@
- test_description='Quoting paths in diff output.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- P0='pathname'
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index c6135c75488..c68729ac098 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -2,6 +2,7 @@
- 
- test_description='diff whitespace error detection'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4025-hunk-header.sh b/t/t4025-hunk-header.sh
-index 35578f2bb91..6356961de46 100755
---- a/t/t4025-hunk-header.sh
-+++ b/t/t4025-hunk-header.sh
-@@ -2,6 +2,7 @@
- 
- test_description='diff hunk header truncation'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- N='日本語'
-diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-index e59601e5fe9..c52c8a21fae 100755
---- a/t/t4300-merge-tree.sh
-+++ b/t/t4300-merge-tree.sh
-@@ -4,6 +4,8 @@
- #
- 
- test_description='git merge-tree'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
-index 701e08a8e59..1227885737b 100755
---- a/t/t7813-grep-icase-iso.sh
-+++ b/t/t7813-grep-icase-iso.sh
-@@ -2,6 +2,7 @@
- 
- test_description='grep icase on non-English locales'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-gettext.sh
- 
- test_expect_success GETTEXT_ISO_LOCALE 'setup' '
-diff --git a/t/t7816-grep-binary-pattern.sh b/t/t7816-grep-binary-pattern.sh
-index 9d67a5fc4cf..fdb2355649e 100755
---- a/t/t7816-grep-binary-pattern.sh
-+++ b/t/t7816-grep-binary-pattern.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git grep with a binary pattern files'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-gettext.sh
- 
- nul_match_internal () {
--- 
-2.33.0.1567.g7b23ce7ed9e
+---Alex
+
+[1] https://git-scm.com/community
+
+-------
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+  I configured my ~/.gitconfig so that git credentials invoke a helper for a
+  subdomain using wildcards. For example:
+
+  [credential "https://*.example.com"]
+          helper = "/usr/local/bin/custom_helper"
+
+  This works for all tested subdomains /except/ for those which contain an
+  underscore.
+
+  authenticates without prompting:
+    git clone https://testA.example.com
+    git clone https://test-b.example.com
+
+  prompts for authentication:
+    git clone https://test_c.example.com
+
+
+What did you expect to happen? (Expected behavior)
+
+  I expected the pattern matching to work for all resolved URLs.
+
+
+What happened instead? (Actual behavior)
+
+  It does not match URLs which contain an underscore.
+
+
+What's different between what you expected and what actually happened?
+
+  It only matches URLs which do not contain an underscore.
+
+
+Anything else you want to add:
+
+  If I don't use pattern matching, and instead state the URL explicitly in
+  ~/.gitconfig, it works as expected. For example, the following works:
+
+  [credential "https://test_c.example.com"]
+          helper = "/usr/local/bin/custom_helper"
+
+  As part of writing this bug report, I learned that underscores are not valid
+  DNS characters for hostnames (but are valid for other record types, which are
+  largely irrelevant to git).
+
+  What is notable is that git pattern matching enforces the spec more strictly
+  than without pattern matching (and more strictly than the OS and every DNS
+  server between my system and the authoritative DNS server).
+
+  At minimum, git should be consistent with itself.
+
+  As for which behavior is "correct", the question is whether git wishes to
+  follow/enforce the spec tightly, or not get in the way of a real-world oddity
+  that everything else seems to tolerate.
+
+  This also likely affects patterns for http.<url>.*
+  https://git-scm.com/docs/git-config#Documentation/git-config.txt-httplturlgt
 
