@@ -2,122 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B90C433F5
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4558C433F5
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:28:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A36160E78
-	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8124A60D42
+	for <git@archiver.kernel.org>; Tue, 12 Oct 2021 02:28:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231352AbhJLCX5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Oct 2021 22:23:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37326 "EHLO cloud.peff.net"
+        id S231586AbhJLCaB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Oct 2021 22:30:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37332 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231199AbhJLCX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Oct 2021 22:23:56 -0400
-Received: (qmail 30288 invoked by uid 109); 12 Oct 2021 02:21:55 -0000
+        id S231517AbhJLCaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Oct 2021 22:30:01 -0400
+Received: (qmail 30300 invoked by uid 109); 12 Oct 2021 02:28:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Oct 2021 02:21:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Oct 2021 02:28:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31172 invoked by uid 111); 12 Oct 2021 02:21:55 -0000
+Received: (qmail 31218 invoked by uid 111); 12 Oct 2021 02:27:59 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Oct 2021 22:21:55 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Oct 2021 22:27:59 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 11 Oct 2021 22:21:54 -0400
+Date:   Mon, 11 Oct 2021 22:27:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     Chris Chow <cchow@nianticlabs.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Inconsistency in git credential helper docs
-Message-ID: <YWTxQrOBTT8bWmFg@coredump.intra.peff.net>
-References: <CAH4DS54U-qN+NY2A50bBawbL1cwD74fdaZdQKdhXyZSzFS-Y+g@mail.gmail.com>
+To:     Robin Dupret <robin.dupret@gmail.com>
+Cc:     git@vger.kernel.org, Robin Dupret <robin.dupret@hey.com>
+Subject: Re: [PATCH] http-backend: remove a duplicated code branch
+Message-ID: <YWTyr6joJlyi1TPe@coredump.intra.peff.net>
+References: <20211011192546.1571-1-robin.dupret@hey.com>
+ <20211011192546.1571-2-robin.dupret@hey.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH4DS54U-qN+NY2A50bBawbL1cwD74fdaZdQKdhXyZSzFS-Y+g@mail.gmail.com>
+In-Reply-To: <20211011192546.1571-2-robin.dupret@hey.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 11, 2021 at 02:36:13PM -0700, Chris Chow wrote:
+On Mon, Oct 11, 2021 at 09:25:46PM +0200, Robin Dupret wrote:
 
-> There appears to be a small inconsistency / bug in the documentation
-> located at https://git-scm.com/docs/gitcredentials.
+> Signed-off-by: Robin Dupret <robin.dupret@hey.com>
 
-I'm not sure I see what you mean.
+You signed-off, which is good (and necessary for contributing a patch).
+This is a good place to say "why". Even if it is "because it makes the
+code more readable", it is good to say that rather than leave readers
+guessing (though of course people won't necessarily agree ;) ).
 
-> Under the "Custom Helpers" subhead, there's a line that reads
-> > Generally speaking, rule (3) above is the simplest for users to specify. Authors of credential helpers should make an effort to assist their users by naming their program "git-credential-$NAME", and putting it in the $PATH or $GIT_EXEC_PATH during installation, which will allow a user to enable it with git config credential.helper $NAME.
+> ---
+>  http-backend.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/http-backend.c b/http-backend.c
+> index e7c0eeab23..3d6e2ff17f 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -466,9 +466,7 @@ static void run_service(const char **argv, int buffer_input)
+>  	struct child_process cld = CHILD_PROCESS_INIT;
+>  	ssize_t req_len = get_content_length();
+>  
+> -	if (encoding && !strcmp(encoding, "gzip"))
+> -		gzipped_request = 1;
+> -	else if (encoding && !strcmp(encoding, "x-gzip"))
+> +	if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "x-gzip")))
+>  		gzipped_request = 1;
 
-OK, so here you'd call your helper git-credential-gcloud.sh so that:
+I think this conversion is correct, and I do find the resulting slightly
+easier to read. I wondered if the two conditions might have come
+separately, but no, they were both there in the initial 556cfa3b6d
+(Smart fetch and push over HTTP: server side, 2009-10-30).
 
-  git config credential.helper gcloud.sh
+We do frown a bit on making small style changes like this. This kind of
+churn isn't dramatically improving the quality of the code, and it
+carries the risk of regression (if there is something subtle that you or
+the reviewers missed) and creates a maintenance burden (it may conflict
+with other patches, though I doubt it in this case, and it creates work
+for reviewers and the maintainer to apply).
 
-would work.
-
-> Earlier in the document, under "Configuration Options > helper", there
-> is a line that reads
-> > The name of an external credential helper, and any associated options. If the helper name is not an absolute path, then the string git credential- is prepended
-
-And likewise here, we will run "git credential-gcloud.sh", which in turn
-calls "git-credential-gcloud.sh" (since there is no builtin of that
-name).
-
-But we would never call "credential-gcloud.sh" in this way. You
-could say:
-
-  git config credential.helper '!credential-gcloud.sh'
-
-of course, but that is skipping the auto-name stuff entirely.
-
-> I think the latter text is correct. The maintainers of the google
-> cloud SDK followed the advice in the first part, naming their cred
-> helper `git-credential-gcloud.sh`, which is not accessible if you set
-> the custom credential helper to `gcloud.sh`. I had to make a symlink
-> at `credential-gcloud.sh`, following the instructions in the latter
-> block, to make it work. One could of course just specify the full path
-> in .gitconfig, but I figured it might be good to have these parts be
-> consistent anyways.
-
-Both pieces of text are pointing to the name that the gcloud folks used.
-I'm not sure why it didn't work, or how a symlink could possibly have
-helped. Can you share the exact sequence of commands, with output, that
-shows what you're seeing?
-
-Here's a toy example that shows the kind of thing that should work:
-
-  # toy helper that lets us know when it's running
-  { echo '#!/bin/sh' && echo 'echo >&2 running the foo helper'; } >foo.sh
-  chmod +x foo.sh
-
-  # add our current directory to PATH to experiment; usually these
-  # commands would go into /usr/local/bin, ~/bin, etc
-  export PATH=$PATH:$PWD
-
-  # make sure we're in a repo so we can stick our config somewhere. In
-  # the real world you'd probably be using "git config --global" or
-  # similar.
-  git init
-  git config credential.helper foo.sh
-
-  # this should say "credential-foo.sh is not a git command", because we
-  # tried to run "git credential-foo.sh", but that doesn't exist (the
-  # command itself is a noop; it just tries to remove a bogus credential
-  # that you don't actually have, but that's enough to trigger each
-  # helper).
-  echo url=https://user:pass@example.com | git credential reject
-
-  # now try it again with credential-foo.sh in the path. That also won't
-  # work, with the same outcome.
-  mv foo.sh credential-foo.sh
-  echo url=https://user:pass@example.com | git credential reject
-
-  # now try it with git-credential-foo.sh in the path. This should
-  # trigger the helper successfully.
-  mv credential-foo.sh git-credential-foo.sh
-  echo url=https://user:pass@example.com | git credential reject
-
-What I'm suspecting is that the "credential-foo.sh is not a git command"
-message may have confused you, and then while debugging it you did
-something else (e.g., tweaking your PATH, setting the execute bit, etc)
-that led the original git-credential-gcloud.sh to work.
+So...I dunno. I don't mind it, but it is not a pattern we like to
+encourage in general. Let's see what Junio thinks.
 
 -Peff
