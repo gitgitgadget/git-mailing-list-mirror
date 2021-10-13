@@ -2,127 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCD0C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6622FC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:31:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5173F60E8B
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:19:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5002D60ED4
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237692AbhJMFVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 01:21:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34948 "EHLO
+        id S237725AbhJMFda (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 01:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237650AbhJMFVJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 01:21:09 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C48DC061714
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:19:05 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id g184so1189475pgc.6
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:19:05 -0700 (PDT)
+        with ESMTP id S237705AbhJMFd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 01:33:29 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B046CC061570
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id om14so1287198pjb.5
+        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NzV8RB7URs90yC/jVzjYQqqva4SIwy/oMHW2og6DwE8=;
-        b=a0NVFe3UlMDKVi7B4df8F1G1vfTnBXxpWyevPsACzHXyQ4gCjAKai2aQRL7vS0VAF1
-         cTOJb0oycuJ+7n4NG6JWVhFYiepmUCPbWBqkJu8apYBeRplOtp5M4tDauS9GEFrjHbb+
-         RiHc9nUlJILu5EwtOqVzrAfnfjQwOpk4RGeOk2gJj6S9J2A9A546znOYMlP87Q6Ta+pl
-         xFouuwqnjXCURuFobaU8cmVf5fjdXXaKCE88vrDEhvyJQJegOKN70f6uvCO4Z3jRiOJg
-         ZYYlI/wd7d1PAct3zWu7vbRn7zZGn8Sy2R1qR0BZj5/r51tj5TveTt8syJ5z0txgXl+E
-         wNLQ==
+        h=references:user-agent:from:to:cc:subject:date:in-reply-to
+         :message-id:mime-version;
+        bh=2oP+USo1L8AyvrGlQQ+Fv+z8rUILzVDiwzUYQryYsWc=;
+        b=Xfwf3/VIh+XfYI/O7l4Uxo5NPe6EIPmTIaq74d5rMaYLU3/ushqEJPKeYBWpG61o1Z
+         SMf6wEPG8aVWWvD84F/T/H4raD0fotBFtxNXBIN3oVD74aYSvKfXk70WnZErjXWdasTX
+         JtoGkFVcwwGv9d0RL5tgu6o0kdOkglOGY9XFEjsPNhlLtgh49sqXvGlzZpOfPGHXFsZB
+         hLi93PLY+PBrBGEKcxAMX5C+wvly8NJAY5xaWpL30oibvpq/++TEJRg6WT/EbFg4eei1
+         ksF2jO6sr478PrUPhLKWjdJXcMfTyOcrKmV2+bOYInKzFAooNq0mZFncPet/z4yhn8+p
+         FQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NzV8RB7URs90yC/jVzjYQqqva4SIwy/oMHW2og6DwE8=;
-        b=JgbhTDVr/9t/+F/TPm5KrxKlwvjoS1N75zx68SVxe+UYbqEo3T9AEQvRHw6kfpIwUL
-         VPEmvyeERhXht+KCI9LmyMJ/YcDo1fgfYC/rofVD4SguKJDT0oo4TaZCngJH7Z4uYjTG
-         b7yicc2HO8DhslTSzd8LVM9VNlnHI0Fdeh5N1UqnSD82NPomdOWm41H8LaIdKP+ePp3f
-         8HxJUeK1oh/bQ0Zhke8Ao+3LS71xcrUKsmJ0lMZQtkTu8vbFxsRMsBEJlkJQirl+VXjt
-         LeEfaIApGUacsEyhNBwtAFSrKkQLQxQcyiWbwnCRrFpZ5zzmkO11Ylh+acqpeChfBqxz
-         nB5A==
-X-Gm-Message-State: AOAM533+RY0nnNthegmUYBx4AKBo5bkeb/Dw8MWuE1TYc/m5EVjsQci3
-        sfCnrVKbPSIZiPzFjRad27w=
-X-Google-Smtp-Source: ABdhPJw6cEvJFgPhLY7ZVJbAHciuF1knp3KEz+3fMAdJQdnr6YbMfUCudkfXdvkmlvHW064XvDep0A==
-X-Received: by 2002:a05:6a00:16cb:b0:44b:bd38:e068 with SMTP id l11-20020a056a0016cb00b0044bbd38e068mr35817698pfc.34.1634102344925;
-        Tue, 12 Oct 2021 22:19:04 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.121.111])
-        by smtp.gmail.com with ESMTPSA id 12sm12481197pfz.133.2021.10.12.22.19.00
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Oct 2021 22:19:04 -0700 (PDT)
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
+         :in-reply-to:message-id:mime-version;
+        bh=2oP+USo1L8AyvrGlQQ+Fv+z8rUILzVDiwzUYQryYsWc=;
+        b=YUau0FF9W9cXCMxCn7guSoas/pUue7SP4UrzMe5Ty+iDin4Vt1MnfGXkXlLKKD3f6J
+         tIT1GHjXu1KPdubqLRQf3aXJ/Ba4rYyxOTI8gmzmmo+iFzcSqofcEWOUaZIXdvx2Tmfd
+         gOWws485FZXPTsEK97qZxdMe/VJEp2uM6SNM5bQTHnPZ6O1Od84fvvkCrVGsQINXCQd4
+         BCqxJ9RQPdNBwHVJOx6wpMqmUzK71blB7OpiWHwjgOBJKDmzyhVw1u5IqHT65LOaL0Rs
+         QCDiKlnquN1Y2W30KbPOwCNB9Ehg737NK9E+La/uaDkALZwnxIoom55x9JuXfc35hw8/
+         lhVw==
+X-Gm-Message-State: AOAM530qcAuLBisy6yMVqdyxgjTgekN/2c9eRo95AgdWZwH5aONO8QJw
+        jVW6FAnVMMAao5vB9aG6Q1k=
+X-Google-Smtp-Source: ABdhPJxUZuIrm/MKPEE6E8L2NuGTg0SqzzCghByfGqy+s7RHz/omX0f5IBgpEKEY0yMy5LQppHRseQ==
+X-Received: by 2002:a17:903:1c7:b0:13e:d05b:ed09 with SMTP id e7-20020a17090301c700b0013ed05bed09mr33656198plh.52.1634103085103;
+        Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
+Received: from atharva-on-air ([119.82.121.111])
+        by smtp.gmail.com with ESMTPSA id 17sm13767353pgr.10.2021.10.12.22.31.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Oct 2021 22:31:24 -0700 (PDT)
+References: <xmqqv9239k15.fsf@gitster.g> <YWYHCnpPnrjwTjhA@google.com>
+User-agent: mu4e 1.6.3; emacs 27.2
 From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     raykar.ath@gmail.com
-Cc:     avarab@gmail.com, christian.couder@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
-        jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
-        periperidip@gmail.com
-Subject: [PATCH v3 9/9] submodule--helper: rename helper functions
-Date:   Wed, 13 Oct 2021 10:48:05 +0530
-Message-Id: <20211013051805.45662-10-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211013051805.45662-1-raykar.ath@gmail.com>
-References: <20210916103241.62376-1-raykar.ath@gmail.com>
- <20211013051805.45662-1-raykar.ath@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        gitscale@google.com
+Subject: Re: Submodules UX overhaul update (was: What's cooking in git.git
+ (Oct 2021, #03; Mon, 11))
+Date:   Wed, 13 Oct 2021 10:50:23 +0530
+In-reply-to: <YWYHCnpPnrjwTjhA@google.com>
+Message-ID: <m2h7dlij88.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two functions were prefixed with 'do' before the shell-to-C
-conversion because they were utility functions meant to be called by
-their non-prefixed counterpart.
 
-Since those callers don't exist anymore, and these functions can now be
-used directly, let's rename them to signal this fact.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
----
- builtin/submodule--helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> As I promised in IRC yesterday, here's an attempt to filter this into a
+> submodules newsletter of sorts.
+>
+> For context on the broader submodules effort I'm discussing in this
+> note, please see the design doc:
+> https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
+>
+> I'm aware there are other submodule efforts ongoing too, but in this
+> letter I've highlighted ones that are necessary for the above-linked
+> design doc. Selfish, I know. ;)
+>
+> On Mon, Oct 11, 2021 at 05:14:14PM -0700, Junio C Hamano wrote:
+>> [Stalled]
+>>
+>> * ar/submodule-update (2021-09-20) 8 commits
+>>  . submodule--helper: rename helper functions
+>>  . submodule--helper: remove unused helpers
+>>  . submodule--helper: remove update-clone subcommand
+>>  . submodule: move core cmd_update() logic to C
+>>  . submodule--helper: refactor get_submodule_displaypath()
+>>  . submodule--helper: rename helpers for update-clone
+>>  . submodule--helper: get remote names from any repository
+>>  . submodule--helper: split up ensure_core_worktree()
+>>
+>>  Rewrite of "git submodule update" in C.
+>>
+>>  Kicked out of 'seen' to make room for es/superproject-aware-submodules
+>>  which is among the topics this topic stomps on.
+>
+> Mentioning this series in the "newsletter" since I'm aware that I'm
+> blocking it with es/superproject-aware-submodules. I have it open in
+> another tab as I type and plan to send a reroll today or tomorrow.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 0d6e65bd6c..82d68650e8 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2450,7 +2450,7 @@ static int run_update_command(struct update_data *ud, int subforce, struct strin
- 	return 0;
- }
- 
--static int do_run_update_procedure(struct update_data *ud, struct string_list *err)
-+static int run_update_procedure(struct update_data *ud, struct string_list *err)
- {
- 	int subforce = is_null_oid(&ud->suboid) || ud->force;
- 
-@@ -2612,7 +2612,7 @@ static int push_check(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static void do_ensure_core_worktree(const char *path)
-+static void ensure_core_worktree(const char *path)
- {
- 	const char *cw;
- 	struct repository subrepo;
-@@ -2871,7 +2871,7 @@ static int update_submodule(struct update_data *update_data)
- 	char *prefixed_path;
- 	struct string_list err = STRING_LIST_INIT_DUP;
- 
--	do_ensure_core_worktree(update_data->sm_path);
-+	ensure_core_worktree(update_data->sm_path);
- 
- 	if (update_data->recursive_prefix)
- 		prefixed_path = xstrfmt("%s%s", update_data->recursive_prefix,
-@@ -2911,7 +2911,7 @@ static int update_submodule(struct update_data *update_data)
- 	}
- 
- 	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force)
--		if (do_run_update_procedure(update_data, &err))
-+		if (run_update_procedure(update_data, &err))
- 			return 1;
- 
- 	if (update_data->recursive) {
--- 
-2.32.0
+I am not sure if this will be helpful or not, but today I sent a reroll
+of my topic, and while I was at it, I tried to reapply your series and
+my series on the up-to-date master to see where conflicts appear. I have
+written a note about it in my cover letter [1]. I hope it can be helpful
+in some way!
 
+[1] https://lore.kernel.org/git/20211013051805.45662-1-raykar.ath@gmail.com/
