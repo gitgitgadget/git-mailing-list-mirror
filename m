@@ -2,111 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6622FC433F5
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B32C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 07:51:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5002D60ED4
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 05:31:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 140926103C
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 07:51:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237725AbhJMFda (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 01:33:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37730 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237705AbhJMFd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 01:33:29 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B046CC061570
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id om14so1287198pjb.5
-        for <git@vger.kernel.org>; Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
+        id S238707AbhJMHxP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 03:53:15 -0400
+Received: from mail-am5eur03hn2215.outbound.protection.outlook.com ([52.100.11.215]:61924
+        "EHLO EUR03-AM5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S238694AbhJMHxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 03:53:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QY/5PHztLhEIbOXll4rauetUVLyy9jcoIXXz/AaErgyOkdYxEdpWT2pfzVyxBqC17K3x6Kq5JNCGC2sdjEK/p6V0akBtWta1DziWqSjDxrwxhjE+kXbF0mv+D448jpxe8OEd3KRDZw5By7LIreaJv2iGLV96V10gj3xDYr0g4o1i/bJQN22dmoW9ERWk7Y3m8wXr0kURiCnLlyoY0SrR1z83G6st+1mfORuTTyBTWF2RjegX7I8JBkKYSiuCjF3rUZZ+PfOplMQxvq7mncDwa5LY7ic9e6y5/F8aqeGxqsvBomoLYJALShvjkWGbCeoFCwPAYHfRaSpi3RwIFahBRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tveX1HPji/MSCNv92VXNlmTBjXChsH82kN37zDJ4DbU=;
+ b=aPY9nJmKe9TaFJLuWzXef9VgjKSyLx9IoX83Xsv3C2vxUcB+ioUqNGuz8FfIYObx6A+9wE2BomEakpN5EkurcrlgoI26UhbNMeDLO93naCz2NYAGaO+T6ykIb90YNB7ag1s8vEXvIS1wJMq0NihhVlfaaJ9IKzcU7LxUBDIQvlA3K7Q0hf75Cg6PohJdirkVbGZDe7piwbmEZkJsuqA1AJZA6Gra2X/clnmwFaCZxhdJejEJxfaVu0quA/Y2kqxGppJTQY8awTXChFdvCEpWfG9TROxWmGJbJ22jee+Y5adLaDb4f0a/JHoZ222OH84dTCUHgrldLUUxDuENOuIEIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:user-agent:from:to:cc:subject:date:in-reply-to
-         :message-id:mime-version;
-        bh=2oP+USo1L8AyvrGlQQ+Fv+z8rUILzVDiwzUYQryYsWc=;
-        b=Xfwf3/VIh+XfYI/O7l4Uxo5NPe6EIPmTIaq74d5rMaYLU3/ushqEJPKeYBWpG61o1Z
-         SMf6wEPG8aVWWvD84F/T/H4raD0fotBFtxNXBIN3oVD74aYSvKfXk70WnZErjXWdasTX
-         JtoGkFVcwwGv9d0RL5tgu6o0kdOkglOGY9XFEjsPNhlLtgh49sqXvGlzZpOfPGHXFsZB
-         hLi93PLY+PBrBGEKcxAMX5C+wvly8NJAY5xaWpL30oibvpq/++TEJRg6WT/EbFg4eei1
-         ksF2jO6sr478PrUPhLKWjdJXcMfTyOcrKmV2+bOYInKzFAooNq0mZFncPet/z4yhn8+p
-         FQfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
-         :in-reply-to:message-id:mime-version;
-        bh=2oP+USo1L8AyvrGlQQ+Fv+z8rUILzVDiwzUYQryYsWc=;
-        b=YUau0FF9W9cXCMxCn7guSoas/pUue7SP4UrzMe5Ty+iDin4Vt1MnfGXkXlLKKD3f6J
-         tIT1GHjXu1KPdubqLRQf3aXJ/Ba4rYyxOTI8gmzmmo+iFzcSqofcEWOUaZIXdvx2Tmfd
-         gOWws485FZXPTsEK97qZxdMe/VJEp2uM6SNM5bQTHnPZ6O1Od84fvvkCrVGsQINXCQd4
-         BCqxJ9RQPdNBwHVJOx6wpMqmUzK71blB7OpiWHwjgOBJKDmzyhVw1u5IqHT65LOaL0Rs
-         QCDiKlnquN1Y2W30KbPOwCNB9Ehg737NK9E+La/uaDkALZwnxIoom55x9JuXfc35hw8/
-         lhVw==
-X-Gm-Message-State: AOAM530qcAuLBisy6yMVqdyxgjTgekN/2c9eRo95AgdWZwH5aONO8QJw
-        jVW6FAnVMMAao5vB9aG6Q1k=
-X-Google-Smtp-Source: ABdhPJxUZuIrm/MKPEE6E8L2NuGTg0SqzzCghByfGqy+s7RHz/omX0f5IBgpEKEY0yMy5LQppHRseQ==
-X-Received: by 2002:a17:903:1c7:b0:13e:d05b:ed09 with SMTP id e7-20020a17090301c700b0013ed05bed09mr33656198plh.52.1634103085103;
-        Tue, 12 Oct 2021 22:31:25 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.111])
-        by smtp.gmail.com with ESMTPSA id 17sm13767353pgr.10.2021.10.12.22.31.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 22:31:24 -0700 (PDT)
-References: <xmqqv9239k15.fsf@gitster.g> <YWYHCnpPnrjwTjhA@google.com>
-User-agent: mu4e 1.6.3; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        gitscale@google.com
-Subject: Re: Submodules UX overhaul update (was: What's cooking in git.git
- (Oct 2021, #03; Mon, 11))
-Date:   Wed, 13 Oct 2021 10:50:23 +0530
-In-reply-to: <YWYHCnpPnrjwTjhA@google.com>
-Message-ID: <m2h7dlij88.fsf@gmail.com>
-MIME-Version: 1.0
+ d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tveX1HPji/MSCNv92VXNlmTBjXChsH82kN37zDJ4DbU=;
+ b=ic4L57XMF3SvwfwktLoFpK7LimkjieVAqtG4IYT0GnT7PX76BBDDlxlpF5g9G+HF4mmLXevF+JrZMfC230p7FxoMMW5HkEqGUgtH/JPUAJ0HX37ZpA0pl9F8ZCPwbU2hlhXUm+Q6MnfoGiAVcN1/+K2BoA8S+V8BGRAp3kvt0Rc=
+Authentication-Results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PAXPR10MB4813.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:152::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16; Wed, 13 Oct
+ 2021 07:51:10 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::49a2:88ed:be81:d939%6]) with mapi id 15.20.4587.026; Wed, 13 Oct 2021
+ 07:51:10 +0000
+From:   Fabian Stelzer <fs@gigacodes.de>
+To:     git@vger.kernel.org
+Cc:     Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH v2 0/2] ssh signing: fix merging signed tags & docs
+Date:   Wed, 13 Oct 2021 09:51:05 +0200
+Message-Id: <20211013075107.8584-1-fs@gigacodes.de>
+X-Mailer: git-send-email 2.31.1
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-ClientProxiedBy: AM7PR02CA0022.eurprd02.prod.outlook.com
+ (2603:10a6:20b:100::32) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
+MIME-Version: 1.0
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM7PR02CA0022.eurprd02.prod.outlook.com (2603:10a6:20b:100::32) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16 via Frontend Transport; Wed, 13 Oct 2021 07:51:09 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 450df94f-b38c-45fe-06fc-08d98e1e38a4
+X-MS-TrafficTypeDiagnostic: PAXPR10MB4813:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <PAXPR10MB4813E54AEDEB336338F1D56EB6B79@PAXPR10MB4813.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?N0geutrvCywMtGg6i5wtwJqLRYrJFlLtFF9fK9QDH05y9QT5UedWhWfYvwzn?=
+ =?us-ascii?Q?vtR+JCeua/uee12/4tqAggTZ1znCnAmSExrZGa6zyiPLQ1kYeQwmXNWf8MOS?=
+ =?us-ascii?Q?y06868qphLGr7lNtOcyGkbd4jekZANZGrU4mldrOnO63LH/cf4nSOY5MaXAX?=
+ =?us-ascii?Q?y1QXGJXR6FCq8AZlFkBxzBaebLXrjlhugRu/tupcjX1Wx96hhBgbOefVC5V4?=
+ =?us-ascii?Q?thrTb50bysg4goux4FfERUimnXSr3/61+43xliF6o0HJDFChDZ0DX2gGMpFB?=
+ =?us-ascii?Q?+eJbQ2yRvBAALtGoR6AIIzRH4c00LXty1Tg4R7al/6hbic+yVGYT1l/l/4pE?=
+ =?us-ascii?Q?DpewUPHLr00vAhGHvDcOUbyy/ssB8yBzzsaYrtudelWSXXD8i+QuBTU4YU3c?=
+ =?us-ascii?Q?oOpBwEIY0sIT6pmv4NSn8xFHUBMt+vToXyh1HqoR6QcYg26OaID4GaMxVxot?=
+ =?us-ascii?Q?ix0KMHFg+9kGRaF777J71ELkxF9deFmqrFP0ef50dj+klwx7N+aWBdTskaAk?=
+ =?us-ascii?Q?r042giThpQOZElkTb5c8dc7DshaCKNpq/oA49Ncggu3ongGWQGLFdm8QIf2P?=
+ =?us-ascii?Q?ujFUAc4zGHsjQm6JyJwDEpfSFp2jkRoyb0dujsvYd0nKcbbIx9WvJpmYLVVM?=
+ =?us-ascii?Q?QMHSBs5crZJiHhdl1ObFbdgxqNoO7UeQXDM7LAJq0q5rFkgukLVyBWkg8xfV?=
+ =?us-ascii?Q?Z3b3XNR1XICL/Aiw6XvSVNs4ejsS3m2NVJfDBrGq0Rn2Hjq82fYfTKlBBxtT?=
+ =?us-ascii?Q?WL6HQBmbpDOMzlT/ZQwGySKVwyD3U/1Sjtex86THCzb/NqpT2z/2IBx9NYaZ?=
+ =?us-ascii?Q?9fgcaP7wKQQDngUo1i3WJyDmp5pvaSg9pUq7fIRMl3HV7r5pM3K9NvBYumq8?=
+ =?us-ascii?Q?f8oa7ug9s79DiibnW8locIM2aEWcmOBVotMYlUoGzFFLNG3sfcXFHfEl/gck?=
+ =?us-ascii?Q?HNck7RXjjRwnDHz7AR72P370rvOeeOc6katjaI3rxvxAGGcJRufcdZJY5KgY?=
+ =?us-ascii?Q?RU3AnONfg7txjKYinMzSZVE93g=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(376002)(346002)(136003)(396003)(39840400004)(366004)(66556008)(5660300002)(66476007)(66946007)(8936002)(6486002)(8676002)(6666004)(316002)(508600001)(2906002)(6496006)(52116002)(1076003)(36756003)(107886003)(4744005)(38100700002)(83380400001)(186003)(6916009)(4326008)(2616005)(86362001)(23200700001);DIR:OUT;SFP:1501;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?uLJfxXM5xRcVyDNqKI95nJv3nHpIXeNXtFsH7xVoTnYvYN5UR1Y/pGwHpLx0?=
+ =?us-ascii?Q?vyb2WGZBTuAFlBD4/ffvouy82YXXZOU6wPUW+SJs4tuxOa8mA2Gg5QQEZo6T?=
+ =?us-ascii?Q?D3ki9HBSBkseUhRrp8gdG/dfXmquuAXvn2IRwIa3RXYM1ScNFd776LEK5AUJ?=
+ =?us-ascii?Q?WQ6Pw+1kLjnoRUVVj3SN9egmpp3xZtz+niB3CoQqdJowgzTdrOM8n8+UEmBi?=
+ =?us-ascii?Q?WwukUJsqX2USP8a1wPr3GgP9JlhxpC/mHf+Uvh54V8Ll1WxOR/v3uqQadroG?=
+ =?us-ascii?Q?B7qqWjKgDzPmZEmF7z2IsjNcQEWihI0iyKYw4lWqrsP9tJiFvhTQPMnMVjmB?=
+ =?us-ascii?Q?ZyNr71VQAqS/JZbQ5ON36R7hclA0iGlVRSY8pHPe8O3e6Gj9nqwc0tlurpk8?=
+ =?us-ascii?Q?exeVgx30v7We3+9zPNh0DC0/xUxmnUrx3+7dc9Mj8Ocaq2z07pUcJLA7L/wG?=
+ =?us-ascii?Q?7AMtflKom7k3SMom6bhsLwhE8tZAbofCXsQ0CKdELDa3Xni2iszxGLMdGuuW?=
+ =?us-ascii?Q?GVF770I671X9el885CAXUAE6/OSEQtC5Hf2DMbDxa7i7y3EIUdXdLt4tnKEg?=
+ =?us-ascii?Q?koIODHcONFwg+T7rX662sGjFIlnqQSMfelxrYMf55dfAk+TtIVh9S2lJIowA?=
+ =?us-ascii?Q?1Y0Kj9fx/FKWCDoIS+pX3g066gcq1gi+CbmLqRfkC9U77zhCD6pl8GuSoevf?=
+ =?us-ascii?Q?//lbaS0qXwweh36dbINRMoMpGDA3W52EpD43AMOTysSmeph9ouNMWhQ61t6D?=
+ =?us-ascii?Q?G7nEYJk80+e5Q4222X3RHFt6mo6wVbroAdkRfQZlXonUvJ29QbtAFCsmtYZi?=
+ =?us-ascii?Q?JagpKNgHJRw+18DOCWuPR7fLC/n1qLIytL1GGj3NypR8lWHOfGzAktr0CcXf?=
+ =?us-ascii?Q?Oh6PakwBWXEsf+KxHZ5tUNWfHrtQPPxFtSmWAzXoe/tj5l7VK3zwWkxiJ1sT?=
+ =?us-ascii?Q?U1smlxg2I//d5ORrCVldcaeqeKUiX8IntiQ3MGTbM0icMK2BLPUkpd5Qc29/?=
+ =?us-ascii?Q?SrHN6T9D4TcoJnJ6Be3EREf2/Agrai+G544bnYPyCslENFOD3rF3RoNeMVq6?=
+ =?us-ascii?Q?tsSBhCh3UOth2NdUiYsUnmAGkJodVs/gsePBvH9KR0gr56occxG3OwcIZqtO?=
+ =?us-ascii?Q?XQgo7IZuL1b7GAgAzs2gJ/BVcAmfNK7n3HU8drpp2VrhUG0QvNeqtZtgO4NH?=
+ =?us-ascii?Q?6kKUUMXS6Af4nUi24V1kPdqqQp9fXKtr6RHwmgeWYNSqVa2ho/KfPyDjHo+T?=
+ =?us-ascii?Q?HmxqYmqWi9mzGHu42GUfd+lbsVI11EiCIkj2l8dFiqeZRmxuL+h3eZkEBpnb?=
+ =?us-ascii?Q?wsQi1n6CUlX/26DKZCd3H8Vva1evV3wj+IJ/LF9sRDv9tS/NNhe6iSB/94/g?=
+ =?us-ascii?Q?ryuFavkTDWpsaNJjrbUwG6BXbFaL?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 450df94f-b38c-45fe-06fc-08d98e1e38a4
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2021 07:51:10.1615
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BwBBGFLrjfBykguVdty41g9BSyggeEenrz6YiuO+Yk9sH7iTVk3nCg72qBRUbccGAsxTPWLwfD7zirUVjmJafD0mbWQaEN+ZCD/0jyiMV2I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR10MB4813
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Two small follow up patches on top of 1bfb57f642d. fmt-merge-msg needs
+to load gpg config to be able to verify merged tags. load it and add
+some tests. And i forgot to adjust the docs when we changed some
+behaviour of the original patch during review.
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Sorry for sending this after the merge to next. I didn't want to send a
+full reroll of the big patch series for these small changes. Should i
+do that next time or can/should i send these to the list as single
+patches on top of my existing patch series? I used gitgitgadget for the
+series and i'm not sure how sth like this would work with it (if it does
+at all).
 
-> As I promised in IRC yesterday, here's an attempt to filter this into a
-> submodules newsletter of sorts.
->
-> For context on the broader submodules effort I'm discussing in this
-> note, please see the design doc:
-> https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
->
-> I'm aware there are other submodule efforts ongoing too, but in this
-> letter I've highlighted ones that are necessary for the above-linked
-> design doc. Selfish, I know. ;)
->
-> On Mon, Oct 11, 2021 at 05:14:14PM -0700, Junio C Hamano wrote:
->> [Stalled]
->>
->> * ar/submodule-update (2021-09-20) 8 commits
->>  . submodule--helper: rename helper functions
->>  . submodule--helper: remove unused helpers
->>  . submodule--helper: remove update-clone subcommand
->>  . submodule: move core cmd_update() logic to C
->>  . submodule--helper: refactor get_submodule_displaypath()
->>  . submodule--helper: rename helpers for update-clone
->>  . submodule--helper: get remote names from any repository
->>  . submodule--helper: split up ensure_core_worktree()
->>
->>  Rewrite of "git submodule update" in C.
->>
->>  Kicked out of 'seen' to make room for es/superproject-aware-submodules
->>  which is among the topics this topic stomps on.
->
-> Mentioning this series in the "newsletter" since I'm aware that I'm
-> blocking it with es/superproject-aware-submodules. I have it open in
-> another tab as I type and plan to send a reroll today or tomorrow.
+Fabian Stelzer (2):
+  ssh signing: fmt-merge-msg tests & config parse
+  ssh signing: clarify trustlevel usage in docs
 
-I am not sure if this will be helpful or not, but today I sent a reroll
-of my topic, and while I was at it, I tried to reapply your series and
-my series on the up-to-date master to see where conflicts appear. I have
-written a note about it in my cover letter [1]. I hope it can be helpful
-in some way!
+ Documentation/config/gpg.txt |  4 +---
+ fmt-merge-msg.c              |  6 ++++++
+ t/t6200-fmt-merge-msg.sh     | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 3 deletions(-)
 
-[1] https://lore.kernel.org/git/20211013051805.45662-1-raykar.ath@gmail.com/
+-- 
+2.31.1
+
