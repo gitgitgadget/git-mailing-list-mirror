@@ -2,85 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9068C433FE
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 13:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC5C2C433EF
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 13:43:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 947466113D
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 13:34:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A523A60F94
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 13:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235247AbhJMNgq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 09:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36818 "EHLO
+        id S235496AbhJMNpW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 09:45:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231644AbhJMNgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 09:36:43 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8D9FC061570
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 06:34:39 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id e12so8521574wra.4
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 06:34:39 -0700 (PDT)
+        with ESMTP id S234712AbhJMNpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 09:45:21 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CE7C061570
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 06:43:18 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id n8so12106318lfk.6
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 06:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ilZuRUVHVFzSi+/aav25g5yKwdmUmZkTZfleoO2GSlY=;
-        b=BQ3AyqfozKNnqV0cjLU3IsMTb8AKqvGBxVaS2pp2m41FSYt0acgAGFk7wDLQOQZnzm
-         c/Nj3NeRBTb6bzljYNhC8ACfpHnnpVVONA7OZgollHoh32p7SRBw/q9VoShOXnbqAYjP
-         ibHPMBwVSujRLltKc71unQULjKDZSy42kSok63bQOPR/zwSBtJIQNKdqFto3ac5r83VI
-         O1rZYiQFI2gFtddhcfV3L4UTPBdRE0YGKY1txMW5nD963st0d7Y7jrW1xl/fmVkXOv69
-         EU0q0Ne8H0xtivJWxNanGUjLnknXVmg0fDXDxmE8wVNVleQRICi0XflMXLajFQZkZbd0
-         lfOg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=58ZsRgwfaxVJIFGdi+vQSppzs7/kyhENo4CoWHANpl4=;
+        b=D8S3DX0AIcCH8B9nvZFeiJNGr91fHvEQ8QjGbp0pLh9bg+z5pIuWBz0UAEQnAGF552
+         bB3rblkm3jINzatkxWrRC4bNe0nspL6ldosKJl30Q1gfsPN9rwvvUEQXy8ZZl9PpBmPz
+         w+7/H/d+r52bMER8Svfr8GQjotC03XLZyTJxLtdASQxfvHOv5AEPL7c49RVokOOTJXYW
+         QrtJqGazPsVB6PqXYibfrLEdZC1rHsxG8DermtighVTHiEiCHxPNgfZXw8F/UpYXPA6m
+         9xUy7iVclkenD8gLQtWu8g5lhAIzYLO08FGqGBt9NHurY541a5U/g7K20SzZB5P3HjdN
+         E0bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ilZuRUVHVFzSi+/aav25g5yKwdmUmZkTZfleoO2GSlY=;
-        b=NMZvyXEE2R5CnapYRYr/8Hp8JgBHE/JMV+eNMSIa8aUfbiGy38djFRMsAp+xiGsQuL
-         IUWqY4O2DA06sjp3Y3a/Qr/gXwDhP2SjieX6ra3SrX7pdofpvHZDKr/WEbswuAdKdGX9
-         zvCIFswnKOQBD0NFfed7e3sGnoI038Dj8hSWIxgHqQSvvZ1Z+BQCyG0EB35Z8Dsokvnd
-         43zb5Gdg4U9xXuktK+q7IFx7mwlVyBthkWdV2YofRJRVJMJuJq3XM8ncOek58kNw1K+R
-         scWtyJkgMJZVCXG/mEchxGJGKdZOI4XgrKTPd5jUCR3ZRVWpq7mziv5F/UPxeSDrO1bF
-         scqQ==
-X-Gm-Message-State: AOAM531BQJl8CyeEjxgMvQmF56B8BElmBvqZsvIKxHKxCAezUGy+Z8Ju
-        LdzlA6CwOACq9Ad59DwT/dGeY/mTy4NcyA==
-X-Google-Smtp-Source: ABdhPJxReztF90qiNop9V7/66FX/NPQruIYCjg3m+u/yhX1lO09BZKI5PoCioTLfBiqeVaiskxCwEg==
-X-Received: by 2002:a05:600c:3546:: with SMTP id i6mr13086778wmq.146.1634132078355;
-        Wed, 13 Oct 2021 06:34:38 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id c14sm13244838wrd.50.2021.10.13.06.34.37
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=58ZsRgwfaxVJIFGdi+vQSppzs7/kyhENo4CoWHANpl4=;
+        b=7IB8sFBelgtonXEtvHaWU6FIFTjbJtHMZPpq+kBzof4AfZWEqT3mHk0xF1ZPyjoRhw
+         UMb7v1PQdpOHKrHxMNxOUswgXFANGMmKD6QAK250s8A1Bdz7UARwaphV/apHLWY0Kcxy
+         yZwVk4tMpPzoESpT8R+zKbCEMLZY6yEYki7pky8RfxbGwk32P84MCC+l7J4VDFEvW5uU
+         boa6oJWjYDwFTKdlvsZzRNIjRQsfspHggabzjfD5hNt8Zu/rwdXohsAPCvb0uj7nqhOI
+         X0L6ds+z+ZsQlLOUagfhimqj0qTTzbZWEUk9vyFHNGZ3Cz7aAsiuLSCCTNuluClHYaRE
+         mJmg==
+X-Gm-Message-State: AOAM533TPVgk5zZngbjK3wUSSy41HeT6oWe3mLtbvCdn006W/y3ZEXqh
+        F/ODSI5ogKu1TnHs2Oz+qU8=
+X-Google-Smtp-Source: ABdhPJwTNUnAmLRMZooYIB7iFlNPMBafcvEo1Fguxyeh67oxh2VDZBrmWuskAy4NIM8xv4xR5OdOFw==
+X-Received: by 2002:a05:6512:30f:: with SMTP id t15mr37705451lfp.64.1634132596404;
+        Wed, 13 Oct 2021 06:43:16 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id y14sm88769lfk.41.2021.10.13.06.43.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Oct 2021 06:34:37 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Wed, 13 Oct 2021 06:43:15 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/unpack-trees-leakfix
-Date:   Wed, 13 Oct 2021 15:33:19 +0200
-References: <xmqqv9239k15.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <xmqqv9239k15.fsf@gitster.g>
-Message-ID: <877dehhwuq.fsf@evledraar.gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH RFC v1] stash: implement '--staged' option for 'push'
+ and 'save'
+References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
+        <CAPig+cQgZX5U0KThgSKjmgvOvEZWxPF_BovYYe=VfjDvUE5c9Q@mail.gmail.com>
+        <87fst7z0oa.fsf@osv.gnss.ru> <87y26yk35r.fsf@evledraar.gmail.com>
+        <xmqqa6je8n5c.fsf@gitster.g> <xmqqo87u777d.fsf@gitster.g>
+        <87k0ii446g.fsf@osv.gnss.ru> <xmqqzgre40ff.fsf@gitster.g>
+        <87lf2yqevj.fsf@osv.gnss.ru> <xmqqo87til8b.fsf@gitster.g>
+Date:   Wed, 13 Oct 2021 16:43:15 +0300
+In-Reply-To: <xmqqo87til8b.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        12 Oct 2021 21:48:04 -0700")
+Message-ID: <871r4pujkc.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Oct 11 2021, Junio C Hamano wrote:
-
-> * ab/unpack-trees-leakfix (2021-10-07) 2 commits
->  - unpack-trees: don't leak memory in verify_clean_subdirectory()
->  - Merge branch 'ab/sanitize-leak-ci' into ab/unpack-trees-leakfix
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->  Leakfix.
+>> I didn't ask you what --staged is suitable for, sorry. I asked how do
+>> you solve the problem of saving an *entirely unrelated* subset of
+>> changes for future use?
 >
->  Will merge to 'next'?
+> Ah, OK.  I do not think I would "git add" unrelated pieces in the
+> first place, so "add -p && stash --staged" as a way to stash away
+> such a change would be quite foreign concept in my workflow.
+>
+> IOW, I'd concentrate on finishing the step I am working on, leaving
+> unrelated changes in the working tree, and when I came to a good
+> stopping point, I'd do the "stash -k && test && commit" dance,
+> followed by "stash pop".  At that point,the working tree would have
+> only unrelated changes that I can stash away with "stash save".
+>
+> So I guess perhaps your "no such problem for me" is the closest?
 
-I think it's ready, but I see you peeled of the 2nd and 3rd patch. I
-re-rolled a v3 which should address Elijah's outstanding comments there:
-with
-https://lore.kernel.org/git/cover-v3-0.3-00000000000-20211013T132223Z-avarab@gmail.com/
+Yep, looks like it is.
 
-I can submit that after this one if you'd like, but having that missing
-clear_unpack_trees_porcelain() seems easy enough, and will make that API
-and its users leak-free.
+For me the problem with the approach you've adopted is that these
+unrelated changes distract my attention every time I select what is to
+be in the next clean commit, and it gets annoying over time.
+
+Thanks,
+-- Sergey Organov
