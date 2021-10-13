@@ -2,497 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5657C433F5
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70BAEC433F5
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:37:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB1A2611CA
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:31:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45B3D6117A
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237644AbhJMTdo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 15:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36100 "EHLO
+        id S230312AbhJMTjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 15:39:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234531AbhJMTdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 15:33:42 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE827C061760
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:31:38 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id e6-20020a637446000000b002993ba24bbaso2035152pgn.12
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:31:38 -0700 (PDT)
+        with ESMTP id S229664AbhJMTjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 15:39:04 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B668AC061570
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:37:00 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id e65so925654pgc.5
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=hJ7XGOItW0YvxIxckAA1mNWSbcVvgLV14g/GLHLWu3k=;
-        b=P0OxkS7gdhpsc5Lwpdt4sCqKBmY0PJ6D4tZcuzgOENg/7n7jcU+mCWpXyk5ikgr72m
-         8gtkRI/S5ozt2Kwqv73Q2e/JJW4T+un5+ozJy827OyyAqawaJ59dHeqBIz28Fbk9XNne
-         PTqrOQa91J5/Ck9/Ik2y1ZKKdGtwMAIArignG1BMxTxJSfhE7PDCup/aMjtwCUFCZxFU
-         J1cwLIj8QfpbYhhbBx2evEreaJfIFP/a4xOQynZZb2wqQWsE7wwPX6jEBquu5wW2DfW+
-         JQXCmITSHwDCjPDJtxcurAJb3nacwygxADzta9h34q0On2YnhZ52q5EXgWofcVmnSMcI
-         waUA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0X6UvDzBnueC5W92RkubzNE9m34yGiEpdHuH1knHYqM=;
+        b=a6YIHGImH8EeOp5duhPq8VgA8Z9LbscrV4G3AZYx0TYOrH79v69tzTOWekCIAVxhnd
+         8fjS6ubkg8Yl7fAT9NGJ6Hfgyr62Q9R0XSf/AcnCx7/0AxOuoZ//IbFBahPknRD6VSXt
+         4kH9+WXoMnYvytYOeab9WHUd5ZxceFVZ1tLtr2MuXFC2BBVLTaYnfXRXEcVXMz7P4jkT
+         TZ+fC3sisOS5iqaavBssnGVrcRcmYyjKhPdiegE3VXEk8HusB+XU4h7TV3esZjsDTmTH
+         nAWNt6jjzDo4uh4ZC5VELE5POwPPPoRGPvuM5AbUuE3WJCr1mgqXH1ziq5vZbtiCUK3n
+         g9vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=hJ7XGOItW0YvxIxckAA1mNWSbcVvgLV14g/GLHLWu3k=;
-        b=2bhEnSVKUDBe2eT5uE2eNvdH+rvdaukXKh+IkoCS5oXZalIeqWXZL4YP0qIBQtWpXV
-         oLVTXAiLI3A6ANPQrEoGD+yIhlsNQpJ+3mo6uXKZ3WC4en+gY8mSIYOSHlSX3NFjaDCs
-         yCPQZDFyCKvbipqejk+OxOP/dZ05c+q7NBW/jR0Q/NZE4UEKmo2KNNrirP9m3vgyzeYU
-         DdDPLRF0i3hsx0q8Kw8ItIa14PqQDmvbi2QDEFn/1pKu7wk8Uy+6qUo+Edl/E5BH+4e4
-         YJEQmMhrBCIJAofM+86azZn9b6ny4TW8fHb89HAOyP3WQ4sJz9mWYUflOcvOGXhfT3nt
-         pWdQ==
-X-Gm-Message-State: AOAM5317sBr+lmT7UT+5fUE21Wl8N8qRX0/dlrTZD0NoHkBbB/JIAivd
-        rDZJZAwzcSZG0Azq3qW9RNv8pUq0lNLUqr9ZEV3BPnZ0L+QD57L/s4uM4fpDkx7W1cI5N0DyVaY
-        BES0bpf2XBw+zqCGoRR9k/krg5IWfUSQgP0bGm1v1ve2J96/8UqMYOcEgy5x8ofE=
-X-Google-Smtp-Source: ABdhPJyE5h1J7iylHNiOkrken5D8HbsVeXrMlncHk7+6snFDkaBCbckk3uadXdQbcs44Gx9+sDuDIHevNBs/iw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:5895:: with SMTP id
- j21mr15630814pji.99.1634153498213; Wed, 13 Oct 2021 12:31:38 -0700 (PDT)
-Date:   Wed, 13 Oct 2021 12:31:27 -0700
-In-Reply-To: <20211013193127.76537-1-chooglen@google.com>
-Message-Id: <20211013193127.76537-4-chooglen@google.com>
-Mime-Version: 1.0
-References: <pull.1103.git.git.1633633635.gitgitgadget@gmail.com> <20211013193127.76537-1-chooglen@google.com>
-X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
-Subject: [PATCH v2 3/3] remote: add struct repository parameter to external functions
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0X6UvDzBnueC5W92RkubzNE9m34yGiEpdHuH1knHYqM=;
+        b=E/InDBNNfSbckIvjm8m2P8beunlLiVRyBhZHYnxaa9H1pmgiMCNyYPP2JWXQE2Ootq
+         zof2YHXDBDSk0E14Nhnx2E0EzHgSRXTNfBydVWVyH6Kpt0b0In0WJpiChjB3ro7rgHHX
+         TylgjfXu24fyMYe6+Tbuv+sRpGa87LrOYeg/hx2tkE7YXZ4mtJYiNYFSI/4SsMkPLmj7
+         0zoccLAZEGDzBXI8BZy026g08peeCg6KOOSdmPLJgUQOTMnWuIVsrRH3lgBE4qMg3JjR
+         0G7K0FHY2NCL+9IX36ZUE8RFfx6IwDjyhck0hSUkOkPWemnXSCKmKgf0yLD7V8KrvAYm
+         qcAA==
+X-Gm-Message-State: AOAM531j8AAGLuHD+V/poHMZNgjonmB0m9A4bUatM2LQ4Hph5iPpnbs+
+        nJeRdsCMdI7B2L8ETg0bmOfhbQ==
+X-Google-Smtp-Source: ABdhPJz2i5V7osg8LaAR4f+kcdgl0gx7bTonm19vdrpVTZ0pxPu95SH4fh2RohZTKiekdz0BY6PBrQ==
+X-Received: by 2002:a63:7e05:: with SMTP id z5mr873718pgc.354.1634153818692;
+        Wed, 13 Oct 2021 12:36:58 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:3db2:597e:d036:ff3f])
+        by smtp.gmail.com with ESMTPSA id j6sm311279pgq.0.2021.10.13.12.36.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Oct 2021 12:36:58 -0700 (PDT)
+Date:   Wed, 13 Oct 2021 12:36:52 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/4] introduce submodule.superprojectGitDir record
+Message-ID: <YWc1VJgWymoPado9@google.com>
+References: <20210819200953.2105230-1-emilyshaffer@google.com>
+ <20210819200953.2105230-3-emilyshaffer@google.com>
+ <9fecf160-9646-7e56-478c-aa5f8defa6a9@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9fecf160-9646-7e56-478c-aa5f8defa6a9@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Finish plumbing remote_state by adding a struct repository
-parameter to repo_* functions. While this removes all references to
-the_repository->remote_state, certain functions still use the_repository
-to parse oids.
+On Thu, Aug 19, 2021 at 08:38:19PM -0400, Derrick Stolee wrote:
+> 
+> On 8/19/2021 4:09 PM, Emily Shaffer wrote:
+> ...
+> > +submodule.superprojectGitDir::
+> > +	The relative path from the submodule's worktree to its superproject's
+> > +	gitdir. When Git is run in a repository, it usually makes no difference
+> > +	whether this repository is standalone or a submodule, but if this
+> > +	configuration variable is present, additional behavior may be possible,
+> > +	such as "git status" printing additional information about this
+> > +	submodule's status with respect to its superproject. This config should
+> > +	only be present in projects which are submodules, but is not guaranteed
+> > +	to be present in every submodule, so only optional value-added behavior
+> > +	should be linked to it. It is set automatically during
+> > +	submodule creation.
+> > ++
+> > +	Because of this configuration variable, it is forbidden to use the
+> > +	same submodule worktree shared by multiple superprojects.
+> 
+> nit: this paragraph linked with the "+" line should have no tabbing.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- remote.c | 111 ++++++++++++++++++++++++++++++-------------------------
- remote.h |  96 +++++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 142 insertions(+), 65 deletions(-)
+Done.
 
-diff --git a/remote.c b/remote.c
-index 850ccd8eff..be0889c53b 100644
---- a/remote.c
-+++ b/remote.c
-@@ -495,7 +495,8 @@ static int valid_remote_nick(const char *name)
- 	return 1;
- }
- 
--const char *remote_for_branch(struct branch *branch, int *explicit)
-+const char *repo_remote_for_branch(struct repository *repo,
-+				   struct branch *branch, int *explicit)
- {
- 	if (branch && branch->remote_name) {
- 		if (explicit)
-@@ -507,22 +508,24 @@ const char *remote_for_branch(struct branch *branch, int *explicit)
- 	return "origin";
- }
- 
--const char *pushremote_for_branch(struct branch *branch, int *explicit)
-+const char *repo_pushremote_for_branch(struct repository *repo,
-+				       struct branch *branch, int *explicit)
- {
- 	if (branch && branch->pushremote_name) {
- 		if (explicit)
- 			*explicit = 1;
- 		return branch->pushremote_name;
- 	}
--	if (the_repository->remote_state->pushremote_name) {
-+	if (repo->remote_state->pushremote_name) {
- 		if (explicit)
- 			*explicit = 1;
--		return the_repository->remote_state->pushremote_name;
-+		return repo->remote_state->pushremote_name;
- 	}
--	return remote_for_branch(branch, explicit);
-+	return repo_remote_for_branch(repo, branch, explicit);
- }
- 
--const char *remote_ref_for_branch(struct branch *branch, int for_push)
-+const char *repo_remote_ref_for_branch(struct repository *repo,
-+				       struct branch *branch, int for_push)
- {
- 	if (branch) {
- 		if (!for_push) {
-@@ -530,9 +533,11 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push)
- 				return branch->merge_name[0];
- 			}
- 		} else {
--			const char *dst, *remote_name =
--				pushremote_for_branch(branch, NULL);
--			struct remote *remote = remote_get(remote_name);
-+			const char *dst,
-+				*remote_name = repo_pushremote_for_branch(
-+					repo, branch, NULL);
-+			struct remote *remote =
-+				repo_remote_get(repo, remote_name);
- 
- 			if (remote && remote->push.nr &&
- 			    (dst = apply_refspecs(&remote->push,
-@@ -544,42 +549,43 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push)
- 	return NULL;
- }
- 
--static struct remote *remote_get_1(const char *name,
--				   const char *(*get_default)(struct branch *, int *))
-+static struct remote *repo_remote_get_1(
-+	struct repository *repo, const char *name,
-+	const char *(*get_default)(struct repository *, struct branch *, int *))
- {
- 	struct remote *ret;
- 	int name_given = 0;
- 
--	read_config(the_repository->remote_state);
-+	read_config(repo->remote_state);
- 
- 	if (name)
- 		name_given = 1;
- 	else
--		name = get_default(the_repository->remote_state->current_branch,
-+		name = get_default(repo, repo->remote_state->current_branch,
- 				   &name_given);
- 
--	ret = make_remote(the_repository->remote_state, name, 0);
-+	ret = make_remote(repo->remote_state, name, 0);
- 	if (valid_remote_nick(name) && have_git_dir()) {
- 		if (!valid_remote(ret))
--			read_remotes_file(the_repository->remote_state, ret);
-+			read_remotes_file(repo->remote_state, ret);
- 		if (!valid_remote(ret))
--			read_branches_file(the_repository->remote_state, ret);
-+			read_branches_file(repo->remote_state, ret);
- 	}
- 	if (name_given && !valid_remote(ret))
--		add_url_alias(the_repository->remote_state, ret, name);
-+		add_url_alias(repo->remote_state, ret, name);
- 	if (!valid_remote(ret))
- 		return NULL;
- 	return ret;
- }
- 
--struct remote *remote_get(const char *name)
-+struct remote *repo_remote_get(struct repository *repo, const char *name)
- {
--	return remote_get_1(name, remote_for_branch);
-+	return repo_remote_get_1(repo, name, repo_remote_for_branch);
- }
- 
--struct remote *pushremote_get(const char *name)
-+struct remote *repo_pushremote_get(struct repository *repo, const char *name)
- {
--	return remote_get_1(name, pushremote_for_branch);
-+	return repo_remote_get_1(repo, name, repo_pushremote_for_branch);
- }
- 
- int remote_is_configured(struct remote *remote, int in_repo)
-@@ -591,14 +597,12 @@ int remote_is_configured(struct remote *remote, int in_repo)
- 	return !!remote->origin;
- }
- 
--int for_each_remote(each_remote_fn fn, void *priv)
-+int repo_for_each_remote(struct repository *repo, each_remote_fn fn, void *priv)
- {
- 	int i, result = 0;
--	read_config(the_repository->remote_state);
--	for (i = 0; i < the_repository->remote_state->remotes_nr && !result;
--	     i++) {
--		struct remote *remote =
--			the_repository->remote_state->remotes[i];
-+	read_config(repo->remote_state);
-+	for (i = 0; i < repo->remote_state->remotes_nr && !result; i++) {
-+		struct remote *remote = repo->remote_state->remotes[i];
- 		if (!remote)
- 			continue;
- 		result = fn(remote, priv);
-@@ -1666,7 +1670,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	}
- }
- 
--static void set_merge(struct branch *ret)
-+static void set_merge(struct repository *repository, struct branch *ret)
- {
- 	struct remote *remote;
- 	char *ref;
-@@ -1686,7 +1690,7 @@ static void set_merge(struct branch *ret)
- 		return;
- 	}
- 
--	remote = remote_get(ret->remote_name);
-+	remote = repo_remote_get(repository, ret->remote_name);
- 
- 	CALLOC_ARRAY(ret->merge, ret->merge_nr);
- 	for (i = 0; i < ret->merge_nr; i++) {
-@@ -1703,17 +1707,16 @@ static void set_merge(struct branch *ret)
- 	}
- }
- 
--struct branch *branch_get(const char *name)
-+struct branch *repo_branch_get(struct repository *repo, const char *name)
- {
- 	struct branch *ret;
- 
--	read_config(the_repository->remote_state);
-+	read_config(repo->remote_state);
- 	if (!name || !*name || !strcmp(name, "HEAD"))
--		ret = the_repository->remote_state->current_branch;
-+		ret = repo->remote_state->current_branch;
- 	else
--		ret = make_branch(the_repository->remote_state, name,
--				  strlen(name));
--	set_merge(ret);
-+		ret = make_branch(repo->remote_state, name, strlen(name));
-+	set_merge(repo, ret);
- 	return ret;
- }
- 
-@@ -1743,7 +1746,8 @@ static const char *error_buf(struct strbuf *err, const char *fmt, ...)
- 	return NULL;
- }
- 
--const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
-+const char *repo_branch_get_upstream(struct repository *repo,
-+				     struct branch *branch, struct strbuf *err)
- {
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
-@@ -1784,11 +1788,14 @@ static const char *tracking_for_push_dest(struct remote *remote,
- 	return ret;
- }
- 
--static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
-+static const char *repo_branch_get_push_1(struct repository *repo,
-+					  struct branch *branch,
-+					  struct strbuf *err)
- {
- 	struct remote *remote;
- 
--	remote = remote_get(pushremote_for_branch(branch, NULL));
-+	remote = repo_remote_get(repo, repo_pushremote_for_branch(repo, branch,
-+								  NULL));
- 	if (!remote)
- 		return error_buf(err,
- 				 _("branch '%s' has no remote for pushing"),
-@@ -1821,14 +1828,14 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
- 		return tracking_for_push_dest(remote, branch->refname, err);
- 
- 	case PUSH_DEFAULT_UPSTREAM:
--		return branch_get_upstream(branch, err);
-+		return repo_branch_get_upstream(repo, branch, err);
- 
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 	case PUSH_DEFAULT_SIMPLE:
- 		{
- 			const char *up, *cur;
- 
--			up = branch_get_upstream(branch, err);
-+			up = repo_branch_get_upstream(repo, branch, err);
- 			if (!up)
- 				return NULL;
- 			cur = tracking_for_push_dest(remote, branch->refname, err);
-@@ -1844,13 +1851,15 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
- 	BUG("unhandled push situation");
- }
- 
--const char *branch_get_push(struct branch *branch, struct strbuf *err)
-+const char *repo_branch_get_push(struct repository *repo, struct branch *branch,
-+				 struct strbuf *err)
- {
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
- 
- 	if (!branch->push_tracking_ref)
--		branch->push_tracking_ref = branch_get_push_1(branch, err);
-+		branch->push_tracking_ref =
-+			repo_branch_get_push_1(repo, branch, err);
- 	return branch->push_tracking_ref;
- }
- 
-@@ -2103,15 +2112,16 @@ static int stat_branch_pair(const char *branch_name, const char *base,
-  * upstream defined, or ref does not exist).  Returns 0 if the commits are
-  * identical.  Returns 1 if commits are different.
-  */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
--		       const char **tracking_name, int for_push,
--		       enum ahead_behind_flags abf)
-+int repo_stat_tracking_info(struct repository *repo, struct branch *branch,
-+			    int *num_ours, int *num_theirs,
-+			    const char **tracking_name, int for_push,
-+			    enum ahead_behind_flags abf)
- {
- 	const char *base;
- 
- 	/* Cannot stat unless we are marked to build on top of somebody else. */
--	base = for_push ? branch_get_push(branch, NULL) :
--		branch_get_upstream(branch, NULL);
-+	base = for_push ? repo_branch_get_push(repo, branch, NULL) :
-+				repo_branch_get_upstream(repo, branch, NULL);
- 	if (tracking_name)
- 		*tracking_name = base;
- 	if (!base)
-@@ -2123,15 +2133,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- /*
-  * Return true when there is anything to report, otherwise false.
-  */
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf)
-+int repo_format_tracking_info(struct repository *repo, struct branch *branch,
-+			      struct strbuf *sb, enum ahead_behind_flags abf)
- {
- 	int ours, theirs, sti;
- 	const char *full_base;
- 	char *base;
- 	int upstream_is_gone = 0;
- 
--	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-+	sti = repo_stat_tracking_info(repo, branch, &ours, &theirs, &full_base,
-+				      0, abf);
- 	if (sti < 0) {
- 		if (!full_base)
- 			return 0;
-diff --git a/remote.h b/remote.h
-index 184d14af3d..a1cf86f973 100644
---- a/remote.h
-+++ b/remote.h
-@@ -117,15 +117,28 @@ struct remote {
-  * remote_get(NULL) will return the default remote, given the current branch
-  * and configuration.
-  */
--struct remote *remote_get(const char *name);
--
--struct remote *pushremote_get(const char *name);
-+struct remote *repo_remote_get(struct repository *repo, const char *name);
-+static inline struct remote *remote_get(const char *name)
-+{
-+	return repo_remote_get(the_repository, name);
-+}
-+
-+struct remote *repo_pushremote_get(struct repository *repo, const char *name);
-+static inline struct remote *pushremote_get(const char *name)
-+{
-+	return repo_pushremote_get(the_repository, name);
-+}
- int remote_is_configured(struct remote *remote, int in_repo);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
- 
- /* iterate through struct remotes */
--int for_each_remote(each_remote_fn fn, void *priv);
-+int repo_for_each_remote(struct repository *repo, each_remote_fn fn,
-+			 void *priv);
-+static inline int for_each_remote(each_remote_fn fn, void *priv)
-+{
-+	return repo_for_each_remote(the_repository, fn, priv);
-+}
- 
- int remote_has_url(struct remote *remote, const char *url);
- 
-@@ -320,10 +333,35 @@ struct branch {
- 	const char *push_tracking_ref;
- };
- 
--struct branch *branch_get(const char *name);
--const char *remote_for_branch(struct branch *branch, int *explicit);
--const char *pushremote_for_branch(struct branch *branch, int *explicit);
--const char *remote_ref_for_branch(struct branch *branch, int for_push);
-+struct branch *repo_branch_get(struct repository *repo, const char *name);
-+static inline struct branch *branch_get(const char *name)
-+{
-+	return repo_branch_get(the_repository, name);
-+}
-+
-+const char *repo_remote_for_branch(struct repository *repo,
-+				   struct branch *branch, int *explicit);
-+static inline const char *remote_for_branch(struct branch *branch,
-+					    int *explicit)
-+{
-+	return repo_remote_for_branch(the_repository, branch, explicit);
-+}
-+
-+const char *repo_pushremote_for_branch(struct repository *repo,
-+				       struct branch *branch, int *explicit);
-+static inline const char *pushremote_for_branch(struct branch *branch,
-+						int *explicit)
-+{
-+	return repo_pushremote_for_branch(the_repository, branch, explicit);
-+}
-+
-+const char *repo_remote_ref_for_branch(struct repository *repo,
-+				       struct branch *branch, int for_push);
-+static inline const char *remote_ref_for_branch(struct branch *branch,
-+						int for_push)
-+{
-+	return repo_remote_ref_for_branch(the_repository, branch, for_push);
-+}
- 
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-@@ -339,7 +377,13 @@ int branch_merge_matches(struct branch *, int n, const char *);
-  * message is recorded there (if the function does not return NULL, then
-  * `err` is not touched).
-  */
--const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-+const char *repo_branch_get_upstream(struct repository *repo,
-+				     struct branch *branch, struct strbuf *err);
-+static inline const char *branch_get_upstream(struct branch *branch,
-+					      struct strbuf *err)
-+{
-+	return repo_branch_get_upstream(the_repository, branch, err);
-+}
- 
- /**
-  * Return the tracking branch that corresponds to the ref we would push to
-@@ -347,7 +391,13 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-  *
-  * The return value and `err` conventions match those of `branch_get_upstream`.
-  */
--const char *branch_get_push(struct branch *branch, struct strbuf *err);
-+const char *repo_branch_get_push(struct repository *repo, struct branch *branch,
-+				 struct strbuf *err);
-+static inline const char *branch_get_push(struct branch *branch,
-+					  struct strbuf *err)
-+{
-+	return repo_branch_get_push(the_repository, branch, err);
-+}
- 
- /* Flags to match_refs. */
- enum match_refs_flags {
-@@ -366,11 +416,27 @@ enum ahead_behind_flags {
- };
- 
- /* Reporting of tracking info */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
--		       const char **upstream_name, int for_push,
--		       enum ahead_behind_flags abf);
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf);
-+int repo_stat_tracking_info(struct repository *repo, struct branch *branch,
-+			    int *num_ours, int *num_theirs,
-+			    const char **upstream_name, int for_push,
-+			    enum ahead_behind_flags abf);
-+static inline int stat_tracking_info(struct branch *branch, int *num_ours,
-+				     int *num_theirs,
-+				     const char **upstream_name, int for_push,
-+				     enum ahead_behind_flags abf)
-+{
-+	return repo_stat_tracking_info(the_repository, branch, num_ours,
-+				       num_theirs, upstream_name, for_push,
-+				       abf);
-+}
-+
-+int repo_format_tracking_info(struct repository *repo, struct branch *branch,
-+			      struct strbuf *sb, enum ahead_behind_flags abf);
-+static inline int format_tracking_info(struct branch *branch, struct strbuf *sb,
-+				       enum ahead_behind_flags abf)
-+{
-+	return repo_format_tracking_info(the_repository, branch, sb, abf);
-+}
- 
- struct ref *get_local_heads(void);
- /*
--- 
-2.33.0.882.g93a45727a2-goog
+> 
+> Also, could we use the same submodule worktree for multiple superprojects
+> _before_ this configuration variable? That seems wild to me. Or, is that
+> not a new requirement?
 
+I guess it'd be possible to do something pretty evil with symlinks? I'm
+not sure why you would want to, though.
+
+But now that I think about it more, I'm not sure that it would work, at
+least if we understand submodule to mean "...and the gitdir lives in
+.git/modules/ of the superproject".
+
+If superA contains sub and superB contains a symlink to 'sub''s
+worktree in superA, then wouldn't superA and superB both be trying to
+contain their own gitdirs for sub? And having multiple gitdirs for a
+worktree is an unacceptable state anyway.
+
+Or maybe the issue is more like: you have super, which contains sub, and
+you have super-wt, which is a worktree of super; to avoid duplicating
+sub, you decided to use a symlink. So there's only one sub gitdir, and
+only one super gitdir. It's a little awkward, but since submodule
+worktrees aren't currently supported, I can see the appeal. In this
+configuration, a path from submodule *worktree* to superproject gitdir,
+which is what v3 and earlier propose, would be broken in one
+superproject worktree or the other And having multiple gitdirs for a
+worktree is an unacceptable state anyway.
+
+Or maybe the issue is more like: you have super, which contains sub, and
+you have super-wt, which is a worktree of super; to avoid duplicating
+sub, you decided to use a symlink. So there's only one sub gitdir, and
+only one super gitdir. It's a little awkward, but since submodule
+worktrees aren't currently supported, I can see the appeal. In this
+configuration, a path from submodule *worktree* to superproject gitdir,
+which is what v3 and earlier propose, would be broken in one
+superproject worktree or the other. But as I'm proposing in v4, folks in
+the review club pointed out to me that a pointer from gitdir to gitdir
+makes more sense - and that would fix this concern, too, because sub and
+the symlink of sub would both share a single gitdir, and that gitdir
+would point to the single gitdir of super and super-wt.
+
+All a long way to say: I think v4 will fix it by originating the
+relative path from submodule gitdir, instead. And I will remove the
+extra paragraph - I think it is just adding confusion around a case that
+nobody would really want to use...
+
+> 
+> Perhaps you mean something like this instead:
+> 
+> 	It is forbidden to use the same submodule worktree for multiple
+> 	superprojects, so this configuration variable stores the unique
+> 	superproject and is not multi-valued.
+> 
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index d55f6262e9..d60fcd2c7d 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -1910,6 +1910,10 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+> >  		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+> >  					   error_strategy);
+> >  
+> > +	git_config_set_in_file(p, "submodule.superprojectGitdir",
+> > +			       relative_path(absolute_path(get_git_dir()),
+> > +					     path, &sb));
+> > +
+> 
+> I see that all new submodules will have this configuration set. But we will
+> also live in a world where some existing submodules do not have this variable
+> set. I'll look elsewhere for compatibility checks.
+
+Yep, the series intended to add them piecemeal where possible, over the
+course of a handful of commits.
+
+> 
+> >  inspect() {
+> > -	dir=$1 &&
+> > -
+> > -	git -C "$dir" for-each-ref --format='%(refname)' 'refs/heads/*' >heads &&
+> > -	{ git -C "$dir" symbolic-ref HEAD || :; } >head &&
+> > -	git -C "$dir" rev-parse HEAD >head-sha1 &&
+> > -	git -C "$dir" update-index --refresh &&
+> > -	git -C "$dir" diff-files --exit-code &&
+> > -	git -C "$dir" clean -n -d -x >untracked
+> > +	sub_dir=$1 &&
+> > +	super_dir=$2 &&
+> > +
+> > +	git -C "$sub_dir" for-each-ref --format='%(refname)' 'refs/heads/*' >heads &&
+> > +	{ git -C "$sub_dir" symbolic-ref HEAD || :; } >head &&
+> > +	git -C "$sub_dir" rev-parse HEAD >head-sha1 &&
+> > +	git -C "$sub_dir" update-index --refresh &&
+> > +	git -C "$sub_dir" diff-files --exit-code &&
+> > +	cached_super_dir="$(git -C "$sub_dir" config --get submodule.superprojectGitDir)" &&
+> > +	[ "$(git -C "$super_dir" rev-parse --absolute-git-dir)" \
+> > +		-ef "$sub_dir/$cached_super_dir" ] &&
+> > +	git -C "$sub_dir" clean -n -d -x >untracked
+> 
+> You rewrote this test in the previous patch, and now every line is changed
+> because you renamed 'dir' to 'sub_dir'. Could the previous patch use
+> 'sub_dir' from the start so this change only shows the new lines instead of
+> many edited lines?
+
+Sure.
+
+> 
+> >  }
+> >  
+> >  test_expect_success 'submodule add' '
+> > @@ -138,7 +142,7 @@ test_expect_success 'submodule add' '
+> >  	) &&
+> >  
+> >  	rm -f heads head untracked &&
+> > -	inspect addtest/submod &&
+> > +	inspect addtest/submod addtest &&
+> 
+> Similarly, I would not be upset to see these lines be changed just the
+> once, even if the second argument is ignored for a single commit. But
+> this nitpick is definitely less important since I could see taste
+> swaying things either way.
+
+I feel less interested in that nit; I think a mechanical "strip the
+useless arg" change + a mechanical "add an unrelated useful arg" change
+is easier to review than doing both at once.
+
+ - Emily
