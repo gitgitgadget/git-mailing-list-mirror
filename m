@@ -2,192 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C8AC433EF
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 18:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAD78C433F5
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 18:51:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5970D61056
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 18:33:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A061261139
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 18:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236975AbhJMSft (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 14:35:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50814 "EHLO
+        id S231402AbhJMSxt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 14:53:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232682AbhJMSfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 14:35:47 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9A1C061570
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 11:33:43 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id 4-20020a620504000000b0044be2cfac9bso2092417pff.0
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 11:33:43 -0700 (PDT)
+        with ESMTP id S229814AbhJMSxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 14:53:48 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCC6C061570
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 11:51:44 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id ls18so2941088pjb.3
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 11:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=DwHTykuttlYYCTYC9vyRXZoV4ZKvn/+9+7J9a0U3IvQ=;
-        b=p54YjJU56ASsDru2M1lcSr8YsRA+cS0rGIGcM036SvYPRwOo0sC6TxmuffH/vNawKs
-         JYUntj1bT+K/oNJoJ3eMX6uKwybXgniX+dlFREdABdBprdkwyfvYkn78Jn+7pKPr0J5P
-         hh44m+Sm2Nb+yeDb4RiHp83o7W4pW2nfbhmPCaC5A2PjJIuOgRmiqj/QgE4payLoDyFh
-         MtYq2z6KtXLz36kR5QLxEm/YaVJ6Wy7K4Ya9uExyhswIRv/LS1tmSnEnmSYm7w8xefuh
-         od6DVVCk3mNQfRmrLI1+pBSLmlBnvdq3oq8TJffe8rfbw7h+zcIMYcuQLDSZysThhaQp
-         Ee/w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QkgIlNCvE07gDIlPXCd62dIgnkgKrmUWzFYUZlOVuD4=;
+        b=M101WzXF8fgonP6/ZPV+5dhEcl+DjBbwJjOn2/Ur2kh8nHcDUovHu6Jla4IYgoeIGi
+         Z0F22MSoJRew0vaM5PXLPb2jvVPh7mubEkEDNXGv1hzQQi2l0WgE2DNyGkNNcU1x/wCn
+         ejG+9tVP0JX+0/Fl4YizZiD2dS49QqZ2WzP1mKfQVf8xc0GxUF/YCcWqUIDeoAUiqvkf
+         2Hf3ewMuaW+rAYixfWAbb5TEHX1PqiW5RrTi0eCTj5pNKfTZg5PCqxqKGBk9iJTf5ctJ
+         WfWVcG0SJL0BfLN/S4j/gY/O74r5SAS9iuXC/eWyODHsbIXbswjKrz1kRn4DtS/XEACV
+         WDzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=DwHTykuttlYYCTYC9vyRXZoV4ZKvn/+9+7J9a0U3IvQ=;
-        b=zl1lMqYYsRpi8EEDr4d8qtGAQ8uJ24Lx6fvzGG6RMrTt8c4tXrLXnooqvu27CL/AX9
-         WpJnbCKdWlZRW671HH0bUyeAkev/0Ffmjxik80eiHh2nQMyRFOw9BZjhzAJmgjZO//4g
-         9tv/7uCvzDUPbzowVpnQ/WjboLFridB28MgLp6VEAlC+RBQ7XUwxscByQ1NYVioCVZIO
-         Ji+6jZ2/xiXMCuE59uDdXDwJZ1g7i0Auv4M5h3NSq30gNUyM7Pwb8OUJx64ACzA7xTF4
-         cougDjOoAJ0LRVzT5mExWdaRt8eQj9GxsViO3GQuF6zhKyrVYdFDQlWyHQ9LBrqxWJDM
-         oZJA==
-X-Gm-Message-State: AOAM533X86Q6Cyr9Duakln1WnXpEiAW72mscGJSJmHYOgeWSgLSzRtzm
-        27ujv5FZdPs3jFZa6yjnzOwCe1dxo8bwU3nQTUp5
-X-Google-Smtp-Source: ABdhPJwe2r2C7pSTdm4uMmVWjI2NTjMZpOiKka1l6V6cWSxfObq7SfTs7LkvqS5zadrmzo2GJLUz870llzo0XWy44NMv
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:4011:: with SMTP id
- ie17mr15239193pjb.41.1634150023466; Wed, 13 Oct 2021 11:33:43 -0700 (PDT)
-Date:   Wed, 13 Oct 2021 11:33:41 -0700
-In-Reply-To: <YWYafdpemaiAjvUV@coredump.intra.peff.net>
-Message-Id: <20211013183341.85761-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <YWYafdpemaiAjvUV@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-Subject: Re: [RFC PATCH 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QkgIlNCvE07gDIlPXCd62dIgnkgKrmUWzFYUZlOVuD4=;
+        b=dQdRdIVxqOYaY1Qvs1wM1n9WucXwKkLjpX9AusK4g8mOF8YcSz2yl+drUnFpZnktr7
+         xcc7zDqVyvFx3j6MU6TTgcQJ0T57aP9N5O+XmLWlmIPy0Rs3Ym6BWn/JUjLXigjYfLcZ
+         gBePplmhUTUEVFmH5RCIl88jmrIq9ME2H5fg+oKNwUty4cekCppY9y1Sn4eV9RxwVa0m
+         DoJ3Ut3QtajTY5OjzNBNoK8Rw7bmPpjWgqoGp3+ey37JiL/qo2YYWivGQrW6xtpHe15I
+         a/VA1JinYHWyBbwytIZ3bDyNBLHHoLf1uV4Pau/domONTsr4eksQHm2k11WkDaWcI3+/
+         dltQ==
+X-Gm-Message-State: AOAM532LwJenV65ayGCHvuM1UcIGG3znLRgMSyiWFfYAk1ZEGpiQDS1L
+        /t0JdZy90p5ipYbOT/n7UpoGmChgV0ODBQ==
+X-Google-Smtp-Source: ABdhPJy0/XpJjk6TOgqq6VyCe3Jby8CrMdrEqxnxCS54Ga4wvRLu+H7sI+TSSMgpNu1MWKzyHSMqGw==
+X-Received: by 2002:a17:90b:3cc:: with SMTP id go12mr15298870pjb.127.1634151104145;
+        Wed, 13 Oct 2021 11:51:44 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:3db2:597e:d036:ff3f])
+        by smtp.gmail.com with ESMTPSA id o2sm245521pgc.47.2021.10.13.11.51.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Oct 2021 11:51:43 -0700 (PDT)
+Date:   Wed, 13 Oct 2021 11:51:37 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 0/4] cache parent project's gitdir in submodules
+Message-ID: <YWcquctPsrRm964k@google.com>
+References: <20210819200953.2105230-1-emilyshaffer@google.com>
+ <f5197594-550f-3bd8-2d22-c9e1b3e161fd@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f5197594-550f-3bd8-2d22-c9e1b3e161fd@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> OK. I was a little wary after reading the subject that this would be
-> "when we are using such a URL", which is full of all kinds of odd corner
-> cases. But if it is "a remote is defined with a matching URL" that makes
-> it a property of the repository, not the operation.
+On Thu, Aug 19, 2021 at 09:09:46PM -0400, Derrick Stolee wrote:
 > 
-> I think in general this kind of feature is currently served by just
-> correlating filesystem paths with their function. So with your patch I
-> could do:
+> On 8/19/2021 4:09 PM, Emily Shaffer wrote:
+> > Since v2, mostly documentation changes and a handful of small nits from
+> > Junio and Jonathan Tan. Thanks for the reviews, both.
 > 
->   [includeIf "hasremoteurl:https://myjob.example.com"]
->   path = foo.conf
+> Sorry to show up late with many questions (mostly because my understanding
+> of submodules is not as strong as yours),
+
+Well, here I am apologizing for showing up even later with a reply ;)
+
+> but I do have some concerns that
+> we have not covered all the cases that could lead to the relative path
+> needing an update, such as a 'git checkout' across commits in the super-
+> project which moves a submodule.
 > 
-> But in general, I'd imagine most people put their repository in ~/work
-> or similar, and just do:
+> Leading more to my confusion is that I thought 'git submodule update'
+> was the way to move a submodule, but that does not appear to be the case.
+> I used 'git mv' to move a submodule and that correctly updated the
+> .gitmodules file, but did not run any 'git submodule' subcommands (based
+> on GIT_TRACE2_PERF=1).
+
+During a live review a few weeks ago it was pointed out, I forget by
+who, that this whole series would make a lot more sense if it was
+treated as the path from the submodule's gitdir to the superproject's
+gitdir. I think this would also fix your 'git mv' example here, as the
+submodule gitdir would not change.
+
 > 
->   [includeIf "gitdir:~/work"]
->   path = foo.conf
-> 
-> (and of course you can imagine more subdivisions as necessary). So I
-> find the use-case only sort-of compelling. In general, I'm in favor of
-> adding new includeIf directions even if they're only moderately
-> convenient. But this one is rather sticky, because it is dependent on
-> other config keys being defined. So it introduces a new and complicated
-> ordering issue. Is it worth it? Maybe I'm not being imaginative enough
-> in seeing the use cases.
+> You mention in an earlier cover letter that this config does not need to
+> exist, but it seems to me that if it exists it needs to be correct for us
+> to depend on it for future features. I'm not convinced that we can rely
+> on it as-written, but you might be able to convince me by pointing out
+> why these submodule movements are safe.
 
-My main use case is for a remote repo administrator to offer a
-recommended config to anyone who clones that repo. For this, I don't
-think we can prescribe a local directory structure (e.g. "~/work")
-without being too restrictive or broad (that is, if the user ends up
-creating a repo that so happens to match our glob but did not intend the
-config to apply to it).
+Yeah, that is a good point, and I wonder how to be defensive about
+this... Maybe it makes sense to BUG() if we don't find the
+superproject's gitdir from this config? Maybe it makes sense to warn
+(asking users to 'git submodule update') and erase the incorrect config
+line?
 
-I did bring up the idea that an individual could use this to have config
-in one place that affects a subset of remotes, but you're right that
-they could just do this by putting repositories at different places in
-the filesystem.
+Both those approaches would require a wrapper around
+'git_config_get_string()' to cope with a failure, but it might be worth
+it.
 
-> > I marked this as RFC because there are some design points that need to
-> > be resolved:
-> > 
-> >  - The existing "include" and "includeIf" instructions are executed
-> >    immediately, whereas in order to be useful, the execution of
-> >    "includeIf hasremoteurl" needs to be delayed until all config files
-> >    are read. Are there better ways to do this?
-> 
-> Note that this violates the "as if they had been found at the location
-> of the include directive" rule which we advertise to users. I'd imagine
-> that most of the time it doesn't matter, but this is a pretty big
-> exception we'll need to document.
+I'll try proposing such a wrapper in the reroll, unless I hear back
+sooner.
 
-Yes, that's true. Another thing I just thought of is to add a new
-"deferIncludeIf" which makes clear the different semantics (deferred
-include, and perhaps not allow recursive includes).
-
-> Just brainstorming some alternatives:
-> 
->   - We could stop the world while we are parsing and do a _new_ parse
->     that just looks at the remote config (in fact, this is the natural
->     thing if you were consulting the regular remote.c code for the list
->     of remotes, because it does its own config parse).
-> 
->     That does mean that the remote-conditional includes cannot
->     themselves define new remotes. But I think that is already the case
->     with your patch (and violating that gets you into weird circular
->     problems).
-
-Hmm...yes, having a special-case rule that such an included file cannot
-define new remotes would be complex.
-
->   - We could simply document that if you want to depend on conditional
->     includes based on a particular remote.*.url existing, then that
->     remote config must appear earlier in the sequence.
-> 
->     This is a bit ugly, because I'm sure it will bite somebody
->     eventually. But at the same time, it resolves all of the weird
->     timing issues, and does so in a way that will be easy to match if we
->     have any other config dependencies.
-
-My main issue with this is that different config files are read at
-different times, and the repo config (that usually contains the remote)
-is read last.
-
-> >  - Is the conditionally-included file allowed to have its own
-> >    "include{,If}" instructions? I'm thinking that we should forbid it
-> >    because, for example, if we had 4 files as follows: A includes B and
-> >    C includes D, and we include A and C in our main config (in that
-> >    order), it wouldn't be clear whether B (because A was first included)
-> >    or C (because we should execute everything at the same depth first)
-> >    should be executed first. (In this patch, I didn't do anything about
-> >    includes.)
-> 
-> I'd say that A would expand B at the moment it is parsed, by the usual
-> as-if rule. If it has a recursive includeIf on remotes, then my head may
-> explode. I'd argue that we should refuse to do recursive remote-ifs in
-> that case (though all of this is a consequence of the after-the-fact
-> parsing; I'd much prefer one of the alternatives I gave earlier).
-
-If we can't expand in place, I would say that any recursive includes
-should be refused. But as you said, we could still think about whether
-in-place expansion can be done before addressing this question.
-
-> >  - A small one: the exact format of the glob. I probably will treat the
-> >    URL like a path.
-> 
-> You might want to use the matcher from urlmatch.[ch], which understands
-> things like wildcards. Of course remote "URLs" are not always real
-> syntactically valid URLs, which may make that awkward.
-> 
-> Barring that the usual fnmatch glob is probably our best bet.
-
-OK.
-
-> So we make a copy of every remote name on the off chance that somebody
-> has an includeIf which looks at it. That feels wasteful, though in
-> practice it's probably not that big a deal.
-> 
-> By doing the config parsing ourselves here we're missing out on any
-> other forms of remote, like .git/remotes. Those are old and not widely
-> used, and I'd be OK with skipping them. But we should clearly document
-> that this is matching remote.*.url, not any of the other mechanisms.
-
-Sounds good.
-
-> I only lightly read the rest of the patch. I didn't see anything
-> obviously wrong, but I think the goal at this point is figuring out the
-> design.
-
-Yes, that's right.
+ - Emily
