@@ -2,177 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33232C433EF
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E341AC433EF
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:11:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 150C861130
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 19:52:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0C8160EDF
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238343AbhJMTyy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 15:54:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbhJMTyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 15:54:51 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F25F4C061570
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:52:47 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id om2-20020a17090b3a8200b001a069b140ffso2381659pjb.1
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 12:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=FFuBV1wL4Bv0NkxKwZXNO75udY3pSKx4K05dwtVY7VQ=;
-        b=j+Q3hbE7UdR6Hbyn1TAwac7A4fPQR15pqEWKeCB1TTqY6oPcEAv/Qa7pzwzPzHH/c1
-         3W2vPfmkrupGTK/uW9+77tX2IcBoyvL/sMelmUnSsCpGh6OCmhDjpUr1nmWrSIL6g43j
-         Vf+V4c72xHfKdTuF5f2zmervSrySreLat8Rals/bsHVqpaLocr1vwQOU0pkM9x0QSqee
-         LgjcjU/tKEW6wiVB0IFzXk5f0HcA2sQPSarr5OPSIWuJKwLLXaDW5aOa6rfYZx234z6y
-         eXzZKfzVB1TKt+axeOEA9aUPTixN3lVqUY2W7N+C+h2rHJBSTjga/xdMevR7B8Ss9kmV
-         s+/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=FFuBV1wL4Bv0NkxKwZXNO75udY3pSKx4K05dwtVY7VQ=;
-        b=7SIa+Ns+RYO5D/UBmU1todr8Eheb/zi/ltJMAo19Fb8Dh4nP3+AJ27HgsNekog28FW
-         EacaUXTq0xmKNl6n9QHmJM2Pf9LfVtR98wVsLoc43Cz32fiH7KQdY1m3f+UXYQAlAXmD
-         jHR8mveGoVEgOW+bnk56qkrYR2bay1ywlemeZ/iKgn2v0r/Px59R2dY/0RhVAwC8RGzx
-         gwyTlNyLoSusNiSQB3UNM75vwaXSN+U0s5FWqxoczR/MDeozsEx0veTwbeOK2JVJycSo
-         Ox7yTxnMfcrrZ1R7705gmyPuvyUdJhhTLZJAY2N6IMtzM+J636kCAmRhHlZe9ncd1PFe
-         3JpQ==
-X-Gm-Message-State: AOAM532FpJgfJUoRtlBwvZMn3LJSQk5ypil3lDl2rqPVYyxXAI5LnRmS
-        vFOcKUTY48WNM54jrIGu/tHEPbvn6cOdM3IO6Sjr
-X-Google-Smtp-Source: ABdhPJxAixhHsFBhuOevTvbmnjKzK93FZ87pidW3lNT4l7VMYpuwf42MD+S0F6JIAGnOUxPpc8YmCJbnuecmnibEUVA1
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:ce0f:: with SMTP id
- y15mr906342pgf.249.1634154767407; Wed, 13 Oct 2021 12:52:47 -0700 (PDT)
-Date:   Wed, 13 Oct 2021 12:52:45 -0700
-In-Reply-To: <xmqqk0ih24a0.fsf@gitster.g>
-Message-Id: <20211013195245.93145-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqk0ih24a0.fsf@gitster.g>
-X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-Subject: Re: [RFC PATCH 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S239014AbhJMUN7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 16:13:59 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62995 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236302AbhJMUN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 16:13:59 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F99414E3BB;
+        Wed, 13 Oct 2021 16:11:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vjUEE+39EjHWsF6XR02NHvx4Ru2oGRRRciUJ5t
+        9X5gE=; b=TXUn9xwS+wd5VKrdRU5Triv0jMo365m1r8y3uAyj4c3XUpDE4GF2z7
+        UwnEwtzPpMx+AbCtjpwp7XLxrFgXV6iDTiLrIo5Sop6evLXzOsufWzZukJ91/5QJ
+        jKSCtqppjPAx5AVjmTx19NyzmqT6nmGEjLonsPvDlV+9JPOx/8di4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 487BE14E3BA;
+        Wed, 13 Oct 2021 16:11:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A6E3F14E3B9;
+        Wed, 13 Oct 2021 16:11:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] remote: replace static variables with struct
+ remote_state
+References: <pull.1103.git.git.1633633635.gitgitgadget@gmail.com>
+        <20211013193127.76537-1-chooglen@google.com>
+Date:   Wed, 13 Oct 2021 13:11:51 -0700
+In-Reply-To: <20211013193127.76537-1-chooglen@google.com> (Glen Choo's message
+        of "Wed, 13 Oct 2021 12:31:24 -0700")
+Message-ID: <xmqqtuhkfzw8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CE5880E6-2C61-11EC-95E1-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > I marked this as RFC because there are some design points that need to
-> > be resolved:
-> >
-> >  - The existing "include" and "includeIf" instructions are executed
-> >    immediately, whereas in order to be useful, the execution of
-> >    "includeIf hasremoteurl" needs to be delayed until all config files
-> >    are read. Are there better ways to do this?
-> 
-> An interesting chicken-and-egg problem.  Even if an included
-> configuration file does not have further "include", you may discover
-> there are more remotes, which may add new includes to fire from the
-> top-level configuration file.
+Glen Choo <chooglen@google.com> writes:
 
-That's true. We might need to say that such conditional includes are
-based only on what happened during the main config parsing.
-
-> What if we have multiple remotes?  Is it a sufficient match for only
-> one of them match what is mentioned in the includeIf condition?
-> Should all of them must match the pattern instead?  Majority,
-> perhaps?  Something else?
-
-I think at least one remote should match.
-
-> >  - Is the conditionally-included file allowed to have its own
-> >    "include{,If}" instructions? I'm thinking that we should forbid it
-> >    because, for example, if we had 4 files as follows: A includes B and
-> >    C includes D, and we include A and C in our main config (in that
-> >    order), it wouldn't be clear whether B (because A was first included)
-> >    or C (because we should execute everything at the same depth first)
-> >    should be executed first. (In this patch, I didn't do anything about
-> >    includes.)
-> 
-> Interesting.  The order of real inclusion obviously would affect the
-> outcome of the "last one wins" rule.  And this does not have to be
-> limited to this "hasremote" condition, so we need to design it with
-> a bit of care.
-> 
-> Would it be possible for a newly included file to invalidate an
-> earlier condition that was used to decide whether to include another
-> file or not?  If not, then you can take a two-pass approach where
-> the first pass is used to decide solely to discover which
-> conditionally included files are taken, clear the slate and the
-> parse these files in the textual order.  In the case of your example
-> above, the early part of the primary config would be the first to be
-> read, then comes A's early part, then comes B in its entirety, then
-> the rest of A, and then the middle part of the primary config, then
-> C's early part, then D, and then the rest of C,... you got the idea.
+> While this concern is valid, I decided to keep this interface for a few
+> reasons:
 >
-> If it is possible for an included file to invalidate a condition we
-> have already evaluated to make a decision, it would become messy.
-> For example, we might decide to include another file based on the
-> value we discovered for a config variable:
-> 
->     === .git/config ===
->     [my] variable
->     [your] variable = false
-> 
->     [includeIf "configEq:my.variable==true"]
->             file = fileA
-> 
-> but the included file may override the condition, e.g.
-> 
->     === fileA ===
->     [my] variable = false
->     [your] variable = true
-> 
-> and applying the "last one wins" rule becomes messy.  I do not
-> offhand know what these
-> 
->     $ git config --bool my.variable
->     $ git config --bool your.variable
-> 
-> should say, and do not have a good explanation for possible
-> outcomes.
+> 1. The correct way of calling the function is 'obvious'.
+> 2. It is relatively easy to get the contained object (struct branch/remote)
+>    and its containing struct repository/remote_state (e.g. we don't pass
+>    struct branch or remote through long call chains). For "struct
+>    branch", callers usually get the branch from the repo and use it
+>    immediately. For "struct remote", we don't use container objects
+>    outside of static functions. If you are interested in seeing all of
+>    the call sites, you can see a sample commit in [3].
+> 3. The separation between container/contained objects allows us to
+>    reason better about what the correct interface is. e.g. we might be
+>    tempted to include a backpointer from struct branch to struct
+>    remote_state so that we can pass around struct branch and be
+>    confident that struct branch has all of the information it needs.
 
-In this case, it makes sense to me to think that files are included
-entirely or not at all, so my.variable would be false and your.variable
-would be true. I guess the tricky part is something like:
+I am not following.  None of the above reasons argue for forcing the
+functions that take contained object to also take its container.
 
-  === .git/config ===
-  [my] variable = true
-  [your] variable = false
-  [includeIf "configEq:my.variable==true"]
-    file = fileA
-  [includeIf "configEq:my.variable==false"]
-    file = fileB
-  === fileA ===
-    my.variable = false
-  === fileB ===
-    your.variable = true
+>    However, I believe that some questions *shouldn't* be answered by
+>    just struct branch. The prime example in this series is
+>    branch_get_push() - it conceptually answers 'What is the pushremote
+>    of this branch', but the behavior we want is closer to 'If
+>    configured, give me the pushremote for the branch. Otherwise, give me
+>    the default pushremote of the repo.'. This is arguably a relevant
+>    detail that should be exposed to callers.
 
-and what my.variable and your.variable would end up being.
+It is a good example why such a function can just take an instance
+of branch, and the caller,
 
-> Maybe the above example can serve as a way to guide us when we
-> design the types of conditionals we allow in includeIf.  This
-> example tells us that it is probably a terrible idea to allow using
-> values of configuration variables as part of "includeIf" condition.
+ (1) who does care about the fallback, can be assured that the logic
+     falls back to the correct repository; and
 
-Hmm...well, remote.foo.url is a configuration variable. I think that the
-two-pass approach you describe would work if we prohibit subsequent
-inclusions.
+ (2) who does not care about the fallback and sees it a mere
+     implementation detail of "I am on this branch; give me the
+     remote to push to", do not have to know what, other than the
+     branch object, needs to be passed.
 
-> There may lead to similar "'hasremoteurl' makes a well-behaved
-> condition, because [remote] are additive and not 'last-one-wins',
-> but we cannot add 'lacksremoteurl' as a condition, because a file we
-> decide to include based on a 'lacks' predicate may invalidate the
-> 'lacks' condition by defining such a remote" design decisions you'd
-> need to make around the URLs of the remotes defined for the
-> repository.
+if we explicitly record a branch object which repository it was
+taken from.
 
-And if we implement two-pass with no subsequent inclusions, "lacks"
-would work the same way.
+There may be some other (real) reason where the resistance comes
+from, that you may not be telling us, though.  But in what was
+described in the message I am responding to, I didn't see much
+convincing reason to argue _for_ keeping the contained objects
+ignorant of the container and forcing callers to pass both to
+functions that use both the container and contained to compute
+something.
+
+Thanks.
