@@ -2,63 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE6DC433F5
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F5CAC433FE
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:27:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A2876101E
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:24:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 765CB6101D
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 20:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbhJMU0H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 16:26:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50052 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbhJMU0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 16:26:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F692D8DD0;
-        Wed, 13 Oct 2021 16:24:02 -0400 (EDT)
+        id S229575AbhJMU3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 16:29:13 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55155 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229496AbhJMU3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 16:29:13 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C8E414E673;
+        Wed, 13 Oct 2021 16:27:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hrK9J8Gi1PZHKi1XjOSJLFGSFbWbiBxtz3KmfT
-        VRLL4=; b=e9T+MOB+l8TYaiHosYdDesJPFyFLJIuNEdz0pkOBYic+l9egzyjJRy
-        1G9eybzxKfbBWFt3dLe/cOsiER9S24Ciyl1sKkApCDo2BR84nuFZR45lA5GY5JLq
-        4IPc/Wuvgzhydmq6jwIUGwF0LcVAesAZ4O7JVlktP7jPqfckScYkg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78601D8DCF;
-        Wed, 13 Oct 2021 16:24:02 -0400 (EDT)
+        :content-type; s=sasl; bh=y2bCZmDlkn1bv6dBulrYiIaoMJFthDylIpIiEf
+        g4vK4=; b=GVxDgYQIeIOC6tt2QG+yxyCg5G/IxJGkgPJOkSO7Yq/xI4wbZer3O0
+        BZ4k5SQM5wyZ14Oxp1xLSmt2LIWPiTc/YE6w1fyEUXAArvlGhwzjzrQsPHvdpgaD
+        AzrPK6zeMt1O2Y3AFPG+9Y4CGi6CC8sydzy3/EBrZR70sl4he7H1Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9629114E670;
+        Wed, 13 Oct 2021 16:27:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2E52D8DCD;
-        Wed, 13 Oct 2021 16:24:01 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E9F7E14E66F;
+        Wed, 13 Oct 2021 16:27:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Glen Choo <chooglen@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] remote: add struct repository parameter to
- external functions
+Subject: Re: [PATCH v2 0/3] remote: replace static variables with struct
+ remote_state
 References: <pull.1103.git.git.1633633635.gitgitgadget@gmail.com>
         <20211013193127.76537-1-chooglen@google.com>
-        <20211013193127.76537-4-chooglen@google.com>
-Date:   Wed, 13 Oct 2021 13:24:00 -0700
-In-Reply-To: <20211013193127.76537-4-chooglen@google.com> (Glen Choo's message
-        of "Wed, 13 Oct 2021 12:31:27 -0700")
-Message-ID: <xmqqczo8fzbz.fsf@gitster.g>
+        <xmqqtuhkfzw8.fsf@gitster.g>
+Date:   Wed, 13 Oct 2021 13:27:02 -0700
+In-Reply-To: <xmqqtuhkfzw8.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        13 Oct 2021 13:11:51 -0700")
+Message-ID: <xmqq8rywfz6x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 80E4FFAE-2C63-11EC-BCB1-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: ED8198C0-2C63-11EC-8894-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Finish plumbing remote_state by adding a struct repository
-> parameter to repo_* functions. While this removes all references to
-> the_repository->remote_state, certain functions still use the_repository
-> to parse oids.
+> There may be some other (real) reason where the resistance comes
+> from, that you may not be telling us, though.  But in what was
+> described in the message I am responding to, I didn't see much
+> convincing reason to argue _for_ keeping the contained objects
+> ignorant of the container and forcing callers to pass both to
+> functions that use both the container and contained to compute
+> something.
 
-OK.
+I am not you, so I can only speculate, but the real reason _could_
+be that it makes it simpler to formulate steps 2 and 3 mechanically.
+After adding "repo" parameter to a function that used to take, say,
+a "branch", in step 3, a future clean-up series could add a .repo
+member to branch objects and remove the "repo" parameter from such
+function.
+
+I think that approach would make more work to get to the final
+state, though.
