@@ -2,104 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E62BC433F5
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 16:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4498EC433EF
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 17:00:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8179B61100
-	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 16:21:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F02F6113E
+	for <git@archiver.kernel.org>; Wed, 13 Oct 2021 17:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbhJMQXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 12:23:44 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:47281 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229903AbhJMQXm (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Oct 2021 12:23:42 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 15F435C00F9;
-        Wed, 13 Oct 2021 12:21:38 -0400 (EDT)
-Received: from imap42 ([10.202.2.92])
-  by compute6.internal (MEProxy); Wed, 13 Oct 2021 12:21:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=waite.eu; h=
-        mime-version:message-id:in-reply-to:references:date:from:to
-        :subject:content-type; s=fm1; bh=ukHMpstXxwlycHAROrO6Nk/uW3cnCKP
-        3/SwHOmJlubY=; b=C88fe7UXc54MRc1o4g1/fZ8qsvlHkd9564kRoiqhnwV9Mdd
-        d63FPOwH8qXXC3lzKQg95gtiSq8o84lNNQ4k9iMKuntJG3uOkMg5q3Np9FtiyU/5
-        6Q9YZTilVNWy4Fv9zm2zYjvbbVuLilKUxuLN4l6AIDtE82BPjj0iHCSNYtwNXBQN
-        Knx+98VKe4yqrm7sxiESc04jEyneVUcqEU4OR35qNQVssiN7wREsZkLJbpGaonLo
-        engt5/vd+GoGY+YA8SGe2OYdzmKU83NuTRrAgr3cZGz94Y0Mjh6evXk1FvRjBBmB
-        I5YMbdhgwjfp7IBaco8ulfgPkDVXxsbLGvOLSZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ukHMps
-        tXxwlycHAROrO6Nk/uW3cnCKP3/SwHOmJlubY=; b=byzRkDBEFbecmVK1QAjTn1
-        /rfcAjREn2ichMMCBblvmiDChashA8NWAZAG+ha88+XB2BRUHmhg4jP5575+oyv0
-        bLStNA+6N63qxTYkbfF/vg56cdJy1SKTZWcQgshAJ0kzV3RM/CcX0TqO+D1OHpwW
-        iccIHG0cQtmtYzD9EeKTxr7Y7HkxtZlJdIYtaRZJpn5o35vk6WTDH8+ywkjXQl2T
-        64xVPcNAQQ48Er+YWTVnBRWiqEQ2/IR9ga4De+pyrg7n8bF6bHFZ7LLbwgIEbneF
-        eKZT69rAoDhyqpf16j6BJCtIZGXO+Vlefdkc+NQr5bO8WglphwGJx/mQu2NZ2b2w
-        ==
-X-ME-Sender: <xms:kQdnYS7LaWTkNaqTTW7WmP6P_73O-TNYTFgKhNMq-HhgPlS_1YVAAw>
-    <xme:kQdnYb7y9EdPWpJlYZ9t9qYwY-TtVWFJCh6R32uwlezvslrOwgWrY1JF4ZF0xqjHr
-    zqaXIWmcks7YeyNpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetlhgv
-    gicuhggrihhtvgdfuceorghlvgigseifrghithgvrdgvuheqnecuggftrfgrthhtvghrnh
-    epgfejgeetgfekveffveelteelkedvfeejvdffhfduueffueeijeeuteekvdegffdtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlvgigse
-    ifrghithgvrdgvuh
-X-ME-Proxy: <xmx:kQdnYRdn6jdOxoosAt_SlpUDtuL6P-VYa5YGKj32KdUenmBUj_3lJg>
-    <xmx:kQdnYfL6g6eYikdB1oBAWi0a6yXmpBxWOmQWJz2tDUvTAmqjha0FfA>
-    <xmx:kQdnYWIJA1ZkNxvZb41-i85fSMy2s_jZGu-SAf6G_Wl7-po9jljLOQ>
-    <xmx:kgdnYdUgLe9zbZnZdGCmd9YpEB59HB6CLKIyr3w9Mb7dpfAtEbJCqw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 9711E2180075; Wed, 13 Oct 2021 12:21:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1345-g8441cd7852-fm-20211006.001-g8441cd78
-Mime-Version: 1.0
-Message-Id: <c84ef8d0-0ed7-4267-9952-d9a2bc053ad6@www.fastmail.com>
-In-Reply-To: <YWYLRvUEkoudH5n0@pug.qqx.org>
-References: <28ff3572-1819-4e27-a46d-358eddd46e45@www.fastmail.com>
- <xmqqk0ii3zl6.fsf@gitster.g> <YWXzGeiUSMeq5Key@coredump.intra.peff.net>
- <YWX8d/VTrkOz5tga@camp.crustytoothpaste.net>
- <YWX+6OgzN4CDzomO@coredump.intra.peff.net>
- <YWYCh3+37d27QNjW@camp.crustytoothpaste.net>
- <YWYE2LZp/EfoBpN/@camp.crustytoothpaste.net> <YWYLRvUEkoudH5n0@pug.qqx.org>
-Date:   Wed, 13 Oct 2021 18:21:16 +0200
-From:   "Alex Waite" <alex@waite.eu>
-To:     "Aaron Schrab" <aaron@schrab.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [BUG] credential wildcard does not match hostnames containing an
- underscore
-Content-Type: text/plain
+        id S233857AbhJMRC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 13:02:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53004 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230057AbhJMRC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 13:02:57 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3AC2107803;
+        Wed, 13 Oct 2021 13:00:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=K1U93prQGP2E
+        XJdj3aws9Y2PhnqvedajjON1I39/Fys=; b=R/PjPS1xFRE9pIybkdT4APZPMhD+
+        wSijPdF7Brym3lfP2M6c1irP8Ic8qtgedor228RbalJdPntvnfKSfhc/Bdk3d7Du
+        nyEqk/GWSiZHOAdlMr5I2GbocO6V5O96Q5J8IWxTHEOjN8aYxTy9Y971Z45doHCK
+        kdCX4pKFHoIMfPk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9B97107802;
+        Wed, 13 Oct 2021 13:00:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D3B6107801;
+        Wed, 13 Oct 2021 13:00:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] config: make git_config_include() static
+References: <cover.1634077795.git.jonathantanmy@google.com>
+        <179df6d6adfe460de7413e1fb1dff6bce185ae0e.1634077795.git.jonathantanmy@google.com>
+        <87sfx5ib3h.fsf@evledraar.gmail.com>
+Date:   Wed, 13 Oct 2021 10:00:52 -0700
+In-Reply-To: <87sfx5ib3h.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 13 Oct 2021 10:26:11 +0200")
+Message-ID: <xmqqk0igj1vf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2007F932-2C47-11EC-B651-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2021.10.13, aaron@schrab.com:
-> At 21:57 +0000 12 Oct 2021, "brian m. carlson" 
-> <sandals@crustytoothpaste.net> wrote:
->>I also just checked, and RFC 5280 specifies the rules for RFC 1123
->>regarding host names in certificates.  So even if we did accept this, no
->>publicly trusted CA could issue a certificate for such a domain, because
->>to do so would be misissuance.  So this at best could help people who
->>are either using plain HTTP or an internal CA using broken tools,
->>neither of which I think argue in favor of supporting this.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Tue, Oct 12 2021, Jonathan Tan wrote:
 >
-> Or people using a wildcard certificate.
+>> It is not used from outside the file in which it is declared.
+>>
+>> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>> ---
+>>  config.c | 12 +++++++++++-
+>>  config.h | 37 ++++---------------------------------
+>>  2 files changed, 15 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/config.c b/config.c
+>> index 2edf835262..365d57833b 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -120,6 +120,16 @@ static long config_buf_ftell(struct config_source=
+ *conf)
+>>  	return conf->u.buf.pos;
+>>  }
+>> =20
+>> +struct config_include_data {
+>> +	int depth;
+>> +	config_fn_t fn;
+>> +	void *data;
+>> +	const struct config_options *opts;
+>> +};
+>> +#define CONFIG_INCLUDE_INIT { 0 }
+>> +
+>> +static int git_config_include(const char *var, const char *value, voi=
+d *data);
+>
+> Can't we just move the function here?
+>
+>>  #define MAX_INCLUDE_DEPTH 10
+>>  static const char include_depth_advice[] =3D N_(
+>>  "exceeded maximum include depth (%d) while including\n"
+>> @@ -306,7 +316,7 @@ static int include_condition_is_true(const struct =
+config_options *opts,
+>>  	return 0;
+>>  }
+>> =20
+>> -int git_config_include(const char *var, const char *value, void *data=
+)
+>> +static int git_config_include(const char *var, const char *value, voi=
+d *data)
+>
+> ...and avoid the forward declaration?
+>
+> I've seen that in a few places, making the diff smaller here doesn't
+> seem worth it v.s. maintaining the definition in two places.
 
-I didn't expect to kick off such a big discussion with this bug. ;-)
-
-Just to add my 2 cents: the environment where I bumped into this is using a wildcard cert. It's among a fleet of (busy) internal domains that host data for scientific analysis. Lots of tools talk with those domains, and this is the first time I've been made aware of something struggling with the domains containing an underscore.
-
-I'm not saying whether git should or should not change its behavior here. But the above is why I was surprised to learn the an underscore is not valid. Because everything (DNS servers, dig, Apache, and git itself) seems to happily use it.
-
-In my view, the primary bug is how difficult it was to debug what was going wrong. This is most easily solved by improving the git docs to specify which characters will be matched. Even better if GIT_TRACE (or something similar) can inform/warn the user about matching.
-
-In any case, thanks everyone for looking into this. :-)
-
----Alex
+Sounds good.  If we are moving things around anyway, it is probably
+a good time to do that, too ;-)
