@@ -2,133 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A0AC433F5
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 01:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2ED7C433F5
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 01:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9733360ED4
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 01:21:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9EC561175
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 01:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbhJNBXe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 21:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58754 "EHLO
+        id S229846AbhJNB1P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 21:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbhJNBXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 21:23:33 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C44FEC061570
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 18:21:29 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r18so14243556wrg.6
-        for <git@vger.kernel.org>; Wed, 13 Oct 2021 18:21:29 -0700 (PDT)
+        with ESMTP id S229930AbhJNB1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 21:27:14 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF84C061746
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 18:25:10 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id s19-20020a63e813000000b00287d976d152so2505459pgh.3
+        for <git@vger.kernel.org>; Wed, 13 Oct 2021 18:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=fnudMLv/7uKRvu8ivtzyuBCUmptPyzs9hIMLAly5+Y8=;
-        b=MS0lXfll8tIx/CKy+sriEQKpnWfH8X6njlmWmxR4TZGMPq+IAf1Pry8XRx8rERuLAF
-         1lpAnH1jfDDp7ajuYE6zeDvOk3HzQAHTvfpqv0kCtxvL+6OB/qtsrVK+0WeskJmiQVGj
-         LYY93BmyuMjD3jFWtBATuGIHZZbmXCOg6FqdG+aUIXB+pZCcFWorqryzOJldgvscYdUR
-         sQsRMkPAefVvUX5AYkN57+or01ncLI2m71PFX1crKhSmtBsQLE/2n8TapLBCaeW2b49V
-         bsJS7YM+o9rthxKDVPy7+vP3fYi/qgukff9ItEknv3iIUqAdVnTJ/QkviRU0wB8K5TUM
-         hwFg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=aTYNV+NVseaoOA1BNehmH+tBj6SHVfL5lflMYQqqcJ8=;
+        b=Q/mQ9xEbDkiRGmStavIMm+Xk2G1RVKnFPI37rrGNEE3wuIbCmT3MZzkzz4jUQeMjaV
+         0sO+iEVTEKpK+EyeM2c4/fSOfZ5ZchzfZcI10PGWmfQv6v5vdItm7+fk/zl4WSVZ5D0s
+         UtPB35GX1dEOcPUva1BQI5loVSQOSbeYkpPdCw++LeKtCpb7QSfwEs1QLUdXKjVMPEZF
+         8S2ibYKTByG/mbKzfQcDBAvhABRB6rAS0rBco9UkYQu6kz1M1H7TDc0ya5zEgMHW+Njq
+         cFFrnVfDhnUMxpC8jV604hkQpEMFAm4mauS+wKR42hKplGRqQjxGhyKtMy8rlUEoTj0v
+         ksWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=fnudMLv/7uKRvu8ivtzyuBCUmptPyzs9hIMLAly5+Y8=;
-        b=4NgxxpaEaSWkxR4jA0J0DFRQ9r+L+EtBid8Q2BsCBD6uuRO8p5prPC3HZMZ90vkdQN
-         YPV727jia6oDcLEnPZuokrMYcOqRLw2ju0dtZ3p2psSdYYlCGcx2uqh+3tmEmLbAczsc
-         McDOT5UajrDE/Nn795HoxAW5WJWgxXVzBtmi2jI0c04fka0AQNV08PtLJQJSeWnAXeR+
-         TPO00yx60dUOMGTNHn9ugcjt0rUkyoyCVU3ij+91yc9QSUiXl6xD87r6RMKDMEwzHzSB
-         012HjiOgdsPGctbsGeLb2GPrFLRRot/l6RKymrFYdcKg1+M4b84gtnjVvKI0fl7dltKc
-         VHJA==
-X-Gm-Message-State: AOAM532ePsSBQwAnae8/CyP5cF+pMHPYhxY7H7t2Dvj9MwVT1qMnlFoZ
-        iJbKJcChF8rR0zYhkI76j42XHCdTzCdpeg==
-X-Google-Smtp-Source: ABdhPJxXWy+KPjAK/havk5VjeyDG6ODI9Ua3+GTxrb5rC1NGA3JHknu1Mz/hW2FEU3/vN44ZSs6jcg==
-X-Received: by 2002:adf:ae1a:: with SMTP id x26mr3032697wrc.30.1634174488207;
-        Wed, 13 Oct 2021 18:21:28 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d3sm979327wrb.36.2021.10.13.18.21.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Oct 2021 18:21:27 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=aTYNV+NVseaoOA1BNehmH+tBj6SHVfL5lflMYQqqcJ8=;
+        b=xqnMmecCp5LOa8g6Ntn+CxwaPHJZuoLSc4hqvXZiK0jlaeab0R6oo05kLtOYgHWx1O
+         mge+jgl8JW6mWoiA71WH5K52ouGH+Z6Da8Yg5+XGfql9wrsCCyMdUNLjXTMm3tnc6kv/
+         R6l8ZUJ/TbEHsOnto3tzL5rfIubllZE0nmhBkvu2eJZCSe1a8xg7xKXHZxpPn5QamydC
+         xoH6iCLrgfmqPBOb5ClLPAtnTL109o5ikzfwygMN94xi9+VAiVVtZwKBO1ZMUSUD9CLV
+         Ub4hgUuAmkeh7mn/w10iNKmWPgc7SG70MPu158tvefkl12FiD2KibqRgWE/pFKHOnAhv
+         ds7w==
+X-Gm-Message-State: AOAM532lSpdTgrMRmHJZAk+bQDOllJBXQyfC06OI+A5fdk1WkvjM/6JT
+        2j5mOoAEcpYM1S2OzbJ5cu+nHaTieDwE0g==
+X-Google-Smtp-Source: ABdhPJw45tdTkNisSfHfsddFVOAjxNjlrT16ojXK9+NODRNKnnV42RJoaUK32OeetpAzYD07E1Qy/GfoYiFdyw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a63:9353:: with SMTP id
+ w19mr2041903pgm.379.1634174709880; Wed, 13 Oct 2021 18:25:09 -0700 (PDT)
+Date:   Wed, 13 Oct 2021 18:25:02 -0700
+In-Reply-To: <xmqqmtncebtb.fsf@gitster.g>
+Message-Id: <kl6lmtnc1jpt.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1103.git.git.1633633635.gitgitgadget@gmail.com>
+ <20211013193127.76537-1-chooglen@google.com> <xmqqtuhkfzw8.fsf@gitster.g>
+ <kl6ltuhk1tdg.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqmtncebtb.fsf@gitster.g>
+Subject: Re: [PATCH v2 0/3] remote: replace static variables with struct remote_state
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Suggestion: "verify/repair" option for 'git gc'
-Date:   Thu, 14 Oct 2021 03:19:10 +0200
-References: <e288dbe1-b7c7-5a2e-5271-404a14de836a@syntevo.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <e288dbe1-b7c7-5a2e-5271-404a14de836a@syntevo.com>
-Message-ID: <87h7dkh04o.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, Oct 13 2021, Alexandr Miloslavskiy wrote:
+> IOW, we need to start somewhere to clean things up, so either we
+> teach multi-repository support to remote.c from day one, or we pass
+> a repository as a separate and redundant parameter, with the
+> intention to later clean up.
 
-> Suggestion
-> ----------
-> 1) It would be nice if 'git gc' had an option to also verify
->    (like 'git fsck') the repo and report corruption. I think that it's
->    a good idea to have it in 'gc' for performance reasons, because
->    'git gc' already reads things.
->
-> 2) It would be nice if git could automatically download blobs from
->    remote if local blob is corrupted. Maybe it was already implemented,
->    see story 3 below.
->
-> Motivation
-> ----------
->
-> -- Story 1 --
-> Just a few days ago I encountered another secretly broken repo which
-> caused some small bugs in the git UI I'm using. The repo worked mostly
-> fine, that's why I had no idea that it's corrupted.
->
-> My git UI invokes 'git gc' sometimes and if that detected the
-> corruption, I wouldn't have to spend time hunting the bug in UI.
->
-> Specifically, it reports these errors on `git fsck`
->   error: object 0189425cc210555c36383293c468df5da73acc48 is a commit,
->   not a blob
->   error in tree 1d571d7354f99b726bbcc0cb232b3f47846c71a1: broken links
->   error: object 0189425cc210555c36383293c468df5da73acc48 is a commit,
->   not a blob
->   error in tree 2808b286c2a933e88735d97416e29b9514fc6af2: broken links
->   error: object 0189425cc210555c36383293c468df5da73acc48 is a commit,
->   not a blob
->   error in tree 604f6f6c4fbf8da7a593708e863e68f8c5a27d07: broken links
->   error: object 0189425cc210555c36383293c468df5da73acc48 is a commit,
->   not a blob
->   error in tree 6a2c4a5ef0b0ee7aa85d88c3147b7558a6a7c29f: broken links
->
-> The repo is not confidential and I could share it if needed.
-> I "solved" the problem by cloning a new copy.
+I authored this topic with the assumption that passing a 'redundant'
+context object was the path forward, not something to clean up. I think
+this explains most of the divergence in opinion.
 
-I'd be interested in a copy of it, I've been slowly trying to improve
-these sorts of corruption cases.
+> ...I suspect that this piece is isolated
+> enough that it is simpler to use as a starting point, and then the
+> callers into remote.c API can then be cleaned up, gradually extending
+> the circle.
 
-> -- Story 2 --
-> A few years ago, I had another repo that wasn't used for a couple years
-> and had corrupted blobs. The repo looked fine until I tried to clone
-> from it. Unfortunately it was the only copy and I had to write some
-> code to "guess" the blob's contents to repair the repo.
+Agree that this piece is a good place to start such work.
+
+> I do not think it is meant to be internal to begin with.  If we
+> declare, after careful consideration, that an in-core branch object
+> given by remote.c API always belongs to one and only one repository,
+> then following the branch->repository pointer should be the
+> documented and kosher way to find out the repository by anybody who
+> is given the branch object.
+
+In the specific case of an in-core object that can refer only to one
+repository, I think this is a fairly straightforward way of maintaining
+referential integrity. However I don't think that the approach of
+"contained object pointing to container" generalizes well - if I were
+passed a struct remote_state and I needed to access its repository
+later, is the ideal interface a backpointer, or is there a deeper
+problem with how things are structured?
+
+IOW, whether or not we should use the backpointer seems to depend on the
+specifics of each use case. It might be productive to decide on
+guidelines, especially with regards to repository.
+
+> ...A function that takes repo and branch
+> to pretend as if it can work with an inconsistent pair is an
+> invidation for the interface misuse.
+
+Fair.
+
+>> objects). I do not think we are in the same position with struct branch;
+>> struct branch seems sufficiently separated to me.
 >
-> If 'git gc' detected corruption, I would have known about the problem
-> earlier,
-> when I still had other copies around.
+> Sufficiently separated in the sense that you take a branch from the
+> parent repository and throwing it at a function with a pointer to an
+> in-core repository for a submodule would make some sort of sense?  
 
-I wonder if this and other issues you encountered wouldn't need a full
-"fsck", but merely gc triggering a complete repack. Which is not to say
-that some regular background "fsck" wouldn't be a good idea...
+I meant "sufficiently separated" in the sense that a struct branch is
+meaningful to callers, even in the absence of a repository. Even in the
+case where we *might* care about the repository e.g. getting a default
+for remote_for_branch(), there are callers that make do with just
+branch->remote_name.
 
-> -- Story 3 --
-> Also a few years ago, I had a repo with a single corrupted blob. I don't
-> remember why, but simply re-cloning it was a headache. I managed to fix repo
-> by issuing a command to re-download a blob from remote. Git could totally do
-> that itself, I think.
+This was meant to contrast to ref_store, which relies on its specific
+repository for much of its internals and is difficult to separate. I am
+worried about the knock-on effects of taking a _relatively_ clean
+abstraction layer in struct branch and tying it back to the repository
+layer.
 
-Yes, we still definitely have cases where dealing with this sort of
-thing can be very painful.
+That said, you have rightly noted that we should not pretend that a
+branch from repo A can be thrown together with a pointer to repo B in
+any kind of meaningful way (or at least, not yet). A backpointer can
+prevent this.
+
+I'm not fully convinced either way so I'll take time to mull over it; I
+would also like to start on the right foot with this subsystem.
