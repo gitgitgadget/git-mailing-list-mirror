@@ -2,110 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31428C433F5
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 23:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FBDAC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 00:22:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D682610F9
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 23:38:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE7D160E54
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 00:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234457AbhJNXk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 19:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234392AbhJNXk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 19:40:56 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CAD3C061570
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 16:38:50 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id e3so22955498wrc.11
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 16:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=3ydWDH9RoC7A7VMY2mR4jq5yV9QdscdKWQTDXRvVqCA=;
-        b=ASiWRRGJ6S6gZHovygG1+rJC3B9845l8wtD9kfyWmVaYEnMZNHPqxCxd/moZFuip3/
-         +GMSCN+XMZoIlMfWFXJnxwVLMnLBrnEsNIw43LPHH5weMab9kyJOqtwamf4PMYQei3b5
-         xImVVK357SabSXDSB5/ZXvpTgPhPZVVk2jWQECHNcK5RkrpbKtIgi1W8+dIfQEC5KRfQ
-         C/PIb0068QfJZJQMzO/L+xU3obvrXEvjpgJGu012n2DTeAvkYW7xv28qsCa5N9CCPC+M
-         IC4VR9egH83+/VMeXHAT3ibM1gfz/FIRUQgByTnJlsexWuVfdXTYPQe2h8pZsV2O1ZVL
-         zJqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=3ydWDH9RoC7A7VMY2mR4jq5yV9QdscdKWQTDXRvVqCA=;
-        b=bOfbY8e619WndRRvRT92r5+C0rfWwzNhL9e8LKXP7iCFvAvLtY/Tr6RvCb6Ce4vF3c
-         kDxgyYg5HSqHJ0oghBDq0GBOSS9WiytZMx5l/z+M2HjBhvRkRGuGaZt1A08k96DGBiBS
-         pQMVW7s9lY3uX0qXvphIS9/hcsxrjGBMLbsDEJCH2Ao46cvWMSsh6grfRKhB/Qjl8msw
-         2264zEHyvry0qByXeMylpRdMW1sqYrRLDnMqJPLS0o7xLnGF/i6x8FeW5IttKA5FP+lm
-         ykf9AYeiCO3QiVTDpRLTcjX0/yKov5ykJL+zYYd/poq3DI1MFaMWHapZRWmZWg9xsyMw
-         yyaA==
-X-Gm-Message-State: AOAM531sPe0ovgsSCJJSmCRB0yBUEasHZkcLK3Z9FvSUKOYMz+/3zqfd
-        dAOxdUP51Gq/ZvP4OxtZEsc=
-X-Google-Smtp-Source: ABdhPJxGZxYnmN7NDZ+uReRyTAkAJFBH4PVDqRixHoUsshru0SjbHeJAhrFiqycfkt6Hy7EhJGE5XA==
-X-Received: by 2002:adf:aad0:: with SMTP id i16mr10497357wrc.128.1634254729113;
-        Thu, 14 Oct 2021 16:38:49 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i13sm2934848wmq.41.2021.10.14.16.38.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Oct 2021 16:38:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 0/3] Use default values from settings instead of config
-Date:   Fri, 15 Oct 2021 01:38:02 +0200
-References: <20211005001931.13932-1-chooglen@google.com>
- <20211012174208.95161-1-chooglen@google.com>
- <87wnmihswp.fsf@evledraar.gmail.com>
- <02947b5e-7ce3-4760-0d27-621c7362f839@gmail.com>
- <87pms8hq4s.fsf@evledraar.gmail.com>
- <d553054f-a484-ba34-ef3b-1e6778211a47@gmail.com>
- <kl6l7def1c4h.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <kl6l7def1c4h.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <87ilxzfa7s.fsf@evledraar.gmail.com>
+        id S232319AbhJOAY2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 20:24:28 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.18.15]:53192 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232796AbhJOAY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 20:24:26 -0400
+Received: from [94.228.207.246] (helo=[192.168.2.206])
+        by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1mb7Gj-0000Jl-CM; Thu, 14 Oct 2021 22:24:01 +0200
+Subject: Re: Suggestion: "verify/repair" option for 'git gc'
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <e288dbe1-b7c7-5a2e-5271-404a14de836a@syntevo.com>
+ <87h7dkh04o.fsf@evledraar.gmail.com>
+ <96bf2eff-f4c8-cae8-76cb-6eeb233cd1d3@syntevo.com>
+ <87czo7haha.fsf@evledraar.gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <437b170b-d366-ce3b-b34f-e56429a21b5a@syntevo.com>
+Date:   Thu, 14 Oct 2021 23:23:29 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <87czo7haha.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for such a detailed reply!
 
-On Thu, Oct 14 2021, Glen Choo wrote:
+On 14.10.2021 18:17, Ævar Arnfjörð Bjarmason wrote:
+ > Was this created with git itself, or some tool that's manually
+ > crafting trees?
 
-> Derrick Stolee <stolee@gmail.com> writes:
->
->>>> The commit-graph should be disabled if replace-objects are enabled. If
->>>> there is a bug being introduced here it is because the commit-graph is
->>>> being checked during fsck even though it would never be read when the
->>>> replace-objects exist.
->>>>
->>>> Thanks,
->>>> -Stolee
->>> 
->>> Thanks, isn't the obvious fix for this to extend your d6538246d3d
->>> (commit-graph: not compatible with replace objects, 2018-08-20) to do
->>> "read_replace_refs = 0;" in graph_verify()? That works for me on this
->>> case.
->>
->> Ignoring the replace refs while verifying will allow you to verify the
->> on-disk commit-graph file without issue.
->
-> It seems like we've converged on doing read_replace_refs = 0 \o/
->
-> If we are going to do this twice in graph_verify() and graph_write(), is
-> there any reason why I shouldn't just do "read_replace_refs = 0" once in
-> cmd_commit_graph()? IOW any time we do anything with commit-graphs, we
-> should just ignore replace refs because they're incompatible.
+I have spent... a while... to figure what exactly happened with the
+repo. It was in fact my fault. Git could have done better to filter
+wrong user input, but it didn't and allowed my mistake to go into
+objects.
 
-No reason, I think that's the best way to do this.
+So, here's what I did:
+1) I had two repos with completely disjoint history, but matching
+    (at some point) sources. With different paths, though.
+2) I wanted to copy a set of patches from repo SRC to repo DST
+3) I didn't expect that patch can apply on its own, so I decided to
+    edit the generated patch before applying it. Yeah, I did it wrong
+    in the end, but frankly moving patches between such different repos
+    is something I never done before.
+4) I fixed file paths in patch (didn't know about 'git apply -p')
+5) I identified commit in repo DST (0189425c, this might ring a bell)
+    which had the same sources as the base of my patches in repo SRC.
+6) I patched all 'index sha..sha' to 'index 0189425c..sha'
+    What I hoped to achieve is to convince git that patch was created
+    on repo DST commit 0189425c, instead of where it was really created.
+    From 'sha..sha' notation I thought that it's 'commit..commit', but
+    it was in fact 'blob..blob', I didn't expect that.
+    If you're interested, the patch can still be found in file
+    '.git\rebase-apply\patch' of the repo I sent you, and I tried to
+    apply it on top of 4e74e0897.
+7) Patch applied partially, because the sources weren't as identical
+    as I thought. I understand that it created trees in the process,
+    which contained the hacked 0189425c as if it was a blob, while it
+    was in fact a commit.
 
-I've submitted a series to fix that verify issue, as noted in the CL
-these patches on top of it without that disabling of the mktag tests
-will pass with GIT_TEST_COMMIT_GRAPH=true):
-https://lore.kernel.org/git/cover-0.3-00000000000-20211014T233343Z-avarab@gmail.com
+Now I already know that I didn't need to change any sha's, git applies
+the patch just fine if the previous file content matches. I also know
+that I could just use '-p' to fix paths, so in the end no patch edits
+were needed.
+
+Conclusion: my fault, but git could error on the wrong 'index sha..sha'
+instead of creating wrong blobs.
+
+ > the "gc" command actually does do exactly what you're suggesting
+
+Right, I didn't notice that. My UI runs 'git gc' sometimes and I
+assumed that corruption occurred long ago. Back then, I just deleted
+and re-cloned a repo and continued my work, that's why I didn't really
+tried to investigate back then.
+
+Still, the other two stories, the blob was genuinely corrupt (in one
+case I made a program to brute force correct contents, in other
+downloading blob by sha from remote fixed it).
+
+I have now tried corrupting a single bit in loose objects and packs,
+and both `git gc` and `git fsck` correctly notice the problem. They
+don't offer any solutions such as re-downloading from remote, though.
+
+So it seems that the first part of my suggestion (to verify on gc) is
+already there. Yeah, it's foolish that I posted before testing things
+carefully, I was convinced by a combination of stories I encountered :(
+
+ > Hypothetically, but these blobs aren't corrupted, and no amount of
+ > fetching something from other places is going to fix a bad DAG.
+
+Right, the corruption in specific repo I sent is a different case. Now
+that we know what happened, let's forget about this case in light of
+auto-repair idea.
+
+ > But even without that you'll find that e.g. if a recent object is bad,
+ > and we'd like to fetch it from upstream, that we're just going to die
+ > pretty early, as none of the code involved in say incremental fetching
+ > is prepared to run across a bad/corrupt object.
+
+I understand that fixing a genuinely corrupt object involves two cases:
+1) Loose object - just delete it, then promisor will treat it as missing
+2) Packed object - I understand that in current implementation,
+    replacing the object will involve repacking anyway. So, I'm thinking,
+    the corrupt pack can be extracted into loose objects, then read (1)
+    about fixing loose object.
+
+In both cases, make sure that remote has the non-corrupt object before
+going further.
