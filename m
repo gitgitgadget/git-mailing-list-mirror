@@ -2,76 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5E58C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 21:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1548C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 22:21:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88F686105A
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 21:50:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84A16610F9
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 22:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234130AbhJNVwf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 17:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
+        id S229836AbhJNWX0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 18:23:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhJNVwe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 17:52:34 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636D1C061570
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 14:50:29 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id y23-20020a17090abd1700b001a0b6d87a3cso5742157pjr.7
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 14:50:29 -0700 (PDT)
+        with ESMTP id S229632AbhJNWX0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 18:23:26 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB95C061570
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 15:21:20 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id q193-20020a252aca000000b005ba63482993so8956971ybq.0
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 15:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=fcgEqNl05Su3dqpNQ1UYCE2xDiSUTsGF40fY0MqmwOc=;
-        b=mRQL36SvC+AFVEKhDZBP6tD3SzfEs99KlkmgSnWgTRBpWACHS0PEho/sKyPVZFuLGr
-         vdazGnbQ0TVHVyQ63rrPRY31QuqchE5JgtYPWhonkA+5tsb5TJDXjmvNgiIRmRg+8hBF
-         lDr6tCLISD8g0zItUvIxxJgtPhKeC8ODODwAuHbwzadwR2LDwFSZgV1si6GKez3Kppnw
-         buVgrdKqKnpgVWQ8YWIfs6sWosuRQ71Nlb4U8wCK5feYDIDQsE/F2TmnuY9OrRJKOONm
-         pk2eMKL18hIKobwc00Edx9wAFOReX9V/EoyDmPaKTlurxQU8VbHQju4htNtdG2qGN1Yz
-         nprA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bIu87anSWtfsL2QTxJGxz3fbJVkLQE582QLSLnWST0s=;
+        b=Z5aGIf11twjXOG3joCyeKDz63kMtlZc5k8DODdQvSf0r8UrCsW40LNlTAjxjGpSzJL
+         OD6ydm46Cta4U+Zukj4/R7rncmtsMLBpGubSxKe45EDa2mb3xn3IjLZLvcDNRTlWeRqB
+         AqIeEMsQu1h7UlHUIrmuQl1qVlFqE0yRWLxhDvqropVUraoULq8u1BC+F/lMh0Psk1SI
+         GecQviS1J1l7/qV9MGByM8al8a/Sk63rvTymLA37e3iBJadG2jiCjFD+YXJPjkURZxmb
+         YGAMgAZVhVxO0auGYFpoY+kBTjWZ5/R8fGAG/o2H4gIqBZmkpzMkv5kpugNEddAiwR5G
+         bb1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=fcgEqNl05Su3dqpNQ1UYCE2xDiSUTsGF40fY0MqmwOc=;
-        b=XGCesSGN5YbuvA6v0pa5AWp0Uhguvc6IpimtdQqnmfWhaJn3hwoe4Q9dybJBrbGR9e
-         LCxr2+jqe+PipruGu5YCALnuDhE8y1vw4sbZHdsajhSnLCRk2irXd9eM+zltEaZkWsQg
-         pXna8lLWnP88JKjxPxueAGyPGMK57TJU6eQ1QXQGW75H3EJKsll7xSTEDG5N6gp2XpAG
-         7fvffvbI6onmk/pECzXdRKEfx5ULWk5PGWeA78PN1mFvkeZwxSBNPWqVxCXXElDX7OqC
-         D40S1bY/GQYn1kNbUZsxZ1KSuqsa3PKmFRTNw9g3ULA76egmMnkEws1mH623F4QDKLoo
-         AlUA==
-X-Gm-Message-State: AOAM532XkhnrHoA5/VqQGSHbGW1gjQwtmuCdayE3SxwUyRydrmUDhX4Y
-        TiOMocfnKkUpvk02sXbz2fmHfONV24RTcw==
-X-Google-Smtp-Source: ABdhPJy/EfXz648YjI8lsipGgF2RlDwaberdRTgX/HAiRlMVD8+iPd0i6cJVfoutajbPbyxa6Z6lBNEvjOWCOQ==
+         :references:subject:from:to:cc;
+        bh=bIu87anSWtfsL2QTxJGxz3fbJVkLQE582QLSLnWST0s=;
+        b=Sd6hJ9aCaRST3lTYENLFwjKYtoIQoVCLXm63Ki2YoNBXcJVy6hAIsTy4tZso8kGRFx
+         lF6aPl/NYmCPIGZq1qJjDyortxsNs0N2fCc8XeJVPzM4TPGZlxZWUNJ+j/1+xe2gG149
+         XBH8WEN99v5pDY+8lu7hF6jMBhklRhtZJgmDUPejT/vVfL//P2Q+ToK8NBSr7rKgjgIc
+         f6VJQMfa9U70LT6pQPgiCGr36+Hm7O9uyn8gKa4peqp171a3PGxI1KGIYjdu9O2gF+e4
+         y36sTs6KqlSh8+60lZibicagxqsLxH+FFvxIcL4LjEHNA3lrXCFBeE5qM2jl+WBf6JTR
+         IdcQ==
+X-Gm-Message-State: AOAM533SYicviweZ9ldY6E9pRXXSaAXm8xvSG5AteeyyXbPVZniLwbeo
+        Bn1t+bg2JAmYUyqhz+BUoelRhu5yaUx7FQ==
+X-Google-Smtp-Source: ABdhPJyqbo/KM7+pPlMEI66H6JBSPr40k6oNAHwJzBXvI748NCEhyd9wnyU0OhMLgOtq7za3vN+2h6NayaVGqg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:db53:: with SMTP id
- u19mr23328293pjx.234.1634248228914; Thu, 14 Oct 2021 14:50:28 -0700 (PDT)
-Date:   Thu, 14 Oct 2021 14:50:20 -0700
-In-Reply-To: <20210907115932.36068-1-raykar.ath@gmail.com>
-Message-Id: <kl6la6jb1dk3.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a25:b447:: with SMTP id
+ c7mr9194724ybg.214.1634250080054; Thu, 14 Oct 2021 15:21:20 -0700 (PDT)
+Date:   Thu, 14 Oct 2021 15:21:18 -0700
+In-Reply-To: <d553054f-a484-ba34-ef3b-1e6778211a47@gmail.com>
+Message-Id: <kl6l7def1c4h.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <20210907115932.36068-1-raykar.ath@gmail.com>
-Subject: Re: [PATCH 00/13] submodule: convert the rest of 'update' to C
+References: <20211005001931.13932-1-chooglen@google.com> <20211012174208.95161-1-chooglen@google.com>
+ <87wnmihswp.fsf@evledraar.gmail.com> <02947b5e-7ce3-4760-0d27-621c7362f839@gmail.com>
+ <87pms8hq4s.fsf@evledraar.gmail.com> <d553054f-a484-ba34-ef3b-1e6778211a47@gmail.com>
+Subject: Re: [PATCH v4 0/3] Use default values from settings instead of config
 From:   Glen Choo <chooglen@google.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org
+To:     Derrick Stolee <stolee@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This series builds upon the previous conversion work on 'submodule update' and
-> moves out all of that shell logic in 'git-submodule.sh' into
-> 'builtin/submodule--helper.c'.
+Derrick Stolee <stolee@gmail.com> writes:
 
-Hey Atharva! I'm working on a series that will teach "git branch" how to
-handle "--recurse-submodules". I plan to do this in-process because I
-think this will take less overall effort than using child processes, and
-to make it happen, I'm planning to add a helper function like
-"for_each_submodule()", which would call a C callback function on each
-submodule.
+>>> The commit-graph should be disabled if replace-objects are enabled. If
+>>> there is a bug being introduced here it is because the commit-graph is
+>>> being checked during fsck even though it would never be read when the
+>>> replace-objects exist.
+>>>
+>>> Thanks,
+>>> -Stolee
+>> 
+>> Thanks, isn't the obvious fix for this to extend your d6538246d3d
+>> (commit-graph: not compatible with replace objects, 2018-08-20) to do
+>> "read_replace_refs = 0;" in graph_verify()? That works for me on this
+>> case.
+>
+> Ignoring the replace refs while verifying will allow you to verify the
+> on-disk commit-graph file without issue.
 
-This is conceptually similar to "git submodule foreach" and
-for_each_listed_submodule() (though not exactly equivalent), so I'm
-reaching out to you in case this work is already on your radar. If so,
-and if it is coming soon, it might be easier to for me to base my work
-off yours instead of duplicating our efforts :)
+It seems like we've converged on doing read_replace_refs = 0 \o/
+
+If we are going to do this twice in graph_verify() and graph_write(), is
+there any reason why I shouldn't just do "read_replace_refs = 0" once in
+cmd_commit_graph()? IOW any time we do anything with commit-graphs, we
+should just ignore replace refs because they're incompatible.
