@@ -2,57 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A41A0C433F5
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E120C433EF
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 13:34:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7EFAA60C4B
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:47:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23D1A610D0
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 13:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231597AbhJNMtp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 08:49:45 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.44]:57858 "EHLO
-        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbhJNMto (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 08:49:44 -0400
-Received: from [94.228.207.246] (helo=[192.168.2.206])
-        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1mb08v-0005a6-11; Thu, 14 Oct 2021 14:47:29 +0200
-Subject: Re: Suggestion: "verify/repair" option for 'git gc'
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-References: <e288dbe1-b7c7-5a2e-5271-404a14de836a@syntevo.com>
- <87h7dkh04o.fsf@evledraar.gmail.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <96bf2eff-f4c8-cae8-76cb-6eeb233cd1d3@syntevo.com>
-Date:   Thu, 14 Oct 2021 15:47:34 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S231245AbhJNNgj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 09:36:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230288AbhJNNgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 09:36:38 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E53CC061570
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 06:34:33 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id r18so19599236wrg.6
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 06:34:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:from:subject:reply-to:to:cc
+         :references:content-language:in-reply-to:content-transfer-encoding;
+        bh=PFXTpCLv09L5M+dFFSZrTbEzCVaEa0vyD3OkDYF6k0A=;
+        b=kslblJnPy/o+IzRn9Ktlk4W8gSaiFlF+lE+Hl73abybogLCq6u2ywux/8X1Q45Hnch
+         a9AIbhTZ97scMYmvNxiuqNyp6v5fXiEmlpMWzyruDhOBzQ1F63se6Kw8p5eUbe0RiZBi
+         4aSybCtwn8OcIrFfzajTBKYL0ZB0DyO3qa19BMW6/1ifBn8otP+F8pDwsBHGxPo6E1Jb
+         GhcEfehLr3eYdoHKZTLeOaVtxeQlFxvJhrXY6G7TEqDty0m7PoHBogbKoec9ISmYBA7a
+         Ql9OuNbBYYa7fEsSpBFEV+44uy2TXZDxln+PSA23LfqyWYkE88MVm+rlclnbs/8eTRt4
+         korg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
+         :subject:reply-to:to:cc:references:content-language:in-reply-to
+         :content-transfer-encoding;
+        bh=PFXTpCLv09L5M+dFFSZrTbEzCVaEa0vyD3OkDYF6k0A=;
+        b=pM2MK/HC/qxHlIdC6ILZp4KmDuhru1pRg22AnTFuASR1U7W+xJv52XzEB5fMO1PvB2
+         a8jEVoIYqTHjE+DCeHQKLB2dhIHkhxqbRqI/kajR4hoBrlYiQ16DzF55N0nTnyNTz26m
+         QVgumGw0M0IXD5VJWtjzqcGja70+2ZhK7kBaMQ1Fzo37K6kuVNloEwJ30mY8Zb77mEUw
+         f9lLxdRkKsKEDHYqquwh6pz9c64Oxk4yXAmbttycPDV1duzj5snUscKj3ky/DGzHkWmC
+         a0v3CXYWsl3/GY8AUz/bHE8pg9XDVx8tyQmgYo3UAU7mlZSrjWusIr/zXq8yXtqVgwOj
+         R/vQ==
+X-Gm-Message-State: AOAM531uYcmLw86fvImGC1H5TTWf6m25hUcJ525xm72m8b9FbjuggW+j
+        Wxr2RwlkvoQyKnC9vmksT6I=
+X-Google-Smtp-Source: ABdhPJyzt1j0UXI8/md3yo3d2jNa2kLxXI/QA51Ei5ivkTlRs64/tG9DK32Ex+RInl+01IZrpRyahA==
+X-Received: by 2002:adf:a15c:: with SMTP id r28mr6656278wrr.287.1634218472047;
+        Thu, 14 Oct 2021 06:34:32 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id v10sm2594873wri.29.2021.10.14.06.34.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Oct 2021 06:34:31 -0700 (PDT)
+Message-ID: <6dd3ba9f-7054-93f3-7798-d4a4a211899a@gmail.com>
+Date:   Thu, 14 Oct 2021 14:34:28 +0100
 MIME-Version: 1.0
-In-Reply-To: <87h7dkh04o.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3] sparse index: fix use-after-free bug in
+ cache_tree_verify()
+Reply-To: phillip.wood@dunelm.org.uk
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1053.v2.git.1633600244854.gitgitgadget@gmail.com>
+ <pull.1053.v3.git.1633630041829.gitgitgadget@gmail.com>
+ <xmqqee8wpm0u.fsf@gitster.g> <4ccaad06-a1ae-bd1b-f25d-bfa899ffa98f@gmail.com>
+ <xmqqwnmnjnn5.fsf@gitster.g>
+Content-Language: en-GB-large
+In-Reply-To: <xmqqwnmnjnn5.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14.10.2021 4:19, Ævar Arnfjörð Bjarmason wrote:
-> I'd be interested in a copy of it, I've been slowly trying to improve
-> these sorts of corruption cases.
+Hi Junio
 
-Sent.
+On 08/10/2021 20:57, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> On 07/10/2021 22:23, Junio C Hamano wrote:
+>>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>
+>>>>        * Fixed the spelling of Stolee's name (sorry Stolee)
+>>>>        * Added "-q" to the test to prevent a failure on Microsoft's fork[1]
+>>>>            [1]
+>>>>       https://lore.kernel.org/git/ebbe8616-0863-812b-e112-103680f7298b@gmail.com/
+>>> I've seen the exchange, but ...
+>>>
+>>>> -	for OPERATION in "merge -m merge" cherry-pick rebase
+>>>> +	for OPERATION in "merge -m merge" cherry-pick "rebase --apply -q" "rebase --merge"
+>>>>    	do
+>>> ... it looks too strange that only one of them requires a "--quiet"
+>>> option.  Is it a possibility to get whoever's fork corrected so that
+>>> it behaves sensibly without requiring the "-q" option only for the
+>>> particular rebase backend?
+>>
+>> The issue is caused by a patch that Microsoft is carrying that stops
+>> apply from creating paths with the skip-worktree bit set. As they're
+>> upstreaming their sparse index and checkout work I expect it will show
+>> up on the list sooner or later. I agree the "-q" is odd and it also
+>> means the test is weaker but I'm not sure what else we can do.
+> 
+> Perhaps passing "-q" to the other variant of "rebase" would make it
+> clear that (1) we do not want to worry about traces involved in the
+> verbose message generation and (2) there is nothing fishy going on
+> in only one of the "rebase" backends.
 
-> I wonder if this and other issues you encountered wouldn't need a full
-> "fsck", but merely gc triggering a complete repack.
+I'm not sure about that. There are really three levels of output from 
+rebase - quiet, normal and verbose. I think passing "-q" suppresses 
+virtually all the output - there is no indication of which commits have 
+been picked. As test appears to be comparing the output of the command 
+for the sparse and non-spare case as a proxy for "it behaves the same 
+for sparse and non-sparse checkouts/indexes" passing "-q" to rebase 
+weakens the test considerably. Stolee indicated [1] that he is happy for 
+us to drop the "-q" for the "--apply" case so I'd be inclined to go back 
+to your corrected version of V2.
 
-That sounds slow :( For example, it's going to be a lot of disk write 
-bandwidth. Just doing the verification along with regular gc sounds faster.
+Best Wishes
 
-> Yes, we still definitely have cases where dealing with this sort of
-> thing can be very painful.
+Phillip
 
-With the new remote promisor code, I think that auto-fixing corrupted 
-blobs is easy enough (provided they can be found on any remote) ?
+[1] 
+https://lore.kernel.org/git/e281c2e2-2044-1a11-e2bc-5ab3ee92c300@gmail.com/
