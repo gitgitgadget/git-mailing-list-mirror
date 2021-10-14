@@ -2,128 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57622C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 17:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB89EC433F5
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 17:17:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3203460F21
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 17:12:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8700361053
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 17:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232226AbhJNROV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 13:14:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49472 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbhJNROU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 13:14:20 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E65C061570
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 10:12:15 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id a17-20020a4a6851000000b002b59bfbf669so2100783oof.9
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 10:12:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=YxI6nq7XXLCJXG5WroX0oLDiiD6N8MJZyCcGWvtUgKE=;
-        b=ar62TBS56ky6TskeIGOqEkCwunelIqO3N1Xv8qtG8PZJhxQFQtX3kdeYzwo0/Vlu4z
-         sfFNuntw4XfIBA6C0hs2RMhGZDJ3uzKVDtWhxjzEdp+jAYLtImvK7G9KcWZpXEx9oWkI
-         TbKc9fG00vt5XNKY7iwXMV87Ojqp/DO7nFBAF+jqCEy7bVjxndOkZoF+jmqo2PheMUX+
-         FSGIV4vAyuUQYacvuay1mt1S05ifdbhLgH1UA+RJMYnEmQw9VaxRx4q234odNBYBnsas
-         vwPNsrFiZliQevMnr91+D/PUF/t0CF+QdbU6+Ush47AGIeExB8oPCre5KjdTYGwdrUTM
-         yhdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=YxI6nq7XXLCJXG5WroX0oLDiiD6N8MJZyCcGWvtUgKE=;
-        b=Dxwo2XOMVjm5NscfOBcKFx3jWIBBzBqjZahQVQBqETJ72pWgzWMgN4A0sCif+DpxbL
-         dobIlwPlJ8Dk72nBaSeOj3N9rIJttH8ptkmxQ6a9sW406XOJ2QcVYF3Jlw3SIDnChEpv
-         x7KM3Yisu62IM9pQzjJ2ogJc4kWql3caY9wnzC9eslaK2x7zqMoAEBju9D7RlDT4jFF3
-         BVCTn1/tkpA1Pkd00J5RFw2ItxhKFJzByuzjpiuBqatMX4DEgS+qzcfSLGQr1fb+EGWw
-         iVS4zWLPInPFrD6WsGrlCM8JkBC+lvSMZZ4hA//A+uxQ9T+hxzQGRMXOewD1jkqkz2H8
-         scbA==
-X-Gm-Message-State: AOAM5314qiw3Ujajd6dlOm5rUSwJFcKNmqv7AI46qptnAw3xZOeGB5et
-        YgG349Z7biM9jUjlDN0Ql9M=
-X-Google-Smtp-Source: ABdhPJyU/k0DWF+RivLH0z77W+C8K4Js+WpVv6i45NpUnW/pI4Po3ICnGJIc1rX8gadvacdOxu5MdA==
-X-Received: by 2002:a4a:dfdb:: with SMTP id p27mr5181703ood.70.1634231534711;
-        Thu, 14 Oct 2021 10:12:14 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:254d:795e:811:9a2c? ([2600:1700:e72:80a0:254d:795e:811:9a2c])
-        by smtp.gmail.com with ESMTPSA id bk8sm68501oib.57.2021.10.14.10.12.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Oct 2021 10:12:14 -0700 (PDT)
-Message-ID: <461f5fa8-42a4-b9a0-b223-7f97b764efd0@gmail.com>
-Date:   Thu, 14 Oct 2021 13:12:11 -0400
+        id S232827AbhJNRTK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 13:19:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64928 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231376AbhJNRTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 13:19:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E0E0015641C;
+        Thu, 14 Oct 2021 13:17:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=5IzOQEm/hFgdjri/Swq2flzFhK5yYllq6CRpdhzHcOQ=; b=MPM6
+        FyLtG33ubAjCf2xAOYqrcQTcOXf1IS4Nmu+Cfsx3rTyHhmiZJqCgX90tmrmrlGH6
+        H5AKiDcOtQpKsfy4dgkHRv8IzFWhDMDr2CPS73gxEawUtNfIeGZoBf6kENFm3JAa
+        unf9/jGH4Bcp0BIdVuYI9/p8Z9atrwnVY+EoCu4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D9D6215641B;
+        Thu, 14 Oct 2021 13:17:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3DC6A156416;
+        Thu, 14 Oct 2021 13:17:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rob Browning <rlb@defaultvalue.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] signature-format.txt: explain and illustrate multi-line
+ headers
+References: <20211009163338.2175170-1-rlb@defaultvalue.org>
+        <YWRpPw4eTwTmgVvC@coredump.intra.peff.net>
+        <xmqq4k9ncopr.fsf@gitster.g>
+        <YWTuAOjqK6fy9ZRT@coredump.intra.peff.net>
+        <xmqqzgre5glb.fsf@gitster.g> <xmqqtuhlisqe.fsf_-_@gitster.g>
+        <87zgrcgpez.fsf@trouble.defaultvalue.org>
+Date:   Thu, 14 Oct 2021 10:17:01 -0700
+Message-ID: <xmqq5ytzcyr6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH v3 0/4] cache parent project's gitdir in submodules
-Content-Language: en-US
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20210819200953.2105230-1-emilyshaffer@google.com>
- <f5197594-550f-3bd8-2d22-c9e1b3e161fd@gmail.com>
- <YWcquctPsrRm964k@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YWcquctPsrRm964k@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BF91768-2D12-11EC-A624-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/13/2021 2:51 PM, Emily Shaffer wrote:
-> On Thu, Aug 19, 2021 at 09:09:46PM -0400, Derrick Stolee wrote:
->> but I do have some concerns that
->> we have not covered all the cases that could lead to the relative path
->> needing an update, such as a 'git checkout' across commits in the super-
->> project which moves a submodule.
->>
->> Leading more to my confusion is that I thought 'git submodule update'
->> was the way to move a submodule, but that does not appear to be the case.
->> I used 'git mv' to move a submodule and that correctly updated the
->> .gitmodules file, but did not run any 'git submodule' subcommands (based
->> on GIT_TRACE2_PERF=1).
-> 
-> During a live review a few weeks ago it was pointed out, I forget by
-> who, that this whole series would make a lot more sense if it was
-> treated as the path from the submodule's gitdir to the superproject's
-> gitdir. I think this would also fix your 'git mv' example here, as the
-> submodule gitdir would not change.
+Rob Browning <rlb@defaultvalue.org> writes:
 
-I think that's a great way to deliver similar functionality without
-the issues I was thinking about.
+> One question I had was whether git's requirement was strictly a space,
+> or if it was following the rfc-822 convention where (if I remember
+> correctly) a tab is equivalent, i.e. the LWSP production in the grammar.
 
->> You mention in an earlier cover letter that this config does not need to
->> exist, but it seems to me that if it exists it needs to be correct for us
->> to depend on it for future features. I'm not convinced that we can rely
->> on it as-written, but you might be able to convince me by pointing out
->> why these submodule movements are safe.
-> 
-> Yeah, that is a good point, and I wonder how to be defensive about
-> this... Maybe it makes sense to BUG() if we don't find the
-> superproject's gitdir from this config? Maybe it makes sense to warn
-> (asking users to 'git submodule update') and erase the incorrect config
-> line?
+We use a single SP when writing and we accept a single SP when
+reading.  See commit.c::add_extra_header() for the writing side, and
+commit.c::read_commit_extra_header_lines() for the reading side.
 
-I think we can complain with something like a die() if the config points
-to data that doesn't make sense (not a .git directory), but a BUG() is
-too heavy-handed because it can just be a user modifying their config
-file incorrectly.
+Unlike in RFC-822 style e-mail headers, 
 
-I'm happy to shut down a process because a user messed with config
-incorrectly. Since your proposed change allows operations like 'git mv'
-to move submodules without needing to change this config, I'm much
-happier with the design. It becomes impossible for the config to get
-out of sync unless the user does something outside of a Git command.
+ * keywords in our object headers are not followed by a colon;
 
-Thanks,
--Stolee
+ * the value carried on our object header is not a "logically a
+   single line of characters".  
+
+ * our headers do not go through their "unfolding" (i.e. removal of
+   CRLF eol markers to form a single long line, while preserving the
+   WSP that immediately followed the CRLF).  We instead remove the
+   SP that signalled the line as a continuation of the previous line
+   to keep the original line structure.
+
+With so little similarity, there is no reason for us to mimick their
+"folding" rule.
+
+We limit to the SP and not LWP for another reason.  Because the
+exact byte sequence in the object (including the header part of
+"commit" and "tag" objects) determines the name of the object, it
+avoids ambiguity to make sure we do not allow unnecessary
+"flexibility" in the way the same thing can be expressed.  If the
+same signature is attached to a pair of otherwise identical commits
+in their headers, one with SP signaling continued lines, the other
+using HT (or random permutations of choice between SP/HT---making
+2^N variants for a N line signature block), we would needlessly
+create many variants of the "same" commit, which is not ideal.
