@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6199DC433FE
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 00:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91E8CC433EF
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 00:07:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49A7E6113B
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 00:07:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 795FE6113B
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 00:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbhJNAJO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Oct 2021 20:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
+        id S230265AbhJNAJV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Oct 2021 20:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbhJNAIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Oct 2021 20:08:53 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC8DC06177B
+        with ESMTP id S230322AbhJNAJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Oct 2021 20:09:03 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD49FC061762
         for <git@vger.kernel.org>; Wed, 13 Oct 2021 17:06:48 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id v17so13750576wrv.9
+Received: by mail-wr1-x431.google.com with SMTP id i12so13777594wrb.7
         for <git@vger.kernel.org>; Wed, 13 Oct 2021 17:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UF0m0fy+FrS7BOfPF9cFoV3A5sGFM+8xFbei8mU2nxM=;
-        b=KoMA552J/2dsMAyWfm1g9NXTQK8fLz6xUdhmsIu5Lkx372L0ZiqNZ2fuaBpTXpj47w
-         rNDcNwCM+pUprT/G+aqIf9qFqOPiKZpEOu5n/iJTlKXTPBwIoBN/HlFrYDYLtCzNmeBi
-         Ga+8IqxZOlzMtif6c6zfKZFcIsv8DzYvcSuCaNj9EcGQci1obVvj9HcURVYYgIv6okHh
-         E+4rGqVQ2Awiv8n+Q/i1gBETG3FaLkv/WOoBcSpbkuspztgihevh6UNC0+4CxjrPJBUt
-         IpfJ5JVGADmxdDXvbIS0/jM4GJM77mMVQS3AOkPN9sHR8ulTkKQKfuN2c5WsWa0UNHJp
-         vvWw==
+        bh=w4OKEV8dT7MqqU1hQfaaJEcFIsFEHQYaLHN78Ea6SQo=;
+        b=MO0k89Rgfv6Z3WWVSUgNPIq0la9VmdLhqmVbe5jGBCmJnKOq/hyEvLpiJX6CqP/gVl
+         2KRlmavAiizQ1XVdQuEuZqTW1G6NEiUJ71Somjwui12leULeMeiHahkKobUQZXPKSKew
+         YDIBXW9EM2BpiI4pTT0wHQD8RF60YoUhKlS6kvYArsP1TvTfyCHi7YisD+jvu9FXyy/i
+         PN2skBuc1YIxC11IwV3lZWvKmuQCm70eFdFvrZH6fJ08oNy1K7Y0+5pxgWZW40+9O36d
+         rGMGYcSHeyanYTfn34/KHT4MVihUicSr6qKGtsFQDlMckpZtEeFiIVbb7e82WhTJa/uQ
+         TiNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UF0m0fy+FrS7BOfPF9cFoV3A5sGFM+8xFbei8mU2nxM=;
-        b=sULW0JPHopMBszUT/5zFeeXziypLW3U9NtoshBmOgfvARYOGUooom7Kjf5SXw60GXQ
-         XtENpGeAPOjN0/HGjJ/Sn/HlXFNnqrgkOxEMSGldvBxTQtz9xJC7kcOKo6Y8Z/uPdXeh
-         Jz5cfmNicaf/V0gWc5HZkR4jAp6ct+T3fiTCFAIRfm568fRTuZ2ULSIuqM7AcCXMheBu
-         k9T5oiPqYIBge21LG7pL+CEGt9+Q/hntKzEUceSYf8FATi7CoGkopZM8E4QtvTl5vEuh
-         5QnP1BSIaJsKlWnoK/w5aRwuZB+LoTXwbq0jWZiOipyfa0Y4U98SfCUNhKTfm83ZQ6Wv
-         ZfNQ==
-X-Gm-Message-State: AOAM531I2g/t5qDZPuo555+5n0mP/++0disPjuy/o4w1NMHXNhzZQI2r
-        DGF9USGdI9/iyN1VWWcvxe0+IHxZXiyLpA==
-X-Google-Smtp-Source: ABdhPJw4gAye/TJAJEl+YyTZxX9eGdCUvsvhLoBsx60A8jfdxBSFZQEHgioJ8JqUNaEV1c13Gnp2xA==
-X-Received: by 2002:a5d:64cd:: with SMTP id f13mr2865529wri.92.1634170006570;
-        Wed, 13 Oct 2021 17:06:46 -0700 (PDT)
+        bh=w4OKEV8dT7MqqU1hQfaaJEcFIsFEHQYaLHN78Ea6SQo=;
+        b=4oPmw6OD9y2D+ZG9bT6JfRgxVkBAOb3FKIoBkNQDaBCfvgny+CTB8mYbVxRVkG/1an
+         3zcDWyFoBpwZvrsiaoPRl2nQE01A6/cpInTpRq+624Zf7rr2k/uj6qkNfCUIcVSZEfeR
+         f6w4b08jlOxhB7F4AxY6LfumIh4jFrJyO5doAg+yL/+8dllSTkjPje1BGz9uHLjNg2ze
+         g7jia78ri3faE3hZ9kb+YW0yJJ9GiFs7Q6BcfMVOEpGCJarUmhvV+FRYEGZsrYDkNe9g
+         cOPDNkG4YuC9IydNhmvHrNh0hdVZcv+koZ2JTrjyfkOkhBdrb+NOPkLgst1xo1F/VPY0
+         o+xg==
+X-Gm-Message-State: AOAM532+xECIoexOsxAdMrA98vJXVGmmd0tY2AZptWg01k6YuyHKQNdV
+        11Kclmf2InHMoRBkxLg3P7OJxjEOy/vtzA==
+X-Google-Smtp-Source: ABdhPJwUMWJql3K5qpxF5Q3rTjwrBWqMdtyNWH+xNL0M7mkrQRN5Wd1vSPFz+bKiEyRNbTXdsAPKrg==
+X-Received: by 2002:a1c:8054:: with SMTP id b81mr2411630wmd.87.1634170007323;
+        Wed, 13 Oct 2021 17:06:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y8sm670711wmi.43.2021.10.13.17.06.45
+        by smtp.gmail.com with ESMTPSA id y8sm670711wmi.43.2021.10.13.17.06.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 13 Oct 2021 17:06:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Han-Wen Nienhuys <hanwen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 16/20] refs API: make resolve_ref_unsafe() not set errno
-Date:   Thu, 14 Oct 2021 02:06:28 +0200
-Message-Id: <patch-16.20-888b1884c29-20211013T235900Z-avarab@gmail.com>
+Subject: [PATCH 17/20] refs API: make expand_ref() & repo_dwim_log() not set errno
+Date:   Thu, 14 Oct 2021 02:06:29 +0200
+Message-Id: <patch-17.20-e2885f13c9b-20211013T235900Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1346.g48288c3c089
 In-Reply-To: <cover-00.20-00000000000-20211013T235900Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20211013T235900Z-avarab@gmail.com>
@@ -70,73 +70,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the resolve_ref_unsafe() wrapper function to use the underlying
-refs_werrres_ref_unsafe() directly.
-
-From a reading of the callers I determined that the only one who cared
-about errno was a sequencer.c caller added in e47c6cafcb5 (commit:
-move print_commit_summary() to libgit, 2017-11-24), I'm migrating it
-to using refs_werrres_ref_unsafe() directly.
-
-This adds another "set errno" instance, but in this case it's OK and
-idiomatic. We are setting it just before calling die_errno(). We could
-have some hypothetical die_errno_var(&saved_errno, ...) here, but I
-don't think it's worth it. The problem with errno is subtle action at
-distance, not this sort of thing. We already use this pattern in a
-couple of places in wrapper.c
+The use of these two is rather trivial, and it's easy to see none of
+their callers care about errno. So let's move them from
+refs_resolve_ref_unsafe() to refs_resolve_ref_unsafe_with_errno(),
+these were the last two callers, so we can get rid of that wrapper
+function.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c      |  6 ++++--
- sequencer.c | 10 ++++++++--
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ refs.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index f2a56a216c3..4b0c1a30a18 100644
+index 4b0c1a30a18..16f8220b108 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1784,8 +1784,10 @@ int refs_init_db(struct strbuf *err)
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       struct object_id *oid, int *flags)
- {
--	return refs_resolve_ref_unsafe(get_main_ref_store(the_repository), refname,
--				       resolve_flags, oid, flags);
-+	int ignore_errno;
-+
-+	return refs_werrres_ref_unsafe(get_main_ref_store(the_repository), refname,
-+				       resolve_flags, oid, flags, &ignore_errno);
- }
+@@ -653,13 +653,16 @@ int expand_ref(struct repository *repo, const char *str, int len,
+ 		struct object_id oid_from_ref;
+ 		struct object_id *this_result;
+ 		int flag;
++		struct ref_store *refs = get_main_ref_store(repo);
++		int ignore_errno;
  
- int resolve_gitlink_ref(const char *submodule, const char *refname,
-diff --git a/sequencer.c b/sequencer.c
-index 64b1f2e681c..7052f791410 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1281,6 +1281,8 @@ void print_commit_summary(struct repository *r,
- 	struct pretty_print_context pctx = {0};
- 	struct strbuf author_ident = STRBUF_INIT;
- 	struct strbuf committer_ident = STRBUF_INIT;
-+	struct ref_store *refs;
-+	int resolve_errno;
+ 		this_result = refs_found ? &oid_from_ref : oid;
+ 		strbuf_reset(&fullref);
+ 		strbuf_addf(&fullref, *p, len, str);
+-		r = refs_resolve_ref_unsafe(get_main_ref_store(repo),
+-					    fullref.buf, RESOLVE_REF_READING,
+-					    this_result, &flag);
++		r = refs_werrres_ref_unsafe(refs, fullref.buf,
++					    RESOLVE_REF_READING,
++					    this_result, &flag,
++					    &ignore_errno);
+ 		if (r) {
+ 			if (!refs_found++)
+ 				*ref = xstrdup(r);
+@@ -688,12 +691,14 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
+ 	for (p = ref_rev_parse_rules; *p; p++) {
+ 		struct object_id hash;
+ 		const char *ref, *it;
++		int ignore_errno;
  
- 	commit = lookup_commit(r, oid);
- 	if (!commit)
-@@ -1330,9 +1332,13 @@ void print_commit_summary(struct repository *r,
- 	rev.diffopt.break_opt = 0;
- 	diff_setup_done(&rev.diffopt);
- 
--	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
--	if (!head)
-+	refs = get_main_ref_store(the_repository);
-+	head = refs_werrres_ref_unsafe(refs, "HEAD", 0, NULL, NULL,
-+				       &resolve_errno);
-+	if (!head) {
-+		errno = resolve_errno;
- 		die_errno(_("unable to resolve HEAD after creating commit"));
-+	}
- 	if (!strcmp(head, "HEAD"))
- 		head = _("detached HEAD");
- 	else
+ 		strbuf_reset(&path);
+ 		strbuf_addf(&path, *p, len, str);
+-		ref = refs_resolve_ref_unsafe(refs, path.buf,
++		ref = refs_werrres_ref_unsafe(refs, path.buf,
+ 					      RESOLVE_REF_READING,
+-					      oid ? &hash : NULL, NULL);
++					      oid ? &hash : NULL, NULL,
++					      &ignore_errno);
+ 		if (!ref)
+ 			continue;
+ 		if (refs_reflog_exists(refs, path.buf))
 -- 
 2.33.1.1346.g48288c3c089
 
