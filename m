@@ -2,118 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED3F8C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 16:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B8A3C433F5
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 16:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3A8E6109E
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 16:51:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00BCD6101D
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 16:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231825AbhJNQxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 12:53:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51036 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230030AbhJNQxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 12:53:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAE0BE0939;
-        Thu, 14 Oct 2021 12:51:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MuRN8o9ev0KxkQiJ1CNkLTmVmIQP8HJ5/4Nauw
-        cXY84=; b=SKTDrejggIirzmwywNqJoXN59K1ICL2OV5TBGYzzWi3eDntKsrGTXT
-        HOzYX9kxOHMGJOyUNBZWSM0ih7GF5DBMj3G4ywfJx9y+I8XMoSyyVG1n0nRwIa3y
-        vRnwQQ44pTr5Y2rWkljkDeg/tjVT+Eei1t2Q5T9VF4cUDvqKINOcs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0EB8E0938;
-        Thu, 14 Oct 2021 12:51:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 084EEE0937;
-        Thu, 14 Oct 2021 12:51:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, vagabon.xyz@gmail.com,
-        Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH RESEND] archive: rewrite description for compression
- level option
-References: <20211014120233.7834-1-bagasdotme@gmail.com>
-Date:   Thu, 14 Oct 2021 09:51:28 -0700
-In-Reply-To: <20211014120233.7834-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Thu, 14 Oct 2021 19:02:34 +0700")
-Message-ID: <xmqqh7djczxr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232717AbhJNQ4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 12:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45366 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230244AbhJNQ4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 12:56:07 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE31C061570
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 09:54:01 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id r15so6033835qkp.8
+        for <git@vger.kernel.org>; Thu, 14 Oct 2021 09:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=a2JKZ3EaiWnBGsQ2cXinfvC1CCcAgluJ9SKhL/3+YrU=;
+        b=PeQVey82j95JvckgeV2upFgtYmEUW+nu8JZisRlTwP5sp2m25Vs7gq9hpiV7Ho8Zzi
+         gz7vcjQJ9uEhOV6iNBeKOKiXDb2wTl9nRClhLeUu6FmPm0xJAzlQnuOq06+rwtHibSE4
+         CwpjwafNe1Q663QYKCeh+v644v/KzgfzKlyx+zFeo/I7aJY6Vi/dMsZjM6rSTOd/XIN7
+         yAv/JLK2sdKgQeMdZki76QHysuARZjgjor8rxhjgG2liHLV+mULlim/N0HYeEo6xPgQj
+         Lo2WTsUahlymIaXWw2Utmg0Wwc3rF6t7t5r35FCE1U/qt24p3g9DzjGOaQu91rJtZvbu
+         IrFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=a2JKZ3EaiWnBGsQ2cXinfvC1CCcAgluJ9SKhL/3+YrU=;
+        b=wuzHOSIcJjP08AfT8D17JSezye0dE+MBmUVuA/tSpeBQJUajScFt/VqZQtEjLs48oM
+         l7syZeG8dRF5/lmFDAzzvv2dyPb1URIhuodQf4JkgCQWH8KZgisNmM8n5XCRoYr+OWHm
+         6c2c5KYg68b8eo3e6BSMmz1tYV9qHFFdUc71wKEo0R1HJZqTAnIit9NjA/xgqSlbaOkF
+         5rU29wZjOpEV15w9842a28+XjT+G1Y9SN8KbBljVunttp5vf+BbkajmGDCLWyPHPlK2R
+         7qGw1xtSyi4E7HCiIS+xDxoRk7g1Kkrp3fvMEqkOI/g5d5CrmsnyzP81FebLFWu+5oPR
+         hNsA==
+X-Gm-Message-State: AOAM532mlGmrfg16Nf5pCae+uCQPNzMWSM0x/d/dHh3tP0xC+62mZSEE
+        uw43yKgZqge4h4YyJ3fw/6A=
+X-Google-Smtp-Source: ABdhPJyUWPnonHx9tEept/QzjMz5uL/zKz3wSNtA7NM7IaG5FKUCTPLfHCRZyYmQMF92ZtBX7f5lQg==
+X-Received: by 2002:a37:61c8:: with SMTP id v191mr5561164qkb.379.1634230440926;
+        Thu, 14 Oct 2021 09:54:00 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:254d:795e:811:9a2c? ([2600:1700:e72:80a0:254d:795e:811:9a2c])
+        by smtp.gmail.com with ESMTPSA id x10sm1611478qtm.19.2021.10.14.09.53.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Oct 2021 09:54:00 -0700 (PDT)
+Message-ID: <d553054f-a484-ba34-ef3b-1e6778211a47@gmail.com>
+Date:   Thu, 14 Oct 2021 12:53:58 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA1BB394-2D0E-11EC-9158-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH v4 0/3] Use default values from settings instead of config
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <20211005001931.13932-1-chooglen@google.com>
+ <20211012174208.95161-1-chooglen@google.com>
+ <87wnmihswp.fsf@evledraar.gmail.com>
+ <02947b5e-7ce3-4760-0d27-621c7362f839@gmail.com>
+ <87pms8hq4s.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <87pms8hq4s.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On 10/13/2021 11:57 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Oct 13 2021, Derrick Stolee wrote:
+> 
+>> On 10/12/2021 4:34 PM, Ævar Arnfjörð Bjarmason wrote:...
+>>> If I comment yout your addition of GIT_TEST_COMMIT_GRAPH=0 in that file
+>>> I see that we fail N number of tests, but all of them are actually
+>>> fallout of just this test:
+>>>
+>>>         git replace $head_parent $head && 
+>>>         git replace -f $tree $blob 
+>>>
+>>> I.e. we've created a replacement object replacing a tree with a blob, as
+>>> part of tests I added to test how mktag handles those sorts of weird
+>>> edge cases.
+>>>
+>>> This then causes the graph verify code to throw a hissy fit with:
+>>>
+>>>     root tree OID for commit 0ddfaf193ff13d6ab39b7cbd9eed645e3ee2f050 in
+>>>     commit-graph is da5497437fd67ca928333aab79c4b4b55036ea66 !=
+>>>     0fbca9850869684085d654f9e1380c9780802570
+>>>
+>>> I.e. when we wrote the graph we somehow didn't notice that the root tree
+>>> node we wrote is to an object that's not actually a tree? Isn't this a
+>>> bug where some part of the commit graph writing should be doing its own
+>>> extended OID lookup that's replacement-object aware, it didn't, and we
+>>> wrote a corrupt graph as a result?
+>>>
+>>> If there is a legitimate reason why we're not just hiding a bug we've
+>>> turned up with these fixes let's disable that one test, not the entire
+>>> test file.
+>>
+>> The commit-graph should be disabled if replace-objects are enabled. If
+>> there is a bug being introduced here it is because the commit-graph is
+>> being checked during fsck even though it would never be read when the
+>> replace-objects exist.
+>>
+>> Thanks,
+>> -Stolee
+> 
+> Thanks, isn't the obvious fix for this to extend your d6538246d3d
+> (commit-graph: not compatible with replace objects, 2018-08-20) to do
+> "read_replace_refs = 0;" in graph_verify()? That works for me on this
+> case.
 
-> Currently, the description of compression level option (`-<number>` or
-> `-#`) only specifies two level (`-0` and `-9`), giving the impression
-> that only both levels are accepted, although other level number can be
-> specified. Rewrite the description.
+Ignoring the replace refs while verifying will allow you to verify the
+on-disk commit-graph file without issue.
+ 
+> I.e. if we ignore replace refs when writing the graph, and we don't use
+> it if there are any due to commit_graph_compatible(), why would we
+> consider them when verifying it?
 
-While I find that the updated description is more detailed [*], I am
-not sure if the change to the heading is an improvement for readers,
-as I do not think of a case where users would choose to use anything
-other than to use (1) no compression level option, (2) '-0' for
-speed, or (3) '-9' for size, and explicitly singling out `-0` and
-`-9` like the current text does would help those who wonder what the
-option, used in a script written by somebody else that they are
-given to maintain, mean, better than the updated text that does not
-even allow /-9 in their pager to look for the description, if you
-only had `-<number>` or `-#`.
+I generally consider any interaction with the commit-graph while
+replace refs are enabled to be the bug. We don't read the commit-graph
+when replace refs are on, so why are we verifying it?
 
-Also, unless we take `-47`, I do not think it is a good idea to
-spell it as `-<number>`.  Perhaps `-<digit>` is OK, but it shares
-exactly the same issue as `-<number>` I mentioned above.
+But, I understand the desire to check the on-disk content even though
+it is not being used, so disabling replace refs to do the verify should
+be sufficient.
 
-Thanks.
+Thanks,
+-Stolee
 
-
-[Footnote]
-
- * Not that the original does not carry the same information; when
-   "-9" is described as "highest and slowest", accompanied by "any
-   number from 1 to 9 to adjust", the readers can easily read that
-   "Higher number indicates ..." tradeoff without getting told.
-
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->  Documentation/git-archive.txt | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-> index 9f8172828d..097b999bbd 100644
-> --- a/Documentation/git-archive.txt
-> +++ b/Documentation/git-archive.txt
-> @@ -93,12 +93,11 @@ BACKEND EXTRA OPTIONS
->  
->  zip
->  ~~~
-> --0::
-> -	Store the files instead of deflating them.
-> --9::
-> -	Highest and slowest compression level.  You can specify any
-> -	number from 1 to 9 to adjust compression speed and ratio.
-> -
-> +-<number>::
-> +	Select the compression level. Higher number indicates better
-> +	compression at the expense of longer time to compress. Valid
-> +	values are from 0 to 9. If 0 is selected, the files will be
-> +	stored without compressing.
->  
->  CONFIGURATION
->  -------------
->
-> base-commit: 2bd2f258f4195ac54293a3f45b86457c0bd5fc11
