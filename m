@@ -2,105 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5151C433EF
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A41A0C433F5
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:47:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 905E46101D
-	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:03:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EFAA60C4B
+	for <git@archiver.kernel.org>; Thu, 14 Oct 2021 12:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231195AbhJNMFJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Oct 2021 08:05:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbhJNMFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Oct 2021 08:05:07 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD4DC06174E
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 05:03:03 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id g5so4040213plg.1
-        for <git@vger.kernel.org>; Thu, 14 Oct 2021 05:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8yvlIDPIRUbrjIhtPS/ztuKi9WUhG61Lvz8W3CYk+xY=;
-        b=DmBYEqPkgipGpbdyEEImVO40VSwa+9Dutdaob7Re7Ywx/h8DcTxISVqCLFHyTaMHNF
-         wVhUGQkgmDd4yOawiPmn7pWnlkHTf1ZbGtminsCmLni9JBO21njmrGxn2UGDIDXRzq/a
-         jWKOp1AW/1xyLr2MAYmH6cSwvOtX6ttmcI3nY8I4QsC5yEsYVfhi6w5dePVB5nCZQQzF
-         Jqv/dX9y+XdTqv5FdwWNLzpY/pPJZnK+G1UPY/47+r31zyKdIJOklCo+p4a7y628mCSH
-         k7fjJlWESvAzYosD3ITXA/FYuZAfXcNGzjB/WvjUKA8NdbaRj1kzgfywmZStDO8p4PUl
-         YGhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8yvlIDPIRUbrjIhtPS/ztuKi9WUhG61Lvz8W3CYk+xY=;
-        b=IFtsxiqpzaI8OSWNbpL+ClicrFZ4kCj56m1DloC39o2t7IVUVHnNrL6uqC7S3U+HJm
-         G6K7RDLvilEg7G+bJS8FeJxsIt5Odu6nwzjltYDnU9lTtefMi4q52+ki4CALOniFFR5Z
-         UHKCfsDfeOVGikyVoe63vYeclNsDYLMfLGezYcgB+MjsfGAiundnb/VCG8q4zBq1yMki
-         7XC58SpoM3VPVGaX/Bi6ZLNsJ6MgrfhH3AkBibx225SZJxUrMg1ep1v3mjDcSZZj+d9g
-         v3ot7ottUA9kQYmwWyToR8pLqpHTOtBLHjp8wX5G8NiFpBEPYe4b3OgEHct+gt7L4KNB
-         V+ZQ==
-X-Gm-Message-State: AOAM531GTrCmtuvpbtNrBILfZl2C1sUVER+wIIFJl66Aqkhaa5AAMJGN
-        CMjkywycov911IkcGJox53fMT0pGYyY3YbWY
-X-Google-Smtp-Source: ABdhPJwQdcWXky9VlL8sLqR6bs6h9sxCgnxpDO9URk0MalXH7TfZFmSc9DZcS6dXaM8nAleIxSe2DA==
-X-Received: by 2002:a17:90a:6583:: with SMTP id k3mr20205687pjj.147.1634212982702;
-        Thu, 14 Oct 2021 05:03:02 -0700 (PDT)
-Received: from ubuntu.mate (subs03-180-214-233-80.three.co.id. [180.214.233.80])
-        by smtp.gmail.com with ESMTPSA id x20sm2301507pjp.48.2021.10.14.05.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Oct 2021 05:03:02 -0700 (PDT)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     git@vger.kernel.org
-Cc:     vagabon.xyz@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH RESEND] archive: rewrite description for compression level option
-Date:   Thu, 14 Oct 2021 19:02:34 +0700
-Message-Id: <20211014120233.7834-1-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        id S231597AbhJNMtp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Oct 2021 08:49:45 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.18.44]:57858 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229912AbhJNMto (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Oct 2021 08:49:44 -0400
+Received: from [94.228.207.246] (helo=[192.168.2.206])
+        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1mb08v-0005a6-11; Thu, 14 Oct 2021 14:47:29 +0200
+Subject: Re: Suggestion: "verify/repair" option for 'git gc'
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <e288dbe1-b7c7-5a2e-5271-404a14de836a@syntevo.com>
+ <87h7dkh04o.fsf@evledraar.gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <96bf2eff-f4c8-cae8-76cb-6eeb233cd1d3@syntevo.com>
+Date:   Thu, 14 Oct 2021 15:47:34 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <87h7dkh04o.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, the description of compression level option (`-<number>` or
-`-#`) only specifies two level (`-0` and `-9`), giving the impression
-that only both levels are accepted, although other level number can be
-specified. Rewrite the description.
+On 14.10.2021 4:19, Ævar Arnfjörð Bjarmason wrote:
+> I'd be interested in a copy of it, I've been slowly trying to improve
+> these sorts of corruption cases.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/git-archive.txt | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+Sent.
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 9f8172828d..097b999bbd 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -93,12 +93,11 @@ BACKEND EXTRA OPTIONS
- 
- zip
- ~~~
---0::
--	Store the files instead of deflating them.
---9::
--	Highest and slowest compression level.  You can specify any
--	number from 1 to 9 to adjust compression speed and ratio.
--
-+-<number>::
-+	Select the compression level. Higher number indicates better
-+	compression at the expense of longer time to compress. Valid
-+	values are from 0 to 9. If 0 is selected, the files will be
-+	stored without compressing.
- 
- CONFIGURATION
- -------------
+> I wonder if this and other issues you encountered wouldn't need a full
+> "fsck", but merely gc triggering a complete repack.
 
-base-commit: 2bd2f258f4195ac54293a3f45b86457c0bd5fc11
--- 
-An old man doll... just what I always wanted! - Clara
+That sounds slow :( For example, it's going to be a lot of disk write 
+bandwidth. Just doing the verification along with regular gc sounds faster.
 
+> Yes, we still definitely have cases where dealing with this sort of
+> thing can be very painful.
+
+With the new remote promisor code, I think that auto-fixing corrupted 
+blobs is easy enough (provided they can be found on any remote) ?
