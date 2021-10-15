@@ -2,116 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74505C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB46C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:50:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F05561151
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:46:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 710BC60F6F
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241576AbhJOQsL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:48:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241566AbhJOQsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 12:48:11 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E506C061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:46:04 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id g14so6122785qvb.0
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:46:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=J2xY2jRGTopcZUnYGY75BEygOxapaHxSAvyd+utsqp0=;
-        b=Mtb3h364f0a245IORje5wIscuHvOxH/NzQCtv+mv+GY8LUgSFh+NrAT6dB2y/fh8oV
-         m1jDDmUR1R8paLaPGv1Ixfn7i6j30qZnWjNbT0xpgF7Z8z+Ujk0Fo4GlrA/gY3H/EqIR
-         OfrMm0oTOI1opoFZSKOJ/Gdv6LPt8GoZ8AhJc3D3GgeOYqgx0xtxrJbF9z/ZGhGJfZlg
-         Iswe5xmtBayu3PZhMbtGvOH1uHmMzxK4xy9hZccKB7dWJuWcXtoLUJFKKDZaXVy9A/7E
-         +/l3Y9BLsuN431VAMwWcuh+XLbVN8xQnq6ue2H2CN/+STgWIBBQt8Ar6WjJqU/tXUJ9e
-         yKLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=J2xY2jRGTopcZUnYGY75BEygOxapaHxSAvyd+utsqp0=;
-        b=Oc5yZYoCd+TYj8ZtHXiE8//jcmtznWMQrW8NWspNx/CKcqYIx2v2OcC5XP0kCUd0sx
-         JLwtc/gyeLxh8T5B5KulMDDMA5MwHq1FNP1C4ohHLh5xhVrdkr8P5mDaIo2Pa8CNB4ks
-         VpTT8r2I+Cxa+gVGERPq6TYjjCB8uXD0qat0QYlWcQ36uBrokK5JRyiG0lkgCrM6NTpP
-         +3docgTEEvMS7G9gwP9IYo2fnV64CXFBJOq253mmUqrcpgpEA2tKparqBGL+qSM337Ye
-         rKYFOVcCn0Ek7uVB9GuSVCpYmloi11tqZF3sku3wmUf3Ac8ncu8BjQi12FYqUyEsBMO0
-         MIuA==
-X-Gm-Message-State: AOAM531XJJopglR3e2VWfaSvBt/zourzjz1MbzwGIra9nh9+UXUDGAKP
-        gA8cz7SzEF3YAUmaETeJTZX23O5VBSU=
-X-Google-Smtp-Source: ABdhPJysu7G8dXvp6j7UWZDSDTalAaCxRGo5VFpKBUyWgG32RlgUzzwT5mR0tbiVEZJAwpEoXO0Y6g==
-X-Received: by 2002:a0c:f10c:: with SMTP id i12mr12112489qvl.27.1634316363603;
-        Fri, 15 Oct 2021 09:46:03 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:7410:d2b1:c643:df9b? ([2600:1700:e72:80a0:7410:d2b1:c643:df9b])
-        by smtp.gmail.com with ESMTPSA id m6sm2759233qkh.69.2021.10.15.09.46.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Oct 2021 09:46:03 -0700 (PDT)
-Message-ID: <a8e7c755-6ee0-cec7-9721-0e244e561542@gmail.com>
-Date:   Fri, 15 Oct 2021 12:46:01 -0400
+        id S236428AbhJOQxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 12:53:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54455 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236216AbhJOQxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 12:53:02 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B1D1FEFBB;
+        Fri, 15 Oct 2021 12:50:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=dSjKGDxKxuwT
+        lf8FYH355NwXrfRL6+k0ncVGOcY7o2w=; b=EOTWPFzKik4p/RLH2gV7khumJWB1
+        txt3X0L4e5NnK3dx0srYGgGPKKT7j+wZ+IdPwFsbXxwleZK4YEd4+5W+d4jpiqdv
+        N1H/tyaOs4Ap7/UPMF0bK3e8cEAW+TO+1m9WzuUGQJnIa07s2iBGG7Vi0wEqO+xz
+        AFsSWWfBHehPBco=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91C71FEFBA;
+        Fri, 15 Oct 2021 12:50:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AF53FEFB9;
+        Fri, 15 Oct 2021 12:50:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        vagabon.xyz@gmail.com, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2] archive: rewrite description for compression level
+ option
+References: <20211015121336.46981-1-bagasdotme@gmail.com>
+        <87h7die9jj.fsf@evledraar.gmail.com>
+Date:   Fri, 15 Oct 2021 09:50:52 -0700
+In-Reply-To: <87h7die9jj.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 15 Oct 2021 14:46:29 +0200")
+Message-ID: <xmqq7dee8c5v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH 1/2] diff: enable and test the sparse index
-Content-Language: en-US
-To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, newren@gmail.com,
-        Lessley Dennington <lessleydennington@gmail.com>
-References: <pull.1050.git.1634232352.gitgitgadget@gmail.com>
- <9a597233cf4127e97ac9f680f540c7c9a9304211.1634232353.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <9a597233cf4127e97ac9f680f540c7c9a9304211.1634232353.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0FA9AE86-2DD8-11EC-A610-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/14/2021 1:25 PM, Lessley Dennington via GitGitGadget wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-There is a failure in 'seen', and it's due to a subtle reason
-that we didn't catch in gitgitgadget PR builds. It's because
-ds/add-rm-with-sparse-index wasn't in your history until it was
-merged into 'seen'.
+>>  SYNOPSIS
+>>  --------
+>>  [verse]
+>> -'git archive' [--format=3D<fmt>] [--list] [--prefix=3D<prefix>/] [<ex=
+tra>]
+>> +'git archive' [--format=3D<fmt>] [--list] [--prefix=3D<prefix>/] [-#]
+>>  	      [-o <file> | --output=3D<file>] [--worktree-attributes]
+>>  	      [--remote=3D<repo> [--exec=3D<git-upload-archive>]] <tree-ish>
+>>  	      [<path>...]
+>> @@ -65,10 +65,6 @@ OPTIONS
+>>  	Look for attributes in .gitattributes files in the working tree
+>>  	as well (see <<ATTRIBUTES>>).
+>> =20
+>> -<extra>::
+>> -	This can be any options that the archiver backend understands.
+>> -	See next section.
+>> -
+>>  --remote=3D<repo>::
+>>  	Instead of making a tar archive from the local repository,
+>>  	retrieve a tar archive from a remote repository. Note that the
+>> @@ -88,17 +84,13 @@ OPTIONS
+>>  	of the current working directory are included in the archive.
+>>  	If one or more paths are specified, only these are included.
+>> =20
+>> -BACKEND EXTRA OPTIONS
+>> ----------------------
+>> -
+>> -zip
+>> -~~~
+>> --0::
+>> -	Store the files instead of deflating them.
+>> --9::
+>> -	Highest and slowest compression level.  You can specify any
+>> -	number from 1 to 9 to adjust compression speed and ratio.
+>> -
+>> +-#::
+>> +	Select the compression level. The supported levels and default
+>> +	value (if none is selected) are depending on compression command
+>> +	backend configured for the selected format (either explicitly with
+>> +	`--format` or inferred from file name specified with `-o`). Common
+>> +	values are `-0` for only storing files (zip only), `-1` for fastest
+>> +	compression time, and `-9` for best compression ratio.
+>
+>
+> This is getting there, but I think we really should not have a -# in th=
+e
+> synopsis, since that's not how we refer to a digit-wildcard in any othe=
+r
+> context. And users might assume that a literal -# is meant, some
+> commonly used tools even support that, e.g. try:
+>
+>     curl -L -o /dev/null -# https://cdimage.debian.org/debian-cd/curren=
+t/amd64/iso-dvd/debian-11.1.0-amd64-DVD-1.iso
+>
+> Let's just use "[-<0..9 digit>[", or "[-<digit>]" in the SYNOPSIS and
+> explain that it's 0..9 below in this section..
 
-> +test_expect_success 'diff partially-staged' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>$1
-> +	EOF
-> +
-> +	# Add file within cone
-> +	test_all_match git sparse-checkout set deep &&
+I agree with you about `-#`.
 
-The root cause is that you should use "test_sparse_match" when
-adjusting the sparse-checkout definition. The full-checkout repo
-is getting the sparse-checkout set to a single pattern "deep",
-but without cone mode.
+I do not think it is a good idea to remove the backend-specific
+option section like this patch does, as the next archiver may not
+even support `-<digit>`.  Even with the existing two backends, the
+description of it need to be different (cf. the other response I
+sent you last night on "--fast/--best"?).  Rather, the first thing
+to improve would be to _add_ a section for `tar` format, next to the
+`zip` format, I would think, as those who wants to write `tar` do
+not have to read `zip` specific options, and vice versa.
 
-> +	run_on_all ../edit-contents deep/testfile &&
-> +	test_all_match git add deep/testfile &&
+The new paragraph on `-#` in the patch may work as a replacement for
+existing explanation for `zip`-specific extra options, but it needs
+to drop the changes made to make it applicable to any format, like
+"depending on ... backend" and "(zip only)" if we want to take it.
 
-But the test fails here because "deep/testfile" doesn't match
-the sparse-checkout definition in the full-checkout repo.
-
-> +	run_on_all ../edit-contents deep/testfile &&
-> +
-> +	test_all_match git diff &&
-> +	test_all_match git diff --staged &&
-> +
-> +	# Add file outside cone
-> +	test_all_match git reset --hard &&
-> +	run_on_all mkdir newdirectory &&
-> +	run_on_all ../edit-contents newdirectory/testfile &&
-> +	test_all_match git sparse-checkout set newdirectory &&
-
-You'll want to change this line, too.
-
-Thanks,
--Stolee
+Thanks.
