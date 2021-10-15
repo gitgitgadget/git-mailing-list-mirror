@@ -2,128 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B0AC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E32C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:46:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AEDF60F23
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:04:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5BC361073
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235061AbhJOKGX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 06:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50370 "EHLO
+        id S237996AbhJOKsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 06:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237807AbhJOKFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 06:05:34 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88E06C061769
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:03:27 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u8-20020a05600c440800b0030d90076dabso1320158wmn.1
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:03:27 -0700 (PDT)
+        with ESMTP id S229690AbhJOKsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 06:48:14 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6EBC061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:08 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id bi9so8055525qkb.11
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NOaOovkwb8qkCYt87D4CK6A/czaJ87skyyOeQtHwtjY=;
-        b=G1MnyjMNZrwnhwMOriP8dk29CngTEfWWXxvA1Y+sn8XmOYTD7gdMaa2wEUxDYhySKw
-         FqJ1i0aRJGf0uhFctalwseW7TV7gIc+MXMo1FZANe9zOPVHTr/0MCIXZ2CCDVTv4Gszs
-         U+7EMs3NfhbggAaFpRxww/1X8vT4wX8Jfu+9rELP2SXtU62PPd+LXuCjyb9y6MsDB9hS
-         GqDx1maAADCOKjyUxdDEp12uf/4XtEtVIKPebbz5M0vicZwfwuH3iDwIYSkBPXwQdaPa
-         whvgykTpuzyFxGP/pDT9iatiIsgaRg105CLLyu4xfCoChmJs5IV6GXX8hAjxHWfNPI6T
-         J/Uw==
+        d=linuxonly.nl; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=IuKqEoivsN7Bl2Q2civVkwB/t3fenGV7uFAnEAvlAZM=;
+        b=5a5yscSJuinApgHQQhb55qaAJ14ILFoT8o8B0SQKlfZs3UoddMnWwFiqWenP4v79ho
+         vYBfhR6gc1MSzEbGiRSiJakWxZ4/Q/xWybJvldY6WoYnNCHPOnPqTQpYGfXxKr9xrK6+
+         +dX1duUXZDCt6AHrjVFaWy/CbYtkNuQ5bc+gw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NOaOovkwb8qkCYt87D4CK6A/czaJ87skyyOeQtHwtjY=;
-        b=gDmxa/8yL8j2FaUlUv5EMM1M5hNUHiQj1dlBN/qRLLQmVy6G7TCI8ogaMqP8G+X81K
-         3WSOZKgFbV08a5zkNt2lsaT5AFDNeTyEuzhMNEOL02p5qFq2PFeeQgE0kSyo9T78KsRG
-         SVhTnnN8ogvwPyAvyBSQmXJZv3JJHJ916m2vQP8iUfzbki0+urj2rresqN4oDqdqa6XM
-         oeTcye8qklZtp/xDQtK52mV4zMyVijzXsrEyppy1Lxl+QUXXLrFUzWKFG83K/4IsAvQ3
-         kpZfHnGH/pHv1ZKYLBTzGEcQxTipmbgRg9cY4m/WfYlsJnwkTYCjanCdy8chm2dlTqwS
-         SKiw==
-X-Gm-Message-State: AOAM530/+9TmtaI3lHZ0SOrmpK0nzckp/tr58JFGOGYl0ektW/FCzZvY
-        o4T3GFdCkpWPlPcEVJLuGN/UdrnRanU=
-X-Google-Smtp-Source: ABdhPJzvoVGohuaWr57rmGTU3aXjHgqQGtLaW/55zARTJBmkKFuXm9XWsAArJV7GFSc6mEC5tzWcXA==
-X-Received: by 2002:a1c:c908:: with SMTP id f8mr25392389wmb.142.1634292206208;
-        Fri, 15 Oct 2021 03:03:26 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id 1sm10695622wmb.24.2021.10.15.03.03.25
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=IuKqEoivsN7Bl2Q2civVkwB/t3fenGV7uFAnEAvlAZM=;
+        b=PpB8Z8wvjg1zjAWp9/VXSISHoFIsh2FJeiMZpWEeexWhYaIuhsacb3K47mT7l7cY/l
+         u013I/kre6nlo/mzdpFVzYnCkY6hcJUFMM92T53izXXb+bHylMwDYm1gHRuV8x+3qOvA
+         xYIcFAeT+1+cgkCGNkiM+uiKQVnE3hZgRZ6LzM23Noq165VD5wN14XQW89HXuuwo6Wq+
+         9n0veebLrPoUzySssQKa/6ZVegU4OocQhtxpKycTZ1RiuAfvVXVy5Ok99rHiXOZhLwP1
+         q4bHA5enxe6yFhzpQIZxXfSE2NLiHYiCKjxZKQPGtszHKnUoSAUarkaPFk8JjGubIbEF
+         wGyw==
+X-Gm-Message-State: AOAM532/FR7a25h2vr4Z2kxNwdXMHV0hIRyK4IHxRlE/OjMtU99zx/DP
+        3NUqsS21pmxC3gE6FHe+87XABDGO3tGEaQ==
+X-Google-Smtp-Source: ABdhPJwaTYHdrx6/VLZBSpyxU1HwB32m6Pi53izmmh9rX8EAO18Zk2SBGAiWTrmXOmYj5D/AedfHCA==
+X-Received: by 2002:a37:6484:: with SMTP id y126mr9492989qkb.384.1634294767643;
+        Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
+        by smtp.gmail.com with ESMTPSA id 6sm2800246qtz.13.2021.10.15.03.46.07
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Oct 2021 03:03:25 -0700 (PDT)
-Message-ID: <5868076d-69cf-9b77-fa5c-5bb229333bd9@gmail.com>
-Date:   Fri, 15 Oct 2021 11:03:24 +0100
+        Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
+Received: by mail-qt1-f174.google.com with SMTP id w2so8421738qtn.0
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:1492:: with SMTP id t18mr12855584qtx.229.1634294766733;
+ Fri, 15 Oct 2021 03:46:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: To "const char *" and cast on free(), or "char *" and no cast...
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Eric Wong <e@80x24.org>
-References: <patch-1.1-9b17170b794-20211014T000949Z-avarab@gmail.com>
- <8f87cdb9-b52b-8d1a-545d-ed3055c536c0@gmail.com>
- <87mtnbfk0g.fsf@evledraar.gmail.com> <xmqqlf2vbbl8.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqlf2vbbl8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CAA1vfca+kPSsitsZad-bmrd+o1ay60NXZrH2zGLpwN69Px-rtw@mail.gmail.com>
+In-Reply-To: <CAA1vfca+kPSsitsZad-bmrd+o1ay60NXZrH2zGLpwN69Px-rtw@mail.gmail.com>
+From:   Sjoerd Langkemper <sjoerd-2021@linuxonly.nl>
+Date:   Fri, 15 Oct 2021 12:45:55 +0200
+X-Gmail-Original-Message-ID: <CAA1vfcYSZWEXsDBD2_0o48EYbU9e9nKVoFdQ0M=fDAOMki3bng@mail.gmail.com>
+Message-ID: <CAA1vfcYSZWEXsDBD2_0o48EYbU9e9nKVoFdQ0M=fDAOMki3bng@mail.gmail.com>
+Subject: Re: Git submodule update remote keeps using previous default branch
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+The submodule is updated according to where `origin/HEAD` points. The
+`origin/HEAD` ref of a repository is not automatically updated when
+the upstream default branch changes. However, this can be forced with
+`git remote set-head origin -a`.
 
-On 14/10/2021 21:22, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
->>> It's great to see these leaks being fixed. I wonder though if it would
->>> be better to change the structure definition so that 'name' and 'path'
->>> are no longer 'const'. That would be a better reflection of the new
->>> regime.[...]
->>
->> I think this is the right thing to do, but I'm not quite sure. There was
->> a thread at it here:
->>
->>      https://lore.kernel.org/git/YUZG0D5ayEWd7MLP@carlos-mbp.lan/
->>
->> Where I chimed in and suggested exactly what you're saying here, but the
->> consensus seemed to go the other way, and if you grep:
->>
->>      git grep -F 'free((char *)'
->>
->> You can see that we use this pattern pretty widely.
-> 
-> Unfortunately, we probably need to make a trade-off and cannot eat
-> the cake and have it at the same time.
-> 
-> If we leave the .members non-const, the destructor may have to cast
-> the constness away.  If it is marked const * const, then we also
-> need to let the constructor do the same.
+I think it is a little bit surprising that `origin/HEAD` does not
+necessarily point to the remote default branch. However, changing the
+default branch should be pretty rare, so I understand this is not
+checked every time.
 
-It's not just in the destructor though, there are several other places 
-where we cast the value to free it suggesting it is not actually const. 
-I'd rather pass a "const struct branch_info*" around to all the callers 
-that are not mutating the struct (we already do that in some places but 
-not all) and change the structure definition to avoid the casts where it 
-is mutated.
+Regards,
 
-> By marking the .members const, we can be sure that the users of the
-> API will not muck with the values once the structure is instanciated
-> and given to them, but the destructor need to cast the constness
-> away.  It may be lessor of two evils, as the need to cast is isolated
-> in the _implementation_ of the API, and casts in the _users_ of the API
-> would stand out more.
+Sjoerd Langkemper
 
-If it was just the destructor that was free()'ing the values I'd agree 
-but the struct gets mutated in other places as well.
-
-Best Wishes
-
-Phillip
+On Fri, Oct 15, 2021 at 10:34 AM Sjoerd Langkemper
+<sjoerd-2021@linuxonly.nl> wrote:
+>
+> I am having trouble with git 2.33.1 checking out the wrong branch for
+> submodules for which the default branch has changed. `git submodule
+> update --remote` seems to remember the branch name to retrieve, while
+> I expect it to use the remote HEAD every time. This causes unexpected
+> behaviour when the remote HEAD starts pointing to another branch.
+>
+> I create a new git project and add a submodule, with `git submodule
+> add git@host:foo/testproject.git`.
+>
+> This checks out the default branch, `master` in this case. `git remote
+> show origin` also shows that `master` is the HEAD branch. Running `git
+> submodule update --remote` updates the submodule to the latest master.
+>
+> Now I change the default branch on the remote (using Gitlab's web
+> interface) to `newmaster`.
+>
+> `git remote show origin` now correctly shows `newmaster` as the
+> remote's HEAD branch. However, running `git submodule update --remote`
+> still updates the submodule to the latest `master` branch, while I
+> expect it to update to the lastest `newmaster` branch.
+>
+> There's no branch specified in .gitmodules or .git/config. I am not
+> sure how git remembers the branch. When switching `testproject` to
+> `newmaster` manually and then running `git submodule update --remote`,
+> it is reset to `master` again.
+>
+> Is this a bug? Can I change the branch somehow?
+>
+> Regards,
+>
+> Sjoerd Langkemper
