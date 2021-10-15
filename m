@@ -2,127 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C7CAC433FE
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7909C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:07:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09B656108B
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:06:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A073D610E8
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241997AbhJORIP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 13:08:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        id S241981AbhJORKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 13:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242026AbhJORIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 13:08:11 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FE9C061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:06:05 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id 80-20020a630753000000b002997713c266so2525614pgh.9
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:06:05 -0700 (PDT)
+        with ESMTP id S237786AbhJORKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 13:10:02 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF28C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:07:55 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id r2so9126965pgl.10
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jq7YX6Cz5PXf1dCXGqIjB4ct95t4Tb6rR3NXxFFQUI8=;
-        b=QS5VKEiWTGQ62AJzoDQf09d7N2r2zHqC7svT5TxUHhEVbgVSH/hIiBFSyuYgxQUd2n
-         fNir/yJROAG4NFvi8dEkEPfTtx3aBW8wyOoFDLXEic9LveQ1QUG5D0JUmRWcMGy6rp7Y
-         hzZp7r6chhhVito6C+tQRiXhg6g/MyX2X0+ULxvMLxO8L96Wp4T0AqsF/JztUTUE1BXR
-         jQv8KUNP5fs54mgIWE3vkhjsVYui6/xG8jcgMRbfbopSi9bCeA1xhZEK/Q4Vm625x0v7
-         pHU/RqeDYDHiBIeTTvWOfTFlVgUO74xUPPJdY2/XXWylCFMliQ7YQIVFg2UxXCY59+FE
-         y4cA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=UcuFvg6VvbAihDylUDq69Rh9e9og+y7PFrfvNE9p91U=;
+        b=DNmC7DCsFd69hvetIyVb+EPmFVPJ9Odk9SjT5vs71yur9UUjFwVRpQmP0fnDnyK2E3
+         p0qY5jdtD4BEyfVztdLu/Y6Neg8/uE/xUN1hxvvW90YN7LdL2DF90NagHAgilPN+ubht
+         NdLeWU6jfa/Kaf4HARjJWltFi+lI/sF1seJ/JJWwLLHy/20PxUw9z6gXNHwT0sGcEPEo
+         br7dxiL32klbQBXpzdsn2vsaFNwMfx2ByTp4Ov8kiZrnCMATsYik+WxOLGduKZJqkNQ9
+         JtiWwDP/MpLSdkbRnt1iG+6Fc8XYulQueBqHgG1bWnjxK4c6TPTheQz77nshFSgQPTuE
+         wEEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jq7YX6Cz5PXf1dCXGqIjB4ct95t4Tb6rR3NXxFFQUI8=;
-        b=z5nWyxnVs5O184PFsK+nU+lokx9jEc4n+RqCZFJwAv+MdQeAYIUyVjiiMJ/HNn/LVV
-         sM6BfwBNm4jP/vRditWQR48ExUyPDttOhPMjI48ZqZYjm5ioWpDkvoMsi/KRMwR6pzID
-         0vWM/xeprKugVHzEOKuVi9b0CvmxmsUfc680AjHe2FNwwP92CechTfixt1hjYQNo05jq
-         wdfkD13t4ldbFxRQxo34jKC42DJS1F41GMhjq9B7q0HBCZDTPJGDZZkrRbM/9TgwyTZU
-         0rq9/TSTpoJfdHdoFwg98fDqmgcj/GpiYu9+IrrF94aleDUmNdh1mVahU/TojrKdvb3r
-         TDkg==
-X-Gm-Message-State: AOAM531cnLxON5XwWQR7FNx4IKzQB2zmuQANi2HNDso6axbBZjL828yk
-        HLN6ie5Nk3opMv11Xl+NcidlJLsojIXUUA==
-X-Google-Smtp-Source: ABdhPJwzYprByV0Ou6Ksb8Qb5zMphNq6Kgz2GawxWMyCRvxEL/bl4/D7hgL2AcZ48EkxgV2V5x4ikcjNtws/Zw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:23d1:: with SMTP id
- md17mr1855439pjb.215.1634317564330; Fri, 15 Oct 2021 10:06:04 -0700 (PDT)
-Date:   Fri, 15 Oct 2021 10:06:01 -0700
-In-Reply-To: <20211015122515.47535-1-bagasdotme@gmail.com>
-Message-Id: <kl6l4k9i1ame.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211015122515.47535-1-bagasdotme@gmail.com>
-Subject: Re: [PATCH v2] Documentation: specify base point when generating
- MyFirstContribution patchset
-From:   Glen Choo <chooglen@google.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Carlo Arenas <carenas@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=UcuFvg6VvbAihDylUDq69Rh9e9og+y7PFrfvNE9p91U=;
+        b=uCtnkfemAWadtCKbOW/OZmDSSLTzV/DSgMuih5Uro3+XM0bN/9TU5Fbt3xbeh7BcXN
+         88qDl5znNq+l3LqX+06xTH3OSrkd492JEz1hp3WPyKveUUlOcSBJ/uRa28NjN/6FqTAr
+         brrXI5r+77Zfk9pDfixHrLOU1g53km+qKD1rQfI/F7wWyC7EHNl7Gl0BbAzLJHd6zb+2
+         d6b+B3LfcRLN6R4SBMLc10AVlGvJQBoHMQrmqkUnxblpLEBbcsTHIMecS9uvjWo+3u3Q
+         uyUbzGv61dC2c/MEn1iIJmVLgAluBBNtRi38sL1AefXlkOI8WgKs8JLJaf78jrsjEiLl
+         H4SQ==
+X-Gm-Message-State: AOAM5324kMfV25629g+HA4RJqDBLNe/qz1g/VYc5xsId1zO1UJ25AY7X
+        GXajsPSKMH/O/GijnRzeCPQJ1Xk4Z43nAw==
+X-Google-Smtp-Source: ABdhPJwdlcNdRAze/pyVeptj3SSnf7LUSRU/drHF4Trcsf4NXx3LTMjTyXRuruX+FbYUJ4C5EvNaYg==
+X-Received: by 2002:a63:cf10:: with SMTP id j16mr10077161pgg.257.1634317675067;
+        Fri, 15 Oct 2021 10:07:55 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cc2f:afb0:ab09:f218])
+        by smtp.gmail.com with ESMTPSA id bp19sm5312785pjb.46.2021.10.15.10.07.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 10:07:54 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 10:07:49 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 08/13] send-email: use 'git hook run' for
+ 'sendemail-validate'
+Message-ID: <YWm1ZdLJqQG8ywiH@google.com>
+References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
+ <patch-v2-08.13-6c4ebd68d56-20211015T093918Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v2-08.13-6c4ebd68d56-20211015T093918Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On Fri, Oct 15, 2021 at 11:43:36AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> Change the "sendmail-validate" hook to be run via the "git hook run"
+> wrapper instead of via a direct invocation.
+> 
+> This is the smallest possibly change to get "send-email" using "git
+> hook run". We still check the hook itself with "-x", and set a
+> "GIT_DIR" variable, both of which are asserted by our tests. We'll
+> need to get rid of this special behavior if we start running N hooks,
+> but for now let's be as close to bug-for-bug compatible as possible.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-> index b20bc8e914..5aaf31cb66 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -937,6 +937,23 @@ but want reviewers to look at what they have so far. You can add this flag with
->  Check and make sure that your patches and cover letter template exist in the
->  directory you specified - you're nearly ready to send out your review!
+Someday we can delete a bunch more in there and on that day we can
+celebrate. But the rationale for making the change minimal LGTM.
+
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+
+> ---
+>  git-send-email.perl   | 22 ++++++++++++++--------
+>  t/t9001-send-email.sh |  4 ++--
+>  2 files changed, 16 insertions(+), 10 deletions(-)
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 5262d88ee32..4c20c0bbb79 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -195,13 +195,13 @@ sub format_2822_time {
+>  my $editor;
 >  
-> +It would help those who review and test your patches to specify on what
-> +commit the patches should be applied to. To do so, use the `--base` option
-> +when running `format-patch`. The option expects hash of the commit the
-> +patchset is based on. Since we base `psuh` on top of `master`, the base
-> +commit hash can be determined by: 
-> +
-> +----
-> +$ git show -s --format="%H" master
-> +----
-> +
-> +The output of command above can be passed to `--base` option. Replace `<base>`
-> +with your own hash:
-> +
-> +----
-> +$ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
-> +----
-> +
->  [[cover-letter]]
->  === Preparing Email
-
-This reads quite awkwardly because a few lines above, we already tell
-the reader exactly what commands to run:
-
-  Sending emails with Git is a two-part process; before you can prepare the emails
-  themselves, you'll need to prepare the patches. Luckily, this is pretty simple:
-
-  ----
-  $ git format-patch --cover-letter -o psuh/ master..psuh
-  ----
-
-If we do accept this suggestion (and I am not sure if we should, because
-as Junio said, there are strong conventions for determining the branch
-point), I think this would be easier to follow if we incorporate it into
-the existing instructions. Something like..
-
-  Sending emails with Git is a two-part process; before you can prepare the emails
-  themselves, you'll need to prepare the patches. Luckily, this is
-  pretty simple. First, we'll get the hash of the commit the patchset is
-  based on. We call this commit the 'base'.
-
-  ----
-  $ git show -s --format="%H" master
-  ----
-
-  Now, we'll generate the patches, passing the hash of the 'base' to the
-  --base option.
-
-  ----
-  $ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
-  ----
-
-  [...describe --base=<base> the way we describe the other options].
+>  sub system_or_msg {
+> -	my ($args, $msg) = @_;
+> +	my ($args, $msg, $cmd_name) = @_;
+>  	system(@$args);
+>  	my $signalled = $? & 127;
+>  	my $exit_code = $? >> 8;
+>  	return unless $signalled or $exit_code;
+>  
+> -	my @sprintf_args = ($args->[0], $exit_code);
+> +	my @sprintf_args = ($cmd_name ? $cmd_name : $args->[0], $exit_code);
+>  	if (defined $msg) {
+>  		# Quiet the 'redundant' warning category, except we
+>  		# need to support down to Perl 5.8, so we can't do a
+> @@ -2039,10 +2039,10 @@ sub validate_patch {
+>  	my ($fn, $xfer_encoding) = @_;
+>  
+>  	if ($repo) {
+> +		my $hook_name = 'sendemail-validate';
+>  		my $hooks_path = $repo->command_oneline('rev-parse', '--git-path', 'hooks');
+>  		require File::Spec;
+> -		my $validate_hook = File::Spec->catfile($hooks_path,
+> -					    'sendemail-validate');
+> +		my $validate_hook = File::Spec->catfile($hooks_path, $hook_name);
+>  		my $hook_error;
+>  		if (-x $validate_hook) {
+>  			require Cwd;
+> @@ -2052,13 +2052,19 @@ sub validate_patch {
+>  			chdir($repo->wc_path() or $repo->repo_path())
+>  				or die("chdir: $!");
+>  			local $ENV{"GIT_DIR"} = $repo->repo_path();
+> -			$hook_error = system_or_msg([$validate_hook, $target]);
+> +			my @cmd = ("git", "hook", "run", "--ignore-missing",
+> +				    $hook_name, "--");
+> +			my @cmd_msg = (@cmd, "<patch>");
+> +			my @cmd_run = (@cmd, $target);
+> +			$hook_error = system_or_msg(\@cmd_run, undef, "@cmd_msg");
+>  			chdir($cwd_save) or die("chdir: $!");
+>  		}
+>  		if ($hook_error) {
+> -			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
+> -				       "%s\n" .
+> -				       "warning: no patches were sent\n"), $fn, $hook_error);
+> +			$hook_error = sprintf(__("fatal: %s: rejected by %s hook\n" .
+> +						 $hook_error . "\n" .
+> +						 "warning: no patches were sent\n"),
+> +					      $fn, $hook_name);
+> +			die $hook_error;
+>  		}
+>  	}
+>  
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index aa0c20499ba..84d0f40d76a 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -539,7 +539,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
+>  	test_path_is_file my-hooks.ran &&
+>  	cat >expect <<-EOF &&
+>  	fatal: longline.patch: rejected by sendemail-validate hook
+> -	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
+> +	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
+>  	warning: no patches were sent
+>  	EOF
+>  	test_cmp expect actual
+> @@ -558,7 +558,7 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
+>  	test_path_is_file my-hooks.ran &&
+>  	cat >expect <<-EOF &&
+>  	fatal: longline.patch: rejected by sendemail-validate hook
+> -	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
+> +	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
+>  	warning: no patches were sent
+>  	EOF
+>  	test_cmp expect actual
+> -- 
+> 2.33.1.1338.g20da966911a
+> 
