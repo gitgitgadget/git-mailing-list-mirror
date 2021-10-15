@@ -2,176 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F76C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42E0FC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E87B61181
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:24:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 190EC604DB
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241276AbhJOQ0z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:26:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54358 "EHLO
+        id S241277AbhJOQ12 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 12:27:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241257AbhJOQ0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 12:26:53 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5996BC061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:24:46 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id i5so470030pla.5
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:24:46 -0700 (PDT)
+        with ESMTP id S241257AbhJOQ1Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 12:27:16 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07988C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:10 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d9so1594895pfl.6
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=/L6YEWCMYSdQZo/jqH0WJzino/bOYMGM2PlQrSHJDjk=;
-        b=Z0CVyGvtmYB6nR3BG/3BGJDNca35gQ8Jrrk6LsM2DNXOpVHx1g0WzQSEcdMEBRymvf
-         jIyNYTqHwK30l/ic/xtgIbpjUHw8C8dCotOfUuIgblmmSXRU5c39evilrm6oi6eXw+V+
-         TsDAHfVMiya1mJ0+TVPp9xCxhkwd41zcDngYXyQ0h0vGwx9o68uiuz+o//H+374U3Ivk
-         6+DS4xagekUMPT5K5v08d5xT8LOaNlfdz8UHv0P8DNIhPwf7pHcoOz3JPj72nyxTdwGq
-         Oz9NT82V3V0n49NJuBdISfHFondTwyQb074iJrglSwJU25pwEJyb3lVNwiSsoFa5mdxC
-         D08Q==
+        bh=OCKr9XBN6fIc9F6IWgiUYddE52S+jfpTCHYWH2P6mec=;
+        b=mbLE7RLeUqAiv8PCp5x587QLA0b2PDlW9fq9h3o998pUu08EUzGd13e1mfZELIR7Sf
+         fEThWh04S21jzuRYEt+qqqOwUzf8VDjEVWuQ2dN/ugkwJFixXPQiTVuQIQXkeYg8jUX1
+         RfJ0Wc/vl4mQgRd1NlOcj/0g2a5BuBdfc73CIA8Uq1Zq1kEZV4KGd2XsviqkJZTQ3EjL
+         8Wv5vTBWKdpbnUBswzYVUwdyN0KimJhwjsSlmWkv7na4wUQOMg663EN91T2syWp1HoSd
+         k/pZ7wHNWzC5d2mDJ8LnVoYSLcpcVhqS6uaPmgPFSqimDpdGZ9U3n+nB8B4xYC3FDKNE
+         6Sag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=/L6YEWCMYSdQZo/jqH0WJzino/bOYMGM2PlQrSHJDjk=;
-        b=krdR9T6zGSRCM+wrAXMst5oZMh3xxljpfZKUGgy/LL7YoxbauQykSARfobD2fR4+jE
-         bGSS2lbJNUGqUSohARu3/OpdvUX/udc5pblS6HUiae88CrG97o02U9R24zkWevgLCV11
-         NhIjDUwm7gc4sGIvGTYJTX1blj6uZRJXyv58Z21ojpdfmowQxMpusAi1l+rbP7X49Lk6
-         KwN13FbExLYqK5xQbKB8/7BDAX+j2UF7IsMYeh1QLS5IbI43s8HSLSk3OHenhVCRpKXM
-         RoD/fDJ2FaiSSCZkAhplewk49b+P5RG2lLBIvnyRt5j8TMVsE0DGnpFV4OyQZ7cq9k7K
-         N3Ww==
-X-Gm-Message-State: AOAM5327FWaIKG4CvLFiCmp30WkXm4aq+GE4NI2RQBRIK+x6lGOFFV+Y
-        85iRhTwvSQSudjj53uF7o2Mwvw==
-X-Google-Smtp-Source: ABdhPJxk4gp7pzk2vdsIKxIVk+woV37CSOdmWjvoP3M/6a704cGAvHrGRvhhGFBxGygfXd0wm4T6XQ==
-X-Received: by 2002:a17:90a:c594:: with SMTP id l20mr28055182pjt.223.1634315085674;
-        Fri, 15 Oct 2021 09:24:45 -0700 (PDT)
+        bh=OCKr9XBN6fIc9F6IWgiUYddE52S+jfpTCHYWH2P6mec=;
+        b=HE4PxL4aDJKcImZj1yGDk4WHz9Etuvuuw2qgxDx0gr2jLvY8V8yBA7Khed5ACTRm/P
+         Jwu0lBKIUzfncYlF8GqiLSpNhfs69zGH+huWEUUjCzqyJ+NbyDkVz6emc/bG3CsBJjmP
+         FQQIUqYxyp7l74WWo2BDs/DkGfVh6w1O6p0stx2reABi4GumSRGPeNLVntw5h9+slCOc
+         9NrOPqtOUzfwbFu+gERj1lUHMUPmhRZatLUVD/izJMS6yAeceTjbitGvPA7s27G9O7X2
+         tnRfnQD2TpbJyIHnjhWLO+z+D5uPraD9W0SibkpsSKczRWurfmbPFyLcDpdTwNQlrcPo
+         X/Ag==
+X-Gm-Message-State: AOAM532D5p0NlIyjDGl3gzkI1ZQs5eSqTmeH3UfoFJ2rrbi+xAgJfTae
+        1a8tdVYkxKzJ5l+WM5bhX9TJZK2elT3svg==
+X-Google-Smtp-Source: ABdhPJyE1MQ13ZNfdaocSwY43q1657kAaq+ds5eER1oyecLtHeiDxMaTAhYQhV/rlUFQkE5q06721Q==
+X-Received: by 2002:a63:35c6:: with SMTP id c189mr2960445pga.22.1634315109339;
+        Fri, 15 Oct 2021 09:25:09 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cc2f:afb0:ab09:f218])
-        by smtp.gmail.com with ESMTPSA id h13sm4870675pgf.14.2021.10.15.09.24.44
+        by smtp.gmail.com with ESMTPSA id q12sm5295298pgv.26.2021.10.15.09.25.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 09:24:45 -0700 (PDT)
-Date:   Fri, 15 Oct 2021 09:24:40 -0700
+        Fri, 15 Oct 2021 09:25:08 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 09:25:04 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2 02/13] gc: use hook library for pre-auto-gc hook
-Message-ID: <YWmrSAGTwM0Of/oZ@google.com>
+Subject: Re: [PATCH v2 03/13] rebase: convert pre-rebase to use hook.h
+Message-ID: <YWmrYE65qWjStVzf@google.com>
 References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
- <patch-v2-02.13-e3dc0aed81b-20211015T093918Z-avarab@gmail.com>
+ <patch-v2-03.13-6227a1e644d-20211015T093918Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-02.13-e3dc0aed81b-20211015T093918Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-03.13-6227a1e644d-20211015T093918Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 12, 2021 at 03:30:27PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Oct 12, 2021 at 03:30:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
 > 
-> Move the pre-auto-gc hook away from run-command.h to and over to the
+> Move the pre-rebase hook away from run-command.h to and over to the
 > new hook.h library.
-> 
-> To do this introduce a simple run_hooks_oneshot() wrapper, we'll be
-> using it extensively for these simple cases of wanting to run a single
-> hook under a given name, and having it free the memory we allocate for
-> us.
 > 
 > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+
 > ---
->  builtin/gc.c |  3 ++-
->  hook.c       | 20 ++++++++++++++++++++
->  hook.h       | 13 +++++++++++++
->  3 files changed, 35 insertions(+), 1 deletion(-)
+>  builtin/rebase.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 6b3de3dd514..95939e77f53 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -32,6 +32,7 @@
->  #include "remote.h"
->  #include "object-store.h"
->  #include "exec-cmd.h"
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8c6393f6d78..9a44939d662 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -28,6 +28,7 @@
+>  #include "sequencer.h"
+>  #include "rebase-interactive.h"
+>  #include "reset.h"
 > +#include "hook.h"
 >  
->  #define FAILED_RUN "failed to run %s"
+>  #define DEFAULT_REFLOG_ACTION "rebase"
 >  
-> @@ -394,7 +395,7 @@ static int need_to_gc(void)
->  	else
->  		return 0;
+> @@ -1305,6 +1306,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	char *squash_onto_name = NULL;
+>  	int reschedule_failed_exec = -1;
+>  	int allow_preemptive_ff = 1;
+> +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
+>  	struct option builtin_rebase_options[] = {
+>  		OPT_STRING(0, "onto", &options.onto_name,
+>  			   N_("revision"),
+> @@ -2021,9 +2023,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	}
 >  
-> -	if (run_hook_le(NULL, "pre-auto-gc", NULL))
-> +	if (run_hooks_oneshot("pre-auto-gc", NULL))
-
-I like that the oneshot gives us such a simple replacement for run_hooks_le.
-
->  		return 0;
->  	return 1;
->  }
-> diff --git a/hook.c b/hook.c
-> index 240270db64e..bfdc79e2f1a 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -141,3 +141,23 @@ int run_hooks(const char *hook_name, const char *hook_path,
+>  	/* If a hook exists, give it a chance to interrupt*/
+> +	strvec_push(&hook_opt.args, options.upstream_arg);
+> +	if (argc)
+> +		strvec_push(&hook_opt.args, argv[0]);
+>  	if (!ok_to_skip_pre_rebase &&
+> -	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
+> -			argc ? argv[0] : NULL, NULL))
+> +	    run_hooks_oneshot("pre-rebase", &hook_opt))
+>  		die(_("The pre-rebase hook refused to rebase."));
 >  
->  	return cb_data.rc;
->  }
-> +
-> +int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options)
-> +{
-> +	const char *hook_path;
-> +	struct run_hooks_opt hook_opt_scratch = RUN_HOOKS_OPT_INIT;
-> +	int ret = 0;
-> +
-> +	if (!options)
-> +		options = &hook_opt_scratch;
-> +
-> +	hook_path = find_hook(hook_name);
-> +	if (!hook_path)
-> +		goto cleanup;
-> +
-> +	ret = run_hooks(hook_name, hook_path, options);
-> +cleanup:
-> +	run_hooks_opt_clear(options);
-> +
-> +	return ret;
-> +}
-
-Reasonable enough - lookup, run, cleanup. Thanks.
-
-> diff --git a/hook.h b/hook.h
-> index 111c5cf9296..a2b8d4fc6bd 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -49,7 +49,20 @@ void run_hooks_opt_clear(struct run_hooks_opt *o);
->  /**
->   * Takes an already resolved hook found via find_hook() and runs
->   * it. Does not call run_hooks_opt_clear() for you.
-> + *
-> + * See run_hooks_oneshot() for the simpler one-shot API.
->   */
->  int run_hooks(const char *hookname, const char *hook_path,
->  	      struct run_hooks_opt *options);
-> +
-> +/**
-> + * Calls find_hook() on your "hook_name" and runs the hooks (if any)
-> + * with run_hooks().
-> + *
-> + * If "options" is provided calls run_hooks_opt_clear() on it for
-> + * you. If "options" is NULL the default options from
-> + * RUN_HOOKS_OPT_INIT will be used.
-> + */
-> +int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options);
-> +
->  #endif
+>  	if (options.flags & REBASE_DIFFSTAT) {
 > -- 
 > 2.33.0.1567.g7b23ce7ed9e
 > 
-
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
