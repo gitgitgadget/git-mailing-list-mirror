@@ -2,236 +2,406 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C4F6C433FE
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B92DC433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 15:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14E3B611C1
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E7A361056
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 15:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239341AbhJONRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 09:17:30 -0400
-Received: from mail-ve1eur03hn2213.outbound.protection.outlook.com ([52.100.16.213]:36958
-        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239328AbhJONR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 09:17:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S0I0xbaoMggzfFZN0lM0vS/FfiMNh/uUk0UlwQWi+X5/Qt9jUZVFh0yUOL2DmhP6fp9e2x+mBvnJwp2BVUrDb79kP2yhkPWTLRikN3E/B2uq4rDZR+IW4xt2cMcdjT/Y6QOf0ZqFxv9CJUrURJsBNpSDJFzlJ1VIpYuk8UpSzjr2y6gh+8Pf897snkWyBocCXfQCOX1epkYVAfTvHaxcI1Gmm/ZrKf8bNzcVnFmhhgPLvXkwulUcAA+VUgZ7l/rFHC0FJeHgu0v1vYpmuO1Ap9LMy2MU9aCSF7GnuM/Hjp8aSqHYGR3HyqC8Z3/ZbgdIOzW7IAi2zQM2GiWiXYGrWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2yyyW8PwfYWCQQcJLU/aPOKbsYOMcmQywVzmyalJaSI=;
- b=VX78k7Y1rnHGFJ4MLS0J2CotndKuDUOvZv+qtxpxmVGunVNXpIiL48Idk3R1JWddO2ra6POCCy2GPbrxiDJOo6kiWbD1NSINdYfDJgCwR9h3sJNu9odyd87ePM8mm1Cau5vF4oa+QQvwuhyu2dOQ3trDH6gXBhxC0UMZnbiYlUR5CIlywbBQeQKER9Hp+DlGBIoL3/ODujc0iY8eqdRsc1ALRSp5Qm2Yy1JwYcNMPack1vdiwhSurTcp5HwawHEH9iLTtY3DKsPdcesuuVvwcPmQOyWGwIHq92U3xaSFbhW5MSDIwtb6mt1CEi1O9K3424B6YLiWSusWWWq54bkalQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
+        id S240759AbhJOPGZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 11:06:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234241AbhJOPGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 11:06:25 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82BDAC061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 08:04:18 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id j21so43499384lfe.0
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 08:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2yyyW8PwfYWCQQcJLU/aPOKbsYOMcmQywVzmyalJaSI=;
- b=XNPiAae3YVBhvCc5VoRS0T1XK5oDElW0dz/1FRTaFmxb5PxnViuiiXfBwF1SRnZ1eHUIirH31bIOJAr1LPu1Qkn0o/MZ/po7gZoJ6oPRB1Mrujx1F9Y05PuUU5qLpdeRxRnt01h3OXnWLccr8FvNPGhYPMlpWtEEEVvyMSkuuGs=
-Authentication-Results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4046.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a3::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16; Fri, 15 Oct
- 2021 13:15:13 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::49a2:88ed:be81:d939%6]) with mapi id 15.20.4587.026; Fri, 15 Oct 2021
- 13:15:13 +0000
-From:   Fabian Stelzer <fs@gigacodes.de>
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WyJL9gBmTRco9kopOCRhN0tx7dMJbxokyE2WdQY2XFI=;
+        b=OA7k6Ruj4e/m311gAi8roD0F3KUUjARrEYP6mRKpXDxpcek5SgSz6aCIYq4grUZZ+Q
+         3CbvRnhzCbaxDablcyzJELO3MHooNEisjlOcCd1K7M95dhnTTppmBYde3X4+9dgPL/98
+         /j52VPTRv794c8aesGnRydiEhkq+9dHdXyhSmhpWLwIf2yg4svE29sClyCUQmCMmSvXC
+         Dev5gsLgbE3UEvd8K+Ono9km8p5Qwggd4G2qTHbcODEAYpzqdb6UMHFrn/X/jXYXaMl6
+         d30/XAL0R8z/nVyQD+ctaiclS045r8w49gJierpaLD15gNMk2JC7hVtpMHsa7P/sH0Bi
+         P0wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=WyJL9gBmTRco9kopOCRhN0tx7dMJbxokyE2WdQY2XFI=;
+        b=drmTAnJ6UXQEbaG3AaRujz+En3Vbxi5BZu8HkgGCxDqFtbw236mr4WxwzFcMXqhF2I
+         1pmyC11GjFLx5jq60HhuW/70ZGqZPVkv7Mvg2d6wvMsrXXaA6/p8lSXdHrXLxP5G0ZZU
+         acwmONysQodiJDNpgttuFUbIRlzPNHNyWvwCUwjtkqfICqzPJ+19DtcEnPUlSyDebDl1
+         fOjU9S5YE78dE8YQ6koDUTmfcZjOWaONpddR8QS8LKrNlYI27JXRst1lPE9juvg8sHje
+         DcIfj1R+A7DUSM0s6TNRNsoCJZgIUMrXod1Jk7JuEF4UKEH+iSsvaX72Qpeuj11l/EcK
+         HgzA==
+X-Gm-Message-State: AOAM531GSBbgzW7upguI6qtD2zOU1teL8E6n8t/FW7dkcCM4lLWo0F4b
+        dLsjqryuXEHw+9Cu/JDXDvotk7LTyWY=
+X-Google-Smtp-Source: ABdhPJxQXz3iS7z/iXVKTfMlV6YlKR1qixdbN0KmelDMvahlypDLBaz+kpw7q9LqjfOBqQI/R6UlJw==
+X-Received: by 2002:a2e:a415:: with SMTP id p21mr12944220ljn.384.1634310255330;
+        Fri, 15 Oct 2021 08:04:15 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id o9sm622143ljh.9.2021.10.15.08.04.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 08:04:14 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Fabian Stelzer <fs@gigacodes.de>
-Subject: [RFC PATCH 5/6] ssh signing: verify-tag/check_signature with tag date
-Date:   Fri, 15 Oct 2021 15:15:06 +0200
-Message-Id: <20211015131507.1773153-6-fs@gigacodes.de>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211015131507.1773153-1-fs@gigacodes.de>
-References: <20211015131507.1773153-1-fs@gigacodes.de>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AS9PR06CA0351.eurprd06.prod.outlook.com
- (2603:10a6:20b:466::17) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2] stash: implement '--staged' option for 'push' and 'save'
+References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
+Date:   Fri, 15 Oct 2021 18:04:13 +0300
+In-Reply-To: <87lf2zz59w.fsf@osv.gnss.ru> (Sergey Organov's message of "Mon,
+        11 Oct 2021 23:16:11 +0300")
+Message-ID: <87fst2gwia.fsf_-_@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AS9PR06CA0351.eurprd06.prod.outlook.com (2603:10a6:20b:466::17) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.15 via Frontend Transport; Fri, 15 Oct 2021 13:15:13 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: caa93a68-dca3-4235-a438-08d98fddd289
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4046:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4046E210F0549C1831C0697DB6B99@PR3PR10MB4046.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:82;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?AvOlfm6J3npPqZXnzABzwODC5yzp5An5jkIki7+AXbSgNjWKPdOdxaeklCow?=
- =?us-ascii?Q?OBTH6w9k44jfNpNi7jbJpIuZFyE9z4seyWwFRSBmqsFWgCALGMi6w5bNVkUX?=
- =?us-ascii?Q?piHNg0eclQcCVznXMkbe/xGS5DSinhrmRbffwOaBeOuxMXJ39MYTK/uQnfIE?=
- =?us-ascii?Q?ItUcZEiZJ4YE11aQi24y8Y+JSOyOeOTNQCdgnlo4L9NQeHuNaFCZtra4JwQu?=
- =?us-ascii?Q?zmEZ7As+bDtX/WWXIuYnckm/7uMLFg9XkUUHjWvbTyrmxELN1o58NtF8RjCA?=
- =?us-ascii?Q?nWqiLNyNc9j7nT1YGtAdansfLMlacP/SEywHTqgfcm15JwEsCKWywmeaGK0t?=
- =?us-ascii?Q?biK8n+eEyfl0XcKRPLn0bny/8r3MamCWT5+9vMhmZGIfdMW7CvNgPZgLx/dH?=
- =?us-ascii?Q?zpJb0KqnWMYBEfrwHHLqleISjKB1Z2vU/PlYTsiNOp4p3CaTCZDjmed4JRNf?=
- =?us-ascii?Q?g82cWvtitaUSgRPJW/naHZMAAzLE4QQQuK8pluntxlLHQBNcxpGMF2WeyRJi?=
- =?us-ascii?Q?AsdMwGdVskEaWg4z8GQjGYrHPcSpU54MPI1uKEcPFCPUW8FEg7rPXPTqGFkC?=
- =?us-ascii?Q?6icB4f2FPwCeQTQxUkl+cWKKe5+MgQ0j85yWPUv9EwM1rE6vTqmK0PGMSuty?=
- =?us-ascii?Q?CPf7GZ09dofo/S1tJfIZ8a3Z4vDyfogl6XWewqS8T3A/E0ZxXg/JNmRnXISb?=
- =?us-ascii?Q?jLUsL1hQOG4xxMvAAubpCrNysxxTKaucWULMfRSMZf2C0tD7BheZ0cVHCcCY?=
- =?us-ascii?Q?6UyE/7mbRwnBHGact1CPMkDO6kdUEiepwP3+O+GOLedywuiEcxaBIJLzJNVk?=
- =?us-ascii?Q?KefAOtLeIsmkMTFwqS68VZm7u45yP1HB59mL1FRCPsyyUxrnCob0h4etREbo?=
- =?us-ascii?Q?7bxi34ap0cLaVHGf+DnjerzY3SVndluwmuJPxl+1kA1m60S/lTscMF22b2L0?=
- =?us-ascii?Q?nvb3UolP9bWI6H8DRy3SWvCbe7r5NSrkydW9hCID1l9oZ2nrF+Lw2Qh6NbrQ?=
- =?us-ascii?Q?EVxdV+9zVgLUfJaemTqoLF6slA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(366004)(136003)(376002)(39840400004)(396003)(346002)(107886003)(36756003)(2906002)(1076003)(83380400001)(6916009)(316002)(4326008)(38100700002)(6496006)(8676002)(2616005)(5660300002)(66556008)(66476007)(66946007)(15650500001)(86362001)(8936002)(186003)(52116002)(6666004)(508600001)(6486002)(23200700001);DIR:OUT;SFP:1501;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2DKHSeedZYABVR1qSQJVKA0+2iz/R/GP88vAom+uCXqFIRwvLwhBKvCSXuPW?=
- =?us-ascii?Q?s2aqhMTSPB0tj6L+EFIC7cWwfKACEJjvyq3E+gHeRhq+xMDjA+ZwIFezLuZC?=
- =?us-ascii?Q?6x9uMzVy3Yj/+5k2AG4JR+n1RcfjHxiompKpIVaynKHNaD2vf/Zm6FApWTnz?=
- =?us-ascii?Q?W670JWfc3gY0lyDcdjUieZJlNvGkx+LWnM61DrUK0mqog7a2RTk7UBwudTOM?=
- =?us-ascii?Q?lBYmNJjZd5JmKqklJjH86mgXa5CRMWnLoN2gKHhCypACVQc7XLxI7PnQ4xTj?=
- =?us-ascii?Q?lIf+2dbYwCLpDP0J0niC1xJZlsqqSBX1W2Ts2GK5+gPuX/T/j86tl0e5572h?=
- =?us-ascii?Q?FkZGnoUDJ7NsjhmSQoenvxPwlH4pgbf7VTe9Ak44m/5JUwqlxhk/t8RL1Njm?=
- =?us-ascii?Q?E3LI5Yypwl3rRnpwkGlqyb3603WcxQFpOZ+skm/wAr0fS30ESQ+TcLQO7Xln?=
- =?us-ascii?Q?xYNXAz+5YMeGYB1Kf78+ZCUGor6/H4K7L8KyrddzN8OOGCaXHJwKisQuSjog?=
- =?us-ascii?Q?fh5Zt5Z5/8VRwd3UnyFuEFkJ+O13M54XwdfWk1BMGm3HOorThKlHO2m/eZW6?=
- =?us-ascii?Q?SrExpf/MVZm4ciOTExukzkLMmtoIcMCHfrOIYmgpEIfzR7bOQvHnLoRdo0cp?=
- =?us-ascii?Q?QWOFdOVc6m2z04ZUpx9CfnSUEzfTAIfCCW2Ek/NzWMBZAi3xxTyZsuh3B5LJ?=
- =?us-ascii?Q?H0nmWA7tA+6y9RjwuxG/QWbg62S8lns3jo+TJnkyHVn11ILvPNz7BTRcHsh8?=
- =?us-ascii?Q?PHe+XF7dEfZ4QfggfCIY9/mEaFJ1mDqjBuMm5wetT07wD5EbH8xCUaDN2Udt?=
- =?us-ascii?Q?hp2vv2SSh2GZ9X7QMHViqO1WcNoOCRhkwl8MdCbJNzBSoHu5jVc1o/X5vInL?=
- =?us-ascii?Q?GgVCaYZdGOVpBaEVpXPTGA2kLyP4ePFuHLfuAyzKFJJmRJ0LFvEdyomqFVEJ?=
- =?us-ascii?Q?AbSYr9NgMnqbqnvRBOr8L/duvFlTvKKyWi0rpFwrMZ/GBPRs6HJ9dVzISDeR?=
- =?us-ascii?Q?FbsFAZRJN+1+snQXR1mb2+XMqLnDyt/ufilsdzvhBX6ednVJbQ8sqE/y14fu?=
- =?us-ascii?Q?fYHCD2RB8dddQzWZtaF+4ZXyXOeaG+6D2TEJ4GLCJ+ukIHoOz+V5xv9BQG1P?=
- =?us-ascii?Q?oviTT+ehv0eYnBkOR7coF4/UnanqLjKnlZsd4N0DNAOrEEy+3kHdIHlWECN8?=
- =?us-ascii?Q?U54pOAxZy7IAcTBYVYRy8wNKBsn/CWFKpacaIkcc6DFzGzKbNnHif4bcExzB?=
- =?us-ascii?Q?0vuYe4Juo8Z9oQ35IYIawXSfw/ie7qbU+OcjvPhIVuEtvhQAmX8/OrkQB/dk?=
- =?us-ascii?Q?V7uihw7v0A9ZzitDE3/Dm3gAoKmaT5IwaftU1qLw8XjZLu3pi7BwWp425yNQ?=
- =?us-ascii?Q?fC2Jwp0KmGpcu4kqkEoUuiVjfCim?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: caa93a68-dca3-4235-a438-08d98fddd289
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2021 13:15:13.4019
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ClCQyrzfCaLbUNjZXTOIiNmb3EBSXBx/9w863TJ1E7dVsUnRVKAUUtLOH1Kh8M4yqYeh7pI2hPkEfiF/G5Ttc50oza2xtTvjaIizWE+e2eI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4046
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Passes tag date and tagger ident to to check_signature.
-Implements the same tests as for verify-commit.
 
-Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+Stash only the changes that are staged.
+
+This mode allows to easily stash-out for later reuse some changes
+unrelated to the current work in progress.
+
+Unlike 'stash push --patch', --staged supports use of any tool to
+select the changes to stash-out, including, but not limited to 'git
+add --interactive'.
+
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- t/t7031-verify-tag-signed-ssh.sh | 42 ++++++++++++++++++++++++++++++++
- tag.c                            | 12 +++++++--
- 2 files changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7031-verify-tag-signed-ssh.sh b/t/t7031-verify-tag-signed-ssh.sh
-index 06c9dd6c93..1cb36b9ab8 100755
---- a/t/t7031-verify-tag-signed-ssh.sh
-+++ b/t/t7031-verify-tag-signed-ssh.sh
-@@ -48,6 +48,23 @@ test_expect_success GPGSSH 'create signed tags ssh' '
- 	git tag -u"${GPGSSH_KEY_UNTRUSTED}" -m eighth eighth-signed-alt
- '
+This operation that is essentially just a 'git commit', but to the stash
+rather than to the current branch, is somehow missed, complicating the
+task that is otherwise simple and natural. For example, see discussions
+here:
+
+https://stackoverflow.com/questions/14759748/stashing-only-staged-changes-in-git-is-it-possible
+
+Changes in v2:
+
+  * Fixed English grammar in commit message
+
+  * Fixed copy-paste error in help description
+
+Changes in v1:
+
+  * Implement separate stash_staged() instead of re-using and changing
+    stash_patch()
+
+  * Add test
+
+  * Minor documentation cleanup
+
+ Documentation/git-stash.txt | 34 ++++++++++++++--
+ builtin/stash.c             | 80 ++++++++++++++++++++++++++++++++-----
+ t/t3903-stash.sh            | 11 +++++
+ 3 files changed, 113 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index be6084ccefbe..6e15f4752576 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 'git stash' drop [-q|--quiet] [<stash>]
+ 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+-'git stash' [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
++'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
+ 	     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
+@@ -47,7 +47,7 @@ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
+ COMMANDS
+ --------
  
-+test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed tags with keys having defined lifetimes' '
-+	test_when_finished "test_unconfig commit.gpgsign" &&
-+	test_config gpg.format ssh &&
-+
-+	echo expired >file && test_tick && git commit -a -m expired -S"${GPGSSH_KEY_EXPIRED}" &&
-+	git tag -s -u "${GPGSSH_KEY_EXPIRED}" -m expired-signed expired-signed &&
-+
-+	echo notyetvalid >file && test_tick && git commit -a -m notyetvalid -S"${GPGSSH_KEY_NOTYETVALID}" &&
-+	git tag -s -u "${GPGSSH_KEY_NOTYETVALID}" -m notyetvalid-signed notyetvalid-signed &&
-+
-+	echo timeboxedvalid >file && test_tick && git commit -a -m timeboxedvalid -S"${GPGSSH_KEY_TIMEBOXEDVALID}" &&
-+	git tag -s -u "${GPGSSH_KEY_TIMEBOXEDVALID}" -m timeboxedvalid-signed timeboxedvalid-signed &&
-+
-+	echo timeboxedinvalid >file && test_tick && git commit -a -m timeboxedinvalid -S"${GPGSSH_KEY_TIMEBOXEDINVALID}" &&
-+	git tag -s -u "${GPGSSH_KEY_TIMEBOXEDINVALID}" -m timeboxedinvalid-signed timeboxedinvalid-signed
-+'
-+
- test_expect_success GPGSSH 'verify and show ssh signatures' '
- 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	(
-@@ -80,6 +97,31 @@ test_expect_success GPGSSH 'verify and show ssh signatures' '
- 	)
- '
+-push [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
++push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
  
-+test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-tag exits failure on expired signature key' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_must_fail git verify-tag expired-signed 2>actual &&
-+	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-tag exits failure on not yet valid signature key' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_must_fail git verify-tag notyetvalid-signed 2>actual &&
-+	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-tag succeeds with tag date and key validity matching' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	git verify-tag timeboxedvalid-signed 2>actual &&
-+	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-+	! grep "${GPGSSH_BAD_SIGNATURE}" actual
-+'
-+
-+test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-tag failes with tag date outside of key validity' '
-+	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	test_must_fail git verify-tag timeboxedinvalid-signed 2>actual &&
-+	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
- test_expect_success GPGSSH 'detect fudged ssh signature' '
- 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	git cat-file tag seventh-signed >raw &&
-diff --git a/tag.c b/tag.c
-index 3459a0867c..1868e6b51d 100644
---- a/tag.c
-+++ b/tag.c
-@@ -16,6 +16,8 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 	struct strbuf payload = STRBUF_INIT;
- 	struct strbuf signature = STRBUF_INIT;
- 	int ret;
-+	struct strbuf payload_signer = STRBUF_INIT;
-+	timestamp_t payload_timestamp = 0;
+ 	Save your local modifications to a new 'stash entry' and roll them
+ 	back to HEAD (in the working tree and in the index).
+@@ -60,7 +60,7 @@ subcommand from making an unwanted stash entry.  The two exceptions to this
+ are `stash -p` which acts as alias for `stash push -p` and pathspec elements,
+ which are allowed after a double hyphen `--` for disambiguation.
  
- 	memset(&sigc, 0, sizeof(sigc));
+-save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
++save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
  
-@@ -25,8 +27,13 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 		return error("no signature found");
- 	}
+ 	This option is deprecated in favour of 'git stash push'.  It
+ 	differs from "stash push" in that it cannot take pathspec.
+@@ -205,6 +205,16 @@ to learn how to operate the `--patch` mode.
+ The `--patch` option implies `--keep-index`.  You can use
+ `--no-keep-index` to override this.
  
--	ret = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
--				signature.len, &sigc);
-+	if (parse_signed_buffer_metadata(payload.buf, "tagger", &payload_timestamp,
-+					 &payload_signer))
-+		return error(_("failed to parse timestamp and signer info from payload"));
++-S::
++--staged::
++	This option is only valid for `push` and `save` commands.
+++
++Stash only the changes that are currently staged. This is similar to
++basic `git commit` except the state is committed to the stash instead
++of current branch.
+++
++The `--patch` option has priority over this one.
 +
-+	ret = check_signature(payload.buf, payload.len, payload_timestamp,
-+			      &payload_signer, signature.buf, signature.len,
-+			      &sigc);
+ --pathspec-from-file=<file>::
+ 	This option is only valid for `push` command.
+ +
+@@ -341,6 +351,24 @@ $ edit/build/test remaining parts
+ $ git commit foo -m 'Remaining parts'
+ ----------------------------------------------------------------
  
- 	if (!(flags & GPG_VERIFY_OMIT_STATUS))
- 		print_signature_buffer(&sigc, flags);
-@@ -34,6 +41,7 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 	signature_check_clear(&sigc);
- 	strbuf_release(&payload);
- 	strbuf_release(&signature);
-+	strbuf_release(&payload_signer);
++Saving unrelated changes for future use::
++
++When you are in the middle of massive changes and you find some
++unrelated issue that you don't want to forget to fix, you can do the
++change(s), stage them, and use `git stash push --staged` to stash them
++out for future use. This is similar to committing the staged changes,
++only the commit ends-up being in the stash and not on the current branch.
+++
++----------------------------------------------------------------
++# ... hack hack hack ...
++$ git add --patch foo           # add unrelated changes to the index
++$ git stash push --staged       # save these changes to the stash
++# ... hack hack hack, finish curent changes ...
++$ git commit -m 'Massive'       # commit fully tested changes
++$ git switch fixup-branch       # switch to another branch
++$ git stash pop                 # to finish work on the saved changes
++----------------------------------------------------------------
++
+ Recovering stash entries that were cleared/dropped erroneously::
+ 
+ If you mistakenly drop or clear stash entries, they cannot be recovered
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 8f42360ca913..cdc142f16602 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -27,11 +27,11 @@ static const char * const git_stash_usage[] = {
+ 	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+ 	N_("git stash branch <branchname> [<stash>]"),
+ 	"git stash clear",
+-	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+ 	   "          [--] [<pathspec>...]]"),
+-	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
+ 	NULL
+ };
+@@ -1116,6 +1116,38 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
  	return ret;
  }
  
++static int stash_staged(struct stash_info *info, const struct pathspec *ps,
++		       struct strbuf *out_patch, int quiet)
++{
++	int ret = 0;
++	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
++	struct index_state istate = { NULL };
++
++	if (write_index_as_tree(&info->w_tree, &istate, the_repository->index_file,
++				0, NULL)) {
++		ret = -1;
++		goto done;
++	}
++
++	cp_diff_tree.git_cmd = 1;
++	strvec_pushl(&cp_diff_tree.args, "diff-tree", "-p", "-U1", "HEAD",
++		     oid_to_hex(&info->w_tree), "--", NULL);
++	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
++		ret = -1;
++		goto done;
++	}
++
++	if (!out_patch->len) {
++		if (!quiet)
++			fprintf_ln(stderr, _("No changes selected"));
++		ret = 1;
++	}
++
++done:
++	discard_index(&istate);
++	return ret;
++}
++
+ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		       struct strbuf *out_patch, int quiet)
+ {
+@@ -1242,7 +1274,7 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ }
+ 
+ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_buf,
+-			   int include_untracked, int patch_mode,
++			   int include_untracked, int patch_mode, int only_staged,
+ 			   struct stash_info *info, struct strbuf *patch,
+ 			   int quiet)
+ {
+@@ -1321,6 +1353,16 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		} else if (ret > 0) {
+ 			goto done;
+ 		}
++	} else if (only_staged) {
++		ret = stash_staged(info, ps, patch, quiet);
++		if (ret < 0) {
++			if (!quiet)
++				fprintf_ln(stderr, _("Cannot save the current "
++						     "staged state"));
++			goto done;
++		} else if (ret > 0) {
++			goto done;
++		}
+ 	} else {
+ 		if (stash_working_tree(info, ps)) {
+ 			if (!quiet)
+@@ -1379,7 +1421,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ 	if (!check_changes_tracked_files(&ps))
+ 		return 0;
+ 
+-	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, &info,
++	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, 0, &info,
+ 			      NULL, 0);
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
+@@ -1389,7 +1431,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ }
+ 
+ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
+-			 int keep_index, int patch_mode, int include_untracked)
++			 int keep_index, int patch_mode, int include_untracked, int only_staged)
+ {
+ 	int ret = 0;
+ 	struct stash_info info;
+@@ -1407,6 +1449,17 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 		goto done;
+ 	}
+ 
++	/* --patch overrides --staged */
++	if (patch_mode)
++		only_staged = 0;
++
++	if (only_staged && include_untracked) {
++		fprintf_ln(stderr, _("Can't use --staged and --include-untracked"
++				     " or --all at the same time"));
++		ret = -1;
++		goto done;
++	}
++
+ 	read_cache_preload(NULL);
+ 	if (!include_untracked && ps->nr) {
+ 		int i;
+@@ -1447,7 +1500,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 
+ 	if (stash_msg)
+ 		strbuf_addstr(&stash_msg_buf, stash_msg);
+-	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
++	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode, only_staged,
+ 			    &info, &patch, quiet)) {
+ 		ret = -1;
+ 		goto done;
+@@ -1464,7 +1517,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 		printf_ln(_("Saved working directory and index state %s"),
+ 			  stash_msg_buf.buf);
+ 
+-	if (!patch_mode) {
++	if (!(patch_mode || only_staged)) {
+ 		if (include_untracked && !ps->nr) {
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+@@ -1581,6 +1634,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ {
+ 	int force_assume = 0;
+ 	int keep_index = -1;
++	int only_staged = 0;
+ 	int patch_mode = 0;
+ 	int include_untracked = 0;
+ 	int quiet = 0;
+@@ -1591,6 +1645,8 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
++		OPT_BOOL('S', "staged", &only_staged,
++			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+@@ -1629,6 +1685,9 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		if (patch_mode)
+ 			die(_("--pathspec-from-file is incompatible with --patch"));
+ 
++		if (only_staged)
++			die(_("--pathspec-from-file is incompatible with --staged"));
++
+ 		if (ps.nr)
+ 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
+ 
+@@ -1640,12 +1699,13 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	}
+ 
+ 	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+-			     include_untracked);
++			     include_untracked, only_staged);
+ }
+ 
+ static int save_stash(int argc, const char **argv, const char *prefix)
+ {
+ 	int keep_index = -1;
++	int only_staged = 0;
+ 	int patch_mode = 0;
+ 	int include_untracked = 0;
+ 	int quiet = 0;
+@@ -1656,6 +1716,8 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
++		OPT_BOOL('S', "staged", &only_staged,
++			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+@@ -1677,7 +1739,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&ps, 0, sizeof(ps));
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index,
+-			    patch_mode, include_untracked);
++			    patch_mode, include_untracked, only_staged);
+ 
+ 	strbuf_release(&stash_msg_buf);
+ 	return ret;
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 873aa56e359d..18ea885412b8 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -288,6 +288,17 @@ test_expect_success 'stash --no-keep-index' '
+ 	test bar,bar2 = $(cat file),$(cat file2)
+ '
+ 
++test_expect_success 'stash --staged' '
++	echo bar3 >file &&
++	echo bar4 >file2 &&
++	git add file2 &&
++	git stash --staged &&
++	test bar3,bar2 = $(cat file),$(cat file2) &&
++	git reset --hard &&
++	git stash pop &&
++	test bar,bar4 = $(cat file),$(cat file2)
++'
++
+ test_expect_success 'dont assume push with non-option args' '
+ 	test_must_fail git stash -q drop 2>err &&
+ 	test_i18ngrep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
 -- 
-2.31.1
+2.25.1
 
