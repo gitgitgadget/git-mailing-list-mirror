@@ -2,102 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5092C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 20:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62068C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:04:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A6A46105A
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 20:21:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B2F660E0B
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234285AbhJOUX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 16:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
+        id S238499AbhJOVHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 17:07:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235258AbhJOUX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 16:23:26 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6C1C061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 13:21:19 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id x27so46050144lfa.9
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 13:21:18 -0700 (PDT)
+        with ESMTP id S235480AbhJOVHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 17:07:02 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0299C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id pi19-20020a17090b1e5300b0019fdd3557d3so8178259pjb.5
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bWQnLPgWq9C9ZgEkY7zoVpvcA9T3eZ2k6IVIGZHjbXk=;
-        b=gyl4lLfWS0sFY49qIdGLVbHXYy7CkzGNidthUpHJTAa7iVwIy47As0FvWOdHeB/yt4
-         UARRJlxar7l2y4Xg5snAFq4kY2lV7WRlrbVsU6y1f5dEQZ5CC+VWrhvKKuv4pztMWEYG
-         BLyKNv1bqU9/53NdKP+6lUsyCFg9e4gTpGUQ0Tc2TQejC5Hw7CMqX4andIEpXLbtJxc2
-         3fbQw3WKthaZisuve4zf4VopKcbK+nCwEew+2NU1AOktEuu1/Vl6FgHs9uU5RPJybONI
-         9zali7PWv+kzjRiQ11M95NTnXgCWpXff5NOaq7//pbGSVPp+iPHts4fOU8OURT+LLakJ
-         hWpA==
+        h=content-transfer-encoding:from:mime-version:date:subject:message-id
+         :to;
+        bh=oKUvPSC5xs4S3mB1b5MRj40h/dlNW+zOXBLJynKqp10=;
+        b=A1VYN5jJ0Lo7Pca0sHB7vzqVvHl2O6bjlLpzyoZSzULNqoDvRpVonCJHCWcm1V+yix
+         rjYHTksruWXiwMrgNhpYQ0ZJIFQ2NclQUAAzXQ9vJu54isznRhlyimRjDYUP21rjKg3j
+         aOjgdBylm25ZZ3Xlj62UuvcPIYchLpqpRYGawGpngxBS01jCSdht8SsLWNiR81fjvLz1
+         itgG4KcT0CzI2jdCYOjZtNOyYp8V75GjSrwIgcRgJKgVJKuD0EayfbPl+SabVvnvD1sF
+         8Bn3krmdd6DWnOrWnuhd6hdMHDdaDF0cItV7qA9pveM1uERXUUlNOgnf0dxxFurvwxId
+         u1Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=bWQnLPgWq9C9ZgEkY7zoVpvcA9T3eZ2k6IVIGZHjbXk=;
-        b=o4mD40WFkz6vpnQQoxwvmjtZ2pNo9PRIcCqVBrn5mBopcg6XbxbIPfYD6PeFtfROFA
-         ezXcThX+LFsfIO7VN9M44+i04VREU55FCeqMfpzb6OmmRuvh60dbN4Ihl/xcF+yPGKMT
-         ExSuBDrk7b2enFx15V+iy6uDjZ9gop+5YGrkWT0gIDP+ZBZwSSuSl4YU69Iq+wqwOHDP
-         PZKdKDobrv/B3/79BTeXvp6hliqb2EzR7ZALjhbVxYQ/4aqVEsq+Cqa072+VehWwhnhO
-         gHSBdmkR0GOcUJi5UCAGSCFB+x2QLGBiW9erAvrLsncBHxy7m9p8jE/9O0K075gZ2tNE
-         PSzw==
-X-Gm-Message-State: AOAM531Go+SChRZs9+pR0wOG0i/JpEq2dtBE/eBd57R62epZiiC2xVZa
-        uRQdc5qm9DqZXGvXjb8APyg=
-X-Google-Smtp-Source: ABdhPJyk9vdNAKtabcQ+dGwl0Ri0jhRGMQF74Y5BYB54+sf2UVsi2Rfp3/4gO9coHNI1cE/9j2EAbA==
-X-Received: by 2002:a05:6512:2292:: with SMTP id f18mr12787523lfu.619.1634329277415;
-        Fri, 15 Oct 2021 13:21:17 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id w8sm616584lft.293.2021.10.15.13.21.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 13:21:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Denton Liu <liu.denton@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] stash: implement '--staged' option for 'push' and
- 'save'
-References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
-        <87fst2gwia.fsf_-_@osv.gnss.ru> <xmqq5yty6uh1.fsf@gitster.g>
-        <87pms6cdnk.fsf@osv.gnss.ru> <xmqqsfx25c09.fsf@gitster.g>
-        <87lf2uavum.fsf@osv.gnss.ru>
-Date:   Fri, 15 Oct 2021 23:21:16 +0300
-In-Reply-To: <87lf2uavum.fsf@osv.gnss.ru> (Sergey Organov's message of "Fri,
-        15 Oct 2021 23:14:57 +0300")
-Message-ID: <87ee8mavk3.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+         :subject:message-id:to;
+        bh=oKUvPSC5xs4S3mB1b5MRj40h/dlNW+zOXBLJynKqp10=;
+        b=W70mO8a/cE5XNvE810z+7v0GhF2abH5p6DX2pmIwIsWBFn2KD2+kJ7WNYi2AGrcRNX
+         zqIwsvBIo7gj+ezoSUJgcj5mkv962j1EWvmTp3P/ndhL5O92tAMYpvsbOKPywUo42VpV
+         12E5JP0tZTDda/1z/ehsNa/gjH8hqoZRsd2eDK30gZSitZeweLsnZaLTnr4VLvxGmtoK
+         LMkPwBwK4gjrMMja7EqHoHSQctwSz4RZ5c8dyspmcaU4ZwALClPZ1ZzaFoirFVNmAVoL
+         vRuOjL5HSWdzb5lg4VozlFta80GUfsBxMKCJ+oDRYTt3cuhd1NyOx4mTPwwtxLrMCvJb
+         OpPw==
+X-Gm-Message-State: AOAM533mPhMXzlRu3UnOqxGPKnknEzpVuM+WKTKkDBVuSL4TrEqnzxQF
+        09cvDO9JU9/S0sC5AGt0faG1XsUmlGE=
+X-Google-Smtp-Source: ABdhPJx4PG3zrkkPBIsR+ls6Cygk8hMT+W3PG6AhxdK2OSEIBtai5h/MM2J18jS6ONAGTZR3m9yFOA==
+X-Received: by 2002:a17:90b:3797:: with SMTP id mz23mr16213784pjb.216.1634331895438;
+        Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
+Received: from smtpclient.apple ([2600:380:8022:3997:d5f1:4479:a7fc:d7a2])
+        by smtp.gmail.com with ESMTPSA id s30sm4780894pgn.38.2021.10.15.14.04.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Oct 2021 14:04:54 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From:   Jesus Alvarado <mannyman4208@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date:   Fri, 15 Oct 2021 14:04:53 -0700
+Subject: Trade 
+Message-Id: <BED4B0A6-0CCC-4D29-8CF0-82C38AB6F344@gmail.com>
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (18G82)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+The adult world is what got millions of Americans stuck together in Trojans p=
+roblems world economy is affected by this.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
->>
->>>> but
->>>> unlike the "stash -p" that goes interactive to let the user pick
->>>> hunks, in which context "oh, no, you did not SELECT anything" makes
->>>> perfect sense as an error message, this message would be confusing
->>>> to users who weren't offered a chance to select.
->>>
->>> It seems to me that it makes sense to leave this warning as is, in case
->>> the user invoked "stash --staged" without anything staged. I'm OK to
->>> change this if you have something better in mind.
->>
->> I am not questioning the presense of the warning.  It is just the
->> phrasing of the warning---"You have nothing staged" would make a
->> good message, but "You didn't select anything", when we do not offer
->> them a chance to select in the first place, would not work well.
->
-> Ah, I agree, your phrasing is much better, -- will fix.
+JMA
 
-Changed to "No staged changes" for the next re-roll. Looks OK?
-
-Thanks,
--- Sergey Organov
