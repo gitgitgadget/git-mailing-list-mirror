@@ -2,69 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62068C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8BFC433FE
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:20:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B2F660E0B
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:04:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2572560F8F
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 21:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238499AbhJOVHD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 17:07:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34122 "EHLO
+        id S238660AbhJOVWq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 17:22:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235480AbhJOVHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 17:07:02 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0299C061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id pi19-20020a17090b1e5300b0019fdd3557d3so8178259pjb.5
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
+        with ESMTP id S235393AbhJOVWp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 17:22:45 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95080C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:20:38 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id p21so3480335wmq.1
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 14:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:from:mime-version:date:subject:message-id
-         :to;
-        bh=oKUvPSC5xs4S3mB1b5MRj40h/dlNW+zOXBLJynKqp10=;
-        b=A1VYN5jJ0Lo7Pca0sHB7vzqVvHl2O6bjlLpzyoZSzULNqoDvRpVonCJHCWcm1V+yix
-         rjYHTksruWXiwMrgNhpYQ0ZJIFQ2NclQUAAzXQ9vJu54isznRhlyimRjDYUP21rjKg3j
-         aOjgdBylm25ZZ3Xlj62UuvcPIYchLpqpRYGawGpngxBS01jCSdht8SsLWNiR81fjvLz1
-         itgG4KcT0CzI2jdCYOjZtNOyYp8V75GjSrwIgcRgJKgVJKuD0EayfbPl+SabVvnvD1sF
-         8Bn3krmdd6DWnOrWnuhd6hdMHDdaDF0cItV7qA9pveM1uERXUUlNOgnf0dxxFurvwxId
-         u1Zg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GbQSOqcF9ICm7IiW28cZ7ylur6ZTyozM5nRY6Ew1qs8=;
+        b=LhtGHgQfbJHPbGx86yc4sCqd/wUFd2tVI8rHf8s+4rEFW/a3w74mnpymALHkSMsv6y
+         Uj07c8Skb4UKBY5Nzi1z59f+g/vuNajrDulN/bVZ7QBJtMRXyAaYakmQx2gjPywFqL44
+         BZg1Ul+JTnm4vbTYqRDO8Jbn7ZBhSzzr8Q6vSijGsLHPf/1hMjBFqPiglHK+TbUnr78J
+         Z62sDyxGuYx7J5BnuZsX9aMuCp+zxAtk2VBosjGT0JaJI+3MaT5pHm+B9fxofRF/Wofj
+         3T6Uc54zBoyF7gRQL7Ttz7xCMRwmQtq1JNwJPE8T1o6imUGONgt6p1NwYLcfktTEVff/
+         ZVOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
-         :subject:message-id:to;
-        bh=oKUvPSC5xs4S3mB1b5MRj40h/dlNW+zOXBLJynKqp10=;
-        b=W70mO8a/cE5XNvE810z+7v0GhF2abH5p6DX2pmIwIsWBFn2KD2+kJ7WNYi2AGrcRNX
-         zqIwsvBIo7gj+ezoSUJgcj5mkv962j1EWvmTp3P/ndhL5O92tAMYpvsbOKPywUo42VpV
-         12E5JP0tZTDda/1z/ehsNa/gjH8hqoZRsd2eDK30gZSitZeweLsnZaLTnr4VLvxGmtoK
-         LMkPwBwK4gjrMMja7EqHoHSQctwSz4RZ5c8dyspmcaU4ZwALClPZ1ZzaFoirFVNmAVoL
-         vRuOjL5HSWdzb5lg4VozlFta80GUfsBxMKCJ+oDRYTt3cuhd1NyOx4mTPwwtxLrMCvJb
-         OpPw==
-X-Gm-Message-State: AOAM533mPhMXzlRu3UnOqxGPKnknEzpVuM+WKTKkDBVuSL4TrEqnzxQF
-        09cvDO9JU9/S0sC5AGt0faG1XsUmlGE=
-X-Google-Smtp-Source: ABdhPJx4PG3zrkkPBIsR+ls6Cygk8hMT+W3PG6AhxdK2OSEIBtai5h/MM2J18jS6ONAGTZR3m9yFOA==
-X-Received: by 2002:a17:90b:3797:: with SMTP id mz23mr16213784pjb.216.1634331895438;
-        Fri, 15 Oct 2021 14:04:55 -0700 (PDT)
-Received: from smtpclient.apple ([2600:380:8022:3997:d5f1:4479:a7fc:d7a2])
-        by smtp.gmail.com with ESMTPSA id s30sm4780894pgn.38.2021.10.15.14.04.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Oct 2021 14:04:54 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From:   Jesus Alvarado <mannyman4208@gmail.com>
-Mime-Version: 1.0 (1.0)
-Date:   Fri, 15 Oct 2021 14:04:53 -0700
-Subject: Trade 
-Message-Id: <BED4B0A6-0CCC-4D29-8CF0-82C38AB6F344@gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=GbQSOqcF9ICm7IiW28cZ7ylur6ZTyozM5nRY6Ew1qs8=;
+        b=F33H2B/tUGhGCjJrMsduNWGqdxb3M6EZOE9BkG/jxlYK6ReV/WMdpnsw3zvrIPdxTi
+         efYETosESJf66V/wGurxFZNLj5dxKgcNlV3oPl8YFfjZwGc7pm+cZ7c3g38VHjih+XuJ
+         0A/46k/EM+1x+fJZxUcFt+AhPPggMERq8RiWLUwNiLTMxB5u+Px1G3E6He/0xHp2a7uH
+         xKE6XrUHcR1c98XhIVWNC4LXv9MWqGvC4rxspmW62/a9DDkp0QlK3ebEqooENRdpk7Sq
+         r3QN7Lxxu1vN6j4Z/dJcjymIsyV6pZGf3wuVDT156ckUHxi/S566aOQ0BRDcaZNbfr4T
+         9Wqw==
+X-Gm-Message-State: AOAM5309S7bIPjRKRlZhRfaEpCKj6atrDs4uqdbjOY/rz6SLZT8/CubR
+        LzwnUZW7iabDk5r86mYTiHioqFBKtgA=
+X-Google-Smtp-Source: ABdhPJyQjRqC1HgPVKPAEnq5EQihvum+BWWJv+q0wSbPdiG2TclxNZkMdIR1v88k6rlTNxwlthOxKg==
+X-Received: by 2002:a1c:e90a:: with SMTP id q10mr15009366wmc.108.1634332837047;
+        Fri, 15 Oct 2021 14:20:37 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e15sm5792632wrv.74.2021.10.15.14.20.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 14:20:36 -0700 (PDT)
+Message-Id: <pull.1050.v2.git.1634332835.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1050.git.1634232352.gitgitgadget@gmail.com>
+References: <pull.1050.git.1634232352.gitgitgadget@gmail.com>
+From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 15 Oct 2021 21:20:33 +0000
+Subject: [PATCH v2 0/2] Sparse Index: diff and blame builtins
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (18G82)
+Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
+        Lessley Dennington <lessleydennington@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The adult world is what got millions of Americans stuck together in Trojans p=
-roblems world economy is affected by this.
+This series is based on vd/sparse-reset. It integrates the sparse index with
+git diff and git blame and includes:
 
-JMA
+ 1. tests added to t1092 and p2000 to establish the baseline functionality
+    of the commands
+ 2. repository settings to enable the sparse index
 
+The p2000 tests demonstrate a ~30% execution time reduction for 'git diff'
+and a ~75% execution time reduction for 'git diff --staged' using a sparse
+index. For 'git blame', the reduction time was ~60% for a file two levels
+deep and ~30% for a file three levels deep.
+
+Test                                         before  after
+----------------------------------------------------------------
+2000.30: git diff (full-v3)                  0.37    0.36 -2.7%
+2000.31: git diff (full-v4)                  0.36    0.35 -2.8%
+2000.32: git diff (sparse-v3)                0.46    0.30 -34.8%
+2000.33: git diff (sparse-v4)                0.43    0.31 -27.9%
+2000.34: git diff --staged (full-v3)         0.08    0.08 +0.0%
+2000.35: git diff --staged (full-v4)         0.08    0.08 +0.0%
+2000.36: git diff --staged (sparse-v3)       0.17    0.04 -76.5%
+2000.37: git diff --staged (sparse-v4)       0.16    0.04 -75.0%
+2000.62: git blame f2/f4/a (full-v3)         0.31    0.32 +3.2%
+2000.63: git blame f2/f4/a (full-v4)         0.29    0.31 +6.9%
+2000.64: git blame f2/f4/a (sparse-v3)       0.55    0.23 -58.2%
+2000.65: git blame f2/f4/a (sparse-v4)       0.57    0.23 -59.6%
+2000.66: git blame f2/f4/f3/a (full-v3)      0.77    0.85 +10.4%
+2000.67: git blame f2/f4/f3/a (full-v4)      0.78    0.81 +3.8%
+2000.68: git blame f2/f4/f3/a (sparse-v3)    1.07    0.72 -32.7%
+2000.99: git blame f2/f4/f3/a (sparse-v4)    1.05    0.73 -30.5%
+
+
+
+Changes since V1
+================
+
+ * Fix failing diff partially-staged test in
+   t1092-sparse-checkout-compatibility.sh, which was breaking in seen.
+
+Thanks, Lessley
+
+Lessley Dennington (2):
+  diff: enable and test the sparse index
+  blame: enable and test the sparse index
+
+ builtin/blame.c                          |  3 ++
+ builtin/diff.c                           |  3 ++
+ t/perf/p2000-sparse-operations.sh        |  4 ++
+ t/t1092-sparse-checkout-compatibility.sh | 69 +++++++++++++++++++++---
+ 4 files changed, 72 insertions(+), 7 deletions(-)
+
+
+base-commit: 57049e844c80d5fe1394e6d65b28705eabfd6585
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1050%2Fldennington%2Fdiff-blame-sparse-index-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1050/ldennington/diff-blame-sparse-index-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1050
+
+Range-diff vs v1:
+
+ 1:  9a597233cf4 ! 1:  ac33159d020 diff: enable and test the sparse index
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'diff --staged' '
+      +	EOF
+      +
+      +	# Add file within cone
+     -+	test_all_match git sparse-checkout set deep &&
+     ++	test_sparse_match git sparse-checkout set deep &&
+      +	run_on_all ../edit-contents deep/testfile &&
+      +	test_all_match git add deep/testfile &&
+      +	run_on_all ../edit-contents deep/testfile &&
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'diff --staged' '
+      +	test_all_match git reset --hard &&
+      +	run_on_all mkdir newdirectory &&
+      +	run_on_all ../edit-contents newdirectory/testfile &&
+     -+	test_all_match git sparse-checkout set newdirectory &&
+     ++	test_sparse_match git sparse-checkout set newdirectory &&
+      +	test_all_match git add newdirectory/testfile &&
+      +	run_on_all ../edit-contents newdirectory/testfile &&
+     -+	test_all_match git sparse-checkout set &&
+     ++	test_sparse_match git sparse-checkout set &&
+      +
+      +	test_all_match git diff &&
+      +	test_all_match git diff --staged &&
+      +
+      +	# Merge conflict outside cone
+     -+	test_all_match git reset --hard &&
+     ++	# The sparse checkout will report a warning that is not in the
+     ++	# full checkout, so we use `run_on_all` instead of
+     ++	# `test_all_match`
+     ++	run_on_all git reset --hard &&
+      +	test_all_match git checkout merge-left &&
+      +	test_all_match test_must_fail git merge merge-right &&
+      +
+ 2:  ddcee003c92 = 2:  a0b6a152c75 blame: enable and test the sparse index
+
+-- 
+gitgitgadget
