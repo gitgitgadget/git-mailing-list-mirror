@@ -2,135 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB46C433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C7CAC433FE
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:06:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 710BC60F6F
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:50:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09B656108B
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:06:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236428AbhJOQxD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:53:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54455 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236216AbhJOQxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 12:53:02 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B1D1FEFBB;
-        Fri, 15 Oct 2021 12:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dSjKGDxKxuwT
-        lf8FYH355NwXrfRL6+k0ncVGOcY7o2w=; b=EOTWPFzKik4p/RLH2gV7khumJWB1
-        txt3X0L4e5NnK3dx0srYGgGPKKT7j+wZ+IdPwFsbXxwleZK4YEd4+5W+d4jpiqdv
-        N1H/tyaOs4Ap7/UPMF0bK3e8cEAW+TO+1m9WzuUGQJnIa07s2iBGG7Vi0wEqO+xz
-        AFsSWWfBHehPBco=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91C71FEFBA;
-        Fri, 15 Oct 2021 12:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AF53FEFB9;
-        Fri, 15 Oct 2021 12:50:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        vagabon.xyz@gmail.com, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2] archive: rewrite description for compression level
- option
-References: <20211015121336.46981-1-bagasdotme@gmail.com>
-        <87h7die9jj.fsf@evledraar.gmail.com>
-Date:   Fri, 15 Oct 2021 09:50:52 -0700
-In-Reply-To: <87h7die9jj.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 15 Oct 2021 14:46:29 +0200")
-Message-ID: <xmqq7dee8c5v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0FA9AE86-2DD8-11EC-A610-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S241997AbhJORIP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 13:08:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242026AbhJORIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 13:08:11 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FE9C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:06:05 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id 80-20020a630753000000b002997713c266so2525614pgh.9
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:06:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=jq7YX6Cz5PXf1dCXGqIjB4ct95t4Tb6rR3NXxFFQUI8=;
+        b=QS5VKEiWTGQ62AJzoDQf09d7N2r2zHqC7svT5TxUHhEVbgVSH/hIiBFSyuYgxQUd2n
+         fNir/yJROAG4NFvi8dEkEPfTtx3aBW8wyOoFDLXEic9LveQ1QUG5D0JUmRWcMGy6rp7Y
+         hzZp7r6chhhVito6C+tQRiXhg6g/MyX2X0+ULxvMLxO8L96Wp4T0AqsF/JztUTUE1BXR
+         jQv8KUNP5fs54mgIWE3vkhjsVYui6/xG8jcgMRbfbopSi9bCeA1xhZEK/Q4Vm625x0v7
+         pHU/RqeDYDHiBIeTTvWOfTFlVgUO74xUPPJdY2/XXWylCFMliQ7YQIVFg2UxXCY59+FE
+         y4cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=jq7YX6Cz5PXf1dCXGqIjB4ct95t4Tb6rR3NXxFFQUI8=;
+        b=z5nWyxnVs5O184PFsK+nU+lokx9jEc4n+RqCZFJwAv+MdQeAYIUyVjiiMJ/HNn/LVV
+         sM6BfwBNm4jP/vRditWQR48ExUyPDttOhPMjI48ZqZYjm5ioWpDkvoMsi/KRMwR6pzID
+         0vWM/xeprKugVHzEOKuVi9b0CvmxmsUfc680AjHe2FNwwP92CechTfixt1hjYQNo05jq
+         wdfkD13t4ldbFxRQxo34jKC42DJS1F41GMhjq9B7q0HBCZDTPJGDZZkrRbM/9TgwyTZU
+         0rq9/TSTpoJfdHdoFwg98fDqmgcj/GpiYu9+IrrF94aleDUmNdh1mVahU/TojrKdvb3r
+         TDkg==
+X-Gm-Message-State: AOAM531cnLxON5XwWQR7FNx4IKzQB2zmuQANi2HNDso6axbBZjL828yk
+        HLN6ie5Nk3opMv11Xl+NcidlJLsojIXUUA==
+X-Google-Smtp-Source: ABdhPJwzYprByV0Ou6Ksb8Qb5zMphNq6Kgz2GawxWMyCRvxEL/bl4/D7hgL2AcZ48EkxgV2V5x4ikcjNtws/Zw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:23d1:: with SMTP id
+ md17mr1855439pjb.215.1634317564330; Fri, 15 Oct 2021 10:06:04 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 10:06:01 -0700
+In-Reply-To: <20211015122515.47535-1-bagasdotme@gmail.com>
+Message-Id: <kl6l4k9i1ame.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20211015122515.47535-1-bagasdotme@gmail.com>
+Subject: Re: [PATCH v2] Documentation: specify base point when generating
+ MyFirstContribution patchset
+From:   Glen Choo <chooglen@google.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
->>  SYNOPSIS
->>  --------
->>  [verse]
->> -'git archive' [--format=3D<fmt>] [--list] [--prefix=3D<prefix>/] [<ex=
-tra>]
->> +'git archive' [--format=3D<fmt>] [--list] [--prefix=3D<prefix>/] [-#]
->>  	      [-o <file> | --output=3D<file>] [--worktree-attributes]
->>  	      [--remote=3D<repo> [--exec=3D<git-upload-archive>]] <tree-ish>
->>  	      [<path>...]
->> @@ -65,10 +65,6 @@ OPTIONS
->>  	Look for attributes in .gitattributes files in the working tree
->>  	as well (see <<ATTRIBUTES>>).
->> =20
->> -<extra>::
->> -	This can be any options that the archiver backend understands.
->> -	See next section.
->> -
->>  --remote=3D<repo>::
->>  	Instead of making a tar archive from the local repository,
->>  	retrieve a tar archive from a remote repository. Note that the
->> @@ -88,17 +84,13 @@ OPTIONS
->>  	of the current working directory are included in the archive.
->>  	If one or more paths are specified, only these are included.
->> =20
->> -BACKEND EXTRA OPTIONS
->> ----------------------
->> -
->> -zip
->> -~~~
->> --0::
->> -	Store the files instead of deflating them.
->> --9::
->> -	Highest and slowest compression level.  You can specify any
->> -	number from 1 to 9 to adjust compression speed and ratio.
->> -
->> +-#::
->> +	Select the compression level. The supported levels and default
->> +	value (if none is selected) are depending on compression command
->> +	backend configured for the selected format (either explicitly with
->> +	`--format` or inferred from file name specified with `-o`). Common
->> +	values are `-0` for only storing files (zip only), `-1` for fastest
->> +	compression time, and `-9` for best compression ratio.
->
->
-> This is getting there, but I think we really should not have a -# in th=
-e
-> synopsis, since that's not how we refer to a digit-wildcard in any othe=
-r
-> context. And users might assume that a literal -# is meant, some
-> commonly used tools even support that, e.g. try:
->
->     curl -L -o /dev/null -# https://cdimage.debian.org/debian-cd/curren=
-t/amd64/iso-dvd/debian-11.1.0-amd64-DVD-1.iso
->
-> Let's just use "[-<0..9 digit>[", or "[-<digit>]" in the SYNOPSIS and
-> explain that it's 0..9 below in this section..
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index b20bc8e914..5aaf31cb66 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -937,6 +937,23 @@ but want reviewers to look at what they have so far. You can add this flag with
+>  Check and make sure that your patches and cover letter template exist in the
+>  directory you specified - you're nearly ready to send out your review!
+>  
+> +It would help those who review and test your patches to specify on what
+> +commit the patches should be applied to. To do so, use the `--base` option
+> +when running `format-patch`. The option expects hash of the commit the
+> +patchset is based on. Since we base `psuh` on top of `master`, the base
+> +commit hash can be determined by: 
+> +
+> +----
+> +$ git show -s --format="%H" master
+> +----
+> +
+> +The output of command above can be passed to `--base` option. Replace `<base>`
+> +with your own hash:
+> +
+> +----
+> +$ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
+> +----
+> +
+>  [[cover-letter]]
+>  === Preparing Email
 
-I agree with you about `-#`.
+This reads quite awkwardly because a few lines above, we already tell
+the reader exactly what commands to run:
 
-I do not think it is a good idea to remove the backend-specific
-option section like this patch does, as the next archiver may not
-even support `-<digit>`.  Even with the existing two backends, the
-description of it need to be different (cf. the other response I
-sent you last night on "--fast/--best"?).  Rather, the first thing
-to improve would be to _add_ a section for `tar` format, next to the
-`zip` format, I would think, as those who wants to write `tar` do
-not have to read `zip` specific options, and vice versa.
+  Sending emails with Git is a two-part process; before you can prepare the emails
+  themselves, you'll need to prepare the patches. Luckily, this is pretty simple:
 
-The new paragraph on `-#` in the patch may work as a replacement for
-existing explanation for `zip`-specific extra options, but it needs
-to drop the changes made to make it applicable to any format, like
-"depending on ... backend" and "(zip only)" if we want to take it.
+  ----
+  $ git format-patch --cover-letter -o psuh/ master..psuh
+  ----
 
-Thanks.
+If we do accept this suggestion (and I am not sure if we should, because
+as Junio said, there are strong conventions for determining the branch
+point), I think this would be easier to follow if we incorporate it into
+the existing instructions. Something like..
+
+  Sending emails with Git is a two-part process; before you can prepare the emails
+  themselves, you'll need to prepare the patches. Luckily, this is
+  pretty simple. First, we'll get the hash of the commit the patchset is
+  based on. We call this commit the 'base'.
+
+  ----
+  $ git show -s --format="%H" master
+  ----
+
+  Now, we'll generate the patches, passing the hash of the 'base' to the
+  --base option.
+
+  ----
+  $ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
+  ----
+
+  [...describe --base=<base> the way we describe the other options].
