@@ -2,114 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E32C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03813C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 12:14:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5BC361073
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 10:46:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D486A61027
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 12:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237996AbhJOKsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 06:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60142 "EHLO
+        id S238683AbhJOMQk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 08:16:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhJOKsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 06:48:14 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6EBC061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:08 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id bi9so8055525qkb.11
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:08 -0700 (PDT)
+        with ESMTP id S235418AbhJOMQi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 08:16:38 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AFEEC061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 05:14:31 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id i5so27089pla.5
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 05:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxonly.nl; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=IuKqEoivsN7Bl2Q2civVkwB/t3fenGV7uFAnEAvlAZM=;
-        b=5a5yscSJuinApgHQQhb55qaAJ14ILFoT8o8B0SQKlfZs3UoddMnWwFiqWenP4v79ho
-         vYBfhR6gc1MSzEbGiRSiJakWxZ4/Q/xWybJvldY6WoYnNCHPOnPqTQpYGfXxKr9xrK6+
-         +dX1duUXZDCt6AHrjVFaWy/CbYtkNuQ5bc+gw=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Fe+fBmLgCf3Ouan+2vuK4YU+O9h9t+C+Z3Ss/WUMuOo=;
+        b=k1bk8ot2LiPHuKWjZ8HVZCTTzzJQ0uIbpLIvq79E2xMv+xloE1tGtHkQQO02DegIhi
+         2UTv5ol63QY09zugd7yXldTIeboyc024DMvsoFjfmhQR4MyoNE60ybtp5iULTtQMElF3
+         k4CWpzkupb9u57WY4MPViKm0xep2Qy8Xgm9yKeTLMWyGbPrtLFHGJ2iYMMZmi1aJ5xF8
+         5GfETKxicLPgB8+7gXecKgcDVX8HXfYN6d17dJ3I1aFHM3wr9b8GPXq+sdaCfgNDQPwp
+         8krkaOCLYUBX4JVYR4b3OD99XJC6XSjrQlzG9vSuqidOs8WbUVqkRidU/q4K9WI7tHsA
+         Phlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=IuKqEoivsN7Bl2Q2civVkwB/t3fenGV7uFAnEAvlAZM=;
-        b=PpB8Z8wvjg1zjAWp9/VXSISHoFIsh2FJeiMZpWEeexWhYaIuhsacb3K47mT7l7cY/l
-         u013I/kre6nlo/mzdpFVzYnCkY6hcJUFMM92T53izXXb+bHylMwDYm1gHRuV8x+3qOvA
-         xYIcFAeT+1+cgkCGNkiM+uiKQVnE3hZgRZ6LzM23Noq165VD5wN14XQW89HXuuwo6Wq+
-         9n0veebLrPoUzySssQKa/6ZVegU4OocQhtxpKycTZ1RiuAfvVXVy5Ok99rHiXOZhLwP1
-         q4bHA5enxe6yFhzpQIZxXfSE2NLiHYiCKjxZKQPGtszHKnUoSAUarkaPFk8JjGubIbEF
-         wGyw==
-X-Gm-Message-State: AOAM532/FR7a25h2vr4Z2kxNwdXMHV0hIRyK4IHxRlE/OjMtU99zx/DP
-        3NUqsS21pmxC3gE6FHe+87XABDGO3tGEaQ==
-X-Google-Smtp-Source: ABdhPJwaTYHdrx6/VLZBSpyxU1HwB32m6Pi53izmmh9rX8EAO18Zk2SBGAiWTrmXOmYj5D/AedfHCA==
-X-Received: by 2002:a37:6484:: with SMTP id y126mr9492989qkb.384.1634294767643;
-        Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
-        by smtp.gmail.com with ESMTPSA id 6sm2800246qtz.13.2021.10.15.03.46.07
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
-Received: by mail-qt1-f174.google.com with SMTP id w2so8421738qtn.0
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 03:46:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:1492:: with SMTP id t18mr12855584qtx.229.1634294766733;
- Fri, 15 Oct 2021 03:46:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAA1vfca+kPSsitsZad-bmrd+o1ay60NXZrH2zGLpwN69Px-rtw@mail.gmail.com>
-In-Reply-To: <CAA1vfca+kPSsitsZad-bmrd+o1ay60NXZrH2zGLpwN69Px-rtw@mail.gmail.com>
-From:   Sjoerd Langkemper <sjoerd-2021@linuxonly.nl>
-Date:   Fri, 15 Oct 2021 12:45:55 +0200
-X-Gmail-Original-Message-ID: <CAA1vfcYSZWEXsDBD2_0o48EYbU9e9nKVoFdQ0M=fDAOMki3bng@mail.gmail.com>
-Message-ID: <CAA1vfcYSZWEXsDBD2_0o48EYbU9e9nKVoFdQ0M=fDAOMki3bng@mail.gmail.com>
-Subject: Re: Git submodule update remote keeps using previous default branch
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Fe+fBmLgCf3Ouan+2vuK4YU+O9h9t+C+Z3Ss/WUMuOo=;
+        b=xfWA+hDbKUW50smk5I7LaIv578bMbWqyO6Tvpanx3KN4aNQ1KJoPhiPXXYWN34ebhv
+         u4TA8nvbw2SkFeLCB1RIbSS6I2XmE3LPF7aM7HsFabG/0LvNvIEttVSTx8oZko1K5cO5
+         G10a3JixMCeFU0D20yrbMcobCWZtRKoUEa2N2JKdeERyE8kCwugZNH44cTwU1/7WHwkC
+         mj7UtZXJkTW8SkN6Bb8aoGCA2kp8RxixfO0d/YpmxiXuD/JsgPEQgpC7bffwvPhCLDVk
+         J35zUvWIe7kgaTOkHjuV798q6WnnLLxFuQDEV71DApKcHxTkuYpjjfKq99xiyBjfi1QK
+         Ti/Q==
+X-Gm-Message-State: AOAM530/8luJYfc3a5JSbZs0nFIijliVrpbWwpDcoYnK7jHYLc7bc2e7
+        t+JPIjaEWqlRb4/NO58Yk0ovlT0pgBrYS/xm
+X-Google-Smtp-Source: ABdhPJzu5xLvQpCxo3QpDtycT1fNYy8h20hh4NZluZtdDjc5qxmO+APC2bZhAQPvrzMY2598x4nBwA==
+X-Received: by 2002:a17:90b:4a8d:: with SMTP id lp13mr10795369pjb.240.1634300070616;
+        Fri, 15 Oct 2021 05:14:30 -0700 (PDT)
+Received: from ubuntu.mate (subs03-180-214-233-73.three.co.id. [180.214.233.73])
+        by smtp.gmail.com with ESMTPSA id g3sm4842406pjm.22.2021.10.15.05.14.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 05:14:29 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, vagabon.xyz@gmail.com,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v2] archive: rewrite description for compression level option
+Date:   Fri, 15 Oct 2021 19:13:37 +0700
+Message-Id: <20211015121336.46981-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The submodule is updated according to where `origin/HEAD` points. The
-`origin/HEAD` ref of a repository is not automatically updated when
-the upstream default branch changes. However, this can be forced with
-`git remote set-head origin -a`.
+Rewrite the description of `-#` option. Since the option is also
+supported on tar archive, move to OPTIONS section and remove EXTRA.
 
-I think it is a little bit surprising that `origin/HEAD` does not
-necessarily point to the remote default branch. However, changing the
-default branch should be pretty rare, so I understand this is not
-checked every time.
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+ Changes since v1 [1]:
+     - Mention common levels (store-only, fastest time, and best
+       compression).
+     - Note that compression level option is supported by both zip and
+       tar format, so move the description to OPTIONS section.
 
-Regards,
+ [1]: https://lore.kernel.org/git/xmqqpms6akup.fsf@gitster.g/T/#t
 
-Sjoerd Langkemper
+ Documentation/git-archive.txt | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-On Fri, Oct 15, 2021 at 10:34 AM Sjoerd Langkemper
-<sjoerd-2021@linuxonly.nl> wrote:
->
-> I am having trouble with git 2.33.1 checking out the wrong branch for
-> submodules for which the default branch has changed. `git submodule
-> update --remote` seems to remember the branch name to retrieve, while
-> I expect it to use the remote HEAD every time. This causes unexpected
-> behaviour when the remote HEAD starts pointing to another branch.
->
-> I create a new git project and add a submodule, with `git submodule
-> add git@host:foo/testproject.git`.
->
-> This checks out the default branch, `master` in this case. `git remote
-> show origin` also shows that `master` is the HEAD branch. Running `git
-> submodule update --remote` updates the submodule to the latest master.
->
-> Now I change the default branch on the remote (using Gitlab's web
-> interface) to `newmaster`.
->
-> `git remote show origin` now correctly shows `newmaster` as the
-> remote's HEAD branch. However, running `git submodule update --remote`
-> still updates the submodule to the latest `master` branch, while I
-> expect it to update to the lastest `newmaster` branch.
->
-> There's no branch specified in .gitmodules or .git/config. I am not
-> sure how git remembers the branch. When switching `testproject` to
-> `newmaster` manually and then running `git submodule update --remote`,
-> it is reset to `master` again.
->
-> Is this a bug? Can I change the branch somehow?
->
-> Regards,
->
-> Sjoerd Langkemper
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 9f8172828d..9aecc0936c 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -9,7 +9,7 @@ git-archive - Create an archive of files from a named tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>]
++'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [-#]
+ 	      [-o <file> | --output=<file>] [--worktree-attributes]
+ 	      [--remote=<repo> [--exec=<git-upload-archive>]] <tree-ish>
+ 	      [<path>...]
+@@ -65,10 +65,6 @@ OPTIONS
+ 	Look for attributes in .gitattributes files in the working tree
+ 	as well (see <<ATTRIBUTES>>).
+ 
+-<extra>::
+-	This can be any options that the archiver backend understands.
+-	See next section.
+-
+ --remote=<repo>::
+ 	Instead of making a tar archive from the local repository,
+ 	retrieve a tar archive from a remote repository. Note that the
+@@ -88,17 +84,13 @@ OPTIONS
+ 	of the current working directory are included in the archive.
+ 	If one or more paths are specified, only these are included.
+ 
+-BACKEND EXTRA OPTIONS
+----------------------
+-
+-zip
+-~~~
+--0::
+-	Store the files instead of deflating them.
+--9::
+-	Highest and slowest compression level.  You can specify any
+-	number from 1 to 9 to adjust compression speed and ratio.
+-
++-#::
++	Select the compression level. The supported levels and default
++	value (if none is selected) are depending on compression command
++	backend configured for the selected format (either explicitly with
++	`--format` or inferred from file name specified with `-o`). Common
++	values are `-0` for only storing files (zip only), `-1` for fastest
++	compression time, and `-9` for best compression ratio.
+ 
+ CONFIGURATION
+ -------------
+
+base-commit: 2bd2f258f4195ac54293a3f45b86457c0bd5fc11
+-- 
+An old man doll... just what I always wanted! - Clara
+
