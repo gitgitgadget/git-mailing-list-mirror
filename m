@@ -2,140 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD518C433F5
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3C54C433EF
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 991A8610E8
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:14:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9672261151
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 17:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242106AbhJORQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 13:16:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55933 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238023AbhJORQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 13:16:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E667EA1C9;
-        Fri, 15 Oct 2021 13:14:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=erlD45pv0CL6vUWbF03Oeo44LMYCG+hvdkFzZb
-        WW8hw=; b=YLT4o64tYVWUePe+A6A+80ZfgKD0FWMcTfTVWPXPPsplsuti+wPRuK
-        Zsyt73ka/5s36dL6Xa3t4GGDxGWASUQda1Ah6etHwKUC5ymDWF/BJ03/Q3ncsQe1
-        OUpJB8bbZtFUSOtBneJ/XON1FhNF7UM5tozWSb8VnJMoviO4TdeXk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35974EA1C8;
-        Fri, 15 Oct 2021 13:14:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C736EA1C7;
-        Fri, 15 Oct 2021 13:14:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Carlo Arenas <carenas@gmail.com>
-Subject: Re: [PATCH v2] Documentation: specify base point when generating
- MyFirstContribution patchset
-References: <20211015122515.47535-1-bagasdotme@gmail.com>
-Date:   Fri, 15 Oct 2021 10:14:47 -0700
-In-Reply-To: <20211015122515.47535-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Fri, 15 Oct 2021 19:25:16 +0700")
-Message-ID: <xmqqo87q6whk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242107AbhJORSD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 13:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238023AbhJORR4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 13:17:56 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084D9C061570
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:15:50 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id qe4-20020a17090b4f8400b0019f663cfcd1so9798046pjb.1
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 10:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=NOlneyiEzHirV7DcJdh7wgrEOQvSo16rG0XjsIAoXHQ=;
+        b=Bna6J8vMhhzgWwqDmIiV3dV92E3SHuTQrdZ3IOVYyBP5uhufpGyv4h9sxQ9VoLkXQ1
+         dhhcvQnXcgJBKTeXQvijSly/Mvl95AoDMaGtIiqLNhAwD+kffGskmc3IEd5x5gIOXAqC
+         jvCWXiSogAlH6UHwFuPoZtEuetEgO0SEuLbWow1TSIaPEmfXxqokwrl7Bver4CjhnkBn
+         Kmpt100avfUVPNVZWNLGJwNTDyIROSR0qQmDio4s7lFJlnrYGDU47UsNfXGojQGlscwk
+         Yth+C2Wqs6CVU344IQ7qkTheOQqfJGd1okEw7pUJjcqz2ziH8QeH8j9wB9QpoeWxdUvE
+         Jfrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=NOlneyiEzHirV7DcJdh7wgrEOQvSo16rG0XjsIAoXHQ=;
+        b=OxkBJIiWy9ygTOjxO/yT3N2mN2xwha2oqjwvnZ/6F9o1rCEW3uUSogwWRBkl4JlWhA
+         +kZXCXiwTK5D5F035JakG3Hm6ZsPL3eypx7GiegYAishEJNcc/R5w/RsgvVCmn/p8CpB
+         qaEjAu21gcNvsm/XGcRMC47hNXbsQbqnRDa07KDLeTQvrLEM81He/+K813H8geQoelVa
+         guy4rWX5hnUyZuIwPQscF9nS4ph0aaiy7Sa2TRvXyPOAXXftRbhsWc8+2vrV57QVoWl7
+         u1eZSxJVPdf8p2k2R2qFVYtGBs5AxQBVbdSr6l/ko+3fjj4CRDrgU9SFwZNVGjxIKMbx
+         q5Fw==
+X-Gm-Message-State: AOAM532MwO/exKqhA/KPjELd9Lv58JInoOoHn/gMDL93C8QFzzn8pFr7
+        97GJNoLfv7MIulxuPut5xW+yNg==
+X-Google-Smtp-Source: ABdhPJzXiu/tnQ9MrsPIcdylPZWPuMYceDlm8d6k56Hxq7CzdUbfP8f85kt3FjEI9xT61vBDyX2dnQ==
+X-Received: by 2002:a17:90a:4681:: with SMTP id z1mr15224465pjf.113.1634318149175;
+        Fri, 15 Oct 2021 10:15:49 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cc2f:afb0:ab09:f218])
+        by smtp.gmail.com with ESMTPSA id h3sm5655891pfr.98.2021.10.15.10.15.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 10:15:48 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 10:15:43 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v2 10/13] commit: convert {pre-commit,prepare-commit-msg}
+ hook to hook.h
+Message-ID: <YWm3P5EqiE4hYrJr@google.com>
+References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
+ <patch-v2-10.13-dc31d98acdf-20211015T093918Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 66BFE430-2DDB-11EC-9ECD-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v2-10.13-dc31d98acdf-20211015T093918Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On Fri, Oct 15, 2021 at 11:43:38AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> Move these hooks hook away from run-command.h to and over to the new
+> hook.h library.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-> +It would help those who review and test your patches to specify on what
-> +commit the patches should be applied to. To do so, use the `--base` option
-> +when running `format-patch`. The option expects hash of the commit the
-> +patchset is based on. Since we base `psuh` on top of `master`, the base
-> +commit hash can be determined by: 
-> +
-> +----
-> +$ git show -s --format="%H" master
-> +----
+Very straightforward.
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 
-That's a littie bit wasteful.
-
-If we need to teach more stuff (like --format="%H"), one thing that
-more directly help this exact use case is to teach
-
-    git merge-base master psuh
-
-here.  But read on.
-
-> +The output of command above can be passed to `--base` option. Replace `<base>`
-> +with your own hash:
-> +
-> +----
-> +$ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
-> +----
-> +
-
-If we set up the psuh branch correctly, we can use the `--base=auto`
-option, which would reduce the number of things readers need to
-learn by one.  Then the whole example in this patch can be reduced
-to (after dropping "Since we base `psuh` on top of `master`..." at
-the end of the previous paragraph):
-
-    patchset is based on.  As we forked `psuh` to build on
-    `origin/master`, we can use the `--base=auto` option when
-    running the `format-patch` command, like so:
-
-    ----
-    $ git format-patch --cover-letter --base=auto -o psuh/ origin/master..psuh
-    ----
-
-That is one fewer step the user needs to execute.
-
-This needs one line change in the earlier part of the document (not
-touched by the patch under discussion here). 
-
-In the [[setup-workspace]] section, we create the psuh by branching
-out of the origin/master (not 'master', so the references to
-`master` in the patch under discussion need to be updated, which I
-did in the above paragraph already), like so:
-
-    ----
-    $ git checkout -b psuh origin/master
-    ----
-
-All we need to do is to pass the `-t` option there, i.e.
-
-    ----
-    $ git checkout -t -b psuh origin/master
-    ----
-    
-to make the --base=auto work, I think.
-
-Thanks.
-
-
-[Addendum]
-
-Also, if the tutorial text naturally guides the user to be "on" the
-`psuh` branch when the patches are taken from it, we could even
-shorten the command to
-
-    ----
-    $ git format-patch --cover-letter --base=auto -o psuh/ @{u}..
-    ----
-
-That extra shortening would need a bit more work in the earlier part
-of [[format-patch]] section around the part that says "Luckily, this
-is pretty simple".  Basically, we need to invent a plausible story
-for the user to have done "git checkout psuh" earlier, so that it is
-clear to the readers that the `psuh` branch is the current branch.
-
-So it probably is a good idea to leave it outside the scope of this
-topic.
+> ---
+>  commit.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/commit.c b/commit.c
+> index 551de4903c1..4e7cbd7585d 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -21,6 +21,7 @@
+>  #include "commit-reach.h"
+>  #include "run-command.h"
+>  #include "shallow.h"
+> +#include "hook.h"
+>  
+>  static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+>  
+> @@ -1700,22 +1701,22 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+>  int run_commit_hook(int editor_is_used, const char *index_file,
+>  		    const char *name, ...)
+>  {
+> -	struct strvec hook_env = STRVEC_INIT;
+> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+>  	va_list args;
+> -	int ret;
+> +	const char *arg;
+>  
+> -	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
+> +	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+>  
+>  	/*
+>  	 * Let the hook know that no editor will be launched.
+>  	 */
+>  	if (!editor_is_used)
+> -		strvec_push(&hook_env, "GIT_EDITOR=:");
+> +		strvec_push(&opt.env, "GIT_EDITOR=:");
+>  
+>  	va_start(args, name);
+> -	ret = run_hook_ve(hook_env.v, name, args);
+> +	while ((arg = va_arg(args, const char *)))
+> +		strvec_push(&opt.args, arg);
+>  	va_end(args);
+> -	strvec_clear(&hook_env);
+>  
+> -	return ret;
+> +	return run_hooks_oneshot(name, &opt);
+>  }
+> -- 
+> 2.33.1.1338.g20da966911a
+> 
