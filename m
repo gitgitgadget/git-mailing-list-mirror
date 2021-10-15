@@ -2,175 +2,267 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5DC5C433FE
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39BBEC433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CECD611C3
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11CFD611C8
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 13:15:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239261AbhJONRV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 09:17:21 -0400
-Received: from mail-cy1gcc01bn2023.outbound.protection.outlook.com ([52.100.19.23]:25729
-        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
+        id S239296AbhJONRX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 09:17:23 -0400
+Received: from mail-db8eur05hn2207.outbound.protection.outlook.com ([52.100.20.207]:24545
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239251AbhJONRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 09:17:19 -0400
+        id S232670AbhJONRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 09:17:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QcZz1/A1ONYIxltM7GIaHeo8397P03OsX4kDw6Wwpa9sY4MyR5hBAp4TzycyRRbh8AIUB3R/rISnd/nK2M0NfjxhceG3dC2xfHQ5k1xhzsY0AnANwTPHWpELknpHJ1wE9Vts3lzOGDdJ/ZdI9SH0PfFvfA2kZeR9ImzbcvsiImvWY7uTVX7/pn5GcINrRrZ2iH6fzf1KmzaXq/adfY19txtLkdovIFbZoRI8R3oFYAYbvWvUl2c8gSOWsGHwcqnKOG1DupdX/bq2SC6Mp0VNFaw04Lc6+i9FHJTk9f6kW714s9iuPbxehPxm7Nsxtm66WB+fJPUU48/NRxEPkgrPMw==
+ b=mWq8S7zRwC0seWnfIWUCdzaXzNFbcPl70GAbqfYQyqks9kanQ9f1QqX7JNgMBrGQP5yfyWr+O7AQMGBTIRJV2WYfpiw/Sy4hmC/aM7fWCkldbKafr9Zp9GtNrM7ZWsn2hKkBpm47NYdH1FooLWa7LkxDN9BTcqZQ+shkD8JNY5W8KtvSqlaVNUbwSkS4SDQYolwi0zsjrO0dMuk6xXh8aljh4k5L7rUCZhT98HyOwz+LkHNye5L9LuDmi7FQCiPGtCOjmKbvh8epq+vWhqqL7Tzxd19iE2NLwUjl3apa9LnEsW31KpOE0zSPbHasY89qvrLg6x8gqykF2WL5vztOhg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o9w/WM8vXUvBA0xdK5pzeG8DhS9as02TitdPOdQYk6o=;
- b=OUly4H48BBvsZtFY0wMXqb6Um/86fRtJ2JaDqk8VTzDmfQA6fGzzwyiEFmbfD/jA1tyMsyxElWdEKYbYC/368k4zuHqsEaJZ6lUoy2LEBYDoRI+ptsaDO6CFRRlftrsrHzqeHc5Gq5NAVv7z0Gb6Z4Vgx9ZK2ElDjFYYXT0CmEEdphkSEaFHXbnUtMAUmBDFA6faOjsVtFH0VasyOiZOVtqjwRPJSbmZy+oZBm3bAy0FSWDsaEGRPdyDnRvZ0sWi9gGexEviLsBlgXDQZC+MDVMbUf8yfSoNjig7n6GLzUB9q80ms0uZxpewlk1fg8fDP5vL8PBz381JUpep+rXIQA==
+ bh=wnayFmIShJtLCMxXXvxj9ZOJc0Se+6o2nCWFyRk3Ak4=;
+ b=K9FXpzlW7AqM9pErMSPsXipNdePjcbQgWpg9Lx/ukA+Wte4rD07JpItFmNWCsPHhag0o1MAl7fMf6ekHwdxBgbZan1PEcg+Uespas+B1uokZ617bBrC0iQGcn30V+YZgRXxNX0koZjUE0ijZ2H4Rb1BevMqZIAy9HjoMKS6jl4bO37b/X34f2M3cszvt1nb+YHnLCXeHWDp15buHu+dbeFC1cMVqQxy/LkN0JYCf4/ateYj+JplEGHddDK7iIwn1UwbsF+32tqUgYVKgLoUFjxfyf19mv9rs598a/G//FNBSvW4gr9JGKqrSv/ybMhVpEjebvHJ0PzpqxQbqCmomng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o9w/WM8vXUvBA0xdK5pzeG8DhS9as02TitdPOdQYk6o=;
- b=n0XPWLXe7ZCMj7f/wqah3yqBH3cwnVkjVnA7huQmXzcfOUtu/GNx34/zubvPueCYSXwKOCbi6/J3Dxtg2tvuHQwm8SSiIpeC4stOXW7lW4Z18Pk+kD/g2rb0wSqyciGZjMsLZcVmZtXFe0TgW0KlnWA/QUaPjJQvn7YgELiAaIw=
+ bh=wnayFmIShJtLCMxXXvxj9ZOJc0Se+6o2nCWFyRk3Ak4=;
+ b=desPH96+7UNniCQUxOxJJvYPPSUKl3C86JpONdYKvXpxfrqXa9CihHK+jHbaqgfwn9stFQFGWi6KPuGvwgLoPWxBaBCJDWnLqYEqOwmVHaMqelueAShSv4/DfNXgQk+K70nDUGjDxbF1/oz/uHQ3b5y2Fv6XCl/cSvAV4naZzD8=
 Authentication-Results: vger.kernel.org; dkim=none (message not signed)
  header.d=none;vger.kernel.org; dmarc=none action=none
  header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4046.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a3::19) with
+ by PR3PR10MB4192.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:af::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16; Fri, 15 Oct
- 2021 13:15:10 +0000
+ 2021 13:15:12 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::49a2:88ed:be81:d939%6]) with mapi id 15.20.4587.026; Fri, 15 Oct 2021
- 13:15:10 +0000
+ 13:15:12 +0000
 From:   Fabian Stelzer <fs@gigacodes.de>
 To:     git@vger.kernel.org
 Cc:     Fabian Stelzer <fs@gigacodes.de>
-Subject: [RFC PATCH 2/6] ssh signing: add key lifetime test prereqs
-Date:   Fri, 15 Oct 2021 15:15:03 +0200
-Message-Id: <20211015131507.1773153-3-fs@gigacodes.de>
+Subject: [RFC PATCH 4/6] ssh signing: git log/check_signature with commit date
+Date:   Fri, 15 Oct 2021 15:15:05 +0200
+Message-Id: <20211015131507.1773153-5-fs@gigacodes.de>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211015131507.1773153-1-fs@gigacodes.de>
 References: <20211015131507.1773153-1-fs@gigacodes.de>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: AM5P194CA0006.EURP194.PROD.OUTLOOK.COM
- (2603:10a6:203:8f::16) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: AM6P193CA0068.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:209:8e::45) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM5P194CA0006.EURP194.PROD.OUTLOOK.COM (2603:10a6:203:8f::16) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.15 via Frontend Transport; Fri, 15 Oct 2021 13:15:10 +0000
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM6P193CA0068.EURP193.PROD.OUTLOOK.COM (2603:10a6:209:8e::45) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.15 via Frontend Transport; Fri, 15 Oct 2021 13:15:12 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 23e3573c-97c2-498d-f319-08d98fddd0fe
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4046:
+X-MS-Office365-Filtering-Correlation-Id: 1b81fc08-af3c-48ba-13d5-08d98fddd206
+X-MS-TrafficTypeDiagnostic: PR3PR10MB4192:
 X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <PR3PR10MB404695A543A51B5177D8BD4EB6B99@PR3PR10MB4046.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1850;
+X-Microsoft-Antispam-PRVS: <PR3PR10MB4192AC6167FC376A3405760FB6B99@PR3PR10MB4192.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1284;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?dS7A9eFcAFEOo+lfolApcqAav3ivGVbR6XuJLJ5JxuoTng8XlB+I+wH4RvBc?=
- =?us-ascii?Q?DIbNKfpzyRdyc6B6UxeSoT08gfVwpON7zvrBXeOzgRcEIENNCciYRB48XDEd?=
- =?us-ascii?Q?G/i+WGuB0rVqo6SW2TDzk2cH/qAgMSw4dZAqEvtgi3tZdEIho+dygAoqV1XC?=
- =?us-ascii?Q?GszKAYJ1tnbt7Yn78ZfyMsPsZvksJLOYPey3nyttFnRvvShvRFJILE4j45gJ?=
- =?us-ascii?Q?ylDB22hY0D58z0hssoY2jFYCtBdFWvdVrZI01OB4AF4DL/rvLdPtED78B5f+?=
- =?us-ascii?Q?UKtXh/fGRcJyRhsk6k655XBMaQCXE2Vb0GiWyv9szwfjEDy82aqq45QdaW0k?=
- =?us-ascii?Q?rtPA9RzcoPUwC6KlfOqCd9LZYekxA2IK7Up4n2ZJbsDA4oOtcQkrxyZBseks?=
- =?us-ascii?Q?q6t3WfpVHophcp+sJuK3Tv3RFbw4qxW/t8/ZyP7g5vFHX8/KZu5YHWTCRtfi?=
- =?us-ascii?Q?ZZt/rp8dHwNB8Hps4KxiglnRzAhVaKj2jcOXUU6Jbu0N4LaRSibckYDsVXw0?=
- =?us-ascii?Q?WZ2NEOB2ScW/Qs8rcbit6veDA/DrJqyRPsEQTQmBfybVWiOJNdkiMsMS2XK+?=
- =?us-ascii?Q?CPo/bmzZ52ce/zHIYcWkC75dRBb7gxhI8SiYbAC8BjwvKzbusurxKfs7KKps?=
- =?us-ascii?Q?c9/dhXyrdeX0ikjLbU6XkF90TBrV7ZptouJpsdETJyUXqFsq0RwZnn4hbPyH?=
- =?us-ascii?Q?QWkg9AYnQ9uFDJrEVQJtiDs18JRhKlgu13p5V0SEm/u/IfOL/0/tGBRQdAmd?=
- =?us-ascii?Q?P2qqzyKz52+4Lfrzvzkt7vsSjKzZsUfAms2mtO84uNwTMQ0eCbw+PQphIrQS?=
- =?us-ascii?Q?gc8ffanwzt0pKrbYMUl0S4eHA+jU/IShwHd5ItKcU6HCPA8fuj+0yW6iuY61?=
- =?us-ascii?Q?NjXw4yiGbe+NQha0W+EcjJwFhGBtxuiNKyTwppAGdwKe7NwZ5RE8H0cC3uCX?=
- =?us-ascii?Q?9dqee8yTDQ1HtblrMVeVNPukIs1gIEAOE1nlKkPmX6u74guwpsLXu3wo7Bt9?=
- =?us-ascii?Q?Medt8quYGr4p5RuSpMvl4RTfBA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(366004)(136003)(376002)(39840400004)(396003)(346002)(107886003)(36756003)(2906002)(1076003)(83380400001)(6916009)(316002)(4326008)(38100700002)(6496006)(8676002)(2616005)(5660300002)(66556008)(66476007)(66946007)(86362001)(8936002)(186003)(52116002)(6666004)(508600001)(6486002)(23200700001);DIR:OUT;SFP:1501;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UmOB9eNEFG7xg0GGM7wLZHYVz2+g0t478qOotcZFHiGq4oF9KsAO676+8GYa?=
+ =?us-ascii?Q?xkvDxeLLgBngNz7C52sj+UIpBnxpVHJFNeChoKorxdWQxHgD5yNcsTjydrcr?=
+ =?us-ascii?Q?rd/e+ca1RPHcNNrFe5gQwX7ZDGVVYaxw88JSiFovnVSDln2G02+wA1qC+PDV?=
+ =?us-ascii?Q?BeOCMA6203GJ1V85KJS7vvTDxbF8eyX6H0UEIvKWUC9UGTUE4IfnkAMwe7oa?=
+ =?us-ascii?Q?vQaX0zcVI0DBDMDpJYfTB88J82/SqHJAgs2o+SPMNiC8I26OEMLrsJErCJDt?=
+ =?us-ascii?Q?3O24j8aoqN4BBn6JwuWt1zVw1DassQcP7CcFQRb32tON6YtCNJ9q/U8hpdkE?=
+ =?us-ascii?Q?EL+/HP0BsJSZ2Pd+phn7ONE0h93malOSdEEoD5x3HVWbuJCyxVNhyndE7vbz?=
+ =?us-ascii?Q?i/ydNGhy5U1f2qnqPbbbvLxUKtjY9nRMBgVtDA/gfdvK9V5GDTrhMFfHMUjT?=
+ =?us-ascii?Q?Cde9dtwVpJjGrzaLNWoOa820NtOJhQU9JhdB80UGuR/vudyviOoQ/tesQV4T?=
+ =?us-ascii?Q?R/zRL/lsusjNigoCt1qkNcxDbWPKWDKmBVVKyQ6SFGJThjct/RWtldPB+MBp?=
+ =?us-ascii?Q?dzHB20aLlXvh7gzIm2yJj4ygdsgpGwtczRbzO46bZInpQfurt+PcD+NNSehs?=
+ =?us-ascii?Q?rpL/pU+WgohQlrFilTvKYu/8ywRIlo+EIsEb3wp138+wNLKz2odLjiJLK+gN?=
+ =?us-ascii?Q?kRxVddYlfRiWHS3j8c/Vl9HEWVnqlBPZXCK/ewCJLLlyhbfHq3AgCn7xDxra?=
+ =?us-ascii?Q?QhHy1fIZlMAsjWWqMEfPjdyx7ggxP0S3aMpI8uoeL+sJgP8mXFn2LHhGOdZb?=
+ =?us-ascii?Q?238/59GIsBsbvfqLo8o8ORO+Z6dp+KSaDAALVSa4MWgBZEXJ1bYAwCoUWZek?=
+ =?us-ascii?Q?RszYz0Bd9XSpltEbmiMu0MVldbPVeAJz2NQvFerGz0ILsXhws1etwbFtanKu?=
+ =?us-ascii?Q?b2eNYHUr7TYfFswLoH9czS30/hk5u0Cx319W0gxTwX3syoBiVLj08swvMJ2M?=
+ =?us-ascii?Q?5mknR18fdQh1WxBdLRIkp336aQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(39830400003)(366004)(396003)(136003)(346002)(376002)(66476007)(66556008)(186003)(66946007)(2616005)(38100700002)(6916009)(6486002)(36756003)(2906002)(4326008)(107886003)(6666004)(508600001)(52116002)(86362001)(8936002)(316002)(8676002)(5660300002)(6496006)(83380400001)(1076003)(23200700001);DIR:OUT;SFP:1501;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xFJlikwKQkenF7vBOa3RW86H9KJtc6Q6U+YLqT6JHyzZfqzpFTEM3pxnPn3W?=
- =?us-ascii?Q?owUjqV7L7CNOLm6vGZmPFXbC9VD/MbhJvhIlz7EmWenyZ/qCIKa1eOUdLvbT?=
- =?us-ascii?Q?fz3W+cf8cQjlA82mV/GWY9gQIMfHGKRMilsOPKn4ZaNkFQU9Ri39oBPdLJfQ?=
- =?us-ascii?Q?IWJXdGbmjMux5ivP/UmQ599bdyVFSgeuzYWCfYGhsZPQolhOzH9IKIxryg8z?=
- =?us-ascii?Q?IWlWkJMY4zjwQNr5cfs6+2i54+tskYKRmSKHoGpc/nTIrzAYj0lIfdxlS+4/?=
- =?us-ascii?Q?HNTFV+9i9tH5E2GEJVhZOMOrj/N5KtSrEmlBJ7uGd5BEJZqBHrvirmfWpI8H?=
- =?us-ascii?Q?4yrVfXpbDMnawT4c+OVUqg441gfn2pv4mJnfN/pbJNiVtBz6rc7o/lzKwMqg?=
- =?us-ascii?Q?Y7PRMjSS0eGLctVtkIc26Tmhjiox5XAtsIrYysDoJ3n9uzoBx+5zoTGqpFkE?=
- =?us-ascii?Q?XOx020mZ92T6IKJYI06AKgX69eVqPbDz4X1HypKkX9dfx9WRQnQNhDIHaDs2?=
- =?us-ascii?Q?RKOlkLqkuUT/BMLeEoafJCSqcuWTyyTJk9I4G1gcHGpv1/gHCQmrIN+d1MFd?=
- =?us-ascii?Q?LJ4ALA3zDUdevt+W0OYAfI8Y7lSF1X6ZagUj0EordqNwM60l6EGlsqkJUanw?=
- =?us-ascii?Q?ZFhc/2CMsuCIR5NJZffqGSAMmx1EAGbqzoc9d5CTJhu6TWN9oGQqyv9jLEUD?=
- =?us-ascii?Q?qx2mVMdDdu5buIhh0fb9+U2fm4KaDIB6r5tFMB1q0tS8Zx6E8p3L3sn2Vc+z?=
- =?us-ascii?Q?nkXRkX9NabSd4YLWPgwOtQ6N3vUaFh0oNwv2pT45C0jbCjK6nOmsYRbzYUev?=
- =?us-ascii?Q?cDUcYwApYb2bP269R7rRX+oxNQzEQ0m26Ta8Kv2kGXwBFq2+DVrGGQmGJ9Ml?=
- =?us-ascii?Q?glK+LsltmY172vFwe+1DKaIGHjoCq5mdJr4eZqW3Fv1X7SC9j2BoN3+HEpHv?=
- =?us-ascii?Q?6+OZwwFC/p4qKcmoYDJbKFe+hMJe/g6i5n/8XsU3tVJtKpa+/K6SkrsflCs8?=
- =?us-ascii?Q?L+F0pfi4th+dUg+dfZ9FWkgZMfkAFb6fTihZyt9GF88pEVesIrw9IaIxHaDO?=
- =?us-ascii?Q?UOkJDjHkkkEWmEFSbvrWBi9JuOjMKELXuNHaUqSDpDO9ebEyDP3PUUNrv2FS?=
- =?us-ascii?Q?7YUQsLCxkkUOWyl78LvfXAPxv79DoR3JtX1ZxAd8xSqLTNvKcPJny97HKS7f?=
- =?us-ascii?Q?6qZRq9Y9RyEWya0vKGx9aQAHfl+KSXI11X9VmHST7gtMFUJDe2IjjkndkNCG?=
- =?us-ascii?Q?iQdGaTQOyJ58xli/JK/VZuts3IBh7gxwQsD/XOvE0jeg7RwpbnzfOI9Qkpr5?=
- =?us-ascii?Q?Or3Bn+YAImlsXO6iS9X/8A7YNNVrhK+WAfOIp90ElOdPmQpkEwm3h2zYIDws?=
- =?us-ascii?Q?U/vI0WVnNyG9tFhwLTs3hBFKTLKB?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WJQZnBmhT270vmWfa3ASMbY0SJVpAfz2vJbsLL1WjlgjS9pjc76C6wey1wlX?=
+ =?us-ascii?Q?zYG69gPcRridyXgrzw0qvD6huvH2xPC1Re3WK91gVEwZrBvKI3m1yOgpKjoU?=
+ =?us-ascii?Q?jHtQUPr3QSJu0HvPEjC1IONJimPTHu/C+AopsIMN7BcUH6d5Kgc9bEi8l4+S?=
+ =?us-ascii?Q?p/BLt87ckuE0v5GeqVj7b+MAUhNDxrpy4ZlGFVTu8+n5a2ux+vr1phHT4Lj2?=
+ =?us-ascii?Q?KWRmEVW20k4M+pkEtwk+Uc7b49Vdj2Ml+/yC2DY8ELGBhwKEji3MW/Gu+UdZ?=
+ =?us-ascii?Q?EFTXCYBSRqK4JDEeZD2E3p5gOA8J1MBxQjsMXYtX8qqGJpMsd/LNJJzqayUW?=
+ =?us-ascii?Q?075ax2AdPphaS6Hf90LTVwN/cgBRcWinD0VEjMm8EV+9vmqWzSF8EPx2bZax?=
+ =?us-ascii?Q?4EVzilLV6D/lBU1RcpIe1L4up/ennseoRemSxAoNROjQkB64gYvYhJflotFW?=
+ =?us-ascii?Q?P1YUuZZ4TEHMGG4wPWOUQ6WP0yH5liCCHj9rRLx074caBj2kOJyjmkJNCqrp?=
+ =?us-ascii?Q?nX/QmVqNmsKc66UfYGJ3sW9H3wI6Em8SfmVkYQgvjPouQ7vrjk0eUCQsOPBO?=
+ =?us-ascii?Q?v3ZcTc5jS7sWac9sJyA4GwPL0zTcM/mxkblq3LUY9+Fnp4bWIlbCqhzr1PHG?=
+ =?us-ascii?Q?iZ1GiYXdXagnl6YqajpxkEd4zhQHigrKUtK6n0bdrO+1N6kjVuDHaajAyCd4?=
+ =?us-ascii?Q?0dyIBLSGWf5tei+ae/wv5LFkj6eIqTDS5+zyDRJ2DkJpL0jZeq1ON3/YNtdF?=
+ =?us-ascii?Q?5ubg1Z2joq3rLLguB8bwQ92DeZIgQNT4AmPBCMgZysiu38CY+N7NsmVtvGqm?=
+ =?us-ascii?Q?0EJmJwHoVP+edGYpznfHU01NHmzZZrr5PxkFdp8znLFNVpp/rf3muL5y2V+Q?=
+ =?us-ascii?Q?4B/fDBneJq8vSAiZgMsyVEMgsrlpYze6yJk8oquJWSc1YtBQo/KKWgCygKHr?=
+ =?us-ascii?Q?gTmISOU5QbUpWTZyMyGmHi/dlemwNVsY3xAbEO3Brn2K77y+d2ow4DcSfS0Q?=
+ =?us-ascii?Q?df/4vh6cr8XMIURgFOULUwHL7iUJJATf4dwPehjSsRyZgew+Az9yVQsccgxe?=
+ =?us-ascii?Q?jERaOxMQDYDwg1PWw6nnXLQsyMjS/uUx43FboZzA7epqpXx3Bv6cgD6oDEf6?=
+ =?us-ascii?Q?iADIOmPDGy3vRQBGqL/nWt65azz2O/R9UKPvABgiCb/tvgkdjaKlUNEqMe5H?=
+ =?us-ascii?Q?7ymyAQkQjciBaX3MO6iuEvJneGYMv2dXOgiJKlc8m9st4WEmi14X6nVJcE+l?=
+ =?us-ascii?Q?8iENVLblDNra7WkkQ4jJY6HJz2xNB3kFdLAlH1Oa+eJi/4IAOFEYY+67Po0U?=
+ =?us-ascii?Q?jDwihhOTfgGQMAywBv8ecxszhKbGC3iqG7NjvaYJ3xC5WyUlUTSLmXG1iR5V?=
+ =?us-ascii?Q?UrJhxyx/hM2do9fmUiYPzAzeEYPk?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23e3573c-97c2-498d-f319-08d98fddd0fe
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b81fc08-af3c-48ba-13d5-08d98fddd206
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2021 13:15:10.7565
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2021 13:15:12.4809
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mThGWUoXQsX7EX6KClOpVIJ3JBT2WSUQUKqoTAbC6e1fXHzwTzz5cqYng5UY3+NLq50E+fTM8KJdo5fRuTBcVbqx4hctV0Hw32KWs1k07xw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4046
+X-MS-Exchange-CrossTenant-UserPrincipalName: PpY95Z1eOnkFoEEt92/iLAa3q8FZp7dxIGMg2G1kp66OC4Qr60iKJEruQdT1ws/SeByH1LreZuC8fkLat4MG8xXsLZ2o+T4DUeEhM0ZFSlo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4192
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-if ssh-keygen supports -Overify-time, add test keys marked as expired,
-not yet valid and valid both within the test_tick timeframe and outside of it.
+Pass the commit date and ident to check_signature when calling git log.
+Implements the same tests as for verify-commit.
 
 Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- t/lib-gpg.sh | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ log-tree.c     | 23 +++++++++++++++++++----
+ t/t4202-log.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 4 deletions(-)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index f99ef3e859..139e7a45ea 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -90,6 +90,10 @@ test_lazy_prereq RFC1991 '
- GPGSSH_KEY_PRIMARY="${GNUPGHOME}/ed25519_ssh_signing_key"
- GPGSSH_KEY_SECONDARY="${GNUPGHOME}/rsa_2048_ssh_signing_key"
- GPGSSH_KEY_UNTRUSTED="${GNUPGHOME}/untrusted_ssh_signing_key"
-+GPGSSH_KEY_EXPIRED="${GNUPGHOME}/expired_ssh_signing_key"
-+GPGSSH_KEY_NOTYETVALID="${GNUPGHOME}/notyetvalid_ssh_signing_key"
-+GPGSSH_KEY_TIMEBOXEDVALID="${GNUPGHOME}/timeboxed_valid_ssh_signing_key"
-+GPGSSH_KEY_TIMEBOXEDINVALID="${GNUPGHOME}/timeboxed_invalid_ssh_signing_key"
- GPGSSH_KEY_WITH_PASSPHRASE="${GNUPGHOME}/protected_ssh_signing_key"
- GPGSSH_KEY_PASSPHRASE="super_secret"
- GPGSSH_ALLOWED_SIGNERS="${GNUPGHOME}/ssh.all_valid.allowedSignersFile"
-@@ -112,7 +116,20 @@ test_lazy_prereq GPGSSH '
- 	echo "\"principal with number 2\" $(cat "${GPGSSH_KEY_SECONDARY}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
- 	ssh-keygen -t ed25519 -N "${GPGSSH_KEY_PASSPHRASE}" -C "git ed25519 encrypted key" -f "${GPGSSH_KEY_WITH_PASSPHRASE}" >/dev/null &&
- 	echo "\"principal with number 3\" $(cat "${GPGSSH_KEY_WITH_PASSPHRASE}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
--	ssh-keygen -t ed25519 -N "" -f "${GPGSSH_KEY_UNTRUSTED}" >/dev/null
-+	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_UNTRUSTED}" >/dev/null
-+'
+diff --git a/log-tree.c b/log-tree.c
+index 3c3aec5c40..2fd7f0c398 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -509,12 +509,18 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+ 	struct strbuf signature = STRBUF_INIT;
+ 	struct signature_check sigc = { 0 };
+ 	int status;
++	struct strbuf payload_signer = STRBUF_INIT;
++	timestamp_t payload_timestamp = 0;
+ 
+ 	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
+ 		goto out;
+ 
+-	status = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
+-				 signature.len, &sigc);
++	if (parse_signed_buffer_metadata(payload.buf, "committer", &payload_timestamp, &payload_signer))
++		goto out;
 +
-+test_lazy_prereq GPGSSH_VERIFYTIME '
-+	# Check if ssh-keygen has a verify-time option by passing an invalid date to it
-+	ssh-keygen -Overify-time=INVALID -Y check-novalidate -s doesnotmatter 2>&1 | grep -q -F "Invalid \"verify-time\"" &&
-+	ssh-keygen -t ed25519 -N "" -C "timeboxed valid key" -f "${GPGSSH_KEY_TIMEBOXEDVALID}" >/dev/null &&
-+	echo "\"timeboxed valid key\" valid-after=\"20050407000000\",valid-before=\"200504100000\" $(cat "${GPGSSH_KEY_TIMEBOXEDVALID}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	ssh-keygen -t ed25519 -N "" -C "timeboxed invalid key" -f "${GPGSSH_KEY_TIMEBOXEDINVALID}" >/dev/null &&
-+	echo "\"timeboxed invalid key\" valid-after=\"20050401000000\",valid-before=\"20050402000000\" $(cat "${GPGSSH_KEY_TIMEBOXEDINVALID}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	ssh-keygen -t ed25519 -N "" -C "expired key" -f "${GPGSSH_KEY_EXPIRED}" >/dev/null &&
-+	echo "\"principal with expired key\" valid-before=\"20000101000000\" $(cat "${GPGSSH_KEY_EXPIRED}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
-+	ssh-keygen -t ed25519 -N "" -C "not yet valid key" -f "${GPGSSH_KEY_NOTYETVALID}" >/dev/null &&
-+	echo "\"principal with not yet valid key\" valid-after=\"29990101000000\" $(cat "${GPGSSH_KEY_NOTYETVALID}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}"
++	status = check_signature(payload.buf, payload.len, payload_timestamp,
++				 &payload_signer, signature.buf, signature.len,
++				 &sigc);
+ 	if (status && !sigc.output)
+ 		show_sig_lines(opt, status, "No signature\n");
+ 	else
+@@ -524,6 +530,7 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+  out:
+ 	strbuf_release(&payload);
+ 	strbuf_release(&signature);
++	strbuf_release(&payload_signer);
+ }
+ 
+ static int which_parent(const struct object_id *oid, const struct commit *commit)
+@@ -558,6 +565,8 @@ static int show_one_mergetag(struct commit *commit,
+ 	int status, nth;
+ 	struct strbuf payload = STRBUF_INIT;
+ 	struct strbuf signature = STRBUF_INIT;
++	struct strbuf payload_signer = STRBUF_INIT;
++	timestamp_t payload_timestamp = 0;
+ 
+ 	hash_object_file(the_hash_algo, extra->value, extra->len,
+ 			 type_name(OBJ_TAG), &oid);
+@@ -582,9 +591,14 @@ static int show_one_mergetag(struct commit *commit,
+ 
+ 	status = -1;
+ 	if (parse_signature(extra->value, extra->len, &payload, &signature)) {
++
++		if (parse_signed_buffer_metadata(payload.buf, "tagger", &payload_timestamp, &payload_signer))
++			strbuf_addstr(&verify_message, _("failed to parse timestamp and signer info from payload"));
++
+ 		/* could have a good signature */
+-		status = check_signature(payload.buf, payload.len, 0, NULL,
+-					 signature.buf, signature.len, &sigc);
++		status = check_signature(payload.buf, payload.len, payload_timestamp,
++					 &payload_signer, signature.buf,
++					 signature.len, &sigc);
+ 		if (sigc.output)
+ 			strbuf_addstr(&verify_message, sigc.output);
+ 		else
+@@ -597,6 +611,7 @@ static int show_one_mergetag(struct commit *commit,
+ 	strbuf_release(&verify_message);
+ 	strbuf_release(&payload);
+ 	strbuf_release(&signature);
++	strbuf_release(&payload_signer);
+ 	return 0;
+ }
+ 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 6a650dacd6..2b12baab77 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1626,6 +1626,24 @@ test_expect_success GPGSSH 'setup sshkey signed branch' '
+ 	git commit -S -m signed_commit
  '
  
- sanitize_pgp() {
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed commits with keys having defined lifetimes' '
++	test_config gpg.format ssh &&
++	touch file &&
++	git add file &&
++
++	echo expired >file && test_tick && git commit -a -m expired -S"${GPGSSH_KEY_EXPIRED}" &&
++	git tag expired-signed &&
++
++	echo notyetvalid >file && test_tick && git commit -a -m notyetvalid -S"${GPGSSH_KEY_NOTYETVALID}" &&
++	git tag notyetvalid-signed &&
++
++	echo timeboxedvalid >file && test_tick && git commit -a -m timeboxedvalid -S"${GPGSSH_KEY_TIMEBOXEDVALID}" &&
++	git tag timeboxedvalid-signed &&
++
++	echo timeboxedinvalid >file && test_tick && git commit -a -m timeboxedinvalid -S"${GPGSSH_KEY_TIMEBOXEDINVALID}" &&
++	git tag timeboxedinvalid-signed
++'
++
+ test_expect_success GPGSM 'log x509 fingerprint' '
+ 	echo "F8BF62E0693D0694816377099909C779FA23FD65 | " >expect &&
+ 	git log -n1 --format="%GF | %GP" signed-x509 >actual &&
+@@ -1663,6 +1681,31 @@ test_expect_success GPGSSH 'log --graph --show-signature ssh' '
+ 	grep "${GOOD_SIGNATURE_TRUSTED}" actual
+ '
+ 
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'log shows failure on expired signature key' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	git log --graph --show-signature -n1 expired-signed >actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'log shows failure on not yet valid signature key' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	git log --graph --show-signature -n1 notyetvalid-signed >actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'log show success with commit date and key validity matching' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	git log --graph --show-signature -n1 timeboxedvalid-signed >actual &&
++	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
++	! grep "${GPGSSH_BAD_SIGNATURE}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'log shows failure with commit date outside of key validity' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	git log --graph --show-signature -n1 timeboxedinvalid-signed >actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
+ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+ 	test_when_finished "git reset --hard && git checkout main" &&
+ 	git checkout -b plain main &&
 -- 
 2.31.1
 
