@@ -2,124 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42E0FC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67DF0C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 190EC604DB
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EF3661181
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241277AbhJOQ12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:27:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S241263AbhJOQ2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 12:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241257AbhJOQ1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 12:27:16 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07988C061570
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:10 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d9so1594895pfl.6
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:10 -0700 (PDT)
+        with ESMTP id S241292AbhJOQ15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 12:27:57 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EBD0C061769
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:43 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id t11so6699922plq.11
+        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=OCKr9XBN6fIc9F6IWgiUYddE52S+jfpTCHYWH2P6mec=;
-        b=mbLE7RLeUqAiv8PCp5x587QLA0b2PDlW9fq9h3o998pUu08EUzGd13e1mfZELIR7Sf
-         fEThWh04S21jzuRYEt+qqqOwUzf8VDjEVWuQ2dN/ugkwJFixXPQiTVuQIQXkeYg8jUX1
-         RfJ0Wc/vl4mQgRd1NlOcj/0g2a5BuBdfc73CIA8Uq1Zq1kEZV4KGd2XsviqkJZTQ3EjL
-         8Wv5vTBWKdpbnUBswzYVUwdyN0KimJhwjsSlmWkv7na4wUQOMg663EN91T2syWp1HoSd
-         k/pZ7wHNWzC5d2mDJ8LnVoYSLcpcVhqS6uaPmgPFSqimDpdGZ9U3n+nB8B4xYC3FDKNE
-         6Sag==
+        bh=gcRrF+XONew4FUq7XSUImAixR9ykJvqgiMHEhZJn3aM=;
+        b=Gpm7HYDSnN9QgRXMh0Tx7Qw/xdX9bg9p6W6xrBwP4wJUwrjxkIlKU9WbLi6T02S7Td
+         wQams1eIFE6cd8STpNYDVNjUSMawecYYHiX6rkJw2RvozOhFi7sAxiiUUJ6wVwDo0try
+         YhZlo1Li8fVifzeutzI2mxhRat5ezsmhMv/26xgTM/ibe9WPTRA1ykm9ytaf0Fy9caVq
+         PHPxhhKHdiYNgku74wBoFeUuOQOcNXC39HfEkYeGKIPAtCmHUVeIDg9BW3ujHFqpGAWu
+         vBQB9g/KKl238CKnuGGvVeSsv643LFCTWt6cD/dWdH+Sd+e5fmSKQ14NbNGwjQrZuITI
+         1D9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=OCKr9XBN6fIc9F6IWgiUYddE52S+jfpTCHYWH2P6mec=;
-        b=HE4PxL4aDJKcImZj1yGDk4WHz9Etuvuuw2qgxDx0gr2jLvY8V8yBA7Khed5ACTRm/P
-         Jwu0lBKIUzfncYlF8GqiLSpNhfs69zGH+huWEUUjCzqyJ+NbyDkVz6emc/bG3CsBJjmP
-         FQQIUqYxyp7l74WWo2BDs/DkGfVh6w1O6p0stx2reABi4GumSRGPeNLVntw5h9+slCOc
-         9NrOPqtOUzfwbFu+gERj1lUHMUPmhRZatLUVD/izJMS6yAeceTjbitGvPA7s27G9O7X2
-         tnRfnQD2TpbJyIHnjhWLO+z+D5uPraD9W0SibkpsSKczRWurfmbPFyLcDpdTwNQlrcPo
-         X/Ag==
-X-Gm-Message-State: AOAM532D5p0NlIyjDGl3gzkI1ZQs5eSqTmeH3UfoFJ2rrbi+xAgJfTae
-        1a8tdVYkxKzJ5l+WM5bhX9TJZK2elT3svg==
-X-Google-Smtp-Source: ABdhPJyE1MQ13ZNfdaocSwY43q1657kAaq+ds5eER1oyecLtHeiDxMaTAhYQhV/rlUFQkE5q06721Q==
-X-Received: by 2002:a63:35c6:: with SMTP id c189mr2960445pga.22.1634315109339;
-        Fri, 15 Oct 2021 09:25:09 -0700 (PDT)
+        bh=gcRrF+XONew4FUq7XSUImAixR9ykJvqgiMHEhZJn3aM=;
+        b=Ub9D0qGCKAqPyrna1BcYL+ijBwgsFLbSfWp1nFzbU40gwfQ0bNg6LvX6hMtlFK5BOj
+         kCMBlRg/acYT06V1lNZQ25vyFhcg2DhhYjhR7Ap64cL3LI4hHbXSNKw0pBzNUFcwDemT
+         Fy17vL8tGSQeCzOmH9yh064K5evssdZ7IGgwWRobuuxKk4BNK9Dsci6lT5kwjkOotPem
+         JJyUkgztDm79SeU0ahzTxIlOXVQBd6AvRf3gb3g5zKwS/UxXVzPGrugZG/3qGxln0flg
+         6q7EfzJkEV7IGeRP1AzgjQrY+L2wXa+vpegG9m4p/ueJIU0DNkA8DXGJaPezlGQPyDJ/
+         Ekcw==
+X-Gm-Message-State: AOAM531DyvPZY03C9sGBfK55lPfudHQfnIQA0U4gFjEP9wPsMJf1RB/G
+        tFNIqjQvTGQka7ATtnOVUN4Ajg==
+X-Google-Smtp-Source: ABdhPJxHNNxuxZS48IOFwjJH4fTar55dlQhDoqO0Ejlsu1ZOW5kByLl60wNu7IemrXOGlAuGQy9TfA==
+X-Received: by 2002:a17:902:7246:b0:138:a6ed:66cc with SMTP id c6-20020a170902724600b00138a6ed66ccmr12328202pll.22.1634315142554;
+        Fri, 15 Oct 2021 09:25:42 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cc2f:afb0:ab09:f218])
-        by smtp.gmail.com with ESMTPSA id q12sm5295298pgv.26.2021.10.15.09.25.08
+        by smtp.gmail.com with ESMTPSA id c27sm5455611pgb.89.2021.10.15.09.25.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 09:25:08 -0700 (PDT)
-Date:   Fri, 15 Oct 2021 09:25:04 -0700
+        Fri, 15 Oct 2021 09:25:42 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 09:25:37 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2 03/13] rebase: convert pre-rebase to use hook.h
-Message-ID: <YWmrYE65qWjStVzf@google.com>
+Subject: Re: [PATCH v2 04/13] am: convert applypatch to use hook.h
+Message-ID: <YWmrgdFqxOQkjgD7@google.com>
 References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
- <patch-v2-03.13-6227a1e644d-20211015T093918Z-avarab@gmail.com>
+ <patch-v2-04.13-0e34eb54054-20211015T093918Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-03.13-6227a1e644d-20211015T093918Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-04.13-0e34eb54054-20211015T093918Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 12, 2021 at 03:30:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Oct 12, 2021 at 03:30:29PM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
 > 
-> Move the pre-rebase hook away from run-command.h to and over to the
-> new hook.h library.
+> Teach pre-applypatch, post-applypatch, and applypatch-msg to use the
+> hook.h library instead of the run-command.h library.
 > 
 > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-
 Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 
 > ---
->  builtin/rebase.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+>  builtin/am.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
 > 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 8c6393f6d78..9a44939d662 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -28,6 +28,7 @@
->  #include "sequencer.h"
->  #include "rebase-interactive.h"
->  #include "reset.h"
-> +#include "hook.h"
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 3527945a467..2cfe6451b6f 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -446,9 +446,11 @@ static void am_destroy(const struct am_state *state)
+>  static int run_applypatch_msg_hook(struct am_state *state)
+>  {
+>  	int ret;
+> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
 >  
->  #define DEFAULT_REFLOG_ACTION "rebase"
+>  	assert(state->msg);
+> -	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
+> +	strvec_push(&opt.args, am_path(state, "final-commit"));
+> +	ret = run_hooks_oneshot("applypatch-msg", &opt);
 >  
-> @@ -1305,6 +1306,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  	char *squash_onto_name = NULL;
->  	int reschedule_failed_exec = -1;
->  	int allow_preemptive_ff = 1;
-> +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
->  	struct option builtin_rebase_options[] = {
->  		OPT_STRING(0, "onto", &options.onto_name,
->  			   N_("revision"),
-> @@ -2021,9 +2023,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	if (!ret) {
+>  		FREE_AND_NULL(state->msg);
+> @@ -1609,7 +1611,7 @@ static void do_commit(const struct am_state *state)
+>  	const char *reflog_msg, *author, *committer = NULL;
+>  	struct strbuf sb = STRBUF_INIT;
+>  
+> -	if (run_hook_le(NULL, "pre-applypatch", NULL))
+> +	if (run_hooks_oneshot("pre-applypatch", NULL))
+>  		exit(1);
+>  
+>  	if (write_cache_as_tree(&tree, 0, NULL))
+> @@ -1661,7 +1663,7 @@ static void do_commit(const struct am_state *state)
+>  		fclose(fp);
 >  	}
 >  
->  	/* If a hook exists, give it a chance to interrupt*/
-> +	strvec_push(&hook_opt.args, options.upstream_arg);
-> +	if (argc)
-> +		strvec_push(&hook_opt.args, argv[0]);
->  	if (!ok_to_skip_pre_rebase &&
-> -	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
-> -			argc ? argv[0] : NULL, NULL))
-> +	    run_hooks_oneshot("pre-rebase", &hook_opt))
->  		die(_("The pre-rebase hook refused to rebase."));
+> -	run_hook_le(NULL, "post-applypatch", NULL);
+> +	run_hooks_oneshot("post-applypatch", NULL);
 >  
->  	if (options.flags & REBASE_DIFFSTAT) {
+>  	strbuf_release(&sb);
+>  }
 > -- 
 > 2.33.0.1567.g7b23ce7ed9e
 > 
