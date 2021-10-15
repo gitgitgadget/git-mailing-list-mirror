@@ -2,349 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56DADC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E7C7C4332F
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:15:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40FB361090
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:14:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 719D461090
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236917AbhJOQQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:16:15 -0400
-Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:60371 "EHLO
-        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237230AbhJOQQJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Oct 2021 12:16:09 -0400
-Received: from MTA-11-4.privateemail.com (mta-11-1.privateemail.com [198.54.118.201])
+        id S241191AbhJOQRo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 12:17:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51647 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236567AbhJOQRn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 12:17:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D078FEC96;
+        Fri, 15 Oct 2021 12:15:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KRe8S6bHdOYK
+        xtRbMMPWaJuVwapjdY1+zQ2I8HL26hk=; b=xTmE/G7anTReF1HlHQs1sfYektLg
+        QwqEWLLM+iPqM5X7bDG21+7IcBu5YLG7fuwVQAgoaC2OwmgR5PEKIzZyVHYRWnxt
+        OFQz68xPjo2pBBt5l66rrlnJfH10iD5XtLurRSFwX2IYUJF3Hsn9QtVJYCtZx2O1
+        tWCp25zgUNtwMa0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43F6DFEC95;
+        Fri, 15 Oct 2021 12:15:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id C79A680AC6
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 12:14:02 -0400 (EDT)
-Received: from mta-11.privateemail.com (localhost [127.0.0.1])
-        by mta-11.privateemail.com (Postfix) with ESMTP id B0C4A18000A5;
-        Fri, 15 Oct 2021 12:14:01 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.246])
-        by mta-11.privateemail.com (Postfix) with ESMTPA id 3F2DE1800084;
-        Fri, 15 Oct 2021 12:14:01 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v13 2/3] pretty: colorize pattern matches in commit messages
-Date:   Fri, 15 Oct 2021 12:13:55 -0400
-Message-Id: <20211015161356.3372-2-someguy@effective-light.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211015161356.3372-1-someguy@effective-light.com>
-References: <20211015161356.3372-1-someguy@effective-light.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2248FEC93;
+        Fri, 15 Oct 2021 12:15:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/3] commit-graph tests: fix another
+ graph_git_two_modes() helper
+References: <cover-0.3-00000000000-20211014T233343Z-avarab@gmail.com>
+        <patch-2.3-d6934031882-20211014T233343Z-avarab@gmail.com>
+Date:   Fri, 15 Oct 2021 09:15:34 -0700
+In-Reply-To: <patch-2.3-d6934031882-20211014T233343Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 15 Oct
+ 2021 01:37:15 +0200")
+Message-ID: <xmqqwnme8dsp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2102AA34-2DD3-11EC-BAF2-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git log" command limits its output to the commits that contain strings
-matched by a pattern when the "--grep=<pattern>" option is used, but unlike
-output from "git grep -e <pattern>", the matches are not highlighted,
-making them harder to spot.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Teach the pretty-printer code to highlight matches from the
-"--grep=<pattern>", "--author=<pattern>" and "--committer=<pattern>"
-options (to view the last one, you may have to ask for --pretty=fuller).
+> In 135a7123755 (commit-graph: add --split option to builtin,
+> 2019-06-18) this function was copy/pasted to the split commit-graph
+> tests, as in the preceding commit we need to fix this to use
+> &&-chaining, so it won't be hiding errors.
+>
+> Unlike its sister function in "t5318-commit-graph.sh", which we got
+> lucky with, this one was hiding a real test failure. A tests added in
+> c523035cbd8 (commit-graph: allow cross-alternate chains, 2019-06-18)
+> has never worked as intended. Unlike most other graph_git_behavior
+> uses in this file it clones the repository into a sub-directory, so
+> we'll need to refer to "commits/6" as "origin/commits/6".
 
-Also, it must be noted that we are effectively greping the content twice
-(because it would be a hassle to rework the existing matching code to do
-a /g match and then pass it all down to the coloring code), however it only
-slows down "git log --author=^H" on this repository by around 1-2%
-(compared to v2.33.0), so it should be a small enough slow down to justify
-the addition of the feature.
+Interesting.  The original created "fork" prepared the alternates
+structure in the preceding test, but tested the "behavour" of the
+commands outside the "fork" it just prepared?
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
-v2: make the commit message whole (add the missing ingredients), rename
-    append_matched_line() to append_line_with_color(), use
-    colors[GREP_COLOR_MATCH_SELECTED] instead of
-    colors[GREP_COLOR_MATCH_CONTEXT], allow the background color to be
-    customized, don't copy strings to a buffer when not coloring in
-    append_line_with_color(), rename next_match() to grep_next_match(),
-    repurpose grep_next_match()/match_one_pattern() for use in
-    append_line_with_color() (allowing us to remove duplicated matching
-    code in append_line_with_color()), document how to customize the
-    feature and modify some of the tests to fit the feature better.
+>  graph_git_two_modes() {
+> -	git -c core.commitGraph=3Dtrue $1 >output
+> -	git -c core.commitGraph=3Dfalse $1 >expect
+> +	git ${2:+ -C "$2"} -c core.commitGraph=3Dtrue $1 >output &&
+> +	git ${2:+ -C "$2"} -c core.commitGraph=3Dfalse $1 >expect &&
 
-v3: fix a formatting issue with the added documentation.
+OK, it was a bit curious to see :+ (instead of just +), but the
+caller unconditionally passes "$DIR" (with double quotes), so it is
+understandable.  Much more concise than having the caller to repeat
+${4+"$4"} where it says "$DIR".
 
-v4: add strbuf_add_with_color(), use the correct color code scheme in the
-    unit tests and add more unit tests.
-
-v5: separate grep changes from pretty changes and add some performance
-    analysis in the commit message.
-
-v6: put the documentation in the correct place, cleanup pretty.c and
-    format the unit tests according to the current convention.
-
-v7: get rid of all manual strbuf management, constify where now appropriate
-    and fix the header line prefix issue properly.
-
-v8: remove code that relies on grep_header_fields[].
-
-v11: clarify why we are grepping twice.
----
- Documentation/config/color.txt |   7 ++-
- pretty.c                       | 101 +++++++++++++++++++++++++++++----
- t/t4202-log.sh                 |  51 +++++++++++++++++
- 3 files changed, 145 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index e05d520a86..91d9a9da32 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -104,9 +104,12 @@ color.grep.<slot>::
- `matchContext`;;
- 	matching text in context lines
- `matchSelected`;;
--	matching text in selected lines
-+	matching text in selected lines. Also, used to customize the following
-+	linkgit:git-log[1] subcommands: `--grep`, `--author` and `--committer`.
- `selected`;;
--	non-matching text in selected lines
-+	non-matching text in selected lines. Also, used to customize the
-+	following linkgit:git-log[1] subcommands: `--grep`, `--author` and
-+	`--committer`.
- `separator`;;
- 	separators between fields on a line (`:`, `-`, and `=`)
- 	and between hunks (`--`)
-diff --git a/pretty.c b/pretty.c
-index 73b5ead509..2dd94af886 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,6 +431,52 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static inline void strbuf_add_with_color(struct strbuf *sb, const char *color,
-+					 const char *buf, size_t buflen)
-+{
-+	strbuf_addstr(sb, color);
-+	strbuf_add(sb, buf, buflen);
-+	if (*color)
-+		strbuf_addstr(sb, GIT_COLOR_RESET);
-+}
-+
-+static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
-+				   const char *line, size_t linelen,
-+				   int color, enum grep_context ctx,
-+				   enum grep_header_field field)
-+{
-+	const char *buf, *eol, *line_color, *match_color;
-+	regmatch_t match;
-+	int eflags = 0;
-+
-+	buf = line;
-+	eol = buf + linelen;
-+
-+	if (!opt || !want_color(color) || opt->invert)
-+		goto end;
-+
-+	line_color = opt->colors[GREP_COLOR_SELECTED];
-+	match_color = opt->colors[GREP_COLOR_MATCH_SELECTED];
-+
-+	while (grep_next_match(opt, buf, eol, ctx, &match, field, eflags)) {
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_add_with_color(sb, line_color, buf, match.rm_so);
-+		strbuf_add_with_color(sb, match_color, buf + match.rm_so,
-+				      match.rm_eo - match.rm_so);
-+		buf += match.rm_eo;
-+		eflags = REG_NOTBOL;
-+	}
-+
-+	if (eflags)
-+		strbuf_add_with_color(sb, line_color, buf, eol - buf);
-+	else {
-+end:
-+		strbuf_add(sb, buf, eol - buf);
-+	}
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
-@@ -496,9 +542,26 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		struct strbuf id = STRBUF_INIT;
-+		enum grep_header_field field = GREP_HEADER_FIELD_MAX;
-+		struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: ", what);
-+		if (pp->fmt == CMIT_FMT_FULLER)
-+			strbuf_addchars(sb, ' ', 4);
-+
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_line_with_color(sb, opt, id.buf, id.len, pp->color,
-+				       GREP_CONTEXT_HEAD, field);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1939,8 +2002,9 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
-+				 int color, int tabwidth, const char *line,
-+				 int linelen)
- {
- 	const char *tab;
- 
-@@ -1957,7 +2021,9 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_line_with_color(sb, opt, line, tab - line, color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1972,7 +2038,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
- 	 */
--	strbuf_add(sb, line, linelen);
-+	append_line_with_color(sb, opt, line, linelen, color, GREP_CONTEXT_BODY,
-+			       GREP_HEADER_FIELD_MAX);
- }
- 
- /*
-@@ -1984,11 +2051,16 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(sb, opt, pp->color, pp->expand_tabs_in_log,
-+				     line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_line_with_color(sb, opt, line, linelen, pp->color,
-+				       GREP_CONTEXT_BODY,
-+				       GREP_HEADER_FIELD_MAX);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2006,7 +2078,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2027,14 +2101,17 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
--					     line, linelen);
-+			strbuf_add_tabexpand(sb, opt, pp->color,
-+					     pp->expand_tabs_in_log, line,
-+					     linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_line_with_color(sb, opt, line, linelen,
-+					       pp->color, GREP_CONTEXT_BODY,
-+					       GREP_HEADER_FIELD_MAX);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 9dfead936b..3d240bba57 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -449,6 +449,57 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
- 	)
- '
- 
-+test_expect_success 'log --author' '
-+	cat >expect <<-\EOF &&
-+	Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
-+	EOF
-+	git log -1 --color=always --author="A U" >log &&
-+	grep Author log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --committer' '
-+	cat >expect <<-\EOF &&
-+	Commit:     C O Mitter <committer@<BOLD;RED>example<RESET>.com>
-+	EOF
-+	git log -1 --color=always --pretty=fuller --committer="example" >log &&
-+	grep "Commit:" log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log -i --grep with color' '
-+	cat >expect <<-\EOF &&
-+	    <BOLD;RED>Sec<RESET>ond
-+	    <BOLD;RED>sec<RESET>ond
-+	EOF
-+	git log --color=always -i --grep=^sec >log &&
-+	grep -i sec log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.selected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <GREEN>th<RESET><BOLD;RED>ir<RESET><GREEN>d<RESET>
-+	EOF
-+	git -c color.grep.selected="green" log --color=always --grep=ir >log &&
-+	grep ir log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c color.grep.matchSelected log --grep' '
-+	cat >expect <<-\EOF &&
-+	    <BLUE>i<RESET>n<BLUE>i<RESET>t<BLUE>i<RESET>al
-+	EOF
-+	git -c color.grep.matchSelected="blue" log --color=always --grep=i >log &&
-+	grep al log >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect <<EOF
- * Second
- * sixth
--- 
-2.33.0
-
+>  	test_cmp expect output
+>  }
+> =20
+> @@ -64,12 +64,13 @@ graph_git_behavior() {
+>  	MSG=3D$1
+>  	BRANCH=3D$2
+>  	COMPARE=3D$3
+> +	DIR=3D$4
+>  	test_expect_success "check normal git operations: $MSG" '
+> -		graph_git_two_modes "log --oneline $BRANCH" &&
+> -		graph_git_two_modes "log --topo-order $BRANCH" &&
+> -		graph_git_two_modes "log --graph $COMPARE..$BRANCH" &&
+> -		graph_git_two_modes "branch -vv" &&
+> -		graph_git_two_modes "merge-base -a $BRANCH $COMPARE"
+> +		graph_git_two_modes "log --oneline $BRANCH" "$DIR" &&
+> +		graph_git_two_modes "log --topo-order $BRANCH" "$DIR" &&
+> +		graph_git_two_modes "log --graph $COMPARE..$BRANCH" "$DIR" &&
+> +		graph_git_two_modes "branch -vv" "$DIR" &&
+> +		graph_git_two_modes "merge-base -a $BRANCH $COMPARE" "$DIR"
+>  	'
+>  }
+> =20
+> @@ -187,7 +188,10 @@ test_expect_success 'create fork and chain across =
+alternate' '
+>  	)
+>  '
+> =20
+> -graph_git_behavior 'alternate: commit 13 vs 6' commits/13 commits/6
+> +if test -d fork
+> +then
+> +	graph_git_behavior 'alternate: commit 13 vs 6' commits/13 origin/comm=
+its/6 "fork"
+> +fi
+> =20
+>  test_expect_success 'test merge stragety constants' '
+>  	git clone . merge-2 &&
