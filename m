@@ -2,86 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD03FC433EF
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC2F6C433F5
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:36:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA7FB611C1
-	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:26:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B786A61164
+	for <git@archiver.kernel.org>; Fri, 15 Oct 2021 16:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241299AbhJOQ2v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Oct 2021 12:28:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241310AbhJOQ2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Oct 2021 12:28:50 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08E50C06176E
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:26:42 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id g5so6728087plg.1
-        for <git@vger.kernel.org>; Fri, 15 Oct 2021 09:26:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=DvLw5O0GhWNg6XQ3VPL1C0mDrs46UAXOL7JVtzPO75s=;
-        b=FzF5VO/JCXvDdbv3EJaib6PyTuWZA2y7UwFKovGo9S9l3NBB/Rw8+GkCBfN1iCP3DA
-         1lSyMZXA40+65cJtdD4QLpg16u/3QqakbfVy9oTWY1Dec10poBUpBC3eXqgrnv01Ekum
-         frp2ht0YqPQ3NphlNGQ4vwPTm9Iai7nWRDMeX/i6cdJ5uWQi56CehG8lR3BGUf4cgdy0
-         oVHdl/HHA5yRFT45A1KAoPPTptu4SLtZvCjBGhPZBSRoH9b6xI6ktTUCSC6n19YWou+s
-         FeXRLxBaaOcOMT4DUPpQJqizAm0tXVSEgWZzgOBDbLymdZh6UCyMixFfm2OJ0/G9avOs
-         PW1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=DvLw5O0GhWNg6XQ3VPL1C0mDrs46UAXOL7JVtzPO75s=;
-        b=ub/+TNVUgKxMDGNCnJ+ete5g4GXoVDX8yImuJCS1FIWNElXy/AywaD7mqZQZOud+0i
-         3T6Y/iXtRun9NYxcNemR8Sy6/qLGTQdrmO0Esw4lqcS789NfRA8rRVbHqBvWburFxYXz
-         jy+9SzXsgU+VR50gyeSKmwhWWD7XGmFXNG7n56o2L50uqAJ3imQG3U3B8C1ddXO1/Rlm
-         d7J7iIoIvhJbglDnbK/t8DLq2eMZEfCl4khJOTEzi51evIocuXfOesSz3DVlZ/WY1iFQ
-         W1OLX58lDFsC1eZSoaSRnZsdgUKQoi61m08PBXI0JPv9hUsHkk++DfIPyM54LmjzPF+e
-         VNEg==
-X-Gm-Message-State: AOAM530Jvam/DFAcaBMELqq4SXP1u1mO3ojTSnjU7KhUfnCNQXRI4T4h
-        GlQh24ietG5TAtvHbhX9lKmnWJ2qC116sA==
-X-Google-Smtp-Source: ABdhPJxdF9evQ4mH/1U8VYvSJkwqDXuoJrDkLZ+E9k3BMKFdwHcra0l/+eP14X2Rw3igM8oBr97i8g==
-X-Received: by 2002:a17:90a:ad98:: with SMTP id s24mr28953069pjq.122.1634315201378;
-        Fri, 15 Oct 2021 09:26:41 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cc2f:afb0:ab09:f218])
-        by smtp.gmail.com with ESMTPSA id i123sm5412429pfg.157.2021.10.15.09.26.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 09:26:40 -0700 (PDT)
-Date:   Fri, 15 Oct 2021 09:26:35 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2 07/13] git hook run: add an --ignore-missing flag
-Message-ID: <YWmruzO9sdYvVIPP@google.com>
-References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
- <patch-v2-07.13-328767015b1-20211015T093918Z-avarab@gmail.com>
+        id S235873AbhJOQic (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Oct 2021 12:38:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55159 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241451AbhJOQiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Oct 2021 12:38:18 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4772EFEEEE;
+        Fri, 15 Oct 2021 12:36:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Fy0cMewW16/h
+        aQj62Nf3vUEJK4JW70j27ZxQedaw3g4=; b=G7ze4z+f9EsnVuSJzn3JFsJhhfuu
+        X7ozz+sGcglBr4ekBqgSxskCnFSa0ZNa3jEqiOTiDmcXl2p/wa5NQu3gRhj6c2KX
+        kv61S7qQahVUmPa37+pre5G5qbFAV3xYkKZGfGEySQlz+CEP13hc4KWokVRJgfNt
+        dcNtVis/1KTQh2I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D7E2FEEED;
+        Fri, 15 Oct 2021 12:36:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6222AFEEEC;
+        Fri, 15 Oct 2021 12:36:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v3 1/2] "lib-diff" tests: make "README" and "COPYING"
+ test data smaller
+References: <cover-v2-0.5-00000000000-20211005T170031Z-avarab@gmail.com>
+        <cover-v3-0.2-00000000000-20211015T092605Z-avarab@gmail.com>
+        <patch-v3-1.2-02342124582-20211015T092605Z-avarab@gmail.com>
+Date:   Fri, 15 Oct 2021 09:36:09 -0700
+In-Reply-To: <patch-v3-1.2-02342124582-20211015T092605Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 15 Oct
+ 2021 11:30:16
+        +0200")
+Message-ID: <xmqqilxy8cue.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-07.13-328767015b1-20211015T093918Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 00F8B154-2DD6-11EC-BFD9-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Tue, Oct 12, 2021 at 03:30:32PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> For certain one-shot hooks we'd like to optimistically run them, and
-> not complain if they don't exist. This will be used by send-email in a
-> subsequent commit.
+>  t/.gitattributes              |   1 -
+>  t/lib-diff-data.sh            |  22 +++
+>  t/lib-diff.sh                 |   2 +
+>  t/lib-diff/COPYING            | 361 ----------------------------------
+>  t/lib-diff/README             |  46 -----
+>  t/t4003-diff-rename-1.sh      |   4 +-
+>  t/t4005-diff-rename-2.sh      |   4 +-
+>  t/t4007-rename-3.sh           |   5 +-
+>  t/t4008-diff-break-rewrite.sh |   4 +-
+>  t/t4009-diff-rename-4.sh      |   4 +-
+>  10 files changed, 34 insertions(+), 419 deletions(-)
+>  create mode 100644 t/lib-diff-data.sh
+>  delete mode 100644 t/lib-diff/COPYING
+>  delete mode 100644 t/lib-diff/README
 
-Aha, this is what I was looking for in the earlier commit. Feel free to
-disregard those complaints. ;)
+Good.  Directly borrowing a test material from the source directory
+was an easy hack that worked for us for a reasonably long time, but
+when it started to become a maintenance burden, we should have done
+something like this, instead of applying the same kind of laziness
+when 459b8d22 (tests: do not borrow from COPYING and README from the
+real source, 2015-02-15) tried to correct the mess that was caused
+by earlier laziness.
 
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+Thanks.
