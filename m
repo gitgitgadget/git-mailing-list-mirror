@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9260C433EF
-	for <git@archiver.kernel.org>; Sat, 16 Oct 2021 09:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 086C2C433F5
+	for <git@archiver.kernel.org>; Sat, 16 Oct 2021 09:39:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC3BA61073
-	for <git@archiver.kernel.org>; Sat, 16 Oct 2021 09:39:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E46BA60E96
+	for <git@archiver.kernel.org>; Sat, 16 Oct 2021 09:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244034AbhJPJmB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Oct 2021 05:42:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57630 "EHLO
+        id S244043AbhJPJmE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Oct 2021 05:42:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244016AbhJPJlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Oct 2021 05:41:52 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE2DC061772
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 02:39:37 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 3-20020a1c0403000000b00322f53b9bbfso389487wme.3
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 02:39:37 -0700 (PDT)
+        with ESMTP id S244011AbhJPJlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Oct 2021 05:41:50 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C44C06176C
+        for <git@vger.kernel.org>; Sat, 16 Oct 2021 02:39:33 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id y3so30850511wrl.1
+        for <git@vger.kernel.org>; Sat, 16 Oct 2021 02:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CyzukmDVpOofAX86YVcnt8Tfs+rypSbqkBMzOHQ81QU=;
-        b=eIliCLpMelFsoOYRS2hITf7Org/vJ0dtKF+5bcP1LHfCSlupN0jqaLTjf1b7QJlHMM
-         skdiLUu+VkhLlZO+fO5spgdpI6pU7aUVQgBnFQQIgAUQT2/zBgC4l6jNUIaOrmxt6WSi
-         5GEKijR+mn9o4woqNtPWYhUZMNK0cNTi9WB96lDVcsuS0MiTDFMLao0dtu2B5cx2REo0
-         GYmkZPv3w0RzbGQUSBDVKCvz8Q8lwTWYWESubRRavYPJBpMSMee4ofIHMjSGZPrRUAdr
-         4yeMPMYk//TiENw4A4UFZnt3vz9vh7JNNO6U6jpiRgOdLpAWqbSNWEU9tF8P8tRNttp3
-         Sv1A==
+        bh=+ZBSzSS+JAEkX5OFYI+tGaQjHH7ZgkuB4KEiANw1hTU=;
+        b=fRsRCSNq8AnWXEINe601WPMzPrOXm6h4+BCPgoeltIB5eJPpOcqGm2UU6GgYVJuST3
+         LgzB/u/pb9fHZdqFWFyd5uYPU5a7WSeglKCYSLsOZEkoRypewNc9pYMrg5hxcxPwPy/Q
+         r3goYV0Sc6oqT0wGpJmvAUDOJBkop+41H0oJfJwB1v3jpyvG4MOd/RqHYIF0gUfg/XH0
+         c1WhuCUm8iv3cSZeOE3jIv43FoMXqZgZEqw/vG+OXnQ4LQ0IbcTQ93nIQGJJwP3VxnEY
+         9C4CeifuyoLpVf7x7uN1TWWl9hiN4qRqjhwLneWHfFmNJDbPtYp3qgJMs6CDr/PFcDHP
+         J5qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CyzukmDVpOofAX86YVcnt8Tfs+rypSbqkBMzOHQ81QU=;
-        b=GuFaMpBQtvP6QjwyYjGXhCnPVs5WNe68Z3Xuzf4lxKI/F+vMbBHnveGp7r1/+156XY
-         0FEO08371zQTQAFFJw4Pj0vZcGtgGz4jIT0/p1uxiopd8xG/19x1Zm2pU7/7s7vQPRS7
-         wWD5gsL+u2JHI4pelEeXwDWiV45SSZqcgvoQPBwiU/CySG0pjsCZV3iCUcuKka0RQ6Cv
-         KwbfwYfrHufBqlMItX2zzLN+zBiKODeDD9doFzCGXV4Vj8AZ9iWB+AqqjLU1j3+m9aC2
-         QZNRje6VYTsZyYNoIgy+B+r64o/i1N8NQzaWd0C/LSxn3kw/AUisi7S0/Jd9hDryYeI+
-         Y1gw==
-X-Gm-Message-State: AOAM532y5/KnJ4bnWySBI4CuwrnhCTrY7TnDv8ZUbyUr0B69qX6k7h6B
-        3lyh1EG0ZNs6ZGm9qsWbqYYp53Iz9jqd4A==
-X-Google-Smtp-Source: ABdhPJzFS1aZ5MBs6Zhd+l3tIhcEpMtmXjFEYR3loSirvfPI1Mfmlp6ZYgVHvfDFg0rMz0+N/BKxbw==
-X-Received: by 2002:a1c:2b81:: with SMTP id r123mr8599012wmr.136.1634377176214;
-        Sat, 16 Oct 2021 02:39:36 -0700 (PDT)
+        bh=+ZBSzSS+JAEkX5OFYI+tGaQjHH7ZgkuB4KEiANw1hTU=;
+        b=T7N4fIXkfc2l2nDSLhbkBBR4ktUFmIMH8+8WnccnQHIh9E44HtIkoGlGRMAiaVCVF1
+         /UeVwiRerjCPuDyNFSGAb3AoItUwP8PSkex1wQDn738fBEQc64yt7FFqVQW1rx+byCMp
+         d1Y+hRYaTcc+/4nM5opAbQEWZS+zLiEHmYajGnat+/nJITcu+Tv5P1pQoCD8izzJcIR6
+         NWYIq6EiQe9+m7XAl1XDwj4wQt0LpLOCjkbxctW+5DaWhdTmPo8fBQbw+tKmkC/YMVQ9
+         QqYMNQXTrGH/M4eeExZbjiUPoUx5enO3Up1FB/aHhRMfZOJe7AfP6cz52wLVTCQH3Uqs
+         iEPw==
+X-Gm-Message-State: AOAM530MiSQ01wSzHeskwkEoTg84/EsuSdAwDpNyK9pI8rlwm5Ra1Gut
+        bp4LEqpRZZ5l3JND4oqScwMnyb8TJQMQKQ==
+X-Google-Smtp-Source: ABdhPJxASb/CWn0i6Svkt0PmA6e4vorU2s9HGoqNZO6KPjvlBxZmmKdp/tSG7U5ke5kHNZAIrVLB9Q==
+X-Received: by 2002:adf:ee8a:: with SMTP id b10mr20937361wro.335.1634377171629;
+        Sat, 16 Oct 2021 02:39:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k22sm6993492wrd.59.2021.10.16.02.39.35
+        by smtp.gmail.com with ESMTPSA id k22sm6993492wrd.59.2021.10.16.02.39.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Oct 2021 02:39:35 -0700 (PDT)
+        Sat, 16 Oct 2021 02:39:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Han-Wen Nienhuys <hanwen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 08/21] refs API: remove refs_read_ref_full() wrapper
-Date:   Sat, 16 Oct 2021 11:39:14 +0200
-Message-Id: <patch-v2-08.21-b2532614430-20211016T093845Z-avarab@gmail.com>
+Subject: [PATCH v2 02/21] refs API: add a version of refs_resolve_ref_unsafe() with "errno"
+Date:   Sat, 16 Oct 2021 11:39:08 +0200
+Message-Id: <patch-v2-02.21-f6d784b4979-20211016T093845Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1338.g20da966911a
 In-Reply-To: <cover-v2-00.21-00000000000-20211016T093845Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20211013T235900Z-avarab@gmail.com> <cover-v2-00.21-00000000000-20211016T093845Z-avarab@gmail.com>
@@ -70,202 +70,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the refs_read_ref_full() wrapper in favor of migrating various
-refs.c API users to the underlying refs_werrres_ref_unsafe() function.
+Add a new refs_werrres_ref_unsafe() function, which is like
+refs_resolve_ref_unsafe() except that it explicitly saves away the
+"errno" to a passed-in parameter, the refs_resolve_ref_unsafe() then
+becomes a wrapper for it.
 
-A careful reading of these callers shows that the callers of this
-function did not care about "errno", by moving away from the
-refs_resolve_ref_unsafe() wrapper we can be sure that nothing relies
-on it anymore.
+In subsequent commits we'll migrate code over to it, before finally
+making "refs_resolve_ref_unsafe()" with an "errno" parameter the
+canonical version, so this this function exists only so that we can
+incrementally migrate callers, it will be going away in a subsequent
+commit.
 
+As the added comment notes has a rather tortured name to be the same
+length as "refs_resolve_ref_unsafe", to avoid churn as we won't need
+to re-indent the argument lists, similarly the documentation and
+structure of it in refs.h is designed to minimize a diff in a
+subsequent commit, where that documentation will be added to the new
+refs_resolve_ref_unsafe().
+
+At the end of this migration the "meaningful errno" TODO item left in
+76d70dc0c63 (refs.c: make resolve_ref_unsafe set errno to something
+meaningful on error, 2014-06-20) will be resolved.
+
+As can be seen from the use of refs_read_raw_ref() we'll also need to
+convert some functions that the new refs_werrres_ref_unsafe() itself
+calls to take this "failure_errno". That will be done in subsequent
+commits.
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c               | 20 +++++++++-----------
- refs.h               |  2 --
- refs/files-backend.c | 36 ++++++++++++++++++++++--------------
- worktree.c           |  9 +++++----
- 4 files changed, 36 insertions(+), 31 deletions(-)
+ refs.c | 36 +++++++++++++++++++++++++++---------
+ refs.h | 12 ++++++++++++
+ 2 files changed, 39 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 44ddbb14f1d..80b85d244d2 100644
+index 7f019c2377e..ad56dbb0125 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -290,20 +290,17 @@ struct ref_filter {
- 	void *cb_data;
- };
- 
--int refs_read_ref_full(struct ref_store *refs, const char *refname,
--		       int resolve_flags, struct object_id *oid, int *flags)
-+int read_ref_full(const char *refname, int resolve_flags, struct object_id *oid, int *flags)
- {
--	if (refs_resolve_ref_unsafe(refs, refname, resolve_flags, oid, flags))
-+	int ignore_errno;
-+	struct ref_store *refs = get_main_ref_store(the_repository);
-+
-+	if (refs_werrres_ref_unsafe(refs, refname, resolve_flags,
-+				    oid, flags, &ignore_errno))
- 		return 0;
- 	return -1;
+@@ -1679,17 +1679,19 @@ int refs_read_raw_ref(struct ref_store *ref_store,
+ 					   type, &errno);
  }
  
--int read_ref_full(const char *refname, int resolve_flags, struct object_id *oid, int *flags)
--{
--	return refs_read_ref_full(get_main_ref_store(the_repository), refname,
--				  resolve_flags, oid, flags);
--}
--
- int read_ref(const char *refname, struct object_id *oid)
+-/* This function needs to return a meaningful errno on failure */
+-const char *refs_resolve_ref_unsafe(struct ref_store *refs,
++const char *refs_werrres_ref_unsafe(struct ref_store *refs,
+ 				    const char *refname,
+ 				    int resolve_flags,
+-				    struct object_id *oid, int *flags)
++				    struct object_id *oid,
++				    int *flags, int *failure_errno)
  {
- 	return read_ref_full(refname, RESOLVE_REF_READING, oid, NULL);
-@@ -1376,9 +1373,10 @@ int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
- 	struct object_id oid;
- 	int flag;
-+	int ignore_errno;
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	struct object_id unused_oid;
+ 	int unused_flags;
+ 	int symref_count;
  
--	if (!refs_read_ref_full(refs, "HEAD", RESOLVE_REF_READING,
--				&oid, &flag))
-+	if (refs_werrres_ref_unsafe(refs, "HEAD", RESOLVE_REF_READING,
-+				    &oid, &flag, &ignore_errno))
- 		return fn("HEAD", &oid, flag, cb_data);
++	assert(failure_errno);
++
+ 	if (!oid)
+ 		oid = &unused_oid;
+ 	if (!flags)
+@@ -1700,7 +1702,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 		    !refname_is_safe(refname)) {
+-			errno = EINVAL;
++			*failure_errno = EINVAL;
+ 			return NULL;
+ 		}
  
- 	return 0;
-diff --git a/refs.h b/refs.h
-index c8afde6bb50..3938f99c902 100644
---- a/refs.h
-+++ b/refs.h
-@@ -89,8 +89,6 @@ char *refs_resolve_refdup(struct ref_store *refs,
- char *resolve_refdup(const char *refname, int resolve_flags,
- 		     struct object_id *oid, int *flags);
+@@ -1718,9 +1720,12 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 	for (symref_count = 0; symref_count < SYMREF_MAXDEPTH; symref_count++) {
+ 		unsigned int read_flags = 0;
  
--int refs_read_ref_full(struct ref_store *refs, const char *refname,
--		       int resolve_flags, struct object_id *oid, int *flags);
- int read_ref_full(const char *refname, int resolve_flags,
- 		  struct object_id *oid, int *flags);
- int read_ref(const char *refname, struct object_id *oid);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 16e78326381..482d04de03a 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1006,6 +1006,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct ref_lock *lock;
-+	int ignore_errno;
++		errno = 0;
+ 		if (refs_read_raw_ref(refs, refname,
+ 				      oid, &sb_refname, &read_flags)) {
+ 			*flags |= read_flags;
++			if (errno)
++				*failure_errno = errno;
  
- 	files_assert_main_repository(refs, "lock_ref_oid_basic");
- 	assert(err);
-@@ -1032,9 +1033,8 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 		goto error_return;
+ 			/* In reading mode, refs must eventually resolve */
+ 			if (resolve_flags & RESOLVE_REF_READING)
+@@ -1731,9 +1736,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 			 * may show errors besides ENOENT if there are
+ 			 * similarly-named refs.
+ 			 */
+-			if (errno != ENOENT &&
+-			    errno != EISDIR &&
+-			    errno != ENOTDIR)
++			if (*failure_errno != ENOENT &&
++			    *failure_errno != EISDIR &&
++			    *failure_errno != ENOTDIR)
+ 				return NULL;
+ 
+ 			oidclr(oid);
+@@ -1760,7 +1765,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 			    !refname_is_safe(refname)) {
+-				errno = EINVAL;
++				*failure_errno = EINVAL;
+ 				return NULL;
+ 			}
+ 
+@@ -1768,10 +1773,23 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		}
  	}
  
--	if (refs_read_ref_full(&refs->base, lock->ref_name,
--			       0,
--			       &lock->old_oid, NULL))
-+	if (!refs_werrres_ref_unsafe(&refs->base, lock->ref_name, 0,
-+				     &lock->old_oid, NULL, &ignore_errno))
- 		oidclr(&lock->old_oid);
- 	goto out;
+-	errno = ELOOP;
++	*failure_errno = ELOOP;
+ 	return NULL;
+ }
  
-@@ -1397,6 +1397,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	struct strbuf tmp_renamed_log = STRBUF_INIT;
- 	int log, ret;
- 	struct strbuf err = STRBUF_INIT;
-+	int ignore_errno;
- 
- 	files_reflog_path(refs, &sb_oldref, oldrefname);
- 	files_reflog_path(refs, &sb_newref, newrefname);
-@@ -1454,9 +1455,9 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	 * the safety anyway; we want to delete the reference whatever
- 	 * its current value.
- 	 */
--	if (!copy && !refs_read_ref_full(&refs->base, newrefname,
--				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--				NULL, NULL) &&
-+	if (!copy && refs_werrres_ref_unsafe(&refs->base, newrefname,
-+					     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+					     NULL, NULL, &ignore_errno) &&
- 	    refs_delete_ref(&refs->base, NULL, newrefname,
- 			    NULL, REF_NO_DEREF)) {
- 		if (errno == EISDIR) {
-@@ -1868,9 +1869,12 @@ static void update_symref_reflog(struct files_ref_store *refs,
- {
- 	struct strbuf err = STRBUF_INIT;
- 	struct object_id new_oid;
-+	int ignore_errno;
++const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
++				    int resolve_flags, struct object_id *oid,
++				    int *flags)
++{
++	int failure_errno = 0;
++	const char *refn;
++	refn = refs_werrres_ref_unsafe(refs, refname, resolve_flags,
++				       oid, flags, &failure_errno);
++	if (!refn)
++		errno = failure_errno;
++	return refn;
++}
 +
- 	if (logmsg &&
--	    !refs_read_ref_full(&refs->base, target,
--				RESOLVE_REF_READING, &new_oid, NULL) &&
-+	    refs_werrres_ref_unsafe(&refs->base, target,
-+				    RESOLVE_REF_READING, &new_oid, NULL,
-+				    &ignore_errno) &&
- 	    files_log_ref_write(refs, refname, &lock->old_oid,
- 				&new_oid, logmsg, 0, &err)) {
- 		error("%s", err.buf);
-@@ -2144,6 +2148,7 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 		(struct files_reflog_iterator *)ref_iterator;
- 	struct dir_iterator *diter = iter->dir_iterator;
- 	int ok;
-+	int ignore_errno;
+ /* backend functions */
+ int refs_init_db(struct strbuf *err)
+ {
+diff --git a/refs.h b/refs.h
+index d5099d4984e..c8afde6bb50 100644
+--- a/refs.h
++++ b/refs.h
+@@ -11,6 +11,18 @@ struct string_list;
+ struct string_list_item;
+ struct worktree;
  
- 	while ((ok = dir_iterator_advance(diter)) == ITER_OK) {
- 		int flags;
-@@ -2155,9 +2160,10 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 		if (ends_with(diter->basename, ".lock"))
- 			continue;
- 
--		if (refs_read_ref_full(iter->ref_store,
--				       diter->relative_path, 0,
--				       &iter->oid, &flags)) {
-+		if (!refs_werrres_ref_unsafe(iter->ref_store,
-+					     diter->relative_path, 0,
-+					     &iter->oid, &flags,
-+					     &ignore_errno)) {
- 			error("bad ref for %s", diter->path.buf);
- 			continue;
- 		}
-@@ -2501,9 +2507,11 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 			 * the transaction, so we have to read it here
- 			 * to record and possibly check old_oid:
- 			 */
--			if (refs_read_ref_full(&refs->base,
--					       referent.buf, 0,
--					       &lock->old_oid, NULL)) {
-+			int ignore_errno;
-+			if (!refs_werrres_ref_unsafe(&refs->base,
-+						     referent.buf, 0,
-+						     &lock->old_oid, NULL,
-+						     &ignore_errno)) {
- 				if (update->flags & REF_HAVE_OLD) {
- 					strbuf_addf(err, "cannot lock ref '%s': "
- 						    "error reading reference",
-diff --git a/worktree.c b/worktree.c
-index 092a4f92ad2..cfffcdb62b3 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -563,16 +563,17 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
- 		struct worktree *wt = *p;
- 		struct object_id oid;
- 		int flag;
-+		int ignore_errno;
- 
- 		if (wt->is_current)
- 			continue;
- 
- 		strbuf_reset(&refname);
- 		strbuf_worktree_ref(wt, &refname, "HEAD");
--		if (!refs_read_ref_full(get_main_ref_store(the_repository),
--					refname.buf,
--					RESOLVE_REF_READING,
--					&oid, &flag))
-+		if (refs_werrres_ref_unsafe(get_main_ref_store(the_repository),
-+					    refname.buf,
-+					    RESOLVE_REF_READING,
-+					    &oid, &flag, &ignore_errno))
- 			ret = fn(refname.buf, &oid, flag, cb_data);
- 		if (ret)
- 			break;
++/*
++ * Callers should not inspect "errno" on failure, but rather pass in a
++ * "failure_errno" parameter, on failure the "errno" will indicate the
++ * type of failure encountered, but not necessarily one that came from
++ * a syscall. We might have faked it up.
++ */
++const char *refs_werrres_ref_unsafe(struct ref_store *refs,
++				    const char *refname,
++				    int resolve_flags,
++				    struct object_id *oid,
++				    int *flags, int *failure_errno);
++
+ /*
+  * Resolve a reference, recursively following symbolic refererences.
+  *
 -- 
 2.33.1.1338.g20da966911a
 
