@@ -2,119 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D24A0C433F5
-	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 00:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A0E4C433EF
+	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 01:14:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4663610D2
-	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 00:30:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D967961053
+	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 01:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241263AbhJQAcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Oct 2021 20:32:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53750 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233536AbhJQAcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Oct 2021 20:32:14 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3E89C061765
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 17:30:05 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id a13so2390919qkg.11
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 17:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=4bV8YrTm5Y+EOvcEnSieI0VHIalj8a2u4bLUGmWUd84=;
-        b=L+Ln8G6c+DxqT4RLrURbLJNMCXmyqwQfiZBV2ZJfQx5GtlJYzbsZH2LADO4VbSdjFV
-         Ho1YXcAtyqVCfX62gxOjfhSQLEbQ2QHD99UR10Xz7KbGwjs00dMoturdmr1JGZfnm4ol
-         Ewo9DsKBKUGcMkGd9DVl1C1WEPU9HMdj+zEN3kenpTbAdf4jpgd/0myaBnX+TaPE0fDy
-         eni8gk1aen1OXE+/au74KUJTX+PwggMRgL9kHbiareg7W7IeYN/i0RkwsUwQGl9ZmpiW
-         IUDOmSheBYHnvTs23kbk8zzWCZoz4FEr5GrVhYUSuRR2ywSq2jtJwJO6QFWTEI3mBKDr
-         Cq6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4bV8YrTm5Y+EOvcEnSieI0VHIalj8a2u4bLUGmWUd84=;
-        b=ZkKL9ejuR0PRD4jFSrqj147KoZXJWQGo0nJ7XdqhXs35c3WaVJpsYdn1scaZIw/Bir
-         +sKI2oVn6jOP+F5s3rllZfS/GNJsWDdr3PF+g5mjcDhOsfNP9YkU7bTqjEO5HbTqy5TE
-         UqMipBKS68NEvNFq4++bb1R8eQQ+hO0LYJhlR+vxVJZQ8avU953kJSLJH+8VzEzCPrV9
-         qlPlo2Z3/iuJp4HHCurc+I0PaV06ZUu61j58cDcTrIAlNg2Z83xU4Ry3mib8bBQR43LQ
-         wy0HWpqtD65XyJsqD9CVtnaKu5SHMpD2ezHzc7ZzKNK+KaRPckCVMrPTupasPYT+NOyj
-         Uo7w==
-X-Gm-Message-State: AOAM533NjGWkHA4d26/E1sTMQ/ejVAd3NC9ZITOcVdrlnneFPmCTt1mO
-        9FLBre2KIwvCzVHlJ5TYCijhlyLQdXY=
-X-Google-Smtp-Source: ABdhPJzLXJ/me7X3TRqlv9W3lAawgylJtzg/ARrjSnDVyHu21e3Dm5Fm4s9mZBCqo6CSGtq4y+gEcg==
-X-Received: by 2002:a37:9dca:: with SMTP id g193mr16275219qke.124.1634430604566;
-        Sat, 16 Oct 2021 17:30:04 -0700 (PDT)
-Received: from [192.168.50.110] (modemcable214.63-201-24.mc.videotron.ca. [24.201.63.214])
-        by smtp.gmail.com with ESMTPSA id d24sm4407608qtq.95.2021.10.16.17.30.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Oct 2021 17:30:03 -0700 (PDT)
-Subject: Re: Possible bug with checkout and submodules
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Adam Hutchings <adam.abahot@gmail.com>, git@vger.kernel.org
-References: <CADTYju0PpHHG1=S3N4MDWk5yZqb5t_KUhiDvZ_2i-vXFUT_LDw@mail.gmail.com>
- <YWsffmtRQKQGxkiR@camp.crustytoothpaste.net>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <0d8ade7b-e5af-88ec-3e33-96d6c356b714@gmail.com>
-Date:   Sat, 16 Oct 2021 20:30:02 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S241375AbhJQBRA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Oct 2021 21:17:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63353 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230100AbhJQBRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Oct 2021 21:17:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FB81E2A13;
+        Sat, 16 Oct 2021 21:14:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=0jP9t5I9rQcr
+        uygqd0oN/R5IxXwWnhsSdFoO+/lk0HU=; b=UAao2ppbsQ804mZ/B9pkDjfXULM4
+        tfJDRwZE4G9gxaO5Q/rc7Nhupn+sMbn3ETSMwv8T2rHtC3z6GVcwyoUzTcdOoLNt
+        1AgOSDMMDTGw0OIq32BKMj5IPql8tmYcIZSl8lF5YYDwBdo5mZ+hB25wKt9eGux8
+        dmxDODSPKeagRmY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07C3DE2A12;
+        Sat, 16 Oct 2021 21:14:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 712E2E2A10;
+        Sat, 16 Oct 2021 21:14:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: Build failure of 'seen'
+References: <48748e0e-7c18-b7ff-e1c3-ac0733cc7d34@ramsayjones.plus.com>
+Date:   Sat, 16 Oct 2021 18:14:49 -0700
+In-Reply-To: <48748e0e-7c18-b7ff-e1c3-ac0733cc7d34@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Sun, 17 Oct 2021 00:18:19 +0100")
+Message-ID: <xmqqo87o1mgm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <YWsffmtRQKQGxkiR@camp.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A062F7E2-2EE7-11EC-8951-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adam,
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Le 2021-10-16 à 14:52, brian m. carlson a écrit :
-> On 2021-10-16 at 18:44:04, Adam Hutchings wrote:
->> Hi,
->>
->> I may have found a bug in Git but I'm not sure if it's intentional or not. I
->>
->> checked out to a new branch to test a PR on my repo, and the PR added a
->>
->> submodule. I init'ed and updated the submodule, and when I was done testing, I
->>
->> went back to my main branch. However, it did not remove the submodule, and
->>
->> produced this message:
->>
->>
->> ```
->>
->> $ git checkout main
->>
->> warning: unable to rmdir 'glfw': Directory not empty
->>
->> Switched to branch 'main'
->>
->> $
->>
->> ```
->>
->>
->> A friend of mine has managed to reproduce this behavior. We believe the expected
->>
->> outcome is to remove the submodule folder, but this does not seem to happen. Is
->>
->> this intentional?
-> 
-> This is intentional.  It may be that the submodule has data that's
-> ignored, it could have local changes, or it could have additional
-> unpushed history, any of which would probably be data users might not
-> want to lose.  As a result, we don't remove the directory unless the
-> user has run "git submodule deinit".
-> 
+> Hi Junio,
+>
+> Tonight's build of 'seen' failed for me (on Linux and Cygwin):
 
-... or unless you run 'git checkout --recurse-submodules', or just
-'git checkout' and you have 'submodule.recurse' set to true in your configuration.
+Yes, I saw the same with the report at
 
-Cheers,
-Philippe.
+https://lore.kernel.org/git/xmqqh7djba6e.fsf@gitster.g/
+
+the ball is in =C3=86var's court.
+
+Thanks.
