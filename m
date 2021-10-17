@@ -2,160 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 858CCC433F5
-	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 01:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0FA3C433F5
+	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 04:35:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A84F61040
-	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 01:21:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71999610E8
+	for <git@archiver.kernel.org>; Sun, 17 Oct 2021 04:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244609AbhJQBYA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 Oct 2021 21:24:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36602 "EHLO
+        id S244965AbhJQEhW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Oct 2021 00:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhJQBX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Oct 2021 21:23:59 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24106C061765
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 18:21:51 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id s17so12114667ioa.13
-        for <git@vger.kernel.org>; Sat, 16 Oct 2021 18:21:51 -0700 (PDT)
+        with ESMTP id S232228AbhJQEhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Oct 2021 00:37:19 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F034C061765
+        for <git@vger.kernel.org>; Sat, 16 Oct 2021 21:35:10 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id v8so7872355pfu.11
+        for <git@vger.kernel.org>; Sat, 16 Oct 2021 21:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=A9SXpcwxE38yJWzlnd61N/T446gqq+mCn9QLTmK6OdI=;
-        b=oVg9in9KlbpT7mjlKjYiC+bcxVzNtX49XCNUwCaNEuNO/e6zoEEsKObbUUkKWt+1Dy
-         DCs0I7Czc/cRky24ZZop3qYXEwMTTAPkcuUqIpGJms+OCm1T3wgy8TeyDRbnXor/rhS0
-         7TF1vA33ARc5f0IRk4pLKFnqHBc8ePeqHURP7dh8B5n8GI9M5GTgizxmnzkeTLKp1gFn
-         U7NoubUYo/wKk47vjoexsVhpY1VCDoQAwnkW8QRFVGFXY4H0E7/NfW7e2WN2ljYa3c0l
-         Ajyqng/0buei11YYUekI5r7nC9cMCtFDGeRp9v2y67QpCayJSX0YcjWn8+cW8j1zb5tG
-         9DXQ==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0Vm/DZuJk2mJK9ypJq0kf8uj72TTQhdh7ydL3OT8bOs=;
+        b=U9SVlZOfUxnDuJrzkbhqaDYsxkjNl56MfgcV6BHhtnE1fsPWn7r4c3MTAOHSHY2ggR
+         Q/FWUJ44J7jyOBt+f0y0n5vZmtETpF13AVmXS9so69HqVOqGeR4LdaAQfI+fnmmZIyno
+         EgxHJYyHhoUgPVLo7AK4xFMpk+F1GBAR4bG8WxtWIJZwbp/c1Wgz5fhy/jYLzVX8jGQX
+         H5yYon4tLQIRLfZQ4u6AYt/Ie/zDvIC7TK+r/IuyRTidSTxsj7D5EnEHKeW76yifZEve
+         cXA0av9Y9sBhaIaI0r0letBI645SwHFoqDolU90A7V62aY61R1IzXF3GajO8EISwJpwZ
+         Wncg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=A9SXpcwxE38yJWzlnd61N/T446gqq+mCn9QLTmK6OdI=;
-        b=qJDPNQNS4AZTPWwVEYFSQGuzj4MCMDmvI7r7ygvjo3nwBYY6p5laXO5gMoylCSegpQ
-         bYW84knhtrIv76Z6/h2fAGQsVALJLhh7BThS5iLcqX88tVi6beu6PtiSaEZ/Hdctn1VM
-         W/U/H2qpXIIBGIzByAsixjcPGz4NnwOd4uV4RMmrI+iB5kZkMwmzR+cG73DFtCBqJy3m
-         cZbjpu9r2XEkwifcfiYSd2/v1kHjhTCQHPhkPXG1qfUBdHrF+J+70TvJaiZy2XlQilde
-         04y3SomaBwcWo3WEkMoKGLwssgaSM7QmNE3EwzpXHNE2cyh08Ou1Nyg+v95ozgrD4WZ2
-         1tEg==
-X-Gm-Message-State: AOAM531Jc7W1QPFz9H2lehKKZnqiN1/NkCeRQB1nI53lrRNj5U/fi+Zs
-        rn0hInKY7SxzhaYa3HT7ZS11NdaR0po=
-X-Google-Smtp-Source: ABdhPJznHzy5ymJ6TuBBkacLPgJhbfUzbSx0t/wsjaixqQL6HtiYHZFrMyfbjccKsGhEbEwNY8z58g==
-X-Received: by 2002:a5e:9314:: with SMTP id k20mr9149894iom.136.1634433710381;
-        Sat, 16 Oct 2021 18:21:50 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:555e:45c2:a7f5:2da2? ([2600:1700:e72:80a0:555e:45c2:a7f5:2da2])
-        by smtp.gmail.com with ESMTPSA id u7sm4895279ilg.22.2021.10.16.18.21.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Oct 2021 18:21:49 -0700 (PDT)
-Message-ID: <e17b7e0f-edf0-0770-9b9b-dd092a8a7a41@gmail.com>
-Date:   Sat, 16 Oct 2021 21:21:48 -0400
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=0Vm/DZuJk2mJK9ypJq0kf8uj72TTQhdh7ydL3OT8bOs=;
+        b=vCXsTqrENtjThWSs+ZeuWa0Pg7xVFTAwvzXLojOR18KdH5nfaeR+6xRR8VlFp5hLII
+         S19kzmbX76eWB5ysdRmpco51Z7ZmKIjFnqcRHBRmssLoOUEDZ3cZ5o07RegdRCVaoCHt
+         o+9ABlefnHjxkMjfEYtyituijC7NodMK363yQM4KvBFr3NcGwHZ0UXNU4dqYo9uoGgDf
+         pNbZSJdgPT+MvRczCnLrSQDJj38FEBcyaQOISbdirv1tP6azGXkCZUjBSYyBVs9QXLh8
+         E2A68OQI0/4IPkUuz4g4wCCvsHh3m+ZjZny/NUxPpMbPXnfWkhJUlw49h7t5DJfjx6Xf
+         37KA==
+X-Gm-Message-State: AOAM532JusdEW2lJawOvxLGZp3rSoeuhPn7AbETpl+x8RpWkszIVnKxz
+        FsG8oSth1dtW6b3k10dgkVZiUQ==
+X-Google-Smtp-Source: ABdhPJwCtY6gTCKMplzrZOW4kDIOE2m+cBE9YFuEPOPG4VvfmWQu4amc8PzGHIEdH1BotK5ZJB/ovg==
+X-Received: by 2002:a05:6a00:1a8e:b0:44c:f3cb:2a77 with SMTP id e14-20020a056a001a8e00b0044cf3cb2a77mr20825113pfv.53.1634445309627;
+        Sat, 16 Oct 2021 21:35:09 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:553d:e281:cf74:8cfc])
+        by smtp.gmail.com with ESMTPSA id r14sm8514686pgf.49.2021.10.16.21.35.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Oct 2021 21:35:08 -0700 (PDT)
+Date:   Sat, 16 Oct 2021 21:35:02 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] branch: add "inherit" option for branch.autoSetupMerge
+Message-ID: <YWun9j7L5uNlVHkW@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <0346f447548cfd11307173aaa3284d86a2ef689c.1631319742.git.steadmon@google.com>
+ <xmqqwnnondba.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH 2/2] sparse-index: update index read to consider
- index.sparse config
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
-References: <pull.1059.git.1634327697.gitgitgadget@gmail.com>
- <c6279b225454af0cf3b54586127eb91206593af3.1634327697.git.gitgitgadget@gmail.com>
- <xmqqh7di3qfu.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqh7di3qfu.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwnnondba.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/15/2021 5:53 PM, Junio C Hamano wrote:
-> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2021.09.10 17:52, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
 > 
->> From: Victoria Dye <vdye@github.com>
->>
->> Use the index.sparse config setting to expand or collapse the index when
->> read. Previously, index.sparse would determine how the index would be
->> written to disk, but would not enforce whether the index is read into memory
->> as full or sparse. Now, the index is expanded when a sparse index is read
->> with `index.sparse=false` and is collapsed to sparse when a full index is
->> read with `index.sparse=true` (and the command does not require a full
->> index).
+> > It can be helpful when creating a new branch to use the existing
+> > tracking configuration from the branch point. However, there is
+> > currently not a method to automatically do so.
+> >
+> > Teach branch.autoSetupMerge a new "inherit" option. When this is set,
+> > creating a new branch will cause the tracking configuration to default
+> > to the configuration of the branch point, if set.
 > 
-> Instead of calling both in-core index and on-disk index, perhaps use
-> "the in-core index" as appropriately in the above description and
-> the result would become much less ambigous.
+> So, when a new branch N is forked from an existing branch A that
+> builds on branch B (which could be a local branch under refs/heads/
+> or a remote-tracking branch under refs/remotes/), a plain-vanilla
+> auto-setup-merge makes N build on A but with 'inherit', N is marked
+> to build on B instead?
 > 
-> My knee-jerk reaction was that it is of dubious value to spend
-> cycles to make the in-core index sparse after reading a non-sparse
-> index from the disk to give to the caller, but this hurts only the
-> commands that are not yet sparse-aware and call ensure_full_index()
-> as the first thing they do.  To them, we are wasting cycles to
-> shrink and expand for no good reason, and after they are done, the
-> final writeout would create a sparse on-disk index.
-
-I think you are slightly mistaken here: If index.sparse=true, then a
-full index will be converted to one on write, but not immediately upon
-read. This means that subsequent commands will read a sparse index, and
-they will either benefit from that or not depending on whether they are
-integrated with the sparse index or not.
-
-The new behavior here is that if index.sparse=false, then we convert
-a sparse index to a full one upon read, avoiding any chance that a
-Git command is operating on a sparse index in-memory.
-
-The simplest summary I can say is here:
-
-* If index.sparse=false, then a sparse index will be converted to
-  full upon read.
-
-* If index.sparse=true, then a full index will be converted to sparse
-  on write.
-
-> Besides, the on-disk index is expected to be sparse most of the time
-> when index.sparse is true, so it is hopefully a one-time waste that
-> corrects by itself.
+> I do not think it is wise to hide this useful feature behind a
+> configuration variable.  
 > 
-> For all commands that are sparse-aware, especially when asked to
-> perform their operation on the paths that are not hidden by a
-> tree-like index entry, it may or may not be a win, but the downside
-> would be much smaller.  The cost to shrink a full in-core index
-> before writing out as a sparse one should be comparable to the cost
-> to shrink a full in-core index just read from the disk before the
-> sparse-index-aware caller works on it and leaves a still mostly
-> sparse in-core index to be written out without much extra work to
-> re-shrink it to the disk.
+> Rather, this should be made available first to users who do not even
+> set the configuration and then as a convenience measure, made usable
+> via the configuration mechanism as well.
 > 
->> This makes the behavior of `index.sparse` more intuitive, as it now clearly
->> enables/disables usage of a sparse index.
+> The current "git branch --track N A" makes N build on A, so perhaps
+> "git branch --track=inherit N A" should make N build on whatever A
+> builds on.  We may need to give a synonym --track=direct to the
+> traditional "build on the original branch that was used to specfy
+> the fork point" while doing so.
 > 
-> It is a minor thing, so I am willing to let it pass, but I am not
-> sure about this claim.  The write-out codepath ensures, independent
-> of this change, that a full on-disk index is corrected to become
-> sparse when the configuration is set to true, and a sparse on-disk
-> index is corrected to become full when the configuration is set to
-> false, no?
+> And then on top of that, we can add configuration variable handling.
+> 
+> Depending on the value of branch.autoSetupMerge, "git branch -b" and
+> "git checkout -b" would pretend as if "--track" or "--track=inherit"
+> were given, or something along that line.  The end result may be the
+> same for those who only use the configuration variables, but it
+> would give us some flexibility to countermand the configuration from
+> the command line.  Those who set branch.autoSetupMerge to 'inherit'
+> cannot say "git checkout -b N --track=direct A" to express "With
+> this single invocation alone I am making N build on A, even though I
+> know I usually make N build on whatever A builds on" if you give
+> only the configuration variable.
+> 
+> Thanks.
 
-The previous behavior required an index write for the sparse-to-full
-transition. After this change, an index write is still required for the
-full-to-sparse transition.
-
-> So the only "intuitive"-ness we may be gaining is that the codepaths
-> that are sparse-aware would work in their "sparse" (non-"sparse")
-> mode when index.sparse is set to true (false), respectively, no
-> matter how sparse (or not sparse) the on-disk index they work on is
-> initially.  That might help debuggability (assuming that converting
-> between the full and sparse forms are working correctly), but I am
-> not sure if that is something end users would even care about.
-
-I think you have a case for concern with the word "intuitive". Even
-though I agree that the new setup is the best possible interpretation
-of the setting, its inherit asymmetry can be confusing.
-
-Thanks,
--Stolee
-
+Thanks for the feedback. I've added "--track=direct" and
+"--track=inherit" flags in V3, which I'll send out shortly. I am a bit
+skeptical of the value of having "--track=direct" when just "--track"
+still works, but I'll leave it up to the list to decide.
