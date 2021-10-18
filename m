@@ -2,140 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3007AC433F5
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 21:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4CEBC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 21:44:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FFBD61027
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 21:28:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C97A61027
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 21:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231912AbhJRVat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Oct 2021 17:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60488 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231938AbhJRVat (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Oct 2021 17:30:49 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F06C06161C
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 14:28:37 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id om14so13105411pjb.5
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 14:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wKqYc7gvgWWDWs12v53ca/2+VHLNJE/7gJLWkjRIuIo=;
-        b=ViT7/XO8ho3wACk3fKMrgl1uf4O1mMYgD1cV6EW1Y+uI2umpZGB6ONLgrgr7Q5YJYv
-         qtpeflIFKmmCgdfddWdpneuiIIkyV8UVSZDULe7alUyzGCrAnXOt4ZJn0rjDYTzAAcNf
-         hQVbkQalIfhBhESCsy6850wMmeaxyCWBnXzRDGVPknGLM4oJaw/UxiofEUVH2hVrNKtn
-         8JTwHnQqkMuauruVmrhCiBLcsjMZrint76kuWMXYFWrvBuk8dupqNJa09oftPLNeVoQd
-         8e1nT69M+VkJqag7icBSlHpvp3ZFYJKr4RCvspQd+aZizvUzADDnIaB1nlbNUG1HSAAR
-         bAfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wKqYc7gvgWWDWs12v53ca/2+VHLNJE/7gJLWkjRIuIo=;
-        b=U56yEnZgeNALdJaRwdbk4q3k98b0xStcAqEaczyF4c6MVtm30xxgxOa2i9Zf6jg5WP
-         TFapdi5/68SPHVvXXeCwMTxO9R00AKubvoJGdBWzoz81hyzb19rKRki/UVPJEAVVc+Ow
-         WjKAj/uqCLoSmRQH7I5S6PHVcjtjecJCq0fVImqxQ9s4zNM1xafBpOXcRXD2thx0FpNQ
-         ZcLBwwclnGWZP/IDYSSvmApautq8peCJThp6MC6pQbyuGdUhM0QrCYod/ml7+zvDAmwB
-         nqHVotv0Xg6fRXDfv8ORgr+lB0oxuA+tOEwyN/6PiBjcqGX2ncRTc+rk84ZF3JOWEo2U
-         6fFw==
-X-Gm-Message-State: AOAM530v2CO9fRpGV4MINSkYkoXNdtpjyFwbPfG6xlsWIsIPwHTtO21c
-        IRPLDuav8KeDNOXjfHxWWyjlhg==
-X-Google-Smtp-Source: ABdhPJzsEr+49gnKzm9pyyj1mfsxAnAzHGo2l7h4j4a5SxrHEYMguqzqRMGRbGCRqfwPEXA8RTL7dQ==
-X-Received: by 2002:a17:90b:1b0b:: with SMTP id nu11mr1533542pjb.103.1634592516926;
-        Mon, 18 Oct 2021 14:28:36 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com. [35.185.214.157])
-        by smtp.gmail.com with ESMTPSA id p31sm14330444pfw.201.2021.10.18.14.28.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 14:28:36 -0700 (PDT)
-Date:   Mon, 18 Oct 2021 21:28:32 +0000
-From:   Sean Christopherson <seanjc@google.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        matheus.bernardino@usp.br, stolee@gmail.com, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/14] Sparse-checkout: modify 'git add', 'git rm',
- and 'git add' behavior
-Message-ID: <YW3nAKAUj/HF15OR@google.com>
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+        id S232562AbhJRVrG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Oct 2021 17:47:06 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53074 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232292AbhJRVrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Oct 2021 17:47:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C30E6147F7F;
+        Mon, 18 Oct 2021 17:44:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=T7dSleelDx3i
+        3zx6robwY+M3hizfYDJEwBYicQVt44E=; b=SgzKwxuwSTkqvkBFxybVMCSndIrH
+        XmJtkLllC2O0T+U0fG9C2q/p+TNolUTN7/asxO2/YWwMQACauI5+9RPqRrWzRsob
+        a3TUE/N9pxOYd2+7cKUIEhRlMMrs7ZI1JK79re7345hbgdbb+qPrw04F/tPwu1eY
+        ALKm70c8CIxPjw8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB2AB147F7E;
+        Mon, 18 Oct 2021 17:44:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 21B49147F74;
+        Mon, 18 Oct 2021 17:44:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        emilyshaffer@google.com
+Subject: Re: [PATCH v3] branch: add flags and config to inherit tracking
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+        <b9356d9837479914bcf9a265f52afe170be7e2e2.1634445482.git.steadmon@google.com>
+        <87a6j6tbsv.fsf@gmgdl.gmail.com>
+Date:   Mon, 18 Oct 2021 14:44:49 -0700
+In-Reply-To: <87a6j6tbsv.fsf@gmgdl.gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZq?=
+ =?utf-8?B?w7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 18 Oct 2021 20:31:58 +0200")
+Message-ID: <xmqqk0iauhwu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9F6DBE5A-305C-11EC-9E4F-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 12, 2021, Derrick Stolee via GitGitGadget wrote:
-> This series is based on ds/mergies-with-sparse-index.
-> 
-> As requested, this series looks to update the behavior of git add, git rm,
-> and git mv when they attempt to modify paths outside of the sparse-checkout
-> cone. In particular, this care is expanded to not just cache entries with
-> the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
-> definition.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I suspect something in this series broke 'git add' and friends with "odd" sparse
-definitions (I haven't actually bisected).  git 2.33.0 rejects attempts to add
-files with the below sparse-checkout and modified files.  There appears to be a
-discrepancy in the query vs. checkout logic as the rejected files are checked out
-in the working tree, e.g. git sees that the local file was deleted, yet will not
-stage the deletion.
+> On Sat, Oct 16 2021, Josh Steadmon wrote:
+>
+>> It can be helpful when creating a new branch to use the existing
+>> tracking configuration from the branch point. However, there is
+>> currently not a method to automatically do so.
+>
+> There's no method to get *only* that config, but this use-case is why
+> the "-c" option (copy branch) was added.
 
-There's also arguably a flaw in the "advise" trigger.  AFAICT, the help message
-is displayed if and only if the entire path is excluded from the working tree.
-In my perfect world, git would complain and advise if there are unstaged changes
-for tracked files covered by the specified path.
+Hmph, I doubt the claim about the original motivation behind "-c",
+but it sure sounds like an interesting point of view.  The commit at
+the tip, as well as configurations are copied, which is most of the
+way there, but I suspect that the --track=3Dinherit is mostly to be
+used in the context of "git checkout -b" and the mention of "branch"
+is merely for simplicity of the description of this topic, no?  And
+you cannot say "git checkout --clone-branch original" (yet).
 
-Note, my sparse-checkout is very much the result of trial and error to get the
-exact files I care about.  It's entirely possible I'm doing something weird, but
-at the same time git itself is obviously confused.
+But it is a very interesting way to twist the point of view.
 
-Thanks!
 
-$ cat .git/info/sparse-checkout
-!arch/*
-!tools/arch/*
-!virt/kvm/arm/*
-/*
-arch/.gitignore
-arch/Kconfig
-arch/x86
-tools/arch/x86
-tools/include/uapi/linux/kvm.h
-!Documentation
-!drivers
-
-$ git read-tree -mu HEAD
-
-$ rm arch/x86/kvm/x86.c
-
-$ git commit -a
-On branch x86/kvm_find_cpuid_entry_index
-Your branch is up to date with 'kvm/queue'.
-
-You are in a sparse checkout with 40% of tracked files present.
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	deleted:    arch/x86/kvm/x86.c
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-$ git add arch
-
-$ git add .
-
-$ git add arch/x86
-The following paths and/or pathspecs matched paths that exist
-outside of your sparse-checkout definition, so will not be
-updated in the index:
-arch/x86
-hint: If you intend to update such entries, try one of the following:
-hint: * Use the --sparse option.
-hint: * Disable or modify the sparsity rules.
-hint: Disable this message with "git config advice.updateSparsePath false"
