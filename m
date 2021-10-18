@@ -2,64 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 617E0C433F5
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 12:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F7DC433FE
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 12:41:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4463360EE9
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 12:38:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A93CA60FC3
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 12:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231822AbhJRMlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Oct 2021 08:41:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51054 "EHLO
+        id S231772AbhJRMnc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Oct 2021 08:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231889AbhJRMk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Oct 2021 08:40:59 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC648C0613EE
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 05:38:37 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d5so1787597pfu.1
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 05:38:37 -0700 (PDT)
+        with ESMTP id S229519AbhJRMn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Oct 2021 08:43:28 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6328EC06161C
+        for <git@vger.kernel.org>; Mon, 18 Oct 2021 05:41:17 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id t184so13766185pfd.0
+        for <git@vger.kernel.org>; Mon, 18 Oct 2021 05:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=m1VBbL7RIKZk2r4wdJaD9sjlvdV55ZnHhW55f3p9Rec=;
-        b=DT+7i1stcnNcrAa4zMoj6oq/R+UO/J3G/b3cbLrsvFSSihR1ga2m5IPt9NMrE84NX/
-         gZdpIwtkZDsjLtDVPhFTg2EoBwZnrmfb//HlHw4fZGy0eHXy5dU0+BrPgSchWMnf8uQ8
-         /9Lm8zX6esoW5L5/sTh8ZmOn3L69GqqRnegAOZkNlbsbzYbF6Y0KyPTljR4vuhi2UKml
-         mPvC1XLfl9rTDnzCFes7mib1epFkJrxw2Yoeb0mGAk7oOUyzRwsWGdfA94HnMmKbG4nn
-         LNzlgfRU5N+QoBVUpdl5ESYx5ZNShtt5KXd7sQhMGAsIt/DHTUoY5GtaLTvmVpl/lZAl
-         07MA==
+        bh=t/Bu2/6pgzP/2vdq6GEAgKqoYBFNWRRq1Hg2ewLGGGg=;
+        b=FwloW4oy2VMctqFC7ohbSuyeJ2rELVwR+8adUg7++Sge0vcP5hGIDO2JjiQojp9Icf
+         n38ZrDQOUOOrHp+bt6EQrMIez0UaO78Yg72UJLvI5ZeYHYIM433O1my5PRaiBocqgxhr
+         q3tcQ5IFXjv9vuKackzUqx5815hCAdzMFy7zbkjjAzNWBBnxyq5Zm+TvNRfObJyvhp/5
+         v8LKstJjk/bCyM2XXd6CnZHSNIPSSVDB3meHADWLL9pM7Z5ZzwWy6an10jlh3otaarBQ
+         EVJh1P7Ts6sBcnBb1Wxa3NaF2lmfwhqLR25GdCtvCMhZKGs4VhsdFsbABMvWYjjB0Pt6
+         mpHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=m1VBbL7RIKZk2r4wdJaD9sjlvdV55ZnHhW55f3p9Rec=;
-        b=B4+e1LOkv+UNO9H2s+jNOIF1Nq8WvxSlQBzaw+jGU0fuc36rm0ssNJDvSsRyMUl67J
-         mFXgxSb74JxWZ1p3RXuGHs3NHobtWF7emxmZsJ4CwwQg5LRheAnxfotY4e+A2m0XZENv
-         Jq1vTWAJM7AwHD+gcuoyZzxIXySImjDT17b36tqeUk72fxMbq6p9M21+fcWwY8JPURDZ
-         ny992ZaVtd13zn+PiXD7sT1VSfRNC675V0SZSzTLo1oOxozCA5zD/p4wgxcyNCpDfn09
-         9t6QZTJutyq9OFHyRWX2VzGzJ/PP1paGp0eKsqgAIzUa9KFZzGX9uUAvU5qO2KAQwVKs
-         AWow==
-X-Gm-Message-State: AOAM530oJZ3EhXuWtYzE/n3WxYw6Fj7rtKjBGvgqmmHwa8O3OwOF+LJg
-        6bLNdOqvzdJvIfQY7rc/3VoRKs8IpzFDuQ==
-X-Google-Smtp-Source: ABdhPJx8gAZiVqvYlfHu4F9mXjqYaxjA9mdj8fKDXrJm2N/sxgx4oytPqaV6iVMvDM2PBNAFsPOBbw==
-X-Received: by 2002:a63:7402:: with SMTP id p2mr23475769pgc.472.1634560717192;
-        Mon, 18 Oct 2021 05:38:37 -0700 (PDT)
+        bh=t/Bu2/6pgzP/2vdq6GEAgKqoYBFNWRRq1Hg2ewLGGGg=;
+        b=CH0G2m8FkIxeKCQFpNaGHxWFJZEDmIhseduq0Y585QMm51ObDiK+1tvxk+IMiq/jvU
+         kfzls+IMsHl2s5SSv8dKPdoTfTCYGugPSZETJGaOUzwWxVVHig9eugIcwxCy1VPVpAym
+         PQ86IUHAOD+Jlj1VowGuTateNXZzmqZ1N5c1l5HxEalP7dfPd/k/bx6NuP+jLHdDfVN8
+         RuBPQPo0N5nS+TkRcl4y8IHED+bqvWjRzgtl07w1TkGUI6RlrRnnd9C1oW4F1BY1l5JA
+         TydKi+x+nDWWUOvyD9q3aP4IWq63P3zJzO2ruURwU6fubmkEi8fd9lVLZvn9IM5hMcW6
+         lKug==
+X-Gm-Message-State: AOAM5316A+wgEfXK2Y9KoJERcNQr7pvvNvXC0RrwTzGdy3R6psvKUYWN
+        urAuT7e66oix+T0SWAP1FZ8ncvq+1HyY7A==
+X-Google-Smtp-Source: ABdhPJzLsaA39ZJNDyv4P5yqyxneNJeCB+yX9d03bnN6GrNNOVtucDw8/bo3nKl7KkIpjn8WmNU5YQ==
+X-Received: by 2002:a63:7402:: with SMTP id p2mr23487738pgc.472.1634560876655;
+        Mon, 18 Oct 2021 05:41:16 -0700 (PDT)
 Received: from ubuntu.mate (subs02-180-214-232-4.three.co.id. [180.214.232.4])
-        by smtp.gmail.com with ESMTPSA id m10sm19201829pjs.21.2021.10.18.05.38.35
+        by smtp.gmail.com with ESMTPSA id u24sm12978841pfm.27.2021.10.18.05.41.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 05:38:36 -0700 (PDT)
+        Mon, 18 Oct 2021 05:41:16 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, vagabon.xyz@gmail.com,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v3] archive: describe compression level option
-Date:   Mon, 18 Oct 2021 19:38:22 +0700
-Message-Id: <20211018123822.541406-1-bagasdotme@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v3] Documentation: specify base point when generating MyFirstContribution patchset
+Date:   Mon, 18 Oct 2021 19:41:06 +0700
+Message-Id: <20211018124106.542050-1-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,51 +65,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Describe the only extra option in `git archive`, that is the compression
-level option. Previously this option is only described for zip backend;
-add description also for tar backend.
+Specifying base point (commit hash) can help reviewers and testers
+interested on the patchset. Mention how to record it with `--base`
+option to `format-patch`.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
  Changes since v3 [1]:
-     - add description for tar backend
-     - rewrite for zip
+     - rewording (suggested by Glen)
 
- [1]:
-https://lore.kernel.org/git/b28a55da-c74b-8061-108f-10f9df2c0d6f@gmail.com/T/#t
+ I don't apply Junio's suggestion that use `--base=auto`, because in
+ most cases invocations of the option requires full hash of base object
+ and AFAIK people just do `git checkout -b` without specifying the
+ tracking option (`-t`).
 
- Documentation/git-archive.txt | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ [1]: https://lore.kernel.org/git/xmqqo87q6whk.fsf@gitster.g/T/#t
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 9f8172828d..ca3356d543 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -93,12 +93,19 @@ BACKEND EXTRA OPTIONS
+ Documentation/MyFirstContribution.txt | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index b20bc8e914..1c4cd092ee 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -902,10 +902,19 @@ is out of scope for the context of this tutorial.
+ === Preparing Initial Patchset
  
- zip
- ~~~
---0::
--	Store the files instead of deflating them.
---9::
--	Highest and slowest compression level.  You can specify any
--	number from 1 to 9 to adjust compression speed and ratio.
-+-<compression level number>::
-+	Specify compression level. Higher values enables better ratio at
-+	the expense of longer time. Supported values are from `-0`
-+	(store-only) to `-9` (best ratio). Default is `-6` if isn't
-+	specified.
+ Sending emails with Git is a two-part process; before you can prepare the emails
+-themselves, you'll need to prepare the patches. Luckily, this is pretty simple:
++themselves, you'll need to prepare the patches. Luckily, this is pretty simple.
++First, we need to get hash of the commit the patchset is based on. We call
++this commit the `<base>`:
  
-+tar
-+~~~
-+-<compression level number>::
-+	Specify compression level. The value will be passed to the
-+	compression command configured in `tar.<format>.command`. See
-+	manual page of the configured command for the list of supported
-+	levels and the default level if this option isn't specified.
+ ----
+-$ git format-patch --cover-letter -o psuh/ master..psuh
++$ git show -s --format="%H" master
++----
++
++Now generate the patchset, passing the hash of `<base>` to the `--base`
++parameter:
++
++----
++$ git format-patch --cover-letter --base=<base> -o psuh/ master..psuh
+ ----
  
- CONFIGURATION
- -------------
+ The `--cover-letter` parameter tells `format-patch` to create a cover letter
+@@ -916,6 +925,10 @@ The `-o psuh/` parameter tells `format-patch` to place the patch files into a
+ directory. This is useful because `git send-email` can take a directory and
+ send out all the patches from there.
+ 
++The `--base=<base>` parameter tells `format-patch` to embed base commit
++hash to the cover letter. Reviewers and testers interested in the patchset
++can create branch based on the specifed base commit in order to apply it.
++
+ `master..psuh` tells `format-patch` to generate patches for the difference
+ between `master` and `psuh`. It will make one patch file per commit. After you
+ run, you can go have a look at each of the patches with your favorite text
+@@ -1046,7 +1059,7 @@ reviewer comments. Once the patch series is ready for submission, generate your
+ patches again, but with some new flags:
+ 
+ ----
+-$ git format-patch -v2 --cover-letter -o psuh/ --range-diff master..psuh-v1 master..
++$ git format-patch -v2 --cover-letter -o psuh/ --base=<base> --range-diff master..psuh-v1 master..
+ ----
+ 
+ The `--range-diff master..psuh-v1` parameter tells `format-patch` to include a
 
 base-commit: f443b226ca681d87a3a31e245a70e6bc2769123c
 -- 
