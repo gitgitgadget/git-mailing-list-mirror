@@ -2,123 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BD1C433EF
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 01:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 259ACC433F5
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 05:24:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC9AF61179
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 01:15:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0639960FF2
+	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 05:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233991AbhJRBR2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Oct 2021 21:17:28 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62208 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231983AbhJRBR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Oct 2021 21:17:27 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 034B114623C;
-        Sun, 17 Oct 2021 21:15:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+WQTjw+yFeAcxAbZzZk3ir3EA1QdBR0XQBHSGU
-        j5b80=; b=gvgvoo+PfsoxI33XBRxEX/YsJyzn9ATOGZ2D3J9ez0MOFjIjLOlsnP
-        qST3yOnCdqt6GO/dGGncPceCDYXcmzqs6J/g/pu/evNvzqfXBN1DRhZ7Df6So0Xw
-        LqsDLNUgT3mko7BOSQfwYsAriw6yOImRy5UA7/tTxYZJOB9wVh+vI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F01A714623B;
-        Sun, 17 Oct 2021 21:15:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5AF0814623A;
-        Sun, 17 Oct 2021 21:15:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 2/2] sparse-index: update index read to consider
- index.sparse config
-References: <pull.1059.git.1634327697.gitgitgadget@gmail.com>
-        <c6279b225454af0cf3b54586127eb91206593af3.1634327697.git.gitgitgadget@gmail.com>
-        <xmqqh7di3qfu.fsf@gitster.g>
-        <e17b7e0f-edf0-0770-9b9b-dd092a8a7a41@gmail.com>
-        <xmqq5ytw19ck.fsf@gitster.g>
-        <8c148f7d-f175-7dc5-51a0-eef48aa98c3d@gmail.com>
-Date:   Sun, 17 Oct 2021 18:15:12 -0700
-In-Reply-To: <8c148f7d-f175-7dc5-51a0-eef48aa98c3d@gmail.com> (Derrick
-        Stolee's message of "Sun, 17 Oct 2021 15:33:58 -0400")
-Message-ID: <xmqqczo3yvz3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229634AbhJRF0l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Oct 2021 01:26:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229533AbhJRF0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Oct 2021 01:26:41 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A92BC06161C
+        for <git@vger.kernel.org>; Sun, 17 Oct 2021 22:24:30 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id oa4so11410797pjb.2
+        for <git@vger.kernel.org>; Sun, 17 Oct 2021 22:24:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3SyDRfY3IiKo7dvMrIZYzM3sR84UgHRMgkr7S/exR84=;
+        b=elNvg+7UStUaIQUrkcYD6eX/LPTOp+VDx+sZuFMZmdAlMPASuRZtOZvkgdVobpWy8S
+         1LNCvR0W329jCEs4IvSZZB2Rff79JIGkvop/zj+rYYfh/snman9NnwbNNrjneyTk6ELb
+         lSQZN7vxMcm8WPZkpEGxlJaH/D4O8tRA8OLu3c3hozat7+LHd8Ma+xhn3iZcJK3mtpLl
+         pE+BqjKn2DwzkGGb3MsqmU3p+nf6GgysHdIu+OYN6quEbPq29FWblwsgWoDgKc3WC/6l
+         891+hCMUh/ylfNaFsZNgwFI/KPe3BPDTq9fA7wbKm6ftS3fuINsSKTUw4T95Hps1BHzc
+         tHHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3SyDRfY3IiKo7dvMrIZYzM3sR84UgHRMgkr7S/exR84=;
+        b=3lqnEsyPskTERNtcWmUcK814LyBFbl0PlyOuywGtvoyTtonIJqJS5KA4bX9oPbALUY
+         pWllu7haG4ytehczcl6gIpVCf3H1x28pDTUerdY7q/56t3TkezAPor/SX43VsWArj/7i
+         dljNCYJOyU5Ltf0NfVkoU+h+zp+QdsKFw5rXqvUN5zki3+0jyoAbYyv3ZQx6vMo0dzpu
+         QgPrhldUkai/qw7pNb8oCBSkOCQc4UWapr3/bC0QAt5xmcMyafR/u3n7kHPPb+tvG/wd
+         eZWJM/RpCnoTaDvcBQC3i0sV1gfNkgUhuOz/7ScrqUjlFrbThr0zJMSvq71xTv0efCsi
+         g0VQ==
+X-Gm-Message-State: AOAM533vlPERI6FHvsvycdoAAoCZv0u/LP0cRMbZAgFMjzJGIA+kSXmm
+        tPSdBfdYaFdp7PiK8qUTNsA=
+X-Google-Smtp-Source: ABdhPJwOlLoMD5LieNA4PqvUJOK1EokEn0V2AaLJoXuVz07gxO7GzhBbJOjzhHCg+ktsWaBbWnD39w==
+X-Received: by 2002:a17:90b:398:: with SMTP id ga24mr31600353pjb.87.1634534670114;
+        Sun, 17 Oct 2021 22:24:30 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-86.three.co.id. [180.214.232.86])
+        by smtp.gmail.com with ESMTPSA id pj12sm12443716pjb.19.2021.10.17.22.24.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 17 Oct 2021 22:24:29 -0700 (PDT)
+Message-ID: <cc1b7611-8ec1-db29-1678-f45ba08d9b68@gmail.com>
+Date:   Mon, 18 Oct 2021 12:24:26 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D8747358-2FB0-11EC-B30E-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: git tag -h fatal error with global tag.sort config
+Content-Language: en-US
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>, Jakub Wilk <jwilk@jwilk.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <0daf6907-b472-a756-1240-4c78f8f4d37e@gmail.com>
+ <20210912132757.GC76263@szeder.dev>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20210912132757.GC76263@szeder.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 12/09/21 20.27, SZEDER Gábor wrote:
+> Interesting.  It bisects to 47bd3d0c14 (ref-filter: don't look for
+> objects when outside of a repository, 2018-11-14), which, based on the
+> error message, kind of makes sense, because 'git tag' uses the general
+> ref-filter sorting facility.  Now, even if 'git tag -h' is executed in
+> a repository, since 99caeed05d (Let 'git <command> -h' show usage
+> without a git dir, 2009-11-09) run_builtin() special-cases the '-h'
+> option and does not call setup_git_directory(), so cmd_tag() and
+> everything invoked from within will mistakenly think that there is no
+> repository.  And cmd_tag() parses the config before parsing the
+> options (of course, otherwise command line options couldn't override
+> the config), so it hits this die() before parse_options would get a
+> change to act on the '-h' option.
+> 
+> Now, 'git branch' uses the same ref-filter sorting, but the equivalent
+> 'git -c branch.sort=creatordate branch -h' command does show the usage
+> as expected.  The relevant difference between cmd_branch() and
+> cmd_tag() is that the former special-cases the '-h' option as well
+> just before it would call git_config().  Doing the same in cmd_tag()
+> like in the patch below seems to fix this issue, but I'm not sure that
+> this is the right fix.
+> 
+> 
+>    ---  >8  ---
+> 
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 065b6bf093..31b8cc4600 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -485,6 +485,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>   
+>   	setup_ref_filter_porcelain_msg();
+>   
+> +	if (argc == 2 && !strcmp(argv[1], "-h"))
+> +		usage_with_options(git_tag_usage, options);
+> +
+>   	git_config(git_tag_config, sorting_tail);
+>   
+>   	memset(&opt, 0, sizeof(opt));
+> 
 
->>     * In addition, with these patches, if index.sparse=false, a
->>       sparse index will be expaned to full upon reading, and if it
->>       is true, a non-sparse index will be shrunk to sparse upon
->>       reading
->
-> This is only half true. If "index.sparse=false", then a sparse
-> index will be expanded to full upon reading. If "index.sparse=true"
-> then nothing special will happen to an index on reading.
+Sorry for long reply.
 
-OK.  I somehow got the impression that we convert in both ways from
-the patch text under discussion, specifically this part in
-do_read_index():
+Patch applied and usage help appears.
 
-> -	if (istate->repo->settings.command_requires_full_index)
-> +	if (!istate->repo->settings.sparse_index ||
-> +	    istate->repo->settings.command_requires_full_index)
->  		ensure_full_index(istate);
-> +	else if (!istate->sparse_index)
-> +		convert_to_sparse(istate, 0);
->  
->  	return istate->cache_nr;
+But when I do `./bin-wrappers/git tag -h`, I don't see `usage:` header, 
+and instead show the help starting from `-F`.
 
-We used to say "when we know we are running a command that is not
-sparse ready, expand it here" and nothing else.
-
-We now added a bit more condition for expansion, i.e. "when we are
-told that the repository does not want sparse index, or when the
-command is not sparse ready".
-
-But the patch goes one more step.  "If we didn't find a reason to
-expand to full, and if the in-core index we read is not sparse, then
-call convert_to_sparse() on it".  So if the repo settings tells us
-that the repository wants a sparse index, and the index we read was
-not sparse, what does convert_to_sparse() without MEM_ONLY flag bit
-do?  Nothing special?
-
-It internally checks the repo->settings.sparse_index again and
-refrains from shrinking the entries, but we are talking about the
-case where that repo settings is set to "true", so wouldn't we end
-up getting the originally full in-core index turned into sparse?
-
-It is a confusing piece of code.
-
-I see many unconditional calls to convert_to_sparse(istate, 0) on
-the write code paths, where I instead would expect "if the repo
-wants sparse, call convert_to_sparse(), and if the repo does not
-want sparse, call ensure_full_index()", before actualy writing the
-entries out.  These also are setting traps to confuse readers.
-
-Perhaps we want a helper function "ensure_right_sparsity(istate)"
-that would be called where we have
-
-	if (condition)
-		convert_to_sparse();
-	else
-		ensure_full_index();
-
-or an unconditonal call to convert_to_sparse() to unconfuse readers?
-
-Still puzzled...
-
-Thanks.
+-- 
+An old man doll... just what I always wanted! - Clara
