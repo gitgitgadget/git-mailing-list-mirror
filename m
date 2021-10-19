@@ -2,472 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B55CCC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 07:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AFEC433EF
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 08:16:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9302E61378
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 07:37:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5017560EB4
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 08:16:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbhJSHj5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 03:39:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbhJSHj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 03:39:56 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FADC061745
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 00:37:43 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id g36so5471726lfv.3
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 00:37:43 -0700 (PDT)
+        id S234511AbhJSITA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 04:19:00 -0400
+Received: from mail-vi1eur05on2054.outbound.protection.outlook.com ([40.107.21.54]:52146
+        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231758AbhJSIS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 04:18:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=E/Ejc+6K7OKSKBpRH2MO4iYthyl862NNoQKQKiORXXq4d/C1aj0vNVmEAkZP+Kj6e9cg5Z+lTpYJjLzQBkEuw3DbBoBwX8Y3RsyZyRdOw+Nt0h8UcIg+Kn8obytKvUv3RnlLdIN1TtF8pYKzW8jdE1yjmvoBgaKda/acfZcjGdS5Gc2eLbSeM1rm4tHoHSCLpWi1DxP3XfYIVtGAZAdE4hzfQ2ImZn8/hFakdUDO0o3GUBId5ll899u8xPDpknVv7RH4kent3D+wSVUoEgz7pWFJyzW02DIGZU9WkQtTD5m4wzFK3iuglH89fMI/yxHuGCYpFFpb6HbKQ2LwfMDG9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=x8OCa1Y/RnFnFyngYG9f1UkG2pcvwDoYxPqJC3DB00k=;
+ b=gUUOeEVbzvoYwjmMPh7/cjcPJkUi3tOtKWYyHbVr6rYR8xIRe4lSG73sDAWTVfN56QUl039ojEhnmVEudIn9xATW8e2FKkb45/jNGKyMdT+vd3zea/ahfSc1q47bPGym707Dq4rj9IfQkwOeLLbukFgSjFzJnnqJ6ToPYgDuQA3ZHbg0/mX5g5KcpHzqPlY2m9rqKNP1Dtq05Zm9O4o59XKKlVUJCgsyc7OWGranNV/CZjy2YESfo+opIQ8aHVPClrbP8o0gDs4TVB87WbYnE++sNyAv1TkI9R/StqOZg9P/xjzmv9sPTS2t+0A01Y206Xre9ivmRSx1iBAyTkRogg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YCdD3i6214oK2HQQwHVNitW+mjtfDPzoFwX25yY4ZkI=;
-        b=RuzT4yyG9cDt+PkaZgXRHlGYAzGe675ZYfDoEzjFUDnHEu5+vfqHD7/Z9YUbjt69dl
-         vZRnNDmuItYJL7OuHqUjiPyeYKXtn46MQ0TScZ4qI8gINvhctBGMO20zv5I74jUWWWsg
-         SP6ldbjnQ4DKCQlthfnDorH24fKR+wKS12rRgiig4f8YbSwi5HXSwG+xvBpE0y19OY3R
-         pO9qXNzrMT7GnO4VVWABJ0GyOCphy8ZYvBUn2Rvr+B7DmmeI89Vu0nW3uWaiokx375Rs
-         eCQc3AFg4QYxPk3O9YfyrJ/lKZsT04a4sHwm0EKnGkJ+QLYqn7M8e0q/aX0ugQSYDXEV
-         MVAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YCdD3i6214oK2HQQwHVNitW+mjtfDPzoFwX25yY4ZkI=;
-        b=CXiRb+6Gc9MVRVxsSuq6ykZ2t1jDsi7jVhJU1m1cybAKmB+Tsk4Own4HNb1cmbz/5E
-         UajnTP80CNDiCMVdlfh6ouARsJUWuSME0MFy782i1RumT//PuD5ToaYkR/cVV2Xen3om
-         HlqMTMs2TJfFVSN3ps+Una/6skb+cNeIcVjY57HAOPKBjaWhtH4r9AJMBlwZz6pTBT2h
-         pK9TEFSikEDHiikTkLZHZFtJnvD0y8DcUYkfbMQCkiXfiPSTV1u70+a8KllcNe7o57c5
-         qWBkBaYorwvrucKwsXNaI/X5kF1ON/O4Cymygsgd+qb3VuFITZ4fWQ0CmQZpoNg/u/Uj
-         NAQg==
-X-Gm-Message-State: AOAM531IRcp0SE7182zsbjIhnupowYmTkwErzF05m7mbVZrrdWEfh1ka
-        ajEQRXMAexRldLzg6lCOUv/LxhNC514MnOE4Zl061OStxh5yAg==
-X-Google-Smtp-Source: ABdhPJwlhfINdTLgz4DGBf5iNNfyBfENXMQ/upr1k66/9879Eus8iV2Q8h0FM71rPWRYY8CGZFILeREQSkk30ldPe6s=
-X-Received: by 2002:a05:6512:1322:: with SMTP id x34mr4500893lfu.366.1634629062014;
- Tue, 19 Oct 2021 00:37:42 -0700 (PDT)
+ d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=x8OCa1Y/RnFnFyngYG9f1UkG2pcvwDoYxPqJC3DB00k=;
+ b=bj6qdtQlf92nWtBSj51WfEVdbXArCZ82m45MRFmLx4TCprPgpsLe6LmQ8u9jTBlJBJeTknqe8sJ60KXF44/Y3ZlZ6zWH9tBe4FVMjTI7RMYIkSFJodPnE4FbsUbz8BMYp4K1WOi8eux0iZDvdemWq1Vtqi6MqHfnGFDOEyMORPI=
+Authentication-Results: peff.net; dkim=none (message not signed)
+ header.d=none;peff.net; dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PA4PR10MB4526.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:be::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16; Tue, 19 Oct
+ 2021 08:16:45 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::49a2:88ed:be81:d939%7]) with mapi id 15.20.4608.018; Tue, 19 Oct 2021
+ 08:16:45 +0000
+Message-ID: <af0cf842-a16c-6cc3-fb61-b61422b24b17@gigacodes.de>
+Date:   Tue, 19 Oct 2021 10:16:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Subject: Re: [PATCH 0/2] some leak fixes on fs/ssh-signing-fix
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <YW2qpuosxr9PNwVa@coredump.intra.peff.net>
+From:   Fabian Stelzer <fs@gigacodes.de>
+In-Reply-To: <YW2qpuosxr9PNwVa@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM6P191CA0107.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:209:8a::48) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-References: <20211009082058.41138-1-chiyutianyi@gmail.com>
-In-Reply-To: <20211009082058.41138-1-chiyutianyi@gmail.com>
-From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 19 Oct 2021 15:37:30 +0800
-Message-ID: <CAO0brD2J1zEP5=A1uuwvLsFMGZ9X6WaZuhEYZt7AHhzzKoJX5Q@mail.gmail.com>
-Subject: Re: [PATCH] unpack-objects: unpack large object in stream
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Received: from [IPV6:2003:ea:5820:600:c042:75a0:fd5e:1472] (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM6P191CA0107.EURP191.PROD.OUTLOOK.COM (2603:10a6:209:8a::48) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.16 via Frontend Transport; Tue, 19 Oct 2021 08:16:44 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: a3c17b1b-fc13-494e-365f-08d992d8c9fc
+X-MS-TrafficTypeDiagnostic: PA4PR10MB4526:
+X-Microsoft-Antispam-PRVS: <PA4PR10MB45269ED87307C6C50FA4997FB6BD9@PA4PR10MB4526.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 6JHyBnsyjvlbwwSIlD9taP66bObnbTfaUlHRIXQPs9tmmOIB61EiXmimRh8SmFvfr7xZ8iicm7natvaS/iDwYQpRjgbcPu0PI6pNnXTVvk7yUZpLO+aFOT5ztIWNqG1WzkAvPZdGuCeaaRFtc+SUQcjXiT+MpFtrjwvb5pr3iFhmzLt2tnhRarBCfLvzI8hVEimHPOEm4p8NBQWJfM9Dleu203BMTffgR+OwGTJ2MJ6DKZRzeT/nyntHhQxZOBTqt/8gTnNYYSdgigu+/cZU6ekkLkHWfUBYgCa0DgG+4wsARELUi7+3+Y/7+AvpnpnYKPWUX4C5e6LYP85T8Vfv4u5QZKV/2AJGaKZ/SeZkcr0ttZLiB+lwWZ+KHKAH0pEfihYH2o9lnLQ4t7CzATOsn7FzuFgyp+LUdKhRO8XS4yN6zoC6k9sTDymY6PZ2pdQTeXioUhWlNATcS1MdNLPVK+IA/HAD+IhXELSeZYlVULU6+TUjYZqTGkaNIrysN/fuKBTj4XErZMtBUU7lWwP8JqLswIc0NNhXGvNr+S79A+X+dKMvnAbDY9VbXS7QD2zfCcD0KU2KeVp1MPYAZBOPpbT0sjZ7o8bV/g+1WpgoYs1CWRdvBv3F7RC87x3KwWh0BfxgxbbjmQ+e0deTvr5vH5PTZyVIWpnH2Li55wb5TuEI47P6ZoqSdJPzXfAzdbpV/4fLb0LsakXoxbRfUrdeOtTbAT776P6G9QXcIpogSxM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(366004)(39830400003)(376002)(136003)(346002)(396003)(38100700002)(316002)(83380400001)(2616005)(31686004)(186003)(66556008)(8936002)(5660300002)(4744005)(86362001)(2906002)(36756003)(508600001)(53546011)(31696002)(6666004)(8676002)(66476007)(6486002)(66946007)(52116002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S1pMQ1VGY2lkNE55MkZ6V2FNQWlNRUZWck5YU3cxVEVuOUxjeDUrT2NZNWZG?=
+ =?utf-8?B?ZFBqa2xnNnNRdHl4M3MzamVnaDkvZWVaaXpTTHhvMGtxczBBSGV0d2ZZU09L?=
+ =?utf-8?B?SEN5VFAyVGIvTDlGZnBNNmVSa2NMUTYzd3p6byttcUw2WXFyQWYwZ05rSnN5?=
+ =?utf-8?B?MjFZd3YzaWJyQnMyNURkNkpZZWtyL2hKTjNHSnVnZHJ0bEtoWlVTV0VoelZF?=
+ =?utf-8?B?RVdWa1JiTkk4d292Vk5uN21jZm5acjN4RGUrRU53d2dWUmx0Qm5SSHhUa213?=
+ =?utf-8?B?aDlTdHNuRitZWFNzTzFvL3RHRlA4SjVvNllabDgvbjAxOFRHa0FKYi93N1Rm?=
+ =?utf-8?B?dHZDMGdYYlJDZk5abEw4QjV5dGxkUDZZZlpMZFJGMjV6ckxXN3lBS1BlT0NM?=
+ =?utf-8?B?Ym1NUkxNWml2WXNKYnNUeDhRTllLdUVPUWRhZWR5V3RkUm1OY2dWZzN0cVlm?=
+ =?utf-8?B?bHg5c3pqcDNXZUx5bkd5MERYWE1rd1Vhc2ZBRHBBNi9ZR2VvcU9qVG1XVUNV?=
+ =?utf-8?B?bDdrazlJa254aC9VdXJDVDNCV25MNHpjdTFRREJ5ZlJKcUllbEEvbTI3c0Fw?=
+ =?utf-8?B?YUlsSjBkNWVxdmNNaXFEdG1pS2lEdWVULytDU0l0SmJtbE1GMEl6bURaOE1z?=
+ =?utf-8?B?NzNOWTFGdUNwa1IwZHIzcUJQVkJicS9OczZ1WXgraUMvOEthbFhyNDZ1QnNx?=
+ =?utf-8?B?NmhCRUdrMVFvdzBwdEFHK3pHL0VqRGtBamszYmVWam41T2VyM1BnR3lHNlNx?=
+ =?utf-8?B?NjRhMFF1dDBQU0huTWFSejF3VnhwcGlYOUJRek5XZWd2SjhCbDN3WTZ1Z2I2?=
+ =?utf-8?B?LzI5a1hlMlRDMTJVRnB0QVNDc0F5V1Q1a3BzWjkwMk15Z1hNa1dzTStySlNJ?=
+ =?utf-8?B?RXhqY1pselR6TFM0cGtJeGR3VEZ4L3k1NVB3d3FGYUs3WWQzcFMzaXUydHd0?=
+ =?utf-8?B?MUpKb2daOXRDSFJZL0F1enZjeGYwUVZGR0dmQzRJRWtMSVRURWg2WEIxWlZp?=
+ =?utf-8?B?eHB0L3QyQjBvejh4c0VZSlQvc0FZTll6LzlQUFluVllVT3VJNWZBSkZvcVBZ?=
+ =?utf-8?B?OU5sRjROczZSRmdIVHYyWjdMRDRFczBjeTk2Z215WEwzTi83UjMzcjZoTCtr?=
+ =?utf-8?B?dXNQWXJpd2QweHQ4YUJYQUtYYzhteXhsSmx0UEMvRExWbjJSM3V1UzM5anZW?=
+ =?utf-8?B?YXNRMHQvWVlBU0h2NWpheUFmUXBrL09IV1o2T09JMFV2RFVzZjRNZi91Uk12?=
+ =?utf-8?B?Y2xvNFJuWWtOM1BXOUNvL1hDZ2VuY3lEaHZPNHk3MXdWQ2ZiTVRuM2l2dnhv?=
+ =?utf-8?B?QTRTM05uTlhSeHVhRWY5ajFnWDlxMVlSeUc5ZVUyMVk5SUdaL1hHaVkycnBm?=
+ =?utf-8?B?cVFhUlVGVEpTK0doUDNzN1dJNjdrMmxQbEhKVTJQWnEyMC9HcXRKTjlTMklY?=
+ =?utf-8?B?L3RHWlZ1azhrRnRJQldzdk5ESGJ6UHBlK2dvMDUrVFJEK08vQzQ1ajJDZW5R?=
+ =?utf-8?B?Y1hoV0ZyUGxSTkRkQUk0QmVGTnhEdU8rSTZRNldNeVFhRXE0V3N4d0g2MHo4?=
+ =?utf-8?B?S2VZa3FtTnR0RlhFU09OeVRhUTdQbWJhZzZuRi9mOEJMOGozM3JCUzliUDdY?=
+ =?utf-8?B?aEttNjgrVVF1ZGd0MVFNVUdOTkFJdlpNWXBiWEY5V1ZaQkxVNGt3aXdTUmk1?=
+ =?utf-8?B?UDgrOGVsWFd4VXpXRWZUMU8xeTIwNUI3S1J3L3VRUnJRLzFPTjRXZGpRaXls?=
+ =?utf-8?B?ZmRUN3dQQmNHV2lwSnZEVWdXV2dLaEFrN2t4N0VUM3ByQlVvNVhNUnROMVNr?=
+ =?utf-8?B?ME8wSjMyNHlNT01JREl5L1JTeDFTSEtJK3NTMWc2ZG9PQVRCUTl1SnpaTjRz?=
+ =?utf-8?Q?bLwiqwe0mfdoU?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: a3c17b1b-fc13-494e-365f-08d992d8c9fc
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2021 08:16:45.0400
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: roBOeh6G9nFLbq7/8lr3bvD1ieJCn6d8ihgB7Z7xC//XHeeEn4Q1f2hNzOWqNAmq6K0TwHpf+UkHXo0CV0i4a2KjapxuP/96lDB2GtEeUI0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4526
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Any suggestions?
+On 18.10.21 19:11, Jeff King wrote:
+> This fixes two small leaks on top of fs/ssh-signing-fix noticed by
+> Coverity. I guess it's too late to squash them in, so I prepared patches
+> on top.
+> 
+>   [1/2]: gpg-interface: fix leak of "line" in parse_ssh_output()
+>   [2/2]: gpg-interface: fix leak of strbufs in get_ssh_key_fingerprint()
+> 
+>  gpg-interface.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> -Peff
+> 
 
-Han Xin <chiyutianyi@gmail.com> =E4=BA=8E2021=E5=B9=B410=E6=9C=889=E6=97=A5=
-=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=884:21=E5=86=99=E9=81=93=EF=BC=9A
->
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
->
-> When calling "unpack_non_delta_entry()", will allocate full memory for
-> the whole size of the unpacked object and write the buffer to loose file
-> on disk. This may lead to OOM for the git-unpack-objects process when
-> unpacking a very large object.
->
-> In function "unpack_delta_entry()", will also allocate full memory to
-> buffer the whole delta, but since there will be no delta for an object
-> larger than "core.bigFileThreshold", this issue is moderate.
->
-> To resolve the OOM issue in "git-unpack-objects", we can unpack large
-> object to file in stream, and use the setting of "core.bigFileThreshold" =
-as
-> the threshold for large object.
->
-> Reviewed-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> ---
->  builtin/unpack-objects.c          |  41 +++++++-
->  object-file.c                     | 149 +++++++++++++++++++++++++++---
->  object-store.h                    |   9 ++
->  t/t5590-receive-unpack-objects.sh |  92 ++++++++++++++++++
->  4 files changed, 279 insertions(+), 12 deletions(-)
->  create mode 100755 t/t5590-receive-unpack-objects.sh
->
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 4a9466295b..8ac77e60a8 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -320,11 +320,50 @@ static void added_object(unsigned nr, enum object_t=
-ype type,
->         }
->  }
->
-> +static void fill_stream(struct git_zstream *stream)
-> +{
-> +       stream->next_in =3D fill(1);
-> +       stream->avail_in =3D len;
-> +}
-> +
-> +static void use_stream(struct git_zstream *stream)
-> +{
-> +       use(len - stream->avail_in);
-> +}
-> +
-> +static void write_stream_blob(unsigned nr, unsigned long size)
-> +{
-> +       struct git_zstream_reader reader;
-> +       struct object_id *oid =3D &obj_list[nr].oid;
-> +
-> +       reader.fill =3D &fill_stream;
-> +       reader.use =3D &use_stream;
-> +
-> +       if (write_stream_object_file(&reader, size, type_name(OBJ_BLOB),
-> +                                    oid, dry_run))
-> +               die("failed to write object in stream");
-> +       if (strict && !dry_run) {
-> +               struct blob *blob =3D lookup_blob(the_repository, oid);
-> +               if (blob)
-> +                       blob->object.flags |=3D FLAG_WRITTEN;
-> +               else
-> +                       die("invalid blob object from stream");
-> +       }
-> +       obj_list[nr].obj =3D NULL;
-> +}
-> +
->  static void unpack_non_delta_entry(enum object_type type, unsigned long =
-size,
->                                    unsigned nr)
->  {
-> -       void *buf =3D get_data(size);
-> +       void *buf;
-> +
-> +       /* Write large blob in stream without allocating full buffer. */
-> +       if (type =3D=3D OBJ_BLOB && size > big_file_threshold) {
-> +               write_stream_blob(nr, size);
-> +               return;
-> +       }
->
-> +       buf =3D get_data(size);
->         if (!dry_run && buf)
->                 write_object(nr, type, buf, size);
->         else
-> diff --git a/object-file.c b/object-file.c
-> index a8be899481..06c1693675 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1913,6 +1913,28 @@ static int create_tmpfile(struct strbuf *tmp, cons=
-t char *filename)
->         return fd;
->  }
->
-> +static int write_object_buffer(struct git_zstream *stream, git_hash_ctx =
-*c,
-> +                              int fd, unsigned char *compressed,
-> +                              int compressed_len, const void *buf,
-> +                              size_t len, int flush)
-> +{
-> +       int ret;
-> +
-> +       stream->next_in =3D (void *)buf;
-> +       stream->avail_in =3D len;
-> +       do {
-> +               unsigned char *in0 =3D stream->next_in;
-> +               ret =3D git_deflate(stream, flush);
-> +               the_hash_algo->update_fn(c, in0, stream->next_in - in0);
-> +               if (write_buffer(fd, compressed, stream->next_out - compr=
-essed) < 0)
-> +                       die(_("unable to write loose object file"));
-> +               stream->next_out =3D compressed;
-> +               stream->avail_out =3D compressed_len;
-> +       } while (ret =3D=3D Z_OK);
-> +
-> +       return ret;
-> +}
-> +
->  static int write_loose_object(const struct object_id *oid, char *hdr,
->                               int hdrlen, const void *buf, unsigned long =
-len,
->                               time_t mtime)
-> @@ -1949,17 +1971,9 @@ static int write_loose_object(const struct object_=
-id *oid, char *hdr,
->         the_hash_algo->update_fn(&c, hdr, hdrlen);
->
->         /* Then the data itself.. */
-> -       stream.next_in =3D (void *)buf;
-> -       stream.avail_in =3D len;
-> -       do {
-> -               unsigned char *in0 =3D stream.next_in;
-> -               ret =3D git_deflate(&stream, Z_FINISH);
-> -               the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
-> -               if (write_buffer(fd, compressed, stream.next_out - compre=
-ssed) < 0)
-> -                       die(_("unable to write loose object file"));
-> -               stream.next_out =3D compressed;
-> -               stream.avail_out =3D sizeof(compressed);
-> -       } while (ret =3D=3D Z_OK);
-> +       ret =3D write_object_buffer(&stream, &c, fd, compressed,
-> +                                 sizeof(compressed), buf, len,
-> +                                 Z_FINISH);
->
->         if (ret !=3D Z_STREAM_END)
->                 die(_("unable to deflate new object %s (%d)"), oid_to_hex=
-(oid),
-> @@ -2020,6 +2034,119 @@ int write_object_file(const void *buf, unsigned l=
-ong len, const char *type,
->         return write_loose_object(oid, hdr, hdrlen, buf, len, 0);
->  }
->
-> +int write_stream_object_file(struct git_zstream_reader *reader,
-> +                            unsigned long len, const char *type,
-> +                            struct object_id *oid,
-> +                            int dry_run)
-> +{
-> +       git_zstream istream, ostream;
-> +       unsigned char buf[8192], compressed[4096];
-> +       char hdr[MAX_HEADER_LEN];
-> +       int istatus, ostatus, fd =3D 0, hdrlen, dirlen, flush =3D 0;
-> +       int ret =3D 0;
-> +       git_hash_ctx c;
-> +       struct strbuf tmp_file =3D STRBUF_INIT;
-> +       struct strbuf filename =3D STRBUF_INIT;
-> +
-> +       /* Write tmpfile in objects dir, because oid is unknown */
-> +       if (!dry_run) {
-> +               strbuf_addstr(&filename, the_repository->objects->odb->pa=
-th);
-> +               strbuf_addch(&filename, '/');
-> +               fd =3D create_tmpfile(&tmp_file, filename.buf);
-> +               if (fd < 0) {
-> +                       if (errno =3D=3D EACCES)
-> +                               ret =3D error(_("insufficient permission =
-for adding an object to repository database %s"),
-> +                                       get_object_directory());
-> +                       else
-> +                               ret =3D error_errno(_("unable to create t=
-emporary file"));
-> +                       goto cleanup;
-> +               }
-> +       }
-> +
-> +       memset(&istream, 0, sizeof(istream));
-> +       istream.next_out =3D buf;
-> +       istream.avail_out =3D sizeof(buf);
-> +       git_inflate_init(&istream);
-> +
-> +       if (!dry_run) {
-> +               /* Set it up */
-> +               git_deflate_init(&ostream, zlib_compression_level);
-> +               ostream.next_out =3D compressed;
-> +               ostream.avail_out =3D sizeof(compressed);
-> +               the_hash_algo->init_fn(&c);
-> +
-> +               /* First header */
-> +               hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, ty=
-pe,
-> +                               (uintmax_t)len) + 1;
-> +               ostream.next_in =3D (unsigned char *)hdr;
-> +               ostream.avail_in =3D hdrlen;
-> +               while (git_deflate(&ostream, 0) =3D=3D Z_OK)
-> +                       ; /* nothing */
-> +               the_hash_algo->update_fn(&c, hdr, hdrlen);
-> +       }
-> +
-> +       /* Then the data itself */
-> +       do {
-> +               unsigned char *last_out =3D istream.next_out;
-> +               reader->fill(&istream);
-> +               istatus =3D git_inflate(&istream, 0);
-> +               if (istatus =3D=3D Z_STREAM_END)
-> +                       flush =3D Z_FINISH;
-> +               reader->use(&istream);
-> +               if (!dry_run)
-> +                       ostatus =3D write_object_buffer(&ostream, &c, fd,=
- compressed,
-> +                                                     sizeof(compressed),=
- last_out,
-> +                                                     istream.next_out - =
-last_out,
-> +                                                     flush);
-> +               istream.next_out =3D buf;
-> +               istream.avail_out =3D sizeof(buf);
-> +       } while (istatus =3D=3D Z_OK);
-> +
-> +       if (istream.total_out !=3D len || istatus !=3D Z_STREAM_END)
-> +               die( _("inflate returned %d"), istatus);
-> +       git_inflate_end(&istream);
-> +
-> +       if (dry_run)
-> +               goto cleanup;
-> +
-> +       if (ostatus !=3D Z_STREAM_END)
-> +               die(_("unable to deflate new object (%d)"), ostatus);
-> +       ostatus =3D git_deflate_end_gently(&ostream);
-> +       if (ostatus !=3D Z_OK)
-> +               die(_("deflateEnd on object failed (%d)"), ostatus);
-> +       the_hash_algo->final_fn(oid->hash, &c);
-> +       close_loose_object(fd);
-> +
-> +       /* We get the oid now */
-> +       loose_object_path(the_repository, &filename, oid);
-> +
-> +       dirlen =3D directory_size(filename.buf);
-> +       if (dirlen) {
-> +               struct strbuf dir =3D STRBUF_INIT;
-> +               /*
-> +                * Make sure the directory exists; note that the contents
-> +                * of the buffer are undefined after mkstemp returns an
-> +                * error, so we have to rewrite the whole buffer from
-> +                * scratch.
-> +                */
-> +               strbuf_add(&dir, filename.buf, dirlen - 1);
-> +               if (mkdir(dir.buf, 0777) && errno !=3D EEXIST) {
-> +                       unlink_or_warn(tmp_file.buf);
-> +                       strbuf_release(&dir);
-> +                       ret =3D -1;
-> +                       goto cleanup;
-> +               }
-> +               strbuf_release(&dir);
-> +       }
-> +
-> +       ret =3D finalize_object_file(tmp_file.buf, filename.buf);
-> +
-> +cleanup:
-> +       strbuf_release(&tmp_file);
-> +       strbuf_release(&filename);
-> +       return ret;
-> +}
-> +
->  int hash_object_file_literally(const void *buf, unsigned long len,
->                                const char *type, struct object_id *oid,
->                                unsigned flags)
-> diff --git a/object-store.h b/object-store.h
-> index d24915ced1..12b113ef93 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -33,6 +33,11 @@ struct object_directory {
->         char *path;
->  };
->
-> +struct git_zstream_reader {
-> +       void (*fill)(struct git_zstream *);
-> +       void (*use)(struct git_zstream *);
-> +};
-> +
->  KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
->         struct object_directory *, 1, fspathhash, fspatheq)
->
-> @@ -225,6 +230,10 @@ int hash_object_file(const struct git_hash_algo *alg=
-o, const void *buf,
->  int write_object_file(const void *buf, unsigned long len,
->                       const char *type, struct object_id *oid);
->
-> +int write_stream_object_file(struct git_zstream_reader *reader,
-> +                            unsigned long len, const char *type,
-> +                            struct object_id *oid, int dry_run);
-> +
->  int hash_object_file_literally(const void *buf, unsigned long len,
->                                const char *type, struct object_id *oid,
->                                unsigned flags);
-> diff --git a/t/t5590-receive-unpack-objects.sh b/t/t5590-receive-unpack-o=
-bjects.sh
-> new file mode 100755
-> index 0000000000..7e63dfc0db
-> --- /dev/null
-> +++ b/t/t5590-receive-unpack-objects.sh
-> @@ -0,0 +1,92 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2021 Han Xin
-> +#
-> +
-> +test_description=3D'Test unpack-objects when receive pack'
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success "create commit with big blobs (1.5 MB)" '
-> +       test-tool genrandom foo 1500000 >big-blob &&
-> +       test_commit --append foo big-blob &&
-> +       test-tool genrandom bar 1500000 >big-blob &&
-> +       test_commit --append bar big-blob &&
-> +       (
-> +               cd .git &&
-> +               find objects/?? -type f | sort
-> +       ) >expect &&
-> +       git repack -ad
-> +'
-> +
-> +test_expect_success 'setup GIT_ALLOC_LIMIT to 1MB' '
-> +       GIT_ALLOC_LIMIT=3D1m &&
-> +       export GIT_ALLOC_LIMIT
-> +'
-> +
-> +test_expect_success 'prepare dest repository' '
-> +       git init --bare dest.git &&
-> +       git -C dest.git config core.bigFileThreshold 2m &&
-> +       git -C dest.git config receive.unpacklimit 100
-> +'
-> +
-> +test_expect_success 'fail to push: cannot allocate' '
-> +       test_must_fail git push dest.git HEAD 2>err &&
-> +       test_i18ngrep "remote: fatal: attempting to allocate" err &&
-> +       (
-> +               cd dest.git &&
-> +               find objects/?? -type f | sort
-> +       ) >actual &&
-> +       ! test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'set a lower bigfile threshold' '
-> +       git -C dest.git config core.bigFileThreshold 1m
-> +'
-> +
-> +test_expect_success 'unpack big object in stream' '
-> +       git push dest.git HEAD &&
-> +       git -C dest.git fsck &&
-> +       (
-> +               cd dest.git &&
-> +               find objects/?? -type f | sort
-> +       ) >actual &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'setup for unpack-objects dry-run test' '
-> +       PACK=3D$(echo main | git pack-objects --progress --revs test) &&
-> +       unset GIT_ALLOC_LIMIT &&
-> +       git init --bare unpack-test.git
-> +'
-> +
-> +test_expect_success 'unpack-objects dry-run with large threshold' '
-> +       (
-> +               cd unpack-test.git &&
-> +               git config core.bigFileThreshold 2m &&
-> +               git unpack-objects -n <../test-$PACK.pack
-> +       ) &&
-> +       (
-> +               cd unpack-test.git &&
-> +               find objects/ -type f
-> +       ) >actual &&
-> +       test_must_be_empty actual
-> +'
-> +
-> +test_expect_success 'unpack-objects dry-run with small threshold' '
-> +       (
-> +               cd unpack-test.git &&
-> +               git config core.bigFileThreshold 1m &&
-> +               git unpack-objects -n <../test-$PACK.pack
-> +       ) &&
-> +       (
-> +               cd unpack-test.git &&
-> +               find objects/ -type f
-> +       ) >actual &&
-> +       test_must_be_empty actual
-> +'
-> +
-> +test_done
-> --
-> 2.33.0.1.g09a6bb964f.dirty
->
+Thanks.
+Both of these look good.
+
+Is coverity included in the ci/gh actions? Where would these notices
+show up?
+
+Kind regards,
+Fabian
