@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 530B6C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C586AC433EF
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AE406137D
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A69946137D
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235492AbhJSLmM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 07:42:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53678 "EHLO
+        id S230281AbhJSLmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 07:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235298AbhJSLmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 07:42:00 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE18C061772
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:30 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id e5-20020a17090a804500b001a116ad95caso2430486pjw.2
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:30 -0700 (PDT)
+        with ESMTP id S230303AbhJSLmK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 07:42:10 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08FA9C061777
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:33 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id e5-20020a17090a804500b001a116ad95caso2430581pjw.2
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ikrrlh13K1mgZ435whYcNFo5qkKACD6jnoPIS8qPH7Q=;
-        b=Gv3FtEehxNLT0Oc6NHzySvQPmknadV4jtY570Z8BfnaPgkxXeEyInAL7XJzkTIsumh
-         ugzbdc74Wytvdl1HAoVLUgeOFy561BkRn5lohxrnNyThmguzBaJD1UrmSHWZExXJN4Bk
-         EBpaot+60J2BYEzWEhHwZLYIBTaOB0MkjOl/g8d7H27a71FrhCNVslxpqxqWOFPuIDKf
-         132n680GpLn11kNsEycEQLbycxZFy/Urfcs89VaaTu+1HfFUdDB8WAVwV0D3S7ZYepCH
-         WW8yl5/uuQ/t1aMnmRIuwP5QUK3erlqNIyi39uA4406L/7ZsSP6jac37uE61XzaCCBfT
-         ZPSg==
+        bh=NaAP2QAIoZTZsr+6wUC+yxCPQXY2JRO7stjPsRNyWwo=;
+        b=N6O5Mot6A6d6lizV8Y9PkMeP72GZ3NSk5VUMDVuFMvbTt1ousJfKNrU3lt+HOIXz/G
+         h0wKRzIPbxkg88XwZJ4gJBTA7z4354Kf0QZXCyZQ9zKdt9+0hbIpiD/skQSyoRZGMJcD
+         apuJeNxAiXoYIlSYdsQ17Zvn7OvnwBKI+rDeMz1yrVwtiNpCe+Jlow3DwK/rcqQZq3qE
+         QmAv5GHZqQvT7hTifGM0mZx0wUOXOvOfi2GzitdxmgpE1BpnbbGO3OKNV8LlN042qUuK
+         edaRV9Gr5CeG6ek7BPz38YBvzIoeLIu4aV5xOw2Sgc3QGTe8wOyN868HBVqy3s35GqG2
+         KZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ikrrlh13K1mgZ435whYcNFo5qkKACD6jnoPIS8qPH7Q=;
-        b=Yt6CqWmvwNsFiYHO16d2PWyf6/x0vKn4BaYJLboBmjYvhuiEv54SymDrPXYBOUlUC9
-         KFRg2OBteyjMpGaUhYy8XgmFzD8UrQs1veOYqr+1Yi1Calphb0Ci9xxGtjwjYZglNyNx
-         8TIbZcLS/r6FChVWcH/LtO7VYweDsi6NmGA9WrDHSjhD3yu1uCyX95AE/ovvkvmztxQ/
-         YpPg95xwFNIiG7aoAAR5X5DvJP9yQUCMDiI+eQ1dFjrUYkBzvSYQ48+iigViPsbjLsI2
-         y6VcA6Yueu+zv2EZZhT1/0euqY3Lg3uI/3nW/Y7ByRpaT5vEhCzT6qmt0aIPRUhgTFD3
-         GHTg==
-X-Gm-Message-State: AOAM530oWLsNRjgIcJysH63tOJour0z63qADxrn4l+OXt636OvfDGc4z
-        +Zd33su9yLSyHQrl6YJEw+U/7Q3TwUg=
-X-Google-Smtp-Source: ABdhPJxZvMA/Z5v+0E9sMtYU3dS9XbEwxmXZBxNXzRoB/orjuh47tsHAQu6/eBncQg9KbtlbYXN/8A==
-X-Received: by 2002:a17:902:e884:b0:13f:19bf:fc16 with SMTP id w4-20020a170902e88400b0013f19bffc16mr32775250plg.67.1634643569994;
-        Tue, 19 Oct 2021 04:39:29 -0700 (PDT)
+        bh=NaAP2QAIoZTZsr+6wUC+yxCPQXY2JRO7stjPsRNyWwo=;
+        b=oFQv61DDcFno4XFIz9XbhD3u8xEq2dPsjBDpjdrPp4Smrwyj9wBOa+84ELjmws9K96
+         NA1LWKhLU7c0k/lj5vRYFbb+G4o5QbxjYoAWcQhBjjmVXVu1QpGBTQWKzE6GTpTIvzEs
+         5iNjWRVjjlmWihPpXamse1BGJz4istnrHk4584VvbcPeqXFB0qYsi2/MRto34pEhVkOb
+         xdu6b6Mjygu9TRStWD4j48edcpBO+wFzIGUK7YptGq0lf14QsdnfC9aSss7amTt+KYKf
+         DtRPrmNW1rC39sx/ksrq+Q8/FGlMN9olgb0qms5ZoIvLH5n7t+qKcOh7iUFSlt00B7nZ
+         eIhA==
+X-Gm-Message-State: AOAM5324SLzeKUuz9glIrpc/Kf7jWCLVTd1HfdDsMRWdMN5BsMusuh9W
+        n4XtTIHzMuO4Qu73o4wjzDJv4A2D7NI=
+X-Google-Smtp-Source: ABdhPJw1dapzjOO3/7235ThjEi62KIsf980e62tgqzN+1C1Uysxp0M/FdPlX22stXrbW33MuS1Gr7g==
+X-Received: by 2002:a17:902:c206:b0:13f:68f:675c with SMTP id 6-20020a170902c20600b0013f068f675cmr33452109pll.8.1634643572337;
+        Tue, 19 Oct 2021 04:39:32 -0700 (PDT)
 Received: from localhost.localdomain ([205.204.117.96])
-        by smtp.gmail.com with ESMTPSA id l207sm16430861pfd.199.2021.10.19.04.39.27
+        by smtp.gmail.com with ESMTPSA id l207sm16430861pfd.199.2021.10.19.04.39.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Oct 2021 04:39:29 -0700 (PDT)
+        Tue, 19 Oct 2021 04:39:32 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong@alibaba-inc.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, avarab@gmail.com, jonathantanmy@google.com,
         bagasdotme@gmail.com, adlternative@gmail.com, stolee@gmail.com,
-        Teng Long <tenglong@alibaba-inc.com>
-Subject: [PATCH v6 07/12] t5702: test cases for excluding commits
-Date:   Tue, 19 Oct 2021 19:38:31 +0800
-Message-Id: <ca72efd22ef6a11d8cdbf48912818ea7edbcf73f.1634634814.git.tenglong@alibaba-inc.com>
+        Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH v6 08/12] packfile-uri: support for excluding trees
+Date:   Tue, 19 Oct 2021 19:38:32 +0800
+Message-Id: <c7a885ebec703f383f5935517170b4ab755b5411.1634634814.git.tenglong@alibaba-inc.com>
 X-Mailer: git-send-email 2.31.1.453.g945ddc3a74.dirty
 In-Reply-To: <cover.1634634814.git.tenglong@alibaba-inc.com>
 References: <cover.1634634814.git.tenglong@alibaba-inc.com>
@@ -68,322 +68,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Teng Long <tenglong@alibaba-inc.com>
----
- t/t5702-protocol-v2.sh | 300 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 300 insertions(+)
+From: Teng Long <dyroneteng@gmail.com>
 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index ccd3678311..6e323253f7 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -967,6 +967,306 @@ test_expect_success 'blob-exclusion (using uploadpack.excludeobject): packfile U
- 	blobpackfileuri_fetch new
- '
+This commit introduce the exclusion of tree objects. The exclusion range
+is designed by an enum named `exclude_level` in "pack-objects.c" that
+enumerate three values, "ET_SELF", "ET_INCLUDE" and "ET_REACHABLE".
+
+Exclusion scope on different level:
+
+1. When a tree is specified to be excluded with level "ET_SELF",
+only the tree object itself will be excluded.
+
+2. When a tree specified to be excluded with level "ET_INCLUDE",
+exclude the tree itself, as well as all the trees and blobs it contains.
+
+3. When it is specified with level "ET_REACHABLE", the excluding scope
+is as same as level "ET_INCLUDE", because tree do not have any
+ancestors.
+
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
+---
+ builtin/pack-objects.c | 18 ++++++++++++++++++
+ list-objects.c         |  8 ++++++--
+ object.c               |  1 +
+ object.h               |  1 +
+ 4 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index e7b27ef443..6713e734fb 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1250,6 +1250,21 @@ static int match_packfile_uri_exclusions(struct configured_exclusion *ex)
+ 	return 0;
+ }
  
-+test_expect_success 'commit-exclusion(excluding_type=ET_SELF): part of packfile response provided as URI' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	test_when_finished "rm -rf \"$P\" http_child log *found" &&
-+	excluding_type="0" &&
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+	mkdir "$P"/my-tree  &&
-+	echo my-blob >"$P"/my-tree/my-blob &&
-+	git -C "$P" add my-tree &&
-+	mkdir "$P"/my-tree/sub-tree &&
-+	echo sub-blob >"$P"/my-tree/sub-tree/sub-blob &&
-+	git -C "$P" add my-tree &&
-+	test_commit -C "$P" A &&
-+ 	commith=$(git -C "$P" rev-parse A) &&
-+ 	roottreeh=$(git -C "$P" rev-parse A:) &&
-+	mytreeh=$(git -C "$P" ls-tree HEAD my-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+	subtreeh=$(git -C "$P" ls-tree HEAD my-tree/sub-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+	ah=$(git -C "$P" hash-object A.t) &&
-+	myblobh=$(git -C "$P" hash-object my-tree/my-blob) &&
-+	subblobh=$(git -C "$P" hash-object my-tree/sub-tree/sub-blob) &&
-+	configure_exclusion commit "$P" "$commith" new "$excluding_type" >h &&
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child
-+'
++static int want_exclude_object(struct object_list *objects)
++{
++	struct object_list *p;
++	struct configured_exclusion *ex;
 +
-+test_expect_success 'commit-exclusion(excluding_type=ET_INCLUDE): part of packfile response provided as URI' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	test_when_finished "rm -rf \"$P\" http_child log *found" &&
-+	excluding_type="1" &&
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+	mkdir "$P"/my-tree  &&
-+	echo my-blob >"$P"/my-tree/my-blob &&
-+	git -C "$P" add my-tree &&
-+	mkdir "$P"/my-tree/sub-tree &&
-+	echo sub-blob >"$P"/my-tree/sub-tree/sub-blob &&
-+	git -C "$P" add my-tree &&
-+	test_commit -C "$P" A &&
-+ 	commith=$(git -C "$P" rev-parse A) &&
-+ 	roottreeh=$(git -C "$P" rev-parse A:) &&
-+	mytreeh=$(git -C "$P" ls-tree HEAD my-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+	subtreeh=$(git -C "$P" ls-tree HEAD my-tree/sub-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+	ah=$(git -C "$P" hash-object A.t) &&
-+	myblobh=$(git -C "$P" hash-object my-tree/my-blob) &&
-+	subblobh=$(git -C "$P" hash-object my-tree/sub-tree/sub-blob) &&
-+	configure_exclusion commit "$P" "$commith" new "$excluding_type" >h &&
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+	for idx in http_child/.git/objects/pack/*.idx
-+	do
-+		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
-+		{
-+			grep "^[0-9a-f]\{16,\} " out || :
-+		} >out.objectlist &&
-+		if test_line_count = 7 out.objectlist
-+		then
-+			if grep $commith out
-+			then
-+				>commithfound
-+			fi &&
-+			if grep $roottreeh out
-+			then
-+				>roottreehfound
-+			fi &&
-+			if grep $ah out
-+			then
-+				>ahfound
-+			fi &&
-+			if grep $mytreeh out
-+			then
-+				>mytreehfound
-+			fi &&
-+			if grep $myblobh out
-+			then
-+				>myblobhfound
-+			fi &&
-+			if grep $subtreeh out
-+			then
-+				>subtreehfound
-+			fi &&
-+			if grep $subblobh out
-+			then
-+				>subblobhfound
-+			fi
-+		fi
-+	done &&
-+	test -f mytreehfound &&
-+	test -f myblobhfound &&
-+	test -f subtreehfound &&
-+	test -f subblobhfound &&
-+	test -f commithfound &&
-+	test -f roottreehfound &&
-+	test -f ahfound &&
-+	# Ensure that there are exactly 2 packfiles with associated .idx
-+	ls http_child/.git/objects/pack/*.pack \
-+		http_child/.git/objects/pack/*.idx >filelist &&
-+	test_line_count = 4 filelist
-+'
++	if (!objects)
++		return 0;
++	for (p = objects; p; p = p->next) {
++		ex = oidmap_get(&configured_exclusions, &p->item->oid);
++		if (match_packfile_uri_exclusions(ex) && ex->level > ET_SELF)
++			return 1;
++	}
++	return 0;
++}
 +
-+test_expect_success 'commit-exclusion(excluding_type=ET_REACHABLE):  hitten a full packfile response provided as URI' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+ 	test_when_finished "rm -rf \"$P\" http_child log *found" &&
-+	excluding_type="2" &&
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+	mkdir "$P"/my-tree  &&
-+	echo my-blob >"$P"/my-tree/my-blob &&
-+	git -C "$P" add my-tree &&
-+	test_commit -C "$P" A &&
-+ 	commith=$(git -C "$P" rev-parse A) &&
-+  	roottreeh=$(git -C "$P" rev-parse A:) &&
-+ 	mytreeh=$(git -C "$P" ls-tree HEAD my-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+ 	ah=$(git -C "$P" hash-object A.t) &&
-+ 	myblobh=$(git -C "$P" hash-object my-tree/my-blob) &&
-+	configure_exclusion commit "$P" "$commith" new "$excluding_type" >h &&
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+	for idx in http_child/.git/objects/pack/*.idx
-+	do
-+		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
-+		{
-+			grep "^[0-9a-f]\{16,\} " out || :
-+		} >out.objectlist &&
-+		if test_line_count = 5 out.objectlist
-+		then
-+			if grep $commith out
-+			then
-+				>commithfound
-+			fi &&
-+			if grep $roottreeh out
-+			then
-+				>roottreehfound
-+			fi &&
-+			if grep $mytreeh out
-+			then
-+				>mytreehfound
-+			fi &&
-+			if grep $ah out
-+			then
-+				>ahfound
-+			fi &&
-+			if grep $myblobh out
-+			then
-+				>myblobhfound
-+			fi
-+		elif test_line_count = 0 out.objectlist
-+		then
-+				>emptypackfound
-+		fi
-+	done &&
-+	test -f emptypackfound &&
-+	test -f mytreehfound &&
-+	test -f myblobhfound &&
-+	test -f commithfound &&
-+	test -f roottreehfound &&
-+	test -f ahfound &&
-+	# Ensure that there are exactly 2 packfiles with associated .idx
-+	ls http_child/.git/objects/pack/*.pack \
-+		http_child/.git/objects/pack/*.idx >filelist &&
-+	test_line_count = 4 filelist
-+'
-+
-+test_expect_success 'commit-exclusion(excluding_type=ET_REACHABLE): part of packfile response provided as URI' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+ 	test_when_finished "rm -rf \"$P\" http_child log *found" &&
-+	excluding_type="2" &&
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+	mkdir "$P"/my-tree  &&
-+	echo my-blob >"$P"/my-tree/my-blob &&
-+	git -C "$P" add my-tree &&
-+	test_commit -C "$P" A &&
-+	mkdir "$P"/other-tree  &&
-+	echo other-blob >"$P"/other-tree/other-blob &&
-+	git -C "$P" add other-tree &&
-+	test_commit -C "$P" B &&
-+    ah=$(git -C "$P" hash-object A.t) &&
-+    bh=$(git -C "$P" hash-object B.t) &&
-+	myblobh=$(git -C "$P" hash-object my-tree/my-blob) &&
-+	otherblobh=$(git -C "$P" hash-object other-tree/other-blob) &&
-+	rm -rf "$P"/my-tree "$P"/other-tree "$P"/A.t "$P"/B.t &&
-+	mkdir "$P"/another-tree  &&
-+	echo another-blob >"$P"/another-tree/another-blob &&
-+	git -C "$P" add . &&
-+	test_commit -C "$P" C &&
-+ 	commitAh=$(git -C "$P" rev-parse A) &&
-+ 	commitBh=$(git -C "$P" rev-parse B) &&
-+ 	commitCh=$(git -C "$P" rev-parse C) &&
-+ 	roottreeAh=$(git -C "$P" rev-parse A:) &&
-+ 	roottreeBh=$(git -C "$P" rev-parse B:) &&
-+ 	roottreeCh=$(git -C "$P" rev-parse C:) &&
-+    mytreeh=$(git -C "$P" ls-tree A my-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+    othertreeh=$(git -C "$P" ls-tree B other-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+    anothertreeh=$(git -C "$P" ls-tree C another-tree | sed -ne "s/.*\($OID_REGEX\).*/\1/p") &&
-+    ch=$(git -C "$P" hash-object C.t) &&
-+	anotherblobh=$(git -C "$P" hash-object another-tree/another-blob) &&
-+	configure_exclusion commit "$P" "$commitBh" new "$excluding_type" >h &&
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+	for idx in http_child/.git/objects/pack/*.idx
-+	do
-+		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
-+		{
-+			grep "^[0-9a-f]\{16,\} " out || :
-+		} >out.objectlist &&
-+		if test_line_count = 5 out.objectlist
-+		then
-+			if grep $commitCh out
-+			then
-+				>commitChfound
-+			fi &&
-+			if grep $roottreeCh out
-+			then
-+				>roottreeChfound
-+			fi &&
-+			if grep $anothertreeh out
-+			then
-+				>anothertreehfound
-+			fi &&
-+			if grep $anotherblobh out
-+			then
-+				>anotherblobhfound
-+			fi &&
-+			if grep $ch out
-+			then
-+				>chfound
-+			fi
-+		elif test_line_count = 10 out.objectlist
-+		then
-+			if grep $commitAh out
-+			then
-+				>commitAhfound
-+			fi &&
-+			if grep $commitBh out
-+			then
-+				>commitBhfound
-+			fi &&
-+			if grep $roottreeAh out
-+			then
-+				>roottreeAhfound
-+			fi &&
-+			if grep $roottreeBh out
-+			then
-+				>roottreeBhfound
-+			fi &&
-+			if grep $mytreeh out
-+			then
-+				>mytreehfound
-+			fi &&
-+			if grep $othertreeh out
-+			then
-+				>othertreehfound
-+			fi &&
-+			if grep $myblobh out
-+			then
-+				>myblobhfound
-+			fi &&
-+			if grep $otherblobh out
-+			then
-+				>otherblobhfound
-+			fi &&
-+			if grep $ah out
-+			then
-+				>ahfound
-+			fi &&
-+			if grep $bh out
-+			then
-+				>bhfound
-+			fi
-+		fi
-+	done &&
-+	test -f commitChfound &&
-+	test -f roottreeChfound &&
-+	test -f anothertreehfound &&
-+	test -f anotherblobhfound &&
-+	test -f chfound &&
-+	test -f commitAhfound &&
-+	test -f commitBhfound &&
-+	test -f roottreeAhfound &&
-+	test -f roottreeBhfound &&
-+	test -f mytreehfound &&
-+	test -f othertreehfound &&
-+	test -f myblobhfound &&
-+	test -f otherblobhfound &&
-+	test -f ahfound &&
-+	test -f bhfound &&
-+	# Ensure that there are exactly 2 packfiles with associated .idx
-+	ls http_child/.git/objects/pack/*.pack \
-+		http_child/.git/objects/pack/*.idx >filelist &&
-+	test_line_count = 4 filelist
-+'
-+
- test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
- 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
- 	test_when_finished "rm -rf \"$P\" http_child log" &&
+ static int want_found_object(const struct object_id *oid, int exclude,
+ 			     struct packed_git *p)
+ {
+@@ -1400,11 +1415,14 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	if (uri_protocols.nr) {
+ 		if (referred_objs) {
+ 			struct commit *commit = referred_objs->commit;
++			struct object_list *trees = referred_objs->trees;
+ 			if (commit) {
+ 				commit_ex = oidmap_get(&configured_exclusions, &commit->object.oid);
+ 				if (match_packfile_uri_exclusions(commit_ex) && commit_ex->level > ET_SELF)
+ 					return 0;
+ 			}
++			if (want_exclude_object(trees))
++				return 0;
+ 		}
+ 
+ 		ex = oidmap_get(&configured_exclusions, oid);
+diff --git a/list-objects.c b/list-objects.c
+index b32213ecf1..40292e2cc8 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -114,8 +114,11 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 	struct name_entry entry;
+ 	enum interesting match = ctx->revs->diffopt.pathspec.nr == 0 ?
+ 		all_entries_interesting : entry_not_interesting;
++	struct referred_objects *referred_buf;
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
++	referred_buf = xmemdupz(referred_objs, sizeof(struct referred_objects));
++	object_list_insert(&tree->object, &referred_buf->trees);
+ 
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (match != all_entries_interesting) {
+@@ -136,7 +139,7 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 				    entry.path, oid_to_hex(&tree->object.oid));
+ 			}
+ 			t->object.flags |= NOT_USER_GIVEN;
+-			process_tree(ctx, t, base, entry.path, referred_objs);
++			process_tree(ctx, t, base, entry.path, referred_buf);
+ 		}
+ 		else if (S_ISGITLINK(entry.mode))
+ 			process_gitlink(ctx, entry.oid.hash,
+@@ -149,9 +152,10 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 				    entry.path, oid_to_hex(&tree->object.oid));
+ 			}
+ 			b->object.flags |= NOT_USER_GIVEN;
+-			process_blob(ctx, b, base, entry.path, referred_objs);
++			process_blob(ctx, b, base, entry.path, referred_buf);
+ 		}
+ 	}
++	free(referred_buf);
+ }
+ 
+ static void process_tree(struct traversal_context *ctx,
+diff --git a/object.c b/object.c
+index f86b52c4d6..895068cbc2 100644
+--- a/object.c
++++ b/object.c
+@@ -334,6 +334,7 @@ void add_object_array_with_path_and_referred_commit(struct object *obj, const ch
+ 	struct referred_objects *referred_objs;
+ 	referred_objs = xmalloc(sizeof(struct referred_objects));
+ 	referred_objs->commit = referred_commit;
++	referred_objs->trees = NULL;
+ 
+ 	if (nr >= alloc) {
+ 		alloc = (alloc + 32) * 2;
+diff --git a/object.h b/object.h
+index 4db0ecc3f2..618d674249 100644
+--- a/object.h
++++ b/object.h
+@@ -65,6 +65,7 @@ struct object_array {
+ 
+ struct referred_objects{
+     struct commit *commit;
++    struct object_list *trees;
+ };
+ #define OBJECT_ARRAY_INIT { 0, 0, NULL }
+ 
 -- 
 2.31.1.453.g945ddc3a74.dirty
 
