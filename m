@@ -2,57 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 519FBC433EF
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 19:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBD4C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 21:01:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D43961175
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 19:33:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C836B611B0
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 21:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232831AbhJSTfs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 15:35:48 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:50358 "EHLO bsmtp3.bon.at"
+        id S231345AbhJSVEH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 17:04:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41942 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230481AbhJSTfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 15:35:47 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4HYkSB2Rv2z5tl9;
-        Tue, 19 Oct 2021 21:33:29 +0200 (CEST)
-Subject: Re: What's cooking in git.git (Oct 2021, #05; Mon, 18)
-To:     Junio C Hamano <gitster@pobox.com>
-References: <xmqq1r4hv7bv.fsf@gitster.g>
+        id S230190AbhJSVEG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 17:04:06 -0400
+Received: (qmail 7399 invoked by uid 109); 19 Oct 2021 21:01:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Oct 2021 21:01:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15189 invoked by uid 111); 19 Oct 2021 21:01:52 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Oct 2021 17:01:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 19 Oct 2021 17:01:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Fabian Stelzer <fs@gigacodes.de>
 Cc:     git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <55716d3f-a0e6-a047-49f1-bf2be8ba2b72@kdbg.org>
-Date:   Tue, 19 Oct 2021 21:33:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+Subject: Re: [PATCH 0/2] some leak fixes on fs/ssh-signing-fix
+Message-ID: <YW8yP0mb7j15y6Yy@coredump.intra.peff.net>
+References: <YW2qpuosxr9PNwVa@coredump.intra.peff.net>
+ <af0cf842-a16c-6cc3-fb61-b61422b24b17@gigacodes.de>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1r4hv7bv.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <af0cf842-a16c-6cc3-fb61-b61422b24b17@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.10.21 um 08:48 schrieb Junio C Hamano:
-> * js/userdiff-cpp (2021-10-10) 6 commits
->   (merged to 'next' on 2021-10-18 at fea77f6c4e)
->  + userdiff-cpp: learn the C++ spaceship operator
->  + userdiff-cpp: permit the digit-separating single-quote in numbers
->  + userdiff-cpp: prepare test cases with yet unsupported features
->  + userdiff-cpp: tighten word regex
->  + t4034: add tests showing problematic cpp tokenizations
->  + t4034/cpp: actually test that operator tokens are not split
-> 
->  Userdiff patterns for the C++ language has been updated.
-> 
->  Will merge to 'master'.
+On Tue, Oct 19, 2021 at 10:16:41AM +0200, Fabian Stelzer wrote:
 
-Please don't, yet. There is a regression that, e.g., 2' as in '2' is
-regarded as a token.
+> Is coverity included in the ci/gh actions? Where would these notices
+> show up?
 
-Will submit a fix (the plan is to undo the digit separator thing), but
-it'll take a week or two as I am currently knocked out.
+Not currently. I've been playing with running it in an action, and may
+submit something to make it more official. There's some discussion here:
 
--- Hannes
+  https://lore.kernel.org/git/YV5dmkkuCqAY2qqG@coredump.intra.peff.net/
+
+There's also some on-going work to make the test suite run without
+leak-checkers (I didn't dig them up, but you can find recent topics and
+commits from Ævar). But we've got a ways to go, so you'd likely find a
+bunch of existing leaks if you tried it.
+
+So no, for now there was nothing obvious you could have seen that would
+have alerted you.
+
+-Peff
