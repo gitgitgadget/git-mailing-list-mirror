@@ -2,153 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20514C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 16:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7802C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 17:31:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8AE36113D
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 16:50:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92FF961355
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 17:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234130AbhJSQw2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 12:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232507AbhJSQw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 12:52:26 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05389C06161C
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 09:50:14 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id o133so455236pfg.7
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 09:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=bNKcSqd0Ai/K8J/804qUgbJt7U7ssx2BgRXjVZ+1pes=;
-        b=QFO90EXnKmr41JgLokoqnxmr/OhZjmh4flNyzelBGbtYumXvd/3jYBUGUlj961Xi6L
-         eeBZXKv2FkpeA/mZjPY6T0zZ5AccHa3bt3U8cLbEoSzm4o0DMlTNKEX+uA/lQCdm/ao5
-         DsWjiDN7+zyvke5sX9TU4YgwledunZ8BpvzZhOsDwBVb/FCgEQtjzXMe/PKSZKCYGm8p
-         E/2aRQYpxKkYi3/fbsJRnIET96WCNuTS0BDD7l/3xaMPBgj0rvNupKlaRAXgvoPq/Rv6
-         m9yC6MPLsJcKF/pDAtSAtdywZO7Q4A1UzdqvfC4aPy/gL2CHQAmtnf4HU/DWvVSTRny9
-         BJzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bNKcSqd0Ai/K8J/804qUgbJt7U7ssx2BgRXjVZ+1pes=;
-        b=jAYzfidSozQkDK9I7uq9xflBRrASGL+1jJ6ukX3zA+PfJiVYVekr895Z7m6hQySSi2
-         75yVPhlaiTyMyopNLn69UUr0Zhl5qxaC+vX3nl6KvRpzFOiADBq91uGAKUZTey0XVN+E
-         DwFIaOmRabdQkSORA42PYaNfJXNAKDcIJuCYr94L/PSPrteT2vFqZiW74sc2zGDhBZD1
-         icUblZSAgcwnglYwvMV7xpJa/cfZ0SaH3NR9a/HDJoW0NL3kARMQQGgmedI5+HeabPtL
-         uGd2ahl20bZrjy2JAwB19mzTjNJCLtHX97N9VVfNSC81/wZPT2idyG1B427WYns+imgJ
-         AxdA==
-X-Gm-Message-State: AOAM531rMX1GxqKww7r5X6/awK1jGSVUojx2qcicnfhotvQ+X0Wt/bVf
-        n0BnaY60MOQ7efO3F7Q4ep/z5A==
-X-Google-Smtp-Source: ABdhPJzkoZrDu0PL1Y/wbWg/JSJrAPKa7RV8OIinIO7ONKcq3/6GWsrx4ORa0xR9fm+V7uiuX7Dqzw==
-X-Received: by 2002:a62:7b87:0:b0:44d:3e28:a2ac with SMTP id w129-20020a627b87000000b0044d3e28a2acmr956216pfc.67.1634662213241;
-        Tue, 19 Oct 2021 09:50:13 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com. [35.185.214.157])
-        by smtp.gmail.com with ESMTPSA id w15sm16845181pfc.220.2021.10.19.09.50.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Oct 2021 09:50:12 -0700 (PDT)
-Date:   Tue, 19 Oct 2021 16:50:08 +0000
-From:   Sean Christopherson <seanjc@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        matheus.bernardino@usp.br, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/14] Sparse-checkout: modify 'git add', 'git rm',
- and 'git add' behavior
-Message-ID: <YW73QD7a+NzHd8dq@google.com>
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
- <YW3nAKAUj/HF15OR@google.com>
- <00188c99-386f-8d4f-08f6-11a49d31184c@gmail.com>
+        id S233460AbhJSRdb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 13:33:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41702 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232526AbhJSRdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 13:33:31 -0400
+Received: (qmail 7003 invoked by uid 109); 19 Oct 2021 17:31:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Oct 2021 17:31:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12600 invoked by uid 111); 19 Oct 2021 17:31:17 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Oct 2021 13:31:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 19 Oct 2021 13:31:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PoC] mailmap and trailers
+Message-ID: <YW8A5FznqLYs7MqH@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <00188c99-386f-8d4f-08f6-11a49d31184c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 19, 2021, Derrick Stolee wrote:
-> On 10/18/2021 5:28 PM, Sean Christopherson wrote:
-> > On Sun, Sep 12, 2021, Derrick Stolee via GitGitGadget wrote:
-> >> This series is based on ds/mergies-with-sparse-index.
-> >>
-> >> As requested, this series looks to update the behavior of git add, git rm,
-> >> and git mv when they attempt to modify paths outside of the sparse-checkout
-> >> cone. In particular, this care is expanded to not just cache entries with
-> >> the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
-> >> definition.
-> > 
-> > I suspect something in this series broke 'git add' and friends with "odd" sparse
-> > definitions (I haven't actually bisected).  git 2.33.0 rejects attempts to add
-> > files with the below sparse-checkout and modified files.  There appears to be a
-> > discrepancy in the query vs. checkout logic as the rejected files are checked out
-> > in the working tree, e.g. git sees that the local file was deleted, yet will not
-> > stage the deletion.
-> 
-> Are you using v2.33.0? This change is not in that version.
+The notion came up at the virtual contrib summit that we mailmap
+author/committer names, but not usually idents in trailers. We do for
+"git shortlog --group=trailer", but not in say, "git log", which is
+where most people will see them.
 
-Hrm, it's an internal build that says v2.33.0 is the bsae, but the --sparse option
-is available so who knows what's actually underneath the hood.  I can try vanilla
-upstream builds if that would help narrow down the issue.
+So here's a proof-of-concept at mapping idents in trailers for git-log.
+It does enough that you can try:
 
-> However, mt/add-rm-in-sparse-checkout [1] was introduced in v2.33.0 and
-> introduced these advice suggestions.
-> 
-> [1] https://github.com/git/git/compare/a5828ae6b52137b913b978e16cd2334482eb4c1f...d5f4b8260f623d6fdef36d5eaa8a0c2350390472
->
-> The series you are commenting on goes even farther in restricting adds to
-> be within the sparse-checkout definitions, even for unstaged files or files
-> that removed the skip-worktree bit due to a merge conflict. It also creates
-> an override '--sparse' option that allows you to ignore these protections.
-> 
-> > There's also arguably a flaw in the "advise" trigger.  AFAICT, the help message
-> > is displayed if and only if the entire path is excluded from the working tree.
-> > In my perfect world, git would complain and advise if there are unstaged changes
-> > for tracked files covered by the specified path.
-> >> Note, my sparse-checkout is very much the result of trial and error to get the
-> > exact files I care about.  It's entirely possible I'm doing something weird, but
-> > at the same time git itself is obviously confused.
-> > 
-> > Thanks!
-> > 
-> > $ cat .git/info/sparse-checkout
-> > !arch/*
-> > !tools/arch/*
-> > !virt/kvm/arm/*
-> > /*
-> > arch/.gitignore
-> > arch/Kconfig
-> > arch/x86
-> > tools/arch/x86
-> > tools/include/uapi/linux/kvm.h
-> > !Documentation
-> > !drivers
-> 
-> Have you tried using 'arch/x86/' and 'tools/arch/x86/' to specify
-> that these are directories? Just a thought.
+  $ git log --format='%(trailers)' >orig
+  $ git log --format='%(trailers:mailmap)' >mapped
+  $ diff -u orig mapped
 
-Nice!  That workaround resolves the issue.  I vaguely recall intentionally omitting
-the trailing slash, but adding it back doesn't seem to have any unwanted side effects
-on the current git versions I'm using.
+which does show the expected differences for git.git (e.g., people's
+Signed-off-by trailers getting adjusted for their current emails).
 
-> > $ git read-tree -mu HEAD
-> > 
-> > $ rm arch/x86/kvm/x86.c
-> > 
-> > $ git commit -a
-> ...
-> > 	deleted:    arch/x86/kvm/x86.c
-> 
-> This is certainly odd. Worth more investigation that I don't have
-> time for at this moment.
+One of the main things I wondered was the speed difference. The first
+command runs in about 0.5s for me, and the second in about 3.5s. So
+there's a pretty big cost, but perhaps acceptable in the context of
+interactive use. I didn't profile much. I'd guess some of the time is
+just that parsing and handling individual trailers at all is a bit slow
+(so it's on par with %(trailers:unfold), etc).
 
-I've no objection to punting on this now that I have a workaround.  The man pages
-are quite clear that sparse checkouts are still experimental and it's no trouble
-for me to whine again if something breaks in the future :-)
+What's here should work reliably, I think, but is pretty incomplete:
 
-Thanks again!
+  - it only works for %(trailers). We'd probably want a
+    "--mailmap-trailers" options to affect --pretty=medium, etc. That
+    code would probably go in pretty.c:pp_remainder()
+
+  - docs/tests conspicuously missing
+
+  - there's some ugliness with the ownership of the mailmap data
+    structure itself. I followed the existing pattern there. At the very
+    least these two spots should use the _same_ static string_list, but
+    probably it should be refactored to put it into pretty_print_context
+    or something.
+
+Anyway, here it is. I'm not sure if I'll push it forward more, but
+certainly anybody interested is welcome to pick it up and run with it. I
+mostly wanted to show how much and where such code would be, and see how
+it performed.
+
+---
+diff --git a/pretty.c b/pretty.c
+index 73b5ead509..0afa70058f 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1167,6 +1167,7 @@ int format_set_trailers_options(struct process_trailer_options *opts,
+ 	for (;;) {
+ 		const char *argval;
+ 		size_t arglen;
++		int bool_arg;
+ 
+ 		if (**arg == ')')
+ 			break;
+@@ -1200,6 +1201,15 @@ int format_set_trailers_options(struct process_trailer_options *opts,
+ 			strbuf_expand(kvsepbuf, fmt, strbuf_expand_literal_cb, NULL);
+ 			free(fmt);
+ 			opts->key_value_separator = kvsepbuf;
++		} else if (match_placeholder_bool_arg(*arg, "mailmap", arg, &bool_arg)) {
++			if (bool_arg) {
++				/* yuck but this is how mailmap_name() above does it */
++				static struct string_list mailmap = STRING_LIST_INIT_DUP;
++				read_mailmap(&mailmap);
++				opts->mailmap = &mailmap;
++			} else {
++				opts->mailmap = NULL;
++			}
+ 		} else if (!match_placeholder_bool_arg(*arg, "only", arg, &opts->only_trailers) &&
+ 			   !match_placeholder_bool_arg(*arg, "unfold", arg, &opts->unfold) &&
+ 			   !match_placeholder_bool_arg(*arg, "keyonly", arg, &opts->key_only) &&
+diff --git a/trailer.c b/trailer.c
+index 7c7cb61a94..743fdd506d 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -6,6 +6,8 @@
+ #include "tempfile.h"
+ #include "trailer.h"
+ #include "list.h"
++#include "mailmap.h"
++
+ /*
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+  */
+@@ -1138,6 +1140,29 @@ void trailer_info_release(struct trailer_info *info)
+ 	free(info->trailers);
+ }
+ 
++static int mailmap_value(struct string_list *mailmap,
++			 struct strbuf *out, const struct strbuf *in)
++{
++	const char *mailbuf, *namebuf;
++	size_t namelen, maillen;
++	struct ident_split ident;
++
++	if (split_ident_line(&ident, in->buf, in->len))
++		return -1; /* not an ident */
++
++	namebuf = ident.name_begin;
++	namelen = ident.name_end - ident.name_begin;
++	mailbuf = ident.mail_begin;
++	maillen = ident.mail_end - ident.mail_begin;
++
++	map_user(mailmap, &mailbuf, &maillen, &namebuf, &namelen);
++	strbuf_add(out, namebuf, namelen);
++	strbuf_addstr(out, " <");
++	strbuf_add(out, mailbuf, maillen);
++	strbuf_addch(out, '>');
++	return 0;
++}
++
+ static void format_trailer_info(struct strbuf *out,
+ 				const struct trailer_info *info,
+ 				const struct process_trailer_options *opts)
+@@ -1148,7 +1173,7 @@ static void format_trailer_info(struct strbuf *out,
+ 	/* If we want the whole block untouched, we can take the fast path. */
+ 	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
+ 	    !opts->separator && !opts->key_only && !opts->value_only &&
+-	    !opts->key_value_separator) {
++	    !opts->key_value_separator && !opts->mailmap) {
+ 		strbuf_add(out, info->trailer_start,
+ 			   info->trailer_end - info->trailer_start);
+ 		return;
+@@ -1177,8 +1202,11 @@ static void format_trailer_info(struct strbuf *out,
+ 					else
+ 						strbuf_addstr(out, ": ");
+ 				}
+-				if (!opts->key_only)
+-					strbuf_addbuf(out, &val);
++				if (!opts->key_only) {
++					if (!opts->mailmap ||
++					    mailmap_value(opts->mailmap, out, &val) < 0)
++						strbuf_addbuf(out, &val);
++				}
+ 				if (!opts->separator)
+ 					strbuf_addch(out, '\n');
+ 			}
+diff --git a/trailer.h b/trailer.h
+index 795d2fccfd..747d2a6bc6 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -73,6 +73,7 @@ struct process_trailer_options {
+ 	int no_divider;
+ 	int key_only;
+ 	int value_only;
++	struct string_list *mailmap;
+ 	const struct strbuf *separator;
+ 	const struct strbuf *key_value_separator;
+ 	int (*filter)(const struct strbuf *, void *);
