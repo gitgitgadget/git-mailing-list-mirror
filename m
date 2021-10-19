@@ -2,181 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D237AC433F5
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D686C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:47:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF2DF61057
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:34:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F396660FF2
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230178AbhJSCgR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 18 Oct 2021 22:36:17 -0400
-Received: from regular1.263xmail.com ([211.150.70.196]:42752 "EHLO
-        regular1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbhJSCgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Oct 2021 22:36:16 -0400
-X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Oct 2021 22:36:15 EDT
-Received: from localhost (unknown [192.168.167.32])
-        by regular1.263xmail.com (Postfix) with ESMTP id 10AF91F14
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 10:27:50 +0800 (CST)
-X-MAIL-GRAY: 0
-X-MAIL-DELIVERY: 1
-X-ADDR-CHECKED4: 1
-X-SKE-CHECKED: 1
-X-ABS-CHECKED: 1
-X-ANTISPAM-LEVEL: 2
-Received: from pw (unknown [222.95.251.49])
-        by smtp.263.net (postfix) whith ESMTP id P15805T140581248091904S1634610466993528_;
-        Tue, 19 Oct 2021 10:27:49 +0800 (CST)
-X-IP-DOMAINF: 1
-X-RL-SENDER: lll@xeltek-cn.com
-X-SENDER: lll@xeltek-cn.com
-X-LOGIN-NAME: lll@xeltek-cn.com
-X-FST-TO: git@vger.kernel.org
-X-RCPT-COUNT: 1
-X-LOCAL-RCPT-COUNT: 0
-X-SENDER-IP: 222.95.251.49
-X-ATTACHMENT-NUM: 0
-X-UNIQUE-TAG: <6737513ca80d85e90c08ca5332fc24f6>
-X-System-Flag: 0
-From:   "LL L" <lll@xeltek-cn.com>
-To:     <git@vger.kernel.org>
-Subject: Git failed to pull after upgrading to 2.33.1, using choco
-Date:   Tue, 19 Oct 2021 10:27:43 +0800
-Message-ID: <001401d7c490$e7d57620$b7806260$@xeltek-cn.com>
+        id S230390AbhJSCt2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Oct 2021 22:49:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46018 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230287AbhJSCt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Oct 2021 22:49:27 -0400
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A17C06161C
+        for <git@vger.kernel.org>; Mon, 18 Oct 2021 19:47:15 -0700 (PDT)
+Received: by mail-ua1-x92a.google.com with SMTP id h4so8469859uaw.1
+        for <git@vger.kernel.org>; Mon, 18 Oct 2021 19:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:message-id:subject:to:date:in-reply-to:references:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=z6SPyeGiRQxLMjHsl+dNO6kOgqiqP2ppFQZUHaUOhvc=;
+        b=gPgkLhY2Yf6Joq6ecjDpDl7py4Vr2NqFuqyLL+dC3W6HzvYL4lZEKxItLrsjx7wi1d
+         Gct0xBbQxBret+ht5zRdGgcwz/ZWIp9uwIzLvBqyz5mQOQg8Nrpa1rxlvu0Tt9hgQpzM
+         z6tfzfXJrABZZ/RJrhubxd2PgTO34caE0ta+vT6xEG2aq7A3bZhNn62v/12Q6YgsvTBo
+         WmCkTN1rip78m2YSxhtgCfRudVIltDg0VTOkJqUMP4aLQEejTc+0NVYEQpOr66A1Fcc6
+         Z0voCvwGr/RzgntZCw71BR45vDZIcYTIo/YVMkE44SqpfSTNM/PUJqCGWCKU84fVyWSa
+         xA3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:message-id:subject:to:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=z6SPyeGiRQxLMjHsl+dNO6kOgqiqP2ppFQZUHaUOhvc=;
+        b=T/zlgxVeVcqo9QipGhzI/qk6HtkWTX6B0yNgmwRV1lyNgghbpwHJlW+dObkyUS449I
+         Tt5uzGKjy0/Cn29x1Glk1vII1ftZeGkLR2/YL6YwGLQ0P/eTfUCd2ATrb6wDOEeEutDW
+         uVCjkX9AIXniuR4irY9Czex+ME+SrdsDJqcxReVpdEM0bs+mhow5LCp5JPQl3ZOLui/r
+         K/emrCBfHIkd4NIdr1/YBf7d+yqTRdGKrU/PkJTpBEps0aMnuyrJ3NfMJo8MegQE047d
+         uIhrFK7doASRSvJPC1qZsQzJ5Y4qg283Y/xbeauZbp9lYYaIrRwtgOIZoBuZlYoKeqly
+         Kjyw==
+X-Gm-Message-State: AOAM531PqzDhHOPKUZBIgrBV8vpN1E9N8fweMbK4rw/9NottF8+rjt5H
+        ozsyZ67DfxqA/JaHJlubfuja45EReP8KOg==
+X-Google-Smtp-Source: ABdhPJz9vpNEVoqMPKQZlLZQxvyYzvItRDIAIlIfDcwShGaT4CPmxk+GfwCjH+zzKQ6uxZSiHWn6KQ==
+X-Received: by 2002:a05:6102:3910:: with SMTP id e16mr32142146vsu.16.1634611635030;
+        Mon, 18 Oct 2021 19:47:15 -0700 (PDT)
+Received: from [192.168.44.4] ([177.75.142.230])
+        by smtp.gmail.com with ESMTPSA id p8sm9953274vke.11.2021.10.18.19.47.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Oct 2021 19:47:14 -0700 (PDT)
+From:   Bruno Moreira-Guedes <brunodout.dev@gmail.com>
+X-Google-Original-From: Bruno Moreira-Guedes <brunodOut.dev@gmail.com>
+Message-ID: <d7de2654254a8b542deda4b11475bc919b87c3f9.camel@gmail.com>
+Subject: Re: Bug - added changes are not shown in the diff view anymore (
+ not added
+To:     Raphael Biersbach <raphael.biersbach@gmx.net>, git@vger.kernel.org
+Date:   Mon, 18 Oct 2021 23:47:12 -0300
+In-Reply-To: <7d2751d1-949e-cc90-4063-f9f576c6febf@gmx.net>
+References: <7d2751d1-949e-cc90-4063-f9f576c6febf@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 (3.40.4-2.fc34) 
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdfEkOU57XeKrHxNSVulsOcVhZzDFA==
-Content-Language: en-us
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Mon, 2021-10-18 at 16:40 +0200, Raphael Biersbach wrote:
+> 
+> Greetings,
+> 
+> when using gitk I am encountering this bug:
+> 
+> - added changes are not shown in the diff view anymore ( not added
+> changes and commits are fine)
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+I tried to reproduce through with the version on "master" branch
+with the following steps:
+1. I have written a new file with some short text
+2. I added it to index with `git add`
+3. I ran gitk
+4. I went to the top point in the graph, "Local changes checked
+in to index but not commited"
+5. I verified Diff option was checked
 
-1. uninstall git for windows 2.32.2
-2. install git again with： choco install -y git
-3. git pull emit error:
+I got precisely what I would expect:
+   Author:   
+   Committer:   
+   Parent: 9b803221a51430fc491a4b3536bb8a1088c1af6e (Update
+   README.md)
+   Branch: 
+   Follows: 
+   Precedes: 
+   
+       Local changes checked in to index but not committed
+   
+   ----------------------- test.txt -----------------------
+   new file mode 100644
+   index 0000000..9daeafb
+   @@ -0,0 +1 @@
+   +test
 
-git@e.coding.net: Permission denied (publickey).
-fatal: Could not read from remote repository.
+If I did something different from what you have in mind,
+could you please add the steps you can do to reproduce the
+problem? Also, could you check if the reported behavior
+appears on git's latest version (from "master" branch)?
 
-Please make sure you have the correct access rights
-and the repository exists.
-
-4. I am sure it is caused by the upgrading, I observed same issue on my other windows 10 machine..
-
-What did you expect to happen? (Expected behavior)
-
-pull from origin;
-
-What happened instead? (Actual behavior)
-
-git@e.coding.net: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-What's different between what you expected and what actually happened?
-
-It doesn't work.
-
-Anything else you want to add:
-
-coding:/mytex on  trunk [?]
-❯ git pull
-git@e.coding.net: Permission denied (publickey).
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-coding:/mytex on  trunk [?] took 13s
-❯ ssh -Tv git@e.coding.net
-OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
-debug1: Reading configuration data C:\\Users\\LL L/.ssh/config
-debug1: Connecting to e.coding.net [81.69.155.167] port 22.
-debug1: Connection established.
-debug1: identity file C:\\Users\\LL L/.ssh/id_rsa type 0
-debug1: identity file C:\\Users\\LL L/.ssh/id_rsa-cert type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_dsa type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_dsa-cert type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_ecdsa type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_ecdsa-cert type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_ed25519 type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_ed25519-cert type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_xmss type -1
-debug1: identity file C:\\Users\\LL L/.ssh/id_xmss-cert type -1
-debug1: Local version string SSH-2.0-OpenSSH_for_Windows_8.1
-debug1: Remote protocol version 2.0, remote software version Go-CodingGit
-debug1: no match: Go-CodingGit
-debug1: Authenticating to e.coding.net:22 as 'git'
-debug1: SSH2_MSG_KEXINIT sent
-debug1: SSH2_MSG_KEXINIT received
-debug1: kex: algorithm: curve25519-sha256@libssh.org
-debug1: kex: host key algorithm: rsa-sha2-512
-debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
-debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
-debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-debug1: Server host key: ssh-rsa SHA256:jok3FH7q5LJ6qvE7iPNehBgXRw51ErE77S0Dn+Vg/Ik
-debug1: Host 'e.coding.net' is known and matches the RSA host key.
-debug1: Found key in C:\\Users\\LL L/.ssh/known_hosts:28
-debug1: rekey out after 134217728 blocks
-debug1: SSH2_MSG_NEWKEYS sent
-debug1: expecting SSH2_MSG_NEWKEYS
-debug1: SSH2_MSG_NEWKEYS received
-debug1: rekey in after 134217728 blocks
-debug1: pubkey_prepare: ssh_get_authentication_socket: No such file or directory
-debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
-debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_dsa
-debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_ecdsa
-debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_ed25519
-debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_xmss
-debug1: SSH2_MSG_SERVICE_ACCEPT received
-debug1: Authentications that can continue: publickey
-debug1: Next authentication method: publickey
-debug1: Offering public key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
-debug1: Server accepts key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
-debug1: Authentication succeeded (publickey).
-Authenticated to e.coding.net ([81.69.155.167]:22).
-debug1: channel 0: new [client-session]
-debug1: Entering interactive session.
-debug1: pledge: network
-CODING 提示: Hello eyl, You've connected to coding.net via SSH. This is a Personal Key.
-eyl，你好，你已经通过 SSH 协议认证 coding.net 服务，这是一个个人公钥.
-公钥指纹：e9:6c:54:c8:72:42:36:ac:b2:29:7e:ad:b1:a5:09:42
-debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
-debug1: channel 0: free: client-session, nchannels 1
-Transferred: sent 2624, received 1924 bytes, in 1.5 seconds
-Bytes per second: sent 1791.8, received 1313.8
-debug1: Exit status 0
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.33.1.windows.1
-cpu: x86_64
-built from commit: 05d80adb775077d673fab685009ede4a1003ed92
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19044 
-compiler info: gnuc: 10.3
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-
+> 
+> git version 2.33.0
+> 
+> running on 5.10.70-1-MANJARO , window manager i3
+> 
+> 
+> Raphael Biersbach
 
 
