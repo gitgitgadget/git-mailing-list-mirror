@@ -2,169 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD63AC433F5
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87441C433F5
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 12:30:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA4D86137C
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 11:40:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63B1D61378
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 12:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235518AbhJSLmZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 07:42:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
+        id S231564AbhJSMcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 08:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235483AbhJSLmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 07:42:11 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0F1C061745
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:42 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id ez7-20020a17090ae14700b001a132a1679bso1839808pjb.0
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 04:39:42 -0700 (PDT)
+        with ESMTP id S230097AbhJSMcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 08:32:13 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EBC1C06161C
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 05:30:01 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id u69so4664401oie.3
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 05:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8EofLOsIBlOIuEE/Mkpq365W7kqYJ2FXkqaC3BwMhBs=;
-        b=Unixh4M9FSaTudRonCtakcvaNepAby2Wf+i1DFR0Dmb4w5HFdWZSsTCmfqTsaccRri
-         QXQKgnAXXimVlargxQXM5zmMqJ1l6ODNCDC5ZOSFHt5867ECg5bni+X1tPTd1XDXCovy
-         ZAbY9Hm+oOFlt0eQ0ytDurlffzrBgpiMKyWMZ3DDaPNXQqsgbgQSrAU9yUhYSe7xg3XT
-         zWM7sBemlsYQ14R5xGTsrCsz+Oc1iEgwf0XK+pllt4XVVZaWKehyp6tXoLCXhsAqc5g7
-         U/Et4GYgBzsBwa0RuEDEHU5D3x7ozHLW3TtzTYCgSIRd0jE8RAyZhAzxmpI+24YDKC24
-         Qfiw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=bPyLOvr/t8W+mwRLo3mYI4QD+BHHiNErY5nXXQ8YHaM=;
+        b=Yw/ndjahH4vjVD4CuJzcFAmY5K1oZiugyNSc6zg+UwwVDp3Lr2l+bvM9u1KbNyADJK
+         AUbi25serTuXXJXoKgj3EfU/dnzQdJ8h4V/E/7agKi2RlYv/299r7cHTS5nZEzdUMZ5Y
+         xe8+T8PXUFlZB8Wm2kwBXduQHfeP7zA2EsPdT/OKXlLmVEJxckpY3Tm9XUwD6nkRAv94
+         N9cbrMNbQvCvG/CdHrreV5qwGracfd5/vT7barZbiOisb4fF2iv76lB09TrhL3GQ+Tzj
+         AQJF5EZQYY3IVg9OATUD7G3yvKOACze7fYuKCm/Em6wZLoNF+4BhoabSuDT8Ad/7YkdS
+         1v/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8EofLOsIBlOIuEE/Mkpq365W7kqYJ2FXkqaC3BwMhBs=;
-        b=7N4VQmmcjW2EiqdTnBUsC5zGnpG9RKdH4Dy3xRGYN+DRgHUF85whWe+dZV3mCzihNJ
-         Fgz75YtJAH5FiYfw/2amMyCnsHd0XkPks2XIJ+nMWkOVc9jQj8mOZSNU7BTWcginSpgY
-         Rvt+GtJr+yCH3H3mfLnAd4ip9ClGrHMHkwA3I1NmtYWSLVJBD5vy5xWks9iR5ws+odTh
-         eTyFJoWW0NKUBhZM2g/3kFklBtMqswJUSzCh1X10qZEhJDWhQobWlq9GdIz8mZZd95N8
-         ljQXYF2iTvqXjuZ/galWqALs6GezNcqblSaz0ArMhZIt8GT7GW7hGea8O1GyswkqRAD1
-         cLQg==
-X-Gm-Message-State: AOAM531mpgBq96dsoWtwwAv98dBXuJxJhcsaN2WbZUevNAIIpsle3w+f
-        4yTlBuArq1l6YvNNuSRvWghj0V7Bg0I=
-X-Google-Smtp-Source: ABdhPJz9j8a3GpIYzdvZA7TjjCvjALAgKkON3E2a7h708lX9+zDqL2UxqnR9DsZ4Nb0eQzJrGOJB9A==
-X-Received: by 2002:a17:90b:3ec3:: with SMTP id rm3mr6019038pjb.186.1634643582085;
-        Tue, 19 Oct 2021 04:39:42 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.96])
-        by smtp.gmail.com with ESMTPSA id l207sm16430861pfd.199.2021.10.19.04.39.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Oct 2021 04:39:41 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong@alibaba-inc.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com, jonathantanmy@google.com,
-        bagasdotme@gmail.com, adlternative@gmail.com, stolee@gmail.com,
-        Teng Long <tenglong@alibaba-inc.com>
-Subject: [PATCH v6 12/12] packfile-uri.txt: support multiple object types
-Date:   Tue, 19 Oct 2021 19:38:36 +0800
-Message-Id: <79fc2c23cf053cb525d818b6b47e24c49b57f672.1634634814.git.tenglong@alibaba-inc.com>
-X-Mailer: git-send-email 2.31.1.453.g945ddc3a74.dirty
-In-Reply-To: <cover.1634634814.git.tenglong@alibaba-inc.com>
-References: <cover.1634634814.git.tenglong@alibaba-inc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=bPyLOvr/t8W+mwRLo3mYI4QD+BHHiNErY5nXXQ8YHaM=;
+        b=u55li5bc10P8a7Lyl62WLlGekY/4g9iUgxSjLp5S8gakF7XjBIs8NlSsyF62Wfv27r
+         m+5Dym14WBZLb1YYC0iKbeWAsIpx6b5tJveCFsqed7Lt/llTHLKNASi/oY1c0SWkWRL2
+         qHbNpe1u+Qr1dHAxX1xdMHdNf6dWC5jdPbFgjgxr0zZsQCxn624ho/L0rk7E1jvvOTdW
+         Mn8OmwD8QDSgsVFxrBtsI6d1QAErv7NIJcfMAqq4/MOKPUiXTpCIjxj/2Rd1kqF45P4g
+         thXQbb2MGbTmNWgl7KsSLDcbWHRlFBafijttM/Dqnc2tsuLf8S1Tsic05d1pUH8X2kJB
+         hWqw==
+X-Gm-Message-State: AOAM530OcWdxGoLNXJv8axHt9sXdP0gVVC1qMPYxe7BJ+WiHE/EZcRWr
+        J9gTYb4hKX67EO3xL319QG0=
+X-Google-Smtp-Source: ABdhPJy21E8WnBvnPjMNSLzgS9bEGp1bOQW3dHRT8Cf0LRZeIhf6N6ztA2Uuo/BmaHFmgkyQUsNs6w==
+X-Received: by 2002:a05:6808:bc5:: with SMTP id o5mr3797854oik.129.1634646600381;
+        Tue, 19 Oct 2021 05:30:00 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9145:f5c3:60a6:a1c8? ([2600:1700:e72:80a0:9145:f5c3:60a6:a1c8])
+        by smtp.gmail.com with ESMTPSA id 103sm3668316otj.44.2021.10.19.05.29.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Oct 2021 05:29:59 -0700 (PDT)
+Message-ID: <00188c99-386f-8d4f-08f6-11a49d31184c@gmail.com>
+Date:   Tue, 19 Oct 2021 08:29:58 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH v2 00/14] Sparse-checkout: modify 'git add', 'git rm', and
+ 'git add' behavior
+Content-Language: en-US
+To:     Sean Christopherson <seanjc@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
+        matheus.bernardino@usp.br, vdye@github.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+ <YW3nAKAUj/HF15OR@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <YW3nAKAUj/HF15OR@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Teng Long <tenglong@alibaba-inc.com>
----
- Documentation/technical/packfile-uri.txt | 74 ++++++++++++++++++++----
- 1 file changed, 63 insertions(+), 11 deletions(-)
+On 10/18/2021 5:28 PM, Sean Christopherson wrote:
+> On Sun, Sep 12, 2021, Derrick Stolee via GitGitGadget wrote:
+>> This series is based on ds/mergies-with-sparse-index.
+>>
+>> As requested, this series looks to update the behavior of git add, git rm,
+>> and git mv when they attempt to modify paths outside of the sparse-checkout
+>> cone. In particular, this care is expanded to not just cache entries with
+>> the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
+>> definition.
+> 
+> I suspect something in this series broke 'git add' and friends with "odd" sparse
+> definitions (I haven't actually bisected).  git 2.33.0 rejects attempts to add
+> files with the below sparse-checkout and modified files.  There appears to be a
+> discrepancy in the query vs. checkout logic as the rejected files are checked out
+> in the working tree, e.g. git sees that the local file was deleted, yet will not
+> stage the deletion.
 
-diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/technical/packfile-uri.txt
-index f7eabc6c76..0e6d7c8dda 100644
---- a/Documentation/technical/packfile-uri.txt
-+++ b/Documentation/technical/packfile-uri.txt
-@@ -34,14 +34,69 @@ having it advertise `packfile-uris`, tolerating the client sending
- include some sort of non-trivial implementation in the Minimum Viable Product,
- at least so that we can test the client.
- 
--This is the implementation: a feature, marked experimental, that allows the
--server to be configured by one or more `uploadpack.blobPackfileUri=<sha1>
--<uri>` entries. Whenever the list of objects to be sent is assembled, all such
--blobs are excluded, replaced with URIs. As noted in "Future work" below, the
--server can evolve in the future to support excluding other objects (or other
--implementations of servers could be made that support excluding other objects)
--without needing a protocol change, so clients should not expect that packfiles
--downloaded in this way only contain single blobs.
-+This is the implementation: a feature, marked experimental, that allows
-+the server to be configured by one or more entries with the format:
-+
-+    uploadpack.excludeobject=<object-hash> <level> <pack-hash> <uri>
-+
-+Value `<object-hash>` is the key of entry, and the object type can be
-+blob, tree, commit, or tag. Value of entry has three parts,
-+`<pack-hash>` is used to identify the packfile which contains the given
-+`<object-hash>` object, and `<uri>` is the URI to download the packfile by
-+client. For example, When a blob is configured with `uploadpack.excludeobject`
-+that means whenever the blob to be send is assembled, the object will
-+be excluded.
-+
-+In addition to excluding a single object like blob, sometimes it's
-+hoped to exclude not only the object itself, but also all the related
-+objects with it, like all the objects a tree contains or the ancestors
-+that a commit can reach. In these cases, the `<level>` is designed to
-+distinguish the scope of exclusion, it supports three levels:
-+
-+- Level 0: Excluding a single object itself, without any objects that
-+  have a relationship with it. 
-+
-+- Level 1: Excluding object itself, and objects it contains.
-+
-+- Level 2: Excluding object itself, the objects it contains, and the
-+  ancestors it can reach.
-+
-+If `<level>` is configured as 0, only the object itself will be
-+excluded, no matter what the object type is. It is a common scenario
-+for large size blobs, but it does much not sense for other object types
-+(e.g. download a singe commit without downloading the blobs and tree
-+in it).
-+
-+If `<level>` is configured as 1, not only the single object but also all
-+the objects in it will be excluded. This applies to scenarios where
-+it's wanted to exclude a specified non-blob object that includes some
-+lage size objects.
-+
-+- If <object-hash> is a blob, the result is the same as level 0, because blob
-+contains nothing just itself.
-+
-+- If <object-hash> is a tree, the tree itself, and all blobs and trees
-+  in it will be excluded.
-+
-+- If <object-hash> is a commit, the commit itself, the referenced
-+  root-tree, and all blobs and trees in the root-tree will be excluded.
-+
-+- If <object-hash> is a tag, the tag itself, the dereferenced commit
-+  and all trees and blobs contained in its root-tree will be excluded.
-+
-+If `<level>` is configured as 2, not only the objects in the scope of
-+level 1 , but also the reachable ancestors will be excluded if
-+`<object-hash>` is commit or tag.
-+
-+Configuration compatibility
-+---------------------------
-+
-+The old configuration of packfile-uri:
-+
-+    uploadpack.blobPackfileUri=<object-hash> <pack-hash> <uri>
-+
-+For the old configuration is compatible with the new one, but it only
-+supports the exclusion of blob objects.
- 
- Client design
- -------------
-@@ -65,9 +120,6 @@ The protocol design allows some evolution of the server and client without any
- need for protocol changes, so only a small-scoped design is included here to
- form the MVP. For example, the following can be done:
- 
-- * On the server, more sophisticated means of excluding objects (e.g. by
--   specifying a commit to represent that commit and all objects that it
--   references).
-  * On the client, resumption of clone. If a clone is interrupted, information
-    could be recorded in the repository's config and a "clone-resume" command
-    can resume the clone in progress. (Resumption of subsequent fetches is more
--- 
-2.31.1.453.g945ddc3a74.dirty
+Are you using v2.33.0? This change is not in that version.
 
+However, mt/add-rm-in-sparse-checkout [1] was introduced in v2.33.0 and
+introduced these advice suggestions.
+
+[1] https://github.com/git/git/compare/a5828ae6b52137b913b978e16cd2334482eb4c1f...d5f4b8260f623d6fdef36d5eaa8a0c2350390472
+
+The series you are commenting on goes even farther in restricting adds to
+be within the sparse-checkout definitions, even for unstaged files or files
+that removed the skip-worktree bit due to a merge conflict. It also creates
+an override '--sparse' option that allows you to ignore these protections.
+
+> There's also arguably a flaw in the "advise" trigger.  AFAICT, the help message
+> is displayed if and only if the entire path is excluded from the working tree.
+> In my perfect world, git would complain and advise if there are unstaged changes
+> for tracked files covered by the specified path.
+>> Note, my sparse-checkout is very much the result of trial and error to get the
+> exact files I care about.  It's entirely possible I'm doing something weird, but
+> at the same time git itself is obviously confused.
+> 
+> Thanks!
+> 
+> $ cat .git/info/sparse-checkout
+> !arch/*
+> !tools/arch/*
+> !virt/kvm/arm/*
+> /*
+> arch/.gitignore
+> arch/Kconfig
+> arch/x86
+> tools/arch/x86
+> tools/include/uapi/linux/kvm.h
+> !Documentation
+> !drivers
+
+Have you tried using 'arch/x86/' and 'tools/arch/x86/' to specify
+that these are directories? Just a thought.
+
+> $ git read-tree -mu HEAD
+> 
+> $ rm arch/x86/kvm/x86.c
+> 
+> $ git commit -a
+...
+> 	deleted:    arch/x86/kvm/x86.c
+
+This is certainly odd. Worth more investigation that I don't have
+time for at this moment.
+
+Thanks,
+-Stolee
