@@ -2,148 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E494C433EF
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 18:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 519FBC433EF
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 19:33:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7258361260
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 18:56:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D43961175
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 19:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234663AbhJSS6h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 14:58:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231355AbhJSS6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 14:58:36 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D81C06161C
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 11:56:23 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id d3so16998818edp.3
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 11:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=963AK8Nwu4ZVAwmXPsN7MHE9+UPWaIQWh/l0IhAM6Fo=;
-        b=2ckYKA1QFpMClfwM3fNmYp2N3nQba6nQoAh0Goj9AqLXHkTJCfxWftta2kpJNDTyFA
-         xtpDuDXGbzdtLC8YsevG5+g4L/jVAjquT1zX06HA4S1/MlTF9WU2p/69y/nHO12lGSkw
-         2bFL/BswCp99TjnMk0/IvLilRsJK6iW2tJDVCvB72pOXU8k69muNTk5zTz8n0y4AR3pf
-         2soJZX/0kIAA2Ey1g3IUtW+8HsM10VPPNqOolsJsa7Z90+ovETzeoVPE+BABGayKG+5c
-         yBD6dSdRwDqk3WfF54am15CAhIN4YHzXdN+1YgM2Q6yzpqnfX5G9u883f+leybmnLxJM
-         lwDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=963AK8Nwu4ZVAwmXPsN7MHE9+UPWaIQWh/l0IhAM6Fo=;
-        b=T9+AdCiBGSfGyxH+NyoYgvpea+0ST87Zg+X8Lu4xEzUNNKjghjkS6wXf9kFSw8gSHN
-         /jupoxcbYlZDcc1YvGR4J77l/78hIysECzFS8YS5CwPhzVBrJ/5eHHG2TsCLx0VBu+Oa
-         5IVA9H8GGWQ1b5ycmaXHxz+oNeMSVIaaVPZM90SjT1JtrsX6nGneNpfiyBqjhVJMv5Jc
-         5scVBVOk/kXjvE3KQmx4Se6Z8HEya9Zz0gdikh2nC0y6WFiD1ymTCgOQeutW+nC6y6wJ
-         5CfE6axxaXETjk1VomxeteHCpM4bAGqfM/kTga34BjjPw9qAxbQw/UMA5OKivKAY2GCe
-         7h4Q==
-X-Gm-Message-State: AOAM5316BG2vuHtWkqdkfHvH87Y/P2IcjEodLwGOs3Ch3B2nHyhLW4o8
-        RELlTtKXCxpetSnUFwYXvJsUEEO4cSZCjKcMTtIBei9JdXg=
-X-Google-Smtp-Source: ABdhPJyoLWwKc4rT4qlsFR8EE09HApWMPjB6K5Gf8Hxr0DPMd+cuSiLPPtB6TPfx9A4LkCECNdlCTnGqQQKl0ZaJcLU=
-X-Received: by 2002:a05:6402:40d2:: with SMTP id z18mr55987460edb.362.1634669781964;
- Tue, 19 Oct 2021 11:56:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <YVmTKWlOFr+IwzzI@Sun> <YWsbcbASLG3QNPyZ@Sun> <xmqqv91wyyij.fsf@gitster.g>
-In-Reply-To: <xmqqv91wyyij.fsf@gitster.g>
-From:   Jerry Zhang <jerry@skydio.com>
-Date:   Tue, 19 Oct 2021 11:56:11 -0700
-Message-ID: <CAMKO5Csj_ck+1+0JsvmF7eSkr514GBUtznKqPvkfEwHGJ34cwQ@mail.gmail.com>
-Subject: Re: [PATCH] apply: fix delete-then-new patch fail with 3way
+        id S232831AbhJSTfs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 15:35:48 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:50358 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230481AbhJSTfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 15:35:47 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4HYkSB2Rv2z5tl9;
+        Tue, 19 Oct 2021 21:33:29 +0200 (CEST)
+Subject: Re: What's cooking in git.git (Oct 2021, #05; Mon, 18)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Hongren (Zenithal) Zheng" <i@zenithal.me>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <xmqq1r4hv7bv.fsf@gitster.g>
+Cc:     git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <55716d3f-a0e6-a047-49f1-bf2be8ba2b72@kdbg.org>
+Date:   Tue, 19 Oct 2021 21:33:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <xmqq1r4hv7bv.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 16, 2021 at 11:08 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Hongren (Zenithal) Zheng" <i@zenithal.me> writes:
->
-> > On Sun, Oct 03, 2021 at 07:25:29PM +0800, Hongren (Zenithal) Zheng wrote:
-> >> For one single patch FILE containing both deletion and creation
-> >> of the same file, applying with three way would fail, which should not.
-> >>  ...
->
-> Sigh.
->
-> Jerry, it seems that the earlier "let's be more aggressive to use
-> --3way, instead of using it as a fallback" is turning out to be more
-> and more trouble than we hoped.
->
-> One thing to notice about the patch used for this test is that ...
->
-> >> +test_expect_success 'apply delete then new patch with 3way' '
-> >> +    git reset --hard main &&
-> >> +    test_write_lines 1 > delnew &&
-> >> +    git add delnew &&
-> >> +    git commit -m "delnew" &&
-> >> +    cat >delete-then-new.patch <<-\EOF &&
-> >> +    --- a/delnew
-> >> +    +++ /dev/null
-> >> +    @@ -1 +0,0 @@
-> >> +    -1
-> >> +    --- /dev/null
-> >> +    +++ b/delnew
-> >> +    @@ -0,0 +1 @@
-> >> +    +2
-> >> +    EOF
->
-> ... this is clearly not a patch that was generated by Git.  We do
-> not show two separate patches, to delete and then to create, the
-> same path to express a file modification, and that is true even when
-> we are showing a total-rewrite patch.
->
-> In addition, the above set of two patches lack the "index" header
-> that records the old and new blob object name, because it is not a
-> patch generated by Git.  Whether 3-way is attempted before or after
-> the normal application, because the object names there are a crucial
-> ingredient for the 3-way merge logic, there is no way for it to work
-> at all.
->
->
-> >> +    # Apply must succeed.
-> >> +    git apply --3way delete-then-new.patch
->
-> So, one simple and safe answer would be "Don't do it, --3way is only
-> about Git patches."  IOW, the command is failing as designed.
-Yeah I do wonder why one would specify "--3way" when the behavior that
-they want is actually "direct application". Maybe the OP can elaborate on their
-use case?
+Am 19.10.21 um 08:48 schrieb Junio C Hamano:
+> * js/userdiff-cpp (2021-10-10) 6 commits
+>   (merged to 'next' on 2021-10-18 at fea77f6c4e)
+>  + userdiff-cpp: learn the C++ spaceship operator
+>  + userdiff-cpp: permit the digit-separating single-quote in numbers
+>  + userdiff-cpp: prepare test cases with yet unsupported features
+>  + userdiff-cpp: tighten word regex
+>  + t4034: add tests showing problematic cpp tokenizations
+>  + t4034/cpp: actually test that operator tokens are not split
+> 
+>  Userdiff patterns for the C++ language has been updated.
+> 
+>  Will merge to 'master'.
 
-Part of my original assumption was that "--3way" users actually *want* 3way,
-and thus the behavior change wouldn't be too controversial. Of course since
-git has so many users, it shouldn't be that surprising that there are many use
-patterns out there.
+Please don't, yet. There is a regression that, e.g., 2' as in '2' is
+regarded as a token.
 
-One possible fix-all solution would just be to back out the original change and
-move the behavior into a new flag "--actually-3way" (name tbd) that will apply
-this behavior and "--3way" would keep the old behavior. The downside here
-would be proliferating more flags that would complicate the api and require
-maintenance. And of course if users depended on the *new* behavior in the
-meantime, then we'd be stuck.
+Will submit a fix (the plan is to undo the digit separator thing), but
+it'll take a week or two as I am currently knocked out.
 
-Back to the patch at hand, it does seem like it would work, however I
-notice that
-if a modification patch were added to the end of the file such that it were
-deleted -> add -> modify, that modify wouldn't benefit from actually
-doing a 3way
-since the file would not be in the index due to this short-cut. The
-more general approach
-of refactoring to write out results after each patch instead of at the
-end *would* fix
-both things. I guess this goes back to the larger issue of the
-threeway implementation
-not being well suited to non-git patches.
-
-
->
-> To extend and automate the solution would be to see, just before
-> attempting to do the 3-way, if the incoming patch is a Git generated
-> one, and do not even bother using the 3-way logic if it is not.
->
+-- Hannes
