@@ -2,103 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A9BC433EF
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 23:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D237AC433F5
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0022B60F02
-	for <git@archiver.kernel.org>; Mon, 18 Oct 2021 23:18:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF2DF61057
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 02:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbhJRXUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Oct 2021 19:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbhJRXUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Oct 2021 19:20:34 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684E6C06161C
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 16:18:22 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id 2-20020aa79102000000b0044c216dd8ecso9867135pfh.18
-        for <git@vger.kernel.org>; Mon, 18 Oct 2021 16:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=EUi6pC4u86HNVvx7wQYNv9Yr+mn2vHj3LOUBhudNuC8=;
-        b=DTJlBok2H72TTUjZYjEBVX57Pjt9z0FV3w/aSHa8BCy8D+2zUkPeDkrtkiGN0ShGKa
-         lRF7V8H02dvIJsAoiKJ1bsO13qim6T2WCk138xqSa4ZDRfrYJ0V44bSm8ir6oOF7dr29
-         Fm/nTYgGtitRgxKBWBA/c93Js5rW+p0oPGIJfOoIzVjukHvEaFljrpZavZr/WUXODB/E
-         R1sifhQN+/brShVph+SwX5wOoq7EIxWjQ6gYSwasaL/okNd8KE9M/ku30Sb7I3flr/HD
-         yYS+ZLJChkKgRQss4fLru7cnamDtCPdw7IKDPl2XRHopisWF43PywQdIpz9ehpLtkRsz
-         mAUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=EUi6pC4u86HNVvx7wQYNv9Yr+mn2vHj3LOUBhudNuC8=;
-        b=UCS1RrqfjMScDi277o6tVsVLmWhVebo8Zc9L7BtOPkzYf3zuXgLigm65DYeWGjf4ya
-         4qgkcOtVtxBMLxwXyqwyOFyqmcpKadrb3KMtTeeOa4vlonI8jk0vLP9Z12o9TyWm21nR
-         jF/TFZisPEc9xDdBAdXJ8fkz+ne0MfA2XidNu0VSyh1NZmciY+J6J2XgtOLFYyXvLen8
-         u+ezjGvxFL0pstVfHwt3hhAwDwclBhFKclendg4cFpSVHMV50wge6OyAPgIhy/WVYU1N
-         NBI1WPsasBa3VjbGlMsNAbgniY0iv0FkPQj0WWs073N8BQQ0gfVsWKMgAwLdTA/mcjTZ
-         88jg==
-X-Gm-Message-State: AOAM531DkabwvTXC4FGu19g+A3keUKFzkc5eUfYX+JeoUbTA5G5D8bEm
-        n5SkIUbD19017XFhFimrxvHcv9BWA1p3YsEJYa/o
-X-Google-Smtp-Source: ABdhPJx4E/s/5/JP6qlEboMaDcGQZEb5b/u942p6k24dRcYVLPGkQ8SiZaG4dQOX2hB5JqmFtXSPUEl0chCW9EyMpmAo
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:7f4a:0:b0:44d:292f:cc24 with
- SMTP id a71-20020a627f4a000000b0044d292fcc24mr31749804pfd.58.1634599101751;
- Mon, 18 Oct 2021 16:18:21 -0700 (PDT)
-Date:   Mon, 18 Oct 2021 16:18:18 -0700
-In-Reply-To: <20211014203416.2802639-4-emilyshaffer@google.com>
-Message-Id: <20211018231818.89219-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20211014203416.2802639-4-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-Subject: Re: [PATCH v4 3/4] submodule: record superproject gitdir during absorbgitdirs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S230178AbhJSCgR convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 18 Oct 2021 22:36:17 -0400
+Received: from regular1.263xmail.com ([211.150.70.196]:42752 "EHLO
+        regular1.263xmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229888AbhJSCgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Oct 2021 22:36:16 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Oct 2021 22:36:15 EDT
+Received: from localhost (unknown [192.168.167.32])
+        by regular1.263xmail.com (Postfix) with ESMTP id 10AF91F14
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 10:27:50 +0800 (CST)
+X-MAIL-GRAY: 0
+X-MAIL-DELIVERY: 1
+X-ADDR-CHECKED4: 1
+X-SKE-CHECKED: 1
+X-ABS-CHECKED: 1
+X-ANTISPAM-LEVEL: 2
+Received: from pw (unknown [222.95.251.49])
+        by smtp.263.net (postfix) whith ESMTP id P15805T140581248091904S1634610466993528_;
+        Tue, 19 Oct 2021 10:27:49 +0800 (CST)
+X-IP-DOMAINF: 1
+X-RL-SENDER: lll@xeltek-cn.com
+X-SENDER: lll@xeltek-cn.com
+X-LOGIN-NAME: lll@xeltek-cn.com
+X-FST-TO: git@vger.kernel.org
+X-RCPT-COUNT: 1
+X-LOCAL-RCPT-COUNT: 0
+X-SENDER-IP: 222.95.251.49
+X-ATTACHMENT-NUM: 0
+X-UNIQUE-TAG: <6737513ca80d85e90c08ca5332fc24f6>
+X-System-Flag: 0
+From:   "LL L" <lll@xeltek-cn.com>
+To:     <git@vger.kernel.org>
+Subject: Git failed to pull after upgrading to 2.33.1, using choco
+Date:   Tue, 19 Oct 2021 10:27:43 +0800
+Message-ID: <001401d7c490$e7d57620$b7806260$@xeltek-cn.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdfEkOU57XeKrHxNSVulsOcVhZzDFA==
+Content-Language: en-us
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Already during 'git submodule add' we record a pointer to the
-> superproject's gitdir. However, this doesn't help brand-new
-> submodules created with 'git init' and later absorbed with 'git
-> submodule absorbgitdir'. Let's start adding that pointer during 'git
-> submodule absorbgitdir' too.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-s/absorbgitdir/absorbgitdirs/ (note the "s" at the end)
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> @@ -2114,6 +2115,15 @@ static void relocate_single_git_dir_into_superproject(const char *path)
->  
->  	relocate_gitdir(path, real_old_git_dir, real_new_git_dir);
->  
-> +	/* cache pointer to superproject's gitdir */
-> +	/* NEEDSWORK: this may differ if experimental.worktreeConfig is enabled */
-> +	strbuf_addf(&config_path, "%s/config", real_new_git_dir);
-> +	git_config_set_in_file(config_path.buf, "submodule.superprojectGitdir",
-> +			       relative_path(absolute_path(get_git_dir()),
-> +					     real_new_git_dir, &sb));
-> +
-> +	strbuf_release(&config_path);
-> +	strbuf_release(&sb);
->  	free(old_git_dir);
->  	free(real_old_git_dir);
->  	free(real_new_git_dir);
+1. uninstall git for windows 2.32.2
+2. install git again with： choco install -y git
+3. git pull emit error:
 
-Here [1] you mention that you'll delete the NEEDSWORK, but it's still
-there.
+git@e.coding.net: Permission denied (publickey).
+fatal: Could not read from remote repository.
 
-Having said that, it might be better to make a test in which we call
-this command while in a worktree of a superproject. The test might
-reveal that (as pointed out to me internally) you might need to use the
-common dir functions instead of the git dir functions to point to the
-directory that you want (git-worktree.txt distinguishes the 2 if you
-search for GIT_COMMON_DIR).
+Please make sure you have the correct access rights
+and the repository exists.
 
-Besides that, all 4 patches look good (including the description of the
-new config variable).
+4. I am sure it is caused by the upgrading, I observed same issue on my other windows 10 machine..
 
-[1] https://lore.kernel.org/git/YWc2iJ7FQJYCnQ7w@google.com/
+What did you expect to happen? (Expected behavior)
+
+pull from origin;
+
+What happened instead? (Actual behavior)
+
+git@e.coding.net: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+What's different between what you expected and what actually happened?
+
+It doesn't work.
+
+Anything else you want to add:
+
+coding:/mytex on  trunk [?]
+❯ git pull
+git@e.coding.net: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+coding:/mytex on  trunk [?] took 13s
+❯ ssh -Tv git@e.coding.net
+OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
+debug1: Reading configuration data C:\\Users\\LL L/.ssh/config
+debug1: Connecting to e.coding.net [81.69.155.167] port 22.
+debug1: Connection established.
+debug1: identity file C:\\Users\\LL L/.ssh/id_rsa type 0
+debug1: identity file C:\\Users\\LL L/.ssh/id_rsa-cert type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_dsa type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_dsa-cert type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_ecdsa type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_ecdsa-cert type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_ed25519 type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_ed25519-cert type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_xmss type -1
+debug1: identity file C:\\Users\\LL L/.ssh/id_xmss-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_for_Windows_8.1
+debug1: Remote protocol version 2.0, remote software version Go-CodingGit
+debug1: no match: Go-CodingGit
+debug1: Authenticating to e.coding.net:22 as 'git'
+debug1: SSH2_MSG_KEXINIT sent
+debug1: SSH2_MSG_KEXINIT received
+debug1: kex: algorithm: curve25519-sha256@libssh.org
+debug1: kex: host key algorithm: rsa-sha2-512
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug1: Server host key: ssh-rsa SHA256:jok3FH7q5LJ6qvE7iPNehBgXRw51ErE77S0Dn+Vg/Ik
+debug1: Host 'e.coding.net' is known and matches the RSA host key.
+debug1: Found key in C:\\Users\\LL L/.ssh/known_hosts:28
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug1: SSH2_MSG_NEWKEYS received
+debug1: rekey in after 134217728 blocks
+debug1: pubkey_prepare: ssh_get_authentication_socket: No such file or directory
+debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
+debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_dsa
+debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_ecdsa
+debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_ed25519
+debug1: Will attempt key: C:\\Users\\LL L/.ssh/id_xmss
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug1: Authentications that can continue: publickey
+debug1: Next authentication method: publickey
+debug1: Offering public key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
+debug1: Server accepts key: C:\\Users\\LL L/.ssh/id_rsa RSA SHA256:SzTwSmfmiLOTlZGuTIhP2VctForj8wVH866bFSWWLH0
+debug1: Authentication succeeded (publickey).
+Authenticated to e.coding.net ([81.69.155.167]:22).
+debug1: channel 0: new [client-session]
+debug1: Entering interactive session.
+debug1: pledge: network
+CODING 提示: Hello eyl, You've connected to coding.net via SSH. This is a Personal Key.
+eyl，你好，你已经通过 SSH 协议认证 coding.net 服务，这是一个个人公钥.
+公钥指纹：e9:6c:54:c8:72:42:36:ac:b2:29:7e:ad:b1:a5:09:42
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug1: channel 0: free: client-session, nchannels 1
+Transferred: sent 2624, received 1924 bytes, in 1.5 seconds
+Bytes per second: sent 1791.8, received 1313.8
+debug1: Exit status 0
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.33.1.windows.1
+cpu: x86_64
+built from commit: 05d80adb775077d673fab685009ede4a1003ed92
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19044 
+compiler info: gnuc: 10.3
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+
+
+
