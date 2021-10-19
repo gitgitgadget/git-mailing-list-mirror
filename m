@@ -2,442 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD4F1C433F5
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 22:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCC36C433EF
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 23:12:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7F4F61074
-	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 22:57:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABBFD610FC
+	for <git@archiver.kernel.org>; Tue, 19 Oct 2021 23:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbhJSW77 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 18:59:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39946 "EHLO
+        id S229555AbhJSXOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 19:14:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbhJSW74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 18:59:56 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013F5C06161C
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 15:57:42 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id g39so10760526wmp.3
-        for <git@vger.kernel.org>; Tue, 19 Oct 2021 15:57:42 -0700 (PDT)
+        with ESMTP id S229498AbhJSXOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 19:14:36 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460FCC06161C
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 16:12:23 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id ec8so19126542edb.6
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 16:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2ilqEFrYC5VGI89o9DeqCKACTNIHocslCTRHmnNsjrM=;
-        b=ZbgA4jVieVeMhFKOiHr5Glhiji4oHqW6SWPp6W9XnbOwgs0ZoUajVmMnmySgeOQSpu
-         7Utl+5NKPKrVSLKWb6JqWzZpIB0gBudiDIXDK/HjPYUA3U5rpLCFR6sNAl1PB5mALBAj
-         3+NepRwA43tjtKXxCDfm9ltf/CJbkzEMkkpn0OzTFD0+MBkXgyAydALlDKUkc4fq2V/8
-         iFL72Y2La/UKJVCuSc0r/FOg0cIhYXU/AM736JU51h6kO0uxg4/O1nfz2Mp+rZTjS4SE
-         SnfcCqYMLkSI4BiB4wYs0hlbEJyCfj8qmW5yDK+IXAciN3fLDbWE9+Yxb4l9ZJ0ksD6p
-         0bfQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=HUjp3pkoRoHTrzCA4pwwS1IWXV44jGyIyORIH4ag0dc=;
+        b=WdSCKcBedX3JbtcXfKqXunH1B1jnzNtXwQfm8w2ZMk28z97cTeHuVX4qguEgR5qGWg
+         IxdxrdwAAAJbbWiB+bcsNlbqX082fk5FDDyxRK+24yy9SOiMVyuYIlxZGBjuGfBZQuHz
+         arIoKMAA0x0VBAxnPJ+cgB1Nl8i/eN4huyposxm+XJyAagNz6XxO+AsWpm/8sy1HgyaI
+         2jgOS5w/LbjH9jOWLoGsVA3D4rNINOdQDlfUpdE/QrBwcaXgUz2KK71kTofoCt1FVdGL
+         w6aH3HQQd58zSHoKqgDYAy06VF8F6OrxbAMuA0CO8V0qxI7nRjjmaOBjPzYpdpySBiVa
+         48mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2ilqEFrYC5VGI89o9DeqCKACTNIHocslCTRHmnNsjrM=;
-        b=HIwoKsWodnggG2dOC6TVcW5V5gKwFrEfGsFaUQXTB0lieNk9x5qN85hiOJNJjycQ3s
-         N7Cp5GmenBUZzxJGc8ic2fiWgm8tyZrIpKwojwzx/PjfBIMFsrefl8onPLHtKaG1wZdw
-         DxSHdL5ntQRpL4IfPRInAsJ4Py6/UpI3Snwz5e8dq/FeESCHFaUVPXqKFdCxTtuxCZMy
-         IwwfwrV4cOyj1TQBHsWsZ4vsXgvQV7Y00i+gaZl27A8oT4MUppPJ5aBR21PwOtXwAXUw
-         PgVZZeAg5Tb00VtaXVWF1xjAFBeSANbsASX88/FbbKItYM5KlmY0vD4G58MsBzbwAh3e
-         YLBA==
-X-Gm-Message-State: AOAM530Qo8R3p6Bvw+h6Uh9j/d3P58RwTO9IKpepsnLhz6Wnoj1JzLYB
-        2HeoUy36pEGlYRz+8ZOC2n/1Wxi+9WI=
-X-Google-Smtp-Source: ABdhPJxtyI+bAeWvRNsSsPRgXrvtaNb2NLV36korfMWgT3Ahq+v3/gOVebJGJ+UfpJ41W8uTaKRMKQ==
-X-Received: by 2002:a5d:6d05:: with SMTP id e5mr46927249wrq.300.1634684261428;
-        Tue, 19 Oct 2021 15:57:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c77sm333694wme.48.2021.10.19.15.57.40
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=HUjp3pkoRoHTrzCA4pwwS1IWXV44jGyIyORIH4ag0dc=;
+        b=xU/ZuMuYahbE4qa+GPl8xNZd4RFRbZdWxUqN1FTPnhdc4S9phCjVr3mBfFD3gW5ZYY
+         SMfH8ktAUd5Y6ABqaC4m7ZsA5exdN/nbklUrqVy+RAY70pDBO2Ken+Xdzb+RfveK2ezr
+         zZQpzxsze1411LvWvVttsy++WAM/CbP6sINAdOWxsou9Y3MyKXYMXxhHkshIi7wECxP7
+         dGLv65KTeqqWOCGpVrl6aDJBfuudop5bYM1/2DVurHDPFg5ahNuWL0OE3I2C8M65d1p3
+         2is9+OwouY/n5tcrHcRC2RLuA4dRzlLO1uPG3iGpMeNGI1qw5PZI5e/jN+VqCvH7FNDi
+         8RHA==
+X-Gm-Message-State: AOAM5321D52q0pJhRDQo0iOGDK+g+eZSNU/4LlNky4uNSKNt9rCBL40Z
+        cCfStKuF8w2+Bmvn/GwlRgJI8Dr2KLSG5g==
+X-Google-Smtp-Source: ABdhPJxUcEcAIA2JBCibvfKesBVWZMk2mFoUdQaOmuUwLC54z31OWupcHNJH4girWpWHF5gkIGVMUA==
+X-Received: by 2002:a17:906:4950:: with SMTP id f16mr40416236ejt.297.1634685141531;
+        Tue, 19 Oct 2021 16:12:21 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id au26sm135250ejc.53.2021.10.19.16.12.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Oct 2021 15:57:40 -0700 (PDT)
-Message-Id: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com>
-References: <pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com>
-From:   "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Oct 2021 22:57:39 +0000
-Subject: [PATCH v3] fetch-pack: redact packfile urls in traces
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 19 Oct 2021 16:12:17 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mcyHI-000ayF-W9;
+        Wed, 20 Oct 2021 01:12:17 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v2 01/13] hook: add 'run' subcommand
+Date:   Wed, 20 Oct 2021 01:08:14 +0200
+References: <cover-v2-00.13-00000000000-20211015T093918Z-avarab@gmail.com>
+ <patch-v2-01.13-ba64faf0580-20211015T093918Z-avarab@gmail.com>
+ <YWmrL/POUE8P8Od1@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <YWmrL/POUE8P8Od1@google.com>
+Message-ID: <211020.86mtn4obhr.gmgdl@evledraar>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Ivan Frade <ifrade@google.com>, Ivan Frade <ifrade@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ivan Frade <ifrade@google.com>
 
-In some setups, packfile uris act as bearer token. It is not
-recommended to expose them plainly in logs, although in special
-circunstances (e.g. debug) it makes sense to write them.
+On Fri, Oct 15 2021, Emily Shaffer wrote:
 
-Redact the packfile URL paths by default, unless the GIT_TRACE_REDACT
-variable is set to false. This mimics the redacting of the Authorization
-header in HTTP.
+> On Tue, Oct 12, 2021 at 03:30:26PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>>=20
+>> In order to enable hooks to be run as an external process, by a
+>> standalone Git command, or by tools which wrap Git, provide an external
+>> means to run all configured hook commands for a given hook event.
+>>=20
+>> Most of our hooks require more complex functionality than this, but
+>> let's start with the bare minimum required to support our simplest
+>> hooks.
+>>=20
+>> In terms of implementation the usage_with_options() and "goto usage"
+>> pattern here mirrors that of
+>> builtin/{commit-graph,multi-pack-index}.c.
+>>=20
+>> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+>> new file mode 100644
+>> index 00000000000..660d6a992a0
+>> --- /dev/null
+>> +++ b/Documentation/git-hook.txt
+>> @@ -0,0 +1,38 @@
+>> +git-hook(1)
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +NAME
+>> +----
+>> +git-hook - run git hooks
+>> +
+>> +SYNOPSIS
+>> +--------
+>> +[verse]
+>> +'git hook' run <hook-name> [-- <hook-args>]
+>> +
+>> +DESCRIPTION
+>> +-----------
+>> +
+>> +This command is an interface to git hooks (see linkgit:githooks[5]).
+>> +Currently it only provides a convenience wrapper for running hooks for
+>> +use by git itself. In the future it might gain other functionality.
+>
+> s/git/Git/g nit, no? I thought we were somewhat picky about capitalizing =
+Git
+> when we don't mean `git`?
 
-Signed-off-by: Ivan Frade <ifrade@google.com>
----
-    fetch-pack: redact packfile urls in traces
-    
-    Changes since v1:
-    
-     * Redact only the path of the URL
-     * Test are now strict, validating the exact line expected in the log
-    
-    Changes since v1:
-    
-     * Removed non-POSIX flags in tests
-     * More accurate regex for the non-encrypted packfile line
-     * Dropped documentation change
-     * Dropped redacting the die message in http-fetch
+I'm not sure how this got mixed up, but the text you've got quoted here
+is from the v1 at:
+https://lore.kernel.org/git/patch-01.13-a39c0748d3f-20211012T131934Z-avarab=
+@gmail.com/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1052%2Fifradeo%2Fredact-packfile-uri-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1052/ifradeo/redact-packfile-uri-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1052
+But you're replying to the v2 here, i.e. this, which has no such text:
+https://lore.kernel.org/git/patch-v2-01.13-ba64faf0580-20211015T093918Z-ava=
+rab@gmail.com/
 
-Range-diff vs v2:
+I see I managed to omit the In-Reply-To link from v2 to v1 by mistake,
+maybe some funny mailer interaction with that?
 
- 1:  701cb7a6ab9 ! 1:  9afe0093af4 fetch-pack: redact packfile urls in traces
-     @@ Commit message
-          recommended to expose them plainly in logs, although in special
-          circunstances (e.g. debug) it makes sense to write them.
-      
-     -    Redact the packfile-uri lines by default, unless the GIT_TRACE_REDACT
-     -    variable is set to false. This mimics the redacting of the
-     -    Authorization header in HTTP.
-     -
-     -    Changes since v1:
-     -    - Removed non-POSIX flags in tests
-     -    - More accurate regex for the non-encrypted packfile line
-     -    - Dropped documentation change
-     -    - Dropped redacting the die message in http-fetch
-     +    Redact the packfile URL paths by default, unless the GIT_TRACE_REDACT
-     +    variable is set to false. This mimics the redacting of the Authorization
-     +    header in HTTP.
-      
-          Signed-off-by: Ivan Frade <ifrade@google.com>
-      
-     @@ fetch-pack.c: static void receive_wanted_refs(struct packet_reader *reader,
-       static void receive_packfile_uris(struct packet_reader *reader,
-       				  struct string_list *uris)
-       {
-     -+	int original_options;
-     ++	int saved_options;
-       	process_section_header(reader, "packfile-uris", 0);
-      +	/*
-      +	 * In some setups, packfile-uris act as bearer tokens,
-      +	 * redact them by default.
-      +	 */
-     -+	original_options = reader->options;
-     ++	saved_options = reader->options;
-      +	if (git_env_bool("GIT_TRACE_REDACT", 1))
-     -+		reader->options |= PACKET_READ_REDACT_ON_TRACE;
-     ++		reader->options |= PACKET_READ_REDACT_URL_PATH;
-      +
-       	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-       		if (reader->pktlen < the_hash_algo->hexsz ||
-     @@ fetch-pack.c: static void receive_packfile_uris(struct packet_reader *reader,
-       
-       		string_list_append(uris, reader->line);
-       	}
-     -+	reader->options = original_options;
-     ++	reader->options = saved_options;
-      +
-       	if (reader->status != PACKET_READ_DELIM)
-       		die("expected DELIM");
-       }
-      
-       ## pkt-line.c ##
-     +@@ pkt-line.c: int packet_length(const char lenbuf_hex[4])
-     + 	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
-     + }
-     + 
-     ++static int find_url_path_start(const char* buffer)
-     ++{
-     ++	const char *URL_MARK = "://";
-     ++	char *p = strstr(buffer, URL_MARK);
-     ++	if (!p) {
-     ++		return -1;
-     ++	}
-     ++
-     ++	p += strlen(URL_MARK);
-     ++	while (*p && *p != '/')
-     ++		p++;
-     ++
-     ++	// Position after '/'
-     ++	if (*p && *(p + 1))
-     ++		return (p + 1) - buffer;
-     ++
-     ++	return -1;
-     ++}
-     ++
-     + enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
-     + 						size_t *src_len, char *buffer,
-     + 						unsigned size, int *pktlen,
-     +@@ pkt-line.c: enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
-     + {
-     + 	int len;
-     + 	char linelen[4];
-     ++	int url_path_start;
-     + 
-     + 	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
-     + 		*pktlen = -1;
-      @@ pkt-line.c: enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
-       		len--;
-       
-       	buffer[len] = 0;
-      -	packet_trace(buffer, len, 0);
-     -+	if (options & PACKET_READ_REDACT_ON_TRACE) {
-     ++	if (options & PACKET_READ_REDACT_URL_PATH &&
-     ++	    (url_path_start = find_url_path_start(buffer)) != -1) {
-      +		const char *redacted = "<redacted>";
-     -+		packet_trace(redacted, strlen(redacted), 0);
-     ++		struct strbuf tracebuf = STRBUF_INIT;
-     ++		strbuf_insert(&tracebuf, 0, buffer, len);
-     ++		strbuf_splice(&tracebuf, url_path_start,
-     ++			      len - url_path_start, redacted, strlen(redacted));
-     ++		packet_trace(tracebuf.buf, tracebuf.len, 0);
-     ++		strbuf_release(&tracebuf);
-      +	} else {
-      +		packet_trace(buffer, len, 0);
-      +	}
-     @@ pkt-line.h: void packet_fflush(FILE *f);
-       #define PACKET_READ_CHOMP_NEWLINE        (1u<<1)
-       #define PACKET_READ_DIE_ON_ERR_PACKET    (1u<<2)
-       #define PACKET_READ_GENTLE_ON_READ_ERROR (1u<<3)
-     -+#define PACKET_READ_REDACT_ON_TRACE      (1u<<4)
-     ++#define PACKET_READ_REDACT_URL_PATH      (1u<<4)
-       int packet_read(int fd, char **src_buffer, size_t *src_len, char
-       		*buffer, unsigned size, int options);
-       
-     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
-       	test_i18ngrep "disallowed submodule name" err
-       '
-       
-     -+test_expect_success 'packfile-uri redacted in trace' '
-     ++test_expect_success 'packfile-uri path redacted in trace' '
-      +	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-      +	rm -rf "$P" http_child log &&
-      +
-     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
-      +	git -C "$P" add my-blob &&
-      +	git -C "$P" commit -m x &&
-      +
-     -+	configure_exclusion "$P" my-blob >h &&
-     ++	git -C "$P" hash-object my-blob >objh &&
-     ++	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-     ++	git -C "$P" config --add \
-     ++		"uploadpack.blobpackfileuri" \
-     ++		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-      +
-      +	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-      +	git -c protocol.version=2 \
-      +		-c fetch.uriprotocols=http,https \
-      +		clone "$HTTPD_URL/smart/http_parent" http_child &&
-      +
-     -+	grep "clone< <redacted>" log
-     ++	grep -F "clone< \\1$(cat packh) $HTTPD_URL/<redacted>" log
-      +'
-      +
-     -+test_expect_success 'packfile-uri not redacted in trace when GIT_TRACE_REDACT=0' '
-     ++test_expect_success 'packfile-uri path not redacted in trace when GIT_TRACE_REDACT=0' '
-      +	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-      +	rm -rf "$P" http_child log &&
-      +
-     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
-      +	git -C "$P" add my-blob &&
-      +	git -C "$P" commit -m x &&
-      +
-     -+	configure_exclusion "$P" my-blob >h &&
-     ++	git -C "$P" hash-object my-blob >objh &&
-     ++	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-     ++	git -C "$P" config --add \
-     ++		"uploadpack.blobpackfileuri" \
-     ++		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-      +
-      +	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-      +	GIT_TRACE_REDACT=0 \
-     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
-      +		-c fetch.uriprotocols=http,https \
-      +		clone "$HTTPD_URL/smart/http_parent" http_child &&
-      +
-     -+	grep -E "clone< ..[0-9a-f]{40,64} http://" log
-     ++	grep -F "clone< \\1$(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" log
-      +'
-      +
-       test_expect_success 'http:// --negotiate-only' '
-
-
- fetch-pack.c           | 11 +++++++++
- pkt-line.c             | 33 ++++++++++++++++++++++++++-
- pkt-line.h             |  1 +
- t/t5702-protocol-v2.sh | 51 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 95 insertions(+), 1 deletion(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a9604f35a3e..1587b9ae662 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1518,7 +1518,16 @@ static void receive_wanted_refs(struct packet_reader *reader,
- static void receive_packfile_uris(struct packet_reader *reader,
- 				  struct string_list *uris)
- {
-+	int saved_options;
- 	process_section_header(reader, "packfile-uris", 0);
-+	/*
-+	 * In some setups, packfile-uris act as bearer tokens,
-+	 * redact them by default.
-+	 */
-+	saved_options = reader->options;
-+	if (git_env_bool("GIT_TRACE_REDACT", 1))
-+		reader->options |= PACKET_READ_REDACT_URL_PATH;
-+
- 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
- 		if (reader->pktlen < the_hash_algo->hexsz ||
- 		    reader->line[the_hash_algo->hexsz] != ' ')
-@@ -1526,6 +1535,8 @@ static void receive_packfile_uris(struct packet_reader *reader,
- 
- 		string_list_append(uris, reader->line);
- 	}
-+	reader->options = saved_options;
-+
- 	if (reader->status != PACKET_READ_DELIM)
- 		die("expected DELIM");
- }
-diff --git a/pkt-line.c b/pkt-line.c
-index de4a94b437e..1a9e6870559 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -386,6 +386,25 @@ int packet_length(const char lenbuf_hex[4])
- 	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
- }
- 
-+static int find_url_path_start(const char* buffer)
-+{
-+	const char *URL_MARK = "://";
-+	char *p = strstr(buffer, URL_MARK);
-+	if (!p) {
-+		return -1;
-+	}
-+
-+	p += strlen(URL_MARK);
-+	while (*p && *p != '/')
-+		p++;
-+
-+	// Position after '/'
-+	if (*p && *(p + 1))
-+		return (p + 1) - buffer;
-+
-+	return -1;
-+}
-+
- enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 						size_t *src_len, char *buffer,
- 						unsigned size, int *pktlen,
-@@ -393,6 +412,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- {
- 	int len;
- 	char linelen[4];
-+	int url_path_start;
- 
- 	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
- 		*pktlen = -1;
-@@ -443,7 +463,18 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 		len--;
- 
- 	buffer[len] = 0;
--	packet_trace(buffer, len, 0);
-+	if (options & PACKET_READ_REDACT_URL_PATH &&
-+	    (url_path_start = find_url_path_start(buffer)) != -1) {
-+		const char *redacted = "<redacted>";
-+		struct strbuf tracebuf = STRBUF_INIT;
-+		strbuf_insert(&tracebuf, 0, buffer, len);
-+		strbuf_splice(&tracebuf, url_path_start,
-+			      len - url_path_start, redacted, strlen(redacted));
-+		packet_trace(tracebuf.buf, tracebuf.len, 0);
-+		strbuf_release(&tracebuf);
-+	} else {
-+		packet_trace(buffer, len, 0);
-+	}
- 
- 	if ((options & PACKET_READ_DIE_ON_ERR_PACKET) &&
- 	    starts_with(buffer, "ERR "))
-diff --git a/pkt-line.h b/pkt-line.h
-index 82b95e4bdd3..853d20688c8 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -88,6 +88,7 @@ void packet_fflush(FILE *f);
- #define PACKET_READ_CHOMP_NEWLINE        (1u<<1)
- #define PACKET_READ_DIE_ON_ERR_PACKET    (1u<<2)
- #define PACKET_READ_GENTLE_ON_READ_ERROR (1u<<3)
-+#define PACKET_READ_REDACT_URL_PATH      (1u<<4)
- int packet_read(int fd, char **src_buffer, size_t *src_len, char
- 		*buffer, unsigned size, int options);
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index d527cf6c49f..f01af2f2ed3 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1107,6 +1107,57 @@ test_expect_success 'packfile-uri with transfer.fsckobjects fails when .gitmodul
- 	test_i18ngrep "disallowed submodule name" err
- '
- 
-+test_expect_success 'packfile-uri path redacted in trace' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child log &&
-+
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+
-+	git -C "$P" hash-object my-blob >objh &&
-+	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-+	git -C "$P" config --add \
-+		"uploadpack.blobpackfileuri" \
-+		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-+
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+
-+	grep -F "clone< \\1$(cat packh) $HTTPD_URL/<redacted>" log
-+'
-+
-+test_expect_success 'packfile-uri path not redacted in trace when GIT_TRACE_REDACT=0' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child log &&
-+
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+
-+	git -C "$P" hash-object my-blob >objh &&
-+	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-+	git -C "$P" config --add \
-+		"uploadpack.blobpackfileuri" \
-+		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-+
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	GIT_TRACE_REDACT=0 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+
-+	grep -F "clone< \\1$(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" log
-+'
-+
- test_expect_success 'http:// --negotiate-only' '
- 	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
- 	URI="$HTTPD_URL/smart/server" &&
-
-base-commit: 9d530dc0024503ab4218fe6c4395b8a0aa245478
--- 
-gitgitgadget
+Anyway for all the rest of the comments below & in this thread I tried
+to address them in some way, re-rolling soon...
