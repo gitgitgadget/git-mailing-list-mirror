@@ -2,139 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24ED9C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA423C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:39:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07F2E60FC1
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:27:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD7A360EFF
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbhJTB3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 21:29:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37052 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229604AbhJTB3s (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Oct 2021 21:29:48 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D91C160473;
-        Wed, 20 Oct 2021 01:27:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634693254;
-        bh=VpyoT3YGaxOAqbBMV4w6zvxCTlldsh/O9PkntRU0iis=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=RvFTCmYQHeOjtHRQ2aXReOalkR1IC/LalL+Rkd6eK2UWduz4ys9yXaMaS0PFMliIt
-         3TUN6OZBxVjMBWSygjIo1aoeyPy2bk6fdM2lnFoL/OaWG+O8i0yP8EML5+UB3n8po4
-         u/MqmjaJKCIGUNt01MbygE6kqj3sWhuIsu9XQpf5JOr3KbyCFTkmBvGLdcKCE+Tvda
-         I/bz2lcdYwSZA/4eCyoMiUN18Zs07P90iAtCVr11p+POfcbm1ycpRN0vM7VSmCH55V
-         4XWXSzU83d01usThsckZU8JqN6unwRWEvii2pQcUbJ4/SQdhjSCP6DSX99W1y/qDE5
-         PSBiaq4nyJBgeIMiLrSDRaIqjThuxpizlf3Asi24YQ4kyZSur5Htmy9VfjD1Pq4ROH
-         dfgRmStbQAMLau3DF2v6XYDcVXqSKbu5sbiHQcKhiCcrbKjNBohm3p0EctT98uLvOE
-         oDNt7QQxlCv1zAEZXDp8UnLJb8nBfQ0yFcVJixoyLksabZzn+Lu
-Date:   Wed, 20 Oct 2021 01:27:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        id S229653AbhJTBlN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 21:41:13 -0400
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:42802 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhJTBlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 21:41:12 -0400
+Received: by mail-ed1-f53.google.com with SMTP id t16so19931576eds.9
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 18:38:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7AIOdNiGtysnGP2CPGtUNLk1w693ejQ8Hxo/U0Ms0eI=;
+        b=LFnqNI9YTQ65fbYoHPjVSGmA1U7ZFuY20I0skQdvvzQiv14F403LaSffG1gVtDzAzB
+         C+M3JhniKwUPGmOw9j4koN1+vAIVYegUwJSATNB/wyZvIX+ZUP0xdDcxcaH9Mx3yxuRH
+         ynDC9ZdEi7tAe9WYdAg/tAsxV/UtwHlysvHT/0duQHtZuuouRBJeQy1p8AA4Vi+8BqPT
+         O+r3zCNx5XT8bLKZyl7M/Xbu54n1n//jMJF9+S/o8Uo2Sn4qe2fD1111Je+poT+ipiqp
+         TjqPt52KxrOHimvDQo37TDOxDQHVJNBvusPHqMwp81VsRSK8CDLK1Id3bsoSJCHr3NW7
+         0YNw==
+X-Gm-Message-State: AOAM531Krxr+AYV7ue5moeSZhiam9axQLTH/R8MTSRGDITABP4jT+/1X
+        tJ39kKAf6W5M4vfYB10yA/Mg3AZx9dHeFFJHGDI=
+X-Google-Smtp-Source: ABdhPJxJqayA8H8jENGSsgJBt0KHK1ORmE30Rzex/Jjd1+9CWEKIwADUc/IUsfR231HqN5x27G8QV2u+ewDcd9TQZQo=
+X-Received: by 2002:a50:e0c3:: with SMTP id j3mr57892285edl.97.1634693938339;
+ Tue, 19 Oct 2021 18:38:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <20211020010624.675562-1-sandals@crustytoothpaste.net> <20211020010624.675562-6-sandals@crustytoothpaste.net>
+In-Reply-To: <20211020010624.675562-6-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 19 Oct 2021 21:38:47 -0400
+Message-ID: <CAPig+cR=wQYthORMfyf4ShBCTXyWkQJqH6YHuW4Uv-Ys3wef5g@mail.gmail.com>
+Subject: Re: [PATCH 4/4] gitfaq: add entry about syncing working trees
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/4] gitfaq: give advice on using eol attribute in
- gitattributes
-Message-ID: <YW9wgbN/b8NkVp4z@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
- <20211020010624.675562-4-sandals@crustytoothpaste.net>
- <CAPig+cTn4fZtssPrn+z582E++Kdc2+z+=iNtp2kodR=QJVeycg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="zAa7wiQDgf/4YCNx"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTn4fZtssPrn+z582E++Kdc2+z+=iNtp2kodR=QJVeycg@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Oct 19, 2021 at 9:06 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> gitfaq: add entry about syncing working trees
 
---zAa7wiQDgf/4YCNx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+You sent two [4/4] patches. I'm guessing the one prefixed by "gitfaq:"
+is the correct one.
 
-On 2021-10-20 at 01:21:40, Eric Sunshine wrote:
-> On Tue, Oct 19, 2021 at 9:06 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > In the FAQ, we tell people how to use the text attribute, but we fail to
-> > explain what to do with the eol attribute.  As we ourselves have
-> > noticed, most shell implementations do not care for carriage returns,
-> > and as such, people will practically always want them to use LF endings.
-> > Similar things can be said for batch files on Windows, except with CRLF
-> > endings.
-> >
-> > Since these are common things to have in a repository, let's help users
-> > make a good decision by recommending that they use the gitattributes
-> > file to correctly check out the endings.
-> >
-> > In addition, let's correct the cross-reference to this question, which
-> > originally referred to "the following entry", even though a new entry
-> > has been inserted in between.  The cross-reference notation should
-> > prevent this from occurring and provide a link in formats, such as HTML,
-> > which support that.
-> >
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> > @@ -464,14 +465,25 @@ references, URLs, and hashes stored in the reposi=
-tory.
-> > +With text files, Git will generally the repository contains LF endings=
- in the
-> > +repository, and will honor `core.autocrlf` and `core.eol` to decide wh=
-at options
-> > +to use when checking files out.  You can also override this by specify=
-ing a
-> > +particular line ending such as `eol=3Dlf` or `eol=3Dcrlf` if those fil=
-es must always
-> > +have that ending (e.g., for functionality reasons).
->=20
-> The first sentence in the paragraph is unparseable.
+> Users very commonly want to sync their working tree across machines,
+> often to carry across in-progress work or stashes.  Despite this not
+> being a recommended approach, users want to do it and are not dissuaded
+> by suggestions not to, so let's recommend a sensible technique.
+> [...]
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> @@ -185,6 +185,45 @@ Then, you can adjust your push URL to use `git@example_author` or
+> +[[sync-working-tree]]
+> +How do I sync a working tree across systems?::
+> +       First, decide whether you want to do this at all.  Git usually works better
+> +       when you push or pull your work using the typical `git push` and `git fetch`
+> +       commands and isn't designed to share a working tree across systems.  Doing so
+> +       can cause `git status` to need to re-read every file in the working tree.
+> +       Additionally, Git's security model does not permit sharing a working tree
+> +       across untrusted users, so it is only safe to sync a working tree if it will
+> +       only be used by a single user across all machines.
+> ++
+> +Therefore, it's better to push your work to either the other system or a central
+> +server using the normal push and pull mechanism.  However, this doesn't always
+> +preserve important data, like stashes, so some people prefer to share a working
+> +tree across systems.
+> ++
+> +It is important not to use a cloud syncing service to sync any portion of a Git
+> +repository, since this can cause corruption, such as missing objects, changed
+> +or added files, broken refs, and a wide variety of other corruption.  These
+> +services tend to sync file by file and don't understand the structure of a Git
+> +repository.  This is especially bad if they sync the repository in the middle of
+> +it being updated, since that is very likely to cause incomplete or partial
+> +updates and therefore data loss.
+> ++
+> +The recommended approach is to use `rsync -a --delete-after` (ideally with an
+> +encrypted connection such as with `ssh`) on the root of repository.  You should
+> +ensure several things when you do this:
+> [...]
+> +Be aware that even with these recommendations, syncing in this way is
+> +potentially risky since it bypasses Git's normal integrity checking for
+> +repositories, so having backups is advised.
 
-Yes, I think perhaps I omitted the word "ensure".
+Considering the potential damage which can result from this sort of
+synching, this entire section seems too gentle. My knee-jerk reaction
+is that it would be better to strongly dissuade upfront rather than
+saying that it's okay to do this if you really want to. As such, I'm
+wondering if organizing the section like this would be better:
 
-And I should reflect that they should have that ending in the working
-tree, which I neglected to mention.
+(1) Make a strong statement against doing this: "<strong>Don't do it.</strong>"
 
-> > +# Ensure all shell files end up with LF endings and all batch files en=
-d up
-> > +# with CRLF endings in the working tree and both end up with LF in the=
- repo.
-> > +*.sh text eol=3Dlf
-> > +*.bat text eol=3Dcrlf
->=20
-> Maybe: s/end up with/have/g
+(2) Explain why users shouldn't do it; in particular, the final
+paragraph above which talks about integrity checks and whatnot should
+be right up near the top along with discussion of corruption.
 
-Great.  That does read more clearly and succinctly.
+(3) Say that cloud-synching services must _not_ be used and explain why.
 
-I'll include those fixes in a reroll.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---zAa7wiQDgf/4YCNx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYW9wgAAKCRB8DEliiIei
-gXplAQDg6grLN1zxlGOiLypMixfgBD8qyLmVAaXd6m7L0WxddQD/biV20W3uEk5f
-3rX9H15Th4dmSL/SXI/0LQ874F+iVQE=
-=Cgp5
------END PGP SIGNATURE-----
-
---zAa7wiQDgf/4YCNx--
+(4) Relent a tiny bit and explain that the only slightly acceptable
+mechanism is `rsync` when used in a very strict fashion (quiescent
+repository, etc.)
