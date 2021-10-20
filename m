@@ -2,126 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A14F3C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 22:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF49C433EF
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E14B611CC
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 22:25:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55CAE610A1
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230181AbhJTW17 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 18:27:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37722 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229695AbhJTW16 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 20 Oct 2021 18:27:58 -0400
-Received: from camp.crustytoothpaste.net (unknown [72.12.180.34])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4AD9360734;
-        Wed, 20 Oct 2021 22:25:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634768743;
-        bh=Yx6RN8d2YB+JE5AhlVFVa8JtnFUl2jL6HZr1VsL3Fto=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=qOdPEyJMmlYQQp0X9ajV/v+ybtgGwJ2tCDs3qzS4Z6ul6QI8QWPPlJ0e96Ik7y60U
-         mKmfK5aWgulxQylkTdAZZ53hKIcQtTzx1SJLIg4xPPhH/duJahgu+XoOLd7SyghBfi
-         t7nhdAfF0VyUcpzPMYdkQsL2oFcoCKnqsJMhiDoUSGlT/xXQRzNgog8p7N77m2Dn5M
-         o9op+Zge6hHjRtToUqoWPcvDHM0oZb1rm6MNxy5+w77sRfKrTD73uTxR2wSC1icSC+
-         wzQSWc3FlkkjgQl1gvYTL9oyY4tKSzbHQFOW25dzXixF3mbSFgZ7xKiVxBwqGsZdH6
-         1LzuE4ossMZI6L6Rk5iCFeW8d1c8Expi4DM1NgH4NIlRqQ/HrmxXR3T5APA86Ficps
-         HQBnEubqViIfPz4EpwY+2fw+7RYhhbkfUL5bvADg1e9Dw06eK/NkB4fB7uWolzahu2
-         W9/4zddfApXj/Yyik+CF6+kdsebSXCLgVgxgj68KZwPrKZUmzwP
-Date:   Wed, 20 Oct 2021 22:25:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/4] gitfaq: give advice on using eol attribute in
- gitattributes
-Message-ID: <YXCXU8uns1Xld5lH@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
- <20211020010624.675562-4-sandals@crustytoothpaste.net>
- <CAPig+cTn4fZtssPrn+z582E++Kdc2+z+=iNtp2kodR=QJVeycg@mail.gmail.com>
- <YW9wgbN/b8NkVp4z@camp.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2110201400020.56@tvgsbejvaqbjf.bet>
+        id S230368AbhJTXgQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 19:36:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35082 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229702AbhJTXgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 19:36:15 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAFFC06161C
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 16:34:00 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id i20so261707edj.10
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 16:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UKR8nlkckXp6jXti+LaNrW+chEGbbFQiJ8oB/DFfpjA=;
+        b=myvG8cQ3Q86nIiseVE7uUsmcFsyV7A5Msr5YJubpaSW0s5E9h2OSLeimrFYTBAPwVY
+         j8EbcKc1WYCN55gxuhQKTyuXpQNoi9ztJWDDfDZFo8V2dS0cDtQt8B+NEsQnfiUsP5kg
+         AbsOP+mPbiRBC/inhsTLaOuOnOaTkXcgPxFVRORkfY0/W1GfSdR1gGExmYSyo5z4fqp0
+         lMeTE5wzKWAxFkFMWHmwNka/XDse2Soq90au9InGTWPmokLeVVFLtYNJCTTNLZ8xwEzi
+         b12mikGieVc8tJzrE57T2OLNMPAlAeVF0NDsJxmp2WhAoxjwF3GMWqZOMoivlgzjHGqf
+         znCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UKR8nlkckXp6jXti+LaNrW+chEGbbFQiJ8oB/DFfpjA=;
+        b=kr8JX5jZsHWLfgtjFZVlU6mWVQ5zgyunYovI7TFVqXrRMHyJMcuVTHTS2h7YMRcbdR
+         WJ3pW5P7DdUYlFdcvTGjk4FJVZxGjRK+NVzDVXi0hgBwOWJF5PSXUgvyWQPMjXWSZHxH
+         /8XEPTL8WFls8TnASsHF4mOX7Ca2/Xc8sakDEWTtjm1NVaTrYbZ5+/LhqgSE0cCWzJnu
+         1YncwYlY/hFjuqhlsb/zsQRD53lWE8BYD1e177xOdSO7/n/1e3q5bIWZd9tbVX3DfFX2
+         MQTLFzK0DvlHaAf+rQjMj4qV61CGsCbn6IWgln0Z5XcExG8vj4gIKv/55ZYWx/EIAmo9
+         6z4g==
+X-Gm-Message-State: AOAM532rSygXVyHHvG6908cuFshiuN6k7AAwbsYt95BMFBO7sjj1e6zp
+        WlRWL1e9rzLH2hsOg478CX7dpEuM9C5Vhg==
+X-Google-Smtp-Source: ABdhPJwJF6bPIw4rPmKQlm6vEWSFAilu8WgRz3sl1g6i0ENJd52upLzoqcdx9kSZxktHW6D5RNYSMw==
+X-Received: by 2002:a17:907:7691:: with SMTP id jv17mr2763307ejc.378.1634772838394;
+        Wed, 20 Oct 2021 16:33:58 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f25sm1628104ejb.34.2021.10.20.16.33.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Oct 2021 16:33:57 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mdL5o-000uBG-RG;
+        Thu, 21 Oct 2021 01:33:56 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Subject: Re: [PATCH 0/8] Makefile: make command-list.h 2-5x as fast with -jN
+Date:   Thu, 21 Oct 2021 01:14:37 +0200
+References: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net>
+ <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
+ <YXB9moNHRj+nrnX9@coredump.intra.peff.net> <YXCKqAEwtwFozWk6@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <YXCKqAEwtwFozWk6@nand.local>
+Message-ID: <211021.86v91rmftn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xM5sL7Zhx3sv+WXC"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2110201400020.56@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---xM5sL7Zhx3sv+WXC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Oct 20 2021, Taylor Blau wrote:
 
-On 2021-10-20 at 12:02:02, Johannes Schindelin wrote:
-> Hi brian,
->=20
-> On Wed, 20 Oct 2021, brian m. carlson wrote:
->=20
-> > On 2021-10-20 at 01:21:40, Eric Sunshine wrote:
-> > > On Tue, Oct 19, 2021 at 9:06 PM brian m. carlson
-> > > <sandals@crustytoothpaste.net> wrote:
-> > >
-> > > > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> > > > @@ -464,14 +465,25 @@ references, URLs, and hashes stored in the re=
-pository.
-> > > > +With text files, Git will generally the repository contains LF end=
-ings in the
-> > > > +repository, and will honor `core.autocrlf` and `core.eol` to decid=
-e what options
-> > > > +to use when checking files out.  You can also override this by spe=
-cifying a
-> > > > +particular line ending such as `eol=3Dlf` or `eol=3Dcrlf` if those=
- files must always
-> > > > +have that ending (e.g., for functionality reasons).
-> > >
-> > > The first sentence in the paragraph is unparseable.
-> >
-> > Yes, I think perhaps I omitted the word "ensure".
-> >
-> > And I should reflect that they should have that ending in the working
-> > tree, which I neglected to mention.
->=20
-> Please note that Git for Windows defaults to `core.autoCRLF=3Dtrue`,
-> therefore this sentence is not completely correct. Maybe something as
-> short as "(except in Git for Windows, which defaults to CRLF endings)"
-> would suffice?
+> On Wed, Oct 20, 2021 at 04:35:38PM -0400, Jeff King wrote:
+>> On Wed, Oct 20, 2021 at 08:39:51PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>
+>> > This series is based off an off-hand comment I made about making the
+>> > cmdlist.sh faster, in the meantime much of the same methods are
+>> > already cooking in "next" for the "lint-docs" target.
+>> >
+>> > See 7/8 for the main performance numbers, along the way I stole some
+>> > patches from Johannes Sixt who'd worked on optimizing the script
+>> > before, which compliment this new method of generating this file by
+>> > piggy-backing more on GNU make for managing a dependency graph for us.
+>>
+>> I still think this is a much more complicated and error-prone approach
+>> than just making the script faster. I know we can't rely on perl, but
+>> could we use it optimistically?
 
-What I meant by that sentence was that I should add, "in the working
-tree" to the sentence ending "if those files must always have that
-ending".  I believe that is still the case for Git for Windows, since
-otherwise our shell files in the repository would be broken there, and
-I'm fairly confident they are not.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Jeff: Just in terms of error prone both of these implementations will
+accept bad input that's being caught in 8/8 of this series.
 
---xM5sL7Zhx3sv+WXC
-Content-Type: application/pgp-signature; name="signature.asc"
+We accept a lot of bad input now, ending up with some combinations of
+bad output or compile errors if you screw with the input *.txt files. I
+think I've addressed all of those in this series.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+If you mean the general concept of making a "foo.gen" from a "foo.txt"
+as an intermediate with make as a way to get to "many-foo.h" I don't
+really see how it's error prone conceptually. You get error checking
+each step of the way, and it encourages logic that's simpler each step
+of the way.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXCXUwAKCRB8DEliiIei
-gVr+APwL5vLTUdO8NA3mJw2Z7vX7740QP8B3UZKM8rxaLQmQ1gEAxbw+fV3GbKkN
-XkNFzgUWPjEwFJqcB0PX1epkfckV4QY=
-=bpQo
------END PGP SIGNATURE-----
+> I'll take credit for this terrible idea of using Perl when available.
+>
+> But I don't think we even need to, since we could just rely on Awk. That
+> has all the benefits you described while still avoiding the circular
+> dependency on libgit.a. But the killer feature is that we don't have to
+> rely on two implementations, the lesser-used of which is likely to
+> bitrot over time.
+>
+> The resulting awk is a little ugly, because of the nested-ness. I'm also
+> no awk-spert, but I think that something like the below gets the job
+> done.
+>
+> It also has the benefit of being slightly faster than the equivalent
+> Perl implementation, for whatever those extra ~9 ms are worth ;).
+>
+> Benchmark #1: sh generate-cmdlist.sh command-list.txt
+>   Time (mean =C2=B1 =CF=83):      25.3 ms =C2=B1   5.3 ms    [User: 31.1 =
+ms, System: 8.3 ms]
+>   Range (min =E2=80=A6 max):    15.5 ms =E2=80=A6  31.7 ms    95 runs
+>
+> Benchmark #2: sh generate-cmdlist.sh.old command-list.txt
+>   Time (mean =C2=B1 =CF=83):      34.9 ms =C2=B1   9.8 ms    [User: 41.0 =
+ms, System: 6.9 ms]
+>   Range (min =E2=80=A6 max):    22.4 ms =E2=80=A6  54.8 ms    64 runs
+>
+> Summary
+>   'sh generate-cmdlist.sh command-list.txt' ran
+>     1.38 =C2=B1 0.49 times faster than 'sh generate-cmdlist.sh.old comman=
+d-list.txt'
+>
+> ---
+>
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> index a1ab2b1f07..39338ef1cc 100755
+> --- a/generate-cmdlist.sh
+> +++ b/generate-cmdlist.sh
+> @@ -64,12 +64,19 @@ print_command_list () {
+>  	echo "static struct cmdname_help command_list[] =3D {"
+>
+>  	command_list "$1" |
+> -	while read cmd rest
+> -	do
+> -		printf "	{ \"$cmd\", $(get_synopsis $cmd), 0"
+> -		printf " | CAT_%s" $(echo "$rest" | get_category_line)
+> -		echo " },"
+> -	done
+> +	awk '{
+> +		f=3D"Documentation/" $1 ".txt"
+> +		while((getline line<f) > 0) {
+> +			if (match(line, "^" $1 " - ")) {
+> +				syn=3Dsubstr(line, RLENGTH+1)
+> +				printf "\t{ \"%s\", N_(\"%s\"), 0", $1, syn
+> +				for (i=3D2; i<=3DNF; i++) {
+> +					printf " | CAT_%s", $i
+> +				}
+> +				print " },"
+> +			}
+> +		}
+> +	}'
+>  	echo "};"
+>  }
 
---xM5sL7Zhx3sv+WXC--
+Per Eric's Sunshine's upthread comments an awk and Perl implementation
+were both considered before[1].
+
+I also care a bit about the timings of the from-scratch build, but I
+think they're way less interesting than a partial build.
+
+I.e. I think if you e.g. touch Documentation/git-a*.txt with this series
+with/without this awk version the difference in runtime is within the
+error bars. I.e. making the loop faster isn't necessary. It's better to
+get to a point where make can save you from doing all/most of the work
+by checking modification times, rather than making an O(n) loop faster.
+
+The only reason there's even a loop there is because it's used by the
+cmake logic in contrib/* (how we've ended up with a hard dependency in
+contrib is another matter...).
+
+I'm also interested in (and have WIP patches for) simplifying things
+more generally in the Makefile. Once we have a file exploded out has
+just the synopsis line that can be used to replace what's now in
+Documentation/cmd-list.perl, i.e. those summary blurbs also end up in
+"man git".
+
+There's subtle dependency issues there as well, and just having a
+one-off solution for the the command-list.h doesn't get us closer to
+addressing that sibling implementation.
+
+In terms of future Makefile work I was hoping to get this in, untangle
+some of the complexity between the inter-dependency of Makefile &
+Documentation/Makefile (eventually just merging the two, and leaving a
+stub in Documentation/Makefile). I've also got a working implementation
+for getting rid of all of the "FORCE" dependencies (except the version
+one).
+
+1. https://lore.kernel.org/git/CAPig+cSzKoOzU-zPOZqfNpPYBFpcWqvDP3mwLvAn5Wk=
+iNW0UMw@mail.gmail.com/
