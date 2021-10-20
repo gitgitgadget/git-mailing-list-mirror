@@ -2,107 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96916C433EF
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 579BDC433F5
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:46:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 751F16103D
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:41:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31216610A2
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 23:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231224AbhJTXnd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 19:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36658 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbhJTXnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 19:43:32 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDB88C06161C
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 16:41:17 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 5so1738084edw.7
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 16:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=XHvMVOAooqood3iGxqZWik2vejiJ611Y+VjJLGOd3rQ=;
-        b=pFd/AktFNUU2erX7P2p34kNpMBb+8dxgrnggbzn4+bgyKV6qNs1IofReCjZf/hqT2U
-         /EKzQLX8CECdaG0U+MX0Whj5OrdahHooz1zSdsh2nFE3NTpq/vz1Wve3PQ0M/yOrWDOS
-         uN2YXFjPh4Hb50G787SNqCzL6yZ28e+LY5Dkc3QqsFa/OpW6Ws0V6vetQxTH1FjqzO63
-         bBpQ0RJLhHlhjxJ2rPsyvrMUYZerhZcHPBHDwGoO8RsSGFHX0I2LJn9Z4SVog/2RV16W
-         /dGiuRlNsV+uY5JcLdzKssUoHTZuN29YuwsSjdjKfM5VQpNyq2/O9Mkrui1rIXc0bK2K
-         eTDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=XHvMVOAooqood3iGxqZWik2vejiJ611Y+VjJLGOd3rQ=;
-        b=1lR+cMj5w7CWBdWMKzUEy4aLb9aRP2aQxlOUJg5ftPKcInq/MbkFTYCQT4JeRZxDi9
-         2/ybsJ3H4WtyEoti49bQY4l9LPNxJaT9pbM+l66cUI0UtHnrdzLQ8Ti6qPPN2Kl+DVgp
-         LV6yAV6YNJNHhTPkdzTTz4Rvkp25mJlZI0xKCCKbQkN0g2btxc3LWesLugdY4yQw8+uz
-         q/HwO3D/4b8og8o/m4gfVfUXTjOV/oBGXRpr9ml0HlFNScpwtcs94Am+jKdo1Id1udvq
-         NEzqiBpD5iaUq33YrPuiL2eYAuPG8Qn56Mt4XyzbWQX2m7TcUtnGfJFF9BmWcnk8zbSv
-         MdGg==
-X-Gm-Message-State: AOAM533zF7DjfyINWwzajqEkMPD5AeQKD4qUxa+7KAAa5AQQ2/eQzatI
-        2W3edsDJtN+c6uHKFAXENqvFsqJWyUtL1g==
-X-Google-Smtp-Source: ABdhPJxXGppj/cvdgnsHK5yjiwkmZCyFT3hxtWRgE2HEQLK3ibaOsnN9SUldJMeGHiIVVifhGfTk2w==
-X-Received: by 2002:a50:d885:: with SMTP id p5mr2732916edj.255.1634773276283;
-        Wed, 20 Oct 2021 16:41:16 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n23sm1895558edw.75.2021.10.20.16.41.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Oct 2021 16:41:15 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mdLCs-000uTs-Vy;
-        Thu, 21 Oct 2021 01:41:14 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 4/4] doc: add a FAQ entry about syncing working trees
-Date:   Thu, 21 Oct 2021 01:35:43 +0200
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
- <20211020010624.675562-5-sandals@crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20211020010624.675562-5-sandals@crustytoothpaste.net>
-Message-ID: <211021.86r1cfmfhh.gmgdl@evledraar.gmail.com>
+        id S230494AbhJTXtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 19:49:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43210 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230103AbhJTXtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 19:49:01 -0400
+Received: (qmail 10841 invoked by uid 109); 20 Oct 2021 23:46:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Oct 2021 23:46:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31739 invoked by uid 111); 20 Oct 2021 23:46:45 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 Oct 2021 19:46:45 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 20 Oct 2021 19:46:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Subject: Re: [PATCH 0/8] Makefile: make command-list.h 2-5x as fast with -jN
+Message-ID: <YXCqO7WFET6J7gGf@coredump.intra.peff.net>
+References: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net>
+ <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
+ <YXB9moNHRj+nrnX9@coredump.intra.peff.net>
+ <YXCKqAEwtwFozWk6@nand.local>
+ <211021.86v91rmftn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211021.86v91rmftn.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Oct 21, 2021 at 01:14:37AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Wed, Oct 20 2021, brian m. carlson wrote:
+> Jeff: Just in terms of error prone both of these implementations will
+> accept bad input that's being caught in 8/8 of this series.
+> 
+> We accept a lot of bad input now, ending up with some combinations of
+> bad output or compile errors if you screw with the input *.txt files. I
+> think I've addressed all of those in this series.
 
-> +The recommended approach is to use `rsync -a --delete-after` (ideally with an
-> +encrypted connection such as with `ssh`) on the root of repository.  You should
-> +ensure several things when you do this:
+I don't mind more error-checking, though TBH I don't find a huge value
+in it. But what I did mean was:
 
-What's the reason to recommend --delete-after in particular? I realize
-that e.g. in the .git directory not using *A* delete option *will* cause
-corruption, e.g. if you can leave behind stale loose refs with an
-up-to-date pack-refs file.
+> If you mean the general concept of making a "foo.gen" from a "foo.txt"
+> as an intermediate with make as a way to get to "many-foo.h" I don't
+> really see how it's error prone conceptually. You get error checking
+> each step of the way, and it encourages logic that's simpler each step
+> of the way.
 
-But isn't that equally covered by --delete and --delete-before? I'm not
-very well worsed in rsync, but aren't the two equivalent as far as the
-end-state goes?
+Yes. It just seems like the Makefile gets more complicated, and
+sometimes that can lead to subtle dependency issues (e.g., the ".build"
+dependency in the earlier iteration of the series).
 
-If the intention with --delete-after over --delete or --delete-before is
-to somehow make the repository useful during the transfer, doesn't that
-go against the later advice of:
+And in general I'd much rather debug an awk script than a Makefile.
 
-> +* The repository is in a quiescent state for the duration of the transfer (that
-> +	is, no operations of any sort are taking place on it, including background
-> +	operations like `git gc`).
+> Per Eric's Sunshine's upthread comments an awk and Perl implementation
+> were both considered before[1].
 
-Also for this:
+Ah sorry, I thought it was just a perl one that had been the
+show-stopper. I hadn't noticed the awk one. However, the point of my
+patch was to use perl if available, and fall back otherwise. Maybe
+that's too ugly, but it does address the concern with Eric's
+implementation.
 
-> +Be aware that even with these recommendations, syncing in this way is
-> +potentially risky since it bypasses Git's normal integrity checking for
-> +repositories, so having backups is advised.
+> I.e. I think if you e.g. touch Documentation/git-a*.txt with this series
+> with/without this awk version the difference in runtime is within the
+> error bars. I.e. making the loop faster isn't necessary. It's better to
+> get to a point where make can save you from doing all/most of the work
+> by checking modification times, rather than making an O(n) loop faster.
 
-Perhaps we should recommend running a "git gc" or other integrity check
-after (or "git fsck"), although those don't cover some cases, e.g. the
-pack-refs v.s. loose refs problem in the case of a missing
---delete-whatever.
+FWIW, I don't agree with this paragraph at all. Parallelizing or reusing
+partial results is IMHO inferior to just making things faster.
+
+> I'm also interested in (and have WIP patches for) simplifying things
+> more generally in the Makefile. Once we have a file exploded out has
+> just the synopsis line that can be used to replace what's now in
+> Documentation/cmd-list.perl, i.e. those summary blurbs also end up in
+> "man git".
+> 
+> There's subtle dependency issues there as well, and just having a
+> one-off solution for the the command-list.h doesn't get us closer to
+> addressing that sibling implementation.
+
+So I don't know what "subtle dependency issues" you found here, but this
+is exactly the kind of complexity it was my goal to avoid.
+
+-Peff
