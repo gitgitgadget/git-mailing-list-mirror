@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9C7C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B16BCC433FE
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:06:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FF036113B
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:06:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 917AF60F9E
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbhJTBIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 21:08:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37016 "EHLO
+        id S230052AbhJTBIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 21:08:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37020 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229686AbhJTBIq (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Oct 2021 21:08:46 -0400
+        by vger.kernel.org with ESMTP id S229741AbhJTBIr (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Oct 2021 21:08:47 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ADB9260D01;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E186360DE2;
         Wed, 20 Oct 2021 01:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634691992;
+        s=default; t=1634691993;
         bh=S4IMMovLTKF9YmTInA45gWjXq7INKAXkYrxCInX1wkA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=zkVfECUwsYexrQy7kmzfSZUYws5WIQWNpnqxZW+ntlg+oAG1ZmwGaxsRG320f5tuO
-         14Wr9PfKRHpc9i9SH1L6wdSD+C4FK+KddCI6SxBmP4nBaB2vXOCThIN/60DAXMtiwF
-         k0zAotWLDF3bja7ivRqFEUG51aK9Yg8+0n5cHyRTaF7i1yj8mb/zmCY+OhQlcxMwLO
-         Y2Bn4BgHtSwpaO9RYO9M/CR8nh2sWRFzTNZvh6fD/7NuHyRoVCzkPU2zwp91B12Rny
-         ch0rI3Nz5UHA/7ack3DsBNmgE0NA++c7CbFi/k+TnIzq0Dq2KWm+5+/aiVCjDGNHud
-         5H+c0wySUPKqztE3cTCW1WAcjOyTAa+NdnW9hzmhx+S0Rheeq2wuYHiBdmZIkteV42
-         noOBErp7DHz3N+mPYMyeIar2dXf0/uzj/wlGNaVyFQt+NWjCH90zsOQa2Gztzc2Zvu
-         rWB07mUe78RBQaQlbidSmZsYEm6BwGANAvqzi4aPsTWAF+v49oC
+        b=nrG1eQN9YPZ5dI3NfbvqqhKM1eSTUTPx670/IRokuMIXsSfOZl90MtsTZGpTAgQAo
+         Rai6vafz7qMkUPxada4BNGFlijCl5Qx1CLb32r2RpTwlv3a3JK72M4BCkxeXvg1nZl
+         mSTk5k4goW7UPh2YrehKcoXfZPyzLcOOcUN8deIZ0rYGollQxpxiVQZ7Wb697Y/Dys
+         jTII8hFKd3DpV83g3SA/j8hB+2UGkaY0m6q+r/cFMYEUJbg8obBN6zfX7dG2RhXVXP
+         O9H8ZvIKx/ErxmCidQasmm3yWEB9oZKK8HU9lwIl9S9FNj4Jsbviv6ub98/c4WLpMO
+         z1IXVAUOAkjlT6L2G7TDcM11lGXem/3hlZ7XE0Up1yailtzOaEgQouAT+H0IgJwaHm
+         jFjydnzPd+nS9AnlsO/IXKBhWunf0twVkKOPY0k9woLVA8soHA89Uee4kLP/beo+Jm
+         Ju9ENtAPJCOvQFe6uk3mC/MyHq+Sa/oyQHpHP4nVZa1WjJXxNCZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 4/4] doc: add a FAQ entry about syncing working trees
-Date:   Wed, 20 Oct 2021 01:06:23 +0000
-Message-Id: <20211020010624.675562-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 4/4] gitfaq: add entry about syncing working trees
+Date:   Wed, 20 Oct 2021 01:06:24 +0000
+Message-Id: <20211020010624.675562-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.33.0.882.g93a45727a2
 In-Reply-To: <20211020010624.675562-1-sandals@crustytoothpaste.net>
 References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
