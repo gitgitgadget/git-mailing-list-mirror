@@ -2,234 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBC0C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 12:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FEBCC433EF
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 12:02:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2162761354
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 12:01:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3969D60EB1
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 12:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbhJTMEG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 08:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbhJTMEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 08:04:05 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A31BC06161C
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 05:01:50 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id a25so25004652edx.8
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 05:01:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ef3bGGAEjlNbscXVvF+pu+LEiLkUswn75C7kPgpbuFw=;
-        b=VgcGOV04bas6c00dwyPwD5wChgAJgoF5pZFu1Le7ZK9foeyNY+5pPB8Eik9Fpy93K2
-         B6eSbCRhoc2OPHCBQOKvZiPJ45Uuft0m5Rcz3sWZxNDKQMId0UQxF5e98QZMFfV3laEb
-         HolVc1rtf0p0NIf8DopKZxq1aRV3Gv2yU+dvAEutwahKZyYhPiKDrqeletHoccuPhFDA
-         nsikewKGatoNY0VXvChSBIJ9jN47I8maouaN8018JKC7/wadJlWrMJEOA/0b9bZurXb0
-         6MUVAn3KXlKIR9+r23DvzBZqG6VOFj6zReYmdCo91Y6XjlThGusOySZ7HN/0EbpAU72d
-         RRQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ef3bGGAEjlNbscXVvF+pu+LEiLkUswn75C7kPgpbuFw=;
-        b=5sJrHurxcRdHYW1MiMlDfnaUJhBiEkr1Q/NeR96U2roqEL1VNFIGB0ZDe0HjMWg6es
-         XNl5yq32YSsFxYeb3X6n/kUo+ZFRSJs0Y9ncCl2Ju066vH3arROJUD9ck/g0X3Zkz4Mk
-         KSjfNI2e4qaor6v+U8lqGjs+B4pt164LVYulMEE/tJY9bVt+5ClO95fhxoyLTvUoM0GZ
-         H8a0LeqwNWv25cRJalvTJSOlFe6ChpaaiHfHRB95/qWORFjEcasVeip2RJC3FC0M6/Jc
-         Lvy0c88r/2BhxSpiWntF/Xgz224wMURBekTOjXCcTAHHq2HCGtmiUdHJPMvXQ7e+PmWK
-         H/sg==
-X-Gm-Message-State: AOAM53136kpDLDyGIJ5I9dFjNTArXEHxrl5CX+DCAxp23NhgAh6Oyz+e
-        YGcEbVVmRLtpwTkdTN/IgoBniQy5m2Te9w==
-X-Google-Smtp-Source: ABdhPJzMeIxLik+q4qAY5yuYIJipPPo+XOM6LOBikkAjIahphXX3GMe46jJSFf3A+VLJCGMMYUJ2mA==
-X-Received: by 2002:a17:906:fb19:: with SMTP id lz25mr47380145ejb.406.1634731301457;
-        Wed, 20 Oct 2021 05:01:41 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v15sm1073249edi.89.2021.10.20.05.01.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Oct 2021 05:01:40 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mdAHs-000hEK-2Q;
-        Wed, 20 Oct 2021 14:01:40 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ivan Frade <ifrade@google.com>
-Subject: Re: [PATCH v3] fetch-pack: redact packfile urls in traces
-Date:   Wed, 20 Oct 2021 13:41:57 +0200
-References: <pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com>
- <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
-Message-ID: <211020.868rynoqfv.gmgdl@evledraar.gmail.com>
+        id S230156AbhJTMEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 08:04:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37779 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229548AbhJTMEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 08:04:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1634731324;
+        bh=H44zM7TL8yloJfV2FXYZMSueRJC4s5vT65bg/gQFTI0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DBJk8kBDkeL5tc4etA4Jep4ELgcwBdO9GPNnGhQwXVW1Gk4S5up+DZ6eqaydzJQZb
+         +xsCsf3AeO0Kngamab5Pdn0pRfoptQLqr6ReuqsdrTOR9T4WrEgD3M73hEZXQd6ImI
+         AjDjv33poBW4DgJfmrncGnA7t5kmJSWPZZDoUDEE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.7.163] ([89.1.213.179]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuUnK-1mvWUY0Jta-00rYZb; Wed, 20
+ Oct 2021 14:02:04 +0200
+Date:   Wed, 20 Oct 2021 14:02:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 3/4] gitfaq: give advice on using eol attribute in
+ gitattributes
+In-Reply-To: <YW9wgbN/b8NkVp4z@camp.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2110201400020.56@tvgsbejvaqbjf.bet>
+References: <20211020010624.675562-1-sandals@crustytoothpaste.net> <20211020010624.675562-4-sandals@crustytoothpaste.net> <CAPig+cTn4fZtssPrn+z582E++Kdc2+z+=iNtp2kodR=QJVeycg@mail.gmail.com> <YW9wgbN/b8NkVp4z@camp.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SKXhirj8ZMJnZjGR3jZm+dQ2BjVz1q7VCW9B574sKAlpL+K++sT
+ jZYjsvJWZ4xSDOxV4vmFgC88yDuJfbOuZjU8agAyxQld9E+Y4r9UDMgvUIse0kqVKlBKhkP
+ wSfoF7/vXwLuKoyhe5JZI2GwpXfAs9ksZhGn32QMnBXYIMWHCyMVmjdSA6Pe2czVjUHXPCq
+ F+ySB7MUSe9YiW5MkYBiA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:e9kCFMH4f6E=:Umhf+4cn4Gl1UN+bLXCZ91
+ 1I/nQMAHBgDi2/u5XYhl+IamSezUO1NACCkVlWgH3V160Vyw/2HsgotJq+C05ithgVbLmM+Db
+ LVFTi1Yj2ua5L1XRFynA/po4c0ct6PHgtyYZ1lF4ByY+HIxpAPTdA1wGto8EecWJge7RK+w4G
+ G7vQVOBwUhtqibEe1dfAx4pQ4pOtr/t1EvHdqy26Eqx/yAd4KRiJ2qfd6NKUIDUmwEeCF8UFh
+ DbjLaWQHeZhOPBl8wETzeymt78ApcZqGR1A3COVPAnBEvq0I5uvKyUhIXR+FQL5KVQqTDbWV6
+ +6ZsTrxe9JbHOnqazkpDJtIp3F7KfbYvqf1smjjQuMKDP8L8LgMqnHAbxdMlx3HS0B19rUK3I
+ mO+dJze+M4TSXiART/sHlUx5vlszm9aWyQg6cXVXT2/R3ozYKH5THUpyohGZiuwK9Qp7K3XW6
+ DgUZpxCblJgiSOAu4UR66FDHPpwCj6OGsenQLyPPuYgZCBnLYUvUMzsUBToR59rs2W0oWKnay
+ Nwso2Xx4ThqjT1+FZRgBhXmhHLK/wTbLyEwD14Ti4lahAAIkZBgKnTTtnanfYmBxkqOyPAvPr
+ XnKqriP2fWjG6CYhjFYXjEejk/GHRststbSbfDh2f+a5n1QLj/dJHCGCONi9XWCBJCfhR5h5x
+ dLexde5i3drtS1zi2zK4R4n4J4unnA2CxWHEw8CNAXKPI6Y+PK1+8xdDYNjHzs8k+WpAiPCPg
+ 0BaLBv2EfWFBeOUWuq0YZYKnFOE4NzvOaBfzzb9NsPyv3uKaN5ZYEErV5Lzop9pTwoRnV7sDJ
+ Icw8GyCsr+Mv1PVna0dhR7zABKpT67YGc1Sy+ADtSklrZ31Sxh/8msmLPoY4IOynaCtSePO98
+ 9Vp7zh49uKBgHuPfK6OAMQ/2BSOSU0iD46geGwqvW4UeWb2NrDrnD2hIuYAXRgtGsEWUqfCBF
+ CX8UYSrn1DsaSdlsaf4c0mPyTjVw8hpqP0iHb4Mm5gWQ0Li2rAfPDT7h7Qf0Mt9yZ08u68qRZ
+ AgpQz0Oumr8WMMVdh0r3BubcQnUGi1aK9z33+Tiu5uQ3Wjs4zifyxAVY3MQ3WXrLoeSF9wMny
+ q7n7R+VavK4F7U=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi brian,
 
-On Tue, Oct 19 2021, Ivan Frade via GitGitGadget wrote:
+On Wed, 20 Oct 2021, brian m. carlson wrote:
 
-> From: Ivan Frade <ifrade@google.com>
+> On 2021-10-20 at 01:21:40, Eric Sunshine wrote:
+> > On Tue, Oct 19, 2021 at 9:06 PM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> >
+> > > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> > > @@ -464,14 +465,25 @@ references, URLs, and hashes stored in the rep=
+ository.
+> > > +With text files, Git will generally the repository contains LF endi=
+ngs in the
+> > > +repository, and will honor `core.autocrlf` and `core.eol` to decide=
+ what options
+> > > +to use when checking files out.  You can also override this by spec=
+ifying a
+> > > +particular line ending such as `eol=3Dlf` or `eol=3Dcrlf` if those =
+files must always
+> > > +have that ending (e.g., for functionality reasons).
+> >
+> > The first sentence in the paragraph is unparseable.
 >
-> In some setups, packfile uris act as bearer token. It is not
-> recommended to expose them plainly in logs, although in special
-> circunstances (e.g. debug) it makes sense to write them.
+> Yes, I think perhaps I omitted the word "ensure".
 >
-> Redact the packfile URL paths by default, unless the GIT_TRACE_REDACT
-> variable is set to false. This mimics the redacting of the Authorization
-> header in HTTP.
->
-> Signed-off-by: Ivan Frade <ifrade@google.com>
-> ---
->     fetch-pack: redact packfile urls in traces
->     
->     Changes since v1:
+> And I should reflect that they should have that ending in the working
+> tree, which I neglected to mention.
 
-Just context for other reviewers:
+Please note that Git for Windows defaults to `core.autoCRLF=3Dtrue`,
+therefore this sentence is not completely correct. Maybe something as
+short as "(except in Git for Windows, which defaults to CRLF endings)"
+would suffice?
 
-s/Changes since v1/Changes since v2/ I see, from the context of
-https://lore.kernel.org/git/pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com/
-
->      * Redact only the path of the URL
->      * Test are now strict, validating the exact line expected in the log
-
-And this was changed in v2...
-
->     Changes since v1:
->     
->      * Removed non-POSIX flags in tests
->      * More accurate regex for the non-encrypted packfile line
-
-[...]
-
->      * Dropped documentation change
->      * Dropped redacting the die message in http-fetch
-
-Since both of those were done I think in response to my feedback I just
-want to clarify (if needed):
-
- * That the documentation change is still good to have, although I had
-   feedback on fixing that more generally in the protocol v2 docs. It
-   would be great if you could still pursue it (and that I didn't
-   discourage you from doing so).
-
- * I think having this redaction in die() could still be valuable,
-   e.g. your packfile-uri's start failing, and now users are
-   copy/pasting "private" URLs that contain their passwords or whatever
-   to try to get help, that would be bad.   
-
-   But perhaps if you don't have private URLs redacting them
-   unconditionally would slow down debugging for some, i.e. you have 10x
-   pasted URLs, and all the errors are from one set of servers (although
-   your current redaction includes the hostname, which I think would
-   address most cases of say one CDN node failing).
-
-   It was really just a comment that your v1's commit message didn't
-   mention or justify it, but just having it make a mention of it would
-   also be an OK solution, or fold that into another patch or
-   whatever...
-
->  {
-> +	int saved_options;
->  	process_section_header(reader, "packfile-uris", 0);
-> +	/*
-> +	 * In some setups, packfile-uris act as bearer tokens,
-> +	 * redact them by default.
-> +	 */
-> +	saved_options = reader->options;
-
-nit: no need to pre-declare "int saved_options" here, just move this &
-the comment above "process_section_header" (in this case I'd say a
-comment isn't even needed, obvious from context...), or it should be at
-the definition of PACKET_READ_REDACT_URL_PATH... (more below)
-
-> +	if (git_env_bool("GIT_TRACE_REDACT", 1))
-
-If we're going to use GIT_TRACE_REDACT for this the documentation needs updating:
-
-Documentation/git.txt:`GIT_TRACE_REDACT`::
-Documentation/git.txt-  By default, when tracing is activated, Git redacts the values of
-Documentation/git.txt-  cookies, the "Authorization:" header, and the "Proxy-Authorization:"
-Documentation/git.txt-  header. Set this variable to `0` to prevent this redaction.
-
-> +		reader->options |= PACKET_READ_REDACT_URL_PATH;
-
-(continued)... but that was from a really narrow reading of the code, I
-think this whole flip-flopping of options back and forth isn't needed at
-all, and you should just assign this flag at the top of
-do_fetch_pack_v2(), no?  The setting of it also looks like it belongs
-with the reading of "GIT_TEST_SIDEBAND_ALL".
-
-I.e. nothing else uses PACKET_READ_REDACT_URL_PATH, why do we need to be
-flipping it back & forth? Keeping these flags in the "reader" is what
-that member is for, isn't it? Maybe I'm missing something.
-
-> +static int find_url_path_start(const char* buffer)
-> +{
-> +	const char *URL_MARK = "://";
-> +	char *p = strstr(buffer, URL_MARK);
-> +	if (!p) {
-> +		return -1;
-> +	}
-> +
-> +	p += strlen(URL_MARK);
-> +	while (*p && *p != '/')
-> +		p++;
-> +
-> +	// Position after '/'
-> +	if (*p && *(p + 1))
-> +		return (p + 1) - buffer;
-> +
-> +	return -1;
-> +}
-
-I think that packfile URI only supports http:// and https://, not
-file:// or whatever, so I wonder if either curl or we have a helper
-function for this that we can use....(more below)
-
->  enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  						size_t *src_len, char *buffer,
->  						unsigned size, int *pktlen,
-> @@ -393,6 +412,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  {
->  	int len;
->  	char linelen[4];
-> +	int url_path_start;
->  
->  	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
->  		*pktlen = -1;
-> @@ -443,7 +463,18 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  		len--;
->  
->  	buffer[len] = 0;
-> -	packet_trace(buffer, len, 0);
-> +	if (options & PACKET_READ_REDACT_URL_PATH &&
-> +	    (url_path_start = find_url_path_start(buffer)) != -1) {
-> +		const char *redacted = "<redacted>";
-> +		struct strbuf tracebuf = STRBUF_INIT;
-> +		strbuf_insert(&tracebuf, 0, buffer, len);
-> +		strbuf_splice(&tracebuf, url_path_start,
-> +			      len - url_path_start, redacted, strlen(redacted));
-> +		packet_trace(tracebuf.buf, tracebuf.len, 0);
-> +		strbuf_release(&tracebuf);
-> +	} else {
-> +		packet_trace(buffer, len, 0);
-> +	}
-
-...If we're redacting the URL isn't (and this might be less code with a
-helper function) saying:
-
-    failed to get 'https' url from 'somehost.example.com' (full URL redacted due to XYZ setting)
-
-Friendlier than something like (which this function sets up):
-
-    failed to get 'https://somehost.example.com/<redacted>' url
-
-I.e. it allows us to use a get_schema_from_url() and get_host_from_url()
-functions (I don't know if/where we have those, but seems likelier than
-"find path url boundary" (or maybe I'm wrong and we always feed those
-as-is to curl et al).
+Ciao,
+Dscho
