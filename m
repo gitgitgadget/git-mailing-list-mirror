@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F78EC433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 18:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38E59C433FE
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 18:27:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5279D6109F
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 18:27:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24C236109F
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 18:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231222AbhJTS3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 14:29:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50376 "EHLO
+        id S231284AbhJTS3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 14:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbhJTS3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 14:29:45 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EE57C061749
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 11:27:30 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 186-20020a1c01c3000000b0030d8315b593so3503479wmb.5
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 11:27:30 -0700 (PDT)
+        with ESMTP id S231256AbhJTS3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 14:29:46 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72317C06161C
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 11:27:31 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 67-20020a1c1946000000b0030d4c90fa87so11880417wmz.2
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 11:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=585MeI5T4HKkL1g4/bEtwEKVAkTW22WvWZtHm617jsk=;
-        b=E8vbnXzOQ4kCvrSnyaq0e6E3nBpKBnUt1hl45ynjZM7REAE4DbbWt6Gn8V5EYqMy9w
-         brVqZSGJfJGnbYAbheOPx6ASefr7FYx5QjxjLm4RKQGn1MBdQ/4iO7Ki8WoIDLvnqo9l
-         TS7RqDeVD48Ztsz7etJir3UAJESAQDAJEbguxypbMPOnxpnQD3PitMDLt2QddDHpJS2d
-         NqoRiCUiBkyPz1u0RxwFAwyjr0s1yT2+/GVVYQ3GTBCmVmB5F+WAxXBtUtHdS2FRa3zZ
-         6qUTweGqPVgkMX8yLjUWfZmAedkS3PIDki5T+tABm01nLJnQDmZKLBpCzM3hjO4ZkBB/
-         UQ/g==
+        bh=FHaytZHel5gVVKAT+Kci6ZP76N2n7tI4Fn75FtSz2Mk=;
+        b=V/3CZumRgPv7j5ZjKWQTS1GTxRSuhvRGJRScP2HhRSfVSuVUpVyMB83UmpNz/mPPTp
+         CX1Squ6134yFpkJfQGqvd6EZ96cyo+V4aVSUwibvJcAtITwI28VCXQuvgxnYSsSnNfon
+         zibwAWlufXVqeSPvKUBiWucuOsoYJSRnvSNXaRj5B1i8SzmP8y0P6lSRFs4voAfOccyD
+         3/5UzDDIixRgHvtY5M8bQj8UVSr4Jex1zCZbhJpYMwB6PTYLfNHPpdnUHZl4q8SDF+HV
+         1El8ETKikyGOz5dnahwl26FMfsxOOH8m//FFujjNB3AozKk9HozCb0ROjcWpCvdF1qSL
+         +X5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=585MeI5T4HKkL1g4/bEtwEKVAkTW22WvWZtHm617jsk=;
-        b=0sc/RnibZkgcQYhD+y781iTuQYUBf0QlMIKNwS9Xj3tTh/aLRPYMgokBGHrShgZLr0
-         j7HW3Nb2gvou0Ei7XC24x+21xIUMzGqITUy8LtAgH0K0rUu5elVude263IXUf/LGZNJU
-         c522Sa3OKTheq4VZpF7E2PAx7e/SMA+vY2NhZ9vhAXA9zUc1mfqWHvEjHWFxoUzjJK0H
-         z6x/PXqJd9zyyrJpkVMHU4nXG6t2+Nbr+SEWulkbUsYLRAEpTKHJ2fGQ/SftZytmzaTt
-         dtwg6gXcEF48aBPRVIF2ULTYXGxhCQBJ98XfVwMReWtu0b8/n4BSf9HVA/jamXWjY+cJ
-         x8/Q==
-X-Gm-Message-State: AOAM5302ZXHUkjveGxAEBprmtKrfCndWURyyNS2ixrAeoa+4cJyBuBAk
-        FoaHZMCCitBRvveIMwHl1MY1dzuUjsZaug==
-X-Google-Smtp-Source: ABdhPJwJKCW/3CQBcUrVXDRh5WXVQ8XuewnWmswKpuPffILYWLtTwh9qtJCTJW9OSkJ32dvwzcPBlQ==
-X-Received: by 2002:a1c:4484:: with SMTP id r126mr15613660wma.150.1634754448893;
-        Wed, 20 Oct 2021 11:27:28 -0700 (PDT)
+        bh=FHaytZHel5gVVKAT+Kci6ZP76N2n7tI4Fn75FtSz2Mk=;
+        b=cf6qeialwTPDMorSVdVgboFxmo+3Rf9QdrlpLDQeRxokg34frDLbw9TQuBpaJOu4fK
+         MEeJAGWr+ucTOa1nNsgt7f+f7+pCR+dNMhA7O998rM4gy8LVKsmDOY+IZ8pQRC8L6LU/
+         /BuhF3i1aFliVIq25JXWZutdI92ZEX4tRJXpZDuSFPJUavE+raC1yQt5GBIqhmRQJWiZ
+         f9oqc1n9rkTOCx42cCmwSYWEFtn9QBWTZxJc5VKGPUxALJ61UY7R+hVfzrAUqCfXKL5d
+         3vTQ9EG2jcUfMNZ3LCHYIG6Rarcf+XNtfj7gZg+DuncW8K6fseAOHV5BCIEyabK99p9m
+         LXmA==
+X-Gm-Message-State: AOAM533JmvR4/wupACJqd4YuZQ/rZN3mgF3xb0xhK8a1ZhCmLFWYsKI9
+        0SqUYKJ69yOIwnojfl+SjB1KFRdVv+0dnw==
+X-Google-Smtp-Source: ABdhPJxK2bi+vJVD2jN9hdnvK1VMzjR0A+/ZHksQaMGffpTgOfnZTJL1QVzdjf7sUQ+MGe1Lkcs1pw==
+X-Received: by 2002:a05:600c:4fcd:: with SMTP id o13mr16127741wmq.158.1634754449782;
+        Wed, 20 Oct 2021 11:27:29 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id i13sm3091093wmq.41.2021.10.20.11.27.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Oct 2021 11:27:28 -0700 (PDT)
+        Wed, 20 Oct 2021 11:27:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] ref-filter API user: add and use a ref_sorting_release()
-Date:   Wed, 20 Oct 2021 20:27:20 +0200
-Message-Id: <patch-2.3-07062ca276a-20211020T182516Z-avarab@gmail.com>
+Subject: [PATCH 3/3] branch: use ref_sorting_release()
+Date:   Wed, 20 Oct 2021 20:27:21 +0200
+Message-Id: <patch-3.3-c8e8bc46ac4-20211020T182516Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1338.g20da966911a
 In-Reply-To: <cover-0.3-00000000000-20211020T182516Z-avarab@gmail.com>
 References: <RFC-cover-v2-0.4-00000000000-20211020T131627Z-avarab@gmail.com> <cover-0.3-00000000000-20211020T182516Z-avarab@gmail.com>
@@ -69,75 +69,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a ref_sorting_release() and use it for some of the current API
-users, the ref_sorting_default() function and its siblings will do a
-malloc() which wasn't being free'd previously.
+Use a ref_sorting_release() in branch.c to free the memory from the
+ref_sorting_options(). This plugs the final in-tree memory leak of
+that API.
+
+In the preceding commit the "sorting" variable was left in the
+cmd_branch() scope, even though that wasn't needed anymore. Move it to
+the "else if (list)" scope instead. We can also move the "struct
+string_list" only used for that branch to be declared in that block
+
+That "struct ref_sorting" does not need to be "static" (and isn't
+re-used). The "ref_sorting_options()" will return a valid one, we
+don't need to make it "static" to have it zero'd out. That it was
+static was another artifact of the pre-image of the preceding commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/for-each-ref.c | 2 +-
- builtin/tag.c          | 1 +
- ref-filter.c           | 9 +++++++++
- ref-filter.h           | 2 ++
- 4 files changed, 13 insertions(+), 1 deletion(-)
+ builtin/branch.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 642b4b888fb..16a2c7d57ca 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -96,6 +96,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	ref_array_clear(&array);
- 	free_commit_list(filter.with_commit);
- 	free_commit_list(filter.no_commit);
--	UNLEAK(sorting);
-+	ref_sorting_release(sorting);
- 	return 0;
- }
-diff --git a/builtin/tag.c b/builtin/tag.c
-index ad6c9855914..6fe646710d6 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -630,6 +630,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		       find_unique_abbrev(&prev, DEFAULT_ABBREV));
- 
- cleanup:
-+	ref_sorting_release(sorting);
- 	strbuf_release(&buf);
- 	strbuf_release(&ref);
- 	strbuf_release(&reflog_msg);
-diff --git a/ref-filter.c b/ref-filter.c
-index add429be797..282cdad1036 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2705,6 +2705,15 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- 	return 0;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0b7ed82654a..7a1d1eeb070 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -407,7 +407,8 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 	return strbuf_detach(&fmt, NULL);
  }
  
-+void ref_sorting_release(struct ref_sorting *sorting)
-+{
-+	while (sorting) {
-+		struct ref_sorting *next = sorting->next;
-+		free(sorting);
-+		sorting = next;
-+	}
-+}
-+
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+-static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting, struct ref_format *format)
++static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sorting,
++			   struct ref_format *format, struct string_list *output)
  {
- 	struct ref_filter *rf = opt->value;
-diff --git a/ref-filter.h b/ref-filter.h
-index b636f4389d0..6228458d306 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -127,6 +127,8 @@ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
- int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset);
- /*  Default sort option based on refname */
- struct ref_sorting *ref_default_sorting(void);
-+/* Release a "struct ref_sorting" */
-+void ref_sorting_release(struct ref_sorting *);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
- /*  Get the current HEAD's description */
+ 	int i;
+ 	struct ref_array array;
+@@ -449,7 +450,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 		if (column_active(colopts)) {
+ 			assert(!filter->verbose && "--column and --verbose are incompatible");
+ 			 /* format to a string_list to let print_columns() do its job */
+-			string_list_append(&output, out.buf);
++			string_list_append(output, out.buf);
+ 		} else {
+ 			fwrite(out.buf, 1, out.len, stdout);
+ 			putchar('\n');
+@@ -753,9 +754,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 		ref_sorting_set_sort_flags_all(
+ 			sorting, REF_SORTING_DETACHED_HEAD_FIRST, 1);
+-		print_ref_list(&filter, sorting, &format);
++		print_ref_list(&filter, sorting, &format, &output);
+ 		print_columns(&output, colopts, NULL);
+ 		string_list_clear(&output, 0);
++		ref_sorting_release(sorting);
+ 		return 0;
+ 	} else if (edit_description) {
+ 		const char *branch_name;
 -- 
 2.33.1.1338.g20da966911a
 
