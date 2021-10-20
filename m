@@ -2,93 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 919D8C433FE
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A159CC433F5
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:21:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7316A600D3
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:07:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 820A061004
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 01:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbhJTBJR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 21:09:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37028 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229741AbhJTBJQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Oct 2021 21:09:16 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 459D260786;
-        Wed, 20 Oct 2021 01:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634691992;
-        bh=0glHI5VDiJIwIWZYs/4kKFoRVfdx+35K9YtLrLK/mdE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=IW4z8BkPBUNnuubKkgqvGUUQ0qqgcKJlJE+0+0HSxGk8k80RDR85SJ+epgnNInXAp
-         hzXgi9nklanfZis/pp3GMBJ+o82eArTmggk+hlF8z1s1xf3FXmtqZDnU8dpJSliAMk
-         VUg/BaNZ0JyJjYpFQ14JQkF4nTsns3vIorUbJ6znVbaQulQkQge6POngqLktT5XY5R
-         poLGhTvHMIdOiaI5uVPZuwD7DTIVAXXdh/Gf2ka70UhWo7CnqQ7CF7jok26BJ7/LZW
-         xtWl9No05FIQwpeVnfIoFlIyqFYQ+oUg3at0zEF/yzrRKPJLT7jKgvGFyCY5fbye14
-         /mr7i/pLO/0H2FuUS0Yh8L8aS7mVQ6PdvKeo2dQxFSrdOTRkfhQShmLLZmQiwtgOHD
-         O0pIsr72nVGFKD+lrRZ7oWc86sumvMugppACNCu9rZuFN2KN3fR/sPz1K0FK1k+UcK
-         H0yiUW8kH2w8TojZBV3amUF8+Fmf/netiHdr9gB3wqO0QXWEgIS
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
+        id S229715AbhJTBYI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Oct 2021 21:24:08 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:38508 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhJTBYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Oct 2021 21:24:07 -0400
+Received: by mail-ed1-f54.google.com with SMTP id r4so13014100edi.5
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 18:21:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c+ocK2NpxwPrd32LIat3spITwPUBvL7PgJUZGVLfA0w=;
+        b=0z6/ci0Rqbq3N9OCcbmZn1onQPKlpO4jZS0iMJMy6i54aJ7sNyWOWhjN4mGrLvXIaA
+         BH9CEXmLFjmLMhKXgqInE7vFqhrIu2RH3TKppkJOiWMsaDucMe9kHstuF4zloU7Xbd8/
+         aZWNbc817S3NZLwH0WDW0CHerNhbB1RjQ0UAmzmz8Mw7BsL0YwxSttFB3jH85vSWX4KN
+         znm2jr37pC5hmKsFu6prOOL+DdCQLLR3SbhIliEn2k8CzgNZP/MH8JyfGgIeekrIO6Vv
+         uyPwG+J2ZvYY+Gp/T+4Xyb7ZrbVXBznA9Br3hZvQepHB9ro+0o+rDKU+GnLpn8ugM2yp
+         Gs3g==
+X-Gm-Message-State: AOAM532VnSzsSMcBE0l+0o/Ve6LSVL+QMSPiduXzBMGeZa7y1mU/2KEE
+        oiGbVVFRZz6pcftYSt4bwFN/CTBBe5LuDia8j0Iy0zJqyf4=
+X-Google-Smtp-Source: ABdhPJyHu0hLikKGU+gP0sbTVzBgskvIN2SJvEJ4cm3/gVc/Ehje8TKu1rqiutRRBUA0UkzbNR8k+FB9HZ+XJBTTuR4=
+X-Received: by 2002:a17:906:3842:: with SMTP id w2mr43232993ejc.28.1634692912977;
+ Tue, 19 Oct 2021 18:21:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <20211020010624.675562-1-sandals@crustytoothpaste.net> <20211020010624.675562-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20211020010624.675562-4-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 19 Oct 2021 21:21:40 -0400
+Message-ID: <CAPig+cTn4fZtssPrn+z582E++Kdc2+z+=iNtp2kodR=QJVeycg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] gitfaq: give advice on using eol attribute in gitattributes
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 2/4] gitfaq: add documentation on proxies
-Date:   Wed, 20 Oct 2021 01:06:21 +0000
-Message-Id: <20211020010624.675562-3-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.33.0.882.g93a45727a2
-In-Reply-To: <20211020010624.675562-1-sandals@crustytoothpaste.net>
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many corporate environments and local systems have proxies in use.  Note
-the situations in which proxies can be used and how to configure them.
-At the same time, note what standards a proxy must follow to work with
-Git.  Explicitly call out certain classes that are known to routinely
-have problems reported various places online, including in the Git for
-Windows issue tracker and on Stack Overflow, and recommend against the
-use of such software.
+On Tue, Oct 19, 2021 at 9:06 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> In the FAQ, we tell people how to use the text attribute, but we fail to
+> explain what to do with the eol attribute.  As we ourselves have
+> noticed, most shell implementations do not care for carriage returns,
+> and as such, people will practically always want them to use LF endings.
+> Similar things can be said for batch files on Windows, except with CRLF
+> endings.
+>
+> Since these are common things to have in a repository, let's help users
+> make a good decision by recommending that they use the gitattributes
+> file to correctly check out the endings.
+>
+> In addition, let's correct the cross-reference to this question, which
+> originally referred to "the following entry", even though a new entry
+> has been inserted in between.  The cross-reference notation should
+> prevent this from occurring and provide a link in formats, such as HTML,
+> which support that.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> @@ -464,14 +465,25 @@ references, URLs, and hashes stored in the repository.
+> +With text files, Git will generally the repository contains LF endings in the
+> +repository, and will honor `core.autocrlf` and `core.eol` to decide what options
+> +to use when checking files out.  You can also override this by specifying a
+> +particular line ending such as `eol=lf` or `eol=crlf` if those files must always
+> +have that ending (e.g., for functionality reasons).
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/gitfaq.txt | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+The first sentence in the paragraph is unparseable.
 
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 946691c153..abc0f62e6c 100644
---- a/Documentation/gitfaq.txt
-+++ b/Documentation/gitfaq.txt
-@@ -241,6 +241,24 @@ How do I know if I want to do a fetch or a pull?::
- 	ignore the upstream changes.  A pull consists of a fetch followed
- 	immediately by either a merge or rebase.  See linkgit:git-pull[1].
- 
-+[[proxy]]
-+Can I use a proxy with Git?::
-+	Yes, Git supports the use of proxies.  Git honors the standard `http_proxy`,
-+	`https_proxy`, and `no_proxy` environment variables commonly used on Unix, and
-+	it also can be configured with `http.proxy` and similar options for HTTPS (see
-+	linkgit:git-config[1]).  The `http.proxy` and related options can be
-+	customized on a per-URL pattern basis.  In addition, Git can in theory
-+	function normally with transparent proxies that exist on the network.
-++
-+However, note that for Git to work properly, the proxy must be completely
-+transparent.  The proxy cannot modify, tamper with, change, or buffer the
-+connection in any way, or Git will almost certainly fail to work.  Note that
-+many proxies, including many TLS middleboxes, Windows antivirus and firewall
-+programs other than Windows Defender and Windows Firewall, and filtering proxies
-+fail to meet this standard, and as a result end up breaking Git.  Because of the
-+many reports of problems, we recommend against the use of these classes of
-+software and devices.
-+
- Design
- ------
- 
+> +# Ensure all shell files end up with LF endings and all batch files end up
+> +# with CRLF endings in the working tree and both end up with LF in the repo.
+> +*.sh text eol=lf
+> +*.bat text eol=crlf
+
+Maybe: s/end up with/have/g
