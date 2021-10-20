@@ -2,103 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BF1AC433EF
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 14:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAED6C433F5
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 14:29:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF4206138D
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 14:11:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FC6860EE9
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 14:29:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbhJTON0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 10:13:26 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:27626 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229897AbhJTON0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 10:13:26 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mdCJC-0006Mu-9p; Wed, 20 Oct 2021 15:11:10 +0100
-Subject: Re: [PATCH 1/4] gitfaq: add advice on monorepos
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
- <20211020010624.675562-2-sandals@crustytoothpaste.net>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <557fe5b8-36b4-a760-d2dd-02137746a37b@iee.email>
-Date:   Wed, 20 Oct 2021 15:11:09 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S230422AbhJTObc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 10:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231175AbhJTObH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 10:31:07 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF47CC0613E6
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 07:28:48 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id 75so22703341pga.3
+        for <git@vger.kernel.org>; Wed, 20 Oct 2021 07:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Iz/4bQYuWy8M4HSVRyZVLZd+mK2NuxpRlZmqPuW3hkg=;
+        b=UDmKJ7t2CkAbJY5nX0IV3sdmg2Sjax8iobdt7QTHx5zDw9kwC+pV2v2RVvXe4j8Ysk
+         c0p4xnO0hAb2wQfuo4na0kCT6VTIOGbewFzGuECovX2fu+zhgn4jQHgwF8KiuRYze0qR
+         au439qR+n979gLFRCIVDBKTjL8tQG4Bt6HNsu7XEBCCzwZzsA03tYgdrX0WwKZF58wkb
+         jekf2+uVT22lrTHw33Y+9gFHF+TXyAOJjyrOh1sb5RhE62BHXikuSqN/VPzb5AQ2iFcf
+         Ks1LUuDXXbMU8ZW2gaIChfvYik0cZWM0Rkw/FBXrKmJBaO/v8kZrXrmoEIPWLbIJJ+AQ
+         Dcog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Iz/4bQYuWy8M4HSVRyZVLZd+mK2NuxpRlZmqPuW3hkg=;
+        b=Mu5UNu0LXJsYX1T6LEp6/VQV2xz/GOdwzxjtoonYn4nVhQ0YuukCqXM9WsozkyaB3w
+         2zZt9a++2TdZweQT2KcMdsGbeoCYVUOvCBey58gqZnFJM1DEFMqneEDjfhgI63GjFUeb
+         OWKC5YwZGa3RVzw1lpCa87zyKrCZ4HvLIjAXsR4slPoQM0oAZw+TW8VY+a16GBzLqEZ7
+         JjqP6+OEQRpLIGAzkAreKbCi+IShPr4HHxjQhqaZQFRGEM36WasotSpaS5RpiPHSQD7p
+         ChtaDl/EvlQbJ49blAl9s0kFubBCz3LoPFR+WAL8hBmv24HKrGZ4xtOSmik8229BL6pg
+         Pkyg==
+X-Gm-Message-State: AOAM531ie8z7NVNgaeiqTyw9TvU90EaBZ5T0V/+WgjZS/ofITDesrrIE
+        k2Iym2ldjLL+BkmaR+tU/O3L2A==
+X-Google-Smtp-Source: ABdhPJzuyOC5SsIaTSuvg5Cz0LJYNTRrykX+EiT6XYGIp7aVKG8nTD+b3Z8eG3HX1q5hipQTW4KOPQ==
+X-Received: by 2002:a05:6a00:15c9:b0:44c:a998:b50d with SMTP id o9-20020a056a0015c900b0044ca998b50dmr318178pfu.49.1634740128275;
+        Wed, 20 Oct 2021 07:28:48 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com. [35.185.214.157])
+        by smtp.gmail.com with ESMTPSA id y17sm2992348pfi.206.2021.10.20.07.28.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Oct 2021 07:28:47 -0700 (PDT)
+Date:   Wed, 20 Oct 2021 14:28:44 +0000
+From:   Sean Christopherson <seanjc@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, matheus.bernardino@usp.br,
+        vdye@github.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 00/14] Sparse-checkout: modify 'git add', 'git rm',
+ and 'git add' behavior
+Message-ID: <YXAnnHfH8sv2ZJqF@google.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <pull.1018.v2.git.1631453010.gitgitgadget@gmail.com>
+ <YW3nAKAUj/HF15OR@google.com>
+ <00188c99-386f-8d4f-08f6-11a49d31184c@gmail.com>
+ <YW73QD7a+NzHd8dq@google.com>
+ <xmqqa6j3su57.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <20211020010624.675562-2-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa6j3su57.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/10/2021 02:06, brian m. carlson wrote:
-> Many projects around the world have chosen monorepos, and active
-> development on Git is ongoing to support them better.  However, as
-> projects using monorepos grow, they often find various performance
-> and scalability problems that are unpleasant to deal with.
->
-> Add a FAQ entry to note that while Git is attempting improvements in
-> this area, it is not uncommon to see performance problems that
-> necessitate the use of partial or shallow clone, sparse checkout, or the
-> like, and that if users wish to avoid these problems, avoiding a
-> monorepo may be best.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  Documentation/gitfaq.txt | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
->
-> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 8c1f2d5675..946691c153 100644
-> --- a/Documentation/gitfaq.txt
-> +++ b/Documentation/gitfaq.txt
-> @@ -241,6 +241,32 @@ How do I know if I want to do a fetch or a pull?::
->  	ignore the upstream changes.  A pull consists of a fetch followed
->  	immediately by either a merge or rebase.  See linkgit:git-pull[1].
->  
-> +Design
-> +------
-> +
-> +[[monorepos]]
-> +Should we use a monorepo or many individual repos?::
-> +	This is a decision that is typically made based on an organization's needs and
-> +	desires for their projects.  Git has several features, such as shallow clone,
-> +	partial clone, and sparse checkout to make working with large repositories
-> +	easier, and there is active development on making the monorepo experience
-> +	better.
-> ++
-> +However, at a certain size, the performance of a monorepo will likely become
-> +unacceptable _unless_ you use these features.  If you choose to start with a
-> +monorepo and continue to grow, you may end up unhappy with the performance
-> +characteristics at a point where making a change is difficult.  The performance
-> +of using many smaller repositories will almost always be much better and will
-> +generally not necessitate the use of these more advanced features.  If you are
-> +concerned about future performance of your repository and related tools, you may
-> +wish to avoid a monorepo.
-> ++
-> +Ultimately, you should make a decision fully informed about the potential
-> +benefits and downsides, including the capabilities, performance, and future
-> +requirements for your repository and related tools, including your hosting
-> +platform, build tools, and other programs you typically use as part of your
-> +workflow.
-> +
+On Wed, Oct 20, 2021, Junio C Hamano wrote:
+> Sean Christopherson <seanjc@google.com> writes:
+> 
+> >> Are you using v2.33.0? This change is not in that version.
+> >
+> > Hrm, it's an internal build that says v2.33.0 is the bsae, but the --sparse option
+> > is available so who knows what's actually underneath the hood.  I can try vanilla
+> > upstream builds if that would help narrow down the issue.
+> 
+> $ git version
+> 
+> Guessing from the e-mail address, perhaps you are using something
+> derived from the next branch of the day, maintained by Jonathan
+> Nieder's group, for internal consumption at Google.
 
-Does this need some comparison, or link, with sub-module methods and
-issues? Such as the nested sub-module problem, the distinction between
-active sub-modules and quiescent sub-modules (e.g. libraries Vx.y.z)?
-
-As an aside, I don't think we provide any background to the Git
-philosophy that frames some of these issues.
-
--- 
-Philip
-
+That's more than likely the case.  2.33.0.1079.g6e70778dc9-goog
