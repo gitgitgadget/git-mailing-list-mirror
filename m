@@ -2,97 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C4F1C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 11:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97019C433FE
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 11:43:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7D0D611B0
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 11:39:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80A86610CB
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 11:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbhJTLlR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 07:41:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40140 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbhJTLlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 07:41:16 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C54E2C06161C
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 04:39:01 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id w14so23945549edv.11
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 04:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=CxDTHmotPEKdMaMLCCEvZOpdvyysox1fJ7L59YPCjZk=;
-        b=EtikXxYRSKBo9EfQjZGP+ikmg8h+MPVYglFzf84+L7hOzZ6oWxFOXOGVWU3f5vJm6q
-         RHlC7K2VWUz/ihfXJbDgUUsBxMRD0XwUtlplsOxzOXqOiTUDRD7+bAH20JtCJNsV4Wex
-         vMKa4baCQBkmRIDLCPg4W/3TpY92bRKqnWkI7PGdmWXGLMx1YQV5V2drsjutIMD5EhAV
-         5yKiebCkskOWGOlnNsxcngM44R/PlfsdRgYG0faHryqYk5t13LNuUvkUrgSx4tFQTuJY
-         gffVXT2LvSHuFMhuortY1rpcTpNjxw02hV3TO3PlAdYS0Yyb5isxsBob7xA94n+nP1K9
-         9Xsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=CxDTHmotPEKdMaMLCCEvZOpdvyysox1fJ7L59YPCjZk=;
-        b=7Ab7B1p3lBePBJcpzaxnn/WH4dkb6PA+V8PZB7keSmHw3nuuTSRUfX/y7ha52HrrGW
-         cS1qdsgTTlqJjI4BuYLW5BwdiTNoU4B/9g9OYC3VPyDCOC45uJ253M3HgUd1jJDqu+32
-         5fLQqqYmJXDTyqYHkkfAq1p5sBuaWIH6z1N5M6PrQBysQQl8UgiJQMp5hX9BA1GcuyTL
-         XIkdldSqYTWhYrmv+shPTOM2P+v1AR3SgTJAeB3YdUTNu5mQhYJ/xIN9llc8e3q67pu+
-         +cSHPMubIyTI6o/fOQG5P4Br84P1fQdeMnbiuD+PArjCTzO5wusazsHE+15W73vPNAar
-         psKg==
-X-Gm-Message-State: AOAM533VWnnnvvf/C8roTKvjvUdr01NaehBRC+IUBOSE23PmShw47Zx4
-        e4hFdLtZCdhyIVZgmJHex3JtgEfcO0Nyog==
-X-Google-Smtp-Source: ABdhPJyYI9wvSiGjC5pMT/j+MV5DOcflVt10PqVjxtnDR7NXRgJe+VcB6OPHq2rckf0n/J0nw66BfQ==
-X-Received: by 2002:a17:906:c009:: with SMTP id e9mr45522432ejz.509.1634729938430;
-        Wed, 20 Oct 2021 04:38:58 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p26sm1028567edu.57.2021.10.20.04.38.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Oct 2021 04:38:58 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1md9vt-000gpH-LG;
-        Wed, 20 Oct 2021 13:38:57 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/config-based-hooks-2
-Date:   Wed, 20 Oct 2021 13:37:49 +0200
-References: <xmqq1r4hv7bv.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <xmqq1r4hv7bv.fsf@gitster.g>
-Message-ID: <211020.86czo0ncxa.gmgdl@evledraar.gmail.com>
+        id S230269AbhJTLpS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 07:45:18 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50035 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230217AbhJTLpP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 07:45:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1634730172;
+        bh=VxYYxZMqyvjr1389o44DD3NJU3zVMsIM7Z8WaxxpSLo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hZyL8xHy6SiINzx51zmegPKYB40o0HKuHbetHRKYZ8E40l5Jq6IPk1h8Pbye46J5H
+         QKo8t61/OUQ/uAcWzvKmkLpNXZQ/TMYyq1bfQK3OV16fsRXxrH3Bviv1JzjIHpAEpy
+         DmII2i+1k/CH93bTA4OEAGqG/v255sE3STGpZr8I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.7.163] ([89.1.213.179]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MG9kC-1mTKDP3Uaa-00GYZZ; Wed, 20
+ Oct 2021 13:42:51 +0200
+Date:   Wed, 20 Oct 2021 13:42:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?BARDOT_J=C3=A9r=C3=B4me?= <bardot.jerome@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Questions, improvements
+In-Reply-To: <YW85Gs8aU9rrBDOv@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2110201340370.56@tvgsbejvaqbjf.bet>
+References: <9ad3d241-5441-9fbd-76a4-7c47c6a1b70e@gmail.com> <YW85Gs8aU9rrBDOv@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-700136813-1634730173=:56"
+X-Provags-ID: V03:K1:Qt8ORKsEv3kjt3/iyvSmW73tRbNbV3J6clTeFdwO+tMEWkV542r
+ X31A0lOCVe96CgsRmpzQcRLgCtRnsNHW/icsBFl2rcUr74x85wpIW1p8gu+BWk4auUDKNHa
+ 89HrvBADwfMgVzwvrwZPCTZw8tmM4n2BFR1YCSYfGNzqtsaGtJyrIDi0SCL2aSf4xXCmHIm
+ C3VEQZ0VrA8vpFvuag5wg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PMQpoQlcGXc=:++Mnnv0QIFw3lm1+z89a9j
+ tjx7ikAWKzQrSUaaTkHB8jlPmSV3qyMXZ9lDxkv2tNvcXAITidyw92oGw+O//EwCZpvTPa0lS
+ neMN/GFdch4glxmcryccEDIoFzb2W7oZNODYoAF924mWNf4zCHUiBkdhVrvAiUtjGNtO2i4rJ
+ TPWzMlO5FJ93YW1mefR0j4K77YsST+SVduAeaHHe2xfZLgW4l8WOr4p2Z0xpsMc91N6dBhbZx
+ PxUmzEkBFK6cyS+skdAzBMyq3CdExj5aEfu8d6xv+SMXnZgL4T7Q5W6ZD6HrDf1uOCY6lE+1C
+ HrjF3bGIXicsq5amw3/GZaQrTB/rGbF7oKvG28f4e4ACPMhWsEogUTy64I2rKc8G+j3IdHTU+
+ FRG6i+fHutuE9xdXiaXJDhurK0LTDt6TIlgpMiU6O9lCV173brUoz/CWTBwZBiUaZ7w5hLM4Y
+ 7I7dBUuko9eyJaku1E7DKmFnS7NjhbfLMmtymz5ZCf1OLYxlAmWu4s8OousxqeTV/SKNJzHks
+ 9+uuLCXJr01AOcpEirAzlygZnrb3vhe4TrsuEXf+YylcnDT/sk8fTE88lz06TBf9jODZp6erW
+ IB4MywcjMigW/9VNGO6a4cVtRIVedhKBtvhnd4Y5JJg0iRvFShF24qna5cyEasJzsN870E04m
+ 8OX1gBaoh3es7uUAokPA5EGVdqu0eRlc6KzkQ5G4OFRh1BRA8sRPx90lSQdiDvIsdYzFWkxCK
+ 4nFiNLKojpvW1ZGbtNLwS2AbSzSyS5RIUpc0MZrO0o8KY1xG0hyTWuuwbaCsWZsZVVQvRCEg4
+ IFt4zfeMf0izCV6qlmjyOlaVjIXWYc4l7YRiTxbEgpoyESaIx6s9D87JEP9jhhH48yRS8m48J
+ YG2XcHwCi/HlstrL17mRvSv4dcsmF4vf8qhh7sq3cjuortANgDwTXFCq3X3n4VuaKVFDYMH4l
+ Ii1gPoLksHxHDxgkAsGWI0BUu/4ofWV4eHRiY712NiNvXAP+fRqqZkrN4i5Gwy8ZUY/NW1Q/u
+ Qz7WCoaG9Tfb+/BJsE4TsuJoCzXf31yhgsGY1lVNnmqbitLYm2ZVGFQaL7YolIQOGQ4s212I2
+ TNt7T12AqFuN+k=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, Oct 18 2021, Junio C Hamano wrote:
+--8323328-700136813-1634730173=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> * ab/config-based-hooks-2 (2021-10-15) 14 commits
->  - run-command: remove old run_hook_{le,ve}() hook API
->  - receive-pack: convert push-to-checkout hook to hook.h
->  - read-cache: convert post-index-change to use hook.h
->  - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
->  - git-p4: use 'git hook' to run hooks
->  - send-email: use 'git hook run' for 'sendemail-validate'
->  - git hook run: add an --ignore-missing flag
->  - merge: convert post-merge to use hook.h
->  - hooks: convert 'post-checkout' hook to hook library
->  - am: convert applypatch to use hook.h
->  - rebase: convert pre-rebase to use hook.h
->  - gc: use hook library for pre-auto-gc hook
->  - hook: add 'run' subcommand
->  - Merge branch 'ab/config-based-hooks-1' into ab/config-based-hooks-2
+Hi,
+
+On Tue, 19 Oct 2021, Jeff King wrote:
+
+> On Tue, Oct 19, 2021 at 07:38:16PM +0200, BARDOT J=C3=A9r=C3=B4me wrote:
 >
->  More "config-based hooks".
+> > 2)
+> >
+> > I need a domain name / uri / ip base way to choose auth information.
+> > i find some examples in past but not as smart as what i want. (Maybe i
+> > miss something)
+> >
+> > 3)
+> >
+> > For auth client side can we use tools like Pass and or identity manage=
+r.
 >
->  Breaks t2400.
+> I'm not entirely sure I understand your questions here, but I think
+> you're looking for credential helpers? Try "git help credentials" for an
+> overview.
+>
+> There are helpers which interact with common OS secure storage systems
+> (like osxkeychain, libsecret, etc). But you can also write your own
+> little scripts, and restrict them based on URLs.
+>
+> So for instance I use this config to pull a GitHub PAT out of the "pass"
+> tool:
+>
+>   [credential "https://github.com"]
+>   username =3D peff
+>   helper =3D "!f() { test $1 =3D get && echo password=3D`pass github/tok=
+en`; }; f"
 
-Re-rolled with a fix for that per
-https://lore.kernel.org/git/cover-v3-00.13-00000000000-20211019T231647Z-avarab@gmail.com/;
-sorry about the breakage.
+A quite complete, cross-platform credential helper (included in Git for
+Windows and enabled by default, but it also works on macOS and on Linux)
+is Git Credential Manager:
+https://github.com/microsoft/Git-Credential-Manager-Core/
 
+It comes with backends for some major Git hosters and is pretty
+hassle-free, once configured.
+
+Ciao,
+Johannes
+
+--8323328-700136813-1634730173=:56--
