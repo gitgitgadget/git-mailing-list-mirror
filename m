@@ -2,104 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F075C433F5
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 02:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0CEFC433F5
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 04:45:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71DDF61359
-	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 02:20:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B1EA6117A
+	for <git@archiver.kernel.org>; Wed, 20 Oct 2021 04:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbhJTCW7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Oct 2021 22:22:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42168 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229817AbhJTCW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Oct 2021 22:22:56 -0400
-Received: (qmail 8160 invoked by uid 109); 20 Oct 2021 02:20:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 20 Oct 2021 02:20:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18037 invoked by uid 111); 20 Oct 2021 02:20:41 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Oct 2021 22:20:41 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 19 Oct 2021 22:20:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] for-each-ref: delay parsing of --sort=<atom> options
-Message-ID: <YW98+Lj9xVsR9u9Q@coredump.intra.peff.net>
-References: <xmqqv91uw5dl.fsf@gitster.g>
- <YW9EP5UNX0f+eOke@coredump.intra.peff.net>
+        id S229520AbhJTErm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 00:47:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229492AbhJTErl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Oct 2021 00:47:41 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2778DC06161C
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 21:45:27 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id y1so15241142plk.10
+        for <git@vger.kernel.org>; Tue, 19 Oct 2021 21:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Qdu2eO/e98tyNJ80cfTemOdfT4s31Ft9VRTAtWESHfQ=;
+        b=ntqvIiKLk1qrhd1JrDS4tJp+Yvpws48GDm4w16sxEVc3v951mwxAA0RKbv09CYfEc9
+         FkPVuXhKlN6hj2ZxeDXNguZxWRuH6PJcz5Zx8a1qlbsotZ/4I50Fp2jdCbcGFramKvQS
+         0itK+4MpWUVFwOPbghJvoVLWm5Bh8LZWeu/Q3V36CiQVhg0O1vpjztJSE4LthxiDdE/h
+         FoiF+45OqLyHd0jle7tyAEDrtt3MMMl3ByhJeP7Rl+ANNP1D82J0VM+Mi0lGJfq7XpMW
+         5djyTW5bSHmiSvviVLr0M7NyM5HfN/exWcapv6f0oitKK/iqAsqh5NcWqJFi14Y+wAGe
+         oz5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Qdu2eO/e98tyNJ80cfTemOdfT4s31Ft9VRTAtWESHfQ=;
+        b=hosKh3j0yGaJfgD2zQIHkWNGowFS5TuY4lNGNQfbVsFPFQbJhkktUlgAgIbErTAcGP
+         qsC/gfphdYb0CkGnfODarBr13xjRbnQVeq1AI0nmp4AYS03nhc25gBL9YWEU41tEcp8B
+         /M32iMF+tvwEPaRsXGEOm2KymOU38MHtyvTyMw0DhhS59LGeLxepT3l61NMqbXxkyIkI
+         JMs557sw6rSt2LP45HiZfjR8iaA4YfXO6R7K8rfQl0zS10+4Bc1rDzTLp47LFCBC8hbv
+         a+6btBLLAzu0IajpdY/oouMhOu3DnK3TXTMJhF2T2F9vYRk9+ijegMdkBW7NuoTtKl8f
+         5v8Q==
+X-Gm-Message-State: AOAM530ymp/1cRQEBeuos7WgfVEDvAFdRUnlQ3oq0PJ/+2NSICdm6VDE
+        N+qRxaPEnFKy3Z71MjyFjyzFF0j8sIb+sA==
+X-Google-Smtp-Source: ABdhPJzlRIzF18wv6eXpy7aaG85xqYVpMWveflCP7qK11mSrlaTGv9xnSn1FVBA+JYf+TpdMkzr+HA==
+X-Received: by 2002:a17:90a:fa91:: with SMTP id cu17mr4727292pjb.91.1634705126244;
+        Tue, 19 Oct 2021 21:45:26 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-17.three.co.id. [180.214.232.17])
+        by smtp.gmail.com with ESMTPSA id h3sm812384pfr.98.2021.10.19.21.45.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Oct 2021 21:45:25 -0700 (PDT)
+Message-ID: <9652166a-9db3-9e14-5fad-ef0deede9f28@gmail.com>
+Date:   Wed, 20 Oct 2021 11:45:22 +0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YW9EP5UNX0f+eOke@coredump.intra.peff.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH 1/4] gitfaq: add advice on monorepos
+Content-Language: en-US
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
+ <20211020010624.675562-2-sandals@crustytoothpaste.net>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20211020010624.675562-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 19, 2021 at 06:18:40PM -0400, Jeff King wrote:
-
-> > @@ -86,8 +86,6 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
-> >  
-> >  	packet_trace_identity("ls-remote");
-> >  
-> > -	UNLEAK(sorting);
-> > -
-> >  	if (argc > 1) {
-> >  		int i;
-> >  		CALLOC_ARRAY(pattern, argc);
-> > @@ -139,8 +137,13 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
-> >  		item->symref = xstrdup_or_null(ref->symref);
-> >  	}
-> >  
-> > -	if (sorting)
-> > +	if (sorting_options.nr) {
-> > +		struct ref_sorting *sorting;
-> > +		UNLEAK(sorting);
-> > +
-> > +		sorting = ref_sorting_options(&sorting_options);
-> >  		ref_array_sort(sorting, &ref_array);
-> > +	}
+On 20/10/21 08.06, brian m. carlson wrote:
+> +[[monorepos]]
+> +Should we use a monorepo or many individual repos?::
+> +	This is a decision that is typically made based on an organization's needs and
+> +	desires for their projects.  Git has several features, such as shallow clone,
+> +	partial clone, and sparse checkout to make working with large repositories
+> +	easier, and there is active development on making the monorepo experience
+> +	better.
+> ++
+> +However, at a certain size, the performance of a monorepo will likely become
+> +unacceptable _unless_ you use these features.  If you choose to start with a
+> +monorepo and continue to grow, you may end up unhappy with the performance
+> +characteristics at a point where making a change is difficult.  The performance
+> +of using many smaller repositories will almost always be much better and will
+> +generally not necessitate the use of these more advanced features.  If you are
+> +concerned about future performance of your repository and related tools, you may
+> +wish to avoid a monorepo.
+> ++
+> +Ultimately, you should make a decision fully informed about the potential
+> +benefits and downsides, including the capabilities, performance, and future
+> +requirements for your repository and related tools, including your hosting
+> +platform, build tools, and other programs you typically use as part of your
+> +workflow.
+> +
+>   Merging and Rebasing
+>   --------------------
+>   
 > 
-> I wondered at first about pulling this UNLEAK() down, but it's because
-> you move the "sorting" variable itself into the smaller scope. So this
-> makes sense (and calling UNLEAK() before the pointer is set is perfectly
-> fine, since it takes the address of the auto variable). It is a shame
-> you can't just ref_sorting_free() afterwards, but we don't have that
-> function yet. And adding it is way out of scope here. :)
 
-Actually, I think I was wrong here. UNLEAK() will look at &sorting, but
-it will snapshot its data at the time of the call. So it won't do
-anything when the variable doesn't yet have a value.
+It seems like recommending to split repo, right?
 
-You can demonstrate with:
+Ultimately, if people choose split repo instead of monorepo, it will 
+only delay the necessity to use advanced features (partial/shallow 
+clones, sparse checkout, etc.) when the repos become large.
 
-  $ make SANITIZE=leak
-  $ ./git ls-remote --sort=refname .
+For balanced view, we should describe benefits and drawbacks of both 
+monorepo and split repos.
 
-which will complain. Bumping it down like this:
-
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 1e6017cdaa..a94a220256 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -139,10 +139,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 
- 	if (sorting_options.nr) {
- 		struct ref_sorting *sorting;
--		UNLEAK(sorting);
- 
- 		sorting = ref_sorting_options(&sorting_options);
- 		ref_array_sort(sorting, &ref_array);
-+		UNLEAK(sorting);
- 	}
- 
- 	for (i = 0; i < ref_array.nr; i++) {
-
-clears it up. Note that there are other similar "leaks" (e.g., if you
-give a pattern in argv[1]) which should be punted to another topic, but
-I think you'd want to deal with this one since you're moving the
-UNLEAK() around.
-
--Peff
+-- 
+An old man doll... just what I always wanted! - Clara
