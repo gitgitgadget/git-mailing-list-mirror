@@ -2,133 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB55C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 00:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13784C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 01:01:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D943611C7
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 00:41:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E703861052
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 01:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230186AbhJUAnd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Oct 2021 20:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230103AbhJUAnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Oct 2021 20:43:32 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60737C06161C
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 17:41:17 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id i20so731755edj.10
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 17:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qB+RDfbLD2i1dhHAEVLytP1u2jSESAEMjQ1eXlkh9rc=;
-        b=dvXlYENzZFHs2PfojzKndf+h8mZ+CcKBfRpqgGWgqz0uNe/8SkrX4mdUizuxLvuzzi
-         9d6I9vkajuYXPyAaTl522NvTgDwvhDz+wUEkvqAiDn+ma+0LJvDOBK6yZ7Zvtyp+CGjU
-         5RZd2DBgCN/w6Uc3KS/uQJEIgzOum51nEhJqth4PKtbuXbCOTOZzVLJOwLIgstGj6f3r
-         DataeL20C1ZJ1o4q7yKyFUATMOvWcOSan0l4qz835tplsEv8/ELvr5G/6WOGvioLmzoA
-         NPloES/rhckiqNKhStuLOlc+kYtpq1bLHhGcXfo73wVbSbF7Cuwdow4GGubHRNFpNhFW
-         JFyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qB+RDfbLD2i1dhHAEVLytP1u2jSESAEMjQ1eXlkh9rc=;
-        b=YXf92EstOvoo5XBhYiDbvQCtPgLGuYvP5TVIVOU2nPDKjOfFszdIE979GGjh5ZQCjM
-         edJm3xTT1mOXV5sC39GL9gJBKR43pOSCoELd0I+trlKiOQ6TuDI8PKppCUkNqH0C9UhK
-         4Sep5J5w9N0vIeLNk4p8r9otwIMJLFBW49yJCYHGzUVGWYDuB3QvuR7z8liGRwC/OjoQ
-         TYGHoKd2PezKHlAqMrXFQnErJIDFQskaLXFu2SMIynhIeGyu87uvRpdDDpbNFc9YGX78
-         Vgr4JM34qgCizYfVguvVMb8M867liA2dRIrXer9OWtd1U9qMumie/SCLFq7dqeKKxlCc
-         RRqg==
-X-Gm-Message-State: AOAM5304INO9vNSvP1jfxnQimpN6FPVC3UGz1JpVK02dyEorz7b9dGip
-        SxwqQuSQqAJaF52vNDxg8VEXzuEasVzEqg==
-X-Google-Smtp-Source: ABdhPJzFKECPn+HuF97BSbXyzHqCLmkoo2Sn5sZ1lKOB0lY/NNyVB5hBoCAJHIY4CFzLgoXAM+ZoMw==
-X-Received: by 2002:a17:907:96aa:: with SMTP id hd42mr3242668ejc.177.1634776875756;
-        Wed, 20 Oct 2021 17:41:15 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p3sm1700566ejy.94.2021.10.20.17.41.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Oct 2021 17:41:15 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mdM8w-000vg4-7K;
-        Thu, 21 Oct 2021 02:41:14 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 4/4] doc: add a FAQ entry about syncing working trees
-Date:   Thu, 21 Oct 2021 02:33:49 +0200
-References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
- <20211020010624.675562-5-sandals@crustytoothpaste.net>
- <211021.86r1cfmfhh.gmgdl@evledraar.gmail.com>
- <YXCuQ3KID6iq0vwa@camp.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <YXCuQ3KID6iq0vwa@camp.crustytoothpaste.net>
-Message-ID: <211021.86mtn3mcph.gmgdl@evledraar.gmail.com>
+        id S231449AbhJUBDy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Oct 2021 21:03:54 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37848 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229702AbhJUBDv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Oct 2021 21:03:51 -0400
+Received: from camp.crustytoothpaste.net (unknown [72.12.180.34])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5980860734;
+        Thu, 21 Oct 2021 01:01:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1634778065;
+        bh=zdqj+Os7URL9DQIH2RFKmzcZzH1U/c4j0L+GD3jiybc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=p2DV2JBz3hp/NK88YtzNzdLxGlfar6lyujuZnCqlRCeofGful0NiVEHLX3mPCWGx6
+         UgQd/35B+wbGn9sbfcqm+fWW6vJWWJraMZUY6CoO90DUSkYwMTnYR59p90qsbE6jNo
+         fzseTA46lp0i7lOMIzIRTHjsHpdWNduBB0KFJJI0mUPjBZp/HCU7cdcYTOTZxzXf+1
+         xKtIuPC3fwElJIY36/s07salW7P9XzKJJ6u9++OPQJYcm+uQT52tDPD39TPYZvODEJ
+         a8kGUv8YYgfnO/dx2DwCiaoUEiJqr89JubOv8/g+y22xOD2KUUaew2F2d8I7DPwQQQ
+         MhMDQt0Ijka/gwwNSpCZYlztD7TBSNyy9GW1DiStsmIH3JXtpsOADt6C5v42q4I8SS
+         94e/QyBTmmR8NaDoaKvICU+OJ0g49f9bMtDZOzCtazBclZ3G48II5ES48jnBlIs2b/
+         Mq3GEUhn2qXa6cKgoWpSmqbDTK9fLfzUd2Nj0c60YMj4QcdDb5L
+Date:   Thu, 21 Oct 2021 01:00:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     BARDOT =?utf-8?B?SsOpcsO0bWU=?= <bardot.jerome@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Questions, improvements
+Message-ID: <YXC7vfnnEQClQu4N@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        BARDOT =?utf-8?B?SsOpcsO0bWU=?= <bardot.jerome@gmail.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <9ad3d241-5441-9fbd-76a4-7c47c6a1b70e@gmail.com>
+ <YW85Gs8aU9rrBDOv@coredump.intra.peff.net>
+ <9eafffc8-8576-f1ea-45a3-ae4c337db7f1@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="M894/FfoZPTFg68R"
+Content-Disposition: inline
+In-Reply-To: <9eafffc8-8576-f1ea-45a3-ae4c337db7f1@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 21 2021, brian m. carlson wrote:
+--M894/FfoZPTFg68R
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> [[PGP Signed Part:Undecided]]
-> On 2021-10-20 at 23:35:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Wed, Oct 20 2021, brian m. carlson wrote:
->>=20
->> > +The recommended approach is to use `rsync -a --delete-after` (ideally=
- with an
->> > +encrypted connection such as with `ssh`) on the root of repository.  =
-You should
->> > +ensure several things when you do this:
->>=20
->> What's the reason to recommend --delete-after in particular? I realize
->> that e.g. in the .git directory not using *A* delete option *will* cause
->> corruption, e.g. if you can leave behind stale loose refs with an
->> up-to-date pack-refs file.
->>=20
->> But isn't that equally covered by --delete and --delete-before? I'm not
->> very well worsed in rsync, but aren't the two equivalent as far as the
->> end-state goes?
->
-> Yes.  The goal is that if something goes wrong, you have all the objects
-> you did before, even if you have some potentially invalid refs.  The
-> goal is to make it a little less risky if you interrupt it with a Ctrl-C
-> because you realize the destination contained data you wanted.  I always
-> prefer --delete-after for that reason, assuming the destination has
-> sufficient disk space.
+On 2021-10-20 at 12:25:32, BARDOT J=C3=A9r=C3=B4me wrote:
+>=20
+> On 19/10/2021 23:31, Jeff King wrote:
+> > I think you may have a hard time getting people to agree on what should
+> > go into those rules. ;)
+>=20
+> Yes but for certain things i think we will are most of us agree. (In
+> professional context)
+>=20
+> Temp files for Operating System, file system, text editor and IDE.
 
-Isn't it preferable to recommend --delete-before for that reason?
-I.e. --delete-after will produce subtle corruption of e.g. refs
-potentially pointing to the wrong thing.
+Unfortunately, there are a lot of different patterns here.  Some IDEs
+use entire directories, and sometimes those patterns conflict with
+common patterns used elsewhere.
 
-But if you recommend --delete-before I think (but maybe I'm missing some
-cases) that it will be more likely to produce obvious corruption,
-e.g. git dying due to missing objects.
+For example, GitHub's recommended Visual Studio .gitignore[0] recommends
+excluding directories "Bin" and "bin".  However, it is extremely common
+for folks to have a "bin" directory in their dotfiles (I do, at least),
+and that would cause problems.
 
-Anyway, I'm also happy to just leave this as-is, it just stood out to me
-as od..
+It is generally recommended that projects try to remain reasonably
+editor independent so that people can use whichever editor they prefer.
+As a result, many projects don't include any editor-specific .gitignore
+patterns, and rely on each individual user using their
+`core.excludesfile` settings to ignore their own editor's and operating
+system's files (e.g., Vim swap files).  Only editor-agnostic files, such
+as .editorconfig files or files to run linting or formatting tools, are
+included.
 
-> It shouldn't make a difference in a successful end state, however.
->>=20
->> > +Be aware that even with these recommendations, syncing in this way is
->> > +potentially risky since it bypasses Git's normal integrity checking f=
-or
->> > +repositories, so having backups is advised.
->>=20
->> Perhaps we should recommend running a "git gc" or other integrity check
->> after (or "git fsck"), although those don't cover some cases, e.g. the
->> pack-refs v.s. loose refs problem in the case of a missing
->> --delete-whatever.
->
-> I can recommend something like that.
+Also, when you try to pick common patterns, you end up with having to
+decide what "common" means.  Should we support every editor's temporary
+files, no matter how infrequently used?  Should we only support the top
+N editors?  How do we decide which editors we should support?  How do we
+decide which OSes we should support?  Should all patterns be case
+insensitive to support the most OSes, or case sensitive to prevent false
+positives?  How do we limit the rules to avoid bad performance from
+giant lists of rules?  How do we resolve conflicts between these rules?
 
-...or just leave it as-is is also fine with me, whatever you think is
-best.
+As you can see, it becomes quite sticky pretty quickly, and we're
+basically bound to make somebody unhappy.  Letting each project decide
+the appropriate rules for them may not please everybody, but it at least
+displeases far fewer people, and it lets the people most competent to
+decide those rules (the project leaders) make the decision.
+
+[0] https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--M894/FfoZPTFg68R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXC7vAAKCRB8DEliiIei
+gRQHAP9HLFt3POh6YtO8ZAh/AcDPcqbMVtM3D6mBFcnw2Ta7cAD/bOUShX7dFz2K
+4eh0gZB0DRJlb350lyUTBW/y6ux7hAA=
+=IdfK
+-----END PGP SIGNATURE-----
+
+--M894/FfoZPTFg68R--
