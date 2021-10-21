@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 294D4C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0028DC4332F
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1541C6120F
+	by mail.kernel.org (Postfix) with ESMTP id DC46D6120F
 	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231644AbhJUO2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231865AbhJUO2X (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 21 Oct 2021 10:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38408 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231450AbhJUO1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 10:27:43 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63E29C061225
+        with ESMTP id S231462AbhJUO1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 10:27:44 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1694C061227
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:27 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id p21so908069wmq.1
+Received: by mail-wr1-x42b.google.com with SMTP id r10so1139841wra.12
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=COXlRNz5eubvZuyJFl2CvQn08p/blu87ntI7iDlh4dI=;
-        b=Y+Jc9RgzwcV3WSvzArlqFHIzd6PHGmMGzCliHzKW6WALNKWuvbrVtbk1ydfn8FX6cj
-         H7PuHwSAOjYMbXmUOI+X6lSNYoHtC/1vLBTvtgyNdKd/IaPjx1N1h4mMmS1/UDCdreH3
-         0VS8cPU8bAQ8VVlallecFNYFE8WPDCNTo6OIths7s285NNimgVkevrdfqHbCUOhXqwo3
-         ao57eFRcTybWwddcvLB1rfzhmw8u46HNOy/8kAZ/qEQYNPaTlYAx1tG2iP0c9WqAdpvL
-         FMnefAOKLUyNbGQRA1AcUiAW4IjFRHHDwikeNKVDzi0sD5sGGpzxHr52cDW5BVU1Zv+G
-         /K7g==
+        bh=OT4wk9P2uUf/lbNctyV/RDTLgCDHNMc8joLfeeBdOks=;
+        b=X19GtMrsz46NpN6vMQmVoO2FVxaALbadUfJxSCbKKxJ9vfoAETUakjZu5ItVc9lZng
+         FVfp2Ha0Jvj170IPw/fz/dpXl/D2PQmbeHPgVjyt7qdbYfvLhtMgwwfPqeRSGeB5+nrx
+         FQtb2mXT2AJedWoncNA9Jx0gaWPVsWnrZLUFO35fxEO5MhWQ90ZD82ooXNvBxd75XSWp
+         4O3uQWKMabY5ja+wX88k0JuGPiCrgkjAcBmyX5hlVtNJJUHAyoFpHr2i8hfqtaJfTICt
+         yvBHhEUS6QBoM2gWPE2OmlIliLYH52geFtDhv0O6PKiFZT3Ijooyl0ow2RNPrTq3DW1Y
+         muGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=COXlRNz5eubvZuyJFl2CvQn08p/blu87ntI7iDlh4dI=;
-        b=0/qhhXWOkJP/9BdsRrAtDnxnaqwfMQeslP8+FW8DcuF3+w+BcA8udQ6yz3K6DqQasi
-         cFYz9YLo6L7lN4OCIjenpuVpQkundz0ZhRj/FjEE26Tpp5t0iMUmq1fLD2yDoPc04ENY
-         z8JUeZe7hHY/LSvRJCUqO0f36iFz0gbhIvSR0ivPzJQIU/NK6nuK6OvDOvq6oDTX66C4
-         sZyap2H41KFZk2UM2rnoH8KPJnJXOhZHM63WVgzhIRKO6H3BN+fXVySupQxaAatepfLI
-         o//6dJbMhGGD5ubTIgWqIvBGTF30kY3EMFkd7EMzXfh/65Gfqwhqfp5w4lNboG5Pjaxf
-         Qgpg==
-X-Gm-Message-State: AOAM531dPKd8X9Q3qgsz4X4/uN9wDxf0g+yolFpUnLZhXWs9EA/4HDn1
-        Y3mQbYmPm8Fi6U0Onlq4uRC6bYUCHiY=
-X-Google-Smtp-Source: ABdhPJw4e083cu2UAGCFWuVpfv4KjLwdsa8kJSqs1twiOMoew7GVGyQ9IS/QosyZxMDajWGYWNq6fQ==
-X-Received: by 2002:a7b:cbc8:: with SMTP id n8mr7386507wmi.30.1634826326064;
+        bh=OT4wk9P2uUf/lbNctyV/RDTLgCDHNMc8joLfeeBdOks=;
+        b=4Ah+Df/PRLfctqrV1Wp65ThtWh/A1G7lx0i+pb7j06+lugJLSAs8W6SZhs7zoePN4D
+         xl0W9KuyIbeCbaY/S4Vn37XzmoJRgKXxjMM8npCsd/tNOkcwLlhoynefNHDBYuz7ahTa
+         Je0qoB07LtE4qTquxFvJPhKIgwhVsTY7oPGJf9eKyXXTEFT/i8Tye8HgMAd9i7HNNg4Z
+         WFkEbroJm902IN4G+NtjfLbuDM7ehm84pBnR5COMCzH0/sGCmn0tBDsxiFrsFlGsrcyS
+         SCeqTo+dh3PNh2zbg0/01P/GDl9yGnwCh9w9OszUXt4h446BJF5336EfQC3p+h0WkH/r
+         82bQ==
+X-Gm-Message-State: AOAM533sVXc8GhU8nNBi1ACtlO7przjHNObYmqGKqhvbF2Ny4ve2tz0Y
+        POSrlqiDi4Tl/QALAofUBTkZ0wvuLuo=
+X-Google-Smtp-Source: ABdhPJymKTOQPJorPxp3y/IpSRteEhbflQlE5nxDpH3y65eXOSgQrpYSKMm2IPhwFT6GjuWy75E0ug==
+X-Received: by 2002:adf:f812:: with SMTP id s18mr7451931wrp.347.1634826326608;
         Thu, 21 Oct 2021 07:25:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r27sm4934512wrr.70.2021.10.21.07.25.25
+        by smtp.gmail.com with ESMTPSA id l3sm2062180wmc.37.2021.10.21.07.25.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 07:25:25 -0700 (PDT)
-Message-Id: <236b5966257da68c14087b807cb4feef3f1a806f.1634826309.git.gitgitgadget@gmail.com>
+        Thu, 21 Oct 2021 07:25:26 -0700 (PDT)
+Message-Id: <54710a4830dc317797430da1ce210c5fb48d7198.1634826309.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
         <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Oct 2021 14:25:05 +0000
-Subject: [PATCH v4 25/29] t/perf/p7519: add fsmonitor--daemon test cases
+Date:   Thu, 21 Oct 2021 14:25:06 +0000
+Subject: [PATCH v4 26/29] fsmonitor--daemon: periodically truncate list of
+ modified files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,84 +72,147 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Repeat all of the fsmonitor perf tests using `git fsmonitor--daemon` and
-the "Simple IPC" interface.
+Teach fsmonitor--daemon to periodically truncate the list of
+modified files to save some memory.
+
+Clients will ask for the set of changes relative to a token that they
+found in the FSMN index extension in the index.  (This token is like a
+point in time, but different).  Clients will then update the index to
+contain the response token (so that subsequent commands will be
+relative to this new token).
+
+Therefore, the daemon can gradually truncate the in-memory list of
+changed paths as they become obsolete (older than the previous token).
+Since we may have multiple clients making concurrent requests with a
+skew of tokens and clients may be racing to the talk to the daemon,
+we lazily truncate the list.
+
+We introduce a 5 minute delay and truncate batches 5 minutes after
+they are considered obsolete.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p7519-fsmonitor.sh | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ builtin/fsmonitor--daemon.c | 88 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 171644ffc90..e70252ed65a 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -24,7 +24,8 @@ test_description="Test core.fsmonitor"
- # GIT_PERF_7519_SPLIT_INDEX: used to configure core.splitIndex
- # GIT_PERF_7519_FSMONITOR: used to configure core.fsMonitor. May be an
- #   absolute path to an integration. May be a space delimited list of
--#   absolute paths to integrations.
-+#   absolute paths to integrations.  (This hook or list of hooks does not
-+#   include the built-in fsmonitor--daemon.)
- #
- # The big win for using fsmonitor is the elimination of the need to scan the
- # working directory looking for changed and untracked files. If the file
-@@ -143,10 +144,16 @@ test_expect_success "one time repo setup" '
- 
- setup_for_fsmonitor() {
- 	# set INTEGRATION_SCRIPT depending on the environment
--	if test -n "$INTEGRATION_PATH"
-+	if test -n "$USE_FSMONITOR_DAEMON"
- 	then
-+		git config core.useBuiltinFSMonitor true &&
-+		INTEGRATION_SCRIPT=false
-+	elif test -n "$INTEGRATION_PATH"
-+	then
-+		git config core.useBuiltinFSMonitor false &&
- 		INTEGRATION_SCRIPT="$INTEGRATION_PATH"
- 	else
-+		git config core.useBuiltinFSMonitor false &&
- 		#
- 		# Choose integration script based on existence of Watchman.
- 		# Fall back to an empty integration script.
-@@ -182,7 +189,10 @@ test_perf_w_drop_caches () {
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 4c88171e06c..962b24569e1 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -299,6 +299,75 @@ static void fsmonitor_batch__combine(struct fsmonitor_batch *batch_dest,
+ 			batch_src->interned_paths[k];
  }
  
- test_fsmonitor_suite() {
--	if test -n "$INTEGRATION_SCRIPT"; then
-+	if test -n "$USE_FSMONITOR_DAEMON"
-+	then
-+		DESC="builtin fsmonitor--daemon"
-+	elif test -n "$INTEGRATION_SCRIPT"; then
- 		DESC="fsmonitor=$(basename $INTEGRATION_SCRIPT)"
- 	else
- 		DESC="fsmonitor=disabled"
-@@ -293,4 +303,25 @@ test_expect_success "setup without fsmonitor" '
- test_fsmonitor_suite
- trace_stop
++/*
++ * To keep the batch list from growing unbounded in response to filesystem
++ * activity, we try to truncate old batches from the end of the list as
++ * they become irrelevant.
++ *
++ * We assume that the .git/index will be updated with the most recent token
++ * any time the index is updated.  And future commands will only ask for
++ * recent changes *since* that new token.  So as tokens advance into the
++ * future, older batch items will never be requested/needed.  So we can
++ * truncate them without loss of functionality.
++ *
++ * However, multiple commands may be talking to the daemon concurrently
++ * or perform a slow command, so a little "token skew" is possible.
++ * Therefore, we want this to be a little bit lazy and have a generous
++ * delay.
++ *
++ * The current reader thread walked backwards in time from `token->batch_head`
++ * back to `batch_marker` somewhere in the middle of the batch list.
++ *
++ * Let's walk backwards in time from that marker an arbitrary delay
++ * and truncate the list there.  Note that these timestamps are completely
++ * artificial (based on when we pinned the batch item) and not on any
++ * filesystem activity.
++ *
++ * Return the obsolete portion of the list after we have removed it from
++ * the official list so that the caller can free it after leaving the lock.
++ */
++#define MY_TIME_DELAY_SECONDS (5 * 60) /* seconds */
++
++static struct fsmonitor_batch *with_lock__truncate_old_batches(
++	struct fsmonitor_daemon_state *state,
++	const struct fsmonitor_batch *batch_marker)
++{
++	/* assert current thread holding state->main_lock */
++
++	const struct fsmonitor_batch *batch;
++	struct fsmonitor_batch *remainder;
++
++	if (!batch_marker)
++		return NULL;
++
++	trace_printf_key(&trace_fsmonitor, "Truncate: mark (%"PRIu64",%"PRIu64")",
++			 batch_marker->batch_seq_nr,
++			 (uint64_t)batch_marker->pinned_time);
++
++	for (batch = batch_marker; batch; batch = batch->next) {
++		time_t t;
++
++		if (!batch->pinned_time) /* an overflow batch */
++			continue;
++
++		t = batch->pinned_time + MY_TIME_DELAY_SECONDS;
++		if (t > batch_marker->pinned_time) /* too close to marker */
++			continue;
++
++		goto truncate_past_here;
++	}
++
++	return NULL;
++
++truncate_past_here:
++	state->current_token_data->batch_tail = (struct fsmonitor_batch *)batch;
++
++	remainder = ((struct fsmonitor_batch *)batch)->next;
++	((struct fsmonitor_batch *)batch)->next = NULL;
++
++	return remainder;
++}
++
+ static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
+ {
+ 	if (!token)
+@@ -412,6 +481,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 	const char *p;
+ 	const struct fsmonitor_batch *batch_head;
+ 	const struct fsmonitor_batch *batch;
++	struct fsmonitor_batch *remainder = NULL;
+ 	intmax_t count = 0, duplicates = 0;
+ 	kh_str_t *shown;
+ 	int hash_ret;
+@@ -641,11 +711,29 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 			 * that work.
+ 			 */
+ 			fsmonitor_free_token_data(token_data);
++		} else if (batch) {
++			/*
++			 * We are holding the lock and are the only
++			 * reader of the ref-counted portion of the
++			 * list, so we get the honor of seeing if the
++			 * list can be truncated to save memory.
++			 *
++			 * The main loop did not walk to the end of the
++			 * list, so this batch is the first item in the
++			 * batch-list that is older than the requested
++			 * end-point sequence number.  See if the tail
++			 * end of the list is obsolete.
++			 */
++			remainder = with_lock__truncate_old_batches(state,
++								    batch);
+ 		}
+ 	}
  
-+#
-+# Run a full set of perf tests using the built-in fsmonitor--daemon.
-+# It does not use the Hook API, so it has a different setup.
-+# Explicitly start the daemon here and before we start client commands
-+# so that we can later add custom tracing.
-+#
-+if test_have_prereq FSMONITOR_DAEMON
-+then
-+	USE_FSMONITOR_DAEMON=t
+ 	pthread_mutex_unlock(&state->main_lock);
+ 
++	if (remainder)
++		fsmonitor_batch__free_list(remainder);
 +
-+	trace_start fsmonitor--daemon--server
-+	git fsmonitor--daemon start
-+
-+	trace_start fsmonitor--daemon--client
-+	test_expect_success "setup for fsmonitor--daemon" 'setup_for_fsmonitor'
-+	test_fsmonitor_suite
-+
-+	git fsmonitor--daemon stop
-+	trace_stop
-+fi
-+
- test_done
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
+ 	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
 -- 
 gitgitgadget
 
