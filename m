@@ -2,88 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7FD5C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E44A2C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:37:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0638610A4
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:35:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C66D060F25
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbhJUXhp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 19:37:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63092 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbhJUXho (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 19:37:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEFAC151159;
-        Thu, 21 Oct 2021 19:35:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IjUKPkbN1F0FrgS1LMl5w3rzXe3zSN+7y1rO0x
-        2nI5U=; b=g9mtafKQjxRFPcMD3WpZFIJSYhkzuTI3SFtBMnMHE0femwsd1GpzXN
-        ZHh+KnKg7SfFpUR8D87ZmqHHHeiXZV9rkQnQq0j8vuYJFzDDHVUm5CbMECiQUXHp
-        CHodi8RiO1owIxm//IAkjXCW7DKC7oWWNdthJXdWtXE5mNnHHi7a4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8662D151158;
-        Thu, 21 Oct 2021 19:35:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CBCAA15114D;
-        Thu, 21 Oct 2021 19:35:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kalyan Sriram <kalyan@coderkalyan.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Git submodule remove
-References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
-        <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net>
-        <xmqqbl3ihu6l.fsf@gitster.g>
-        <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com>
-Date:   Thu, 21 Oct 2021 16:35:23 -0700
-In-Reply-To: <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com>
-        (Matheus Tavares's message of "Thu, 21 Oct 2021 20:25:03 -0300")
-Message-ID: <xmqqee8egddw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231441AbhJUXjh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 19:39:37 -0400
+Received: from rere.qmqm.pl ([91.227.64.183]:31455 "EHLO rere.qmqm.pl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229512AbhJUXjg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 19:39:36 -0400
+Received: from remote.user (localhost [127.0.0.1])
+        by rere.qmqm.pl (Postfix) with ESMTPSA id 4Hb3mb2CSlz5Y;
+        Fri, 22 Oct 2021 01:37:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rere.qmqm.pl; s=1;
+        t=1634859439; bh=DhtSgPgXDBvU1gykUVSkv5UkKFlgUpUGRw20sQpZqio=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iGE36gxrVYwjG1ta5iLCxgzVo1RQ7faTSiyQMRpKm93vooPIxc3TXi8PwxWKIgjD3
+         cYd0I6xdZGubX/5jtl6ijCHtSep6s4KKqXMRAMeYE3CCENlxFlCcaLOS3Zss6E1eZf
+         sqr/NSVNPAboqqKeprokBEckhX5IfIl7rO2t3PtYkawqDaTyIHU4LxWgWv7JldYsht
+         zt8vgNTfVaKDZhib0Qdm4PWG3t6Krf5dJPnGbYwqoHQA5SHL2v/w45PbfSchtl4qGV
+         Ei8A8pS5gq3oK/b/+c6aLi9P67uzABHEpOcoWV8wmEQAJVvct3/OU1i4d3nDM+Rjwx
+         Pis1DuJsWXbUA==
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.103.3 at mail
+Date:   Fri, 22 Oct 2021 01:37:16 +0200
+From:   =?iso-8859-2?Q?Micha=B3_Miros=B3aw?= <mirq-linux@rere.qmqm.pl>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git format-patch --signoff
+Message-ID: <YXH5rKsjPIeWSGTE@qmqm.qmqm.pl>
+References: <YXHaAu2G51vy5H8z@qmqm.qmqm.pl>
+ <xmqqo87ihurk.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90A8ACF0-32C7-11EC-BA1A-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=iso-8859-2
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo87ihurk.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+On Thu, Oct 21, 2021 at 03:34:39PM -0700, Junio C Hamano wrote:
+> Micha³ Miros³aw <mirq-linux@rere.qmqm.pl> writes:
+> 
+> > I just noticed that `git format-patch --signoff` adds the 'Signed-off-by'
+> > line even if the exact same line is already present in the commit message.
+> > Could this be avoided in the tool?
+> >
+> > git version 2.30.2
+> >
+> > Best Regards
+> > Micha³ Miros³aw
+> 
+> The rule should be "avoid adding the same sign-off as the one at the
+> end".  In other words, as a record of the flow of patch custody,
+[...]
+> This test hasn't changed since it was written in Feb 2013, and I
+> think 2.30.2 is recent enough to conform to the rule to pass this
+> test.
 
-> On Thu, Oct 21, 2021 at 7:47 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>
->> > On 2021-10-21 at 17:25:38, Kalyan Sriram wrote:
->> >> Hello,
->> >>
->> >> I was curious why git-submodule does not have an `rm` command. Currently
->> >> I have to manually delete it from .gitmodules, .git/config,
->> >> .git/modules/, etc. See [0].
->> >>
-> [...]
->> I'd imagine that the happy-case implementation should be fairly
->> straight-forward.  You would:
->>
->>  - ensure that the submodule is "absorbed" already;
->>
->>  - run "git rm -f" the submodule to remove the gitlink from the index
->>    and remove the directory from the working tree; and
->>
->>  - remove the .gitmodules entry for the submodule.
->
-> I think "git rm <submodule>" already does these three steps, doesn't it?
+The test indeed works correctly, and I couldn't reproduce the effect
+on a fresh git repo. I finally took a look with hexdump on the output:
+the culprit was a UTF-8 non-breaking space -- indistinguishable on
+a terminal from a normal space. I'm not sure what to think about this...
+Sorry for the noise.
 
-Wow, that is a unnerving layering violation, but I suspect it is too
-late to fix it. So perhaps "git submodule rm" would just become a
-synonym for "git rm"?
-
-Thanks.
+Best Regards
+Micha³ Miros³aw
