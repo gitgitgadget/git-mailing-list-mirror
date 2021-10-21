@@ -2,67 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56F6DC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE0AC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32BBD611CB
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:45:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDBDE610EA
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbhJUOrv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 10:47:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43652 "EHLO cloud.peff.net"
+        id S231566AbhJUO4x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 10:56:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43668 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230283AbhJUOru (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 10:47:50 -0400
-Received: (qmail 15873 invoked by uid 109); 21 Oct 2021 14:45:34 -0000
+        id S230072AbhJUO4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 10:56:51 -0400
+Received: (qmail 15893 invoked by uid 109); 21 Oct 2021 14:54:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Oct 2021 14:45:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Oct 2021 14:54:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7066 invoked by uid 111); 21 Oct 2021 14:45:33 -0000
+Received: (qmail 7209 invoked by uid 111); 21 Oct 2021 14:54:33 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Oct 2021 10:45:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Oct 2021 10:54:33 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Oct 2021 10:45:33 -0400
+Date:   Thu, 21 Oct 2021 10:54:33 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH 7/8] Makefile: stop having command-list.h depend on a
- wildcard
-Message-ID: <YXF9DQuj0541ULku@coredump.intra.peff.net>
-References: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net>
- <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
- <patch-7.8-0c6f9b80d3b-20211020T183533Z-avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] for-each-ref: delay parsing of --sort=<atom> options
+Message-ID: <YXF/KTD7NgTAPw6G@coredump.intra.peff.net>
+References: <xmqqv91uw5dl.fsf@gitster.g>
+ <YW9EP5UNX0f+eOke@coredump.intra.peff.net>
+ <xmqq4k9bssr7.fsf@gitster.g>
+ <YXCAuAwZenM6EPug@coredump.intra.peff.net>
+ <xmqqpmrzo00q.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-7.8-0c6f9b80d3b-20211020T183533Z-avarab@gmail.com>
+In-Reply-To: <xmqqpmrzo00q.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 20, 2021 at 08:39:58PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Oct 20, 2021 at 02:32:21PM -0700, Junio C Hamano wrote:
 
->  get_synopsis () {
-> +	head -n 10 "Documentation/$1.txt" |
->  	sed -n '
->  		/^NAME/,/'"$1"'/H
->  		${
->  			x
->  			s/.*'"$1"' - \(.*\)/N_("\1")/
->  			p
-> -		}' "Documentation/$1.txt"
-> +		}'
->  }
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yeah, I faced something similar with 7c5045fc18 (ref-filter: apply
+> > fallback refname sort only after all user sorts, 2020-05-03). I suspect
+> > you could use the same keys as those tests, though I am OK if we simply
+> > leave it as a quietly-fixed bug.
+> 
+> Ah, I guess I can cheat and add a new test after these.
+> 
+> If --no-sort weren't taking effect, the expected outcome would be
+> the asme as the previous step this copied from, but with --no-sort
+> clearing the sort keys, we sort by taggerdate and then tiebreak with
+> the refname, and taggeremail does not get into the picture (other
+> than being repeated at the end of the refname).
 
-By the way, I'm not sure about the utility of this change. It reduces
-the number of lines that sed looks at, but at the cost of an extra
-process. That's probably a net loss. And if we did want to limit the
-data sed covers, doing "pq" after we matched would be simpler.
-
-It also feels like it's orthogonal to what this patch is doing, but
-maybe there's some subtle non-performance reason to want this.
+Yeah, I think what you have here makes sense. It's too bad we can't run
+it on the "before" state to double-check that we are triggering the old
+breakage, but there is simply no "--no-sort" at all before your patch
+(which is good, because it would have been broken ;) ).
 
 -Peff
