@@ -2,100 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D08C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 21:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 021FAC433FE
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 22:04:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1D206128B
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 21:36:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBAF160698
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 22:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232216AbhJUVjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 17:39:04 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38462 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232154AbhJUVjD (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Oct 2021 17:39:03 -0400
-Received: from camp.crustytoothpaste.net (unknown [72.12.180.34])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D0B560423;
-        Thu, 21 Oct 2021 21:36:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634852206;
-        bh=K9zpNxdo6zOlhjbft6rzH82VWkLJ0qYk4VGG4fZXFSU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=RP55PdLyrKOPs9291P74yRQPdVRZjKMQQriwOUZDbkSQ84z9OIaQYUDwK1QbPeyXP
-         Thvr0spNzIWOTa+v2Sr2aBVarTy+CkWvdja93BvuFywjBzBF03taXqV4vvlIFuMsfB
-         XQkBPVkyomyGwn1KcDyv9o+lsE3w/ETqZPq+Iy3stxr8KNJBThBg6Cpbw/XCDV76+U
-         fzUEPlit1OqnBMdyExgTzod2QW8PvA6CXwktK0rkgUJMa1Ccu50io7XGHG06n+mPNW
-         iwp+SerxmIewnfdTWyOlO71vRNO8N22YhHcVszMgB4wBygKFT2yD3EDZF5pNk0lynW
-         vwjorIWxFHOzS+I3p1ruaz7J+20LsUAejfB2Sdqu+YlWoRmVKNoAUYk1K9elUlduGn
-         hZFXYKJqx+NfZvbpCgyhFV9PP7UxIjInw7SAWmq4Gg9KHQvPLWZ0eH2QSEohYTIgU5
-         p+3P0xEhaJMysEUsJew7mjXYESPYHdCVCDNevb7Mv9rbZ/eNIqN
-Date:   Thu, 21 Oct 2021 21:36:41 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Kalyan Sriram <kalyan@coderkalyan.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git submodule remove
-Message-ID: <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kalyan Sriram <kalyan@coderkalyan.com>, git@vger.kernel.org
-References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
+        id S231607AbhJUWGu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 18:06:50 -0400
+Received: from rere.qmqm.pl ([91.227.64.183]:11537 "EHLO rere.qmqm.pl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230233AbhJUWGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 18:06:49 -0400
+Received: from remote.user (localhost [127.0.0.1])
+        by rere.qmqm.pl (Postfix) with ESMTPSA id 4Hb1jX334Gz5Y;
+        Fri, 22 Oct 2021 00:04:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rere.qmqm.pl; s=1;
+        t=1634853872; bh=S26ZNvyk8OnzcElbEwVWuXU+hpTTvHTD4h+FrcyWyYQ=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=URZ23a7K4x9qiXxCOm35+RwIMWaKh2eicjlLSR0UIZ3LBuHpChf8PfXGRbg9at2hp
+         GSyDAzOdOw7mFvdVQj3x2B40P86HlyEpWCToeAKzZ0wscIoI/LogYfkVNvpYz5+DKg
+         x/AfUPkIJM28aeL6TZnU9tgZCMP3Ch71sgVWjDYYzKIvj9VwKjkmzcX3ZRSt2MthKZ
+         Xk219DBQxporIQPZIMAXj/OdCehoHW7XyCsphjMer6nf+jPQb9Ws/gz3T++E7jvpvQ
+         5bHPBVQrHJuhslmPd34gIYMYqagYBsKAs73MpcWVQfdM7Wnaz70rxuyq7FAnn1haHO
+         82oL2klZ2JYAw==
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.103.3 at mail
+Date:   Fri, 22 Oct 2021 00:04:31 +0200
+From:   =?iso-8859-2?Q?Micha=B3_Miros=B3aw?= <mirq-linux@rere.qmqm.pl>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: git format-patch --signoff
+Message-ID: <YXHj74OPJmFqamxP@qmqm.qmqm.pl>
+References: <YXHaAu2G51vy5H8z@qmqm.qmqm.pl>
+ <YXHcjbiE6GX6zJHk@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="a/UaZkuwPaFxynzP"
+Content-Type: text/plain; charset=iso-8859-2
 Content-Disposition: inline
-In-Reply-To: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YXHcjbiE6GX6zJHk@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Oct 21, 2021 at 09:33:01PM +0000, brian m. carlson wrote:
+> On 2021-10-21 at 21:22:10, Micha³ Miros³aw wrote:
+> > Hi.
+> > 
+> > I just noticed that `git format-patch --signoff` adds the 'Signed-off-by'
+> > line even if the exact same line is already present in the commit message.
+> > Could this be avoided in the tool?
+> Just so I understand correctly, does it do this even if the existing
+> sign-off is last (or the only one), or only if the sign-off is not the
+> last?
 
---a/UaZkuwPaFxynzP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It does this regardless of where the signoff is or whether it is the
+only one.
 
-On 2021-10-21 at 17:25:38, Kalyan Sriram wrote:
-> Hello,
->=20
-> I was curious why git-submodule does not have an `rm` command. Currently
-> I have to manually delete it from .gitmodules, .git/config,
-> .git/modules/, etc. See [0].
->=20
-> I'd like to contribute my first patch to this project by adding this
-> feature, but wanted to check first with the community if there's any
-> particular reason it was chosen not to not be implemented, or if it's
-> simply that nobody has gotten around to it - it seems to be a relatively
-> common feature someone might want.
->=20
-> Anyway, please let me know if this is something that would be accepted,
-> or if anyone has any comments or suggestions.
-
-I think the reason it hasn't been implemented is that nobody's gotten
-around to it yet.  I certainly would find this useful and have wanted
-the same thing myself, so I can't see a reason why the right series
-wouldn't be accepted.
-
-If someone else knows of a good reason why we haven't done this, I'm all
-ears.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---a/UaZkuwPaFxynzP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXHdaQAKCRB8DEliiIei
-gaVOAP9wi9QO2WGrQ5S5BdHy/0qvKp6mDJ78z0Cr7J7jLKnD0AEA1v+vhv7GHjsW
-AD7+QGwBdS2uytmoBNknHeG7xZ9I/AM=
-=Wq3d
------END PGP SIGNATURE-----
-
---a/UaZkuwPaFxynzP--
+Best Regards
+Micha³ Miros³aw
