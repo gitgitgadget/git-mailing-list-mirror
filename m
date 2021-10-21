@@ -2,138 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC9FFC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 16:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 857B4C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 16:27:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B00CE61362
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 16:25:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B5436137C
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 16:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbhJUQ1W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 12:27:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43778 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230441AbhJUQ1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 12:27:21 -0400
-Received: (qmail 16072 invoked by uid 109); 21 Oct 2021 16:25:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Oct 2021 16:25:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8309 invoked by uid 111); 21 Oct 2021 16:25:01 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Oct 2021 12:25:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Oct 2021 12:25:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH 6/8] generate-cmdlist.sh: replace for loop by printf's
- auto-repeat feature
-Message-ID: <YXGUXEjoB3qofs0U@coredump.intra.peff.net>
-References: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net>
- <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
- <patch-6.8-e0b11514b8d-20211020T183533Z-avarab@gmail.com>
- <YXF8a7OoStzdEwZF@coredump.intra.peff.net>
+        id S231865AbhJUQ3X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 12:29:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58513 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230187AbhJUQ3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 12:29:22 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6A6AD161000;
+        Thu, 21 Oct 2021 12:27:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=U+OmbmDMhaT6Be+I2l6nAg59KyrroCwxSezSY9
+        s7Lak=; b=V3+99Sz+115mLrrqLvvSdzREHkbtHezwfljm1ZkZ8fCZAv1lqlgvxs
+        DOXd3463xQmLg0i8TU9TN0ubg+o8Y7C8l6pyo2L+80C7uMhCWmPUpjO3A/c0hJNw
+        kkJftBJ9czogskAtl5NpCteK6S0lI946jpwMgOdJWarkqyw1desfY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 62CC4160FFF;
+        Thu, 21 Oct 2021 12:27:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BEC0C160FFE;
+        Thu, 21 Oct 2021 12:27:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
+        peff@peff.net
+Subject: Re: [PATCH 02/11] midx.c: don't leak MIDX from verify_midx_file
+References: <cover.1634787555.git.me@ttaylorr.com>
+        <b0c79904ab7bdaee7a1bc7a55b0fb26b1f2cf8d3.1634787555.git.me@ttaylorr.com>
+Date:   Thu, 21 Oct 2021 09:27:02 -0700
+In-Reply-To: <b0c79904ab7bdaee7a1bc7a55b0fb26b1f2cf8d3.1634787555.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Wed, 20 Oct 2021 23:39:50 -0400")
+Message-ID: <xmqqr1cemjhl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YXF8a7OoStzdEwZF@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9A346F6-328B-11EC-A359-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 10:42:52AM -0400, Jeff King wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> index a1ab2b1f07..fab9e6a671 100755
-> --- a/generate-cmdlist.sh
-> +++ b/generate-cmdlist.sh
-> @@ -67,7 +67,7 @@ print_command_list () {
->  	while read cmd rest
->  	do
->  		printf "	{ \"$cmd\", $(get_synopsis $cmd), 0"
-> -		printf " | CAT_%s" $(echo "$rest" | get_category_line)
-> +		printf " | CAT_%s" $rest
->  		echo " },"
->  	done
->  	echo "};"
-> 
-> I think you could also delete get_category_line, as it was inlined in
-> the other caller.
+> The function midx.c:verify_midx_file() allocate a MIDX struct by calling
+> load_multi_pack_index(). But when cleaning up, it calls free() without
+> freeing any resources associated with the MIDX.
+>
+> Call the more appropriate close_midx() which does free those resources,
+> which causes t5319.3 to pass when Git is compiled with SANITIZE=leak.
 
-Just for fun, I did a pure-shell loop to drop get_synopsis, which means
-we don't exec any processes inside the loop. That patch is below, which
-yields the timings (orig is up to your patch 6, no-sort is the patch
-above, and pure-shell is the patch below on top):
+Nice.
 
-  $ hyperfine --warmup 1 -L v orig,no-sort,pure-shell -p 'make clean' 'sh generate-cmdlist.sh.{v} command-list.txt'
-  Benchmark #1: sh generate-cmdlist.sh.orig command-list.txt
-    Time (mean ± σ):      1.286 s ±  0.148 s    [User: 1.503 s, System: 0.781 s]
-    Range (min … max):    0.938 s …  1.451 s    10 runs
-   
-  Benchmark #2: sh generate-cmdlist.sh.no-sort command-list.txt
-    Time (mean ± σ):     553.6 ms ± 143.3 ms    [User: 396.7 ms, System: 198.3 ms]
-    Range (min … max):   192.6 ms … 683.5 ms    10 runs
-   
-  Benchmark #3: sh generate-cmdlist.sh.pure-shell command-list.txt
-    Time (mean ± σ):      29.7 ms ±  15.6 ms    [User: 22.6 ms, System: 19.4 ms]
-    Range (min … max):    12.0 ms …  49.1 ms    10 runs
-   
-  Summary
-    'sh generate-cmdlist.sh.pure-shell command-list.txt' ran
-     18.65 ± 10.93 times faster than 'sh generate-cmdlist.sh.no-sort command-list.txt'
-     43.33 ± 23.32 times faster than 'sh generate-cmdlist.sh.orig command-list.txt'
+By the way, the function starts like so:
 
-So that's building all of the commands faster than I could get even
-"touch Documentation/git-add.txt && make command-list.h" to run with
-your patch (not entirely fair; I'm not invoking make here, which
-probably does add 100ms of overhead, but I think it's still a net win).
+    int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags)
+    {
+            struct pair_pos_vs_id *pairs = NULL;
+            uint32_t i;
+            struct progress *progress = NULL;
+            struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+            verify_midx_error = 0;
 
-The patch below doesn't enforce the /NAME/ section as the sed does. IMHO
-that's not of much value because it uses the line with the command-name
-as the lower bound. But it could be done pretty easily with an extra
-$seen_name variable.
+            if (!m) {
+                    int result = 0;
+                    struct stat sb;
+                    char *filename = get_midx_filename(object_dir);
+                    if (!stat(filename, &sb)) {
+                            error(_("multi-pack-index file exists, but failed to parse"));
+                            result = 1;
+                    }
+                    free(filename);
+                    return result;
+            }
 
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index fab9e6a671..eae4bbb4c7 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -22,16 +22,6 @@ category_list () {
- 	LC_ALL=C sort -u
- }
- 
--get_synopsis () {
--	sed -n '
--		/^NAME/,/'"$1"'/H
--		${
--			x
--			s/.*'"$1"' - \(.*\)/N_("\1")/
--			p
--		}' "Documentation/$1.txt"
--}
--
- define_categories () {
- 	echo
- 	echo "/* Command categories */"
-@@ -66,7 +56,18 @@ print_command_list () {
- 	command_list "$1" |
- 	while read cmd rest
- 	do
--		printf "	{ \"$cmd\", $(get_synopsis $cmd), 0"
-+		synopsis=
-+		while read line
-+		do
-+			case "$line" in
-+			"$cmd - "*)
-+				synopsis=${line#$cmd - }
-+				break
-+				;;
-+			esac
-+		done <"Documentation/$cmd.txt"
-+
-+		printf '\t{ "%s", N_("%s"), 0' "$cmd" "$synopsis"
- 		printf " | CAT_%s" $rest
- 		echo " },"
- 	done
+but after seeing die() sprinkled in load_multi_pack_index() with
+checks during parsing, I am not sure if this is a good error
+reporting mechanism we are seeing here.
+
+It is wonderful to plug leaks here and there, but to be honest, even
+with only a very little parts I saw in this code, I think there are
+other things that need clean-up here.
+
+Also, the way the file-scope global verify_midx_error is used is
+beyond words _ugly_, if the only reason for its use is to make
+midx_report() look simpler, which is what I think is happening.
+
+Not very impressed, but all of the above is not a new issue
+introduced by this patch.
+
+Thanks.
