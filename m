@@ -2,67 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54A4AC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 05:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A775C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 05:50:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E665610D0
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 05:39:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B1D960FE8
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 05:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbhJUFlh convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 21 Oct 2021 01:41:37 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:44741 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229539AbhJUFlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 01:41:36 -0400
-Received: by mail-ed1-f48.google.com with SMTP id w14so626522edv.11
-        for <git@vger.kernel.org>; Wed, 20 Oct 2021 22:39:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uuF003Wd3res0C21uipAGCC5t+Kgvt1wnqsmX7YizDY=;
-        b=f5hEcvCgZXUIui4RDV5f/3KnfDL47TYh5KOyZok+Kg7AEuTQHZPKAuruY6cdl1aFYK
-         z/zglv4Im5yZucm5iRR5F3cJmBg61rJKxbXTIinmWPpPQbN//W9T0VSpUkLoBR4nHE+s
-         KGRqhejXzPGrp9ogGrR0RAwZQWHNeCleRcVrKk7ydIAb3Ou350fN7paweHSvwDyoRn8A
-         e6AXdTnU3unpAKXnGLm9Ov1jgjUrrSloxzGbD4+grV7HGcinUV+r0/CI2ALrttT6MT2E
-         NDdThHnOjCsCjlved+SQyRvMDQ+KCW1iQvWvUEL6Zu3BkABhXOJsYitxR4R81QBQylBE
-         BXkQ==
-X-Gm-Message-State: AOAM531Vcu5aazSVf4DkwRuRow1MwcKyQ85Ly8N4Jua56E0lWqPLnO32
-        b+P5mWPVCKaPdwOlhm9YRA9vgWMCA2cUpNpz8yhGY8aGu18=
-X-Google-Smtp-Source: ABdhPJzj+nlr4x4ynYWBHOQx+GLHsBS5iJHputzSqpOeWSl9kurPa9vDEiZg8O0YzQx4TKlSxP+NpbEuVmxAwcKyWUM=
-X-Received: by 2002:a50:ec0f:: with SMTP id g15mr4700081edr.47.1634794760177;
- Wed, 20 Oct 2021 22:39:20 -0700 (PDT)
+        id S229968AbhJUFwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 01:52:49 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61015 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229499AbhJUFws (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 01:52:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4A7915D6CA;
+        Thu, 21 Oct 2021 01:50:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/jU5AywWr4sc
+        acbNH0JCMwxhuoCGXT+KnbACRNPix54=; b=Nha/5PptWIWa3Kx1htw6G9TM7wMn
+        ZJibb+PTzCgfeEFNICOdjmycdnX4e3w483mJ8sTm5TeEk43Deeeo/fNP2rblJbR3
+        aFpTMd0RKYCc9rbLEeN7W41IirJRzmVuoTGCVDCp7AF2aSvcuhaceBAzxBB5gzd9
+        OnklXBdpuyn6iWk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BD29015D6C9;
+        Thu, 21 Oct 2021 01:50:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 295FB15D6C8;
+        Thu, 21 Oct 2021 01:50:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
+        peff@peff.net
+Subject: Re: [PATCH 01/11] midx.c: clean up chunkfile after reading the MIDX
+References: <cover.1634787555.git.me@ttaylorr.com>
+        <30f6f23daf49814f479865eea5f9ee68de209d5f.1634787555.git.me@ttaylorr.com>
+Date:   Wed, 20 Oct 2021 22:50:29 -0700
+In-Reply-To: <30f6f23daf49814f479865eea5f9ee68de209d5f.1634787555.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Wed, 20 Oct 2021 23:39:47 -0400")
+Message-ID: <xmqqfssvncyi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net> <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
- <YXB9moNHRj+nrnX9@coredump.intra.peff.net> <YXCKqAEwtwFozWk6@nand.local> <211021.86v91rmftn.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211021.86v91rmftn.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 21 Oct 2021 01:39:09 -0400
-Message-ID: <CAPig+cTX+zbO6QJeWR1yu6Fe+wmhHFqd-=mp_GpwFMLYBbu5DA@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Makefile: make command-list.h 2-5x as fast with -jN
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CC78612A-3232-11EC-92A6-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 20, 2021 at 7:34 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Wed, Oct 20 2021, Taylor Blau wrote:
-> > But I don't think we even need to, since we could just rely on Awk. That
-> > has all the benefits you described while still avoiding the circular
-> > dependency on libgit.a. But the killer feature is that we don't have to
-> > rely on two implementations, the lesser-used of which is likely to
-> > bitrot over time.
->
-> Per Eric's Sunshine's upthread comments an awk and Perl implementation
-> were both considered before[1].
-> 1. https://lore.kernel.org/git/CAPig+cSzKoOzU-zPOZqfNpPYBFpcWqvDP3mwLvAn5WkiNW0UMw@mail.gmail.com/
+Taylor Blau <me@ttaylorr.com> writes:
 
-Thanks for saving me the trouble of digging up that email reference.
+> The patch contents are from =C3=86var, but the message is mine. I hope =
+that
+> he doesn't mind me forging his sign-off here.
+>
+>  midx.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/midx.c b/midx.c
+> index 8433086ac1..36e4754767 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -179,12 +179,13 @@ struct multi_pack_index *load_multi_pack_index(co=
+nst char *object_dir, int local
+>  	trace2_data_intmax("midx", the_repository, "load/num_packs", m->num_p=
+acks);
+>  	trace2_data_intmax("midx", the_repository, "load/num_objects", m->num=
+_objects);
+>
+> +	free_chunkfile(cf);
+>  	return m;
+>
+>  cleanup_fail:
+>  	free(m);
+>  	free(midx_name);
+> -	free(cf);
+> +	free_chunkfile(cf);
+>  	if (midx_map)
+>  		munmap(midx_map, midx_size);
+>  	if (0 <=3D fd)
+
+The former is not something we can mechanically locate, but the
+latter we should be able to.  And indeed this is the only instance
+the following experiment finds.
+
+	$ cat >contrib/coccinelle/chunkfile.cocci <<-\EOF
+	@@
+	identifier f !~ "^free_chunkfile$";
+	struct chunkfile *cf;
+	@@
+	  f(...) {<...
+	- free(cf)
+	+ free_chunkfile(cf)
+	  ...>}
+	EOF
+	$ make contrib/coccinelle/chunkfile.cocci.patch
+
+Thanks.
+
