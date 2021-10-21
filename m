@@ -2,62 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80891C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 20:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B89E3C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 20:48:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6632760FD9
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 20:48:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D40C60FD9
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 20:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232046AbhJUUuv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 16:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42718 "EHLO
+        id S232054AbhJUUuw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 16:50:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231666AbhJUUus (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 16:50:48 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72EAC061348
+        with ESMTP id S231430AbhJUUur (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 16:50:47 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39CB0C061764
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 13:48:31 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id z14so469652wrg.6
+Received: by mail-wr1-x431.google.com with SMTP id r7so93938wrc.10
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 13:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qkq4mQztxITq/GOSkhCIwELaNOZlIiv3dFjIv3bSuQU=;
-        b=qkFUaF988fEqusSfFWTCDxqIZB/xUQ8nfkp2mz/4amt5nVGy2U1MM0f4hupSTMPwLp
-         IUqHlLQdKa/rpCRoov8cgJeSyZ4RonfMcBygTOFoikKThnwkqIbSwmD0F8YTzpAwAdpA
-         OXKurhuWT9zfbeWlrZSM/qjSpX+64NxT4Z/lG58lGuNT/oV7GFPUDMxbSSTcj9Cu5Y8u
-         3zrR/8bSeZ4jBmsiTQzBby8lRskT8gxOTdV3c6koACFhV1IXzIlR3vx32U+0jJrAxKd2
-         bqh/+1OK63vygrdaLDqvhNvyNa+ihH+R3g4572gr1MNovPhsqu7Xg7ZUkVrSbyQ1gSNx
-         N3og==
+        bh=8+fO11HluaG7aIPXrE/bW7qpEHv4I6moGjjB4jGT/3Q=;
+        b=SMKjnglo+5e4C8ZCElxumJZrMygbt90fybhnVyDD+ZZFM9uzJDGpFgvwa5DoWlD4QI
+         Yg7xbRtCwW93IwlnNQzQTwD5uDXgQHXjCDuSYFnWiktcquD8laFuLeXbXriF2oGhkKm7
+         XmQRcm0NERXvlUjXRN44+bKMf3P/xrXGDBqFudl24ZxKJzaavivNwr3jjDyGBqN8Xhmr
+         Ybc8kDm0DQfAi4UQ6wLCBrr+TzCdvYd30/Lwz6is2kCMp+4wiC5656bYogW9g3KClQ9P
+         F+fB45uXeUiMkx6ceaDvLZMfB4X/OSoMRkaJQaI25Wt23651Rocc4ijIjoMrKxE9a8yh
+         mO6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qkq4mQztxITq/GOSkhCIwELaNOZlIiv3dFjIv3bSuQU=;
-        b=rV0ZjndlPS+4RY+qR62hEF4cZlFkzvo/FpEkO6qWBTX8oiarfTzLEib1FVGHXdV11h
-         ztyv2UPz9SR912yFMJy8oAinikNsyb5nVlI7W+ntmbKXxRYPp1PASG+lt576i8q593d2
-         6RZ6WqNAgyp6fr1J/YTjqLKwyE3JLh8LAmN7jw30HTi1U/XsZB7+I/Cc5/8Q9rNr4GpS
-         GmYjqRu/we9bDGUxqBDf8/0fcETwF3TrQJ2V//j2LeqBYW1x/8JcYYpDDFAWmezkDglo
-         W9HGBSG3h7Ziq0eyzFG/SsyN+8D5luZMsy4k1APyU7CGmOq+k4FVXgZHQN+v49rTcHGl
-         6EOg==
-X-Gm-Message-State: AOAM530R7uc+H7QsNXasx7z+aKW6GUfoTsi+jWnQvqgVZGu34Sve6jma
-        oiOdEYbzd8E10bfQHvesHh0U7tJxoLo=
-X-Google-Smtp-Source: ABdhPJzn9om2VS4dCZkP1myktTXJOyY5kp6fshXV0GRPgSpwTj15LCfg9yFcQ6Uyw2ndQJGCyOSnoA==
-X-Received: by 2002:adf:9b8a:: with SMTP id d10mr9752143wrc.151.1634849310291;
-        Thu, 21 Oct 2021 13:48:30 -0700 (PDT)
+        bh=8+fO11HluaG7aIPXrE/bW7qpEHv4I6moGjjB4jGT/3Q=;
+        b=MGjDmfcG2lO7BVp7MhyHjka/igLkqipgHR9iJOj4wjRlnOHAmxKeQ3uioGMMQkbpdJ
+         g/0AfqRrJ+rAhBW467qE3A6/DrBYENpH3bwu1pO0BC7JgqiF7ExyL2OABi60MsNVyMg+
+         o/ojCjfN5udwftbAleLOItuVKoTlfnt1KT63Kito7hCS0Z4xaC/B+uNabwE5ZQhQ6m1o
+         XaqGgFygre9ueM8pniiYJpIfFPumGd+EcGSqHENTIxPL7rie9lfk3Vk1Wrip2H+WZy0p
+         86O4wbKq2scu+rHKp0df6JsGGsUYR/KmXfWLK7alZF1Tnv5m6pq3ru5YC1Z5AewzvDHL
+         RkPw==
+X-Gm-Message-State: AOAM533QEvZ+N9PrK9yJwo23ARB/plctE9po7QnXps6Ri5kd0vox/kjP
+        ld7PR5fBaB0g84z+O5p2Ca5sRhuirbM=
+X-Google-Smtp-Source: ABdhPJzIwQOlq0iZoK7WBSnQ1xopCLMjEchIOLIp0ZjZMCMs60Fg67EvqNaMzP0PRvDsSbfyYe1KfA==
+X-Received: by 2002:adf:9c11:: with SMTP id f17mr10417757wrc.147.1634849309649;
+        Thu, 21 Oct 2021 13:48:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u5sm6151194wrg.57.2021.10.21.13.48.29
+        by smtp.gmail.com with ESMTPSA id i9sm1745431wmb.22.2021.10.21.13.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 21 Oct 2021 13:48:29 -0700 (PDT)
-Message-Id: <437cf398256049b10365af8a21961bd3c30710ba.1634849307.git.gitgitgadget@gmail.com>
+Message-Id: <0b6e6633bb2b9f21a79625ace6db9509c48bd819.1634849307.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
 References: <pull.1059.git.1634327697.gitgitgadget@gmail.com>
         <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Oct 2021 20:48:26 +0000
-Subject: [PATCH v2 3/3] sparse-index: update do_read_index to ensure correct
- sparsity
+Date:   Thu, 21 Oct 2021 20:48:25 +0000
+Subject: [PATCH v2 2/3] sparse-index: add ensure_correct_sparsity function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,89 +70,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-If `command_requires_full_index` is false, ensure correct in-core index
-sparsity on read by calling `ensure_correct_sparsity`. This change is meant
-to update the how the index is read in a command after sparse index-related
-repository settings are modified. Previously, for example, if `index.sparse`
-were changed from `true` to `false`, the in-core index on the next command
-would be sparse. The index would only be expanded to full when it was next
-written to disk.
-
-By adding a call to `ensure_correct_sparsity`, the in-core index now matches
-the sparsity dictated by the relevant repository settings as soon as it is
-read into memory, rather than when it is later written to disk.
+The purpose of the `ensure_correct_sparsity` function is to provide a means
+of aligning the in-core index with the sparsity required by the repository
+settings and other properties of the index. The function will first attempt
+to convert the index to sparse, now with a "SPARSE_INDEX_VERIFY_ALLOWED"
+flag that forces the function to return a nonzero value if repository
+settings do not allow use of a sparse index. If a nonzero value is returned,
+the index is expanded to full with `ensure_full_index`.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- read-cache.c                             |  8 ++++++
- t/t1092-sparse-checkout-compatibility.sh | 31 ++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ sparse-index.c | 42 +++++++++++++++++++++++++++++++++++++++---
+ sparse-index.h |  2 ++
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index a78b88a41bf..b3772ba70a1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2337,9 +2337,17 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+diff --git a/sparse-index.c b/sparse-index.c
+index 7b7ff79e044..4273453e078 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -122,11 +122,10 @@ static int index_has_unmerged_entries(struct index_state *istate)
+ 	return 0;
+ }
+ 
+-int convert_to_sparse(struct index_state *istate, int flags)
++static int can_convert_to_sparse(struct index_state *istate, int flags)
+ {
+ 	int test_env;
+-	if (istate->sparse_index || !istate->cache_nr ||
+-	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
++	if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
+ 		return 0;
  
  	if (!istate->repo)
- 		istate->repo = the_repository;
+@@ -187,6 +186,30 @@ int convert_to_sparse(struct index_state *istate, int flags)
+ 	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+ 		return 0;
+ 
++	return 1;
++}
++
++int convert_to_sparse(struct index_state *istate, int flags)
++{
++	int verify = flags & SPARSE_INDEX_VERIFY_ALLOWED;
 +
 +	/*
-+	 * If the command explicitly requires a full index, force it
-+	 * to be full. Otherwise, correct the sparsity based on repository
-+	 * settings and other properties of the index (if necessary).
++	 * If validating with strict checks against whether the sparse index is
++	 * allowed, we want to check `can_convert_to_sparse` *before* exiting
++	 * early due to an already sparse or empty index.
++	 *
++	 * If not performing strict validation, the order is reversed to avoid
++	 * the more expensive checks in `can_convert_to_sparse` whenver possible.
 +	 */
- 	prepare_repo_settings(istate->repo);
- 	if (istate->repo->settings.command_requires_full_index)
- 		ensure_full_index(istate);
-+	else
-+		ensure_correct_sparsity(istate);
++	if (verify) {
++		if (!can_convert_to_sparse(istate, flags))
++			return -1;
++		else if (istate->sparse_index || !istate->cache_nr)
++			return 0;
++	} else if (istate->sparse_index || !istate->cache_nr ||
++		   !can_convert_to_sparse(istate, flags))
++		return 0;
++
+ 	remove_fsmonitor(istate);
  
- 	return istate->cache_nr;
+ 	trace2_region_enter("index", "convert_to_sparse", istate->repo);
+@@ -313,6 +336,19 @@ void ensure_full_index(struct index_state *istate)
+ 	trace2_region_leave("index", "ensure_full_index", istate->repo);
+ }
  
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index ca91c6a67f8..59accde1fa3 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -694,6 +694,37 @@ test_expect_success 'sparse-index is expanded and converted back' '
- 	test_region index ensure_full_index trace2.txt
- '
++void ensure_correct_sparsity(struct index_state *istate)
++{
++	/*
++	 * First check whether the index can be converted to sparse by attempting
++	 * to convert it with the SPARSE_INDEX_VERIFY_ALLOWED flag. If the
++	 * SPARSE_INDEX_VERIFY_ALLOWED checks indicate that the index cannot
++	 * be converted because repository settings and/or index properties
++	 * do not allow it, expand the index to full.
++	 */
++	if (convert_to_sparse(istate, SPARSE_INDEX_VERIFY_ALLOWED))
++		ensure_full_index(istate);
++}
++
+ /*
+  * This static global helps avoid infinite recursion between
+  * expand_to_path() and index_file_exists().
+diff --git a/sparse-index.h b/sparse-index.h
+index 9f3d7bc7faf..b61754f1f76 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -3,7 +3,9 @@
  
-+test_expect_success 'index.sparse disabled inline uses full index' '
-+	init_repos &&
-+
-+	# When index.sparse is disabled inline with `git status`, the
-+	# index is expanded at the beginning of the execution then never
-+	# converted back to sparse. It is then written to disk as a full index.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index -c index.sparse=false status &&
-+	! test_region index convert_to_sparse trace2.txt &&
-+	test_region index ensure_full_index trace2.txt &&
-+
-+	# Since index.sparse is set to true at a repo level, the index
-+	# is converted from full to sparse when read, then never expanded
-+	# over the course of `git status`. It is written to disk as a sparse
-+	# index.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index status &&
-+	test_region index convert_to_sparse trace2.txt &&
-+	! test_region index ensure_full_index trace2.txt &&
-+
-+	# Now that the index has been written to disk as sparse, it is not
-+	# converted to sparse (or expanded to full) when read by `git status`.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index status &&
-+	! test_region index convert_to_sparse trace2.txt &&
-+	! test_region index ensure_full_index trace2.txt
-+'
-+
- ensure_not_expanded () {
- 	rm -f trace2.txt &&
- 	echo >>sparse-index/untracked.txt &&
+ struct index_state;
+ #define SPARSE_INDEX_MEMORY_ONLY (1 << 0)
++#define SPARSE_INDEX_VERIFY_ALLOWED (1 << 1)
+ int convert_to_sparse(struct index_state *istate, int flags);
++void ensure_correct_sparsity(struct index_state *istate);
+ 
+ /*
+  * Some places in the codebase expect to search for a specific path.
 -- 
 gitgitgadget
+
