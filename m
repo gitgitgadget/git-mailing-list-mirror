@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B94BC433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 19:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67901C433FE
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 19:54:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54B58611C7
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 19:54:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4991A611CE
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 19:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbhJUT4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 15:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
+        id S231853AbhJUT4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 15:56:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231687AbhJUT4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 15:56:39 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE2FC061764
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 12:54:21 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u18so1229175wrg.5
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 12:54:21 -0700 (PDT)
+        with ESMTP id S231852AbhJUT4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 15:56:40 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA549C061764
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 12:54:23 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id o24so759943wms.0
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 12:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zeLxhqMwRsh2kfoeS5N0BcNBRx3O6izpI9qjgHdZznE=;
-        b=MD00SeG7tVR0zVapXnNvY+7xsxm0GeJycZKKDdy6wu3AZiNwROajvfNfgVWKdBgidS
-         QR8HENQXzCNnHJ6d6yCQaagtUblsuMSPCHrKlVkDm0P5KQNLmG/X2pRO77x7oxMH/Obi
-         0dlIb2EpPsi+fve1Ih3fsVwzJ0aGBGhX3EXF6/9onSV87m/P5WuQ+cM2W3ibj0XeGPzz
-         0fuVs4Uz652pv4lKX9XqjQwGE1ff6gU7mKFBDBMgWsgahedUKkfzL/gmxYyoEjL1FL2D
-         P99aqmDdpqwHMmA+mOkr3C4kGAZrSnS9S5kDtVXt9Evc/2NfLS9zj5f5O30126iZozSb
-         fUeA==
+        bh=/wCNLJR5YPpv8VdHbo3nD7ODXwfyYPFz7vUzAhpMqnI=;
+        b=EcbhrrL736rT53XTAAMNaQVT3NEWppWbfAzlKoDzHtdv93+BanGNaHitvfZnNeO33C
+         T/Y/NvY9Zdx0RCUsFTftCRY6S7CeLB0jdYtqgDS1/f7OxtXu+UR1L5308fG1QYIUzkaR
+         TmdqlbHCxssBd711ggz+ZhEe8lLSa6ETCeO8T3TdFugL6BalXCmrdLq6L3Assr3MaBFU
+         TnptZ5hECdCOkZicIxByJEb9/7gBCUYOp6Z1g6OzLSexUpgekxRBqW3hZclMWzVdgDm1
+         SEvVHF9OixAhigGyhSjN8j1lKO14lbA6E21mg/DalRd6Hvc41M9w6JRJahQz1qdbocsR
+         qNFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zeLxhqMwRsh2kfoeS5N0BcNBRx3O6izpI9qjgHdZznE=;
-        b=G4ZuUjrxstZElD59ESBfLQqNelR3+hPBuBHZnJHhOzi5rHgZlSXo7MWZic5KtAUcMy
-         VgFUcE3GRsQAUV+oRTZBASyu0LRoOqAfryuA5KhO7tsf/UfsVwPF7/ykSd/xR2NLVdBA
-         6vFmDxpQJuqdIC1ZGnY82ArLHEj3m+6x76K3T7MNU9rYMg9N8gWM9rQfEBKp1lA6J0s8
-         OAbyZRiqbWtAT6mR/lnpftHwBl3lqPL8Ce544Ivq2Td1MC+PKDgjqEMl1gOAw9S0rvDr
-         +EFje9tC7MAgAG+AC91n93Kke3PDZQNKfsBX28dfddHql730uDin4pdbJglfcxsjvC5f
-         Gf/g==
-X-Gm-Message-State: AOAM5302HaLd2eBl8AEqzwdQ/U78tTfv1c0tJ4lYCaBNDp2hoLpssGf+
-        p6uFv2HiOtTZ6tHp4JnB/zxvbVePZiDNPQ==
-X-Google-Smtp-Source: ABdhPJxOAg/WXsZrd9Z6YktCiWK2DVMA04G5q0Ree6xZAiGC8N72+iYfTMjXvNBEMGE6Q+Z1Az4d7g==
-X-Received: by 2002:adf:9787:: with SMTP id s7mr9715820wrb.191.1634846060097;
-        Thu, 21 Oct 2021 12:54:20 -0700 (PDT)
+        bh=/wCNLJR5YPpv8VdHbo3nD7ODXwfyYPFz7vUzAhpMqnI=;
+        b=hKbSSaFQ/4Fu+eigPnnZMZ9luZwJMqyTqVJzWM+W0/p4XWJb4CD8uTxj8CVnROOT/e
+         EshPPX9dWoV7qMbfEDPWSqxe7TYbCqotEZ2BGXib4cH5Y63A3fdKfy8jfrtPOh2Fu7Vc
+         vwOSOw2F4yoqByX9OO+jOIUwWH5yDxBzCkV0qLTCfkhwMwBfFsUDvu1dN42YgSGLwBqS
+         hls6TGXu5eP8JKjWQc1xkSa0Y/qNbgdnbAOzB0XDKJk+jLuE7sRK0qHFyK33iY2cBesh
+         SyaKDDOM3uvVeeDwrpv06wTbx6NAjU3NMZCjOQu1caRpR/Hl+P/P9YMDn6R/8CublaJy
+         q/4A==
+X-Gm-Message-State: AOAM533pTpnwnEJ7nv2+RRets1VIvAiqNBM2V3uczPZnR/AD0UZKM/Wc
+        XTEpAmTl9sJFc+1lBjGBDnECpIS50NOF0Q==
+X-Google-Smtp-Source: ABdhPJwzLz7MObS8Xoaz2UdKfnD1iD+LFBaP5BwvZGd30mbzHHbTFg7Bg2MMH1VABC5Ut1KDTKluqQ==
+X-Received: by 2002:a1c:2b04:: with SMTP id r4mr24253703wmr.48.1634846061984;
+        Thu, 21 Oct 2021 12:54:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6sm7822492wmp.1.2021.10.21.12.54.18
+        by smtp.gmail.com with ESMTPSA id z6sm7822492wmp.1.2021.10.21.12.54.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 12:54:19 -0700 (PDT)
+        Thu, 21 Oct 2021 12:54:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/3] refs.c: make "repo_default_branch_name" static, remove xstrfmt()
-Date:   Thu, 21 Oct 2021 21:54:13 +0200
-Message-Id: <patch-v2-1.3-4f8554bb02e-20211021T195133Z-avarab@gmail.com>
+Subject: [PATCH v2 3/3] config.c: free(expanded) before die(), work around GCC oddity
+Date:   Thu, 21 Oct 2021 21:54:15 +0200
+Message-Id: <patch-v2-3.3-d812358e331-20211021T195133Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1494.g88b39a443e1
 In-Reply-To: <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
 References: <patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
@@ -71,71 +71,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The repo_default_branch_name() function introduced in
-8747ebb7cde (init: allow setting the default for the initial branch
-name via the config, 2020-06-24) has never been used outside of this
-file, so let's make it static, its sibling function
-git_default_branch_name() is what external callers use.
+On my GCC version (10.2.1-6), but not the clang I have available t0017
+will fail under SANITIZE=leak on optimization levels higher than -O0,
+which is annoying when combined with the change in 956d2e4639b (tests:
+add a test mode for SANITIZE=leak, run it in CI, 2021-09-23).
 
-In addition the xstrfmt() to get the "full_ref" in the same commit
-isn't needed, we can use the "REFNAME_ALLOW_ONELEVEL" flag to
-check_refname_format() instead.
+We really do have a memory leak here in either case, as e.g. running
+the pre-image under valgrind(1) will reveal. It's documented
+SANITIZE=leak (and "address", which exhibits the same behavior) might
+interact with compiler optimization in this way in some cases, and
+since this function is called recursively it's going to be especially
+interesting as an optimization target.
 
-This also happens to fix an issue with c150064dbe2 (leak tests: run
-various built-in tests in t00*.sh SANITIZE=leak, 2021-10-12) in "next"
-when combined with SANITIZE=leak and higher optimization flags on at
-least some GCC versions. See [1].
-
-1. https://lore.kernel.org/git/patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com/
+Let's work around this issue by freeing the "expanded" memory before
+we call die(), using the "goto cleanup" pattern introduced in the
+preceding commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c | 8 +++-----
- refs.h | 1 -
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ config.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 7f019c2377e..ccb09acbf1d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -571,11 +571,11 @@ static const char default_branch_name_advice[] = N_(
- "\tgit branch -m <name>\n"
- );
+diff --git a/config.c b/config.c
+index c5873f3a706..ab40decaeba 100644
+--- a/config.c
++++ b/config.c
+@@ -132,6 +132,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+ 	int ret = 0;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	char *expanded;
++	int die_depth = 0;
  
--char *repo_default_branch_name(struct repository *r, int quiet)
-+static char *repo_default_branch_name(struct repository *r, int quiet)
- {
- 	const char *config_key = "init.defaultbranch";
- 	const char *config_display_key = "init.defaultBranch";
--	char *ret = NULL, *full_ref;
-+	char *ret = NULL;
- 	const char *env = getenv("GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME");
- 
- 	if (env && *env)
-@@ -589,10 +589,8 @@ char *repo_default_branch_name(struct repository *r, int quiet)
- 			advise(_(default_branch_name_advice), ret);
+ 	if (!path)
+ 		return config_error_nonbool("include.path");
+@@ -161,18 +162,20 @@ static int handle_path_include(const char *path, struct config_include_data *inc
  	}
  
--	full_ref = xstrfmt("refs/heads/%s", ret);
--	if (check_refname_format(full_ref, 0))
-+	if (check_refname_format(ret, REFNAME_ALLOW_ONELEVEL))
- 		die(_("invalid branch name: %s = %s"), config_display_key, ret);
--	free(full_ref);
- 
- 	return ret;
+ 	if (!access_or_die(path, R_OK, 0)) {
+-		if (++inc->depth > MAX_INCLUDE_DEPTH)
+-			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
+-			    !cf ? "<unknown>" :
+-			    cf->name ? cf->name :
+-			    "the command line");
++		if (++inc->depth > MAX_INCLUDE_DEPTH) {
++			die_depth = 1;
++			goto cleanup;
++		}
+ 		ret = git_config_from_file(git_config_include, path, inc);
+ 		inc->depth--;
+ 	}
+ cleanup:
+ 	strbuf_release(&buf);
+ 	free(expanded);
+-	return ret;
++	if (!die_depth)
++		return ret;
++	die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
++	    !cf ? "<unknown>" : cf->name ? cf->name : "the command line");
  }
-diff --git a/refs.h b/refs.h
-index d5099d4984e..77f899da6ef 100644
---- a/refs.h
-+++ b/refs.h
-@@ -171,7 +171,6 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
-  * return value of `git_default_branch_name()` is a singleton.
-  */
- const char *git_default_branch_name(int quiet);
--char *repo_default_branch_name(struct repository *r, int quiet);
  
- /*
-  * A ref_transaction represents a collection of reference updates that
+ static void add_trailing_starstar_for_dir(struct strbuf *pat)
 -- 
 2.33.1.1494.g88b39a443e1
 
