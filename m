@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E2C4C433FE
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93148C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 593EA6120F
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E8C66121E
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231572AbhJUO2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 10:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38388 "EHLO
+        id S231626AbhJUO2V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 10:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbhJUO1n (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231431AbhJUO1n (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Oct 2021 10:27:43 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4460C061224
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6399EC061220
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:26 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id u18so913399wrg.5
+Received: by mail-wr1-x42b.google.com with SMTP id i12so1386508wrb.7
         for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yX37N4xGrkUrCXyal2nEu6KGGgh5b5JsekoBrlh4mEo=;
-        b=iuWYh2TuALnMD09xiC0ZZNafk63/NB0oBegFRyFYyuwmcjULv6vsyyDB9hWKY99Rdz
-         0ljNfelPJPXn5CJfGd+kshzQNGWcbFym8EYwaP7xELHw4/LF3kdOSrYpTWbJ/3hQsh7y
-         5l8fUkhiiC5BjF3Fj7o+xoH22+q5aXlgjz9wL2idO86/xIpLw4bbZWg91z45P5lP/0/8
-         a+LfMaqbjyuDHn3yYqeDcRnPPwi5bwUz6sAi4vpQGniVeUCWO7GPSZscB38fgvXZBNkr
-         8hgnnW/RbLDUiUqK9Zu4DWDhFwaBS7pKnrwypczleHPLRrHIGSmQuSi/fu2FjhE0cScm
-         YwqQ==
+        bh=h+Ll16drRrZ0MQ3JZUEyAlGPlME6mRvqakNQhG3XdjE=;
+        b=S7zbLCMdLQs9DTlaYOvR5bXG3AGZ4Q9vY25D24EZ8Lmj+Exo/XiMxot0/8fgj6iCTi
+         qEfsdE/uV3Ja/Emoi3GecCnN3PCZRvlulbxEVZs41cQRk5cnZIbKSvlSdbfyeTOWuYOc
+         SnhYeHUtNO2jJC9k6KOMWU75pubdT9R2Qj6rxxa1bzGR/X4iOYCzQqpZPQvE9NVEyGxi
+         zwcYHUwG7z01M4k7WESh92PsYpKRTDhOi56IynqsbjNS+FCLRi1K921po34cs9xQfLWy
+         qdUG8ZyYosBvDcD0/cdgTSjqgXWquzxwsiDLzBIJ7/EjdDMHyTmfW4O1jzMXNiW6tLy3
+         yYyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yX37N4xGrkUrCXyal2nEu6KGGgh5b5JsekoBrlh4mEo=;
-        b=RHd2nmOE578VvpukTmMctp+BngGxPFo+9VIy79jwT3G2CUMjNvmCV7pmdxRyneaSCH
-         RgWRoAqiItdQfHEDJGjggNwtRxzCdKTvek0It/+I3wHLvQDWWHsHKcCb2iYU3fP/auCj
-         RlzgYWXBQMY5AWkH2lDicmglBKYMzmGYYqHoDJgS2oBNBzddTXTje8pm+WmhaqITjbqO
-         IKqa4Kzw0FD7Tp38jEzj5R87TCQBIonrCorLrUIgZpcTeASb4YdZ7w0rDk/PraijHx52
-         JSxGfV/3URrY92pfPhxjjXT4v+O1eQtdg1tYTm8ZfwKJQI3bRpYk5CTryaTPRgmsP9YI
-         TOSQ==
-X-Gm-Message-State: AOAM533sOCpxH0kmZlUMdHTHItmBHidGyJLKQzkhrut8Ysujp3432U2U
-        AboJZnKlEydNsHNqGKUkpgMJsphtKic=
-X-Google-Smtp-Source: ABdhPJx3+LUNvutGRejeqEKn0TsYqLFKuecIQhcOIC4ONgpaRsxYizbOSk3dPxx3rCxqPmAbDX31rQ==
-X-Received: by 2002:adf:c78d:: with SMTP id l13mr7438447wrg.134.1634826325552;
+        bh=h+Ll16drRrZ0MQ3JZUEyAlGPlME6mRvqakNQhG3XdjE=;
+        b=ff9he5gCbGdqtr1ufSlhfPyfUwy58eXwf+z70Pe8I26MXFoTQ3iN8ZmmdWHOnhkIll
+         i7CEioKuwPJGPg3Sss7+QxoMEcMy34OCtGgH8/uWWUsb83Lm5kPekcOlOVYAwl2ETRet
+         Y4yl7osdseC5SS30hlWFbDUgw7gqnsqMMmmHfgjQ4IfwxZr8ZOgBBAlOrpcPGn4oYYiz
+         IMs4180VyX/pa+zSZipIPc3NSX0QEvfoiIUtlWrmCi8Kk8sEfSR5ATOTtjX5Zmt/ZPkF
+         N4FGWRhafjZsSZthMC/1rs7jVLsT6CjGb1mjWymqPKxeOh0LrJMGCsYAnk2LUL/TPRVv
+         3CPQ==
+X-Gm-Message-State: AOAM532LjRXZT1l/e6qYCc44yOPE3EJtYkapkJBQ08rAKVMhvPRpmhpw
+        UDmmMP4mYRqPTkfVw1EPX7rnn+7dbfI=
+X-Google-Smtp-Source: ABdhPJyvqd+liGun6OTlGi7WI2h+o7/DSlp56t5sLKFl8VjIFQOf+dYm3aayrgwgNUTCPM+gXgqpPA==
+X-Received: by 2002:a05:6000:188e:: with SMTP id a14mr7406699wri.223.1634826325026;
         Thu, 21 Oct 2021 07:25:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm5044837wrr.15.2021.10.21.07.25.25
+        by smtp.gmail.com with ESMTPSA id u2sm4914159wrr.35.2021.10.21.07.25.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 07:25:25 -0700 (PDT)
-Message-Id: <1c2eccacff64edc0aba1d60a120f71cb94532e8b.1634826309.git.gitgitgadget@gmail.com>
+        Thu, 21 Oct 2021 07:25:24 -0700 (PDT)
+Message-Id: <de9c015d78c3ad87e84a1d424ebeacaf2491d1db.1634826309.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
         <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Oct 2021 14:25:04 +0000
-Subject: [PATCH v4 24/29] t/perf/p7519: speed up test on Windows
+Date:   Thu, 21 Oct 2021 14:25:03 +0000
+Subject: [PATCH v4 23/29] t/helper/test-chmtime: skip directories on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,69 +71,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Change p7519 to use `test_seq` and `xargs` rather than a `for` loop
-to touch thousands of files.  This takes minutes off of test runs
-on Windows because of process creation overhead.
+Teach `test-tool.exe chmtime` to ignore errors when setting the mtime
+on a directory on Windows.
+
+NEEDSWORK: The Windows version of `utime()` (aka `mingw_utime()`) does
+not properly handle directories because it uses `_wopen()`.  It should
+be converted to using `CreateFileW()` and backup semantics at a minimum.
+Since I'm already in the middle of a large patch series, I did not want
+to destabilize other callers of `utime()` right now.  The problem has
+only been observed in the t/perf/p7519 test when the test repo contains
+an empty directory on disk.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p7519-fsmonitor.sh | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ t/helper/test-chmtime.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 5eb5044a103..171644ffc90 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -98,6 +98,13 @@ trace_stop() {
- 	fi
- }
+diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
+index 524b55ca496..dc28890a183 100644
+--- a/t/helper/test-chmtime.c
++++ b/t/helper/test-chmtime.c
+@@ -134,6 +134,21 @@ int cmd__chmtime(int argc, const char **argv)
+ 		}
  
-+touch_files() {
-+	n=$1
-+	d="$n"_files
-+
-+	(cd $d ; test_seq 1 $n | xargs touch )
-+}
-+
- test_expect_success "one time repo setup" '
- 	# set untrackedCache depending on the environment
- 	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-@@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
- 	fi &&
- 
- 	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
--	for i in $(test_seq 1 10); do touch 10_files/$i; done &&
--	for i in $(test_seq 1 100); do touch 100_files/$i; done &&
--	for i in $(test_seq 1 1000); do touch 1000_files/$i; done &&
--	for i in $(test_seq 1 10000); do touch 10000_files/$i; done &&
-+	touch_files 1 &&
-+	touch_files 10 &&
-+	touch_files 100 &&
-+	touch_files 1000 &&
-+	touch_files 10000 &&
- 	git add 1_file 10_files 100_files 1000_files 10000_files &&
- 	git commit -qm "Add files" &&
- 
-@@ -199,15 +207,15 @@ test_fsmonitor_suite() {
- 
- 	# Update the mtimes on upto 100k files to make status think
- 	# that they are dirty.  For simplicity, omit any files with
--	# LFs (i.e. anything that ls-files thinks it needs to dquote).
--	# Then fully backslash-quote the paths to capture any
--	# whitespace so that they pass thru xargs properly.
-+	# LFs (i.e. anything that ls-files thinks it needs to dquote)
-+	# and any files with whitespace so that they pass thru xargs
-+	# properly.
- 	#
- 	test_perf_w_drop_caches "status (dirty) ($DESC)" '
- 		git ls-files | \
- 			head -100000 | \
- 			grep -v \" | \
--			sed '\''s/\(.\)/\\\1/g'\'' | \
-+			egrep -v " ." | \
- 			xargs test-tool chmtime -300 &&
- 		git status
- 	'
+ 		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
++#ifdef GIT_WINDOWS_NATIVE
++			if (S_ISDIR(sb.st_mode)) {
++				/*
++				 * NEEDSWORK: The Windows version of `utime()`
++				 * (aka `mingw_utime()`) does not correctly
++				 * handle directory arguments, since it uses
++				 * `_wopen()`.  Ignore it for now since this
++				 * is just a test.
++				 */
++				fprintf(stderr,
++					("Failed to modify time on directory %s. "
++					 "Skipping\n"), argv[i]);
++				continue;
++			}
++#endif
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+ 			        argv[i], strerror(errno));
+ 			return 1;
 -- 
 gitgitgadget
 
