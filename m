@@ -2,73 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E44A2C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43DF3C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:38:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C66D060F25
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:37:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DAF0611C7
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 23:38:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbhJUXjh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 19:39:37 -0400
-Received: from rere.qmqm.pl ([91.227.64.183]:31455 "EHLO rere.qmqm.pl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229512AbhJUXjg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 19:39:36 -0400
-Received: from remote.user (localhost [127.0.0.1])
-        by rere.qmqm.pl (Postfix) with ESMTPSA id 4Hb3mb2CSlz5Y;
-        Fri, 22 Oct 2021 01:37:19 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rere.qmqm.pl; s=1;
-        t=1634859439; bh=DhtSgPgXDBvU1gykUVSkv5UkKFlgUpUGRw20sQpZqio=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iGE36gxrVYwjG1ta5iLCxgzVo1RQ7faTSiyQMRpKm93vooPIxc3TXi8PwxWKIgjD3
-         cYd0I6xdZGubX/5jtl6ijCHtSep6s4KKqXMRAMeYE3CCENlxFlCcaLOS3Zss6E1eZf
-         sqr/NSVNPAboqqKeprokBEckhX5IfIl7rO2t3PtYkawqDaTyIHU4LxWgWv7JldYsht
-         zt8vgNTfVaKDZhib0Qdm4PWG3t6Krf5dJPnGbYwqoHQA5SHL2v/w45PbfSchtl4qGV
-         Ei8A8pS5gq3oK/b/+c6aLi9P67uzABHEpOcoWV8wmEQAJVvct3/OU1i4d3nDM+Rjwx
-         Pis1DuJsWXbUA==
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.103.3 at mail
-Date:   Fri, 22 Oct 2021 01:37:16 +0200
-From:   =?iso-8859-2?Q?Micha=B3_Miros=B3aw?= <mirq-linux@rere.qmqm.pl>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S231758AbhJUXkc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 19:40:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54420 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229512AbhJUXkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 19:40:32 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 777C2163E91;
+        Thu, 21 Oct 2021 19:38:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cNEWf9gBc7Gn
+        n6YL/gBF6Vs5cRYh4GK/jnyWRdCBLQ4=; b=gKN2NfQgW1EU98sjJKvS+yH7GCtY
+        7iqjhgbc9lfnDpzmDAHF7tfmlNy3gpqSjwcohZjqxoKkmkbqNvBk4mB5M58O6pfG
+        7WYG7IRg7d8iVZ2JfLlJ+8idBcdeJdixnuDKFOcAv4jQfBj+E0LcjTWD4hymP+mP
+        U3WKLg7qwNqE+rY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 70950163E90;
+        Thu, 21 Oct 2021 19:38:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CD917163E8F;
+        Thu, 21 Oct 2021 19:38:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: git format-patch --signoff
-Message-ID: <YXH5rKsjPIeWSGTE@qmqm.qmqm.pl>
-References: <YXHaAu2G51vy5H8z@qmqm.qmqm.pl>
- <xmqqo87ihurk.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] status: count stash entries in separate function
+References: <20211021222532.463375-1-oystwa@gmail.com>
+        <20211021222532.463375-2-oystwa@gmail.com>
+Date:   Thu, 21 Oct 2021 16:38:11 -0700
+In-Reply-To: <20211021222532.463375-2-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+        message of "Fri, 22 Oct 2021 00:25:31 +0200")
+Message-ID: <xmqq5ytqgd98.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqo87ihurk.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F4CC2F9A-32C7-11EC-B133-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 03:34:39PM -0700, Junio C Hamano wrote:
-> Micha³ Miros³aw <mirq-linux@rere.qmqm.pl> writes:
-> 
-> > I just noticed that `git format-patch --signoff` adds the 'Signed-off-by'
-> > line even if the exact same line is already present in the commit message.
-> > Could this be avoided in the tool?
-> >
-> > git version 2.30.2
-> >
-> > Best Regards
-> > Micha³ Miros³aw
-> 
-> The rule should be "avoid adding the same sign-off as the one at the
-> end".  In other words, as a record of the flow of patch custody,
-[...]
-> This test hasn't changed since it was written in Feb 2013, and I
-> think 2.30.2 is recent enough to conform to the rule to pass this
-> test.
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-The test indeed works correctly, and I couldn't reproduce the effect
-on a fresh git repo. I finally took a look with hexdump on the output:
-the culprit was a UTF-8 non-breaking space -- indistinguishable on
-a terminal from a normal space. I'm not sure what to think about this...
-Sorry for the noise.
+> Make the counting of stash entries contained in one simple function as
+> it will be used in the next commit.
+>
+> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+> ---
+>  wt-status.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index e4f29b2b4c..97230477b2 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -948,11 +948,17 @@ static int stash_count_refs(struct object_id *ooi=
+d, struct object_id *noid,
+>  	return 0;
+>  }
+> =20
+> +static int count_stash_entries()
 
-Best Regards
-Micha³ Miros³aw
+Probably "static int count_stash_entries(void)" was what was meant
+here.
+
+> +{
+> +	int n =3D 0;
+
+Have a blank line between the block of decls at the beginning of the
+function and the first statement.
+
+> +	for_each_reflog_ent("refs/stash", stash_count_refs, &n);
+> +	return n;
+> +}
+
+I briefly wondered if this want to be size_t or some other unsigned
+integral type, but this is merely refactoring the existing code, so
+it is not just OK but is correct to use the same "int" as before.
+
+>  static void wt_longstatus_print_stash_summary(struct wt_status *s)
+>  {
+> -	int stash_count =3D 0;
+> +	int stash_count =3D count_stash_entries();
+> =20
+> -	for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);
+>  	if (stash_count > 0)
+>  		status_printf_ln(s, GIT_COLOR_NORMAL,
+>  				 Q_("Your stash currently has %d entry",
+
+OK.
