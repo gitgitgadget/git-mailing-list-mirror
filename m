@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2699AC433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E2CC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:25:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12CA56120F
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:25:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D5BE6120F
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 14:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231801AbhJUO2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 10:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38386 "EHLO
+        id S231819AbhJUO2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 10:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231408AbhJUO1m (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231424AbhJUO1m (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Oct 2021 10:27:42 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA207C061243
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:25 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id g39so884820wmp.3
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:25 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41921C061230
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:24 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id k7so1323273wrd.13
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 07:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1ZCSptOjl+/jnoWZRke7uwNpWpjV7OfsebHsXtMQsR8=;
-        b=J/kaGf36COKfpHqs/aTKfXo/WAuIeiZLnFwe0+GAVRyxti1vVxOrme4fZgmMxJ5uEx
-         kMX9o9REsmF1X62jpLzD0NC6HQxKwBLF5Dlu6CpTRxRZOZf04HzeTX7EIwNNpxNG+W1s
-         yB+CJ2t29mhrYnaFD8g8IkDwDKUiyrseplwIFlOWX1BGK7Gw3Nuk54C9XHVQ8wELcAvQ
-         lTTvMgvcmrRREA+lbAo+qUfkS7zAVVEG/NiFM4KCZGACW5/Klhg+f1CwtqXzTgtoFBrM
-         Zm22mo+jx5I7NOEontCsby4tJRlEyaQb3HpRcQPzdIJDpXV37i02QG9gMmJr78Xj5//D
-         U3pQ==
+        bh=BKYDjV95m/phfY7cx0ODjQfqbfbv9AMbr4AopT+7xzU=;
+        b=pHfuYzDSGvCopZWS/OAoCel72RQo7QIL6KTKjMdh1IB2OSLhD7HO7MKYUVbIBgEAgP
+         sFZeYObjbSen/iYv8wA0sIfpPAU0eqCVGQ/KjUIGD8y9+GOg2evcXEzARA9VoASiSTAA
+         1TPi7Iv788WNctLk9/6G3hejYHNpH7blklfqzaOiJMqlfwS0h9uRQ/ibUU3rFwQxwVZX
+         lC1KAksi9D2/pcMnp9g0ipMITs8/4/COtBdnNqsgl3mYASzvZ1R9jI5H8X3U5Jh8NuqW
+         sgP/ZfHUtlehJ2SxKoR7RqvsQhRQfytM/mG488qfXByzJZFmH/S9AwRm2Tacvl7c8fgo
+         +Y5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1ZCSptOjl+/jnoWZRke7uwNpWpjV7OfsebHsXtMQsR8=;
-        b=ZATGXu8+v2cgARO8C+bmYFukP7ys4DieaZ1abg7OOWHew/yVMnU8dG0NDXisvOX/H0
-         gWFw1Ch1hWFN8jMLqgeis2PjznucPFU9GIDzyKvtpR2G5Emy6gTHPc+HqAX4wRnjaz5c
-         sEiCmzmilJvK0fxmq/zVXrIiYToEu+cC04JhLGKYm1zKi/6es1HrzvgX8q99VBgfxlgm
-         rmZ395sHkSfy1fbEZKU12wZDLKuCBA+YJVfkc6HdWGI39kh18G61WyYuqg/V28sb7oXJ
-         52G/V9qPaKavf+r+x9Lg84KMTob+SHyI6Hz0J3LZYlROifm2yjbSybM031H+8lPnKl83
-         FCfg==
-X-Gm-Message-State: AOAM5322qdE1k6ErBxNDlfAb3pMCRsNqKnpvW5TT5nnzhF1Ada81UoBl
-        CeAXgjzXWMiRXTY4M0+OKvaUWuw5nyY=
-X-Google-Smtp-Source: ABdhPJxTpZ8xiM+BCnrGarXMPlqCE0a3KvvoMDvbto0t1jnHiPSyIid1qZ7MuKJfJFqe9IMqWjZeDg==
-X-Received: by 2002:a7b:ce1a:: with SMTP id m26mr4485987wmc.187.1634826324424;
-        Thu, 21 Oct 2021 07:25:24 -0700 (PDT)
+        bh=BKYDjV95m/phfY7cx0ODjQfqbfbv9AMbr4AopT+7xzU=;
+        b=5rNbAv0+ncUdyfOQT7owJsh/t5q0Fbur+yuhscfeUXl2kYuGY5mOApEeLGmOBajBVY
+         nUYVs0znHA+zQFPgq6OvfAQMYMR4UBd7bcbMRAymkGSGl3PxL5gZxWI8RgSDkBvFgvyj
+         U76foMg7IACxGqirdCl3QALhDyKy7WWOuaDxHP29JopL98b80uOEBbf02wVNH9Xe8HIO
+         mBtk+Ng0Aa1boSS0MlDHHUlqk826clvhNhdcoxz+jrsV0R0DZ0j999uy5DRdO2QW4VLW
+         ee6wACAm+bzf0FvSNo1ZaQev6/nDKZW7ckwnc+ffbE9wCzmBR022bTsQ9iB+vukNy3TU
+         MDjQ==
+X-Gm-Message-State: AOAM531Ijr8rGiJv4JYMw/eSy+1jTSKcUNzt4gCSgh9FPJfMrt5zUm2O
+        j2I5UmF7OH3VeCJiEHUdEWolc8RvHvo=
+X-Google-Smtp-Source: ABdhPJzd9tIs80KhcU/4ITbBSYSO2kslmKK8lqJqn+AhMVouCAG/+E42Z4cee0TPYZBFKMS9Yaz1eg==
+X-Received: by 2002:a05:6000:1549:: with SMTP id 9mr7855905wry.274.1634826322916;
+        Thu, 21 Oct 2021 07:25:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k17sm4937458wrc.93.2021.10.21.07.25.24
+        by smtp.gmail.com with ESMTPSA id t14sm5107893wrr.75.2021.10.21.07.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 07:25:24 -0700 (PDT)
-Message-Id: <4e96e0667ba51fafa7da110c55f691fd39a15d56.1634826309.git.gitgitgadget@gmail.com>
+        Thu, 21 Oct 2021 07:25:22 -0700 (PDT)
+Message-Id: <704d37d2033d423c5eecda6cd5b97aacaca130c1.1634826309.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
         <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Oct 2021 14:25:02 +0000
-Subject: [PATCH v4 22/29] t/perf: avoid copying builtin fsmonitor files into
- test repo
+Date:   Thu, 21 Oct 2021 14:24:59 +0000
+Subject: [PATCH v4 19/29] help: include fsmonitor--daemon feature flag in
+ version info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,41 +72,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Do not copy any of the various fsmonitor--daemon files from the .git
-directory of the (GIT_PREF_REPO or GIT_PERF_LARGE_REPO) source repo
-into the test's trash directory.
+Add the "feature: fsmonitor--daemon" message to the output of
+`git version --build-options`.
 
-When perf tests start, they copy the contents of the source repo into
-the test's trash directory.  If fsmonitor is running in the source repo,
-there may be control files, such as the IPC socket and/or fsmonitor
-cookie files.  These should not be copied into the test repo.
+The builtin FSMonitor is only available on certain platforms and
+even then only when certain Makefile flags are enabled, so print
+a message in the verbose version output when it is available.
 
-Unix domain sockets cannot be copied in the manner used by the test
-setup, so if present, the test setup fails.
+This can be used by test scripts for prereq testing.  Granted, tests
+could just try `git fsmonitor--daemon status` and look for a 128 exit
+code or grep for a "not supported" message on stderr, but this is
+rather obscure.
 
-Cookie files are harmless, but we should avoid them.
-
-The builtin fsmonitor keeps all such control files/sockets in
-.git/fsmonitor--daemon*, so it is simple to exclude them.
+The main advantage is that the feature message will automatically
+appear in bug reports and other support requests.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/perf-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ help.c        | 4 ++++
+ t/test-lib.sh | 6 ++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index f5ed092ee59..dc29df12fd5 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -74,7 +74,7 @@ test_perf_copy_repo_contents () {
- 	for stuff in "$1"/*
- 	do
- 		case "$stuff" in
--		*/objects|*/hooks|*/config|*/commondir|*/gitdir|*/worktrees)
-+		*/objects|*/hooks|*/config|*/commondir|*/gitdir|*/worktrees|*/fsmonitor--daemon*)
- 			;;
- 		*)
- 			cp -R "$stuff" "$repo/.git/" || exit 1
+diff --git a/help.c b/help.c
+index 973e47cdc30..708eed5d9ad 100644
+--- a/help.c
++++ b/help.c
+@@ -12,6 +12,7 @@
+ #include "refs.h"
+ #include "parse-options.h"
+ #include "prompt.h"
++#include "fsmonitor-ipc.h"
+ 
+ struct category_description {
+ 	uint32_t category;
+@@ -695,6 +696,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ 		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+ 		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
++
++		if (fsmonitor_ipc__is_supported())
++			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
+ 	}
+ }
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 151da80c561..4013ef8906e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1736,3 +1736,9 @@ test_lazy_prereq SHA1 '
+ # Tests that verify the scheduler integration must set this locally
+ # to avoid errors.
+ GIT_TEST_MAINT_SCHEDULER="none:exit 1"
++
++# Does this platform support `git fsmonitor--daemon`
++#
++test_lazy_prereq FSMONITOR_DAEMON '
++	git version --build-options | grep "feature:" | grep "fsmonitor--daemon"
++'
 -- 
 gitgitgadget
 
