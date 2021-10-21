@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B817C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC508C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A366610CB
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D05D4611CE
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbhJUL6S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 07:58:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45161 "EHLO mout.gmx.net"
+        id S231203AbhJUL61 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 07:58:27 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52649 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230354AbhJUL6R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 07:58:17 -0400
+        id S230463AbhJUL6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 07:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1634817360;
-        bh=RrIaipzplHXT8qq+x+oXD2qTRAlkXHe8TjQVQWzD1rk=;
+        s=badeba3b8450; t=1634817368;
+        bh=4ikZDTR4JcmC7tWx1/8IGuEQtxRwm+23CwJyJAP0XO8=;
         h=X-UI-Sender-Class:Date:From:To:Subject:In-Reply-To;
-        b=Mg4/FA577VzjwRj+oPjNHf+YfB08yefKSr31w7XMkhP51KQY0ef7kMGwZwzn7gVLP
-         cSRB6jYJq0hzFHwHBfidCejhnCTOb78UGLOZaCyiCvy3hILTEJ8FTFhPYbW8dG3d94
-         Z+fPD7btAj7JiUc0jnJ4cLknHvTC/zMNF+OJKCuw=
+        b=eVDR/6ThBopU86nibOdT4WiOOY67USk2gumpWzUWqXFrorIaHgLXnu/LLuucpFHDD
+         soGEgN+rXs71Fi2gJB8sMM53NmrhGmy+PUnfFJqWjYXp57p/X0cvIH133CXIjSK/J4
+         I4rO79pkBYXnsNd18u4elD6NCtPTOC0saTOGq5fg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.18.3.1] ([89.1.213.179]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTAFh-1mGfoV0zhH-00UeW3 for
- <git@vger.kernel.org>; Thu, 21 Oct 2021 13:56:00 +0200
-Date:   Thu, 21 Oct 2021 13:55:58 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDysg-1mVrBM0zbw-009xnI for
+ <git@vger.kernel.org>; Thu, 21 Oct 2021 13:56:08 +0200
+Date:   Thu, 21 Oct 2021 13:56:06 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     git@vger.kernel.org
-Subject: [Summit topic] SHA-256 Updates
+Subject: [Summit topic] Server-side merge/rebase: needs and wants?
 In-Reply-To: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2110211147250.56@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-140266036-1634815969=:56"
-Content-ID: <nycvar.QRO.7.76.6.2110211355380.56@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:gqQ1VoNwVo9Ycnd2NWVkqNz1jIRgOe24IzpxIOehAhbvSM9f7CI
- IZMHf4f1wi476JApdiRxAxE0ViTRIbwhxMDxKxy6/x4h0ye5uWyOOUcTknCtrY3vVVjmydD
- rneyvEogQRm3ZBoqZBRBitsOlrgy+QD3YJta3idBe71sapYXLPDX4T2RapJNSz7Gv6sL7GY
- /a2x1XxOa/5s6zpM3SUqw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:fef/juDtG7Q=:D8Kv5dogdU8tC3Pzznvm7g
- 4jh0nWu73R3cXXz/+vGsnRVLUXMlNc3Vrnr+kLXU57I/2WJhhzeSF0Y3rLWGfYe18aRhwNtON
- AsW+pvycx1oBp7OHDvyvrQITKkFsJce+nzzzjvYekIlcUqGLra0TGrSMpZ6vDsl3urlqctJ8i
- OhTqgG8Z3esa1MC/Ah8U1vFtbxy+lGmd1R72qBEeJaCPgJ+xeaUbFnY17oWGAg0bTWahYeMBk
- 3YaBIykHA020EICVKgZ8Wu7WFBAUGqq/fqAEije+vq2OFMX3yOnJd6P/rwBc+sZfKqZ0p8Z53
- W2iD+kfJHA3CkKcsBsOhD092sXykhSLAn8PRjFynvz88Btb99sp/nzDEs3Oswf3FloVjW3gEa
- tXyKcVESRQWxXi4KSQzkH6kEzu7qbdTVda6E+3qIrutT3Zw3xvxCOG2WVfsWm/Ucf9+5+BVeb
- ABjn5GFwNWJ+LOyrpyXSxpw7OPQK4X+2Yb5mJKLuYyDyemcTVUx7kKGNkx7Gt0KrAIxlAr1lt
- CcHF2thMEm9I0QwTZJUmsP4vksNWqkEp6SqBGSlVMB1u+b01PAT30b9QC/n8ZFXKoP/ZKyNMB
- UP7/NThmqRviiYbNoTRDB59OxCBo7fguzwrxjOpkM5GZUSge9b07ITVJ94K7qSS/TeeYRJISp
- v6eWs4UW9EVn8Ma+m6q7FyY2PAhvAeWoMl8eJLXY7cuV70yfV3xUh1v4vlBxlu2Pk+WF1P4yd
- 0cPT8zHCmSTggtqwrhTty+J1DWCgDnYLlJ76yIR8lj4THWPkJ3trWTmOUsjOOqkGBHagRsR7F
- xtPEsSV+S03yGHIYAETbKuiVzP9JaM92/4nk+R4L5p/UQFsnlt877wLEdPuhP3D7b+EY70Ivi
- QM+j1MDxhH6AQcH08jow9L2RSUzGMRZzNWB0u9AF9t8GWLfiFIiuKyfpzlVYQMLmW1A7ViAHc
- fNmySE3uFEHlAWRTwRslk0tov/qrzDekzxW0KjJkBX8EFTKfPQ4wINkpRQcE8i1SpwDIf7hOB
- u8RN5fUWq2jU5D1weKe2VA8P9SDNrRyveFLTAYFYgJQ5sbxiJwA0uhOiM3Vz3Yc1tnI7ORuhv
- lSJQWpU9YUuGvA=
+Content-Type: multipart/mixed; BOUNDARY="8323328-1937593683-1634816207=:56"
+Content-ID: <nycvar.QRO.7.76.6.2110211356020.56@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:dm504eGL5/KAyMyNPq3xYLYrKSWYB6eiwfalbUfHTqCmw3srWaP
+ L9mfWcVfbRnEIQNCCbwf9or7mj4ig88QBgofAzi3E4IVy8XKrOtsnxhUJVCxXf3rma2uPDx
+ 04COKvbeVKy9UPA4gj1GwiOWrQrbV8Rh7+6ouHANz+rHSsRatY0N5uOeyZ/DhJbfrOtZ2sr
+ HXfHy767LkJHK49Ob/3xQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SwQWg5uW+mA=:N4146iNzJ548nM+G+80lIk
+ X/l/onUYC+gnQlUpucquYCo/5i/OVMLZkGipgqcqq8J+Eh4IPGLai/KbQJvY+elRqRTKdwWig
+ 6Nua3KnaKuyevOf4g4zcrHflNGdft1NZdbgFWMGGW+0AtNsYMb4Ug+7JGzIzpREeU/q0qcTfH
+ LZLahP18s9UMoi2ZxzojyJNBEQg2EbrJUnzxNy01Eb6bOzzySl6FMfxprk4V1A/QxLB/KU0Dx
+ EQtvphzCypk1d35673WXBacvEBjdahUspeNIU6d9zWCzdtVi8jbX6yju8qfgfOsSLSPy22uM4
+ d2KNFrI6r1qdLZzI/9Jk8k18565dMlBO73VlJZP4smMnwmSgQ0lmpYn6OJ1qguOncEXxt+Ir4
+ HxWdozygDFZlsmLjMqXV27GfbL1yvjrz88shrYvZFG1q0dnV0pAb5xorgeBXZenURauTfGhgo
+ k1yNSbjdIkOaLv0lc2x3beHJ0TXYcCow7dGVnRLsqFZnjJw/7eFtFOOVx1LxiMmVbVx0hI8Y0
+ VlTiZf8ctD06Et9N0k+rPiiqpRz7CQZPjRS33BT0RtD4502oJb+nCjKAX31dWYcymje18EPcV
+ h4JKixY8JEpRXNTZyvhDyqSkaMq/+UxbgUj/cIarBRsMZc7GbU0N4jg5ZGvvfsLCvjrZpngve
+ pz7KxdJn6JUB0E/WGV758fwA2G0fCouLSk4XIk7R9cBet2PJeL4q9gIH+gUfOh2NTQdJcr7GP
+ Zmx6Z9DikCwzO5rM55H6796a2YFSB/+5AtIxMubZhobL7JBxIDHqp4Q0CgIhnxV1CF5/AC+Si
+ +DkmjXHTG2QLJoQzRP9UwJ0xsrA9Fo4Imdp4ewoXtjv2EYXQExEaSIHCYjtyJaKMjPrsZ6fMp
+ oEz+yI8FvLhn2UEgqD4qXfo8w2xtlAt1Y6ZwGlWByVMxIMrSb8z0wcjQ9LazIUUWQKdaXe+wE
+ 879eLfwFuiKjv+FxUzWUPFQHjOPcUYZ9kmOCJ23f2+q5mCji4MGzAzpBuPzJmvvEYvuEsU7Bk
+ NccVbDTy/j3Qq89YeM9pi5P2xP9cDn1fp7gsgBr0tlNcR7Py2LhRswa8563tWah013DGPVcwV
+ UiuFD8NnLnDrFI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -64,169 +64,193 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-140266036-1634815969=:56
+--8323328-1937593683-1634816207=:56
 Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2110211355381.56@tvgsbejvaqbjf.bet>
+Content-ID: <nycvar.QRO.7.76.6.2110211356021.56@tvgsbejvaqbjf.bet>
 
-This session was led by brian m. carlson. Supporting cast: Jonathan
-"jrnieder" Nieder, Derrick Stolee, Johannes "Dscho" Schindelin, Toon
-Claes, and =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
+This session was led by Elijah Newren. Supporting cast: Christian Couder,
+Jonathan "jrnieder" Nieder, brian m. carlson, Toon Claes, Orgad Shaneh,
+Johannes "Dscho" Schindelin, Derrick Stolee, Philip Oakley, Jeff "Peff"
+King, CB Bailey, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, and Phillip Wood.
 
 Notes:
 
- 1.  Summarizing where we are with what merged:
+ 1.  https://github.com/git/git/pull/1114
 
-     1. We have full SHA256 support \o/
+ 2.  Not about exposing merge over Git protocol, but about providing plumb=
+ing
+     for a server to use to run a merge
 
-     2. Some minor glitches, updated the docs to reflect that
+ 3.  Not only merge/rebase, but also cherry-pick, revert
 
-     3. It works. 2.30 is a good state.
+ 4.  merge-ORT makes things a bit better, as it doesn=E2=80=99t have some =
+of the
+     problems of the recursive algorithm.
 
-     4. None of the major forges support it yet but that will come
+ 5.  The challenge is not necessarily the technical challenges, but the UX=
+ for
+     server tools that live =E2=80=9Cabove=E2=80=9D the git executable.
 
- 2.  Interop between SHA256 repositories and SHA1 repositories
+     1. What kind of output is needed? Machine-readable error messages?
 
-     1. Take each object we receive over the wire or create locally and gi=
-ve it
-        a sha1 value as well
+     2. What Git objects must be created: a tree? A commit?
 
-     2. We have a giant loose object index that maps sha256-id and sha1-id
-        values. Hashmap
+     3. How to handle, report, and store conflicts? Index is not typically
+        available on the server.
 
-     3. Will be changed to some tree to allow prefix mapping
+ 6.  Use case?
 
-     4. index-pack has to take two passes over the pack, because you can=
-=E2=80=99t map
-        a commit before you=E2=80=99ve mapped the tree it points to (or mo=
-re generally
-        can=E2=80=99t map an object before the objects it references)
+     1.  Currently servers use libgit2 to do these algorithms instead of g=
+it
+         itself.
 
-     5. Fortunately blobs don=E2=80=99t point to any other objects so this=
- is
-        relatively quick
+     2.  What would it take for us to move the servers off of libgit2 and =
+onto
+         Git?
 
- 3.  Submodules are tricky
+     3.  This would help with a lot of compatibility issues (sha-256, new =
+data
+         formats)
 
-     1. They come from a different repository so we don=E2=80=99t have any=
-thing to map
-        to
+     4.  Server cares about the exit code to record the success of the
+         operation, including some details around which conflicts happened=
+.
 
-     2. What I=E2=80=99m currently doing is requiring that the submodule b=
-e present
-        locally and storing the mapping separately in the superproject
+     5.  MUST NOT WRITE A REF in-process (because of replication), so must=
+ be
+         at a deep plumbing level.
 
-     3. The mapping isn=E2=80=99t sent over the wire. That could create so=
-me complexity
-        around malicious histories
+     6.  How to restart the merge once a user has submitted conflict
+         resolutions?
 
- 4.  For the same reason we don=E2=80=99t have partial clone working
+     7.  Christian: GitLab also uses libgit2, would like to use C Git. Wan=
+t to
+         not need a worktree for scratch space.
 
-     1. Might require an on-disk format bump
+     8.  jrnieder: Write tree with conflict markers and report the conflic=
+t
+         (just a boolean), at least as an optional mode (JGit does this an=
+d
+         Gerrit relies on it)
 
-     2. jrnieder: taking a step back, the hash verifies the full history v=
-ia
-        the Merkle tree property.
+         1. Including when merging binary files, rename conflicts, etc whe=
+re
+            there=E2=80=99s no place to put the conflict markers
 
-     3. However, with partial clone we already relax this: it is no longer
-        verifiable, locally.
+     9.  brian: fail-fast mode. Present that a conflict happens very quick=
+ly,
+         allow conflict marker computation to be done later, upon user req=
+uest
+         or as a background job.
 
-     4. Therefore, we place a lot of trust on the server.
+     10. Toon: GitLab would love to use merge ORT, and collaborate on it
 
-     5. The server could tell us more information about the edge commits, =
-e.g.
-        SHA-1<->SHA-256 mapping
+     11. Orgad: In case you do have conflicts, does a mergetool-style fron=
+tend
+         want the three competing versions?
 
-     6. Stolee: if I am sha256 client, that=E2=80=99s what I want, you kin=
-d of decide
-        up front what you want
+ 7.  Dscho: there=E2=80=99s a little-used =E2=80=9Cgit merge-tree=E2=80=9D=
+ plumbing command
 
-     7. jrnieder: at $DAYJOB common partial clone scenario is triangular
-        workflow
+     1. jrnieder: it=E2=80=99s a low-level doesn=E2=80=99t-resolve-conflic=
+ts thing, but nothing
+        forces us to keep it that way. Intriguing idea
 
-     8. Stolee: how likely are the multiple hosts not homogenous (all SHA-=
-1, or
-        all SHA-256)?
+ 8.  Difference between rebase and cherry-pick not all that big, apart fro=
+m
+     looking at HEAD (which does not make sense on the server-side)
 
-     9. brian: Valuable to be able to work in SHA256 and refer in input+ou=
-tput
-        to SHA-1. If someone refers to a SHA-1, you still want to be able =
-to
-        see what they=E2=80=99re referring to, to interact with other peop=
-le, even
-        though SHA-1 is insecure
+ 9.  --onto already strains the concept of the rebase, should maybe not be
+     implicit.
 
- 5.  Multi-pack index: doesn=E2=80=99t work, but won=E2=80=99t be hard to =
-fix
+ 10. Stolee: Think about future extensibility: e.g., servers might want to
+     support --autosquash
 
- 6.  We write signatures for both objects. When you =E2=80=9Cgit commit --=
-gpg-sign=E2=80=9D, it
-     can sign in both formats
+ 11. It would be nice to rebase multiple, interconnected branches at the s=
+ame
+     time. But how to specify that?
 
-     1. Verifies in current format
+ 12. Dscho: I have this problem quite often with my many stacked patch ser=
+ies
 
- 7.  Timeframe for hosting providers moving to SHA256
+ 13. I use --recreate-merges (uses =E2=80=9Clabel=E2=80=9D command), creat=
+e refs along the way
 
-     1. Dscho: should we have a multi provider meeting and coordinate that=
-?
-        Could be everyone waiting for others
+ 14. Philip: I also rebase with merges and then run a script after the fac=
+t to
+     update refs
 
-     2. brian: cgit supports SHA256 already, allows self-hosting
+ 15. Peff: I do something lower-tech. When I have branches depending on ea=
+ch
+     other, I set the upstream config. By doing rebases in the right order=
+, the
+     right thing happens.
 
-     3. jrnieder: with interop, individuals can use SHA256 against servers=
- that
-        only support SHA-1. Then that creates pressure for the servers to
-        support SHA256 for performance reasons
+ 16. CB: This feature sounds really exciting, often develops parallel,
+     semi-independent changes that only come together in an octopus merge =
+at
+     the end
 
-     4. brian: interop doesn=E2=80=99t exist yet. If GitHub decides I work=
- on that for
-        the next two months, I think I could do it. But requires the code
-        getting written.
+ 17. Jonathan: Newcomers sometimes put commits that don=E2=80=99t belong t=
+ogether on
+     the same branch; I wish there were a smooth way for them to just =E2=
+=80=9Cdrag
+     over=E2=80=9D a commit, which we don=E2=80=99t currently have because=
+ it involves multiple
+     branches. Cheering you on.
 
-     5. Toon: we at gitlab have sha256 on our radar, but with a very low p=
-rio
-        https://gitlab.com/groups/gitlab-org/-/epics/794
+ 18. cherry-pick in the middle of an interrupted rebase
 
- 8.  jrnieder: Signing: very old Git versions won=E2=80=99t know to invali=
-date them
-     when I commit --amend. How old is =E2=80=9Cvery old=E2=80=9D?
+ 19. If we unify them, then this gets messy
 
-     1. brian: somewhere between 2.20 and 2.28. In 2.20 started treating
-        everything with =E2=80=9Cgpgsig=E2=80=9D at start as a potential s=
-ignature.
+ 20. Dscho: I=E2=80=99m a strong proponent of being able to cherry-pick wh=
+ile you=E2=80=99re
+     rebasing. But I=E2=80=99m also missing the ability to do an interacti=
+ve rebase in
+     the middle of an interactive rebase. I implemented a nested interacti=
+ve
+     rebase in the tooling for Git for Windows, which works by prepending =
+the
+     current interactive rebase=E2=80=99s todo
 
-     2. There were a couple of bugs I fixed in 2.30, working on signature
-        interoperability. Tested with sha256.
+ 21. Peff: That works in that context, but is not fully generic (no way to
+     --abort / --quit). Would want a stack of operations. I have a command
+     called =E2=80=9Cgit continue=E2=80=9D that continues whatever operati=
+on is in progress.
 
-     3. Updated the transition plan: in tags, the trailing signature is al=
-ways
-        the current signature, other ones go in the header.
+ 22. Once we have every high-level operation pushing / popping like this, =
+that
+     kind of thing becomes possible.
 
- 9.  Updating other hosting provider glue to support sha256
+ 23. Toon: I have that too, also =E2=80=9Cgit abort=E2=80=9D
 
-     1. jrnieder: e.g. GitHub API, UIs, =E2=80=A6. Is it hard, similar to =
-the Git part,
-        or a little easier?
+ 24. CB: =E2=80=9Cgit abort =E2=80=9D is slightly terrifying, we started w=
+ith git shell and now
+     we have git forth :)
 
-     2. brian: hardest part is libgit2. Lots of hardcoded oids in its test=
-suite
+ 25. Dscho: could standardize on the git-rebase-todo script and add suppor=
+t for
+     other operations, tricky bit would be how to implemented nested comma=
+nds
+     in an abortable fashion
 
-     3. Libraries tend to be the hardest piece --- e.g. Gerrit will need J=
-Git
-        updates
+ 26. =C3=86var: would be nice if these are pushable/sharable
 
-     4. Dscho: gitk also has some references to hardcoded 40-length
+ 27. Is rebase the right top-level command?
 
-     5. =C3=86var: some patches on the mailing list for gitk and git-gui t=
-o adapt
-        them, from Carlos
-
-     6. brian: hopefully the ecosystem learns from this experience and doe=
-sn=E2=80=99t
-        just hardcode 64 here :)
-
- 10. Interop code only supports 2 algorithms. Hopefully finish this transi=
+ 28. Phillip Wood: for refactoring history, would like a different abstrac=
 tion
-     before we need the next one :)
+     from rebase
 
---8323328-140266036-1634815969=:56--
+ 29. I have a script that does that which works well
+
+ 30. jrnieder: https://github.com/arxanas/git-branchless has some non reba=
+se
+     based history manipulation helpers as well, can be useful for inspira=
+tion
+
+ 31. Elijah: I=E2=80=99m thinking of a =E2=80=9Cgit replay=E2=80=9D comman=
+d
+
+--8323328-1937593683-1634816207=:56--
