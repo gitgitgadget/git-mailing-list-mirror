@@ -2,95 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A16F0C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 08:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BBBAC433EF
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:32:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AF2E61038
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 08:48:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DBCE60C4D
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbhJUIuS convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 21 Oct 2021 04:50:18 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:38643 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231334AbhJUIuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 04:50:17 -0400
-Received: from PCBehncke ([90.187.203.89]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MXGSU-1mCa0o3Q0k-00YhBv for <git@vger.kernel.org>; Thu, 21 Oct 2021 10:47:56
- +0200
-From:   "Florian Behncke" <florian.behncke@elektro-stuhr.de>
-To:     <git@vger.kernel.org>
-References: 
-In-Reply-To: 
-Subject: AW: CoDeSys Git Sale
-Date:   Thu, 21 Oct 2021 10:48:16 +0200
-Organization: elektro stuhr gmbh
-Message-ID: <005401d7c658$63e4ce00$2bae6a00$@elektro-stuhr.de>
+        id S231139AbhJULe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 07:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53734 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230313AbhJULeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 07:34:24 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75857C06161C
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 04:32:08 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id g10so155455edj.1
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 04:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/ndP+fALsdkrBvFWyXH6tHFNEaB94bsTUaeBqVayB7M=;
+        b=CxY7Edi/HzkC/BbMdoYlY2D8Brbtad+rlymAHkg3Dk0JVpfot3WcetpbkAjtV3RUh4
+         TvJdopOsb4+sEGjimilZkFVeV2+h6/3g8aXrOGZKNyAW7UPXtX+T3de/o2RWrk4e4V8c
+         PgFUdBxWNSBH7lPsv7lbz+3Wdz1EGv8cigB9m4xil0D+wOLjlMFU7HbKLdVOXeiz1kkz
+         dWpUjcnsK6JN3wcBMQ7QDWLSyuIjJ1dGDYvQVkr2pYItBw5q5bxWVpTdrE07mVkx4VMV
+         oAD8Syp2gIOY9Yqd0ljUceDsRb4jbp4opYKjrM+Ubv3MLvBRJwEzQB8ZS8M1lBV0Y1KM
+         SEGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=/ndP+fALsdkrBvFWyXH6tHFNEaB94bsTUaeBqVayB7M=;
+        b=tn3/nWpnc9HpHo6QsFen0K8JrC65x/xRkGYiY5IdLnQosX81sRs4f1EEtHIjjb9DmM
+         ylXwnJdn1EukfBqoJD726sCZmEvqe3A5yGL0SWPT0uFFnJm2lEHAS63EPonjlkmbcLsi
+         M0jDpuQNMFqUz/wbZNJEVKB2g30DfP31+o9AWbikwpKf+qGycYXrFUYOFLajIgutqQSz
+         GUqLUlXTiDccKNDx6w+HlR71jplCsYB9mEtTN3n1fllrNlYZ4PNyBd45aZk0NPVRyTMB
+         E+aSz1glr2fQJlSTMC2aPF2MKpKMSU5WB6am3g0y4fc9HSvT2s9rwvKKTEgdn9nyRg58
+         jwdQ==
+X-Gm-Message-State: AOAM530MZWF2ZhBgRjDaRF5dgQyxidXW0ewy4rnWX4y0RDBcsbpaLXEt
+        5N0cm4kZ288iHcx+W/pJ53M=
+X-Google-Smtp-Source: ABdhPJyxQx8Z0KrN/58kRTWS5Qp9MAtNAlFXyMz8gP1WS5AFJNMvO7aQU+FAYqmKFg6HIKqb4E6mfg==
+X-Received: by 2002:a05:6402:51c6:: with SMTP id r6mr6780288edd.276.1634815926879;
+        Thu, 21 Oct 2021 04:32:06 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e30sm2371129ejl.117.2021.10.21.04.32.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 04:32:05 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mdWIm-000yrB-Vz;
+        Thu, 21 Oct 2021 13:32:04 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
+Subject: Re: [PATCH 10/11] pack-bitmap-write.c: don't return without
+ stop_progress()
+Date:   Thu, 21 Oct 2021 13:31:13 +0200
+References: <cover.1634787555.git.me@ttaylorr.com>
+ <cb30aa67c0023c435cf472303bbf4894c8b2d7ec.1634787555.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <cb30aa67c0023c435cf472303bbf4894c8b2d7ec.1634787555.git.me@ttaylorr.com>
+Message-ID: <211021.86ee8emx57.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIPWjrXPL49I74Wn+b7W3vTo+M5X6tt/EGQ
-Content-Language: de
-X-Provags-ID: V03:K1:6G9nQ6fgSe5QuL8dc9z7UIgJGPphI3Y9CSGxZ/ew1ofsvCwIzmj
- uv0qxauDxr6JvvaChZ+p3VAm08z4iblgyV1RWa/hVsTck8GnY4oAYs4lcUUc89ag6IC0q8R
- RCWtqDCc/hD/64gcppFacYJ+E8ogSAOvbFZPB8sErRozzNh1+j82bXz1qSfnuY/4XG58LSa
- Au3RV+kQy87O5o8KMcWNw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5sH3q06FoxU=:ylr2PCOzwoX415KzioNVIA
- l7g4pDQa3jlXFI0XysguJKmq7gpmA/nIHjQ+yxWPxxvDkEx8bkz1FA8pOm0pYsQPtC9XveBPU
- 0k/apgVGtBWInkw9IcKVCIpBXPWRZgy1mVj0Y7AP1Xu6n5amqKF4Bu2kR9mTreGYVb0Xot8BW
- B9PF8KVvFirHghNXxUrhdquhNmetefDIOejQQ5jjNpfGcvECSsYPcATuu+h3p6kysXIUyA/aS
- fsRnLMYAbx01XHLxNvDJPY3rCDkaHcahWWDGsokkMCFPGh4nBchYA80Ps8aHBnAXmneTp5Wy3
- ByXFx4Z47HfAlwL6uFqtFoqNLJj0qyiEfJYoQnWeyaLKo+x2RNAtAX3zUEN0Q44O3kX/CBJPG
- UZX0lD2XCauE10FAaaeVGufoeLwVCiMpDo+JMt7X10e5qFjay4PIn65qCr4Arj0T/ZFp/+/x2
- Oq9fGRaaiedoQGNN7QqPvlP8Ev3TXlod/DakwUblZYxr7sQj6QDwPCoHvN3H0Xf1HNA10TiVL
- y8QBgJU8H6pGEPlodh2xLb+dp8kWripuTGJlSnl0WaKxmnLWDJ2zHBRXH002loKAwLZkFLW2Q
- D8v012nZN7SpShyFLRQQRQIqLjUAjEFc0OrvUPKQeB1m3owoU1Td29Du4TYwuY+zM7uPwwnD4
- sCUyYPN7VKq4AXZIuAbMcJ3RCRpgdkJO6R2rgsnjePu9aY1R8Jgfq/nL0DFfCZPt6jBlp9YRE
- XUF2vyqz9Ju9gd4w
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Wed, Oct 20 2021, Taylor Blau wrote:
 
-Von: Florian Behncke [mailto:florian.behncke@elektro-stuhr.de] 
-Gesendet: Donnerstag, 21. Oktober 2021 10:41
-An: 'git@vger.kernel.org' <git@vger.kernel.org>
-Betreff: CoDeSys Git Sale
+> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>
+> Fix a bug that's been here since 7cc8f971085 (pack-objects: implement
+> bitmap writing, 2013-12-21), we did not call stop_progress() if we
+> reached the early exit in this function.
+>
+> We could call stop_progress() before we return, but better yet is to
+> defer calling start_progress() until we need it.
+>
+> This will matter in a subsequent commit where we BUG(...) out if this
+> happens, and matters now e.g. because we don't have a corresponding
+> "region_end" for the progress trace2 event.
+>
+> Suggested-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  pack-bitmap-write.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index 9c55c1531e..cab3eaa2ac 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -575,15 +575,15 @@ void bitmap_writer_select_commits(struct commit **i=
+ndexed_commits,
+>=20=20
+>  	QSORT(indexed_commits, indexed_commits_nr, date_compare);
+>=20=20
+> -	if (writer.show_progress)
+> -		writer.progress =3D start_progress("Selecting bitmap commits", 0);
+> -
+>  	if (indexed_commits_nr < 100) {
+>  		for (i =3D 0; i < indexed_commits_nr; ++i)
+>  			push_bitmapped_commit(indexed_commits[i]);
+>  		return;
+>  	}
+>=20=20
+> +	if (writer.show_progress)
+> +		writer.progress =3D start_progress("Selecting bitmap commits", 0);
+> +
+>  	for (;;) {
+>  		struct commit *chosen =3D NULL;
 
-Hi,
+Looks good :) Just a note that this is in
+"ab/only-single-progress-at-once" already in case you didn't spot it.
 
-I just saw an offer from the CoDeSys Store. They offer Git for CoDeSys. Without license it won’t run. So, they sell your software and I’m not sure if you know about this.
-https://store.codesys.com/de/codesys-git.html
-The only license I know is combination license for 500€
-https://store.codesys.com/de/codesys-professional-developer-edition.html
-
-Best Regards,
-Florian Behncke
-
---------------------------------------------------------------------------------------------
-elektro stuhr gmbh - Langenfelde 18, 23611 Bad Schwartau
-Tel.: +49 451-29205-13
-Fax: +49 451-283532
-Email : mailto:florian.behncke@elektro-stuhr.de
-Website: elektro-stuhr.de
-
-Sitz der Gesellschaft: Bad Schwartau; 
-Handelsregister: Amtsgericht Lübeck HRB 567 BS
-Geschäftsführung: Peter Bode, Stefanie Spieß
-------------------------------------------------------------------------------------------- 
-
-important Note 
-This email and any attachment hereto are confidential and may contain trade secrets or may be otherwise protected from disclosure. If you have received it in error you are in notice of this fact. Please notify us immediately by reply email and then delete this email and any attachment from your system. Please understand that you are not allowed to copy this email or any attachment hereto or disclose its contents to any other person. Thank you.
-
-Wichtiger Hinweis 
-Diese E-Mail und etwaige Anlagen koennen Betriebs- oder Geschaeftsgeheimnisse oder sonstige vertrauliche Informationen enthalten. Sollten Sie diese E-Mail irrtuemlich erhalten haben, ist Ihnen dieser Umstand hiermit bekannt. Bitte benachrichtigen Sie uns in diesem Fall umgehend durch Ruecksendung der E-Mail und loeschen Sie diese E-Mail einschließlich etwaiger Anlagen von Ihrem System. Diese E-Mail und ihre Anlagen duerfen weiterhin nicht kopiert oder an Dritte weitergegeben werden. Vielen Dank.
-
-Ausschlusserklärung (Disclaimer):
-Wie Sie wissen, können über das Internet versandte E-Mails unter fremden Namen erstellt oder manipuliert werden. Aus diesem Grund sind unsere mit E-Mail verschickten Nachrichten keine rechtsverbindlichen Willenserklärungen.
-
-As you are aware e-mails sent via internet can be recreated or manipulated by third parties. For this reason we do not send legally binding declarations via the internet. 
-
-
+That series is marked for "next?" (with a question mark) by Junio in the
+latest what's cooking, so *hint* *hint* for any last minute review :)
