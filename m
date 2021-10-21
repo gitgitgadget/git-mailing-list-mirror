@@ -2,124 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED11C433F5
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E20DC433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:55:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2CC561052
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:42:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54422611CE
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbhJULow (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 07:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbhJULow (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 07:44:52 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D566C06161C
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 04:42:36 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 193-20020a1c01ca000000b00327775075f7so1030656wmb.5
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 04:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=abNkJrXAuy23zLg39gbf4J9JXqhpdmTrmoN5kFo/M8M=;
-        b=lo4uzbRC5W0XlfY2lWnOghHMtnL7sXoUKadlfa92SralutnlK7ynjnUr2KYYVJ3uQ/
-         kP81a6hQusMnd5IBaMA1l3GBzZyiJhT5MRWuKidj9r1cvjOqFw2mtPinSAlw6H05W1He
-         1mneKVbMRRAwNW+8GrbQT6MoDJswciwdMjdYRwGo/MPe8kRdRSrtddkQ/FBtqfyfY/IZ
-         5+TUHhP+w0C/uE0+ZH13D3IGVgXO+l2GY702DYGZAboELzsFzAyzUtZbpnapFE8Az/af
-         5iyjqptHG9LtKEsaXEYkDFdFu9Qh1dlrwQKyjgNSa5xWKMrOzECrxD+jwvZwDOFw+rmZ
-         ojKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=abNkJrXAuy23zLg39gbf4J9JXqhpdmTrmoN5kFo/M8M=;
-        b=V4i2fdj2xHBIwSRO9BnBMYkNCtJVGfGGhv8LJRraf29rEA+SKKLHx2+BhNvxNooykI
-         EgVK4aQmu2D1KRGQHsSKMzDsCMpIC5hkSADwbTDzl5OjmTzbCR+UZwN2FXQejglyGBmA
-         KBhb85AxgA5CYvoJGRDllbIPkXZUDopfC9Tl97mBOgWl2tHwcenWACq6Vq0LgxuuPx2F
-         B5hw+cUEn4Q6ghVC3i/UfwEwEAtSFAwk06loNkf4Ngh8XH90nAq/a3bIiDLs4PErN6+h
-         UkT4nNGfRItj+lABGUjBctTsrbTR3c84nidwRTLr7x1S1ZK1EqQV7ki4P1qpX9Suanw+
-         lRdQ==
-X-Gm-Message-State: AOAM533DjlQwaGSpYBuCfHvpr6BP2PKnV6Ixcj+E0gfZTEphVEHQAFCl
-        ODAUbKj5rwJ5B0H78eZ18zSegyZlS81sQA==
-X-Google-Smtp-Source: ABdhPJxLhfYBNvYJphW4d8E+spkFclqvQP9BSiH6VAuuWn5ad6QB3nElrTW5nUyLvo9NxJuo3H0FVQ==
-X-Received: by 2002:a05:600c:4f42:: with SMTP id m2mr20576531wmq.82.1634816554445;
-        Thu, 21 Oct 2021 04:42:34 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r5sm7446928wmh.28.2021.10.21.04.42.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 04:42:33 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S230413AbhJUL53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 07:57:29 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53673 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229765AbhJUL52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 07:57:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1634817312;
+        bh=OpaDr+k3Uaxi7OOftuaUH937F0ICltPdyjQpmww/5W4=;
+        h=X-UI-Sender-Class:Date:From:To:Subject;
+        b=UyBVUDYsddSt8QMGzu11jGebZqn1ZiQz2xfRgACWV/wSuI4HKlAx0kM2bW7qMVKuJ
+         pLDvE25ZI6fWyMJA8iHOGECY+kusgotopawEX9sD54DbKEXJb4anpfZKSbMyEKIXh/
+         YmOg3d/gkzSAiaB2oOvqFFaZ9JDZDBMebK9PIUW8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.3.1] ([89.1.213.179]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8GMk-1mi0oq0Bqi-014FIT for
+ <git@vger.kernel.org>; Thu, 21 Oct 2021 13:55:12 +0200
+Date:   Thu, 21 Oct 2021 13:55:10 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] leak tests: free() before die for two API functions
-Date:   Thu, 21 Oct 2021 13:42:29 +0200
-Message-Id: <patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.1.1486.gb2bc4955b90
+Subject: Notes from the Git Contributors' Summit 2021, virtual, Oct 19/20
+Message-ID: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:d55sF0O0XE1kJqtXri0P6ZggwTnDIN6Mb/G8Uu63gVMPCnoCfb+
+ YDWLteIB7432NN6kS1o+yENnZU17EekZKhrp6v1T/Do9R6NtWjn1KzXFIYvjX0M8nFNFJwX
+ Z/6bg6qgj7FeYq86InnkZgQaUAssTqIzTiX2lTyyukKNcOOAD7viQ/hKd9J5ATjItzWGlRA
+ 5mjoE94dlgSi5b25lp7Eg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5S7Qx+AvFfM=:iMjBDmh2s0qiATQPot9kJ+
+ WNmCo9905tx5exuU49j9aMF/vaqIwqOHRx1S9PshISCi6xz7mgF/02AJys7t2e6DZWa0UYCgR
+ aQDbMgkl6VJz1QMvJQwwV9v3ZhU9Fb55O5G54ivWoh0Hq7PtdFohPEzC8tBSxeafaPxJvJBLO
+ LCHEQnaDafozTh+MwFNOrG2RtY/SjNny6sqobUm5yRBKvERE9JyOgcIAgiSrlOQyDk5JmC+2Z
+ DDrlmoHbcbp7ZIB6kXKLQPtf0w7yCBDiELyfnzarVaYzmt/B+Z7pcxfCe+DCXz5WD4yUKAMv7
+ Y+B+tCP7u44f8wCdltsJReqfdyHBhgLVEo2hj9S9d8NrTu4by+aJwHCoEOyhnsY7XnnnpIXEj
+ X1x24RdxMgfixdTnuYJm9YAUsND03MMd5tRRn3Y19xTf+yHN8O5BgpxDtg6RYfHvJQJR9Jy0t
+ Bht5JDAwZ+7jhq05NllTmlFJk0EFW3ASMYhqL8R9pxhcN5q5aU21XHPMKbaQY8OHPo9+rH0RM
+ 1hxmscXNxmjBNE2r/mhtpi3jlo9SQQBflCWyL5XI9OFUAfulnvEyhb2ncov4JpPQHr5Nq9S8H
+ 3pZiXnHvlMjIVxYMeqjm35ChbKyOsykBYj+mWmDEN/o4fp0db8ZkAyJxxxZ1U/YQRPRD3vRFr
+ HNbWNZ8zCt5hhhTu4HbbmRPhXMY1DzmTmDheQ7+1NXMS1OHu981Zc3XWyNPfOi9cIxWi8pjNv
+ gNWYSAVPifMpRlEw1icC2FiCHCk4dF+XW9xtGFxG0EYegXM/niP7jKzYZGLBkZcL2iHtaa/LB
+ aXlA0msdk/oPeX1yqf20HrAFQEO2V/AwWCsdMwz3MQZt26FmIxUw5KOHqpmz3XJUND+k9GPyK
+ wsk90TwrUI7SfVJG4IUbhvsHTaMHltTwV7aH6ZX5X/0r9uMWcO2R4ColHGBRI6tNNRiVc58WX
+ y5D2S0KJznCqua1yj8bT9BlGwh73SlTLSaZGi6tYFDHdclVf3gVCWc9iwYiuzMXJ9hphxByiH
+ 0jZP3LhgiLnCstVa7oFT/PFFUkOGZi875xzWvoTt5FTX+kNVyEQzklB1Q6RTAMYHQjleXsVrn
+ iAAeUtkq5e5P0Q=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call free() just before die() in two API functions whose tests are
-asserted under SANITIZE=leak. Normally this would not be needed due to
-how SANITIZE=leak works, but in these cases my GCC version (10.2.1-6)
-will fail tests t0001 and t0017 under SANITIZE=leak depending on the
-optimization level.
+Team,
 
-See 956d2e4639b (tests: add a test mode for SANITIZE=leak, run it in
-CI, 2021-09-23) for the commit that marked t0017 for testing with
-SANITIZE=leak, and c150064dbe2 (leak tests: run various built-in tests
-in t00*.sh SANITIZE=leak, 2021-10-12) for t0001 (currently in "next").
+we held our second all-virtual Summit over the past two days. It was the
+traditional unconference style meeting, with topics being proposed and
+voted on right before the introduction round. It was really good to see
+the human faces behind those email addresses.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- config.c | 4 +++-
- refs.c   | 5 ++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+32 contributors participated, and we spanned the timezones from PST to
+IST. To make that possible, the event took place on two days, from
+1500-1900 UTC, which meant that the attendees from the US West coast had
+to get up really early, while it was past midnight in India at the end.
 
-diff --git a/config.c b/config.c
-index 2dcbe901b6b..93979d39b21 100644
---- a/config.c
-+++ b/config.c
-@@ -159,11 +159,13 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 	}
- 
- 	if (!access_or_die(path, R_OK, 0)) {
--		if (++inc->depth > MAX_INCLUDE_DEPTH)
-+		if (++inc->depth > MAX_INCLUDE_DEPTH) {
-+			free(expanded);
- 			die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
- 			    !cf ? "<unknown>" :
- 			    cf->name ? cf->name :
- 			    "the command line");
-+		}
- 		ret = git_config_from_file(git_config_include, path, inc);
- 		inc->depth--;
- 	}
-diff --git a/refs.c b/refs.c
-index 7f019c2377e..52929286032 100644
---- a/refs.c
-+++ b/refs.c
-@@ -590,8 +590,11 @@ char *repo_default_branch_name(struct repository *r, int quiet)
- 	}
- 
- 	full_ref = xstrfmt("refs/heads/%s", ret);
--	if (check_refname_format(full_ref, 0))
-+	if (check_refname_format(full_ref, 0)) {
-+		free(ret);
-+		free(full_ref);
- 		die(_("invalid branch name: %s = %s"), config_display_key, ret);
-+	}
- 	free(full_ref);
- 
- 	return ret;
--- 
-2.33.1.1486.gb2bc4955b90
+I would like to thank all participants for accommodating the time, and in
+particular for creating such a friendly, collaborative atmosphere.
 
+A particular shout-out to Jonathan Nieder, Emily Shaffer and Derrick
+Stolee for taking notes. I am going to send out these notes in per-topic
+subthreads, replying to this mail.
+
+Day 1 topics:
+
+* Crazy (and not so crazy) ideas
+* SHA-256 Updates
+* Server-side merge/rebase: needs and wants?
+* Submodules and how to make them worth using
+* Sparse checkout behavior and plans
+
+Day 2 topics:
+
+* The state of getting a reftable backend working in git.git
+* Documentation (translations, FAQ updates, new user-focused, general
+  improvements, etc.)
+* Let's have public Git chalk talks
+* Increasing diversity & inclusion (transition to `main`, etc)
+* Improving Git UX
+* Improving reviewer quality of life (patchwork, subsystem lists?, etc)
+
+A few topics were left for a later date (maybe as public Git chalk talks):
+
+* Making Git memory-leak free (already landed patches)
+* Scaling Git
+* Scaling ref advertisements
+* Config-based hooks (and getting there via migration ot hook.[ch] lib &
+  "git hook run")
+* Make git [clone|fetch] support pre-seeding via downloaded *.bundle files
+
+Ciao,
+Johannes
