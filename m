@@ -2,217 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC994C433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 13:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14B93C433F5
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 13:32:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B221E611CE
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 13:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E017161038
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 13:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbhJUN2i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 09:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52800 "EHLO
+        id S230283AbhJUNeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 09:34:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbhJUN2i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 09:28:38 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35EE2C0613B9
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 06:26:22 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id h10so598793ilq.3
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 06:26:22 -0700 (PDT)
+        with ESMTP id S229952AbhJUNeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 09:34:36 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C60C0613B9
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 06:32:19 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id d125so968964iof.5
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 06:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yeQnfSTl7pAT/Z/rQvKYHSWE+SRp1yfWdAg/OJ1LvL4=;
-        b=IWtU4u3Zj1a8zXqcG5LnyJ43/NTN5HTGUo2PFMCjUPmhdQR2Ili4NbQN6yKJMnvTOO
-         fOCJvU/FIRuF5FNaDVSrKbdD8eZiMKh19NMFldRvMLy/r0xDkwzzCTe5a6HTuPL27I27
-         4tDTb/DwGt8LloQWIqi5h6EBk9uWYYsTE6b7yHCgDu1GXmkx5zYiT12KSh6MnZJzX656
-         9H8+FEL0uuD3xWzWacU3Btqh6KSQPuXf0lS+V6QAnxGE1FCT8bv3A+GSsQnOIYF4BSyZ
-         Ptc87y6PE8vszdZVnUKgj4ZODfkFNx3iEKqWTQH2+jFCzQucndcITPo/rvjc6ZEu3S6/
-         tM2w==
+        bh=0LCF9Mm6ku5jnHQulJiTlc3Yb4nCgVkPWfOx9PLgptQ=;
+        b=UPbEs+tVV8d9LjZ8M/4SlMHcVzqy8Ccq0rY8/5OrP5u013+zpRO6VV58nbjHpV/Ypu
+         ZDrsStBvCiE+eGe8xNa5aaaqZwNDex0jofvzXYGJU3VXcj/ELS2Lrg+eW8hEMZEOrqRn
+         6RUCuAQ/Xz4aqtyUkJGgGoeIrG3BOuRQbhksxpw3Ss9F7vVTTkGyQoKIzX10rcucWCg2
+         1xtaRI+pBpYo0VttVhUmLVd3Rk20JNjS88wVbG3k1KNpoqZ7qrUGscxB0xpctb4YMiJc
+         dcVTnv2TsrMTUkf0DQcI0btT+VaQKG1/LNvH3QIL96u85CJ5bCQRy9dJs+K3XruW/kku
+         vniw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=yeQnfSTl7pAT/Z/rQvKYHSWE+SRp1yfWdAg/OJ1LvL4=;
-        b=T0XshwjTP+g9C9+ubhUxLwvL7B3xycXl9dyzHD5OWfkW73KsUysiaZzJcR6cT64NXp
-         Ga4mLwKKWPuYPxqsdpAMs+hDnLPlKZtS9e1HDmRn7G3u+IlYl1kA5hiWsQiVMFIctuUu
-         Qe1j0zlDAhnx25qp3X8SC13dCHH0UF5gAwgjQE0CyIcy0/2lyTNBUWrmOE8jw3Ni7917
-         Ij6VfGzMkhnoSa2JvNWEquHU8sQmDYnq3Zse0RrpJoSNnzKigr7AoXO6Iy78Xvltn1se
-         d2BHF5CJoclBTuTAeoXKB/sphByT2Fc9H6/tDDUaY+OLbZQwlNnWw4fnVXZ6oIgDBMxu
-         1NtA==
-X-Gm-Message-State: AOAM530SPy/RxGHTjIsLQ5oa9/uWyz2rvmTmMukWGYXdP0oWbrtmShWN
-        5mXAUbFtSvVZZVPoBOMAQmY=
-X-Google-Smtp-Source: ABdhPJwvreEhfrd8FgYfCkLvJAaaOFdDxzYMArmLqgi/IAcUEcQiKkU0nT/DUO0J/f9kluSMzXjyRw==
-X-Received: by 2002:a05:6e02:1c08:: with SMTP id l8mr3702672ilh.137.1634822781472;
-        Thu, 21 Oct 2021 06:26:21 -0700 (PDT)
+        bh=0LCF9Mm6ku5jnHQulJiTlc3Yb4nCgVkPWfOx9PLgptQ=;
+        b=CReMOkclUAPR34ucM76Ee9peUzw2ZEhlfJruxvCiaB5ixvbQ/hszMpNv3lGhKg3wo0
+         dReRMBVlXF6EnjZfLSR+ITbFSgIBBEuBtSCCF6iiC6zP1DafMOTCVAGgkkgBnlITgdRT
+         7HGpcn1FaGyslfLTyiysmyEha4RRe5T6C1KS+09WWZwROwST4WXgIQcrQZPa7hDLgVEa
+         TZHr442wwnSjAih9yRsVaKgQ4bcJGskTRr3lbP9s0QrpLYCv5Pt41KGQf1U98iLrf5L1
+         LXkIvE6A4DyuSASx1RUJqlmXrmFD4r/hfzo/tEcPTjZnBe7MGQDQdII2QhG424nAP6oV
+         TnNg==
+X-Gm-Message-State: AOAM532OlIst6muBICe0Z7Tb+sG1UY6qNlJ/PN/ORYh5IZkDkzDqNAha
+        5MChgf7T/I9MFWeV/QLHgTc=
+X-Google-Smtp-Source: ABdhPJz1p0X1KyYkwLBuYjpYRLRDOINC9VKNfk5lJChYpuu7YZ/2lTFCYz1mE+ERqzNO85fy5xYtUQ==
+X-Received: by 2002:a05:6602:2b90:: with SMTP id r16mr4018417iov.66.1634823138958;
+        Thu, 21 Oct 2021 06:32:18 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:144c:9bcd:5030:5cda? ([2600:1700:e72:80a0:144c:9bcd:5030:5cda])
-        by smtp.gmail.com with ESMTPSA id n17sm2737720ile.76.2021.10.21.06.26.20
+        by smtp.gmail.com with ESMTPSA id a5sm3026382ilf.27.2021.10.21.06.32.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Oct 2021 06:26:21 -0700 (PDT)
-Message-ID: <002d7dd3-c41a-87a4-6fc0-ddf8497f4805@gmail.com>
-Date:   Thu, 21 Oct 2021 09:26:19 -0400
+        Thu, 21 Oct 2021 06:32:18 -0700 (PDT)
+Message-ID: <67b553b7-4e69-9906-b237-9c44cf8aaf44@gmail.com>
+Date:   Thu, 21 Oct 2021 09:32:16 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.2.0
-Subject: Re: [PATCH 2/2] sparse-index: update index read to consider
- index.sparse config
+Subject: Re: [PATCH 05/11] builtin/repack.c: avoid leaking child arguments
 Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1059.git.1634327697.gitgitgadget@gmail.com>
- <c6279b225454af0cf3b54586127eb91206593af3.1634327697.git.gitgitgadget@gmail.com>
- <xmqqh7di3qfu.fsf@gitster.g> <e17b7e0f-edf0-0770-9b9b-dd092a8a7a41@gmail.com>
- <xmqq5ytw19ck.fsf@gitster.g> <8c148f7d-f175-7dc5-51a0-eef48aa98c3d@gmail.com>
- <xmqqczo3yvz3.fsf@gitster.g> <b51500f2-854a-3006-810a-fb7fb8d8dcfb@gmail.com>
- <4656a934-5305-fbdf-76ca-17562fca62ef@github.com>
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, dstolee@microsoft.com, peff@peff.net
+References: <cover.1634787555.git.me@ttaylorr.com>
+ <a68c77c00638bef7e8ce88929015a587d2d1b6f8.1634787555.git.me@ttaylorr.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <4656a934-5305-fbdf-76ca-17562fca62ef@github.com>
+In-Reply-To: <a68c77c00638bef7e8ce88929015a587d2d1b6f8.1634787555.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/18/2021 10:14 AM, Victoria Dye wrote:
-> Derrick Stolee wrote:
->> On 10/17/2021 9:15 PM, Junio C Hamano wrote:
->>> OK.  I somehow got the impression that we convert in both ways from
->>> the patch text under discussion, specifically this part in
->>> do_read_index():
->>>
->>>> -	if (istate->repo->settings.command_requires_full_index)
->>>> +	if (!istate->repo->settings.sparse_index ||
->>>> +	    istate->repo->settings.command_requires_full_index)
->>>>  		ensure_full_index(istate);
->>>> +	else if (!istate->sparse_index)
->>>> +		convert_to_sparse(istate, 0);
->>>>  
->>>>  	return istate->cache_nr;
->>>
->>> We used to say "when we know we are running a command that is not
->>> sparse ready, expand it here" and nothing else.
->>>
->>> We now added a bit more condition for expansion, i.e. "when we are
->>> told that the repository does not want sparse index, or when the
->>> command is not sparse ready".
->>>
->>> But the patch goes one more step.  "If we didn't find a reason to
->>> expand to full, and if the in-core index we read is not sparse, then
->>> call convert_to_sparse() on it".  So if the repo settings tells us
->>> that the repository wants a sparse index, and the index we read was
->>> not sparse, what does convert_to_sparse() without MEM_ONLY flag bit
->>> do?  Nothing special?
->>
->> You are absolutely right. I've been talking about what I _thought_
->> the code does (and should do) but I missed this 'else if' which is
->> in fact doing what you have been claiming the entire time. I should
->> have done a better job double-checking the code before doubling
->> down on my claims.
->>
->> I think the 'else if' should be removed, which would match my
->> expectations.
->>
+On 10/20/2021 11:39 PM, Taylor Blau wrote:
+> `git repack` invokes a handful of child processes: one to write the
+> actual pack, and optionally ones to repack promisor objects and update
+> the MIDX.
 > 
-> By leaving that part out, wouldn't you only solve half of the "mismatch"
-> between in-core index and repo setting? Earlier, you described your
-> expectation as:
+> In none of these cases do we bother to call child_process_clear(), which
+> frees the memory associated with each child's arguments and environment.
 > 
->> * If index.sparse=false, then a sparse index will be converted to
->>   full upon read.
->>
->> * If index.sparse=true, then a full index will be converted to sparse
->>   on write.
+> In order to do so, tweak each function that spawns a child process to
+> have a `cleanup` label that we always visit before returning from each
+> function. Then, make sure that we call child_process_clear() as a part
+> of that label.
 > 
-> Why should the direction of change to the setting value (false->true vs
-> true->false) cause the index to convert at different times? Consider the
-> scenario:
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  builtin/repack.c | 35 ++++++++++++++++++++++++-----------
+>  1 file changed, 24 insertions(+), 11 deletions(-)
 > 
-> # In a cone-mode, sparse index-enabled sparse checkout repo
-> $ git -c index.sparse=false status    # 1
-> $ git status                          # 2
-> $ git status                          # 3
-> 
-> Before this patch, the index has the following states per command:
-> 
-> (1) the index is sparse in-core, writes full on-disk
-> (2) the index is full in-core, writes sparse on-disk
-> (3) the index is sparse in-core, writes sparse on-disk
-> 
-> Here, I see two mismatches in my expectations: (1) operates on an in-core
-> sparse index, despite `index.sparse=false`, and (2) operates on an in-core
-> full index, despite `index.sparse=true`. 
-> 
-> What you're suggesting solves only the first mismatch. However, the second
-> mismatch incurs the performance hit of a supposedly-sparse command actually
-> operating on an in-core full index. It also creates an inconsistency between
-> (2) and (3) in their use of the sparse index. What I'd like this patch to do
-> is:
-> 
-> (1) the index is full in-core, writes full on-disk
-> (2) the index is sparse in-core, writes sparse on-disk
-> (3) the index is sparse in-core, writes sparse on-disk
-> 
-> Here, there are no more mismatches between in-core index usage and what is
-> written to disk, and (2) and (3) use the same index sparsity.
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 0b2d1e5d82..d16bab09a4 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -244,6 +244,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+>  	struct child_process cmd = CHILD_PROCESS_INIT;
+>  	FILE *out;
+>  	struct strbuf line = STRBUF_INIT;
+> +	int ret = 0;
 
-I suppose that my perspective is that we always need to handle a full
-index in-core, because it is a subset of the capabilities of a sparse
-index. There is not much value in requiring the in-core index be sparse.
+nit: "ret" is short for "return" which makes me think "this will
+be used as 'return ret;'" but we don't do that. Instead, we use
+it as the _result_ of an inner call:
 
-But also, I'm now less concerned about commands that convert from
-full-to-sparse on read and expand back to full because of
-command_requires_full_index. This should be a short-lived issue because
-the index.sparse config is unlikely to be changing frequently, so once
-the index is converted to sparse on write, we no longer need to do any
-work to convert the in-core index to sparse on read.
+> -	if (finish_command(&cmd))
+> +	ret = finish_command(&cmd);
+> +
+> +cleanup:
+> +	child_process_clear(&cmd);
+> +
+> +	if (ret)
+>  		die(_("could not finish pack-objects to repack promisor objects"));
 
-The thing to keep in mind is that not every command that reads the index
-also writes it. For example, the two 'git status' commands you list might
-not write the index if there is no new information in the filesystem that
-would trigger an index write.
+For that reason, I would rename this to "res" or "result".
 
-In short: I've shifted my view and no longer oppose this conversion
-immediately upon reading.
+> -	return finish_command(&cmd);
+> +	ret = finish_command(&cmd);
+> +
+> +cleanup:
+> +	child_process_clear(&cmd);
+> +
+> +	return ret;
 
->>> I see many unconditional calls to convert_to_sparse(istate, 0) on
->>> the write code paths, where I instead would expect "if the repo
->>> wants sparse, call convert_to_sparse(), and if the repo does not
->>> want sparse, call ensure_full_index()", before actualy writing the
->>> entries out.  These also are setting traps to confuse readers.
->>>
->>> Perhaps we want a helper function "ensure_right_sparsity(istate)"
->>> that would be called where we have
->>>
->>> 	if (condition)
->>> 		convert_to_sparse();
->>> 	else
->>> 		ensure_full_index();
->>>
->>> or an unconditonal call to convert_to_sparse() to unconfuse readers?
->>
->> convert_to_sparse() has several checks that prevent the conversion
->> from happening, such as having a split index. In particular, it will
->> skip the conversion if the_repository->settings.sparse_index is false.
->> Thus, calling it unconditionally in the write code is correct.
->>
-> 
-> I may have introduced some confusion by redundantly checking
-> `!istate->sparse_index` before converting to sparse (my goal was readability
-> - showing the index does not need to be converted to sparse if it is already
-> sparse - but I think it ended up doing the opposite). The condition could be
-> removed entirely, thanks to an equivalent check inside `convert_to_sparse`:
-> 
-> -       if (istate->repo->settings.command_requires_full_index)
-> +       if (!istate->repo->settings.sparse_index ||
-> +           istate->repo->settings.command_requires_full_index)
->                 ensure_full_index(istate);
-> +       else
-> +               convert_to_sparse(istate, 0);
- 
-This is simpler.
+Here, you are taking the result of an inner call, but actually
+returning it. This makes sense to be "ret".
+
+> +cleanup:
+>  	string_list_clear(&names, 0);
+>  	string_list_clear(&rollback, 0);
+>  	string_list_clear(&existing_nonkept_packs, 0);
+>  	string_list_clear(&existing_kept_packs, 0);
+>  	clear_pack_geometry(geometry);
+>  	strbuf_release(&line);
+> +	child_process_clear(&cmd);
+>  
+> -	return 0;
+> +	return ret;
+
+Also here is good.
 
 Thanks,
 -Stolee
