@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B22CC433EF
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B817C433EF
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25954611CE
-	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:55:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A366610CB
+	for <git@archiver.kernel.org>; Thu, 21 Oct 2021 11:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230516AbhJUL5m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 07:57:42 -0400
-Received: from mout.gmx.net ([212.227.15.15]:42025 "EHLO mout.gmx.net"
+        id S231162AbhJUL6S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 07:58:18 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45161 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230459AbhJUL5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 07:57:40 -0400
+        id S230354AbhJUL6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 07:58:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1634817323;
-        bh=iFDkyA2VzuVknMqs+QcR+pVgSqbx4lg0sm1LFsucxGI=;
+        s=badeba3b8450; t=1634817360;
+        bh=RrIaipzplHXT8qq+x+oXD2qTRAlkXHe8TjQVQWzD1rk=;
         h=X-UI-Sender-Class:Date:From:To:Subject:In-Reply-To;
-        b=EFO5YY0p+DeUlpnzM60mb8nUBYa3lF0BTyBj5VDtdyKGsbJ9ZzKlrub2pw7j9H4hJ
-         o19O2vW7ydUHATFB0tXMz/DUsMdiL1batUqLqa2TVzYLlfkJOZac0VrhdaeTIzwIKR
-         LOGNErEMj5VKqm8TzpbtulUcq8Y9gxlehWR3EOZM=
+        b=Mg4/FA577VzjwRj+oPjNHf+YfB08yefKSr31w7XMkhP51KQY0ef7kMGwZwzn7gVLP
+         cSRB6jYJq0hzFHwHBfidCejhnCTOb78UGLOZaCyiCvy3hILTEJ8FTFhPYbW8dG3d94
+         Z+fPD7btAj7JiUc0jnJ4cLknHvTC/zMNF+OJKCuw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.3.1] ([89.1.213.179]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MAOJV-1mXFGC0WB1-00BxDL for
- <git@vger.kernel.org>; Thu, 21 Oct 2021 13:55:23 +0200
-Date:   Thu, 21 Oct 2021 13:55:21 +0200 (CEST)
+Received: from [172.18.3.1] ([89.1.213.179]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTAFh-1mGfoV0zhH-00UeW3 for
+ <git@vger.kernel.org>; Thu, 21 Oct 2021 13:56:00 +0200
+Date:   Thu, 21 Oct 2021 13:55:58 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     git@vger.kernel.org
-Subject: [Summit topic] Crazy (and not so crazy) ideas
+Subject: [Summit topic] SHA-256 Updates
 In-Reply-To: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2110211144490.56@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2110211147250.56@tvgsbejvaqbjf.bet>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1667452590-1634813789=:56"
-Content-ID: <nycvar.QRO.7.76.6.2110211355150.56@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:9EkRWRVlbMd1y4Uus2lWabqUgumRDUcA1oYPbaRd61ud9wo0vWB
- yhTPgcOxZqUjgveRFQqLmxX0kXHi8UOnhtZXKKSv4ynwp2s+apT9gFDXz+UPa7RtcUSPa4u
- 1AVXwa1YrEoqM5r0Zpq4HvCaVYLLGFRpxI6gcp+sGGx/t0xzwSX9FdSDTB5B4fKEprFFUbn
- EccL39H7rsiEzuwmI+CpQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:236aLDagg4M=:0cmr/ZTzNfKcvD6tRYgca8
- BDI1HK31Dn6W+cvFpyoelI6WrI83XQo0iC2Jg9SYnhuXc/lHmFC/Q4rphn0FUIcQdDlqJNWsf
- dCJmRHT1aVY77NunpDQLTjy38Izb/vp2XfcW1f2FM4ruUIfNmPwbPJHYf8WDkv7sZH6EyjBkc
- JbuyKiqYV6EpqZhN4K5JDWlIClPpPrtCi7+Qug/dZCr3QyhN8BM2gRIOQruFqUcgPmv4UExIf
- k0tucCMgsUVquSl1GTW33qIewzJTHkNkjmGDGrb/J16W+WtBdqZ9xBsI9xdfljRt9VpFtuzPv
- 5XHzBaitY/S2hh+rqqtVazaOizlErZgUGvvjLHHZz61KUAZeGyAgsmkFbxeyWU/FNabgHN9J9
- lDsTLytCepxb8EiNXGYpxmVL/uYDj1+RQyfVJ+imw8+3CF8QCNQB2ouq3rml3224JxfzXOs+/
- fQXTr0d252NJS9l+GPjlbKljBgz2blm1itd8Iy75WQdqHf2frUYBWI8MxOyHa2wvZqullvbqK
- ThW7OzwEdvRD9NDkthaPGoEk7vekkep6/iF2RhhhMYM5YFkCSToa502nP6um4qSWA3hNb0oAA
- aGd1RsaGOPFGBzKA3MNcTsUnsF89zReEkOO7V/LCzJuxVNRafUgKYOE0IZow+y8hjwimoAKlA
- sEHyfcNBMixtv8+EdZUUfiIv5JsMbz6wA4skZIOSQTj3Ircy+g0GbIURB5H3aIQBclFqVoWDP
- yRYjHGIgZzG845uYjWSkyfQsr4+EsNvYJ32dl4Jv+grnE5GjC0Xr+krJr20tpN9PzC3hRMuRF
- oRkSeSOWhFyDIRFrezKO4/9KSqUgWRXXnO01rpHcvbcwLbt+s9j+mZ1GzrIEILVfK7GAw4HUv
- mg9+pQn+QKD5RjP9wAAwy6x06Cn6Vdcs7Ykvp4z1zqXzeF+PQwgSRZ+rJGdMOzwpRX9BdS7mT
- rZn1VQrgdgleSPjmw6e+G4j1bUGumd3uBS0aay2uX8dXxnk5ebTIMIab4uDGIW30hWOfcP4Qn
- 8qSEmNHZD9koKpXbT7BfxYWeTeWHPoqIay/g083c2GYWjmHC+SAbUkbyB+IN/cLXSyPf+DS3c
- 7yqAb+JNxsMqww=
+Content-Type: multipart/mixed; BOUNDARY="8323328-140266036-1634815969=:56"
+Content-ID: <nycvar.QRO.7.76.6.2110211355380.56@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:gqQ1VoNwVo9Ycnd2NWVkqNz1jIRgOe24IzpxIOehAhbvSM9f7CI
+ IZMHf4f1wi476JApdiRxAxE0ViTRIbwhxMDxKxy6/x4h0ye5uWyOOUcTknCtrY3vVVjmydD
+ rneyvEogQRm3ZBoqZBRBitsOlrgy+QD3YJta3idBe71sapYXLPDX4T2RapJNSz7Gv6sL7GY
+ /a2x1XxOa/5s6zpM3SUqw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fef/juDtG7Q=:D8Kv5dogdU8tC3Pzznvm7g
+ 4jh0nWu73R3cXXz/+vGsnRVLUXMlNc3Vrnr+kLXU57I/2WJhhzeSF0Y3rLWGfYe18aRhwNtON
+ AsW+pvycx1oBp7OHDvyvrQITKkFsJce+nzzzjvYekIlcUqGLra0TGrSMpZ6vDsl3urlqctJ8i
+ OhTqgG8Z3esa1MC/Ah8U1vFtbxy+lGmd1R72qBEeJaCPgJ+xeaUbFnY17oWGAg0bTWahYeMBk
+ 3YaBIykHA020EICVKgZ8Wu7WFBAUGqq/fqAEije+vq2OFMX3yOnJd6P/rwBc+sZfKqZ0p8Z53
+ W2iD+kfJHA3CkKcsBsOhD092sXykhSLAn8PRjFynvz88Btb99sp/nzDEs3Oswf3FloVjW3gEa
+ tXyKcVESRQWxXi4KSQzkH6kEzu7qbdTVda6E+3qIrutT3Zw3xvxCOG2WVfsWm/Ucf9+5+BVeb
+ ABjn5GFwNWJ+LOyrpyXSxpw7OPQK4X+2Yb5mJKLuYyDyemcTVUx7kKGNkx7Gt0KrAIxlAr1lt
+ CcHF2thMEm9I0QwTZJUmsP4vksNWqkEp6SqBGSlVMB1u+b01PAT30b9QC/n8ZFXKoP/ZKyNMB
+ UP7/NThmqRviiYbNoTRDB59OxCBo7fguzwrxjOpkM5GZUSge9b07ITVJ94K7qSS/TeeYRJISp
+ v6eWs4UW9EVn8Ma+m6q7FyY2PAhvAeWoMl8eJLXY7cuV70yfV3xUh1v4vlBxlu2Pk+WF1P4yd
+ 0cPT8zHCmSTggtqwrhTty+J1DWCgDnYLlJ76yIR8lj4THWPkJ3trWTmOUsjOOqkGBHagRsR7F
+ xtPEsSV+S03yGHIYAETbKuiVzP9JaM92/4nk+R4L5p/UQFsnlt877wLEdPuhP3D7b+EY70Ivi
+ QM+j1MDxhH6AQcH08jow9L2RSUzGMRZzNWB0u9AF9t8GWLfiFIiuKyfpzlVYQMLmW1A7ViAHc
+ fNmySE3uFEHlAWRTwRslk0tov/qrzDekzxW0KjJkBX8EFTKfPQ4wINkpRQcE8i1SpwDIf7hOB
+ u8RN5fUWq2jU5D1weKe2VA8P9SDNrRyveFLTAYFYgJQ5sbxiJwA0uhOiM3Vz3Yc1tnI7ORuhv
+ lSJQWpU9YUuGvA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -64,211 +64,169 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1667452590-1634813789=:56
+--8323328-140266036-1634815969=:56
 Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2110211355151.56@tvgsbejvaqbjf.bet>
+Content-ID: <nycvar.QRO.7.76.6.2110211355381.56@tvgsbejvaqbjf.bet>
 
-This session was led by Elijah Newren. Supporting cast: Johannes "Dscho"
-Schindelin, Jonathan Tan, Jonathan "jrnieder" Nieder, brian m. carlson,
-Jeff "Peff" King, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, Emily Shaffer, C=
-B Bailey,
-Taylor Blau, and Philip Oakley.
+This session was led by brian m. carlson. Supporting cast: Jonathan
+"jrnieder" Nieder, Derrick Stolee, Johannes "Dscho" Schindelin, Toon
+Claes, and =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
 
 Notes:
 
-* sent my idea for rebase merges on-list
+ 1.  Summarizing where we are with what merged:
 
-* Test suite is slow. Shell scripts and process forking.
+     1. We have full SHA256 support \o/
 
-   * What if we had a special shell that interpreted the commands in a
-     single process?
+     2. Some minor glitches, updated the docs to reflect that
 
-   * Even Git commands like rev-parse and hash-object, as long as that=E2=
-=80=99s
-     not the command you=E2=80=99re trying to test
+     3. It works. 2.30 is a good state.
 
-   * Dscho wants to slip in a C-based solution
+     4. None of the major forges support it yet but that will come
 
-   * Jonathan tan commented: going back to your custom shell for tests
-     idea, one thing we could do is have a custom command that generates
-     the repo commits that we want (and that saves process spawns and
-     might make the tests simpler too)
+ 2.  Interop between SHA256 repositories and SHA1 repositories
 
-      * We could replace several =E2=80=9Csetup repo=E2=80=9D steps with =
-=E2=80=9Cgit fast-import=E2=80=9D
-        instead.
+     1. Take each object we receive over the wire or create locally and gi=
+ve it
+        a sha1 value as well
 
-   * Dscho measured: 0.5 sec - 30 sec in setup steps. Can use fast-import,
-     or can make a new format that helps us set up the test scenario
+     2. We have a giant loose object index that maps sha256-id and sha1-id
+        values. Hashmap
 
-   * Elijah: test-lib-functions helpers could be built ins
+     3. Will be changed to some tree to allow prefix mapping
 
-* Biggest idea: there are a lot of people who version control things via
-  tarballs or .zip files per version. This prevents history from
-  compressing well. Some people check in those compressed files into Git
-  for purposes of history.
+     4. index-pack has to take two passes over the pack, because you can=
+=E2=80=99t map
+        a commit before you=E2=80=99ve mapped the tree it points to (or mo=
+re generally
+        can=E2=80=99t map an object before the objects it references)
 
-   * In particular, .jar files or npm packages. Initial testing showed
-     that you can expand .jar files in a way that creates source-like
-     files.
+     5. Fortunately blobs don=E2=80=99t point to any other objects so this=
+ is
+        relatively quick
 
-   * Jonathan Nieder points out that =E2=80=9Cpristine-tar=E2=80=9D exists=
- to do similar
-     ideas: https://joeyh.name/code/pristine-tar/
+ 3.  Submodules are tricky
 
-   * Others use =E2=80=9Cgit archive=E2=80=9D for this purpose to mixed su=
-ccess.
+     1. They come from a different repository so we don=E2=80=99t have any=
+thing to map
+        to
 
-   * jars and npm packages compress better if you store them in expanded
-     form instead of compressed form
+     2. What I=E2=80=99m currently doing is requiring that the submodule b=
+e present
+        locally and storing the mapping separately in the superproject
 
-   * So many tools are used to using the end-archive, so while it=E2=80=99=
-s
-     tempting to have the build system be responsible for this, being able
-     to =E2=80=9Cgit add=E2=80=9D the archive and have the right thing hap=
-pen behind the
-     scenes would be nice for ease of use
+     3. The mapping isn=E2=80=99t sent over the wire. That could create so=
+me complexity
+        around malicious histories
 
-   * Goal here isn=E2=80=99t bit-for-bit reproducibility, just semantic
-     reproducibility
+ 4.  For the same reason we don=E2=80=99t have partial clone working
 
-   * What about other file formats that use zips, such as LibreOffice?
+     1. Might require an on-disk format bump
 
-   * Git Merge 2018: Designers Git-It; A unified design system workflow
-     did something similar, except made the tool understand the =E2=80=9Ce=
-xploded=E2=80=9D
-     file view.
+     2. jrnieder: taking a step back, the hash verifies the full history v=
+ia
+        the Merkle tree property.
 
-   * Jonathan Tan mentions that smudge/clean filters can help, except this
-     is about tree<->blob instead of blob<->blob
+     3. However, with partial clone we already relax this: it is no longer
+        verifiable, locally.
 
-   * brian m. carlson mentions =E2=80=9Cgit archive=E2=80=9D output isn=E2=
-=80=99t stable across
-     Git versions. Should we have a canonical tar format that provides
-     reproducibility?
+     4. Therefore, we place a lot of trust on the server.
 
-   * Peff: tree<->blob filters can get confusing in the
-     tree<->index<->worktree mapping. Possible, but requires careful
-     thought about the details about when each spot
+     5. The server could tell us more information about the edge commits, =
+e.g.
+        SHA-1<->SHA-256 mapping
 
-   * Old suggestion of a =E2=80=9Cblob-tree=E2=80=9D type that allows stor=
-ing a single
-     index entry that corresponds to multiple trees and blobs in the
-     background, possibly.
+     6. Stolee: if I am sha256 client, that=E2=80=99s what I want, you kin=
+d of decide
+        up front what you want
 
-   * One long-term dream (inspired by Avery Pennarun=E2=80=99s =E2=80=9Cbu=
-p=E2=80=9D tool) is to
-     store large binary files in a tree-structured way that can store
-     common regions as deltas, improve random access, parallelized
-     hashing. Involves a consistent way to split the file into stable
-     pieces, like --rsyncable uses (based on a rolling hash being zero).
+     7. jrnieder: at $DAYJOB common partial clone scenario is triangular
+        workflow
 
-   * Peff: you can do that at the object model layer or at the storage
-     layer. The latter is less invasive.
+     8. Stolee: how likely are the multiple hosts not homogenous (all SHA-=
+1, or
+        all SHA-256)?
 
-   * jrnieder: The benefits of blobtree are greater at the object model
-     layer --- e.g. not having to transmit chunks over the wire that you
-     already have. I think the main obstacle has been that the benefits
-     haven=E2=80=99t been enough to be worth the complexity. If that chang=
-es, we
-     can imagine bundling it with some other object format changes, e.g.
-     putting blob sizes in tree objects, and rolling it out as a new
-     object-format.
+     9. brian: Valuable to be able to work in SHA256 and refer in input+ou=
+tput
+        to SHA-1. If someone refers to a SHA-1, you still want to be able =
+to
+        see what they=E2=80=99re referring to, to interact with other peop=
+le, even
+        though SHA-1 is insecure
 
-   * =C3=86var: can we do this in a simpler manner, without deep technical
-     changes? (Context: was thinking about this in the context of some
-     $id$ questions.) Clean/smudge filters have some significant UX
-     drawbacks. Has experience helping users trying to commit .jar files.
-     Some simple advice saying =E2=80=9Cmaybe you don=E2=80=99t want to co=
-mmit this file
-     type, here are some ways to expand it to a committable format=E2=80=
-=A6=E2=80=9D based
-     on patterns such as .gitignore or .gitattributes. We don=E2=80=99t ha=
-ve ways
-     to indicate =E2=80=9Cthis repo uses Git LFS, but you don=E2=80=99t ha=
-ve the plugin.=E2=80=9D
+ 5.  Multi-pack index: doesn=E2=80=99t work, but won=E2=80=99t be hard to =
+fix
 
-* Emily: If I could rewrite the commit object format, I would change some
-  things
+ 6.  We write signatures for both objects. When you =E2=80=9Cgit commit --=
+gpg-sign=E2=80=9D, it
+     can sign in both formats
 
-   * Allow multiple authors
+     1. Verifies in current format
 
-   * Add a layer of indirection to author name
+ 7.  Timeframe for hosting providers moving to SHA256
 
-      * brian has thought about this too: replace name with email address
-        + some ssh key or something and use something mailmap-like to map
-        it. Could be a backward-compatible approach
+     1. Dscho: should we have a multi provider meeting and coordinate that=
+?
+        Could be everyone waiting for others
 
-   * CB has been thinking about these problems in the background. Could
-     randomly generate an identifier when you commit your first patch, an
-     @example.com address to avoid conflicting with any real address.
-     Mailmap can be a blob maintained by the project
+     2. brian: cgit supports SHA256 already, allows self-hosting
 
-      * In the process can get first-class multiple authors
+     3. jrnieder: with interop, individuals can use SHA256 against servers=
+ that
+        only support SHA-1. Then that creates pressure for the servers to
+        support SHA256 for performance reasons
 
-      * If I have this id representing this particular pair of authors,
-        can update what the id points to
+     4. brian: interop doesn=E2=80=99t exist yet. If GitHub decides I work=
+ on that for
+        the next two months, I think I could do it. But requires the code
+        getting written.
 
-      * Cool stuff but gets complicated
+     5. Toon: we at gitlab have sha256 on our radar, but with a very low p=
+rio
+        https://gitlab.com/groups/gitlab-org/-/epics/794
 
-   * Just getting mailmap applied to trailers in =E2=80=9Cgit log=E2=80=9D=
- would be huge
+ 8.  jrnieder: Signing: very old Git versions won=E2=80=99t know to invali=
+date them
+     when I commit --amend. How old is =E2=80=9Cvery old=E2=80=9D?
 
-      * CB: main reason I don=E2=80=99t put myself in mailmap is that it=
-=E2=80=99s not
-        worth bothering without that feature
+     1. brian: somewhere between 2.20 and 2.28. In 2.20 started treating
+        everything with =E2=80=9Cgpgsig=E2=80=9D at start as a potential s=
+ignature.
 
-      * =C3=86var: =E2=80=9Cgit log --author=E2=80=9D would want the mappi=
-ng, too. (and =E2=80=98git
-        shortlog --group=E2=80=99) Do we do this only at the presentation =
-layer or
-        if we do it at a lower layer do we get such things for free?
+     2. There were a couple of bugs I fixed in 2.30, working on signature
+        interoperability. Tested with sha256.
 
-      * If anyone=E2=80=99s interested, I might know where the dragons are=
- hiding,
-        happy to give advice
+     3. Updated the transition plan: in tags, the trailing signature is al=
+ways
+        the current signature, other ones go in the header.
 
-      * Peff: =E2=80=9Cgit shortlog=E2=80=9D already knows how to parse it=
- out so this
-        seems very possible
+ 9.  Updating other hosting provider glue to support sha256
 
-      * Taylor:
-        https://lore.kernel.org/git/YW8A5FznqLYs7MqH@coredump.intra.peff.n=
-et/T/
+     1. jrnieder: e.g. GitHub API, UIs, =E2=80=A6. Is it hard, similar to =
+the Git part,
+        or a little easier?
 
-   * Generation number was discussed ~2011(?)
+     2. brian: hardest part is libgit2. Lots of hardcoded oids in its test=
+suite
 
-   * =C3=86var: does this really need a format change? Two =E2=80=9Cauthor=
-=E2=80=9D fields
-     would break things, but could have =E2=80=9Cauthor=E2=80=9D and =E2=
-=80=9Cx-author=E2=80=9D header
+     3. Libraries tend to be the hardest piece --- e.g. Gerrit will need J=
+Git
+        updates
 
-   * General principle when changing formats: teasing apart where it=E2=80=
-=99s
-     possible to achieve what you want backward compatibility
+     4. Dscho: gitk also has some references to hardcoded 40-length
 
-* Philip Oakley would like a commit id referring to an unborn branch as a
-  proper id
+     5. =C3=86var: some patches on the mailing list for gitk and git-gui t=
+o adapt
+        them, from Carlos
 
-   * brian: empty tree works for what you=E2=80=99re talking about when yo=
-u want a
-     diff
+     6. brian: hopefully the ecosystem learns from this experience and doe=
+sn=E2=80=99t
+        just hardcode 64 here :)
 
-   * Philip: motivating example was =E2=80=9Cfirst parent is going nowhere=
-, but
-     you have a second parent=E2=80=9D
+ 10. Interop code only supports 2 algorithms. Hopefully finish this transi=
+tion
+     before we need the next one :)
 
-   * jrnieder: I see, you want the --first-parent history of your
-     published branch to match the reflog. As a workaround, you=E2=80=99re=
- able to
-     use an empty initial commit and use --no-ff merges whenever you pull
-     things in, but you=E2=80=99re referring to wishing you didn=E2=80=99t=
- have to make
-     that empty initial commit
-
-   * =C3=86var: reminds me of the discussion in
-     https://www.fossil-scm.org/home/doc/trunk/www/fossil-v-git.wiki of
-     commit/branch relationships
-
---8323328-1667452590-1634813789=:56--
+--8323328-140266036-1634815969=:56--
