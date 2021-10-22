@@ -2,50 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83C16C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 18:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2D5EC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 18:19:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5229561163
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 18:19:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1F9461163
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 18:19:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233643AbhJVSWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 14:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50170 "EHLO
+        id S233733AbhJVSWD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 14:22:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231472AbhJVSWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 14:22:00 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 786B4C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 11:19:42 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r7so3566162wrc.10
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 11:19:42 -0700 (PDT)
+        with ESMTP id S231472AbhJVSWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 14:22:01 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9818C061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 11:19:43 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id r17-20020a7bc091000000b0032ca1d30b30so1305369wmh.0
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 11:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=a4uM3TAfHmp1dqgITIJQ9NmY6utUBFQHi7YZi8VSbPU=;
-        b=UKXltkeYPp0Js+Aphy3aHdLDlDwOQaioJSve4zmPtUat0jCv/pnXRAWFrQhyourjEE
-         jajYIiPG/Fka8amS24gmHbPFCXI61fKh+QKflkOEltFo1e1fPfrhFlwY8t5Mx1em9Kxl
-         h7BEiRJcGQdEGY9bkayYzBrAEYFOvYyd7ict1ZiwOY5pw+EzogNeml9qbt7BLirmCkU/
-         +aQ3El3/x2gC74mzF//r8DYbNULGcGHMei//F14ZryOWn8uuz63qJebZEifRtd/CCJKo
-         SMRjWLsZ6hw1+cJb79G/Oswz8HkfOPxDfn5o4fskVZtgJrbplilV7Ijb0UVJ6vZ8VJdx
-         mmuQ==
+        bh=br/X668ExVNUCVD+imCkGkec5xBNUahSkKKpmXCD/bE=;
+        b=Yl0JXOizGeIDWV12ECbzTJtx801IObvzCWCksOE2yw7JMK21UFNhtbIDo8l7r8HocW
+         BNhVlXzvvR8IHbdyyl7lC4Z40S+GBa4LKl46He36pZhX8mWoTm9zZr9oq8kYY4XKkFtO
+         s5i35UM11XN6FbKsaLsB+I9RTREU7EkHRxb7AFgO4hU8m3ts0falN0J5adIbRflNjddv
+         EV88EMwdlhZN1EY5IK/9HDJKCTHs/2WQ2w4XNSWohQdmmIyX3paB8Pf8bceoPo9tJuGH
+         2SDjkRAjzwmYTchG9eA3d8ERYnx+O7ll/Mo73ywR/CGDAu9f2JIICKvvUYM5dfNZ7+Zh
+         N9+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=a4uM3TAfHmp1dqgITIJQ9NmY6utUBFQHi7YZi8VSbPU=;
-        b=XX/BPEaBO1RKdfbyqADmBqCpnyabwybsQMFH4hqjp1F1viJPbWv/KHM4jWIauB8B/f
-         yuMlzH6uAqb8KXMuYaQ+Rp3W3pMsjdzTOzd6kd+epxZo2zoprGoCikJRRbE9URdD2Akb
-         XmhVEdKO8Fuqkz46mJkMh30eMrIk7QnFFniXh8Rb6Rquu6vVXywLpro1ua+L6Ts0Pkqk
-         INj+eYlinrpdw4Udwfvy+s7eS+XQzYrMeQNKO/oEQeuNHwD8hJJlVgcNmIdsGAGAZS4K
-         SuJFITTalLPL6YP7qDcOf2eE9YjcRh4PowcHlP6JnBZlYEsQvcCROjqlD1T5XJVS0PTO
-         QwHA==
-X-Gm-Message-State: AOAM533D2ynM3HyE76fBVgAq2tAwxke5yxzk8bJslL/WdYraUddT1pL2
-        OnRM5OTlD1JGe1FRlFSsP+/wgPdvngDRmQ==
-X-Google-Smtp-Source: ABdhPJxM1+UBvGFdbI1tfCNHfaczkY93v0n8KNzp5BYsSugFHJf3Zcm8CcHsASmNBbnhRwXp+EQHHA==
-X-Received: by 2002:a5d:6349:: with SMTP id b9mr1834946wrw.102.1634926780775;
-        Fri, 22 Oct 2021 11:19:40 -0700 (PDT)
+        bh=br/X668ExVNUCVD+imCkGkec5xBNUahSkKKpmXCD/bE=;
+        b=3RBVzxptMbh+eISDxtljh+I1CKqCOcJ8uZmNe0AmEKCr7IEYAEdI+bt8fpNA8q4wAc
+         eh3Mrhq3Ww0XfeBA0HXSPguK25Jm8I4338wex5BFqCsGoEpaeGNZxkhp3LZ0+FK/WYeA
+         9M+rFMC8o8pbLkzLK7W/EhJhpqg4a++mccpX5ZCBawOVLz2ZxXTcD7W0OAfoj2NVFnI8
+         aoS5xSaGQ6fUZzfcHJtDlXh6tiujQ09KTOcArjtrKLlFUhDytf2fv+c2U5SBzC60YeiF
+         AsU8CbTg9TwwvQs0FiCAEAoq4io4esYN1COwaNXZARKmFF8pUdcZifN87Lnzglj6dMTp
+         5ZFw==
+X-Gm-Message-State: AOAM531D14Zx/dIz/hY43cIe2VdeFP6J8TsPDPQoNXh6mTiHGUICn39W
+        +PrJ0GdP/n+trBP8vsiJ297ThkkUKJIINA==
+X-Google-Smtp-Source: ABdhPJycogyH3lCeAayI10ppdpowV6fRBArk50LnsEMgwUGS/fqlOo+X6grmfNIt7LztuvGfntCmPA==
+X-Received: by 2002:a05:600c:2041:: with SMTP id p1mr1382826wmg.145.1634926781969;
+        Fri, 22 Oct 2021 11:19:41 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id 3sm8587242wms.5.2021.10.22.11.19.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -58,12 +58,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/6] usage.c: add die_message() & plug memory leaks in refs.c & config.c
-Date:   Fri, 22 Oct 2021 20:19:33 +0200
-Message-Id: <cover-v3-0.6-00000000000-20211022T175227Z-avarab@gmail.com>
+Subject: [PATCH v3 1/6] usage.c: add a die_message() routine
+Date:   Fri, 22 Oct 2021 20:19:34 +0200
+Message-Id: <patch-v3-1.6-fe8763337ed-20211022T175227Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1505.g075a284c562
-In-Reply-To: <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
-References: <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.6-00000000000-20211022T175227Z-avarab@gmail.com>
+References: <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com> <cover-v3-0.6-00000000000-20211022T175227Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,196 +71,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What started as a set of small memory leak fixes is now adding and
-usinge a die_message() function. This non-fatal-die() is useful to
-various callers that want to print "fatal: " before exiting, but don't
-want to call die() for whatever reason.
+We have code in various places that would like to call die(), but
+wants to defer the exit(128) it would invoke, e.g. to print an
+additional message, or adjust the exit code. Add a die_message()
+helper routine to bridge this gap in the API.
 
-I wasn't planning to submit that now, but these were incomplete
-patches I had lying around, and make the 5th and 6th patch much nicer,
-in response to comments on v1 and v2 to the effect that managing
-free()-ing around die() functions was rather nasty.
+Functionally this behaves just like the error() routine, except it'll
+print a "fatal: " prefix, and it will exit with 128 instead of -1,
+this is so that caller can pas the return value to exit(128), instead
+of having to hardcode "128".
 
-This doesn't conflict with anything in-flight, and the changes
-themselves are rather simple.
+A subsequent commit will migrate various callers that benefit from
+this function over to it, for now we're just migrating trivial users
+in usage.c itself.
 
-Ævar Arnfjörð Bjarmason (6):
-  usage.c: add a die_message() routine
-  usage.c API users: use die_message() where appropriate
-  usage.c + gc: add and use a die_message_errno()
-  config.c: don't leak memory in handle_path_include()
-  config.c: free(expanded) before die(), work around GCC oddity
-  refs: plug memory leak in repo_default_branch_name()
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-compat-util.h |  3 +++
+ usage.c           | 46 ++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 37 insertions(+), 12 deletions(-)
 
- builtin/fast-import.c     | 13 +++++----
- builtin/gc.c              | 21 ++++++++------
- builtin/notes.c           |  9 +++---
- config.c                  | 22 ++++++++++-----
- git-compat-util.h         |  4 +++
- http-backend.c            |  3 +-
- parse-options.c           |  2 +-
- refs.c                    |  8 +++++-
- run-command.c             | 16 ++++-------
- t/t1305-config-include.sh |  1 +
- usage.c                   | 58 +++++++++++++++++++++++++++++++--------
- 11 files changed, 106 insertions(+), 51 deletions(-)
-
-Range-diff against v2:
--:  ----------- > 1:  fe8763337ed usage.c: add a die_message() routine
--:  ----------- > 2:  dfc3a8fbccb usage.c API users: use die_message() where appropriate
--:  ----------- > 3:  6b33e394b2f usage.c + gc: add and use a die_message_errno()
-2:  d6d04da1d9d = 4:  3607b905627 config.c: don't leak memory in handle_path_include()
-3:  d812358e331 ! 5:  9a44204c4c9 config.c: free(expanded) before die(), work around GCC oddity
-    @@ Commit message
-         We really do have a memory leak here in either case, as e.g. running
-         the pre-image under valgrind(1) will reveal. It's documented
-         SANITIZE=leak (and "address", which exhibits the same behavior) might
-    -    interact with compiler optimization in this way in some cases, and
-    -    since this function is called recursively it's going to be especially
-    +    interact with compiler optimization in this way in some cases. Since
-    +    this function is called recursively it's going to be especially
-         interesting as an optimization target.
-     
-         Let's work around this issue by freeing the "expanded" memory before
-    -    we call die(), using the "goto cleanup" pattern introduced in the
-    -    preceding commit.
-    +    we call die(), using a combination of the "goto cleanup" pattern
-    +    introduced in a preceding commit, and the newly introduced
-    +    die_message() function.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ config.c: static int handle_path_include(const char *path, struct config_include
-      	int ret = 0;
-      	struct strbuf buf = STRBUF_INIT;
-      	char *expanded;
-    -+	int die_depth = 0;
-    ++	int exit_with = 0;
-      
-      	if (!path)
-      		return config_error_nonbool("include.path");
-    @@ config.c: static int handle_path_include(const char *path, struct config_include
-     -			    cf->name ? cf->name :
-     -			    "the command line");
-     +		if (++inc->depth > MAX_INCLUDE_DEPTH) {
-    -+			die_depth = 1;
-    ++			exit_with = die_message(_(include_depth_advice),
-    ++						MAX_INCLUDE_DEPTH, path,
-    ++						!cf ? "<unknown>" : cf->name ?
-    ++						cf->name : "the command line");
-     +			goto cleanup;
-     +		}
-      		ret = git_config_from_file(git_config_include, path, inc);
-    @@ config.c: static int handle_path_include(const char *path, struct config_include
-      cleanup:
-      	strbuf_release(&buf);
-      	free(expanded);
-    --	return ret;
-    -+	if (!die_depth)
-    -+		return ret;
-    -+	die(_(include_depth_advice), MAX_INCLUDE_DEPTH, path,
-    -+	    !cf ? "<unknown>" : cf->name ? cf->name : "the command line");
-    ++	if (exit_with)
-    ++		exit(exit_with);
-    + 	return ret;
-      }
-      
-    - static void add_trailing_starstar_for_dir(struct strbuf *pat)
-1:  4f8554bb02e ! 6:  d2f639b53cd refs.c: make "repo_default_branch_name" static, remove xstrfmt()
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    refs.c: make "repo_default_branch_name" static, remove xstrfmt()
-    +    refs: plug memory leak in repo_default_branch_name()
-     
-    -    The repo_default_branch_name() function introduced in
-    -    8747ebb7cde (init: allow setting the default for the initial branch
-    -    name via the config, 2020-06-24) has never been used outside of this
-    -    file, so let's make it static, its sibling function
-    -    git_default_branch_name() is what external callers use.
-    +    Fix a memory leak in repo_default_branch_name(), we'll leak memory
-    +    before exit(128) here.
-     
-    -    In addition the xstrfmt() to get the "full_ref" in the same commit
-    -    isn't needed, we can use the "REFNAME_ALLOW_ONELEVEL" flag to
-    -    check_refname_format() instead.
-    +    Normally we would not care much about such leaks, we do leak the
-    +    memory, as e.g. valgrind(1) will report. But the more commonly used
-    +    SANITIZE=leak mode will use GCC and Clang's LSAN mode will not
-    +    normally report such leaks.
-     
-    -    This also happens to fix an issue with c150064dbe2 (leak tests: run
-    -    various built-in tests in t00*.sh SANITIZE=leak, 2021-10-12) in "next"
-    -    when combined with SANITIZE=leak and higher optimization flags on at
-    -    least some GCC versions. See [1].
-    +    At least one GCC version does that in this case, and having the tests
-    +    fail under -O3 would be annoying, so let's free() the allocated memory
-    +    here.
-     
-    -    1. https://lore.kernel.org/git/patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com/
-    +    This uses a new die_message() function introduced in a preceding
-    +    commit. That new function makes the flow around such code easier to
-    +    manage. In this case we can't free(ret) before the die().
-    +
-    +    In this case only the "free(full_ref)" appears to be needed, but since
-    +    we're freeing one let's free both, some other compiler or version
-    +    might arrange this code in such a way as to complain about "ret" too
-    +    with SANITIZE=leak, and valgrind(1) will do so in any case.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## refs.c ##
-    -@@ refs.c: static const char default_branch_name_advice[] = N_(
-    - "\tgit branch -m <name>\n"
-    - );
-    - 
-    --char *repo_default_branch_name(struct repository *r, int quiet)
-    -+static char *repo_default_branch_name(struct repository *r, int quiet)
-    - {
-    - 	const char *config_key = "init.defaultbranch";
-    +@@ refs.c: char *repo_default_branch_name(struct repository *r, int quiet)
-      	const char *config_display_key = "init.defaultBranch";
-    --	char *ret = NULL, *full_ref;
-    -+	char *ret = NULL;
-    + 	char *ret = NULL, *full_ref;
-      	const char *env = getenv("GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME");
-    ++	int exit_with = 0;
-      
-      	if (env && *env)
-    + 		ret = xstrdup(env);
-     @@ refs.c: char *repo_default_branch_name(struct repository *r, int quiet)
-    - 			advise(_(default_branch_name_advice), ret);
-    - 	}
-      
-    --	full_ref = xstrfmt("refs/heads/%s", ret);
-    --	if (check_refname_format(full_ref, 0))
-    -+	if (check_refname_format(ret, REFNAME_ALLOW_ONELEVEL))
-    - 		die(_("invalid branch name: %s = %s"), config_display_key, ret);
-    --	free(full_ref);
-    + 	full_ref = xstrfmt("refs/heads/%s", ret);
-    + 	if (check_refname_format(full_ref, 0))
-    +-		die(_("invalid branch name: %s = %s"), config_display_key, ret);
-    ++		exit_with = die_message(_("invalid branch name: %s = %s"),
-    ++					config_display_key, ret);
-    + 	free(full_ref);
-    ++	if (exit_with) {
-    ++		free(ret);
-    ++		exit(exit_with);
-    ++	}
-      
-      	return ret;
-      }
-    -
-    - ## refs.h ##
-    -@@ refs.h: int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
-    -  * return value of `git_default_branch_name()` is a singleton.
-    -  */
-    - const char *git_default_branch_name(int quiet);
-    --char *repo_default_branch_name(struct repository *r, int quiet);
-    - 
-    - /*
-    -  * A ref_transaction represents a collection of reference updates that
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 141bb86351e..c1bb32460b6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -471,6 +471,7 @@ NORETURN void usage(const char *err);
+ NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int die_message(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
+@@ -505,6 +506,8 @@ static inline int const_error(void)
+ typedef void (*report_fn)(const char *, va_list params);
+ 
+ void set_die_routine(NORETURN_PTR report_fn routine);
++void set_die_message_routine(report_fn routine);
++report_fn get_die_message_routine(void);
+ void set_error_routine(report_fn routine);
+ report_fn get_error_routine(void);
+ void set_warn_routine(report_fn routine);
+diff --git a/usage.c b/usage.c
+index c7d233b0de9..3d4b90bce1f 100644
+--- a/usage.c
++++ b/usage.c
+@@ -55,6 +55,12 @@ static NORETURN void usage_builtin(const char *err, va_list params)
+ 	exit(129);
+ }
+ 
++static void die_message_builtin(const char *err, va_list params)
++{
++	trace2_cmd_error_va(err, params);
++	vreportf("fatal: ", err, params);
++}
++
+ /*
+  * We call trace2_cmd_error_va() in the below functions first and
+  * expect it to va_copy 'params' before using it (because an 'ap' can
+@@ -62,10 +68,9 @@ static NORETURN void usage_builtin(const char *err, va_list params)
+  */
+ static NORETURN void die_builtin(const char *err, va_list params)
+ {
+-	trace2_cmd_error_va(err, params);
+-
+-	vreportf("fatal: ", err, params);
++	report_fn die_message_fn = get_die_message_routine();
+ 
++	die_message_fn(err, params);
+ 	exit(128);
+ }
+ 
+@@ -109,6 +114,7 @@ static int die_is_recursing_builtin(void)
+  * (ugh), so keep things static. */
+ static NORETURN_PTR report_fn usage_routine = usage_builtin;
+ static NORETURN_PTR report_fn die_routine = die_builtin;
++static report_fn die_message_routine = die_message_builtin;
+ static report_fn error_routine = error_builtin;
+ static report_fn warn_routine = warn_builtin;
+ static int (*die_is_recursing)(void) = die_is_recursing_builtin;
+@@ -118,6 +124,16 @@ void set_die_routine(NORETURN_PTR report_fn routine)
+ 	die_routine = routine;
+ }
+ 
++void set_die_message_routine(report_fn routine)
++{
++	die_message_routine = routine;
++}
++
++report_fn get_die_message_routine(void)
++{
++	return die_message_routine;
++}
++
+ void set_error_routine(report_fn routine)
+ {
+ 	error_routine = routine;
+@@ -157,14 +173,23 @@ void NORETURN usage(const char *err)
+ 	usagef("%s", err);
+ }
+ 
++#undef die_message
++int die_message(const char *err, ...)
++{
++	va_list params;
++
++	va_start(params, err);
++	die_message_routine(err, params);
++	va_end(params);
++	return 128;
++}
++
+ void NORETURN die(const char *err, ...)
+ {
+ 	va_list params;
+ 
+-	if (die_is_recursing()) {
+-		fputs("fatal: recursion detected in die handler\n", stderr);
+-		exit(128);
+-	}
++	if (die_is_recursing())
++		exit(die_message("recursion detected in die handler"));
+ 
+ 	va_start(params, err);
+ 	die_routine(err, params);
+@@ -200,11 +225,8 @@ void NORETURN die_errno(const char *fmt, ...)
+ 	char buf[1024];
+ 	va_list params;
+ 
+-	if (die_is_recursing()) {
+-		fputs("fatal: recursion detected in die_errno handler\n",
+-			stderr);
+-		exit(128);
+-	}
++	if (die_is_recursing())
++		exit(die_message("recursion detected in die_errno handler"));
+ 
+ 	va_start(params, fmt);
+ 	die_routine(fmt_with_err(buf, sizeof(buf), fmt), params);
 -- 
 2.33.1.1494.g88b39a443e1
 
