@@ -2,103 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E727BC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CF60C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D167A61504
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:05:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E18461526
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232506AbhJVDHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 23:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42274 "EHLO
+        id S232796AbhJVDIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 23:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232502AbhJVDHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 23:07:18 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12FAC061766
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:05:01 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id j6so2571881ila.1
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:05:01 -0700 (PDT)
+        with ESMTP id S232803AbhJVDIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 23:08:51 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4BFFC061764
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:06:34 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id e5-20020a17090a804500b001a116ad95caso2020791pjw.2
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=79kj0Hz7G1C0b9kzA6orIiebN/l1XiuJDZGgCwfBBpE=;
-        b=Mm6jGRA+gdpga0qHI19WcoDvVdyaE6jXTgsJrW5Uc/AY1c4QgpQKk/0/0EX3Viis2q
-         TTzz4YD/By3V0tgG4lJ88l/vB6DTxevZP5nQa2bDurbVHx8kNAkckIfsjOE/55KBcBmB
-         QpCXpu5PQNrtfngfeuZP0p2NIP9Y6yvdXem8guNM+ysZDR1H7l1TBcpduFdcIbELYgmr
-         eIVZIZ3zPkjRj6F/QbKYWPiHjvKL8B46AH1x2/IRPsZGIdAB209vwoNsACyqgveX5TbR
-         Kl5rjBggsuLPpc23/5SDIDBKEBiSwj53m9gFtWy6NtKWo3QNs0Vte+C/zNpJDeuKVwU5
-         Hjgw==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=xf4aTTNSAFUE9EP5UR5fRlY5owUeQIecLSiXZL3iA7o=;
+        b=UveZA4g+DKHujHf0W4lLJ5kscOLuoyuzokxRb3iRdYk7kT5DOh+ykZKXCNbS6Y8dPA
+         rrIGuke2r4BfFqpAPO8+MT8Jw2n5Ic4YCFc4gkCOK0mK5407hBGOftSWa9yoAkPFfRmE
+         X68OO3hB6pEoCV99MYZTVf+ye4wqMvRfVuaYR8Ak4GmNV8DhAjtkOKLgQCeEB3nQlz7l
+         PIN/b+VnwvfV4TVwPtGjXg7i7PWHoxfgbrroL6uyWj6pXiZBOz/9ObtyXbXWhUR0016z
+         Ro8BRxXVODGQw4XAclJszyjakCx4bzKZa5H3vh1RK7kqNs/mO+vFhqC/VySparfmx7gc
+         3UDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=79kj0Hz7G1C0b9kzA6orIiebN/l1XiuJDZGgCwfBBpE=;
-        b=Sr0njA8nOhE9Cds+MmbhyCIGM+GKO/ygJX6EAymfMEf60uukcS9swWnaa6VlV2Oc4R
-         oenQIRD8dg47my2yFu5UT9pQnZXEkQYvEICv8/awv9yUbB0cugMsu1pnBpp8lNrO8jYg
-         Z2CImgymhZNEyvngeyzW9Sy95NCAx4ZA68JlGbYquT5Zr5V74W1wkw84Las47xx1bD+1
-         YZtzO2E7rDgFKYmPS7UDQtI6reyAgpv1NJ6yWnaWhqHN+zYaFAwEq7oggyvrpKix3xua
-         Cw8NyxtDQ4wfBJ8o+5dkR/XzDLswKwazlagENpOQS2n7kJMjU7hf0wYda2FqCO5u8cNF
-         nunA==
-X-Gm-Message-State: AOAM532cE0RbwoJcyCBWadOxFS2S5rDiyLA8WG/iYwBJstqmq1xzj1an
-        c1lJk1deRmCc5LaJSnCNYvyguw==
-X-Google-Smtp-Source: ABdhPJx4qVUhNovVxRN0EE80bqxWGDGdzB+5JtHJO2Spcjd573wzmI0mzZWLaHLXhkkH6NYa6XI6PQ==
-X-Received: by 2002:a05:6e02:1445:: with SMTP id p5mr6351513ilo.11.1634871901309;
-        Thu, 21 Oct 2021 20:05:01 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m5sm3559540ild.45.2021.10.21.20.05.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 20:05:00 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 23:04:59 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        peff@peff.net
-Subject: Re: [PATCH 01/11] midx.c: clean up chunkfile after reading the MIDX
-Message-ID: <YXIqW1yiaJTS/8in@nand.local>
-References: <cover.1634787555.git.me@ttaylorr.com>
- <30f6f23daf49814f479865eea5f9ee68de209d5f.1634787555.git.me@ttaylorr.com>
- <xmqqy26mmjz8.fsf@gitster.g>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xf4aTTNSAFUE9EP5UR5fRlY5owUeQIecLSiXZL3iA7o=;
+        b=5LcP/MWLc9M3lht+tUFmERn0hpzBDGD+9NHDY9V6L0TYYgIjhW/zTO6ZimblKjUwsP
+         lEaD5wRm2Y9vGpYzvQf8YS9lQ477jRBL40tpopjaIXv6mIMivirZfZZ9ha4PVHgLyqGn
+         49IMnu7b5pDeOHuWSNHRA3MXB9uz4947KaX2FBNGawbL/PUQrgy7GVJnXXLGt4XSoTkM
+         ccQrMp6lLNt5iUn/IxJB6lsAE5CotjuuMxk1Jd4GfzUJ24oLPOmgOJ1JSReoMaM1OnlU
+         jJzVBOAynYiZSG4zxnl5ASCXdVDIyeQHQ1zc9+DuwL3j3JfsshHlIIsw6Jn+1U2pFooq
+         iR4A==
+X-Gm-Message-State: AOAM533JQSkXwlLcaZ6wXZcJoQoAjCH6BR386MvCn0xzXE0CofK9md39
+        VGJ/v/AAIIGqrax9NXayn70=
+X-Google-Smtp-Source: ABdhPJzX2fXOHtTHgD8Hn2WZ8+5/orC9pXDDazA+Hru/NxsPnFJE2WpYf/OX84tw2ouBIh74UWX9mw==
+X-Received: by 2002:a17:90a:c85:: with SMTP id v5mr1277725pja.47.1634871994245;
+        Thu, 21 Oct 2021 20:06:34 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-84.three.co.id. [180.214.232.84])
+        by smtp.gmail.com with ESMTPSA id 31sm5577273pgs.29.2021.10.21.20.06.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Oct 2021 20:06:33 -0700 (PDT)
+Message-ID: <bdf47d51-9cf6-046d-fd97-aa35299daadd@gmail.com>
+Date:   Fri, 22 Oct 2021 10:06:28 +0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy26mmjz8.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [Summit topic] Server-side merge/rebase: needs and wants?
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 09:16:27AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >  cleanup_fail:
-> >  	free(m);
-> >  	free(midx_name);
-> > -	free(cf);
-> > +	free_chunkfile(cf);
-> >  	if (midx_map)
-> >  		munmap(midx_map, midx_size);
-> >  	if (0 <= fd)
->
-> Not a fault of this patch, but I think the code is calling close()
-> on an already closed file descriptor in cleanup_fail codepath, when
-> "goto cleanup_fail" is reached after xmmap() returned, e.g. when
-> oid_version() does not match hash_version, when we failed to read
-> the ToC.
->
-> Also, it is not clear why is it a dying offence if we do not find
-> packnames chunk, but it is just a "pretend as if we do not have this
-> midx file and everybody else is happy" when we failed to read the
-> ToC.
+On 21/10/21 18.56, Johannes Schindelin wrote:
+>   5.  The challenge is not necessarily the technical challenges, but the UX for
+>       server tools that live “above” the git executable.
+> 
+>       1. What kind of output is needed? Machine-readable error messages?
+> 
+>       2. What Git objects must be created: a tree? A commit?
+> 
+>       3. How to handle, report, and store conflicts? Index is not typically
+>          available on the server.
 
-Yep, I agree with you on both of those. I would be happier to see fewer
-die()s deep within midx.c. I'll start a list for myself of some
-potential future cleanups in this area that don't involve memory leaks.
+1) I prefer human-readable (i.e. l10n-able) output, because the output 
+messages for server-side merge/rebase are user-facing.
 
-My hunch is that there's enough subtlty here that we shouldn't tie the
-two (fixing leaks, and other general issues/tidiness in the MIDX code)
-together. So I'll keep track of the latter separately and address those
-in future series.
+2) Same as when doing merge/rebase on local machine (merge commit if 
+non-ff).
 
-Thanks,
-Taylor
+3) I think because on the server-side we have bare repo (instead of 
+normal repo), we need to create temporary index just for merge/rebase. 
+For conflicts, the users need to resolve them locally, then notify the 
+server that they have been resolved, and continue merging process.
+
+-- 
+An old man doll... just what I always wanted! - Clara
