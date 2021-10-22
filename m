@@ -2,123 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8DFDC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E6CC433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 23:00:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A03F860241
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:52:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5B5361037
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 23:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231597AbhJVWyc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 18:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54776 "EHLO
+        id S231691AbhJVXCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 19:02:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbhJVWy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 18:54:29 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BD0C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:52:10 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id y12so6508442eda.4
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:52:10 -0700 (PDT)
+        with ESMTP id S229707AbhJVXCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 19:02:45 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 742ECC061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 16:00:27 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id g10so7021577edj.1
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 16:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3XniM6BKRVtkYtyoQUL4hMgLREGk3rFkCg8nhc0Ia/k=;
-        b=kzXXgyTszp89bFlKedcNc8S1NPxdMC3KOu4vWB4FyFAt4DHC0NDd4Eptw1AF6bx2rm
-         Coa2RB2jd3IgiuOiA0X2Qz2ZgYy0xI7+RpHwvJy7x4JRxZxrI32Wt9fXNBecFlU3Uz3K
-         AL9e8u2q/Bpb1Wk+4FQvolYi51d+yWNL+11QsOzUPPNOVIylKnBdaoXiMixsOAxhLiun
-         +qpG57FuEBWx7wu8w5269yp0jhLIN8trMG6cKj7RziQz7tg0gK1rwcFjADvZPb5uVfnl
-         67v3Cymwf84nL4/ii0OMzny6dKuBv9qHP0jVALfeh53Ru4BNivg8JLzWoswdWsjEs4Fo
-         D+dA==
+         :message-id:mime-version;
+        bh=5orOQWGxRKoAE7szDcr5I+Zc4CQQv4tV+NwCln0viW4=;
+        b=EAXKqhT3BYozvlcJzh0f9D4vzxW4x2FKP1RKsTwEvP1yS5fq5PP7qM4C9rzHFiwy1q
+         Kzi/bBXf6HYwloBFpe6yR8h4EpYbp2CEx/ZK+iYpa/sPOLsMRGKoAYe3CIG/WIrhCXZA
+         8t57Y5kGynKNQB8sucgADTNhcZq6BOO3yFe3hvqSZRmhoGqAoU/T4yk0Cju7en2NNef3
+         G2l1NxuocEwCU6FcbYkxUE44f5D0VYo12SYT5z7Cbl6DwQadtnGhDj2qtmhzXWzrECzF
+         FtR4h+jRq83GtkSYv+6Oi3oXgRdBO/LgLxQBEfb8CQnmmRBJhQCbCxMqVdKYN14H9ofH
+         OReg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=3XniM6BKRVtkYtyoQUL4hMgLREGk3rFkCg8nhc0Ia/k=;
-        b=55+oM5hVpNZyLCQ9gtctWDOxjj6dNp2s0B/lBBKH/NDO7kD7yGA8ozv2yWwUgpez8a
-         AV9tMllRJwvyzYlOQYvE/C6Q36hKAycqgpwSTh4gg9AAhLZEoXwzLijBbngqBGQ2SGvy
-         ZSh/We5DxmjDLQbDE2TZu66OjH4Pj5T6YyMn+6R+j3MjIkEgFcIqcBMCVOa7BQ4LENsd
-         lUlmcNcZEWvwjj6sIBFIFwPm51/yiyEGTLadtiYFGbLwbO4TGZLLtFjiAsW7HfNSOAHK
-         IOpqfSxo2gkHlnjmFrarMULFqn8MhMEK6z7m+vIYfPTtij2raz5504oQKZd81yhixtRG
-         SZoQ==
-X-Gm-Message-State: AOAM530ZyY7Ko9IXeVRPRpPC0oAOeBHM4touvlPqX/MrMv0Oh2DV8vzS
-        6P95EQNKqpoNTJvP5rkzDUQ=
-X-Google-Smtp-Source: ABdhPJw0PLv96cDaaPcl1vLaFOa7Cr+H8hW8o+UAF/RNSR0DYle9AHrSXNGAJqwfoSp03lblGZ1o6A==
-X-Received: by 2002:a50:e041:: with SMTP id g1mr3863677edl.4.1634943129446;
-        Fri, 22 Oct 2021 15:52:09 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=5orOQWGxRKoAE7szDcr5I+Zc4CQQv4tV+NwCln0viW4=;
+        b=x+m7oECdflFGPEyoiWGP2VD/TxDVh69V904BgB3G6LEhAlLjFJt5g4MBynZMADB6PV
+         G/G1B0SgbTffLFyqkPBZ9b2ockeay/nh2bWteXjTMzdVGXbJ8mATUnhHAhV5RGgVJ1tc
+         f/Ym9oymGqDtYm1jogRyNsA8EtwuqlLkzoZTceXck58aSq16WQ8JZ14hLDWpIxZK0AJw
+         O72u0a8RZ2OE7/qkzh8WQi1NmL9cDdaxaxaPlLJ6A6VIgteWol1FhHn5rO6KHjqyYPvG
+         ZUk29L07CLgXWEvbJaihah0P229MG0Tpk3jWN62kDZ15z/v1SKR52bFdBbCmWyLglrq8
+         mNrw==
+X-Gm-Message-State: AOAM532TvCy8BSBZo//4Fxnp2lj+x+9inu7MSALUJbnXlKOjd2CHY+ap
+        0zVZ4iywBlS36hFkFRZ/KKx1fQrmICKU2A==
+X-Google-Smtp-Source: ABdhPJwLi4+O/ImLqPNNrufeTEM2pWsgS0EMM5MqNEKUN3GCPqxkpMSESWnauxGh/xXx8eghqgdviw==
+X-Received: by 2002:a05:6402:3488:: with SMTP id v8mr3908827edc.106.1634943626029;
+        Fri, 22 Oct 2021 16:00:26 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id jg21sm4476111ejc.14.2021.10.22.15.52.08
+        by smtp.gmail.com with ESMTPSA id cx10sm1145206edb.93.2021.10.22.16.00.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 15:52:08 -0700 (PDT)
+        Fri, 22 Oct 2021 16:00:25 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1me3OR-001OUV-Ii;
-        Sat, 23 Oct 2021 00:52:07 +0200
+        id 1me3WT-001Ogy-1O;
+        Sat, 23 Oct 2021 01:00:25 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 2/3] config.c: don't leak memory in
- handle_path_include()
-Date:   Sat, 23 Oct 2021 00:30:33 +0200
-References: <patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com>
- <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
- <patch-v2-2.3-d6d04da1d9d-20211021T195133Z-avarab@gmail.com>
- <xmqqmtn2gdlv.fsf@gitster.g> <211022.86ilxpj7si.gmgdl@evledraar.gmail.com>
- <xmqqh7d8eox7.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Krzysztof =?utf-8?Q?=C5=BBelechows?= =?utf-8?Q?ki?= 
+        <giecrilj@stegny.2a.pl>, git@vger.kernel.org,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: Re: *Really* noisy encoding warnings post-v2.33.0
+Date:   Sat, 23 Oct 2021 00:58:34 +0200
+References: <9896630.2IqcCWsCYL@localhost.localdomain>
+ <YSWVi8uLHZCTtG0l@coredump.intra.peff.net> <xmqqeeahjxj4.fsf@gitster.g>
+ <YSkvNyR4uT52de13@coredump.intra.peff.net>
+ <87ily7m1mv.fsf@evledraar.gmail.com>
+ <YWEAEjIN0HVHbIpg@coredump.intra.peff.net>
+ <YWEBmJk0aENR5Yeo@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <xmqqh7d8eox7.fsf@gitster.g>
-Message-ID: <211023.86wnm4isfc.gmgdl@evledraar.gmail.com>
+In-reply-to: <YWEBmJk0aENR5Yeo@coredump.intra.peff.net>
+Message-ID: <211023.86sfwsis1i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Oct 22 2021, Junio C Hamano wrote:
+On Fri, Oct 08 2021, Jeff King wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> On Fri, Oct 08, 2021 at 10:36:02PM -0400, Jeff King wrote:
 >
->>> Not a problem introduced by this function, but if you look at this
->>> change with "git show -W", we'd notice that the function name on the
->>> hunk header looks strange.  I think we should add a blank line
->>> before the beginning of the function.
->>
->> I think this is a bug in -W, after all if without it we we show the
->> function context line, but with it we advance further, then that means
->> that -W didn't find the correct function boundary.
+>> If that were coupled with, say, an advise() call to explain that output
+>> and matching might be inaccurate (and show that _once_), that might
+>> might it more clear what's going on.
+>> 
+>> Now I am sympathetic to flooding the user with too many messages, and
+>> maybe reducing this to a single instance of "some commit messages could
+>> not be re-encoded; output and matching might be inaccurate" is the right
+>> thing. But in a sense, it's also working as designed: what you asked for
+>> is producing wrong output over and over, and Git is saying so.
 >
-> That's a chicken-and-egg argument, and I do not think it is a bug in
-> "-W" nor the funcname regular expression pattern we use.  We expect
-> a blank line there and the pattern reflects that expectation, so not
-> having an expected blank line is what causes this problem.
+> The single-output version would perhaps be something like this:
 >
-> In any case, we should add a blank linke before the beginning of the
-> function, and of course that is obviously outside the scope of these
-> patches.
+> diff --git a/pretty.c b/pretty.c
+> index 708b618cfe..c86f41bae7 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -606,6 +606,21 @@ static char *replace_encoding_header(char *buf, const char *encoding)
+>  	return strbuf_detach(&tmp, NULL);
+>  }
+>  
+> +static void show_encoding_warning(const char *output_encoding)
+> +{
+> +	static int seen_warning;
+> +
+> +	if (seen_warning)
+> +		return;
+> +
+> +	seen_warning = 1;
+> +	warning("one or more commits could not be re-encoded to '%s'",
+> +		output_encoding);
+> +	advise("When re-encoding fails, some output may be in an unexpected\n"
+> +	       "encoding, and pattern matches against commit data may be\n"
+> +	       "inaccurate.");
+> +}
+> +
+>  const char *repo_logmsg_reencode(struct repository *r,
+>  				 const struct commit *commit,
+>  				 char **commit_encoding,
+> @@ -673,7 +688,7 @@ const char *repo_logmsg_reencode(struct repository *r,
+>  	 * case we just return the commit message verbatim.
+>  	 */
+>  	if (!out) {
+> -		warning("unable to reencode commit to '%s'", output_encoding);
+> +		show_encoding_warning(output_encoding);
+>  		return msg;
+>  	}
+>  	return out;
 
-Sort of, if you were running with the patch I posted at [1] you wouldn't
-see the bad value at @@, but we still extend upwards with -W, which I
-consider a bug.
+*Poke* about this. We're getting pretty close to release. I think the
+WIP hunk I posted in
+https://lore.kernel.org/git/871r4umfnm.fsf@evledraar.gmail.com/ presents
+a good way forward with this.
 
-I.e. both the current context we display and the over-extension there is
-ultimately a symptom of the same issue, which is that what we're doing
-with -W gets conflated with behavior that makes sense without -W, notice
-how if you do "git log -W" on anything that the @@ context we display is
-the prototype of the function /above/ the one you're likely looking at
-the code change in.
-
-So the blank line is the cause of the over-extension, but we'd still
-show the (IMO) incorrect context in either case.
-
-Anyway, as you say a discussion for some other thread. I've been meaning
-to get back to those patches at some point, the first problem is that
-our test coverage for what function context we should find when is
-really lacking, so any changes in that part of the xdiff code are likely
-to break things. I had those tests, but they got lost in some
-bikeshedding...
-
-1. https://lore.kernel.org/git/20210215155020.2804-2-avarab@gmail.com/
+I.e. aside from how wise it is to warn about this in general, I think
+there's a pretty bad bug in your implementation where what should
+effectively be a parse_options() or git_config()-time one-off warning is
+being fired off for every single commit in "git log" in some cases.
