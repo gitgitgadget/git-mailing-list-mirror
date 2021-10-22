@@ -2,118 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07F7FC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90774C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:33:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C957A6162E
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:32:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6739C619E4
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232664AbhJVDeb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 23:34:31 -0400
-Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:40625
-        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232619AbhJVDea (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Oct 2021 23:34:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=cessssaigkdq5uletp7pzdlghxldyiuc; d=coderkalyan.com;
-        t=1634873533;
-        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To;
-        bh=itmrT4W8gouG/gh0ktxxu68Rog0ujenQyUkNfPLRNCY=;
-        b=CkfIjJs/6vjdhY8ByYN1LcYqc80N4ramA/2nd/M64AlgdD/iNSwLJQZvqPorI4ac
-        vUGNQST3irSxuzEYbPnCef+bPdef194r/16o/H8DxhB63apGzVFH2jRGBJpfGieIPka
-        7jB4yBQJsVoia/ZlLjXYxTYb2LK4QM2HWeCn12eE=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1634873533;
-        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To:Feedback-ID;
-        bh=itmrT4W8gouG/gh0ktxxu68Rog0ujenQyUkNfPLRNCY=;
-        b=iQI8KHLB6NxfhWHcG/cqf2vgE+NsXLUoS4/OrITBgW7KwEV0wLB2cp/vr19lwrfF
-        RtAx0UpfRrndhld/WmwA5ZHaMXVa0bx3bXheg5p2cn3FoU/qGhSrjCV2XxPqx+wAPhd
-        qTA3uRbmZNJvxbtDzLV40efWSv1Vd8XxObSL2H+c=
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 22 Oct 2021 03:32:12 +0000
-Message-ID: <0101017ca60e5ffd-9563fafd-86f6-443d-9cbe-e07203caacba-000000@us-west-2.amazonses.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git" <git@vger.kernel.org>
-Subject: Re: Git submodule remove
-From:   "Kalyan Sriram" <kalyan@coderkalyan.com>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Matheus Tavares" <matheus.bernardino@usp.br>
-References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com> <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net> <xmqqbl3ihu6l.fsf@gitster.g> <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com> <xmqqee8egddw.fsf@gitster.g>
-In-Reply-To: <xmqqee8egddw.fsf@gitster.g>
-Feedback-ID: 1.us-west-2.6woXiZ10/hvs78i2LW4ugcJq1GLEuVeUxt3YeADpvNg=:AmazonSES
-X-SES-Outgoing: 2021.10.22-54.240.27.55
+        id S232597AbhJVDgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 23:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48620 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230349AbhJVDgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 23:36:03 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0661C061764
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:33:46 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d9so2445943pfl.6
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:33:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=iYIBg9zT+Q0W/UIDzZRHN++A18xh008CLBIoL53hwxI=;
+        b=qLm8tWVnIHbgDCnhEIV16mFKTxUJMCdlpCf7kEBkt2h1psKAtjDdEqtX2mLmCp1Bq9
+         fMnH9Gpjszk/v4phWM6Vl8ob7ekG+3eW7EhxkBsv9YffHxSGGnrz8tBFwDokXuljm3x+
+         rBqkF8T1ExZ1WJidwZxfhY/31xD1cFt7qkhaOBv+F+waxagoheiyDnVDFhEGxSMPzHON
+         /haGTdk6ElG/rM6W4RPkJxv/4nclIyDXQ/G9SRPeBT4Fsv1iY3VjpqOb6ozbS/rf6YgM
+         CiqIDPvRYNqiwLhjOeg2eO3sUDYzSxq1YSrAwLPY1IjE4qvAY5iVQ1LYn6G2sXiWmood
+         G+dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iYIBg9zT+Q0W/UIDzZRHN++A18xh008CLBIoL53hwxI=;
+        b=TdukIv/F/sNpLs4AZFRxgXKUEb++SWmFu4ej7Z0dOeCXXjXAuZU5YdD10cQ7XM207Z
+         2MIx6Yu3xmsw0X9cisZ1wDDxMJ4SirnB+CNLqSKR0GRRU9vGtXdMYMb5VQ8/7sTE7dou
+         JZJiPy8B3NwkkUKiw0HJPWu27FiOIp89nLxTqU42nrhrk9BW+pqaRSqLZhRyxIPdG0NF
+         MDiglTdzVR4T8SldDPI+Hag1u/abg3EuJys93qYk39+Xpd1PILl+4QEELMt3Npdvii6/
+         eUTyl9UBfSHiSQUYexkzfTlmlr6BVyKS6XWXSFo+and8zLJnT9BdfXyetdZ67PdxB8Vm
+         la4Q==
+X-Gm-Message-State: AOAM532tn26hSiSTGOGCCHES6nVo5mA3S2OiWBUg3YzvIJBwS47gEJLX
+        D9JgXj0F1+6jUud4j4D95yw=
+X-Google-Smtp-Source: ABdhPJyz/5DtNGArn9NzZ+0GtoWVz0ozkQN26xudbgxVhOtSndfB6zmZvxFAxFYasW6hp9qfyyi8Bg==
+X-Received: by 2002:a63:9554:: with SMTP id t20mr7381523pgn.153.1634873626152;
+        Thu, 21 Oct 2021 20:33:46 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-15.three.co.id. [180.214.233.15])
+        by smtp.gmail.com with ESMTPSA id nv5sm8553042pjb.10.2021.10.21.20.33.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Oct 2021 20:33:45 -0700 (PDT)
+Message-ID: <dc479498-428e-7cd4-cad5-da19875a9ad8@gmail.com>
+Date:   Fri, 22 Oct 2021 10:33:43 +0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: changing the experimental 'git switch' (was: [Summit topic]
+ Improving Git UX)
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
+ <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu Oct 21, 2021 at 4:35 PM PDT, Junio C Hamano wrote:
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > On Thu, Oct 21, 2021 at 7:47 PM Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> >>
-> >> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >>
-> >> > On 2021-10-21 at 17:25:38, Kalyan Sriram wrote:
-> >> >> Hello,
-> >> >>
-> >> >> I was curious why git-submodule does not have an `rm` command. Curr=
-ently
-> >> >> I have to manually delete it from .gitmodules, .git/config,
-> >> >> .git/modules/, etc. See [0].
-> >> >>
-> > [...]
-> >> I'd imagine that the happy-case implementation should be fairly
-> >> straight-forward.  You would:
-> >>
-> >>  - ensure that the submodule is "absorbed" already;
-> >>
-> >>  - run "git rm -f" the submodule to remove the gitlink from the index
-> >>    and remove the directory from the working tree; and
-> >>
-> >>  - remove the .gitmodules entry for the submodule.
-> >
-> > I think "git rm <submodule>" already does these three steps, doesn't it=
-?
+On 21/10/21 23.45, Ævar Arnfjörð Bjarmason wrote:
+> In summary, I think it should be changed to act like this:
+>      
+>      |---------------------------+------------------------+---------------------------|
+>      | What                      | Now                    | New                       |
+>      |---------------------------+------------------------+---------------------------|
+>      | Switch                    | git switch existing    | git switch existing       |
+>      | Error                     | git switch nonexisting | <no change (errors)>      |
+>      | Switch with --merge       | git switch -m branch   | git switch --merge branch |
+>      | Create                    | git switch -c new      | git switch -n new         |
+>      | Create from existing      | N/A                    | git switch -c new [<old>] |
+>      | Move & switch to existing | N/A                    | git switch -m new [<old>] |
+>      |---------------------------+------------------------+---------------------------|
+> 
 
-Wow, this is a surprise. Looks like this behavior is mentioned in the
-man page but is not very well known.
-> So perhaps "git submodule rm" would just become a synonym for "git rm"?
->
-> Thanks.
-Almost, yeah, but not quite. I ran a couple quick tests to clarify my own
-understanding of how submodules work, and found that:
+For switch with --merge case, it seems like adding long-option variant 
+of -m (--merge), right?
 
-"git rm" deletes the submodule directory completely and modifies
-.gitmodules, effectively removing the submodule. However, it leaves the
-entry in .git/config dangling, which is annoying.
-
-"git submodule deinit" (which I didn't know existed until I just read the m=
-an
-page) deletes all contents of submodule directory, but leaves the=20
-(empty) submodule directory itself intact. It DOES delete the entry in
-.git/config, but leaves a dangling entry in .gitmodules, so the next
-"git submodule update --init --recursive" registers and populates the
-submodule again.
-
->
-> Wow, that is a unnerving layering violation, but I suspect it is too
-> late to fix it.=20
-I agree, it's probably too late to change the behavior of "git rm"
-regarding how it treats submodules. That said, I think the cleanest
-solution would be to update "git rm" to also remove the dangling
-.git/config entry. Then, I could make "git submodule rm" a synonym for
-"git rm" for clarity. This would probably also involve updating
-documentation in multiple locations to make sure everything is
-consistent, and verifying "git rm" doesn't leave anything else about the
-submodule dangling. Please let me know if anyone has a better idea for
-anything I listed.
-
-Thanks for your input so far, Junio, Matheus, and Brian! If no one has
-any objections, I'll figure out how to make these updates and send a
-patch along.
-
-Thanks!
-Kalyan
+-- 
+An old man doll... just what I always wanted! - Clara
