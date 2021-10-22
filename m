@@ -2,214 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A202AC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A31C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:26:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AE1A60F43
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:07:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24634611CB
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbhJVJJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 05:09:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:48137 "EHLO mout.gmx.net"
+        id S232358AbhJVJ2j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 05:28:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51765 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232406AbhJVJJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 05:09:56 -0400
+        id S232307AbhJVJ2g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 05:28:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1634893658;
-        bh=IUzhfKoDuV0RntvTEKBq97Cs7+dNjlCezHFFQTc60xs=;
-        h=X-UI-Sender-Class:Date:From:To:Subject:In-Reply-To:References;
-        b=ip7/aCJgUIyWYUTDl94EbTA1Xi7DCZ66OsF+aKUNAKUYvycSVOCbX3eA9mrDa+GyJ
-         VuYNwzA+qZ8hheO7naPEfYW976qtjd2HUwsTBQeDPgtMM7DZDuzDVclUZzNAM/QF6A
-         NBOZUEpFZEau5khAk8WcQW/mMMdqoZRbSITq83ok=
+        s=badeba3b8450; t=1634894778;
+        bh=8P0WEnC6d2dRA5eJ0jcf1b9YNp+M28BVLDlVdwr6lNA=;
+        h=X-UI-Sender-Class:Date:From:To:Subject;
+        b=Yuxm2olQIrk8A2E4C+ndy3/HOXBCPCWY4VkdRaugDdDWuRTJsaK0sUyqOlVEPqeHZ
+         bSeAYAhffNiXiTSS5L+R1ptGGlsbjr383lQA78TTjnjYmbnc4X8ZSMla9H+WoRR3yr
+         VzC5wX1K/EoWwcZRXFSd9N1bQUibP2CbUSJ1KFy8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOKi-1myFUK1gXm-00uoQt for
- <git@vger.kernel.org>; Fri, 22 Oct 2021 11:07:38 +0200
-Date:   Fri, 22 Oct 2021 11:07:37 +0200 (CEST)
+Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTiU3-1mH8tD0oJB-00U6FM for
+ <git@vger.kernel.org>; Fri, 22 Oct 2021 11:26:18 +0200
+Date:   Fri, 22 Oct 2021 11:26:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     git@vger.kernel.org
-Subject: Re: Missing notes, was Re: Notes from the Git Contributors' Summit
- 2021, virtual, Oct 19/20
-In-Reply-To: <nycvar.QRO.7.76.6.2110221028090.62@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2110221000480.62@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2110221020570.62@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2110221028090.62@tvgsbejvaqbjf.bet>
+Subject: Let's have chalk talks, was Re: Missing notes from the Git Contributors'
+ Summit 2021, virtual, Oct 19/20
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1785661176-1634891636=:62"
-Content-ID: <nycvar.QRO.7.76.6.2110221041470.62@tvgsbejvaqbjf.bet>
-Message-ID: <1M4JmN-1me7VT1yCn-000Mey@mail.gmx.net>
-X-Provags-ID: V03:K1:XE2qm4dQqe2Kn/kgilmwHskwv6waesb2H2zeegRnD3gmuMzolmW
- shSEnmMi6SjsQ6EyT8Xda9eL/lhp43pHZF48F6W3tvU7RySE0Ef7dxa/h/Ofbkjg8UdTBRQ
- 0m205J/N8p/y1rGA24xYfQoM29qxPfjQrkIq1xv13pKESFBxXzD47kKXspvZTnKL68nfjIB
- 0g4hU15gAY2e1oMqh+5qg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3Jlw/VULC14=:CcA7vzK3k0o1/JHZkP/hnq
- BcCZxZaaa2A2zsWTmUJRGsGgtJjqtTMh6YxIn6XaxwTeO6R1+eI7rvng02+FT+h1aRtBbO/3Y
- mLAmozxJDr2SEsWDFMU9VyYApu3O8ShjlTmDUF9qakvp8DQCZN4wbiDSkTBVpYD+2WU4Tn8Id
- WGOb77zbXl3hQ6c24Z2Dl7O0sltChlu4fHhhgvRO98b7IfbonlSTGL/+bOhCxh/TFJC5VsMZR
- +6QpOi4LCWehXcQn94SLMo6z0b6R4dBOFYur85jpjI7U5IhwyZ2edJbBJJ2GAX2aeOtYgOCm8
- bgJa3clqFPm87mLeyPrfCOGjoWBvwwzYWJZ4OZcRyY8K2cI6m2L/bmBdwuHW1g/OFMRQaX0uC
- 0b8ljHe/RgpRM+c9XLMkxVi15a+vN5OucyqZgnzmWAIkEaRnq5vZE+6kWP1xCmwaLmc634S4F
- y1dxO0482eW3SDCqLYCYu/Jkuc3+BoTbM2rhOouS6KKri2+c3PhVUzuuP09DTyJlEB2z2PwEK
- j+WxK05XSYgkMJFGlgDLoSL1SYghfrhySlKjXxf9o+yyUFLlFg7pgaVyL9igzK3OTQIJmFG2Q
- ljpH3WZNkLtu3ZiZ33eZST8Xi+Itn3pUKEBnrJpau/v0B9amqx3Zq3vQuJd7nNqLb7NkiQieC
- rmNQkSVKaASdoV/YvgXaZuuo82PIOlBbhapBvL5jZSQS5K4QSKrasCMKezD32MOm5SNywvQdr
- AP18RLqr1T3ecs9kqHeSHAnujo5UgJE+RWJWjI4Uk8XVHMIO3UsLLXSrQGj8zQG2nSEjMzgzQ
- w0F83jqtb+zKhBgElQt26JH0mK0F4Qht0vxfuq3n49IwWNDuVcMiyPEhpcNUQAmLT+FtyInUK
- q0zNmBP4y4Xox6L5BQUcOyD1qdpUOru5CBA/YNvXtfmAhsgriE7vmwiyAZnhjfthrRPUHAqmB
- DM2OeRIqniiPb0s/0fNBtXg59fUOn8quSLOD6/wywcxzekwVzodyXkGlN+9VmHK3UZYa8kV35
- WV3elCEwm33U6NSg4bC2bFIEAlLugaQbajLk0ZvI2WQ4QXoqXGHBH8CyWOQwiM0HHQZDoZ84A
- hXjH6vUMm7Cq3Y=
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-ID: <nycvar.QRO.7.76.6.2110221116391.62@tvgsbejvaqbjf.bet>
+Message-ID: <1MQe5k-1mIUTU15Lq-00NjOF@mail.gmx.net>
+X-Provags-ID: V03:K1:g8VaUD6bsv8qUF2VJZoz/OSNmGVOgFNIFAvU3k3yifa7es4vGWr
+ iWnIttFFYZWtaTQ9G8AIL2lynH2zzH4/ql13L82iIkks6WjB+qYTOWmGSEVOUeu2gcSFLWu
+ B3RPm/8I99cG7zdN0k6CtVtb7t1k+cgcKCakVIVhyX0bgLJ6ZlaFNKO8/zPEiAqGOB062QH
+ 24e25cq6LqZgbik3uA2EQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GOJTTuiAynw=:UGAxkfH9eRC4oySJVe3GRm
+ /5L/Wv4ZVoVrsC1LO06HgOTk9fCRDauSC70JTyO+2gMu83TTsK/AkDRm7voshZrBy4HGA5Ce2
+ yu4WUI6yqCL17fulg+io7kZKPJGr6cIYZHloi3BokC+tUvJQPB4dlgmRzELuaWIZKIZYkl2ls
+ lmBZTL4tfyn7b0Nzbdqkwb0LgyId+v9W3imFNQoq5lo2auHQ1AHneLsKJBEmaDZPS4yeIoU9g
+ nwyWR+lyzKP+/aolLDwsIqNedKqzN+/0wSLJycvbBodLPqyky4uiPaPqdO+Mh2df94KXtLBdA
+ eEF0PqnkcanKvL44FtuAFslbepDZk3KSwtIrjY8HGxDWR31zRx9khYWFeF02YjKb+t+Nti0S4
+ 6NRsEgt38wDAWMzpbuMiRwaYOsamRn6QNBagSaSGyycT5oo2fXHh22iqvg6wFOxM3jYVBgPot
+ zdylvWdUsMC/HW/StcbeqGp2TMnEnuO7Y8H/slAecMPb4srBtx3Cwvy1XjDniy0HZlXK7uSbU
+ T2DDJTEa0QT9xiBmPB9SLp1aVLiUbE6AAtiaVX70Smfobn++Qg7Xbe3PdFkuqSkiEMQif334F
+ sAnHfz45ljcJ66fM09j5HlrQlXPFxgnUMHT5MdXu3LjtHwvTDGh/tRkofoyWoDJvwyg9QdWvu
+ F5swwMK8X3sO1r/zAF5YLGCa6Lvn9fxxiwspR9tVZ/M419eygIO+b+tBZrAFPL1TPPneIqm4p
+ c94ixv9IRGVbyMDOqKOby20HrzG9TKzTXR2REO7bgsCgCmvK2w4jteOeE8k19juF2MRr1nwR1
+ BBtnMRqVzVEJCibLMh6hKlY0hjfDgB+3HPCYkQKk/I3aQoaT/uupm3SfcO4QNdsoWQcZlP5gO
+ i9Y7EgAx4ArKm6ZyNUrKQDljt0DZuOrCH0wO4bNO1KqIRvkfFQwipBFqwcGWqYRY6hVVbmxyR
+ K2x9Jh2HO9anUDMdN0xN/NdVeH74dFU6VXd5EZbDM4+HxyryVTSgjWUr0lQbQjq0NbY2Wbk+E
+ zfk+LuKsXYpGo4/KgIPDfpX82lEVzg1ByVKF+RkL7+bkT74CBFLJ40nFTw5gl1SOhQpUYkhZp
+ Y9vlba38zaUT70=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1785661176-1634891636=:62
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2110221041471.62@tvgsbejvaqbjf.bet>
-
 Team,
 
-after 10 failed attempts to send more notes, this might start to get a bit
-annoying on my side.
+If I did not have the impression that this was an important topic, I would
+definitely stop trying to send the notes on this session.
 
 On Fri, 22 Oct 2021, Johannes Schindelin wrote:
 
-> On Fri, 22 Oct 2021, Johannes Schindelin wrote:
->
-> > On Fri, 22 Oct 2021, Johannes Schindelin wrote:
-> >
-> > > On Thu, 21 Oct 2021, Johannes Schindelin wrote:
-> > >
-> > > > * Let's have public Git chalk talks
-> > >
-> > > You might wonder why I did not send out the notes for this talk.
-> > >
-> > > But that is not true! I sent it 6 times already, in various variatio=
-ns,
-> > > and it never came through (but I did get two nastygrams telling me t=
-hat my
-> > > message was rejected because it apparently triggered a filter).
-> >
-> > This session was led by Emily Shaffer. Supporting cast: =C3=86var Arnf=
-j=C3=B6r=C3=B0
-> > Bjarmason, brian m. carlson, CB Bailey, and Junio Hamano.
-> >
-> > Notes:
-> >
-> >  1.  What=E2=80=99s a public chalk talk?
-> >
-> >      1.  At Google, once a week, the team meets up with no particular =
-topic in
-> >          mind, or a couple topics, very informal
-> >
-> >      2.  One person=E2=80=99s turn each week to give an informal talk =
-with a white
-> >          board (not using chalk)
-> >
-> >      3.  Topic should be technical and of interest to the presenter
-> >
-> >      4.  For example: how does protocol v2 work
-> >
-> >      5.  Collaborative, interactive user session
-> >
-> >      6.  Helps by learning about things
-> >
-> >      7.  Helps by honing skills like presentation skills
-> >
-> >      8.  A lot of (good) humility involved. For example, colleagues wh=
-o have
-> >          been familiar with the project for a long time admitting they=
- don=E2=80=99t
-> >          know, or have been wrong about things. Makes others feel more
-> >          comfortable with their perceived lack of knowledge
-> >
-> >      9.  Could be good for everybody on the Git mailing list, might fo=
-ster less
-> >          combative communication on the list
-> >
-> >      10. Might be a way to attract new people by presenting =E2=80=9Co=
-ld timers=E2=80=9D as
-> >          humble
-> >
-> >  2.  Does that appeal to anybody else?
->
-> [redacting a word I suspect to have triggered vger's filter: it is a wor=
-d
-> starting with "T" and continuing with "witch". Whenever you read "[itch]=
-",
-> that's what I substitued for the culprit]
->
->  3.  =C3=86var: I think it would be great, has been a long time we=E2=80=
-=99ve seen each
->      other, and already feels different
->
->  4.  One thing to keep in mind: it=E2=80=99s hard to program on a white =
-board :-)
->
->  5.  Emily: some challenges:
->
->      1. How often?
->
->      2. What time?
->
->      3. Probably move things around (because we=E2=80=99re global)
->
->      4. Tech to use? Jitsi? [itch]? ([itch] seems to be particularly pop=
-ular to
->         teach programming)
->
->      5. Figure out what topics to present
->
->  6.  =C3=86var: does not matter what tech to use
->
->  7.  Emily: some difference may make it matter: on [itch], you can recor=
-d, and
->      they host recordings
->
->  8.  One thing to worry about recording: people might be reticent to mak=
-e
->      public mistakes
->
->  9.  It=E2=80=99s possible to do a [itch] stream, and not record it
+> The[n] brian m. carlson offered the idea to be considerate of
+> reservations by participants, but also accommodate Git contributors who
+> would have loved to see the presentation but were unable to attend due
+> to timezones, time conflicts, etc: offer it for viewing only for a short
+> while.
 
-The brian m. carlson offered the idea to be considerate of reservations by
-participants, but also accommodate Git contributors who would have loved
-to see the presentation but were unable to attend due to timezones, time
-conflicts, etc: offer it for viewing only for a short while.
+CB then said that it would be nice to see the other contributors face to
+face, and that they really liked the idea. But they still hoped that this
+new talk series would not replace the other things we do.
+
+Another point was raised by Emily: in their internal meetings, they often
+talk about patch series that are in progress, or not even started. In
+other words, the discussions are somewhat ephemeral and therefore it would
+not make sense to keep records of it forever.
 
 to be continued
 
-> > >
-> > > I shall keep trying, but my hopes are pretty low by now.
-> > >
-> > > Ciao,
-> > > Johannes
-> > >
-> > > > * Increasing diversity & inclusion (transition to `main`, etc)
-> > > > * Improving Git UX
-> > > > * Improving reviewer quality of life (patchwork, subsystem lists?,=
- etc)
-> > > >
-> > > > A few topics were left for a later date (maybe as public Git chalk=
- talks):
-> > > >
-> > > > * Making Git memory-leak free (already landed patches)
-> > > > * Scaling Git
-> > > > * Scaling ref advertisements
-> > > > * Config-based hooks (and getting there via migration ot hook.[ch]=
- lib &
-> > > >   "git hook run")
-> > > > * Make git [clone|fetch] support pre-seeding via downloaded *.bund=
-le files
-> > > >
-> > > > Ciao,
-> > > > Johannes
-> > > >
-> > >
->
-
---8323328-1785661176-1634891636=:62--
