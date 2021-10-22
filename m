@@ -2,204 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA571C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 10:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA80DC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 12:25:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D176F61059
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 10:32:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8CF06120D
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 12:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232627AbhJVKel (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 06:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
+        id S232089AbhJVM10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 08:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232573AbhJVKek (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 06:34:40 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1DC3C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 03:32:22 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id y22-20020a1c7d16000000b003231ea3d705so2836775wmc.4
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 03:32:22 -0700 (PDT)
+        with ESMTP id S231537AbhJVM1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 08:27:24 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9A1C061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 05:25:06 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id w14so2308971edv.11
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 05:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7Hxtx3/vWwLiDI/tg1/emTcupQbQEAa7LVuybXEKP+Q=;
-        b=az7SqpryQi/h7aTguAvTSeVhTCH90+urf2Hlh07auxMl8eK/0s01UOdo1UqjhhlAVS
-         kDorabU3Mmc/p+3a6EtaLBDPp/ZjL6YA3oPVSlL3HrmKcVdhWa975KpPxEmrQ0Mh1ZNV
-         lTxldmlWrHEh0uyxgRuQ2PBR0gYB218yVKSh5YRJhQjZQ/WW7yHxBe5D62B3jkCh7yCc
-         cKBRerdFBBPvQMxFgr+5HDbeM7mQroPa860xmZLdYfODI2dn4O3yHISgL8Ac27MDbD+9
-         JkXUtoI6Meldu/jm9G0n28pb0R52ttSZ4MbTjfGqagWTER7QCpeU4P7PDkL9mxghOHbI
-         z/Lw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=9A7Vrv9F9hZyEC6dh61CoUgpYHLziEecIfBBi0AoJgg=;
+        b=Zegx0IJDbt/VxjhjVn2eNbd/pdMLmszFX9lrRlTZUemZjOOLyXA6fzRKmwb1pJPhm6
+         AQ2spDbL8UikBpSSDZbwc+WUBaRptf1CF1paRzltV3XX94Q3YzHIVLNM8o9aRcHDQXmW
+         G1G222GNITJUkjUZuBDgR1X4igT3k2bXPb57bo1YGBelF7dYcyWRHU28qschR8ugbWwW
+         TZJjwkx4FtDObnFTRg7oAKcG2ONCudF6/VNxVYvj2EuXiYdeOq3PeKEN8o84RCnFJd6R
+         nMLpgZaGe/yvU6xCYiGBwhQ4OssaTQK7h7JYvEO7cXuXOwqLBLwUTI5R5BTizDNJxlBV
+         BnHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7Hxtx3/vWwLiDI/tg1/emTcupQbQEAa7LVuybXEKP+Q=;
-        b=aaPU55ObYXj1enUKxfRXmDthq9opXGMfTq8qOj5PEvQ+5/EbF/BnxkkxfjoWsx/bNs
-         mWDVq1DymoFItASmOrmKibqeoUzI4kmhlwcBMnqwYQs3mLf7FIDJGW4GRqC8XL24eKrt
-         ZO6veSLqkV7MI7I2glCtncL6RSH0d8pNOT63Tp2bvYwB3gfcTdri/eJHd0NCTOlA2xp1
-         ElcwD0hIXhKYypJ+9lITIA6i7hzPgi6FHJxjuRNDL5pAyuVQpi3B9ll/TlRNXoVuFFXq
-         i1boo+XFZqcs2dt/Jl/QQFElrlVrOGQQSIrbjAanJZuV7ow03VdCaVYkdvd76Z4o+J6v
-         imvQ==
-X-Gm-Message-State: AOAM5332Sh61QrSZDZ19MIus2aiz0eIgb1RWcP/Ff0Tq80zDCEABq/qu
-        2vxhyg9RwnEn44orJjuXxbzCibDPrpgfMw==
-X-Google-Smtp-Source: ABdhPJwnymruYb129tczfc3BOn89y+XGa7eQMLtt2fGTuEu+Pu4OUipIg7J2IorhKwv4Vy3tvTndrw==
-X-Received: by 2002:a7b:c30c:: with SMTP id k12mr27997005wmj.38.1634898740952;
-        Fri, 22 Oct 2021 03:32:20 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y8sm7081747wmi.43.2021.10.22.03.32.19
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=9A7Vrv9F9hZyEC6dh61CoUgpYHLziEecIfBBi0AoJgg=;
+        b=hV1EAEl0cYagwfw/0BtnR+9MeTtgA4f8F685DziDjIqygxc18d8JNokYUFa9kpwiTA
+         mSjxDhUhAfrYFe072W4zMianX6DKCzLfIkrfNcCOWfBwYX99VjFGbrl9QTUdGoPAQAYx
+         QmEQsk7qmivRAzfhS9yAexL+mSdixNkiTAzh/Ow5eNjD15tcxKFX9z9glWKL4F3aWnHJ
+         qFBUylkchs1NO4pMx5eI+G2B9mKelN9itm/dJvQFL1RfOqOf/W+PnwQdG06PW+lNq+Fj
+         NWPVQNGjIu9+3c2e3luKrlGMEsY2JT7jUGy9u0eirYDp4uC1T+Ifh5/HZo7WbdpCTUuu
+         M/TQ==
+X-Gm-Message-State: AOAM530qMgGoBgALFm1j8N4wbXsd7lkHmHeTxlaK9EO2tEY+AMgp225U
+        ijpmljxfeVRsWJXz4cWV2W8=
+X-Google-Smtp-Source: ABdhPJymeLkuU/j9mG9nR4zHgEkWF8J30iOCAV4JTw30c/X3dmZK1GNn6lUenGt+pt6dy0CwTmk8eQ==
+X-Received: by 2002:a17:906:8283:: with SMTP id h3mr15494466ejx.460.1634905503957;
+        Fri, 22 Oct 2021 05:25:03 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f3sm3797809ejl.77.2021.10.22.05.25.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 03:32:19 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] leak tests: add an interface to the LSAN_OPTIONS "suppressions"
-Date:   Fri, 22 Oct 2021 12:32:17 +0200
-Message-Id: <patch-1.1-9190f3c128f-20211022T102725Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.1.1494.g88b39a443e1
-In-Reply-To: <211022.86sfwtl6uj.gmgdl@evledraar.gmail.com>
-References: <211022.86sfwtl6uj.gmgdl@evledraar.gmail.com>
+        Fri, 22 Oct 2021 05:25:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mdtba-001C3U-I0;
+        Fri, 22 Oct 2021 14:25:02 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Kalyan Sriram <kalyan@coderkalyan.com>,
+        git <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: Git submodule remove
+Date:   Fri, 22 Oct 2021 14:12:11 +0200
+References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
+ <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net> <xmqqbl3ihu6l.fsf@gitster.g>
+ <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com>
+ <xmqqee8egddw.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <xmqqee8egddw.fsf@gitster.g>
+Message-ID: <211022.86lf2ll00x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the SANITIZE=leak testing mode added in 956d2e4639b (tests: add
-a test mode for SANITIZE=leak, run it in CI, 2021-09-23) to optionally
-be able to add a "suppressions" file to the $LSAN_OPTIONS.
 
-This allows for marking tests as passing with
-"TEST_PASSES_SANITIZE_LEAK=true" when they still have failure due more
-general widespread memory leaks, such as from the "git log" family of
-commands. We can now mark the "git -C" tests as passing.
+On Thu, Oct 21 2021, Junio C Hamano wrote:
 
-For getting specific tests to pass this is preferable to using
-UNLEAK() in these codepaths, as I'll have fixes for those leaks soon,
-and being able to atomically mark relevant tests as passing with
-"TEST_PASSES_SANITIZE_LEAK=true" helps to explain those changes. See
-[1] for more details.
-
-1. https://lore.kernel.org/git/211022.86sfwtl6uj.gmgdl@evledraar.gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Fri, Oct 22 2021, Ævar Arnfjörð Bjarmason wrote:
-
-> On Fri, Oct 22 2021, Taylor Blau wrote:
+> Matheus Tavares <matheus.bernardino@usp.br> writes:
 >
->> On Thu, Oct 21, 2021 at 01:50:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> On Thu, Oct 21, 2021 at 7:47 PM Junio C Hamano <gitster@pobox.com> wrote:
 >>>
->>> On Wed, Oct 20 2021, Taylor Blau wrote:
-[...]
-> If you want to pick that approach up and run with it I think it would
-> probably make sense to factor that suggested test_expect_success out
-> into a function in test-lib-functions.sh or whatever, and call it as
-> e.g.:
->     
->     TEST_PASSES_SANITIZE_LEAK=true
->      . ./test-lib.sh
->     declare_known_leaks <<-\EOF
->     add_rev_cmdline
->     [...]
->     EOF
+>>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>>>
+>>> > On 2021-10-21 at 17:25:38, Kalyan Sriram wrote:
+>>> >> Hello,
+>>> >>
+>>> >> I was curious why git-submodule does not have an `rm` command. Currently
+>>> >> I have to manually delete it from .gitmodules, .git/config,
+>>> >> .git/modules/, etc. See [0].
+>>> >>
+>> [...]
+>>> I'd imagine that the happy-case implementation should be fairly
+>>> straight-forward.  You would:
+>>>
+>>>  - ensure that the submodule is "absorbed" already;
+>>>
+>>>  - run "git rm -f" the submodule to remove the gitlink from the index
+>>>    and remove the directory from the working tree; and
+>>>
+>>>  - remove the .gitmodules entry for the submodule.
+>>
+>> I think "git rm <submodule>" already does these three steps, doesn't it?
 >
-> Then pipe it through sed 's/^/leak:/' and have it set LSAN_OPTIONS for
-> you.
+> Wow, that is a unnerving layering violation, but I suspect it is too
+> late to fix it. So perhaps "git submodule rm" would just become a
+> synonym for "git rm"?
 >
-> Doing it that way would be less boilerplate for each test that wants it,
-> and is also more likely to work with other non-LSAN leak appoaches,
-> i.e. as long as something can take a list of lines matching stack traces
-> we can feed that to that leak checker's idea of a whitelist.
+> Thanks.
 
-I just went ahead and hacked that up. If you're OK with that approach
-it would really help reduce the work for leak changes I've got
-planned, and as noted gives you the end-state of a passing 5319.
+Why would it be a good thing to change it even if we could? We added
+that section with "git submodule add", it makes sense to have it removed
+on "git init". The user could have added it manually, but the same goes
+for manually added config that "git remote remove" would remove.
 
-I don't know if it makes more sense for you to base on top of this
-if/when Junio picks it up, or to integrate it into your series
-etc. Maybe Junio will chime in ...
+If anything I think it would make sense to extend this behavior. E.g. if
+we "git rm" a <path> and notice that the <path> was the only thing that
+matched a given entry in .gitignore we should remove that entry.
 
- t/t0056-git-C.sh        |  4 ++++
- t/test-lib-functions.sh | 42 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+Or e.g. warn if we notice that the non-ext name of the removed file is
+the only thing matching non-ext-versions of .gitignore, i.e. to catch
+the common case of removing a "foo.c", but leaving a "foo.o" gitignore
+entry behind.
 
-diff --git a/t/t0056-git-C.sh b/t/t0056-git-C.sh
-index 2630e756dab..490aefa81a1 100755
---- a/t/t0056-git-C.sh
-+++ b/t/t0056-git-C.sh
-@@ -2,7 +2,11 @@
- 
- test_description='"-C <path>" option and its effects on other path-related options'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-+todo_leaks <<-\EOF
-+^cmd_log_init_finish$
-+EOF
- 
- test_expect_success '"git -C <path>" runs git from the directory <path>' '
- 	test_create_repo dir1 &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index eef2262a360..d89bf5da7dc 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -243,6 +243,48 @@ debug () {
- 	done
- }
- 
-+# Declare known "general" memory leaks, for use with TEST_PASSES_SANITIZE_LEAK=true.
-+#
-+# Matches lines in a stack trace that leaks. Intended for
-+# LSAN_OPTIONS, but the format is intended to be easy to use with
-+# other leak checkers, so the "leak:" prefix is omitted (and added for
-+# you).
-+#
-+# Use it immediately after sourcing test-lib.sh (or equivalent), and
-+# after a "TEST_PASSES_SANITIZE_LEAK=true" has been set. E.g:
-+#
-+#    TEST_PASSES_SANITIZE_LEAK=true
-+#    . ./test-lib.sh
-+#    todo_leaks <<-\EOF
-+#    ^cmd_log_init_finish$
-+#    EOF
-+#
-+# The "^" and "$" anchors don't suggest full regex syntax support,
-+# that's the only anchoring (or other metacharacter) understood by
-+# LSAN_OPTIONS,.
-+#
-+# See
-+# https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer#suppressions
-+# for the relevant LSAN_OPTIONS documentation.
-+todo_leaks () {
-+	if ! test_have_prereq SANITIZE_LEAK
-+	then
-+		return 0
-+	fi
-+
-+	# Try not to interfere with any test logic
-+	suppressions=.lsan-suppressions.txt
-+	if test -d .git
-+	then
-+		suppressions=".git/$suppressions"
-+	fi
-+	suppressions="$PWD/$suppressions"
-+
-+	sed 's/^/leak:/' >"$suppressions" &&
-+	LSAN_OPTIONS="$LSAN_OPTIONS:suppressions=\"$suppressions\"" &&
-+	export LSAN_OPTIONS
-+}
-+
- # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
- #   -C <dir>:
- #	Run all git commands in directory <dir>
--- 
-2.33.1.1494.g88b39a443e1
+See 95c16418f03 (rm: delete .gitmodules entry of submodules removed from
+the work tree, 2013-08-06) for the commit that gave "git rm" these
+smarts.
 
+I used to think that "git rm" was a bad layering violation, i.e. what's
+the point of it over:
+
+    rm foo
+    git add foo
+
+And in the early days having it at all is IMO one of the things that
+confused a lot of users about git's data model, i.e. they'd re-do their
+moves or removals with the "git mv" or "git rm", thinking the SCM cared
+about being informed of things like that.
+
+But those commands are worthwhile, because they interact nicely with
+other native git features, pathspecs, .gitmodules etc.
+
+FWIW I think one thing that might make the "git submodule" interface
+less confusing is to go in the opposite direction, not to add a "git
+submodule rm" or whatever, but think about whether we need something
+like "git submodule add" at all, i.e. shouldn't that ideally just be
+some special-case of "git add" or "git clone"?
+
+I.e. Either you "git clone" to the working tree and it Just Works (adds
+.gitmodules and all), or "git add" on a directory with a .git dir in it
+will (perhps after asking) shimmy up the relevant submodule scaffolding.
