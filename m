@@ -2,114 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C30C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D1EC433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:18:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F085561205
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEE4B60EB1
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234257AbhJVWQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 18:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
+        id S234318AbhJVWUv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 18:20:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbhJVWQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 18:16:54 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D25DC061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:14:36 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id z69so7219925iof.9
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:14:36 -0700 (PDT)
+        with ESMTP id S233793AbhJVWUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 18:20:49 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45017C061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:18:31 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id u13so1704929edy.10
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=TjpXPbwBGV0efxSWo8cLOK8T3GmAucHCX9tAgWA2NFI=;
-        b=mp2SxWw0QfgHqLv3UV3TN1LBBuvU49gZP8oy3UGj1uXQ0itlPriZezZ+9EWgF9/noz
-         OiW4gH6ogK7KHPh21UN29cbulWQiCXoWct3H0cHVFoIVVUVV6PIb8HWETitbEBkcJTDC
-         ZUbVNSDW2BMnWbyCE1SWZluSLq1Fll8Gj/KQtoBWRkPyFnDqin3hpVCFwqjnvySYSBsc
-         UayYotUBprjCOg+HDzfS0wTsMLc88QC3upzxmEyi6Q4xgyfjoFPYDL+8txprZnxCL4AI
-         6fX5C/n9MT3jdpQ2LvQZkeIQBYKIbV8n3dKprbPzN4dIAokt5UC3ytpCRTMvhn7xrl2l
-         RZWA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8tNl2k58a7J5I4MTRSJaglL56OcJF5JTu723pUTdHak=;
+        b=SG2OnswI0zaRjPMhn2A2h9lWFK9NimvBICgK801g6IZ/aGgSD9uJKOo1DA8pHA0D76
+         ZvxATMpJ9ht8KKXXf7CDFew2f/ToVFLJaQuRe7y3/pB3CWttShJEqp74PucTbtZFuf+l
+         KdjTd7TetudZ4hnoFS7k2DeU93SDh/j8uEdurojHUYHzcD9aN9qke60kSs8+w0/gVgu1
+         VjxINeU2V/Ul1WJFeYzbY/qTn7Ucth9Jf19OjNI/tdHqXFJFic1usGwZbfLdjpMTd39n
+         vpPNzvo8Ur8Snr29HN/K+8sF0sHXZFqdP/6lXCW6SoMwDT872Hro2hYtUJkPXamTjidH
+         Lkhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=TjpXPbwBGV0efxSWo8cLOK8T3GmAucHCX9tAgWA2NFI=;
-        b=sLyI/Ls5dV8Fl61FjMbuaUE4rodHgMz1ZPBHTNS41JWo0cU/XKw4jmX9ilOsLXZaT7
-         Ke0C7LT1PCS+Xa+0g1bfxXpVnZ4a1AUp3vGZKo5E9v2vg5ahtZGemRH1CXUZ8luxBUqM
-         wQlzIxs4mrIaCzja7ShSlL4lynleqC0//6m8CvLj4BaxH9wmxl7vUF9DK7LRs4jnQ6HH
-         BCFEbS193qFlcYWYWL24tqRJLan6fE3hvX71yXZYLcuaAyaalvYVBhA3mARka9bE7vul
-         ewsAL9OKNTKFUVD20Am0t6x3HLm/uB5isQJ1DQhnqDeojhUGUcOJ09vLbdHg/9RZjZOy
-         8qKQ==
-X-Gm-Message-State: AOAM532txhan8xHBla32nyLjaF3mYcC/h+mT/p4Lh/OL7UEYvW/ieNMu
-        N1HbD465c9uw/nB6wI4CA/rERA==
-X-Google-Smtp-Source: ABdhPJx/XWqdJKDDFgyJhtWiNA50flvvzAozlmVyP5RL2BpDpLbH1cz+oZDmMScot8euhEqsJmLSiQ==
-X-Received: by 2002:a05:6638:140f:: with SMTP id k15mr1557339jad.33.1634940875741;
-        Fri, 22 Oct 2021 15:14:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l14sm798579ilk.60.2021.10.22.15.14.35
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=8tNl2k58a7J5I4MTRSJaglL56OcJF5JTu723pUTdHak=;
+        b=Af/OkwqD8XFUD5EdRnJilcujNjJTcQN7iUgx7EeFoXJYgJJM4LfASkR8dlCGL7B0So
+         ANac3WNcVg+C0M0MOtP6P/lHZvm4cbw0KdWRX8y/V/pkLb6cMrgcP40HPLhJDB/RTSAm
+         Jb5LKmMOCV3IEm1JocufaOZnxiLjcG4ziRZmTk8/TlE3CGagc1NDhiUMhagtjSSBOmoT
+         XUwL3Rkpn7AunmjeBvpEay6/hvFNz2PREdxCVXdt3/yPoYgAMjCBGWnhgU9lRh2OkIWR
+         MejrfX9xMTLW11zWbOID+KDdQRbM6avr+loW5qdqeMvjzU+PuUhRs3qfCtUUkGlXt0TL
+         KqJw==
+X-Gm-Message-State: AOAM5319gqpGSBC7Pfz7R1a1Vyl8eNkbRMoQV2eZksOcD3APvaZMKhAy
+        4Zucju3nmiqFo02xq0AklYAR/938U7S+nw==
+X-Google-Smtp-Source: ABdhPJx6+R0oPUeVJqyDRDt+yRt1gBS3pbliywmNSmHNUhF02P2YtlL2MWYhGabV1hibv/EQ8vvAug==
+X-Received: by 2002:a17:906:368c:: with SMTP id a12mr2756854ejc.143.1634941109080;
+        Fri, 22 Oct 2021 15:18:29 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e7sm5661032edz.95.2021.10.22.15.18.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 15:14:35 -0700 (PDT)
-Date:   Fri, 22 Oct 2021 18:14:34 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v3 03/10] progress.c tests: make start/stop verbs on stdin
-Message-ID: <YXM3ynt1UafUHfMQ@nand.local>
-References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
- <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
- <patch-v3-03.10-045d58d8201-20211013T222329Z-avarab@gmail.com>
- <20211021223044.GA3615@szeder.dev>
- <211022.864k99kune.gmgdl@evledraar.gmail.com>
+        Fri, 22 Oct 2021 15:18:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1me2rr-001Nra-4t;
+        Sat, 23 Oct 2021 00:18:27 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [Summit topic] Improving reviewer quality of life (patchwork,
+ subsystem lists?, etc)
+Date:   Sat, 23 Oct 2021 00:06:06 +0200
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110211150460.56@tvgsbejvaqbjf.bet>
+ <20211021134105.ziqmcknnpdsg6cvc@meerkat.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <20211021134105.ziqmcknnpdsg6cvc@meerkat.local>
+Message-ID: <211023.861r4ck8jw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211022.864k99kune.gmgdl@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 22, 2021 at 04:18:16PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >>  	progress_testing = 1;
-> >> -	progress = start_progress(title, total);
-> >>  	while (strbuf_getline(&line, stdin) != EOF) {
-> >>  		char *end;
-> >>
-> >> -		if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
-> >> +		if (skip_prefix(line.buf, "start ", (const char **) &end)) {
-> >> +			uint64_t total = strtoull(end, &end, 10);
-> >> +			if (*end == '\0') {
-> >> +				progress = start_progress(default_title, total);
-> >> +			} else if (*end == ' ') {
-> >> +				item = string_list_insert(&list, end + 1);
-> >> +				progress = start_progress(item->string, total);
-> >
-> > Why is it necessary to use a string_list here?  This is the only place
-> > where it is used, so I don't understand why we should store anything
-> > in it.
->
-> The progress.c API doesn't xstrdup() the title you give it, so you can't
-> free() it after while it's alive.
->
-> Here we're re-setting the same strbuf in a loop, so if we hand a "title"
-> to progress.c we need to keep it around, when we later add a BUG
-> assertion in 10/10:
->
-> +	if (global_progress)
-> +		BUG("'%s' progress still active when trying to start '%s'",
-> +		    global_progress->title, progress->title);
-> +	global_progress = progress;
->
-> The "old" title would point to already-free'd or to a nonsensical value
-> if we didn't do that.
 
-*nod*. I figured as much, but a comment indicating that may be helpful
-for reviewers and future readers of this code.
+On Thu, Oct 21 2021, Konstantin Ryabitsev wrote:
 
-Thanks,
-Taylor
+> On Thu, Oct 21, 2021 at 01:57:11PM +0200, Johannes Schindelin wrote:
+>>  2. Dscho said he=E2=80=99s not able to follow everything on the mailing=
+ list
+>>=20
+>>     1. if you have just one patch you send, reply-all works okay
+>>=20
+>>     2. mailing list works reasonably well if you=E2=80=99re someone like=
+ Junio, working
+>>        on it full time, has good mail filters, keeps up to date with eve=
+rything
+>>=20
+>>     3. If you=E2=80=99re in-between, does not work well
+>
+> This is a problem that's not actually unique to mailing lists. If you hav=
+e any
+> project that is popular enough, at some point it reaches critical mass wh=
+ere
+> developer/user feedback becomes too much for anyone to keep up. Github
+> projects aren't immune to this either, but they do have a benefit of prov=
+iding
+> an easy interface for someone to apply categorization to issues/discussio=
+ns.
+
+I'd like to use this mail as a good jump-off point to link to my "how"
+v.s. "what" E-Mail from when this was last discussed. I think I
+mentioned it in passing at the recent summit:
+
+https://lore.kernel.org/git/87fszd3xo0.fsf@evledraar.gmail.com/
+
+Especially as...
+
+>>     13. Junio: Not really. The extra tracking conversations are not as
+>>         important to me. I think it=E2=80=99s a feature that if someone =
+requests a
+>>         feature and nothing happens for a while that it no longer produc=
+es
+>>         overhead for people is a useful feature. That kind of old filter=
+ing
+>>         feature is sometimes valuable.
+>
+> I find that if there's no mailing list integration, then bugzilla general=
+ly
+> rots after the initial person getting the bug reports moves on. Then bugs
+> reported via bugzilla just sit there without anyone paying attention. At =
+least
+> when bug reports get sent to the list, the ensuing discussions get reflec=
+ted
+> in both the list archives and in bugzilla.
+
+...it makes a passive mention to this "forgetting as a feature" aspect
+of not having a bug tracker.
+
+>
+>>     16. I=E2=80=99m also happy to work with kernel.org admins to get thi=
+s set up for us
+>>         if that=E2=80=99s what we want
+>
+> Consider this part done. :)
+
+And thank you for your contribution to kernel.org infrastructure.
