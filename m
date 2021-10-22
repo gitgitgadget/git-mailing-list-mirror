@@ -2,86 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E9A6C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C30C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:14:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2024B61059
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:03:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F085561205
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 22:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234182AbhJVWFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 18:05:18 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51503 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231382AbhJVWFR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 18:05:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C312159EE2;
-        Fri, 22 Oct 2021 18:02:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BiSJ2bbhNHWyKpAVqwptwNs2wMdRxt+MThf/ii
-        yLEII=; b=NiJPs6nY9L/LObGpQEOnBtLH4VSpa88z6msmGy9tiaS+NI6Y+fOEf5
-        ypsYT0JNsaFcvg5R35BxooET3s7tuFef9DO7Qstxq4s2dZz+BGPkcreZNz5VLYOP
-        f60PTm8N1FXxnRSZI6XOCE1rSdkbnNygigUiJ2QUmaKSMkMtqXL3A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55819159EE1;
-        Fri, 22 Oct 2021 18:02:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 150EA159EE0;
-        Fri, 22 Oct 2021 18:02:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kalyan Sriram" <kalyan@coderkalyan.com>
-Cc:     "Matheus Tavares" <matheus.bernardino@usp.br>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git" <git@vger.kernel.org>
-Subject: Re: Git submodule remove
-References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
-        <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net>
-        <xmqqbl3ihu6l.fsf@gitster.g>
-        <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com>
-        <xmqqee8egddw.fsf@gitster.g>
-        <0101017ca60e5ffd-9563fafd-86f6-443d-9cbe-e07203caacba-000000@us-west-2.amazonses.com>
-Date:   Fri, 22 Oct 2021 15:02:54 -0700
-In-Reply-To: <0101017ca60e5ffd-9563fafd-86f6-443d-9cbe-e07203caacba-000000@us-west-2.amazonses.com>
-        (Kalyan Sriram's message of "Fri, 22 Oct 2021 03:32:12 +0000")
-Message-ID: <xmqq4k98en01.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234257AbhJVWQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 18:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231363AbhJVWQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 18:16:54 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D25DC061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:14:36 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id z69so7219925iof.9
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 15:14:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=TjpXPbwBGV0efxSWo8cLOK8T3GmAucHCX9tAgWA2NFI=;
+        b=mp2SxWw0QfgHqLv3UV3TN1LBBuvU49gZP8oy3UGj1uXQ0itlPriZezZ+9EWgF9/noz
+         OiW4gH6ogK7KHPh21UN29cbulWQiCXoWct3H0cHVFoIVVUVV6PIb8HWETitbEBkcJTDC
+         ZUbVNSDW2BMnWbyCE1SWZluSLq1Fll8Gj/KQtoBWRkPyFnDqin3hpVCFwqjnvySYSBsc
+         UayYotUBprjCOg+HDzfS0wTsMLc88QC3upzxmEyi6Q4xgyfjoFPYDL+8txprZnxCL4AI
+         6fX5C/n9MT3jdpQ2LvQZkeIQBYKIbV8n3dKprbPzN4dIAokt5UC3ytpCRTMvhn7xrl2l
+         RZWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=TjpXPbwBGV0efxSWo8cLOK8T3GmAucHCX9tAgWA2NFI=;
+        b=sLyI/Ls5dV8Fl61FjMbuaUE4rodHgMz1ZPBHTNS41JWo0cU/XKw4jmX9ilOsLXZaT7
+         Ke0C7LT1PCS+Xa+0g1bfxXpVnZ4a1AUp3vGZKo5E9v2vg5ahtZGemRH1CXUZ8luxBUqM
+         wQlzIxs4mrIaCzja7ShSlL4lynleqC0//6m8CvLj4BaxH9wmxl7vUF9DK7LRs4jnQ6HH
+         BCFEbS193qFlcYWYWL24tqRJLan6fE3hvX71yXZYLcuaAyaalvYVBhA3mARka9bE7vul
+         ewsAL9OKNTKFUVD20Am0t6x3HLm/uB5isQJ1DQhnqDeojhUGUcOJ09vLbdHg/9RZjZOy
+         8qKQ==
+X-Gm-Message-State: AOAM532txhan8xHBla32nyLjaF3mYcC/h+mT/p4Lh/OL7UEYvW/ieNMu
+        N1HbD465c9uw/nB6wI4CA/rERA==
+X-Google-Smtp-Source: ABdhPJx/XWqdJKDDFgyJhtWiNA50flvvzAozlmVyP5RL2BpDpLbH1cz+oZDmMScot8euhEqsJmLSiQ==
+X-Received: by 2002:a05:6638:140f:: with SMTP id k15mr1557339jad.33.1634940875741;
+        Fri, 22 Oct 2021 15:14:35 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id l14sm798579ilk.60.2021.10.22.15.14.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Oct 2021 15:14:35 -0700 (PDT)
+Date:   Fri, 22 Oct 2021 18:14:34 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 03/10] progress.c tests: make start/stop verbs on stdin
+Message-ID: <YXM3ynt1UafUHfMQ@nand.local>
+References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+ <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
+ <patch-v3-03.10-045d58d8201-20211013T222329Z-avarab@gmail.com>
+ <20211021223044.GA3615@szeder.dev>
+ <211022.864k99kune.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CFC2E042-3383-11EC-BD7B-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211022.864k99kune.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kalyan Sriram" <kalyan@coderkalyan.com> writes:
+On Fri, Oct 22, 2021 at 04:18:16PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >>  	progress_testing = 1;
+> >> -	progress = start_progress(title, total);
+> >>  	while (strbuf_getline(&line, stdin) != EOF) {
+> >>  		char *end;
+> >>
+> >> -		if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
+> >> +		if (skip_prefix(line.buf, "start ", (const char **) &end)) {
+> >> +			uint64_t total = strtoull(end, &end, 10);
+> >> +			if (*end == '\0') {
+> >> +				progress = start_progress(default_title, total);
+> >> +			} else if (*end == ' ') {
+> >> +				item = string_list_insert(&list, end + 1);
+> >> +				progress = start_progress(item->string, total);
+> >
+> > Why is it necessary to use a string_list here?  This is the only place
+> > where it is used, so I don't understand why we should store anything
+> > in it.
+>
+> The progress.c API doesn't xstrdup() the title you give it, so you can't
+> free() it after while it's alive.
+>
+> Here we're re-setting the same strbuf in a loop, so if we hand a "title"
+> to progress.c we need to keep it around, when we later add a BUG
+> assertion in 10/10:
+>
+> +	if (global_progress)
+> +		BUG("'%s' progress still active when trying to start '%s'",
+> +		    global_progress->title, progress->title);
+> +	global_progress = progress;
+>
+> The "old" title would point to already-free'd or to a nonsensical value
+> if we didn't do that.
 
-> "git rm" deletes the submodule directory completely and modifies
-> .gitmodules, effectively removing the submodule. However, it leaves the
-> entry in .git/config dangling, which is annoying.
+*nod*. I figured as much, but a comment indicating that may be helpful
+for reviewers and future readers of this code.
 
-The entry is not dangling.  It is there to be used when you go back
-in history.
-
-> "git submodule deinit" (which I didn't know existed until I just read the man
-> page) deletes all contents of submodule directory, but leaves the 
-> (empty) submodule directory itself intact. It DOES delete the entry in
-> .git/config, but leaves a dangling entry in .gitmodules, so the next
-> "git submodule update --init --recursive" registers and populates the
-> submodule again.
-
-"deinit" is *not* about remove a submodule.  A project can be
-checked out and used with or without its submodules instantiated,
-and "git submodule init" is a way to instantiate it.  "deinit" is
-its opposite.  As far as the history (which has already been
-recorded in the repository, and the history that will be recorded
-in the repository starting from that state) is concerned, the
-submodule is there---it's just that you are not interested in it and
-chose not to check it out.
-
-So "git rm" seems to be doing exactly what "git submodule rm" should
-be doing, nothing more, nothing less.
+Thanks,
+Taylor
