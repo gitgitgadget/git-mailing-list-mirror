@@ -2,270 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C58D3C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CD1C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 10:01:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6CEF611F2
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 09:57:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90E6A611CB
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 10:01:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232571AbhJVKAC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 06:00:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232560AbhJVKAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 06:00:00 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294ABC061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 02:57:43 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z20so93752edc.13
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 02:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=igVnvRwqBjGTrhFAx4eKl8pHRnthmjQTJ0B2kGBDB8w=;
-        b=GuKK8rJRzWpMboDwwM/xdgdbjej0EXRtt3zepRVGB2z1FRr9zJ1hBNzsWXO0Uabs+b
-         Jy6gstxZhexobki5epC8x7Cuz6qwxSC7K/EG8tSQK7fJj6VTRtPoEe+Xm+/kENZPAZlD
-         lxvOXANpupfhYvso2Lk/9GnOnkwNNQ7H20TgcTcM6ZuPF54CZKBmh3Hk6W2Z/Dt8wc/W
-         nT5JLhzpjZ94Sn6eZiA5mpN+6/sn1iuRz98jFJDZq939fCxaUVUXoQpcXBEZJhNiADK0
-         Bd9MsCowlFNLXSKT8/mafv8xrmf/f2u67fIkZH1YkNb90veepk7fMHzmQizcwkF9yFX2
-         hnmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=igVnvRwqBjGTrhFAx4eKl8pHRnthmjQTJ0B2kGBDB8w=;
-        b=jIv+A7RDHYdvptIEoMdw+PVeVFes/K4vUWKM2hgpkTaCWAGTpxagFrpv2AExQK0va3
-         Ye6iD3P/XHi7Xy1YACaOGUx9WeXdIBORNm64/1hTtMuu1YyqkqSfk29wommayLB/CWv/
-         tqtTFrMv66pv68rCa58q/FkFVFU1ARgdUFqKFBNkEHpP8w/68ZSW/E+92RSReTI3hitL
-         HCM8cjLzKk7/7bH7INiqKWTTAVZAnbqYicL0kjP/LGzgljWMaMgUA/b1BtGhrEVhHX94
-         W3ZrVmNBlCsESsrWtUFKYsVt8BhWiLNHVSuL6wpdZ2Eh6gGd8c6408YyhyxKGKroY7qP
-         B5Zw==
-X-Gm-Message-State: AOAM532aig5Y2R0XXlxpiV6E+302l5OuVS3j8fUWgSiByNbdLfBeq1Wq
-        g1KqejjjQvyCW4dttM/qid4uDPYJlLB3aw==
-X-Google-Smtp-Source: ABdhPJyv2kMluE4tcINMqHv+9z2N4xkZPR3mmMKNyswXb6x0oeufwlD9z4V8GvPR07DCGNcXMh69SA==
-X-Received: by 2002:a05:6402:51d0:: with SMTP id r16mr15561740edd.353.1634896661581;
-        Fri, 22 Oct 2021 02:57:41 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bw25sm3593450ejb.20.2021.10.22.02.57.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 02:57:41 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mdrIy-001997-G5;
-        Fri, 22 Oct 2021 11:57:40 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH 00/11] midx: clean up t5319 under 'SANITIZE=leak'
-Date:   Fri, 22 Oct 2021 10:23:26 +0200
-References: <cover.1634787555.git.me@ttaylorr.com>
- <211021.861r4emv7b.gmgdl@evledraar.gmail.com>
- <YXJAfICQN8s5Gm7s@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <YXJAfICQN8s5Gm7s@nand.local>
-Message-ID: <211022.86sfwtl6uj.gmgdl@evledraar.gmail.com>
+        id S232488AbhJVKDa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 06:03:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60747 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231944AbhJVKDa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 06:03:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1634896871;
+        bh=NsD8HRwXU2ffz/0aEmylRJwluU+vjnIeztcEhxunCUg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fBlJzlWB4bTHzkCKJZQWlXBzHVpI4llkFm9ZjF1MHGzur8fgjGNXk+bqGg5AKLu4F
+         iNZI+4EG7F6geLtisPt8DI+Sq/c2POGRXtaatSXEbxbY0kKDQ56MS46PPwtrrtIW/m
+         Rddw/6WBezlQVClHU4GOFtWXiX1ohFIQEL494ZR8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhU5b-1n8G6G0MkN-00eaFP; Fri, 22
+ Oct 2021 12:01:11 +0200
+Date:   Fri, 22 Oct 2021 12:01:09 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [Summit topic] Server-side merge/rebase: needs and wants?
+In-Reply-To: <bdf47d51-9cf6-046d-fd97-aa35299daadd@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2110221155460.62@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet> <bdf47d51-9cf6-046d-fd97-aa35299daadd@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1401386132-1634896871=:62"
+X-Provags-ID: V03:K1:5+GIJTch5GFSzsCqMqIVHpQ4vVx/wShA+1cXzATvSTF0A2ZIDe7
+ AbEeWPD8A+2gCIIaevV4Rm7acke42ncx0aZD+1PpyDg4V7Lt7QHEtQA4IUSRF2pRhaSiCh8
+ AL2aeyPEQ0c+oJKKKJURzKRKzmPuX6d8nWd0x6cjkVIIWViM33nPyP9PLNtUMsKE32ZBD5n
+ IQaGcUJ1molQobOV6ao6Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0://YsXn6x5Ds=:Gg2n4SfH6rGsDgeN8HQqhm
+ BIj1ZEqZ2Tun5rGAsDyDFf6m7AM5p9hEUPYq9G2vB3Gnd1JSX0XBg9MigysY/1TJ+6Lh/b5wQ
+ idZ1J8cfoRUKiTw3nhW0aDkeBYJiqTV10oVuLa0IlYJv2AlSQo1QgM92AxvBo/Najw/VLLs6u
+ ept4lJyE7JpACI8T8quh2ta9d8rPtgbNxs5b+9Dii0FRx7x9dqE7XpSoquoMA7a1BGpxg/hcW
+ NgMVDZ9OufgDeYot20YoOVuojcy823rm7Y0G8alJnIM6kv5dqD0azDeJWBER4UG+JCZXe1cdq
+ 6LLzQbOL7rafZTjWttMyFD2ss2zc6jgnI2NU2EMeHqznyR8SwKyHTDni4xP3QLqYnwhISrMHb
+ zJJI/SdnndfKuSC06ukGJKFZmZmakOk7V3omgz8rwsQDizy8sQeeeV3Y/+5AO5MloMtzNkNsG
+ BdhgMeo5qY/ZdHuQOva82pznEZWzeJSs2PGukmUrkBN8UgLnQYc8SCXWvPDfPXt9dTCuyhe/L
+ 3O37FKdIurxlAPh7IsmSVRJ7v3D3s7jxqTgpAP6kjxuMSLu1JA+LH1AvS2prbBkQ1XauZOnQB
+ 4iAT0OTbcVnFwB+pNriQ5KdUci/jBNLq7aKDRYsJGFXWY5iyZ+jz5wRkVqoPMOyP1W/prg+yl
+ Ijnzj+9HxSVtjjNmfIvsVgWuMq+yhzHmIgt0IXV6m2Sb8Vv3Z0VDmhJep5GmqiTPYvmY7lMc9
+ GMZKTypqgi0bG/JWrP9WdzfkJfkoAKeu7fZm8ADF698OE/mDUKInbAwRlarEHeR0QxyVpJgdv
+ g3fupoEJ+QfE2Uefm78rg9uwYjUjvpe0vczvar32i/cFIWH1I1UAZS/g/9czaxMAPMNATQ7Nx
+ PDA4p1fA1MK6Z+X7+eNIkul/e5DWRnN4wmBcnKPkm1d2a8ctZO4l3vhB9o0OaxqMVVmdTasej
+ an3L6mbPdpTLSLYbTjy16WbMB7rZjf6n02KX2pSFsCKPnY70Ffkn8OyBpBvGtVeuWFgAf/+Hk
+ KYLrkEC4rpodJHL/cxfiOruZWu8LjtJD0HdtKPvUV8Rd8oAxkMpPeItWRjO6rwAbjoKdtkCb+
+ SS/ks67gGWUE1w=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, Oct 22 2021, Taylor Blau wrote:
+--8323328-1401386132-1634896871=:62
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, Oct 21, 2021 at 01:50:55PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Wed, Oct 20 2021, Taylor Blau wrote:
->>
->> > I tried to separate these out based on their respective areas. The las=
-t 10% are
->> > all from leaking memory in the rev_info structure, which I punted on f=
-or now by
->> > just UNLEAK()-ing it. That's all done in the last patch. If we choose =
-to take
->> > that last patch, then t5319 passes even under SANITIZE=3Dleak builds. =
-But it's a
->> > little gross, so I'm happy to leave it out if others would prefer.
->>
->> I'll defer to you, but I've got a mild preference for keeping it out. An
->> upcoming series of patches I'm submitting (I'm waiting on the current
->> leak fixes to land) will fix most of those rev_info leaks. So not having
->> UNLEAK() markings in-flight makes things a bit easier to manage.
+Hi Bagas,
+
+On Fri, 22 Oct 2021, Bagas Sanjaya wrote:
+
+> On 21/10/21 18.56, Johannes Schindelin wrote:
+> >   5.  The challenge is not necessarily the technical challenges, but t=
+he UX
+> >   for
+> >       server tools that live =E2=80=9Cabove=E2=80=9D the git executabl=
+e.
+> >
+> >       1. What kind of output is needed? Machine-readable error message=
+s?
+> >
+> >       2. What Git objects must be created: a tree? A commit?
+> >
+> >       3. How to handle, report, and store conflicts? Index is not typi=
+cally
+> >          available on the server.
 >
-> If you don't mind, I think keeping this in (as a way to verify that we
-> really did make t5319 leak-free) may be good for reviewers. When you
-> clean these areas up, you'll have to remember to remove those UNLEAK()s,
-> but hopefully they produce conflicts with your in-flight work that serve
-> as not-too-annoying reminders.
->
-> I would certainly rather not have to UNLEAK() those at all, so I am very
-> excited to see a series from you which handles freeing these resources
-> appropriately. It was just too big a bite for me to chew off when
-> preparing this quick series.
+> 1) I prefer human-readable (i.e. l10n-able) output, because the output
+> messages for server-side merge/rebase are user-facing.
 
-Having looked at this a bit more carefully I've upgraded that a bit from
-"I'll defer to you" to strongly objecting to this specific approach (but
-read to the end, I think you can have your cake and eat it too).
+For server-side usage, a human-readable output _by Git_ would not make
+sense. It would be the responsibility of the server-side caller (which is
+usually a web application) to present the result, potentially translated,
+definitely prettified.
 
-I just glanced at this series in my previous pass-over, and evidently
-didn't read the CL to the end. I thought based on the commit subject
-that it was just a change to some midx code impacting t5319.
+So while I agree with you that the result should be made pretty on the
+server side, I disagree that this is Git's job. Instead, Git should
+produce something eminently machine-parseable in this context.
 
-But it's a bigger change across the whole test suite than that.
+> 2) Same as when doing merge/rebase on local machine (merge commit if non=
+-ff).
 
-If you run:
+Local usage is _totally_ different.
 
-    rm .prove; GIT_SKIP_TESTS=3Dt0027 prove -j8 --state=3Dsave t[0-9]*.sh :=
-: --immediate
+> 3) I think because on the server-side we have bare repo (instead of norm=
+al
+> repo), we need to create temporary index just for merge/rebase.
 
-Without this patch (t0027 will take forever), and then:
+Merge ORT does not need a temporary index. That's the reason it is so much
+faster than the regular merge-recursive.
 
-    GIT_SKIP_TESTS=3Dt0027 prove -j8 --state=3Dfailed
+> For conflicts, the users need to resolve them locally, then notify the
+> server that they have been resolved, and continue merging process.
 
-You'll see that (I use GNU screen's logging feature to get the output)
-we made these tests pass, not just your t5319:
-=20=20=20=20
-    $ grep -w ok screenlog.11=20
-    t0056-git-C.sh .................................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t1060-object-corruption.sh ........................ ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t4212-log-corrupt.sh .............................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t4207-log-decoration-colors.sh .................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5313-pack-bounds-checks.sh ....................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5506-remote-groups.sh ............................ ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5513-fetch-track.sh .............................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5319-multi-pack-index.sh ......................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5532-fetch-proxy.sh .............................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t5900-repo-selection.sh ........................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t6011-rev-list-with-bad-commit.sh ................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t6100-rev-list-in-order.sh ........................ ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t6114-keep-packs.sh ............................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t6131-pathspec-icase.sh ........................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t6003-rev-list-topo-order.sh ...................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t7702-repack-cyclic-alternate.sh .................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t9108-git-svn-glob.sh ............................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t9109-git-svn-multi-glob.sh ....................... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t9127-git-svn-partial-rebuild.sh .................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t9133-git-svn-nested-git-repo.sh .................. ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
-    t9168-git-svn-partially-globbed-names.sh .......... ok=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20
+It is already possible e.g. on GitHub to resolve merge conflicts in the
+web UI. That is very convenient, and I think we all agreed at the Summit
+that this is a scenario Git should support as well as it can. We did not
+come to any concrete conclusion how that should look like (read: what
+output format Git could use to support server-side consumption better),
+though, and I think it basically comes down to experimenting with a couple
+approaches.
 
-I've got subsequent patches on top of what's now in-flight that fix
-those bigger leaks incrementally, and as part of that add
-"TEST_PASSES_SANITIZE_LEAK=3Dtrue" to /all/ the relevant passing
-tests.
+Ciao,
+Dscho
 
-I.e. there isn't a 1=3D1 correspondance between all current passing tests
-and "TEST_PASSES_SANITIZE_LEAK=3Dtrue" markings (some are still left
-unmarked). But there has been a 1=3D1 mapping between freshly pasing tests
-as a result of leak fixes and tests that get that
-"TEST_PASSES_SANITIZE_LEAK=3Dtrue" marking.
-
-I think it helps a lot to review those patches & assess their impact if
-code changes can be paired with relevant test suite changes, which isn't
-the case if we've got simultaneous UNLEAK() markings for major leaks
-in-flight.
-
-So the practical effect of that is that I'll need to rebase all that,
-change my testing setup to test those one-at-at-time with "git rebase -i
---exec" before submission (which I do anyway), but now with some
-selective revert of an earlier UNLEAK() to assert that I'm still fixing
-the things I expected.
-
-Then either drop the parts of the commit messages that say "this fixes
-leak XYZ, making tests A, B, C pass" to omit any mention of "A, B, C",
-or reword it for the earlier now-landed UNLEAK() markings.
-
-These are also just the fully passing tests I ran as a one-off for this
-E-Mail. For those I do more exhaustive runs where I'll e.g. spot if a
-test goes from N failing to N-X, and note it if that gets us much closer
-to 0.
-
-But on the "cake and eat it too" front I also realize that it sucks to
-not be able to mark tests you made leak-free as passing just because
-I've got some larger more general leak fixes planned, and even if none
-of your code leaks, it might just be "git log" or whatever.
-
-But we can just use LSAN_OPTIONS with a suppressions file for that. This
-diff below (assume my SOB yadayada) makes your tests pass if I eject the
-11/11 and replace that with this:
-
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index a3c72b68f7c..3f6d716f825 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -1,8 +1,23 @@
- #!/bin/sh
-=20
- test_description=3D'multi-pack-indexes'
-+
-+TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-+test_expect_success SANITIZE_LEAK 'setup LSAN whitelisting' '
-+	suppressions=3D".git/lsan-suppressions.txt" &&=09=20=20=20=20
-+	cat >"$suppressions" <<-\EOF &&
-+	leak:add_rev_cmdline
-+	leak:cmd_log_init_finish
-+	leak:prep_parse_options
-+	leak:prepare_revision_walk
-+	leak:strdup
-+	EOF
-+	LSAN_OPTIONS=3D"$LSAN_OPTIONS:suppressions=3D\"$PWD/$suppressions\"" &&
-+	export LSAN_OPTIONS
-+'
-+
- GIT_TEST_MULTI_PACK_INDEX=3D0
- objdir=3D.git/objects
-=20
-I think that would be a much better approach here, and would really
-prefer if we went for some version of that if you really want to test
-these right away with the linux-leaks job.
-
-I think the better thing to do here is to just leave it, i.e. we've got
-tons of these tests that don't leak themselves, but leak due to "git
-log" or whatever already, but anyway, if what you're doing in
-t5319-multi-pack-index.sh doesn't cause much more work for me as noted
-above I really don't mind.
-
-If you want to pick that approach up and run with it I think it would
-probably make sense to factor that suggested test_expect_success out
-into a function in test-lib-functions.sh or whatever, and call it as
-e.g.:
-=20=20=20=20
-    TEST_PASSES_SANITIZE_LEAK=3Dtrue
-     . ./test-lib.sh
-    declare_known_leaks <<-\EOF
-    add_rev_cmdline
-    [...]
-    EOF
-
-Then pipe it through sed 's/^/leak:/' and have it set LSAN_OPTIONS for
-you.
-
-Doing it that way would be less boilerplate for each test that wants it,
-and is also more likely to work with other non-LSAN leak appoaches,
-i.e. as long as something can take a list of lines matching stack traces
-we can feed that to that leak checker's idea of a whitelist.
+--8323328-1401386132-1634896871=:62--
