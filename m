@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8F16C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 08:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 570D6C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 08:55:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1480610A8
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 08:55:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 395F7610CF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 08:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232434AbhJVI6M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 04:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35366 "EHLO
+        id S232425AbhJVI6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 04:58:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232435AbhJVI6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 04:58:07 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50641C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 01:55:50 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e12so2837436wra.4
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 01:55:50 -0700 (PDT)
+        with ESMTP id S232447AbhJVI6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 04:58:09 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBCF7C061348
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 01:55:51 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id z11-20020a1c7e0b000000b0030db7b70b6bso2584306wmc.1
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 01:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cl2OTstRwVBueHuC1bszwAhHlHQ95Ug+QXtyu6OiplQ=;
-        b=jIPKNi2NhmlVR6HzezuHpMeKax9WlX4n7HkkC1TR3Yo3xXkMf/z7qjxhClJSl2pOOX
-         3xCWGM3Kf5K2Rh9fmQXroUnd8AxmT4lzXK22T23+cdmkhWMaA+Al4ihAfi2WgcB9TXlD
-         /PGZj0TeMtJPBqtaOXl2S8J6y616XipzjiZNLEljswB4AVtSgYU8Invh50PQT2MCfrTF
-         9Z/B/l7MeDMUFNMj07+18o5vaUpcRul731Rv84pPqvH3EInID8dUvHpDukyZqO9d8EUC
-         xXofPC6fG6/yCdN8z5qir+gPF3nncAEsjiXrgG0YZoc4tPUQ44kioVxjsx2LpfElNfNW
-         gyLA==
+        bh=ytZQPlO9P1pFh9RzehhhYtcwvaGxiRmuht7ENhk+OkA=;
+        b=PCma5JnYRma/vnv9l7Hy1yMlC6EK3JNlk96WaaCE9nd2aNyKSA3xSOA3soGBB7l7E4
+         XFmdRz+PSsK5r4XC4xthWWEP97W79c8VKfVQYbpEwxqpbSiWmBh3VenDVsR241XV9Z+t
+         UoIbeAnXXv6q38wMcuCe99TeU17ZgrHcASmBGpgDdsNNld7aAAMn1QWbee0cGTjCB9xM
+         ZElp2PlVvcYmPbQuiFQL1IqxM92EBDEWouUYseM+3weXDWE3Y5BLo73we7wL4otIavr3
+         24sVRqv7GgpeE8fXu0CdkkWgsOJpMHdNZ1rQInUSiOsjXrtDVqm7d7orL5y0gVM8C51f
+         SuXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cl2OTstRwVBueHuC1bszwAhHlHQ95Ug+QXtyu6OiplQ=;
-        b=R7GYNm00cxoDJbnBBps7n2ybTSX4LL3+IJ2eAQMXFTVh0L8pdR9h/12tEZCybLvfkA
-         H2j9FZUNT7kagANxGYfP2HWo891tE21+PbNPyCpSwNi9ysqCfLo/Xd/0KzRbG7jP8R4y
-         kujEQ9yE34m+CiM+bLW2tK0x0sxzYPAp3JjhbKQzLy1fkt3XeNhBheGO+FidIUTVezjC
-         NecK6xsh64ZeOLq6FHbOeI6hSSBO78prWB6dD6wqwEuzGUT2a2JwAPQhe+Zqb5F7mHpo
-         wx2nss2HK4gI5UNN06KwVAs6Y1ptedlBDCjG1SA9aAhCpJEJ09G3TafFQC4i8BpoxMX2
-         5UAA==
-X-Gm-Message-State: AOAM5336e95enuvNwFzO50A1c58Lwu9OUzHKg1zFHfMHTxijWrL+dUzu
-        KM2KF92wnBzfQ/WyAgPIO8CjNpBvoa+N3Q==
-X-Google-Smtp-Source: ABdhPJy+nIN/a5Lp5fXna+/mHE8aWXbjN/0TT7qGnWESnvd4pFpoYBIreId0p6dhW6o8GvhZtqCSPQ==
-X-Received: by 2002:adf:ee8a:: with SMTP id b10mr14657430wro.335.1634892948625;
-        Fri, 22 Oct 2021 01:55:48 -0700 (PDT)
+        bh=ytZQPlO9P1pFh9RzehhhYtcwvaGxiRmuht7ENhk+OkA=;
+        b=klKBEjXJWQAimKVfGzwSCoaR5hdABmtscS/IJmwIqSQ0AnN0FIOPi2yBPt059Dbu9K
+         bV9mTPnXvaQNIaVlTjgaNZYTeP0uGOAqrethqViRYAtlQBvn+ZMKdU0SLU+OSev86s11
+         4W94YIuFdU9gEDS8fHE1b/xYd7V74M/X4+cOLNFKSdsUXdADWeDSEAWbOVarpWxBsDHh
+         8aFJYcc1fdC+J8mt2nuxvi8ThXFmaKtkyqmk9kjdmU1urtbq2k8i+Nt6ObcN04XNyRd2
+         mbJAQ22VG6/eTMe9Vx+LbLLnafGL+aLOJbjpsdmtKJA5+bnpJHbPSpDoeMnOW/PQg7HV
+         4SMQ==
+X-Gm-Message-State: AOAM533Ih8EgmmmnXobJ4PaYXl9OEHiLHMlDNP2SqDZkkog5NrsGQSC7
+        ak/3eo93++rTOKWH/UCVghYhS0/kT+jskQ==
+X-Google-Smtp-Source: ABdhPJwW26S3onpOChGWdpeXedBbEss43SB/QWYJybD8Tir33mPik8JJ1JM0kIk8HX1C7G4vKqdDWQ==
+X-Received: by 2002:a05:600c:154f:: with SMTP id f15mr13454469wmg.195.1634892950359;
+        Fri, 22 Oct 2021 01:55:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b19sm10609069wmj.9.2021.10.22.01.55.48
+        by smtp.gmail.com with ESMTPSA id b19sm10609069wmj.9.2021.10.22.01.55.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 01:55:48 -0700 (PDT)
+        Fri, 22 Oct 2021 01:55:49 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,12 +57,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/6] leaks: miscellaneous small leak fixes
-Date:   Fri, 22 Oct 2021 10:55:38 +0200
-Message-Id: <cover-v2-0.6-00000000000-20211022T085306Z-avarab@gmail.com>
+Subject: [PATCH v2 2/6] grep: use object_array_clear() in cmd_grep()
+Date:   Fri, 22 Oct 2021 10:55:40 +0200
+Message-Id: <patch-v2-2.6-033ca3f7b4f-20211022T085306Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1494.g88b39a443e1
-In-Reply-To: <cover-0.6-00000000000-20211021T155529Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20211021T155529Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.6-00000000000-20211022T085306Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20211021T155529Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20211022T085306Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,51 +70,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A re-roll of these miscellaneous small leak fixes to a address
-comments on v1. I ejected the patch that conflicted with Taylor's
-version (sorry, didn't notice it), and fixed an additional leak in
-grep.c pointed out by Junio. Doing that allowed us to mark a test as
-passing under SANITIZE=leak, with only the minor change of replacing a
-"git checkout" with "git reset --hard" (as "checkout" happens to leak
-currently, but I've also got a pending patch for that).
+Free the "struct object_array" before exiting. This makes grep tests
+(e.g.  "t7815-grep-binary.sh") a bit happer under SANITIZE=leak.
 
-Ævar Arnfjörð Bjarmason (6):
-  grep: prefer "struct grep_opt" over its "void *" equivalent
-  grep: use object_array_clear() in cmd_grep()
-  grep: fix a "path_list" memory leak
-  clone: fix a memory leak of the "git_dir" variable
-  submodule--helper: fix small memory leaks
-  reflog: free() ref given to us by dwim_log()
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/grep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
- builtin/clone.c             |  4 +++-
- builtin/grep.c              | 14 ++++++++------
- builtin/reflog.c            |  1 +
- builtin/submodule--helper.c |  2 ++
- t/t7811-grep-open.sh        |  3 ++-
- 5 files changed, 16 insertions(+), 8 deletions(-)
-
-Range-diff against v1:
-1:  2bdd21e4e59 ! 1:  66c838fd800 grep: prefer "struct grep_opt" over its "void *"
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    grep: prefer "struct grep_opt" over its "void *"
-    +    grep: prefer "struct grep_opt" over its "void *" equivalent
-     
-         Stylistically fix up code added in bfac23d9534 (grep: Fix two memory
-         leaks, 2010-01-30). We usually don't use the "arg" at all once we've
-    -    unpacked it into the struct we want, let's not do that here when we're
-    +    casted it to the struct we want, let's not do that here when we're
-         freeing it. Perhaps it was thought that a cast to "void *" would
-         otherwise be needed?
-     
-2:  727fdb27a2a = 2:  033ca3f7b4f grep: use object_array_clear() in cmd_grep()
--:  ----------- > 3:  8e941e40711 grep: fix a "path_list" memory leak
-3:  86d928ae2f9 = 4:  0d0e6359cf4 clone: fix a memory leak of the "git_dir" variable
-4:  9c3c0529ad0 = 5:  a529c04a29a submodule--helper: fix small memory leaks
-5:  85b7b7aef37 = 6:  6ea5e611ae0 reflog: free() ref given to us by dwim_log()
-6:  526d5649156 < -:  ----------- repack: stop leaking a "struct child_process"
+diff --git a/builtin/grep.c b/builtin/grep.c
+index fd184c182a3..555b2ab6008 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1196,6 +1196,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		run_pager(&opt, prefix);
+ 	clear_pathspec(&pathspec);
+ 	free_grep_patterns(&opt);
++	object_array_clear(&list);
+ 	free_repos();
+ 	return !hit;
+ }
 -- 
 2.33.1.1494.g88b39a443e1
 
