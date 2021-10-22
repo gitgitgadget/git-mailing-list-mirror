@@ -2,96 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A06AC433FE
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4417FC433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:40:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7919161108
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:34:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BFA56108B
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233653AbhJVRgc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 13:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40118 "EHLO
+        id S233906AbhJVRmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 13:42:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233493AbhJVRga (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 13:36:30 -0400
-X-Greylist: delayed 415 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 22 Oct 2021 10:34:12 PDT
-Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA83C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:34:12 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b] (p200300ea270ed80050f86c5553f7f07b.dip0.t-ipconnect.de [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: sven@cs-ware.de)
-        by srv1.79p.de (Postfix) with ESMTPSA id C8F0A600695;
-        Fri, 22 Oct 2021 19:27:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2021; t=1634923635;
-        bh=O1607ra4bQuFvF0hoBLXLbrGKsOSjx9mzp/umJYY9/w=;
-        h=From:To:Subject:Date:From;
-        b=qCvgn1yygNSA/KBbAoI8/jh/7KOWnLeaHDTPVaCOPUZ8R4Vbwx3h6d/dflhxWm8Mg
-         jST/dTrmB+wnNeXpGYzy907YTB8ELLCjvQqk6FCilNFG0WvP1fgOi8p41ygUzTkO1R
-         8nDlVdR4Jk3clSTNLZthioFtk0xBMGxxgh6LIPyI6bBUl5/otf0B1y9HoXRRQrsEHH
-         53osxJi2/eUgl3me736WS1wxovclw3+PElbMK//YqTl2QzuwMVDmGNm0lah74ELbQT
-         T3/bAOrGit79fw9Bfvzdejycoqe/1f2C5n7j0LLf0yRlFTzfmH6Eg+yfela69FMuad
-         1A6CU/4cXVs6w==
-From:   Sven Strickroth <sven@cs-ware.de>
-To:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        bwilliams.eng@gmail.com
-Subject: Git silently broke push-options over ssh?
-Message-ID: <4aef40f2-43f8-eab3-a840-6e76c8b4afbb@cs-ware.de>
-Date:   Fri, 22 Oct 2021 19:27:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S233900AbhJVRmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 13:42:46 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73AFEC061766
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:40:28 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id g10so4362942edj.1
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=PXs9lak0itPu3WzW1qmoQ83xfEIKeuNFivwdUf9PEsU=;
+        b=AzR7CIwkktb8nko7PYaCNbtjSg3Xg2brbTAXNfSe1H+nLsXI1QgDEX7QO1loV4JhDY
+         49fzm0HXiRDEk0fj1rkIPbOyTf7ROaco3HIXipBQyUPMDYHBR5gss4vNiiKRA5WOYpkO
+         1XNkma6RsRLE8ZA4RfdEBldsYoaIZPBoBSkpKrbnaB21lTsk34udxvwy3YqE3zY7GY9d
+         DZuAFiuq+UdpZDj4QVU8fZeMmIRg+JxlLgxRDXnrhzY5++zmn8tEw9DSW8L8ZRgo37Ju
+         srsg1FwX4YHq8GHOyafXgAfrfA/ovsgDcCcPIFcK9LUKFZiL6pg7FWCWNkkkFiAuqCSC
+         41qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=PXs9lak0itPu3WzW1qmoQ83xfEIKeuNFivwdUf9PEsU=;
+        b=h5KWkP1XsyI2phtfT9pFiAtxyjPdFzRNinoC2fPvqti0tQ30b8ONu9z22zbZtcA5ah
+         2Klmu9ylikK3+awAxl+XdCosK7YMP6CJcMB4ZhuawzN4NgHMa4uCLFEx9SOSFgNcsSko
+         0h9SQK4u3/8AwG6GFHBJvETgcF1nMc7Yz0V464pFvrCGv9MY+C0oA8+KU8/AZLyipQtn
+         mfC1d90IK5StcyweBjZkYjUw7rNnQy3C3gSitlI5qObrpK7n2jOSP/ngw9nerKgAhv9e
+         j0ISETPfzVq15ci6EsgC42vHOO7kVBeJfDylQMO2OqhHDUUHG3XRcrU7VWd6t3iV85D7
+         8lfA==
+X-Gm-Message-State: AOAM530lL5EynEh5QxuUsNEfDHfH3QUTK5GT6o6VLqqlCBlFu87bbQD0
+        /BRQ4cA5SFO1Te57EiBY6h4=
+X-Google-Smtp-Source: ABdhPJyrPa6nzIpzkSxUmjpCOtqcHi7Gqw4CWiKJdAXWxn15BsJi0I8D3NyhPeFVoiaGrO17ijolBw==
+X-Received: by 2002:a17:906:7ac9:: with SMTP id k9mr1113859ejo.411.1634924426866;
+        Fri, 22 Oct 2021 10:40:26 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id c19sm5253941ede.16.2021.10.22.10.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Oct 2021 10:40:25 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mdyWm-001IP5-RR;
+        Fri, 22 Oct 2021 19:40:24 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH 3/6] ssh signing: verify-commit/check_signature with
+ commit date
+Date:   Fri, 22 Oct 2021 19:37:03 +0200
+References: <20211022150949.1754477-1-fs@gigacodes.de>
+ <20211022150949.1754477-4-fs@gigacodes.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <20211022150949.1754477-4-fs@gigacodes.de>
+Message-ID: <211022.86ee8dj6uv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I'm using Git (for Windows) 2.33.1 and using push-options as described 
-on <https://docs.gitlab.com/ee/user/project/push_options.html> does not 
-work any more (IIRC it used to work with Git 2.16 and 2.17).
+On Fri, Oct 22 2021, Fabian Stelzer wrote:
 
-If I understood 
-<https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html> 
-correctly I have to enable the Git protocol version 2 and then the push 
-options should work.
+[Just nits]
 
-Now, when I try to use push options on Windows it does not work. I tried 
-to debug it:
+> +	if (payload_timestamp) {
+> +		strbuf_addf(&verify_time, "-Overify-time=%s",
+> +			    show_date(payload_timestamp, 0, &verify_date_mode));
+> +	}
 
-D:\TortoiseGit>set GIT_TRACE=2
-D:\TortoiseGit>set GIT_SSH=ssh.exe
-D:\TortoiseGit>set GIT_SSH_VARIANT=ssh
-D:\TortoiseGit>set GIT_PROTOCOL=version=2
-D:\TortoiseGit>git -c protocol.version=2 -c ssh.variant=ssh -c 
-ssh.command=ssh push -v -o ci.skip origin master~23:testing
-17:36:06.285346 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/bin
-17:36:06.285346 git.c:455               trace: built-in: git push -v -o 
-ci.skip origin 'master~23:testing'
-Pushing to gitlab.com:tortoisegit/tortoisegit.git
-17:36:06.295270 run-command.c:666       trace: run_command: unset 
-GIT_CONFIG_PARAMETERS GIT_PREFIX; ssh.exe git@gitlab.com 
-'git-receive-pack '\''tortoisegit/tortoisegit.git'\'''
+No braces needed.
 
-As you can see, the "-o SendEnv" parameter not passed to ssh.exe and, 
-therefore, I think the push option is not transferred to the server.
+> @@ -482,6 +495,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+>  		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
+>  		goto out;
+>  	}
+> +
+>  	if (ret || !ssh_principals_out.len) {
+>  		/*
+>  		 * We did not find a matching principal in the allowedSigners
 
-According to <https://github.com/git-for-windows/git/issues/3486> the 
-reason is a commit that was shipped with Git 2.18 (in 2018):
+Stray whitespace change.
 
-<https://github.com/git/git/commit/1aa8dded3afff28d8f4c24a97b237a0d9e633173>
+> +int parse_signed_buffer_metadata(const char *payload, const char *signer_header,
+> +				 timestamp_t *payload_timestamp,
+> +				 struct strbuf *payload_signer)
+> +{
+> +	const char *ident_line = NULL;
+> +	size_t ident_len;
+> +	struct ident_split ident;
+> +
+> +	ident_line = find_commit_header(payload, signer_header, &ident_len);
+> +	if (ident_line && ident_len) {
+> +		if (!split_ident_line(&ident, ident_line, ident_len)) {
+> +			if (payload_timestamp && ident.date_begin &&
+> +			    ident.date_end)
+> +				*payload_timestamp = parse_timestamp(
+> +					ident.date_begin, NULL, 10);
+> +			if (payload_signer)
+> +				strbuf_add(payload_signer, ident.mail_begin,
+> +					(ident.mail_end - ident.mail_begin));
+> +
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	return 1;
+> +}
 
-How to use push options with Git over SSH?
+This would be more readable with less nesting, i.e. instead of:
 
--- 
-Best regards,
-  Sven Strickroth
-  PGP key id F5A9D4C4 @ any key-server
+    if (x) {
+        if (y) {
+            [...]
+
+Doing:
+
+    if (!x)
+        return 1;
+    if (!y)
+        return 1;
+
+I.e. only if you get zero from split_ident_line() do you return 0.
+
