@@ -2,165 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9183EC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E1A4C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:44:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57971619BB
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:42:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BECE61A0C
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:44:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbhJVDpE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 23:45:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50680 "EHLO
+        id S232866AbhJVDqe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 23:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232817AbhJVDpD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 23:45:03 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2EF2C061764
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:42:46 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id t184so2119807pgd.8
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:42:46 -0700 (PDT)
+        with ESMTP id S232895AbhJVDqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 23:46:32 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB86C061243
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:44:16 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id 75so2142781pga.3
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=tPzOHukispFyxQa10DsqUyeVgFdl7Od7fAxrNc4l4LY=;
-        b=q75JJVzyislHRukd136469y1Wh2TZbLt1y2C2N+9AIC0m6BZTdfeQbyCDwqnSVtowR
-         1wUuun3r0xlsjJ0O1pH4OrNioiDqZV2OT0oxRV8aWf3mK0Lk/I/wii8me7Jmi2U9EbRf
-         gpc26LR+33EOhNbodwr1JfP/1zwycip75ywBnGBfYULSFrnHg9JF/vLGeHyAXRYcy1mx
-         vZzVw13UJeUt1M4YSXO++lLhJeRfW+L6MiR7FRQN5pAgmLpn+q+77rnjdQMNuZrDWddC
-         oSbyBtA/UNmzIbne0WFUho9MtdQxH7UcKs8jpEKWvlXA8lGFpW0umWCangXpisqQieoS
-         tELQ==
+        bh=30gPcvvO5aNR/eo8Kn5e1wRBZcRq7j+UzWookinnOdk=;
+        b=Ou37Fiol5c1VkFnfjlYLYTwyQEKmW78amPk7S//7mXSZMxUam0T8z9FsDuIvmcgWnX
+         seZO+ey2bSviEYxfYCb3Vlhf/0vhHkqZASwgo/aOahqfzuj2YvWIfVSOyWI+zj+s1HYt
+         lVd8qeoX2wEBhufKtuNRkN+xxxjp9sbi3+dd+DUT+jJhMCz7lk69+MtXRmuxX1+gbQDc
+         4UcS1Ea6FBo/ci0VFJK59eYfD6zo2s31vZQ/Dg9JEeQm+CbCJzS04Tiew4ldxi/FnaUB
+         eBdxuaw3vNvF2d5HK7OXN3dLb8XrizT/FfHDdXylGrgxzkVXn65nBO9/N36/UhJnLih8
+         AY4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=tPzOHukispFyxQa10DsqUyeVgFdl7Od7fAxrNc4l4LY=;
-        b=MJGd1j8tjLTz05JSiN5tmU+hQJlkD20wplvC/zYmWtejh+XY384W6JdN5CcWpcRSxi
-         R60Zlxdgz2PkIIE6Pfrbe49BEVIFQmyPkWlY+3gnL6zwyX0UOuv2rvkWjuQk0JqL21Lk
-         0cAQTYhXha6TjK6tqSXGUj0rQTMkeIPhgT2sgWypkwuXQ+eoAB9TgoSXXJ3dgVAmoFXg
-         livbRYYYjFx+dCczCETmbO0jIEhDb38rCoGwGr/ygJ6k7hH3T+h5AH3sP7cqw9IjZr6O
-         l7UoVEwY1KxYncHc0hyUcOfTxLorXb8iV7x/47SP4HG2oGCrjBbgXA4uxRRv/J+AXb2x
-         wcXw==
-X-Gm-Message-State: AOAM5315JPrdqsvdKe1YQnpsrpyD8jfHj69kLrRwL708V+bt1meeev5w
-        V0Rcb4cKg9skTLwpl2BQT12KqyelsJWc+Q==
-X-Google-Smtp-Source: ABdhPJxFTdezv8PmYw8xq5dbfkV0w+FV3nI2FAvpEtFp0S3R3OpquE742mKnL02DzzODZhx9vf8HVw==
-X-Received: by 2002:a62:e40a:0:b0:44d:a86:43ce with SMTP id r10-20020a62e40a000000b0044d0a8643cemr9870581pfh.69.1634874165910;
-        Thu, 21 Oct 2021 20:42:45 -0700 (PDT)
+        bh=30gPcvvO5aNR/eo8Kn5e1wRBZcRq7j+UzWookinnOdk=;
+        b=iaaeXJfH++01ir70nLDfm5G9YeO9/lhQzypOgYlwC6qx8DDMkD6GwS5hXVXVw3Tw7G
+         WHGVZKM2xD1WVOISqa+8iY4U6GHpby3VgHtZZNlb2PMNLueqkxfptIqcEhDA3ywsMVlh
+         8AMOB4snXYB6CWQK//s16ltmlsHESODnU9xDjIWQbffJosBbTMVUa/X8vegdfVWzm/Vg
+         1tdE8jg9NAskCyHGn4AWOIjf6g+xs/01HxPiUwucU6KX2Gi54GFATixldvM4DK5WKMp/
+         jQcLm5uIflTH7puVOdV7JznSCH15YFxjHEwUi4OPu6s2LRdjDj778WzMFxdN/f0aooff
+         ZEAg==
+X-Gm-Message-State: AOAM531SffbKWIT8jwkgLJ4PnKCbM/XgDHswKZ/8+5PISL0NfSE1FCRG
+        +w2q81b9B1/Oswv/V0oV+W9fjA==
+X-Google-Smtp-Source: ABdhPJz2xM90jH+bj5/lrnBamUyRCmufBYzYcAtG3EEj4T69B64UOPGP7q3BvH3E48Xwq22jUiB5KA==
+X-Received: by 2002:aa7:8752:0:b0:47b:a7a5:6aba with SMTP id g18-20020aa78752000000b0047ba7a56abamr3094884pfo.1.1634874255513;
+        Thu, 21 Oct 2021 20:44:15 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:3866:91e2:ded9:17f2])
-        by smtp.gmail.com with ESMTPSA id l6sm10944025pjy.23.2021.10.21.20.42.44
+        by smtp.gmail.com with ESMTPSA id bf7sm7332268pjb.14.2021.10.21.20.44.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 20:42:44 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 20:42:40 -0700
+        Thu, 21 Oct 2021 20:44:14 -0700 (PDT)
+Date:   Thu, 21 Oct 2021 20:44:10 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
         =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 10/10] progress.c: add & assert a "global_progress"
- variable
-Message-ID: <YXIzMFI62fBsgjMM@google.com>
+Subject: Re: [PATCH v3 00/10] progress: assert "global_progress" + test fixes
+ / cleanup
+Message-ID: <YXIzitjDUpJcFOcS@google.com>
 References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
  <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
- <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 14, 2021 at 12:28:26AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Oct 14, 2021 at 12:28:16AM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
-> The progress.c code makes a hard assumption that only one progress bar
-> be active at a time (see [1] for a bug where this wasn't the
-> case). Add a BUG() that'll trigger if we ever regress on that promise
-> and have two progress bars active at the same time.
+> This series fixes various issues in and related to progress.c, and
+> adds a BUG() assertion for us not starting two progress bars at the
+> same time. Those changes are needed for subsequent changes that do
+> more interesting things with this new global progress bar.
 > 
-> There was an alternative test-only approach to doing the same
-> thing[2], but by doing this outside of a GIT_TEST_* mode we'll know
-> we've put a hard stop to this particular API misuse.
+> This v3 hopefully addresses all the feedback on the v2, thanks
+> all. Changes:
 > 
-> It will also establish scaffolding to address current fundamental
-> limitations in the progress output: The current output must be
-> "driven" by calls to the likes of display_progress(). Once we have a
-> global current progress object we'll be able to update that object via
-> SIGALRM. See [3] for early code to do that.
+>  * Fix a memory leak in 1/10, and make the progress tests use the
+>    SANITIZE=leak test mode.
 > 
-> It's conceivable that this change will hit the BUG() condition in some
-> scenario that we don't currently have tests for, this would be very
-> bad. If that happened we'd die just because we couldn't emit some
-> pretty output.
+>  * Simplified some of the test-progress.c code (no more "start"
+>    handling, the "total" count is mandatory now.
 > 
-> See [4] for a discussion of why our test coverage is lacking; our
-> progress display is hidden behind isatty(2) checks in many cases, so
-> the test suite doesn't cover it unless individual tests are run in
-> "--verbose" mode, we might also have multi-threaded use of the API, so
-> two progress bars stopping and starting would only be visible due to a
-> race condition.
+>  * Split out a formatting change into 2/10 to make 3/10 easier to
+>    read.
 > 
-> Despite that, I think that this change won't introduce such
-> regressions, because:
+>  * A new 9/10 makes an ad-hoc test recipie in 10/10 easier to explain
+>    (in response to Emily's comment).
 > 
->  1. I've read all the code using the progress API (and have modified a
->     large part of it in some WIP code I have). Almost all of it is really
->     simple, the parts that aren't[5] are complex in the display_progress() part,
->     not in starting or stopping the progress bar.
-> 
->  2. The entire test suite passes when instrumented with an ad-hoc
->     Linux-specific mode (it uses gettid()) to die if progress bars are
->     ever started or stopped on anything but the main thread[6].
-> 
->     Extending that to die if display_progress() is called in a thread
->     reveals that we have exactly two users of the progress bar under
->     threaded conditions, "git index-pack" and "git pack-objects". Both
->     uses are straightforward, and they don't start/stop the progress
->     bar when threads are active.
-> 
->  3. I've likewise done an ad-hoc test to force progress bars to be
->     displayed with:
-> 
->         perl -pi -e 's[isatty\(2\)][1]g' $(git grep -l -F 'isatty(2)')
-> 
->     I.e. to replace all checks (not just for progress) of checking
->     whether STDERR is connected to a TTY, and then monkeypatching
->     is_foreground_fd() in progress.c to always "return 1". Running the
->     tests with those applied, interactively and under -V reveals via:
-> 
->         $ grep -e set_progress_signal -e clear_progress_signal test-results/*out
-> 
->     That nothing our tests cover hits the BUG conditions added here,
->     except the expected "BUG: start two concurrent progress bars" test
->     being added here.
-> 
->     That isn't entirely true since we won't be getting 100% coverage
->     due to cascading failures from tests that expected no progress
->     output on stderr. To make sure I covered 100% I also tried making
->     the display() function in progress.c a NOOP on top of that (it's
->     the calls to start_progress_delay() and stop_progress()) that
->     matter.
-> 
->     That doesn't hit the BUG() either. Some tests fail in that mode
->     due to a combination of the overzealous isatty(2) munging noted
->     above, and the tests that are testing that the progress output
->     itself is present (but for testing I'd made display() a NOOP).
-> 
-> Between those three points I think it's safe to go ahead with this
-> change.
-> 
-> 1. 6f9d5f2fda1 (commit-graph: fix progress of reachable commits, 2020-07-09)
-> 2. https://lore.kernel.org/git/20210620200303.2328957-3-szeder.dev@gmail.com
-> 3. https://lore.kernel.org/git/patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com/
-> 4. https://lore.kernel.org/git/cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com/
-> 5. b50c37aa44d (Merge branch 'ab/progress-users-adjust-counters' into
->    next, 2021-09-10)
-> 6. https://lore.kernel.org/git/877dffg37n.fsf@evledraar.gmail.com/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>  * The BUG() assertion in 10/10 now has a much better message, we dump
+>    the title of the two progress bars in play if we have a bug where
+>    we started two at the same time.
 
-I find it much nicer to understand now, thanks. The BUG() change in
-particular is excellent.
+One thing I noticed (and so did SZEDER) was the addition of string_list
+to the helper; I made a comment accordingly in the patch where it was
+added. It kind of seemed like an oversight - but I remember you were
+wanting to head in that direction (multiple progress bar support) so
+maybe it was paving the way for that?
 
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+Anyways, with or without it the series looks OK to me in this round too.
+
+ - Emily
