@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD976C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A82C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:10:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C47496108D
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:10:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E18796112D
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233206AbhJVPMY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 11:12:24 -0400
+        id S233269AbhJVPM1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 11:12:27 -0400
 Received: from mail-ve1eur02hn2210.outbound.protection.outlook.com ([52.100.10.210]:57385
         "EHLO EUR02-VE1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233086AbhJVPMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 11:12:23 -0400
+        id S233183AbhJVPMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 11:12:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WPTXXO36YzlYaVaRaxmggVTXfV+hwzDFaThRmULkTtDwsdt0iCtfl5qgDUCdamNblsIRRPQcGQ1QP04QKFOsw5r/tV/DdHcrYAxdE7WAcQZu5MhMe7UGyRIkcniykV0+tAx6CP+ofPzSbCgD/GbkKWPx4bSccciTUbKXAxqgfQsHUE75n0UBqTiP6xdQvFSpAIwM/Jde2a16Xmhi0MwH+BJP+iuD7T05oeUb4Pv9RxYGteKo87HNKQU/UQmOkX2F63IRs6JOrqae5Js5htw0tkisw1h0xEEFXnG8Pls33GFT8JL3agIlEQhag3+lvopSoDv/P16V16Hn7wW7xiCE2Q==
+ b=n9B2eI4i2a0fsAUj0J2GSIZL+gBEIknvANYAEB/6tDmgsfK7o29lJJqFu714Qdk3Vfn+MAE1ZPmQkQ6pOoBTBrDws07vK6zl75sFfuw2kf8MlCd++U2Xl0XgsRqdQbYotZUiaeZIHYWQvI7EQ0UNR6wf7+5dNp9RaSa/QwBW/6XAZ4NcaMch6p9tGm44YLSNruuG/nEvTUH/Mqd9S8IIcQo2vRSNOnq/8ljKKNzLA/6SyPP4AhXHIf0t+SGLx8P3Qu0c9XAjibyZRax/9CnRkhgKd4zkqtu/aTijQZv0blhUKGxoJ4PYcVo8A6TMTMKIsTHfIjn5xuc9NmKF0oMllg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=usNSOsJK5NSYauxvl/8Eiwl6Amq7n/WAgDVmTOxjZHk=;
- b=Yb87t3UBk7Gz2Pf2QvoqZDlyK1OcLLgPXPyncHBTtsB9e+Zmy/AaE9Ggh972qDv9RqxjjACPTB4xr7Ppynip8pyfBcSxhNbZX9cpmiv9Is5yj3k8ZjXbgkWxlp7IcdI3lUKogA4Myegg56W9Mkz67IrHMWP/q4fnAiecM6h9m3kzvUhYW8yFcdC+xvvY9ai2OXapmmHNZQdfbmCUrSyh4jhr4FM4XMctZyHOvWop9Kbc+Zsn57HyzrRh7BfFf4iU1VaHmxBAqbUB/TB5LOlePnhpz4fmNh4EGLzY8glOyHfWBfWGWoUMxFahvm0z35RcPJZiJB5AgdO767m0kLL6nQ==
+ bh=FpvDbtu705R8sR6gd0MQX18IXhfr83HgtkIIjkZIaQM=;
+ b=oZ9XTQOyPWT/PIChFEBYdCddym84Eib58XB2p40GChJxQySvB/WZixS2fh+fntpBKGa1rhS+oXXhN5u+eSzySeDSjU0s8lD8nPppdMTIiznqDhoMqWJRrm3L+Lh1u44OqIA2C1Ece1r3adC3uVf7TIzhieQo+dawpTDbBXODTAhUVSGEB0spIDD+pGWhumM5LYyTCZ4wJ0hoM/j3FfKsNH0oAacWpMPedYGiaAQ/DJymR56QrSJBVgMaidDUWldXBMNXWdabjcfIgDT1zGf2vwGVhllIp7n+rRXak8bXUR6Gnkhz4qtMEOYjfvBdRfd7bRA2hSo59GbkIkAzxnE4qQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=usNSOsJK5NSYauxvl/8Eiwl6Amq7n/WAgDVmTOxjZHk=;
- b=v4RH/eFl1Sf0hIjhvsyxSoLRzTAhIC6fOWP/vKYhlsyatdYluAv6g3Ay2R3YM6M6bDQ1PZPhOoVRudRNcG/5jcucPTO/1J4TfQGA3jNOxmWxcK0RSZveTa28gVb840251eqTdmU2dn0YokGjxWY5VjC7hraseSWFBPwnv8PSmwQ=
+ bh=FpvDbtu705R8sR6gd0MQX18IXhfr83HgtkIIjkZIaQM=;
+ b=onWUReJhgRYhs8FxI3Rnqm+IAngrOr3qOFZ/JIbZ8BqFhTG8KzP05fP2BaPUWCqB0HNsvt9rc3W2bEik2vcWJGPOgMFh7yH/ck1PKfvBGbEpOIsg9eVXr/UfqIYKFm2JzqygLfj2CRYHQlOMfQgRLhGZHkM0yhBUurnws6wxk3M=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
  by PAXPR10MB4637.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:15b::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.18; Fri, 22 Oct
- 2021 15:10:03 +0000
+ 2021 15:10:05 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::49a2:88ed:be81:d939]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::49a2:88ed:be81:d939%6]) with mapi id 15.20.4628.018; Fri, 22 Oct 2021
- 15:10:03 +0000
+ 15:10:05 +0000
 From:   Fabian Stelzer <fs@gigacodes.de>
 To:     git@vger.kernel.org
 Cc:     Fabian Stelzer <fs@gigacodes.de>,
@@ -56,78 +56,78 @@ Cc:     Fabian Stelzer <fs@gigacodes.de>,
         "Gwyneth Morgan" <gwymor@tilde.club>,
         "Jonathan Tan" <jonathantanmy@google.com>,
         "Josh Steadmon" <steadmon@google.com>
-Subject: [PATCH 1/6] ssh signing: extend check_signature to accept payload metadata
-Date:   Fri, 22 Oct 2021 17:09:44 +0200
-Message-Id: <20211022150949.1754477-2-fs@gigacodes.de>
+Subject: [PATCH 3/6] ssh signing: verify-commit/check_signature with commit date
+Date:   Fri, 22 Oct 2021 17:09:46 +0200
+Message-Id: <20211022150949.1754477-4-fs@gigacodes.de>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211022150949.1754477-1-fs@gigacodes.de>
 References: <20211022150949.1754477-1-fs@gigacodes.de>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: AM5PR0601CA0045.eurprd06.prod.outlook.com
- (2603:10a6:203:68::31) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: AM6P193CA0102.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:209:88::43) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM5PR0601CA0045.eurprd06.prod.outlook.com (2603:10a6:203:68::31) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.16 via Frontend Transport; Fri, 22 Oct 2021 15:10:03 +0000
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM6P193CA0102.EURP193.PROD.OUTLOOK.COM (2603:10a6:209:88::43) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.16 via Frontend Transport; Fri, 22 Oct 2021 15:10:05 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 571b050c-7772-4633-f2df-08d9956e066c
+X-MS-Office365-Filtering-Correlation-Id: 8b334b1a-1efc-41af-7b7b-08d9956e076c
 X-MS-TrafficTypeDiagnostic: PAXPR10MB4637:
-X-Microsoft-Antispam-PRVS: <PAXPR10MB4637729AAC98B928DDDE408AB6809@PAXPR10MB4637.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3276;
+X-Microsoft-Antispam-PRVS: <PAXPR10MB4637EDDAB5AE5961DCBD2AB0B6809@PAXPR10MB4637.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:663;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?BDmTp2E9JfEnR2ZTPUsrQsuRljvi+JHE6RpGVjXIWYDreOaeyCIagyQUeoZf?=
- =?us-ascii?Q?aTEQA+S6DHgwZuBnsIBoFWLyd8uhDbIDQUwrTgbr9fb4CKLh4mvWf6EWDXG0?=
- =?us-ascii?Q?EUrSqqRPQooMFtMLa44fLBCpHytV0ZeDWLCwVfwbFvbUHwxK4D5fA8cQhsvp?=
- =?us-ascii?Q?US/qs5XKeYzPw2Gl0pM3XKQTiJp2rqPD/LxBztTAW0zaXUvWBpwF4dGIF4bM?=
- =?us-ascii?Q?Eh3G5tdo1pEzhcvdH9Tc8fRaHVb5REmQBdRxRflSlQg7tRnPkF+a+03KT0cL?=
- =?us-ascii?Q?2tfoBy34RDPFc9gtNqVbpZrP+NazZnGPUbRIgUDG5zARjziIz0/rOjVXq/9J?=
- =?us-ascii?Q?TP4LpmytVyaxMkDvCQ81Alpy5yu6a187A2/GDfGeGW9TGVt/7dNhPGZ3x1FT?=
- =?us-ascii?Q?fIpqFCzYph2lR7FYFI1ogLv8u5oGSNnkmMYns+u2GJeaCra33VobtPp9jSi9?=
- =?us-ascii?Q?ofkGh/qCgeXdgKcaV+oy9uwEJ1rwhbSafLODTcP0Usd5NvJwcxydUuWDTsC8?=
- =?us-ascii?Q?ucPG7r9r8dmEDfwUWPi+2w1qiq3UolPCGhjkFy4bQbBBaWPwAxkZNJkAfBYv?=
- =?us-ascii?Q?mDu3lADE9pfCwCJuh/UKzavk5H+PEYxMThUgEoc7+qN9jXw7wR9D8EXUFTv8?=
- =?us-ascii?Q?C3CNnfdtwf0jI5gP0vRvAJ8zr1U9RWNs0gm+7yvRrdYQJhrKtCZq4ElvcQvQ?=
- =?us-ascii?Q?FWKk6cBwyAer0s5CCORF1jwB+aB5xxcANDzpvd2ctGOBDxZKBqgBe21OOObA?=
- =?us-ascii?Q?jBdSrGvnzwnRdIfh3HGDxM7jIwLsgaP5fjUtg/2L3NV6y1c4Uwn6sYVW1iKw?=
- =?us-ascii?Q?lqqibueEPt5Cz1/J+qInPna+2cnxkmJc7oz6EcL0PgYAuFsH8t8ycm/JhlTU?=
- =?us-ascii?Q?EHl79yzenIVL0V79XVQ4M4GoW57IVsDWLV6Ro8OzCZTTrObmKLfle2hl+mrt?=
- =?us-ascii?Q?/SDSdccb8tQ1t7wjj98mt0FpWAsGSrVeL19tpWOhbP3a9l7hYXragsaUCTjf?=
- =?us-ascii?Q?n6vKj1DkxIflRoJwkTdBGfTr4Q=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(376002)(396003)(346002)(366004)(136003)(39840400004)(4326008)(7416002)(186003)(6486002)(2616005)(316002)(66476007)(66946007)(5660300002)(8936002)(8676002)(508600001)(83380400001)(38100700002)(66556008)(2906002)(6666004)(54906003)(6496006)(36756003)(86362001)(6916009)(1076003)(52116002)(23200700001);DIR:OUT;SFP:1501;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?FN2naMGBpi6yFMzo2C/PhjerbfiZRQNgRUFYSOOV3ZegH9GmIVMMJ+ubcCae?=
+ =?us-ascii?Q?4hs89r4bXpqBnMRJHfMbM0zgza7DctuAyuWmH0fIYwzeuTU+/PV8oJAMVu+p?=
+ =?us-ascii?Q?b+Aj1JaWHPAOpu+ulo1X8byyOuBeMSHuSr0KenbFB586ZJwEiYVuiLsGvw2u?=
+ =?us-ascii?Q?uUrwdQiI7RiriKRFBzmzI1R9CO8Yq53rfDz5VK//6+0n9VTiIMJPLIsr2mK2?=
+ =?us-ascii?Q?RlSTTyXFyNYl9lzTDwBgy4TReYyDfP1VYMHNAQcQJ2MXECsi01xUVzFU8QLo?=
+ =?us-ascii?Q?/PAURZXzcgodUoAGMsC+wX40SkEXMf8eOIpokwuSmzOnGzFZg99J7u3FpEhw?=
+ =?us-ascii?Q?GySGZ0USB1H1d3mljDE/FO8fi+dycQZ1bx+1NYHCT1JAhvpeNsQtInfc/yEB?=
+ =?us-ascii?Q?Vjpf1M5GE85M4QihEYoK7RlqCowfxjKPsxBHM8efOaMbSnfteX3l1gMDi9C4?=
+ =?us-ascii?Q?KAf9ThMCsfR0IP5ZFTsZKcd3dP7igbkREBBtSZ6kAu2iLY/PvzrbAcEnDXQR?=
+ =?us-ascii?Q?gpEam7Vm9SIqxuaFU2AAmsru0osOm/4lh5D7yQRPt5a4pgWx7rYxNpnhskkE?=
+ =?us-ascii?Q?qTNrAayD6StST1PbbkvdrFcjAX2KoKJyNNQtNlTuTjV0wSDrxywEh/lVKSDJ?=
+ =?us-ascii?Q?rLr2lsv8vtZr9aiG5DEoF4zQ8ROvlvx15RRrkr79yh7X4JVLlsUPm7cHfLLN?=
+ =?us-ascii?Q?3GKVOhuqe7mg/KEimb5sr8wbsFrBYfAtv8cFjDxKbCybFm9zSqZy2L/HGIAo?=
+ =?us-ascii?Q?oorfMTMJWneL5hxpswSEoGwM2pEAdq89EE4NNkc34OMpCnxeYIyWLpmXyiN9?=
+ =?us-ascii?Q?cz5lWwNxIidHYl0tDtAFkyTqBlky8moaeV42kUWqhCJbsX000wiMK9xqP/gL?=
+ =?us-ascii?Q?G5bDvXAyJ03BMQBYxojRA1QLywAqe8UxR0QJr+QkaxmRcWIoWg6OlM7mNxIg?=
+ =?us-ascii?Q?3lCLztftEFcNi5WWZQVKjFvHez1Q/UXTz5YKDk+/ibv4r2dkKWiKprQ79eAF?=
+ =?us-ascii?Q?msiLVp6huhySeBLZpsYeQXm5Nw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(376002)(396003)(346002)(366004)(136003)(39840400004)(4326008)(7416002)(186003)(6486002)(2616005)(316002)(66476007)(66946007)(5660300002)(8936002)(8676002)(508600001)(83380400001)(38100700002)(15650500001)(66556008)(2906002)(6666004)(54906003)(6496006)(36756003)(86362001)(6916009)(1076003)(52116002)(23200700001);DIR:OUT;SFP:1501;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?0RsPwhP1VydQHTuVzWTSJ6F87J+TsciYEsSGpzs7vtdXyZpm0jRnkTAmQ42Y?=
- =?us-ascii?Q?eGY26CNu7LKNd/X9iuJM7te+oHM60vZfSZp6TtRDLxiOvU6uWkcvi37Kclzi?=
- =?us-ascii?Q?+qKZCIrjeuB79hQ5Ybx6JjazdXELqCVotP4znl41GjjwmUS3M8UhWV0QpLOR?=
- =?us-ascii?Q?DXXRyZbsEX5XjBE2LN2ojS/b8Rh2DlW18CoRFo7E7ogmP11MNL+xj8qMTmn4?=
- =?us-ascii?Q?3RaTnTr0g+WTCDlptoRDYtNkisGu0IU3cBBcTZVHPXx0YCIDeHKAGxBlKwp+?=
- =?us-ascii?Q?+BKral4zIdkNZagDoZ7+3KaJGs+uMf/B3BgT5mlQEch1RvlBu1bgEl2CBjif?=
- =?us-ascii?Q?Y670FA5fTGqYTf5Mj419DthKO/nPZxjYMcepql6c+9K4Yra8h/xDyF+sWHwZ?=
- =?us-ascii?Q?9XvK2eGoZ5eGYaoqoJYo05s+0IYrrHtosMR9A8RNX+H+cmDYXu/7u5grGybD?=
- =?us-ascii?Q?ghWsN0Pg/zwUnffhkESnUIGDZTjBcr8bpSKE9K8rSvYE+b2HcUSe7gb1bbyh?=
- =?us-ascii?Q?rF2UXttzGnWYnNHgDomIsgEqW9CUYSepN+C0LdPLoQfokkRLqbxDl8ETSHTs?=
- =?us-ascii?Q?HFmAv5ZfqNPKLHazCiQI8wNC3HzXaERADLXGcuYH/2bOz1pV6FZucJv/1Qw2?=
- =?us-ascii?Q?IMRtoJJUi1NstngyoI17lfoPqu07cLIKajMGkCfAuz67BDuVeEXIiloy9cZs?=
- =?us-ascii?Q?UUlckWCF3inTLjBTXCYe3N0awTNwepKHQK3vGPw0KJKRMhbaq39YdxgotPT3?=
- =?us-ascii?Q?u5kgb+NuYDzYcxI+htrFGqgQLBZSik6b+m48o2fBKfx68d1d3iPBy/o+WWdo?=
- =?us-ascii?Q?FuxmaJqEdEy82tgiUMHYq1jzEqqWFKpLO/z5iWH6kjPpahx+tvPX327crHzI?=
- =?us-ascii?Q?G7gz+lFMpjUHnsD2CqC7R5CPe9W5AGRbtW0VZJ5DeiAWqJfxeu09oLnMsMz7?=
- =?us-ascii?Q?kAtNDgJ5x7n7UFmWa8ZvpM+quD7MukIPSUL4dqYdvvzOb+CvrrKvKxCSkwcA?=
- =?us-ascii?Q?9MQYPfIe0MqYUireX7PRCi4cGcqVPZp7tjfEoxafnAtK+RZPjenTtQ9/lHlp?=
- =?us-ascii?Q?DwsNL/U2rH592WqC96QldepDuLxLiOPSEjYyvkINaFtie7qrvKcJW3NdIFox?=
- =?us-ascii?Q?g5fCUfV3JEXUX/DJBQohr2kWxlJnAeFcYLDuuloB9ANHSO//ymaSkrABtAji?=
- =?us-ascii?Q?AQvHC846TzIaGX0eqFC/69Wh2lNr2fWu2gtKxfCrrmrEemhGGPHRpjSofMWM?=
- =?us-ascii?Q?ImM8CvTWZl1A73IRghXbLJgjIiyN/m9R6m4YnIonaXVp7NZsJp445KeC3wIZ?=
- =?us-ascii?Q?2ZI1Sp/YZ4fTTaQUJNHYsmUSJDh3GL2vA0mxtIowFag1ejGyY3gmTtO9fffX?=
- =?us-ascii?Q?VBt8z6vjjl+JoYcSVrWmNdGmsPnxA7F12iYQHaZLxqDDThUSFC1llXVvJnW/?=
- =?us-ascii?Q?Z4vypTkFZgRASr6+GPkpW9c5P6OjqcNXRVoCuPpf5jd/2n4ansSKFS44X0zW?=
- =?us-ascii?Q?yhLQYwFTYfyJIVSEHy5OAV+lkHkrIvBUoPQz?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7U2szoQVzPo5vK2wvB3Tnzsw44qBYju6hXq43v4iYDLAaefpR46IHM7iFcOP?=
+ =?us-ascii?Q?vgJGuvaSxGN8v+WGWFbr1zdMUP3Ex1EDeLI5mVbkL0UUa/Ovs9lM7YQYR8cb?=
+ =?us-ascii?Q?n0YetQu3gDLC4PSrKtUlIy1COoGJ57++d6gOLUocXNG+ggFEa4NldrcV60Xm?=
+ =?us-ascii?Q?R+mqEBgSZpGacMUoJTpJkE4XKnmxku8IX+RUSYsrQVTt/Bf8UJ/ObS/nIo8o?=
+ =?us-ascii?Q?Q0H1laBOSxmgLg0Zb5mPo0XF5y4wKH5ouuV4fiReG8BKDJmT7tVkUUYJE5oW?=
+ =?us-ascii?Q?c9ShM/pThiDkrZCVDWL7Ktmc0hnKu1mJRB9+2XooDr2KwWtRNUvmZNQRZvuH?=
+ =?us-ascii?Q?LKwZcyguqhYfrE5zmz305Tr2/BxcMstIkxxH4mD+yu3KuXjfIVsDgDd9rUSf?=
+ =?us-ascii?Q?Vd/FFzSSqz7JtmyydcXgG+lQOhnIagE4irvuLgl5yFGbU9qkixg2JZ7JsHH8?=
+ =?us-ascii?Q?bNT/AC8I20t4iK6jgEm3QDd+uOtWkVjWsi2afX0wln9c4Lq3Ymiy8Muu6Cs2?=
+ =?us-ascii?Q?AyRctfOXxlpUKjhUsBREbdkDm+RscD1c+2FfxQa/YzwSH1Ls7tnFo1ogYCDY?=
+ =?us-ascii?Q?I3oVGPfxF/MjvjpGNPp6aDFkk5G+AazjnQuu7If5znu5HJwlQ4R7IFjgqjZo?=
+ =?us-ascii?Q?kHYsDK2LwRqOtZ3Me946c6ENGPAvV5W2HgYtD0aYfWnBnb2+0loD23IEbhjf?=
+ =?us-ascii?Q?qlS2DnX/IEQbPGcW81AczDDhsOP0C3PE5SdwCGpx/bo5M5rVIcmLuNflEDZP?=
+ =?us-ascii?Q?1z9Rnyf59eF6nFDzZgCTzcqUKktW9Nvp610tn6kopCIw+3VN0NPAhuDzT3up?=
+ =?us-ascii?Q?UuyUpcL/sdik3juUS8oH7nN4St+JLiplKzYGT5KPH8T+BtjCAMkv1r5FHGuC?=
+ =?us-ascii?Q?3H/695B+2wDfMtsrr5npt6DZP+pF4IbSqOfmcuojPvfCm62N3dKMSQVL/9d/?=
+ =?us-ascii?Q?T3x1WCxwaAjv5efm8GKnI+sS97O1fRbdhg0Id0/PAooeX4OZwVTMN4gvndyR?=
+ =?us-ascii?Q?gcnEDK6FrqPDu4vs2969jUw787D12uIMJLUbQadRKniAyPk8sBZmxZj1mvta?=
+ =?us-ascii?Q?X8abUN7gZba8qeB14NHgViUU3AbxbhV7lXUZn+XRcCZ4YKI4HDjFPJdyGTk4?=
+ =?us-ascii?Q?AEQXXQWrawbDYsNyk/nPviYOJzHCs3hLWUBTZovUTmMOx5EopAmB30Hdgi6T?=
+ =?us-ascii?Q?7DLKFp9/hQsJox6rnpXCnKzqeLS/KyQtBlS+w7PkiSRoHV91TigJLeHMUYNE?=
+ =?us-ascii?Q?/LIb87zxw2c/cQdqE486aJbZYe+T+wPfdvNhcOV8HXUS/obTBy74OA6nsP08?=
+ =?us-ascii?Q?6VuDoHb1koQeNvF4y7eTZhrKJKRNFXEGXfSbMBPpegpFookRlfqTOeHrhLsw?=
+ =?us-ascii?Q?VtPumdxGxOBTbDb9ZtY5lVf5s2AGLWcgl8Dr5r6f5TLpJN66GopTzMikzffj?=
+ =?us-ascii?Q?PrGYN6JkRlQHQBo3dSVURycB6AsAl2UVTwGtgCI2OyGNjxGE+niqCQ6vCtjG?=
+ =?us-ascii?Q?K0YJJIchZvqN68wWTdt+NpzekvbvLBjtw3h4?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 571b050c-7772-4633-f2df-08d9956e066c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8b334b1a-1efc-41af-7b7b-08d9956e076c
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2021 15:10:03.7336
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2021 15:10:05.4202
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
@@ -138,214 +138,259 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds two new parameters to the check_signature api and passes them to the
-internal verification ssh/gpg methods.
-A payload timestamp that will be used to verify signatures at the time of their
-objects creation if the signing method supports it (only ssh for now).
-And a signer strbuf containing ident information about the signer that
-we will need for implementing "Trust on first use" in a future patch
-series.
+If valid-before/after dates are configured for this signatures key in the
+allowedSigners file then the verification will check if the key was valid at
+the time the commit was made. This allows for graceful key rollover and
+revoking keys without invalidating all previous commits.
+This feature needs openssh > 8.8. Older ssh-keygen versions will simply
+ignore this flag and use the current time.
+Strictly speaking this feature is available in 8.7, but since 8.7 has a
+bug that makes it unusable in another needed call we require 8.8.
 
-Adding the ident info right now instead of a later patch series makes
-certain choices in this patch series clearer. Only passing the timestamp
-could be done a bit simpler on some call sites but i am certain that we
-will need the ident info for "Trust on first use" no matter how exactly
-it will be implemented later.
+Timestamp information is present on most invocations of check_signature.
+However signer ident is not. We will need the signer email / name to be able
+to implement "Trust on first use" functionality.
+Therefore we provide parse_signed_buffer_metadata() for parsing both from
+the payload buffer.
 
-To start with we pass 0, NULL on all invocations to keep the current behaviour
-as is.
+Passes commit date for verify-commit on to check_signature.
+Adds test for keys being expired, not yet valid, having a commit date outside
+of key validity and within.
 
 Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- builtin/receive-pack.c |  5 +++--
- commit.c               |  2 +-
- fmt-merge-msg.c        |  4 ++--
- gpg-interface.c        | 36 +++++++++++++++++++++++++++---------
- gpg-interface.h        |  5 +++--
- log-tree.c             |  4 ++--
- tag.c                  |  2 +-
- 7 files changed, 39 insertions(+), 19 deletions(-)
+ Documentation/config/gpg.txt |  5 +++++
+ commit.c                     | 12 ++++++++--
+ gpg-interface.c              | 43 ++++++++++++++++++++++++++++++++++++
+ gpg-interface.h              |  8 +++++++
+ t/t7528-signed-commit-ssh.sh | 42 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 108 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 49b846d960..761c70642b 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -769,8 +769,9 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		memset(&sigcheck, '\0', sizeof(sigcheck));
+diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+index 4f30c7dbdd..c9be554c73 100644
+--- a/Documentation/config/gpg.txt
++++ b/Documentation/config/gpg.txt
+@@ -64,6 +64,11 @@ A repository that only allows signed commits can store the file
+ in the repository itself using a path relative to the top-level of the working tree.
+ This way only committers with an already valid key can add or change keys in the keyring.
+ +
++Since OpensSSH 8.8 this file allows specifying a key lifetime using valid-after &
++valid-before options. Git will mark signatures as valid if the signing key was
++valid at the time of the signatures creation. This allows users to change a
++signing key without invalidating all previously made signatures.
+++
+ Using a SSH CA key with the cert-authority option
+ (see ssh-keygen(1) "CERTIFICATES") is also valid.
  
- 		bogs = parse_signed_buffer(push_cert.buf, push_cert.len);
--		check_signature(push_cert.buf, bogs, push_cert.buf + bogs,
--				push_cert.len - bogs, &sigcheck);
-+		check_signature(push_cert.buf, bogs, 0, NULL,
-+				push_cert.buf + bogs, push_cert.len - bogs,
-+				&sigcheck);
- 
- 		nonce_status = check_nonce(push_cert.buf, bogs);
- 	}
 diff --git a/commit.c b/commit.c
-index 551de4903c..1704d9df0a 100644
+index 1704d9df0a..e5dfbfcf8e 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -1212,7 +1212,7 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+@@ -1207,17 +1207,25 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+ 	struct strbuf payload = STRBUF_INIT;
+ 	struct strbuf signature = STRBUF_INIT;
+ 	int ret = 1;
++	struct strbuf payload_signer = STRBUF_INIT;
++	timestamp_t payload_timestamp = 0;
+ 
+ 	sigc->result = 'N';
  
  	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
  		goto out;
--	ret = check_signature(payload.buf, payload.len, signature.buf,
-+	ret = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
- 		signature.len, sigc);
+-	ret = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
+-		signature.len, sigc);
++	if (parse_signed_buffer_metadata(payload.buf, "committer",
++					 &payload_timestamp, &payload_signer))
++		goto out;
++
++	ret = check_signature(payload.buf, payload.len, payload_timestamp,
++			      &payload_signer, signature.buf, signature.len,
++			      sigc);
  
   out:
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 5216191488..d2cedad6b7 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -533,8 +533,8 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- 		else {
- 			buf = payload.buf;
- 			len = payload.len;
--			if (check_signature(payload.buf, payload.len, sig.buf,
--					    sig.len, &sigc) &&
-+			if (check_signature(payload.buf, payload.len, 0, NULL,
-+					    sig.buf, sig.len, &sigc) &&
- 			    !sigc.output)
- 				strbuf_addstr(&sig, "gpg verification failed.\n");
- 			else
+ 	strbuf_release(&payload);
+ 	strbuf_release(&signature);
++	strbuf_release(&payload_signer);
+ 
+ 	return ret;
+ }
 diff --git a/gpg-interface.c b/gpg-interface.c
-index 800d8caa67..6049f7cbf7 100644
+index 6049f7cbf7..fed5113297 100644
 --- a/gpg-interface.c
 +++ b/gpg-interface.c
-@@ -20,7 +20,10 @@ struct gpg_format {
- 	const char **sigs;
- 	int (*verify_signed_buffer)(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
--				    size_t payload_size, const char *signature,
-+				    size_t payload_size,
-+				    timestamp_t payload_timestamp,
-+				    struct strbuf *payload_signer,
-+				    const char *signature,
- 				    size_t signature_size);
- 	int (*sign_buffer)(struct strbuf *buffer, struct strbuf *signature,
- 			   const char *signing_key);
-@@ -54,11 +57,17 @@ static const char *ssh_sigs[] = {
+@@ -453,6 +453,13 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 	struct strbuf ssh_principals_err = STRBUF_INIT;
+ 	struct strbuf ssh_keygen_out = STRBUF_INIT;
+ 	struct strbuf ssh_keygen_err = STRBUF_INIT;
++	struct strbuf verify_time = STRBUF_INIT;
++	const struct date_mode verify_date_mode = {
++		.type = DATE_STRFTIME,
++		.strftime_fmt = "%Y%m%d%H%M%S",
++		/* SSH signing key validity has no timezone information - Use the local timezone */
++		.local = 1,
++	};
  
- static int verify_gpg_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
--				    size_t payload_size, const char *signature,
-+				    size_t payload_size,
-+				    timestamp_t payload_timestamp,
-+				    struct strbuf *payload_signer,
-+				    const char *signature,
- 				    size_t signature_size);
- static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
--				    size_t payload_size, const char *signature,
-+				    size_t payload_size,
-+				    timestamp_t payload_timestamp,
-+				    struct strbuf *payload_signer,
-+				    const char *signature,
- 				    size_t signature_size);
- static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 			   const char *signing_key);
-@@ -315,7 +324,10 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 	if (!ssh_allowed_signers) {
+ 		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
+@@ -470,11 +477,17 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		return -1;
+ 	}
  
- static int verify_gpg_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
--				    size_t payload_size, const char *signature,
-+				    size_t payload_size,
-+				    timestamp_t payload_timestamp,
-+				    struct strbuf *payload_signer,
-+				    const char *signature,
- 				    size_t signature_size)
- {
- 	struct child_process gpg = CHILD_PROCESS_INIT;
-@@ -425,7 +437,10 @@ static void parse_ssh_output(struct signature_check *sigc)
++	if (payload_timestamp) {
++		strbuf_addf(&verify_time, "-Overify-time=%s",
++			    show_date(payload_timestamp, 0, &verify_date_mode));
++	}
++
+ 	/* Find the principal from the signers */
+ 	strvec_pushl(&ssh_keygen.args, fmt->program,
+ 		     "-Y", "find-principals",
+ 		     "-f", ssh_allowed_signers,
+ 		     "-s", buffer_file->filename.buf,
++		     verify_time.buf,
+ 		     NULL);
+ 	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_principals_out, 0,
+ 			   &ssh_principals_err, 0);
+@@ -482,6 +495,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
+ 		goto out;
+ 	}
++
+ 	if (ret || !ssh_principals_out.len) {
+ 		/*
+ 		 * We did not find a matching principal in the allowedSigners
+@@ -492,6 +506,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 			     "-Y", "check-novalidate",
+ 			     "-n", "git",
+ 			     "-s", buffer_file->filename.buf,
++			     verify_time.buf,
+ 			     NULL);
+ 		pipe_command(&ssh_keygen, payload, payload_size,
+ 				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+@@ -526,6 +541,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 				     "-f", ssh_allowed_signers,
+ 				     "-I", principal,
+ 				     "-s", buffer_file->filename.buf,
++				     verify_time.buf,
+ 				     NULL);
  
- static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
--				    size_t payload_size, const char *signature,
-+				    size_t payload_size,
-+				    timestamp_t payload_timestamp,
-+				    struct strbuf *payload_signer,
-+				    const char *signature,
- 				    size_t signature_size)
- {
- 	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
-@@ -560,8 +575,10 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 			if (ssh_revocation_file) {
+@@ -571,10 +587,37 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 	strbuf_release(&ssh_principals_err);
+ 	strbuf_release(&ssh_keygen_out);
+ 	strbuf_release(&ssh_keygen_err);
++	strbuf_release(&verify_time);
+ 
  	return ret;
  }
  
--int check_signature(const char *payload, size_t plen, const char *signature,
--	size_t slen, struct signature_check *sigc)
-+int check_signature(const char *payload, size_t plen,
-+		    timestamp_t payload_timestamp,
-+		    struct strbuf *payload_signer, const char *signature,
-+		    size_t slen, struct signature_check *sigc)
- {
- 	struct gpg_format *fmt;
- 	int status;
-@@ -573,8 +590,9 @@ int check_signature(const char *payload, size_t plen, const char *signature,
- 	if (!fmt)
- 		die(_("bad/incompatible signature '%s'"), signature);
- 
--	status = fmt->verify_signed_buffer(sigc, fmt, payload, plen, signature,
--					   slen);
-+	status = fmt->verify_signed_buffer(sigc, fmt, payload, plen,
-+					   payload_timestamp, payload_signer,
-+					   signature, slen);
- 
- 	if (status && !sigc->output)
- 		return !!status;
++int parse_signed_buffer_metadata(const char *payload, const char *signer_header,
++				 timestamp_t *payload_timestamp,
++				 struct strbuf *payload_signer)
++{
++	const char *ident_line = NULL;
++	size_t ident_len;
++	struct ident_split ident;
++
++	ident_line = find_commit_header(payload, signer_header, &ident_len);
++	if (ident_line && ident_len) {
++		if (!split_ident_line(&ident, ident_line, ident_len)) {
++			if (payload_timestamp && ident.date_begin &&
++			    ident.date_end)
++				*payload_timestamp = parse_timestamp(
++					ident.date_begin, NULL, 10);
++			if (payload_signer)
++				strbuf_add(payload_signer, ident.mail_begin,
++					(ident.mail_end - ident.mail_begin));
++
++			return 0;
++		}
++	}
++
++	return 1;
++}
++
+ int check_signature(const char *payload, size_t plen,
+ 		    timestamp_t payload_timestamp,
+ 		    struct strbuf *payload_signer, const char *signature,
 diff --git a/gpg-interface.h b/gpg-interface.h
-index beefacbb1e..f7c5389c90 100644
+index f7c5389c90..1cbecbf4c1 100644
 --- a/gpg-interface.h
 +++ b/gpg-interface.h
-@@ -71,8 +71,9 @@ const char *get_signing_key(void);
-  */
- const char *get_signing_key_id(void);
- int check_signature(const char *payload, size_t plen,
--		    const char *signature, size_t slen,
--		    struct signature_check *sigc);
-+		    timestamp_t payload_timestamp,
-+		    struct strbuf *payload_signer, const char *signature,
-+		    size_t slen, struct signature_check *sigc);
- void print_signature_buffer(const struct signature_check *sigc,
- 			    unsigned flags);
+@@ -65,6 +65,14 @@ int git_gpg_config(const char *, const char *, void *);
+ void set_signing_key(const char *);
+ const char *get_signing_key(void);
  
-diff --git a/log-tree.c b/log-tree.c
-index 644893fd8c..3c3aec5c40 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -513,7 +513,7 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
- 	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
- 		goto out;
++/*
++ * Tries to find "signer_header" (usually committer or tagger) in the payload,
++ * and sets the corresponding timestamp and signer parameters if found.
++ */
++int parse_signed_buffer_metadata(const char *payload, const char *signer_header,
++				 timestamp_t *payload_timestamp,
++				 struct strbuf *payload_signer);
++
+ /*
+  * Returns a textual unique representation of the signing key in use
+  * Either a GPG KeyID or a SSH Key Fingerprint
+diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
+index badf3ed320..dae76ded0c 100755
+--- a/t/t7528-signed-commit-ssh.sh
++++ b/t/t7528-signed-commit-ssh.sh
+@@ -76,6 +76,23 @@ test_expect_success GPGSSH 'create signed commits' '
+ 	git tag twelfth-signed-alt $(cat oid)
+ '
  
--	status = check_signature(payload.buf, payload.len, signature.buf,
-+	status = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
- 				 signature.len, &sigc);
- 	if (status && !sigc.output)
- 		show_sig_lines(opt, status, "No signature\n");
-@@ -583,7 +583,7 @@ static int show_one_mergetag(struct commit *commit,
- 	status = -1;
- 	if (parse_signature(extra->value, extra->len, &payload, &signature)) {
- 		/* could have a good signature */
--		status = check_signature(payload.buf, payload.len,
-+		status = check_signature(payload.buf, payload.len, 0, NULL,
- 					 signature.buf, signature.len, &sigc);
- 		if (sigc.output)
- 			strbuf_addstr(&verify_message, sigc.output);
-diff --git a/tag.c b/tag.c
-index 3e18a41841..3459a0867c 100644
---- a/tag.c
-+++ b/tag.c
-@@ -25,7 +25,7 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 		return error("no signature found");
- 	}
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed commits with keys having defined lifetimes' '
++	test_when_finished "test_unconfig commit.gpgsign" &&
++	test_config gpg.format ssh &&
++
++	echo expired >file && test_tick && git commit -a -m expired -S"${GPGSSH_KEY_EXPIRED}" &&
++	git tag expired-signed &&
++
++	echo notyetvalid >file && test_tick && git commit -a -m notyetvalid -S"${GPGSSH_KEY_NOTYETVALID}" &&
++	git tag notyetvalid-signed &&
++
++	echo timeboxedvalid >file && test_tick && git commit -a -m timeboxedvalid -S"${GPGSSH_KEY_TIMEBOXEDVALID}" &&
++	git tag timeboxedvalid-signed &&
++
++	echo timeboxedinvalid >file && test_tick && git commit -a -m timeboxedinvalid -S"${GPGSSH_KEY_TIMEBOXEDINVALID}" &&
++	git tag timeboxedinvalid-signed
++'
++
+ test_expect_success GPGSSH 'verify and show signatures' '
+ 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+ 	test_config gpg.mintrustlevel UNDEFINED &&
+@@ -122,6 +139,31 @@ test_expect_success GPGSSH 'verify-commit exits failure on untrusted signature'
+ 	grep "${GPGSSH_KEY_NOT_TRUSTED}" actual
+ '
  
--	ret = check_signature(payload.buf, payload.len, signature.buf,
-+	ret = check_signature(payload.buf, payload.len, 0, NULL, signature.buf,
- 				signature.len, &sigc);
- 
- 	if (!(flags & GPG_VERIFY_OMIT_STATUS))
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-commit exits failure on expired signature key' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	test_must_fail git verify-commit expired-signed 2>actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-commit exits failure on not yet valid signature key' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	test_must_fail git verify-commit notyetvalid-signed 2>actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-commit succeeds with commit date and key validity matching' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	git verify-commit timeboxedvalid-signed 2>actual &&
++	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
++	! grep "${GPGSSH_BAD_SIGNATURE}" actual
++'
++
++test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'verify-commit exits failure with commit date outside of key validity' '
++	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++	test_must_fail git verify-commit timeboxedinvalid-signed 2>actual &&
++	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
++'
++
+ test_expect_success GPGSSH 'verify-commit exits success with matching minTrustLevel' '
+ 	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+ 	test_config gpg.minTrustLevel fully &&
 -- 
 2.31.1
 
