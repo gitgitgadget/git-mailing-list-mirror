@@ -2,107 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5BD0C433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A06AC433FE
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:34:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95FDE60FBF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:20:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7919161108
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 17:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233491AbhJVRWh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 13:22:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36974 "EHLO
+        id S233653AbhJVRgc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 13:36:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231893AbhJVRWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 13:22:34 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F264C061764
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:20:16 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id ec8so4313410edb.6
-        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ak8jbSqdkMC6nUYTl2ABDbKfQLuz23H+1KUBhsdbtzE=;
-        b=l+Q7WB4YCvdybPRTt3cv5EYmDKYUl8UAC7894Jnj+JRgQscUdMrjdipBpv9dS01Wfa
-         xbQ5C8bqf3cD5OSMfJaNQyihnnXqIGDON4d2eGXZOyVsvxYg2bQpMjRLXWq8ZgScZz21
-         zL7ZrW2ptQ2oZc2qevk/dNdKzfqx7qjWn4By2LDGeTmjr7HCtp2HRQg3WTLypjmfXW9O
-         9mdu555AH89XcBwVHGjos4hpkr6lQjARAzMFPl0/JeRk4diKOIZO/CZ4QDudPiWsO/zz
-         2isj6T2o18UgsNJCLVkJTxoV87sePG+1taef6JXK7vGe+WCdubiVt7vicsA1ASqQcpU6
-         gQoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ak8jbSqdkMC6nUYTl2ABDbKfQLuz23H+1KUBhsdbtzE=;
-        b=AYhxd8aGzObY3pCqOSEpHxMap7Y9TDOgcEM1dLAPXjpshhjVcF2mzydBI1SeWPxcaT
-         9hShbDjUvduYhxMom5vkX+nPcOwRE733dsD0F//jBg2PRQGgwYfINfMTsslzULPPhU7d
-         j447984D+MEt8n/0m4J/0UPm/asuKhBB2r9Gw8peSHsqJ2GoBTWkdGLDwBHBNvxN1i81
-         u9Wm/MhWeMaMVdUQP4ecUFZDzpKyPfLNoUzuVVD6cWzqcEJ2umdlfa3xma7Yt4HKwUCK
-         5YA1kjR9p9oJ1FqTGmzP0LG9qnTTHT7JGKALnYtkYFZO4oDaT7Udj74CaSXB1RYkr5FC
-         VB/g==
-X-Gm-Message-State: AOAM533shlo07vMvxYCB0gsRRarb07bneDCtrbMExi49qOyQwCKhkm8A
-        xuP5QRjBoRsY9II61lZWdvU=
-X-Google-Smtp-Source: ABdhPJwK470H3e9iORjAq2m3lcPjL/vDozUykoUfernWMDH92jPrwizxr1to3I47NB9baVlXDSeU8w==
-X-Received: by 2002:a17:907:3e22:: with SMTP id hp34mr1005899ejc.464.1634923215009;
-        Fri, 22 Oct 2021 10:20:15 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y6sm4891455edj.51.2021.10.22.10.20.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 10:20:13 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mdyDF-001I37-3d;
-        Fri, 22 Oct 2021 19:20:13 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 2/3] config.c: don't leak memory in
- handle_path_include()
-Date:   Fri, 22 Oct 2021 19:19:26 +0200
-References: <patch-1.1-5a47bf2e9c9-20211021T114223Z-avarab@gmail.com>
- <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
- <patch-v2-2.3-d6d04da1d9d-20211021T195133Z-avarab@gmail.com>
- <xmqqmtn2gdlv.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <xmqqmtn2gdlv.fsf@gitster.g>
-Message-ID: <211022.86ilxpj7si.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233493AbhJVRga (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 13:36:30 -0400
+X-Greylist: delayed 415 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 22 Oct 2021 10:34:12 PDT
+Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA83C061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 10:34:12 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b] (p200300ea270ed80050f86c5553f7f07b.dip0.t-ipconnect.de [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sven@cs-ware.de)
+        by srv1.79p.de (Postfix) with ESMTPSA id C8F0A600695;
+        Fri, 22 Oct 2021 19:27:14 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+        s=mail2021; t=1634923635;
+        bh=O1607ra4bQuFvF0hoBLXLbrGKsOSjx9mzp/umJYY9/w=;
+        h=From:To:Subject:Date:From;
+        b=qCvgn1yygNSA/KBbAoI8/jh/7KOWnLeaHDTPVaCOPUZ8R4Vbwx3h6d/dflhxWm8Mg
+         jST/dTrmB+wnNeXpGYzy907YTB8ELLCjvQqk6FCilNFG0WvP1fgOi8p41ygUzTkO1R
+         8nDlVdR4Jk3clSTNLZthioFtk0xBMGxxgh6LIPyI6bBUl5/otf0B1y9HoXRRQrsEHH
+         53osxJi2/eUgl3me736WS1wxovclw3+PElbMK//YqTl2QzuwMVDmGNm0lah74ELbQT
+         T3/bAOrGit79fw9Bfvzdejycoqe/1f2C5n7j0LLf0yRlFTzfmH6Eg+yfela69FMuad
+         1A6CU/4cXVs6w==
+From:   Sven Strickroth <sven@cs-ware.de>
+To:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        bwilliams.eng@gmail.com
+Subject: Git silently broke push-options over ssh?
+Message-ID: <4aef40f2-43f8-eab3-a840-6e76c8b4afbb@cs-ware.de>
+Date:   Fri, 22 Oct 2021 19:27:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Thu, Oct 21 2021, Junio C Hamano wrote:
+I'm using Git (for Windows) 2.33.1 and using push-options as described 
+on <https://docs.gitlab.com/ee/user/project/push_options.html> does not 
+work any more (IIRC it used to work with Git 2.16 and 2.17).
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Fix a memory leak in the error() path in handle_path_include(), this
->> allows us to run t1305-config-include.sh under SANITIZE=3Dleak,
->> previously 4 tests there would fail. This fixes up a leak in
->> 9b25a0b52e0 (config: add include directive, 2012-02-06).
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  config.c                  | 7 +++++--
->>  t/t1305-config-include.sh | 1 +
->>  2 files changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/config.c b/config.c
->> index 2dcbe901b6b..c5873f3a706 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -148,8 +148,10 @@ static int handle_path_include(const char *path, st=
-ruct config_include_data *inc
->
-> Not a problem introduced by this function, but if you look at this
-> change with "git show -W", we'd notice that the function name on the
-> hunk header looks strange.  I think we should add a blank line
-> before the beginning of the function.
+If I understood 
+<https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html> 
+correctly I have to enable the Git protocol version 2 and then the push 
+options should work.
 
-I think this is a bug in -W, after all if without it we we show the
-function context line, but with it we advance further, then that means
-that -W didn't find the correct function boundary.
+Now, when I try to use push options on Windows it does not work. I tried 
+to debug it:
+
+D:\TortoiseGit>set GIT_TRACE=2
+D:\TortoiseGit>set GIT_SSH=ssh.exe
+D:\TortoiseGit>set GIT_SSH_VARIANT=ssh
+D:\TortoiseGit>set GIT_PROTOCOL=version=2
+D:\TortoiseGit>git -c protocol.version=2 -c ssh.variant=ssh -c 
+ssh.command=ssh push -v -o ci.skip origin master~23:testing
+17:36:06.285346 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/bin
+17:36:06.285346 git.c:455               trace: built-in: git push -v -o 
+ci.skip origin 'master~23:testing'
+Pushing to gitlab.com:tortoisegit/tortoisegit.git
+17:36:06.295270 run-command.c:666       trace: run_command: unset 
+GIT_CONFIG_PARAMETERS GIT_PREFIX; ssh.exe git@gitlab.com 
+'git-receive-pack '\''tortoisegit/tortoisegit.git'\'''
+
+As you can see, the "-o SendEnv" parameter not passed to ssh.exe and, 
+therefore, I think the push option is not transferred to the server.
+
+According to <https://github.com/git-for-windows/git/issues/3486> the 
+reason is a commit that was shipped with Git 2.18 (in 2018):
+
+<https://github.com/git/git/commit/1aa8dded3afff28d8f4c24a97b237a0d9e633173>
+
+How to use push options with Git over SSH?
+
+-- 
+Best regards,
+  Sven Strickroth
+  PGP key id F5A9D4C4 @ any key-server
