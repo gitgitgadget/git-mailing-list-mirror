@@ -2,87 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BCFC433F5
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 00:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F60EC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 00:07:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63B5160524
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 00:06:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E536F6105A
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 00:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232004AbhJVAIV convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 21 Oct 2021 20:08:21 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:35415 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232057AbhJVAIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 20:08:21 -0400
-Received: by mail-ed1-f48.google.com with SMTP id w19so86042edd.2
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 17:06:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fur3mAy0k7poGaM1QShUUYu+yc+Wsel/K042OSfVfuI=;
-        b=Gmt8qX1HCJJHN6vYmpSqjgO3YUN5dsQ5yYIEc9MVs4Eheu1aWt2C2otpkjo86teRjg
-         jH/7XDgwNRzF5J3eKXMQCHIUQFKnlmvGqLEevbp7lotOHE0gOTTuWmBbMTa5VcyCTKWz
-         L3w3cawTKjH6VJ9Cayqo1Qw5jlRhRAMVueWn6//zHUB75tLnIqW/Ij7HtZsuhMM9n6jN
-         WBNIw19RyH3e4nbMjBWTiMUwGh54Kv3GR3EJ5RTrD8Ye2FRTjVt8gzQSTvp15AJP4yEv
-         OkdIhhTZ3VcbaQgq9908sxtqJE88xAo4hqFeFUzIp0B/icbiA8hwNyX7moO3GYJR0spm
-         7lWA==
-X-Gm-Message-State: AOAM531YWXOU82N27c31sQWqdVovaWOFwWEUP7pCDyrtWimG96M1WhB2
-        Kq+rzoln/2zHd+J1aHasUyizkrH3CUiGZUTGCj8g0xBkGWfYDA==
-X-Google-Smtp-Source: ABdhPJyhyVyo64oYDhZK3LVZ8cFCrUZjtdm2ZlftRvu892AzPI/uayWnQFc5ia/PXOcUOqSGWbE1vkd1nRNbrTwi1Vs=
-X-Received: by 2002:a05:6402:10da:: with SMTP id p26mr12334028edu.283.1634861163822;
- Thu, 21 Oct 2021 17:06:03 -0700 (PDT)
+        id S232134AbhJVAKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 20:10:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56271 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232079AbhJVAKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 20:10:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D139A16415D;
+        Thu, 21 Oct 2021 20:07:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=RobwP2I68vfD
+        QJeSN6hhSJLVB6JHWTvJKCdLF1r16h4=; b=NO5VfQ5JCitaK0E92JGGVn4jismC
+        Zl98mOI3gmkXa+YdTXu7iTnLhoF+NuxKeoFzWYCxfz3/5HL4lWaFiWuqvRCvxMtO
+        d4fVd/nawD1MxwX+JAxg1oOO9kUCSF6igIX3lZUdCD/HMzcRv6/WVjrSgUyb+XTa
+        /2xDgtVbE1BTQRA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C88BA16415C;
+        Thu, 21 Oct 2021 20:07:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 102DB16415B;
+        Thu, 21 Oct 2021 20:07:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 3/6] clone: fix a memory leak of the "git_dir" variable
+References: <cover-0.6-00000000000-20211021T155529Z-avarab@gmail.com>
+        <patch-3.6-86d928ae2f9-20211021T155529Z-avarab@gmail.com>
+Date:   Thu, 21 Oct 2021 17:07:48 -0700
+In-Reply-To: <patch-3.6-86d928ae2f9-20211021T155529Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 21 Oct
+ 2021 17:57:34 +0200")
+Message-ID: <xmqqilxpgbvv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211021222532.463375-1-oystwa@gmail.com> <20211021222532.463375-3-oystwa@gmail.com>
-In-Reply-To: <20211021222532.463375-3-oystwa@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 21 Oct 2021 20:05:53 -0400
-Message-ID: <CAPig+cQQurJuKieFcnZ8_10CaJA7vZ2kV=S+AaHVX3nhsVUG-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] status: print stash info with --porcelain=v2 --show-stash
-To:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 181B6B4C-32CC-11EC-9D9E-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 6:25 PM Øystein Walle <oystwa@gmail.com> wrote:
-> The v2 porcelain format is very convenient for obtaining a lot of
-> information about the current state of the repo, but does not contain
-> any info about the stash. git status already accepts --show-stash but
-> it's silently ignored when --porcelain=v2 is given.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> At this point in cmd_clone the "git_dir" is always either an
+> xstrdup()'d string, or something we got from mkpathdup(). Let's free()
+> it before we clobber it.
 >
-> Let's add a simple line to print the number of stash entries but in a
-> format similar in style to the rest of the format.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Signed-off-by: Øystein Walle <oystwa@gmail.com>
 > ---
-> diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-> @@ -113,6 +113,21 @@ test_expect_success 'after first commit, create unstaged changes' '
-> +test_expect_success 'after first commit, stash existing changes' '
-> +       cat >expect <<-EOF &&
-> +       # branch.oid $H0
-> +       # branch.head initial-branch
-> +       # stash 2
-> +       EOF
-> +
-> +       test_when_finished "git stash pop && git stash pop" &&
+>  builtin/clone.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 559acf9e036..fb377b27657 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1040,8 +1040,10 @@ int cmd_clone(int argc, const char **argv, const=
+ char *prefix)
+>  	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NUL=
+L,
+>  		INIT_DB_QUIET);
+> =20
+> -	if (real_git_dir)
+> +	if (real_git_dir) {
+> +		free((char *)git_dir);
+>  		git_dir =3D real_git_dir;
+> +	}
+> =20
+>  	/*
+>  	 * additional config can be injected with -c, make sure it's included
 
-If it's indeed important to clean up the stashes when the test
-finishes, then the test_when_finished() invocation should probably be
-a bit more robust...
+I had to wonder if the old git_dir can still be pointed at by
+junk_git_dir.  Much earlier than this point there is this:
 
-> +       git stash -- file_x &&
-> +       git stash &&
+	if (real_git_dir) {
+		if (real_dest_exists)
+			junk_git_dir_flags |=3D REMOVE_DIR_KEEP_TOPLEVEL;
+		junk_git_dir =3D real_git_dir;
+	} else {
+		if (dest_exists)
+			junk_git_dir_flags |=3D REMOVE_DIR_KEEP_TOPLEVEL;
+		junk_git_dir =3D git_dir;
+	}
+	if (safe_create_leading_directories_const(git_dir) < 0)
+		die(_("could not create leading directories of '%s'"), git_dir);
 
-... since, as it is now, if an error occurs between these two
-git-stash invocations or before them, then there will only be zero or
-one stashes, so the double stash-pop by test_when_finished() will
-itself errout out. Better, perhaps to do this:
+Luckily, junk_git_dir gets git_dir only when !real_git_dir, so it is
+safe.  real_git_dir can only be set via the --separate-git-dir
+command line option, so we are safe here.
 
-    test_when_finished "git stash pop && git stash pop || :" &&
-
-> +       git status --porcelain=v2 --branch --show-stash --untracked-files=no >actual &&
-> +       test_cmp expect actual
-> +'
+Thanks.
