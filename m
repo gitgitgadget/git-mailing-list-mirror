@@ -2,112 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5344EC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0842DC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 16:19:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B03C60F6E
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 15:55:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE61E610A4
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 16:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233508AbhJVP6K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 11:58:10 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49547 "EHLO mout.gmx.net"
+        id S232835AbhJVQVa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 12:21:30 -0400
+Received: from srv1.79p.de ([213.239.234.118]:45692 "EHLO srv1.79p.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233504AbhJVP6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 11:58:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1634918147;
-        bh=Zc2EpjhxYJeso+vYs4Q85TzykGz/ILHCHuaDUvmlvKU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EtM81jfUja73qOUleWLe7jNAU8VV4famY2DCbK7+oFE1JJkBKsgT/P/zBuYSQOonl
-         uKTmBTFhm6kXVqsIPla3l64v0Z1ND3cQ1akXsAwPcYERs4fFie8Zs/g+wP6BW7rbOh
-         u9jP9ZuGMX1b/ufDd2xPzn2F2fXWvk+t5B2MfJRQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6DWs-1mbiuY3Czw-006c32; Fri, 22
- Oct 2021 17:55:46 +0200
-Date:   Fri, 22 Oct 2021 17:55:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: js/scalar, was Re: What's cooking in git.git (Oct 2021, #05;
- Mon, 18)
-In-Reply-To: <211022.868rylkuw7.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2110221734530.62@tvgsbejvaqbjf.bet>
-References: <xmqq1r4hv7bv.fsf@gitster.g> <nycvar.QRO.7.76.6.2110191436250.56@tvgsbejvaqbjf.bet> <211020.86zgr3n698.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2110210947590.56@tvgsbejvaqbjf.bet> <211022.868rylkuw7.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232258AbhJVQVa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 12:21:30 -0400
+X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Oct 2021 12:21:29 EDT
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b] (p200300ea270ed80050f86c5553f7f07b.dip0.t-ipconnect.de [IPv6:2003:ea:270e:d800:50f8:6c55:53f7:f07b])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sven@cs-ware.de)
+        by srv1.79p.de (Postfix) with ESMTPSA id 53002600695;
+        Fri, 22 Oct 2021 18:13:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+        s=mail2021; t=1634919200;
+        bh=2vU9tXwx0sCA7sI2YJW+o5GGQmzR2u4QpjXbOXN0s7g=;
+        h=To:From:Subject:Date:From;
+        b=cHGS+GY7NJdg9uJVGnqZ4JvcDr2JGsNWsmKz7CE9FruxJRbwKlabuNO8dm9y+KGw/
+         1HDYAvXZJ1E4Y06UQTzo8VxVsl9xzoP13t0d+Tn0na8D7fUMDEOdcMObDq9JZwcLJB
+         FOG74fowXxtTvIKK8mCj0y7Pc4LId990xrpuBW2S9TePrFH3AhecdGH2Wsci4IaKuz
+         j4JZIQHmpCz9uQKkpHVeS/C38qYrWPaE8M4U6edN0+zPlUpa8hMtExzBB839RuHs9r
+         LwoGYnxr13p94oTK0rA+AFLtEnrDZGq5ilZ1QuVycrC4hMmuOsv3a+9yJqgYM0hP9I
+         5cuP4BytKahtA==
+To:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From:   Sven Strickroth <email@cs-ware.de>
+Subject: tortoiseplink ssh variant still needed?
+Message-ID: <dad761bf-3121-8934-fad6-78610bc21121@cs-ware.de>
+Date:   Fri, 22 Oct 2021 18:13:20 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1451397759-1634918147=:62"
-X-Provags-ID: V03:K1:q4hGHLG+h98RNxYMU+mpVQyuBiN4JKSx+V4n33jMr51/FzYFgm6
- lM+43ffufaVwBksa6Kznxxn4DGEyyBOHVXS+QvqYig9HahHdU8RxUxKJqsXBUzwbdQtqTeF
- W2+KlhklIUt2RdJr2iViPLpqwUB2bxnMh5FyWy6yjBSOznVtbMxVPjQHHOsiHAsQni7b7Nh
- h1tptnQoRMNIlLYBoXbnQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZLHt8sjvBF4=:2e29Z+bbJvWYJ7791QGhFK
- T05nNmz1dcMIaixQpL6TbvSKUr/6So28aI7plJ6Li0mIGl19oz+w3RBoVYe/K/paCg3jumT+Q
- CpVL/MLxIdi/g+2UdiEzJeOCCfrguMtu/dNmXXB+xbYZV4kYQWtSyD8/3CkKIhqDWZeoC4OP8
- aHqYRDGsjnMh5OqWuzNfhPsYoAQEX57eUYyFyNJOWxQH+hSKKYUQ9uPwgHr75RBeokFXIfzbg
- 1tXqYoraJ8sqQ/2ccZEbQyZoIyoI9FcHtDOYQq34O3ebIZtw6xdFtVXX4F9ZhSmrqP77/gpHi
- 6IAoMkxaxZemlZgnsvXCv6si/dvSRv7VXd4ggxRMfW7zMW6Bl3D+Xbo0txqQAIFYvyRzivLiN
- VvlLSMa+HfsfGFSb5AiFHCt60803YmUOcSUfLS+ZckZUtYYZNnP4x/bWL1fNBzFZpWBMlnBsI
- xHqMhLKQTxyAC2e2cxGzCEtoibSYMa6dUe/d0wVHH8g4tJXjEM1HkKRMcebC/JzjHmkh+vEBG
- dXY4KZoQuFvA7o+eo1AoBuMW+5zs50TsBxHlnGBZtz29yNQQ0M6kL23c4eodXuoaKwQEkzzKw
- TnRx1N0fpHW206Ky7f/MGSZ6Yn5foOQYa5c+0qYutU2DqnMSJYTeKIsLt7nUpbGqku3prCE5X
- KK5iMedozzm6xwgthbWkvASqbLecaSmmZ3nYAWB12KuMiJYdnJDRG7xnclFDKko1qTe1HDXhz
- SFPqqIc2zPLQ+LBhQ0IHftV7ooIuGDdWeCgvIyWrFqELQn2i9+XYe3bqNksi8nHYTKdDMdbfk
- k8twiBNUGdiNeCQeHLayPhHG+rkZKbZVbZoVEn869L0c5Mz9UvPhZwJilLKs26KxNiZuxfXOp
- qPlHvwuINDqvITzSz9XHDvb5h8Drp7UZ5KY9ZGOc9d/fjgsOgji85E2o9D3eqQGsAcE4ysknk
- MguBAnOMrFElb0PYznoY8chH+HT3pO8p3yqX/wz6zA3C9wqMHHeX0kd9GCauJ67yx9DxEC7pQ
- Nl7czJpxB34Asbp0LyPd8rZiq0NNi6smaX7xCjsr7FOllgLlkK0uHUHdH/B/YTbsUcNVOJ+dM
- 5NRgLrizZKF37U=
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-1451397759-1634918147=:62
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Git differentiates between different variants of SSH tools.
 
-Hi =C3=86var,
+One variant is the tortoiseplink variant. When this is configured Git 
+passes passes a special "--batch" parameter and passes the port using 
+"-P" (capitalized P) t the SSH tool.
 
-On Fri, 22 Oct 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+IIRC tortoiseplink was initially created by TortoiseCVS which is 
+nowadays not maintained any more 
+(<http://www.tortoisecvs.org/download.shtml>).
+In TortoiseSVN and TortoiseGit tortoiseplink was modified six years ago 
+(around 2015-03-07) to ignore the "--batch" parameter and also accept 
+"-p" additionally to "-P"  (cf. 
+<https://osdn.net/projects/tortoisesvn/scm/svn/commits/26348>).
 
-> On Thu, Oct 21 2021, Johannes Schindelin wrote:
->
-> > tl;dr it isn't worth your nor my time for you to focus on the build
-> > process in contrib/scalar/ at this moment.
+Therefore, my first question: Does Git still want to support very old 
+versions of tortoiseplink or should I provide a patch which drops 
+support for it?
 
-I still stand by these words, and I think you completely glanced over this
-problem. Your focus seems to lie exclusively on those "dependency
-problems". But apart from you, who cares if `libgit.a` is not rebuilt in
-obscure and rare circumstances _when building something in `contrib/`_?
-The code in `contrib/scalar/` is transitional.
+Second question:
+TortoiseGit comes with an even more improved version of TortoisePLink 
+(named TortoiseGitPLink, but also ships the same binary as 
+tortoiseplink) that also accepts "-o SetEnv=..." parameters in order to 
+support the Git protocol version 2. At the moment TortoiseGit 
+automatically sets the environment variable "GIT_SSH_VARIANT=ssh". This 
+works, but is not perfect if other parameter of OpenSSH are used. Would 
+it make sense to add a new ssh variant tortoisegitplink? If yes, how to 
+handle new versions that might also support even more OpenSSH command 
+line parameters?
 
-Just forget about Scalar's build process. Forget about getting its CI to
-work. I have all that figured out already. It is all working as well as
-needed.
-
-> > Having said that, I do appreciate your interest in this patch series, =
-and
-> > I have suggestions at the end of this mail how we could collaborate on=
- it
-> > in a more fruitful manner.
-
-I would still like to invite you to think along more productive lines.
-It's not about where Scalar's build mechanics are right now. It's where we
-can take _Git_ to do what Scalar already does.
-
-Ciao,
-Dscho
-
-> [... skipping a lot of talk about "fixing" the build problems that I do
-> not consider problems at all at this stage, and probably also not later
-> because I want Scalar _not_ to be integrated more closely into Git's
-> build process as I have pointed out multiple times even while you are
-> continuously trying to push for the exact opposite of that and I am
-> starting to feel a bit unheard...]
-
---8323328-1451397759-1634918147=:62--
+-- 
+Best regards,
+  Sven Strickroth
+  PGP key id F5A9D4C4 @ any key-server
