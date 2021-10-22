@@ -2,105 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E67C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07F7FC433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:32:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BE9961440
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C957A6162E
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231134AbhJVDYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 23:24:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230349AbhJVDYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 23:24:12 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96EA6C061764
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:21:55 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id l7so2825801iln.8
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=eiJ3kBZnumiG4435n06m3eRfMZYjDYJ5s9yiabjDc7g=;
-        b=C7YI34IGJOAHx4wBKsh19R0kMmfGkIFTfWzpo1VCHY3GrZD+y3msGi7B9jxS/4ODRb
-         Q2IAOMgbpyzgOlL0+j28lrnsYEUZWWtXRC+VKGr7dFm/GjBv9YxnD10a+q7tF6xdqEmC
-         V3ZMC7QtxOIR1Psi6zide3ClEnKi73oM2Dd4Nw7CxBgoB6M/lJw37flv1g6Dq5oSLYRq
-         eSOrRfw5eNACX1gJsPzFZlQhe4fvejySgz2rdF2JanvcJGgAUHNCRuQBOEHDw05ww3Qg
-         OqYpU6d3uNMePhwaRVodroCah5Nrs0oWyjuY+TZtL0Tb67OfmH0utkQCMZKB2AI7YR02
-         LOmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eiJ3kBZnumiG4435n06m3eRfMZYjDYJ5s9yiabjDc7g=;
-        b=R35INDt/RXf5NAfnoL8GN1mAoLZITcLSK89lBWC8pOCMO/AroRWjI7ONH75rc3nTqE
-         JngZwYuhMAQua5K9MVL12j74j5spdS7Sm2uF0GXpcjOT3ZS29kQzkIb2KlQTtlzKROEL
-         HrlQ9iaXf2iV+zfyRiBxPSicjXKGfaLi5vSfhaqLS2rjddUaeL9s+M8SoBccirTCijGT
-         3RemLGIWJMxMhdnPA922eixWEoYpdDGi0Z5vR7lrf2/EuLBZI02aX4S38oHRw4E9K0Aj
-         kOCtCMJLaqs+D8ywniuL6Ot1NyGgQAlkjxRXsgm829ATeeIfQaq9Wzj4zJprptO5URQW
-         AcmQ==
-X-Gm-Message-State: AOAM530/DyJR9oqpCX999rxzzPBkEoq3FA3JT3bWQZxDYIZ5ele3s6EP
-        Ls8VgScWa7Bsv6boun+H9jANm/SQQ7nqqA==
-X-Google-Smtp-Source: ABdhPJyaL4ufBpGLhj81UQjdM0nS/Az05dzvKe6X+EQAuGEBb2epG8jY16+yNPL0gXF5ygPx7bcMBQ==
-X-Received: by 2002:a05:6e02:1c2b:: with SMTP id m11mr6315014ilh.307.1634872914908;
-        Thu, 21 Oct 2021 20:21:54 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c5sm3618400ilq.71.2021.10.21.20.21.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 20:21:54 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 23:21:53 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        peff@peff.net
-Subject: Re: [PATCH 05/11] builtin/repack.c: avoid leaking child arguments
-Message-ID: <YXIuURFP/FOpae7U@nand.local>
-References: <cover.1634787555.git.me@ttaylorr.com>
- <a68c77c00638bef7e8ce88929015a587d2d1b6f8.1634787555.git.me@ttaylorr.com>
- <xmqqmtn2mj0s.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmtn2mj0s.fsf@gitster.g>
+        id S232664AbhJVDeb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 23:34:31 -0400
+Received: from a27-55.smtp-out.us-west-2.amazonses.com ([54.240.27.55]:40625
+        "EHLO a27-55.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232619AbhJVDea (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Oct 2021 23:34:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=cessssaigkdq5uletp7pzdlghxldyiuc; d=coderkalyan.com;
+        t=1634873533;
+        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To;
+        bh=itmrT4W8gouG/gh0ktxxu68Rog0ujenQyUkNfPLRNCY=;
+        b=CkfIjJs/6vjdhY8ByYN1LcYqc80N4ramA/2nd/M64AlgdD/iNSwLJQZvqPorI4ac
+        vUGNQST3irSxuzEYbPnCef+bPdef194r/16o/H8DxhB63apGzVFH2jRGBJpfGieIPka
+        7jB4yBQJsVoia/ZlLjXYxTYb2LK4QM2HWeCn12eE=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1634873533;
+        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To:Feedback-ID;
+        bh=itmrT4W8gouG/gh0ktxxu68Rog0ujenQyUkNfPLRNCY=;
+        b=iQI8KHLB6NxfhWHcG/cqf2vgE+NsXLUoS4/OrITBgW7KwEV0wLB2cp/vr19lwrfF
+        RtAx0UpfRrndhld/WmwA5ZHaMXVa0bx3bXheg5p2cn3FoU/qGhSrjCV2XxPqx+wAPhd
+        qTA3uRbmZNJvxbtDzLV40efWSv1Vd8XxObSL2H+c=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 22 Oct 2021 03:32:12 +0000
+Message-ID: <0101017ca60e5ffd-9563fafd-86f6-443d-9cbe-e07203caacba-000000@us-west-2.amazonses.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git" <git@vger.kernel.org>
+Subject: Re: Git submodule remove
+From:   "Kalyan Sriram" <kalyan@coderkalyan.com>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "Matheus Tavares" <matheus.bernardino@usp.br>
+References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com> <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net> <xmqqbl3ihu6l.fsf@gitster.g> <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com> <xmqqee8egddw.fsf@gitster.g>
+In-Reply-To: <xmqqee8egddw.fsf@gitster.g>
+Feedback-ID: 1.us-west-2.6woXiZ10/hvs78i2LW4ugcJq1GLEuVeUxt3YeADpvNg=:AmazonSES
+X-SES-Outgoing: 2021.10.22-54.240.27.55
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 09:37:07AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Thu Oct 21, 2021 at 4:35 PM PDT, Junio C Hamano wrote:
+> Matheus Tavares <matheus.bernardino@usp.br> writes:
 >
-> > `git repack` invokes a handful of child processes: one to write the
-> > actual pack, and optionally ones to repack promisor objects and update
-> > the MIDX.
+> > On Thu, Oct 21, 2021 at 7:47 PM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> >>
+> >> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >>
+> >> > On 2021-10-21 at 17:25:38, Kalyan Sriram wrote:
+> >> >> Hello,
+> >> >>
+> >> >> I was curious why git-submodule does not have an `rm` command. Curr=
+ently
+> >> >> I have to manually delete it from .gitmodules, .git/config,
+> >> >> .git/modules/, etc. See [0].
+> >> >>
+> > [...]
+> >> I'd imagine that the happy-case implementation should be fairly
+> >> straight-forward.  You would:
+> >>
+> >>  - ensure that the submodule is "absorbed" already;
+> >>
+> >>  - run "git rm -f" the submodule to remove the gitlink from the index
+> >>    and remove the directory from the working tree; and
+> >>
+> >>  - remove the .gitmodules entry for the submodule.
 > >
-> > In none of these cases do we bother to call child_process_clear(), which
-> > frees the memory associated with each child's arguments and environment.
-> >
-> > In order to do so, tweak each function that spawns a child process to
-> > have a `cleanup` label that we always visit before returning from each
-> > function. Then, make sure that we call child_process_clear() as a part
-> > of that label.
+> > I think "git rm <submodule>" already does these three steps, doesn't it=
+?
+
+Wow, this is a surprise. Looks like this behavior is mentioned in the
+man page but is not very well known.
+> So perhaps "git submodule rm" would just become a synonym for "git rm"?
 >
-> I have a slight aversion against the fact that this patch makes us
-> call child_process_clear(), when we know we may have called
-> finish_command().  Callers of finish_command() in other codepaths
-> rely on the fact that finish_command() calls child_process_clear(),
-> which means that because of this change, we are now constrained to
-> keep child_process_clear() idempotent?
+> Thanks.
+Almost, yeah, but not quite. I ran a couple quick tests to clarify my own
+understanding of how submodules work, and found that:
 
-Good point. In functions besides cmd_repack(), it's easy enough to just
-call child_process_clear() once before returning instead of using a
-label. That has the added benefit of side-stepping the variable name
-question that you and Stolee raised (but I think whether we call it
-"result", "res", or "ret" is besides the point).
+"git rm" deletes the submodule directory completely and modifies
+.gitmodules, effectively removing the submodule. However, it leaves the
+entry in .git/config dangling, which is annoying.
 
-In cmd_repack(), I'd like to wrap the other cleanup-related calls
-underneath a 'cleanup' label. So there we want to track whether or not
-we have called finish_command(), so that we only call
-child_process_clear() when we *haven't* already called it via
-finish_command().
+"git submodule deinit" (which I didn't know existed until I just read the m=
+an
+page) deletes all contents of submodule directory, but leaves the=20
+(empty) submodule directory itself intact. It DOES delete the entry in
+.git/config, but leaves a dangling entry in .gitmodules, so the next
+"git submodule update --init --recursive" registers and populates the
+submodule again.
 
-Thanks,
-Taylor
+>
+> Wow, that is a unnerving layering violation, but I suspect it is too
+> late to fix it.=20
+I agree, it's probably too late to change the behavior of "git rm"
+regarding how it treats submodules. That said, I think the cleanest
+solution would be to update "git rm" to also remove the dangling
+.git/config entry. Then, I could make "git submodule rm" a synonym for
+"git rm" for clarity. This would probably also involve updating
+documentation in multiple locations to make sure everything is
+consistent, and verifying "git rm" doesn't leave anything else about the
+submodule dangling. Please let me know if anyone has a better idea for
+anything I listed.
+
+Thanks for your input so far, Junio, Matheus, and Brian! If no one has
+any objections, I'll figure out how to make these updates and send a
+patch along.
+
+Thanks!
+Kalyan
