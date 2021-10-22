@@ -2,97 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4126C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 04:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D1CAC433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 05:23:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA3E7604DB
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 04:39:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EB9560FF2
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 05:23:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231939AbhJVEln (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 00:41:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231185AbhJVElm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 00:41:42 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6D7DC061764
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 21:39:25 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id h196so3788144iof.2
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 21:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=gikce3NPlR1NeFK9iPdwndqEthCYORWX4yS2UeB3Ct0=;
-        b=IjphJrsDlYiG37u1lhrhTyxDk9JpAtv3CtkvW5IHoVFJi9gHiTlBmxlrJ2mex+b1HX
-         JcFhEFfuhe7kHHZQx2XdNVuUSyJl69/irCNgdTTjLK/2paRe1MkWjLNoAFLR1Ed/m3Hn
-         jckF7MtAOjb354FYb5RbO3CdlrgY5/pnXRA50Dliz9+TDpeW2Ah0mtxrcE9p3CUm5J1z
-         o01we9AXBg+zFnhDB9QUJLbgtYXs8U2eb4v+QrY8vNvS4hHkhgYqcGTf9uUs27GfmjQ2
-         1vNQSyoUWMxY2/SjoLui6ZaV+Unq5x9xthWQ6Rvr4COZsR5pEk2tbaBYjjYLGTmX4QeD
-         4bPQ==
+        id S229925AbhJVFZh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 01:25:37 -0400
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:44798 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229478AbhJVFZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 01:25:36 -0400
+Received: by mail-ed1-f50.google.com with SMTP id w14so9677910edv.11
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 22:23:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=gikce3NPlR1NeFK9iPdwndqEthCYORWX4yS2UeB3Ct0=;
-        b=FVoflT2xp0aRGnqQoEP9iP0UuPZzQ901rMONTYRUIyhzG9/WqS0GL+xaV9D7aAqzN5
-         zQZUBrbvC8c1vBK/zpS0JDPtZmhq6IdxpqfWzTH7HHitcdVHpcjP6ovdwPxawy1psgxR
-         hekeXxPJJQPxGaHIAjtU+YeJHyDWjBaOxdx6UiH30i986qO//cWCzu7GhNVuJQFhqU9C
-         I9uN/UDSUrUhxs+Khrz5H2NHL2Z4ltm5IfGl25/QEqQ/AAYHukp2EO37nPadG6+Nae6X
-         h9a+ggtQfzklgVNtYRBrzeEB95lOHju9jIeRhu+pcGUUGI05BZpKeb/Dq/K1MCfwTsuj
-         j3aQ==
-X-Gm-Message-State: AOAM530zPickQddW3qOZqnQpU93NW53S2D0FLqJjh6j/Gwe9ZsNtl0tf
-        9P/Xji8aGs31okKmwZfBO1n1Nw==
-X-Google-Smtp-Source: ABdhPJwYZeGpYtHycaxuy+jyAM8XoznhpecmckjemLgHPmTeYv7vNtd3PQXjaVWA7uIqzI5Na1WfYg==
-X-Received: by 2002:a02:270c:: with SMTP id g12mr6736102jaa.75.1634877565072;
-        Thu, 21 Oct 2021 21:39:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j22sm3391276ila.6.2021.10.21.21.39.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 21:39:24 -0700 (PDT)
-Date:   Fri, 22 Oct 2021 00:39:24 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH 00/11] midx: clean up t5319 under 'SANITIZE=leak'
-Message-ID: <YXJAfICQN8s5Gm7s@nand.local>
-References: <cover.1634787555.git.me@ttaylorr.com>
- <211021.861r4emv7b.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8uHrTZfZC+ghkfiA5dTSWWWku6P5i2ToLFUXaBkaYso=;
+        b=Pb4uhEH8dsNB6i84TVEn6wO+eCCupsd3hCkeY1eJLP9KLTrWCLWcw2oY7zkRkcn76h
+         Pc2CGqPmIg/n0u14uzSEsFVuOHNuh3/nJHH6PJOUfsVngwGZJn8KlI6qPOwJvMzUtJA1
+         l6mjQ3L181UpmtD2ENNsKkicSSX+PD/kYMRVzTvfy6vIk/GD5ktkpcmPhIACXtU+/pLX
+         OMh2tgiDWPh7iCsS5YWOGz3qB6G8yxb09uy4wzxv0b2WaBr3LGHMWnLGOBsGzh68MYQd
+         YOQx4sc+DszYQk4CVSSefNSgXnJQlyYuFFLvTnILpnZyfN6MMih9InKdAgmcS/GEpGqb
+         3g3g==
+X-Gm-Message-State: AOAM530H40u10dSdQacZvEXJOGflIFoPn4zno31uhqCLwrHGjCDLT+PD
+        gyt4Ai9vvMGa35s3LgaJ9neGppV/Za6gkg7UmvA=
+X-Google-Smtp-Source: ABdhPJww9AfyeE7hw3K1+6McQ3gy8s3/LPl56APiaZCoAgNqV0Wpd0uTX6dcaq09pdfZBPKOXPP8Q91610ZaL6HXAUQ=
+X-Received: by 2002:a05:6402:5113:: with SMTP id m19mr14401802edd.231.1634880198148;
+ Thu, 21 Oct 2021 22:23:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211021.861r4emv7b.gmgdl@evledraar.gmail.com>
+References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
+ <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com> <507020bbef08a02afc53815754cc999c390eb7c7.1634826309.git.gitgitgadget@gmail.com>
+In-Reply-To: <507020bbef08a02afc53815754cc999c390eb7c7.1634826309.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 22 Oct 2021 01:23:07 -0400
+Message-ID: <CAPig+cT1j6NsZaSM+_JgGksmH4XGsnh7Pe=dbELoBU+FisHGag@mail.gmail.com>
+Subject: Re: [PATCH v4 29/29] t7527: test status with untracked-cache and fsmonitor--daemon
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 01:50:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Oct 21, 2021 at 10:26 AM Jeff Hostetler via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
+> features and a series of edits and verify that status output is
+> identical.
 >
-> On Wed, Oct 20 2021, Taylor Blau wrote:
->
-> > I tried to separate these out based on their respective areas. The last 10% are
-> > all from leaking memory in the rev_info structure, which I punted on for now by
-> > just UNLEAK()-ing it. That's all done in the last patch. If we choose to take
-> > that last patch, then t5319 passes even under SANITIZE=leak builds. But it's a
-> > little gross, so I'm happy to leave it out if others would prefer.
->
-> I'll defer to you, but I've got a mild preference for keeping it out. An
-> upcoming series of patches I'm submitting (I'm waiting on the current
-> leak fixes to land) will fix most of those rev_info leaks. So not having
-> UNLEAK() markings in-flight makes things a bit easier to manage.
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+> @@ -508,4 +510,98 @@ test_expect_success 'cleanup worktrees' '
+> +test_lazy_prereq UNTRACKED_CACHE '
+> +       { git update-index --test-untracked-cache; ret=$?; } &&
+> +       test $ret -ne 1
+> +'
 
-If you don't mind, I think keeping this in (as a way to verify that we
-really did make t5319 leak-free) may be good for reviewers. When you
-clean these areas up, you'll have to remember to remove those UNLEAK()s,
-but hopefully they produce conflicts with your in-flight work that serve
-as not-too-annoying reminders.
+I may be missing something obvious, but can't this be expressed more simply as:
 
-I would certainly rather not have to UNLEAK() those at all, so I am very
-excited to see a series from you which handles freeing these resources
-appropriately. It was just too big a bite for me to chew off when
-preparing this quick series.
+    test_lazy_prereq UNTRACKED_CACHE '
+        git update-index --test-untracked-cache
+        test $? -ne 1
+    '
 
-Thanks,
-Taylor
+How significant is it to test specifically against 1? If not, then
+even simpler would be:
+
+    test_lazy_prereq UNTRACKED_CACHE '
+        git update-index --test-untracked-cache
+    '
+
+which is also more robust since it won't be fooled by die() or crashes.
+
+> +test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
+> +       test_might_fail git config --unset core.useBuiltinFSMonitor &&
+
+More idiomatic:
+
+    test_unconfig core.useBuiltinFSMonitor &&
+
+> +       git update-index --no-fsmonitor &&
+> +       test_might_fail git fsmonitor--daemon stop
+> +'
+> +
+> +matrix_clean_up_repo () {
+> +       git reset --hard HEAD
+> +       git clean -fd
+> +}
+
+Since calls to this function are part of the &&-chain in tests, it
+probably would be a good idea to maintain the &&-chain within the body
+of the function, as well.
+
+> +matrix_try () {
+> +       test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
+> +               matrix_clean_up_repo &&
+> +               $fn &&
+> +               if test $uc = false -a $fsm = false
+
+We avoid -a and -o with `test` and instead chain them with &&:
+
+    if test $uc = false && test $fsm = false
+
+Documentation/CodingGuidelines mentions this. Also see [1] & [2].
+
+[1]: https://lore.kernel.org/git/xmqqa6qkb5fi.fsf@gitster.g/
+[2]: https://lore.kernel.org/git/CAPig+cQFFsLeE921WpzTxVnBMnNRiKs4N=hUQ2UQi1VznNEQwg@mail.gmail.com/
+
+> +               then
+> +                       git status --porcelain=v1 >.git/expect.$fn
+> +               else
+> +                       git status --porcelain=v1 >.git/actual.$fn
+> +                       test_cmp .git/expect.$fn .git/actual.$fn
+> +               fi
+> +       '
+
+Broken &&-chain in the `else` arm.
+
+> +       return $?
+> +}
+
+No callers care about the return value of this function, so the
+`return $?` can be dropped.
+
+> +uc_values="false"
+> +test_have_prereq UNTRACKED_CACHE && uc_values="false true"
+> +for uc_val in $uc_values
+> +do
+> +       if test $uc_val = false
+> +       then
+> +               test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
+> +                       git config core.untrackedcache false &&
+> +                       git update-index --no-untracked-cache
+> +               '
+> +       else
+> +               test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
+> +                       git config core.untrackedcache true &&
+> +                       git update-index --untracked-cache
+> +               '
+> +       fi
+> +
+> +       fsm_values="false true"
+> +       for fsm_val in $fsm_values
+> +       do
+> +               if test $fsm_val = false
+> +               then
+> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
+> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
+
+Ditto: test_unconfig()
+
+> +                               git update-index --no-fsmonitor &&
+> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
+> +                       '
+
+stderr is redirected within tests anyhow, so we normally don't
+suppress it manually like this (especially since it may come in handy
+when debugging a failing test).
+
+> +               else
+> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
+> +                               git config core.useBuiltinFSMonitor true &&
+> +                               git fsmonitor--daemon start &&
+> +                               git update-index --fsmonitor
+> +                       '
+> +               fi
+> +
+> +               matrix_try $uc_val $fsm_val edit_files
+> +               matrix_try $uc_val $fsm_val delete_files
+> +               matrix_try $uc_val $fsm_val create_files
+> +               matrix_try $uc_val $fsm_val rename_files
+> +               matrix_try $uc_val $fsm_val file_to_directory
+> +               matrix_try $uc_val $fsm_val directory_to_file
+> +
+> +               if test $fsm_val = true
+> +               then
+> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
+> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
+
+Ditto: test_unconfig()
+
+> +                               git update-index --no-fsmonitor &&
+> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
+
+Ditto: stderr
+
+> +                       '
+> +               fi
+> +       done
+> +done
