@@ -2,198 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D1CAC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 05:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2312C433F5
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 06:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EB9560FF2
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 05:23:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CFC560FC3
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 06:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229925AbhJVFZh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 01:25:37 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:44798 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbhJVFZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 01:25:36 -0400
-Received: by mail-ed1-f50.google.com with SMTP id w14so9677910edv.11
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 22:23:18 -0700 (PDT)
+        id S231334AbhJVGo3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 02:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230238AbhJVGo1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 02:44:27 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27133C061764
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 23:42:10 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id 187so2749973pfc.10
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 23:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JGEJupecB/IyS/f6Y9JyuQnPUpr15SBY2WK9cmy+WFI=;
+        b=qGfcO6c3wEl5gUmkGQKL+xrH16iuSMnen/jztVK2fquGuw6AGbTyCp8VGFNny32WxA
+         qotq0mCUuNuXxg4hLVwRyUKoMi/8iHbx3RWZXBqshnrvqMOmJ+7jcAd2+mVxPAbCoipK
+         +Pz/Ng3a7gNJ1hr4ySbxM27IQMAQiGIrGAV2/YhaAHDwr0g6g7RE4QkBpGgGfQrzdmRm
+         QA3/q0Qd9Gzyzf+A10uAHwkua8cCvKE0Iw9DP6g5xcBdK+mY2AYhS1agzC4cUKrVxDp7
+         1mshOX3WbBRzDvYNk8B861Cp/HNSoSnbKrLhikJXJtv9hW+NnlaMWCMS8+qeA+W/r2j6
+         4qYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8uHrTZfZC+ghkfiA5dTSWWWku6P5i2ToLFUXaBkaYso=;
-        b=Pb4uhEH8dsNB6i84TVEn6wO+eCCupsd3hCkeY1eJLP9KLTrWCLWcw2oY7zkRkcn76h
-         Pc2CGqPmIg/n0u14uzSEsFVuOHNuh3/nJHH6PJOUfsVngwGZJn8KlI6qPOwJvMzUtJA1
-         l6mjQ3L181UpmtD2ENNsKkicSSX+PD/kYMRVzTvfy6vIk/GD5ktkpcmPhIACXtU+/pLX
-         OMh2tgiDWPh7iCsS5YWOGz3qB6G8yxb09uy4wzxv0b2WaBr3LGHMWnLGOBsGzh68MYQd
-         YOQx4sc+DszYQk4CVSSefNSgXnJQlyYuFFLvTnILpnZyfN6MMih9InKdAgmcS/GEpGqb
-         3g3g==
-X-Gm-Message-State: AOAM530H40u10dSdQacZvEXJOGflIFoPn4zno31uhqCLwrHGjCDLT+PD
-        gyt4Ai9vvMGa35s3LgaJ9neGppV/Za6gkg7UmvA=
-X-Google-Smtp-Source: ABdhPJww9AfyeE7hw3K1+6McQ3gy8s3/LPl56APiaZCoAgNqV0Wpd0uTX6dcaq09pdfZBPKOXPP8Q91610ZaL6HXAUQ=
-X-Received: by 2002:a05:6402:5113:: with SMTP id m19mr14401802edd.231.1634880198148;
- Thu, 21 Oct 2021 22:23:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JGEJupecB/IyS/f6Y9JyuQnPUpr15SBY2WK9cmy+WFI=;
+        b=qOE+OJkDaRcAbgcempd+jgDcauvEXaYlJ8N5mHTz+VnFFuCxIwUivoxMLiAHZK8HTc
+         ltbcLoCQnIzpBbKJgJwHmvnJhC9ke0fSpvM7zETuzCTmP2jcYRGcjMeKlzYre8tCNMLC
+         FytU4ct9n8vu2eUV0QjJT047aaQv/EjEgyiDjBU1TCEFAuQ3SvG4jYR3d5KNsru8Q8HC
+         IgYC08KljQD83y6p2dFBsc7blES/oSH1I90sgCERW2qRZkcvER00YAm6bw9MxeTTs7fD
+         ZgjFUoUtb9V7xwSpvFxjUtpgu+XRG458Z8nZjE9sRqT0ZBVakjBUEbBowCOZM350Qvrc
+         OChw==
+X-Gm-Message-State: AOAM5325pfrmHH9UnasJtmX92VYIOeZ2ZfSeV1PVjwbk0/xGCtVRBYCM
+        lQVDvORME/KLZ/PXckMHA4HR4rBh8fctB+3l
+X-Google-Smtp-Source: ABdhPJyiCzKIi2c4avKr4rOG2Cvhurai+lSbVZo4gz0gerqqtg1fDlKyM3NR/WxEAiVZ3S4O+hs0Ew==
+X-Received: by 2002:a63:e243:: with SMTP id y3mr8132840pgj.101.1634884929474;
+        Thu, 21 Oct 2021 23:42:09 -0700 (PDT)
+Received: from ubuntu.mate (subs03-180-214-233-84.three.co.id. [180.214.233.84])
+        by smtp.gmail.com with ESMTPSA id l17sm9766097pfc.94.2021.10.21.23.42.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 23:42:09 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Glen Choo <chooglen@google.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH] MyFirstContribution: teach to use "format-patch --base=auto"
+Date:   Fri, 22 Oct 2021 13:40:46 +0700
+Message-Id: <20211022064044.28761-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
- <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com> <507020bbef08a02afc53815754cc999c390eb7c7.1634826309.git.gitgitgadget@gmail.com>
-In-Reply-To: <507020bbef08a02afc53815754cc999c390eb7c7.1634826309.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 22 Oct 2021 01:23:07 -0400
-Message-ID: <CAPig+cT1j6NsZaSM+_JgGksmH4XGsnh7Pe=dbELoBU+FisHGag@mail.gmail.com>
-Subject: Re: [PATCH v4 29/29] t7527: test status with untracked-cache and fsmonitor--daemon
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 10:26 AM Jeff Hostetler via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
-> features and a series of edits and verify that status output is
-> identical.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
-> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-> @@ -508,4 +510,98 @@ test_expect_success 'cleanup worktrees' '
-> +test_lazy_prereq UNTRACKED_CACHE '
-> +       { git update-index --test-untracked-cache; ret=$?; } &&
-> +       test $ret -ne 1
-> +'
+From: Junio C Hamano <gitster@pobox.com>
 
-I may be missing something obvious, but can't this be expressed more simply as:
+Let's encourage first-time contributors to tell us what commit they
+based their work with the format-patch invocation. As the example
+already forks from origin/master and branch.autosetupmerge by
+default records the upstream when the psuh branch was created, we
+can use --base=auto for this.  Also, mention to the readers that the
+range of commits can simply be given with `@{u}` if they are on the
+`psuh` branch already.
 
-    test_lazy_prereq UNTRACKED_CACHE '
-        git update-index --test-untracked-cache
-        test $? -ne 1
-    '
+As we are getting one more option on the command line, and spending
+one paragraph each to explain them, let's reformat that part of the
+description as a bulletted list.
 
-How significant is it to test specifically against 1? If not, then
-even simpler would be:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+[Bagas Sanjaya: fix grammar in commit message and explain `auto` value]
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+ Documentation/MyFirstContribution.txt | 41 ++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
-    test_lazy_prereq UNTRACKED_CACHE '
-        git update-index --test-untracked-cache
-    '
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index b20bc8e914..b896d10755 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -905,19 +905,34 @@ Sending emails with Git is a two-part process; before you can prepare the emails
+ themselves, you'll need to prepare the patches. Luckily, this is pretty simple:
+ 
+ ----
+-$ git format-patch --cover-letter -o psuh/ master..psuh
+-----
+-
+-The `--cover-letter` parameter tells `format-patch` to create a cover letter
+-template for you. You will need to fill in the template before you're ready
+-to send - but for now, the template will be next to your other patches.
+-
+-The `-o psuh/` parameter tells `format-patch` to place the patch files into a
+-directory. This is useful because `git send-email` can take a directory and
+-send out all the patches from there.
+-
+-`master..psuh` tells `format-patch` to generate patches for the difference
+-between `master` and `psuh`. It will make one patch file per commit. After you
++$ git format-patch --cover-letter -o psuh/ --base=auto psuh@{u}..psuh
++----
++
++ . The `--cover-letter` option tells `format-patch` to create a
++   cover letter template for you. You will need to fill in the
++   template before you're ready to send - but for now, the template
++   will be next to your other patches.
++
++ . The `-o psuh/` option tells `format-patch` to place the patch
++   files into a directory. This is useful because `git send-email`
++   can take a directory and send out all the patches from there.
++
++ . The `--base=auto` option tells the command to record the "base
++   commit", on which the recipient is expected to apply the patch
++   series. The `auto` value will cause `format-patch` to track
++   the base commit automatically, which is the merge base of tip
++   commit of the remote-tracking branch and the specified
++   revision range.
++
++ . The `psuh@{u}..psuh` option tells `format-patch` to generate
++   patches for the commits you created on the `psuh` branch since it
++   forked from its upstream (which is `origin/master` if you
++   followed the example in the "Set up your workspace" section).  If
++   you are already on the `psuh` branch, you can just say `@{u}`,
++   which means "commits on the current branch since it forked from
++   its upstream", which is the same thing.
++
++The command will make one patch file per commit. After you
+ run, you can go have a look at each of the patches with your favorite text
+ editor and make sure everything looks alright; however, it's not recommended to
+ make code fixups via the patch file. It's a better idea to make the change the
 
-which is also more robust since it won't be fooled by die() or crashes.
+base-commit: f443b226ca681d87a3a31e245a70e6bc2769123c
+-- 
+An old man doll... just what I always wanted! - Clara
 
-> +test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
-> +       test_might_fail git config --unset core.useBuiltinFSMonitor &&
-
-More idiomatic:
-
-    test_unconfig core.useBuiltinFSMonitor &&
-
-> +       git update-index --no-fsmonitor &&
-> +       test_might_fail git fsmonitor--daemon stop
-> +'
-> +
-> +matrix_clean_up_repo () {
-> +       git reset --hard HEAD
-> +       git clean -fd
-> +}
-
-Since calls to this function are part of the &&-chain in tests, it
-probably would be a good idea to maintain the &&-chain within the body
-of the function, as well.
-
-> +matrix_try () {
-> +       test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
-> +               matrix_clean_up_repo &&
-> +               $fn &&
-> +               if test $uc = false -a $fsm = false
-
-We avoid -a and -o with `test` and instead chain them with &&:
-
-    if test $uc = false && test $fsm = false
-
-Documentation/CodingGuidelines mentions this. Also see [1] & [2].
-
-[1]: https://lore.kernel.org/git/xmqqa6qkb5fi.fsf@gitster.g/
-[2]: https://lore.kernel.org/git/CAPig+cQFFsLeE921WpzTxVnBMnNRiKs4N=hUQ2UQi1VznNEQwg@mail.gmail.com/
-
-> +               then
-> +                       git status --porcelain=v1 >.git/expect.$fn
-> +               else
-> +                       git status --porcelain=v1 >.git/actual.$fn
-> +                       test_cmp .git/expect.$fn .git/actual.$fn
-> +               fi
-> +       '
-
-Broken &&-chain in the `else` arm.
-
-> +       return $?
-> +}
-
-No callers care about the return value of this function, so the
-`return $?` can be dropped.
-
-> +uc_values="false"
-> +test_have_prereq UNTRACKED_CACHE && uc_values="false true"
-> +for uc_val in $uc_values
-> +do
-> +       if test $uc_val = false
-> +       then
-> +               test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
-> +                       git config core.untrackedcache false &&
-> +                       git update-index --no-untracked-cache
-> +               '
-> +       else
-> +               test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
-> +                       git config core.untrackedcache true &&
-> +                       git update-index --untracked-cache
-> +               '
-> +       fi
-> +
-> +       fsm_values="false true"
-> +       for fsm_val in $fsm_values
-> +       do
-> +               if test $fsm_val = false
-> +               then
-> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
-> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
-
-Ditto: test_unconfig()
-
-> +                               git update-index --no-fsmonitor &&
-> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
-> +                       '
-
-stderr is redirected within tests anyhow, so we normally don't
-suppress it manually like this (especially since it may come in handy
-when debugging a failing test).
-
-> +               else
-> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
-> +                               git config core.useBuiltinFSMonitor true &&
-> +                               git fsmonitor--daemon start &&
-> +                               git update-index --fsmonitor
-> +                       '
-> +               fi
-> +
-> +               matrix_try $uc_val $fsm_val edit_files
-> +               matrix_try $uc_val $fsm_val delete_files
-> +               matrix_try $uc_val $fsm_val create_files
-> +               matrix_try $uc_val $fsm_val rename_files
-> +               matrix_try $uc_val $fsm_val file_to_directory
-> +               matrix_try $uc_val $fsm_val directory_to_file
-> +
-> +               if test $fsm_val = true
-> +               then
-> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
-> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
-
-Ditto: test_unconfig()
-
-> +                               git update-index --no-fsmonitor &&
-> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
-
-Ditto: stderr
-
-> +                       '
-> +               fi
-> +       done
-> +done
