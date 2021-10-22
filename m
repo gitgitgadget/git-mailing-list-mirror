@@ -2,152 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADCFDC433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E67C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:21:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95823613A9
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BE9961440
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 03:21:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232837AbhJVDPP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Oct 2021 23:15:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44096 "EHLO
+        id S231134AbhJVDYN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Oct 2021 23:24:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232835AbhJVDPP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Oct 2021 23:15:15 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FE1C061764
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:12:58 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id h193so2092508pgc.1
-        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:12:58 -0700 (PDT)
+        with ESMTP id S230349AbhJVDYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Oct 2021 23:24:12 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96EA6C061764
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:21:55 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id l7so2825801iln.8
+        for <git@vger.kernel.org>; Thu, 21 Oct 2021 20:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=euWpoa0Mk8BqDEiv8wZCHFLTxwGuV1GkH00JJhLcCRU=;
-        b=P+vqKk8CXYGpB8E9a8HZtq9byue9wukdPmmwlwYDOM/SAgNKG3xveJvfDYlIjYi/OZ
-         qJXphJ5cpgLN3Z0yBfI0IbznNSEx+iqLlaQIrqtp9MJ3fI7txD6SlMnD4MmtS2ZaMAQL
-         RygCxtG2kTRD/d/uTplgvcOhQpNJ0s5y09uAub841zQypiyQJlekGFTF6agTywvCR0+F
-         qegDg6z98jinoX9h0QcBuk9KSyxhVjErntWSuXan8kEFncJlxgA3gR6p9tN1FDvnqACf
-         jsx/gtlkcAw0SSOU4q5IEesqiF5cBN0IM5MqnSKC7MYqtwrLfQYpJacfTGPuzIT5gjY3
-         S9oQ==
+        bh=eiJ3kBZnumiG4435n06m3eRfMZYjDYJ5s9yiabjDc7g=;
+        b=C7YI34IGJOAHx4wBKsh19R0kMmfGkIFTfWzpo1VCHY3GrZD+y3msGi7B9jxS/4ODRb
+         Q2IAOMgbpyzgOlL0+j28lrnsYEUZWWtXRC+VKGr7dFm/GjBv9YxnD10a+q7tF6xdqEmC
+         V3ZMC7QtxOIR1Psi6zide3ClEnKi73oM2Dd4Nw7CxBgoB6M/lJw37flv1g6Dq5oSLYRq
+         eSOrRfw5eNACX1gJsPzFZlQhe4fvejySgz2rdF2JanvcJGgAUHNCRuQBOEHDw05ww3Qg
+         OqYpU6d3uNMePhwaRVodroCah5Nrs0oWyjuY+TZtL0Tb67OfmH0utkQCMZKB2AI7YR02
+         LOmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=euWpoa0Mk8BqDEiv8wZCHFLTxwGuV1GkH00JJhLcCRU=;
-        b=hj0ACjYePjt1gA1kCPy0lwVKRmwTZTlpDVXOf3ev7FvJQN+xdhqkvBlvwSl+Tz1bWg
-         5T/9raIdlIZDzWfeL20BC1jU0Ce0M2L2A5/aJppEgMUNfcIQTL9ebCgWLIQoAbV7n8M4
-         0YYFXih2Kq86pPq1thkhwTlF3/FqPBBB4pku/1EQFVlYqmeZWkreaHlM/X1iVB7/maO0
-         08h65/gJ2QasFRsA5Id+IxuQle2Q+tSFtSadxQrVAhPFqReMiLUPt92C4ZFjeWmtmvT1
-         OEzku2oLO+x5fD1K38Dy88VdPUPHV4oXcqbMmAxRsiIG2TYN4VGD/T0P1wCQjc7TxEhs
-         7xoQ==
-X-Gm-Message-State: AOAM530ZkB//3bjd4ORRjRyBDxN+p2g+RG+naPFq8FjRuMAzSEsOwhtg
-        fY99a6fQQ7MMdVF4vUJwUlKX/g==
-X-Google-Smtp-Source: ABdhPJxZ/GSgM1cGuuec6ia0MvFwxLjU20+wUalMxOy+cKNnakKT444dyOZry2Ll893atch6i1ZAuA==
-X-Received: by 2002:a63:91c7:: with SMTP id l190mr7210142pge.350.1634872377642;
-        Thu, 21 Oct 2021 20:12:57 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:3866:91e2:ded9:17f2])
-        by smtp.gmail.com with ESMTPSA id b6sm8885833pfv.171.2021.10.21.20.12.56
+        bh=eiJ3kBZnumiG4435n06m3eRfMZYjDYJ5s9yiabjDc7g=;
+        b=R35INDt/RXf5NAfnoL8GN1mAoLZITcLSK89lBWC8pOCMO/AroRWjI7ONH75rc3nTqE
+         JngZwYuhMAQua5K9MVL12j74j5spdS7Sm2uF0GXpcjOT3ZS29kQzkIb2KlQTtlzKROEL
+         HrlQ9iaXf2iV+zfyRiBxPSicjXKGfaLi5vSfhaqLS2rjddUaeL9s+M8SoBccirTCijGT
+         3RemLGIWJMxMhdnPA922eixWEoYpdDGi0Z5vR7lrf2/EuLBZI02aX4S38oHRw4E9K0Aj
+         kOCtCMJLaqs+D8ywniuL6Ot1NyGgQAlkjxRXsgm829ATeeIfQaq9Wzj4zJprptO5URQW
+         AcmQ==
+X-Gm-Message-State: AOAM530/DyJR9oqpCX999rxzzPBkEoq3FA3JT3bWQZxDYIZ5ele3s6EP
+        Ls8VgScWa7Bsv6boun+H9jANm/SQQ7nqqA==
+X-Google-Smtp-Source: ABdhPJyaL4ufBpGLhj81UQjdM0nS/Az05dzvKe6X+EQAuGEBb2epG8jY16+yNPL0gXF5ygPx7bcMBQ==
+X-Received: by 2002:a05:6e02:1c2b:: with SMTP id m11mr6315014ilh.307.1634872914908;
+        Thu, 21 Oct 2021 20:21:54 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c5sm3618400ilq.71.2021.10.21.20.21.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 20:12:56 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 20:12:52 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Subject: Re: [RFC PATCH 0/2] Conditional config includes based on remote URL
-Message-ID: <YXIsNIoxhADuM1Mi@google.com>
-References: <cover.1634077795.git.jonathantanmy@google.com>
- <20211018204803.75088-1-jonathantanmy@google.com>
+        Thu, 21 Oct 2021 20:21:54 -0700 (PDT)
+Date:   Thu, 21 Oct 2021 23:21:53 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
+        peff@peff.net
+Subject: Re: [PATCH 05/11] builtin/repack.c: avoid leaking child arguments
+Message-ID: <YXIuURFP/FOpae7U@nand.local>
+References: <cover.1634787555.git.me@ttaylorr.com>
+ <a68c77c00638bef7e8ce88929015a587d2d1b6f8.1634787555.git.me@ttaylorr.com>
+ <xmqqmtn2mj0s.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211018204803.75088-1-jonathantanmy@google.com>
+In-Reply-To: <xmqqmtn2mj0s.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 18, 2021 at 01:48:03PM -0700, Jonathan Tan wrote:
-> 
-> After some in-office discussion, here are the alternatives as I see it:
-> 
->  (1) Introduce a "includeAfterIf" (or "deferIncludeIf", or some other
->      name) command that is executed after all config files are read. (If
->      there are multiple, they are executed in order of appearance.)
->      Files included by this mechanism cannot directly or indirectly
->      contain another "includeAfterIf". This is the same as what was
->      introduced in this patch set, except for the name of the directive.
-> 
->  (2) Leave the name as "includeIf", and when it is encountered with a
->      remote-URL condition: continue parsing the config files, skipping
->      all "includeIf hasRemoteUrl", only looking for remote.*.url. After
->      that, resume the reading of config files at the first "includeIf
->      hasRemoteUrl", using the prior remote.*.url information gathered to
->      determine which files to include when "includeIf hasRemoteUrl" is
->      encountered. Files included by this mechanism cannot contain any
->      "remote.*.url" variables.
-> 
-> In all cases, the include is executed if at least one remote URL
-> matches.
-> 
-> There are other ideas including:
-> 
->  (3) remote.*.url must appear before a "includeIf hasRemoteUrl" that
->      wants to match it. (But this doesn't fit our use case, in which a
->      repo config has the URL but a system or user config has the
->      include.)
-> 
->  (4) "includeIf hasRemoteUrl" triggers a search of the repo config just
->      for remote.*.url. (I think this out-of-order config search is more
->      complicated than (2), though.)
-> 
-> For (2), I think that prohibiting "remote.*.url" from any "includeIf
-> hasRemoteUrl" files sidesteps questions like "what happens when an
-> included file overrides the URL that made us include this file in the
-> first place" or "what happens if an included file includes a
-> remote.*.url that validates or invalidates a prior or subsequent file",
-> because now that cannot happen at all. My main concern with this
-> prohibition was that if we were to introduce another similar condition
-> (say, one based on remote names), what would happen? But I think this is
-> solvable - make the prohibitions based only on all the conditions that
-> the actually used, so if the user only uses conditions on remote URLs,
-> then the user can still set refspecs (for example), even after the
-> remote-name-condition feature is introduced in Git.
-> 
-> For (1), it is simpler in concept (and also in implementation, I think).
-> The user just needs to know that certain includes are on-the-spot and
-> certain includes (the ones with "after" in the name) are deferred - in
-> particular, if a config variable isn't the value they expect, they'll
-> need to check that it wasn't introduced in an includeAfterIf file. (And
-> the user also needs to figure out that if they want to override such a
-> variable, they'll need to make their own includeAfterIf with an
-> always-true condition.)
-> 
-> From the prior replies, I think that people will be more interested in
-> (2) as it preserves the "last config wins" rule, and I'm inclined to go
-> for (2) too. I'll see if others have any other opinions, and if not I'll
-> see how the implementation of (2) will look like.
+On Thu, Oct 21, 2021 at 09:37:07AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > `git repack` invokes a handful of child processes: one to write the
+> > actual pack, and optionally ones to repack promisor objects and update
+> > the MIDX.
+> >
+> > In none of these cases do we bother to call child_process_clear(), which
+> > frees the memory associated with each child's arguments and environment.
+> >
+> > In order to do so, tweak each function that spawns a child process to
+> > have a `cleanup` label that we always visit before returning from each
+> > function. Then, make sure that we call child_process_clear() as a part
+> > of that label.
+>
+> I have a slight aversion against the fact that this patch makes us
+> call child_process_clear(), when we know we may have called
+> finish_command().  Callers of finish_command() in other codepaths
+> rely on the fact that finish_command() calls child_process_clear(),
+> which means that because of this change, we are now constrained to
+> keep child_process_clear() idempotent?
 
-Another concern which came up for me in a private conversation today -
+Good point. In functions besides cmd_repack(), it's easy enough to just
+call child_process_clear() once before returning instead of using a
+label. That has the added benefit of side-stepping the variable name
+question that you and Stolee raised (but I think whether we call it
+"result", "res", or "ret" is besides the point).
 
-How difficult will it be for users to override this include directive if
-it is set somewhere outside of their control? For example:
+In cmd_repack(), I'd like to wrap the other cleanup-related calls
+underneath a 'cleanup' label. So there we want to track whether or not
+we have called finish_command(), so that we only call
+child_process_clear() when we *haven't* already called it via
+finish_command().
 
-/etc/gitconfig:
-[includeIf hasRemoteUrl.https://example.com/example.git] // or whatever
-  path = /etc/some-special-config
-
-Will it be possible for a user to "un-include" /etc/some-special-config
-themselves?
-
-I don't think this should change your patch much - if my understanding
-is correct, we also don't have a way to "un-include" existing include or
-includeIf directives made outside of the user's control. But I wonder if
-it'd be useful to think about some way to do that. Maybe we can teach
-the config parse how to include a config file in reverse? Maybe we need
-a "neverInclude" directive? Food for thought, anyway.
-
-Sorry, but I won't have time to take a look at the rest of this series
-til next week.
-
- - Emily
-
+Thanks,
+Taylor
