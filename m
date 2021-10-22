@@ -2,109 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4A35C433EF
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 21:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A777C433EF
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 21:54:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 803CB6054E
-	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 21:32:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 693C06103E
+	for <git@archiver.kernel.org>; Fri, 22 Oct 2021 21:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233750AbhJVVen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Oct 2021 17:34:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53042 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231997AbhJVVem (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Oct 2021 17:34:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53670E08D4;
-        Fri, 22 Oct 2021 17:32:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dQ7pLhAaBlvF
-        FGNSQnQVEKUh9oFJAZBLFsaCsuiWfIo=; b=phgIgMF3x2/JBVphodgLxtXH+PYm
-        1t9eNkQzDRbOoyEccHpjtQRuYME3bKhGweKHbiXDU2uRkNzvCzr7zAX9B5Z6fqa2
-        dctZGmvKi0HeEpuuciK2fcdY2linW3hfRmmyf+xDwtHzS0P3U8WegsJrOakEDBwK
-        gDPxBfAO6nZO41Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A343E08D3;
-        Fri, 22 Oct 2021 17:32:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9883E08D2;
-        Fri, 22 Oct 2021 17:32:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S232113AbhJVV5A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Oct 2021 17:57:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231363AbhJVV47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Oct 2021 17:56:59 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7632BC061764
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 14:54:41 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id t9so73375lfd.1
+        for <git@vger.kernel.org>; Fri, 22 Oct 2021 14:54:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=6qX5m/+fLkQIKekXvJ4jrbh/jnS31Uy4nYhQQU7/sYQ=;
+        b=EiFnYmGFWul2dtqe5q76PosqAUXW3og1fbP/Nt3f9c10SMUQU6xApZEcxRsMrSXsOZ
+         gIUyAnbuMagg9/03Cs7rcJWKMwoz6+aZ8bcduxloqoRrJTfZ4Zr3EQqG974udlCj3oXa
+         rzjVMzL44YgsJmsInQh7lE1QNyKDt3RjV8MsTcj+xq4ckiUsprbzmES6zYdHwnPGXOk5
+         4kcLYnYsS18LjB+2IBfhgKEb/pmS2EQcKvAIB2RCu4xdtFejoI+fvVKD9BpKsND9Sp5g
+         bsH5cKaMsi3VWc3b5R0F2v1dN9gRHKvBe0diI+aCMqQSh5Plg+L8hkcGuCIcVbHDZmcN
+         yBDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=6qX5m/+fLkQIKekXvJ4jrbh/jnS31Uy4nYhQQU7/sYQ=;
+        b=ETqxVei+QJR319ZngolDBEtijbaVYgV6yaXSYkw6T6RUT12c+7hEgtFJQANvfS27CS
+         uqSinlBedJhiaiE4UbOFvRWmp+M5smWvvP0J0iaAgWUN2ph4orEFTjNnQ48TaMbzZhDM
+         XKNp7BAMk7lF5T/yAoiKrYxZBwgdYJINA/7o3Z+lgzbYBTsC9WohmxAmFhABaLt9xNnd
+         SS7PFzeo6nMJ6hvxRkUX5fRXaiZ/+CnOYFkFrHyMCy/rlJ9YKyYUTDMnyDqgNmOCiscA
+         FPwBV+WgJuLZd4by9QvwiYa/gbonEmvlJ8afMxXHarxRg+02xVEas4PZSr3FVtTKLnYo
+         5DIw==
+X-Gm-Message-State: AOAM533N1oNho5Xd+Jyq8Vsy/BijQgRWv1s6spkzpps5Nc7AnPia2XkN
+        TTG8GMmDNwyUYubXJtYCFRkn3iJR6Fo=
+X-Google-Smtp-Source: ABdhPJxz9ql3LuU0hM8oBMpFV83vg5C5+XyYHbyxiLBNIuHw8/nxCdZ9kTeHOiDAU5jAGlULR901lQ==
+X-Received: by 2002:ac2:46ed:: with SMTP id q13mr2031023lfo.231.1634939679687;
+        Fri, 22 Oct 2021 14:54:39 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id bp25sm842490lfb.64.2021.10.22.14.54.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Oct 2021 14:54:39 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kalyan Sriram <kalyan@coderkalyan.com>,
-        git <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Git submodule remove
-References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com>
-        <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net>
-        <xmqqbl3ihu6l.fsf@gitster.g>
-        <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com>
-        <xmqqee8egddw.fsf@gitster.g>
-        <211022.86lf2ll00x.gmgdl@evledraar.gmail.com>
-Date:   Fri, 22 Oct 2021 14:32:22 -0700
-In-Reply-To: <211022.86lf2ll00x.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+Cc:     martin <test2@mfriebe.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Josh Steadmon <steadmon@google.com>
+Subject: Re: changing the experimental 'git switch'
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
+        <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
+        <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
+        <211022.86v91pjfn7.gmgdl@evledraar.gmail.com>
+Date:   Sat, 23 Oct 2021 00:54:38 +0300
+In-Reply-To: <211022.86v91pjfn7.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
  =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 22 Oct 2021 14:12:11 +0200")
-Message-ID: <xmqq8rykeoex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        Bjarmason"'s message of "Fri, 22 Oct 2021 16:24:49 +0200")
+Message-ID: <875ytozpwh.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8B924C18-337F-11EC-B41A-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Why would it be a good thing to change it even if we could? We added
-> that section with "git submodule add", it makes sense to have it remove=
-d
-> on "git init".
+> On Fri, Oct 22 2021, martin wrote:
+>
 
-... on "git submodule rm", yes.  Not "git rm". I am not sure what
-your "git init" is your typo for.
+[...]
 
-That is primarily because I do not believe the "git submodule"'s
-world view is the _only_ valid porcelain UI for a feature that lets
-you use another project as if it is one of your subdirectories.  So
-whatever opinionated policy the current "git submodule" implements,
-I'd prefer to keep it in "git submodule" (and ".gitmodules", which is
-where the data to support "git submodule"-style submodule handling
-lives in), not in the lower level "git add" and "git rm".
+>> If 2 letters could be used, then -c could be given twice for "create copy"
+>> -c  => create
+>> -c -c  => create copy
+>> -cc  => create copy
 
-> If anything I think it would make sense to extend this behavior. E.g. i=
-f
-> we "git rm" a <path> and notice that the <path> was the only thing that
-> matched a given entry in .gitignore we should remove that entry.
+Please, no!
 
-I think that is a wrong analogy.
+> Hrm, that's interesting.
 
-It does not make sense to me to remove "*.o" from my .gitignore,
-when I do "git rm vendor-binary.o". I have "*.o" in .gitignore
-because I do not want to add .o files produced by compiling my
-source files, and the "git rm" does not change that fact at all.
+Yep, Git UI is too "interesting" already.
 
-I unfortunately had to keep track of an opaque vendor-supplied
-binary, which got replaced recently with a new version, and that is
-why I am running "git rm" on it.  "git add -f vendor-binary-v2.o"
-is what I was planning to do next.
+> But probably better to have a long-option.
 
-I do not want you to mess with my .gitignore; you are assuming too
-much on my workflow.
+Definitely.
 
-> See 95c16418f03 (rm: delete .gitmodules entry of submodules removed fro=
-m
-> the work tree, 2013-08-06) for the commit that gave "git rm" these
-> smarts.
+> Some short options (notable -v for --verbose) often work like that,
+> but I wonder if people wouldn't just be confused by it.
 
-I know.  That is exactly the layering violation I am unhappy about
-but we came with it too far to remove.
+I would be confused. Those options that do behave like that usually
+just increase (implicit) level of verbosity or debug level, so -vv is a
+way to say --verbose=2, and -vvv => --verbose=3.
+
+An option that changes its semantic depending on its sequence number is
+something that I'd avoid like a plague.
+
+Thanks,
+-- Sergey Organov
+ 
