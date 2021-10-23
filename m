@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28EACC433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1426C433F5
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E39E460FDA
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0FA960FDA
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbhJWNAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 09:00:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39246 "EHLO
+        id S230230AbhJWNAe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 09:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbhJWNAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 09:00:30 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D9BC061764
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id t184so5966565pgd.8
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+        with ESMTP id S229699AbhJWNAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 09:00:33 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FD5C061764
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:14 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id u6so4671058ple.2
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QEFjduxivPHS3FQ0Xp6CRGxWajf3GrLP2ZvnjKSSr2s=;
-        b=OIlDcmtF1YaBcUCwkfex2N1Wa0kxRQQ4fRUQ/vY6kQGMyX7KYQ3a3NbbnEZ2DEIA2o
-         4dmlgqVOtoyv5upVbnyJfhdCzUJqWlLTiHVlHfzif+TQi8TV13LOfr0CLUP7HSNCrCqE
-         zerzVEAgF0Cr2MbaBEMK/vDAfMSBI4r4efFXnmlkNw4MKC7D/NRWqQ+U3gqkK7V2ZqW+
-         HKyeVm9Q58/pcscyYJx4GfzdD6YsVdEA0kA4iQG7uD1yfBYGlSamsIQQzrsbRbWaGynE
-         XMiHSxpUOb4c4vskOJMRqXy2pblvuQGWge4LOc0NsqZ8/tdVXtWfcIWHdVAqlG47bZES
-         M2wQ==
+        bh=WIWARtUp+Oll6qalc5uBlRMOylbdDnDNxmKxz60u6QA=;
+        b=qUzAM4fgRie5y+1eKxJxAQzC9Xrzwgr5Ml0Lyl9rSCyEMXdSjGbyUYJR5hrveKVnmQ
+         VaYES6+jNyCHu9+Ei7/6x5CVuya2kg6QDTWb6he9w7kjs7lhYbhlSUjPbBt3s+Q3/WCt
+         GrqBlNbI3z894Q2KObFiMzLkzTo6M4+e//1PUOPlzxpt79pYcgMLC5TUu3NqOrOyACmV
+         gf9zg12Hc4PszU5DzN8BjvRnyJ2g4jqcDlZDHpejSZkj4QDyTArSVZpHfSslrncTS9KH
+         9bXML3UtjqOfpn+uPmX/8vRp9KpPED0rU/7hI2tBcydqvF1CVeGDMB+iu3vNdNkZfN3s
+         PjYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QEFjduxivPHS3FQ0Xp6CRGxWajf3GrLP2ZvnjKSSr2s=;
-        b=MewUDubjAM5A7uZHtYLsA8KZ9imDEzZIfQSkyf3W7H+Pj1VTavpu3f5gTNqTySnBMK
-         10YQ22a2mVd6242H0t6Lo6SJ6WRrtML+I6Hh/PEwMlMbrV/2vfYdOjyCqWkScaJKiZ+y
-         nzrRd/yUq5VMcj7QNLCJ4Ku+nLhB4aQgVWbHutNEJjciZYN4LyZcRozTVvmW9Ktn/Z/o
-         G1JjCvEKjIj9e+hU1/tqTztTQqzu5uapQ+rHSKoIcPXnXqdIIbXjGpjGxW37mBD/Bfv2
-         fm2kEl4md4y9cx+Eub88aPkgObxSjbqhNylA+pl6Zzlpx+kY336kRncVf8COnMqfDAIc
-         RiMA==
-X-Gm-Message-State: AOAM5336nzNG+BGkbWObfDATCIxfWAfw8421xtpZbrgtlCZPyXGrvjzc
-        guFv0xNkW2WRwq39z44cnb9Urtivuo8=
-X-Google-Smtp-Source: ABdhPJzZQJWYIuuFy8ZoGEb/h6v9UFFwOA/O2tdSzKyKdXcJZrQiHRQ0+N75+i7DoCisrEnqO5c3YQ==
-X-Received: by 2002:a63:3548:: with SMTP id c69mr4486489pga.111.1634993891420;
-        Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+        bh=WIWARtUp+Oll6qalc5uBlRMOylbdDnDNxmKxz60u6QA=;
+        b=oc7iFsm969xVkrwWYqxnZOGdbSx6zg5KD8zK5kM7CHaQWpA4cEkdeLTVNfuvH1bbiN
+         WbZkNuyC+UTdokdq9F5pc0R3GU9tglYltDOLAe7iGL1sex3PmTxazgajeFIXDQ+SXXzN
+         mvYChIBlWvRDKqguUzyyTNO0aucLYLf+lx4gx9958YUXQiADjGiO8wmmmW3LcFvGNy3m
+         NWLRA6i8gUONrqQSxESoXQouivKnwTJsf2ztL0jexJwsDZbV4eKiK79UgZPUr1usfcIc
+         RnrNw+MOPrkxDOMVZVUuO9rgnUbkWUNAVTxcOlaqurfwrZ7yk+jgGsYa7VHNypHX+fLV
+         bzeg==
+X-Gm-Message-State: AOAM532N+DafevyZ1qRYHXCw5Pk8TgHAWY2ex8Il8dfqKL11cJoVBr9l
+        7sMucSo7W+bavKWczdfCGGs=
+X-Google-Smtp-Source: ABdhPJwY96Bd7vHJGp/ukCrLsCqISZ2aEx9u3A6pmtrffoKTIxhrNJ1kq8r/UgoOaHroiqG4vNZk5w==
+X-Received: by 2002:a17:90b:1511:: with SMTP id le17mr2726177pjb.99.1634993893861;
+        Sat, 23 Oct 2021 05:58:13 -0700 (PDT)
 Received: from localhost.localdomain ([49.204.131.111])
-        by smtp.gmail.com with ESMTPSA id p4sm10955655pgc.15.2021.10.23.05.58.09
+        by smtp.gmail.com with ESMTPSA id p4sm10955655pgc.15.2021.10.23.05.58.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+        Sat, 23 Oct 2021 05:58:13 -0700 (PDT)
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Atharva Raykar <raykar.ath@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
@@ -58,89 +58,137 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Christian Couder <christian.couder@gmail.com>,
         Shourya Shukla <periperidip@gmail.com>
-Subject: [PATCH v3 0/1] submodule: correct an incorrectly formatted error message
-Date:   Sat, 23 Oct 2021 18:27:21 +0530
-Message-Id: <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
+Subject: [PATCH v3 1/1] submodule--helper: fix incorrect newlines in an error message
+Date:   Sat, 23 Oct 2021 18:27:22 +0530
+Message-Id: <20211023125722.125933-2-kaartic.sivaraam@gmail.com>
 X-Mailer: git-send-email 2.33.1.1058.gd3b4e01def
-In-Reply-To: <m27df9lvm1.fsf@gmail.com>
+In-Reply-To: <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
 References: <m27df9lvm1.fsf@gmail.com>
+ <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Atharva,
+A refactoring[1] done as part of the recent conversion of
+'git submodule add' to builtin, changed the error message
+shown when a Git directory already exists locally for a submodule
+name. Before the refactoring, the error used to appear like so:
 
-Sorry for the delay in sending this. Got held up with other work.
+  --- START OF OUTPUT ---
+  $ git submodule add ../sub/ subm
+  A git directory for 'subm' is found locally with remote(s):
+    origin        /me/git-repos-for-test/sub
+  If you want to reuse this local git directory instead of cloning again from
+    /me/git-repos-for-test/sub
+  use the '--force' option. If the local git directory is not the correct repo
+  or you are unsure what this means choose another name with the '--name' option.
+  ---  END OF OUTPUT  ---
 
-On 21/09/21 10:17 pm, Atharva Raykar wrote:
->>
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index 414fcb63ea..236da214c6 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -2775,7 +2775,7 @@ struct add_data {
->>   };
->>   #define ADD_DATA_INIT { .depth = -1 }
->>
->> -static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
->> +static void show_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
-> 
-> I like the change from using a strbuf instead of passing the output
-> stream and printing to it. But maybe we should rename this function, now
-> that it doesn't really 'show' anything? Probably something like
-> 'append_fetch_remotes()'?
+After the refactoring the error started appearing like so:
 
-That's a good point. I've taken your suggestion into account in this v3.
+  --- START OF OUTPUT ---
+  $ git submodule add ../sub/ subm
+  A git directory for 'subm' is found locally with remote(s):  origin     /me/git-repos-for-test/sub
+  fatal: If you want to reuse this local git directory instead of cloning again from
+  /me/git-repos-for-test/sub
+  use the '--force' option. If the local git directory is not the correct repo
+  or if you are unsure what this means, choose another name with the '--name' option.
 
-Find the details of the v3 of this patch below.
+  ---  END OF OUTPUT  ---
 
-Changes since v2:
+As one could observe the remote information is printed along with the
+first line rather than on its own line. Also, there's an additional
+newline following output.
 
-- Renamed the helper function name to be more appropriate, upon suggestion.
+Make the error message consistent with the error message that used to be
+printed before the refactoring.
 
-Also, I rebased my local branch over the latest 'master'. So, this should apply
-cleanly over 'master'.
+This also moves the 'fatal:' prefix that appears in the middle of the
+error message to the first line as it would more appropriate to have
+it in the first line. The output after the change would look like:
 
-For reference, the v2 could be found here:
+  --- START OF OUTPUT ---
+  $ git submodule add ../sub/ subm
+  fatal: A git directory for 'subm' is found locally with remote(s):
+    origin        /me/git-repos-for-test/sub
+  If you want to reuse this local git directory instead of cloning again from
+    /me/git-repos-for-test/sub
+  use the '--force' option. If the local git directory is not the correct repo
+  or you are unsure what this means choose another name with the '--name' option.
+  ---  END OF OUTPUT  ---
 
-    https://public-inbox.org/git/20210918193116.310575-1-kaartic.sivaraam@gmail.com/
+[1]: https://lore.kernel.org/git/20210710074801.19917-5-raykar.ath@gmail.com/#t
 
-... and the range-diff against v2 could be found below.
-
---
-Sivaraam
-
-
-Kaartic Sivaraam (1):
-  submodule--helper: fix incorrect newlines in an error message
-
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
  builtin/submodule--helper.c | 37 +++++++++++++++++++++++--------------
  1 file changed, 23 insertions(+), 14 deletions(-)
 
-Range-diff against v2:
-1:  95cbe38be3 ! 1:  7c4887ccf5 submodule--helper: fix incorrect newlines in an error message
-    @@ builtin/submodule--helper.c: struct add_data {
-      #define ADD_DATA_INIT { .depth = -1 }
-      
-     -static void show_fetch_remotes(FILE *output, const char *git_dir_path)
-    -+static void show_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
-    ++static void append_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
-      {
-      	struct child_process cp_remote = CHILD_PROCESS_INIT;
-      	struct strbuf sb_remote_out = STRBUF_INIT;
-    @@ builtin/submodule--helper.c: static int add_submodule(const struct add_data *add
-     +						    "locally with remote(s):\n"),
-     +					    add_data->sm_name);
-     +
-    -+				show_fetch_remotes(&msg, add_data->sm_name,
-    -+						   submod_gitdir_path);
-    ++				append_fetch_remotes(&msg, add_data->sm_name,
-    ++						     submod_gitdir_path);
-      				free(submod_gitdir_path);
-     -				die(_("If you want to reuse this local git "
-     -				      "directory instead of cloning again from\n"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6298cbdd4e..37661e2789 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2999,7 +2999,7 @@ struct add_data {
+ };
+ #define ADD_DATA_INIT { .depth = -1 }
+ 
+-static void show_fetch_remotes(FILE *output, const char *git_dir_path)
++static void append_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
+ {
+ 	struct child_process cp_remote = CHILD_PROCESS_INIT;
+ 	struct strbuf sb_remote_out = STRBUF_INIT;
+@@ -3015,7 +3015,7 @@ static void show_fetch_remotes(FILE *output, const char *git_dir_path)
+ 		while ((next_line = strchr(line, '\n')) != NULL) {
+ 			size_t len = next_line - line;
+ 			if (strip_suffix_mem(line, &len, " (fetch)"))
+-				fprintf(output, "  %.*s\n", (int)len, line);
++				strbuf_addf(msg, "  %.*s\n", (int)len, line);
+ 			line = next_line + 1;
+ 		}
+ 	}
+@@ -3047,19 +3047,28 @@ static int add_submodule(const struct add_data *add_data)
+ 
+ 		if (is_directory(submod_gitdir_path)) {
+ 			if (!add_data->force) {
+-				fprintf(stderr, _("A git directory for '%s' is found "
+-						  "locally with remote(s):"),
+-					add_data->sm_name);
+-				show_fetch_remotes(stderr, submod_gitdir_path);
++				struct strbuf msg = STRBUF_INIT;
++				char *die_msg;
++
++				strbuf_addf(&msg, _("A git directory for '%s' is found "
++						    "locally with remote(s):\n"),
++					    add_data->sm_name);
++
++				append_fetch_remotes(&msg, add_data->sm_name,
++						     submod_gitdir_path);
+ 				free(submod_gitdir_path);
+-				die(_("If you want to reuse this local git "
+-				      "directory instead of cloning again from\n"
+-				      "  %s\n"
+-				      "use the '--force' option. If the local git "
+-				      "directory is not the correct repo\n"
+-				      "or if you are unsure what this means, choose "
+-				      "another name with the '--name' option.\n"),
+-				    add_data->realrepo);
++
++				strbuf_addf(&msg, _("If you want to reuse this local git "
++						    "directory instead of cloning again from\n"
++						    "  %s\n"
++						    "use the '--force' option. If the local git "
++						    "directory is not the correct repo\n"
++						    "or you are unsure what this means choose "
++						    "another name with the '--name' option."),
++					    add_data->realrepo);
++
++				die_msg = strbuf_detach(&msg, NULL);
++				die("%s", die_msg);
+ 			} else {
+ 				printf(_("Reactivating local git directory for "
+ 					 "submodule '%s'\n"), add_data->sm_name);
 -- 
 2.33.1.1058.gd3b4e01def
 
