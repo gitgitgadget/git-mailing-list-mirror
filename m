@@ -2,89 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E3CC433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 08:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C355FC43219
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 08:27:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF7A661057
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 08:08:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4E6B60EBB
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 08:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbhJWIGG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 04:06:06 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.18.15]:42995 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhJWIGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 04:06:05 -0400
-Received: from [79.233.238.25] (helo=[192.168.2.202])
-        by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <test2@mfriebe.de>)
-        id 1mdwV4-00073p-0k; Fri, 22 Oct 2021 17:30:30 +0200
-Subject: Re: changing the experimental 'git switch' (was: [Summit topic]
- Improving Git UX)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S230081AbhJWI3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 04:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229666AbhJWI3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 04:29:23 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91075C061764
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 01:27:04 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id p16so89261lfa.2
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 01:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=YPoAg80sw/RFUx7/8RWZpAR9GOdJzpxC8RtfEQPuD8E=;
+        b=VfJbdqSpyaWAbuxIOfoxZ9WFSaRzYop/p4kcZLcMJDrJyAu7iS+6sYbcGG+6L/cylc
+         +dAgmTVRgSRqn6cFNWRkzAkIU2QNialr2mt71EdoOhZ+Ie5AHfx6yegEDDg9mvt0u5rJ
+         Rd2R7B8yZ0qxN8Ymlmcerxs7RLd5+09tp3vkLpxZKb4C0Dc8ZHd4BhC5f8stxAJ2WqhC
+         HsFhjMOJjimOpPp+nXPn0dIivRx/rtZXUkp35qOhyM4VaBKilb7IUWUWb5B6tyKC+BoE
+         4XIsEH6mS5+qqEp9iqJm3fhXCo6DHRwM7j4M4TW/gm+i6QtxQP0G1fLLZBGtnLsqf3eI
+         K/yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=YPoAg80sw/RFUx7/8RWZpAR9GOdJzpxC8RtfEQPuD8E=;
+        b=m4sP6kDWHFxGnrCX+++5sxnlLJQJsfXKdd3fK9IFwebR0hRsRBZ4mHNIdafpVnARIC
+         UDJgtpEH/3FE/dr3+u/8cjopvLtTjFyiNAMFJWypVDYEF55T3KOI8bWPJJl+7+J1n4ZC
+         Rgk6lWUf+xdsaVBGhmeTRK6OCCJ1MW6NcbP1XDGitCpvKAE/0gk7tOABSSp+0ucOR/Vl
+         MO9f0VkX/Ff27bC+PytCnNBgCGcKgBPTUoga5DpCjQ3tCO//lhh0EY2LhARsw0hK284T
+         H8g6EOWeCHt9mt3YWs1cV1sNFKSGTlJH9HhNQ5GrO39Pl+ebUU4wEULztQa60exXTsUt
+         HJxQ==
+X-Gm-Message-State: AOAM532F3INtO1giQkXhRkLTgVhzB6LzbA6smYUFuYsf06pZoNbOd85U
+        nm9ShaW/7q9y0rKoixunarUH1HX8RcY=
+X-Google-Smtp-Source: ABdhPJwkPqnw+gR1Di8Nhips2HY1vv8J0+hKuFLdpM0GtWz/hUsgpcXsV0OnPigxLpkTUJBWYAxtRQ==
+X-Received: by 2002:a05:6512:12c9:: with SMTP id p9mr4748772lfg.236.1634977623000;
+        Sat, 23 Oct 2021 01:27:03 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 15sm965351lfy.86.2021.10.23.01.27.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Oct 2021 01:27:02 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     martin <test2@mfriebe.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org, Josh Steadmon <steadmon@google.com>
+Subject: Re: changing the experimental 'git switch'
 References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
- <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
- <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
- <211022.86v91pjfn7.gmgdl@evledraar.gmail.com>
-From:   martin <test2@mfriebe.de>
-Message-ID: <dc5dcc43-34d0-f4a8-93fa-6875c98e74a5@mfriebe.de>
-Date:   Fri, 22 Oct 2021 17:30:26 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
+        <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
+        <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
+        <211022.86v91pjfn7.gmgdl@evledraar.gmail.com>
+        <dc5dcc43-34d0-f4a8-93fa-6875c98e74a5@mfriebe.de>
+Date:   Sat, 23 Oct 2021 11:27:00 +0300
+In-Reply-To: <dc5dcc43-34d0-f4a8-93fa-6875c98e74a5@mfriebe.de> (martin's
+        message of "Fri, 22 Oct 2021 17:30:26 +0200")
+Message-ID: <875ytokuy3.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <211022.86v91pjfn7.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/10/2021 16:24, Ævar Arnfjörð Bjarmason wrote:
-> FWIW one reason this would be needed is that "switch" intentionally did
-> not take "git switch unknown-name" to create "unknown-name", but maybe
-> we could relax that if we just e.g. printed out a notice saying a new
-> branch is created (which we probably do already...).
-I think the "required flag for create" is a good idea and should be 
-kept. (My 2 cents)
+martin <test2@mfriebe.de> writes:
 
-having the "new name" identified, also helps the user to get the order 
-of the arguments right.
-Take
-   git rebase  <upstream>   <branch>
-Why is the target listed before the source? But whichever way round, it 
-is hard to remember.
-If rebase would only take one <upstream>, and the optional <branch> 
-would be a "--from", wouldn't that be easier?
+> On 22/10/2021 16:24, Ævar Arnfjörð Bjarmason wrote:
 
->> If 2 letters could be used, then -c could be given twice for "create copy"
->> -c  => create
->> -c -c  => create copy
->> -cc  => create copy
-> Hrm, that's interesting. But probably better to have a long-option.
-Well, both: Long and short. But long is --copy or --create-copy.
-The issue is finding a short option. -cc imho is still short.
+[...]
 
->> But in "git switch" a new commit for the top is given. So that differs.
->> Maybe someone can educate me ?
-> Maybe I'm being dense, but I'm not really seeing how a:
->
->      git switch [some create option] <new> <old>
->
-> Would have caveats that we don't have already with:
-I only tried to illuminate my question with some made-up examples (the 
-examples were not meant to be a solution).
+>>> If 2 letters could be used, then -c could be given twice for "create copy"
+>>> -c  => create
+>>> -c -c  => create copy
+>>> -cc  => create copy
+>> Hrm, that's interesting. But probably better to have a long-option.
+> Well, both: Long and short. But long is --copy or --create-copy.
+> The issue is finding a short option. -cc imho is still short.
 
-What exactly does copy/move do? Am I missing any point?
-- They create a new branch (when using switch this branch will also be 
-reset to a given commit)
-- They copy the reflog
-- "move" deletes the old branch (or can be seen as rename)
+No -cc or --cc, please! -cc is not single option, it's -c -c in a line,
+and you will then have hard time to even describe -c.
 
-Anything else?
+--cc would be a point of confusion as well, e.g., see "git log --cc".
 
+BTW, is it frequent enough operation to even demand something shorter
+than --copy?
 
+Thanks,
+-- Sergey Organov
