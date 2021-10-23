@@ -2,193 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1426C433F5
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B2F8C433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 14:58:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0FA960FDA
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF2D660F25
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 14:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230230AbhJWNAe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 09:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39258 "EHLO
+        id S230361AbhJWPAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 11:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbhJWNAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 09:00:33 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FD5C061764
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:14 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id u6so4671058ple.2
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WIWARtUp+Oll6qalc5uBlRMOylbdDnDNxmKxz60u6QA=;
-        b=qUzAM4fgRie5y+1eKxJxAQzC9Xrzwgr5Ml0Lyl9rSCyEMXdSjGbyUYJR5hrveKVnmQ
-         VaYES6+jNyCHu9+Ei7/6x5CVuya2kg6QDTWb6he9w7kjs7lhYbhlSUjPbBt3s+Q3/WCt
-         GrqBlNbI3z894Q2KObFiMzLkzTo6M4+e//1PUOPlzxpt79pYcgMLC5TUu3NqOrOyACmV
-         gf9zg12Hc4PszU5DzN8BjvRnyJ2g4jqcDlZDHpejSZkj4QDyTArSVZpHfSslrncTS9KH
-         9bXML3UtjqOfpn+uPmX/8vRp9KpPED0rU/7hI2tBcydqvF1CVeGDMB+iu3vNdNkZfN3s
-         PjYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WIWARtUp+Oll6qalc5uBlRMOylbdDnDNxmKxz60u6QA=;
-        b=oc7iFsm969xVkrwWYqxnZOGdbSx6zg5KD8zK5kM7CHaQWpA4cEkdeLTVNfuvH1bbiN
-         WbZkNuyC+UTdokdq9F5pc0R3GU9tglYltDOLAe7iGL1sex3PmTxazgajeFIXDQ+SXXzN
-         mvYChIBlWvRDKqguUzyyTNO0aucLYLf+lx4gx9958YUXQiADjGiO8wmmmW3LcFvGNy3m
-         NWLRA6i8gUONrqQSxESoXQouivKnwTJsf2ztL0jexJwsDZbV4eKiK79UgZPUr1usfcIc
-         RnrNw+MOPrkxDOMVZVUuO9rgnUbkWUNAVTxcOlaqurfwrZ7yk+jgGsYa7VHNypHX+fLV
-         bzeg==
-X-Gm-Message-State: AOAM532N+DafevyZ1qRYHXCw5Pk8TgHAWY2ex8Il8dfqKL11cJoVBr9l
-        7sMucSo7W+bavKWczdfCGGs=
-X-Google-Smtp-Source: ABdhPJwY96Bd7vHJGp/ukCrLsCqISZ2aEx9u3A6pmtrffoKTIxhrNJ1kq8r/UgoOaHroiqG4vNZk5w==
-X-Received: by 2002:a17:90b:1511:: with SMTP id le17mr2726177pjb.99.1634993893861;
-        Sat, 23 Oct 2021 05:58:13 -0700 (PDT)
-Received: from localhost.localdomain ([49.204.131.111])
-        by smtp.gmail.com with ESMTPSA id p4sm10955655pgc.15.2021.10.23.05.58.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Oct 2021 05:58:13 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
-Subject: [PATCH v3 1/1] submodule--helper: fix incorrect newlines in an error message
-Date:   Sat, 23 Oct 2021 18:27:22 +0530
-Message-Id: <20211023125722.125933-2-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.33.1.1058.gd3b4e01def
-In-Reply-To: <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
-References: <m27df9lvm1.fsf@gmail.com>
- <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
+        with ESMTP id S229901AbhJWPAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 11:00:21 -0400
+X-Greylist: delayed 81874 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 23 Oct 2021 07:58:02 PDT
+Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 883DAC061714
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 07:58:02 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPv6:2003:ea:2738:ef00:e116:f70b:b16d:6d5b] (p200300ea2738ef00e116f70bb16d6d5b.dip0.t-ipconnect.de [IPv6:2003:ea:2738:ef00:e116:f70b:b16d:6d5b])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sven@cs-ware.de)
+        by srv1.79p.de (Postfix) with ESMTPSA id D584A600695;
+        Sat, 23 Oct 2021 16:57:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+        s=mail2021; t=1635001079;
+        bh=Yijig5k8zaMfQVMtEvtEvSpVKxrpclts3N6PZJXdr1s=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=u4SivCzaQ2FOVhH3ctW4axwFJd19TbNMiz6RrCaC6KoS5zO/3pfJDqsKGQHpjhtlQ
+         uARICEV3Y8OCj5Fs4Di0ucIGVtsjA52ZgdLqx+0G5QTn/XFNBo/juapZmu915wE1ut
+         TChzDSg23R+qaHuknNZlkqaAV1TaNl6BFhK1ZFrxJYnJFexdo6zpublX2CmWYrcZX8
+         Anq0plaMNTlBwEyf9eGThJRD54bx3bPR+FOPeVMBed9jMFnzyn7AClTOFt99gG3gwU
+         avTzZYDcCjUf4AZ6mfvuwn7hQ5XkzwaUASVCc+xiwvUDgFwTgF80YFb2RYqRzXvyk8
+         9qlRbFg3w+6eQ==
+Subject: Re: Git silently broke push-options over ssh?
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+References: <4aef40f2-43f8-eab3-a840-6e76c8b4afbb@cs-ware.de>
+ <YXMku8V9cdHLfXt6@coredump.intra.peff.net>
+From:   Sven Strickroth <email@cs-ware.de>
+Message-ID: <ff7ff6ca-2941-c61e-f36d-0732b367fc64@cs-ware.de>
+Date:   Sat, 23 Oct 2021 16:57:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YXMku8V9cdHLfXt6@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A refactoring[1] done as part of the recent conversion of
-'git submodule add' to builtin, changed the error message
-shown when a Git directory already exists locally for a submodule
-name. Before the refactoring, the error used to appear like so:
+Am 22.10.2021 um 22:53 schrieb Jeff King:
+> On Fri, Oct 22, 2021 at 07:27:14PM +0200, Sven Strickroth wrote:
+> 
+>> If I understood <https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html>
+>> correctly I have to enable the Git protocol version 2 and then the push
+>> options should work.
+> 
+> I don't think that is true. There is no v2 push protocol yet, so the
+> push options must work over v0.
 
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):
-    origin        /me/git-repos-for-test/sub
-  If you want to reuse this local git directory instead of cloning again from
-    /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or you are unsure what this means choose another name with the '--name' option.
-  ---  END OF OUTPUT  ---
+You are right. After enabling GIT_TRACE_PACKET I see that the 
+push-option gets transmitted correctly.
 
-After the refactoring the error started appearing like so:
+I got confused was because a GitLab CI pipeline run despite I passed 
+ci.skip. The reason why the pipeline ran despite of that flag is that 
+some external push hook triggered a CI pipeline action manually - when I 
+look at GitLab immediately after the push I see that the pipeline is 
+skipped and then the external hook fires...
 
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):  origin     /me/git-repos-for-test/sub
-  fatal: If you want to reuse this local git directory instead of cloning again from
-  /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or if you are unsure what this means, choose another name with the '--name' option.
+Thanks for the hint for enabling GIT_TRACE_PACKET  Peff and sorry for 
+the noise.
 
-  ---  END OF OUTPUT  ---
-
-As one could observe the remote information is printed along with the
-first line rather than on its own line. Also, there's an additional
-newline following output.
-
-Make the error message consistent with the error message that used to be
-printed before the refactoring.
-
-This also moves the 'fatal:' prefix that appears in the middle of the
-error message to the first line as it would more appropriate to have
-it in the first line. The output after the change would look like:
-
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  fatal: A git directory for 'subm' is found locally with remote(s):
-    origin        /me/git-repos-for-test/sub
-  If you want to reuse this local git directory instead of cloning again from
-    /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or you are unsure what this means choose another name with the '--name' option.
-  ---  END OF OUTPUT  ---
-
-[1]: https://lore.kernel.org/git/20210710074801.19917-5-raykar.ath@gmail.com/#t
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
- builtin/submodule--helper.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6298cbdd4e..37661e2789 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2999,7 +2999,7 @@ struct add_data {
- };
- #define ADD_DATA_INIT { .depth = -1 }
- 
--static void show_fetch_remotes(FILE *output, const char *git_dir_path)
-+static void append_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
- {
- 	struct child_process cp_remote = CHILD_PROCESS_INIT;
- 	struct strbuf sb_remote_out = STRBUF_INIT;
-@@ -3015,7 +3015,7 @@ static void show_fetch_remotes(FILE *output, const char *git_dir_path)
- 		while ((next_line = strchr(line, '\n')) != NULL) {
- 			size_t len = next_line - line;
- 			if (strip_suffix_mem(line, &len, " (fetch)"))
--				fprintf(output, "  %.*s\n", (int)len, line);
-+				strbuf_addf(msg, "  %.*s\n", (int)len, line);
- 			line = next_line + 1;
- 		}
- 	}
-@@ -3047,19 +3047,28 @@ static int add_submodule(const struct add_data *add_data)
- 
- 		if (is_directory(submod_gitdir_path)) {
- 			if (!add_data->force) {
--				fprintf(stderr, _("A git directory for '%s' is found "
--						  "locally with remote(s):"),
--					add_data->sm_name);
--				show_fetch_remotes(stderr, submod_gitdir_path);
-+				struct strbuf msg = STRBUF_INIT;
-+				char *die_msg;
-+
-+				strbuf_addf(&msg, _("A git directory for '%s' is found "
-+						    "locally with remote(s):\n"),
-+					    add_data->sm_name);
-+
-+				append_fetch_remotes(&msg, add_data->sm_name,
-+						     submod_gitdir_path);
- 				free(submod_gitdir_path);
--				die(_("If you want to reuse this local git "
--				      "directory instead of cloning again from\n"
--				      "  %s\n"
--				      "use the '--force' option. If the local git "
--				      "directory is not the correct repo\n"
--				      "or if you are unsure what this means, choose "
--				      "another name with the '--name' option.\n"),
--				    add_data->realrepo);
-+
-+				strbuf_addf(&msg, _("If you want to reuse this local git "
-+						    "directory instead of cloning again from\n"
-+						    "  %s\n"
-+						    "use the '--force' option. If the local git "
-+						    "directory is not the correct repo\n"
-+						    "or you are unsure what this means choose "
-+						    "another name with the '--name' option."),
-+					    add_data->realrepo);
-+
-+				die_msg = strbuf_detach(&msg, NULL);
-+				die("%s", die_msg);
- 			} else {
- 				printf(_("Reactivating local git directory for "
- 					 "submodule '%s'\n"), add_data->sm_name);
--- 
-2.33.1.1058.gd3b4e01def
-
+  Sven
