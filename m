@@ -2,79 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B2F8C433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 14:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0CD3C433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 15:41:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF2D660F25
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 14:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D81CB60FE3
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 15:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbhJWPAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 11:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36750 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbhJWPAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 11:00:21 -0400
-X-Greylist: delayed 81874 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 23 Oct 2021 07:58:02 PDT
-Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 883DAC061714
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 07:58:02 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPv6:2003:ea:2738:ef00:e116:f70b:b16d:6d5b] (p200300ea2738ef00e116f70bb16d6d5b.dip0.t-ipconnect.de [IPv6:2003:ea:2738:ef00:e116:f70b:b16d:6d5b])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S230463AbhJWPoR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 11:44:17 -0400
+Received: from a2nlsmtp01-05.prod.iad2.secureserver.net ([198.71.225.49]:45072
+        "EHLO a2nlsmtp01-05.prod.iad2.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229901AbhJWPoQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 23 Oct 2021 11:44:16 -0400
+Received: from a2plcpnl0855.prod.iad2.secureserver.net ([107.180.109.50])
+        by : HOSTING RELAY : with ESMTP
+        id eJ8imaq1fD8S5eJ8imH5WR; Sat, 23 Oct 2021 08:40:56 -0700
+X-CMAE-Analysis: v=2.4 cv=Ks2IZUaN c=1 sm=1 tr=0 ts=61742d08
+ a=TnFZWvihntyBY5k9PECvpg==:117 a=gu6bcJMwsK5EayZrpSXjig==:17
+ a=9+rZDBEiDlHhcck0kWbJtElFXBc=:19 a=IkcTkHD0fZMA:10 a=8gfv0ekSlNoA:10
+ a=_sIrjDtJnPOESWS0g28A:9 a=QEXdDO2ut3YA:10
+X-SECURESERVER-ACCT: justus@opentransactions.org
+Received: from [156.96.151.132] (port=47690 helo=mailserver)
+        by a2plcpnl0855.prod.iad2.secureserver.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <justus@opentransactions.org>)
+        id 1meJ8h-003dMh-SX; Sat, 23 Oct 2021 08:40:56 -0700
+Received: from [10.137.0.14] (helium.fuckthenavy.net [192.168.199.2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: sven@cs-ware.de)
-        by srv1.79p.de (Postfix) with ESMTPSA id D584A600695;
-        Sat, 23 Oct 2021 16:57:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2021; t=1635001079;
-        bh=Yijig5k8zaMfQVMtEvtEvSpVKxrpclts3N6PZJXdr1s=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=u4SivCzaQ2FOVhH3ctW4axwFJd19TbNMiz6RrCaC6KoS5zO/3pfJDqsKGQHpjhtlQ
-         uARICEV3Y8OCj5Fs4Di0ucIGVtsjA52ZgdLqx+0G5QTn/XFNBo/juapZmu915wE1ut
-         TChzDSg23R+qaHuknNZlkqaAV1TaNl6BFhK1ZFrxJYnJFexdo6zpublX2CmWYrcZX8
-         Anq0plaMNTlBwEyf9eGThJRD54bx3bPR+FOPeVMBed9jMFnzyn7AClTOFt99gG3gwU
-         avTzZYDcCjUf4AZ6mfvuwn7hQ5XkzwaUASVCc+xiwvUDgFwTgF80YFb2RYqRzXvyk8
-         9qlRbFg3w+6eQ==
-Subject: Re: Git silently broke push-options over ssh?
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-References: <4aef40f2-43f8-eab3-a840-6e76c8b4afbb@cs-ware.de>
- <YXMku8V9cdHLfXt6@coredump.intra.peff.net>
-From:   Sven Strickroth <email@cs-ware.de>
-Message-ID: <ff7ff6ca-2941-c61e-f36d-0732b367fc64@cs-ware.de>
-Date:   Sat, 23 Oct 2021 16:57:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        by mailserver (Postfix) with ESMTPSA id 196718608B7;
+        Sat, 23 Oct 2021 10:40:54 -0500 (CDT)
+Message-ID: <e5a6dfa5-617f-5b5b-6803-45d36b3de53e@opentransactions.org>
+Date:   Sat, 23 Oct 2021 07:40:52 -0800
 MIME-Version: 1.0
-In-Reply-To: <YXMku8V9cdHLfXt6@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: gitignore as symbolic link
 Content-Language: en-US
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Rene Kita <mail@rkta.de>, git <git@vger.kernel.org>
+References: <fcf288fc-72b7-964c-e462-496066528c7b@opentransactions.org>
+ <YXLro/8c1Feg6TcN@kitchen>
+ <CAHd-oW50puNCrYTQhR4qffgtP6-wJerWLhmhCV+nYcLVNu+CBg@mail.gmail.com>
+ <fa4b28b1-9b5e-0201-5afe-2e8f294fa9b4@opentransactions.org>
+ <YXP5rZT5IgFcMZs0@camp.crustytoothpaste.net>
+From:   Justus Ranvier <justus@opentransactions.org>
+Organization: Open-Transactions
+In-Reply-To: <YXP5rZT5IgFcMZs0@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - a2plcpnl0855.prod.iad2.secureserver.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - opentransactions.org
+X-Get-Message-Sender-Via: a2plcpnl0855.prod.iad2.secureserver.net: authenticated_id: justus@opentransactions.org
+X-Authenticated-Sender: a2plcpnl0855.prod.iad2.secureserver.net: justus@opentransactions.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-CMAE-Envelope: MS4xfITI82z4MThXgVrrxomqrhdYIayIWuKs6G1zZxfyOCmFg6Vw2Q6SFgYzSUexv77CoW2+j0Bl4ariU5Gkqo6WUNhL1Xxv8eA2D3SVXzDJtU1ERy9UMlY9
+ ZPXirmLbXTqjyGjjoMGI/1mQg8owyK+MyIGFO93Mvia3oGaFWjoG+MkhVCOEwnTFVoCY6owt+n75aGUMH6ZORQlUhsYTtFtbIaQkkeyruSbbG53YT8S8vQjJ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.10.2021 um 22:53 schrieb Jeff King:
-> On Fri, Oct 22, 2021 at 07:27:14PM +0200, Sven Strickroth wrote:
-> 
->> If I understood <https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html>
->> correctly I have to enable the Git protocol version 2 and then the push
->> options should work.
-> 
-> I don't think that is true. There is no v2 push protocol yet, so the
-> push options must work over v0.
+On 10/23/21 04:01, brian m. carlson wrote:
+> For example, I
 
-You are right. After enabling GIT_TRACE_PACKET I see that the 
-push-option gets transmitted correctly.
+I'm glad that works for you and whatever organizations you happen to be 
+involved in. I'm sure you're happy that git taking away this capability 
+did not impact your workflow.
 
-I got confused was because a GitLab CI pipeline run despite I passed 
-ci.skip. The reason why the pipeline ran despite of that flag is that 
-some external push hook triggered a CI pipeline action manually - when I 
-look at GitLab immediately after the push I see that the pipeline is 
-skipped and then the external hook fires...
-
-Thanks for the hint for enabling GIT_TRACE_PACKET  Peff and sorry for 
-the noise.
-
-  Sven
+Other people have different use cases and operate under different sets 
+of constraints and are considerably inconvenienced when functionality 
+that has worked for many years is suddenly removed from a core piece of 
+software like git.
