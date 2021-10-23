@@ -2,38 +2,38 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5DF8C433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 22:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7E62C433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 22:26:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E93C60F23
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 22:21:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFDFC60F25
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 22:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231174AbhJWWV4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 18:21:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57915 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229730AbhJWWVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 18:21:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EC55FEBDC;
-        Sat, 23 Oct 2021 18:19:32 -0400 (EDT)
+        id S231331AbhJWW20 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 18:28:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65197 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229730AbhJWW2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 18:28:25 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 22EA815D3C8;
+        Sat, 23 Oct 2021 18:26:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hG4m/SmqD1zY
-        DXzCAHm6+tqgWpjgJ3BjWtQsWQar0cQ=; b=mohaqC7QXNk0X4SWCc336UZCtu4N
-        ME9sikRo1T1Fk591TkEpoVbG8uHt/PoNEKwI4m/2o8sCqtrNHHJknCEGSNBR9Tgd
-        EK+E9H2k30V31SZy9lk/Zi2A1kB/Eg3K7/zkOIIXwClIfZb/N9qhpGxCIBpRWPoB
-        uUu8rIOuhNbPSp4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74B3DFEBDB;
-        Sat, 23 Oct 2021 18:19:32 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=IMM2vRj/3MFJ
+        5ggXDoHbtQvf03owcXqdKs4ZIaQI5ss=; b=j/234N0MnxEy13CL40H6Sfh+9ZDW
+        XyoEOlSsD3yeAT3VREju5rCxBbsjQaSftZSOWb8jxFuGUODT+yOUGg93Xb1ds5q2
+        YNIXQEfTOeY3qgorclvd/rDJWNvJfIKgjVlqvuuVdvXj0h+u21kFZhz7/i+mACYz
+        eVKDs3syyVPvKPE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1B7AC15D3C7;
+        Sat, 23 Oct 2021 18:26:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C665CFEBDA;
-        Sat, 23 Oct 2021 18:19:31 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7A7A315D3C5;
+        Sat, 23 Oct 2021 18:26:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
@@ -42,21 +42,21 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 09/10] generate-cmdlist.sh: replace "grep' invocation
- with a shell version
+Subject: Re: [PATCH v2 10/10] generate-cmdlist.sh: replace "cut", "tr" and
+ "grep" with pure-shell
 References: <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
         <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
-        <patch-v2-09.10-7903dd1f8c2-20211022T193027Z-avarab@gmail.com>
-Date:   Sat, 23 Oct 2021 15:19:30 -0700
-In-Reply-To: <patch-v2-09.10-7903dd1f8c2-20211022T193027Z-avarab@gmail.com>
+        <patch-v2-10.10-e10a43756d1-20211022T193027Z-avarab@gmail.com>
+Date:   Sat, 23 Oct 2021 15:26:02 -0700
+In-Reply-To: <patch-v2-10.10-e10a43756d1-20211022T193027Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 22 Oct
- 2021 21:36:13
+ 2021 21:36:14
         +0200")
-Message-ID: <xmqqcznv9yfh.fsf@gitster.g>
+Message-ID: <xmqq7de39y4l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4BAD2C32-344F-11EC-B4C0-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 35232678-3450-11EC-9CFC-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,93 +64,34 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Replace the "grep" we run to exclude certain programs from the
-> generated output with a pure-shell loop that strips out the comments,
-> and sees if the "cmd" we're reading is on a list of excluded
-> programs. This uses a trick similar to test_have_prereq() in
-> test-lib-functions.sh.
->
-> On my *nix system this makes things quite a bit slower compared to
-> HEAD~, but since the generate-cmdlist.sh is already quite fast, and
-> this likely helps systems where command invocations are more
-> expensive (i.e. Windows) let's use this anyway.
->
->   'sh generate-cmdlist.sh.old command-list.txt' ran
->     1.56 =C2=B1 0.11 times faster than 'sh generate-cmdlist.sh command-=
-list.txt'
->    18.00 =C2=B1 0.19 times faster than 'sh generate-cmdlist.sh.master c=
-ommand-list.txt'
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  generate-cmdlist.sh | 27 +++++++++++++++++++++------
->  1 file changed, 21 insertions(+), 6 deletions(-)
->
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> index 9b7d6aea629..2b184bbc65f 100755
-> --- a/generate-cmdlist.sh
-> +++ b/generate-cmdlist.sh
-> @@ -6,12 +6,27 @@ die () {
->  }
-> =20
->  command_list () {
-> -	eval "grep -ve '^#' $exclude_programs" <"$1"
-> +	while read cmd rest
-> +	do
-> +		case "$cmd" in
-> +		"#"*)
-> +			continue;
-> +			;;
-> +		*)
-> +			case "$exclude_programs" in
-> +				*":$cmd:"*)
-> +				;;
+> Extend the pure-shell parsing of command-list.txt by using having
 
-Funny indentation.
+using having???
 
-> +			*)
-> +				echo "$cmd $rest"
-> +				;;
-> +			esac
-> +		esac
-> +	done
->  }
+> command_list() take an argument indicating whether we're interested in
+> the "$cmd" part of the line, or just the "$rest".
 
->  category_list () {
-> -	command_list "$1" |
-> +	command_list <"$1" |
+OK, --no-cat stands for --no-category?  Even if (or especially if,
+perhaps) you do not bother to parse the option in the command_list
+helper, it would help the readers if it is spelled out.  I somehow
+thought if this option has anything to do with "/bin/cat".
 
-This change is unnecessary if you did
+> That takes care of the "cut -d", and printf's auto-repeat feature can
+> replace the "tr". We don't need the "grep -v" either, as we're not
+> emitting any empty lines here (the command-list.txt doesn't have any).
 
-	while read cmd rest
-	do
-		...
-	done <"$1"
+It may make sense to ensure that the case arm won't feed an empty=20
+line that made cmd an empty by tightening the condition.
 
-to keep the external interface to the command_list helper unchanged.
+	case "$cmd" in
+	"#"*)
+		continue
+		;;=20
+-	*)
++	?*)
+		case "$exclude_programs" in
+		*:"$cmd":*)
+			;;
 
-> -	cut -c 40- |
-> +	cut -d' ' -f2- |
-
-Is this just a subjective preference or a logical consequence of how
-the output from command_list looks like got somehow changed?
-
-> @@ -48,7 +63,7 @@ define_category_names () {
->  print_command_list () {
->  	echo "static struct cmdname_help command_list[] =3D {"
-> =20
-> -	command_list "$1" |
-> +	command_list <"$1" |
-
-Ditto.
-
-> -exclude_programs=3D
-> +exclude_programs=3D:
->  while test "--exclude-program" =3D "$1"
->  do
->  	shift
-> -	exclude_programs=3D"$exclude_programs -e \"^$1 \""
-> +	exclude_programs=3D"$exclude_programs$1:"
->  	shift
->  done
+If anything, that would serve as a clear documentation that we are
+safe even when the input has an empty line.
