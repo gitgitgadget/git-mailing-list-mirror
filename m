@@ -2,102 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B136C433F5
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 884FDC433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:10:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E7D260FDA
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:02:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 609266109E
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhJWMEr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 08:04:47 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39596 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230236AbhJWMEp (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 23 Oct 2021 08:04:45 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5B28A60473;
-        Sat, 23 Oct 2021 12:01:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1634990516;
-        bh=+2rWOZse0Ny9c0Ew0iVCRfIXwizSpQeTcZ+tYOJTTaw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=TX9qm174dKNXqHWRQEDiVHmDWLn0egBsODsrRmvkplV8s2MIZqbXEUuVUE9V8fSLI
-         mMx/YgxzT9PCpZRt8apupGOiEI7v3fjjYiJAa9np7jRNMk5/RJtInDJrv7swbFmOKn
-         u7vsZslmsxWOdzzq57WYuqFHlPgZnMtQdHgnNJnPzxQsuULsG6CKgij1DnNyKCEgie
-         NRwgzGGDo4AQLysuCBRQLEgkZJHntCCyql/7orLPTrcCtv7VQvn66EBI0KbbPRJEoC
-         YddjhTggivRHGMrEiUmeYLJ00ZrOL2NWQDnGlIwGq42MTWUq6Y4uLUsgyjzOAdnvaX
-         0XvFsJEkbbLttBW+13D7+DR/vGXjZgFWD1eTN73RLKpMD7Zc2b8u4UxPEsEyqU5b81
-         TzmMhhkyQxlu82cNc8BNw7PgHDz+5ycQ9kaFCBqYHcFgBxgDDTHMGJJkAuv5ZZjZWG
-         0JLuD+5AxqVM7VUcV2zOZakqjItXAJHzPpsF2GYfiyw080Sjb+/
-Date:   Sat, 23 Oct 2021 12:01:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Justus Ranvier <justus@opentransactions.org>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Rene Kita <mail@rkta.de>, git <git@vger.kernel.org>
-Subject: Re: gitignore as symbolic link
-Message-ID: <YXP5rZT5IgFcMZs0@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Justus Ranvier <justus@opentransactions.org>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Rene Kita <mail@rkta.de>, git <git@vger.kernel.org>
-References: <fcf288fc-72b7-964c-e462-496066528c7b@opentransactions.org>
- <YXLro/8c1Feg6TcN@kitchen>
- <CAHd-oW50puNCrYTQhR4qffgtP6-wJerWLhmhCV+nYcLVNu+CBg@mail.gmail.com>
- <fa4b28b1-9b5e-0201-5afe-2e8f294fa9b4@opentransactions.org>
+        id S230155AbhJWMNF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 08:13:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229813AbhJWMNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 08:13:02 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A985BC061764
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:10:43 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id q2-20020a17090a2e0200b001a0fd4efd49so9003240pjd.1
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:10:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=ynP3MXVx1pctJkNhPpLiroPFM58h3Lug48iAP4nMnUg=;
+        b=NyvjlcyrD6Tb7MkKAQqTNrrwvd7O5gejjOxk6tIqZuXOSYEUVAx5YhEQ3nNzDkUJdl
+         Y2TL2a2iMqN/soM2gBxCvdKOIFlsvpR+Bnc3bsV/+s7S4vsL+R37hIkakUnVWbnlEXBb
+         bs8vRFMu8OijJVenB85z19gJHEi6NLQsRAnZ1zXbvfGm+lzEy0CiHrmH8cnq1nNP4i2B
+         92tUaLC0fBOHv1dl3TttvPjkD2+kNDJLbsuuATAwkwr/jVMQma0CQix9v8+a4sxg2Blh
+         qo5AufR++oaqidT6p9sOIgCNWAKRVOrTnF6DEE/loxNXA9bQNxAp++p1+VblYYi/4nNp
+         Nr7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ynP3MXVx1pctJkNhPpLiroPFM58h3Lug48iAP4nMnUg=;
+        b=SzXAIQmGgbmD5QQfMoaQOfzwc5XgD+XnZnMyIc8lJpMIl5tNJJuMImn9RQealOXFzN
+         MCQ+x+Ar7S5MeS5tL7w664IKYN9yD6vtErMRWIlT6Cb66J0+nOsjfrdVLO/wuUs8Dn09
+         xGwyPAqKsb68KSEy7vjtHW7ksd0UNRzAmtgvKyVJxFuD3/sstiy+XtAtPtmsKV3rteWg
+         k5ps40VIz6JtgOWJxkL00Wps/uzYFre37gKnx0l5hder79nR3l5o3do7E1hx38IBb50O
+         Ab2k3+Lg7ZzKCuQdP+sKDyIIAEHvGu3sMyTythKgdBMojiELxVPfHaYa3MXzdT1XucIb
+         v0nA==
+X-Gm-Message-State: AOAM533293XjwuxjG4Q8FSCuEZf/+rFBH4RzTMQDYAR0kChpaxURM00J
+        BsOEl7HI6/tQoW8EAgATpjv32yHEOfM5PFAs
+X-Google-Smtp-Source: ABdhPJy0kuQbwVsn0+csz6fuktIdmLKPov7J8CTaqFBl7OLBRJwxwqkZnyukCjF6sVnltC7D5eafnA==
+X-Received: by 2002:a17:90a:8912:: with SMTP id u18mr6473159pjn.69.1634991042534;
+        Sat, 23 Oct 2021 05:10:42 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-77.three.co.id. [180.214.233.77])
+        by smtp.gmail.com with ESMTPSA id m22sm13057169pfo.176.2021.10.23.05.10.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 23 Oct 2021 05:10:42 -0700 (PDT)
+Message-ID: <376fa19b-0e3f-1ccb-6c25-c9aa86fc0707@gmail.com>
+Date:   Sat, 23 Oct 2021 19:10:39 +0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dx/RTebC84F9Am6u"
-Content-Disposition: inline
-In-Reply-To: <fa4b28b1-9b5e-0201-5afe-2e8f294fa9b4@opentransactions.org>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: Bug report: branch display in git stash output
+Content-Language: en-US
+To:     Kraymer <kraymer@gmail.com>, git@vger.kernel.org
+References: <CAAjS6zO2E043KEcqEJr_5QbtdZEjxVWObCc518Ti3sW-p6LX5A@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <CAAjS6zO2E043KEcqEJr_5QbtdZEjxVWObCc518Ti3sW-p6LX5A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 23/10/21 14.21, Kraymer wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> ❯ git checkout -b branch/with/slash
+> Switched to a new branch 'branch/with/slash'
+> ❯ echo "foobar" > foobar.txt
+> ❯ git stash
+> Saved working directory and index state WIP on slash: 41dc5da git:
+> update .gitconfig
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> ❯ git stash list
+> stash@{0}: WIP on branch/with/slash: 41dc5da git: update .gitconfig
+> 
+> What happened instead? (Actual behavior)
+> 
+> ❯ git stash list
+> stash@{0}: WIP on slash: 41dc5da git: update .gitconfig
+> 
+> What's different between what you expected and what actually happened?
+> 
+> the displayed branch name in `git stash` output is truncated
 
---dx/RTebC84F9Am6u
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I can reproduce the issue using this reproducer:
 
-On 2021-10-22 at 23:55:16, Justus Ranvier wrote:
-> Suppose a person is managing N repositories. Would that person prefer to
-> maintain the list of files to ignore for every random IDE that anybody who
-> joins the team might want to use in:
->=20
-> a: One place
-> b: N places
+```
 
-Developers should be responsible for ensuring that their own editor's
-temporary files are ignored.  For example, I use Vim, so it's my
-responsibility to ensure that I globally ignore swap files using
-"core.excludesFile" or that my editor is configured not to produce them.
-(In my case, it's the latter.)
+mkdir test && cd test &&
+git init &&
 
-As you point out, it's unsustainable to have to manage a list of the
-detritus of every possible editor.  What if I had decided to use an
-editor that is not very popular, like ae, joe, or acme?  Should every
-project be responsible for dealing with my uncommon editor, or should I
-be responsible for my own editing hygiene?
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+# make initial commit first, since git stash requires it
+echo "./" > slashdot &&
+git commit -m "slashdot" &&
 
---dx/RTebC84F9Am6u
-Content-Type: application/pgp-signature; name="signature.asc"
+# stash WIP
+git checkout -b slash/dot &&
+echo "slashdot" >> slashdot &&
+git stash push -m "slashdot"
+```
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Note that when stashing, the message says "Saved working directory and 
+index state On dot: slashdot" although we are currently on `slash/dot` 
+branch.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXP5rQAKCRB8DEliiIei
-gYSdAP9HvE6FcjI0onHRNeKPCI3zVQ8/IOL2BZ8G6TjxJeqXoAD7B1jVl+6viO5k
-2/gsxVunoctqsoSNkL54snUwRQDsuA4=
-=5mXy
------END PGP SIGNATURE-----
-
---dx/RTebC84F9Am6u--
+-- 
+An old man doll... just what I always wanted! - Clara
