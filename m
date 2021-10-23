@@ -2,116 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 884FDC433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28EACC433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 609266109E
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:10:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E39E460FDA
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 12:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230155AbhJWMNF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 08:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
+        id S230048AbhJWNAb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 09:00:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbhJWMNC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 08:13:02 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A985BC061764
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:10:43 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id q2-20020a17090a2e0200b001a0fd4efd49so9003240pjd.1
-        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:10:43 -0700 (PDT)
+        with ESMTP id S229699AbhJWNAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 09:00:30 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D9BC061764
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id t184so5966565pgd.8
+        for <git@vger.kernel.org>; Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=ynP3MXVx1pctJkNhPpLiroPFM58h3Lug48iAP4nMnUg=;
-        b=NyvjlcyrD6Tb7MkKAQqTNrrwvd7O5gejjOxk6tIqZuXOSYEUVAx5YhEQ3nNzDkUJdl
-         Y2TL2a2iMqN/soM2gBxCvdKOIFlsvpR+Bnc3bsV/+s7S4vsL+R37hIkakUnVWbnlEXBb
-         bs8vRFMu8OijJVenB85z19gJHEi6NLQsRAnZ1zXbvfGm+lzEy0CiHrmH8cnq1nNP4i2B
-         92tUaLC0fBOHv1dl3TttvPjkD2+kNDJLbsuuATAwkwr/jVMQma0CQix9v8+a4sxg2Blh
-         qo5AufR++oaqidT6p9sOIgCNWAKRVOrTnF6DEE/loxNXA9bQNxAp++p1+VblYYi/4nNp
-         Nr7A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QEFjduxivPHS3FQ0Xp6CRGxWajf3GrLP2ZvnjKSSr2s=;
+        b=OIlDcmtF1YaBcUCwkfex2N1Wa0kxRQQ4fRUQ/vY6kQGMyX7KYQ3a3NbbnEZ2DEIA2o
+         4dmlgqVOtoyv5upVbnyJfhdCzUJqWlLTiHVlHfzif+TQi8TV13LOfr0CLUP7HSNCrCqE
+         zerzVEAgF0Cr2MbaBEMK/vDAfMSBI4r4efFXnmlkNw4MKC7D/NRWqQ+U3gqkK7V2ZqW+
+         HKyeVm9Q58/pcscyYJx4GfzdD6YsVdEA0kA4iQG7uD1yfBYGlSamsIQQzrsbRbWaGynE
+         XMiHSxpUOb4c4vskOJMRqXy2pblvuQGWge4LOc0NsqZ8/tdVXtWfcIWHdVAqlG47bZES
+         M2wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ynP3MXVx1pctJkNhPpLiroPFM58h3Lug48iAP4nMnUg=;
-        b=SzXAIQmGgbmD5QQfMoaQOfzwc5XgD+XnZnMyIc8lJpMIl5tNJJuMImn9RQealOXFzN
-         MCQ+x+Ar7S5MeS5tL7w664IKYN9yD6vtErMRWIlT6Cb66J0+nOsjfrdVLO/wuUs8Dn09
-         xGwyPAqKsb68KSEy7vjtHW7ksd0UNRzAmtgvKyVJxFuD3/sstiy+XtAtPtmsKV3rteWg
-         k5ps40VIz6JtgOWJxkL00Wps/uzYFre37gKnx0l5hder79nR3l5o3do7E1hx38IBb50O
-         Ab2k3+Lg7ZzKCuQdP+sKDyIIAEHvGu3sMyTythKgdBMojiELxVPfHaYa3MXzdT1XucIb
-         v0nA==
-X-Gm-Message-State: AOAM533293XjwuxjG4Q8FSCuEZf/+rFBH4RzTMQDYAR0kChpaxURM00J
-        BsOEl7HI6/tQoW8EAgATpjv32yHEOfM5PFAs
-X-Google-Smtp-Source: ABdhPJy0kuQbwVsn0+csz6fuktIdmLKPov7J8CTaqFBl7OLBRJwxwqkZnyukCjF6sVnltC7D5eafnA==
-X-Received: by 2002:a17:90a:8912:: with SMTP id u18mr6473159pjn.69.1634991042534;
-        Sat, 23 Oct 2021 05:10:42 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-77.three.co.id. [180.214.233.77])
-        by smtp.gmail.com with ESMTPSA id m22sm13057169pfo.176.2021.10.23.05.10.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Oct 2021 05:10:42 -0700 (PDT)
-Message-ID: <376fa19b-0e3f-1ccb-6c25-c9aa86fc0707@gmail.com>
-Date:   Sat, 23 Oct 2021 19:10:39 +0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QEFjduxivPHS3FQ0Xp6CRGxWajf3GrLP2ZvnjKSSr2s=;
+        b=MewUDubjAM5A7uZHtYLsA8KZ9imDEzZIfQSkyf3W7H+Pj1VTavpu3f5gTNqTySnBMK
+         10YQ22a2mVd6242H0t6Lo6SJ6WRrtML+I6Hh/PEwMlMbrV/2vfYdOjyCqWkScaJKiZ+y
+         nzrRd/yUq5VMcj7QNLCJ4Ku+nLhB4aQgVWbHutNEJjciZYN4LyZcRozTVvmW9Ktn/Z/o
+         G1JjCvEKjIj9e+hU1/tqTztTQqzu5uapQ+rHSKoIcPXnXqdIIbXjGpjGxW37mBD/Bfv2
+         fm2kEl4md4y9cx+Eub88aPkgObxSjbqhNylA+pl6Zzlpx+kY336kRncVf8COnMqfDAIc
+         RiMA==
+X-Gm-Message-State: AOAM5336nzNG+BGkbWObfDATCIxfWAfw8421xtpZbrgtlCZPyXGrvjzc
+        guFv0xNkW2WRwq39z44cnb9Urtivuo8=
+X-Google-Smtp-Source: ABdhPJzZQJWYIuuFy8ZoGEb/h6v9UFFwOA/O2tdSzKyKdXcJZrQiHRQ0+N75+i7DoCisrEnqO5c3YQ==
+X-Received: by 2002:a63:3548:: with SMTP id c69mr4486489pga.111.1634993891420;
+        Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+Received: from localhost.localdomain ([49.204.131.111])
+        by smtp.gmail.com with ESMTPSA id p4sm10955655pgc.15.2021.10.23.05.58.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Oct 2021 05:58:11 -0700 (PDT)
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
+Subject: [PATCH v3 0/1] submodule: correct an incorrectly formatted error message
+Date:   Sat, 23 Oct 2021 18:27:21 +0530
+Message-Id: <20211023125722.125933-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.33.1.1058.gd3b4e01def
+In-Reply-To: <m27df9lvm1.fsf@gmail.com>
+References: <m27df9lvm1.fsf@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: Bug report: branch display in git stash output
-Content-Language: en-US
-To:     Kraymer <kraymer@gmail.com>, git@vger.kernel.org
-References: <CAAjS6zO2E043KEcqEJr_5QbtdZEjxVWObCc518Ti3sW-p6LX5A@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <CAAjS6zO2E043KEcqEJr_5QbtdZEjxVWObCc518Ti3sW-p6LX5A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/10/21 14.21, Kraymer wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> ❯ git checkout -b branch/with/slash
-> Switched to a new branch 'branch/with/slash'
-> ❯ echo "foobar" > foobar.txt
-> ❯ git stash
-> Saved working directory and index state WIP on slash: 41dc5da git:
-> update .gitconfig
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> ❯ git stash list
-> stash@{0}: WIP on branch/with/slash: 41dc5da git: update .gitconfig
-> 
-> What happened instead? (Actual behavior)
-> 
-> ❯ git stash list
-> stash@{0}: WIP on slash: 41dc5da git: update .gitconfig
-> 
-> What's different between what you expected and what actually happened?
-> 
-> the displayed branch name in `git stash` output is truncated
+Hi Atharva,
 
-I can reproduce the issue using this reproducer:
+Sorry for the delay in sending this. Got held up with other work.
 
-```
+On 21/09/21 10:17 pm, Atharva Raykar wrote:
+>>
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index 414fcb63ea..236da214c6 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -2775,7 +2775,7 @@ struct add_data {
+>>   };
+>>   #define ADD_DATA_INIT { .depth = -1 }
+>>
+>> -static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
+>> +static void show_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
+> 
+> I like the change from using a strbuf instead of passing the output
+> stream and printing to it. But maybe we should rename this function, now
+> that it doesn't really 'show' anything? Probably something like
+> 'append_fetch_remotes()'?
 
-mkdir test && cd test &&
-git init &&
+That's a good point. I've taken your suggestion into account in this v3.
 
-# make initial commit first, since git stash requires it
-echo "./" > slashdot &&
-git commit -m "slashdot" &&
+Find the details of the v3 of this patch below.
 
-# stash WIP
-git checkout -b slash/dot &&
-echo "slashdot" >> slashdot &&
-git stash push -m "slashdot"
-```
+Changes since v2:
 
-Note that when stashing, the message says "Saved working directory and 
-index state On dot: slashdot" although we are currently on `slash/dot` 
-branch.
+- Renamed the helper function name to be more appropriate, upon suggestion.
 
+Also, I rebased my local branch over the latest 'master'. So, this should apply
+cleanly over 'master'.
+
+For reference, the v2 could be found here:
+
+    https://public-inbox.org/git/20210918193116.310575-1-kaartic.sivaraam@gmail.com/
+
+... and the range-diff against v2 could be found below.
+
+--
+Sivaraam
+
+
+Kaartic Sivaraam (1):
+  submodule--helper: fix incorrect newlines in an error message
+
+ builtin/submodule--helper.c | 37 +++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
+
+Range-diff against v2:
+1:  95cbe38be3 ! 1:  7c4887ccf5 submodule--helper: fix incorrect newlines in an error message
+    @@ builtin/submodule--helper.c: struct add_data {
+      #define ADD_DATA_INIT { .depth = -1 }
+      
+     -static void show_fetch_remotes(FILE *output, const char *git_dir_path)
+    -+static void show_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
+    ++static void append_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
+      {
+      	struct child_process cp_remote = CHILD_PROCESS_INIT;
+      	struct strbuf sb_remote_out = STRBUF_INIT;
+    @@ builtin/submodule--helper.c: static int add_submodule(const struct add_data *add
+     +						    "locally with remote(s):\n"),
+     +					    add_data->sm_name);
+     +
+    -+				show_fetch_remotes(&msg, add_data->sm_name,
+    -+						   submod_gitdir_path);
+    ++				append_fetch_remotes(&msg, add_data->sm_name,
+    ++						     submod_gitdir_path);
+      				free(submod_gitdir_path);
+     -				die(_("If you want to reuse this local git "
+     -				      "directory instead of cloning again from\n"
 -- 
-An old man doll... just what I always wanted! - Clara
+2.33.1.1058.gd3b4e01def
+
