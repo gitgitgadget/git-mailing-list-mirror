@@ -2,61 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57156C433EF
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 18:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23F99C433EF
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 20:28:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B3B760232
-	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 18:32:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC94860F23
+	for <git@archiver.kernel.org>; Sat, 23 Oct 2021 20:28:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230404AbhJWSd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Oct 2021 14:33:59 -0400
-Received: from smtprelay07.ispgateway.de ([134.119.228.97]:19431 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230051AbhJWSd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Oct 2021 14:33:57 -0400
-X-Greylist: delayed 11179 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Oct 2021 14:33:56 EDT
-Received: from [79.233.235.171] (helo=[192.168.2.202])
-        by smtprelay07.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1meItG-0003jU-IH
-        for git@vger.kernel.org; Sat, 23 Oct 2021 17:24:58 +0200
-From:   Martin <git@mfriebe.de>
-Subject: Contradicting man page for git branch copy
-To:     Git List <git@vger.kernel.org>
-Message-ID: <7a600f7e-e3a7-edac-056c-9639ff01e471@mfriebe.de>
-Date:   Sat, 23 Oct 2021 17:25:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S230280AbhJWUaj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Oct 2021 16:30:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55717 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230142AbhJWUai (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Oct 2021 16:30:38 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADC2FE9298;
+        Sat, 23 Oct 2021 16:28:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3j+nYt0hm1YFNgkL61hLVgGi3tt8NjHigGjORz
+        v32s8=; b=IqwXTc/BQVwGHF9i1VxitS9IxJEFFMSH7UdyiY+jqlDzhrdOiuE6rX
+        jSP67ZUCaqD/lFf2e9Wq3GwdCma7UUGqhExwIrAqOMO6xGoA3VEi3+/JzVamrSDe
+        9xE5U/H4WANi48pTJ/6YZWqsHNNCDnHVYprP1EZI6sjm0UdqxqX+o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5838E9297;
+        Sat, 23 Oct 2021 16:28:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 147CDE9296;
+        Sat, 23 Oct 2021 16:28:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, dstolee@microsoft.com, peff@peff.net
+Subject: Re: [PATCH 10/11] pack-bitmap-write.c: don't return without
+ stop_progress()
+References: <cover.1634787555.git.me@ttaylorr.com>
+        <cb30aa67c0023c435cf472303bbf4894c8b2d7ec.1634787555.git.me@ttaylorr.com>
+        <211021.86ee8emx57.gmgdl@evledraar.gmail.com>
+        <xmqqpmrykys9.fsf@gitster.g>
+Date:   Sat, 23 Oct 2021 13:28:16 -0700
+In-Reply-To: <xmqqpmrykys9.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        21 Oct 2021 11:39:34 -0700")
+Message-ID: <xmqqilxncwpr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1D244C0-343F-11EC-9CA0-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The man page says
+Junio C Hamano <gitster@pobox.com> writes:
 
-1) Under "Description"
-https://git-scm.com/docs/git-branch#_description
-> The |-c| and |-C| options have the exact same semantics as |-m| and 
-> |-M|, except instead of the branch being renamed, it will be copied to 
-> a new name, along with its config and reflog.
-
-But on the option itself
-https://git-scm.com/docs/git-branch#Documentation/git-branch.txt--c
+>> Looks good :) Just a note that this is in
+>> "ab/only-single-progress-at-once" already in case you didn't spot it.
+>>
+>> That series is marked for "next?" (with a question mark) by Junio in the
+>> latest what's cooking, so *hint* *hint* for any last minute review :)
 >
-> -c
-> --copy
+> I wonder if it would help contributors if we give them a simple rule
+> to follow before sending their patches out:
 >
->     Copy a branch and the corresponding reflog.
+>  - You develop on an appropriate base (either on maint, or master,
+>    or a merge of selected topics in flight you absolutely have to
+>    depend on) as usual.
 >
+>  - You test merge the result to 'seen' and to 'next'.  If you do not
+>    get heavy conflicts and the tests pass, you are OK.
+>
+>  - Otherwise, you study what is conflicting, and should review it
+>    before you submit your topic.
 
-The latter does not mention the config.
+Addendum to this third step.
 
-So does it copy the config or not ?
+     ... Also, if you chose to depend on other topics when you
+     decided on the base in the first step, giving them your review
+     would be a good way to show others that _you_ understand the
+     code that you are building on top of, which in turn may give
+     others confidence in your topic.
 
-
-
+Thanks.
