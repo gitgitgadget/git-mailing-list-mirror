@@ -2,58 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B54D9C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 15:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38A69C433F5
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 15:43:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9196E60F21
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 15:38:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19C7060F46
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 15:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbhJXPkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Oct 2021 11:40:46 -0400
-Received: from mail.archlinux.org ([95.216.189.61]:56240 "EHLO
-        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230379AbhJXPkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Oct 2021 11:40:45 -0400
-Message-ID: <b08a9b79-c53b-c2f3-f976-01822b362add@archlinux.org>
+        id S231852AbhJXPp6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Oct 2021 11:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231708AbhJXPpv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Oct 2021 11:45:51 -0400
+Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970F7C06122F
+        for <git@vger.kernel.org>; Sun, 24 Oct 2021 08:43:07 -0700 (PDT)
+Message-ID: <348299a1-1333-9792-7b75-fc310f5ce47e@archlinux.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-rsa; t=1635089903;
+        s=dkim-rsa; t=1635090185;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=URwIkRCvvUK5H3/UWiyuGrwpit5DcGbout2jkpaQfoY=;
-        b=OjVDCXqslwdJMAlmuTi8YoB+8Al2XWcHN7COssR5opDNk+idks8TWqvNKF+biQmDf11SrA
-        6C+njuZ50BGyPTUByrd780tfFZZsiRFiZ0KGpNbeWRQwHgJri3DEufOcHq9h9kten/KSkC
-        pe70FsUUc/b/IlfGrnITMIjfefsUAJqoxvmNaZrfVVNnUD9z26pNxZiP5i9GAW+VzSm3HK
-        mVEgaTqi451MOCiwGFW6Flk0VsgscQoozVgbweqJxlOUrKSiXNJ8124VsSgUC3b4oD+hzJ
-        XvoM8Uu7d7jE2GGAGLSvAXG/LvCy7l8o7ZFnAdoPUIhE4CkjvlH/oXWkrnoIglfS0Bbwt3
-        C7Rc51dhrKzzAMMr4IB6SROuYVqAgAW1ACMTXTdczDLqjdz79hLy5PdH3jPZDt2huDYO23
-        hv9DdH3V25wZbGTAEk0kc7dI15xlasQ1AQYCE9lhKyq9iA+ApMYhEaICaoHrDTBtZQLhFR
-        4va8XdNVEMUbCc/Bll/Ze+UX+9pRJZVF86ptmz5II0k8loalBR+3dwGp+U4GF9E98nuK0e
-        YaOGlw4utmAXMGv++jjzQ7hHYfWV5FAKtxDxTrGuIjNYo23cfd8za6b0a+h2DidaQldf70
-        7IYB5QMPsEQ5LzQwDxxdhgt3IO/Dg8GG8zogyyFxZpKvTof7TJMBE=
+        bh=0ccxC8RVeOk3/ZuFByWk3RG3tLc/b4eqrf9BoWJiONw=;
+        b=H2ttgnCdCUG7AU9Km2kb5R+RQxWRAZqTfYkZ49hNQ6jtQHbhErAC2sVw3CEs2uA5ModwJc
+        CRP3QuHD0W7Ohx2k7bzzhDC+12n2UdJdHoI7+B7CKt3pCyqpFiEgGVgiZdSCwRsRHx7cKg
+        kbE/HFKIe47Jap8sGQj+BDj0frkLw06udcIvnDtUvBMIuWaR5x6jOo+D9tdFFZkMsdcqCZ
+        FgC2mlX1mNGTvUrufAwcFIkI4vNUi/2Mn9dspbSVHXHKFHMhZmmpdALz+7wJ8XSFNTreVO
+        mvvPnihBacdBiuNq2Xb8rK5zZu+PFA2MPVTs8TP6Ti069ak0GyTjqtSQs9yAJqviGCQrfS
+        3h+BJNHWo0z13vjYUGpmud6v1lUbdNdVLsWT8RRYChUhzm+K2YRsiRjBdBxauz7m792gDB
+        LjMOQPLMjW0zfxoBb4i9oVYLmJJUt6FnQjWu5qNnuPWQwRAm0+FlI5IOp9T5GQjVBvyjGv
+        ySJH6xposBpjDH+4VYPV2p+rgqxOLUsQ+4w75vZTTgVujzkFVnqLZTa2QwcZyxxwOdwskH
+        WWaZo90+yfWbZqeT8bpNrbanG4AbEtKAj3P0yR8vmqE3dowvSzzTkC1ZudLz0wlmOrC1VN
+        LaOeqp9c8u2/1Sgxute272ppuRfz9zejIitMhD63Q0EsMW31t9ivM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-ed25519; t=1635089903;
+        s=dkim-ed25519; t=1635090185;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=URwIkRCvvUK5H3/UWiyuGrwpit5DcGbout2jkpaQfoY=;
-        b=Dv4/zt4Kh3PHhjz9CDHtVt7OP1tJpYEjBpOP266dQxyzH2OHfEOHjaJhGsuvQz/1Kjd/8Z
-        bzjRuaEh4whhk2Cw==
-Date:   Sun, 24 Oct 2021 11:38:20 -0400
+        bh=0ccxC8RVeOk3/ZuFByWk3RG3tLc/b4eqrf9BoWJiONw=;
+        b=MT2wu76fzzf4PdTNGIhzBEX3S8ELpMPe1pHdH3TEcpBGApbnBfrYpGuhenIdydW/bztMze
+        ZwlfA3if0FQd0pBw==
+Date:   Sun, 24 Oct 2021 11:43:02 -0400
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/3] pretty: add tag option to %(describe)
+Subject: Re: [PATCH 3/3] pretty: add abbrev option to %(describe)
 Content-Language: en-US-large
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 References: <20211024014256.3569322-1-eschwartz@archlinux.org>
- <20211024014256.3569322-3-eschwartz@archlinux.org>
- <xmqq5ytn6mw2.fsf@gitster.g>
+ <20211024014256.3569322-4-eschwartz@archlinux.org>
+ <xmqqv91n57g4.fsf@gitster.g>
 From:   Eli Schwartz <eschwartz@archlinux.org>
 X-Clacks-Overhead: GNU Terry Pratchett
-In-Reply-To: <xmqq5ytn6mw2.fsf@gitster.g>
+In-Reply-To: <xmqqv91n57g4.fsf@gitster.g>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------kt340f0tkraN1rrJSlOfi0tR"
+ boundary="------------T9ArUOwc30My99Ff6fp5DU4g"
 Authentication-Results: mail.archlinux.org;
         auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
@@ -61,286 +64,151 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------kt340f0tkraN1rrJSlOfi0tR
-Content-Type: multipart/mixed; boundary="------------SZqyZJuAm9Kgmbs3Gccgbe9J";
+--------------T9ArUOwc30My99Ff6fp5DU4g
+Content-Type: multipart/mixed; boundary="------------YIPhg7Cu1vxjjYO9h0zSP5Ma";
  protected-headers="v1"
 From: Eli Schwartz <eschwartz@archlinux.org>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b08a9b79-c53b-c2f3-f976-01822b362add@archlinux.org>
-Subject: Re: [PATCH 2/3] pretty: add tag option to %(describe)
+Message-ID: <348299a1-1333-9792-7b75-fc310f5ce47e@archlinux.org>
+Subject: Re: [PATCH 3/3] pretty: add abbrev option to %(describe)
 References: <20211024014256.3569322-1-eschwartz@archlinux.org>
- <20211024014256.3569322-3-eschwartz@archlinux.org>
- <xmqq5ytn6mw2.fsf@gitster.g>
-In-Reply-To: <xmqq5ytn6mw2.fsf@gitster.g>
+ <20211024014256.3569322-4-eschwartz@archlinux.org>
+ <xmqqv91n57g4.fsf@gitster.g>
+In-Reply-To: <xmqqv91n57g4.fsf@gitster.g>
 
---------------SZqyZJuAm9Kgmbs3Gccgbe9J
+--------------YIPhg7Cu1vxjjYO9h0zSP5Ma
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 10/24/21 12:57 AM, Junio C Hamano wrote:
+On 10/24/21 1:15 AM, Junio C Hamano wrote:
 > Eli Schwartz <eschwartz@archlinux.org> writes:
 >=20
->> The %(describe) placeholder by default, like `git describe`, only
->> supports annotated tags. However, some people do use lightweight tags
->> for releases, and would like to describe those anyway. The command lin=
-e
->> tool has an option to support this.
+>> The %(describe) placeholder by default, like `git describe`, uses a
+>> seven-character abbreviated commit hash. This may not be sufficient to=
+
+>=20
+> "hash" -> "object name".
+>=20
+>> fully describe all git repos, resulting in a placeholder replacement
+>=20
+> "all git repos" -> "all commits in a given repository" (there may be
+> other valid way to clarify, but the point is that 'describe' does
+> not describe 'git repos' in the sense that my repository gets
+> description X while your repository gets description Y).
+
+
+Good points.
+
+
+>> changing its length because the repository grew in size. This could
+>> cause the output of git-archive to change.
 >>
->> Teach the placeholder to support this as well.
->>
->> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
->> ---
->>  Documentation/pretty-formats.txt | 11 ++++++-----
->>  pretty.c                         | 23 +++++++++++++++++++----
->>  t/t4205-log-pretty-formats.sh    |  8 ++++++++
->>  3 files changed, 33 insertions(+), 9 deletions(-)
->>
->> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-f=
-ormats.txt
->> index ef6bd420ae..14107ac191 100644
->> --- a/Documentation/pretty-formats.txt
->> +++ b/Documentation/pretty-formats.txt
->> @@ -220,6 +220,7 @@ The placeholders are:
->>  			  inconsistent when tags are added or removed at
->>  			  the same time.
->>  +
->> +** 'tags[=3D<BOOL>]': Also consider lightweight tags.
->>  ** 'match=3D<pattern>': Only consider tags matching the given
->>     `glob(7)` pattern, excluding the "refs/tags/" prefix.
->>  ** 'exclude=3D<pattern>': Do not consider tags matching the given
+>> Add the --abbrev option to `git describe` to the placeholder interface=
+
+>> in order to provide tools to the user for fine-tuning project defaults=
+
+>> and ensure reproducible archives.
 >=20
-> What is the guiding principle used in this patch to decide where the
-> new entry should go? =20
+> Note that it is sad that --abbrev=3D<n> does not necessarily ensure
+> reproducibility.  To be more precise, I do not think it sacrifices
+> uniqueness to make the output reproducible.  You can get more than N
+> hex-digits in the output if N is too small to ensure uniquness.
 >=20
-> The existing 'match' and 'exclude' are the opposites to each other,
-> and it makes sense to keep them together, and between them, 'match'
-> is the positive variant while 'exclude' is the negative one, so the
-> current order makes sense.  I wonder why the new "also consider"
-> should come before them, instead of after.
+> So it indeed is that this line of thought ...
 >=20
-> I am not saying you should change the order, and I would be most
-> unhappy if you did so without explanation in an updated patch.
-> Rather, I would like to hear the reasoning behind the decision,
-> preferrably in the proposed log message.
-
-
-The guiding principle I used was to replicate the order in which the
-same options are listed in git-describe(1).
-
-Err, maybe that means I should not have used the word "also" in the doc
-string...
-
-
->> @@ -273,11 +274,6 @@ endif::git-rev-list[]
->>  			  If any option is provided multiple times the
->>  			  last occurrence wins.
->>  +
->> -The boolean options accept an optional value `[=3D<BOOL>]`. The value=
-s
->> -`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"=
-
->> -sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
->> -option is given with no value, it's enabled.
->> -+
->>  ** 'key=3D<K>': only show trailers with specified key. Matching is do=
-ne
->>     case-insensitively and trailing colon is optional. If option is
->>     given multiple times trailer lines matching any of the keys are
->> @@ -313,6 +309,11 @@ insert an empty string unless we are traversing r=
-eflog entries (e.g., by
->>  decoration format if `--decorate` was not already provided on the com=
-mand
->>  line.
->> =20
->> +The boolean options accept an optional value `[=3D<BOOL>]`. The value=
-s
->> +`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"=
-
->> +sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
->> +option is given with no value, it's enabled.
->> +
+>> One alternative would be to just always specify --abbrev=3D40 but this=
+ may
+>> be a bit too biased...
 >=20
-> This paragraph used to be inside the description of %(trailers:...),
-> but that was only because %(trailers) was the only one that took a
-> boolean value for its options, and not because it was the only one
-> that had special treatment for its boolean options.  Because the
-> existing rule for an option that takes a boolean value equally
-> applies to the %(describe:...), and more importantly, because we
-> expect that any other pretty-format placeholder that would acquire
-> an option with boolean value would follow the same rule, it makes
-> sense to move it here, together with other rules like %+ and %- that
-> apply to any placeholders.
+> ... to use --abbrev=3D999 (because 40 is not the length of a full
+> object name in the SHA-2 world) is the only reasonable way, if what
+> you care about is the reproducibility.
+
+
+Right, I keep forgetting about the current work towards SHA-2... that
+being said I somehow feel that 40 hex-digits will probably be reasonably
+sufficient even if commit object ids can become longer than that. So it
+is technically true...
+
+
+>     Side note.  I think "git describe --no-abbrev" is buggy in that
+>     it does not give a full object name; I didn't check the code,
+>     but it appears to be behaving the same way as "git describe
+>     --abbrev=3D0" (show no hexdigits).  Fixing this bug may possibly
+>     be a low-hanging fruit.
+
+
+I... did not realize that --abbrev, which takes an integer value, could
+be specified with a leading --no- in the first place. :o
+
+
+> But even if the feature cannot be used to guarantee a full
+> reproducibility, it is a good thing that we can now add this feature
+> with minimum effort thanks to the previous two steps.
 >=20
-> Makes sense.  I very much appreciate this extra attention to the
-> detail.
-
-
-:)
-
-
->> diff --git a/pretty.c b/pretty.c
->> index 9db2c65538..3a41bedf1a 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -1216,28 +1216,43 @@ int format_set_trailers_options(struct process=
-_trailer_options *opts,
->> =20
->>  static size_t parse_describe_args(const char *start, struct strvec *a=
-rgs)
->>  {
->> +	const char *options[] =3D { "tags" };
->>  	const char *option_arguments[] =3D { "match", "exclude" };
->>  	const char *arg =3D start;
->> =20
->>  	for (;;) {
->>  		const char *matched =3D NULL;
->> -		const char *argval;
->> +		const char *argval =3D NULL;
->>  		size_t arglen =3D 0;
->> +		int optval =3D 0;
->>  		int i;
->> =20
->>  		for (i =3D 0; i < ARRAY_SIZE(option_arguments); i++) {
->>  			if (match_placeholder_arg_value(arg, option_arguments[i], &arg,
->>  							&argval, &arglen)) {
->>  				matched =3D option_arguments[i];
->> +				if (!arglen)
->> +					return 0;
->>  				break;
->>  			}
->>  		}
->> +		if (!matched)
->> +			for (i =3D 0; i < ARRAY_SIZE(options); i++) {
->> +				if (match_placeholder_bool_arg(arg, options[i], &arg,
->> +								&optval)) {
->> +					matched =3D options[i];
->> +					break;
->> +				}
->> +			}
->>  		if (!matched)
->>  			break;
->> =20
+> The refactoring I suggested in my review for the previous step will
+> shine, if we want to do a good job parsing the --abbrev=3D<n> option,
+> since such a code organization would make it a fairly easy addition
+> to introduce "integer" type that calls match_placeholder_arg_value()
+> to read the option value (like "string" does) and validate that the
+> value is indeed an integer.
 >=20
-> I find this new structure of the code somewhat dubious.  Shouldn't
-> we be rather starting with an array of struct that describes the
-> token to match and how the token should be handled?  Something like
->=20
->     struct {
-> 	const char *name;
-> 	enum { OPT_STRING, OPT_BOOL } type;
->     } option[] =3D {
-> 	{ "exclude", OPT_STRING },
->         { "match", OPT_STRING },
-> 	{ "tags", OPT_BOOL },
->     };
->=20
->     for (;;) {
-> 	int i;
-> 	int found =3D 0;
-> 	...
->         for (i =3D 0; !found && i < ARRAY_SIZE(option); i++) {
->             switch (option.type) {
->             case OPT_STRING:
->                 if (match_placeholder_arg_value(...)) {
->                     strvec_pushf(args, "--%s=3D%.*s", ...);
-> 		    found =3D 1;
-> 		}
->                 break;
->             case OPT_BOOL:
->                 if (match_placeholder_bool_arg(...)) {
-> 		    found =3D 1;
-> 		    if (optval)
-> 			strvec_pushf(args, "--%s", option.name);
-> 		    else
-> 			strvec_pushf(args, "--no-%s", option.name);
-> 		}
-> 		break;
-> 	    }
-> 	}
->     }
->=20
-> And instead of the option -> option_arguments rename, the 1/3 of the
-> series can be to introduce the above structure, without introducing
-> OPT_BOOL and "tags" element to the option[] array.
+> Would we want to support "--contains" as another boolean type?  How
+> about "--all" and "--long"?  All three sound plausible candidates.
 
 
-Maybe!
+I didn't have any immediate use for these options. To be honest, I don't
+entirely understand the purpose of:
 
-I'll confess that I'm a bit of a monkey-see-monkey-do coder when it
-comes to C (I keep meaning to learn it properly, but as things stand I'm
-a lot more comfortable in e.g. python). So there is a good chance I
-could be a lot more optimized in my approach... your suggestion
-resembles the kind of thing I might do in a language I know better.
+--all, which causes git describe to report things like "heads/master"
 
-I'll look into this, it makes sense.
+--contains, which causes git describe to report different output
+depending on the status of later commits being tagged
 
 
->> -		if (!arglen)
->> -			return 0;
->> -		strvec_pushf(args, "--%s=3D%.*s", matched, (int)arglen, argval);
->> +
->> +		if (argval) {
->> +			strvec_pushf(args, "--%s=3D%.*s", matched, (int)arglen, argval);
->> +		} else if (optval) {
->> +			strvec_pushf(args, "--%s", matched);
->> +		}
->>  	}
->>  	return arg - start;
->>  }
->> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-format=
-s.sh
->> index 5865daa8f8..d4acf8882f 100755
->> --- a/t/t4205-log-pretty-formats.sh
->> +++ b/t/t4205-log-pretty-formats.sh
->> @@ -1002,4 +1002,12 @@ test_expect_success '%(describe:exclude=3D...) =
-vs git describe --exclude ...' '
->>  	test_cmp expect actual
->>  '
->> =20
->> +test_expect_success '%(describe:tags) vs git describe --tags' '
->> +	test_when_finished "git tag -d tagname" &&
->> +	git tag tagname &&
->> +	git describe --tags >expect &&
->> +	git log -1 --format=3D"%(describe:tags)" >actual &&
->> +	test_cmp expect actual
->> +'
->=20
-> Nice.
->=20
-> I like how the end-user visible part of this addition is designed to
-> look very much.  With a cleaned up implementation it would be great.
->=20
-> Thanks.
->=20
+They may have their uses, but I'm not sure those uses include writing
+metadata to a git-archive tarball at least. I believe the results would
+inevitably end up changing after the fact, whereas only matching
+existing tags will tend to be pretty reliable as a tag is, in most
+(all?) cases, pushed at the same time as, or before:
+- the commit it describes
+- commits which are later than the tag
 
+
+On the other hand...
+
+--long could be interesting to some people, although for, say,
+generating software version numbers, a tagged release will typically
+omit that information in my experience. For the sake of thoroughness I
+could add that too.
 
 --=20
 Eli Schwartz
 Arch Linux Bug Wrangler and Trusted User
 
---------------SZqyZJuAm9Kgmbs3Gccgbe9J--
+--------------YIPhg7Cu1vxjjYO9h0zSP5Ma--
 
---------------kt340f0tkraN1rrJSlOfi0tR
+--------------T9ArUOwc30My99Ff6fp5DU4g
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF1fe0ACgkQzrFn77Vy
-K9aXSBAAmQ43t1Mk333cMoaLJFzxcDT/WDnMnHVS75wmVUuNtX0g5wEh2AWzj21s
-55qHXXHjjRMnXAuS7Ph1TNSsbVtFENohDubnS1VHpnp2lUDyJqhkc7nTqSekc9Lk
-pttO9y2GXCeaMUZ9Z5K5jJiINBtpU94J/BcVD7/pcOGsho1Z9M9Rmqmoi6ew1XlN
-jDjuMAqFOw/Q6ondB5WZBWt6HL8yrzeap78mNgobujUYOwyinOMFdLPKocI6WDQz
-vbSSMnmX22kJRr1uxu0DCmJON+zYw5O50MdwfPwA+rC9HG0kubHvFx4xllvihoC1
-hg9jKwt5i7Yt56iX2c8EDOtidXOX7kk7sz+Eiidzu51H/fHVEhjLaRIXXpU+HQmV
-44UPEj5hUtanir8YxFlWZv4zIoZB8nE5ZLhNqivfIFDWtVM6G18gcCA8L1HqCitB
-gP9djuNj7vwmRG2yMpDhWx708fAU4KLEebzwlqTKV1WOgg/rlhl+P3U0iudMdxsq
-PTRo0K5TO6+gqq1BltBuQt2OdPlC+y+wHkTJrrri2fO4PC6lVSx6rnSHz6kI+aZt
-Fp/4DeI3s68Bd026oV7wS95WWw/19/w6tgixeAw0+i/7dm5shk62wcQa5bpDk3dc
-3EviO7+BqZtgVlvJsoskQ9xY6WIbJePnVZsduuqmVwLvsJORsL0=
-=QLpW
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF1fwYACgkQzrFn77Vy
+K9aDlA/+Lay19T9J/CmK0GYQ+Jo7RlVQDyK7RcU8BscDOt5qlcP7gPggr8LrHMLj
++WVH505jILcJ6j7hBvgNLGD3BQovjYMFhRDuCfXoP4h0rjmrWqarmOw+DwinAzpy
+Q+YSA0dZpLW837mOm/qVn5/xY+RtStUguEHm62+klvFwE7SyvcnjvuJNIj/kcof/
+cnkDX+DU9MhcGHAq18hAwOksZifpAFbRhvASFtccHMPKrX3Xi4NGAmvArpVj1/fp
+zHZ6Rbt034sz8chaGknhpBvkrRhcC6e4gYXrnxqP/xPoRZR2wKu+9sEXe0WTaQTg
+SzYiIQY7E9qPOmfwTd4z0564u1E7wY6gAuZntmpxv5OwRTzbMvpBw9aZCIDZxtlI
+BmX4kOBLp5JHHw+D3TF4EZL+9tpuqKKUVt3hfaOzqU7VtI7QTr4DUYeHmtLhTQcZ
+deTlz4RStI4s9jhujwjyG0W0auJ0yvar8AfOo0cG1SWVrkWDyjoSdPA9HNtghI4G
++u5Vqd56uBcB2mh22nEBShIMhGHq9wB6KFDAsHNj5xDt5+VEE/gE5hV1o0lOKJzf
+ba6AWa7FfzT5frc6v8/x9dFN/Zk6cJ4Nrz3bL1vywYrGI2rHXtPQ7juln7+HOPhS
+0sO7JhIgcfwE69Dm9VR7CDDY7t2MtRcQ73c3L/v8pJjUq6Z+qsc=
+=apeX
 -----END PGP SIGNATURE-----
 
---------------kt340f0tkraN1rrJSlOfi0tR--
+--------------T9ArUOwc30My99Ff6fp5DU4g--
