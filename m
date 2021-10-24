@@ -2,82 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1118C433EF
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 06:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 041D4C433EF
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 09:08:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB40560FC3
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 06:54:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CECBC60EB1
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 09:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229861AbhJXG4i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Oct 2021 02:56:38 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.18.29]:36354 "EHLO
-        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbhJXG4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Oct 2021 02:56:37 -0400
-Received: from [79.233.232.241] (helo=[192.168.2.202])
-        by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1meXOJ-00029D-MM
-        for git@vger.kernel.org; Sun, 24 Oct 2021 08:53:59 +0200
-Message-ID: <da952e81-70f9-886b-42ff-2ec850f55fa0@mfriebe.de>
-Date:   Sun, 24 Oct 2021 08:54:12 +0200
+        id S229867AbhJXJK1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Oct 2021 05:10:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55839 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229463AbhJXJK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Oct 2021 05:10:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 128691017FF;
+        Sun, 24 Oct 2021 05:08:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=sTjMNOQESd4ezHUn44eV8FGDVXdpD0V/rzHumk+070o=; b=A2Iq
+        stiLeM0Xc2OZ8ALtUSFBHNGQxOPzemt+1dwo2XAqSgAcIrq+TqPY0T8arsCEIqsJ
+        J1j4pUVtDpWow39aFmxfXuNW/fSj8xcqMXsF6gJwQaaMedOjoussK556Fi2+cBe0
+        0SmAFiym81KhQttr3zIao1wtvaYz30e32JEC804=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04A501017FE;
+        Sun, 24 Oct 2021 05:08:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 580151017FD;
+        Sun, 24 Oct 2021 05:08:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/6] git-sh-setup: remove "sane_grep", it's not needed
+ anymore
+References: <cover-0.6-00000000000-20211021T195538Z-avarab@gmail.com>
+        <patch-6.6-556fa96dde7-20211021T195538Z-avarab@gmail.com>
+        <xmqqwnm6ge7w.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2110221625570.62@tvgsbejvaqbjf.bet>
+Date:   Sun, 24 Oct 2021 02:08:04 -0700
+Message-ID: <xmqq1r4a6b9n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-From:   Martin <git@mfriebe.de>
-Subject: Re: changing the experimental 'git switch' (was: [Summit topic]
- Improving Git UX)
-Cc:     git@vger.kernel.org
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
- <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
- <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
-Content-Language: en-GB
-In-Reply-To: <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E5F5121E-34A9-11EC-9AE8-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/10/2021 16:04, martin wrote:
-> Unless there is more, than the copying of the reflog, wouldn't it be 
-> better to add an option "--copy-reflog"
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ok, I found the answer (actually 2 / see other mail)
-> The |-c| and |-C| options have the exact same semantics as |-m| and 
-> |-M|, except instead of the branch being renamed, it will be copied to 
-> a new name, along with its config and reflog.
-As for the "config" being part depends on which part of the man-page one 
-reads.
+>> For all other users, I think the above applies well, but the one in
+>> filter-branch deals with end-user contents, so we cannot say
+>> "contents of the tag cannot be binary".
+>>
+>> Not that I care about filter-branch too deeply ;-)
+>
+> You probably meant that you do not care about filter-branch too deeply?
+> ;-)
 
-But, anyway on the topic of "git switch"
-
-Copying a branch (and maybe moving too) could be seen as an extension to 
-creating a new one.
-After all, after the copy operation there is a newly created branch. 
-Only it has some more data with it.
-
-So one could do
-git switch  --settings-from <branch-with-reflog-and-conf> --create 
-<new-branch>   <commit>
-git switch  -s <branch-with-reflog-and-conf>   -c <new-branch>   <commit>
-
-"settings-from" is just an example, there may be better names for it. 
-Ideally not starting with a "c".
-
-And using a name different from "copy" may be more accurate, because 
-unless it is created on the same one <commit> to which the 
-<branch-with-reflog-and-conf> points, then its at best partially copied.
-
-On top of that options could be brought in, to copy only reflog or only 
-config.
-
-Using the above with an --force-create / -C would make it a "move branch".
-In this case there could be a shortcut, if <branch-with-reflog-and-conf> 
-and (the old) <new-branch>  are the same.
-
-
+I don't get it.  Not only I meant, I said so, didn't I?
