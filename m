@@ -2,103 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A489BC433F5
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 20:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A084FC433F5
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 20:33:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7766760E09
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 20:27:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 788E560FE8
+	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 20:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231840AbhJXU37 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Oct 2021 16:29:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50893 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231658AbhJXU36 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Oct 2021 16:29:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 83859F0B45;
-        Sun, 24 Oct 2021 16:27:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zjd4F8btdG0y
-        3sBUb9O/DxB1brDTSwX9Q/sc4fLFjVs=; b=DuOxd0imDy+dBjX0iEqi8zt7swzI
-        u2iMCTHzmmWAvIzWdu5ms35ShmjJY137Je8jV8O7StyUPH6zzL6psZWMLte+K0kY
-        r/5Ri4OQheABBEC/Ie3bLrdycPs0/QQGqovlZVeKoVr+KhPkYeO4C6tS7KQD/y7T
-        nSjF7WmtEb1DSbk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B35BF0B40;
-        Sun, 24 Oct 2021 16:27:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBB71F0B3F;
-        Sun, 24 Oct 2021 16:27:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin <git@mfriebe.de>
-Cc:     git@vger.kernel.org
-Subject: Re: changing the experimental 'git switch'
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
-        <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
-        <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
-        <da952e81-70f9-886b-42ff-2ec850f55fa0@mfriebe.de>
-Date:   Sun, 24 Oct 2021 13:27:34 -0700
-In-Reply-To: <da952e81-70f9-886b-42ff-2ec850f55fa0@mfriebe.de> (Martin's
-        message of "Sun, 24 Oct 2021 08:54:12 +0200")
-Message-ID: <xmqqwnm2418p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D3176494-3508-11EC-AE92-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+        id S231944AbhJXUgL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Oct 2021 16:36:11 -0400
+Received: from a27-185.smtp-out.us-west-2.amazonses.com ([54.240.27.185]:33939
+        "EHLO a27-185.smtp-out.us-west-2.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231394AbhJXUgK (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 24 Oct 2021 16:36:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=cessssaigkdq5uletp7pzdlghxldyiuc; d=coderkalyan.com;
+        t=1635107629;
+        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To;
+        bh=epamjqOsDHUxjeL5U5k1iMHW2E4UgI+KtRHLJQEvqnM=;
+        b=FYqOh07gkV8CB959/9xTu7LZWtW3NDlyeIYc1ZWxPDIMBXS1Z+OryKXM1J6++7uO
+        2Fv6FRPNCC+1Qervtgy/WkuSku06ORFNyWaUHwp4ttdwzEMasFnGRq3zMsqWIFc8x6T
+        ZztyoXuqqPeCo78LsoGOneVuX6dJkb4VDbxgmono=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1635107629;
+        h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:From:To:References:In-Reply-To:Feedback-ID;
+        bh=epamjqOsDHUxjeL5U5k1iMHW2E4UgI+KtRHLJQEvqnM=;
+        b=T2mN3l5niv9hHMdgS7i6p0kKFDuHPVJpqGkwHeDbW3Cvpk9vuhs0btmT4nPLPELE
+        GR0ztzB1bLgjCxWuJtUgYrfFDlB99V5OQxTwGSk/JylHKN8nE+cJSbYLO1rw3ToUjRX
+        B7W4HJsD8aLRjnTU5YWG8355ifKyv7IQ/K3pHXw4=
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Sun, 24 Oct 2021 20:33:49 +0000
+Message-ID: <0101017cb4026947-7e22d019-674b-4d1c-b229-b10328252341-000000@us-west-2.amazonses.com>
+Cc:     "Matheus Tavares" <matheus.bernardino@usp.br>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git" <git@vger.kernel.org>
+Subject: Re: Git submodule remove
+From:   "Kalyan Sriram" <kalyan@coderkalyan.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
+References: <0101017ca3e30c39-f111f739-4db7-4c1e-aff2-3ee50f546591-000000@us-west-2.amazonses.com> <YXHdaQ98GJiFj0OK@camp.crustytoothpaste.net> <xmqqbl3ihu6l.fsf@gitster.g> <CAHd-oW5PfygyNsRWGg4_W2pxR_HbePvguKRf-bK9RtY3cuAX9g@mail.gmail.com> <xmqqee8egddw.fsf@gitster.g> <0101017ca60e5ffd-9563fafd-86f6-443d-9cbe-e07203caacba-000000@us-west-2.amazonses.com> <xmqq4k98en01.fsf@gitster.g>
+In-Reply-To: <xmqq4k98en01.fsf@gitster.g>
+Feedback-ID: 1.us-west-2.6woXiZ10/hvs78i2LW4ugcJq1GLEuVeUxt3YeADpvNg=:AmazonSES
+X-SES-Outgoing: 2021.10.24-54.240.27.185
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin <git@mfriebe.de> writes:
-
-> So one could do
-> git switch=C2=A0 --settings-from <branch-with-reflog-and-conf> --create
-> <new-branch>=C2=A0=C2=A0 <commit>
-> git switch=C2=A0 -s <branch-with-reflog-and-conf>=C2=A0=C2=A0 -c <new-b=
-ranch>=C2=A0=C2=A0 <commit>
+On Fri Oct 22, 2021 at 3:02 PM PDT, Junio C Hamano wrote:
+> "Kalyan Sriram" <kalyan@coderkalyan.com> writes:
 >
-> "settings-from" is just an example, there may be better names for
-> it. Ideally not starting with a "c".
+> > "git rm" deletes the submodule directory completely and modifies
+> > .gitmodules, effectively removing the submodule. However, it leaves the
+> > entry in .git/config dangling, which is annoying.
 >
-> And using a name different from "copy" may be more accurate, because
-> unless it is created on the same one <commit> to which the=20
-> <branch-with-reflog-and-conf> points, then its at best partially copied=
-.
+> The entry is not dangling. It is there to be used when you go back
+> in history.
+>
+> > "git submodule deinit" (which I didn't know existed until I just read t=
+he man
+> > page) deletes all contents of submodule directory, but leaves the=20
+> > (empty) submodule directory itself intact. It DOES delete the entry in
+> > .git/config, but leaves a dangling entry in .gitmodules, so the next
+> > "git submodule update --init --recursive" registers and populates the
+> > submodule again.
+>
+> "deinit" is *not* about remove a submodule. A project can be
+> checked out and used with or without its submodules instantiated,
+> and "git submodule init" is a way to instantiate it. "deinit" is
+> its opposite. As far as the history (which has already been
+> recorded in the repository, and the history that will be recorded
+> in the repository starting from that state) is concerned, the
+> submodule is there---it's just that you are not interested in it and
+> chose not to check it out.
+>
+> So "git rm" seems to be doing exactly what "git submodule rm" should
+> be doing, nothing more, nothing less.
 
-I like the "copy the settings from this other branch when creating
-this new branch" as a concept.
+That makes sense, thanks for the clarification. So it looks like there
+isn't any work to be done here after all?
 
-One thing that I find iffy is the reflog.  Even with the current
-"create a new branch NEW, pointing at the same commit, tracking the
-same remote-tracking branch, having the same branch description, and
-pretending to have come along the same trajectory, out of this
-original branch OLD", I actually find that the copyng of reflog is
-utterly questionable.  Before that operation, the new branch did not
-exist, hence NEW@{4.days.ago} shouldn't say the same thing as
-OLD@{4.days.ago} for the branch NEW that was created like so just a
-minute ago.
+What are your thoughts about aliasing git submodule rm to git rm?=20
 
-If you generalize the operation to allow starting the new branch at
-a different commit, it becomes even more strange to copy the reflog
-of the "original" branch, which is not even the original for this
-new branch.
-
-Another thing nobody seems to have brought up is the branch
-description.  We copy everything under branch.OLD.* to branch.NEW.*
-and end up copying it from OLD to NEW, but I think that is also a
-nonsense operation.
-
-So, it probably makes sense to be more selective that what are
-sensibly copied and what are not.  Reflog most likely does not
-belong to the "sensibly copyable" set.  Tracking info most likely
-does.  Among various configuration in branch.OLD.*, there may be
-things like description that are not sensibly copyable.
-
+Thanks,
+Kalyan
