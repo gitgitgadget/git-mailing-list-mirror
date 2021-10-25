@@ -2,112 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 159E3C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9799FC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:07:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE6FD60F9B
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:04:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78E5960F9B
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:07:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233424AbhJYNHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 09:07:09 -0400
-Received: from mout.gmx.net ([212.227.15.19]:41925 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233391AbhJYNHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 09:07:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635167077;
-        bh=cHABubggtig7G9LoY6KwshB601sk7ZOaG0MjiuaqfO4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AD1wzLzjL8Gaiv3kFei7TdGaeY3nuc0VnWMSMMHM/ynnbH/7GHpRlzSgLTF2xZEW0
-         rY8UWlY188s47ghVMEsy+Y0FoTs1fsWQ8sVxpaLbiW9XTfKTQiLwfztVJIGSm9usm9
-         1k9f1BgJQSd6NGIUVT6fvoS4T9j8PKdj/tFtuqMU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N79yQ-1mkP3B1VhU-017TjO; Mon, 25
- Oct 2021 15:04:37 +0200
-Date:   Mon, 25 Oct 2021 15:04:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Sven Strickroth <email@cs-ware.de>, git <git@vger.kernel.org>
-Subject: Re: tortoiseplink ssh variant still needed?
-In-Reply-To: <xmqqtuh79zmq.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2110251459100.62@tvgsbejvaqbjf.bet>
-References: <dad761bf-3121-8934-fad6-78610bc21121@cs-ware.de> <xmqqtuh79zmq.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233279AbhJYNJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 09:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49536 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230170AbhJYNJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 09:09:57 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E9DC061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 06:07:34 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id b133-20020a1c808b000000b0032ca4d18aebso9294651wmd.2
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 06:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=OLv+xj7vWgwk3/5A94+n4n/hAqUr511+qk8hPdYhJ/U=;
+        b=hohVlVcgDSu4X/woJEjXgZRXb2i5iqd2PU2r6S5FRQjeab/gKWeBMAMCPyVBYDXipk
+         t8YBf/dTbJBdUZg1dcBqqsSTvhzOnEi6y53zVMEuCP3o93HS79Rg+bmm9kCRSqFoqG8C
+         DGswsoi87mMYEpMztzeEV39KImcSDL9PekQDTXeOKjWSMagVFTwS9p2snC+8RKTa2PQq
+         a8RaPuM8ARmvfs3WajXAcPEEo4jYAzgzQfyl/iQQsNN+/xLj/sxVLAWL5ELwkgdbVysi
+         ghb69dr6BI2x+tvHH5HHs5oVcoKoiPhzMvYGA1i4RwSS02jkF070dQ5PkMAhJC84f0iX
+         90Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=OLv+xj7vWgwk3/5A94+n4n/hAqUr511+qk8hPdYhJ/U=;
+        b=30dOAImDxj24taLYm+BjlBoJqmOxr37wFlm+funyCZBPGFjOioWxvBbmBVGZutTP1i
+         D2hY2EVj92RXE3XHDH4rX5wPwK8dVXsLe+1WctZ0uZVkQEbRM9UgpqMeV2fZhhE9zA/2
+         ahVDZCwu8gOXXthHt9Cx8hCIySEOkQHAGeuxQybptgSduImeMewfOwsADV5iXBdCKf2h
+         Mviy1na08CSbJhtBViy36Ee0xc2tCqjgQ1jOTi9Pq6QFJMmxMwYyFE1BwtrG1SWVohv+
+         ng2YlgmoiVtx9G+7kcjN0KHhs3PtNBjZn7tHsQ0SuqWgBZ5UnrlxeFvgvNSrG+moElYh
+         r5eg==
+X-Gm-Message-State: AOAM531UmZ2x1btvSACcGoRLOL/x2nPsSMLxJEzUV3fjoVcwMkesWCkT
+        FkAOdbR/S+JcnJKcXIMliQhtOXeXW5IbPA==
+X-Google-Smtp-Source: ABdhPJxUi7NaTmwyHh6W9y0YTU0UNUj0F4HQAbQfSK7oru5nVLF7/p9ILrZKFHxnoWeno9a40N5FOQ==
+X-Received: by 2002:a7b:c751:: with SMTP id w17mr10860889wmk.184.1635167252981;
+        Mon, 25 Oct 2021 06:07:32 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id r11sm1802211wrx.79.2021.10.25.06.07.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Oct 2021 06:07:32 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mezhM-001XRM-4Y;
+        Mon, 25 Oct 2021 15:07:32 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] Conditional config includes based on remote URL
+Date:   Mon, 25 Oct 2021 15:03:20 +0200
+References: <cover.1634077795.git.jonathantanmy@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <cover.1634077795.git.jonathantanmy@google.com>
+Message-ID: <211025.86lf2hgsmj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:p2yCEsEvXRqclhMBxi9k/CsVbvHEzZRiUV8i2/tTM0wu0MgNhRp
- 6HUgJquXRbr6SU+LgYOgaE6x0wUrgCSES2Dghm3wS2SJarxvQdg9Yda0X0CWMhQ3SFlX9uJ
- jCO4mEs6IjL16TgpbaCdy7D2ETpax8gKkPFOAAMxGy1g5O2DvM47Llug/vT39iFn/S8/jup
- CJ0SKLWqWzYfVmkqAmifw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ss73HVz953s=:7TITLXeKzKhBUJd0zE1Ncq
- 24y+KWa3ligCegTQzxF3m1dWi37mxp9UzrlaG7iJMt0Ptzj+puP37/dSAwmFizH1UNHtRmC/9
- Ujn5wFqJs95huzYEMFJ6+3VKIxlj9ZxOzGf7klZP0ONZc6Lzqzer7zvOpa1pC4aa39SNRJXA3
- yItpp8E6veJFRMkOSJMKiSSZh/zCad6Djx2xQx4riWVG+RKLuHN5F6LE7HcXdonMylIn7yyyR
- 0SURGlzj9CLuUlwDvobjfm97VmH5oZgN77uD3zyGkMSp7LfJy0H6FAUybAFnLMOy6czAfDEZz
- boRKSSORNWNCIAs0t3yt21NCmOV11yO1sxEZMIPEhH85w7aS6xVA7K6u4GWFE2UhHcQUN6Chm
- Zs4WXvEJYo0Cdijwwe4R4vdpvLrXiESsq4ISu2dNAK8IUsK/DeWcdROnRUy2JKCB2F0RAn+9V
- n2qznCRiSQPejce7w86Z83/0WjuOnwQHNJMxYIzZNRa7SfMu+TAP1qGjYiz18HdPWKtN7m+hU
- 16KmhTDufz3c07Ztq+ZV+pco5OUytXufaXacin9F9qmM/CEWxywBR9tkndwtZVY7HuprAIJb4
- hckPh7FCPThcQgBqWvoXDZgmTzTzJoNdDrWYvqJul8rRoTXZK5cU/fyC9V+LSQjrOh9g4UyKQ
- MN8RsElxfoBb89N9aMhstkhn1SQkYZuJgfAiIjrIdfRqPD2Uuukx760Fxv78EohDjXr3pkyg+
- XnkpW0Ws9r83Ft39NRRWXX4/4Rs3/WTbv4Az2KSDhG3i7BC5B7uZBMvccW8N5lKME0UyPkr+u
- ro1dtUMF+1585H8WhrK7HTf36Kp39xXi4IJ0+k1W+RFJ8NMnQ4BqXzWK+wE45HmZDtNB5fEJ/
- RkW3FZTILRDD1dWlwCP60pa/p/suAyJW1DlB4G7Dmp3W7zX56MeCRRBwoXOUvF0jOf///bmSy
- lIAT2oiezFisRjqKqDNbQa5CDUAe0vSHr9vpVwS/LUojYAiv2tqp/Lo5eecGTg0sooU92b1bu
- D6mzdGF1y7HhLOYDzdED45HaV+TdX5x3gVyX+L5hv6SfP4mJuYbGx0JGhpwlVzW5KTRK7C5qx
- 0w49DuNLHxJpM4=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Sat, 23 Oct 2021, Junio C Hamano wrote:
+On Tue, Oct 12 2021, Jonathan Tan wrote:
 
-> Sven Strickroth <email@cs-ware.de> writes:
->
-> > Therefore, my first question: Does Git still want to support very old
-> > versions of tortoiseplink or should I provide a patch which drops
-> > support for it?
->
-> [...]
->
-> I am guessing that nobody other than those on Windows use
-> TortoisePlink, and that everybody other than those who build their
-> own Git from source use Dscho's Git-for-Windows, and I further
-> assume that the GfW comes with its own copy of OpenSSH.
->
-> So our intended audience is those who started using Git on Windows
-> back when TortoisePlink was still a thing, are still happily using
-> TortoisePlink, and are willing to only update Git but not migrate to
-> OpenSSH.  How big that audience is, I do not know, as I do not do
-> Windows.
+I tried sending the below (sans some last minute spellchecking now)
+around October 19th, but for some reason it didn't make it
+on-list. Trying again now, apologies for [near-]duplicates, if any (I
+elaborated a bit at the end just now).
 
-Nobody really knows, but we started discouraging `plink` usage (also
-`tortoiseplink` usage) already way back in the msysGit days. AFAIR we
-simply ran into too much trouble, and started to only offer `plink` as an
-option if the user had _any_ PuTTY saved sessions.
+> Previously [1], I sent a patch set for remote-suggested configs that are
+> transmitted when fetching, but there were some security concerns. Here
+> is another way that remote repo administators can provide recommended
+> configs - through conditionally included files based on the configured
+> remote. Git itself neither transmits nor prompts for these files, which
+> hopefully reduces people's concerns.
 
-> How much maintenance burden is the "support" costing us?  A quick
-> scan in connect.c tells me that the "add --batch to the command
-> line" would be the only thing we would be able to shed; everything
-> else seems to be shared with plink and putty.
+I had some concerns about the specifics of the implementation/what
+seemed to be tailoring it a bit too closely to one use-case[1][2], not
+inherently with the idea (although I think e.g. for brian that more
+closely reflects his thoughts).
 
-Since I have to assume a very small usership, I would think that we can
-drop support for the older `tortoiseplink`. But you're right, what does it
-_buy_ us?
+Anyway, just saying that aside from this RFC I don't think we were at
+the point of really fleshing out what this would look like, and there
+being some hard "no", so I think that idea could still be pursued.
 
-My guess is that Sven wants to go further and enable the `-o SetEnv` thing
-for protocol v2 (which we figured out together, over in the Git for
-Windows bug tracker, to be turned off when pushing). But that would
-require the `tortoisegitplink` variant, I think.
+On this proposal: this also applies globally to all history, but I don't
+have the same concern with that as the 1=1 mapping of remote-suggested
+hooks, our path includes work that way, after all.
 
-So maybe a better idea would be to focus on introducing support for
-`tortoisegitplink` and work on the `-o SetEnv` issue, and leave the
-`--batch` code alone for now.
+I think it would be nice if you could think about if/how this and the
+"onbranch" include would work together though to serve the general case
+better.
 
-Ciao,
-Dscho
+Also if you have a repo with N remotes each where "origin" tracks URLs
+at git.example.com, and you add a "dev" tracking dev.example.com, will
+the config apply if you're say on a branch tracking the "live" server,
+if you've said "include this for repos matching dev.example.com?
+
+Arguably that's what you want, but perhaps something that those more
+used to the centralized workflows wouldn't consider as being unintuitive
+for users who might want to add this config only for their main "origin"
+remote. We don't really have a way of marking that special-ness though,
+except maybe checkout.defaultRemote.
+
+I'm also still somewhat mystified at how this would better serve your
+userbase than the path-based included, i.e. the selling point of the
+remote-suggested configuration was that it would Just Work.
+
+But for this the users would either need to setup the config themselves
+for your remote, but that would be easier than pro-actively cloning in
+"work" or whatever? I guess, just wondering if I'm missing something.
+
+Or if it's a partly-automated system where some automation is dropping
+in a /etc/gitconfig.d/google-remote-config-include I wonder if this
+whole thing wouldn't be better for users with such special-needs if we
+just supported an "early config hook".
+
+i.e. similar to how we read trace2 config from /etc/gitconfig early, we
+could start picking up a hook that just so happens to conform to the
+config schema Emily's config-based hooks use.
+
+So the /etc/gitconfig would have say:
+
+    hook.ourConfigThingy.command=/usr/bin/googly-git-config
+    hook.ourConfigThingy.event=include-config
+
+That hook would just produce a config snippet to be included on STDOUT.
+
+Since it's an arbitrary external command it would nicely get around any
+chicken and egg problems in git itself, it could run "git remote -v",
+inspect the equivalent of an "onbranch" etc. etc, then just dynamically
+produce config-to-be-included.
+
+Please don't take this as some objection to your current proposal, just
+a thought on something that might entirely bypass odd edge cases and
+arbitrary limitations associated with doing this all in the "main"
+process on-the-fly.
+
+The special-ness with that one would need to be that we'd say it
+wouldn't have the normal "last set wins" semantics, or maybe we could do
+that and just note that we saw it, and execute the "include" when we
+detect the end of the full config parsing (I'm not familiar enough with
+those bits to say where that is).
+
+Both of those seem easier than dealing with any chicken & egg problems
+in parsing the config stream itself, since such a hook could just invoke
+"git remote -v" and the like itself, after e.g. setting some environment
+variable of its own to guard against its own recursion (or we'd do it
+for it for such hooks...).
+
+1. https://lore.kernel.org/git/87k0mn2dd3.fsf@evledraar.gmail.com/
+2. https://lore.kernel.org/git/87o8awvglr.fsf@evledraar.gmail.com/
