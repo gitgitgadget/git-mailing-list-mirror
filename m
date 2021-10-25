@@ -2,174 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8E2C433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 22:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D26EC433F5
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 23:00:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AFCE60E75
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 22:54:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 165D86103C
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 23:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233747AbhJYW4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 18:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43436 "EHLO
+        id S234688AbhJYXCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 19:02:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232586AbhJYW4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 18:56:52 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 276D2C061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 15:54:29 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id j2-20020a1c2302000000b0032ca9b0a057so162051wmj.3
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 15:54:29 -0700 (PDT)
+        with ESMTP id S233747AbhJYXCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 19:02:36 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3432C061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 16:00:13 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id kx11-20020a17090b228b00b001a23c39abfaso449263pjb.0
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 16:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=6GR+qDqtBpLyDOPaTLZQ7vWRCCsr+ZBPzgmKIvq/OgY=;
-        b=etM1bnQm4UO3ZJnLIwDdsmGzNVMitngmZYv8p9QBn+nuN9KyTqoYEbjbHzVBx/J3Ek
-         HnNFGgMt/C7/FTSOCVAvwlMuoyfvCNgTMhVMRYOvFGe9lYE+loTERmP5cQNnVM3OEqDc
-         Pr/sQ9znImltKQcNnm9WLg7ZWKc8EThtr9x8Vs7fAy7Uo0kya2enyWlJt6bY7eachqnO
-         Cpug4IaiS63YSYSOu095V8OPDrMMF/pF6xbbrFS+AyIx1WNFkcanBstlnv92GqpclkSA
-         yN6hxOaQAJ+g0VLz2Chb+VGIDLS7iXl1WlDUV7I2vEWFekax9Hm+fwsuVuQcwDHkej06
-         Jc4A==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=d4Ah5uvx8cK547CZek5SjiaWLSZttnAOtPToOJLV3/g=;
+        b=X0qNBKPcyHj6IQm2kc/15NyIRrNZ8R74FQGudmGqG50v8xMvSi3C3Uj6KPUM3Ry435
+         cH+n09650JuZUGk/KAmsuNLTdI3gLdL5FGTP/Ax454jGritUKz1INx+6tSyb6iT8ikz1
+         88RF7yf8WnzUdl9qAjCSX1cpgBeiHPQxCXJI7jlTVGNnpwsJ2R14NfuimD/pVfOQp4zt
+         s6ep1XmKWdtT8rhcCuQ9ntccgXdMU6ztGmLAxyf0DX/Lzs57osqiuX2BuTD8pbd0/AmE
+         YFBQVYEP9RIJqCgGoStL+qVEilZvq2CwtKJhh86hMJI9kZLYpQhKmVT+PE3Em6FtgHUO
+         roKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=6GR+qDqtBpLyDOPaTLZQ7vWRCCsr+ZBPzgmKIvq/OgY=;
-        b=6NqPQWL5dL67BnDneGSU8kry09sPwzsVfn5eKiFVNkgFkbT3Cwvhn22L8492dH5tAI
-         5oey/e1ZSlGcTqpNNKIzN5l0ZbmeXJpr1VREocTH3cX1+kivX+U2opm5kbQkho2/vwdg
-         9Fj38qG+UibUxDVDYAJjCAXFxnvDYslVsEFEN7hPpfKGDlfm1RXXiBpExGyJOIhgtAY4
-         nRS1DNQRu0Qys02loTtwcoVIrK0PAjbBM2JV8+h+zUzct0GONsLcFqiXYT1tCW/KT/TI
-         wY7caUwXx499O+hmK+pIRihdi7BmdCGNBfsSbo372CWpbWR1+7GnEBO1VxbpqiKfNZQH
-         flcg==
-X-Gm-Message-State: AOAM530aI5/seVzYr+TL4nuTIaiHts3Ho9JEEceGccIg6xPfcjUVqrVv
-        cExUmmE8HVFmc2jw6YTBJn8dUhtDXdJ2cQ==
-X-Google-Smtp-Source: ABdhPJyhC0A1ZeAeIrIELeDlUEE+7c6+fjSSnMRX8rOJzH5kviOQ79tNSXA+6+FycNsQe+nVq+1T1A==
-X-Received: by 2002:a7b:cc87:: with SMTP id p7mr3340042wma.26.1635202467393;
-        Mon, 25 Oct 2021 15:54:27 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v191sm17406412wme.36.2021.10.25.15.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 15:54:26 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mf8rJ-001hH8-Ui;
-        Tue, 26 Oct 2021 00:54:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thiago Perrotta <tbperrotta@gmail.com>
-Cc:     git@vger.kernel.org, carenas@gmail.com, gitster@pobox.com,
-        bagasdotme@gmail.com
-Subject: Re: [PATCH v8 0/2] send-email: shell completion improvements
-Date:   Tue, 26 Oct 2021 00:44:37 +0200
-References: <87fst7lkjx.fsf@evledraar.gmail.com>
- <20211025212707.188151-1-tbperrotta@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20211025212707.188151-1-tbperrotta@gmail.com>
-Message-ID: <211026.86o87c1zry.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=d4Ah5uvx8cK547CZek5SjiaWLSZttnAOtPToOJLV3/g=;
+        b=Th7eeGGGObbAqT5eqErRfOsRfEEHo9A9cmE1fgbqpkcW6i7e1Ffyi39P9qZ4cDwZdX
+         /0b0y7I9l/MpzKc+gIUAMV76Rdb8j/GpdpBy9sde3sU3OeTrNb7VQlbawuVj0BBFOH++
+         oUOjU8ht6EUVdz+wttavlKjh8ObBfmr3uraztixMl3OwypaoCUim1Mhn+aUqzm/zJbm2
+         zWynaBFGe9KqTFaV9hI9mKw1oICwI/UAOwfW6sXh82ZCIRuSLBJEfrhvxvu2KgY73wD6
+         5HMkwxrojHrnhIsXfm47NFFoKpwLCtXuMAOjrauhuGbq4YFf8kCHRPoR7dDSax9y3N9L
+         I5/A==
+X-Gm-Message-State: AOAM531tqmARgy79Xviz+i8gzDbY3K4MqrYgheOKu62vyUYWCiyIiyln
+        xVFo8d1cJK7rp/Fy48xkbGc/k/j6cnz9Lw==
+X-Google-Smtp-Source: ABdhPJxXm0D243MqdMGfxX+OzTrOSyx9wJjpYa6KxyBq6Tif5UT8MNtwE30zRlP6TmKoES66Z3q5iJoucfrryA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:5285:: with SMTP id
+ w5mr200392pjh.1.1635202813010; Mon, 25 Oct 2021 16:00:13 -0700 (PDT)
+Date:   Mon, 25 Oct 2021 16:00:05 -0700
+In-Reply-To: <xmqqzgqwzvwx.fsf@gitster.g>
+Message-Id: <kl6lbl3c7lsa.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+Subject: Re: [PATCH v3 2/4] remote: use remote_state parameter internally
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Oct 25 2021, Thiago Perrotta wrote:
+> I just checked.  The repository the push is run in is bare and its
+> HEAD is detached, pointing at a commit directly.
 
->> ...I think that re-indentation is better left alone for the patch
->> readability.
+Thanks, I was able to reproduce the segfault using your config.
+
+>> "current_branch" is allowed to be NULL when HEAD does not point to a
+>> branch.
 >
-> Reverted the `GetOptions` indentation. Noise is now gone :-)
+> Good point.  It is a good justification to make the remote_state
+> available to the function, as branch==NULL that signals "there is no
+> current branch in the repository" cannot be dereferenced to get to
+> either the repository or the remote_state, yet the function needs
+> access to remote_state even when branch==NULL.
 
-Thanks.
+Yes, I wish we had noticed this sooner in our discussion and the fault
+is mine. It seems that pushremote_for_branch() is a prime example of
+"get the settings from the branch if possible, but default to the
+correct repository settings otherwise.", which is difficult to express
+if remote_state is not available to the function.
 
->> First, in your 1/3 you're adding a \n, but in 2/3 we end up with \n\n. I
->> think you can just skip 1/3, maybe mention "how it also has a "\n" in
->> the commit message.
+> What "branch" is pushremote_for_branch() meant to take?  Is there a
+> caller that asks a hypothetical "I know this is not a branch that is
+> the current branch in the repository, but to which remote would we
+> push if this branch _were_ the current one?" (and passes NULL to
+> mean "there is a checked out branch, but what happens if our HEAD
+> were detached?") question?  Even if there isn't currently, do we
+> want to add such callers in the future?
 >
-> I don't quite see how this would fit into the commit message. A comment in the
-> code seems to fit better to account for this detail. That's what I did, but if
-> you still disagree, please elaborate where in the commit message this sentence
-> should be added.
+> If the answer is yes, then the function need to take both branch and
+> remote_state as two separate parameters.  If the answer is no (i.e.
+> we never ask hypothetical questions, we just ask what we should do
+> in the current, real, state), then the function can just take the
+> remote_state and remote_state->branch being NULL would be used as a
+> signal that the HEAD is detached.  I suspect it is the former, as
+> this information is used in string-name-to-object translation for
+> "topic@{push}" in object-name.c::interpret_branch_mark() function.
 
-Makes sense I think, will take a look.
+I agree that the need for hypothetical "what happens if HEAD were
+detached?" questions may arise, though I'm not sure if there are any
+right now. When we call branch_get(NULL), the expected return value is
+the "current_branch". If there is no "current_branch" i.e. the return
+value of branch_get() is the NULL branch. A NULL branch is not usable -
+branch_get_push() and branch_get_upstream() return error messages
+indicating "HEAD does not point to a branch". (these are the functions
+used by object-name.c::interpret_branch_mark()).
 
->> You then strip out "--" arguments from the combined list, but isn't this
->> something we do need to emit? I.e. it's used as syntax by the bash
->> completion isn't it? (I just skimmed the relevant C code in
->> parse-options.c).
->
-> I interpreted that standalone `--` as an extraneous / useless token. If it's
-> there intentionally, then I am reverting my stripping of it. At the end of the
-> day whether to include it or not is a small detail, but FYI, when I do:
->
->   $ git clone -<TAB>
->
-> in bash, nothing happens. I would have expected it to be expanded to "--"
-> because of the explicit "--", but it doesn't. Therefore my conclusion is that
-> "--" in the output of "--git-completion-helper" is useless. Am I missing
-> something? What would be the function of the standalone "--" then?
->
-> From my local testing, whether the options are sorted or not, whether
-> they are repeated or not, whether they follow a specific order with
-> respect to "--" or not, all of those details seem not to matter. Bash
-> completion seems to handle all of those cases just fine interactively.
+Given the convention of "NULL branch == detached HEAD", how do we
+proceed? Some options:
 
-Digging a bit more: It's for folding away options that are negated, not
-for completing "-<TAB>". See the examples at b221b5ab9b9 (completion:
-collapse extra --no-.. options, 2018-06-06).
+a) Represent detached HEAD with a non-NULL "struct branch". This will
+   let us continue using the remote_state backpointer, which makes many
+   interfaces clean, but is somewhat invasive, error-prone and it uses
+   "struct branch" for something that is not a branch, which is itself
+   an error-prone interface.
 
-> In fact, here's another example:
->
-> $ git init --git-completion-helper | tr ' ' '\n'  | grep -C1 '^--$'
-> --no-template
-> --
-> --no-bare
->
-> ...there are --no-* options both _before_ and _after_ the --. I really
-> cannot see the point of the -- in the output, it seems to be just noise.
+b) Keep the backpointer, but add remote_state as a parameter to
+   pushremote_for_branch(). The least possible effort to fix the problem
+   and might be 'easy' but is inconsistent with the other functions and
+   is prone to misuse because the backpointer and parameter can be
+   different.
 
-Right, because some --no-whatever we define because we've got a
---whatever and it's boolean, but for others we've got a --no-whatever as
-the primary, as in th case of --no-template..
+c) Replace the backpointer with a remote_state parameter. Expressive and
+   fits the paradigm of "defaulting to the repo when needed", but
+   interfaces are repetitive and shifts the responsibility of
+   correctness to the caller (see v2).
 
-> I readded -- to the output anyway since you requested it, but if it
-> needs to follow a certain spec w.r.t. ordering, we should have tests for
-> it. This specific part (the -- and the --no- order thing) of the commit
-> is something I am not keen to doing though, at least not in this patch
-> series; sorry, it already goes far beyond the scope of my original
-> intent. Anything else you ask for that is inline with the original
-> intent (like generating options programatically instead of hard-coding
-> them) I am fine with though, and in fact I believe I have addressed all
-> comments so far, if there's anything else I may have missed let me know.
+d) Default to the_repository in pushremote_for_branch(). Easy, but
+   incorrect in general.
 
-Yeah sorry about the confusion so far, it's also been a voyage of
-discovery for me :)
+e) Some kind of reimagining of the remotes interfaces that doesn't
+   have this problem. One possible approach is to remove branches from
+   the remotes system altogether, since remotes are primarily concerned
+   with _branch tracking information_ and not really _branches_ per se;
+   perhaps we are being led astray by our terminology. If possible, this
+   is probably the most elegant long term solution, but it's
+   time-consuming and it's not clear how we will get there.
 
-This time around I tested with:
+Currently, my preference is to go with (c). We can create a clear
+expectation to callers that branch tracking information is not complete
+without a repository, thus a repository is always supplied, explicitly
+or not. If so, the remote_state parameter looks less like an
+implementation detail, especially since a NULL branch is allowed.
 
-diff --git a/parse-options.c b/parse-options.c
-index 6e0535bdaad..d659309c5e7 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -515,8 +515,6 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
- static void show_negated_gitcomp(const struct option *opts, int show_all,
-                                 int nr_noopts)
- {
--       int printed_dashdash = 0;
--
-        for (; opts->type != OPTION_END; opts++) {
-                int has_unset_form = 0;
-                const char *name;
-@@ -551,10 +549,6 @@ static void show_negated_gitcomp(const struct option *opts, int show_all,
-                        if (nr_noopts < 0)
-                                printf(" --%s", name);
-                } else if (nr_noopts >= 0) {
--                       if (nr_noopts && !printed_dashdash) {
--                               printf(" --");
--                               printed_dashdash = 1;
--                       }
-                        printf(" --no-%s", opts->long_name);
-                        nr_noopts++;
-                }
-
-Which will fail a test in t/t9902-completion.sh showing this specific
-behavior.
+I know we have already considered and abandoned (c) after v2, but has
+your opinion changed after considering the new information?
