@@ -2,91 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FF54C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8479BC433F5
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:57:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0999260E97
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:56:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61929603E7
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234080AbhJYQ6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 12:58:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61141 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232613AbhJYQ6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:58:34 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19AAEF786E;
-        Mon, 25 Oct 2021 12:56:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ETHdnDNWN09X5yaYRPDJT86aM75vM9rtUTA8KJ
-        RooeU=; b=QQv30QuA9PG9QPWUXeWLFU+93iMYTzri6kSLrH0t8FvSMr9wfnprw0
-        bNc6ARyi1nF/RO7BvwTFwT5Dv9zen34CB6a0xE3VpwAAcXUGNDKmYMNacX6EcKwv
-        4t+TcFpjN0NKwpZhZQLNgw7gaVIJxR/4wShANjGankQVplZTFiWBQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1132DF786D;
-        Mon, 25 Oct 2021 12:56:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 75B3DF786C;
-        Mon, 25 Oct 2021 12:56:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org
-Subject: Re: SubmittingPatchs: clarify choice of base and testing
-References: <cover.1634787555.git.me@ttaylorr.com>
-        <cb30aa67c0023c435cf472303bbf4894c8b2d7ec.1634787555.git.me@ttaylorr.com>
-        <211021.86ee8emx57.gmgdl@evledraar.gmail.com>
-        <xmqqpmrykys9.fsf@gitster.g> <xmqqilxncwpr.fsf@gitster.g>
-        <xmqqa6izcwio.fsf_-_@gitster.g>
-        <006c186e-c005-28a3-7a5c-27d365ffe026@gigacodes.de>
-        <xmqqilxl2gpj.fsf@gitster.g>
-Date:   Mon, 25 Oct 2021 09:56:10 -0700
-In-Reply-To: <xmqqilxl2gpj.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        25 Oct 2021 09:48:40 -0700")
-Message-ID: <xmqqee892gd1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234102AbhJYQ7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 12:59:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45764 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234047AbhJYQ7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 12:59:53 -0400
+Received: (qmail 6158 invoked by uid 109); 25 Oct 2021 16:57:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Oct 2021 16:57:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20830 invoked by uid 111); 25 Oct 2021 16:57:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Oct 2021 12:57:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 25 Oct 2021 12:57:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 00/10] Makefile: make generate-cmdlist.sh much faster
+Message-ID: <YXbh+YR19bygRFaX@coredump.intra.peff.net>
+References: <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
+ <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7500D000-35B4-11EC-A493-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Oct 22, 2021 at 09:36:04PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
->>> @@ -260,8 +281,8 @@ or include any extra files which do not relate to what your patch
->>>  is trying to achieve. Make sure to review
->>>  your patch after generating it, to ensure accuracy.  Before
->>>  sending out, please make sure it cleanly applies to the `master`
->>> -branch head.  If you are preparing a work based on "next" branch,
->>> -that is fine, but please mark it as such.
->>> +branch head.  If you are preparing a work based on selected topics
->>> +merged to `master`, please mark your patch as such.
->>
->> I think this meant to say 'merged to "next|maint|seen"'?
->> Or topics selected for being merged into master?
->
-> Ah, thanks for catching.  I meant "not merged to 'master'" (will fix
-> locally).
+> This version of this series drops the Makefile-powered version of the
+> cmdlist in favor of making the shellscript much faster, mostly with
+> suggestions from Jeff King.
+> 
+> I still think that splitting out the generated data into files may be
+> useful for unifying the Documentation/ and C code build processes,
+> there's another custom parser for command-list.txt in
+> Documentation/cmd-list.perl.
+> 
+> But if and when I've got something for that I can dig that out of the
+> v1, in the meantime the v1 of this should be mostly uncontroversial.
 
-Sorry, should have re-read it more carefully.  The original text
-is saying what I wanted to say, but I misread it ;-)
+Thanks, up through patch 8 this all looks good to me.
 
-We earlier in the document said that there are three possible bases;
-fixes are usually based on 'maint', new features on 'master', but as
-an exception, if your new feature need to depend on something not
-yet in 'master', then you start a branch from 'master', merge
-selected topics into that branch, and use the resulting branch as
-the 'base' of your topic.  We do not want a new topic based on
-'next', so preparing such a synthetic base by starting from 'next'
-and merging topics that are not yet in 'next' is unwelcome.
+> The last tow patches make things a bit slower for me, but since they
+> replace command invocations with pure-shell logic they presumably make
+> things a bit less painful on e.g. Windows, and the 8th patch here
+> already made things quite very fast already.
 
-Perhaps there needs some rewording to clarify that the sentence is
-referring to that case.
+These ones I could take or leave. They probably do help a little on
+Windows, but I'm much more concerned about O(nr_of_commands) process
+invocations than I am in reducing the base number of invocations
+(because one gives a 169x speedup over the other).
 
-Thanks again.
+And in patch 9 in particular, we're trading a grep one-liner for a
+much-longer shell loop.  And I don't think this is hypocritical with
+respect to patch 8; there we are replacing ugly sed with ugly shell, and
+the speed benefit is clear and large.
+
+-Peff
