@@ -2,102 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4745BC433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE02BC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:14:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F59C60ED4
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB0AD60EDF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231616AbhJYQMd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 12:12:33 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59817 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230177AbhJYQMc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:12:32 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 25CFA16A12F;
-        Mon, 25 Oct 2021 12:10:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EBhRXJE0x47b
-        /y3MvWnJfnOLRit6+QQbgRNLRJvyV6w=; b=SlyDqDekgU9w1QrznOXgaAQJv1eY
-        48QsMAM+ZJdQietkVZBxj+fnxrBPjUywXyB0sKhMjtulZ6wT+SQH4vKCnDqXf0uy
-        MYMxOttBZq5AJ1XFYyMQnB+Mr4T8BJWEJgBzJ/kSjkModXrNksn8W1vBnDPPuTW1
-        AbhcFPBst0YcFrE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DF9916A12E;
-        Mon, 25 Oct 2021 12:10:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7391416A12B;
-        Mon, 25 Oct 2021 12:10:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] command-list.txt: remove 'sparse-index' from main help
-References: <20211024170730.3428123-1-szeder.dev@gmail.com>
-Date:   Mon, 25 Oct 2021 09:10:06 -0700
-In-Reply-To: <20211024170730.3428123-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Sun, 24 Oct 2021 19:07:30 +0200")
-Message-ID: <xmqqmtmx2iht.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233908AbhJYQQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 12:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233883AbhJYQQc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 12:16:32 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F435C061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 09:14:10 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id l7so13550082iln.8
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 09:14:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=s0O83sZNGIkxeKjPAXw99outgAfVh9sIg30OMdb5X/Q=;
+        b=jZLNc304ZELsB5s2v/WaET+GmjvnMXSsaoXsOPjBjpZ93nZffMH0CIRgY5NftqkaY8
+         JAvqgZW/PFVRQjrcKSL8Fkd+8GSdbKukSotYrHbuk6sRu396oUE/WN/LtYuCBHUT+uxR
+         IIa8oEqc0cd5A9ipyDw62rFnxjbFHElTtzHijAi4kC94VM0ifVssIeAl7/OisAavHOF5
+         aTfZKVOUHKhmsO734A9xztHEhclh8Z1gugZGm3vD0iu/oNpIfCy5dSLbtVpRbQL9lztY
+         EOU59tvQ723xG8sIpLPuRBot2W58oARDcFLRYc+WKUZ4k3RvuSJI2PgwxItOcWXJnIdv
+         GlMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=s0O83sZNGIkxeKjPAXw99outgAfVh9sIg30OMdb5X/Q=;
+        b=IJDKDYoXsIO6he/Jytmf0POSEPJEyMNAAY1DaYvsNQm5VG0et+xzL+ogtXfcIVbNmI
+         D4E4MJhpzmwy828I3EysXJLHdhHY9t21/e3uwPtU9PcoZh1WQfx1wIz8IJhxBv2PwE7b
+         juMOb1nzodBfZnetFdAnpEoHHMYYGl2SgOHlGQLSh62hP94kh16crCkhooGx9I68yw3U
+         t/g7gVwHg1/o2iLDOYVHd4QRU2V8xvFqPsi7Q2t+KSXTpVvPWKV0pWPqrzf7npq7IVsF
+         DKwF6cW72pld6xWLds8Emu26dZDOXCopijabVz6FKEpB0LWOOzojY6qwTMqBFIIhOUGt
+         2Wxg==
+X-Gm-Message-State: AOAM530OJeonyHRZXvkyq2A5p00GgSZUYZ1WqyArbW9DnMCcjl/cSMaC
+        eClQSRFf+AhAFeFtPZ2zCo8Zg5A2OgI=
+X-Google-Smtp-Source: ABdhPJyS7Ub2EW15CO/Q5cc/oYFerRdfqvoaVoZpTfbHtWZChOhbPvCfhv/l6fOly55Xo7RKtooQpQ==
+X-Received: by 2002:a05:6e02:1c0c:: with SMTP id l12mr10835072ilh.69.1635178449767;
+        Mon, 25 Oct 2021 09:14:09 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b594:8626:d264:bb0? ([2600:1700:e72:80a0:b594:8626:d264:bb0])
+        by smtp.gmail.com with ESMTPSA id g6sm3197482ilq.68.2021.10.25.09.14.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 09:14:09 -0700 (PDT)
+Message-ID: <b208eb06-21c7-2199-0bc8-597669a165a1@gmail.com>
+Date:   Mon, 25 Oct 2021 12:14:07 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 05859DCE-35AE-11EC-B400-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH v4 3/4] submodule: record superproject gitdir during
+ absorbgitdirs
+Content-Language: en-US
+To:     Jonathan Tan <jonathantanmy@google.com>, emilyshaffer@google.com
+Cc:     git@vger.kernel.org
+References: <20211014203416.2802639-4-emilyshaffer@google.com>
+ <20211018231818.89219-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20211018231818.89219-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On 10/18/2021 7:18 PM, Jonathan Tan wrote:
+>> Already during 'git submodule add' we record a pointer to the
+>> superproject's gitdir. However, this doesn't help brand-new
+>> submodules created with 'git init' and later absorbed with 'git
+>> submodule absorbgitdir'. Let's start adding that pointer during 'git
+>> submodule absorbgitdir' too.
+> 
+> s/absorbgitdir/absorbgitdirs/ (note the "s" at the end)
+> 
+>> @@ -2114,6 +2115,15 @@ static void relocate_single_git_dir_into_superproject(const char *path)
+>>  
+>>  	relocate_gitdir(path, real_old_git_dir, real_new_git_dir);
+>>  
+>> +	/* cache pointer to superproject's gitdir */
+>> +	/* NEEDSWORK: this may differ if experimental.worktreeConfig is enabled */
+>> +	strbuf_addf(&config_path, "%s/config", real_new_git_dir);
+>> +	git_config_set_in_file(config_path.buf, "submodule.superprojectGitdir",
+>> +			       relative_path(absolute_path(get_git_dir()),
+>> +					     real_new_git_dir, &sb));
+>> +
+>> +	strbuf_release(&config_path);
+>> +	strbuf_release(&sb);
+>>  	free(old_git_dir);
+>>  	free(real_old_git_dir);
+>>  	free(real_new_git_dir);
+> 
+> Here [1] you mention that you'll delete the NEEDSWORK, but it's still
+> there.
+> 
+> Having said that, it might be better to make a test in which we call
+> this command while in a worktree of a superproject. The test might
+> reveal that (as pointed out to me internally) you might need to use the
+> common dir functions instead of the git dir functions to point to the
+> directory that you want (git-worktree.txt distinguishes the 2 if you
+> search for GIT_COMMON_DIR).
 
-> Ever since 'git sparse-checkout' was introduced [1] it is included in
-> 'git --help' in the section "work on the current change" along with
-> the commands 'add', 'mv', 'restore', and 'rm'.  It clearly doesn't
-> belong to that group, moreover it can't be considered such a common
-> command to belong to 'git --help' in the first place, so remove it
-> from there.
->
-> [1] 94c0956b60 (sparse-checkout: create builtin with 'list'
->                 subcommand, 2019-11-21)
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  command-list.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I came here to say the same thing. It's a bit too direct to compute
+the location of a config file this way, so we should expose a method
+that can create one for a given Git directory.
 
-Redirecting to Stolee just in case for an Ack.
+Since you're setting this config value inside the submodule's config,
+what does it mean for a submodule to also be a worktree (and hence
+require config.worktree)? What happens in this rough scenario?
 
-I tend to agree that this is a housekeeping command for a local
-repository to control what are and what are not materialized in the
-working tree.  It does not directly affect the history produced from
-there, similar to "git gc" is, so in that sense, I do not think we
-would miss it in the "list of usual commands".
+  1. git init sub
+  2. git init super
+  3. git -C sub worktree add super/sub
+  4. git -C super submodule absorbgitdir sub
 
-If I had to have it in some category, I do agree with the current
-code that it belongs to the "worktree" family, though.
+I haven't actually tried running these things, but it seems unusual
+and unexpected. This doesn't even account for cases where the repo
+root and a worktree are both submodules within the superproject.
 
-Thanks, will queue.
+If we already have protections preventing these worktrees as
+submodules, then perhaps there is no need for work here. I'm not
+familiar enough with the area to make a claim one way or another.
 
-> diff --git a/command-list.txt b/command-list.txt
-> index a289f09ed6..eb9cee8dee 100644
-> --- a/command-list.txt
-> +++ b/command-list.txt
-> @@ -168,7 +168,7 @@ git-show-index                          plumbingint=
-errogators
->  git-show-ref                            plumbinginterrogators
->  git-sh-i18n                             purehelpers
->  git-sh-setup                            purehelpers
-> -git-sparse-checkout                     mainporcelain           worktr=
-ee
-> +git-sparse-checkout                     mainporcelain
->  git-stash                               mainporcelain
->  git-stage                                                             =
-  complete
->  git-status                              mainporcelain           info
+Thanks,
+-Stolee
