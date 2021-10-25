@@ -2,112 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B6DC433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 20:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8E3EC433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 20:13:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20614604E9
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 20:12:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F6C160527
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 20:13:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238508AbhJYUOw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 16:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33930 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238292AbhJYUOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 16:14:45 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0251EC053A6B
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 12:36:29 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id m26-20020a62a21a000000b0041361973ba7so7012534pff.15
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 12:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=zT7/JTMZs8uHX/WCCne/iJxhxiARm1BG+nbYlLrxKRs=;
-        b=XrQdg8596LKOkBvP2R+drjk2mPfLVSHjxnRy+OOT8uWsPS5llj2z5kG2a24/mbgMxG
-         aMRHk+Ch/taoOHuBO2LSJUz8iQ5MoFr+5IGvWIOQykgqc6yqxfF65uRTQp3M6VlIGOxC
-         tCEQRkztpiagiPY16AzbfGyYnZt6zQrHw4BdAvQD0DknuO2vF7K0ROJLXWAmF1ctfiXS
-         kPGRDVOHvSwxI40Pnrk8WxT63Il5+NmEV5YUs6pDIq1Rg5H8j1SJUjidxx2jbcnpKQxx
-         qob5DY9VJMu3c6E3GBR+DZpJRYgMgzyMpfsj+/50Zv2zTwizSzatcQldXCSgMIatTFZQ
-         tlsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=zT7/JTMZs8uHX/WCCne/iJxhxiARm1BG+nbYlLrxKRs=;
-        b=EAaUkWMaVOu72RTQNmgVgKHfI3RfcIw3IPHkEAiq+J9OSoIRFJNmOFx6MEW5YnrnKl
-         l7RTMh21HT+DeZtnRovYI008n9n7ew4lpv+rPOULMl1aSteuwF60XdxIwWSutlnxahzN
-         C7Nr2BUL13B1fGbG1CgShjaifJPUnw8HAm8w6pgEsTuk565zvdz8O5gPtTmY4WYdaMiv
-         oIjZ+05k1akNbY1qM16rHwOSiBASKagcdFiZOGvbt6BMMn2wb6NOyQCj0eM+CZfT3+Eg
-         ngdik51VmDNaNtc/C+sHAzDZLRnP6zbzGN5why7QGVM8dtfVLmHhchKpDYZ4Hq57xi0E
-         zXVg==
-X-Gm-Message-State: AOAM533nJQ5nvc1dIjqkrFwAP/8fYJ8K/Idk7YHcCfu+E3SV10oKX6sm
-        svEqSNiPX4qByB1O9ssdFvaRS1KZmsz/5A==
-X-Google-Smtp-Source: ABdhPJzi0jssuQBfllJ9w4vMEJn/tcK8nPg5pVRBuvkLFzgEekVGyFBoSbcCj2bYw28zl6EiYz5bf+LWdy11gw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:60d:: with SMTP id
- gb13mr144640pjb.0.1635190588196; Mon, 25 Oct 2021 12:36:28 -0700 (PDT)
-Date:   Mon, 25 Oct 2021 12:36:26 -0700
-In-Reply-To: <kl6l35opasd1.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6lzgqwaocl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211013193127.76537-1-chooglen@google.com> <20211019224339.61881-1-chooglen@google.com>
- <20211019224339.61881-3-chooglen@google.com> <xmqqzgr3o4yw.fsf@gitster.g>
- <xmqqtuhbo2tn.fsf@gitster.g> <kl6l35opasd1.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 2/4] remote: use remote_state parameter internally
-From:   Glen Choo <chooglen@google.com>
+        id S238566AbhJYUQE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 16:16:04 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:32813 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236509AbhJYUP7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Oct 2021 16:15:59 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id DCA8F5C02E2;
+        Mon, 25 Oct 2021 16:13:36 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 25 Oct 2021 16:13:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=aP0TuHg7wIjn0oIZ7zWw274tlFX
+        h8zoNuKTd6TH23gs=; b=eoblY+N6Y9Ztv3cDUjb3XvMN/n9jTzveHrSfJY1BRmh
+        xgOJspvgFKOU86VlfifSu4ouVeisemmiRZ94uVroHKIOCe3QaOyoxL1frXOE2/gZ
+        PQ1ioyHkJhHtcZHbtk6FmNhaXVi+mjjO5SDoPQlk1kHSJUJPIrDG4f5hW+4a3i74
+        aoqTqUQV/37MOROoev9AXSGlRUWBbnLCp/UUnVpKc2vJe8p8lsm3aFgIOYJl/aM1
+        vWHkQoyz61eZ807QO13f+lTNWX+SM4OZCAbs3He0YfFd4Oj/p2UgtSvuJ35JBfaB
+        Tc7E6/9YJNKYrPKMqPhuidwvYD9WuPvGJ5r36soS1Qw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=aP0TuH
+        g7wIjn0oIZ7zWw274tlFXh8zoNuKTd6TH23gs=; b=bHKp41yDWOCUAFxYy9c/tf
+        pwYSYwLirEf7VCZ6X0bAcEZak3vm/OpelebxnQlBJ9J05+mbt4uZvuKsASFuCplC
+        YFqjQIn36EIMZ/PYOshnH9IEU+RrKgTMR0GwMbo2iugt4G81tER4izUwSMOugkET
+        ecT8AecudK9e+FGDR4ATluqLJIj3nQkD1YNv6aNWYjdgiX0pLlpHcUVVh5Ihv6Bq
+        MO2NF/m80Igko8R93AneeM5DmDyz757lpRi38sTxYBRVwFQZXUySKoXlj+yvtbDA
+        rt6ww33iF4L0IvNY2Et+4GHbATYnHWPTPB6KCy1YLzysTAqoQncNRZetisPDbeng
+        ==
+X-ME-Sender: <xms:8A93YeaX26xt--wqsht2E_LRQfTxoOmikRf4iPZ8oFT6RWVyQZeaCw>
+    <xme:8A93YRZt9qf2bKXlgE1IP8sbw48l6xWbypwhhFH9AlKGQKeQym61v_Nhupia-EobJ
+    mbCUdz6Y0c2mg2tBA>
+X-ME-Received: <xmr:8A93YY-OloWkCPRW2MHBSFKgk8l5jDe7iexGZJyifeEF6rLWVotNxe_UqvG5mPr1BtAEWr0N>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefhedgheehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghrnhgr
+    nhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtth
+    gvrhhnpedvjeeifeelhfetiefhhfdthfefkefhhfeutdetvdfgvefgveefheffgfekjeef
+    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
+    gvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:8A93YQqZ5tczRLo9SY-cuy_S0H3aNqJInju5gql3atKKdFwv0quFdQ>
+    <xmx:8A93YZrpKRiHY9pE23DCgua5IYFLSSuUW9QZrG2Pd5zj1DMVLMtX3w>
+    <xmx:8A93YeRul1hSOA2RA7ThBTcWqsJqCsJnrO1Mmm1S1pLSHeVFj-d-RQ>
+    <xmx:8A93Yano7zQ784HUBxlgP_b5AL-KuFJJA9WAstPFcCLZ-1XDA0revw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Oct 2021 16:13:34 -0400 (EDT)
+Date:   Mon, 25 Oct 2021 22:13:30 +0200
+From:   Fernando Ramos <greenfoo@u92.eu>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     David Aguilar <davvid@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Seth House <seth@eseth.com>, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+Subject: Re: [RFC PATCH] mergetools/vimdiff: add vimdiff4 merge tool variant
+Message-ID: <YXcP6kf3tGr+WFRS@zacax395.localdomain>
+References: <20211019212020.25385-1-greenfoo@u92.eu>
+ <CAJDDKr5frTgh4_x5yvskJfppew3ntvpgBe9MnUB9CfGQaw1TLQ@mail.gmail.com>
+ <xmqqk0i10xzt.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk0i10xzt.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Thanks David and Juno for your feedback.
 
->> The caller is remote_get_1(); this funciton was called with
->> "current_branch", which can be NULL until you have a repository and
->> you've called read_config(), but otherwise shouldn't be.
+I completely agree that adding another vimdiffX variant is ... not elegant.
 
-One possible culprit is working with detached HEAD, are you pushing with
-detached HEAD?
+So I've been thinking a bit more about how this whole "vim layout" mechanism can
+be made more generic and this is what I came up with:
 
-"current_branch" is allowed to be NULL when HEAD does not point to a
-branch. From read_config():
+  1. Let's add a new configuration variable to the "vimdiff" merge tool called
+     "layout":
 
-	if (startup_info->have_repository) {
-		const char *head_ref = refs_resolve_ref_unsafe(
-			get_main_ref_store(repo), "HEAD", 0, NULL, &flag);
-		if (head_ref && (flag & REF_ISSYMREF) &&
-		    skip_prefix(head_ref, "refs/heads/", &head_ref)) {
-			repo->remote_state->current_branch = make_branch(
-				repo->remote_state, head_ref, strlen(head_ref));
-		}
-	}
+         [mergetool "vimdiff"]
+         layout = ...
 
-This condition fails in detached head and "current_branch" is not set:
+  2. If this new variable is *not* present, vim will behave in the same way it
+     does today (ie. a top row with the local, base and remote buffers, and a
+     bottom row with the merged buffer).
 
-  head_ref && (flag & REF_ISSYMREF) && skip_prefix(head_ref, "refs/heads/", &head_ref)
+  3. In all other cases, the contents of the "layout" variable will be
+     intepreted following these rules:
 
->> The direct culprit is this part:
->>
->>     const char *pushremote_for_branch(struct branch *branch, int *explicit)
->>     {
->>             if (branch && branch->pushremote_name) {
->>                     if (explicit)
->>                             *explicit = 1;
->>                     return branch->pushremote_name;
->>             }
->>             if (branch->remote_state->pushremote_name) {
->>
->> where the second if() statement used to check "pushremote_name", but
->> now unconditionally dereferences "branch".
->>
-To work with branch = NULL, it seems obvious that branch should be
-conditionally dereferenced in pushremote_for_branch, i.e.
+       - ";" is used to separate "tab descriptors"
+       - "," is used to separate "row descriptors"
+       - "|" is used to separate "column descriptors"
+       - "+" is used to load buffers that won't be displayed by default
 
-  - if (branch->remote_state->pushremote_name) {
-  + if (brnach && branch->remote_state->pushremote_name) {
+     This will be better understood with some examples that emulate the behavior
+     of the current "vimdiff", "vimdiff1", "vimdiff2" and "vimdiff3" variants as
+     well as the proposed "vimdiff4" one:
 
-However, if you are not using detached HEAD, the problem might be
-elsewhere..
+
+       vimdiff  --> layout = "LOCAL | BASE | REMOTE, MERGED"
+
+           ------------------------------------------
+           |             |           |              |
+           |   LOCAL     |   BASE    |   REMOTE     |
+           |             |           |              |
+           ------------------------------------------
+           |                                        |
+           |                MERGED                  |
+           |                                        |
+           ------------------------------------------
+
+
+       vimdiff1 --> layout = "LOCAL* | REMOTE"
+
+           ------------------------------------------
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           |     LOCAL         |    REMOTE          |
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           ------------------------------------------
+
+           NOTE: In this case (where there is no "MERGED"
+           buffer specified in the "layout" string), a "*"
+           is needed to indicate which file will be the one
+           containing the final version of the file after
+           resolving conflicts.
+
+
+       vimdiff2 --> layout = "LOCAL | MERGED | REMOTE"
+
+           ------------------------------------------
+           |             |           |              |
+           |             |           |              |
+           |             |           |              |
+           |   LOCAL     |   BASE    |   REMOTE     |
+           |             |           |              |
+           |             |           |              |
+           |             |           |              |
+           |             |           |              |
+           ------------------------------------------
+
+
+       vimdiff3 --> layout = "LOCAL + REMOTE + BASE + MERGED"
+
+           ------------------------------------------
+           |                                        |
+           |                                        |
+           |                                        |
+           |               MERGED                   |
+           |                                        |
+           |                                        |
+           |                                        |
+           ------------------------------------------
+
+           NOTE: LOCAL, REMOTE and BASE are loaded as hidden
+           buffers and you need to recall them explicitely.
+
+
+       vimdiff4 --> layout = "BASE | LOCAL | REMOTE, MERGED; BASE | LOCAL; BASE | REMOTE"
+ 
+           ------------------------------------------
+           | <TAB #1> |  TAB #2  |  TAB #3  |       |
+           ------------------------------------------
+           |             |           |              |
+           |   LOCAL     |   BASE    |   REMOTE     |
+           |             |           |              |
+           ------------------------------------------
+           |                                        |
+           |                MERGED                  |
+           |                                        |
+           ------------------------------------------
+
+           ------------------------------------------
+           |  TAB #1  | <TAB #2> |  TAB #3  |       |
+           ------------------------------------------
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           |     BASE          |    LOCAL           |
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           ------------------------------------------
+
+           ------------------------------------------
+           |  TAB #1  |  TAB #2  | <TAB #3> |       |
+           ------------------------------------------
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           |     BASE          |    REMOTE          |
+           |                   |                    |
+           |                   |                    |
+           |                   |                    |
+           ------------------------------------------
+
+
+The nice thing about this approach is that, as we have seen, it is generic
+enough to rule all current variants obsolete.
+
+So, please let me know what you think about this:
+
+  * Do you like this approach? Or am I trying to crack a nut with a sledgehammer
+    by making the whole thing too complex?
+
+  * In case you like it, should we keep the old "vimdiff1", "vimdiff2" and
+    "vimdiff3" variants for backwards compatibility?
+    If the answer is "yes", I'll just alias them to the new "layout" mechanism
+    so that the amount of extra code needed for supporting them is minimal.
+
+If you tell me you like this proposal, I'll go ahead and implement a patch for
+all of this, taking into consideration David's suggestions for avoiding problems
+with file with spaces in their names and also adding new documentation for all
+of this.
+
+    NOTE: The only non-trivial thing about implementing this is how to parse the
+    "layout" variable syntax *in bash* to convert it into a sequence of vim
+    commands that achieves the expected outcome... but seems like a funny
+    weekend project :)
+
+If you think it is not worth the effort, let me know if it is OK to just add
+"vimdiff4" + documentation instead for now (or something else).
+
+Thanks.
+   
+
