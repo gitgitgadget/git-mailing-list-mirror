@@ -2,237 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93466C433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 159E3C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:04:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FEEF61039
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:00:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE6FD60F9B
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 13:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233459AbhJYNDR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 09:03:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47954 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233391AbhJYNDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 09:03:13 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29AFDC061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 06:00:51 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id g201-20020a1c20d2000000b00327775075f7so4894553wmg.5
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 06:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ojgnvg3AOpgxHpE+qPvLJTmDN2LwwstClKVr4S2mVhE=;
-        b=LGBxVwdpphXN/hLX06jo4Jm4+9VlADVgKQc/HedKi9Zi2bEfBbt2B+w8hpPWe3bRep
-         no5uLLEdVE2pgHRdsWX/euqvXBxPxRbEN7K6W30o+Q/bIG9+rNmZ4zocHtXpW82N/Lgp
-         J3WLYevBeu4eMLvDhe1NRw7vflCVagdXL8MIxBmbP+h/qNoDVQU95CjPk67oclmXdmht
-         ncPvayJVvxHH79m4r8UHUph/1N24D9ApUvW6Uw4hb5YUJTPP9U0VmrroQeq9Dj+urEKA
-         yPb8zmSJuC4036lMhGOTa1RtKsaKwPWriSK2Gi9Dy9AOPO7DFS8mMOxjAKdvqqhTyRu1
-         IV+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ojgnvg3AOpgxHpE+qPvLJTmDN2LwwstClKVr4S2mVhE=;
-        b=5sESG7FothVSvzWkcWE1Pi1tUQjsNWFpKFoJQL01tLm/hkOJMYRt2ZNtaG8Dx/o6of
-         9qHI0ktTFelrc/OEJVuqDhwwEYBVfYSOsnsNS7XPeYXC7pyMbem1bXaTAmqgC5AEXToU
-         TYHQ+zfkV/xilZyNHXoVsKs0lUxpaWEul1vS/5K9mPjL4mXFC3FL7Ca6dvovwwlWQmU8
-         xTreGhNmQRBo60PzrCk+HmllS7MCJvi/LN/zgSQoriTcq7JVcR1JrY68AIWY2DEFsdlt
-         T1GpZfij+TEweWJUaWjDISgKElyGXSVHnNSQ4g6pw3ytUfyGI4sp0u9viTrIM7tIwBr/
-         8q7g==
-X-Gm-Message-State: AOAM533rXWvJXn5AQlLqdqG1nhPcmk8RkjFDVTQoxnIoF+6lGBcWfFnY
-        9Tm+nAJvYImgo2dP+gTxnE429QTJ2Q/cMQ==
-X-Google-Smtp-Source: ABdhPJxdDb37gyXCzhEcw/T1BLSgYPvFarHiVRTrk7z0ZbGoKIMv4WBJd1jIjjW49nW01Tj2p93MIg==
-X-Received: by 2002:a05:600c:430c:: with SMTP id p12mr14741342wme.188.1635166849538;
-        Mon, 25 Oct 2021 06:00:49 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s18sm14146138wrb.95.2021.10.25.06.00.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 06:00:49 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mezaq-001XHy-JV;
-        Mon, 25 Oct 2021 15:00:48 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Let's have public Git chalk talks, was Re: Notes from the Git
- Contributors' Summit 2021, virtual, Oct 19/20
-Date:   Mon, 25 Oct 2021 14:58:48 +0200
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2110221143240.62@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <nycvar.QRO.7.76.6.2110221143240.62@tvgsbejvaqbjf.bet>
-Message-ID: <211025.86pmrtgsxr.gmgdl@evledraar.gmail.com>
+        id S233424AbhJYNHJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 09:07:09 -0400
+Received: from mout.gmx.net ([212.227.15.19]:41925 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233391AbhJYNHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 09:07:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1635167077;
+        bh=cHABubggtig7G9LoY6KwshB601sk7ZOaG0MjiuaqfO4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AD1wzLzjL8Gaiv3kFei7TdGaeY3nuc0VnWMSMMHM/ynnbH/7GHpRlzSgLTF2xZEW0
+         rY8UWlY188s47ghVMEsy+Y0FoTs1fsWQ8sVxpaLbiW9XTfKTQiLwfztVJIGSm9usm9
+         1k9f1BgJQSd6NGIUVT6fvoS4T9j8PKdj/tFtuqMU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.19.78] ([89.1.213.179]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N79yQ-1mkP3B1VhU-017TjO; Mon, 25
+ Oct 2021 15:04:37 +0200
+Date:   Mon, 25 Oct 2021 15:04:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Sven Strickroth <email@cs-ware.de>, git <git@vger.kernel.org>
+Subject: Re: tortoiseplink ssh variant still needed?
+In-Reply-To: <xmqqtuh79zmq.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2110251459100.62@tvgsbejvaqbjf.bet>
+References: <dad761bf-3121-8934-fad6-78610bc21121@cs-ware.de> <xmqqtuh79zmq.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:p2yCEsEvXRqclhMBxi9k/CsVbvHEzZRiUV8i2/tTM0wu0MgNhRp
+ 6HUgJquXRbr6SU+LgYOgaE6x0wUrgCSES2Dghm3wS2SJarxvQdg9Yda0X0CWMhQ3SFlX9uJ
+ jCO4mEs6IjL16TgpbaCdy7D2ETpax8gKkPFOAAMxGy1g5O2DvM47Llug/vT39iFn/S8/jup
+ CJ0SKLWqWzYfVmkqAmifw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ss73HVz953s=:7TITLXeKzKhBUJd0zE1Ncq
+ 24y+KWa3ligCegTQzxF3m1dWi37mxp9UzrlaG7iJMt0Ptzj+puP37/dSAwmFizH1UNHtRmC/9
+ Ujn5wFqJs95huzYEMFJ6+3VKIxlj9ZxOzGf7klZP0ONZc6Lzqzer7zvOpa1pC4aa39SNRJXA3
+ yItpp8E6veJFRMkOSJMKiSSZh/zCad6Djx2xQx4riWVG+RKLuHN5F6LE7HcXdonMylIn7yyyR
+ 0SURGlzj9CLuUlwDvobjfm97VmH5oZgN77uD3zyGkMSp7LfJy0H6FAUybAFnLMOy6czAfDEZz
+ boRKSSORNWNCIAs0t3yt21NCmOV11yO1sxEZMIPEhH85w7aS6xVA7K6u4GWFE2UhHcQUN6Chm
+ Zs4WXvEJYo0Cdijwwe4R4vdpvLrXiESsq4ISu2dNAK8IUsK/DeWcdROnRUy2JKCB2F0RAn+9V
+ n2qznCRiSQPejce7w86Z83/0WjuOnwQHNJMxYIzZNRa7SfMu+TAP1qGjYiz18HdPWKtN7m+hU
+ 16KmhTDufz3c07Ztq+ZV+pco5OUytXufaXacin9F9qmM/CEWxywBR9tkndwtZVY7HuprAIJb4
+ hckPh7FCPThcQgBqWvoXDZgmTzTzJoNdDrWYvqJul8rRoTXZK5cU/fyC9V+LSQjrOh9g4UyKQ
+ MN8RsElxfoBb89N9aMhstkhn1SQkYZuJgfAiIjrIdfRqPD2Uuukx760Fxv78EohDjXr3pkyg+
+ XnkpW0Ws9r83Ft39NRRWXX4/4Rs3/WTbv4Az2KSDhG3i7BC5B7uZBMvccW8N5lKME0UyPkr+u
+ ro1dtUMF+1585H8WhrK7HTf36Kp39xXi4IJ0+k1W+RFJ8NMnQ4BqXzWK+wE45HmZDtNB5fEJ/
+ RkW3FZTILRDD1dWlwCP60pa/p/suAyJW1DlB4G7Dmp3W7zX56MeCRRBwoXOUvF0jOf///bmSy
+ lIAT2oiezFisRjqKqDNbQa5CDUAe0vSHr9vpVwS/LUojYAiv2tqp/Lo5eecGTg0sooU92b1bu
+ D6mzdGF1y7HhLOYDzdED45HaV+TdX5x3gVyX+L5hv6SfP4mJuYbGx0JGhpwlVzW5KTRK7C5qx
+ 0w49DuNLHxJpM4=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Fri, Oct 22 2021, Johannes Schindelin wrote:
+On Sat, 23 Oct 2021, Junio C Hamano wrote:
 
-> Team,
+> Sven Strickroth <email@cs-ware.de> writes:
 >
-> On Thu, 21 Oct 2021, Johannes Schindelin wrote:
+> > Therefore, my first question: Does Git still want to support very old
+> > versions of tortoiseplink or should I provide a patch which drops
+> > support for it?
 >
->> * Let's have public Git chalk talks
+> [...]
 >
-> Okay, I give up on the mailing list. I tried some 20 times to send the
-> notes out in one form or another, and it simply is not working, and the
-> time I spent trying was definitely lost time.
+> I am guessing that nobody other than those on Windows use
+> TortoisePlink, and that everybody other than those who build their
+> own Git from source use Dscho's Git-for-Windows, and I further
+> assume that the GfW comes with its own copy of OpenSSH.
 >
-> So here is a link:
-> https://gist.github.com/dscho/003a0e112058e5794b5e08e84d34092d
+> So our intended audience is those who started using Git on Windows
+> back when TortoisePlink was still a thing, are still happily using
+> TortoisePlink, and are willing to only update Git but not migrate to
+> OpenSSH.  How big that audience is, I do not know, as I do not do
+> Windows.
 
-Trying to see if it works for me. FWIW I recieved a bounce from GMail on
-an unrelated mail of mine in this thread whose error suggests that
-gmx.de's MX's may be rate limiting recieved mails on your account in
-some way, which may or may not have anything to do with difficulties
-interacting with kernel.org infrastructure in general.
+Nobody really knows, but we started discouraging `plink` usage (also
+`tortoiseplink` usage) already way back in the msysGit days. AFAIR we
+simply ran into too much trouble, and started to only offer `plink` as an
+option if the user had _any_ PuTTY saved sessions.
 
-Attempt to paste
-https://gist.githubusercontent.com/dscho/003a0e112058e5794b5e08e84d34092d/r=
-aw/8d825e01152d957671d5da9e7c5217cabc37afa5/gistfile1.txt
-follows below:
+> How much maintenance burden is the "support" costing us?  A quick
+> scan in connect.c tells me that the "add --batch to the command
+> line" would be the only thing we would be able to shed; everything
+> else seems to be shared with plink and putty.
 
-This session was led by Emily Shaffer. Supporting cast: =C3=86var Arnfj=C3=
-=B6r=C3=B0
-Bjarmason, brian m. carlson, CB Bailey, and Junio Hamano.
+Since I have to assume a very small usership, I would think that we can
+drop support for the older `tortoiseplink`. But you're right, what does it
+_buy_ us?
 
-Notes:
+My guess is that Sven wants to go further and enable the `-o SetEnv` thing
+for protocol v2 (which we figured out together, over in the Git for
+Windows bug tracker, to be turned off when pushing). But that would
+require the `tortoisegitplink` variant, I think.
 
- 1.  What=E2=80=99s a public chalk talk?
+So maybe a better idea would be to focus on introducing support for
+`tortoisegitplink` and work on the `-o SetEnv` issue, and leave the
+`--batch` code alone for now.
 
-     1.  At Google, once a week, the team meets up with no particular topic=
- in
-         mind, or a couple topics, very informal
-
-     2.  One person=E2=80=99s turn each week to give an informal talk with =
-a white
-         board (not using chalk)
-
-     3.  Topic should be technical and of interest to the presenter
-
-     4.  For example: how does protocol v2 work
-
-     5.  Collaborative, interactive user session
-
-     6.  Helps by learning about things
-
-     7.  Helps by honing skills like presentation skills
-
-     8.  A lot of (good) humility involved. For example, colleagues who have
-         been familiar with the project for a long time admitting they don=
-=E2=80=99t
-         know, or have been wrong about things. Makes others feel more
-         comfortable with their perceived lack of knowledge
-
-     9.  Could be good for everybody on the Git mailing list, might foster =
-less
-         combative communication on the list
-
-     10. Might be a way to attract new people by presenting =E2=80=9Cold ti=
-mers=E2=80=9D as
-         humble
-
- 2.  Does that appeal to anybody else?
-
- 3.  =C3=86var: I think it would be great, has been a long time we=E2=80=99=
-ve seen each
-     other, and already feels different
-
- 4.  One thing to keep in mind: it=E2=80=99s hard to program on a white boa=
-rd :-)
-
- 5.  Emily: some challenges:
-
-     1. How often?
-
-     2. What time?
-
-     3. Probably move things around (because we=E2=80=99re global)
-
-     4. Tech to use? Jitsi? Twitch? (Twitch seems to be particularly popula=
-r to
-        teach programming)
-
-     5. Figure out what topics to present
-
- 6.  =C3=86var: does not matter what tech to use
-
- 7.  Emily: some difference may make it matter: on Twitch, you can record, =
-and
-     they host recordings
-
- 8.  One thing to worry about recording: people might be reticent to make
-     public mistakes
-
- 9.  It=E2=80=99s possible to do a Twitch stream, and not record it
-
- 10. brian: maybe record it, but not keep the recordings forever
-
- 11. People might be uncomfortable having their homes being recorded
-
- 12. At GitHub, some sessions are recorded just so people from other timezo=
-nes
-     can watch later
-
- 13. CB: would be a nice way to see the other contributors
-
- 14. Really like the idea, hopefully won=E2=80=99t replace other things we =
-do
-
- 15. Emily: internally, often about patch series in progress (or not even
-     started)
-
- 16. So retaining recordings for long time makes even less sense
-
- 17. Weekly might be too frequently, Monthly cadence sound more reasonable?
-
- 18. Junio: not sure we want an official schedule
-
- 19. Assumed this would be an extension of what we do on IRC
-
- 20. Remember when Linus would drop in and talk about a specific topic in
-     depth, was nice
-
- 21. Now we have video
-
- 22. Emily: I fear if we don=E2=80=99t schedule it, it=E2=80=99ll never hap=
-pen
-
- 23. =C3=86var: would like it to be organized, maybe try some schedule and =
-then
-     iterate?
-
- 24. brian: if it is scheduled, I can put it on my calendar, otherwise migh=
-t be
-     hard to block the time
-
- 25. Every two weeks would be fine, especially when alternating timezones
-
- 26. Emily: who besides me wants to volunteer for the other timezone?
-
- 27. =C3=86var: if you start a schedule, I=E2=80=99ll see what I can do
-
- 28. CB: also interested
-
- 29. brian: can do, but Toronto is probably too close to California time
-
- 30. Junio: schedule should be put on https://tinyurl.com/gitcal
-
- 31. Emily: how about using a Google Sheet just like for the Contributors=
-=E2=80=99
-     Summit?
-
- 32. One advantage to decide the topic in advance is that people can decide
-     whether to make time to attend, on the other hand people might show up
-     with a polished PowerPoint, which is not the idea
-
- 33. brian: we can try, and if it does not work, make it less formal
-
- 34. Emily: pretty much got what I need to start this
+Ciao,
+Dscho
