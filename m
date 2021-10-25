@@ -2,131 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 798E2C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 12:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCCD3C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 12:52:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6232460F02
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 12:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B21FE603E9
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 12:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232474AbhJYMsu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 08:48:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44508 "EHLO
+        id S233348AbhJYMy2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 08:54:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233293AbhJYMsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 08:48:43 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73441C061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 05:46:18 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id g201-20020a1c20d2000000b00327775075f7so4843799wmg.5
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 05:46:18 -0700 (PDT)
+        with ESMTP id S233071AbhJYMy2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 08:54:28 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9445C061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 05:52:05 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id k7so8017023wrd.13
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 05:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=uEBCzwGDwhv3gwFHQWi8Ws4mCxJfO1bGAqcXAwkb9Pk=;
-        b=B2aUEvrUtVPXhO8IM6+MH6M0jbAXrglrnzcZ/yhBIeM2S0lpqobvVgdHx0vvJ+37z5
-         4TfYl3GiMpLByf27DsNTZSq9vRVxRIBUkbiU2CWL4PhUbyY2EM98JW3jKiDwWtIZ1g8E
-         OfEJz4ECLr5P1ZEYS8QacCrLO0nhObBxgIUT987oO2gBTTLqohZXaHBUbHGijxAKQ1ZT
-         UPaOOwbi4Wr859NxXpclGBft+Q/9eqABw+1NVlDBtc3/NjpcEzGZLXs5/RqGuy8jfAh0
-         kJ7sXVGtpUQ8lJoHSBtREYTcLylFZwI/eFRMQ2Pm7M91XymPnr2JcPuLGxRfU48DCxdq
-         2qzA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=rTbJZN5Spc5+5ePcY/c5ikBzlMHdIt07PiM0BycAYk8=;
+        b=BIl+BBT0Rf4EPMzmdfaR4hMPRX5qWV8MACy3SVsExPk+c5BRCnWQuqFIWQGrG1Ezvs
+         SqYpQTWQFYrVhjbkMQIOyKxYwWnyug/Q3fEv8MTCKBpZ3vEsQRI4UDttVf3E5S03tH1i
+         s0/iotwuE7qdmC2Tg3CdDXPEyqHTU2PNeIZ7F/fFpZ2+L0crmriKS1IJ6zEGJHDhOxdp
+         MMIYZgB3M0d6nDN//99/XTqWnTMLLNXPoKpnMGGrTtihs/Ih3b3+aOrW0KIsPRBWql2y
+         pnIkizr7r8vj0vC3XLUf9QzRwMXTjNYJMIiRZroWUYKLvPOvPEQmrtLSAHEc5SWpxjb9
+         Uvgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=uEBCzwGDwhv3gwFHQWi8Ws4mCxJfO1bGAqcXAwkb9Pk=;
-        b=L7a8oeKQsMroqZw+Hqwep1DddNgGSgeTi1PONxx+Gwb9OMcYaGlM4fXr9CINL45y5k
-         jS4vjabBVnCGp1yfe32otbV5cuPrCrio4jc8t+PZ3wBuUVHQeiFF2jsAbVQfndLXM0yo
-         eMfkW9M72mY9qkpktQFgpHA5FFF+lQ0qm0oc/VoEAd05nYvwlgtE/7GGwrm9A1V7RWge
-         vs8UJlTJNUYSwiVN1zBfNmxfmBaCmatZaLdDej2Ot+yyXUGHU3X+OpkMsB/C5YSvXyZS
-         HmCfwI0Zr715OIC+u3/GJNOptcQSKn30E/xHZNFTYypxXapsWWXwGobcQ2Cj63CjowiV
-         zzJA==
-X-Gm-Message-State: AOAM533iD/+jLW3jnCWRvUVCVh8zvhEBC7W9Z7VzMhVJ36EQkwy/GM8p
-        DlvNljfnBFl4+4mBdi3PNvJ6uoGhpos9TQ==
-X-Google-Smtp-Source: ABdhPJxjdVWIukLht0gfKYhORS1Ssb4yhOhKax6lg4SxU5926BWTXNTWfOXERaZdiQ9s0xME3LZ+zw==
-X-Received: by 2002:a7b:c30c:: with SMTP id k12mr49390375wmj.38.1635165976658;
-        Mon, 25 Oct 2021 05:46:16 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=rTbJZN5Spc5+5ePcY/c5ikBzlMHdIt07PiM0BycAYk8=;
+        b=7QjZA5B3R3ZsnI424e4j7PG+m19cDfXZOUhQs/75ngFnMB+mCK1o5NFSHXae0Gobkt
+         08Z9RI0gC1nT8EeylPnMJSjlXf87xHu5pcdnXR2UmLS58AFHzPaGO2pFSMXiSgHetNK9
+         iriXk7MPRkobQDLW/f1VlbhspTS2oAlkBBuk9Jq8nsQOYHt76M86O+j+tHp69D3y7lLk
+         5nR3TtbV6yEALfJq7i/8pWWF163dIK2DJE1Fri55UT2dzgPax1x2atmb2Zl/ycmoJcnO
+         4VV0z3mbD2I7L+aCXfQeIvNYTS/g19Inbmcuah6rgtVamBH8X/W9H3a4B/bTmaaJ3sak
+         M59g==
+X-Gm-Message-State: AOAM530fRcV4LDNv3bXV3IhweBIfcQpWNFXpNUzl9PJcoV4X5v7gr0LT
+        H54kZbBGmHswe6M71Ku4UFA=
+X-Google-Smtp-Source: ABdhPJzY9m08VFPe1wGxXFP6B4yBFNklfPSaDWLYja+5+btYesTrl6ziFqvC4F7ZsXb04RWyJE16mw==
+X-Received: by 2002:a05:6000:1841:: with SMTP id c1mr23584848wri.204.1635166324355;
+        Mon, 25 Oct 2021 05:52:04 -0700 (PDT)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d16sm8620457wrq.66.2021.10.25.05.46.16
+        by smtp.gmail.com with ESMTPSA id o20sm191499wmq.47.2021.10.25.05.52.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 05:46:16 -0700 (PDT)
+        Mon, 25 Oct 2021 05:52:03 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mezMl-001Wr4-Qy;
-        Mon, 25 Oct 2021 14:46:15 +0200
+        id 1mezSN-001X3l-CL;
+        Mon, 25 Oct 2021 14:52:03 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH] amend error message violations
-Date:   Mon, 25 Oct 2021 14:37:38 +0200
-References: <pull.1062.git.1635164026698.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin <git@mfriebe.de>, git@vger.kernel.org
+Subject: Re: changing the experimental 'git switch'
+Date:   Mon, 25 Oct 2021 14:48:47 +0200
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110211150290.56@tvgsbejvaqbjf.bet>
+ <211021.86wnm6l1ip.gmgdl@evledraar.gmail.com>
+ <9c6b3041-a5c0-6fe1-860e-7bfcb292ae81@mfriebe.de>
+ <da952e81-70f9-886b-42ff-2ec850f55fa0@mfriebe.de>
+ <xmqqwnm2418p.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <pull.1062.git.1635164026698.gitgitgadget@gmail.com>
-Message-ID: <211025.86y26hgtm0.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqwnm2418p.fsf@gitster.g>
+Message-ID: <211025.86tuh5gtcc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Oct 25 2021, Abhradeep Chakraborty via GitGitGadget wrote:
+On Sun, Oct 24 2021, Junio C Hamano wrote:
 
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+> Martin <git@mfriebe.de> writes:
 >
-> Issue no #635 in the gitgitgadget/git repo has a brief description
-> about the violation of error message style convention. These
-> violations are - 1) Do not end error messages with a full stop. 2) Do
-> not capitalize ("unable to open %s", not "Unable to open %s") 3) Say
-> what the error is first ("cannot open %s", not "%s: cannot open")
+>> So one could do
+>> git switch=C2=A0 --settings-from <branch-with-reflog-and-conf> --create
+>> <new-branch>=C2=A0=C2=A0 <commit>
+>> git switch=C2=A0 -s <branch-with-reflog-and-conf>=C2=A0=C2=A0 -c <new-br=
+anch>=C2=A0=C2=A0 <commit>
+>>
+>> "settings-from" is just an example, there may be better names for
+>> it. Ideally not starting with a "c".
+>>
+>> And using a name different from "copy" may be more accurate, because
+>> unless it is created on the same one <commit> to which the=20
+>> <branch-with-reflog-and-conf> points, then its at best partially copied.
+>
+> I like the "copy the settings from this other branch when creating
+> this new branch" as a concept.
+>
+> One thing that I find iffy is the reflog.  Even with the current
+> "create a new branch NEW, pointing at the same commit, tracking the
+> same remote-tracking branch, having the same branch description, and
+> pretending to have come along the same trajectory, out of this
+> original branch OLD", I actually find that the copyng of reflog is
+> utterly questionable.  Before that operation, the new branch did not
+> exist, hence NEW@{4.days.ago} shouldn't say the same thing as
+> OLD@{4.days.ago} for the branch NEW that was created like so just a
+> minute ago.
+>
+> If you generalize the operation to allow starting the new branch at
+> a different commit, it becomes even more strange to copy the reflog
+> of the "original" branch, which is not even the original for this
+> new branch.
+>
+> Another thing nobody seems to have brought up is the branch
+> description.  We copy everything under branch.OLD.* to branch.NEW.*
+> and end up copying it from OLD to NEW, but I think that is also a
+> nonsense operation.
+>
+> So, it probably makes sense to be more selective that what are
+> sensibly copied and what are not.  Reflog most likely does not
+> belong to the "sensibly copyable" set.  Tracking info most likely
+> does.  Among various configuration in branch.OLD.*, there may be
+> things like description that are not sensibly copyable.
 
-Let's summarize the guidelines instead of asking readers to visit
-https://github.com/gitgitgadget/git/issues/635 (which isn't even
-directly linked here) only to find a quote from CodingGuidelines.
+It is a bit weird, but the main problem is that we'll use it for UI such
+as @{-1} or whatever in addition to things like "x days ago". So if you
+copy a branch for some ad-hoc testing, and were just running such a
+command you might expend it to work.
 
-I think it's good to split these up, e.g. the rewording of the BUG()
-message for the 3rd quoted item in CodingGuidelines from cases where
-you're only changing the capitalization of these messages.
+For a user it also maps nicely to the mental model you'd have if you
+copied two directories with the "-p" option to "cp", i.e. you'll be able
+to run a "find" command on that checking mtime of N days ago and the
+like.
 
-> One thing to note that I didn't change any .po file as there is a
-> doubt whether those are good to change or not.
-
-Those should be left alone, and will be updated by translators as part
-of the whole "git.pot" process.
-
-> -			res = error(_("Could not parse HEAD^{tree}"));
-> +			res = error(_("could not parse HEAD^{tree}"));
-
-If we're going to mass-edit these I wouldn't mind an addition to the
-guidelines that says we ''-quote things, and add that when appropriate....
-
->  				regerror(ret, &regex, errbuf, sizeof(errbuf));
-> -				err(s, _("Malformed search regexp %s: %s"),
-> +				err(s, _("malformed search regexp %s: %s"),
->  				    s->answer.buf, errbuf);
->  				continue;
-
-..e.g. here.
-
-> -	error(_("You have not concluded your merge (MERGE_HEAD exists)."));
-> +	error(_("you have not concluded your merge (MERGE_HEAD exists)"));
->  	if (advice_enabled(ADVICE_RESOLVE_CONFLICT))
->  		advise(_("Please, commit your changes before merging."));
-> -	die(_("Exiting because of unfinished merge."));
-> +	die(_("exiting because of unfinished merge"));
->  }
-
-Surely any convention of not using full-stop should extend to advise()
-too?
-
-But in this case aren't we constructing sentences in parts? Maybe having
-the full-stops here is better than not, I'm not sure.
-
-Also, have you tried using coccinelle for this? Doing this sort of
-replacement should be a small matter of some inline Python, the
-linux.git repo has some good examples of that.
-
-It would make discussing these changes easier, and per the "pending"
-docs in contrib/coccinelle/README any patches could follow such rules
-incrementally...
+Maybe it still doesn't make sense for those cases just some thoughts on
+UX edge cases.
