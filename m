@@ -2,120 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E3BCC433FE
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CCAEC433F5
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:48:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60451604E9
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:27:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61CA760F22
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233348AbhJYV3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 17:29:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51972 "EHLO
+        id S233217AbhJYVus (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 17:50:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232971AbhJYV3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 17:29:47 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AFAC061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:27:24 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id d205so13239648qke.3
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:27:24 -0700 (PDT)
+        with ESMTP id S230201AbhJYVur (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 17:50:47 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B47C061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:48:25 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id 187so12198457pfc.10
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gokXIJiLkNt+SR2xH6s6FPwFbWR2isiSUaTCKJlN0jI=;
-        b=OLh+rvzUhqB7j3kTb+BHILpyhd3I3QHjEb4Z+sSCNLHap9Xnb1QTRt6ec9Fyyuo+Lv
-         t4MVAEortofjMuS1RxYiuvf5C7eJzUIT0w8mT2uTJRjBYvou4Fey8/EHl/7ekzXZIaKa
-         RrFW89IlyeLagxvigU4v5oge0LjcSOxJPaH8/6FXjZrgfINqnTAcFT19XJ0QNM8AGbzq
-         kh2F/aXjqP4euoZRlP0Gq+P2sRXHhMs4ktCnetyJQMTv710C6nFKmh9yWHyhZVVMN5n4
-         L3ccI5bkuOjUw9cZtdRNgZL2pcPxuHHUrDrha6kottfEjjh69EtyGy7DPy/oS+k0FEM9
-         ORCQ==
+        d=atlassian.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ntl7JZbDPe2W3MmzEi9tr+uAn+gDDre2p+qwZ5TII7I=;
+        b=rgb51udh4PG9jFKc5Fhc0MorSwmGYdGEto8YRvrOK/KR894x54eBIeiHJhLPBI+kqv
+         Ng5t8ONwtwCCpiC8HZY2H5ENkinSblOyEiRqx3tpJtTNKWzXc+e9XPgGQagtSOqIu8f8
+         3HWyOP4ow7gdEJJdSyDYtTnFcp7wus7AJsFj9Ds/Q+9d2eOm0Aha80r/36RqCYlFGp+7
+         MNx2YFlX7bcctCKwSqLbyoi0THSEeyLQthYrleRw68ogwjBaRezIcUBKZWlNcNhSAWe7
+         2YqiqxrfuLIoWez9XY4PD0UtfFUyeUinf4XxUq5vFHUIZZhw0JKtLLz9jFMsPOsRY3XV
+         nzQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gokXIJiLkNt+SR2xH6s6FPwFbWR2isiSUaTCKJlN0jI=;
-        b=niW93ALxn6RXU/zLdXjhTDDzBvZaytuHk/1QjKAC2aVNkOb9aminAc0Y4ryHFMdK8s
-         EszzxGBuH8SjLSqFEXFxxT0Z1of4Q/fwGBsiMSGpgRL2dYyThP+lN69FsMnibT1mqNtm
-         nO0E2sWVJV4KhTCmd0qdYr7q/rSMq9KVgjFFUj5wfq6FA7YK/xwWPisrX/fD520jwRNB
-         j/4Sj2O29NtaurqGrLVAlmzCnSVha3pU/Zt5RfwSodR7ASCXyib50K4sBopGJkoD1BPq
-         8IBDgQsBoP3c4wzSQL4U6G2QAVYaf7/J4ATMLcTcV7uqVkooLHSBH8Pm3uA0mGK4KY2O
-         iVkw==
-X-Gm-Message-State: AOAM530QZnVwNVEh+twWPnSU+SyipgT+GT11RC46FGnql1d21SKrEcXi
-        KNf3AIsGFh77h0pMpCG0PzUmIMvpaQgaGw==
-X-Google-Smtp-Source: ABdhPJylxSdmfnhDbO3vJhRWLgoibX+S6Ve7qh1P/Iyv3sfTNqLCmzFJ6rf11F8lD8tFUKXaFOqi8g==
-X-Received: by 2002:a37:7ce:: with SMTP id 197mr15633719qkh.59.1635197243708;
-        Mon, 25 Oct 2021 14:27:23 -0700 (PDT)
-Received: from localhost.localdomain (bras-base-ktnron0919w-grc-11-76-71-43-238.dsl.bell.ca. [76.71.43.238])
-        by smtp.gmail.com with ESMTPSA id bk13sm9288672qkb.58.2021.10.25.14.27.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 14:27:23 -0700 (PDT)
-From:   Thiago Perrotta <tbperrotta@gmail.com>
-To:     git@vger.kernel.org, carenas@gmail.com, gitster@pobox.com,
-        bagasdotme@gmail.com, avarab@gmail.com
-Cc:     tbperrotta@gmail.com
-Subject: [PATCH v8 2/2] send-email docs: add format-patch options
-Date:   Mon, 25 Oct 2021 17:27:07 -0400
-Message-Id: <20211025212707.188151-3-tbperrotta@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <87fst7lkjx.fsf@evledraar.gmail.com>
-References: <87fst7lkjx.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ntl7JZbDPe2W3MmzEi9tr+uAn+gDDre2p+qwZ5TII7I=;
+        b=h9w8m+YAmaLRyz2qADzJhr905YWldLETY/1stEVxuwnNPi14iEy/Fetdms7VRTpKve
+         Ru/MPmLKOOasgOc88knx2ks3hloPoSuZtPNc60+VtaiYjhJpyXL/yq36NrrIB4y/z8Ws
+         512tXCtUPxttVH70xbQ0snDOKTeArJD5YX6JBvbEENmdZ/hcW+SCgXIhfMeepTjyqo4P
+         3Ut/mDV4+nKnHvP1ZI+vfy1mbf6/yZujvgSoZdCAHb5yWTsq+8Dp0ePC9j0dFsJIi1I7
+         YqMX5hRgScqT6KrslPX1JQkWgExtac28vZUCyXPG8SRpk0HlGQjAiOir2Pcz0ylRTe3H
+         TFQg==
+X-Gm-Message-State: AOAM530d/SjzAC+/HbnXuvPBifw8RYtZFGSfjSf/TSItaXqvchfH5kHq
+        7px4OeqpGIFtx3nejzimmy6Fvfuf0gLV1XjFdXiEhBHWmx8M6A==
+X-Google-Smtp-Source: ABdhPJzoLvWHwNv4h8vkWeJ4+yRThz/OjUTMCcHSQBhlWzf36nr3i6DuSkXoUS8fCSsAAkfMuapn4w20vVGLVwF/6vo=
+X-Received: by 2002:a63:70a:: with SMTP id 10mr1827650pgh.299.1635198504354;
+ Mon, 25 Oct 2021 14:48:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGyf7-HFGgkXsA-MXBOdiogDid+=F8jmqw0zxwQoUzha-jc1Hw@mail.gmail.com>
+ <YXcC8jQbFsaqYN2M@coredump.intra.peff.net>
+In-Reply-To: <YXcC8jQbFsaqYN2M@coredump.intra.peff.net>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Mon, 25 Oct 2021 14:48:13 -0700
+Message-ID: <CAGyf7-Gge72Cr39pEci8CNBiVWDO2O5MesrFRqafE-_ibHfR0g@mail.gmail.com>
+Subject: Re: Unexpected cat-file --batch-check output
+To:     Jeff King <peff@peff.net>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-send-email(1) does not mention that "git format-patch" options are
-accepted. Augment SYNOPSIS and DESCRIPTION to mention it.
+On Mon, Oct 25, 2021 at 12:18 PM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Oct 25, 2021 at 12:02:38PM -0700, Bryan Turner wrote:
+>
+> > I'm working with some users trying to reconcile an odd mismatch
+> > observed in some Git output.
+> >
+> > Running an ls-tree for a branch and path, limited to a single pattern
+> > within, shows this:
+> > /usr/bin/git ls-tree -z refs/heads/develop:path/to/parent =E2=80=93 fil=
+e
+> > 100644 blob 4c8d566ed80a1554a059b97f7cd533a55bbd2ea8    file
+> >
+> > If we then run cat-file --batch-check, though, we see this:
+> > echo 'refs/heads/develop
+> > refs/heads/develop:path/to/parent/file' | /usr/bin/git cat-file --batch=
+-check
+> > 28a05ce2e3079afcb32e4f1777b42971d7933a91 commit 259
+> > cc10f4b278086325aab2f95df97c807c7c6cd75e commit 330
+>
+> That's definitely odd. Some things I'd try:
+>
+>   - do other versions of cat-file behave differently (i.e., is it a
+>     regression)?
+>
+>   - what does "git rev-parse refs/heads/develop:path/to/parent/file"
+>     say? If it comes up with 4c8d566ed80, then the problem is cat-file
+>     specific. If not, then it's a problem in the name resolution
+>     routines.
+>
+>   - likewise, what does "git cat-file -t cc10f4b27808" say? I'd expect
+>     it to really be a commit (a bug in batch-check's formatting routines
+>     could show the wrong object, but I'd expect the oid to at least
+>     match what ls-tree showed).
 
-Update git-send-email.perl USAGE to be consistent with
-git-send-email(1).
+I don't have that specific data, but one thing I do know is that
+cat-file -p prints commit contents:
 
-Signed-off-by: Thiago Perrotta <tbperrotta@gmail.com>
----
- Documentation/git-send-email.txt | 6 ++++--
- git-send-email.perl              | 3 ++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+/usr/bin/git cat-file -p refs/heads/develop:path/to/parent/file
+tree c378146c918c05794e5fb1d1f6986c81ca866326
+parent 6cb6016c78c4c963311ca82fc53764141b0d3bdd
+author ...
+committer ...
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3db4eab4ba..41cd8cb424 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -9,7 +9,8 @@ git-send-email - Send a collection of patches as emails
- SYNOPSIS
- --------
- [verse]
--'git send-email' [<options>] <file|directory|rev-list options>...
-+'git send-email' [<options>] <file|directory>...
-+'git send-email' [<options>] <format-patch options>
- 'git send-email' --dump-aliases
- 
- 
-@@ -19,7 +20,8 @@ Takes the patches given on the command line and emails them out.
- Patches can be specified as files, directories (which will send all
- files in the directory), or directly as a revision list.  In the
- last case, any format accepted by linkgit:git-format-patch[1] can
--be passed to git send-email.
-+be passed to git send-email, as well as options understood by
-+linkgit:git-format-patch[1].
- 
- The header of the email is configurable via command-line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
-diff --git a/git-send-email.perl b/git-send-email.perl
-index b45c7da3ab..ace2dbca1a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -40,7 +40,8 @@ package main;
- 
- sub usage {
- 	print <<EOT;
--git send-email [options] <file | directory | rev-list options >
-+git send-email' [<options>] <file|directory>
-+git send-email' [<options>] <format-patch options>
- git send-email --dump-aliases
- 
-   Composing:
--- 
-2.33.1
+<Commit message starts here>
 
+One other observation. I threw
+cc10f4b278086325aab2f95df97c807c7c6cd75e into Github's search, on a
+lark, since so much open source is there, and it actually finds that
+commit in multiple repositories[1][2][3]
+
+[1] https://github.com/bitcoin-sv/bitcoin-sv/commit/cc10f4b278086325aab2f95=
+df97c807c7c6cd75e
+[2] https://github.com/fakecoinbase/bitcoin-svslashbitcoin-sv/commit/cc10f4=
+b278086325aab2f95df97c807c7c6cd75e
+[3] https://github.com/TuringBitchain/TuringBitchain/commit/cc10f4b27808632=
+5aab2f95df97c807c7c6cd75e
+
+None of those repositories has a branch named "develop", and the
+"file" I've obscured here is not present in any of them, so while
+there is clearly some ancestry in this repository with open source
+roots, it's evolved since then. Experimenting with some of the
+"nearby" files that are present in those public repositories, I have
+not been able to reproduce the issue in any of them.
+
+>
+>   - Is there anything odd about the tree? E.g., duplicate entries, out
+>     of order entries, etc? Examining "ls-tree" output might help, but
+>     "git fsck" should also note any irregularities.
+
+I've sent some further commands, based on your suggestions, to the users.
+
+>
+> After that, I'd probably start running "cat-file --batch-check" through
+> a debugger. I know you said you don't have access to the repository, but
+> perhaps whoever does might be willing to run it through "fast-export
+> --anonymize" and see if the bug persists?
+
+fast-export --anonymize might be a way forward. Thanks for suggesting
+it (I always forget about it); I've mentioned it to the users.
+
+Thanks Jeff; I appreciate your time/insights!
+
+Best regards,
+Bryan Turner
