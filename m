@@ -2,72 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 383BEC433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 17:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 861E4C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 17:52:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DFF260F46
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 17:49:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63FC460E8C
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 17:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233600AbhJYRva (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 13:51:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55766 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233746AbhJYRvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 13:51:14 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C08F16AADF;
-        Mon, 25 Oct 2021 13:48:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=daFYOIXu16Pb58T+nHkov49HEw83Kc5LGriHbq
-        A1P7A=; b=A34xxj3WIo5aLdO1FvEdkgauC3GBE++pHlFIW2v6MUbpRW7rHz0azQ
-        /znFyQYZP/1m6awUcWohTqdex4XBZvkhaBvUfUI8W8C1S23ZnrCS2+TVqRVWbiEC
-        EJE00uFs0NKU1pTDz9uNn1UzJkhEn4IsRqL8tvVroicy4cOld8RIM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2649416AADE;
-        Mon, 25 Oct 2021 13:48:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8532B16AADA;
-        Mon, 25 Oct 2021 13:48:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git List <git@vger.kernel.org>, vagabon.xyz@gmail.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] archive: describe compression level option
-References: <20211022064543.28950-1-bagasdotme@gmail.com>
-        <CAPig+cRAi4ZR+_+Dh+DoUBkG=sgWTekxadob2YvThJQhr9tqfA@mail.gmail.com>
-        <xmqqcznvbg2m.fsf@gitster.g>
-        <CAPig+cQ8NEKY3nwuFi_7Hc7L7rnbcUShf3zw60PvBB8LOPEgPA@mail.gmail.com>
-Date:   Mon, 25 Oct 2021 10:48:48 -0700
-In-Reply-To: <CAPig+cQ8NEKY3nwuFi_7Hc7L7rnbcUShf3zw60PvBB8LOPEgPA@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 25 Oct 2021 12:39:07 -0400")
-Message-ID: <xmqqsfwp0zcv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233400AbhJYRyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 13:54:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45944 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230398AbhJYRyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 13:54:35 -0400
+Received: (qmail 6393 invoked by uid 109); 25 Oct 2021 17:52:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Oct 2021 17:52:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21647 invoked by uid 111); 25 Oct 2021 17:52:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Oct 2021 13:52:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 25 Oct 2021 13:52:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 08/10] generate-cmdlist.sh: do not shell out to "sed"
+Message-ID: <YXbuy3Lk0ZS+8sFQ@coredump.intra.peff.net>
+References: <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
+ <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
+ <patch-v2-08.10-83318d6c0da-20211022T193027Z-avarab@gmail.com>
+ <YXbfdEqKHc5b19u9@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CF5AB794-35BB-11EC-ABBA-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YXbfdEqKHc5b19u9@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Oct 25, 2021 at 12:46:45PM -0400, Jeff King wrote:
 
->> In summary, perhaps something like this?  I still have "-9 (best
->> ratio)" which does not say it is merely the intent and not
->> guarantee, but the resulting text read a bit funny with "best ratio"
->> replaced with "try hardest".
->
-> This version looks fine. Thanks.
+> It's like spawning processes is somehow faster on your machine than
+> mine. I wonder if it's a CPU governor thing. This is a laptop, and those
+> numbers come from using "powersave". Doing "cpufreq-set -g performance",
+> I get:
+> 
+>    'sh generate-cmdlist.sh command-list.txt' ran
+>    14.35 ± 0.23 times faster than 'sh generate-cmdlist.sh.old command-list.txt'
+>    33.15 ± 0.50 times faster than 'sh generate-cmdlist.sh.master command-list.txt'
+> 
+> which is closer. But most notably all versions are 3-5x faster than
+> their "powersave" counterparts. I wonder if that has been driving some
+> of the confusion in our timings in this thread.
 
-Thanks for proofreading.  I have locally fixed a grammo ("Larger
-values allow the command"), by the way.
+BTW, I should have mentioned these governors are used with the
+intel_pstate driver. So "powersave" here is not the default "use the
+lowest frequency" governor in linux, but the pstate-specific one which
+is more like "ondemand".
 
+Not that I expect anybody to look into or pontificate on governor
+issues, but I wanted to make sure I didn't confuse anyone.
 
+-Peff
