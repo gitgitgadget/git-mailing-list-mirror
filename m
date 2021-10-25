@@ -2,74 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5578BC433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 10:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20206C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 10:44:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3378360E96
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 10:38:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0790D60EBD
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 10:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232913AbhJYKk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 06:40:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58543 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232877AbhJYKk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 06:40:28 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06C47D8D7D;
-        Mon, 25 Oct 2021 06:38:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=cm3E6X+yoX+yYJ+t8pcyHcskTn4L3LitjX286uIlQL8=; b=IMAK
-        z5yMSLp1v1MRc/wq/ipI2tF7yARO+ORLQ3WBJ+A6/GIenlSnnWuuLRrn/b2lzcRh
-        lkdYlWHdIlLSM4smJsJIi0JeLjAuju1DUoTatWHvBrKB/m6/qlqgAwA9YDxxeVCG
-        9JCBv+CAUd+oAMC+DfNUUQHK/hSKU0AJLTFBHjY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E33F9D8D79;
-        Mon, 25 Oct 2021 06:38:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 418EED8D78;
-        Mon, 25 Oct 2021 06:38:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Marco Beck <mbeck@eaddrinuse.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] gpg-interface: allow selecting key id with env variable
-References: <20211024193625.148-1-mbeck@eaddrinuse.net>
-        <xmqqsfwq40w7.fsf@gitster.g> <YXXMroOBvDERXIMP@octopus.int.carobme.de>
-Date:   Mon, 25 Oct 2021 03:38:04 -0700
-Message-ID: <xmqqwnm12xv7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232828AbhJYKqb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 06:46:31 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:57742 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232789AbhJYKqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 06:46:31 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mexSZ-0004hP-Az; Mon, 25 Oct 2021 11:44:07 +0100
+Message-ID: <48d2b707-3337-8232-af19-dc6170e12313@iee.email>
+Date:   Mon, 25 Oct 2021 11:44:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A2F6FD66-357F-11EC-A253-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH 1/4] gitfaq: add advice on monorepos
+Content-Language: en-GB
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20211020010624.675562-1-sandals@crustytoothpaste.net>
+ <20211020010624.675562-2-sandals@crustytoothpaste.net>
+ <557fe5b8-36b4-a760-d2dd-02137746a37b@iee.email>
+ <YXCWigr6TovYXgbb@camp.crustytoothpaste.net>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <YXCWigr6TovYXgbb@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marco Beck <mbeck@eaddrinuse.net> writes:
+Hi Brian,
+On 20/10/2021 23:22, brian m. carlson wrote:
+> On 2021-10-20 at 14:11:09, Philip Oakley wrote:
+>> Does this need some comparison, or link, with sub-module methods and
+>> issues? Such as the nested sub-module problem, the distinction between
+>> active sub-modules and quiescent sub-modules (e.g. libraries Vx.y.z)?
+> I don't think it does.  Some projects choose to use many repositories
+> with submodules, and some use many repositories without submodules.  At
+> work, we do the latter, and it tends to work just fine.
 
-> On Sun, Oct 24, 2021 at 01:35:04PM -0700, Junio C Hamano wrote:
->
->>Can you explain why we want to add another way to specify the key?
->
-> Motivation for that patch was that I usually use the same .gitconfig
-> (all dotfiles actually) with multiple identities (e.g. company and private
-> email address). It's really convenient to switch to a different identity
-> for the rest of the session by just setting e.g. $GIT_AUTHOR_EMAIL and not
-> needing to remember adding --author to every invocation of git-commit(1)
-> etc. Thought it would be nice to have that convenience for selecting a
-> signing key as well.
+To clarify, my comment was with regard to the complementary discussions
+about _choice_ of repo types, rather than mono-repo and other
+post-choice issues. Possibly, part of such a discussion on choice of
+repo-type, could include the potential slippery slope between the
+different uses of sub-modules.
 
-If you are flipping between two (or more) idents using GIT_AUTHOR_*
-but not doing the same for GIT_COMMITTER_*, then your commits may be
-made under the same committer identity for both work and hobby
-projects, which may not be what you want.  And if you are flipping
-between multiple committer idents via GIT_COMMITTER_* environment
-variables, the GPG signing key should follow the committer ident at
-no extra cost, I would think.
-
-
+I feel a lot of the difficult sub-module discussion are because we don't
+have a common terminology for the different (mental) models of
+sub-module use, their benefits and problems.
+--
+Philip
