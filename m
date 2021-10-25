@@ -2,148 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CCAEC433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B63F6C433F5
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 22:16:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61CA760F22
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 21:48:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D80A6101C
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 22:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233217AbhJYVus (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 17:50:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56772 "EHLO
+        id S233385AbhJYWTU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 18:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230201AbhJYVur (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 17:50:47 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B47C061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:48:25 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id 187so12198457pfc.10
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 14:48:25 -0700 (PDT)
+        with ESMTP id S232653AbhJYWTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 18:19:19 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B159FC061745
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 15:16:56 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 71-20020a1c014a000000b0032cafd23b1dso85225wmb.4
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 15:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ntl7JZbDPe2W3MmzEi9tr+uAn+gDDre2p+qwZ5TII7I=;
-        b=rgb51udh4PG9jFKc5Fhc0MorSwmGYdGEto8YRvrOK/KR894x54eBIeiHJhLPBI+kqv
-         Ng5t8ONwtwCCpiC8HZY2H5ENkinSblOyEiRqx3tpJtTNKWzXc+e9XPgGQagtSOqIu8f8
-         3HWyOP4ow7gdEJJdSyDYtTnFcp7wus7AJsFj9Ds/Q+9d2eOm0Aha80r/36RqCYlFGp+7
-         MNx2YFlX7bcctCKwSqLbyoi0THSEeyLQthYrleRw68ogwjBaRezIcUBKZWlNcNhSAWe7
-         2YqiqxrfuLIoWez9XY4PD0UtfFUyeUinf4XxUq5vFHUIZZhw0JKtLLz9jFMsPOsRY3XV
-         nzQQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=b9HehMapAhoPP2kL2W3+HrPtFiBn2BVU0iXedugTyt0=;
+        b=NtD6S/pndznjtHYi/HqmQ5HNJXn3Erzxdjzg+Sox0tdXZS15wRG7oKml5CnG6KStIF
+         Y+b5Z4uA+tCFwCkyAe7EoL/eKrdwX9fvB/EyYV2ehDPT9vDSfStKSV1zkMcka1qaiqXD
+         BS8LhHYINicUb05rOFZwny82jT/EbOGDDd0BGhn1qcYtlCA8OwhYGnrFNyKocy2ruWQN
+         OnWFGJh/vDlUIpdfgKZxcxe0YASgFfgYxjRvaIkv1GI7ZW1JTNoW2DEQg2DPkjPYyGFJ
+         5B7bEdqWQCIjg4K7mzW1kI9RYSDJEG3KrGYffPVufEQyW2+Z+l1TEqkCYVWofveGWatk
+         yl+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ntl7JZbDPe2W3MmzEi9tr+uAn+gDDre2p+qwZ5TII7I=;
-        b=h9w8m+YAmaLRyz2qADzJhr905YWldLETY/1stEVxuwnNPi14iEy/Fetdms7VRTpKve
-         Ru/MPmLKOOasgOc88knx2ks3hloPoSuZtPNc60+VtaiYjhJpyXL/yq36NrrIB4y/z8Ws
-         512tXCtUPxttVH70xbQ0snDOKTeArJD5YX6JBvbEENmdZ/hcW+SCgXIhfMeepTjyqo4P
-         3Ut/mDV4+nKnHvP1ZI+vfy1mbf6/yZujvgSoZdCAHb5yWTsq+8Dp0ePC9j0dFsJIi1I7
-         YqMX5hRgScqT6KrslPX1JQkWgExtac28vZUCyXPG8SRpk0HlGQjAiOir2Pcz0ylRTe3H
-         TFQg==
-X-Gm-Message-State: AOAM530d/SjzAC+/HbnXuvPBifw8RYtZFGSfjSf/TSItaXqvchfH5kHq
-        7px4OeqpGIFtx3nejzimmy6Fvfuf0gLV1XjFdXiEhBHWmx8M6A==
-X-Google-Smtp-Source: ABdhPJzoLvWHwNv4h8vkWeJ4+yRThz/OjUTMCcHSQBhlWzf36nr3i6DuSkXoUS8fCSsAAkfMuapn4w20vVGLVwF/6vo=
-X-Received: by 2002:a63:70a:: with SMTP id 10mr1827650pgh.299.1635198504354;
- Mon, 25 Oct 2021 14:48:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=b9HehMapAhoPP2kL2W3+HrPtFiBn2BVU0iXedugTyt0=;
+        b=7ULJqvXJ4XBBQp3UmFB8x2i1mpO7kfRyHTVPJsw9ax0rLtvbtbM2QEEuBJeQpAg1pK
+         OWQoHMMCr9pbQPednyULOcWQK213MPNb+7gJQV0JJR1fPa/fzhuXazFbC5z9XvolI0qS
+         JHpuUlrNAx7rUM2+7AdDeH2V2Hwuszk/t0HP2xHw7ca9DBuDyN1Z6BW5TUigSp6YEdNl
+         3/CB29jfgU10yt18zQrWlkFsl7bQQslLU+kPaX+nxO1PfgL7yX4p3ymoKjUL07iBF7hP
+         edgH5c76Xczh9CrOHmNm9BrXcYglBYqat+8fbgxCzVqJ+OXoSu5lP092s+8MSnzpl7C9
+         dOYw==
+X-Gm-Message-State: AOAM531Bxh8yZ5xj9S1cgvC/7tddhe/ud7tHc2Y7G+QUjMWWEuvwkpIS
+        umhJKJqswSzRrdvp9UfJVys=
+X-Google-Smtp-Source: ABdhPJxUtWyonl0r/MXyX7FjdeUIWslFARq4sw0j/nK9CiTqakA+Y5SvKdwU3fnyhVDLd5AaiArmcw==
+X-Received: by 2002:a05:600c:b41:: with SMTP id k1mr53200078wmr.4.1635200215205;
+        Mon, 25 Oct 2021 15:16:55 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id y5sm7617545wrd.75.2021.10.25.15.16.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Oct 2021 15:16:54 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mf8H0-001gZ5-6l;
+        Tue, 26 Oct 2021 00:16:54 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
+Subject: Re: [Summit topic] The state of getting a reftable backend working
+ in git.git
+Date:   Tue, 26 Oct 2021 00:09:55 +0200
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110211148400.56@tvgsbejvaqbjf.bet>
+ <CAFQ2z_NBOC5sDSL6AjCe-5mPVhU1B_guJEsHwVT3=AK1aAt8UA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <CAFQ2z_NBOC5sDSL6AjCe-5mPVhU1B_guJEsHwVT3=AK1aAt8UA@mail.gmail.com>
+Message-ID: <211026.86wnm021ih.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAGyf7-HFGgkXsA-MXBOdiogDid+=F8jmqw0zxwQoUzha-jc1Hw@mail.gmail.com>
- <YXcC8jQbFsaqYN2M@coredump.intra.peff.net>
-In-Reply-To: <YXcC8jQbFsaqYN2M@coredump.intra.peff.net>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 25 Oct 2021 14:48:13 -0700
-Message-ID: <CAGyf7-Gge72Cr39pEci8CNBiVWDO2O5MesrFRqafE-_ibHfR0g@mail.gmail.com>
-Subject: Re: Unexpected cat-file --batch-check output
-To:     Jeff King <peff@peff.net>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 25, 2021 at 12:18 PM Jeff King <peff@peff.net> wrote:
+
+On Mon, Oct 25 2021, Han-Wen Nienhuys wrote:
+
+> On Thu, Oct 21, 2021 at 1:56 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>> This session was led by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (on behal=
+f of Han-Wen
+>> Nienhuys, the driving force behind the reftable patches, who did not
+>> attend the Summit). Supporting cast: Jonathan "jrnieder" Nieder, Johannes
+>> "Dscho" Schindelin, Philip Oakley, Jeff "Peff" King, and Junio Hamano.
+>>
 >
-> On Mon, Oct 25, 2021 at 12:02:38PM -0700, Bryan Turner wrote:
+> Thanks =C3=86var for doing this. I wanted to be there, but I took a much
+> needed 2 week computer-less vacation .
+
+No problem, as is perhaps clear from the notes I had to hand-wave some
+questions away since I didn't know about those things.
+
+>>..
+>>      9.  Reftable has a set of files that go together. May want debuggin=
+g tool
+>>          to dump the content of a binary reftable file. But we can
+>>          incrementally add those
 >
-> > I'm working with some users trying to reconcile an odd mismatch
-> > observed in some Git output.
-> >
-> > Running an ls-tree for a branch and path, limited to a single pattern
-> > within, shows this:
-> > /usr/bin/git ls-tree -z refs/heads/develop:path/to/parent =E2=80=93 fil=
-e
-> > 100644 blob 4c8d566ed80a1554a059b97f7cd533a55bbd2ea8    file
-> >
-> > If we then run cat-file --batch-check, though, we see this:
-> > echo 'refs/heads/develop
-> > refs/heads/develop:path/to/parent/file' | /usr/bin/git cat-file --batch=
--check
-> > 28a05ce2e3079afcb32e4f1777b42971d7933a91 commit 259
-> > cc10f4b278086325aab2f95df97c807c7c6cd75e commit 330
 >
-> That's definitely odd. Some things I'd try:
+> The patch series includes a test-tool for dumping both individual
+> tables and a stack of tables. It's not super-polished, but it gets the
+> job done.
 >
->   - do other versions of cat-file behave differently (i.e., is it a
->     regression)?
+> $ touch a ; ~/vc/git/git add a; ~/vc/git/git commit -mx
+> ...
 >
->   - what does "git rev-parse refs/heads/develop:path/to/parent/file"
->     say? If it comes up with 4c8d566ed80, then the problem is cat-file
->     specific. If not, then it's a problem in the name resolution
->     routines.
+> $  ~/vc/git/bin-wrappers/test-tool  dump-reftable -t
+> .git/reftable/0x000000000002-0x000000000002-327b23c6.ref
+> ref{refs/heads/main(2) val 1 ab21c324503544acca84eb55f5ee7dce24b23e15}
+> log{HEAD(2) Han-Wen Nienhuys <hanwen@google.com> 1635188263 0200
+> 0000000000000000000000000000000000000000 =3D>
+> ab21c324503544acca84eb55f5ee7dce24b23e15
 >
->   - likewise, what does "git cat-file -t cc10f4b27808" say? I'd expect
->     it to really be a commit (a bug in batch-check's formatting routines
->     could show the wrong object, but I'd expect the oid to at least
->     match what ls-tree showed).
-
-I don't have that specific data, but one thing I do know is that
-cat-file -p prints commit contents:
-
-/usr/bin/git cat-file -p refs/heads/develop:path/to/parent/file
-tree c378146c918c05794e5fb1d1f6986c81ca866326
-parent 6cb6016c78c4c963311ca82fc53764141b0d3bdd
-author ...
-committer ...
-
-<Commit message starts here>
-
-One other observation. I threw
-cc10f4b278086325aab2f95df97c807c7c6cd75e into Github's search, on a
-lark, since so much open source is there, and it actually finds that
-commit in multiple repositories[1][2][3]
-
-[1] https://github.com/bitcoin-sv/bitcoin-sv/commit/cc10f4b278086325aab2f95=
-df97c807c7c6cd75e
-[2] https://github.com/fakecoinbase/bitcoin-svslashbitcoin-sv/commit/cc10f4=
-b278086325aab2f95df97c807c7c6cd75e
-[3] https://github.com/TuringBitchain/TuringBitchain/commit/cc10f4b27808632=
-5aab2f95df97c807c7c6cd75e
-
-None of those repositories has a branch named "develop", and the
-"file" I've obscured here is not present in any of them, so while
-there is clearly some ancestry in this repository with open source
-roots, it's evolved since then. Experimenting with some of the
-"nearby" files that are present in those public repositories, I have
-not been able to reproduce the issue in any of them.
-
+> commit (initial): x
 >
->   - Is there anything odd about the tree? E.g., duplicate entries, out
->     of order entries, etc? Examining "ls-tree" output might help, but
->     "git fsck" should also note any irregularities.
-
-I've sent some further commands, based on your suggestions, to the users.
-
+> }
+> log{refs/heads/main(2) Han-Wen Nienhuys <hanwen@google.com> 1635188263 02=
+00
+> 0000000000000000000000000000000000000000 =3D>
+> ab21c324503544acca84eb55f5ee7dce24b23e15
 >
-> After that, I'd probably start running "cat-file --batch-check" through
-> a debugger. I know you said you don't have access to the repository, but
-> perhaps whoever does might be willing to run it through "fast-export
-> --anonymize" and see if the bug persists?
+> commit (initial): x
+>
+> }
 
-fast-export --anonymize might be a way forward. Thanks for suggesting
-it (I always forget about it); I've mentioned it to the users.
+Neat.
 
-Thanks Jeff; I appreciate your time/insights!
+From memory I think the more general concern Philip Oakley was also
+expressing (but maybe he'll chime in) could also be addressed by a tool
+that just un-reftable-ifies a repository.
 
-Best regards,
-Bryan Turner
+I think such a thing would be useful, and I think we don't have that
+already. Isn't the files backend or reftable usage now an "init"-time
+setting.
+
+It would be useful if for no other reason than to give user who are
+looking at a repository that's weird somehow the ability to quickly
+migrate 100% away from reftable, to see if it has any impact on whatever
+they're seeing.
+
+I wanted to implement a "git unpack-refs" a while ago for "pack-refs",
+just to simulate some performance aspects of loose-refs without writing
+an ad-hoc "ref exploder" one-liner again.
+
+A migration tool would surely be pretty much that, no? I.e. we'd just
+create a .git/refs.migrate or whatever, then hold a lock on reftable,
+and in-place move .git/refs{.migrate,} (along with top-level files like
+HEAD et al, presumably...).
+
+Maybe there's more complexity I'm not considering than just the *.lock
+dance in .git/*, but if not such a tool could also convert freely
+between the two backends, so you could try refable out in an existing
+checkout.
