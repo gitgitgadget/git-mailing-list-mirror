@@ -2,228 +2,297 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F0DFC433EF
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 22:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2351C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 05:02:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A4886101C
-	for <git@archiver.kernel.org>; Sun, 24 Oct 2021 22:55:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C49D360C40
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 05:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231771AbhJXW5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Oct 2021 18:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56126 "EHLO
+        id S231940AbhJYFE3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 01:04:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbhJXW5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Oct 2021 18:57:49 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E84C061745
-        for <git@vger.kernel.org>; Sun, 24 Oct 2021 15:55:28 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id w15so11131672edc.9
-        for <git@vger.kernel.org>; Sun, 24 Oct 2021 15:55:28 -0700 (PDT)
+        with ESMTP id S229489AbhJYFE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 01:04:28 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C38C061745
+        for <git@vger.kernel.org>; Sun, 24 Oct 2021 22:02:06 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id w15so6770604wra.3
+        for <git@vger.kernel.org>; Sun, 24 Oct 2021 22:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nwcJUKakbosbQEkd/eRN/rwlQMQ0seGchi61YMsFOF8=;
-        b=ZpifgDNJji4mnHUsol723knlNPAGDvGZno88YA9Jdr7BBN6Kj+MHbk4NqQr0TmLOM7
-         l0t+LmezBtCQs7R/MfS4vB4+Zy+/S5+kc7nOFOCBqkL856+8C1h74M6l1XmDgKR+c4Fz
-         kXYg0o3hE39VLkaHurzD0Ge0vW0DQou5B4unToRGEk8X1X1m3nswkBVvK0B75OKn+JUT
-         ZKAkO5KhEODAm6B+EjUdjdLggTTVPs0ZjzFai2+WY7Vc1KtKifg5beQ3JSJ4TxNRwpUp
-         m+xDZeqsL+loUcmj7rO+tIOplMAWur/7Agy6vskNe/1HAxxjOPZPl0UWr36dbhGc9RaY
-         AbBw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=JmuhRHb9zVaozts7k2iba2TbJythbbmf/MnaVEdYKNQ=;
+        b=IZ2Ixd82Nhr2tzlScYhaKVWRr0R7qJKuT4bgxf28wSmgyjfbBZ1ecBnVNHpzgTZrCP
+         HSiAmXg5TW4YuwGdJmX5pWSljrnmMTrcS0+bqUzNuKj0pazHMPbIntl8+TT4wcTb79v3
+         CEfsyIwlW2jgjZCnsN1na03VFzeCD3CMLUPpMElrldo/3YoUBt2xJL+x2im0tbz13QI0
+         gg+7ppDUyQ8OZaoEcV+nvMP/HYDEUUcLoIvuYP4B42lxlbaj2MdCIDYrzhTqLbWmyw0j
+         mlJ3Br78OXQ8IUBz8Cx58H2kdWKz6Wrh4Cg4X4IoK8MV1EI1aarmON3V9mn30rW/pr2e
+         Ht3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nwcJUKakbosbQEkd/eRN/rwlQMQ0seGchi61YMsFOF8=;
-        b=hdGWc+Eoe2R3+ONIxSRYYCCVVTJEzKG/bPonvj6pfszPkoTav2KXCYrrKFYbnb7UvH
-         mgKcD1r3LEhcStwwhNrEkrB/A9Tn65d1dipg0NvF95GTXwKdlDtWUtBrF1KQCpzoEUGf
-         X/TQFn5m4YTTPOW31Sj8Bvn9LBSJ9urDR9l42cIxSBrrAWwigDT8XLKv0NgiM8IEHSJ5
-         NUbmeDV4xoSUAjhmlGmU92MB9XVY9CSP4QHI644xHCJsKSAeFz1IYN0qqf6hrNqlOvyn
-         fV+Kf4JdD8vo4P5aABxTY6CMd9sVePS7fT2qeQUzP1AFQDbSmEhYCK4pki3Iko/5uo83
-         c0sg==
-X-Gm-Message-State: AOAM532vjbz80STTfHHiNrUdB2YTzqkHhxKoFwVcOratFsCgqNt70NIW
-        q50HmL9+qhpdV2IAgwo9mqqc0LBrQ9fA9f+gsjU=
-X-Google-Smtp-Source: ABdhPJwPLtdIiX2Bb43nhXLXrJxISgnRxd2g6EkvCZqP5IIyBqBTb/sG+XzU4gpnGrW13Fm1IzUOcPWU0VU68OqSYLQ=
-X-Received: by 2002:a05:6402:268f:: with SMTP id w15mr21540615edd.13.1635116126171;
- Sun, 24 Oct 2021 15:55:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JmuhRHb9zVaozts7k2iba2TbJythbbmf/MnaVEdYKNQ=;
+        b=Sv0OB2QIxbFmycZt9BP3bZTfdVjhtwUgXTPlYJRPo3/ibBRD0ybbuY1Q+LZVzDwqmj
+         W9wty/KONVBkhu++cJ+ReG7BTaSg9vpfvSFCdOFuRimbe6zZWHaKlYWK028/mCWZ9jiz
+         tRvG6hux+UW1D0sckcnjhxi/4hF8mC75gNUGZHMZWvCalCrRCSJwMqsmptnkkdwgVCuR
+         LjKTWYvxfIJdUvts6jIw32FpQ9ea0q5IcCMJzri2W4D6ubJs7fp6QEjQCHVuRa4LxRjR
+         PUnHbF5kLtPxMtJfX/cQDxZeVy285VUj7L4/SzJEfJIy0urlIXnimn4DhOCl+H1DME7U
+         9Ohw==
+X-Gm-Message-State: AOAM531eFtygzuZpCxZfM7VqCAaArvAumZRT+iOFR+gienHkM65s7ULa
+        k+iKHRC/WRwks3BfEH+NDFs=
+X-Google-Smtp-Source: ABdhPJweXFfCGnpC2gQ3jMNUtnHfpmPeb6d020R/KxSM0ZfRqhckq4zqP+LGXb3yZKK1aEXXOjYY3Q==
+X-Received: by 2002:adf:f1d2:: with SMTP id z18mr11107743wro.160.1635138125105;
+        Sun, 24 Oct 2021 22:02:05 -0700 (PDT)
+Received: from szeder.dev (94-21-23-225.pool.digikabel.hu. [94.21.23.225])
+        by smtp.gmail.com with ESMTPSA id s3sm16293392wmh.30.2021.10.24.22.02.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Oct 2021 22:02:04 -0700 (PDT)
+Date:   Mon, 25 Oct 2021 07:02:02 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 10/10] progress.c: add & assert a "global_progress"
+ variable
+Message-ID: <20211025050202.GC2101@szeder.dev>
+References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+ <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
+ <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20211019212020.25385-1-greenfoo@u92.eu>
-In-Reply-To: <20211019212020.25385-1-greenfoo@u92.eu>
-From:   David Aguilar <davvid@gmail.com>
-Date:   Sun, 24 Oct 2021 15:54:49 -0700
-Message-ID: <CAJDDKr5frTgh4_x5yvskJfppew3ntvpgBe9MnUB9CfGQaw1TLQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] mergetools/vimdiff: add vimdiff4 merge tool variant
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Seth House <seth@eseth.com>, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 19, 2021 at 2:22 PM Fernando Ramos <greenfoo@u92.eu> wrote:
->
-> This new vimdiff4 variant of the merge-tool opens three tabs:
->
->   - The first one contains the same panes as the standard "vimdiff" (ie.
->     LOCAL, BASE and REMOTE in the top row and MERGED in the bottom row).
->
->       ------------------------------------------
->       | <TAB #1> |  TAB #2  |  TAB #3  |       |
->       ------------------------------------------
->       |             |           |              |
->       |   LOCAL     |   BASE    |   REMOTE     |
->       |             |           |              |
->       ------------------------------------------
->       |                                        |
->       |                MERGED                  |
->       |                                        |
->       ------------------------------------------
->
->       NOTE: This view is enough for 90% of the cases, but when the merge is
->             somewhat complex, the three-way differences representation
->             end up being messy. That is why two new tabs are added to
->             show isolated one-to-one diffs.
->
->   - The second one is a vertical diff between BASE and LOCAL
->
->       ------------------------------------------
->       |  TAB #1  | <TAB #2> |  TAB #3  |       |
->       ------------------------------------------
->       |                   |                    |
->       |                   |                    |
->       |                   |                    |
->       |     BASE          |    LOCAL           |
->       |                   |                    |
->       |                   |                    |
->       |                   |                    |
->       ------------------------------------------
->
->   - The third one is a vertical diff between BASE and REMOTE
->
->       ------------------------------------------
->       |  TAB #1  |  TAB #2  | <TAB #3> |       |
->       ------------------------------------------
->       |                   |                    |
->       |                   |                    |
->       |                   |                    |
->       |     BASE          |    REMOTE          |
->       |                   |                    |
->       |                   |                    |
->       |                   |                    |
->       ------------------------------------------
->
-> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
+On Thu, Oct 14, 2021 at 12:28:26AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> The progress.c code makes a hard assumption that only one progress bar
+> be active at a time (see [1] for a bug where this wasn't the
+> case). Add a BUG() that'll trigger if we ever regress on that promise
+> and have two progress bars active at the same time.
+
+I still very much dislike the idea of a BUG() in the progress code
+that can trigger outside of the test suite, because the progress line
+is only a UI gimmick and not a crucial part of any Git operation, and
+even though a progress line might be buggy, the underlying Git
+operation is not affected by it and would still finish successfully,
+as was the case with the dozen of so progress line bugs in the past.
+
+> There was an alternative test-only approach to doing the same
+> thing[2], but by doing this outside of a GIT_TEST_* mode we'll know
+> we've put a hard stop to this particular API misuse.
+> 
+> It will also establish scaffolding to address current fundamental
+> limitations in the progress output: The current output must be
+> "driven" by calls to the likes of display_progress().
+
+Please elaborate why that is a "fundamental limitation"; I don't see
+any drawback of the current approach.
+
+> Once we have a
+> global current progress object we'll be able to update that object via
+> SIGALRM.
+
+What are the supposed benefits of doing that?  I do see its drawbacks,
+considering that we have progress lines that are updated from multiple
+threads.
+
+> See [3] for early code to do that.
+> 
+> It's conceivable that this change will hit the BUG() condition in some
+> scenario that we don't currently have tests for, this would be very
+> bad. If that happened we'd die just because we couldn't emit some
+> pretty output.
+> 
+> See [4] for a discussion of why our test coverage is lacking; our
+> progress display is hidden behind isatty(2) checks in many cases, so
+> the test suite doesn't cover it unless individual tests are run in
+> "--verbose" mode, we might also have multi-threaded use of the API, so
+> two progress bars stopping and starting would only be visible due to a
+> race condition.
+> 
+> Despite that, I think that this change won't introduce such
+> regressions, because:
+> 
+>  1. I've read all the code using the progress API (and have modified a
+>     large part of it in some WIP code I have). Almost all of it is really
+>     simple, the parts that aren't[5] are complex in the display_progress() part,
+>     not in starting or stopping the progress bar.
+> 
+>  2. The entire test suite passes when instrumented with an ad-hoc
+>     Linux-specific mode (it uses gettid()) to die if progress bars are
+>     ever started or stopped on anything but the main thread[6].
+> 
+>     Extending that to die if display_progress() is called in a thread
+>     reveals that we have exactly two users of the progress bar under
+>     threaded conditions, "git index-pack" and "git pack-objects". Both
+>     uses are straightforward, and they don't start/stop the progress
+>     bar when threads are active.
+> 
+>  3. I've likewise done an ad-hoc test to force progress bars to be
+>     displayed with:
+> 
+>         perl -pi -e 's[isatty\(2\)][1]g' $(git grep -l -F 'isatty(2)')
+> 
+>     I.e. to replace all checks (not just for progress) of checking
+>     whether STDERR is connected to a TTY, and then monkeypatching
+>     is_foreground_fd() in progress.c to always "return 1". Running the
+>     tests with those applied, interactively and under -V reveals via:
+> 
+>         $ grep -e set_progress_signal -e clear_progress_signal test-results/*out
+> 
+>     That nothing our tests cover hits the BUG conditions added here,
+>     except the expected "BUG: start two concurrent progress bars" test
+>     being added here.
+> 
+>     That isn't entirely true since we won't be getting 100% coverage
+>     due to cascading failures from tests that expected no progress
+>     output on stderr. To make sure I covered 100% I also tried making
+>     the display() function in progress.c a NOOP on top of that (it's
+>     the calls to start_progress_delay() and stop_progress()) that
+>     matter.
+> 
+>     That doesn't hit the BUG() either. Some tests fail in that mode
+>     due to a combination of the overzealous isatty(2) munging noted
+>     above, and the tests that are testing that the progress output
+>     itself is present (but for testing I'd made display() a NOOP).
+> 
+> Between those three points I think it's safe to go ahead with this
+> change.
+
+The above analysis only considers _our_ _current_ codebase.
+
+However, even though this might be safe now, it doesn't mean that it
+will remain safe in the future, as we might add new progress lines
+that lack test coverage (though hopefully won't), and would hit that
+BUG() at a user.
+
+Furthermore, even though this might be safe in our codebase, it
+doesn't mean that it is safe in some 20+k forks of Git that exist on
+GitHub alone (I for one have a git command or two with in my fork
+which output progress lines but, sadly, have zero test coverage).
+
+But more importantly, even though it might be safe to do so, that
+doesn't mean that it's a good idea to do so.  The commit message does
+little to justify why it is conceptually a good idea to add this BUG()
+to the progress code in a way that it can trigger outside of the test
+suite.
+
+
+> 1. 6f9d5f2fda1 (commit-graph: fix progress of reachable commits, 2020-07-09)
+> 2. https://lore.kernel.org/git/20210620200303.2328957-3-szeder.dev@gmail.com
+> 3. https://lore.kernel.org/git/patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com/
+> 4. https://lore.kernel.org/git/cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com/
+> 5. b50c37aa44d (Merge branch 'ab/progress-users-adjust-counters' into
+>    next, 2021-09-10)
+> 6. https://lore.kernel.org/git/877dffg37n.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->  mergetools/vimdiff   | 12 +++++++++++-
->  t/t7610-mergetool.sh |  1 +
->  2 files changed, 12 insertions(+), 1 deletion(-)
-
-
-Thanks for including the visual diagrams (which I hope gmail doesn't mangle).
-That makes it much easier to see what's going on.
-
-I'm personally not opposed to the vimdiff4 variants (we already have 3
-others) but what I think might be missing is a bit of documentation
-that documents the builtin tools and their variants.
-
-Right now git-mergetool.txt includes config/mergetool.txt for
-documenting its config variables. It might be worth having a common
-"mergetools.txt" where the builtin tools and variants can be
-documented and then we can include that file from both
-git-mergetool.txt and git-difftool.txt.
-
-That would be a good place to write up the differences between the
-variants, and the diagram you included in the commit message would be
-helpful there as well.
-
-
-
->
-> diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-> index 96f6209a04..f830b1ed95 100644
-> --- a/mergetools/vimdiff
-> +++ b/mergetools/vimdiff
-> @@ -40,6 +40,16 @@ merge_cmd () {
->                                 "$LOCAL" "$REMOTE" "$MERGED"
->                 fi
->                 ;;
-> +       *vimdiff4)
-> +               if $base_present
-> +               then
-> +                       "$merge_tool_path" -f -d -c "4wincmd w | wincmd J | tabnew | edit $LOCAL | vertical diffsplit $BASE | tabnew | edit $REMOTE | vertical diffsplit $BASE | 2tabprevious" \
-> +                               "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
-> +               else
-> +                       "$merge_tool_path" -f -d -c 'wincmd l' \
-> +                               "$LOCAL" "$MERGED" "$REMOTE"
-> +               fi
-> +               ;;
->         esac
+>  progress.c                  | 18 ++++++++++++++----
+>  t/t0500-progress-display.sh | 11 +++++++++++
+>  2 files changed, 25 insertions(+), 4 deletions(-)
+> 
+> diff --git a/progress.c b/progress.c
+> index b9369e9a264..a31500f8b2b 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -46,6 +46,7 @@ struct progress {
+>  };
+>  
+>  static volatile sig_atomic_t progress_update;
+> +static struct progress *global_progress;
+>  
+>  /*
+>   * These are only intended for testing the progress output, i.e. exclusively
+> @@ -219,11 +220,16 @@ void progress_test_force_update(void)
+>  	progress_interval(SIGALRM);
 >  }
+>  
+> -static void set_progress_signal(void)
+> +static void set_progress_signal(struct progress *progress)
+>  {
+>  	struct sigaction sa;
+>  	struct itimerval v;
+>  
+> +	if (global_progress)
+> +		BUG("'%s' progress still active when trying to start '%s'",
+> +		    global_progress->title, progress->title);
+> +	global_progress = progress;
 
+This function is called set_progress_signal(), so checking and setting
+'global_progress' feels out of place here; it would be better to do
+that in start_progress_delay().
 
-It's pretty rad how we're able to get that much vim goodness out of
-this snippet of configuration.
+> +
+>  	if (progress_testing)
+>  		return;
+>  
+> @@ -241,10 +247,14 @@ static void set_progress_signal(void)
+>  	setitimer(ITIMER_REAL, &v, NULL);
+>  }
+>  
+> -static void clear_progress_signal(void)
+> +static void clear_progress_signal(struct progress *progress)
+>  {
+>  	struct itimerval v = {{0,},};
+>  
+> +	if (!global_progress)
+> +		BUG("should have active global_progress when cleaning up");
+> +	global_progress = NULL;
 
-There seems to be an issue here, though. The $LOCAL values are passed
-to the "edit $LOCAL", "edit $REMOTE" and "vertical diffsplit $BASE"
-commands as-is. It seems like this would break when the filenames
-contain spaces. Is that correct?
+Likewise.
 
-If so, does vimscript have a way to quote those arguments? Does
-surrounding the variable with escaped double-quotes ("... | edit
-\"$LOCAL\" | ...") work? (... for everything except files with
-embedded double-quotes in their name, which might be an acceptable
-limitation).
-
-
-
->
-> @@ -63,7 +73,7 @@ exit_code_trustable () {
->
->  list_tool_variants () {
->         for prefix in '' g n; do
-> -               for suffix in '' 1 2 3; do
-> +               for suffix in '' 1 2 3 4; do
-
-
-Pre-existing, but we typically try to avoid multiple statements on a
-single line. It seems worth fixing this up in a preparatory patch
-since we're touching these lines.
-
-for prefix in '' g n
-do
-    for suffix in '' 1 2 3 4
-    do
-        ...
-    done
-done
-
-
-
->                         echo "${prefix}vimdiff${suffix}"
->                 done
->         done
-> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-> index 8cc64729ad..755b4c0a4a 100755
-> --- a/t/t7610-mergetool.sh
-> +++ b/t/t7610-mergetool.sh
-> @@ -836,6 +836,7 @@ test_expect_success 'mergetool --tool-help shows recognized tools' '
->         git mergetool --tool-help >mergetools &&
->         grep vimdiff mergetools &&
->         grep vimdiff3 mergetools &&
-> +       grep vimdiff4 mergetools &&
->         grep gvimdiff2 mergetools &&
->         grep araxis mergetools &&
->         grep xxdiff mergetools &&
-
-Looks good otherwise, thanks for the RFC patch. I'd recommend getting
-the docs and quoting stuff sorted out as the next step towards getting
-this merged.
-
-Thanks!
-
---
-David
+>  	if (progress_testing)
+>  		return;
+>  
+> @@ -268,7 +278,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+>  	strbuf_init(&progress->counters_sb, 0);
+>  	progress->title_len = utf8_strwidth(title);
+>  	progress->split = 0;
+> -	set_progress_signal();
+> +	set_progress_signal(progress);
+>  	trace2_region_enter("progress", title, the_repository);
+>  	return progress;
+>  }
+> @@ -372,7 +382,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
+>  		display(progress, progress->last_value, buf);
+>  		free(buf);
+>  	}
+> -	clear_progress_signal();
+> +	clear_progress_signal(progress);
+>  	strbuf_release(&progress->counters_sb);
+>  	if (progress->throughput)
+>  		strbuf_release(&progress->throughput->display);
+> diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
+> index 59e9f226ea4..867fdace3f2 100755
+> --- a/t/t0500-progress-display.sh
+> +++ b/t/t0500-progress-display.sh
+> @@ -298,6 +298,17 @@ test_expect_success 'cover up after throughput shortens a lot' '
+>  	test_cmp expect out
+>  '
+>  
+> +test_expect_success 'BUG: start two concurrent progress bars' '
+> +	cat >in <<-\EOF &&
+> +	start 0 one
+> +	start 0 two
+> +	EOF
+> +
+> +	test_must_fail test-tool progress \
+> +		<in 2>stderr &&
+> +	grep "^BUG: .*'\''one'\'' progress still active when trying to start '\''two'\''$" stderr
+> +'
+> +
+>  test_expect_success 'progress generates traces' '
+>  	cat >in <<-\EOF &&
+>  	start 40
+> -- 
+> 2.33.1.1346.g48288c3c089
+> 
