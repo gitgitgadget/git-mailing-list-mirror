@@ -2,81 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF73C433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E48C4C433FE
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:48:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1E8060555
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:46:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDC7F601FF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 16:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234056AbhJYQtJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 12:49:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45732 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231127AbhJYQtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:49:08 -0400
-Received: (qmail 6090 invoked by uid 109); 25 Oct 2021 16:46:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Oct 2021 16:46:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20688 invoked by uid 111); 25 Oct 2021 16:46:44 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Oct 2021 12:46:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 25 Oct 2021 12:46:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 08/10] generate-cmdlist.sh: do not shell out to "sed"
-Message-ID: <YXbfdEqKHc5b19u9@coredump.intra.peff.net>
-References: <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
- <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
- <patch-v2-08.10-83318d6c0da-20211022T193027Z-avarab@gmail.com>
+        id S234106AbhJYQvM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 12:51:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61470 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234118AbhJYQvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 12:51:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0D2FF77D2;
+        Mon, 25 Oct 2021 12:48:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BbhimHfYq7e+zn3sZL3uSXMA7NSA9n/2WxHL8+
+        RLUEk=; b=blysrkL0l/33cswDMCwbeJk4XTNEcHM7kCvW+b0/bGtgsPM5o338EU
+        j8+NXKZSX8ytRvWW5dPz4sbOvvUiUmjrcZF6OjYAFp5QfbYSYAaByCzbBaVKpmC4
+        p7Q+DqoqJ8yScRcrSzq3brOr2xnO65TdVgTvmXhF2Ua2HTNCrnPz0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A831DF77D1;
+        Mon, 25 Oct 2021 12:48:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 19D0CF77D0;
+        Mon, 25 Oct 2021 12:48:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org
+Subject: Re: SubmittingPatchs: clarify choice of base and testing
+References: <cover.1634787555.git.me@ttaylorr.com>
+        <cb30aa67c0023c435cf472303bbf4894c8b2d7ec.1634787555.git.me@ttaylorr.com>
+        <211021.86ee8emx57.gmgdl@evledraar.gmail.com>
+        <xmqqpmrykys9.fsf@gitster.g> <xmqqilxncwpr.fsf@gitster.g>
+        <xmqqa6izcwio.fsf_-_@gitster.g>
+        <006c186e-c005-28a3-7a5c-27d365ffe026@gigacodes.de>
+Date:   Mon, 25 Oct 2021 09:48:40 -0700
+In-Reply-To: <006c186e-c005-28a3-7a5c-27d365ffe026@gigacodes.de> (Fabian
+        Stelzer's message of "Mon, 25 Oct 2021 10:59:53 +0200")
+Message-ID: <xmqqilxl2gpj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-08.10-83318d6c0da-20211022T193027Z-avarab@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 688E20B2-35B3-11EC-9BCE-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 22, 2021 at 09:36:12PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-> From: Jeff King <peff@peff.net>
-> 
-> Replace the "sed" invocation in get_synopsis() with a pure-shell
-> version. This speeds up generate-cmdlist.sh significantly. Compared to
-> HEAD~ (old) and "master" we are, according to hyperfine(1):
+> On 23.10.21 22:32, Junio C Hamano wrote:>  * A new feature should be
+> based on `master` in general. If the new
+>> -  feature depends on a topic that is in `seen`, but not in `master`,
+>> -  base your work on the tip of that topic.
+>> +  feature depends on other topics that are in `next`, but not in
+>> +  `master`, fork a branch from the tip of `master`, merge these topics
+>> +  to the branch, and work on that branch.  You can remind yourself of
+>> +  how you prepared the base with `git log --first-parent master..`
+>> +  easily by doing so.
+>
+> Using the topic branches from gitster/git that were merged? Or by
+> selecting the specific commits from the merge into next?
 
-Unsurprisingly I'm in favor of this. ;)
+If I were doing this, I would find the tip(s) of things I would
+depend on out of the output from
 
-Curiously again, I get more dramatic results than you:
+  $ git log --oneline --first-parent origin/master..origin/next
 
->   'sh generate-cmdlist.sh command-list.txt' ran
->    12.69 ± 5.01 times faster than 'sh generate-cmdlist.sh.old command-list.txt'
->    18.34 ± 3.03 times faster than 'sh generate-cmdlist.sh.master command-list.txt'
+This lists a series of merge commits and the second parent of each
+merge commit is the tip of the topic that was merged to 'next'.
 
-    'sh generate-cmdlist.sh command-list.txt' ran
-     22.44 ± 13.59 times faster than 'sh generate-cmdlist.sh.old command-list.txt'
-     57.35 ± 34.10 times faster than 'sh generate-cmdlist.sh.master command-list.txt'
+>> @@ -260,8 +281,8 @@ or include any extra files which do not relate to what your patch
+>>  is trying to achieve. Make sure to review
+>>  your patch after generating it, to ensure accuracy.  Before
+>>  sending out, please make sure it cleanly applies to the `master`
+>> -branch head.  If you are preparing a work based on "next" branch,
+>> -that is fine, but please mark it as such.
+>> +branch head.  If you are preparing a work based on selected topics
+>> +merged to `master`, please mark your patch as such.
+>
+> I think this meant to say 'merged to "next|maint|seen"'?
+> Or topics selected for being merged into master?
 
-It's like spawning processes is somehow faster on your machine than
-mine. I wonder if it's a CPU governor thing. This is a laptop, and those
-numbers come from using "powersave". Doing "cpufreq-set -g performance",
-I get:
+Ah, thanks for catching.  I meant "not merged to 'master'" (will fix
+locally).
 
-   'sh generate-cmdlist.sh command-list.txt' ran
-   14.35 ± 0.23 times faster than 'sh generate-cmdlist.sh.old command-list.txt'
-   33.15 ± 0.50 times faster than 'sh generate-cmdlist.sh.master command-list.txt'
+Depending on stuff that are already in 'master', unless you are
+preparing a fix that would also apply to the maintenance track, is
+rather easy---you can just build on top of 'master'.
 
-which is closer. But most notably all versions are 3-5x faster than
-their "powersave" counterparts. I wonder if that has been driving some
-of the confusion in our timings in this thread.
+And in general, I do not want to see a new topic based on another
+topic that is not yet in 'next'.  If a developer has such a topic,
+I'd appreciate if the developer waits and shifts their attention to
+help the other topics they are planning to depend on---and one way
+to do so is to review these other topics ;-)
 
-Either way, I think this is still a good direction to go.
-
--Peff
+Thanks.
