@@ -2,84 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5F3BC433EF
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 18:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EA47C433EF
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 18:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9EB760F46
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 18:18:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 023BE60E0B
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 18:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232606AbhJYSUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 14:20:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51290 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231512AbhJYSUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 14:20:40 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0184A16ADF2;
-        Mon, 25 Oct 2021 14:18:18 -0400 (EDT)
+        id S233243AbhJYScT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 14:32:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61054 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230111AbhJYScT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 14:32:19 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC20DF82F3;
+        Mon, 25 Oct 2021 14:29:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LwzqI7nKi2X+kdwptcD/01daAXT33lnu3BLpPq
-        +eKMo=; b=OVEnmHnHtYrLx2hpcwSzh7nymGQckyrC9SE6ikhaohmOyEwc3/RB6l
-        ebMgWobKRfHxZ8C1fO/bjLHAETp7xnRyYybcVzQOkfm8M8ZmHaETL67RxDoMzZaJ
-        pMUuzJ93WB0ZzIKdnzZjTKqO6HwWgczGHKcX7aWc7QxHevkONJqis=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE74716ADF1;
-        Mon, 25 Oct 2021 14:18:17 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=QRET7EQfuLpd
+        nA6oV3nQEAGX+RPnX7CsRpnrCSsP1Hg=; b=YDHgmqN4RZLZPxepHbsotv3vYaet
+        k1+GBkzqtb0CVtJd0QiBxWQ0eagyktFvywSNWObjeXyTxR6Ms9lkq8XIWesbCXju
+        OAWAcFWdypd10bNAWIsWGbuMnRooFBfMhT7MebBGUEeGrVwj1/UYyjrVgnqiLMRb
+        im60EC4fgqVJPFg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E38E8F82F2;
+        Mon, 25 Oct 2021 14:29:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5477916ADED;
-        Mon, 25 Oct 2021 14:18:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D6A6F82F1;
+        Mon, 25 Oct 2021 14:29:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Fernando Ramos <greenfoo@u92.eu>,
-        Git Mailing List <git@vger.kernel.org>,
-        Seth House <seth@eseth.com>, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: Re: [RFC PATCH] mergetools/vimdiff: add vimdiff4 merge tool variant
-References: <20211019212020.25385-1-greenfoo@u92.eu>
-        <CAJDDKr5frTgh4_x5yvskJfppew3ntvpgBe9MnUB9CfGQaw1TLQ@mail.gmail.com>
-Date:   Mon, 25 Oct 2021 11:18:14 -0700
-In-Reply-To: <CAJDDKr5frTgh4_x5yvskJfppew3ntvpgBe9MnUB9CfGQaw1TLQ@mail.gmail.com>
-        (David Aguilar's message of "Sun, 24 Oct 2021 15:54:49 -0700")
-Message-ID: <xmqqk0i10xzt.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 01/10] command-list.txt: sort with "LC_ALL=C sort"
+References: <cover-0.8-00000000000-20211020T183533Z-avarab@gmail.com>
+        <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
+        <patch-v2-01.10-96885282988-20211022T193027Z-avarab@gmail.com>
+Date:   Mon, 25 Oct 2021 11:29:53 -0700
+In-Reply-To: <patch-v2-01.10-96885282988-20211022T193027Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 22 Oct
+ 2021 21:36:05
+        +0200")
+Message-ID: <xmqqfssp0xge.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EBDA0EAC-35BF-11EC-8EA3-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8D116404-35C1-11EC-A685-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> I'm personally not opposed to the vimdiff4 variants (we already have 3
-> others) but what I think might be missing is a bit of documentation
-> that documents the builtin tools and their variants.
-
-Hmph, are we encouraging everybody to add yet another variant?  I
-wonder if we can stop at adding a single "vimdiffX" variant that
-takes the layout information (like the one this vimdiff4 passes to
-the underlying tool via the command line option) in a configuration
-variable and stop adding more variants, or is vim's specification of
-the layout we use here via the command line not flexible enough to
-serve all future needs?  I also wonder if all the existing vimdiff
-variants can be done in terms of such a vimdiffX implementation.
-
-> Right now git-mergetool.txt includes config/mergetool.txt for
-> documenting its config variables. It might be worth having a common
-> "mergetools.txt" where the builtin tools and variants can be
-> documented and then we can include that file from both
-> git-mergetool.txt and git-difftool.txt.
+> We should keep these files sorted in the C locale, e.g. in the C
+> locale the order is:
 >
-> That would be a good place to write up the differences between the
-> variants, and the diagram you included in the commit message would be
-> helpful there as well.
+>     git-check-mailmap
+>     git-check-ref-format
+>     git-checkout
+>
+> But under en_US.UTF-8 it's:
+>
+>     git-check-mailmap
+>     git-checkout
+>     git-check-ref-format
+>
+> In a subsequent commit I'll change generate-cmdlist.sh to use C sort
+> order, and without this change we'd be led to believe that that change
+> caused a meaningful change in the output, so let's do this as a
+> separate step, right now the generate-cmdlist.sh script just uses the
+> order found in this file.
 
-Yup, in any case, I do like the suggestion to document the variants.
+Hmph, I do not mind sorting this file bytewise like this at all, but
+does the justification above still apply to this round?  I had an
+impression that we lose the sorting altogether in the end...
 
-Thanks, both.
+Also, I am not sure where that "led to believe" comes from---do we
+have a test that checks the output from generate-cmdlist somehow?
+
+
