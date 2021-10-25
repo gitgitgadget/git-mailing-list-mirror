@@ -2,74 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5681EC433F5
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 07:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77CE8C433F5
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 08:25:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3861061002
-	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 07:39:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58EB960EE9
+	for <git@archiver.kernel.org>; Mon, 25 Oct 2021 08:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231821AbhJYHl5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Oct 2021 03:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58488 "EHLO
+        id S232195AbhJYI1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Oct 2021 04:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhJYHl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Oct 2021 03:41:56 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD249C061745
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 00:39:34 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id q187so10096335pgq.2
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 00:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0EnAOkRdhP1/qXLILUZGika0hagEnJeP+Q9AVDD9DYc=;
-        b=U2DrUBfiLnsGdrsTDvn62xO68zSzRfw0ZtNJViKxNIGxGY1s5VoNtJ5jk6GuFLIUyU
-         oy/bv9IO7eCzh7ESgsBObkEqbokSh5x819nzsHKyB+8vCXr1p/1yRjuMTkl8jg0fZhtM
-         AC6D0nTbKa+CZh7T8XG7nQQvG7sE58JZZRqcsLo8knDUxXsmkRCGrrX+WuqACKPaWHg3
-         /SJLQDx702v0vtyxw3cnrwq+DIzPdHxc+5MrsTHJACuPMbrKzvhqMtmtwiBYUDIAQeQO
-         ZmvW1QaPqJ6ICpdTye0ZAbShR5wSBbAxcwGj422oIXkCT4tBT/8cON10whCnyq8WjY/O
-         2/nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0EnAOkRdhP1/qXLILUZGika0hagEnJeP+Q9AVDD9DYc=;
-        b=On8gz0TEccSCOUFOMq+/SN8/9sfKTZkeU27oOzf/Xt3M+vM6CqKg4L/tDL/1Yj/eu2
-         gZODf2I746y3580QdZUftgllqklI8HW+WeqTFUsW3ge8KoyTjUH9EtRmXEO37bmsEakq
-         lOM9BCO/Ek35+L8a2n+Hx/WtksmrBxsjgMlbXknztdTOxqvq5hhr5JQGw0jKYrBnsVSK
-         R8Oe0IGset7ua3hJH6iLk8hKFxPtMLXou4aPVjKSBwhxt6dHkwgFWwpUaLWCN8khR3q0
-         okCxUWxotOkbsvx9wnuUPsXW7GcG1A/dyVtMhUUB7AppwhdogZJl9nIc7MGAUGm7KrEM
-         /Aog==
-X-Gm-Message-State: AOAM5338ffTSFxLc2ST+TmDLycdkA2cWJgaPwNsIowB+hX55txqtqAkR
-        VKSmFVXqQezP1/L39FnN8qO0pNGTkF60hg0+5uQeVSPZzzY=
-X-Google-Smtp-Source: ABdhPJxb7M8nGb5HASgo/R1jrpk53qBk6dqBIwBgn7MZqRuV7dq2bxxhz86/W5n9FPk5kccArmQFnKATxVOpocLgZJo=
-X-Received: by 2002:a63:7418:: with SMTP id p24mr2186210pgc.204.1635147574212;
- Mon, 25 Oct 2021 00:39:34 -0700 (PDT)
-MIME-Version: 1.0
-From:   Yiyuan guo <yguoaz@gmail.com>
-Date:   Mon, 25 Oct 2021 15:39:23 +0800
-Message-ID: <CAM7=BFoQ3-VfES+n-pH7Oukq1PODVbE9Uu9Y-4XuSA5SjQo=uw@mail.gmail.com>
-Subject: [BUG] Integer overflow bug in cache-tree.c
+        with ESMTP id S232207AbhJYI1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Oct 2021 04:27:07 -0400
+Received: from mackerel.carobme.de (unknown [IPv6:2a01:4f8:1c1c:4990::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C73C061220
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 01:24:44 -0700 (PDT)
+Received: from mail.carobme.de (p57a9a54f.dip0.t-ipconnect.de [87.169.165.79])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: mrelay)
+        by mackerel.carobme.de (Postfix) with ESMTPSA id 4Hd7Kk2JQPzFTYc
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 10:24:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eaddrinuse.net;
+        s=thorn; t=1635150282;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=xRiR4pTwlQU7vB2XYKwbSfPEYvUaOp92rTl4B8J0ZmU=;
+        b=TgIOkbypatPDnViu/yzzxzkxozwkc4RQZEuuvZ1qq8bLPkV8LW/PPUzyTEIBBPYXHu5nSW
+        Y9BrpaTgVclqlWAtzavTtiLROoWMZ6yM8UFz3cP9xdY5VDA8696R2AoZQtIvKf2hvJD7Qf
+        3OClLAhryVvlpIv11qdlX4zgwd6lGPR0NAGeb7nALShv/nS8qYx5iGfSpAH2EE1fUC8y/t
+        7R+2s73Lz99P6alsoJ02F3VfyOjUn9fKWrsASVc9oRuV+HHRVcBCDDPxHckGwi2r9k8zU1
+        5aV2sutBszj6Pzus3z45dcl1DKzws/D4J8dXIu5mN2BKF93mU1sPa3nH/ZGrog==
+Received: from octopus.int.carobme.de (octopus.int.carobme.de [192.168.78.3])
+        by mail.carobme.de (Postfix) with ESMTP id 4Hd7Kj6ChtzXRVd
+        for <git@vger.kernel.org>; Mon, 25 Oct 2021 10:24:41 +0200 (CEST)
+Received: from mbeck (uid 1000)
+        (envelope-from mbeck@eaddrinuse.net)
+        id 7e228a
+        by octopus.int.carobme.de (DragonFly Mail Agent v0.11+);
+        Mon, 25 Oct 2021 10:24:41 +0200
+Date:   Mon, 25 Oct 2021 10:24:41 +0200
+From:   Marco Beck <mbeck@eaddrinuse.net>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] gpg-interface: allow selecting key id with env variable
+Message-ID: <YXZpyWesc8VRWYwr@octopus.int.carobme.de>
+References: <20211024193625.148-1-mbeck@eaddrinuse.net>
+ <xmqqsfwq40w7.fsf@gitster.g>
+ <YXXMroOBvDERXIMP@octopus.int.carobme.de>
+ <8661a491-5ef1-a469-878f-7dd81d4a1aa2@gigacodes.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <8661a491-5ef1-a469-878f-7dd81d4a1aa2@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the file cache-tree.c, the function "static struct cache_tree
-*read_one(const char **buffer, unsigned long *size_p)"
-has the following code
-(link:https://github.com/git/git/blob/9d530dc0024503ab4218fe6c4395b8a0aa245478/cache-tree.c#L592-#L593):
+On Mon, Oct 25, 2021 at 09:31:33AM +0200, Fabian Stelzer wrote:
 
-int subtree_nr;
-subtree_nr = strtol(cp, &ep, 10);
+>[includeIf "gitdir:~/projects/work/"]
+>  path = ".gitconfig.work"
 
-it->subtree_alloc = subtree_nr + 2;
-CALLOC_ARRAY(it->down, it->subtree_alloc);
+Yeah, that's what I added to my config recently just for signing key
+selection. I'm using direnv[1] for some time now to switch between
+different "profiles" (more than just Git settings) by just setting
+some environment variables and it was nice to have everything in one
+place. That's why I disliked adding the includeIf to my .gitconfig.
 
-The variable subtree_nr is converted from the string buffer. Suppose
-it equals INT_MAX, the computation of
-it->subtree_alloc can trigger a signed integer overflow, which is
-later used to calculate allocation size.
+Thanks anyway,
+Marco
 
-This can cause security problems if the function do_read_index is
-given a crafted index file.
+[1] https://direnv.net/
