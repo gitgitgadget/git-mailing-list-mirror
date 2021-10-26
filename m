@@ -2,116 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3406C433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 419A6C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:07:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C57EB60EC0
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:05:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29A2661078
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238568AbhJZTIH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 15:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34880 "EHLO
+        id S236139AbhJZTKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 15:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238522AbhJZTHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 15:07:36 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E006C061745
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:04:37 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id v200so60252ybe.11
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:04:37 -0700 (PDT)
+        with ESMTP id S231776AbhJZTHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 15:07:50 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C73D9C07978D
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:04:49 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id m184so678414iof.1
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vo/yvf0DeK7oqceS8QdgdHH1ZiZcIYMi84MIXU8+CH8=;
-        b=fkLUM/fHLGce9I+CdwlJz2qxgTP/RekNR1J/pFlJ9uNVB4qxjW3CVariCY57WhhBOF
-         TFj4swCbFYfisD9MBNfafvwN/5niSYJLUfDEDM/zu6CnLWGpYC/sHZWk0NqCvy8nQgfm
-         ogd+YKF5+NaUkMZXGURTWSlMMYNm0Pe0kFqFp+aJykDyiM7nby9qIg/B7L3l8S6B5SYz
-         VlAHuDoV06m52ZnBFXEDlHRIBNguVUJ/phzP1VzsBLp2vH3TrQMK0GsxKH2V+qIP4hdT
-         bjqYSH2nWWlm+qdt4vc3K9+e2xBzxQ6SKnxH9buk0Es6vlrVADt2WmSUXULciDnB8INQ
-         PvRg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=pzUTZjeQ5u6KSHKde37YefjfpFnbAgKijZdfydNtvUw=;
+        b=V3KXWD55VkbGIXwurs0n1hPASR6BNsSZExHRXOmjioauqZZOa7ymKkykycV67xBpCr
+         JkUCerZKqC/T4YK5+szUPZgzR1+nu+FavKkN4KmA0GdlRjE8MPqWz2BN6+dcefBvo1+M
+         FWcewOijAmRfkMqO+I5KahzKxmu9Lbkcj1sBNgjiRA+5tbSFv+DDIyDkzMf1MzGSiLmU
+         qfGk5BExKIbj8hjtAMQp78kD2CUU+agp3vqIJ+8pp0vrOwXS8jl9GcUqB+LQj9z7ST18
+         x5z/pUQO6Z6XdcjiLGxFnsLQfW9rE4/8NiN7q8yv7MkvKtNkb59nwlwlnoy2E+6ESJjy
+         sF4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vo/yvf0DeK7oqceS8QdgdHH1ZiZcIYMi84MIXU8+CH8=;
-        b=FbKzbBPw9XJVtNitVB3pQ6r2a0KjkxGaAQc/BeN49LMV1Ln/2a4vWhsTs3F1wef84M
-         g+7ZDNdxD25i2aNiE5NLTFnflh8wfc/IdujrscgZnvldKuEDsDIrib2an8B+3MlTlUmY
-         7+mg42ZNgkLdbnes2HFYpA3nOucX2zTZRlar0okdWcPyxZtC/yMgYMtSj1CazbD+p6+e
-         Arfo7ACUR87JhVX5AEpS4HIlyMWVB1SwatEz/R3cFbcvMk8kOzDaw3TuYgvvrAPoEEJD
-         cWOVW8j93cd5lTg88oTNq6iP9pj/Dy+PcEyIUOqIQ3HCDBGERGWfF/urtHOQvsnkITA9
-         4lUg==
-X-Gm-Message-State: AOAM531pxyfVQmzNsQLn3Ll8XwLnr+UzqT8hiErlT5MgutVgOA3qi0Hr
-        JO1ZLwsSyJwfyreBg8FrRgY+XD5dNcpOvcY3f3Q=
-X-Google-Smtp-Source: ABdhPJzXKrwnCy/e58h2SwOXr3P9RGkiVZG4ipgqAysyOA77vx+4SdNIdiEPcQcTUiH199qZmF9Jhjj/xRBUMurQsII=
-X-Received: by 2002:a05:6902:54f:: with SMTP id z15mr16079853ybs.183.1635275076556;
- Tue, 26 Oct 2021 12:04:36 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=pzUTZjeQ5u6KSHKde37YefjfpFnbAgKijZdfydNtvUw=;
+        b=AydhZ/lstercpZvRLH9PxnTjI17mREXeJ4jwSYjzKFw4mi+aL5XIsv3nYGZ4QcLwVs
+         80mm6mcYcy7NfyGICp6JhEUitOLoK5PSvbcX00ZSeNLFEMpwU5Aajfow7A8B/M+EOhtQ
+         eBI/wRzRdxenK7wyOFia5cW3Zi5mGIzf0ZQWPBcN6/VZIWrWzPnsULd8lOuSQEVVuGPv
+         v6CpkmO9HNlXTO/YSu34lWZzHO/E0a2N3EvqIERxQmt13LIQ4RxBZSPhbVPjMpP7FnDi
+         V6X8UCYaeFs1psByH5ji2AXEKRcVE9JX9HquSIP1KKffgVWOA0v1muidFcHQ99H9ma3c
+         F9+w==
+X-Gm-Message-State: AOAM532SHYq1KXtxjmvWQgSyOeKBJeP5xhtE8GGH+bYPpNPKrBEwKJDX
+        7FIZ3rpwFDzXFiR5mI8r7zvifYQVyMY=
+X-Google-Smtp-Source: ABdhPJyuj9dAq4VU/Yj1ZQcXNT9Y/mLRuNyCiTEteOv+makg9PDFK9Ch5jxiaY8QsLwYNP/m/68JrA==
+X-Received: by 2002:a6b:7604:: with SMTP id g4mr16792396iom.162.1635275089090;
+        Tue, 26 Oct 2021 12:04:49 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:86f:cede:45bc:10f6? ([2600:1700:e72:80a0:86f:cede:45bc:10f6])
+        by smtp.gmail.com with ESMTPSA id v4sm480798ilq.57.2021.10.26.12.04.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Oct 2021 12:04:48 -0700 (PDT)
+Message-ID: <00a67af9-da41-6df4-afc0-5ae7c7714bfd@gmail.com>
+Date:   Tue, 26 Oct 2021 15:04:46 -0400
 MIME-Version: 1.0
-References: <xmqqbl3u5fhy.fsf@gitster.g> <20211024162859.6295-1-robin.dupret@hey.com>
- <20211024162859.6295-2-robin.dupret@hey.com> <xmqqsfwp2j6o.fsf@gitster.g>
-In-Reply-To: <xmqqsfwp2j6o.fsf@gitster.g>
-From:   Robin Dupret <robin.dupret@gmail.com>
-Date:   Tue, 26 Oct 2021 21:04:25 +0200
-Message-ID: <CA+G124Xci1bGG1uxt35gr9ede11ix10CtLmmWcT+eYNCDSN6Xw@mail.gmail.com>
-Subject: Re: [PATCH] http-backend: remove a duplicated code branch
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Robin Dupret <robin.dupret@hey.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH v2] add, rm, mv: fix bug that prevents the update of
+ non-sparse dirs
+Content-Language: en-US
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com, vdye@github.com,
+        derrickstolee@github.com,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Sean Christopherson <seanjc@google.com>
+References: <5e99c039db0b9644fb21f2ea72a464c67a74ff64.1635191000.git.matheus.bernardino@usp.br>
+ <ca1c6a86-23ab-57ae-b1ca-64a9851d72db@web.de>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ca1c6a86-23ab-57ae-b1ca-64a9851d72db@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Did you mean to send the same patch text (but with an updated log
-> message)?  Just making sure.
+On 10/26/2021 12:22 PM, René Scharfe wrote:
+> Am 25.10.21 um 23:07 schrieb Matheus Tavares:
 
-Yes, exactly.
+I reordered some things to first audit that 'slash' is used safely,
+assuming that we can store "p - 1" if p is a non-zero pointer.
 
-> We are all imperfect human and anything we do is merely "trying to"
+>> +	/*
+>> +	 * If UNDECIDED, use the match from the parent dir (recursively),
+>> +	 * or fall back to NOT_MATCHED at the topmost level.
+>> +	 */
+>> +	for (end = path + strlen(path); end > path && match == UNDECIDED; end = slash) {
+>> +
+>> +		for (slash = end - 1; slash >= path && *slash != '/'; slash--)
 
-Fair point. :-) Do you want me to resend the patch without this part
-or is it ok ?
+Since "slash >= path" is compared before dereferencing '*slash', this is safe.
 
-Thank you !
+>> +			; /* do nothing */
+> 
 
-Le lun. 25 oct. 2021 =C3=A0 17:55, Junio C Hamano <gitster@pobox.com> a =C3=
-=A9crit :
->
-> Robin Dupret <robin.dupret@gmail.com> writes:
->
-> > Try to make reading the computation of the gzipped flag a bit more
-> > natural.
->
-> ... and did you succeed? ;-)
->
-> We are all imperfect human and anything we do is merely "trying to",
-> so let's not say "try to", unless the change is so involved that it
-> is hard to judge if the result has succeeded in trying.
->
-> Did you mean to send the same patch text (but with an updated log
-> message)?  Just making sure.
->
-> Thanks; will queue.
->
-> > Signed-off-by: Robin Dupret <robin.dupret@hey.com>
-> > ---
-> >  http-backend.c | 4 +---
-> >  1 file changed, 1 insertion(+), 3 deletions(-)
-> >
-> > diff --git a/http-backend.c b/http-backend.c
-> > index e7c0eeab23..3d6e2ff17f 100644
-> > --- a/http-backend.c
-> > +++ b/http-backend.c
-> > @@ -466,9 +466,7 @@ static void run_service(const char **argv, int buff=
-er_input)
-> >       struct child_process cld =3D CHILD_PROCESS_INIT;
-> >       ssize_t req_len =3D get_content_length();
-> >
-> > -     if (encoding && !strcmp(encoding, "gzip"))
-> > -             gzipped_request =3D 1;
-> > -     else if (encoding && !strcmp(encoding, "x-gzip"))
-> > +     if (encoding && (!strcmp(encoding, "gzip") || !strcmp(encoding, "=
-x-gzip")))
-> >               gzipped_request =3D 1;
-> >
-> >       if (!user || !*user)
+>> +
+>> +		match = path_matches_pattern_list(path, end - path,
+>> +				slash >= path ? slash + 1 : path, &dtype,
+
+This is also a safe use of 'slash'.
+
+> slash can end up one less than path.  If path points to the first char
+> of a string object this would be undefined if I read 6.5.6 of C99
+> correctly.  (A pointer to the array element just after the last one is
+> specified as fine as long as it's not dereferenced, but a pointer to
+> the element before the first one is not mentioned and thus undefined.)
+
+I also see the specification saying this is undefined, but I do not
+understand how any reasonable compiler/runtime could do anything
+other than store "path - 1" as if it was an unsigned integer. There
+are a lot of references about "the array" that the pointer points to,
+but these pointer arithmetic things are not actually accessing the
+memory allocator.
+
+> Do you really need the ">=" instead of ">"?
+
+I think the only case that would be of any interest is if the path
+started with a slash, which would not be a valid worktree path. I
+believe we could use ">" for an abundance of caution with the
+undefined nature of subtracting from a pointer, but it is non-
+obvious that that is a real problem.
+
+Thanks,
+-Stolee
