@@ -2,63 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB2A9C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53956C433FE
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8654F60F70
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FB3360FE8
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239095AbhJZUIa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 16:08:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239090AbhJZUI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 16:08:29 -0400
-Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2599C061570
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 13:06:04 -0700 (PDT)
-Message-ID: <7bd2ef6f-9afe-2c44-db51-9307b0cd5f0f@archlinux.org>
+        id S239108AbhJZUIy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 16:08:54 -0400
+Received: from mail.archlinux.org ([95.216.189.61]:56270 "EHLO
+        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239104AbhJZUIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 16:08:53 -0400
+Message-ID: <5e2233d8-f63c-d786-ee9f-31865d6c208c@archlinux.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-rsa; t=1635278763;
+        s=dkim-rsa; t=1635278787;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=+TkcKoovQ5pnMP2k9OxzZnfLLFHNaNpwcgR+sKKOoIg=;
-        b=gGRCHfjI2Nb/nhqPYJXDUdxBFnWqoncxPmWIKj1bblShG1r75kuvvAJCRow0DTrMjlrVeJ
-        20m0fFgS9N7yhqzk20qvUeqHsYwQh0epITcfSpCVyUZ+Pi4M+cOUWmsFocNyBEklWgTeKw
-        NTOlxZhpVC+WV4gl38+2oFjVW3tWJeqMIglAMddmDyul3G65BwaVi7FUO6kItyEbWfJG/m
-        gM3VfAmDwh6H8LZcUSKxDfGfSSo2RjNmZU6VnrWkWroMEaxzJJyhiZLcJSTsH8EdWWW7aj
-        7aTL+r1+yzLK7UQAfRyRxBVa7bb52HP+i2/wCPyW5w2HbrzRLEL0jBTANEjm2vWXRKwl3R
-        uIw7oBnYGu91/gOxESyScDTZ8cW/Etw8mipPDIM8fwJlJL2Z+u6RminDa4U19PhY9Uqhul
-        RcqdpMQkeav5MK+B5AuUvhGsYanfznRMo0k9KG+e0DJbGvsV3sFMUQD97KvyRvQTiReOPK
-        AkzSOLvgHEZG0Uigb7XDhbipyAGVN6VOIjMbb0+A88je2NemIP2sWldAPD5hvi6GjRRp7W
-        PVnXJ/SLkVJvDKyPL6xR1AxLKDq7n0i4oK/NftYKY9sk9Cj9U2ldMQFC9H04FqhiaWlBQO
-        nE39d668i8KHi5yv0SFaPsuzAOJYnQwx9jp4L4ZAgGDAnNta8BhN8=
+        bh=g3XoPqOx1werSEjx0NKJAeFFtfFnYzyEzgysRFKJjuE=;
+        b=XBX0kMdELHb0Cxq6eVpUmQ3AVcodno2EeJPrFRdF/zqjqr1xN5D00AX4bSYELvpt1SWl4p
+        Vdgqaj51zaUZMMAU4JX9ibQN2Avr+pBJfnZxGZWyS/84nbXgFKxaBpsBBG8b1qpLffuKK0
+        e1mX3DxhEMNitRhfhxF1qodCsZ5bxYq/P+ONz4ZnzXbi+B82x8lcGAbw5IrhUP+2GER+Gt
+        zZByXgvvPMs/DpIwrr0MaANIObKQcI/P4IvqoHXJZ2Y8TM0HyBNDpxqZElVrW6nCPEntge
+        IP2WERiWKkDTRL0ZY/6VeQylF1UY1DnByBGAWn5Q/ek51Ldve3jmdLyPUoMxAf+ErcmtIG
+        NDAYYwlefgyMAoaJ7UM+zGCAc3+zrJasM/Q42nc7BcK+0CrP6r358UkjlHJQV5P+lp4SVG
+        KLlITuy6shaLac4xi5Q7EOy2HhAKBbwb8ysGOhhoLZdollupS0TCHNvEGjyUErileACW/u
+        Bw0mPtFvlgLur6xMlfu7WiDM2OOCxSy9OMcAnz9k+/XC9Sq02qlv+DExpDNw1xIMaPmt7u
+        iwd4TCcTFyxuB1Mambnp9CxXDVl6t7tsAzZuwlPM2pKX3ZjHQkKStGDC7mgF5UZYj9L9tC
+        Gfq7RakSrepHHRBRankSAuNVf9SsodOi4TF0jKd5yC2DtZ9fgB99A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-ed25519; t=1635278763;
+        s=dkim-ed25519; t=1635278787;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=+TkcKoovQ5pnMP2k9OxzZnfLLFHNaNpwcgR+sKKOoIg=;
-        b=msXrMG7jdFGrJbGDoDKFJLfyAOCEsqUI7YKTBKLN1BU9u2c6nykZ4BeF5pnEdWJ9XZyKkk
-        KP5SJaSBzNLHCoDQ==
-Date:   Tue, 26 Oct 2021 16:05:59 -0400
+        bh=g3XoPqOx1werSEjx0NKJAeFFtfFnYzyEzgysRFKJjuE=;
+        b=eNmB1Wi+MkG95Z5/h89mFrzQCF52lmPpHZ5JYz9cYmsVX3mo9iAPiH3bhx8N2tJqEzOoG3
+        Y0Y8wW/drJCzdYAA==
+Date:   Tue, 26 Oct 2021 16:06:25 -0400
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 1/3] pretty.c: rework describe options parsing for
- better extensibility
+Subject: Re: [PATCH v2 2/3] pretty: add tag option to %(describe)
 Content-Language: en-US-large
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>
 References: <20211024014256.3569322-1-eschwartz@archlinux.org>
  <20211026013452.1372122-1-eschwartz@archlinux.org>
- <20211026013452.1372122-2-eschwartz@archlinux.org>
- <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+ <20211026013452.1372122-3-eschwartz@archlinux.org>
+ <CAPig+cTe9iMCteUYZZP_8cYoOzbg-95ptuVdvvk0SKUGMgrDjg@mail.gmail.com>
 From:   Eli Schwartz <eschwartz@archlinux.org>
 X-Clacks-Overhead: GNU Terry Pratchett
-In-Reply-To: <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+In-Reply-To: <CAPig+cTe9iMCteUYZZP_8cYoOzbg-95ptuVdvvk0SKUGMgrDjg@mail.gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------Z5ryNvhHo2noYwOW95IdLeLe"
+ boundary="------------5xrYU6Mv6p9FRpv0L2r1qY21"
 Authentication-Results: mail.archlinux.org;
         auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
@@ -66,148 +62,111 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Z5ryNvhHo2noYwOW95IdLeLe
-Content-Type: multipart/mixed; boundary="------------JwNEylsaxFbj0jPWJDgWjPHj";
+--------------5xrYU6Mv6p9FRpv0L2r1qY21
+Content-Type: multipart/mixed; boundary="------------9j2FtEfPdnFy3Q4hWWFhWwgS";
  protected-headers="v1"
 From: Eli Schwartz <eschwartz@archlinux.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: Git List <git@vger.kernel.org>
-Message-ID: <7bd2ef6f-9afe-2c44-db51-9307b0cd5f0f@archlinux.org>
-Subject: Re: [PATCH v2 1/3] pretty.c: rework describe options parsing for
- better extensibility
+Message-ID: <5e2233d8-f63c-d786-ee9f-31865d6c208c@archlinux.org>
+Subject: Re: [PATCH v2 2/3] pretty: add tag option to %(describe)
 References: <20211024014256.3569322-1-eschwartz@archlinux.org>
  <20211026013452.1372122-1-eschwartz@archlinux.org>
- <20211026013452.1372122-2-eschwartz@archlinux.org>
- <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
-In-Reply-To: <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+ <20211026013452.1372122-3-eschwartz@archlinux.org>
+ <CAPig+cTe9iMCteUYZZP_8cYoOzbg-95ptuVdvvk0SKUGMgrDjg@mail.gmail.com>
+In-Reply-To: <CAPig+cTe9iMCteUYZZP_8cYoOzbg-95ptuVdvvk0SKUGMgrDjg@mail.gmail.com>
 
---------------JwNEylsaxFbj0jPWJDgWjPHj
+--------------9j2FtEfPdnFy3Q4hWWFhWwgS
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 10/26/21 1:18 AM, Eric Sunshine wrote:
+On 10/26/21 1:25 AM, Eric Sunshine wrote:
 > On Mon, Oct 25, 2021 at 9:36 PM Eli Schwartz <eschwartz@archlinux.org> =
 wrote:
->> It contains option arguments only, not options. We would like to add
->> option support here too, but to do that we need to distinguish between=
-
->> different types of options.
+>> The %(describe) placeholder by default, like `git describe`, only
+>> supports annotated tags. However, some people do use lightweight tags
+>> for releases, and would like to describe those anyway. The command lin=
+e
+>> tool has an option to support this.
 >>
->> Lay out the groundwork for distinguishing between bools, strings, etc.=
-
->> and move the central logic (validating values and pushing new argument=
-s
->> to *args) into the successful match, because that will be fairly
->> conditional on what type of argument is being parsed.
+>> Teach the placeholder to support this as well.
 >>
 >> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
 >> ---
 >> diff --git a/pretty.c b/pretty.c
->> @@ -1216,28 +1216,37 @@ int format_set_trailers_options(struct process=
-_trailer_options *opts,
->>  static size_t parse_describe_args(const char *start, struct strvec *a=
-rgs)
->>  {
->> +       struct {
->> +               char *name;
->> +               enum { OPT_STRING } type;
->> +       }  option[] =3D {
->> +               { "exclude", OPT_STRING },
->> +               { "match", OPT_STRING },
->> +       };
->>         const char *arg =3D start;
->>
->>         for (;;) {
->> +               int found =3D 0;
->>                 const char *argval;
->>                 size_t arglen =3D 0;
->>                 int i;
->>
->> +               for (i =3D 0; !found && i < ARRAY_SIZE(option); i++) {=
+>> @@ -1229,10 +1230,21 @@ static size_t parse_describe_args(const char *=
+start, struct strvec *args)
+>>                 for (i =3D 0; !found && i < ARRAY_SIZE(option); i++) {=
 
->> +                       switch(option[i].type) {
->> +                       case OPT_STRING:
->> +                               if (match_placeholder_arg_value(arg, o=
-ption[i].name, &arg,
->> +                                                               &argva=
-l, &arglen) && arglen) {
->> +                                       if (!arglen)
->> +                                               return 0;
+>>                         switch(option[i].type) {
+>> +                       case OPT_BOOL:
+>> +                               if(match_placeholder_bool_arg(arg, opt=
+ion[i].name, &arg, &optval)) {
 >=20
-> I may be missing something obvious, but how will it be possible for:
+> Style nit: add space after `if`
+
+
+Oops, I am not sure how this happened. It's wrong in the switch too.
+
+
+>> +                                       if (optval) {
+>> +                                               strvec_pushf(args, "--=
+%s", option[i].name);
+>> +                                       } else {
+>> +                                               strvec_pushf(args, "--=
+no-%s", option[i].name);
+>> +                                       }
 >=20
->     if (!arglen)
->         return 0;
+> We would normally omit the braces for this simple `if`:
 >=20
-> to trigger if the `if` immediately above it:
+>     if (optval)
+>         strvec_pushf(...);
+>     else
+>         strvec_pushf(...);
 >=20
->     if (... && arglen) {
+> ... or maybe even use the ternary operator:
 >=20
->  has already asserted that `arglen` is not 0?
-
-
-I don't think you are missing anything here, I simply forgot that
-halfway through I added a second check to the if, and later moved the
-code from down below.
-
-I think returning 0 is correct here, to avoid pointlessly checking the
-rest of option[]. So I'll (re-)remove the first check.
-
-
->> +                                       strvec_pushf(args, "--%s=3D%.*=
-s", option[i].name, (int)arglen, argval);
->> +                                       found =3D 1;
->> +                               }
->>                                 break;
->>                         }
->>                 }
->> +               if (!found)
->>                         break;
+>     strvec_pushf(args, "--%s%s", optval ? "" : "no-", option[i].name);
 >=20
-> The use of `found` to break out of a loop from within a `switch` seems
-> a bit clunky. An alternative would be to `goto` a label...
->=20
->>         }
->>         return arg - start;
->=20
-> ... which could be introduced just before the `return`. Of course,
-> this is highly subjective, so not necessarily worth changing.
+> but it's highly subjective whether or not that's more readable.
 
 
-Keeping in mind that this for (;;) { .... break; } was there before me
-:D I just switched the name/type of the variable it checks...
+Although the braces feel more natural to me for clarity purposes, it's a
+good point that the git coding style says to omit them for single
+statements, and I should have followed that here.
 
-IMO changing to goto is not my business to change (at least not in this
-patch), and given the "common wisdom" is "goto is evil" I'm not strongly
-inclined to get into the business of rewriting someone else's code for
-that. It's too subjective for my taste.
+The ternary doesn't feel readable to me, however.
+
+=2E..
+
+Thanks for the style review!
 
 --=20
 Eli Schwartz
 Arch Linux Bug Wrangler and Trusted User
 
---------------JwNEylsaxFbj0jPWJDgWjPHj--
+--------------9j2FtEfPdnFy3Q4hWWFhWwgS--
 
---------------Z5ryNvhHo2noYwOW95IdLeLe
+--------------5xrYU6Mv6p9FRpv0L2r1qY21
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF4X6gACgkQzrFn77Vy
-K9ab7xAAlLD4GRCR0/0vpA5psvhb2u9y57Gpu1G9ppH3DlnBbb2OzSinSE/Ix3ej
-2hnQrVoa8X4sBZNIgdbWXvg3FV5KNQB6/QGYr8689I6Te8ZqiTWMZxXRjltIwyd7
-6l/10JeK7UHWNerZ0j6A68QkHIAKJ++euLPxchSb9UDP15Ue6eCNdtHK4hvzkai2
-FEnpxaHkHUqK8OoeccnVgDhTkjU7RewRNbNrmCoBjTBXIsimyDIRfwdG0p0VR2cQ
-TlshUgfVcT5xo82Ecl+VF1zUaPCfKl9U5HhkMvP8ACbjQ2zFtyI5NA6PXEQDFiE8
-JDC9u8dBJQwdQdG1E1H/oh3VF7PAQcr7I5IEU1T0U97qa1xS2FpmE7Aw1ZweQ8sz
-JMdkuChlYT2LVdNeJzTcO5nrJmq502ko9oCt8hMNAlBCtyCdPRX7PwGhH13huqvD
-KP7BICOZqO1i7e6i3Sp0Dsfoh5SbTw4pzcd/11rhzBMnB7VoZ+G5wsOPMWTYFMBD
-miUr1hMrKxCQ+lmf0jgOI2BdQqKDTziCdTtNpR4NqwAiXrEx7tgwcDRWV4DVwQYA
-/iR8tXU1+Scg6O1iXTCkLY+PYH2RmeLHm+Qakz+ETcfM3xEICuE6pU4GE5hDxf1C
-qViUH5nGnFtCd+qfz9JmsQdecTc4pfpuhxxwlOJ516MRAxoNYGE=
-=g77I
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF4X8EACgkQzrFn77Vy
+K9YNsw/+KHV0Dxf8YAw6lT0UupR1PKLPAMrElBFWHjdsAuGxHfJ5V431UaxKW2Q4
+uNUNYbxFNSLSTnjHJ7x/ILewufGyEmEArfOLXNnOzs8Owbto8PBN7MwEIyp2ZaLP
+Hb5c7RwbIn2bngS4QeFl/b3pizZjUzheO2ZUVw3LSyOHThcfBVrXsXhMRbchVeqo
+WRFjpJiVzffCYxl2bKaovjiePFfxIvYMyyHMfW7ARQ4bw7A/10cJ7MTZVG7y8VmL
+Ml8hYEzjnJ2S/ApaEYBzo3375iqP4TDEq99kd2C39AX5P0L6yaJTQqD94w904DJh
+eX/3609ZVmB5e0YKMr/rV98lKoTQNJfW5vmZTtC2zUkvQBrIvKX5aizXQ1OXDyqC
+wCE7W8K6EbZXhQr9gH5vEhDlyQTpb6Awzedh5ZrFUYDg3dkKXsFeS4hFDucDM7KH
+LxOwLYk8ImeBPzOBfB+ntFLwCk6LMlTfY49ImfkMrqOCSWCVQRQ+RQYMTqCr1vme
+7hut9e5bBvrIhbv/wUf88I+e2mr7ltz3KuKKBjSGIiGmJxRXrwOyHE4GTp7XJVmn
+YLHZ7pLcYTQRyXEOBbpG1NNM5tDaUo7DfO3OrxFkULe5FSxT4/w/gertFL+iiY7j
+WFH8YauTigC8txX1ehlXq/ltfYyrj0WGsj9hO6s70uzCw8hKK/A=
+=r5Fp
 -----END PGP SIGNATURE-----
 
---------------Z5ryNvhHo2noYwOW95IdLeLe--
+--------------5xrYU6Mv6p9FRpv0L2r1qY21--
