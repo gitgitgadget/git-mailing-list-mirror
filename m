@@ -2,114 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15493C433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 08:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FAE7C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 08:53:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0B8560174
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 08:12:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EC636108D
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 08:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233543AbhJZIOn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 04:14:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53982 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhJZIOm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 04:14:42 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBCCAC061745
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 01:12:18 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id 20so3928495vkc.8
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 01:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jnuPJSbrjZCZH00A7auEqGgm7qvWRuV6/kOJ+Exkbu0=;
-        b=gkaO9X82YX9mbDaY36qEkayYWguXhXowf3fedEGmgwRWx2aIkYcaaZGtyE2du1pc7H
-         AvfHPbFBf9OvM7TUzzW7MXeb4Pp5GICa6KobaPyo+WZOqmjpPGK3dZBTpQmGeuJeqQlU
-         KyqLluRIi3OykjrSX40mbMf0//LRX/RZwWa9WKcc0sxn9JQ92/BpsynuZsRwnYV6YtIY
-         8UVsY3YnGNadQhVyNZH/eQ+RQvuGmOxCu9VqBPBxRHyXezwnm7Z4Il5tSnFxA0l6HbLP
-         wvT4DTxtAl+8CV4s41ksbtz5GUoDmbwpTw7RDRxMlie6c0JtJcn9ls1eo6r8ryxdWCWb
-         3P9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jnuPJSbrjZCZH00A7auEqGgm7qvWRuV6/kOJ+Exkbu0=;
-        b=Fkqn5siWyZ/ZCYueWdmvSnCz8I0XvIbjwivKoLGWdjnUvt+buDtXAsdVGSbjqL/yta
-         ZexhSflZp3w1AMiEp5S+2aDkGQEdlqRvNZTl8MyM1g4qLrUG++kLuvenMnMJxD2TuQlg
-         kQGgdcZTdXuVfK3U1IHqfQXM8i5kkZe1hzbCGOMrsaB7Gk5kq4bdDsnZO6KhAyyCsyg0
-         /wSzU9+ULOTX6cLjTd+dofCfANXtWf7+BGqEG81129utHPAJl2L0UE8f29Ya6JuG2TbY
-         QN3VgZHzHy42SkVoMkzDJer5H2l4s4k8rXxLvf4Wk1exphi8PA/dBRUezWrxfRbzAdAf
-         uYBw==
-X-Gm-Message-State: AOAM531lT2oMdmhn4cQmuFDrZD3boRzo9VjvGTbwnxQVzbGZ9Xgc2Jvt
-        +RKrstK+ALg9IXSRHYrW+mkm43nWg09f+r4Hx3RLjpjsb1WStw==
-X-Google-Smtp-Source: ABdhPJx+jv5Wt9S6lGrop+6lVLtKF8vP34MJdkZPkuKT+YG4Cnbb4RJxGOceFSeapYxOi0CcPvqW0FbgCzx3/wrOb4E=
-X-Received: by 2002:a1f:784b:: with SMTP id t72mr19553735vkc.15.1635235937879;
- Tue, 26 Oct 2021 01:12:17 -0700 (PDT)
+        id S234335AbhJZI4R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 04:56:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46538 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233877AbhJZI4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 04:56:16 -0400
+Received: (qmail 8818 invoked by uid 109); 26 Oct 2021 08:53:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 26 Oct 2021 08:53:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5532 invoked by uid 111); 26 Oct 2021 08:53:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 26 Oct 2021 04:53:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 26 Oct 2021 04:53:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v3 5/6] config.c: free(expanded) before die(), work
+ around GCC oddity
+Message-ID: <YXfCH7I1XwH+Vetu@coredump.intra.peff.net>
+References: <cover-v2-0.3-00000000000-20211021T195133Z-avarab@gmail.com>
+ <cover-v3-0.6-00000000000-20211022T175227Z-avarab@gmail.com>
+ <patch-v3-5.6-9a44204c4c9-20211022T175227Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2110211148400.56@tvgsbejvaqbjf.bet> <CAFQ2z_NBOC5sDSL6AjCe-5mPVhU1B_guJEsHwVT3=AK1aAt8UA@mail.gmail.com>
- <211026.86wnm021ih.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211026.86wnm021ih.gmgdl@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 26 Oct 2021 10:12:06 +0200
-Message-ID: <CAFQ2z_OfWe53zh-Eu09M=7pxD4=AMiWrNvwqv_HB7NFNRX+dhw@mail.gmail.com>
-Subject: Re: [Summit topic] The state of getting a reftable backend working in git.git
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v3-5.6-9a44204c4c9-20211022T175227Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 26, 2021 at 12:16 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> From memory I think the more general concern Philip Oakley was also
-> expressing (but maybe he'll chime in) could also be addressed by a tool
-> that just un-reftable-ifies a repository.
->
-> I think such a thing would be useful, and I think we don't have that
-> already. Isn't the files backend or reftable usage now an "init"-time
-> setting.
->..
-> Maybe there's more complexity I'm not considering than just the *.lock
-> dance in .git/*, but if not such a tool could also convert freely
-> between the two backends, so you could try refable out in an existing
-> checkout.
+On Fri, Oct 22, 2021 at 08:19:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-I added a convert-ref-storage command to the JGit command line client
-for exactly this,
+> On my GCC version (10.2.1-6), but not the clang I have available t0017
+> will fail under SANITIZE=leak on optimization levels higher than -O0,
+> which is annoying when combined with the change in 956d2e4639b (tests:
+> add a test mode for SANITIZE=leak, run it in CI, 2021-09-23).
 
-$ jgit convert-ref-storage  -h
-jgit convert-ref-storage [--format VAL] [--help (-h)] [--ssh [JSCH | APACHE=
-]]
+This one really makes me sad. The resulting code is more complicated,
+and what guarantee do we have that we won't run into similar problems
+with other die() calls?
 
- --format VAL          : Format to convert to (reftable or refdir) (default=
-:
-                         reftable)
- --help (-h)           : display this help text (default: true)
- --ssh [JSCH | APACHE] : Selects the built-in ssh library to use, JSch or
-                         Apache MINA sshd. (default: JSCH)
+If we're getting false positives, I'd rather see us work around them
+with annotations, or a better compiler (I couldn't reproduce with gcc
+10.3.0 or 11.2.0 from Debian, so I doubt there is even much point in
+reporting it upstream).
 
-See here[1] for implementation. It's not safe for concurrent use with
-other git commands, but that's hardly a common use-case.
+> We really do have a memory leak here in either case, as e.g. running
+> the pre-image under valgrind(1) will reveal. It's documented
+> SANITIZE=leak (and "address", which exhibits the same behavior) might
+> interact with compiler optimization in this way in some cases. Since
+> this function is called recursively it's going to be especially
+> interesting as an optimization target.
 
-[1] https://eclipse.googlesource.com/gerrit/jgit/jgit/+/1825a2230c06e7a6cbe=
-23c69b63c3b7ecd2ceac6/org.eclipse.jgit/src/org/eclipse/jgit/internal/storag=
-e/file/FileRepository.java#806
+I don't see how we have a leak. If we hit this die code-path then we
+never exit the function. I can't reproduce the problem, but it sounds
+like -O2 is reusing the stack space of "expanded" to prepare for the
+die() call? IMHO that is not an actual leak. It is still in scope from
+the perspective of C, and anyway we are about to exit from within the
+die().
 
+If we were to do anything in the code itself, I'd much prefer to hit it
+with an UNLEAK().
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-Peff
