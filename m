@@ -2,127 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B29EDC433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB2A9C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C95160E8F
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:32:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8654F60F70
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 20:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238773AbhJZTeq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 15:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S239095AbhJZUIa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 16:08:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237035AbhJZTep (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 15:34:45 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC0AC061570
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:32:21 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id e144so757436iof.3
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2daTUbyVdVMjCvi6UJJvoUuOPjcyL0e7/l61Di4s6yU=;
-        b=N8Fuw5GERiqd52M/KE1EUYrJn7nej3WUaAeeMAXnNgmYPmwEaTHxs9Pv0kxCysKtW5
-         Hx6n4YpTFp2OsQrtG6C7fdCzV6P9KsO2sHHHnLwSP5/P+zTRvs+G8DJ52XNZZZrjnEgM
-         rP+xbyM507qyCbxU2mD6bZmj1Ip8Wes6NuMRzRji4cONsiaSdPn+nuzVMJGrLH16ZkMM
-         +RFfN4jW4TY24v4fkytxpuXch9EUUhHrM7TsGnn/5E/aCPyN04nhW7DaF0mPyAVwG+5G
-         WtRWtSSwNvgx+L4uOEnYsyIuHc/DwLIZVqPk6Gee+fcdsn01OsjVxlOA4d/jw5BwDmkf
-         BxFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2daTUbyVdVMjCvi6UJJvoUuOPjcyL0e7/l61Di4s6yU=;
-        b=Sy0LxKmiZMyw6hpK6hUyxzVijpTnrMEi+yeLz7ybLSZ7g2TLtt6Uwecp0FVj6JzbLG
-         k7HJEWKb2zNScoz5+ZqaYIz2cQyX2L8jXNyNixEQZKie+7uRf7M4LDdY9igBqM/eN2jN
-         7GnmnBPfFZ8CTUEmHKgVaxU7uM3XjO4eZuMHqylq2Wpit1TEAWhSfg9QIoS6cPKHBGFQ
-         x/URsEja/Lkco5UNDUDFSnI7zNNeGvXAnXNS5pPzIfvloKVK4K6WmS4H3a8e39Ddo0qP
-         D+E9IW6/Il6ikEiLZfgBd030WQ7iXPLTo6VH+QQdBEC26bScq2YwB6RERDkQTGzPpUJ9
-         rRFw==
-X-Gm-Message-State: AOAM530B4mOR76LNTXRb33/R4ppJ/550XXN8FvHfxe6wj+1Xa0I+sAAV
-        kQkaOCDCs5IEqEEIzMRODPE3aiSnp0eKfxjS8F+ZHaPwTxXtXQ==
-X-Google-Smtp-Source: ABdhPJxpaob3iWtCQgAHi8KAPmjNeFBIRUQFq4DjwZaCN3VNX3C8jj/nE4ZLsbgBUSTHC8IOpeg297Q8xYzvUL1MwG0=
-X-Received: by 2002:a02:b885:: with SMTP id p5mr13145258jam.81.1635276739995;
- Tue, 26 Oct 2021 12:32:19 -0700 (PDT)
+        with ESMTP id S239090AbhJZUI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 16:08:29 -0400
+Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2599C061570
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 13:06:04 -0700 (PDT)
+Message-ID: <7bd2ef6f-9afe-2c44-db51-9307b0cd5f0f@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1635278763;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+TkcKoovQ5pnMP2k9OxzZnfLLFHNaNpwcgR+sKKOoIg=;
+        b=gGRCHfjI2Nb/nhqPYJXDUdxBFnWqoncxPmWIKj1bblShG1r75kuvvAJCRow0DTrMjlrVeJ
+        20m0fFgS9N7yhqzk20qvUeqHsYwQh0epITcfSpCVyUZ+Pi4M+cOUWmsFocNyBEklWgTeKw
+        NTOlxZhpVC+WV4gl38+2oFjVW3tWJeqMIglAMddmDyul3G65BwaVi7FUO6kItyEbWfJG/m
+        gM3VfAmDwh6H8LZcUSKxDfGfSSo2RjNmZU6VnrWkWroMEaxzJJyhiZLcJSTsH8EdWWW7aj
+        7aTL+r1+yzLK7UQAfRyRxBVa7bb52HP+i2/wCPyW5w2HbrzRLEL0jBTANEjm2vWXRKwl3R
+        uIw7oBnYGu91/gOxESyScDTZ8cW/Etw8mipPDIM8fwJlJL2Z+u6RminDa4U19PhY9Uqhul
+        RcqdpMQkeav5MK+B5AuUvhGsYanfznRMo0k9KG+e0DJbGvsV3sFMUQD97KvyRvQTiReOPK
+        AkzSOLvgHEZG0Uigb7XDhbipyAGVN6VOIjMbb0+A88je2NemIP2sWldAPD5hvi6GjRRp7W
+        PVnXJ/SLkVJvDKyPL6xR1AxLKDq7n0i4oK/NftYKY9sk9Cj9U2ldMQFC9H04FqhiaWlBQO
+        nE39d668i8KHi5yv0SFaPsuzAOJYnQwx9jp4L4ZAgGDAnNta8BhN8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1635278763;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+TkcKoovQ5pnMP2k9OxzZnfLLFHNaNpwcgR+sKKOoIg=;
+        b=msXrMG7jdFGrJbGDoDKFJLfyAOCEsqUI7YKTBKLN1BU9u2c6nykZ4BeF5pnEdWJ9XZyKkk
+        KP5SJaSBzNLHCoDQ==
+Date:   Tue, 26 Oct 2021 16:05:59 -0400
 MIME-Version: 1.0
-References: <pull.1052.git.1633708986.gitgitgadget@gmail.com>
- <pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com> <xmqqczobb8jd.fsf@gitster.g>
-In-Reply-To: <xmqqczobb8jd.fsf@gitster.g>
-From:   Ivan Frade <ifrade@google.com>
-Date:   Tue, 26 Oct 2021 12:32:08 -0700
-Message-ID: <CANQMx9W_Zt+qy3sppx1qGdf6S9gMSEp_7jjV4hc_aeyR62syrQ@mail.gmail.com>
-Subject: Re: [PATCH v2] fetch-pack: redact packfile urls in traces
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 1/3] pretty.c: rework describe options parsing for
+ better extensibility
+Content-Language: en-US-large
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <20211024014256.3569322-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-2-eschwartz@archlinux.org>
+ <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+From:   Eli Schwartz <eschwartz@archlinux.org>
+X-Clacks-Overhead: GNU Terry Pratchett
+In-Reply-To: <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------Z5ryNvhHo2noYwOW95IdLeLe"
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It seems I sent my original reply only to the github PR. Sorry for the
-confusion:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------Z5ryNvhHo2noYwOW95IdLeLe
+Content-Type: multipart/mixed; boundary="------------JwNEylsaxFbj0jPWJDgWjPHj";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@archlinux.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Git List <git@vger.kernel.org>
+Message-ID: <7bd2ef6f-9afe-2c44-db51-9307b0cd5f0f@archlinux.org>
+Subject: Re: [PATCH v2 1/3] pretty.c: rework describe options parsing for
+ better extensibility
+References: <20211024014256.3569322-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-2-eschwartz@archlinux.org>
+ <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
+In-Reply-To: <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
 
-On Mon, Oct 11, 2021 at 1:39 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Ivan Frade <ifrade@google.com>
-...
->
-> It of course is a different matter if the explained idea is
-> agreeable, though ;-).  Hiding the entire packet, based on the "it
-> might be in some setups" seems a bit too much.
->
-> Is it often the case that the whole URI is sensitive, or perhaps
-> leading "<scheme>://<host>/pack-<abc>.pack" part is not sensitive at
-> all, and what follows after that "public" part has some "nonce"
-> material that makes it sensitive?
+--------------JwNEylsaxFbj0jPWJDgWjPHj
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-In the specific case I am working on, the path of the URL is an
-encrypted string that shouldn't be completely exposed (exposing part
-of it would be fine). In general, I think we can assume that
-<scheme>://<host>/ are always "public" but the path could be
-sensitive.
+On 10/26/21 1:18 AM, Eric Sunshine wrote:
+> On Mon, Oct 25, 2021 at 9:36 PM Eli Schwartz <eschwartz@archlinux.org> =
+wrote:
+>> It contains option arguments only, not options. We would like to add
+>> option support here too, but to do that we need to distinguish between=
 
-We could redact only the path (<scheme>://<host>/REDACTED), or even a
-fixed length of the URL? (<scheme>://<host>/pack-<xxREDACTED).
+>> different types of options.
+>>
+>> Lay out the groundwork for distinguishing between bools, strings, etc.=
 
-In the next patch version I go with redacting the path.
+>> and move the central logic (validating values and pushing new argument=
+s
+>> to *args) into the successful match, because that will be fairly
+>> conditional on what type of argument is being parsed.
+>>
+>> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
+>> ---
+>> diff --git a/pretty.c b/pretty.c
+>> @@ -1216,28 +1216,37 @@ int format_set_trailers_options(struct process=
+_trailer_options *opts,
+>>  static size_t parse_describe_args(const char *start, struct strvec *a=
+rgs)
+>>  {
+>> +       struct {
+>> +               char *name;
+>> +               enum { OPT_STRING } type;
+>> +       }  option[] =3D {
+>> +               { "exclude", OPT_STRING },
+>> +               { "match", OPT_STRING },
+>> +       };
+>>         const char *arg =3D start;
+>>
+>>         for (;;) {
+>> +               int found =3D 0;
+>>                 const char *argval;
+>>                 size_t arglen =3D 0;
+>>                 int i;
+>>
+>> +               for (i =3D 0; !found && i < ARRAY_SIZE(option); i++) {=
+
+>> +                       switch(option[i].type) {
+>> +                       case OPT_STRING:
+>> +                               if (match_placeholder_arg_value(arg, o=
+ption[i].name, &arg,
+>> +                                                               &argva=
+l, &arglen) && arglen) {
+>> +                                       if (!arglen)
+>> +                                               return 0;
+>=20
+> I may be missing something obvious, but how will it be possible for:
+>=20
+>     if (!arglen)
+>         return 0;
+>=20
+> to trigger if the `if` immediately above it:
+>=20
+>     if (... && arglen) {
+>=20
+>  has already asserted that `arglen` is not 0?
 
 
-> > Changes since v1:
-...
->  Please write such material below the three-dash line.
-Done
+I don't think you are missing anything here, I simply forgot that
+halfway through I added a second check to the if, and later moved the
+code from down below.
 
-> And there is no need to duplicate the log message here ;-)
-Done
+I think returning 0 is correct here, to avoid pointlessly checking the
+rest of option[]. So I'll (re-)remove the first check.
 
-> So "original_options" is used to save away the reader->options so
-> that it can be restored before returning to our caller?
->
-> OK (it may be more common in this codebase to call such a variable
-> "saved_X", though).
 
-In the latest iteration, the option is enabled for all sections and
-there is no need to set/unset the flag.
+>> +                                       strvec_pushf(args, "--%s=3D%.*=
+s", option[i].name, (int)arglen, argval);
+>> +                                       found =3D 1;
+>> +                               }
+>>                                 break;
+>>                         }
+>>                 }
+>> +               if (!found)
+>>                         break;
+>=20
+> The use of `found` to break out of a loop from within a `switch` seems
+> a bit clunky. An alternative would be to `goto` a label...
+>=20
+>>         }
+>>         return arg - start;
+>=20
+> ... which could be introduced just before the `return`. Of course,
+> this is highly subjective, so not necessarily worth changing.
 
-> > +     grep "clone< <redacted>" log
->
-> This checks only that "redacted" string appears, but what the theme
-> of the change really cares about is different, no?  You want to
-> ensure that no sensitive substring of the URI appears in the log.
->
-> Imagine somebody breaking the redact logic by making it prepend that
-> string to the payload, instead of replacing the payload with that
-> string---this test will not catch such a regression.
 
-Now the tests verify the expected packfile-uri full line is in the log.
+Keeping in mind that this for (;;) { .... break; } was there before me
+:D I just switched the name/type of the variable it checks...
 
-Thanks,
+IMO changing to goto is not my business to change (at least not in this
+patch), and given the "common wisdom" is "goto is evil" I'm not strongly
+inclined to get into the business of rewriting someone else's code for
+that. It's too subjective for my taste.
 
-Ivan
+--=20
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
+
+--------------JwNEylsaxFbj0jPWJDgWjPHj--
+
+--------------Z5ryNvhHo2noYwOW95IdLeLe
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF4X6gACgkQzrFn77Vy
+K9ab7xAAlLD4GRCR0/0vpA5psvhb2u9y57Gpu1G9ppH3DlnBbb2OzSinSE/Ix3ej
+2hnQrVoa8X4sBZNIgdbWXvg3FV5KNQB6/QGYr8689I6Te8ZqiTWMZxXRjltIwyd7
+6l/10JeK7UHWNerZ0j6A68QkHIAKJ++euLPxchSb9UDP15Ue6eCNdtHK4hvzkai2
+FEnpxaHkHUqK8OoeccnVgDhTkjU7RewRNbNrmCoBjTBXIsimyDIRfwdG0p0VR2cQ
+TlshUgfVcT5xo82Ecl+VF1zUaPCfKl9U5HhkMvP8ACbjQ2zFtyI5NA6PXEQDFiE8
+JDC9u8dBJQwdQdG1E1H/oh3VF7PAQcr7I5IEU1T0U97qa1xS2FpmE7Aw1ZweQ8sz
+JMdkuChlYT2LVdNeJzTcO5nrJmq502ko9oCt8hMNAlBCtyCdPRX7PwGhH13huqvD
+KP7BICOZqO1i7e6i3Sp0Dsfoh5SbTw4pzcd/11rhzBMnB7VoZ+G5wsOPMWTYFMBD
+miUr1hMrKxCQ+lmf0jgOI2BdQqKDTziCdTtNpR4NqwAiXrEx7tgwcDRWV4DVwQYA
+/iR8tXU1+Scg6O1iXTCkLY+PYH2RmeLHm+Qakz+ETcfM3xEICuE6pU4GE5hDxf1C
+qViUH5nGnFtCd+qfz9JmsQdecTc4pfpuhxxwlOJ516MRAxoNYGE=
+=g77I
+-----END PGP SIGNATURE-----
+
+--------------Z5ryNvhHo2noYwOW95IdLeLe--
