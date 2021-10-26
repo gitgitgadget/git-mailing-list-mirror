@@ -2,176 +2,246 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57B92C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 22:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB8CC433F5
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 22:50:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D5CA60F21
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 22:43:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12ED0610A4
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 22:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240127AbhJZWpx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 18:45:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56314 "EHLO
+        id S231838AbhJZWw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 18:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233975AbhJZWpv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 18:45:51 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB3A3C061570
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 15:43:26 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id bp15so2016614lfb.4
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 15:43:26 -0700 (PDT)
+        with ESMTP id S230233AbhJZWw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 18:52:26 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F2C7C061570
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 15:50:01 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id s19so859349wra.2
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 15:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Od/vN0aypKNbTNCh6m0AketCt0euV7HtZbG3je2ANAw=;
-        b=T7teNoSjOMUWf9C4qG0GY3l2TIrmgWxeEwFF+RbtWN05Hj2YvCZCOBjOMpmUiz9YbS
-         MNtfCY4UabDlzCl2I5+Jx3GlHJwaeiXTJjugmM0hvur/Lch5UUJadmKONs7jp7K5dQU4
-         QRoRBnC/vgfNXthoRcjmvSm2n8NjgvUX6HOnmIR+lyBOGp4PMJLgFHPnKBiReiTXPcAx
-         bCWhP72SLo8OVvF49KFUHC/ufQhbAxY6PH/ZrEl7j2AYk1rGO7vMGXc9B+p8zsNuRBqs
-         Qj/anSuJUuJkTBRKf+vOiOWjgUymcmNuWvVjmuBIg7Iitrp5VAinvcNmticd2Kl74hij
-         wczw==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ZpqCsgc6Mnep8c8+3Un5QEFGreNNUHoiok6J/BiLXjw=;
+        b=PhbtoXNQINy9htsxW54ugfQeUfnHSTRYhGyQ0q3R1g071V+/4v0+ITuEUzBGYnor3R
+         X4B9B3vGvdJFbFRXDGbj5CGGfm8gFM6a2StPhsvkACiJMi1YQAjwsdSI6kJFZ1bs2nFX
+         TpBvh5d2PmdYMEq9vS2SyWFaCXChOpIyyQ9+TPXJNDXCfaEJFBbsodiCd+ppd6Xiuc4g
+         ufAH0y68wrv85FEcwjG17Cm2roUqdvNbQEmcDcYoje6CGgMbRreubVJC1UxHN94zIVRs
+         gcSNmjRsRzf+BIRkRoVRJ7Kc5VzG1J6viPLtNAm8MBW38D7tODWWjvnd7roSHpd0Kimr
+         q0UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Od/vN0aypKNbTNCh6m0AketCt0euV7HtZbG3je2ANAw=;
-        b=TVPHn6q7XLtGhpj7FIP/tJUeESf2YQFc+eOC0HA4vd3W/GZqBjMY+bhn1MGWyq/60f
-         IYfzEHTQ2JcJmFk/QKTpLH3KIkiGv/5g0aO5vc4mYDO3nnFeL7/f3teJ2q9eyQOzfMpy
-         Jx1WFpk/iXfFDBgLq38VGsgBqHrDp9Y4+5XdUNpzSt/E/FPR9DCsQbuqNiNxijzkLrnl
-         4W04xtjxmTAtmwieE4p1T3kFEHSJks48Sl4c5Br26FWQ27EpksSO7VoK48YvfpzoptH2
-         J+GTR8kZ8Sk7LSP/LJJrwyqlDgEJVHuC26Wn6ClbDEY8v2td9XdEf/VOqfIznKOmZCKH
-         8sDQ==
-X-Gm-Message-State: AOAM533ubWAIkD/GcumGSw3vxWXqpRbsKsoglNjuM9oHewqiTcDmVqTc
-        aggAz3dew2TNOMyvz+XZ6WATMqrBetTB429kDuQGcA==
-X-Google-Smtp-Source: ABdhPJx7mme6ToAYnodzN/68kzUaPokDEd1ZcFZhN0n2xsxaupc/UmGmTBBmCEDYkX/00xGaLX40jgrdeoYT2OIxnqg=
-X-Received: by 2002:a05:6512:142:: with SMTP id m2mr24183344lfo.125.1635288205107;
- Tue, 26 Oct 2021 15:43:25 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ZpqCsgc6Mnep8c8+3Un5QEFGreNNUHoiok6J/BiLXjw=;
+        b=VPlD1+YXSGqNF+opIaNHm302Bf35r723pJrPo4rZut0upyAHc7rjrfN1+5ZOSVe3oU
+         l7HTqPC73scpvwNPFxPhQpuIoUi6/07o7VNM/wjMSFpzH6jvLGpp8nh90porJKOCD4Ld
+         FGnYM/NAxJx8U26lbk4TK9SQ0TqfdnCcf6bwCYYPnURzvyjvYg1TTcrbC3HzHLEnFMtI
+         CoBex5aTkCpwvGTlqKbOV0Gv64Fkiu/uG7t8tqTDD7ya7KU18bdiI743KgCxbprwF59l
+         UmSSvvmIqpKQG6vFxBaueOjIkIgddJF0Agjfsh4s1q/1Pga2ZTdmY3rQ5EiBKtm1ntJ/
+         ty0g==
+X-Gm-Message-State: AOAM533+m+23+idEE+tSaRiXetEBrcbGs1KOlDeRbBFcYjqkkpdCakaU
+        ogBuDtRisx4SmdmgMuVGJDhvEDs79Mo=
+X-Google-Smtp-Source: ABdhPJw6aaN9H1VSma9Ur8zoNg+KUwErDkg3XXWpb0JqAvE8aWfJkEQtKeQtpuGebqL0QBS8aOyTgA==
+X-Received: by 2002:adf:dd89:: with SMTP id x9mr10504214wrl.169.1635288600144;
+        Tue, 26 Oct 2021 15:50:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u16sm1714023wmc.21.2021.10.26.15.49.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Oct 2021 15:49:59 -0700 (PDT)
+Message-Id: <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
+References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
+From:   "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 26 Oct 2021 22:49:57 +0000
+Subject: [PATCH v4 0/2] fetch-pack: redact packfile urls in traces
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <5e99c039db0b9644fb21f2ea72a464c67a74ff64.1635191000.git.matheus.bernardino@usp.br>
- <47aec8ed-5e54-6d13-8154-0202ef0fd747@gmail.com>
-In-Reply-To: <47aec8ed-5e54-6d13-8154-0202ef0fd747@gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Tue, 26 Oct 2021 19:43:13 -0300
-Message-ID: <CAHd-oW6w0aiFDVX1S2ttfc++H3okz2YTGf3f2p=xSbL_Bc_DNA@mail.gmail.com>
-Subject: Re: [PATCH v2] add, rm, mv: fix bug that prevents the update of
- non-sparse dirs
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Sean Christopherson <seanjc@google.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Ivan Frade <ifrade@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Stolee
+Changes since v3:
 
-Thanks for the review!
+ * Enable redacting URLs for all sections
+ * Redact only URL path (it was until the end of line)
+ * Redact URL in die() with more friendly message
+ * Update doc to mention that packfile URIs are also redacted.
 
-On Tue, Oct 26, 2021 at 9:53 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 10/25/2021 5:07 PM, Matheus Tavares wrote:
-> >
-> > - Simplified the implementation by unifing the code path for cone mode and
-> >   full pattern mode. Since path_matches_pattern_list() never returns UNDECIDED
-> >   for cone mode, it will always execute only one iteration of the loop and then
-> >   find the final answer. There is no need to handle this case in a separate
-> >   block.
->
-> This was unexpected, but makes sense. While your commit message hints at the
-> fact that cone mode never returns UNDECIDED, it doesn't explicitly mention
-> that cone mode will exit the loop after a single iteration. It might be nice
-> to make that explicit either in the commit message or the block comment before
-> the loop.
+Changes since v2:
 
-Yup, will do.
+ * Redact only the path of the URL
+ * Test are now strict, validating the exact line expected in the log
 
-> > - Inside the loop, made sure to change dtype to DT_DIR when going to parent
-> >   directories. Without this, the pattern match would fail if we had a path
-> >   like "a/b/c" and the pattern "b/" (with trailing slash).
->
-> Very good. We typically need to detect the type for the first path given,
-> but we know that all parents are directories. I've used this trick elsewhere.
->
-> I see in the code that the first path is used as DT_REG. It's my fault, but
-> perhaps it should be made more clear that path_in_sparse_checkout() will
-> consider the given path as a file, not a directory. The current users of the
-> method are using it properly, but I'm suddenly worried about another caller
-> misinterpreting the generality of the problem.
+Changes since v1:
 
-Yeah, I was thinking about this too... I'm afraid there might be at
-least two users of this function which already pass non-regular files
-to it: builtin/add.c:refresh() and
-sparse-index.c:convert_to_sparse_rec().
+ * Removed non-POSIX flags in tests
+ * More accurate regex for the non-encrypted packfile line
+ * Dropped documentation change
+ * Dropped redacting the die message in http-fetch
 
-The first calls the function passing the user-given pathspec, which
-may be a directory. But this one is easy to solve: I think we don't
-even need the path_in_sparse_checkout() here as the `git add
---refresh` only work on tracked files, and the previous
-matches_skip_worktree() call covers both skip_worktree and
-non-skip_worktree index entries (maybe we should rename this function
-to matches_sparse_ce()?)
+Ivan Frade (2):
+  fetch-pack: redact packfile urls in traces
+  http-fetch: redact url on die() message
 
-As for convert_to_sparse_rec(), it seems to call
-path_in_sparse_checkout() with the directory components of paths, so
-something like "dir/". Perhaps we can make path_in_sparse_checkout()
-receive a dtype argument and pass DT_UNKNOWN in this case?
+ Documentation/git.txt  |  5 +++--
+ fetch-pack.c           |  3 +++
+ http-fetch.c           | 15 +++++++++++--
+ pkt-line.c             | 40 ++++++++++++++++++++++++++++++++-
+ pkt-line.h             |  1 +
+ t/t5702-protocol-v2.sh | 51 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 110 insertions(+), 5 deletions(-)
 
-Another case I haven't given much thought yet is submodules. For example:
 
-git init sub &&
-test_commit -C sub file &&
-git submodule add ./sub &&
-git commit -m sub &&
-git sparse-checkout set 'sub/' &&
-git mv sub sub2
+base-commit: e9e5ba39a78c8f5057262d49e261b42a8660d5b9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1052%2Fifradeo%2Fredact-packfile-uri-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1052/ifradeo/redact-packfile-uri-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1052
 
-Erroneously gives:
-The following paths and/or pathspecs matched paths that exist
-outside of your sparse-checkout definition, so will not be
-updated in the index:
-sub
+Range-diff vs v3:
 
-But it works if we change DT_REG to DT_UNKNOWN in
-path_in_sparse_checkout(). So, I'm not sure, should we use DT_UNKNOWN
-for all calls?
+ 1:  9afe0093af4 ! 1:  973a250752c fetch-pack: redact packfile urls in traces
+     @@ Commit message
+      
+          Signed-off-by: Ivan Frade <ifrade@google.com>
+      
+     - ## fetch-pack.c ##
+     -@@ fetch-pack.c: static void receive_wanted_refs(struct packet_reader *reader,
+     - static void receive_packfile_uris(struct packet_reader *reader,
+     - 				  struct string_list *uris)
+     - {
+     -+	int saved_options;
+     - 	process_section_header(reader, "packfile-uris", 0);
+     -+	/*
+     -+	 * In some setups, packfile-uris act as bearer tokens,
+     -+	 * redact them by default.
+     -+	 */
+     -+	saved_options = reader->options;
+     -+	if (git_env_bool("GIT_TRACE_REDACT", 1))
+     -+		reader->options |= PACKET_READ_REDACT_URL_PATH;
+     -+
+     - 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
+     - 		if (reader->pktlen < the_hash_algo->hexsz ||
+     - 		    reader->line[the_hash_algo->hexsz] != ' ')
+     -@@ fetch-pack.c: static void receive_packfile_uris(struct packet_reader *reader,
+     + ## Documentation/git.txt ##
+     +@@ Documentation/git.txt: for full details.
+       
+     - 		string_list_append(uris, reader->line);
+     + `GIT_TRACE_REDACT`::
+     + 	By default, when tracing is activated, Git redacts the values of
+     +-	cookies, the "Authorization:" header, and the "Proxy-Authorization:"
+     +-	header. Set this variable to `0` to prevent this redaction.
+     ++	cookies, the "Authorization:" header, the "Proxy-Authorization:"
+     ++	header and packfile URLs. Set this variable to `0` to prevent this
+     ++	redaction.
+     + 
+     + `GIT_LITERAL_PATHSPECS`::
+     + 	Setting this variable to `1` will cause Git to treat all
+     +
+     + ## fetch-pack.c ##
+     +@@ fetch-pack.c: static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+     + 		reader.me = "fetch-pack";
+       	}
+     -+	reader->options = saved_options;
+     + 
+     ++	if (git_env_bool("GIT_TRACE_REDACT", 1))
+     ++		reader.options |= PACKET_READ_REDACT_URL_PATH;
+      +
+     - 	if (reader->status != PACKET_READ_DELIM)
+     - 		die("expected DELIM");
+     - }
+     + 	while (state != FETCH_DONE) {
+     + 		switch (state) {
+     + 		case FETCH_CHECK_LOCAL:
+      
+       ## pkt-line.c ##
+      @@ pkt-line.c: int packet_length(const char lenbuf_hex[4])
+       	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
+       }
+       
+     -+static int find_url_path_start(const char* buffer)
+     ++static char *find_url_path(const char* buffer, int *path_len)
+      +{
+      +	const char *URL_MARK = "://";
+     -+	char *p = strstr(buffer, URL_MARK);
+     -+	if (!p) {
+     -+		return -1;
+     -+	}
+     ++	char *path = strstr(buffer, URL_MARK);
+     ++	if (!path)
+     ++		return NULL;
+      +
+     -+	p += strlen(URL_MARK);
+     -+	while (*p && *p != '/')
+     -+		p++;
+     ++	path += strlen(URL_MARK);
+     ++	while (*path && *path != '/')
+     ++		path++;
+      +
+     -+	// Position after '/'
+     -+	if (*p && *(p + 1))
+     -+		return (p + 1) - buffer;
+     ++	if (!*path || !*(path + 1))
+     ++		return NULL;
+     ++
+     ++	// position after '/'
+     ++	path++;
+     ++
+     ++	if (path_len) {
+     ++		char *url_end = strchrnul(path, ' ');
+     ++		*path_len = url_end - path;
+     ++	}
+      +
+     -+	return -1;
+     ++	return path;
+      +}
+      +
+       enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
+     @@ pkt-line.c: enum packet_read_status packet_read_with_status(int fd, char **src_b
+       {
+       	int len;
+       	char linelen[4];
+     -+	int url_path_start;
+     ++	char *url_path_start;
+     ++	int url_path_len;
+       
+       	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
+       		*pktlen = -1;
+     @@ pkt-line.c: enum packet_read_status packet_read_with_status(int fd, char **src_b
+       	buffer[len] = 0;
+      -	packet_trace(buffer, len, 0);
+      +	if (options & PACKET_READ_REDACT_URL_PATH &&
+     -+	    (url_path_start = find_url_path_start(buffer)) != -1) {
+     ++	    (url_path_start = find_url_path(buffer, &url_path_len))) {
+      +		const char *redacted = "<redacted>";
+      +		struct strbuf tracebuf = STRBUF_INIT;
+      +		strbuf_insert(&tracebuf, 0, buffer, len);
+     -+		strbuf_splice(&tracebuf, url_path_start,
+     -+			      len - url_path_start, redacted, strlen(redacted));
+     ++		strbuf_splice(&tracebuf, url_path_start - buffer,
+     ++			      url_path_len, redacted, strlen(redacted));
+      +		packet_trace(tracebuf.buf, tracebuf.len, 0);
+      +		strbuf_release(&tracebuf);
+      +	} else {
+     @@ pkt-line.h: void packet_fflush(FILE *f);
+       #define PACKET_READ_DIE_ON_ERR_PACKET    (1u<<2)
+       #define PACKET_READ_GENTLE_ON_READ_ERROR (1u<<3)
+      +#define PACKET_READ_REDACT_URL_PATH      (1u<<4)
+     - int packet_read(int fd, char **src_buffer, size_t *src_len, char
+     - 		*buffer, unsigned size, int options);
+     + int packet_read(int fd, char *buffer, unsigned size, int options);
+       
+     + /*
+      
+       ## t/t5702-protocol-v2.sh ##
+      @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobjects fails when .gitmodul
+ -:  ----------- > 2:  c7f0977cabd http-fetch: redact url on die() message
 
-> > @@ -1504,8 +1504,9 @@ static int path_in_sparse_checkout_1(const char *path,
-> >                                    struct index_state *istate,
-> >                                    int require_cone_mode)
-> >  {
-> > -     const char *base;
-> >       int dtype = DT_REG;
->
-> Here is where we assume a file to start.
->
-> > +     enum pattern_match_result match = UNDECIDED;
-> > +     const char *end, *slash;
-> >
-> >       /*
-> >        * We default to accepting a path if there are no patterns or
-> > @@ -1516,11 +1517,23 @@ static int path_in_sparse_checkout_1(const char *path,
-> >            !istate->sparse_checkout_patterns->use_cone_patterns))
-> >               return 1;
-> >
-> > -     base = strrchr(path, '/');
-> > -     return path_matches_pattern_list(path, strlen(path), base ? base + 1 : path,
-> > -                                      &dtype,
-> > -                                      istate->sparse_checkout_patterns,
-> > -                                      istate) > 0;
-> > +     /*
-> > +      * If UNDECIDED, use the match from the parent dir (recursively),
-> > +      * or fall back to NOT_MATCHED at the topmost level.
-> > +      */
-> > +     for (end = path + strlen(path); end > path && match == UNDECIDED; end = slash) {
->
-> nit: since this line is long and the sentinel is complicated, it might
-> be worth splitting the different parts into their own lines:
->
->         for (end = path + strlen(path);
->              end > path && match == UNDECIDED;
->              end = slash) {
-
-Good idea, I will split the lines like you did.
+-- 
+gitgitgadget
