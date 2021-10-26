@@ -2,116 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35131C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 05:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EE63C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 05:25:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 123B961074
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 05:18:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 661B960EFE
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 05:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234899AbhJZFUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 01:20:39 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:44009 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234436AbhJZFUi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 01:20:38 -0400
-Received: by mail-ed1-f47.google.com with SMTP id u13so8645390edy.10
-        for <git@vger.kernel.org>; Mon, 25 Oct 2021 22:18:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jRH5AICpftAq11ERu3SIhlu+zL8Q9uOuDhbOU2OVPRg=;
-        b=vY5U7sir2DjSV/mo+zgoVlstA0uYkd3Kvgdl9M69sEHV9FkYVXcHOUEGiplZQW6+sY
-         Nmxfm+ur6CyDUhk91CIfuoxyDd4pAOTbIexMVlIVOUcoCp5GKWTPkAnHq2OXK77WkT2y
-         HeOKR+M0bACXPOm9Nta4nHhNwNKIDqgiQsnOAZWCyPbyNnqIc07VunD8K8lBJtjwpOWc
-         P0uMHpomly9YZUMmCrNNLDGsWlBu3zGxFt9qXtaP1d2fLwMc3wjyXhfu/QnEaaunOu1B
-         ooara2/2Z/DPK7xuckorg7GdtAYtV9akxMC8TMe0UTY92SjpQtH5mw/ySF7qLH2TmzBL
-         5juQ==
-X-Gm-Message-State: AOAM530F+hvXRdxBH9glGP9prbK0j4bxSWtvR5RoYx9gYO1Vqa1zJ+73
-        v6eRvHHLfP5QEou3GxA7s84JJHj8hQ+LtpeAVQj9vMp7
-X-Google-Smtp-Source: ABdhPJzyvLjSJwK+mdN4Mcx/5o3JWCAtxk/yRbIOiWKwCWO4/SSOWO2C5givcbTR+oQaEo7XgXchvjHzUckSao/I+ks=
-X-Received: by 2002:a17:906:3842:: with SMTP id w2mr28767551ejc.28.1635225494318;
- Mon, 25 Oct 2021 22:18:14 -0700 (PDT)
+        id S234600AbhJZF1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 01:27:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46454 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230501AbhJZF1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 01:27:34 -0400
+Received: (qmail 8114 invoked by uid 109); 26 Oct 2021 05:25:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 26 Oct 2021 05:25:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3245 invoked by uid 111); 26 Oct 2021 05:25:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 26 Oct 2021 01:25:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 26 Oct 2021 01:25:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2021, #06; Mon, 25)
+Message-ID: <YXeRNkO8B4TP/cau@coredump.intra.peff.net>
+References: <xmqq5ytkzbt7.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20211024014256.3569322-1-eschwartz@archlinux.org>
- <20211026013452.1372122-1-eschwartz@archlinux.org> <20211026013452.1372122-2-eschwartz@archlinux.org>
-In-Reply-To: <20211026013452.1372122-2-eschwartz@archlinux.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 26 Oct 2021 01:18:03 -0400
-Message-ID: <CAPig+cTWeN9_Z1jNLyyMsbRS4oOoyrPAWa3+JdCtsgE2B-rKFg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] pretty.c: rework describe options parsing for
- better extensibility
-To:     Eli Schwartz <eschwartz@archlinux.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5ytkzbt7.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 25, 2021 at 9:36 PM Eli Schwartz <eschwartz@archlinux.org> wrote:
-> It contains option arguments only, not options. We would like to add
-> option support here too, but to do that we need to distinguish between
-> different types of options.
->
-> Lay out the groundwork for distinguishing between bools, strings, etc.
-> and move the central logic (validating values and pushing new arguments
-> to *args) into the successful match, because that will be fairly
-> conditional on what type of argument is being parsed.
->
-> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
-> ---
-> diff --git a/pretty.c b/pretty.c
-> @@ -1216,28 +1216,37 @@ int format_set_trailers_options(struct process_trailer_options *opts,
->  static size_t parse_describe_args(const char *start, struct strvec *args)
->  {
-> +       struct {
-> +               char *name;
-> +               enum { OPT_STRING } type;
-> +       }  option[] = {
-> +               { "exclude", OPT_STRING },
-> +               { "match", OPT_STRING },
-> +       };
->         const char *arg = start;
->
->         for (;;) {
-> +               int found = 0;
->                 const char *argval;
->                 size_t arglen = 0;
->                 int i;
->
-> +               for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
-> +                       switch(option[i].type) {
-> +                       case OPT_STRING:
-> +                               if (match_placeholder_arg_value(arg, option[i].name, &arg,
-> +                                                               &argval, &arglen) && arglen) {
-> +                                       if (!arglen)
-> +                                               return 0;
+On Mon, Oct 25, 2021 at 08:48:04PM -0700, Junio C Hamano wrote:
 
-I may be missing something obvious, but how will it be possible for:
+> * ks/submodule-add-message-fix (2021-10-23) 1 commit
+>   (merged to 'next' on 2021-10-25 at 377e759528)
+>  + submodule--helper: fix incorrect newlines in an error message
+> 
+>  Message regression fix.
+> 
+>  Will merge to 'master'.
 
-    if (!arglen)
-        return 0;
+This commit has an extra unused parameter in the helper function. I
+think we'd want the patch below on top.
 
-to trigger if the `if` immediately above it:
+-- >8 --
+Subject: submodule: drop unused sm_name parameter from append_fetch_remotes()
 
-    if (... && arglen) {
+Commit c21fb4676f (submodule--helper: fix incorrect newlines in an error
+message, 2021-10-23) accidentally added a new, unused parameter while
+changing the name and signature of show_fetch_remotes() to
+append_fetch_remotes(). We can drop this to keep things simpler (and
+satisfy -Wunused-parameter).
 
- has already asserted that `arglen` is not 0?
+The error is likely because c21fb4676f is fixing a problem from
+8c8195e9c3 (submodule--helper: introduce add-clone subcommand,
+2021-07-10). An earlier iteration of that second commit introduced the
+same unused parameter (though it was dropped before it finally made it
+to 'next'), and the fix on top accidentally carried forward the extra
+parameter.
 
-> +                                       strvec_pushf(args, "--%s=%.*s", option[i].name, (int)arglen, argval);
-> +                                       found = 1;
-> +                               }
->                                 break;
->                         }
->                 }
-> +               if (!found)
->                         break;
+Signed-off-by: Jeff King <peff@peff.net>
+---
+If this seems familiar, it's because the fixup for the earlier commit
+was discussed in July:
 
-The use of `found` to break out of a loop from within a `switch` seems
-a bit clunky. An alternative would be to `goto` a label...
+  https://lore.kernel.org/git/YPqkHs47VDFBNZ0Z@coredump.intra.peff.net/
 
->         }
->         return arg - start;
+ builtin/submodule--helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-... which could be introduced just before the `return`. Of course,
-this is highly subjective, so not necessarily worth changing.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5224283bd1..13a098305b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2776,7 +2776,7 @@ struct add_data {
+ };
+ #define ADD_DATA_INIT { .depth = -1 }
+ 
+-static void append_fetch_remotes(struct strbuf *msg, const char *sm_name, const char *git_dir_path)
++static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
+ {
+ 	struct child_process cp_remote = CHILD_PROCESS_INIT;
+ 	struct strbuf sb_remote_out = STRBUF_INIT;
+@@ -2831,8 +2831,7 @@ static int add_submodule(const struct add_data *add_data)
+ 						    "locally with remote(s):\n"),
+ 					    add_data->sm_name);
+ 
+-				append_fetch_remotes(&msg, add_data->sm_name,
+-						     submod_gitdir_path);
++				append_fetch_remotes(&msg, submod_gitdir_path);
+ 				free(submod_gitdir_path);
+ 
+ 				strbuf_addf(&msg, _("If you want to reuse this local git "
+-- 
+2.33.1.1326.g74374c95d7
+
