@@ -2,202 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A4BDC433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E24C433F5
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:11:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22B4560295
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:07:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D27F61156
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234963AbhJZMJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 08:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233508AbhJZMJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 08:09:26 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07FDC061745
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id v16so4793947ple.9
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=emgUZ659XKmn9glNQvbRMaM6M0ASrs2qCeOGqERg9ZY=;
-        b=FtXDd9fgewrjMkpBGHQAVmfYxCG8POl9fXrGrbLAwGckotFBfRte0jge6xGtJyFEJ7
-         VOihBSP+SXZVyW1WmKSCnOLdmKstlRZg0p+clNpCf3yo94VvCd9g4HejukERU0lHDTEb
-         hTKhB8RidmUAKw3kh/ZelIaz5wskqGQGfcnfllI1EVY4h0BYSo9yDN6H7MF9Z1NekAMh
-         h3UObmJoyxEVcekNhG25cXIwFKstProAJtkCmFf7TXcZb8kKErzpGYY4/WMk0dsjSPzh
-         gwpvP02a4vRvKI+eHMlyTuuOBFpXin+Z8P6ctOtJozuS5BXskqkEJ2PRl2fL/MC/WubO
-         BzkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=emgUZ659XKmn9glNQvbRMaM6M0ASrs2qCeOGqERg9ZY=;
-        b=jXZz3Nb4S25WGxU+7jC05l+CHk6UQQmsG5XtUUn9nJ7yHeICGO/m4mZ27D+VTG5pB5
-         GHUSgRk71BkEPQkGbf/khsR0Fokr5CF/3+rEPR/DssSOx8fsI8AY0oKUjwfcnfqOES/1
-         3FNgx+9tjj38u1pO6W7q7pZppAIj6nLlvSDBcVwvRsKtHEacoZXxeRdBIi2coCeCqtHR
-         h3qPnX3RLVb49+KqOiWTfvbGSWBgrZSOORPW1YUjUo4g9E7i8lkHUonOXtzF9fbfSjL7
-         yihFuM1LtD5D9h4NYzTEGEB2vKxNAnnTb0b/KIBKwn5tL0YbM6hqGRImE+cLyM3JKt8n
-         8F3A==
-X-Gm-Message-State: AOAM530RUFDZdCCBndnp+CVfJ2+9lCA8QnXRPjcFnvBWRXxMCERrxGAl
-        8EFd/2pLJIupMvQBkd0sxCTSfZwayes=
-X-Google-Smtp-Source: ABdhPJxlaUZuB8ym/31Ywta6agng6UHnlp05jCDWFJj1UqTvJFlRf5gbjDFntXMR9XPWM6bfiV4KYQ==
-X-Received: by 2002:a17:90b:1c02:: with SMTP id oc2mr28186901pjb.128.1635250022214;
-        Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
-Received: from localhost ([2402:800:63ed:4f9f:ab51:923b:a9aa:a7f3])
-        by smtp.gmail.com with ESMTPSA id y17sm24114010pfi.206.2021.10.26.05.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 05:07:00 -0700 (PDT)
-Date:   Tue, 26 Oct 2021 19:06:59 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Eli Schwartz <eschwartz@archlinux.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] pretty: add abbrev option to %(describe)
-Message-ID: <YXfvY3n9wEwctjUR@danh.dev>
-References: <20211024014256.3569322-1-eschwartz@archlinux.org>
- <20211026013452.1372122-1-eschwartz@archlinux.org>
- <20211026013452.1372122-4-eschwartz@archlinux.org>
+        id S235685AbhJZMN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 08:13:58 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:33611 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232378AbhJZMN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 08:13:57 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MWixU-1mCdGO1UXA-00X6Hr; Tue, 26 Oct 2021 14:11:24 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 8B0591E01E7;
+        Tue, 26 Oct 2021 12:11:23 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id d6z4iaE4ET-y; Tue, 26 Oct 2021 14:11:23 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (30-usr-pf-main.vpn.it.cetitec.com [10.8.5.30])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 323B01E01E6;
+        Tue, 26 Oct 2021 14:11:23 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from local account)
+Date:   Tue, 26 Oct 2021 14:11:22 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] Fix "commit-msg" hook unexpectedly called for "git pull
+ --no-verify"
+Message-ID: <YXfwanz3MynCLDmn@pflmari>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211026013452.1372122-4-eschwartz@archlinux.org>
+X-Provags-ID: V03:K1:+jmZBp80tSxFxKUqKzg6K6CtqdGbKpHzyK+8GdxYkOF+4Gm8iVw
+ vt6H1pTCbgobQ/NC37ZXUUJcLefIm6IyWXYxlDtwKPDkPLG6BqERpVXqtxUelWnOg4z0+3k
+ oxiao1tuD48Tdq2VLQs2m6nhlmjnjGuwNeRddFbOHXGML69pq7K2m1QIfMGz8alboorp/bz
+ cQI+Gooj0EzAzrxBmgWWA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2gFsFvBlhoI=:D2epdKlJwwtDARjXZxDmmd
+ rMwax0y4KKJBsajxDjXxNZ0OJdREEv6iJjjIg06/NOsQEOz/nIaacqBtxoMyDERjXoRbRLpOb
+ WRDpFkBeSYWT1fA9rYMKp+vSCNBBNOvSVcvkWy1At0X1a+E7tIKTMcKTmiLUNR9+27BfUXR61
+ ZYP/3nsOjmnXxT55ercab9b+8xWHhxdbs0xOIiN+VZsW9b0hzuuqZsLAtalNFTIIkH/rBT2SS
+ owwxfDY0QG2265w6cBxeJM9+3FZWiiL5NRwCen4PulEkZZrJjNLtj2kwE4GTE4IzBBqu3VWZI
+ nGcU+7N3H66eZd4qMg0f/qdWSggHvectwuXUNYrx9X20pdxh6JELeJEF2wLa/0B8RoEN7CzXf
+ 2c85NHD6jGXqjfJcZHzaZN2CVw8IVvb9onEqzGmc/yifWiG2exLNtCw+GHd9LqVyDrkM6+d1U
+ yVPWazEGWRIfOaHLpvUQdlpcpiMfAzvP+UY42kgfwnt4hQa6GMFPcK/yAUcpvKWpb0M6SLD6F
+ 9jsgric3+mZxZq8FL2Wm9B9YyAcwSKKS1AGu/vp+vyI7gxSgPmI5dadyp5JE7vjWUr81Zg7S1
+ qN+taOitMSi9C00mOtIONbsFXQYnqZGo+e7Sn3b5ThJD4JqMdAcKSXGxVnpR2lgCGoi2SAZPG
+ q9bIlw9Li2vGq9rXYizK1eMnZGjdfuYEZ7nsUBsDqPHLHhGPrDbo/fSfuXIXn31vnvcUDLsX/
+ vzZnYXgkuOleP35f
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-10-25 21:34:52-0400, Eli Schwartz <eschwartz@archlinux.org> wrote:
-> The %(describe) placeholder by default, like `git describe`, uses a
-> seven-character abbreviated commit object name. This may not be
-> sufficient to fully describe all commits in a given repository,
-> resulting in a placeholder replacement changing its length because the
-> repository grew in size.  This could cause the output of git-archive to
-> change.
-> 
-> Add the --abbrev option to `git describe` to the placeholder interface
-> in order to provide tools to the user for fine-tuning project defaults
-> and ensure reproducible archives.
-> 
-> One alternative would be to just always specify --abbrev=40 but this may
-> be a bit too biased...
-> 
-> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
-> ---
-> 
-> Notes:
->     With regard to validating that an integer is passed, I attempt to parse the
->     result using the same mechanism git-describe itself does in the abbrev
->     callback, just with slightly different validation of what we have at the end...
->     because of course here argval is the entire rest of the format string,
->     including the ")".
->     
->     While testing that this actually does what it's supposed to do, I noticed that
->     it doesn't validate junk like leading whitespace or plus signs... this is a
->     problem for `git describe --abbrev='    +15'` too so I guess it's not my
->     problem to fix...
-> 
->  Documentation/pretty-formats.txt |  4 ++++
->  pretty.c                         | 16 +++++++++++++++-
->  t/t4205-log-pretty-formats.sh    |  8 ++++++++
->  3 files changed, 27 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index 86ed801aad..57fd84f579 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -222,6 +222,10 @@ The placeholders are:
->  +
->  ** 'tags[=<BOOL>]': Instead of only considering annotated tags,
->     consider lightweight tags as well.
-> +** 'abbrev=<N>': Instead of using the default number of hexadecimal digits
-> +   (which will vary according to the number of objects in the repository with a
-> +   default of 7) of the abbreviated object name, use <n> digits, or as many digits
-> +   as needed to form a unique object name.
->  ** 'match=<pattern>': Only consider tags matching the given
->     `glob(7)` pattern, excluding the "refs/tags/" prefix.
->  ** 'exclude=<pattern>': Do not consider tags matching the given
-> diff --git a/pretty.c b/pretty.c
-> index 16b5366fed..44bfc49b38 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -1218,9 +1218,10 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
->  {
->  	struct {
->  		char *name;
-> -		enum { OPT_BOOL, OPT_STRING, } type;
-> +		enum { OPT_BOOL, OPT_INTEGER, OPT_STRING, } type;
->  	}  option[] = {
->  		{ "tags", OPT_BOOL},
-> +		{ "abbrev", OPT_INTEGER },
->  		{ "exclude", OPT_STRING },
->  		{ "match", OPT_STRING },
->  	};
-> @@ -1245,6 +1246,19 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
->  					found = 1;
->  				}
->  				break;
-> +			case OPT_INTEGER:
-> +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
-> +								&argval, &arglen) && arglen) {
-> +					if (!arglen)
-> +						return 0;
-> +					char* endptr;
+The option is incorrectly translated to "--no-verify-signatures",
+which causes the unexpected effect of the hook being called.
+And an even more unexpected effect of disabling verification
+of signatures.
 
-Other than the question pointed out by Eric,
+The manual page describes the option to behave same as the similarly
+named option of "git merge", which seems to be the original intention
+of this option in the "pull" command.
 
-with DEVELOPER=1, -Werror=declaration-after-statement
-We'll need this change squashed in:
+Signed-off-by: Alexander Riesen <raa.lkml@gmail.com>
+---
+ builtin/pull.c          |  6 ++++++
+ t/t5521-pull-options.sh | 11 +++++++++++
+ 2 files changed, 17 insertions(+)
 
-------- 8< -----
-diff --git a/pretty.c b/pretty.c
-index 289b5456c8..85d4ab008b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1249,9 +1249,9 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
- 			case OPT_INTEGER:
- 				if (match_placeholder_arg_value(arg, option[i].name, &arg,
- 								&argval, &arglen) && arglen) {
-+					char* endptr;
- 					if (!arglen)
- 						return 0;
--					char* endptr;
- 					strtol(argval, &endptr, 10);
- 					if (endptr - argval != arglen)
- 						return 0;
-------- >8 -----
-
-> +					strtol(argval, &endptr, 10);
-> +					if (endptr - argval != arglen)
-> +						return 0;
-> +					strvec_pushf(args, "--%s=%.*s", option[i].name, (int)arglen, argval);
-> +					found = 1;
-> +				}
-> +				break;
->  			case OPT_STRING:
->  				if (match_placeholder_arg_value(arg, option[i].name, &arg,
->  								&argval, &arglen) && arglen) {
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index d4acf8882f..35eef4c865 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -1010,4 +1010,12 @@ test_expect_success '%(describe:tags) vs git describe --tags' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success '%(describe:abbrev=...) vs git describe --abbrev=...' '
-> +	test_when_finished "git tag -d tagname" &&
-> +	git tag -a -m tagged tagname &&
-> +	git describe --abbrev=15 >expect &&
-> +	git log -1 --format="%(describe:abbrev=15)" >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-> -- 
-> 2.33.1
-> 
-
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 425950f469..428baea95b 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -84,6 +84,7 @@ static char *opt_edit;
+ static char *cleanup_arg;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
++static char *opt_no_verify;
+ static int opt_autostash = -1;
+ static int config_autostash;
+ static int check_trust_level = 1;
+@@ -160,6 +161,9 @@ static struct option pull_options[] = {
+ 	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
+ 		N_("abort if fast-forward is not possible"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
++	OPT_PASSTHRU(0, "no-verify", &opt_no_verify, NULL,
++		N_("bypass pre-merge-commit and commit-msg hooks"),
++		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
+ 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
+ 		N_("verify that the named commit has a valid GPG signature"),
+ 		PARSE_OPT_NOARG),
+@@ -688,6 +692,8 @@ static int run_merge(void)
+ 		strvec_pushf(&args, "--cleanup=%s", cleanup_arg);
+ 	if (opt_ff)
+ 		strvec_push(&args, opt_ff);
++	if (opt_no_verify)
++		strvec_push(&args, opt_no_verify);
+ 	if (opt_verify_signatures)
+ 		strvec_push(&args, opt_verify_signatures);
+ 	strvec_pushv(&args, opt_strategies.v);
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index db1a381cd9..0eb1916175 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -225,4 +225,15 @@ test_expect_success 'git pull --no-signoff flag cancels --signoff flag' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'git pull --no-verify flag passed to merge' '
++	test_when_finished "rm -fr src dst actual" &&
++	git init src &&
++	test_commit -C src one &&
++	git clone src dst &&
++	echo false >dst/.git/hooks/commit-msg &&
++	chmod +x dst/.git/hooks/commit-msg &&
++	test_commit -C src two &&
++	git -C dst pull --no-ff --no-verify
++'
++
+ test_done
 -- 
-Danh
+2.31.0.30.g60a470ee5c
+
