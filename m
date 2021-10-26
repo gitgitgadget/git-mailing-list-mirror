@@ -2,97 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A357C433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 11:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A4BDC433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:07:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB33B60232
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 11:21:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22B4560295
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231407AbhJZLXZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 07:23:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40596 "EHLO
+        id S234963AbhJZMJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 08:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235542AbhJZLXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 07:23:19 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97103C061745
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 04:20:55 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id g205-20020a1c20d6000000b0032cc6bbd505so2141562wmg.5
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 04:20:55 -0700 (PDT)
+        with ESMTP id S233508AbhJZMJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 08:09:26 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07FDC061745
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id v16so4793947ple.9
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=3r6NWPaGKNNdzs5QI5FE+l8dnY2lN5QIexGjoK8RTdw=;
-        b=DAXHRP7D+aJHqgOdQm18QCgvd8Ex4voSlsD4QwabXWE2kEl4qFj+ZViZ/BUA+ukdYH
-         4ydLqzKwVVvPUStx1LT5M4f2TweuGirkc5o3JXhkwSi5QoWzZR0PHdvJ1J3LJNzPfonq
-         GCXrOvcGqqPgnGsd04lwK2KL9arD6EU4jlg9uugo/rb8SR2UcYwxXyBHNFhClcL5NQh8
-         ejU8GJXX5mTdhGTl8oJCWyYAUooLBXbsLe8a9Zdtd14LEPan04+GSyeGudga6eL8MkeI
-         UcAsfX4+Edrs3DYDN7bI4uPSURNZ4Iec6w/eicF2AE1k9vZVg9LGXn6RWyGaofNE5TzW
-         7DKA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=emgUZ659XKmn9glNQvbRMaM6M0ASrs2qCeOGqERg9ZY=;
+        b=FtXDd9fgewrjMkpBGHQAVmfYxCG8POl9fXrGrbLAwGckotFBfRte0jge6xGtJyFEJ7
+         VOihBSP+SXZVyW1WmKSCnOLdmKstlRZg0p+clNpCf3yo94VvCd9g4HejukERU0lHDTEb
+         hTKhB8RidmUAKw3kh/ZelIaz5wskqGQGfcnfllI1EVY4h0BYSo9yDN6H7MF9Z1NekAMh
+         h3UObmJoyxEVcekNhG25cXIwFKstProAJtkCmFf7TXcZb8kKErzpGYY4/WMk0dsjSPzh
+         gwpvP02a4vRvKI+eHMlyTuuOBFpXin+Z8P6ctOtJozuS5BXskqkEJ2PRl2fL/MC/WubO
+         BzkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=3r6NWPaGKNNdzs5QI5FE+l8dnY2lN5QIexGjoK8RTdw=;
-        b=kr7otlrSFnmmrDBlakM2CnwOiIS2S+RSRtK/1Wxj7J9v2MW/iXkq0URFIOFfjHxLuA
-         m+cEfenYL+As+bJnSSpXWE3qgn7G7JLEUS6UJgbGKMtf62KZa0XlRrrNvqelgTIQKAlf
-         I75kqbNuNUty0lTwnzTpvan/3o7Aw8BYC7Txag4SKqtBfiEMOBPnVI7DQZ32pNK7SRdf
-         k8qAQlz7YIv1HhiTD/u1CCS+f0k4xOosK1WDtvSeCACJbQ9qF6K6DI2/hd7UWUOZTiEw
-         DbbS8mvp9Vjjdn7MjjdJcFV5erJrhP5EUId6+gp020+YgDKqFNXyt63dNy2eQY4Mqtkj
-         hiBQ==
-X-Gm-Message-State: AOAM530M6jUitkCDbmo+twyXeiSqL8n2dxmKxTvtwk+4IOzfYSmYpUWz
-        /gt0fpKgMYOmWZIib/0nVsc=
-X-Google-Smtp-Source: ABdhPJy5Zjpa5AaDGU87kaIJN8DLRlaV0C86TE6r9Cmxcb2Dda/OUsV1VTmTVKsoHS7MkjvYqPlfGg==
-X-Received: by 2002:a05:600c:4f8b:: with SMTP id n11mr25875403wmq.54.1635247253969;
-        Tue, 26 Oct 2021 04:20:53 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v185sm306839wme.35.2021.10.26.04.20.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=emgUZ659XKmn9glNQvbRMaM6M0ASrs2qCeOGqERg9ZY=;
+        b=jXZz3Nb4S25WGxU+7jC05l+CHk6UQQmsG5XtUUn9nJ7yHeICGO/m4mZ27D+VTG5pB5
+         GHUSgRk71BkEPQkGbf/khsR0Fokr5CF/3+rEPR/DssSOx8fsI8AY0oKUjwfcnfqOES/1
+         3FNgx+9tjj38u1pO6W7q7pZppAIj6nLlvSDBcVwvRsKtHEacoZXxeRdBIi2coCeCqtHR
+         h3qPnX3RLVb49+KqOiWTfvbGSWBgrZSOORPW1YUjUo4g9E7i8lkHUonOXtzF9fbfSjL7
+         yihFuM1LtD5D9h4NYzTEGEB2vKxNAnnTb0b/KIBKwn5tL0YbM6hqGRImE+cLyM3JKt8n
+         8F3A==
+X-Gm-Message-State: AOAM530RUFDZdCCBndnp+CVfJ2+9lCA8QnXRPjcFnvBWRXxMCERrxGAl
+        8EFd/2pLJIupMvQBkd0sxCTSfZwayes=
+X-Google-Smtp-Source: ABdhPJxlaUZuB8ym/31Ywta6agng6UHnlp05jCDWFJj1UqTvJFlRf5gbjDFntXMR9XPWM6bfiV4KYQ==
+X-Received: by 2002:a17:90b:1c02:: with SMTP id oc2mr28186901pjb.128.1635250022214;
+        Tue, 26 Oct 2021 05:07:02 -0700 (PDT)
+Received: from localhost ([2402:800:63ed:4f9f:ab51:923b:a9aa:a7f3])
+        by smtp.gmail.com with ESMTPSA id y17sm24114010pfi.206.2021.10.26.05.07.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 04:20:53 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mfKVh-001mA7-3a;
-        Tue, 26 Oct 2021 13:20:53 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: pre-v2.34.0-rc0 regressions: 'git log' has a noisy iconv() warning
- (was: What's cooking in git.git (Oct 2021, #06; Mon, 25))
-Date:   Tue, 26 Oct 2021 13:15:00 +0200
-References: <xmqq5ytkzbt7.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <xmqq5ytkzbt7.fsf@gitster.g>
-Message-ID: <211026.86y26gyqui.gmgdl@evledraar.gmail.com>
+        Tue, 26 Oct 2021 05:07:00 -0700 (PDT)
+Date:   Tue, 26 Oct 2021 19:06:59 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Eli Schwartz <eschwartz@archlinux.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] pretty: add abbrev option to %(describe)
+Message-ID: <YXfvY3n9wEwctjUR@danh.dev>
+References: <20211024014256.3569322-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-1-eschwartz@archlinux.org>
+ <20211026013452.1372122-4-eschwartz@archlinux.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211026013452.1372122-4-eschwartz@archlinux.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-10-25 21:34:52-0400, Eli Schwartz <eschwartz@archlinux.org> wrote:
+> The %(describe) placeholder by default, like `git describe`, uses a
+> seven-character abbreviated commit object name. This may not be
+> sufficient to fully describe all commits in a given repository,
+> resulting in a placeholder replacement changing its length because the
+> repository grew in size.  This could cause the output of git-archive to
+> change.
+> 
+> Add the --abbrev option to `git describe` to the placeholder interface
+> in order to provide tools to the user for fine-tuning project defaults
+> and ensure reproducible archives.
+> 
+> One alternative would be to just always specify --abbrev=40 but this may
+> be a bit too biased...
+> 
+> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
+> ---
+> 
+> Notes:
+>     With regard to validating that an integer is passed, I attempt to parse the
+>     result using the same mechanism git-describe itself does in the abbrev
+>     callback, just with slightly different validation of what we have at the end...
+>     because of course here argval is the entire rest of the format string,
+>     including the ")".
+>     
+>     While testing that this actually does what it's supposed to do, I noticed that
+>     it doesn't validate junk like leading whitespace or plus signs... this is a
+>     problem for `git describe --abbrev='    +15'` too so I guess it's not my
+>     problem to fix...
+> 
+>  Documentation/pretty-formats.txt |  4 ++++
+>  pretty.c                         | 16 +++++++++++++++-
+>  t/t4205-log-pretty-formats.sh    |  8 ++++++++
+>  3 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index 86ed801aad..57fd84f579 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -222,6 +222,10 @@ The placeholders are:
+>  +
+>  ** 'tags[=<BOOL>]': Instead of only considering annotated tags,
+>     consider lightweight tags as well.
+> +** 'abbrev=<N>': Instead of using the default number of hexadecimal digits
+> +   (which will vary according to the number of objects in the repository with a
+> +   default of 7) of the abbreviated object name, use <n> digits, or as many digits
+> +   as needed to form a unique object name.
+>  ** 'match=<pattern>': Only consider tags matching the given
+>     `glob(7)` pattern, excluding the "refs/tags/" prefix.
+>  ** 'exclude=<pattern>': Do not consider tags matching the given
+> diff --git a/pretty.c b/pretty.c
+> index 16b5366fed..44bfc49b38 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1218,9 +1218,10 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
+>  {
+>  	struct {
+>  		char *name;
+> -		enum { OPT_BOOL, OPT_STRING, } type;
+> +		enum { OPT_BOOL, OPT_INTEGER, OPT_STRING, } type;
+>  	}  option[] = {
+>  		{ "tags", OPT_BOOL},
+> +		{ "abbrev", OPT_INTEGER },
+>  		{ "exclude", OPT_STRING },
+>  		{ "match", OPT_STRING },
+>  	};
+> @@ -1245,6 +1246,19 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
+>  					found = 1;
+>  				}
+>  				break;
+> +			case OPT_INTEGER:
+> +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+> +								&argval, &arglen) && arglen) {
+> +					if (!arglen)
+> +						return 0;
+> +					char* endptr;
 
-On Mon, Oct 25 2021, Junio C Hamano wrote:
+Other than the question pointed out by Eric,
 
-> The fifteenth batch of topics are in 'master'.  I expect that this
-> is more-or-less what we can expect in the -rc0, unless there is a
-> hotfix to what's already merged.
+with DEVELOPER=1, -Werror=declaration-after-statement
+We'll need this change squashed in:
 
-I suggested a way forward for these iconv warnings that will be new in
-2.34.0 at [1], poked'd a few days ago at [2].
+------- 8< -----
+diff --git a/pretty.c b/pretty.c
+index 289b5456c8..85d4ab008b 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1249,9 +1249,9 @@ static size_t parse_describe_args(const char *start, struct strvec *args)
+ 			case OPT_INTEGER:
+ 				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+ 								&argval, &arglen) && arglen) {
++					char* endptr;
+ 					if (!arglen)
+ 						return 0;
+-					char* endptr;
+ 					strtol(argval, &endptr, 10);
+ 					if (endptr - argval != arglen)
+ 						return 0;
+------- >8 -----
 
-Jeff: What do you think? Per [1] I think it's best to drop it entirely
-for now, or split out just the "completely unknown encoding" problem
-from "can't decode this particular thing".
+> +					strtol(argval, &endptr, 10);
+> +					if (endptr - argval != arglen)
+> +						return 0;
+> +					strvec_pushf(args, "--%s=%.*s", option[i].name, (int)arglen, argval);
+> +					found = 1;
+> +				}
+> +				break;
+>  			case OPT_STRING:
+>  				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+>  								&argval, &arglen) && arglen) {
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> index d4acf8882f..35eef4c865 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -1010,4 +1010,12 @@ test_expect_success '%(describe:tags) vs git describe --tags' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '%(describe:abbrev=...) vs git describe --abbrev=...' '
+> +	test_when_finished "git tag -d tagname" &&
+> +	git tag -a -m tagged tagname &&
+> +	git describe --abbrev=15 >expect &&
+> +	git log -1 --format="%(describe:abbrev=15)" >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> -- 
+> 2.33.1
+> 
 
-You also had a patch in [3] that wasn't picked up, which would warn
-about this once.
-
-If we *are* going to warn that seems like the worst of both in some
-sense, i.e. we'll no longer give users anything like "in this huge
-commit stream, we couldn't search in commit XYZ", instead we just warn
-on whatever happens to be the first commit, and you'll have no idea if
-subsequent matches were completed or not.
-
-1. https://lore.kernel.org/git/871r4umfnm.fsf@evledraar.gmail.com/
-2. https://lore.kernel.org/git/211023.86sfwsis1i.gmgdl@evledraar.gmail.com/
-3. https://lore.kernel.org/git/YWEBmJk0aENR5Yeo@coredump.intra.peff.net/
+-- 
+Danh
