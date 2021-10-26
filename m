@@ -2,128 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E24C433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54545C433FE
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:16:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D27F61156
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:11:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B9576103C
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235685AbhJZMN6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 08:13:58 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:33611 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232378AbhJZMN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 08:13:57 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MWixU-1mCdGO1UXA-00X6Hr; Tue, 26 Oct 2021 14:11:24 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 8B0591E01E7;
-        Tue, 26 Oct 2021 12:11:23 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id d6z4iaE4ET-y; Tue, 26 Oct 2021 14:11:23 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (30-usr-pf-main.vpn.it.cetitec.com [10.8.5.30])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 323B01E01E6;
-        Tue, 26 Oct 2021 14:11:23 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from local account)
-Date:   Tue, 26 Oct 2021 14:11:22 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH] Fix "commit-msg" hook unexpectedly called for "git pull
- --no-verify"
-Message-ID: <YXfwanz3MynCLDmn@pflmari>
+        id S235419AbhJZMSp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 08:18:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231546AbhJZMSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 08:18:42 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE0AC061745
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:16:18 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id d10so14774135wrb.1
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=PvL4wU6QC63Z9SZuoIqwGX/AvIhBrH5GPqc6NyyBg9k=;
+        b=TiPwBbvah5RNKyvnErRXlKNsEt1CI3n4090Zg2iMpGYPzcmwolhif9ziga0P5PCJoh
+         ZzJ6O5cMvHNaTV5q5lgfkrfGHlg0Bpbg/9sLQIsMrMoVUAaSIilxUVX4zWJ0JdPucBcR
+         tojAxgkv4dFHy2Bg5J6Du04Uj93Ou3S2Snt/b4Bsf6232sa9dJpAv4rIb6rzllEkPGVL
+         qmQNbltQe8FVp6WBmc8ALn6U9fpOESuz0DSUeHSuJGnK5W/3OzOyYCl7Se6AG6Nju4Eo
+         zOwdM9uXlB69VfQ8PaB4UVEdCJwfCQEnWYHf+/VF09pC57yww6nKLRazfrcITtrmU9KT
+         l+ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=PvL4wU6QC63Z9SZuoIqwGX/AvIhBrH5GPqc6NyyBg9k=;
+        b=OAWlW9AqSn+Xw9i5w/1hHFMlOk4inY0GFBmfcxav5mW0VBPyWfanWS2ZK3OR9nqo4f
+         ZQX8vt/D8pUU+1QnHeeOnzp0BJPTAyFV3L0hgeb+fnl7Nne6/JPcS+TWs/dkDzQF5p4V
+         HAE50sjWAEV6aleFheGL8uf0jRjlRIVIKXbbfiSMftoesDc+DetE9UnF3NUWnAHE1exw
+         Hy7Ja9aXKytJZdyf1TGXVQOi3GxhYRxHrRJwAA1YPt2uRxzpGFyD/FLuYzBst+Rxcpky
+         lPzw2QEWLuEfvUe2o8rkIAKM/30wPkYBVvS62C/Aq7l1CR4uCGFLgNhbdJ/sNGFzpE+F
+         odEQ==
+X-Gm-Message-State: AOAM533hwV7EiWnQWOtlUWSH7ol0DhvwBbtSmdokz1h5nZx6bqcxuPJg
+        wbl2WmPGeY2YcsmUo/rQqCiPv6bo2eoHlQ==
+X-Google-Smtp-Source: ABdhPJwLzf86RmykjiVksLm1yMgiB3cbrHZkEYkBF5FWmbTozK4PTVDZSP54yokPUa8hSD/HCZT4Rw==
+X-Received: by 2002:a05:6000:186c:: with SMTP id d12mr9922467wri.237.1635250576704;
+        Tue, 26 Oct 2021 05:16:16 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id c7sm15744026wrp.51.2021.10.26.05.16.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Oct 2021 05:16:16 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mfLNH-001o18-Ux;
+        Tue, 26 Oct 2021 14:16:15 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: tb/plug-pack-bitmap-leaks (was: What's cooking in git.git (Oct
+ 2021, #06; Mon, 25))
+Date:   Tue, 26 Oct 2021 14:13:44 +0200
+References: <xmqq5ytkzbt7.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <xmqq5ytkzbt7.fsf@gitster.g>
+Message-ID: <211026.86tuh4yoa8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Provags-ID: V03:K1:+jmZBp80tSxFxKUqKzg6K6CtqdGbKpHzyK+8GdxYkOF+4Gm8iVw
- vt6H1pTCbgobQ/NC37ZXUUJcLefIm6IyWXYxlDtwKPDkPLG6BqERpVXqtxUelWnOg4z0+3k
- oxiao1tuD48Tdq2VLQs2m6nhlmjnjGuwNeRddFbOHXGML69pq7K2m1QIfMGz8alboorp/bz
- cQI+Gooj0EzAzrxBmgWWA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2gFsFvBlhoI=:D2epdKlJwwtDARjXZxDmmd
- rMwax0y4KKJBsajxDjXxNZ0OJdREEv6iJjjIg06/NOsQEOz/nIaacqBtxoMyDERjXoRbRLpOb
- WRDpFkBeSYWT1fA9rYMKp+vSCNBBNOvSVcvkWy1At0X1a+E7tIKTMcKTmiLUNR9+27BfUXR61
- ZYP/3nsOjmnXxT55ercab9b+8xWHhxdbs0xOIiN+VZsW9b0hzuuqZsLAtalNFTIIkH/rBT2SS
- owwxfDY0QG2265w6cBxeJM9+3FZWiiL5NRwCen4PulEkZZrJjNLtj2kwE4GTE4IzBBqu3VWZI
- nGcU+7N3H66eZd4qMg0f/qdWSggHvectwuXUNYrx9X20pdxh6JELeJEF2wLa/0B8RoEN7CzXf
- 2c85NHD6jGXqjfJcZHzaZN2CVw8IVvb9onEqzGmc/yifWiG2exLNtCw+GHd9LqVyDrkM6+d1U
- yVPWazEGWRIfOaHLpvUQdlpcpiMfAzvP+UY42kgfwnt4hQa6GMFPcK/yAUcpvKWpb0M6SLD6F
- 9jsgric3+mZxZq8FL2Wm9B9YyAcwSKKS1AGu/vp+vyI7gxSgPmI5dadyp5JE7vjWUr81Zg7S1
- qN+taOitMSi9C00mOtIONbsFXQYnqZGo+e7Sn3b5ThJD4JqMdAcKSXGxVnpR2lgCGoi2SAZPG
- q9bIlw9Li2vGq9rXYizK1eMnZGjdfuYEZ7nsUBsDqPHLHhGPrDbo/fSfuXIXn31vnvcUDLsX/
- vzZnYXgkuOleP35f
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option is incorrectly translated to "--no-verify-signatures",
-which causes the unexpected effect of the hook being called.
-And an even more unexpected effect of disabling verification
-of signatures.
 
-The manual page describes the option to behave same as the similarly
-named option of "git merge", which seems to be the original intention
-of this option in the "pull" command.
+On Mon, Oct 25 2021, Junio C Hamano wrote:
 
-Signed-off-by: Alexander Riesen <raa.lkml@gmail.com>
----
- builtin/pull.c          |  6 ++++++
- t/t5521-pull-options.sh | 11 +++++++++++
- 2 files changed, 17 insertions(+)
+> * tb/plug-pack-bitmap-leaks (2021-10-21) 9 commits
+>  - pack-bitmap.c: more aggressively free in free_bitmap_index()
+>  - pack-bitmap.c: don't leak type-level bitmaps
+>  - pack-bitmap.c: avoid leaking via midx_bitmap_filename()
+>  - builtin/multi-pack-index.c: don't leak concatenated options
+>  - builtin/repack.c: avoid leaking child arguments
+>  - builtin/pack-objects.c: don't leak memory via arguments
+>  - t/helper/test-read-midx.c: free MIDX within read_midx_file()
+>  - midx.c: don't leak MIDX from verify_midx_file
+>  - midx.c: clean up chunkfile after reading the MIDX
+>
+>  Leakfix.
+>
+>  Will merge to 'next'?
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 425950f469..428baea95b 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -84,6 +84,7 @@ static char *opt_edit;
- static char *cleanup_arg;
- static char *opt_ff;
- static char *opt_verify_signatures;
-+static char *opt_no_verify;
- static int opt_autostash = -1;
- static int config_autostash;
- static int check_trust_level = 1;
-@@ -160,6 +161,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
- 		N_("abort if fast-forward is not possible"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+	OPT_PASSTHRU(0, "no-verify", &opt_no_verify, NULL,
-+		N_("bypass pre-merge-commit and commit-msg hooks"),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-@@ -688,6 +692,8 @@ static int run_merge(void)
- 		strvec_pushf(&args, "--cleanup=%s", cleanup_arg);
- 	if (opt_ff)
- 		strvec_push(&args, opt_ff);
-+	if (opt_no_verify)
-+		strvec_push(&args, opt_no_verify);
- 	if (opt_verify_signatures)
- 		strvec_push(&args, opt_verify_signatures);
- 	strvec_pushv(&args, opt_strategies.v);
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index db1a381cd9..0eb1916175 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -225,4 +225,15 @@ test_expect_success 'git pull --no-signoff flag cancels --signoff flag' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'git pull --no-verify flag passed to merge' '
-+	test_when_finished "rm -fr src dst actual" &&
-+	git init src &&
-+	test_commit -C src one &&
-+	git clone src dst &&
-+	echo false >dst/.git/hooks/commit-msg &&
-+	chmod +x dst/.git/hooks/commit-msg &&
-+	test_commit -C src two &&
-+	git -C dst pull --no-ff --no-verify
-+'
-+
- test_done
--- 
-2.31.0.30.g60a470ee5c
+These patches all look good to me.
 
+I see you peeled off 10/11 and 11/11 from Taylor's submitted
+patches. The 10/11 re-submitted a patch that's in my
+ab/only-single-progress-at-once, and I really preferred 11/11 not going
+in, and instead suggested [1].
+
+But since you've peeled off those two (I wouldn't have 10/11 at all) I
+think this is definitely ready for 'next'.
+
+1. https://lore.kernel.org/git/patch-1.1-9190f3c128f-20211022T102725Z-avarab@gmail.com/
