@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F45C433FE
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 21:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8988BC433F5
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 21:01:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73B6760FE8
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 21:01:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75CF261039
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 21:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239359AbhJZVEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 17:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33240 "EHLO
+        id S239381AbhJZVED (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 17:04:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239362AbhJZVDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 17:03:50 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17843C06122B
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 14:01:25 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id h20so679114ila.4
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 14:01:25 -0700 (PDT)
+        with ESMTP id S239352AbhJZVDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 17:03:55 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71DD1C061235
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 14:01:28 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id f9so953924ioo.11
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 14:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=b0QQ8cMtcjtTT22hoGkncPPVHt+E3hy22Eb3Oz0dKmA=;
-        b=nCHRl3jAJfxgJWlKUWqfvpfY4/iuyc4hSN9lXvpnuTUqb5dDXijP3mLu/B2MksGGKU
-         44j2jImv3KyqrLI9qA4NEiiJ9UMjMGQ3r9XBqPdK+6+l0D39cfhb+kHGYhOBdRS38PSS
-         l3V3IDq9BokGj1Sn95ObxcmWCiH+NFJErgdAQS008JQSFpXFIDsWBDfBQL0L22bpLv4c
-         mxvlwK9F1dhhI1oSvvk5aExN3SbhqsYTozUwEZI7pJlpxRSx+cWPIRbG4OkRVY0ssA3Y
-         X6R5YEKyODxoKTImlVr6TC9kKEiUzN4s6KadXwjMgTorzZneemB11NUOt01bJUThIBHu
-         BIVg==
+        bh=B6Pe1TTYNS9Q8z0noJ4i5DWNrdimfhRp/iP6KRF7+tE=;
+        b=sGAgiKCuCBUdg/tmDHhQ8g/3NWIWcqD6phcpfJdlLcQ0Y0HH3QZpqm9wTxsKpcATwa
+         LbzwpljquQ2VdxA+aGuZ+/PMQyx//0wHBgEdQRrAqSF9bITGNGeKiKTnHlBiSI4mw0qi
+         Le73FhGETP2wuO1bu/b1GlfMKWa5/PLYVMVAwpmsuJys4mfIlyiXGfXrnKAaCIXeinwq
+         YWEyRUaEnDHPY8ZhMuML4oonO5nmj6sOyA2WE8nFomFW2gmyOkfWrlYtmAGzc8yH0W9w
+         lTPX34pm+P0g6sgHbxUpfS0FKOCWLHGT5T1OsLs/rzW3mJGFBewh2stkwZhyOYmHXHl8
+         hI5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=b0QQ8cMtcjtTT22hoGkncPPVHt+E3hy22Eb3Oz0dKmA=;
-        b=ezoBtd3KRjUTgNDCzD7NjUW7nYlMZ19VX3cIPt074ddTPhLxk6ckJ+Ls2MP73HSiIV
-         X2u9VAgkkAfsGskI/NnCNmFVdyIKw4aR+8YKkHE8QMsgK2ZakfGTHJEG91xar36It7ld
-         WXvnvOq4qtzfgRYYM7kx12sc3Mf2PRE9vJj5L8Yq0tq4h3VNOjVS7d7vimn8cN2Mz2OB
-         Y0Q3UvBv6Wz6EQ2EuqiXkLt/WsjCpEkZ2/KSQ0ViYdAc4JM7RGhB5lH9YJgEIdqzho6B
-         WqaI+76i/vSV7BvGzZvbosxDauSx89Z7XNu4HDi45zAqUjsvKWxx1sQS1mBSUxj0aYjf
-         LYCQ==
-X-Gm-Message-State: AOAM532OQzhPkCtqrl8HUHNslHOxfjQr7aqupDiwjqIrS8GKvUoLuNpn
-        ZM7MjQgeVot87H7Zk0UQUsVV6Q7p32k1ig==
-X-Google-Smtp-Source: ABdhPJxRvOZGS8C0x7D/aY3gDum5HNwP/A/vBlqqFuT1k+g18fmA+o60LemPpOArtmFZSAf6BRy6Vg==
-X-Received: by 2002:a92:3211:: with SMTP id z17mr692921ile.271.1635282084971;
-        Tue, 26 Oct 2021 14:01:24 -0700 (PDT)
+        bh=B6Pe1TTYNS9Q8z0noJ4i5DWNrdimfhRp/iP6KRF7+tE=;
+        b=SYUWP9GDDfwDVyKoWTDUmQ7W4nEIo98wyYKVRuTe2bTmLftBZOuq3gTPs+wI6v5w4O
+         rthAKMYSLtJB6MbV5rlsRqnZHXNFkJFbtWA+UE7r2/HWl7neHwxVkhZg7L6Mhk35rpL3
+         QwrNl2DclRlplCOfdmrC211f8BdHH+2t5OjHS4jxra67wykhAZsFF4do29mp6vRUpafm
+         vYlfzg26CMRiHIZHgXAiY8rOBbRmGFRBqBJgM4E9TEemLXnCNvIy5LJArhAa576pcXv6
+         ZVlILvvQGd3yIgsZ6OGqjX7TzblBfMRQcwRAfr/e0zlfuZkY3ruUyAGYmIpplb19NGUm
+         Ghng==
+X-Gm-Message-State: AOAM530mVz+X4ylACJeGYZUnSnKB0KQ+wBzRrMhpZ6uZndm+OPqTWEVb
+        TecznYNTlx2JrHHSKUUadJbWqjcHvXcmnQ==
+X-Google-Smtp-Source: ABdhPJwhWFMTbU5yEcDYsj/N/PvQIEmdcWmcW9e+O6VmUXpeJm/Ojjtk4KvF9vxyQBQCfaq1ztlSOw==
+X-Received: by 2002:a05:6602:1542:: with SMTP id h2mr16777239iow.190.1635282087764;
+        Tue, 26 Oct 2021 14:01:27 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n17sm10973224ile.76.2021.10.26.14.01.24
+        by smtp.gmail.com with ESMTPSA id v4sm616758ilq.57.2021.10.26.14.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 14:01:24 -0700 (PDT)
-Date:   Tue, 26 Oct 2021 17:01:23 -0400
+        Tue, 26 Oct 2021 14:01:27 -0700 (PDT)
+Date:   Tue, 26 Oct 2021 17:01:26 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, dstolee@microsoft.com, peff@peff.net
-Subject: [PATCH v2 8/9] pack-bitmap.c: don't leak type-level bitmaps
-Message-ID: <77a445463298cac69f00a0b9c5b5951bae80b2dd.1635282024.git.me@ttaylorr.com>
+Subject: [PATCH v2 9/9] pack-bitmap.c: more aggressively free in
+ free_bitmap_index()
+Message-ID: <c1e7e6cc924f61d237e5cc7045ad9698fbe4c3b2.1635282024.git.me@ttaylorr.com>
 References: <cover.1635282024.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -65,40 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-test_bitmap_walk() is used to implement `git rev-list --test-bitmap`,
-which compares the result of the on-disk bitmaps with ones generated
-on-the-fly during a revision walk.
+The function free_bitmap_index() is somewhat lax in what it frees. There
+are two notable examples:
 
-In fa95666a40 (pack-bitmap.c: harden 'test_bitmap_walk()' to check type
-bitmaps, 2021-08-24), we hardened those tests to also check the four
-special type-level bitmaps, but never freed those bitmaps. We should
-have, since each required an allocation when we EWAH-decompressed them.
+  - While it does call kh_destroy_oid_map on the "bitmaps" map, which
+    maps commit OIDs to their corresponding bitmaps, the bitmaps
+    themselves are not freed. Note here that we recycle already-freed
+    ewah_bitmaps into a pool, but these are handled correctly by
+    ewah_pool_free().
 
-Free those, plugging that leak, and also free the base (the scratch-pad
-bitmap), too.
+  - We never bother to free the extended index's "positions" map, which
+    we always allocate in load_bitmap().
+
+Fix both of these.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ pack-bitmap.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 3f603425c9..3d81425c29 100644
+index 3d81425c29..a56ceb9441 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1726,6 +1726,12 @@ void test_bitmap_walk(struct rev_info *revs)
- 	else
- 		die("mismatch in bitmap results");
- 
-+	bitmap_free(result);
-+	bitmap_free(tdata.base);
-+	bitmap_free(tdata.commits);
-+	bitmap_free(tdata.trees);
-+	bitmap_free(tdata.blobs);
-+	bitmap_free(tdata.tags);
- 	free_bitmap_index(bitmap_git);
- }
- 
+@@ -1859,9 +1859,17 @@ void free_bitmap_index(struct bitmap_index *b)
+ 	ewah_pool_free(b->trees);
+ 	ewah_pool_free(b->blobs);
+ 	ewah_pool_free(b->tags);
++	if (b->bitmaps) {
++		struct stored_bitmap *sb;
++		kh_foreach_value(b->bitmaps, sb, {
++			ewah_pool_free(sb->root);
++			free(sb);
++		});
++	}
+ 	kh_destroy_oid_map(b->bitmaps);
+ 	free(b->ext_index.objects);
+ 	free(b->ext_index.hashes);
++	kh_destroy_oid_pos(b->ext_index.positions);
+ 	bitmap_free(b->result);
+ 	bitmap_free(b->haves);
+ 	if (bitmap_is_midx(b)) {
 -- 
 2.33.0.96.g73915697e6
-
