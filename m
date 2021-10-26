@@ -2,182 +2,297 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8A30C433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C7EC433F5
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 14:00:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACE9260F6F
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 12:59:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D61560C41
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 14:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236096AbhJZNCI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 09:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34946 "EHLO
+        id S235398AbhJZOCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 10:02:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233472AbhJZNCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 09:02:07 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5821C061745
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:59:43 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id d10so15008162wrb.1
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 05:59:43 -0700 (PDT)
+        with ESMTP id S232091AbhJZOCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 10:02:39 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB41FC061745
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 07:00:15 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id y11so13511796qtn.13
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 07:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=l2ITzVNjWzHEjtZLqQ3FW1m4Ni3BEY7FXsgGhASJsqg=;
-        b=iR5JMbGIot7m900UDfaLp2UOb/l12krL61b8ufoZRtcBXW9VVlugNSqyC16IedZ2+L
-         eLPkmnB93VLG849tx7o/t+VfJNKpP8qC2EAdrk5KVXcLak9QkbE16TBWuik9zdzdxfR0
-         kXt0EAsjYRVFw579k23jpdGHlrps7q1CW5EporYLGFDNQnc5ArVo+FSuzpn2U3oUQNwO
-         Zu6pMYJd2rhcyi+8qWJS4kFkclZxA3l+p0Nn3+aQHxuPXtW22MPTo9N6lx335gPdCPuQ
-         o2LHkHWVGweMYbiRh/u7mB4nJ9TzsnfLFmjdQhb3TfrEr2oGriza6h0c0fDm7eEKPlMd
-         DKyw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=8tnxK1WwlUMtRcUhv3r5ZhNzS5YLoCJ8/3/vaNey7BQ=;
+        b=lzNcdOlVQwKBxSuAmatmsW2l237brjzVLs1omHa1GnJwV70vci9cMcCJeSd9radCDM
+         FU0ny0XC+BVxqrfj7GxeFujRuiEIhTvBZt18yht8RmLYq/zL1TmVfGWN1LnLQvGDqlPI
+         NFa5b1mW8/FgO6jVzNTpU5/5tAwfiCUyFFT00q4Awo4HyTLniY3q7RRTU7IuCnUXWrSz
+         wqN2+3GJViI4W2Uu9HhKlC/tmhyl+xLwdnNCpoX2ESJ1+OsSS93iHCeXOnAGt1yoHlBT
+         NCgdj/XBLa90VW8pARnnqUiUwF3vtLAQk39M/E+zjs5m8oRKxuOrYh6no52Y+zp/js3w
+         8hjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=l2ITzVNjWzHEjtZLqQ3FW1m4Ni3BEY7FXsgGhASJsqg=;
-        b=o1rrv3ZQS1kU7iBr/wv08XYBgqVrFe4/0juzFj3Y/V3tNkVzytyYOsT6Ef6waV0c8l
-         LwnsAIqosAOC13VcAwArv78NwLKVfnEec8sTkeo87FcQ9abYaz88G9cdFOdO+E423CrR
-         equt8LAr6sbhYcXoZ8M64P4/CbeD5j3hhY3bUlKsqDDHp0vE4s0VV9GomeBVAuYrMMCQ
-         tNa6aE6xG21dh7OlJVToDNv9Bv71W+W67I4ajdLkgS7vnKnsvM9fB7HHLS1qZ92wVwWj
-         nV/MORMHtoC9qD0ZUkrF065OPPwDEhuO/c82uNs4BAcO0YmDD59KNEW1HcoBrkE8rzZK
-         I1Vg==
-X-Gm-Message-State: AOAM53302WXVx3cn9Mq3Vvr4T/83/nxy0OWJJLKuebRDyAiDpS8ipueg
-        7qt/IEcmBzS+JA5/moUQXUQ=
-X-Google-Smtp-Source: ABdhPJyENpPyZCs+h3282cKXUXbnGVEkgFnEh7ycABd/MVE+sI2kdz2JmOzEbf4dLnMatFTQHF39Iw==
-X-Received: by 2002:a05:6000:1205:: with SMTP id e5mr10167629wrx.437.1635253182315;
-        Tue, 26 Oct 2021 05:59:42 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id c17sm12421611wrv.22.2021.10.26.05.59.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 05:59:41 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mfM3J-001ot5-Cc;
-        Tue, 26 Oct 2021 14:59:41 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: js/scalar, was Re: What's cooking in git.git (Oct 2021, #05;
- Mon, 18)
-Date:   Tue, 26 Oct 2021 14:20:55 +0200
-References: <xmqq1r4hv7bv.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2110191436250.56@tvgsbejvaqbjf.bet>
-        <211020.86zgr3n698.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2110210947590.56@tvgsbejvaqbjf.bet>
-        <211022.868rylkuw7.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2110221734530.62@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <nycvar.QRO.7.76.6.2110221734530.62@tvgsbejvaqbjf.bet>
-Message-ID: <211026.86lf2gym9u.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=8tnxK1WwlUMtRcUhv3r5ZhNzS5YLoCJ8/3/vaNey7BQ=;
+        b=RiBwMtjsjtYAtHOb0dRpgbmc4hEItInj9kYnWJHWWbsMaxG9lXNCYYDeFQBp+V0TkX
+         UYyzUfDpcc3xC2FToMJ+JVJS6tYu8HV29Ju6FE3QBndTjo93rosaHy3tlHNkOlz9xP9c
+         PG6fC5Z/30jb4xLj9T/zA+BNI78FbtsdhowIAjAIo4ZsjRpfJ5dV712Bp1wDzEZvqCIM
+         c8Y6zNYONV9Q9bXGTuehR3qxtv9hkhkaAENClAN1TKHreWtySQqmsN+kqwgLpqGXSQT9
+         QOV8BUoKdjRHWCLKkuHkEpIYZ8pURmIneFYOONi4KQZPwEUrxicu7FYoyJBTn1Ul6aoa
+         6xdg==
+X-Gm-Message-State: AOAM530/nfDYyPCVmmmZ4738CoIHVKDY/cB4r6wJSSfEBGERTCc4eP4M
+        toAASH2xd1bhQ1m4I5gZ4Nw=
+X-Google-Smtp-Source: ABdhPJw8aNpRHLbYSmyieZ27K90C4RVlTQmFUZrrPyNVyyF+1F0C+at4XB9Z4d8WCLUSU3usYnx+eQ==
+X-Received: by 2002:ac8:5e4e:: with SMTP id i14mr24873553qtx.129.1635256813890;
+        Tue, 26 Oct 2021 07:00:13 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:86f:cede:45bc:10f6? ([2600:1700:e72:80a0:86f:cede:45bc:10f6])
+        by smtp.gmail.com with ESMTPSA id h20sm10878184qtx.10.2021.10.26.07.00.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Oct 2021 07:00:13 -0700 (PDT)
+Message-ID: <f2269fc7-1688-d62e-02bb-01c5b5e33143@gmail.com>
+Date:   Tue, 26 Oct 2021 10:00:10 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH 2/3] protocol v2: specify static seeding of clone/fetch
+ via "bundle-uri"
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Albert Cui <albertqcui@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        "Robin H . Johnson" <robbat2@gentoo.org>
+References: <cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com>
+ <patch-2.3-3ac0539c053-20211025T211159Z-avarab@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <patch-2.3-3ac0539c053-20211025T211159Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/25/2021 5:25 PM, Ævar Arnfjörð Bjarmason wrote:
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> +bundle-uri CLIENT ERROR RECOVERY
+> +++++++++++++++++++++++++++++++++
+> +
+> +A client MUST above all gracefully degrade on errors, whether that
+> +error is because of bad missing/data in the bundle URI(s), because
+> +that client is too dumb to e.g. understand and fully parse out bundle
+> +headers and their prerequisite relationships, or something else.
 
-On Fri, Oct 22 2021, Johannes Schindelin wrote:
+"too dumb" seems a bit informal to me, especially because you
+immediately elaborate on its meaning. You could rewrite as follows:
 
-> Hi =C3=86var,
->
-> On Fri, 22 Oct 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Thu, Oct 21 2021, Johannes Schindelin wrote:
->>
->> > tl;dr it isn't worth your nor my time for you to focus on the build
->> > process in contrib/scalar/ at this moment.
->
-> I still stand by these words, and I think you completely glanced over this
-> problem. Your focus seems to lie exclusively on those "dependency
-> problems". But apart from you, who cares if `libgit.a` is not rebuilt in
-> obscure and rare circumstances _when building something in `contrib/`_?[.=
-..]
+  ...because
+  that client can't understand or fully parse out bundle
+  headers and their prerequisite relationships, or something else.
 
-You glanced over and didn't reply to the "This invariant that something
-must be[...]" part of the E-Mail you're replying to, which I think gets
-to the crux of the issue.
+> +Server operators should feel confident in turning on "bundle-uri" and
+> +not worry if e.g. their CDN goes down that clones or fetches will run
+> +into hard failures. Even if the server bundle bundle(s) are
+> +incomplete, or bad in some way the client should still end up with a
+> +functioning repository, just as if it had chosen not to use this
+> +protocol extension.
 
-I.e. you haven't answered why you actively prefer a broken build system
-integration when a non-broken and less complex one is available, other
-than some vague and unclear references to the effect that "it's a
-contrib thing", without really explaining what that means, or why it
-necessitates a broken and more complex build system.
+Also, insertions of "e.g." in the middle of a sentence don't flow well.
 
-It's not that libgit.a isn't rebuilt, that part isn't broken, it's built
-by the top-level Makefile. It's that if you:
+  Server operators should feel confident in turning on "bundle-uri" and
+  not worry that failures such as the CDN being unavailable will cause
+  clones or fetches to have hard failures. Even if the server bundle(s)
+  are invalid, the client should still end up with a functioning
+  repository, just as if it had chosen not to use this protocol extension.
 
-    make -C contrib/scalar
+(Note: I also removed a "bundle bundle(s)" that was split across a line
+break.)
 
-And then change anything it depends on, short of the top-level
-rebuilding libgit.a it won't be re-built, so for anyone hacking on it
-that Makefile is rather useless. It *does* work to do:
+> +bundle-uri SERVER TO CLIENT
+> ++++++++++++++++++++++++++++
+> +
+> +The ordering of the returned bundle uris is not significant. Clients
 
-    make contrib/scalar/scalar
+I'm late to noticing, but shouldn't "URI" be all-caps when not used in
+the literal capability string "bundle-uri"?
 
-Because that uses the top-level Makefile, will inspect
-contrib/scalar/.depends etc. So your patches already mostly make
-contrib/scalar/Makefile redundant anyway, hence my question about (and
-patches) why we can't just drop it entirely.
+> +bundle-uri CLIENT TO SERVER
+> ++++++++++++++++++++++++++++
+> +
+> +The client SHOULD provide reference tips found in the bundle header(s)
+> +as 'have' lines in any subsequent `fetch` request. A client MAY also
+> +ignore the bundle(s) entirely if doing so is deemed worse for some
+> +reason, e.g. if the bundles can't be downloaded, it doesn't like the
+> +tips it finds etc.
 
-As an aside your commit message instructs users to run:
+I would just stop after "is deemed worse for some reason." because one
+example is obvious and the other is unclear how the client would detect
+that situation. (Maybe: tip commit timestamps are really old?)
 
-     make -C contrib/scalar/Makefile
+> +
+> +WHEN ADVERTISED BUNDLE(S) REQUIRE NO FURTHER NEGOTIATION
+> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> +
+> +If after issuing `bundle-uri` and `ls-refs`, and getting the header(s)
+> +of the bundle(s) the client finds that the ref tips it wants can be
+> +retrieved entirety from advertised bundle(s), it MAY disconnect. The
 
-But that command can't work (you either meant -f <path>, or -C <dir>).
+s/entirety/entirely/
 
-You keep narrowly focusing on the bit where your *.o dependencies are
-broken, but I've pointed out a bunch of other things that are broken,
-including but not limited to: "make TAGS coccicheck check-docs install
-install-doc" etc.
+> +results of such a 'clone' or 'fetch' should be indistinguishable from
+> +the state attained without using bundle-uri.
+> +
+> +EARLY CLIENT DISCONNECTIONS AND ERROR RECOVERY
+> +++++++++++++++++++++++++++++++++++++++++++++++
+> +
+> +A client MAY perform an early disconnect while still downloading the
+> +bundle(s) (having streamed and parsed their headers). In such a case
+> +the client MUST gracefully recover from any errors related to
+> +finishing the download and validation of the bundle(s).
+> +
+> +I.e. a client might need to re-connect and issue a 'fetch' command,
+> +and possibly fall back to not making use of 'bundle-uri' at all.
 
-> [...]The code in `contrib/scalar/` is transitional.[...]
+Use "For example," over starting a sentence with "i.e.". The examples
+of "i.e." and "e.g." already in this document show proper use, which
+involves parentheses.
 
-OK. But it's being proposed for merge to "master", I don't see how "we
-don't expect this to stay for long" translates into "it's OK that it's
-broken while it's here".
-=20
-> Just forget about Scalar's build process. Forget about getting its CI to
-> work. I have all that figured out already. It is all working as well as
-> needed.
+> +This "MAY" behavior is specified as such (and not a "SHOULD") on the
+> +assumption that a server advertising bundle uris is more likely than
+> +not to be serving up a relatively large repository, and to be pointing
+> +to URIs that have a good chance of being in working order. A client
+> +MAY e.g. look at the payload size of the bundles as a heuristic to see
 
-You're proposing to integrate this into git.git, so it really does
-matter that it's useful to others and plays well with existing
-components.
+Again, here, the entire sentence is an example. This "e.g." can be
+removed with no loss of meaning.
 
-When a release of this is available we'd expect third-party packagers to
-consider installing it alongside git. If that's not at all the intent
-then at the very least the commit messages & documentation are sorely
-lacking.
+> +if an early disconnect is worth it, should falling back on a full
+> +"fetch" dialog be necessary.
 
-And it's not OK that some in-tree *.c code that uses various bits of
-libgit.a and will break if changes to that code don't take it into
-account doesn't have meaningful testing CI/integration.
 
-E.g. I was hacking on something the other day, and since I build (my
-version of) your scalar patches had a breakage due (my local changes to)
-an API where scalar was the one remaining in-tree user of an API
-function. Luckily I ran its tests by default, and didn't need to go out
-of my way to do so.
+> +While no per-URI key-value are currently supported currently they're
+> +intended to support future features such as:
+> +
+> + * Add a "hash=<val>" or "size=<bytes>" advertise the expected hash or
+> +   size of the bundle file.
 
-All of the above is in the context that I've offered you patches to fix
-all these issues.
+I suppose if one wanted to add this server-to-bundle coupling, then some
+clients might appreciate it.
 
-I haven't sent anything but an inline WIP demo of that to the list
-because we're still having this discussion where you're categorically
-refusing to even consider fixes to things in your series that are
-demonstrably broken.
+> + * Advertise that one or more bundle files are the same (to e.g. have
+> +   clients round-robin or otherwise choose one of N possible files).
 
->> > Having said that, I do appreciate your interest in this patch series, =
-and
->> > I have suggestions at the end of this mail how we could collaborate on=
- it
->> > in a more fruitful manner.
->
-> I would still like to invite you to think along more productive lines.
-> It's not about where Scalar's build mechanics are right now. It's where we
-> can take _Git_ to do what Scalar already does.
+  * Advertise that one or more bundle files are the same, to allow for
+    redundancy without causing duplicated effort.
 
-That's also interesting, but right now we're not discussing that
-subsequent set of patches, but your integration of scalar in-tree. Let's
-fix those issues first.
+> +static void send_bundle_uris(struct packet_writer *writer,
+> +			     struct string_list *uris)
+> +{
+> +	struct string_list_item *item;
+> +
+> +	for_each_string_list_item(item, uris)
+> +		packet_writer_write(writer, "%s", item->string);
+> +}
+> +
+> +static int advertise_bundle_uri = -1;
+> +static struct string_list bundle_uris = STRING_LIST_INIT_DUP;
+
+I see you put send_bundle_uris() before the global bundle_uris so
+it can be independent, but do you expect anyone to call send_bundle_uris()
+via a different list?
+
+Should we find a different place to store this data?
+
+> +static int bundle_uri_config(const char *var, const char *value, void *data)
+> +{
+> +	if (!strcmp(var, "uploadpack.bundleuri")) {
+> +		advertise_bundle_uri = 1;
+> +		string_list_append(&bundle_uris, value);
+> +	}
+> +
+> +	return 0;
+> +}
+
+Here, we are dictating that the URI list is available as a multi-valued
+config "uploadpack.bundleuri".
+
+1. Should this be updated in Documentation/config/uploadpack.txt?
+
+2. This seems difficult to extend to your possible future features as
+   listed in the protocol docs, mainly because this can only store the
+   flat URI string. To add things like hash values, sizes, and prereqs,
+   you would need more data included and grouped on a per-URI basis.
+   What plans do you have to make extensions here while remaining
+   somewhat compatible with downgrading Git versions?
+
+> @@ -136,6 +137,11 @@ static struct protocol_capability capabilities[] = {
+>  		.advertise = always_advertise,
+>  		.command = cap_object_info,
+>  	},
+> +	{
+> +		.name = "bundle-uri",
+> +		.advertise = bundle_uri_advertise,
+> +		.command = bundle_uri_command,
+> +	},
+>  };
+
+I really appreciate that it is this simple to extend protocol v2.
+
+> +test_expect_success 'basics of bundle-uri: dies if not enabled' '
+> +	test-tool pkt-line pack >in <<-EOF &&
+> +	command=bundle-uri
+> +	0000
+> +	EOF
+> +
+> +	cat >err.expect <<-\EOF &&
+> +	fatal: invalid command '"'"'bundle-uri'"'"'
+> +	EOF
+> +
+> +	cat >expect <<-\EOF &&
+> +	ERR serve: invalid command '"'"'bundle-uri'"'"'
+> +	EOF
+> +
+> +	test_must_fail test-tool serve-v2 --stateless-rpc <in >out 2>err.actual &&
+> +	test_cmp err.expect err.actual &&
+> +	test_must_be_empty out
+> +'
+> +
+> +
+
+hyper-nit: double newline.
+
+The implementation seems simple enough, which I like. I'm a bit
+your current use of Git config as the back-end, only because it is
+difficult to be future-proof. As the functionality stands today, the
+current config design works just fine. Perhaps we don't need to
+worry about the future, because we can design a new, complementary
+storage for that extra data. It seems worth exploring for a little
+while, though. Perhaps we should take a page out of 'git-remote'
+and how it stores named remotes with sub-items for metadata. The
+names probably don't need to ever be exposed to users, but it could
+be beneficial to anyone implementing this scheme.
+
+[bundle "main"]
+	uri = https://example.com/my-bundle
+	uri = https://redundant-cdn.com/my-bundle
+	size = 120523
+	sha256 = {64hexchars}
+
+[bundle "fork"]
+	uri = https://cdn.org/my-fork
+	size = 334
+	sha256 = {...}
+	prereq = {oid}
+
+This kind of layout has an immediate grouping of data that should
+help any future plan. Notice how I included multiple "uri" lines
+in the "main", which helps with your plan for duplicate URIs.
+
+Thanks,
+-Stolee
