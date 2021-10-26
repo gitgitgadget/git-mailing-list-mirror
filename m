@@ -2,146 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2479C433F5
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B29EDC433F5
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:32:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C25A660E08
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:31:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C95160E8F
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 19:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238762AbhJZTdc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 15:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41118 "EHLO
+        id S238773AbhJZTeq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 15:34:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237035AbhJZTdb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 15:33:31 -0400
-Received: from viathinksoft.de (viathinksoft.de [IPv6:2001:1af8:4700:a07e:1::1337])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE64C061570
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:31:06 -0700 (PDT)
-Received: by viathinksoft.de (Postfix, from userid 114)
-        id 0EDB561C71CB; Tue, 26 Oct 2021 21:31:04 +0200 (CEST)
-Received: from webmail.viathinksoft.de (localhost [127.0.0.1])
-        (Authenticated sender: daniel-marschall@viathinksoft.de)
-        by viathinksoft.de (Postfix) with ESMTPA id 37EED61C71B2;
-        Tue, 26 Oct 2021 21:30:39 +0200 (CEST)
+        with ESMTP id S237035AbhJZTep (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 15:34:45 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC0AC061570
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:32:21 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id e144so757436iof.3
+        for <git@vger.kernel.org>; Tue, 26 Oct 2021 12:32:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2daTUbyVdVMjCvi6UJJvoUuOPjcyL0e7/l61Di4s6yU=;
+        b=N8Fuw5GERiqd52M/KE1EUYrJn7nej3WUaAeeMAXnNgmYPmwEaTHxs9Pv0kxCysKtW5
+         Hx6n4YpTFp2OsQrtG6C7fdCzV6P9KsO2sHHHnLwSP5/P+zTRvs+G8DJ52XNZZZrjnEgM
+         rP+xbyM507qyCbxU2mD6bZmj1Ip8Wes6NuMRzRji4cONsiaSdPn+nuzVMJGrLH16ZkMM
+         +RFfN4jW4TY24v4fkytxpuXch9EUUhHrM7TsGnn/5E/aCPyN04nhW7DaF0mPyAVwG+5G
+         WtRWtSSwNvgx+L4uOEnYsyIuHc/DwLIZVqPk6Gee+fcdsn01OsjVxlOA4d/jw5BwDmkf
+         BxFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2daTUbyVdVMjCvi6UJJvoUuOPjcyL0e7/l61Di4s6yU=;
+        b=Sy0LxKmiZMyw6hpK6hUyxzVijpTnrMEi+yeLz7ybLSZ7g2TLtt6Uwecp0FVj6JzbLG
+         k7HJEWKb2zNScoz5+ZqaYIz2cQyX2L8jXNyNixEQZKie+7uRf7M4LDdY9igBqM/eN2jN
+         7GnmnBPfFZ8CTUEmHKgVaxU7uM3XjO4eZuMHqylq2Wpit1TEAWhSfg9QIoS6cPKHBGFQ
+         x/URsEja/Lkco5UNDUDFSnI7zNNeGvXAnXNS5pPzIfvloKVK4K6WmS4H3a8e39Ddo0qP
+         D+E9IW6/Il6ikEiLZfgBd030WQ7iXPLTo6VH+QQdBEC26bScq2YwB6RERDkQTGzPpUJ9
+         rRFw==
+X-Gm-Message-State: AOAM530B4mOR76LNTXRb33/R4ppJ/550XXN8FvHfxe6wj+1Xa0I+sAAV
+        kQkaOCDCs5IEqEEIzMRODPE3aiSnp0eKfxjS8F+ZHaPwTxXtXQ==
+X-Google-Smtp-Source: ABdhPJxpaob3iWtCQgAHi8KAPmjNeFBIRUQFq4DjwZaCN3VNX3C8jj/nE4ZLsbgBUSTHC8IOpeg297Q8xYzvUL1MwG0=
+X-Received: by 2002:a02:b885:: with SMTP id p5mr13145258jam.81.1635276739995;
+ Tue, 26 Oct 2021 12:32:19 -0700 (PDT)
 MIME-Version: 1.0
-Date:   Tue, 26 Oct 2021 21:30:39 +0200
-From:   Daniel Marschall <info@daniel-marschall.de>
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
-Subject: Re: git-svn bug: Output git directory has uncommitted changes
-In-Reply-To: <20211026151442.65rndwsleyitxvvg@tb-raspi4>
-References: <77aacb3b44523223c7647bdae1702a31@daniel-marschall.de>
- <20211025094139.GA22377@dcvr> <20211026151442.65rndwsleyitxvvg@tb-raspi4>
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <5be6fa92074fb40f3167901d203941bc@daniel-marschall.de>
-X-Sender: info@daniel-marschall.de
-Organization: ViaThinkSoft
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.1052.git.1633708986.gitgitgadget@gmail.com>
+ <pull.1052.v2.git.1633746024175.gitgitgadget@gmail.com> <xmqqczobb8jd.fsf@gitster.g>
+In-Reply-To: <xmqqczobb8jd.fsf@gitster.g>
+From:   Ivan Frade <ifrade@google.com>
+Date:   Tue, 26 Oct 2021 12:32:08 -0700
+Message-ID: <CANQMx9W_Zt+qy3sppx1qGdf6S9gMSEp_7jjV4hc_aeyR62syrQ@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch-pack: redact packfile urls in traces
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.10.2021 17:14, schrieb Torsten Bögershausen:
-> On Mon, Oct 25, 2021 at 09:41:39AM +0000, Eric Wong wrote:
->> Daniel Marschall <info@daniel-marschall.de> wrote:
->> > Hello,
->> >
->> > I have found following bug in the latest version of git-svn . I have this
->> > issue with the old version shipped in Debian stable, as well as with the
->> > latest version built from source.
->> >
->> >
->> > What did you do before the bug happened? (Steps to reproduce your issue)
->> >
->> > Extract the following SVN repository to GIT:
->> > https://svn.viathinksoft.com/svn/filter_foundry/
->> > The bug ONLY happens with this single SVN repository. All other SVN
->> > repositories from my server work perfectly.
->> >
->> > $ PERL5LIB=perl/ ./git-svn --authors-file="../../authors.txt" clone
->> > --trunk="trunk" "https://svn.viathinksoft.com/svn/filter_foundry/" "_test"
->> > $ cd _test
->> > $ git status
->> >
->> > What did you expect to happen? (Expected behavior)
->> >
->> > git status should show that nothing needs to be commited.
->> >
->> > What happened instead? (Actual behavior)
->> >
->> > You get a long list of files which need to be committed. The list is
->> > sometimes longer and sometimes shorter. So, the behavior is not
->> > deterministic. I have the feeling that the list often contains all files in
->> > the repo.
->> 
->> It seems like a CRLF vs LF vs CR issue; not something I'm
->> familiar with (not even in a git-only environment).
->> 
->> Running `git diff --ignore-space-change` says there aren't
->> non-space changes.
->> 
->> The presence of a .gitattributes file in the repo could be
->> confusing things, maybe, just a guess, I don't know...
->> 
->> Being a *nix-only person, I've never mucked with eol= attributes
->> at all.  Maybe somebody else experienced with such issues can
->> chime in; but eol stuff seems like a minefield of complexity I
->> don't ever want to step into :x
->> 
->> > Anything else you want to add:
->> >
->> > This SVN repository was cloned from a foreign server to my own server, and
->> > then continued there. I think this SVN repository has some specific
->> > properties that cause the bugs.
->> 
->> It's been a while since I've looked at SVN stuff.  From what I
->> remember, git-svn doesn't check the CRLF property on the SVN side.
-> 
-> Good point, Eric
-> 
-> After cloning the repo with git-svn, we can say that:
-> The .gitattributes file is in conflict with the files commited under 
-> Git
-> Run
-> git ls-files --eol
-> to see what is going on
-> [lots of output]
-> 
-> To give a simpler example, run it on only one file,
-> which is changed in my clone:
-> 
-> git ls-files --eol telegraphics_common/tt/wind.c
-> i/crlf  w/crlf  attr/text eol=crlf telegraphics_common/tt/wind.c
-> 
-> And what does this mean ?
-> The file has CRLF in the index, CRLF in the working tree and "text"
-> These settings are conflicting.
-> The easiest solution may be to replace
-> "text" with "text=auto"
-> in .gitattributes
-> 
-> And, while looking at .gitignore: the "eol=cr" is not supported under 
-> Git:
-> *.afs text eol=cr
-> (But Git does not complain)
+It seems I sent my original reply only to the github PR. Sorry for the
+confusion:
 
-Thank you for your replies.
+On Mon, Oct 11, 2021 at 1:39 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Ivan Frade <ifrade@google.com>
+...
+>
+> It of course is a different matter if the explained idea is
+> agreeable, though ;-).  Hiding the entire packet, based on the "it
+> might be in some setups" seems a bit too much.
+>
+> Is it often the case that the whole URI is sensitive, or perhaps
+> leading "<scheme>://<host>/pack-<abc>.pack" part is not sensitive at
+> all, and what follows after that "public" part has some "nonce"
+> material that makes it sensitive?
 
-I don't have much experience with .gitattributes, so I am not sure if I 
-did everything correctly.
+In the specific case I am working on, the path of the URL is an
+encrypted string that shouldn't be completely exposed (exposing part
+of it would be fine). In general, I think we can assume that
+<scheme>://<host>/ are always "public" but the path could be
+sensitive.
 
-What I had in mind was the following:
-I have files in my SVN repository which are CRLF, and some files are LF.
-I wanted to tell GIT which line ending the files should have
-so that they will have the exact same line endings after the repo is 
-checked out. I think text=auto will also do this, maybe I should try 
-that.
+We could redact only the path (<scheme>://<host>/REDACTED), or even a
+fixed length of the URL? (<scheme>://<host>/pack-<xxREDACTED).
 
-The "AFS" files are very special, though. Due to compatibility reasons, 
-they must be in the ancient Macintosh format (CR) otherwise the program 
-won't work. Do I need to state "eol=cr" then? Or will GIT automatically 
-use the same line endings as in the files which I have added to SVN?
+In the next patch version I go with redacting the path.
 
-Thank you for your help!
+
+> > Changes since v1:
+...
+>  Please write such material below the three-dash line.
+Done
+
+> And there is no need to duplicate the log message here ;-)
+Done
+
+> So "original_options" is used to save away the reader->options so
+> that it can be restored before returning to our caller?
+>
+> OK (it may be more common in this codebase to call such a variable
+> "saved_X", though).
+
+In the latest iteration, the option is enabled for all sections and
+there is no need to set/unset the flag.
+
+> > +     grep "clone< <redacted>" log
+>
+> This checks only that "redacted" string appears, but what the theme
+> of the change really cares about is different, no?  You want to
+> ensure that no sensitive substring of the URI appears in the log.
+>
+> Imagine somebody breaking the redact logic by making it prepend that
+> string to the payload, instead of replacing the payload with that
+> string---this test will not catch such a regression.
+
+Now the tests verify the expected packfile-uri full line is in the log.
+
+Thanks,
+
+Ivan
