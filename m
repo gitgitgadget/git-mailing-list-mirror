@@ -2,219 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A4CC433EF
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 16:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C188C433EF
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 16:22:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 480E260238
-	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 16:18:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51E89603E9
+	for <git@archiver.kernel.org>; Tue, 26 Oct 2021 16:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237738AbhJZQUZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Oct 2021 12:20:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52654 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237523AbhJZQTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Oct 2021 12:19:37 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B13C06122C
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 09:17:05 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id y17so17940396ilb.9
-        for <git@vger.kernel.org>; Tue, 26 Oct 2021 09:17:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bsex5lYWGIxarQGhwxMduzhm6M5joyK8/jc10nMi3SI=;
-        b=SsTCyFVDH5vrWmYMdVhaZMGIr+TSBrqUmPM78NbWJtDWSwvfy03Qqc0X0K0fJsc4cf
-         3yeVn56Rth3ZXiskZEF9kbHpi+cVorU/nBFzmAEBuMGsZgO8ana5N+x4R3dd1ICaG1LI
-         pXvkZquA8EkR5WvjXArggPk7ZXmVzMvnBRdQzdQd7sboH8YW3hzQ/v3Vfd6UOhJCIbiM
-         ZXLX1JiERW0miPx+yt/E65piky0ZzB8fv5ayS5DZwUwpBH7Cz4SphjvVMJc0yieEKNpS
-         4RjKLkDGHqfIoG8aWdsbyijppO5J70OwqSSQoVgbtF6LL/KTDcSmd5lLGcr4alVCZbFb
-         oS4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bsex5lYWGIxarQGhwxMduzhm6M5joyK8/jc10nMi3SI=;
-        b=oz3TRT6StbPwwR3AA9swGzT+qFHWlp+cE/KM/VGPf+yEUpusslh8mydOEKtIHEcauk
-         EUT/qguf7UBpec7G5DG7dTclpYaK5elZmv+QmRBA8mDe6KH4MXk/UqK0Uf+qhZaHLLOo
-         24oHHA/oG2KMZIGm1TxEWhZrtWI730mVsbruL5F0V4gRGuXbJ34Po8tQPwiy3hINFPtE
-         V18moA/zDZAlgQaPnnrBds8Ycstg8IJy396IYcCYKuLh0s+HGSodteW3Qo/4nN2hRMnM
-         oY09Gif+DcmgZWi3/C1QRx/HMiwpvcD1wTfZqeIeVvI/YGVL1TrDvKXwFARQQrnQ58uA
-         Pr3Q==
-X-Gm-Message-State: AOAM532np8EJPeBhlNpoQkxynSGshdORETfZhl3HAFFdUDy/g2BVy1eb
-        LtQP3MpYSVeZ/vwYtAJVQs8=
-X-Google-Smtp-Source: ABdhPJxhBQGIhPGlB22dozedQWlumbt4YW6r0+msaRh5+QZN6QMPaJlcXisYbPH9CPhpjyMIxeP8Gg==
-X-Received: by 2002:a92:d08a:: with SMTP id h10mr15036506ilh.59.1635265025087;
-        Tue, 26 Oct 2021 09:17:05 -0700 (PDT)
-Received: from [192.168.86.115] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id n25sm10514157ioz.51.2021.10.26.09.17.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Oct 2021 09:17:04 -0700 (PDT)
-Message-ID: <086ad119-0739-5ce0-af99-0b1ab1c3d484@gmail.com>
-Date:   Tue, 26 Oct 2021 09:17:03 -0700
+        id S234204AbhJZQZC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Oct 2021 12:25:02 -0400
+Received: from mout.web.de ([212.227.17.12]:40413 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231880AbhJZQZB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Oct 2021 12:25:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1635265348;
+        bh=KeyjsKhLCbKe70OwisuaKabFMfe5a0RbsDkdUGpIWoE=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=eyrpuXyntdX++hawxoJqvh8QO0z1CRJpEcQvOAwTI7v7OIw55yfbDJGlC1NMZGdx9
+         U6kRa6xxTjvJ7TG4f8WlubciYj+tmtyeIft2pwTSBw653E4TV+FLArueooQYD7IaSK
+         0Li0sNx6PLF2ofvgvJdH2TrU+hXu6MPAIWKTPbso=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MPpE6-1mbZTC0usU-0054PI; Tue, 26 Oct 2021 18:22:28 +0200
+Subject: Re: [PATCH v2] add, rm, mv: fix bug that prevents the update of
+ non-sparse dirs
+To:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com, stolee@gmail.com,
+        vdye@github.com, derrickstolee@github.com,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Sean Christopherson <seanjc@google.com>
+References: <5e99c039db0b9644fb21f2ea72a464c67a74ff64.1635191000.git.matheus.bernardino@usp.br>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ca1c6a86-23ab-57ae-b1ca-64a9851d72db@web.de>
+Date:   Tue, 26 Oct 2021 18:22:26 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.1
-Subject: Re: [PATCH v2 2/2] blame: enable and test the sparse index
+In-Reply-To: <5e99c039db0b9644fb21f2ea72a464c67a74ff64.1635191000.git.matheus.bernardino@usp.br>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        newren@gmail.com
-References: <pull.1050.git.1634232352.gitgitgadget@gmail.com>
- <pull.1050.v2.git.1634332835.gitgitgadget@gmail.com>
- <a0b6a152c754862323e9a5b89ad43ab34b6548f7.1634332836.git.gitgitgadget@gmail.com>
- <YXcZPxYlRLEEwU16@nand.local>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <YXcZPxYlRLEEwU16@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:klfXImfYIWuY07zDxrrrol8NVbACM4ZY/NwY0o4xr5VmdkwuQDG
+ uGYHMuiw9vcfeR5OSldulbmiB+noQ7gC0in7UE4+jMWjxFiiBdhlgGhDAR5ZN0F9PbymjnF
+ IqAUjeNijfiIcvO2jNefk5k5PU4s6stPf2B3R5lFF4NR0lrF264C+1I4iqGjFrsKRvxavjh
+ 2yWOouEpj6QubHxcSFzzw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:W9flnUo3NMg=:KerJMN49UKpEacy5HRhO9R
+ awgoFsQyb1B7aF/SYSYl1sv7KmLPFQ1P1SYqQ2RywQjdozUxNI4rPkDueZHPrlUX9ByFwtkxL
+ V/MlmnJyRPcxIc5KrzvkmDDWnQJ3YRlpY23ukwci86dvXzRIgut/x0NqOexAvbnK4S28RqwKV
+ rXrjKt3aM8pY/OHLoKvevv0XLtBVqnbK6s+I4725YECLu7MpebiDYuc0aD+Va3pUN/LOC8oI5
+ g46gvON8cR3aNCmuGu+Yh2QsY2UzJouxgSWXAtlXK2/bD7k8sOgtQ7DpgEgBpogCRzuktm/0N
+ tYXSBMKnR0shOtVrpcrEfJ5IiDhxehMSrjOKEUViVEMNqOC/6LhhBtRLjrBSolisoY48xREIp
+ ns53zpLmhqCWHG4Avr8HBhGP22POiDEKk6uTb7N8F+uLVhuzvVyHJTdzxfS+CNCVhMxpRIc3X
+ kLM0IM2+x3fTU00lHofRh3oE/12c+yzTcf80fP8SmJUivmomwaqbN4lASn6wswnLmRG+V0cDE
+ gMK14EnOFHkZbv8DDvwt8InOTxelRN9w5hbp0mLAiB3Qed3X9I2AkvA2dUZheT/5ttECUs0EC
+ tEKKuHIOiH8WAE2+xg8xICxH3yzeEighn7MMfII97QmepPjf/rz7HzEEu+F83iCfe4v1kq6FT
+ BVio6E/MDMbmPjJvIVz1t98taKzRlecrNBmx8X5IzF/upLdZw8r1qW2OewerqJbg3kZ2Fni8s
+ cG5rC3PDUGJwDO5Pr4TneFjwigSV2nwpIDQSM+scdILMFGvOsZxUJ/Q62cLtACMPx7Fp7hz6S
+ Iy1QB/gFQ7NvmkSxttuofvPAfORnTLTwaW595IVOaM/zGchHiVggFiKZmKTy+MP7aCkvEHk2/
+ 5ylRubZPY049jR02i+urvf3Swb+Ws7+w1Lp8IbJWBMx/x72CJzRj6zIzr7iLrkh9uHNvTqAS9
+ ZIF+Zonna+vOzTdnvnzOZwgqwJwKToVTjGWiIzmx+ntwTJwTzKdUH57ZPM+u56BUXmFwmP33m
+ vxNSEJiwrm80R9o6BvxDji9Uk8krN3capu73ee0qRANorwyiMmVum2sGAQilE5JKAQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/25/21 1:53 PM, Taylor Blau wrote:
-> On Fri, Oct 15, 2021 at 09:20:35PM +0000, Lessley Dennington via GitGitGadget wrote:
->> From: Lessley Dennington <lessleydennington@gmail.com>
->>
->> Enable the sparse index for the 'git blame' command. The index was already
->> not expanded with this command, so the most interesting thing to do is to
->> add tests that verify that 'git blame' behaves correctly when the sparse
->> index is enabled and that its performance improves. More specifically, these
->> cases are:
->>
->> 1. The index is not expanded for 'blame' when given paths in the sparse
->> checkout cone at multiple levels.
->>
->> 2. Performance measurably improves for 'blame' with sparse index when given
->> paths in the sparse checkout cone at multiple levels.
->>
->> The `p2000` tests demonstrate a ~60% execution time reduction when running
->> 'blame' for a file two levels deep and and a ~30% execution time reduction
->> for a file three levels deep.
-> 
-> Eek. What's eating up the other 30% when we have to open up another
-> layer of trees?
-> 
-I'm not sure to be totally honest. However, given these are both pretty 
-good time reductions I don't think we should be terribly concerned.
->>
->> Test                                         before  after
->> ----------------------------------------------------------------
->> 2000.62: git blame f2/f4/a (full-v3)         0.31    0.32 +3.2%
->> 2000.63: git blame f2/f4/a (full-v4)         0.29    0.31 +6.9%
->> 2000.64: git blame f2/f4/a (sparse-v3)       0.55    0.23 -58.2%
->> 2000.65: git blame f2/f4/a (sparse-v4)       0.57    0.23 -59.6%
->> 2000.66: git blame f2/f4/f3/a (full-v3)      0.77    0.85 +10.4%
->> 2000.67: git blame f2/f4/f3/a (full-v4)      0.78    0.81 +3.8%
->> 2000.68: git blame f2/f4/f3/a (sparse-v3)    1.07    0.72 -32.7%
->> 2000.99: git blame f2/f4/f3/a (sparse-v4)    1.05    0.73 -30.5%
->>
->> We do not include paths outside the sparse checkout cone because blame
->> currently does not support blaming files outside of the sparse definition.
->> Attempting to do so fails with the following error:
->>
->> fatal: no such path '<path outside sparse definition>' in HEAD.
-> 
-> Small nit; this error message should be indented with a couple of space
-> characters to indicate that it's the output of running Git instead of
-> part of your patch message. Not worth a reroll on its own, but something
-> to keep in mind for your many future patches :).
-> 
-Eh, I'm making some changes based on your suggestions anyway, so I'm 
-including this in v3. Thanks for letting me know!
->>
->> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
->> ---
->>   builtin/blame.c                          |  3 +++
->>   t/perf/p2000-sparse-operations.sh        |  2 ++
->>   t/t1092-sparse-checkout-compatibility.sh | 24 +++++++++++++++++-------
->>   3 files changed, 22 insertions(+), 7 deletions(-)
->>
->> diff --git a/builtin/blame.c b/builtin/blame.c
->> index 641523ff9af..af3d81e2bd4 100644
->> --- a/builtin/blame.c
->> +++ b/builtin/blame.c
->> @@ -902,6 +902,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->>   	long anchor;
->>   	const int hexsz = the_hash_algo->hexsz;
->>
->> +	prepare_repo_settings(the_repository);
->> +	the_repository->settings.command_requires_full_index = 0;
->> +
-> 
-> By now we're quite used to seeing this ;). Makes sense to me.
-> 
->>   	setup_default_color_by_age();
->>   	git_config(git_blame_config, &output_option);
->>   	repo_init_revisions(the_repository, &revs, NULL);
->> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
->> index bff93f16e93..9ac76a049b8 100755
->> --- a/t/perf/p2000-sparse-operations.sh
->> +++ b/t/perf/p2000-sparse-operations.sh
->> @@ -115,5 +115,7 @@ test_perf_on_all git reset --hard
->>   test_perf_on_all git reset -- does-not-exist
->>   test_perf_on_all git diff
->>   test_perf_on_all git diff --staged
->> +test_perf_on_all git blame $SPARSE_CONE/a
->> +test_perf_on_all git blame $SPARSE_CONE/f3/a
-> 
-> Good.
-> 
->>   test_done
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index e5d15be9d45..960ccf2d150 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -488,15 +488,16 @@ test_expect_success 'blame with pathspec inside sparse definition' '
->>   	test_all_match git blame deep/deeper1/deepest/a
->>   '
->>
->> -# TODO: blame currently does not support blaming files outside of the
->> -# sparse definition. It complains that the file doesn't exist locally.
->> -test_expect_failure 'blame with pathspec outside sparse definition' '
->> +# Blame does not support blaming files outside of the sparse
->> +# definition, so we verify this scenario.
->> +test_expect_success 'blame with pathspec outside sparse definition' '
->>   	init_repos &&
->>
->> -	test_all_match git blame folder1/a &&
->> -	test_all_match git blame folder2/a &&
->> -	test_all_match git blame deep/deeper2/a &&
->> -	test_all_match git blame deep/deeper2/deepest/a
->> +	test_sparse_match git sparse-checkout set &&
->> +	test_sparse_match test_must_fail git blame folder1/a &&
->> +	test_sparse_match test_must_fail git blame folder2/a &&
->> +	test_sparse_match test_must_fail git blame deep/deeper2/a &&
->> +	test_sparse_match test_must_fail git blame deep/deeper2/deepest/a
->>   '
-> 
-> test_must_fail used to allow for segfaults, but doesn't these days. So
-> this is a good test of "it should fail in sparse checkouts but not
-> crash", although I think it would be good to ensure that it's failing in
-> the way you expect (i.e., by checking that stderr contains "no such path
-> <xyz> in HEAD").
-Good suggestion, coming in v3!
->>
->>   test_expect_success 'checkout and reset (mixed)' '
->> @@ -874,6 +875,15 @@ test_expect_success 'sparse-index is not expanded: merge conflict in cone' '
->>   	)
->>   '
->>
->> +test_expect_success 'sparse index is not expanded: blame' '
->> +	init_repos &&
->> +
->> +	ensure_not_expanded blame a &&
->> +	ensure_not_expanded blame deep/a &&
->> +	ensure_not_expanded blame deep/deeper1/a &&
->> +	ensure_not_expanded blame deep/deeper1/deepest/a
->> +'
-> 
-> Makes sense. Probably just one of these is necessary, but I haven't
-> looked into init_repos (or the "setup" test) enough to know for sure.
-> Either way, not worth changing.
-> 
-> Thanks,
-> Taylor
-> 
+Am 25.10.21 um 23:07 schrieb Matheus Tavares:
+> These three commands recently learned to avoid updating paths outside
+> the sparse checkout even if they are missing the SKIP_WORKTREE bit. This
+> is done using path_in_sparse_checkout(), which checks whether a given
+> path matches the current list of sparsity rules, similar to what
+> clear_ce_flags() does when we run "git sparse checkout init" or "git
+> sparse-checkout reapply". However, clear_ce_flags() uses a recursive
+> approach, applying the match results from parent directories on paths
+> that get the UNDECIDED result, whereas path_in_sparse_checkout() only
+> attempts to match the full path and immediately considers UNDECIDED as
+> NOT_MATCHED. This makes the function miss matches with leading
+> directories. For example, if the user has the sparsity patterns "!/a"
+> and "b/", add, rm, and mv will fail to update the path "a/b/c" and end
+> up displaying a warning about it being outside the sparse checkout even
+> though it isn't. This problem only occurs in full pattern mode as the
+> pattern matching functions never return UNDECIDED for cone mode.
+>
+> To fix this, replicate the recursive behavior of clear_ce_flags() in
+> path_in_sparse_checkout(), falling back to the parent directory match
+> when a path gets the UNDECIDED result. (If this turns out to be too
+> expensive in some cases, we may want to later add some form of caching
+> to accelerate multiple queries within the same directory. This is not
+> implemented in this patch, though.) Also add two tests for each affected
+> command (add, rm, and mv) to check that they behave correctly with the
+> recursive pattern matching. The first test would previously fail without
+> this patch while the second already succeeded. It is added mostly to
+> make sure that we are not breaking the existing pattern matching for
+> directories that are really sparse, and also as a protection against any
+> future regressions.
+>
+> Two other existing tests had to be changed as well: one test in t3602
+> checks that "git rm -r <dir>" won't remove sparse entries, but it didn't
+> allow the non-sparse entries inside <dir> to be removed. The other one,
+> in t7002, tested that "git mv" would correctly display a warning message
+> for sparse paths, but it accidentally expected the message to include
+> two non-sparse paths as well.
+>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>
+> Changes since RFC/v1 [1]:
+>
+> - Inverted the loop direction to start from the full path and go backwar=
+ds in
+>   the parent dirs. This way we can stop early when we find the first
+>   non-UNDECIDED match result.
+>
+> - Simplified the implementation by unifing the code path for cone mode a=
+nd
+>   full pattern mode. Since path_matches_pattern_list() never returns UND=
+ECIDED
+>   for cone mode, it will always execute only one iteration of the loop a=
+nd then
+>   find the final answer. There is no need to handle this case in a separ=
+ate
+>   block.
+>
+> - Inside the loop, made sure to change dtype to DT_DIR when going to par=
+ent
+>   directories. Without this, the pattern match would fail if we had a pa=
+th
+>   like "a/b/c" and the pattern "b/" (with trailing slash).
+>
+> - Changed the tests to use trailing slash to make sure they cover the co=
+rner
+>   case described above.
+>
+> - Improved commit message.
+>
+> [1]: https://lore.kernel.org/git/80b5ba61861193daf7132aa64b65fc7dde90dac=
+b.1634866698.git.matheus.bernardino@usp.br
+> (The RFC was deep down another thread, so I separated v2 to help
+> readers. Please, let me know if that is not a good approach and I will
+> avoid it in the future.)
+>
+>  dir.c                          | 25 +++++++++++++++++------
+>  t/t3602-rm-sparse-checkout.sh  | 37 +++++++++++++++++++++++++++++++---
+>  t/t3705-add-sparse-checkout.sh | 18 +++++++++++++++++
+>  t/t7002-mv-sparse-checkout.sh  | 24 ++++++++++++++++++++--
+>  4 files changed, 93 insertions(+), 11 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index a4306ab874..248f72e732 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1504,8 +1504,9 @@ static int path_in_sparse_checkout_1(const char *p=
+ath,
+>  				     struct index_state *istate,
+>  				     int require_cone_mode)
+>  {
+> -	const char *base;
+>  	int dtype =3D DT_REG;
+> +	enum pattern_match_result match =3D UNDECIDED;
+> +	const char *end, *slash;
+>
+>  	/*
+>  	 * We default to accepting a path if there are no patterns or
+> @@ -1516,11 +1517,23 @@ static int path_in_sparse_checkout_1(const char =
+*path,
+>  	     !istate->sparse_checkout_patterns->use_cone_patterns))
+>  		return 1;
+>
+> -	base =3D strrchr(path, '/');
+> -	return path_matches_pattern_list(path, strlen(path), base ? base + 1 :=
+ path,
+> -					 &dtype,
+> -					 istate->sparse_checkout_patterns,
+> -					 istate) > 0;
+> +	/*
+> +	 * If UNDECIDED, use the match from the parent dir (recursively),
+> +	 * or fall back to NOT_MATCHED at the topmost level.
+> +	 */
+> +	for (end =3D path + strlen(path); end > path && match =3D=3D UNDECIDED=
+; end =3D slash) {
+> +
+> +		for (slash =3D end - 1; slash >=3D path && *slash !=3D '/'; slash--)
+> +			; /* do nothing */
+
+slash can end up one less than path.  If path points to the first char
+of a string object this would be undefined if I read 6.5.6 of C99
+correctly.  (A pointer to the array element just after the last one is
+specified as fine as long as it's not dereferenced, but a pointer to
+the element before the first one is not mentioned and thus undefined.)
+
+Do you really need the ">=3D" instead of ">"?
+
+> +
+> +		match =3D path_matches_pattern_list(path, end - path,
+> +				slash >=3D path ? slash + 1 : path, &dtype,
+> +				istate->sparse_checkout_patterns, istate);
+> +
+> +		/* We are going to match the parent dir now */
+> +		dtype =3D DT_DIR;
+> +	}
+> +	return match > 0;
+>  }
+>
+>  int path_in_sparse_checkout(const char *path,
