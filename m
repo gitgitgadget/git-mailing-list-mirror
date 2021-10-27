@@ -2,242 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E13C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93C95C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 542B060E54
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:27:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7553C60F0F
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242108AbhJ0N3u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 09:29:50 -0400
-Received: from mout.kundenserver.de ([217.72.192.75]:51451 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238115AbhJ0N3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 09:29:43 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MTAJl-1mETag3anP-00Ua0z; Wed, 27 Oct 2021 15:27:05 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id CD2E51E01E7;
-        Wed, 27 Oct 2021 13:27:04 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id MKKWHz3m1be2; Wed, 27 Oct 2021 15:27:04 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (19-usr-pf-main.vpn.it.cetitec.com [10.8.5.19])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 48D2C1E01E6;
-        Wed, 27 Oct 2021 15:27:04 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from local account)
-Date:   Wed, 27 Oct 2021 15:27:03 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Remove negation from the merge option "--no-verify"
-Message-ID: <YXlTpzrY7KFqRlno@pflmari>
-References: <YXfwanz3MynCLDmn@pflmari>
- <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
- <YXlBhmfXl3wFQ5Bj@pflmari>
- <YXlD5ecNSdeBSMoS@coredump.intra.peff.net>
+        id S235710AbhJ0Nay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 09:30:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57954 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242146AbhJ0Nax (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 09:30:53 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7054CC061745
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 06:28:28 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 131-20020a1c0489000000b0032cca9883b5so4985067wme.0
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 06:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9g+YisL1AWwI4sDGK9QbgPnwxr2qu5wWAHHbu+l1rKY=;
+        b=PFBoiPRgEhtTUD+MA34VlnGUQ+hJOEcXKm0ICr6d6BfHkjTLjvRpxjzNCvaBrBYnAv
+         dHWim3+iyaSY/gq9oB0+gdBK2OXS8hxtVd0x07QK5N3dmrc9+gq5Eb3MKeM7EJmZnzhS
+         fOKXQVNksftRkcDdh92qHbX08es0q0oOfBukQ8BDjQRBzfa6OV8BVGX5rGiKwDY1Q0WM
+         JbEkgl0fTEYtlYn7msJPzfy5MjgR5xXHdNMt2esA6xLpbqtbqAUky5SuL9M2vjJF0fx3
+         6QTqGQRLC8qfGlAbrcofv/ywMb3+uiwwTPQCCJcp4C1twcJr3p6ZTxpsjRBdJ6Y7fIpD
+         RBtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9g+YisL1AWwI4sDGK9QbgPnwxr2qu5wWAHHbu+l1rKY=;
+        b=kJCBQYL1l9sY8R9U+3PBpgF43MEujtbkYvf52zRvfnc+LnBFMHmcAFufdwx9V9e+Ye
+         5Luz8JYrluCh4/KpySCG1qJs4BxCUg75EBTals9KzPnzbRktl6gbTeMn6mpbXIqHSKMp
+         xJWn/WF/0AFuRQQqc0IsVHYSLYazzB8HLRywqg7ZHd82PbPn8tKfW1451qP9BwBk68LB
+         N1gh0KBBKUay8hXvobg55UhdQswL6zQ3/3IfxHrE8ZqIm1vE2YeMwdEtX8yvzmTiAp1S
+         xLka4dC0lldTXI45EcnxlCaYhgOw5XyQf1j/WKZmqpN+PXnC8KsKh8o6z3JHtfyvVRfh
+         BUoQ==
+X-Gm-Message-State: AOAM532cT4qIvQ2PPXsEqU63rxFv+NJG0nvkf1d2x+EJagnPvKJL/aYE
+        kMNSLYFuhoWt40+xDS3EBT8=
+X-Google-Smtp-Source: ABdhPJwe3gG17w2839i4N8haFPdjzyWnxXWchJUCvFOXg2rSUTkdRdT9d+VdVRjN11c1Z8ex2VHEmA==
+X-Received: by 2002:a05:600c:1c21:: with SMTP id j33mr5632315wms.163.1635341307082;
+        Wed, 27 Oct 2021 06:28:27 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id t3sm3327536wma.38.2021.10.27.06.28.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Oct 2021 06:28:26 -0700 (PDT)
+Message-ID: <d359c8a6-412f-98eb-8509-15267cdb0988@gmail.com>
+Date:   Wed, 27 Oct 2021 14:28:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YXlD5ecNSdeBSMoS@coredump.intra.peff.net>
-X-Provags-ID: V03:K1:nYagFg//Bc47WcmTEDei6G8fm+ShMvKntnqfZJknYFRkSPAbP82
- fiUpSjjIZC4TNzF30vwWKgSKGjhfYG7HjwZnRQK0LR50rhF79aWnXiQ3l7QR/VmqXS/A7yJ
- 6Bhklg2TLllyDum5DbCpQ/Ws9IniJKzdV/nv5wSu9ZCRrizt9AnDwBm+dBK4nQhS6QF4zzV
- VEvJUFQQfF1RwJDQL+V3Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a2vdNFgsAaU=:oQD1S3sTiNhh3x7Rvs5/X6
- WTOBujPI5UfGtCN9BuEyQs9LA6PxaOK6qAyckyxyK+ePjm8xJTX6YUjJgTWdvX3ApbpWkjjLJ
- hBdtcumOgNCUtOxvuiWgr0GNV4ES3ona4HvATuZOF9NuCQNf1gpRdQ2VtWY5kWse7hSE8SD01
- npSIi/GNvayR0gHg7pVaiOeIzoxWieEX/MN0E6y3FUtscJT3H/ZfldDw36NaGvCXLyboQwltH
- JnV+YDspw44Bd62enmhfatuWKAVNnEhOQS+X2WJqotuxRneJtBX42dtIBm0GEJWO81dkvCVgZ
- ImTaLUxUIY+U0EJukmFMM+kGp5fWrz5RF6nY4aI6rBSW4klOxlFX94jKcFsY1zRN2jkKKuBNV
- e1gJPvf8lkOmntpeUkVmmq7jpEsyUDjrQ1kQXJh/Ss/isFRFeQWj3wVoQ+od2OrUvgkx7LZgh
- dWQrXcUY8U4sg0NnhQOu+vWjCYeHBHsjd3o7QpKqvDSZXVDxuuwYdaTS6ndktrcdMGcNs7QYH
- 4uwGT0rw/A3ezPEQcLhDoUeqXHql2BueWqm6tpAdKBzk/F80q/CNjStap/aM9ZGfpYmbRs6rt
- PjlLtJbgM/BXHEVuS/DGybZUyVU6+dakd8opr+xYF0YdRVvPjIVKNPE0+T6ol+rJEJg1u56OV
- 7jE8pURFoeFfVMShAC1you4aMPK0E1wPCSvSpLRZJMW3OKDmcob3qbTxtWSllh8xx+uTTV3CH
- pfmQqO8z8eFPcG6V
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 00/15] diff --color-moved[-ws] speedups
+Content-Language: en-GB-large
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
+ <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alex Riesen <raa.lkml@gmail.com>
+On 27/10/2021 13:04, Phillip Wood via GitGitGadget wrote:
+ > [...]
+>   * Patches 1-3 are new and fix an existing bug.
 
-This allows re-enabling hooks disabled by an earlier "--no-verify"
-in command-line and makes the interface more consistent.
+Sorry that should be "Patches 2-4"
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+>[...]
+> The bug fix in patch 3 degrades the performance, but by the end of the
+> series the timings are the same as V2 - see the range diff.
 
----
+It is patch 4 that degrades the performance, not patch 3
 
-This one is on top of "[PATCH] Fix "commit-msg" hook unexpectedly called for
-"git pull --no-verify" (http://public-inbox.org/git/YXfwanz3MynCLDmn@pflmari/).
-Which is a bit awkward. Should I resend as series?
+Best Wishes
 
-Jeff King, Wed, Oct 27, 2021 14:19:49 +0200:
-> On Wed, Oct 27, 2021 at 02:09:42PM +0200, Alex Riesen wrote:
-> > Jeff King, Tue, Oct 26, 2021 23:16:09 +0200:
-> > > On Tue, Oct 26, 2021 at 02:11:22PM +0200, Alex Riesen wrote:
-> > > I was going to ask whether this should be passing through "verify", and
-> > > allowing its "no-" variant, but there is no "--verify" in git-merge.
-> > > Arguably there should be (for consistency and to countermand an earlier
-> > > --no-verify), but that is outside the scope of your fix (sadly if
-> > > somebody does change that, they'll have to remember to touch this spot,
-> > > too, but I don't think it can be helped).
-> > 
-> > This seems simple enough, though. Like this?
-> > 
-> > [PATCH] Remove negation from the merge option "--no-verify"
-> > 
-> > This allows re-enabling hooks disabled by an earlier "--no-verify"
-> > in command-line and makes the interface more consistent.
-> 
-> Yeah, I don't see any problems in the patch below, and I agree it makes
-> things overall nicer (both the user-facing parts, and not having to see
-> the double-negative "!no_verify" in the code).
-
-Ok, resending it formally.
-
-> > diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> > index 80d4831662..54cd3b04df 100644
-> > --- a/Documentation/merge-options.txt
-> > +++ b/Documentation/merge-options.txt
-> > @@ -112,8 +112,9 @@ option can be used to override --squash.
-> >  +
-> >  With --squash, --commit is not allowed, and will fail.
-> >  
-> > ---no-verify::
-> > -	This option bypasses the pre-merge and commit-msg hooks.
-> > +--[no-]verify::
-> > +	With `--no-verify`, bypass the pre-merge and commit-msg hooks,
-> > +	which will be run by default.
-> 
-> This "which will be run by default" is a little awkward. Maybe:
-> 
->   By default, pre-merge and commit-msg hooks are run. When `--no-verify`
->   is given, these are bypassed.
-> 
-> ?
-
-Of course. It certainly reads better like this.
-
- Documentation/git-merge.txt     |  2 +-
- Documentation/merge-options.txt |  5 +++--
- builtin/merge.c                 | 12 ++++++------
- builtin/pull.c                  | 12 ++++++------
- 4 files changed, 16 insertions(+), 15 deletions(-)
-
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 3819fadac1..324ae879d2 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
--	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
-+	[--[no-]verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
- 	[--[no-]allow-unrelated-histories]
- 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
- 'git merge' (--continue | --abort | --quit)
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 80d4831662..f8016b0f7b 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -112,8 +112,9 @@ option can be used to override --squash.
- +
- With --squash, --commit is not allowed, and will fail.
- 
----no-verify::
--	This option bypasses the pre-merge and commit-msg hooks.
-+--[no-]verify::
-+	By default, pre-merge and commit-msg hooks are run. When `--no-verify`
-+	is given, these are bypassed.
- 	See also linkgit:githooks[5].
- 
- -s <strategy>::
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9d5359edc2..ab5c221234 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -83,7 +83,7 @@ static int default_to_upstream = 1;
- static int signoff;
- static const char *sign_commit;
- static int autostash;
--static int no_verify;
-+static int verify = 1;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -290,7 +290,7 @@ static struct option builtin_merge_options[] = {
- 	OPT_AUTOSTASH(&autostash),
- 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
- 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
--	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge-commit and commit-msg hooks")),
-+	OPT_BOOL(0, "verify", &verify, N_("control use of pre-merge-commit and commit-msg hooks")),
- 	OPT_END()
- };
- 
-@@ -822,7 +822,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *index_file = get_index_file();
- 
--	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
-+	if (verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
- 		abort_commit(remoteheads, NULL);
- 	/*
- 	 * Re-read the index as pre-merge-commit hook could have updated it,
-@@ -858,9 +858,9 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 			abort_commit(remoteheads, NULL);
- 	}
- 
--	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
--					  "commit-msg",
--					  git_path_merge_msg(the_repository), NULL))
-+	if (verify && run_commit_hook(0 < option_edit, get_index_file(),
-+				      "commit-msg",
-+				      git_path_merge_msg(the_repository), NULL))
- 		abort_commit(remoteheads, NULL);
- 
- 	read_merge_msg(&msg);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 428baea95b..e783da10b2 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -84,7 +84,7 @@ static char *opt_edit;
- static char *cleanup_arg;
- static char *opt_ff;
- static char *opt_verify_signatures;
--static char *opt_no_verify;
-+static char *opt_verify;
- static int opt_autostash = -1;
- static int config_autostash;
- static int check_trust_level = 1;
-@@ -161,9 +161,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
- 		N_("abort if fast-forward is not possible"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
--	OPT_PASSTHRU(0, "no-verify", &opt_no_verify, NULL,
--		N_("bypass pre-merge-commit and commit-msg hooks"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+	OPT_PASSTHRU(0, "verify", &opt_verify, NULL,
-+		N_("control use of pre-merge-commit and commit-msg hooks"),
-+		PARSE_OPT_NOARG),
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-@@ -692,8 +692,8 @@ static int run_merge(void)
- 		strvec_pushf(&args, "--cleanup=%s", cleanup_arg);
- 	if (opt_ff)
- 		strvec_push(&args, opt_ff);
--	if (opt_no_verify)
--		strvec_push(&args, opt_no_verify);
-+	if (opt_verify)
-+		strvec_push(&args, opt_verify);
- 	if (opt_verify_signatures)
- 		strvec_push(&args, opt_verify_signatures);
- 	strvec_pushv(&args, opt_strategies.v);
--- 
-2.33.0.22.g8cd9218530
-
+Phillip
