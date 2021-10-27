@@ -2,515 +2,287 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB457C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 873F5C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:11:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3BCC61039
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 635C960296
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240535AbhJ0TGT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 15:06:19 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39779 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231620AbhJ0TGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 15:06:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635361431;
-        bh=yVM4e/8UNBAy37TBdbIHD5SzJHH5gJuFWAOilOmJ9co=;
-        h=X-UI-Sender-Class:To:From:Subject:Date;
-        b=ctqYSIOfenRNBOE+CyR8dmQqvhHjGDS6dQhT/+VtsmTot570IB1ci1aUV8E9eyrDr
-         0nYg4O76BfZ4HUKipGnAc/C1mj/J+EhqRMqxNEP4gob01Y1v8mBRX8+PJLRSOb5vHf
-         EVb67DMXiJBzPQjuZPjeqzokebO+ccsj/9LfhjSc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.9.46] ([62.202.180.250]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mwwdf-1mr2T62qGx-00yOr9 for
- <git@vger.kernel.org>; Wed, 27 Oct 2021 21:03:51 +0200
-To:     Git Mailinglist <git@vger.kernel.org>
-From:   Peter Hunkeler <phunsoft@gmx.net>
-Subject: Git not commiting anything if file created and "git add"ed in
- pre-commit hook is the only file in the staging area
-Message-ID: <0165d68f-79a7-d8b7-1bba-89a1449e87a7@gmx.net>
-Date:   Wed, 27 Oct 2021 21:03:49 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S240590AbhJ0TOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 15:14:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240552AbhJ0TOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 15:14:21 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A345C061570
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 12:11:55 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z20so14816503edc.13
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 12:11:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=p0VZ69z3Wx+828/LZY3P8xp482ibkzPJIZT6CSdyUI0=;
+        b=baxAX1bia2qULnPIVMWDVmExtU4gzA2/0tywt+dmlw04jQC7KGbbuVvVRTe5bUKc7N
+         d90EVMjtloSSzgFivnxKfaQ4A9+l3PTr50KwsnXJkOs5K8WIfblh49zKegMx1NkGI7K5
+         TUsg5Tv8jNTVQZNTWRMlTUpu41myEsB+ItgBkP7LruI/aXeD/E5yCwvvxq189n/di2Z7
+         0s0LXbTxs25NVJ0/PdtBJTY5v1UaAEQYRM31N4OLDsk2EOiH64tPnnJmm+EYzeI8vzLR
+         Y3Y74IIfWMOogX9PE422k0SvH9l4A6b3xY4Tuw/WijNIAYVcyPezC+zb0KR9VAhtwe3C
+         B4xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=p0VZ69z3Wx+828/LZY3P8xp482ibkzPJIZT6CSdyUI0=;
+        b=HZdjGV2c3ynnST8MhAxQPBZXgPzNowuW7ZR37bXfTdOw2Ic40SnH5qCESTqlxqSVGh
+         c0qY0JCqAOF0UPN0GpXXLVVg2I8RnyNP+OxIzbnMXAh0+wizb86XXIcpnL7p8rPDrfBd
+         PVPllQ+CS+CD7BZ6HfSkLscShZ0Rizfv6fNPIIMC5e7rOC9JO3xhUEkwNhelm74kSQxP
+         bKYch963CVSuszEilwgKY/g2bIGoIRtbbizIKEWOZIn6OLX+KfY05asFLILCE69747vM
+         /SyAfW0QQWIGOp6vHu3trQg1zlSBHJMqlBBCgTQXsMsHRVanu7C60hOdbLwK1/MdvLts
+         RWSQ==
+X-Gm-Message-State: AOAM533KnKGyuoMIAEVAV+6mZ8ZULoX1BKC49cN9ld3Ec+Bzihn/sPC6
+        9EJLNMlsDVWhtMWaa9XHdOTFc0OJeCA=
+X-Google-Smtp-Source: ABdhPJycq36crGEjD6QMog7odf+6+VD1hta/wrtTW9Tbti5hxNAQtP7OtX6gqThG9C6FQY9RXv1rbQ==
+X-Received: by 2002:a17:906:248f:: with SMTP id e15mr38852928ejb.541.1635361913542;
+        Wed, 27 Oct 2021 12:11:53 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id qf38sm377459ejc.116.2021.10.27.12.11.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 12:11:53 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mfoL2-0021G6-5V;
+        Wed, 27 Oct 2021 21:11:52 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Albert Cui <albertqcui@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        "Robin H . Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH 2/3] protocol v2: specify static seeding of clone/fetch
+ via "bundle-uri"
+Date:   Wed, 27 Oct 2021 20:01:47 +0200
+References: <cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com>
+ <patch-2.3-3ac0539c053-20211025T211159Z-avarab@gmail.com>
+ <7fab28bf-54e7-d0e9-110a-53fad6244cc9@gmail.com>
+ <211027.86r1c6yh52.gmgdl@evledraar.gmail.com>
+ <756524c1-a3b9-29b5-bb72-f75a0c76ea1f@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <756524c1-a3b9-29b5-bb72-f75a0c76ea1f@gmail.com>
+Message-ID: <211027.86ilxixoxz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-X-Provags-ID: V03:K1:E4fw98v29D4k5tdWHsxtCalZSZ9Wa80IbaZkxnxwhUHjjqUosn1
- dax9qP8+MMoSmxp88vAnT2/O8UO/WXH3J2+mVcGmknvNCRqexm7lFt/IWY0T3rDmEjY+yF7
- 1HmUUZt7B8xYiaAeRSmqEH14RRGjaJoU+8F6BZGYktkA4zPS5oydhoANsakRI3z3lZaWQQ0
- +Akp5Voi0+QwsTrCJUQ4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/cFhET45ZpI=:3NHMoLeYupZfKGTihBo7Z1
- O1zlmC9fkSl1n7MB9joClN7Dq/glrfKjZqhO6yVjGP3lfrD8aTW33qhH7v8Ho0cxct/RkAnJH
- XWKcBM7LOuV7D4I6mykK2N0tBssg9WtXMmsBY7gGHrUCIOB0D14dB/zVRN3DEOj7T/Nk9G0zt
- ITlRatMbhfiJsaaBHgq11JQz6ykh2Q1Cbi9iWXWXunkSfkXhfCLasmQ+huKGjoepeK+qho51T
- rhyH/d1Al77n0t9DbrZLhsPueZWm0hwpw1Q/7oSOmNgNdZS4YgiXKl3s3bMytK878NJwO6E5W
- nPN5o5CFxK05PRQRbzpy+WkPr8aZ8bKvCPL0wn7kVLPMyqyDisransoia94wrM5SFUdDVvXTP
- emAMkpoQr7pgxFWLn45M6o0UMp0q+/Y3CK9a+8G1n162CcRzSLDaMWdJRfpR3A9mjAYdmN7Yk
- or73Wd93x6prc+TWnEucHPi3vEU0maoZIpaVjtMOiNxuqmvBiTek3f1Qc/c50UcKSJPlfXg99
- FBqzMKKFPSftVtN22/a2aSOrm+etRfLyZZP1f9KZRFWh/GkisoZlYoLaKH+QW3Bt8uzV9G7pz
- vwnGa9VV7J5eln4imdD1Sg665ApURPvpJSDSYWE1CA9wmpCiUr0Gybt3IbDnBphyQQg1Lccpu
- CsTUG48KnKT+lMRalFf/fsJxdnI6vO+APWkLnFsBQkzEKYujtXAdAzClWjhsdZQdiiasDnm2K
- YtRoFemrrNNXvSApv+UXYsgXabCt58cAg7Rv0geCGMb4GngYhBBU+XNTSFJdV8BSNarytfCb8
- zfY3iqux0Fr3Nlp/mf9/VrPK0kzgvtgyI5nAjov5ANtlsvo4mqwIp4bY7PnaOXT87kdBee6SL
- S9WaqAylo4G8V2WJlH2O6fErFxIDWlXD/vfXsoCPilJJ1xCbCltD13j93BFXjijr4A9Yrct7Z
- 8nBroN2EliWuIN/Yoaez3MZCmdMxAMxj/emagEe0GlJELtKIvF8R3lnHeXozdMDXpuzy0Ik53
- 9cBv9CtFQESntiydWI3S+z4bTGs9UW2f5FS0Z5O/13x567/pKArwKvUOFTPBM4RujcVDHMIfa
- JLUN2xL7E/Nibk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Git seems to behave inconsistently when creating and "git add"ing
-content (files) from within a pre-commit hook. It claims there is
-"nothing to commit", if the stating area was empty before the commit
-command. Otherwise, the new content becomes part of the commit. See
-details on how to reproduce and a log of the individual steps below.
 
-Regards
-Peter
-
-
-=3D=3D=3D Amended Git bug report
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-I'm quite new to using git, so please bear with me should I mix up some
-terminology.
-
-I need some new file to be created at each commit. The new file must
-become part of the commit.
-I thought a git pre-commit hook would be the appropriate place. While
-the file is created as desired,
-git does *not* include this new file in the commit, when there is
-nothing else in the staging area. It
-reports the new file as being untracked, and says nothing added to
-commit. A git status immediately
-thereafter does, however, show the new file in the staging area. If I
-run another commit just now, another
-new file is created as expected, but this time, git adds them both to
-the commit. This can be reliably
-reproduced by repeating 'git commit -m "empty"', and every second time,
-the commit is done.
-
-Further testing shows that the newly created file *is* added to the
-commit, *if* at least one other change
-was registered to be commited (git add some time before the git commit).
-
-Same behaviour, if two files are created and added withing the
-pre-commit hook. Both files are added to
-the commit only every second time, or if some other change does exist in
-the staging area before the commit
-command.
-
-The git pre-commit hook looks like this (indented for readability, only):
- =C2=A0=C2=A0=C2=A0 #!/bin/bash
- =C2=A0=C2=A0=C2=A0 fn=3D"folder1\folder1_file3_$(date +%Y%m%d_%H%M%S).txt=
-"
- =C2=A0=C2=A0=C2=A0 echo "some text" > $fn
- =C2=A0=C2=A0=C2=A0 git add $fn
-
-Note: This testing was done on Windows 10, but initially, I detected
-this on a server running Linux.
-
-
-
-
-
-
-What did you expect to happen? (Expected behavior)
-
-I expect the file created and added from within the git pre-commit hook
-to become part of the commit
-no matter whether there are or aren't any other changes in the staging
-are, i.e. added beforehand.
-
-
-
-
-What happened instead? (Actual behavior)
-
-File created and 'git added' from within the pre-commit hook shell
-script is *not* added to the current
-commit, if there are no other changes in the staging area.
-
-The behaviour is inconsistent. If it is allowed to do a "git add" from
-within a pre-commit hook (is it allowed?),
-then file added must become part of the commit irrespective of whether
-or not there are other changes in the
-staging area that have been there *before* the commit command was
-issued. Else git should reject the "git add"
-(and other commands) from within the pre-commit hook.
-
-What's different between what you expected and what actually happened?
-
-see above,
-
-
-
-
-
-
-Anything else you want to add:
-
-I'm adding the log from a terminal session where I reproduce the
-behaviour below, limited by a line
-of '=3D' signs. Individual commands are separated by a line of '-' signs
-with a comment what the next step
-will be.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-
-=2D-- content of directory before git init
-=2D--------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ ls -lR
-.:
-total 6
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file1.txt
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file2.txt
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:19 folder1/
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:16 git-hook-saved/
-
-./folder1:
-total 2
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:58 folder1_file1.txt
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:58 folder1_file2.txt
-
-./git-hook-saved:
-total 1
--rwxr-xr-x 1 Peter 197121 111 Oct 25 14:21 pre-commit*
-
-
-=2D-- git init
-=2D----------------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing
-$ git init
-Initialized empty Git repository in D:/Temp/git-testing/.git/
-
-
-=2D-- git initial status
-=2D------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-
-No commits yet
-
-Untracked files:
- =C2=A0 (use "git add <file>..." to include in what will be committed)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 file1.txt
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 file2.txt
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 folder1/
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git-hook-saved/
-
-nothing added to commit but untracked files present (use "git add" to trac=
-k)
-
-
-=2D-- adding all initial data to the staging area
-=2D--------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git add "*"
-
-
-=2D-- commiting initial data
-=2D-----------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "initial commit"
-[master (root-commit) 4daefe7] initial commit
- =C2=A05 files changed, 12 insertions(+)
- =C2=A0create mode 100644 file1.txt
- =C2=A0create mode 100644 file2.txt
- =C2=A0create mode 100644 folder1/folder1_file1.txt
- =C2=A0create mode 100644 folder1/folder1_file2.txt
- =C2=A0create mode 100644 git-hook-saved/pre-commit
-
-
-=2D-- Show status after initial commit
-=2D----------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-nothing to commit, working tree clean
-
-
-=2D-- Install git pre-commit hook, then do an empty commit
-=2D------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "empty 1"
-warning: LF will be replaced by CRLF in
-folder1/folder1_file3_20211025_142454.txt.
-The file will have its original line endings in your working directory
-On branch master
-Untracked files:
- =C2=A0 (use "git add <file>..." to include in what will be committed)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 folder1/folder1_file3_20211025=
-_142454.txt
-
-nothing added to commit but untracked files present (use "git add" to trac=
-k)
-
-
-=2D-- Show whats in the file system at this point in time
-=2D------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ ls -lR
-.:
-total 6
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file1.txt
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file2.txt
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:24 folder1/
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:16 git-hook-saved/
-
-./folder1:
-total 3
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file1.txt
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file2.txt
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:24 folder1_file3_20211025_142454.tx=
-t
-
-./git-hook-saved:
-total 1
--rwxr-xr-x 1 Peter 197121 111 Oct 25 14:21 pre-commit
-
-
-=2D-- What is the status of git? The "add" from the hook did
-work!------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-Changes to be committed:
- =C2=A0 (use "git restore --staged <file>..." to unstage)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 new file:=C2=A0=C2=A0 folder1/=
-folder1_file3_20211025_142454.txt
-
-
-=2D-- Immediately do another (not really empty) git commit
-=2D------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "empty 2"
-warning: LF will be replaced by CRLF in
-folder1/folder1_file3_20211025_142554.txt.
-The file will have its original line endings in your working directory
-[master e9809aa] empty 2
- =C2=A02 files changed, 2 insertions(+)
- =C2=A0create mode 100644 folder1/folder1_file3_20211025_142454.txt
- =C2=A0create mode 100644 folder1/folder1_file3_20211025_142554.txt
-
-
-=2D-- Show whats in the file system at this point in time
-=2D------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ ls -lR
-.:
-total 6
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file1.txt
--rw-r--r-- 1 Peter 197121 9 Oct 25 13:55 file2.txt
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:25 folder1/
-drwxr-xr-x 1 Peter 197121 0 Oct 25 14:16 git-hook-saved/
-
-./folder1:
-total 4
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file1.txt
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file2.txt
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:24 folder1_file3_20211025_142454.tx=
-t
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:25 folder1_file3_20211025_142554.tx=
-t
-
-./git-hook-saved:
-total 1
--rwxr-xr-x 1 Peter 197121 111 Oct 25 14:21 pre-commit
-
-
-=2D-- Once more, this time really an "empty" commit again.
-=2D-----------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "empty 3"
-warning: LF will be replaced by CRLF in
-folder1/folder1_file3_20211025_142645.txt.
-The file will have its original line endings in your working directory
-On branch master
-Untracked files:
- =C2=A0 (use "git add <file>..." to include in what will be committed)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 folder1/folder1_file3_20211025=
-_142645.txt
-
-nothing added to commit but untracked files present (use "git add" to trac=
-k)
-
-
-=2D-- Show the status, same behaviour again.
-=2D--------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-Changes to be committed:
- =C2=A0 (use "git restore --staged <file>..." to unstage)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 new file:=C2=A0=C2=A0 folder1/=
-folder1_file3_20211025_142645.txt
-
-
-=2D-- Yet another commit immediately thereafter
-=2D--------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "empty 4"
-warning: LF will be replaced by CRLF in
-folder1/folder1_file3_20211025_142659.txt.
-The file will have its original line endings in your working directory
-[master 032a58e] empty 4
- =C2=A02 files changed, 2 insertions(+)
- =C2=A0create mode 100644 folder1/folder1_file3_20211025_142645.txt
- =C2=A0create mode 100644 folder1/folder1_file3_20211025_142659.txt
-
-
-=2D-- Status?
-=2D--------------------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-nothing to commit, working tree clean
-
-
-=2D-- Content of filesystem
-=2D--------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ ls -lR
-.:
-total 7
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:55 file1.txt
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:55 file2.txt
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:27 file3.txt
-drwxr-xr-x 1 Peter 197121=C2=A0 0 Oct 25 14:28 folder1/
-drwxr-xr-x 1 Peter 197121=C2=A0 0 Oct 25 14:16 git-hook-saved/
-
-./folder1:
-total 7
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file1.txt
--rw-r--r-- 1 Peter 197121=C2=A0 9 Oct 25 13:58 folder1_file2.txt
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:24 folder1_file3_20211025_142454.tx=
-t
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:25 folder1_file3_20211025_142554.tx=
-t
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:26 folder1_file3_20211025_142645.tx=
-t
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:26 folder1_file3_20211025_142659.tx=
-t
--rw-r--r-- 1 Peter 197121 10 Oct 25 14:28 folder1_file3_20211025_142815.tx=
-t
-
-./git-hook-saved:
-total 1
--rwxr-xr-x 1 Peter 197121 111 Oct 25 14:21 pre-commit
-
-
-=2D-- Creating a new file outside of hook
-=2D-------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ echo "some text" > file3.txt
-
-
-=2D-- Git status?
-=2D-----------------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-Untracked files:
- =C2=A0 (use "git add <file>..." to include in what will be committed)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 file3.txt
-
-nothing added to commit but untracked files present (use "git add" to trac=
-k)
-
-
-=2D-- Adding the new file to the staging area
-=2D-----------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git add *
-warning: LF will be replaced by CRLF in file3.txt.
-The file will have its original line endings in your working directory
-
-
-=2D-- Status again
-=2D---------------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-Changes to be committed:
- =C2=A0 (use "git restore --staged <file>..." to unstage)
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 new file:=C2=A0=C2=A0 file3.tx=
-t
-
-
-=2D-- Committing the new file (and the one created by the pre-commit hook)
-=2D-------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git commit -m "one new file present"
-warning: LF will be replaced by CRLF in
-folder1/folder1_file3_20211025_142815.txt.
-The file will have its original line endings in your working directory
-[master 4ea47ec] one new file present
- =C2=A02 files changed, 2 insertions(+)
- =C2=A0create mode 100644 file3.txt
- =C2=A0create mode 100644 folder1/folder1_file3_20211025_142815.txt
-
-
-=2D-- Status?
-=2D-------------------------------------------------------------------
-Peter@MySystem MINGW64 /d/Temp/git-testing (master)
-$ git status
-On branch master
-nothing to commit, working tree clean
-
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-
-
-
-
-
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.32.0.windows.2
-cpu: x86_64
-built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19042
-compiler info: gnuc: 10.3
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Programme
-Non-UAC\Git\usr\bin\bash.exe
-
-
-[Enabled Hooks]
-pre-commit
-
+On Wed, Oct 27 2021, Derrick Stolee wrote:
+
+> On 10/27/2021 4:29 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Tue, Oct 26 2021, Derrick Stolee wrote:
+>>=20
+>>> On 10/25/2021 5:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>> Add a server-side implementation of a new "bundle-uri" command to
+>>>> protocol v2. As discussed in the updated "protocol-v2.txt" this will
+>>>> allow conforming clients to optionally seed their initial clones or
+>>>> incremental fetches from URLs containing "*.bundle" files created with
+>>>> "git bundle create".
+>>>
+>>> ...
+>>>
+>>>> +DISCUSSION of bundle-uri
+>>>> +^^^^^^^^^^^^^^^^^^^^^^^^
+>>>> +
+>>>> +The intent of the feature is optimize for server resource consumption
+>>>> +in the common case by changing the common case of fetching a very
+>>>> +large PACK during linkgit:git-clone[1] into a smaller incremental
+>>>> +fetch.
+>>>> +
+>>>> +It also allows servers to achieve better caching in combination with
+>>>> +an `uploadpack.packObjectsHook` (see linkgit:git-config[1]).
+>>>> +
+>>>> +By having new clones or fetches be a more predictable and common
+>>>> +negotiation against the tips of recently produces *.bundle file(s).
+>>>> +Servers might even pre-generate the results of such negotiations for
+>>>> +the `uploadpack.packObjectsHook` as new pushes come in.
+>>>> +
+>>>> +I.e. the server would anticipate that fresh clones will download a
+>>>> +known bundle, followed by catching up to the current state of the
+>>>> +repository using ref tips found in that bundle (or bundles).
+>>>> +
+>>>> +PROTOCOL for bundle-uri
+>>>> +^^^^^^^^^^^^^^^^^^^^^^^
+>>>> +
+>>>> +A `bundle-uri` request takes no arguments, and as noted above does not
+>>>> +currently advertise a capability value. Both may be added in the
+>>>> +future.
+>>>
+>>> One thing I realized was missing from this proposal is any interaction
+>>> with partial clone. It would be disappointing if we could not advertise
+>>> bundles of commit-and-tree packfiles for blobless partial clones.
+>>>
+>>> There is currently no way for the client to signal the filter type
+>>> during this command. Not having any way to extend to include that
+>>> seems like an oversight we should remedy before committing to a
+>>> protocol that can't be extended.
+>>>
+>>> (This also seems like a good enough reason to group the URIs into a
+>>> struct-like storage, because the filter type could be stored next to
+>>> the URI.)
+>>=20
+>> I'll update the docs to note that. I'd definitely like to leave out any
+>> implementation of filter/shallow for an initial iteration of this for
+>> simplicity, but the protocol keyword/behavior is open-ended enough to
+>> permit any extension.
+>
+> It would be good to be explicit about how this would work. Looking at
+> it fresh, it seems that the server could send multiple bundle URIs with
+> the extra metadata to say which ones have a filter (and what that filter
+> is). The client could then check if a bundle matches the given filter.
+>
+> But this is a bit inverted: the filter mechanism currently has the client
+> request a given filter and the server responds with _at least_ that much
+> data. This allows the server to ignore things like pathspec-filters or
+> certain size-based filters. If the client just ignores a bundle URI
+> because it doesn't match the exact filter, this could lead the client to
+> ask for the data without a bundle, even if it would be faster to just
+> download the advertised bundle.
+>
+> For this reason, I think it would be valuable for the client to tell
+> the server the intended filter, and the server responds with bundle
+> URIs that contain a subset of the information that would be provided
+> by a later fetch request with that filter.
+>
+>> I.e. the server can start advertising "bundle-uri=3Dshallow", and future
+>> clients can request arbitrary key-value pairs in addition to just
+>> "bundle-uri" now.
+>>=20
+>> Having said that I think that *probably* this is something that'll never
+>> be implemented, but maybe I'll eat my words there.
+
+I didn't mean to elide past "filter", but was just using "shallow" as a
+short-hand for one thing in the "fetch" dialog that a client can mention
+that'll impact PACK generation, just like filter.
+
+Having thought about this a bit more, I think it should be an invariant
+in any bundle-uri design that the server shouldn't communicate any
+side-channel information whatsoever about a bundle it advertises, if
+that information can't be discovered in the header of that bundle file.
+
+Mind you, this means throwing out large parts of my current proposed
+over-the-wire design, but I think for the better. I.e. the whole
+response part where we communicate:
+
+    (bundle-uri (SP bundle-feature-key (=3Dbundle-feature-val)?)* LF)*
+    flush-pkt
+
+Would just become something like:
+
+    (bundle-uri delim-pkt bundle-header? delim-pkt)*
+    flush-pkt
+
+I.e. we'd optionally transfer the content of the bundle header (content
+up to the first "\n\n") to the client, but *only* ever as a shorthand
+for saving the client a roundtrip.
+
+The pointed-to bundle is still 100% the source of truth, and when
+retrieving the bundle-uri we'd ignore whatever "bundle-header" we got
+earlier (except insofar as we'd like to say emit a warning() if the two
+don't match).
+
+(I'd not thought too carefully about these shallow/filter etc. edge
+cases, my main intended use-case has been pre-seeding full clones, and
+having this feedback to make me think about it is very valuable).
+
+> You continue focusing on the shallow option, which I agree is not
+> important. The filter option, specifically --filter=3Dblob:none, seems
+> to be critical to have a short-term plan for implementing with this
+> in mind.
+
+Per the above this then just becomes a question of "how do we produce a
+bundle with those attributes?".
+
+I *think* that currently there isn't a way to do that, i.e. the PACK
+payload of a bundle is the output of "git pack-objects", but due to it
+including refs, tips and prerequisites.
+
+I don't think you can say "this bundle has no blobs". The
+"prerequisites" hard map to the same thing you could put on a
+"want/have" line during PACK negotiation.
+
+I think we could/should fix that, i.e. we can bump the bundle format
+version and have it encode some extended prerequisites/filter/shallow
+etc information. You'd then have a 1=3D1 match between the features of
+git-upload-pack and what you can transfer via the bundle side-channel.
+
+But the more I think about it, the more strongly I feel that we should
+always add that to the bundle *format*, and not as some side-channel
+information in this "bundle-uri" protocol keyword.
+
+To me *the* point of this feature is to have servers provide a shorthand
+for something that's been a well-established trick you can do today, and
+of which there are any number of pre-existing implementations.
+
+I'm not trying to break any new ground here, just make "git
+[fetch|clone]" support a well-known trick as a first-class feature via
+protocol v2.
+
+I'm not the first person to whip up some custom
+"git-clone-via-bundle.sh" that takes bundle URI(s) and a repo URI,
+wget's the bundle, calls "git bundle unbundle", updates ref tips, and
+then does a "git fetch".
+
+The benefit of making that a first-class protocol feature over a full
+negotiation is essentially synonymous with how it's easier in practice
+to widely deploy static assets on CDNs v.s. guaranteeing the same
+network locality, caching etc. when serving up the same payload by
+running a custom binary.
+
+One reason not to add any side-channel information not found in the
+bundle header(s) is that we can also guarantee that there won't be any
+feature gap between the "transfer.injectBundleURI" config key I've
+already got implemented (and is in the earlier RFC version of this
+series). I.e. you can do:
+
+    # You can specify this N number of times to inject N bundles
+    git clone \
+	-c transfer.injectBundleURI=3D"https://something.local/some-repo.bundle" \
+        https://example.com/some-repo.git
+
+To inject CDN support to any remote server that doesn't know about
+"bundle-uri", or add to the bundles of a server that does. That URI can
+even be a file:// if you add "-c fetch.uriProtocols=3Dfile".
+
+I realize that all of the above does *not* answer part of your question
+about filters, which I think I can accurately rephrase as:
+
+    Ok, so you can dump a static list of bundle URIs from config, but
+    that's always going to be a small list, what about the combinatorial
+    explosion arbitrary upload-pack options? Filters, shallow,
+    include-tag etc.
+
+My main answer to that is that YAGNI. If you need to spew out an URL for
+a PACK after a client describes any of its arbitrary wants, needs,
+filters etc. you've exactly re-invented what "packfile-uri" is today. I
+think that feature is very useful, and I've got no intention of trying
+to replace it.
+
+I think the sweet spot for "bundle-uri" is to advertise a small number
+of bundles that encompass common clone/fetch patterns. I.e. something
+like a bundle for a full clone with the repo data up to today, and maybe
+a couple of other bundles covering a time period that clients would be
+likely to incrementally update within, e.g. 1 week ago..today &&
+yesterday..now.
+
+I agree that adding say "full clone, --depth=3D1" and "full clone, no
+blobs" etc. to that might be *very* useful for some deployments, but per
+the above I think we should really add that to the bundle format first,
+not protocol v2.
