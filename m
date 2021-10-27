@@ -2,212 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B75FC433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48692C433FE
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:07:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F28F610A0
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:06:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2722360F38
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243779AbhJ0UIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 16:08:46 -0400
-Received: from siwi.pair.com ([209.68.5.199]:52719 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243776AbhJ0UIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 16:08:45 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 711553F4821;
-        Wed, 27 Oct 2021 16:06:19 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3E1F43F40FB;
-        Wed, 27 Oct 2021 16:06:19 -0400 (EDT)
-Subject: Re: [PATCH v4 29/29] t7527: test status with untracked-cache and
- fsmonitor--daemon
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
- <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
- <507020bbef08a02afc53815754cc999c390eb7c7.1634826309.git.gitgitgadget@gmail.com>
- <CAPig+cT1j6NsZaSM+_JgGksmH4XGsnh7Pe=dbELoBU+FisHGag@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d9c3ef61-768c-3560-2858-3438c355a742@jeffhostetler.com>
-Date:   Wed, 27 Oct 2021 16:06:18 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S243790AbhJ0UJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 16:09:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37196 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243784AbhJ0UJj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 16:09:39 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10509C061570
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 13:07:14 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id v17so3683470qtp.1
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 13:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=IgYqZq2uUvFZP1QbDjIf8QopiYbOQhiMdwNep92l6bs=;
+        b=idXqvxvq5TDApLdYZnpNet/QgyYJ+TQZkdxz8w3BHEmD5ulYyao6+XNn7GYhz5QM/h
+         1ytEi0cszrM5TkEQIVQ9/EIXEnz45hhc2Apw8sexCaVdrv/iL8ExdoUaI+kVoiX1Qq5n
+         3e3jLOclm7NBEvk3imKM/nKbkpUt1YYHMjMvFXqBEMjWkkGoNcvIaNyZcmJXSr3eB0Qi
+         AledEcaEIHeeOlTVjMWzpwU9PQJ9em8YhGr7lkRetFB2sTVvsptzg6Wc2RMdUjtO+3un
+         XgIsB5haseBWHr18onKUmzp/BSpnedw8a14voiCiJLc8OvB3uR6hexA6uANXHwYDPyrb
+         3KFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IgYqZq2uUvFZP1QbDjIf8QopiYbOQhiMdwNep92l6bs=;
+        b=vF9tRpnI9MOh9C2OTrXT/Ordrb8yQADF9pNnCqT7Eevxpx2TpIhhjHlMPKXEulWHUM
+         9KYhGXYGh86Zgc1sfsBGLwZAOk489O340aQecCaws8lpvm6fl3I8Z8OS+GsI7YU7ICNF
+         /bAvBLvXJMgQUiK1KcQdGy0zgilvpNNTJaeG4R2SdFl6JVgR/yRrIFF8La3Ug/PcJx50
+         YdQIW/KP1oL3hATYYvpYkyn2wvOfw6c5c65i8CB8o1Cq5/MXrkbHrfiDr9JmgCP/dyYe
+         9K54GwGHAednk/x8qIYWa23PuwoxpXONMWTdK6BzV1FnABRlnZjXZao4NoYjzg/qH6Z9
+         LE0w==
+X-Gm-Message-State: AOAM531QZo/u/jR02YLMiEglzKppHk4H0WXz8RC1e+78bk5y4rycoEzh
+        PYPGLZAqX8LR6akUoA7mY3cbdKzLXLE=
+X-Google-Smtp-Source: ABdhPJwcvLIHE7qKyHdvMbTP0gMV8Dnw2k9vJi1STP8KWN3wvwTmdRFKWf80OAXYwBd678wAJ//Gsg==
+X-Received: by 2002:a05:622a:1894:: with SMTP id v20mr31464911qtc.355.1635365233173;
+        Wed, 27 Oct 2021 13:07:13 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e44a:53c8:a196:8752? ([2600:1700:e72:80a0:e44a:53c8:a196:8752])
+        by smtp.gmail.com with ESMTPSA id d23sm575914qtm.11.2021.10.27.13.07.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Oct 2021 13:07:12 -0700 (PDT)
+Message-ID: <bf73e2d2-a2ab-8364-d505-1bd5bba3efd2@gmail.com>
+Date:   Wed, 27 Oct 2021 16:07:11 -0400
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cT1j6NsZaSM+_JgGksmH4XGsnh7Pe=dbELoBU+FisHGag@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH v3 2/3] sparse-index: add ensure_correct_sparsity function
 Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, Victoria Dye <vdye@github.com>
+References: <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
+ <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
+ <9d6511db0728e9880a96f3d9e3a025a9ddc5bc9e.1635358812.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <9d6511db0728e9880a96f3d9e3a025a9ddc5bc9e.1635358812.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/27/2021 2:20 PM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
 
+> +static int is_sparse_index_allowed(struct index_state *istate, int flags)
 
-On 10/22/21 1:23 AM, Eric Sunshine wrote:
-> On Thu, Oct 21, 2021 at 10:26 AM Jeff Hostetler via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
->> features and a series of edits and verify that status output is
->> identical.
->>
->> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
->> ---
->> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
->> @@ -508,4 +510,98 @@ test_expect_success 'cleanup worktrees' '
->> +test_lazy_prereq UNTRACKED_CACHE '
->> +       { git update-index --test-untracked-cache; ret=$?; } &&
->> +       test $ret -ne 1
->> +'
-> 
-> I may be missing something obvious, but can't this be expressed more simply as:
-> 
->      test_lazy_prereq UNTRACKED_CACHE '
->          git update-index --test-untracked-cache
->          test $? -ne 1
->      '
-> 
-> How significant is it to test specifically against 1? If not, then
-> even simpler would be:
-> 
->      test_lazy_prereq UNTRACKED_CACHE '
->          git update-index --test-untracked-cache
->      '
-> 
-> which is also more robust since it won't be fooled by die() or crashes.
-> 
+I agree this name is better.
 
-IIRC I stole that from t7063.  It didn't occur to me to try to
-simplify it.
+>  {
+> -	int test_env;
+> -	if (istate->sparse_index || !istate->cache_nr ||
+> -	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
+> +	if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
+>  		return 0;
+>  
+>  	if (!istate->repo)
+>  		istate->repo = the_repository;
+>  
+>  	if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
+> +		int test_env;
+> +
+>  		/*
+>  		 * The sparse index is not (yet) integrated with a split index.
+>  		 */
 
+Nice that most of the implementation comes over without showing
+up in the diff.
 
->> +test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
->> +       test_might_fail git config --unset core.useBuiltinFSMonitor &&
-> 
-> More idiomatic:
-> 
->      test_unconfig core.useBuiltinFSMonitor &&
-> 
+>  	if (!istate->sparse_checkout_patterns->use_cone_patterns)
+>  		return 0;
+>  
+> +	return 1;
+> +}
+> +
+> +int convert_to_sparse(struct index_state *istate, int flags)
+> +{
+> +	/*
+> +	 * If the index is already sparse, empty, or otherwise
+> +	 * cannot be converted to sparse, do not convert.
+> +	 */
+> +	if (istate->sparse_index || !istate->cache_nr ||
+> +	    !is_sparse_index_allowed(istate, flags))
+> +		return 0;
 
-Good to know, thanks!
-I'll take a look at this and the rest of your comments below.
+> +void ensure_correct_sparsity(struct index_state *istate)
+> +{
+> +	/*
+> +	 * If the index can be sparse, make it sparse. Otherwise,
+> +	 * ensure the index is full.
+> +	 */
+> +	if (is_sparse_index_allowed(istate, 0))
+> +		convert_to_sparse(istate, 0);
+> +	else
+> +		ensure_full_index(istate);
+> +}
 
-thanks
-Jeff
+These two methods become very simple. Excellent.
 
-
->> +       git update-index --no-fsmonitor &&
->> +       test_might_fail git fsmonitor--daemon stop
->> +'
->> +
->> +matrix_clean_up_repo () {
->> +       git reset --hard HEAD
->> +       git clean -fd
->> +}
-> 
-> Since calls to this function are part of the &&-chain in tests, it
-> probably would be a good idea to maintain the &&-chain within the body
-> of the function, as well.
-> 
->> +matrix_try () {
->> +       test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
->> +               matrix_clean_up_repo &&
->> +               $fn &&
->> +               if test $uc = false -a $fsm = false
-> 
-> We avoid -a and -o with `test` and instead chain them with &&:
-> 
->      if test $uc = false && test $fsm = false
-> 
-> Documentation/CodingGuidelines mentions this. Also see [1] & [2].
-> 
-> [1]: https://lore.kernel.org/git/xmqqa6qkb5fi.fsf@gitster.g/
-> [2]: https://lore.kernel.org/git/CAPig+cQFFsLeE921WpzTxVnBMnNRiKs4N=hUQ2UQi1VznNEQwg@mail.gmail.com/
-> 
->> +               then
->> +                       git status --porcelain=v1 >.git/expect.$fn
->> +               else
->> +                       git status --porcelain=v1 >.git/actual.$fn
->> +                       test_cmp .git/expect.$fn .git/actual.$fn
->> +               fi
->> +       '
-> 
-> Broken &&-chain in the `else` arm.
-> 
->> +       return $?
->> +}
-> 
-> No callers care about the return value of this function, so the
-> `return $?` can be dropped.
-> 
->> +uc_values="false"
->> +test_have_prereq UNTRACKED_CACHE && uc_values="false true"
->> +for uc_val in $uc_values
->> +do
->> +       if test $uc_val = false
->> +       then
->> +               test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
->> +                       git config core.untrackedcache false &&
->> +                       git update-index --no-untracked-cache
->> +               '
->> +       else
->> +               test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
->> +                       git config core.untrackedcache true &&
->> +                       git update-index --untracked-cache
->> +               '
->> +       fi
->> +
->> +       fsm_values="false true"
->> +       for fsm_val in $fsm_values
->> +       do
->> +               if test $fsm_val = false
->> +               then
->> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
->> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
-> 
-> Ditto: test_unconfig()
-> 
->> +                               git update-index --no-fsmonitor &&
->> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
->> +                       '
-> 
-> stderr is redirected within tests anyhow, so we normally don't
-> suppress it manually like this (especially since it may come in handy
-> when debugging a failing test).
-> 
->> +               else
->> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
->> +                               git config core.useBuiltinFSMonitor true &&
->> +                               git fsmonitor--daemon start &&
->> +                               git update-index --fsmonitor
->> +                       '
->> +               fi
->> +
->> +               matrix_try $uc_val $fsm_val edit_files
->> +               matrix_try $uc_val $fsm_val delete_files
->> +               matrix_try $uc_val $fsm_val create_files
->> +               matrix_try $uc_val $fsm_val rename_files
->> +               matrix_try $uc_val $fsm_val file_to_directory
->> +               matrix_try $uc_val $fsm_val directory_to_file
->> +
->> +               if test $fsm_val = true
->> +               then
->> +                       test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor at end" '
->> +                               test_might_fail git config --unset core.useBuiltinFSMonitor &&
-> 
-> Ditto: test_unconfig()
-> 
->> +                               git update-index --no-fsmonitor &&
->> +                               test_might_fail git fsmonitor--daemon stop 2>/dev/null
-> 
-> Ditto: stderr
-> 
->> +                       '
->> +               fi
->> +       done
->> +done
+-Stolee
