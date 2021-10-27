@@ -2,202 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73408C433FE
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76EFCC433FE
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 15:11:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51EF060F56
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:41:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D50D60EFF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 15:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237893AbhJ0Onm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 10:43:42 -0400
-Received: from mout.web.de ([212.227.17.11]:42559 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237794AbhJ0Onm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 10:43:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1635345672;
-        bh=wKx0qoqEYAj3+5GlWR43GTKcmhfdtM87rdY6NuRsXzU=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=ZcjApzrG1cFl0y5wiZiX5OIYQE1slH73V4TYsDxFibs/77XZRQ27IWG7dSdAJIfsc
-         VGe94B42G2EY/6W3RhRs8SR7jlAPg9zEaHDw5sbdWqBZgd++ZRdZY/edqJFPzXyvyl
-         FcPoIFXZGL8M587BWJpfSqq/LtTtdYKBDt/ahG+4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MUlDP-1mExvy3Jg1-00QRs9; Wed, 27
- Oct 2021 16:41:11 +0200
-Date:   Wed, 27 Oct 2021 16:41:11 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Daniel Marschall <info@daniel-marschall.de>
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
-Subject: Re: git-svn bug: Output git directory has uncommitted changes
-Message-ID: <20211027144111.y43o4qdp3pjp6xsh@tb-raspi4>
-References: <77aacb3b44523223c7647bdae1702a31@daniel-marschall.de>
- <20211025094139.GA22377@dcvr>
- <20211026151442.65rndwsleyitxvvg@tb-raspi4>
- <5be6fa92074fb40f3167901d203941bc@daniel-marschall.de>
+        id S238205AbhJ0PNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 11:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234640AbhJ0PNs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 11:13:48 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A685FC061570
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 08:11:22 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 188so5257521ljj.4
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 08:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ChtHg/lQBZtaIGOWkOj0x+iHctfZFE4eMH+U1yb/+Mo=;
+        b=Jo2Kjxpvkgz6ilrB6lPNftYZIlhQ5lz11AQUq7rV29O4xlmAKFCX1h4YFLul1Yt9SW
+         TCORrTwguCZPb8HBgJ5wDkObrd98UuOgsWSCsKnvb10PTlw+lI5vOwX7tNpCYLojIKIt
+         W3H1JVPnzjhpwqkmmm9VXX7CVzxULX9PAYmWgoPnleE0yuJOAk4/TQeIduL+c+zzEnPR
+         VCEY6nHVS6AhBgj8n5PKwaA3tFeiQqQ9djGpjoavez7o3nB70TpI/mkQEOkxVWfhYFaP
+         MkVwdwq5PbKzgt21ioA2r8x+cO7edRKeQPkrxj4HB9TiO1CXCnDJY5saycSjh7SgjnPa
+         WieQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=ChtHg/lQBZtaIGOWkOj0x+iHctfZFE4eMH+U1yb/+Mo=;
+        b=EUuRQwcvBGJf8WTMlKQfc57NQ0G/4eXYTNzYLolBCkrHw7zLKFPtVojbvt2nqJdZ1+
+         7l5mWCIDd2CeHTjfpiO/89BLR8dTp0nYN83rvykssbWb36cJp1nGnlK46nQaQuYqjYsS
+         6HJ+MhMUyke9meXaI3sWacsrdgw0KKKtNG2rnJ5LynOhlSRveZ0Q7ZZPEy7lA8CTg5e4
+         hJarGzu6d7/ULdYzb0wcSf/joOdymdWvHPARyWQE+3gHc6hm/h4V+Ok6kYNAMTCXvTCX
+         zzRegDe+pSCGcaL0nodABorSHS4ceL7ZeYROf7iUynEOPuqkEMJ2+DVXXETKZMUrdWNF
+         y/xA==
+X-Gm-Message-State: AOAM532j+jCQYnxPsDrqNLB9C8AwHEyb27cqEmAmEWK9iUj4SVI0Em4z
+        KfB8IcnqC4/7FNJEnOnnvrxauJe0NOY=
+X-Google-Smtp-Source: ABdhPJxxH4MoXLd8UKelUBTg++OLYObTWTeIvmPR34YvZN3wNmMO/myFWIWkovYzaQy9W54XzB6/hw==
+X-Received: by 2002:a05:651c:1583:: with SMTP id h3mr5225045ljq.98.1635347481007;
+        Wed, 27 Oct 2021 08:11:21 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id y19sm23392lfa.123.2021.10.27.08.11.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 08:11:20 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] stash: implement '--staged' option for 'push' and
+ 'save'
+References: <875yugcs3l.fsf@osv.gnss.ru> <87lf2zz59w.fsf@osv.gnss.ru>
+        <87fst2gwia.fsf_-_@osv.gnss.ru> <87pms2mi1p.fsf_-_@osv.gnss.ru>
+        <YXeMkC/jPxjzNgWF@coredump.intra.peff.net>
+Date:   Wed, 27 Oct 2021 18:11:19 +0300
+In-Reply-To: <YXeMkC/jPxjzNgWF@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 26 Oct 2021 01:05:20 -0400")
+Message-ID: <8735ombizs.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <5be6fa92074fb40f3167901d203941bc@daniel-marschall.de>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:HXW1HLUtUnzGfRS01PXm7FjgiGvQgoKG7j+QWPsjRw0T/oCJ7Rq
- M6iAvxEHbRP1vsSjQ9qYQUhytyOuydSVyWxg627ZJnll+q5zRRyXquC4hFi8sAIv8S6386I
- WziyCFeG5Gyqc4SNizL/WIUEsrV6qY3dk4sIHyK6O6XKDAWVzaMIRLDvjnttpUy1BcvbCBk
- WmCFgT8YYYmRixh6mzsxQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IvinpN+ndok=:N9k9NS5DtWGKJoIX8CDHs1
- iSyzi1eFPKmejxucHkUAYDLF4IeNvhjPD9YX2jtwykTjx242IputHij38PZxuX5pe+A/UK2VO
- hh+8wEg+8u67x4SFFJh9MZtDemDh6mCCJsWNjzqboeprgkEQ2kQ76Buft8MiPbzzFhVuJHxJp
- w7cigmO8KBygwZtdbu4p7v9qPWVM6OulHETz59v4K+EHdzAwEA629vTcLYEXCikBLNfSFW868
- QB1wYKPP8a1If86lJTSa4IlnCCY4qf9yXAsbNgDv3dQT4OU8j/MSABMsbzTAy3From40Pv5fz
- sTyBVOX34QhowXlpN6TfLVP/vY1xK3fUHLiIWFwlb1+AqWS0hnWdFT86f+fB2J4v5f9BX7Rww
- 9mM1pkzYUS45fNYCJ0izQ5lG/4YG8Bj2lLG4lnID8WQ4RUgZH1ipWHg06NZp3pUiwq0PEM2Fi
- IwpXUbMFoiwiTfhBHIaPtv4zsJ6AChMFc+BX6QdZ6JO88KooKU8GZesHGsXrMVqrNeVvxRX2W
- K1vIpfcYonbf7R8qULx0Wf0PcJ6foAsTTamWFj9xoiZ0XAqzfBQQE+cHfbbSnFKtBtcKv1wF6
- 9KkhR2XPClIFh/nhd3KyS5XbjIboI4STfn3f+w7unTOY02jbnhVGP1h3rH64hoy0kY/zSTzmU
- k2LKYY6bbAFnkJf0L3uaai/tAa64uz/Qkzshi2P3QfzxEVEr5YtOk+zLDtA6JiHkEmQrDGVYJ
- FXd4XxqO9JNDilSsdm79JypdKYUQGKJ3l0TQF5fy6AclwpICCdrN4rGFAjx4TxpkLjriMkZe0
- Pvi3Wf7wrmi5DrWNCBoHfNL/Lv6BpGw+6OHT1+KtjBHfAph9sAiOwHyeDhQprFhnId/PGcPP1
- CoRExD4WzaCI2WNWmuJa/pUA+z+ew8RlPVf2/N0GFc2PAfBRvTIwdFEK/FfsYSqxFAZyFu45C
- NDF4uNSF2+9izuk2DcIuf+rm35qFkNkaqqJ16VrPISzkpKG435aI0YLxSX9DkAbtKhSHq8GTR
- OkWxiibEfL5AWW6clyJGtOevyLaw5N/AYU/zJWMa5PFt/GUdC8fTTqJmy2ouhJVKcA==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 26, 2021 at 09:30:39PM +0200, Daniel Marschall wrote:
-> Am 26.10.2021 17:14, schrieb Torsten B=F6gershausen:
-> > On Mon, Oct 25, 2021 at 09:41:39AM +0000, Eric Wong wrote:
-> > > Daniel Marschall <info@daniel-marschall.de> wrote:
-> > > > Hello,
-> > > >
-> > > > I have found following bug in the latest version of git-svn . I ha=
-ve this
-> > > > issue with the old version shipped in Debian stable, as well as wi=
-th the
-> > > > latest version built from source.
-> > > >
-> > > >
-> > > > What did you do before the bug happened? (Steps to reproduce your =
-issue)
-> > > >
-> > > > Extract the following SVN repository to GIT:
-> > > > https://svn.viathinksoft.com/svn/filter_foundry/
-> > > > The bug ONLY happens with this single SVN repository. All other SV=
-N
-> > > > repositories from my server work perfectly.
-> > > >
-> > > > $ PERL5LIB=3Dperl/ ./git-svn --authors-file=3D"../../authors.txt" =
-clone
-> > > > --trunk=3D"trunk" "https://svn.viathinksoft.com/svn/filter_foundry=
-/" "_test"
-> > > > $ cd _test
-> > > > $ git status
-> > > >
-> > > > What did you expect to happen? (Expected behavior)
-> > > >
-> > > > git status should show that nothing needs to be commited.
-> > > >
-> > > > What happened instead? (Actual behavior)
-> > > >
-> > > > You get a long list of files which need to be committed. The list =
-is
-> > > > sometimes longer and sometimes shorter. So, the behavior is not
-> > > > deterministic. I have the feeling that the list often contains all=
- files in
-> > > > the repo.
-> > >
-> > > It seems like a CRLF vs LF vs CR issue; not something I'm
-> > > familiar with (not even in a git-only environment).
-> > >
-> > > Running `git diff --ignore-space-change` says there aren't
-> > > non-space changes.
-> > >
-> > > The presence of a .gitattributes file in the repo could be
-> > > confusing things, maybe, just a guess, I don't know...
-> > >
-> > > Being a *nix-only person, I've never mucked with eol=3D attributes
-> > > at all.  Maybe somebody else experienced with such issues can
-> > > chime in; but eol stuff seems like a minefield of complexity I
-> > > don't ever want to step into :x
-> > >
-> > > > Anything else you want to add:
-> > > >
-> > > > This SVN repository was cloned from a foreign server to my own ser=
-ver, and
-> > > > then continued there. I think this SVN repository has some specifi=
-c
-> > > > properties that cause the bugs.
-> > >
-> > > It's been a while since I've looked at SVN stuff.  From what I
-> > > remember, git-svn doesn't check the CRLF property on the SVN side.
-> >
-> > Good point, Eric
-> >
-> > After cloning the repo with git-svn, we can say that:
-> > The .gitattributes file is in conflict with the files commited under G=
-it
-> > Run
-> > git ls-files --eol
-> > to see what is going on
-> > [lots of output]
-> >
-> > To give a simpler example, run it on only one file,
-> > which is changed in my clone:
-> >
-> > git ls-files --eol telegraphics_common/tt/wind.c
-> > i/crlf  w/crlf  attr/text eol=3Dcrlf telegraphics_common/tt/wind.c
-> >
-> > And what does this mean ?
-> > The file has CRLF in the index, CRLF in the working tree and "text"
-> > These settings are conflicting.
-> > The easiest solution may be to replace
-> > "text" with "text=3Dauto"
-> > in .gitattributes
-> >
-> > And, while looking at .gitignore: the "eol=3Dcr" is not supported unde=
-r
-> > Git:
-> > *.afs text eol=3Dcr
-> > (But Git does not complain)
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Oct 18, 2021 at 07:09:06PM +0300, Sergey Organov wrote:
 >
-> Thank you for your replies.
+>> +static int stash_staged(struct stash_info *info, const struct pathspec *ps,
+>> +			struct strbuf *out_patch, int quiet)
+>> +{
+>> +	int ret = 0;
+>> +	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+>> +	struct index_state istate = { NULL };
+>> +
+>> + if (write_index_as_tree(&info->w_tree, &istate,
+>> the_repository->index_file,
+>> +				0, NULL)) {
+>> +		ret = -1;
+>> +		goto done;
+>> +	}
+>> +
+>> +	cp_diff_tree.git_cmd = 1;
+>> +	strvec_pushl(&cp_diff_tree.args, "diff-tree", "-p", "-U1", "HEAD",
+>> +		     oid_to_hex(&info->w_tree), "--", NULL);
+>> +	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
+>> +		ret = -1;
+>> +		goto done;
+>> +	}
+>> +
+>> +	if (!out_patch->len) {
+>> +		if (!quiet)
+>> +			fprintf_ln(stderr, _("No staged changes"));
+>> +		ret = 1;
+>> +	}
+>> +
+>> +done:
+>> +	discard_index(&istate);
+>> +	return ret;
+>> +}
 >
-> I don't have much experience with .gitattributes, so I am not sure if I =
-did
-> everything correctly.
->
-> What I had in mind was the following:
-> I have files in my SVN repository which are CRLF, and some files are LF.
-> I wanted to tell GIT which line ending the files should have
-> so that they will have the exact same line endings after the repo is che=
-cked
-> out. I think text=3Dauto will also do this, maybe I should try that.
->
-> The "AFS" files are very special, though. Due to compatibility reasons, =
-they
-> must be in the ancient Macintosh format (CR) otherwise the program won't
-> work. Do I need to state "eol=3Dcr" then? Or will GIT automatically use =
-the
-> same line endings as in the files which I have added to SVN?
+> This function doesn't look at its "struct pathspec" parameter at all.
+> I'm not sure if that's a bug (i.e., it should be restricting the diff
+> here) or if it was just pulled unnecessarily over from stash_patch().
 
-Git will not change files with CR as line ending:
-When there is neither a LF nor CRLF; then the file is "not text".
+Yep, it's a remnant from copy-paste of stash_patch(). I'm used to
+getting a warning from compiler for such cases and didn't pay enough
+attention. The warning belongs to -Wextra though and is not turned on
+for Git compilation.
 
-git ls-files --eol  | grep "^i/-text"
+Thanks for catching!
 
-Will list png, afs and some other.
-You can remove the eol=3Dcr (it doesn't do anything useful, and it is just=
- confusing)
-
-Better would be:
-*.afs -text
-or
-*.afs binary
-
-I leave it to the reader, to find out what the difference is.
-
->
-> Thank you for your help!
-
-Happy to help
+-- Sergey Organov
