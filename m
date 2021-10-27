@@ -2,64 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3889C433FE
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0989C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:13:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E26F610A0
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:08:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBA596103C
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 20:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240453AbhJ0UK5 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 27 Oct 2021 16:10:57 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:38694 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238558AbhJ0UK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 16:10:56 -0400
-Received: by mail-ed1-f51.google.com with SMTP id r4so14721324edi.5
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 13:08:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8DqBkWo52m33pYn5QrJiKJn5wBnWHu4L2HrAg1i/dL0=;
-        b=gLkkibNis6t2V/oe4UFKdM+Jxu9lswWeC1azzpdnZp9Yj1VoBmY9lGuh8rCp8J0gSZ
-         tCqkeKDWyxeUakGyrdp3oiIvKpuajYoxxKNrIyeAthqKIKS0C0MzUrf2+TP9Sq3K5/uB
-         GlRKbQJiktGtB1j6NEycPeyvcfmxoEIahAjBHJYS6kLzuKJMwNLKXpQNEz0l5Kd6rbmY
-         3tAKphXmKyWP3eE42m0k6SDntxBSlU0KpHl28ZEtCyH3Sv0ajyXAtz3B7AjBhSIDtsoT
-         B6a+CTwpOiX0ayncShDMZTJh7Ng/vWe55rGpSBp86aKKyOwSsm9llcaT7xd+hWMr+AaS
-         CkMA==
-X-Gm-Message-State: AOAM533rF8JdQvShI4G7Ipfe/UZ7N/5fMSFQCf7Z8Y6iFpdtYD7IRsQS
-        8gJ0MTe+msIXSC4lfuoSGVC7k24eakDMvTMpp4COgQ5B
-X-Google-Smtp-Source: ABdhPJw4ADEYiS3uNWS5PZchzviCmoUcXXMf3mapSC3uJ7D7ZcM6jYd0ihj2Hf3Ea+errE3A/1LcHCl0uEwTGnH9w0E=
-X-Received: by 2002:a17:907:7244:: with SMTP id ds4mr26871001ejc.392.1635365309220;
- Wed, 27 Oct 2021 13:08:29 -0700 (PDT)
+        id S240842AbhJ0UP3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 16:15:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58298 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240699AbhJ0UPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 16:15:25 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11A69F0892;
+        Wed, 27 Oct 2021 16:12:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K1sghF1UpsunRNb6CWhryyLwfnN8M+JqmFN/sY
+        JbcQ8=; b=ZR18IcTFxyMfzy1hUCOgHXI1bGkcuQiDJEL93GEBDPSbYApFDsGDQ1
+        sNHi52twKotqNQjpoVwGNfUbwAlOxiGMi7cRpEyZoYS9LyIvzT9V5gqcLI+Mi8nw
+        7WL9CNPbfnzt9QDdU2rUPqg5/C4AX4R6DZyBXBNrslHvJoNMfyfAQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09AE2F0891;
+        Wed, 27 Oct 2021 16:12:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6BE16F0890;
+        Wed, 27 Oct 2021 16:12:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Alex Riesen <alexander.riesen@cetitec.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] Fix "commit-msg" hook unexpectedly called for "git pull
+ --no-verify"
+References: <YXfwanz3MynCLDmn@pflmari>
+        <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
+Date:   Wed, 27 Oct 2021 13:12:57 -0700
+In-Reply-To: <YXhwGQOTfD+ypbo8@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 26 Oct 2021 17:16:09 -0400")
+Message-ID: <xmqq8ryew7jq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com> <CAN0heSpRZy3+jyc09NEj4NJk4zN4X_RyVk33F5c6tyUE2qMGzQ@mail.gmail.com>
-In-Reply-To: <CAN0heSpRZy3+jyc09NEj4NJk4zN4X_RyVk33F5c6tyUE2qMGzQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 27 Oct 2021 16:08:18 -0400
-Message-ID: <CAPig+cRUz1x7v=CRseWrLiN2nHX-sE=pMeMH1gqW0z5ZZTt0kw@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix grammar rules in commands'syntax
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47531014-3762-11EC-980D-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 27, 2021 at 2:56 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> On Tue, 26 Oct 2021 at 21:35, Jean-Noël Avila via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > -<CVS_module>::
-> > +<CVS-module>::
-> >         The CVS module you want to import. Relative to <CVSROOT>.
->
-> Here's another "<CVSROOT>".
+Jeff King <peff@peff.net> writes:
 
-This one might need a bit of special consideration. Not only is
-`<CVSROOT>` an argument to the `-d` option, but CVSROOT is also an
-environment variable (which can be overridden by `-d`). So, perhaps
-this particular instance ought to be simply `CVSROOT` (with the
-backticks).
+> OK, so we failed to pass through --no-verify, because it got caught as a
+> prefix of --verify-signatures, since the outer parse-options didn't know
+> about it. Makes sense, and I suppose this has been broken since
+> 11b6d17801 (pull: pass git-merge's options to git-merge, 2015-06-14).
+>
+> I was going to ask whether this should be passing through "verify", and
+> allowing its "no-" variant, but there is no "--verify" in git-merge.
+> Arguably there should be (for consistency and to countermand an earlier
+> --no-verify), but that is outside the scope of your fix (sadly if
+> somebody does change that, they'll have to remember to touch this spot,
+> too, but I don't think it can be helped).
+
+We do not even have "--verify" in "git commit", because letting the
+hooks to interfere is the default, but if we were designing it
+today, we probably would add "--verify" to override a "--no-verify"
+earlier on the command line, so it is not implausible that people
+would want to add "--verify" to "git commit" and "git merge" in the
+future.
+
+We can add two hunks, one for builtin/merge.c and another for
+builtin/pull.c, to leave a note for future developers and it would
+help quite a lot, I would presume.
+
+Thanks.
