@@ -2,155 +2,233 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE715C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEC23C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C9E0600EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:56:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A751360F22
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 19:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238704AbhJ0S6r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 14:58:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49470 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbhJ0S6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 14:58:46 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B26C061570
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 11:56:21 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id r5so2674474pls.1
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 11:56:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RDBS8vKi73ejSxWxZbzelwTTZCjaBNJZSCaq4rPzQPA=;
-        b=FCaRFXdk1qm/3TN7yxRehtdNo23cjnyzHU59iVvrdzgbj2vQKs59iKwa17zCU5PO80
-         7TPM10u9x+UY5HftqAWy/kMdhNMsCuLO3sGQ4ILGrWkH9nfN7c6s+AyNOOJCx0ilNrKG
-         Y6Ql+F5/VP3/Z9qbCth9U8C6bEbDsKOzdoOwHJauxRVUQzqpq+Ed5ris0yWuCSENPU38
-         TrTFwSYItlRZ9BS7DpVdnk9nWlNK2TSdIBGKFIBfOdybQ3jcQAWWA+LVDqUrHpQIOFcW
-         b+gB0u+dDPID1crCnlEadOVb6+cCbd+R4B0y2K99EWimuMTaRcd11zR4wp65EpMpaNys
-         YD/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RDBS8vKi73ejSxWxZbzelwTTZCjaBNJZSCaq4rPzQPA=;
-        b=cZYtLFBYJ7P2LcPLjMYaNNjbHlWZnpGBk5MPg0gcg+qZ2/A2dErma0DkuomgGOyzVr
-         rNDJVqN3Jslkrsrrpg9z7+EdjXe6nlyIxj0koU7JnIJcX0eaLnodOxGAinafidjeOP7j
-         9B2Cu5V9WspgLrDfV+UQ0+XIBEHjvzautAeP9yjljln/3+mgwko5SbOojp/XvkbLskgX
-         EO82azxO3hUNBC1QZChl93lCfOkjdVQJn5xKAyO7cvegrHnztqZPr8rO4uHNfiaK/wvN
-         eO8zjr3f207pFIYo3QruCcP4Ws24OtKFYygSNF7Mi/WKEzjAjZnUnE/brWnB6Tndi+3k
-         QGXg==
-X-Gm-Message-State: AOAM532nDhXVNN8UBLEmRVbuSlYZ1BUhhb8GE5IUaoUJjYL+d3K5H1ds
-        VYCkepMtaNazmwV5cwv5CWj6otWCXiGz+AIVNxY=
-X-Google-Smtp-Source: ABdhPJy+4lRLnA07XE5Jg9s4OE7RAZSCz8SPeQTh4uZTl1vLeP28eXgHWKPaeTWmqMbF+70uU0Y/164g53MmcyeUnQ0=
-X-Received: by 2002:a17:90a:430d:: with SMTP id q13mr7765987pjg.112.1635360980682;
- Wed, 27 Oct 2021 11:56:20 -0700 (PDT)
+        id S240523AbhJ0TGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 15:06:05 -0400
+Received: from siwi.pair.com ([209.68.5.199]:47983 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231620AbhJ0TGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 15:06:04 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B27BE3F4820;
+        Wed, 27 Oct 2021 15:03:38 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 80E383F483E;
+        Wed, 27 Oct 2021 15:03:38 -0400 (EDT)
+Subject: Re: [PATCH v4 03/29] fsmonitor: config settings are
+ repository-specific
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
+ <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+ <882789b4dfebddb059f62b0b2edb95b92f3c69ee.1634826309.git.gitgitgadget@gmail.com>
+ <xmqqlf2mjdgf.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <d7c7d96c-06c2-d330-03b6-040b7bb4a23b@jeffhostetler.com>
+Date:   Wed, 27 Oct 2021 15:03:38 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 27 Oct 2021 20:56:07 +0200
-Message-ID: <CAN0heSpRZy3+jyc09NEj4NJk4zN4X_RyVk33F5c6tyUE2qMGzQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix grammar rules in commands'syntax
-To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqlf2mjdgf.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Oct 2021 at 21:35, Jean-No=C3=ABl Avila via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+
+
+On 10/21/21 5:05 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>>   	if (fsmonitor > 0) {
+>> -		if (git_config_get_fsmonitor() == 0)
+>> +		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
+>> +
+>> +		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
+>> +			warning(_("core.useBuiltinFSMonitor is unset; "
+>> +				"set it if you really want to enable the "
+>> +				"builtin fsmonitor"));
+>>   			warning(_("core.fsmonitor is unset; "
+>> -				"set it if you really want to "
+>> -				"enable fsmonitor"));
+>> +				"set it if you really want to enable the "
+>> +				"hook-based fsmonitor"));
+>> +		}
+>>   		add_fsmonitor(&the_index);
+>>   		report(_("fsmonitor enabled"));
+>>   	} else if (!fsmonitor) {
+>> -		if (git_config_get_fsmonitor() == 1)
+>> +		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
+>> +		if (fsm_mode == FSMONITOR_MODE_IPC)
+>> +			warning(_("core.useBuiltinFSMonitor is set; "
+>> +				"remove it if you really want to "
+>> +				"disable fsmonitor"));
+>> +		if (fsm_mode == FSMONITOR_MODE_HOOK)
+>>   			warning(_("core.fsmonitor is set; "
+>>   				"remove it if you really want to "
+>>   				"disable fsmonitor"));
+> 
+> Hmph.  This does not change the behaviour per-se, but what are we
+> trying to achieve with these warning messages?
+> 
+> The user uses --fsmonitor or --no-fsmonitor option from the command
+> line, presumably as a one-shot "this time I'd operate the command
+> differently from the configured way", so it seems unlikely that the
+> user is doing so because "... really want to enable/disable".  The
+> "report()" calls in these if/else cases seem sufficient reminder of
+> what is going on---perhaps these warnings should be made silenceable
+> by turning them into advice messages?
 >
-> --- a/Documentation/git-archimport.txt
-> +++ b/Documentation/git-archimport.txt
-> @@ -9,8 +9,8 @@ git-archimport - Import a GNU Arch repository into Git
->  SYNOPSIS
->  --------
->  [verse]
-> -'git archimport' [-h] [-v] [-o] [-a] [-f] [-T] [-D depth] [-t tempdir]
-> -               <archive/branch>[:<git-branch>] ...
-> +'git archimport' [-h] [-v] [-o] [-a] [-f] [-T] [-D <depth>] [-t <tempdir=
->]
-> +              <archive>/<branch>[:<git-branch>]...
 
-Your rewrite makes it seem like one would write, e.g., "myarch/master"
-with a literal slash, whereas my initial thought was that the original
-tried to express something like "(<archive> | <branch>)". But I have
-zero experience with "GNU Arch" and git-archimport, so I can't really
-tell whether your rewrite is for the better or not. :-)
+The original code had the basic warning for `core.fsmonitor`
+which becomes ambiguous/confusing when we have two different
+config values.
 
-In any case, this document goes on to write "<archive/branch>" several
-times. Supposedly, they would all want to be changed as well. There's
-also an instance of "Archive/branch identifier ..." to maybe look into.
+I was really wanting to just get rid of the warnings.  They
+only appear if the users passes a `--[no-]fsmonitor` on the
+command line to temporarily override the config setting.
 
-> --- a/Documentation/git-cvsimport.txt
-> +++ b/Documentation/git-cvsimport.txt
-> @@ -9,11 +9,11 @@ git-cvsimport - Salvage your data out of another SCM pe=
-ople love to hate
->  SYNOPSIS
->  --------
->  [verse]
-> -'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <CVSROOT>]
-> +'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <cvsroot>]
+I'll see about making them advice messages.
 
-> -<CVS_module>::
-> +<CVS-module>::
->         The CVS module you want to import. Relative to <CVSROOT>.
 
-Here's another "<CVSROOT>".
+>> -int git_config_get_fsmonitor(void)
+>> -{
+>> -	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
+>> -		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
+>> -
+>> -	if (core_fsmonitor && !*core_fsmonitor)
+>> -		core_fsmonitor = NULL;
+>> -
+>> -	if (core_fsmonitor)
+>> -		return 1;
+>> -
+>> -	return 0;
+>> -}
+> 
+> This used to be how we got the configuration.
+> 
+>> --- a/config.h
+>> +++ b/config.h
+>> @@ -610,7 +610,6 @@ int git_config_get_pathname(const char *key, const char **dest);
+>>   int git_config_get_index_threads(int *dest);
+>>   int git_config_get_split_index(void);
+>>   int git_config_get_max_percent_split_change(void);
+>> -int git_config_get_fsmonitor(void);
+> 
+> And that is removed so any in-flight topic that adds new caller will
+> be caught by the compiler.  OK.
+> 
+>> diff --git a/environment.c b/environment.c
+>> index 9da7f3c1a19..68f90632245 100644
+>> --- a/environment.c
+>> +++ b/environment.c
+>> @@ -82,7 +82,6 @@ int protect_hfs = PROTECT_HFS_DEFAULT;
+>>   #define PROTECT_NTFS_DEFAULT 1
+>>   #endif
+>>   int protect_ntfs = PROTECT_NTFS_DEFAULT;
+>> -const char *core_fsmonitor;
+> 
+> So is this.
+> 
+> All nice.
+> 
+>> +static void lookup_fsmonitor_settings(struct repository *r)
+>> +{
+>> +	struct fsmonitor_settings *s;
+>> +
+>> +	CALLOC_ARRAY(s, 1);
+>> +
+>> +	r->settings.fsmonitor = s;
+>> +
+>> +	if (check_for_ipc(r))
+>> +		return;
+>> +
+>> +	if (check_for_hook(r))
+>> +		return;
+>> +
+>> +	fsm_settings__set_disabled(r);
+>> +}
+>> +
+>> +enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+>> +{
+>> +	if (!r->settings.fsmonitor)
+>> +		lookup_fsmonitor_settings(r);
+> 
+> OK, and these "lookup" calls are what make this field "lazily
+> loaded".  A helper
+> 
+> static inline void lazily_load_fsmonitor_settings(struct repository *r)
+> {
+> 	if (!r->settings.fsmonitor)
+> 		lookup_fsmonitor_settings(r);
+> }
+> 
+> might be handy.  Also an assert to ensure nobody calls lookup() on a
+> repository that already has lazily loaded the settings would be
+> necessary.
+> 
+> 	static void lookup_fsmonitor_settings(struct repository *r)
+> 	{
+> 		if (r->settings.fsmonitor)
+> 			BUG("...");
+> 		CALLOC_ARRAY(r->settings.fsmonitor, 1);
 
-> --- a/Documentation/git-http-push.txt
-> +++ b/Documentation/git-http-push.txt
-> @@ -63,16 +63,15 @@ of such patterns separated by a colon ":" (this means=
- that a ref name
+good point.
 
-> -Each pattern pair consists of the source side (before the colon)
-> -and the destination side (after the colon).  The ref to be
-> -pushed is determined by finding a match that matches the source
-> -side, and where it is pushed is determined by using the
-> -destination side.
-> +Each pattern pair '<src>:<dst>' consists of the source side (before
-> +the colon) and the destination side (after the colon).  The ref to be
-> +pushed is determined by finding a match that matches the source side,
-> +and where it is pushed is determined by using the destination side.
 
-This looks like the insertion of "'<src>:<dst>' early on, where the rest
-of the changes are just follow-on line-wrapping.
-
-I wonder if this patch could benefit from being broken into smaller
-pieces. Maybe a few preliminaries like "change <foo|bar|baz> to
-(foo|bar|baz)" and the like, then even if the final patch is "large", it
-will not be *as large*? But there are clearly sub-topics here, such as
-"change <some_arg> to <some-arg>" and "change arg to <arg>". Or maybe
-this doesn't make sense as an approach to cutting this patch into
-smaller pieces, but I thought I'd mention it.
-
-> - - It is an error if <src> does not match exactly one of the
-> + - It is an error if '<src>' does not match exactly one of the
->     local refs.
->
-> - - If <dst> does not match any remote ref, either
-> + - If '<dst>' does not match any remote ref, either
-
-I believe these match Junio's preference, so ok. But again, this looks
-like it could go in a separate patch from a lot of these other changes
-as a way of keeping to somewhat focused changes.
-
-> -               (--[cached|deleted|others|ignored|stage|unmerged|killed|m=
-odified])*
-> -               (-[c|d|o|i|s|u|k|m])*
-> +               [--(cached|deleted|others|ignored|stage|unmerged|killed|m=
-odified)...]
-> +               [-(c|d|o|i|s|u|k|m)...]
-
-Sort of cute how this saves on repeating the "--" by pulling it out.
-Anyway, nothing new in your patch. :-)
-
-Thanks for unifying these things.
-
-Martin
+> 
+>> +enum fsmonitor_mode {
+>> +	FSMONITOR_MODE_DISABLED = 0,
+>> +	FSMONITOR_MODE_HOOK = 1, /* core.fsmonitor */
+>> +	FSMONITOR_MODE_IPC = 2,  /* core.useBuiltinFSMonitor */
+>> +};
+> 
+> Please remind me why we need a new separate variable, instead of
+> turning the core.fsmonitor variable into an extended bool <false,
+> true, builtin>?  The compatibility issues during transition is the
+> same either way.  Old clients will ignore the request silently when
+> you set core.useBuiltinFSMonitor, or they will barf if you set
+> core.fsmonitor to 'builtin', so in a sense, extending the existing
+> variable may be a safer option.
+> 
+>> diff --git a/repository.h b/repository.h
+>> index a057653981c..89a1873ade7 100644
+>> --- a/repository.h
+>> +++ b/repository.h
+>> @@ -4,6 +4,7 @@
+>>   #include "path.h"
+>>   
+>>   struct config_set;
+>> +struct fsmonitor_settings;
+>>   struct git_hash_algo;
+>>   struct index_state;
+>>   struct lock_file;
+>> @@ -34,6 +35,8 @@ struct repo_settings {
+>>   	int command_requires_full_index;
+>>   	int sparse_index;
+>>   
+>> +	struct fsmonitor_settings *fsmonitor; /* lazy loaded */
+> 
+> "lazily" loaded, I think.
+> 
+>>   GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
+>> -code path for utilizing a file system monitor to speed up detecting
+>> -new or changed files.
+>> +code path for utilizing a (hook based) file system monitor to speed up
+>> +detecting new or changed files.
+> 
+> Nice attention to the detail here.
+> 
+> Thanks.
+> 
