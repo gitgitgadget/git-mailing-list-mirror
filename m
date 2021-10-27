@@ -2,116 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 951E4C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 11:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24995C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 11:56:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66AEE604E9
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 11:40:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D51560F70
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 11:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239785AbhJ0Lmi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 07:42:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47916 "EHLO cloud.peff.net"
+        id S241789AbhJ0L6d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 07:58:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47932 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230336AbhJ0Lmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 07:42:38 -0400
-Received: (qmail 13144 invoked by uid 109); 27 Oct 2021 11:40:12 -0000
+        id S241715AbhJ0L6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 07:58:23 -0400
+Received: (qmail 13175 invoked by uid 109); 27 Oct 2021 11:55:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Oct 2021 11:40:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Oct 2021 11:55:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22089 invoked by uid 111); 27 Oct 2021 11:40:12 -0000
+Received: (qmail 22224 invoked by uid 111); 27 Oct 2021 11:55:57 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Oct 2021 07:40:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Oct 2021 07:55:57 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 Oct 2021 07:40:12 -0400
+Date:   Wed, 27 Oct 2021 07:55:57 -0400
 From:   Jeff King <peff@peff.net>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] config: include file if remote URL matches a glob
-Message-ID: <YXk6nLJTZn1ilsf6@coredump.intra.peff.net>
-References: <YWYafdpemaiAjvUV@coredump.intra.peff.net>
- <20211013183341.85761-1-jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 0/2] Conditional config includes based on remote URL
+Message-ID: <YXk+TRnndNZkdsGF@coredump.intra.peff.net>
+References: <cover.1634077795.git.jonathantanmy@google.com>
+ <20211018204803.75088-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211013183341.85761-1-jonathantanmy@google.com>
+In-Reply-To: <20211018204803.75088-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 13, 2021 at 11:33:41AM -0700, Jonathan Tan wrote:
+On Mon, Oct 18, 2021 at 01:48:03PM -0700, Jonathan Tan wrote:
 
-> > But in general, I'd imagine most people put their repository in ~/work
-> > or similar, and just do:
-> > 
-> >   [includeIf "gitdir:~/work"]
-> >   path = foo.conf
-> > 
-> > (and of course you can imagine more subdivisions as necessary). So I
-> > find the use-case only sort-of compelling. In general, I'm in favor of
-> > adding new includeIf directions even if they're only moderately
-> > convenient. But this one is rather sticky, because it is dependent on
-> > other config keys being defined. So it introduces a new and complicated
-> > ordering issue. Is it worth it? Maybe I'm not being imaginative enough
-> > in seeing the use cases.
+>  (1) Introduce a "includeAfterIf" (or "deferIncludeIf", or some other
+>      name) command that is executed after all config files are read. (If
+>      there are multiple, they are executed in order of appearance.)
+>      Files included by this mechanism cannot directly or indirectly
+>      contain another "includeAfterIf". This is the same as what was
+>      introduced in this patch set, except for the name of the directive.
+
+I think this works in terms of having self-consistent rules that make
+sense. But deferring things does introduce new complications in terms of
+overrides, because we rely on last-one-wins. Emily asked elsewhere about
+overriding the inclusion of a file. We don't have a way to do that now,
+and I think it would be tricky to add. But what about overriding a
+single variable?
+
+Right now this works:
+
+  git config --global foo.bar true
+  git config --local foo.bar false
+
+to give you "false". But imagining there was a world of deferred config,
+then:
+
+  git config --file ~/.gitconfig-foo foo.bar true
+  git config --global deferInclude.path .gitconfig-foo
+  git config --local foo.bar false
+
+gives "true". We'd read .gitconfig-foo after everything else, overriding
+the repo-level config.
+
+If the deferred includes were processed at the end of each individual
+file, that would solve that. You're still left with the slight oddness
+that a deferred include may override options within the same file that
+come after it, but that's inherent to the "defer" concept, and the
+answer is probably "don't do that". It's only when it crosses file
+boundaries (which are explicitly ordered by priority) that it really
+hurts.
+
+>  (2) Leave the name as "includeIf", and when it is encountered with a
+>      remote-URL condition: continue parsing the config files, skipping
+>      all "includeIf hasRemoteUrl", only looking for remote.*.url. After
+>      that, resume the reading of config files at the first "includeIf
+>      hasRemoteUrl", using the prior remote.*.url information gathered to
+>      determine which files to include when "includeIf hasRemoteUrl" is
+>      encountered. Files included by this mechanism cannot contain any
+>      "remote.*.url" variables.
+
+I think doing this as "continue parsing" and "resume" is hard to do.
+Because you can't look at other non-remote.*.url entries here (otherwise
+you'd see them out of order). So you have to either:
+
+  - complete the parse, stashing all the other variables away, and then
+    resolve the include, and then look at all the stashed variables as
+    if you were parsing them anew.
+
+  - teach our config parser how to save and restore state, including
+    both intra-file state and the progress across the set of files
+
+I think it's much easier if you think of it as "start a new config parse
+that does not respect hasRemoteURL". And the easiest way to do that is
+to just let remote.c's existing git_config() start that parse (probably
+by calling git_config_with_options() and telling it "don't respect
+hasRemoteURL includes"). You may also need to teach the config parser to
+be reentrant. We did some work on that a while ago, pushing the state
+int config_source which functions as a stack, but I don't offhand know
+if you can call git_config() from within a config callback.
+
+> There are other ideas including:
 > 
-> My main use case is for a remote repo administrator to offer a
-> recommended config to anyone who clones that repo. For this, I don't
-> think we can prescribe a local directory structure (e.g. "~/work")
-> without being too restrictive or broad (that is, if the user ends up
-> creating a repo that so happens to match our glob but did not intend the
-> config to apply to it).
+>  (3) remote.*.url must appear before a "includeIf hasRemoteUrl" that
+>      wants to match it. (But this doesn't fit our use case, in which a
+>      repo config has the URL but a system or user config has the
+>      include.)
 
-Yeah, I agree that it's not quite as turnkey if you have to assume
-something about the user's directory structure. On the other hand, they
-have to decide to put the included config file somewhere, too, so it
-seems like you need to give the user "do something like this"
-instructions rather than purely something they can copy and paste.
+Yeah, I agree this won't work.
 
-I dunno. I guess you can assume they'll put it in ~/.gitconfig-foo or
-similar, and come up with copy-and-pastable directions from that.
+>  (4) "includeIf hasRemoteUrl" triggers a search of the repo config just
+>      for remote.*.url. (I think this out-of-order config search is more
+>      complicated than (2), though.)
 
-I agree that the "match the remote" rule makes things _more_ convenient.
-Mostly I was just wondering if it changed things enough to merit the
-complications it introduces. I'm not sure I have an answer, and clearly
-it's pretty subjective.
-
-> > Just brainstorming some alternatives:
-> > 
-> >   - We could stop the world while we are parsing and do a _new_ parse
-> >     that just looks at the remote config (in fact, this is the natural
-> >     thing if you were consulting the regular remote.c code for the list
-> >     of remotes, because it does its own config parse).
-> > 
-> >     That does mean that the remote-conditional includes cannot
-> >     themselves define new remotes. But I think that is already the case
-> >     with your patch (and violating that gets you into weird circular
-> >     problems).
-> 
-> Hmm...yes, having a special-case rule that such an included file cannot
-> define new remotes would be complex.
-
-I think that's mostly true of your "defer" system, too, unless you keep
-applying it recursively. The rule is slightly different there: it's not
-"you can't define new remotes", but rather "you can't do a
-remote-conditional include based on a remote included by
-remote-conditional".
-
-> >   - We could simply document that if you want to depend on conditional
-> >     includes based on a particular remote.*.url existing, then that
-> >     remote config must appear earlier in the sequence.
-> > 
-> >     This is a bit ugly, because I'm sure it will bite somebody
-> >     eventually. But at the same time, it resolves all of the weird
-> >     timing issues, and does so in a way that will be easy to match if we
-> >     have any other config dependencies.
-> 
-> My main issue with this is that different config files are read at
-> different times, and the repo config (that usually contains the remote)
-> is read last.
-
-Ah, right. I was thinking of the definitions within a single file, but
-you're right that the common case would be having the include in
-~/.gitconfig, and the remotes defined in $GIT_DIR/config. So yeah, any
-ordering constraint like that is a non-starter, I'd think.
+I think this is what I described above, and actually is less
+complicated. ;)
 
 -Peff
