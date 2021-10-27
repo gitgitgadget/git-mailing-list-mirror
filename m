@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDDF9C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 506CCC433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:39:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6C2460720
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:39:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36BC460F56
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 14:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242628AbhJ0OmA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 10:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
+        id S242637AbhJ0OmB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 10:42:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238902AbhJ0Oly (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 10:41:54 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C64AC061570
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 07:39:28 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id u18so4577976wrg.5
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 07:39:28 -0700 (PDT)
+        with ESMTP id S238962AbhJ0Olz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 10:41:55 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14BB8C061767
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 07:39:29 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id y205-20020a1c7dd6000000b0032cc8c2800fso5582869wmc.4
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 07:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kb73tIJKEniDWqTeYxI92yj2S3EyQHnwcWkfm6tEo94=;
-        b=nyt4U4dJ8eXw4UwPi3pgct9lwrAbgWnhnywKM9to+WJavlFa52j7UjwrYJW0dMj9yY
-         MgVz4/uP/VYvZL+L4CQxmCxk3VTxjXKIJCVFomcZrrftG2Qz0MFzWm/xYhom2QWhYkPn
-         kjGSv+JUgo8bl8bFoUmLyfkW4h6eux3BtCltuJVAeyrv4Hcjuu3Q5IfvU5rU/hjR7mTu
-         bdmagkROej0nyjzfK1bfnifqJcnlh37w7V3HnDANnIIM3e066T7MZCseQbFV0DThnmyd
-         DjxVUe+ACc4FSoYZ9ZzWQKPsgfkaPaqjYfIbAAageQs1g0QXdJSaTqAt+ZfFwsfXbaZB
-         2PkA==
+        bh=+dch2aTLAv85TXXA5lgJ4m8qNH4dps5WqL8q9u/O5kk=;
+        b=bII53/sIC1NfTxjRcrbZJCY9Z2EUfYZpA4UyFtuBmOTn/tFHLtHEF437rmdKG/QrQ0
+         fxPJH8Dg/9p0uc8onsLJFZCGMTbTliGwmsQsIHr2XLEveU+VxuRxCxTT7+BB8H68TVl5
+         r/lS6wubgw4sU2yekqr+XBIVrsbi2RWaXWpMtw84kFeeGNd539ME+6xBsrCpmqQTQwyL
+         pWD1OMg/DP6KLMiFdDMdYHMPSl1839nhnqDJLitjGmqafNY338BXHfwDa2RCXVDawEEk
+         k053FodA6GQj1WMeP6oXZDtC3OYencTexfMUb2qjpatH7c5540gbqWmYoqlePVVFMdJG
+         a6aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kb73tIJKEniDWqTeYxI92yj2S3EyQHnwcWkfm6tEo94=;
-        b=JH71OaSZkR566RuvB5qoRysi92cGh1vr+UEXu0Mf8Cvh0UfDw4JnFF7t3syQ7LLxJW
-         4zAC2EKyIdhDbVHWRQNwSYieQ3kYBbRtwdD+dBG8d9UzNq9GrqRtDeWUVNRk6y7m+Jhg
-         mMcE7E/JL1aCD/xI3xr7pzNqLJCa11ZWjzBnANbtVFO+dZt+m0zS42yh7jpCxvb912P8
-         OzAOOoUjP6DD2tQJ2bpGeKAX/srisUJEeRPxpF2/cZMJ02m4URxDBbSRXUIDFhwMHMNo
-         EdVGgXaND1G2ceNru3tmwCuDp8sZTabPBPfe0i/RwLe5BztNz/B1yqAufO6fu4uV2u8V
-         rTqQ==
-X-Gm-Message-State: AOAM531yrb1PowK8SVBb7jWN+vJwGyZpHOnYB9FT0ZLy5DaguujD3oXa
-        6xcgs5ZYOPWiqafq/sm8uJZh/G2nARs=
-X-Google-Smtp-Source: ABdhPJye7g4g0PtC6vcVTpGhEIWpD81q5OAVDQS9zTezgahRo7RAbFNU8Kw4V0YWXTVqnE/8jIZfKw==
-X-Received: by 2002:a5d:5092:: with SMTP id a18mr6025685wrt.421.1635345567013;
+        bh=+dch2aTLAv85TXXA5lgJ4m8qNH4dps5WqL8q9u/O5kk=;
+        b=FnkzsOeJ5puwM3h3iSCSyc+W9ErNsRJ102KlFp/EtRvawYMdCkJsHcHo3X9/iG+Cum
+         URdST+9PPmxDRerMKTfGW7uA8q1955R5+zadqjXnKo+f10FvghvrspsEyhVQNfVMvAcp
+         0Jrs2+JPo2xzGZx5Ye2e7n9sYXNqzFBwRyqIqeo2cLhpqp0GpzQ/WhoknBSi6RjGa8dR
+         R4HvzLngUI45bdnAYmHGqcMNyFJvQWZ3mJyNdQ+73qaM3xL/F7847Gc0jJ3wn/qemRX1
+         NXmA+cN+oQ1NjvwUp45hSpHGDa8jYS+9ei+1rqnljYbiy/q9xe8viYG6BCMjPitAsm48
+         ISMQ==
+X-Gm-Message-State: AOAM532JdASlEJS63gYb9sE09Ud639SMo7UvarkWOeIOXyXi8DmD+r08
+        YdjyqJ5aTYKjXkZ4A280VxDMKTwGjj0=
+X-Google-Smtp-Source: ABdhPJwGDuazfhjwHma73IE6kKyPfisW7FuWVnRZJvvsf7b7qaN/lJUvz5WshWqY2d5G5BHZziLmUg==
+X-Received: by 2002:a7b:cc8c:: with SMTP id p12mr2477701wma.158.1635345567599;
         Wed, 27 Oct 2021 07:39:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm49351wrv.80.2021.10.27.07.39.26
+        by smtp.gmail.com with ESMTPSA id o2sm85031wrg.1.2021.10.27.07.39.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 07:39:26 -0700 (PDT)
-Message-Id: <cc76c6946476d51a269da3ad91aaae014e2a48d8.1635345563.git.gitgitgadget@gmail.com>
+        Wed, 27 Oct 2021 07:39:27 -0700 (PDT)
+Message-Id: <217ae44541878b712b45db9525a6de5b854f27bb.1635345563.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
 References: <pull.1048.v4.git.1633984222.gitgitgadget@gmail.com>
         <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 14:39:19 +0000
-Subject: [PATCH v5 4/8] reset: expand test coverage for sparse checkouts
+Date:   Wed, 27 Oct 2021 14:39:20 +0000
+Subject: [PATCH v5 5/8] reset: integrate with sparse index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,126 +75,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add new tests for `--merge` and `--keep` modes, as well as mixed reset with
-pathspecs. New performance test cases exercise various execution paths for
-`reset`.
+Disable `command_requires_full_index` repo setting and add
+`ensure_full_index` guards around code paths that cannot yet use sparse
+directory index entries. `reset --soft` does not modify the index, so no
+compatibility changes are needed for it to function without expanding the
+index. For all other reset modes (`--mixed`, `--hard`, `--keep`, `--merge`),
+the full index is expanded to prevent cache tree corruption and invalid
+variable accesses.
 
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Additionally, the `read_cache()` check verifying an uncorrupted index is
+moved after argument parsing and preparing the repo settings. The index is
+not used by the preceding argument handling, but `read_cache()` must be run
+*after* enabling sparse index for the command (so that the index is not
+expanded unnecessarily) and *before* using the index for reset (so that it
+is verified as uncorrupted).
+
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/perf/p2000-sparse-operations.sh        |  3 +
- t/t1092-sparse-checkout-compatibility.sh | 84 ++++++++++++++++++++++++
- 2 files changed, 87 insertions(+)
+ builtin/reset.c | 10 +++++++---
+ cache-tree.c    |  1 +
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 597626276fb..bfd332120c8 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -110,5 +110,8 @@ test_perf_on_all git add -A
- test_perf_on_all git add .
- test_perf_on_all git commit -a -m A
- test_perf_on_all git checkout -f -
-+test_perf_on_all git reset
-+test_perf_on_all git reset --hard
-+test_perf_on_all git reset -- does-not-exist
+diff --git a/builtin/reset.c b/builtin/reset.c
+index e441b6601b9..0ac0de7dc97 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -180,6 +180,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.flags.override_submodule_config = 1;
+ 	opt.repo = the_repository;
  
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index cab6340a9d0..a8583030b38 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -475,6 +475,90 @@ test_expect_success 'checkout and reset (mixed)' '
- 	run_on_sparse test_path_is_missing folder1
- '
++	ensure_full_index(&the_index);
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
+ 	diffcore_std(&opt);
+@@ -257,9 +258,6 @@ static void parse_args(struct pathspec *pathspec,
+ 	}
+ 	*rev_ret = rev;
  
-+test_expect_success 'checkout and reset (merge)' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	test_all_match git checkout -b reset-test update-deep &&
-+	run_on_all ../edit-contents a &&
-+	test_all_match git reset --merge deepest &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git reset --hard update-deep &&
-+	run_on_all ../edit-contents deep/a &&
-+	test_all_match test_must_fail git reset --merge deepest
-+'
-+
-+test_expect_success 'checkout and reset (keep)' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	test_all_match git checkout -b reset-test update-deep &&
-+	run_on_all ../edit-contents a &&
-+	test_all_match git reset --keep deepest &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git reset --hard update-deep &&
-+	run_on_all ../edit-contents deep/a &&
-+	test_all_match test_must_fail git reset --keep deepest
-+'
-+
-+test_expect_success 'reset with pathspecs inside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	test_all_match git checkout -b reset-test update-deep &&
-+	run_on_all ../edit-contents deep/a &&
-+
-+	test_all_match git reset base -- deep/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git reset base -- nonexistent-file &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git reset deepest -- deep &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+# Although the working tree differs between full and sparse checkouts after
-+# reset, the state of the index is the same.
-+test_expect_success 'reset with pathspecs outside sparse definition' '
-+	init_repos &&
-+	test_all_match git checkout -b reset-test base &&
-+
-+	test_sparse_match git reset update-folder1 -- folder1 &&
-+	git -C full-checkout reset update-folder1 -- folder1 &&
-+	test_sparse_match git status --porcelain=v2 &&
-+	test_all_match git rev-parse HEAD:folder1 &&
-+
-+	test_sparse_match git reset update-folder2 -- folder2/a &&
-+	git -C full-checkout reset update-folder2 -- folder2/a &&
-+	test_sparse_match git status --porcelain=v2 &&
-+	test_all_match git rev-parse HEAD:folder2/a
-+'
-+
-+test_expect_success 'reset with wildcard pathspec' '
-+	init_repos &&
-+
-+	test_all_match git checkout -b reset-test update-deep &&
-+	test_all_match git reset base -- \*/a &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git rev-parse HEAD:folder1/a &&
-+
-+	test_all_match git reset base -- folder\* &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git rev-parse HEAD:folder2
-+'
-+
- test_expect_success 'merge, cherry-pick, and rebase' '
- 	init_repos &&
+-	if (read_cache() < 0)
+-		die(_("index file corrupt"));
+-
+ 	parse_pathspec(pathspec, 0,
+ 		       PATHSPEC_PREFER_FULL |
+ 		       (patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0),
+@@ -405,6 +403,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (intent_to_add && reset_type != MIXED)
+ 		die(_("-N can only be used with --mixed"));
  
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
++	if (read_cache() < 0)
++		die(_("index file corrupt"));
++
+ 	/* Soft reset does not touch the index file nor the working tree
+ 	 * at all, but requires them in a good order.  Other resets reset
+ 	 * the index file to the tree object we are switching to. */
+diff --git a/cache-tree.c b/cache-tree.c
+index 90919f9e345..9be19c85b66 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -776,6 +776,7 @@ void prime_cache_tree(struct repository *r,
+ 	cache_tree_free(&istate->cache_tree);
+ 	istate->cache_tree = cache_tree();
+ 
++	ensure_full_index(istate);
+ 	prime_cache_tree_rec(r, istate->cache_tree, tree);
+ 	istate->cache_changed |= CACHE_TREE_CHANGED;
+ 	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
 -- 
 gitgitgadget
 
