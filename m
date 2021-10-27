@@ -2,338 +2,242 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ED1C433F5
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E13C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:27:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CE6960200
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:01:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 542B060E54
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 13:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236578AbhJ0NDi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 09:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232410AbhJ0NDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 09:03:37 -0400
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [IPv6:2a01:e0c:1:1599::14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DC9C061570
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 06:01:12 -0700 (PDT)
-Received: from [192.168.3.156] (unknown [92.173.128.58])
-        (Authenticated sender: jn.avila@free.fr)
-        by smtp5-g21.free.fr (Postfix) with ESMTPSA id 8F5F15FF9E;
-        Wed, 27 Oct 2021 15:01:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1635339669;
-        bh=8K8zEjPJjlGmgDLQi4X/Gb0raLUD89dyP0N4rjgdK1M=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=o3BZ2UQTYDxzVHsJnas/NllYocNYp+Wj+voL1OGPatQ19E5+2HDlWTe5/9BZIXphb
-         +uCFCYamlgAd7G54qrkUOHIdX+BsLU0HSYw5uRNccQYvzEorX0rRAMv5Rrwx+4M6d0
-         NIxI4CdXtgjCLNeP0fn2RIF3WvLU7ENIlt6bPhDKqUjWcOJpj+2prFLoU1LkEh1kkY
-         7B7TZx5yU2YkrFnwf6rDgwdNhyrIT9pdI+Hv583mQLaOE7bQ+QUKTu/pbsr+LamhaY
-         ajV5MT/bXMaVLrEj9+T9yDOsA7cvf2rYjzfd9ilZ0f3aPHOcqxPk0grny6cJrCaJCa
-         NslW36We/9aIg==
-Subject: Re: [PATCH] doc: fix grammar rules in commands'syntax
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
- <CAPig+cQVChdH6eJGKPuRExt5TpfNWDwY95bge01dixr7jkiUuQ@mail.gmail.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-Message-ID: <76e58ef5-62c4-ae9e-2557-40345734de25@free.fr>
-Date:   Wed, 27 Oct 2021 15:01:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S242108AbhJ0N3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 09:29:50 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:51451 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238115AbhJ0N3n (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 09:29:43 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MTAJl-1mETag3anP-00Ua0z; Wed, 27 Oct 2021 15:27:05 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id CD2E51E01E7;
+        Wed, 27 Oct 2021 13:27:04 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id MKKWHz3m1be2; Wed, 27 Oct 2021 15:27:04 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (19-usr-pf-main.vpn.it.cetitec.com [10.8.5.19])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 48D2C1E01E6;
+        Wed, 27 Oct 2021 15:27:04 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from local account)
+Date:   Wed, 27 Oct 2021 15:27:03 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Remove negation from the merge option "--no-verify"
+Message-ID: <YXlTpzrY7KFqRlno@pflmari>
+References: <YXfwanz3MynCLDmn@pflmari>
+ <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
+ <YXlBhmfXl3wFQ5Bj@pflmari>
+ <YXlD5ecNSdeBSMoS@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQVChdH6eJGKPuRExt5TpfNWDwY95bge01dixr7jkiUuQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YXlD5ecNSdeBSMoS@coredump.intra.peff.net>
+X-Provags-ID: V03:K1:nYagFg//Bc47WcmTEDei6G8fm+ShMvKntnqfZJknYFRkSPAbP82
+ fiUpSjjIZC4TNzF30vwWKgSKGjhfYG7HjwZnRQK0LR50rhF79aWnXiQ3l7QR/VmqXS/A7yJ
+ 6Bhklg2TLllyDum5DbCpQ/Ws9IniJKzdV/nv5wSu9ZCRrizt9AnDwBm+dBK4nQhS6QF4zzV
+ VEvJUFQQfF1RwJDQL+V3Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:a2vdNFgsAaU=:oQD1S3sTiNhh3x7Rvs5/X6
+ WTOBujPI5UfGtCN9BuEyQs9LA6PxaOK6qAyckyxyK+ePjm8xJTX6YUjJgTWdvX3ApbpWkjjLJ
+ hBdtcumOgNCUtOxvuiWgr0GNV4ES3ona4HvATuZOF9NuCQNf1gpRdQ2VtWY5kWse7hSE8SD01
+ npSIi/GNvayR0gHg7pVaiOeIzoxWieEX/MN0E6y3FUtscJT3H/ZfldDw36NaGvCXLyboQwltH
+ JnV+YDspw44Bd62enmhfatuWKAVNnEhOQS+X2WJqotuxRneJtBX42dtIBm0GEJWO81dkvCVgZ
+ ImTaLUxUIY+U0EJukmFMM+kGp5fWrz5RF6nY4aI6rBSW4klOxlFX94jKcFsY1zRN2jkKKuBNV
+ e1gJPvf8lkOmntpeUkVmmq7jpEsyUDjrQ1kQXJh/Ss/isFRFeQWj3wVoQ+od2OrUvgkx7LZgh
+ dWQrXcUY8U4sg0NnhQOu+vWjCYeHBHsjd3o7QpKqvDSZXVDxuuwYdaTS6ndktrcdMGcNs7QYH
+ 4uwGT0rw/A3ezPEQcLhDoUeqXHql2BueWqm6tpAdKBzk/F80q/CNjStap/aM9ZGfpYmbRs6rt
+ PjlLtJbgM/BXHEVuS/DGybZUyVU6+dakd8opr+xYF0YdRVvPjIVKNPE0+T6ol+rJEJg1u56OV
+ 7jE8pURFoeFfVMShAC1you4aMPK0E1wPCSvSpLRZJMW3OKDmcob3qbTxtWSllh8xx+uTTV3CH
+ pfmQqO8z8eFPcG6V
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 26, 2021, Eric Sunshine wrote:
-> On Tue, Oct 26, 2021 at 11:11 AM Jean-Noël Avila via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> doc: fix grammar rules in commands'syntax
-> 
-> Missing space.
-> 
->> According to the coding guidelines, the placeholders must:
->>  * be in small letters
->>  * enclosed in angle brackets
->>
->> Some other rules are also applied.
-> 
-> Perhaps just mention them here?
-> 
->     * use hyphens rather than underscores or spaces
->       between words
+From: Alex Riesen <raa.lkml@gmail.com>
 
-There are a lot more places with spaces within placeholders. Will extend.
+This allows re-enabling hooks disabled by an earlier "--no-verify"
+in command-line and makes the interface more consistent.
 
->     * indicate repetition with `...` rather than `*`
-> 
-> were some that I saw while reading.
-> 
-> Overall, the patch looks good. One or two notes below...
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 
-Thanks for taking time to review this cumbersome patch.
+---
 
-> 
->> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
->> ---
->> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
->> @@ -11,7 +11,7 @@ SYNOPSIS
->> -'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
->> +'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new-branch>] [<start-point>]
-> 
-> Nice to see this attention to detail.
-> 
->> @@ -43,7 +43,7 @@ You could omit `<branch>`, in which case the command degenerates to
->> -'git checkout' -b|-B <new_branch> [<start point>]::
->> +'git checkout' -b|-B <new-branch> [<start-point>]::
-> 
-> Likewise.
-> 
->> @@ -145,11 +145,11 @@ as `ours` (i.e. "our shared canonical history"), while what you did
->> --b <new_branch>::
->> +-b <new-branch>::
->>         Create a new branch named `<new_branch>` and start it at
->>         `<start_point>`; see linkgit:git-branch[1] for details.
-> 
-> The names in the description need fixing too: s/_/-/g
+This one is on top of "[PATCH] Fix "commit-msg" hook unexpectedly called for
+"git pull --no-verify" (http://public-inbox.org/git/YXfwanz3MynCLDmn@pflmari/).
+Which is a bit awkward. Should I resend as series?
 
-Ack
+Jeff King, Wed, Oct 27, 2021 14:19:49 +0200:
+> On Wed, Oct 27, 2021 at 02:09:42PM +0200, Alex Riesen wrote:
+> > Jeff King, Tue, Oct 26, 2021 23:16:09 +0200:
+> > > On Tue, Oct 26, 2021 at 02:11:22PM +0200, Alex Riesen wrote:
+> > > I was going to ask whether this should be passing through "verify", and
+> > > allowing its "no-" variant, but there is no "--verify" in git-merge.
+> > > Arguably there should be (for consistency and to countermand an earlier
+> > > --no-verify), but that is outside the scope of your fix (sadly if
+> > > somebody does change that, they'll have to remember to touch this spot,
+> > > too, but I don't think it can be helped).
+> > 
+> > This seems simple enough, though. Like this?
+> > 
+> > [PATCH] Remove negation from the merge option "--no-verify"
+> > 
+> > This allows re-enabling hooks disabled by an earlier "--no-verify"
+> > in command-line and makes the interface more consistent.
+> 
+> Yeah, I don't see any problems in the patch below, and I agree it makes
+> things overall nicer (both the user-facing parts, and not having to see
+> the double-negative "!no_verify" in the code).
 
-> 
->> --B <new_branch>::
->> +-B <new-branch>::
->>         Creates the branch `<new_branch>` and start it at `<start_point>`;
->>         if it already exists, then reset it to `<start_point>`. This is
->>         equivalent to running "git branch" with "-f"; see
-> 
-> Likewise: s/_/-/g
+Ok, resending it formally.
 
-Ack
+> > diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+> > index 80d4831662..54cd3b04df 100644
+> > --- a/Documentation/merge-options.txt
+> > +++ b/Documentation/merge-options.txt
+> > @@ -112,8 +112,9 @@ option can be used to override --squash.
+> >  +
+> >  With --squash, --commit is not allowed, and will fail.
+> >  
+> > ---no-verify::
+> > -	This option bypasses the pre-merge and commit-msg hooks.
+> > +--[no-]verify::
+> > +	With `--no-verify`, bypass the pre-merge and commit-msg hooks,
+> > +	which will be run by default.
+> 
+> This "which will be run by default" is a little awkward. Maybe:
+> 
+>   By default, pre-merge and commit-msg hooks are run. When `--no-verify`
+>   is given, these are bypassed.
+> 
+> ?
 
-> 
->> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
->> @@ -9,20 +9,20 @@ git-config - Get and set repository or global options
->> -'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
->> +'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch <name> <URL>
-> 
-> The commit message talks about using lowercase, so perhaps? s/URL/url/
+Of course. It certainly reads better like this.
 
+ Documentation/git-merge.txt     |  2 +-
+ Documentation/merge-options.txt |  5 +++--
+ builtin/merge.c                 | 12 ++++++------
+ builtin/pull.c                  | 12 ++++++------
+ 4 files changed, 16 insertions(+), 15 deletions(-)
 
-URL is not a word, but an acronym. Lowercasing it looks weird, but
-that's personal taste. URL appears with a lot different casings across
-the documents.
-
-
-> 
->> @@ -102,7 +102,7 @@ OPTIONS
->> ---get-urlmatch name URL::
->> +--get-urlmatch <name> <URL>::
->>         When given a two-part name section.key, the value for
->>         section.<url>.key whose <url> part matches the best to the
->>         given URL is returned (if no such key exists, the value for
-> 
-> Ditto. In fact, lowercase <url> is already used in the description,
-> but not in the item line.
-> 
-> If wanting to match other documentation files, this would also be
-> typeset as `<url>` rather than <url> in the description text, but that
-> change may be well outside the scope of this patch.
-> 
->> @@ -145,7 +145,7 @@ See also <<FILES>>.
->> --f config-file::
->> +-f <config-file>::
->>  --file config-file::
-> 
-> Need to apply brackets around `config-file` for the `--file` option
-> too, just as you did for short `-f`.
-> 
->> @@ -246,7 +246,7 @@ Valid `<type>`'s include:
->> ---get-colorbool name [stdout-is-tty]::
->> +--get-colorbool <name> [<stdout-is-tty>]::
->>
->>         Find the color setting for `name` (e.g. `color.diff`) and output
->>         "true" or "false".  `stdout-is-tty` should be either "true" or
-> 
-> Should you wrap `stdout-is-tty` within angle brackets within the
-> description too?
-> 
-
-The rules for referring to placeholder in text wasn't defined (use angle
-brackets or not, use monospace or not) . Usage in manpages is diverse.
-Logically this would be monospace for any token of the synopsis and
-angle bracket when it's a placeholder.
-
-However, this is a larger fixup in manpages, that would require its own
-patch.
-
->> @@ -257,7 +257,7 @@ Valid `<type>`'s include:
->> ---get-color name [default]::
->> +--get-color <name> [<default>]::
->>
->>         Find the color configured for `name` (e.g. `color.diff.new`) and
->>         output it as the ANSI color escape sequence to the standard
-> 
-> And here? <name> rather than `name`?
-> 
->> diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
->> @@ -8,7 +8,7 @@ git-credential - Retrieve and store user credentials
->> -git credential <fill|approve|reject>
->> +git credential [fill|approve|reject]
-> 
-> The original was indeed wrong but the revised text is also slightly
-> misleading. The square brackets suggest that the "action" is optional,
-> but in fact it's not, so this should be using parentheses:
-> 
->     git credential (fill|approve|reject)
-> 
-> Also, the usage text in builtin/credential.c is wrong:
-> 
->     % git credential
->     usage: git credential [fill|approve|reject]
-> 
-> It should be using parentheses, as well, but fixing that may be
-> outside the scope of this patch (and can be done later).
-> 
->> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
->> @@ -9,11 +9,11 @@ git-cvsimport - Salvage your data out of another SCM people love to hate
->> -'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <CVSROOT>]
->> +'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <cvsroot>]
->>               [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
->> -             [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
->> +             [-C <git-repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
->>               [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
->> -             [-r <remote>] [-R] [<CVS_module>]
->> +             [-r <remote>] [-R] [<CVS-module>]
-> 
-> I wonder if <commitlimit> should be changed to <commit-limit>?
-> 
->> diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
->> @@ -12,7 +12,7 @@ SYNOPSIS
->>  'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
->>          [--[no-]full] [--strict] [--verbose] [--lost-found]
->>          [--[no-]dangling] [--[no-]progress] [--connectivity-only]
->> -        [--[no-]name-objects] [<object>*]
->> +        [--[no-]name-objects] [<object>...]
-> 
-> Okay.
-> 
->> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
->> @@ -79,7 +79,7 @@ repository.  If not specified, fall back to the default name (currently
->> ---shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
->> +--shared[=(false|true|umask|group|all|world|everybody|0<octal>)]::
-> 
-> This feels slightly unusual; I'd have expected just plain `<octal>`
-> without the leading `0`, and...
-> 
->> @@ -110,13 +110,14 @@ the repository permissions.
->> -'0xxx'::
->> +'0<octal>'::
-> 
-> .. this would also say just `<octal>`, and...
-> 
->> -'0xxx' is an octal number and each file will have mode '0xxx'. '0xxx' will
->> -override users' umask(2) value (and not only loosen permissions as 'group' and
->> -'all' does). '0640' will create a repository which is group-readable, but not
->> -group-writable or accessible to others. '0660' will create a repo that is
->> -readable and writable to the current user and group, but inaccessible to others.
->> +'0<octal>' is an octal number and each file will have mode
->> +'0<octal>'. '0<octal>' will override users' umask(2) value (and not
->> +only loosen permissions as 'group' and 'all' does). '0640' will create
->> +a repository which is group-readable, but not group-writable or
->> +accessible to others. '0660' will create a repo that is readable and
->> +writable to the current user and group, but inaccessible to others.
-> 
-> ... this would then go on to explain that `<octal>` "... is an octal
-> number starting with literal `0`...".
-> 
-> But it's subjective and others might feel differently.
-> 
->> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
->> @@ -81,7 +81,7 @@ produced by `--stat`, etc.
->> -<revision range>::
->> +<revision-range>::
->>         Show only commits in the specified revision range.  When no
->>         <revision range> is specified, it defaults to `HEAD` (i.e. the
->>         whole history leading to the current commit).  `origin..HEAD`
-> 
-> Also need to fix the description: s/<revision range>/<revision-range>/
-> 
->> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
->> @@ -10,8 +10,8 @@ SYNOPSIS
->>  'git ls-files' [-z] [-t] [-v] [-f]
->> -               (--[cached|deleted|others|ignored|stage|unmerged|killed|modified])*
->> -               (-[c|d|o|i|s|u|k|m])*
->> +               [--(cached|deleted|others|ignored|stage|unmerged|killed|modified)...]
->> +               [-(c|d|o|i|s|u|k|m)...]
-> 
-> I wonder if we could make it easier on users if written like this:
-> 
->     [--cached|--deleted|--others|--blah|--blah]...
->     [-c|-d|-o|-i|-s|-u|-k|-m]...
-> 
-> But that's subjective.
-
-It would better match synopsis of other commands with the following
-grammar which expresses alternative options as explained in the
-remainder of the manpage:
-
-[-c|--cached] [-d|--deleted] [-m|--modified] and so on.
-
-> 
->> diff --git a/Documentation/git-pack-redundant.txt b/Documentation/git-pack-redundant.txt
->> @@ -9,7 +9,7 @@ git-pack-redundant - Find redundant pack files
->> -'git pack-redundant' [ --verbose ] [ --alt-odb ] < --all | .pack filename ... >
->> +'git pack-redundant' [ --verbose ] [ --alt-odb ] ( --all | <.pack-filename>... )
-> 
-> I'd probably drop the leading dot in <.pack-filename>. It shouldn't be
-> difficult for a reader to figure out that these are the files with
-> `.pack` extension, and if they do need help understanding that, then
-> probably better to explain in prose that <pack-filename> is a pack
-> file with `.pack` extension.
-> 
->> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
->> @@ -89,7 +89,7 @@ counts both authors and co-authors.
->> -<revision range>::
->> +<revision-range>::
->>         Show only commits in the specified revision range.  When no
->>         <revision range> is specified, it defaults to `HEAD` (i.e. the
->>         whole history leading to the current commit).  `origin..HEAD`
-> 
-> Need to update the description to: s/<revision range>/<revision-range>/
-
-Ack
-
-> 
->> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
->> @@ -11,7 +11,7 @@ given by a list of patterns.
->> -'git sparse-checkout <subcommand> [options]'
->> +'git sparse-checkout <subcommand> [<options>...]'
-> 
-> The addition of `...` would make more sense if it was spelled
-> "option", but with it already being plural "options", I have trouble
-> understanding why `...` is added.
-> 
->> diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
->> @@ -9,7 +9,7 @@ git-stage - Add file contents to the staging area
->> -'git stage' args...
->> +'git stage' <arg>...
-> 
-> It's subjective, but I find plain `<args>` easier to interpret than
-> `<arg>...`. Does our documentation favor one form over the other, or
-> is there a random mix?
-> 
->> diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
->> @@ -8,7 +8,7 @@ git-web--browse - Git helper script to launch a web browser
->> -'git web{litdd}browse' [<options>] <url|file>...
->> +'git web{litdd}browse' [<options>] (<url>|<file>)...
-> 
-> Good.
-> 
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 3819fadac1..324ae879d2 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
++	[--[no-]verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+ 'git merge' (--continue | --abort | --quit)
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 80d4831662..f8016b0f7b 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -112,8 +112,9 @@ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
+ 
+---no-verify::
+-	This option bypasses the pre-merge and commit-msg hooks.
++--[no-]verify::
++	By default, pre-merge and commit-msg hooks are run. When `--no-verify`
++	is given, these are bypassed.
+ 	See also linkgit:githooks[5].
+ 
+ -s <strategy>::
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9d5359edc2..ab5c221234 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -83,7 +83,7 @@ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
+ static int autostash;
+-static int no_verify;
++static int verify = 1;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -290,7 +290,7 @@ static struct option builtin_merge_options[] = {
+ 	OPT_AUTOSTASH(&autostash),
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+-	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge-commit and commit-msg hooks")),
++	OPT_BOOL(0, "verify", &verify, N_("control use of pre-merge-commit and commit-msg hooks")),
+ 	OPT_END()
+ };
+ 
+@@ -822,7 +822,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	struct strbuf msg = STRBUF_INIT;
+ 	const char *index_file = get_index_file();
+ 
+-	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
++	if (verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
+ 		abort_commit(remoteheads, NULL);
+ 	/*
+ 	 * Re-read the index as pre-merge-commit hook could have updated it,
+@@ -858,9 +858,9 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 			abort_commit(remoteheads, NULL);
+ 	}
+ 
+-	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
+-					  "commit-msg",
+-					  git_path_merge_msg(the_repository), NULL))
++	if (verify && run_commit_hook(0 < option_edit, get_index_file(),
++				      "commit-msg",
++				      git_path_merge_msg(the_repository), NULL))
+ 		abort_commit(remoteheads, NULL);
+ 
+ 	read_merge_msg(&msg);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 428baea95b..e783da10b2 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -84,7 +84,7 @@ static char *opt_edit;
+ static char *cleanup_arg;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
+-static char *opt_no_verify;
++static char *opt_verify;
+ static int opt_autostash = -1;
+ static int config_autostash;
+ static int check_trust_level = 1;
+@@ -161,9 +161,9 @@ static struct option pull_options[] = {
+ 	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
+ 		N_("abort if fast-forward is not possible"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
+-	OPT_PASSTHRU(0, "no-verify", &opt_no_verify, NULL,
+-		N_("bypass pre-merge-commit and commit-msg hooks"),
+-		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
++	OPT_PASSTHRU(0, "verify", &opt_verify, NULL,
++		N_("control use of pre-merge-commit and commit-msg hooks"),
++		PARSE_OPT_NOARG),
+ 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
+ 		N_("verify that the named commit has a valid GPG signature"),
+ 		PARSE_OPT_NOARG),
+@@ -692,8 +692,8 @@ static int run_merge(void)
+ 		strvec_pushf(&args, "--cleanup=%s", cleanup_arg);
+ 	if (opt_ff)
+ 		strvec_push(&args, opt_ff);
+-	if (opt_no_verify)
+-		strvec_push(&args, opt_no_verify);
++	if (opt_verify)
++		strvec_push(&args, opt_verify);
+ 	if (opt_verify_signatures)
+ 		strvec_push(&args, opt_verify_signatures);
+ 	strvec_pushv(&args, opt_strategies.v);
+-- 
+2.33.0.22.g8cd9218530
 
