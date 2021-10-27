@@ -2,169 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CAD4C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 17:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A826C433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 17:56:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70D15610A3
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 17:53:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCC5C6109F
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 17:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236188AbhJ0Rz3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 13:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
+        id S238579AbhJ0R7X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 13:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbhJ0Rz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 13:55:28 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DD0C061570
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 10:53:02 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id z2-20020aa79482000000b0047c0239f1e3so1953748pfk.22
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 10:53:02 -0700 (PDT)
+        with ESMTP id S233651AbhJ0R7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 13:59:22 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B4DC061570
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 10:56:57 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id ee16so831127edb.10
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 10:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=01UMO02YkBm9L3Jtkq0L7b5KUTLdpIlz2OkPqcaGvtE=;
-        b=i6PTNgyDEOiEBNMDhFgl9o00e1/jAQ2ezxHksl/Wf3wL8OzhfM3QYgihPGu7CVcmKJ
-         EoHUzrkd0aNOGS+dwVt846QlRDmK/Fmnpa5tqKQd/osVLK9IB/Gfk3jQ+F6QhhFwocz6
-         Kn1JZ4r2e15ysO/ukS5bpRwWQghkLmRFEslqtYObWSzVKJsHgX1Z7sdLigKwo5xftEQI
-         /mqOyh+PUDPVIOyh2nQTNOJVkG2pjNTezCS/JDsf7y3d2E0dyuAA8WrdX6iMyrdZQ+E9
-         x4DZohWdf/qFJoMzJ/LfLGwmbemqvuib3HDHOJst2pSg7qOW7WtzbPNY7UbyxQ6SPEwJ
-         Kl2w==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=uDb1HkQSpOEI4vr/NtopMuNsfV9I9WzDE3bBHoyO61A=;
+        b=cbvElaqRSIuqR9/61JtutoREX0x+7zYpKLk46W0IWZDY2aXp+xJG21OzQYQZo5reMo
+         W56gV0xtLhvCJnynOl7yg5rmtLOQPco0d+XtaVbm6qgy/uev7kNZKXTSnTfCRGO7Mlp1
+         8njZactx5W4bnm23WigbtPPrhPSwXsCWQB4pTy3x/GCGOryP6zyl3fuLCOC0wdztVriW
+         Bhbjg8XE9H2804DTna3HID15CfM82iDNHR1SArIL84beOxUvNg4haG5Z3IblmV6se4Sl
+         wde3kekaw4H2uK7uNrbhlO9exBw5HNWug9al0g6HJgk5UKMffCBsZ8e/39xy0iPAVIUR
+         GH+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=01UMO02YkBm9L3Jtkq0L7b5KUTLdpIlz2OkPqcaGvtE=;
-        b=bV5OkOayBBhK6RJkFwuQpmz9foLyu9MHwsAHon7koOvP8hE4vMEdJPUuJt6f1xErHN
-         L+s7SwlYWj64E4pjKi9KAHgW/nBxSTT0yW4NeNRQBBt9xQkRV70KSfBbLIEkb1D5r3fy
-         qRUiYwdDTZxysdmBMq4VUzEoU6Ipz/pZXORQi3Tm+vdxqNprbNM3iK6ypqTYGeqqokxc
-         y4Iji8Uv8x/1RolBtNorSvVml64jd+t9T8avWbTd0BKpt+QApGNDjB3mPZfmQPy7IMCQ
-         Ut8rFm1ZLuYXsY18dXPedXkb1ijLCcgeb6aoZewhUN+Hbb/4zc0MJ1Z3FXqCe2h4cALn
-         40lA==
-X-Gm-Message-State: AOAM530DEk5OH6MlAUGKOA7tP5DTiyi4oJmYOXbDc5IIurHQ/YX+zX3Y
-        5Qhr5nVrCkPjfZh93EY9DhM6/5sFLjn4//0LsN8c
-X-Google-Smtp-Source: ABdhPJxbRDuv28MAKL+Dzw3UBSjczqhL9eqGiFcpWgFQ0Q1h0A8Y6pElEb8VvPISiv9sUjp28bQJq5CnLfGXAthYWRpu
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:844b:0:b0:47b:eb1a:4afc with
- SMTP id k72-20020a62844b000000b0047beb1a4afcmr23125840pfd.73.1635357181495;
- Wed, 27 Oct 2021 10:53:01 -0700 (PDT)
-Date:   Wed, 27 Oct 2021 10:52:59 -0700
-In-Reply-To: <YXk+TRnndNZkdsGF@coredump.intra.peff.net>
-Message-Id: <20211027175259.2230232-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <YXk+TRnndNZkdsGF@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
-Subject: Re: [RFC PATCH 0/2] Conditional config includes based on remote URL
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=uDb1HkQSpOEI4vr/NtopMuNsfV9I9WzDE3bBHoyO61A=;
+        b=Don/zxKR9swGPTq/ISJsRjcoPLK0m8vr5bUZXKH8iwbe99EVoV+WJKDAmWu6nmp2uJ
+         ElJH/y+9Udrn8PBE/hqhSp5FxGtNcxU1BYFjZ+5mq6JeMPu24UXqxBok6H32nO6aOrdA
+         qgLDUTtYTbb9wwKCG23bPhnzlMS67eBtrCYwCQNJFmfo/5QAaiQt87rD8vXAwqxB6tAb
+         NorsQebdoWkHINd7pHv6+N8Dmwn4U4g8NGwyN7NPypUv/uQtoKYd0xVjY6mgEQmTsZC9
+         O0bHMrxKnB65TO4FqWymHvSIvpI9CYsBtcTd+7gNe30eNtzmOSUjoQX9W7O5V7pk/gnf
+         9IaA==
+X-Gm-Message-State: AOAM530Ik85tgDxHdbTCN5yGC+NzC1i7Zt4+jtMG4Q+yFAwqL4uJpIKo
+        Neg5k6wOrNPRWxwiCIpgmzl9bKjTb3E=
+X-Google-Smtp-Source: ABdhPJzoRnlyRkrUQp9i+nBtB/sxrS8IKNeAO6kTyjPj9/NdWMs6CYGSx3UDqMllIpO//Ia1AZjlrw==
+X-Received: by 2002:a17:906:3784:: with SMTP id n4mr40471021ejc.129.1635357415271;
+        Wed, 27 Oct 2021 10:56:55 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id l10sm424815edk.30.2021.10.27.10.56.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 10:56:53 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mfnAT-0020xa-5f;
+        Wed, 27 Oct 2021 19:56:53 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Albert Cui <albertqcui@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        "Robin H . Johnson" <robbat2@gentoo.org>,
+        Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 2/3] protocol v2: specify static seeding of clone/fetch
+ via "bundle-uri"
+Date:   Wed, 27 Oct 2021 19:49:31 +0200
+References: <cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com>
+ <patch-2.3-3ac0539c053-20211025T211159Z-avarab@gmail.com>
+ <f2269fc7-1688-d62e-02bb-01c5b5e33143@gmail.com>
+ <211026.86cznrzu8g.gmgdl@evledraar.gmail.com>
+ <b22b894b-af03-c108-a3d5-0072c252f513@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <b22b894b-af03-c108-a3d5-0072c252f513@gmail.com>
+Message-ID: <211027.86mtmuxsey.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Mon, Oct 18, 2021 at 01:48:03PM -0700, Jonathan Tan wrote:
-> 
-> >  (1) Introduce a "includeAfterIf" (or "deferIncludeIf", or some other
-> >      name) command that is executed after all config files are read. (If
-> >      there are multiple, they are executed in order of appearance.)
-> >      Files included by this mechanism cannot directly or indirectly
-> >      contain another "includeAfterIf". This is the same as what was
-> >      introduced in this patch set, except for the name of the directive.
-> 
-> I think this works in terms of having self-consistent rules that make
-> sense. But deferring things does introduce new complications in terms of
-> overrides, because we rely on last-one-wins. Emily asked elsewhere about
-> overriding the inclusion of a file. We don't have a way to do that now,
-> and I think it would be tricky to add. But what about overriding a
-> single variable?
-> 
-> Right now this works:
-> 
->   git config --global foo.bar true
->   git config --local foo.bar false
-> 
-> to give you "false". But imagining there was a world of deferred config,
-> then:
-> 
->   git config --file ~/.gitconfig-foo foo.bar true
->   git config --global deferInclude.path .gitconfig-foo
->   git config --local foo.bar false
-> 
-> gives "true". We'd read .gitconfig-foo after everything else, overriding
-> the repo-level config.
-> 
-> If the deferred includes were processed at the end of each individual
-> file, that would solve that. You're still left with the slight oddness
-> that a deferred include may override options within the same file that
-> come after it, but that's inherent to the "defer" concept, and the
-> answer is probably "don't do that". It's only when it crosses file
-> boundaries (which are explicitly ordered by priority) that it really
-> hurts.
 
-This would indeed solve the issue of the user needing to know the trick
-to override variables set by deferred includes. But this wouldn't solve
-our primary use case in which a system-level config defines a
-conditional include but the repo config defines the URL, I think.
+On Tue, Oct 26 2021, Derrick Stolee wrote:
 
-> >  (2) Leave the name as "includeIf", and when it is encountered with a
-> >      remote-URL condition: continue parsing the config files, skipping
-> >      all "includeIf hasRemoteUrl", only looking for remote.*.url. After
-> >      that, resume the reading of config files at the first "includeIf
-> >      hasRemoteUrl", using the prior remote.*.url information gathered to
-> >      determine which files to include when "includeIf hasRemoteUrl" is
-> >      encountered. Files included by this mechanism cannot contain any
-> >      "remote.*.url" variables.
-> 
-> I think doing this as "continue parsing" and "resume" is hard to do.
-> Because you can't look at other non-remote.*.url entries here (otherwise
-> you'd see them out of order). So you have to either:
-> 
->   - complete the parse, stashing all the other variables away, and then
->     resolve the include, and then look at all the stashed variables as
->     if you were parsing them anew.
-> 
->   - teach our config parser how to save and restore state, including
->     both intra-file state and the progress across the set of files
+> On 10/26/2021 11:00 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I am implementing something similar to your first approach (stashing
-things). It's almost done so hopefully we'll have something concrete to
-discuss soon.
+[I'll reply to the rest later, either here or in related threads. I.e. I
+might end up entirely revamping the config etc. format]
 
-> I think it's much easier if you think of it as "start a new config parse
-> that does not respect hasRemoteURL". And the easiest way to do that is
-> to just let remote.c's existing git_config() start that parse (probably
-> by calling git_config_with_options() and telling it "don't respect
-> hasRemoteURL includes"). You may also need to teach the config parser to
-> be reentrant. We did some work on that a while ago, pushing the state
-> int config_source which functions as a stack, but I don't offhand know
-> if you can call git_config() from within a config callback.
+>> There's also the small matter of it being consistent with the
+>> packfile-uri config in its current form, but that shouldn't be a reason
+>> not to come up with something better. If anything any better suggestion
+>> (if we go for that) could be supported by it too...
+>
+> What do you mean about being consistent with packfile-uri? This layer
+> that we care about isn't even implemented in git.git.
 
-Besides the reentrancy (which may be difficult, as there are some global
-variables, but from a glance, some code seems to take care to save and
-restore them, so it may already be reentrant or not too difficult to
-make reentrant), we would have to bubble down the config (struct
-git_config_source and struct config_options) into all the places that
-could potentially start the parse and also have a place to store the
-URLs we get. If we're already going to stash URLs, it may be easier to
-stash the variables instead.
+It's rather limited, but we do support a uploadpack.BlobPackFileUri as a
+server-side feature for upload-pack. I.e.:
 
-> > There are other ideas including:
-> > 
-> >  (3) remote.*.url must appear before a "includeIf hasRemoteUrl" that
-> >      wants to match it. (But this doesn't fit our use case, in which a
-> >      repo config has the URL but a system or user config has the
-> >      include.)
-> 
-> Yeah, I agree this won't work.
-> 
-> >  (4) "includeIf hasRemoteUrl" triggers a search of the repo config just
-> >      for remote.*.url. (I think this out-of-order config search is more
-> >      complicated than (2), though.)
-> 
-> I think this is what I described above, and actually is less
-> complicated. ;)
-> 
-> -Peff
+    uploadpack.BlobPackFileUri=3D<OID> <pack-hash> <packfile-uri>
 
-Well, let me finish up (2), and let's see.
+See Documentation/technical/packfile-uri.txt.
+
+The <pack-hash> is part of the protocol, but the <OID> is just an aid to
+upload-pack to peel out that OID when it serves up the PACK, the <OID>
+being what you get from the URI.
+
+In terms of server implementation it's rather proof-of-concept-ish,
+i.e. it's not really all that useful unless your use case is carving out
+a small number of really big blobs. JGit's is much more mature, and
+there's some patches on-list recently to make the git.git one more
+practically useful[1].
+
+1. https://lore.kernel.org/git/cover.1634634814.git.tenglong@alibaba-inc.co=
+m/
+
