@@ -2,438 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE46C433FE
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADF4DC433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:10:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9281860F70
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:05:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9659F6103B
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241771AbhJ0MH1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 08:07:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240329AbhJ0MHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 08:07:11 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B1EC079788
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:40 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id e12so3769133wra.4
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=p5cnPMQKbgHXVyVGUj+cefY7DiWcqcJMbT+NkgNsm8c=;
-        b=og0zgq/WjOgM5mTfzYjHM4dGNTWhA3tr16pf/NKIUR6gwZ25/XkoCFFacK2HoUujDB
-         9IKatIKJN46AoSU1sxG0e09RUWM07ikeqV+QoVW5QYpoGu8I0owT7lJQL6unP3gN9IP8
-         PJoxeVk1ukbzs13BUYsBalsMP9edDh7j+g5RmrT7NIIrWd97NZXfMFZ+G1sf4r1M2Qbu
-         NFnZ8QzhuRsGLkBvMvjDNmU613laMc9odljfI2rYCM6ZJ4gJZ74ufjX0j36fkxXzJu8F
-         YeN8Klm7e4Kzln4Z/2pq9YATh6fKjeVrELHx2RLX1ThsGthVDMQ6j5HPrsjSEO1iRARm
-         G1cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p5cnPMQKbgHXVyVGUj+cefY7DiWcqcJMbT+NkgNsm8c=;
-        b=fjYlNTChDDVp2A8726uwN9X74V40bNKrutC7r7yifs67HLXqGx4Ix0ZNXsqcyOwCqO
-         oF776zCXA7iexV5k8JiQlmfCnSage/6xadctcwdrXfQcB76eNwuh6QrcalQP2eqqm65D
-         3dAEnfODr4e5gXX3fKVkUCsJIElznEsTL/ecFQqIewNkrq0LFtUJAN1E7R8MYHvdRlNg
-         AOkOvBpI7hoGalk8ZicZNCGo8H8t5FCAkyLN4R593cdxtx4zaCZEV7cnjmiwpF7u06Xi
-         Dx+su3ZfE2WpKkzlNW1Tf2C4gWx4h01zPJWXRMf0g3yXp2J8A5kuLuv/PkSvYkohymU6
-         H1Sw==
-X-Gm-Message-State: AOAM530QxIT/enh3UjcjxNCHGWOQuSi2h85SUSBcJ8XSAL3VCqS9WODR
-        vsD/g0ryQw+onwPZztdBf2Prvvkzxzs=
-X-Google-Smtp-Source: ABdhPJxYiqqpRwyZyKt6Xr9hLQJ1gcqcu9DlzazruYjNM9Z9mfpd/NfRLsNtJbTJSVXNLOLL9v9f/A==
-X-Received: by 2002:adf:ee43:: with SMTP id w3mr956709wro.198.1635336278436;
-        Wed, 27 Oct 2021 05:04:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm3101572wmj.28.2021.10.27.05.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 05:04:38 -0700 (PDT)
-Message-Id: <ae78c05f08dfe0ce8d2870fdabeafceecbf6784c.1635336263.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
-References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
-        <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 12:04:22 +0000
-Subject: [PATCH v3 15/15] diff --color-moved: intern strings
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S241810AbhJ0MMY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 08:12:24 -0400
+Received: from mout.kundenserver.de ([212.227.126.130]:47745 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241832AbhJ0MMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 08:12:21 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MQvH5-1mL2Ex2luR-00NxB1; Wed, 27 Oct 2021 14:09:44 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 821EC1E01E7;
+        Wed, 27 Oct 2021 12:09:43 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id T6_ri1rDNxbb; Wed, 27 Oct 2021 14:09:43 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (19-usr-pf-main.vpn.it.cetitec.com [10.8.5.19])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 1366B1E01E6;
+        Wed, 27 Oct 2021 14:09:43 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from local account)
+Date:   Wed, 27 Oct 2021 14:09:42 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix "commit-msg" hook unexpectedly called for "git pull
+ --no-verify"
+Message-ID: <YXlBhmfXl3wFQ5Bj@pflmari>
+References: <YXfwanz3MynCLDmn@pflmari>
+ <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
+X-Provags-ID: V03:K1:b2IBwWL8XgmkzbkevGmIlJ2U1rvuQ/T4xb9u+E8y/VZdD+4aGKw
+ RzPGsjdaYeEGzgUgjIZINRX5AkdlIa3ypsR6+GLHTlCvzVJxiRtBNHW5MjSbmRiPNkjQd7w
+ xDITtgoeA2wazpWpwig04oTJsAScncsrvsJPCg5T1Z0sKuBSP0UyYXH4+PeuIGUOguB9qJM
+ e/HTTpPJ0AwLvsfrgbVZA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EMR3MoLIPkY=:IV4gvllqGXixniVjWynz1s
+ 5LmDB96m4TVDypi3TYm+8mj4xzNSFIKiATVilIqP1zvgT7fwx7eQT2r3zdiTjG9lby/8DlYTQ
+ n4p2SR/+bIBhJ2tzuAgbFtAZMmTow+q30vePgH1RZeGjKdJMjOxejX5QdNVBl2NJ9mHdePUiQ
+ 3eQJb5kqpycK9lse6CqJZp8+xU8BMiBKSrmPAxoSfnCfWwXmv6I7Nsh5wLc0l0HvVhg5yCkXX
+ UXVLSZjmJeTGHuUiwW8/J6Bmr0Mvua5/LqfJcv2gQ2gIYCQCZeUlWSKdz2sZa5/vjPlm/+dBs
+ 1XKrVLtuK4I7HPX+Om0IflVY0BgAEVeXBZo4FgtmOnDKuWrDl+W79tdG8PvfYCa/0tsE4oT/6
+ TzOBFFnB+hs09r3rqp1Zj1pIplmZ9dY2LeCy/XyWhxZvu9l2ue/FHz5jhrhXemznDOg7N6V01
+ RH7vqYn5hUP06zYnwWkJITEMhMFt8uXXgecH3TQucuHw5h8qPIfXUxfzQEbCltve6WwFOR3Tx
+ /nqede9jSZAi5QMaC7hPa/Iq0EfEiVbuLo80/2iU4imojH1857Ay8G3360Yw1HvpLKwZhsVLq
+ yq7rzRhCyg/9wdizfzQdSvvi5vpuUvxkkp7LmzBlI3Q8ZI1kU/EM2SqOgWEWV/rkgPz3R9JoZ
+ IoM1hz/tCkRYCWy8ZgfCTr188RpiPMQ2BYiZqIq4SS0d7ikMgsFvDQGWFya0PKH8GRLiSQ2kU
+ dJfLfyQd3nR3hSCJ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Jeff King, Tue, Oct 26, 2021 23:16:09 +0200:
+> On Tue, Oct 26, 2021 at 02:11:22PM +0200, Alex Riesen wrote:
+> I was going to ask whether this should be passing through "verify", and
+> allowing its "no-" variant, but there is no "--verify" in git-merge.
+> Arguably there should be (for consistency and to countermand an earlier
+> --no-verify), but that is outside the scope of your fix (sadly if
+> somebody does change that, they'll have to remember to touch this spot,
+> too, but I don't think it can be helped).
 
-Taking inspiration from xdl_classify_record() assign an id to each
-addition and deletion such that lines that match for the current
---color-moved-ws mode share the same unique id. This reduces the
-number of hash lookups a little (calculating the ids still involves
-one hash lookup per line) but the main benefit is that when growing
-blocks of potentially moved lines we can replace string comparisons
-which involve chasing a pointer with a simple integer comparison. On a
-large diff this commit reduces the time to run 'diff --color-moved' by
-37% compared to the previous commit and 31% compared to master, for
-'diff --color-moved-ws=allow-indentation-change' the reduction is 28%
-compared to the previous commit and 96% compared to master. There is
-little change in the performance of 'git log --patch' as the diffs are
-smaller.
+This seems simple enough, though. Like this?
 
-Test                                                                 HEAD^               HEAD
----------------------------------------------------------------------------------------------------------------
-4002.1: diff --no-color-moved --no-color-moved-ws large change        0.38(0.33+0.05)    0.38(0.33+0.05)  +0.0%
-4002.2: diff --color-moved --no-color-moved-ws large change           0.88(0.81+0.06)    0.55(0.50+0.04) -37.5%
-4002.3: diff --color-moved-ws=allow-indentation-change large change   0.85(0.79+0.06)    0.61(0.54+0.06) -28.2%
-4002.4: log --no-color-moved --no-color-moved-ws                      1.16(1.07+0.08)    1.15(1.09+0.05)  -0.9%
-4002.5: log --color-moved --no-color-moved-ws                         1.31(1.22+0.08)    1.29(1.19+0.09)  -1.5%
-4002.6: log --color-moved-ws=allow-indentation-change                 1.32(1.24+0.08)    1.31(1.18+0.13)  -0.8%
+[PATCH] Remove negation from the merge option "--no-verify"
 
-Test                                                                 master              HEAD
----------------------------------------------------------------------------------------------------------------
-4002.1: diff --no-color-moved --no-color-moved-ws large change        0.38 (0.33+0.05)   0.38(0.33+0.05)  +0.0%
-4002.2: diff --color-moved --no-color-moved-ws large change           0.80 (0.75+0.04)   0.55(0.50+0.04) -31.2%
-4002.3: diff --color-moved-ws=allow-indentation-change large change  14.20(14.15+0.05)   0.61(0.54+0.06) -95.7%
-4002.4: log --no-color-moved --no-color-moved-ws                      1.15 (1.05+0.09)   1.15(1.09+0.05)  +0.0%
-4002.5: log --color-moved --no-color-moved-ws                         1.30 (1.19+0.11)   1.29(1.19+0.09)  -0.8%
-4002.6: log --color-moved-ws=allow-indentation-change                 1.70 (1.63+0.06)   1.31(1.18+0.13) -22.9%
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+This allows re-enabling hooks disabled by an earlier "--no-verify"
+in command-line and makes the interface more consistent.
 ---
- diff.c | 174 +++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 96 insertions(+), 78 deletions(-)
+ Documentation/git-merge.txt     |  2 +-
+ Documentation/merge-options.txt |  5 +++--
+ builtin/merge.c                 | 12 ++++++------
+ builtin/pull.c                  | 12 ++++++------
+ 4 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 9ef88d7665a..c28c56c1283 100644
---- a/diff.c
-+++ b/diff.c
-@@ -18,6 +18,7 @@
- #include "submodule-config.h"
- #include "submodule.h"
- #include "hashmap.h"
-+#include "mem-pool.h"
- #include "ll-merge.h"
- #include "string-list.h"
- #include "strvec.h"
-@@ -772,6 +773,7 @@ struct emitted_diff_symbol {
- 	int flags;
- 	int indent_off;   /* Offset to first non-whitespace character */
- 	int indent_width; /* The visual width of the indentation */
-+	unsigned id;
- 	enum diff_symbol s;
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 3819fadac1..324ae879d2 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
++	[--[no-]verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+ 'git merge' (--continue | --abort | --quit)
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 80d4831662..54cd3b04df 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -112,8 +112,9 @@ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
+ 
+---no-verify::
+-	This option bypasses the pre-merge and commit-msg hooks.
++--[no-]verify::
++	With `--no-verify`, bypass the pre-merge and commit-msg hooks,
++	which will be run by default.
+ 	See also linkgit:githooks[5].
+ 
+ -s <strategy>::
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9d5359edc2..ab5c221234 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -83,7 +83,7 @@ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
+ static int autostash;
+-static int no_verify;
++static int verify = 1;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -290,7 +290,7 @@ static struct option builtin_merge_options[] = {
+ 	OPT_AUTOSTASH(&autostash),
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+-	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge-commit and commit-msg hooks")),
++	OPT_BOOL(0, "verify", &verify, N_("control use of pre-merge-commit and commit-msg hooks")),
+ 	OPT_END()
  };
- #define EMITTED_DIFF_SYMBOL_INIT {NULL}
-@@ -797,9 +799,9 @@ static void append_emitted_diff_symbol(struct diff_options *o,
- }
  
- struct moved_entry {
--	struct hashmap_entry ent;
- 	const struct emitted_diff_symbol *es;
- 	struct moved_entry *next_line;
-+	struct moved_entry *next_match;
- };
+@@ -822,7 +822,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	struct strbuf msg = STRBUF_INIT;
+ 	const char *index_file = get_index_file();
  
- struct moved_block {
-@@ -865,24 +867,24 @@ static int cmp_in_block_with_wsd(const struct moved_entry *cur,
- 				 const struct emitted_diff_symbol *l,
- 				 struct moved_block *pmb)
- {
--	int al = cur->es->len, bl = l->len;
--	const char *a = cur->es->line,
--		   *b = l->line;
--	int a_off = cur->es->indent_off,
--	    a_width = cur->es->indent_width,
--	    b_off = l->indent_off,
--	    b_width = l->indent_width;
-+	int a_width = cur->es->indent_width, b_width = l->indent_width;
- 	int delta;
- 
--	/* If 'l' and 'cur' are both blank then they match. */
--	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE)
-+	/* The text of each line must match */
-+	if (cur->es->id != l->id)
-+		return 1;
-+
-+	/*
-+	 * If 'l' and 'cur' are both blank then we don't need to check the
-+	 * indent. We only need to check cur as we know the strings match.
-+	 * */
-+	if (a_width == INDENT_BLANKLINE)
- 		return 0;
- 
+-	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
++	if (verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
+ 		abort_commit(remoteheads, NULL);
  	/*
- 	 * The indent changes of the block are known and stored in pmb->wsd;
- 	 * however we need to check if the indent changes of the current line
--	 * match those of the current block and that the text of 'l' and 'cur'
--	 * after the indentation match.
-+	 * match those of the current block.
- 	 */
- 	delta = b_width - a_width;
- 
-@@ -893,22 +895,26 @@ static int cmp_in_block_with_wsd(const struct moved_entry *cur,
- 	if (pmb->wsd == INDENT_BLANKLINE)
- 		pmb->wsd = delta;
- 
--	return !(delta == pmb->wsd && al - a_off == bl - b_off &&
--		 !memcmp(a + a_off, b + b_off, al - a_off));
-+	return delta != pmb->wsd;
- }
- 
--static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
--			   const struct hashmap_entry *eptr,
--			   const struct hashmap_entry *entry_or_key,
--			   const void *keydata)
-+struct interned_diff_symbol {
-+	struct hashmap_entry ent;
-+	struct emitted_diff_symbol *es;
-+};
-+
-+static int interned_diff_symbol_cmp(const void *hashmap_cmp_fn_data,
-+				    const struct hashmap_entry *eptr,
-+				    const struct hashmap_entry *entry_or_key,
-+				    const void *keydata)
- {
- 	const struct diff_options *diffopt = hashmap_cmp_fn_data;
- 	const struct emitted_diff_symbol *a, *b;
- 	unsigned flags = diffopt->color_moved_ws_handling
- 			 & XDF_WHITESPACE_FLAGS;
- 
--	a = container_of(eptr, const struct moved_entry, ent)->es;
--	b = container_of(entry_or_key, const struct moved_entry, ent)->es;
-+	a = container_of(eptr, const struct interned_diff_symbol, ent)->es;
-+	b = container_of(entry_or_key, const struct interned_diff_symbol, ent)->es;
- 
- 	return !xdiff_compare_lines(a->line + a->indent_off,
- 				    a->len - a->indent_off,
-@@ -916,55 +922,81 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 				    b->len - b->indent_off, flags);
- }
- 
--static struct moved_entry *prepare_entry(struct diff_options *o,
--					 int line_no)
-+static void prepare_entry(struct diff_options *o, struct emitted_diff_symbol *l,
-+			  struct interned_diff_symbol *s)
- {
--	struct moved_entry *ret = xmalloc(sizeof(*ret));
--	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
- 	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
- 	unsigned int hash = xdiff_hash_string(l->line + l->indent_off,
- 					      l->len - l->indent_off, flags);
- 
--	hashmap_entry_init(&ret->ent, hash);
--	ret->es = l;
--	ret->next_line = NULL;
--
--	return ret;
-+	hashmap_entry_init(&s->ent, hash);
-+	s->es = l;
- }
- 
--static void add_lines_to_move_detection(struct diff_options *o,
--					struct hashmap *add_lines,
--					struct hashmap *del_lines)
-+struct moved_entry_list {
-+	struct moved_entry *add, *del;
-+};
-+
-+static struct moved_entry_list *add_lines_to_move_detection(struct diff_options *o,
-+							    struct mem_pool *entry_mem_pool)
- {
- 	struct moved_entry *prev_line = NULL;
--
-+	struct mem_pool interned_pool;
-+	struct hashmap interned_map;
-+	struct moved_entry_list *entry_list = NULL;
-+	size_t entry_list_alloc = 0;
-+	unsigned id = 0;
- 	int n;
-+
-+	hashmap_init(&interned_map, interned_diff_symbol_cmp, o, 8096);
-+	mem_pool_init(&interned_pool, 1024 * 1024);
-+
- 	for (n = 0; n < o->emitted_symbols->nr; n++) {
--		struct hashmap *hm;
--		struct moved_entry *key;
-+		struct interned_diff_symbol key;
-+		struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
-+		struct interned_diff_symbol *s;
-+		struct moved_entry *entry;
- 
--		switch (o->emitted_symbols->buf[n].s) {
--		case DIFF_SYMBOL_PLUS:
--			hm = add_lines;
--			break;
--		case DIFF_SYMBOL_MINUS:
--			hm = del_lines;
--			break;
--		default:
-+		if (l->s != DIFF_SYMBOL_PLUS && l->s != DIFF_SYMBOL_MINUS) {
- 			prev_line = NULL;
- 			continue;
- 		}
- 
- 		if (o->color_moved_ws_handling &
- 		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
--			fill_es_indent_data(&o->emitted_symbols->buf[n]);
--		key = prepare_entry(o, n);
--		if (prev_line && prev_line->es->s == o->emitted_symbols->buf[n].s)
--			prev_line->next_line = key;
-+			fill_es_indent_data(l);
- 
--		hashmap_add(hm, &key->ent);
--		prev_line = key;
-+		prepare_entry(o, l, &key);
-+		s = hashmap_get_entry(&interned_map, &key, ent, &key.ent);
-+		if (s) {
-+			l->id = s->es->id;
-+		} else {
-+			l->id = id;
-+			ALLOC_GROW_BY(entry_list, id, 1, entry_list_alloc);
-+			hashmap_add(&interned_map,
-+				    memcpy(mem_pool_alloc(&interned_pool,
-+							  sizeof(key)),
-+					   &key, sizeof(key)));
-+		}
-+		entry = mem_pool_alloc(entry_mem_pool, sizeof(*entry));
-+		entry->es = l;
-+		entry->next_line = NULL;
-+		if (prev_line && prev_line->es->s == l->s)
-+			prev_line->next_line = entry;
-+		prev_line = entry;
-+		if (l->s == DIFF_SYMBOL_PLUS) {
-+			entry->next_match = entry_list[l->id].add;
-+			entry_list[l->id].add = entry;
-+		} else {
-+			entry->next_match = entry_list[l->id].del;
-+			entry_list[l->id].del = entry;
-+		}
+ 	 * Re-read the index as pre-merge-commit hook could have updated it,
+@@ -858,9 +858,9 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 			abort_commit(remoteheads, NULL);
  	}
-+
-+	hashmap_clear(&interned_map);
-+	mem_pool_discard(&interned_pool, 0);
-+
-+	return entry_list;
- }
  
- static void pmb_advance_or_null(struct diff_options *o,
-@@ -973,7 +1005,6 @@ static void pmb_advance_or_null(struct diff_options *o,
- 				int *pmb_nr)
- {
- 	int i, j;
--	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
+-	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
+-					  "commit-msg",
+-					  git_path_merge_msg(the_repository), NULL))
++	if (verify && run_commit_hook(0 < option_edit, get_index_file(),
++				      "commit-msg",
++				      git_path_merge_msg(the_repository), NULL))
+ 		abort_commit(remoteheads, NULL);
  
- 	for (i = 0, j = 0; i < *pmb_nr; i++) {
- 		int match;
-@@ -986,9 +1017,8 @@ static void pmb_advance_or_null(struct diff_options *o,
- 			match = cur &&
- 				!cmp_in_block_with_wsd(cur, l, &pmb[i]);
- 		else
--			match = cur &&
--				xdiff_compare_lines(cur->es->line, cur->es->len,
--						    l->line, l->len, flags);
-+			match = cur && cur->es->id == l->id;
-+
- 		if (match) {
- 			pmb[j] = pmb[i];
- 			pmb[j++].match = cur;
-@@ -998,7 +1028,6 @@ static void pmb_advance_or_null(struct diff_options *o,
- }
- 
- static void fill_potential_moved_blocks(struct diff_options *o,
--					struct hashmap *hm,
- 					struct moved_entry *match,
- 					struct emitted_diff_symbol *l,
- 					struct moved_block **pmb_p,
-@@ -1012,7 +1041,7 @@ static void fill_potential_moved_blocks(struct diff_options *o,
- 	 * The current line is the start of a new block.
- 	 * Setup the set of potential blocks.
- 	 */
--	hashmap_for_each_entry_from(hm, match, ent) {
-+	for (; match; match = match->next_match) {
- 		ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
- 		if (o->color_moved_ws_handling &
- 		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-@@ -1067,8 +1096,7 @@ static int adjust_last_block(struct diff_options *o, int n, int block_length)
- 
- /* Find blocks of moved code, delegate actual coloring decision to helper */
- static void mark_color_as_moved(struct diff_options *o,
--				struct hashmap *add_lines,
--				struct hashmap *del_lines)
-+				struct moved_entry_list *entry_list)
- {
- 	struct moved_block *pmb = NULL; /* potentially moved blocks */
- 	int pmb_nr = 0, pmb_alloc = 0;
-@@ -1077,23 +1105,15 @@ static void mark_color_as_moved(struct diff_options *o,
- 
- 
- 	for (n = 0; n < o->emitted_symbols->nr; n++) {
--		struct hashmap *hm = NULL;
--		struct moved_entry *key;
- 		struct moved_entry *match = NULL;
- 		struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
- 
- 		switch (l->s) {
- 		case DIFF_SYMBOL_PLUS:
--			hm = del_lines;
--			key = prepare_entry(o, n);
--			match = hashmap_get_entry(hm, key, ent, NULL);
--			free(key);
-+			match = entry_list[l->id].del;
- 			break;
- 		case DIFF_SYMBOL_MINUS:
--			hm = add_lines;
--			key = prepare_entry(o, n);
--			match = hashmap_get_entry(hm, key, ent, NULL);
--			free(key);
-+			match = entry_list[l->id].add;
- 			break;
- 		default:
- 			flipped_block = 0;
-@@ -1135,7 +1155,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 				 */
- 				n -= block_length;
- 			else
--				fill_potential_moved_blocks(o, hm, match, l,
-+				fill_potential_moved_blocks(o, match, l,
- 							    &pmb, &pmb_alloc,
- 							    &pmb_nr);
- 
-@@ -6253,20 +6273,18 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 
- 	if (o->emitted_symbols) {
- 		if (o->color_moved) {
--			struct hashmap add_lines, del_lines;
--
--			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
--			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
-+			struct mem_pool entry_pool;
-+			struct moved_entry_list *entry_list;
- 
--			add_lines_to_move_detection(o, &add_lines, &del_lines);
--			mark_color_as_moved(o, &add_lines, &del_lines);
-+			mem_pool_init(&entry_pool, 1024 * 1024);
-+			entry_list = add_lines_to_move_detection(o,
-+								 &entry_pool);
-+			mark_color_as_moved(o, entry_list);
- 			if (o->color_moved == COLOR_MOVED_ZEBRA_DIM)
- 				dim_moved_lines(o);
- 
--			hashmap_clear_and_free(&add_lines, struct moved_entry,
--						ent);
--			hashmap_clear_and_free(&del_lines, struct moved_entry,
--						ent);
-+			mem_pool_discard(&entry_pool, 0);
-+			free(entry_list);
- 		}
- 
- 		for (i = 0; i < esm.nr; i++)
+ 	read_merge_msg(&msg);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 428baea95b..e783da10b2 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -84,7 +84,7 @@ static char *opt_edit;
+ static char *cleanup_arg;
+ static char *opt_ff;
+ static char *opt_verify_signatures;
+-static char *opt_no_verify;
++static char *opt_verify;
+ static int opt_autostash = -1;
+ static int config_autostash;
+ static int check_trust_level = 1;
+@@ -161,9 +161,9 @@ static struct option pull_options[] = {
+ 	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
+ 		N_("abort if fast-forward is not possible"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
+-	OPT_PASSTHRU(0, "no-verify", &opt_no_verify, NULL,
+-		N_("bypass pre-merge-commit and commit-msg hooks"),
+-		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
++	OPT_PASSTHRU(0, "verify", &opt_verify, NULL,
++		N_("control use of pre-merge-commit and commit-msg hooks"),
++		PARSE_OPT_NOARG),
+ 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
+ 		N_("verify that the named commit has a valid GPG signature"),
+ 		PARSE_OPT_NOARG),
+@@ -692,8 +692,8 @@ static int run_merge(void)
+ 		strvec_pushf(&args, "--cleanup=%s", cleanup_arg);
+ 	if (opt_ff)
+ 		strvec_push(&args, opt_ff);
+-	if (opt_no_verify)
+-		strvec_push(&args, opt_no_verify);
++	if (opt_verify)
++		strvec_push(&args, opt_verify);
+ 	if (opt_verify_signatures)
+ 		strvec_push(&args, opt_verify_signatures);
+ 	strvec_pushv(&args, opt_strategies.v);
 -- 
-gitgitgadget
+2.33.0.22.g8cd9218530
+
+
