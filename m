@@ -2,158 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB1D7C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 08:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ECFDC433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 08:51:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCBA161073
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 08:28:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2170060F9D
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 08:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241010AbhJ0Iag (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 04:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240949AbhJ0IaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 04:30:08 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B9EC061233
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 01:27:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id j2-20020a1c2302000000b0032ca9b0a057so1620684wmj.3
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 01:27:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=x4VHMf5Ie9TYvQ9UrPa0BHCWFCVGGp9dxV4hFNAFBh4=;
-        b=C1Li2CiyMGhLXyH8mBLhdTW/kL4GoWU7tHU1pBN9PKG426Yj82uf3D10L/s38rGic7
-         3qzIt6ughxJylFYHWWQ0g0m0/3Sn05WPSVuOLo500Y5I1zCbFeb9ssowL/j4ts+7H1KZ
-         PWG7wgTFQjluNrc4/c8fz7r4+CrE7pMRiZuuiFd1Qr0lbHXVIRORVErwztKLSpsS+1DC
-         BXCuNqa1s1icRbvcQKGBIBbJ0oPXjd3JHxQyBp5K3Cj9dOV6121RESCrHsLKPvnPE4X1
-         dXq2ttTd/GjPv6eA3Z7E8Xs+/27Hnk6iXbiE0+AmgxQcj1JMk+pLpkshKMd4+Tns/8AJ
-         u3SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x4VHMf5Ie9TYvQ9UrPa0BHCWFCVGGp9dxV4hFNAFBh4=;
-        b=qD/7fXFtYhpKTQHWGhp6Y8ViOrOb27ldCgvHDd1FRDat4p18tc9d5Y4lhyW5JL6SBA
-         lityJvu2QWvM02tjA0H5g1zYJdhv4xeNgNHHsBE+SllFKXHN+S97lHezTk1RgC5DQHfq
-         5F40EQRkDZo9KbxMyaTYtbeR6zQJpbcwUto4pIvzgT+I0YhMbeFhoK2fmqDjcx9yCtht
-         fzxcxkc2E6WyDJJIrBmwdQPWix+MP/qby14NC6umwaoUzU9IFnJ8023H/T1mpO0sZuvY
-         l1xq/aBEGkoYw2v7MbCYFptb/mrks4MKXXK+28Me36tVNyEwah67tvf5ZKn/yImrIJMx
-         xwJQ==
-X-Gm-Message-State: AOAM531XtRHboeuw2gf9WVtL1mKnYUfvIBsWJgSp8ObJmBDWGg/6XkGt
-        qxO1HnxZhkVMtYQ/otnlwVjHceypEFc=
-X-Google-Smtp-Source: ABdhPJzaVQy03cS3hcZtuQ5gls9jJYge8ALBKo2/5uN3ZELlz+0Pf2D2vAjuLMScrYDVZVmUt1j6Rw==
-X-Received: by 2002:a7b:c4c4:: with SMTP id g4mr3111886wmk.93.1635323249424;
-        Wed, 27 Oct 2021 01:27:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t6sm15316710wrw.78.2021.10.27.01.27.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 01:27:29 -0700 (PDT)
-Message-Id: <e3a6eea0534d4e0ae5e9597b1dc3b86bfd9bffe2.1635323239.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
-References: <pull.1005.v5.git.1633604349.gitgitgadget@gmail.com>
-        <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 08:27:19 +0000
-Subject: [PATCH v6 15/15] scalar: accept -C and -c options before the
- subcommand
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S241035AbhJ0Ix0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 04:53:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47802 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239592AbhJ0IxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 04:53:25 -0400
+Received: (qmail 12886 invoked by uid 109); 27 Oct 2021 08:51:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Oct 2021 08:51:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20201 invoked by uid 111); 27 Oct 2021 08:51:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Oct 2021 04:51:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 27 Oct 2021 04:50:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        git <git@vger.kernel.org>
+Subject: Re: [Summit topic] Documentation (translations, FAQ updates, new
+ user-focused, general improvements, etc.)
+Message-ID: <YXkS85G5ujqxVf0M@coredump.intra.peff.net>
+References: <nycvar.QRO.7.76.6.2110211149000.56@tvgsbejvaqbjf.bet>
+ <1c9adc5d-21ac-f6c6-8a87-959be5420636@free.fr>
+ <211022.86r1cdjfe2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211022.86r1cdjfe2.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Fri, Oct 22, 2021 at 04:31:46PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-The `git` executable has these two very useful options:
+> I'd very much support this living in-tree just as the po/* directory
+> already does. I.e. periodically pulled down.
 
--C <directory>:
-	switch to the specified directory before performing any actions
+Just a bit of a tangent here, since weblate was mentioned earlier.
 
--c <key>=<value>:
-	temporarily configure this setting for the duration of the
-	specified scalar subcommand
+I'd caution a bit against pulling the history generated by weblate
+directly. It's pretty sub-optimal from a Git perspective: you have a
+bunch of big .po files and then a ton of little commits changing one or
+a handful of lines.
 
-With this commit, we teach the `scalar` executable the same trick.
+So the "logical" size of the repository (the sum of the actual object
+sizes) ends up growing quite a bit. Deltas can help with the on-disk
+size, but:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
- contrib/scalar/scalar.txt | 10 ++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
+  - lots of operations scale with the logical size. The client-side
+    index-pack of a clone, for instance, but also everyday stuff like
+    "git log -S".
 
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index b2e92cf63b5..6c496318bd4 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -807,6 +807,25 @@ int cmd_main(int argc, const char **argv)
- 	struct strbuf scalar_usage = STRBUF_INIT;
- 	int i;
- 
-+	while (argc > 1 && *argv[1] == '-') {
-+		if (!strcmp(argv[1], "-C")) {
-+			if (argc < 3)
-+				die(_("-C requires a <directory>"));
-+			if (chdir(argv[2]) < 0)
-+				die_errno(_("could not change to '%s'"),
-+					  argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else if (!strcmp(argv[1], "-c")) {
-+			if (argc < 3)
-+				die(_("-c requires a <key>=<value> argument"));
-+			git_config_push_parameter(argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else
-+			break;
-+	}
-+
- 	if (argc > 1) {
- 		argv++;
- 		argc--;
-@@ -817,7 +836,8 @@ int cmd_main(int argc, const char **argv)
- 	}
- 
- 	strbuf_addstr(&scalar_usage,
--		      N_("scalar <command> [<options>]\n\nCommands:\n"));
-+		      N_("scalar [-C <directory>] [-c <key>=<value>] "
-+			 "<command> [<options>]\n\nCommands:\n"));
- 	for (i = 0; builtins[i].name; i++)
- 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
- 
-diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index f416d637289..cf4e5b889cc 100644
---- a/contrib/scalar/scalar.txt
-+++ b/contrib/scalar/scalar.txt
-@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
- depending on the subcommand. With the exception of `clone`, `list` and
- `reconfigure --all`, all subcommands expect to be run in an enlistment.
- 
-+The following options can be specified _before_ the subcommand:
-+
-+-C <directory>::
-+	Before running the subcommand, change the working directory. This
-+	option imitates the same option of linkgit:git[1].
-+
-+-c <key>=<value>::
-+	For the duration of running the specified subcommand, configure this
-+	setting. This option imitates the same option of linkgit:git[1].
-+
- COMMANDS
- --------
- 
--- 
-gitgitgadget
+  - empirically we don't do a great job of finding these. See below for
+    some numbers.
+
+For instance, take https://github.com/phpmyadmin/phpmyadmin, a
+repository which uses weblate (I don't mean to pick on them; it's just a
+repo whose weblate-related packing I've looked into before). A fresh
+clone is 1.3GB. If you do an aggressive repack, you can get it down to
+about 550MB. But there's still tons of logical data. Running:
+
+  git cat-file --batch-all-objects --batch-check='%(objectsize) %(objectsize:disk)' |
+  perl -alne '
+    $logical += $F[0]; $disk += $F[1];
+    END { print "$logical / $disk = " . $logical / $disk }
+  '
+
+shows that there's over 70GB of logical data. It gets an impressive
+156:1 compression ratio (for comparison, "normal" repos like linux.git
+and git.git are around 40-60x in my experience).
+
+If you split it up by directory, like this:
+
+  git rev-list --objects --all --no-object-names -- po |
+  git cat-file --batch-check='%(objectsize)' |
+  perl -lne '$total += $_; END { print $total }'
+
+you'll see that po/ accounts for almost 60GB of that logical size.
+
+We face some of that in our current po/, too. They're big files, and
+that's the nature of the problem space. But our current ones tend to be
+edited by taking a pass over the whole file, rather than the one-liners
+that a web-based workflow encourages.
+
+To be clear, I'm not arguing against weblate in general. It's cool that
+it makes it easier for people to contribute to translations. But I think
+it has an outsized impact on size and performance compared to the rest
+of the repository. That's a big price to pay for carrying the history
+in-tree.
+
+Obviously one option there is to squash the po/ history before pulling
+it in. The weblate commit messages themselves aren't that useful. I'm
+not actually sure if jnavila's work so far has been using weblate. The
+commits in his git-html-l10n are much coarser than what I see in
+phpmyadmin, for example (so maybe he's doing similar squashing already).
+
+-Peff
