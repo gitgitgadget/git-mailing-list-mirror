@@ -2,96 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAE14C433FE
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 22:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BE3C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 23:44:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1A4160E8B
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 22:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFAC9608FE
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 23:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbhJ0W7i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 18:59:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47846 "EHLO
+        id S229515AbhJ0Xqi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 19:46:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhJ0W7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 18:59:36 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5F4C061570
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 15:57:09 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id y1-20020a17090a134100b001a27a7e9c8dso5988685pjf.3
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 15:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t+C++ZVW+eHMsYH8kHCjA23NgVrJ7cDWP1LKL/bgWS8=;
-        b=CdjGQ+W0qpmM7a4LbkAR6qphHz64lipB/UUsfs2cVgdC9lymAAl+vfwn9PaIn6JWSV
-         eEPS2zv2trv45WEbRDSPJlw7N5P9jGxxpZMjoOuKLbajBK3rrg9u2YvfuCvqzNBNAAKf
-         1xhV7ungM1RFrSDiLlHq79TAe8sjii7KJ+DLhO69GoSktqe0ynhEwtxJoMIkPXKiwGZG
-         4bkP2bFgRhyaoqDsaASThfmUH/NwnoFlMg/OoJWHrPQkBqtO5QBBaQBFacqX5cbGwVyH
-         ZLswGPGtC4Km06t5EfBrQ/L8tpAbW5cKng4WKMbokAxfS1TXRc9Fv6kQrdrQP12cWLhp
-         j2Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t+C++ZVW+eHMsYH8kHCjA23NgVrJ7cDWP1LKL/bgWS8=;
-        b=zEnDEP35kx1fleMoYmc3QJVpKEmw79zX7UrVYIsk8QuLa6NvkR4dXE+bwo+2C8ja/4
-         CZpy2xDJ3uD06loccYy/pJwVmU4zKZsWV2bYZIAGB03LpN5Z9q4gD7kbHzKjsqvoV3bS
-         Lwv1KMJ0A85uWH0E9YAUiNCJcW2oKwkOPCtwh0GFvCKKtjcUb8+QeWenNvFbU7tVdMmZ
-         bjVzDURwCeUhBacjquLZHQJeT1IuNhmFU2JfDs83UaIUEi3QlotOPcEtllRHGAcdGXb9
-         j1FEYnW8Uomouo4WBpkFos0dDmrfGQIF5okYqRkLWW0wrK8br7B/yz8dtV9Zye002Pkt
-         6qAw==
-X-Gm-Message-State: AOAM533LevU67wX0cDOVFJ3FJbUXnoya4pfxwgQztDM3+0QcvTVWAdqX
-        U4TrkIW0ly7cOuLD3JN+6QU=
-X-Google-Smtp-Source: ABdhPJyRtW9OJ+MeptopJXLcA3ZNf1miHiOv3zr2ScTtYr1dGA45hE1qkMU4LCpmDyqNFJhdfdP3YA==
-X-Received: by 2002:a17:902:d508:b0:140:42ce:c7b1 with SMTP id b8-20020a170902d50800b0014042cec7b1mr541940plg.89.1635375429157;
-        Wed, 27 Oct 2021 15:57:09 -0700 (PDT)
-Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
-        by smtp.gmail.com with ESMTPSA id p7sm727374pgn.52.2021.10.27.15.57.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 15:57:08 -0700 (PDT)
-Date:   Wed, 27 Oct 2021 15:57:06 -0700
-From:   Neeraj Singh <nksingh85@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH 0/2] tmp-objdir: fix regressions in
- core.fsyncobjectfiles=batch
-Message-ID: <20211027225706.GA3984@neerajsi-x1.localdomain>
-References: <pull.1067.git.1635287730.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2110271439120.56@tvgsbejvaqbjf.bet>
- <xmqqo87auqda.fsf@gitster.g>
+        with ESMTP id S229437AbhJ0Xqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 19:46:37 -0400
+X-Greylist: delayed 785 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 27 Oct 2021 16:44:11 PDT
+Received: from outpost.hi.is (outpost.hi.is [IPv6:2a00:c88:4000:1650::165:166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D768C061570
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 16:44:10 -0700 (PDT)
+Received: from krafla.rhi.hi.is (krafla.rhi.hi.is [IPv6:2a00:c88:4000:1480::148:57])
+        by outpost.hi.is (8.14.7/8.14.7) with ESMTP id 19RNV1QY006687
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 23:31:01 GMT
+DKIM-Filter: OpenDKIM Filter v2.11.0 outpost.hi.is 19RNV1QY006687
+Received: from krafla.rhi.hi.is (localhost [127.0.0.1])
+        by krafla.rhi.hi.is (8.15.2/8.15.2) with ESMTPS id 19RNV1oG762931
+        (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 23:31:01 GMT
+Received: (from bjarniig@localhost)
+        by krafla.rhi.hi.is (8.15.2/8.15.2/Submit) id 19RNV1Em762930
+        for git@vger.kernel.org; Wed, 27 Oct 2021 23:31:01 GMT
+Date:   Wed, 27 Oct 2021 23:31:01 +0000
+From:   Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+To:     git@vger.kernel.org
+Subject: "git describe --debug" does not show the latest tag for "groff"
+Message-ID: <20211027233101.GA762862@rhi.hi.is>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqo87auqda.fsf@gitster.g>
+Sender: bjarniig@hi.is
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 27, 2021 at 02:09:21PM -0700, Junio C Hamano wrote:
-> Yeah, none of the above is attractive this late in the cycle X-<.
-> 
-> It probalby is best to queue the "fixup!" commits as they are on top
-> of ns/tmp-objdir, merge the result to two topics that depend on
-> ns/tmp-objdir, and keep them without merging them down, until the
-> release.  When it is time to rewind 'next' after the release, it
-> would be a good chance to get rid of these "oops, earlier we screwed
-> up" commits by redoing the tmp-objdir (and rebasing the other two
-> topics on top).
-> 
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Hi Junio,
-Apologies for the breakage! I just want to be 100% clear here: is there
-any action I should take with the patches, or will you handle the merge/rebase?
+  I do not know, it could have happened anytime after the latest tag
+was committed (11th Nov. 2020).
 
-FYI for anyone trying this on git-for-windows, there's one additional patch at:
-https://github.com/neerajsi-msft/git/commit/435e1d2e5e8fb422b0f08ff6a01a130584f7e249
+What did you expect to happen? (Expected behavior)
 
-That fixes a gfw-specific breakage that affects tmp_objdir_migrate and causes it to
-infinitely create recursive directories until the disk fills up (surprisingly we don't
-hit stack overflow first).
+  Seeing the latest tag "1.23.0.rc1" in the version string of "groff"
+(and in the output of "git describe --debug")
 
-Thanks,
-Neeraj
+What happened instead? (Actual behavior)
+
+  "groff --version" shows for example "1.22.4.3317-8f8c8-dirty"
+
+  "git describe --debug" shows:
+
+describe HEAD
+No exact match on refs or tags, searching to describe
+finished search at 2ac1f9ba5578cad27dc547d5be3c91753db436ea
+ annotated       3318 1.22.4
+ annotated       3319 1.22.4.rc5
+ annotated       3352 1.22.4.rc4
+ annotated       3464 1.22.4.rc3
+ annotated       3485 1.23.0.rc1
+ annotated       3572 1.22.4.rc2
+ annotated       3619 1.22.3.rc1
+traversed 3833 commits
+1.22.4-3318-g3a1e750d
+
+What's different between what you expected and what actually happened?
+
+  The latest tag is not shown for the groff version.
+
+Anything else you want to add:
+
+
+  The latest tag in "git log" is 1.23.0.rc1 in my branch.
+  It is 1.23.0.rc1 in branch master.
+
+  Search for "tag:" in "git log" in my branch shows:
+
+commit c05b538c504106d55b81caa6400ea80797f03775 (tag: 1.23.0.rc1)
+Author: Bertrand Garrigues <...>
+Date:   Wed Nov 11 01:58:55 2020 +0100
+
+  "git show-ref 1.23.0.rc1" in my branch shows:
+
+faa3dff8d011e61721e763c71b6ccbf20a4675bc refs/tags/1.23.0.rc1
+
+####
+
+  "git-version-gen" (gnulib) does not get the latest tag.
+
+  The call in configure.am is:
+
+AC_INIT([GNU Troff],[m4_esyscmd(build-aux/git-version-gen --prefix ""
+.tarball-version)],[http://savannah.gnu.org/bugs/?group=g$
+
+  The files ".git/packed-refs" and ".git/info/refs" are the same in both
+branches.
+
+#####
+
+[System Info]
+git version 2.33.0 (Debian/testing Version: 1:2.33.0-1)
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.14.9-2 #1 SMP Sun Oct 10 01:53:44 UTC 2021 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.32
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+
+-- 
+Bjarni I. Gislason
