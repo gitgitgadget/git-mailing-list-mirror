@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B067BC433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1049FC433FE
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B609610A3
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC4F360E8B
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241762AbhJ0MHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 08:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
+        id S240336AbhJ0MHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 08:07:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241715AbhJ0MG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 08:06:56 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187E0C061224
+        with ESMTP id S241730AbhJ0MG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 08:06:57 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A242AC0613B9
         for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:31 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id v127so2367294wme.5
+Received: by mail-wr1-x42c.google.com with SMTP id o14so3702607wra.12
         for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=63o3P4q1ZFH6Z3d6V3ABrwdZeiLXPkyAw8esWLYB2Wc=;
-        b=qXjttTT8x2fu0YX7Zyh5LECrRuVPY8qIN9LvMg/euOU6NLXScCzUsSpU0sBn4Xo3Lu
-         dY0zaCJdM1tDv+U0sUlx7RQpF9KiJkRMvYy4IA3xBNAtoDANAYLG+KkPgGmXJBKdt0/y
-         gjU93KcuRdfJqTGbQ2WITHXTTT8SJb1xLnM6uZzNsyTcIyQ+7SCIwBrnNyekONkyDsTr
-         8e3Ume9DKj1jDODXPQn4Jx/mgx5CUL+YYJPXcvGPJB8Vbd+IVi4V6BjkavG/+S1Hhhc9
-         pSqGpVG/oD2YAtBAlyo8pUX1aitN2btNhbYJF3EtpaSJLJ+uxrJMjZ60GpCAnB2Gh5Eg
-         nlHA==
+        bh=QMoWx+vto78ZYKdHTzHFdPgdOaprERVbNGfNe2DRDPg=;
+        b=bmRnM0dQSGsV4A0ezbYAWs0YmAfehnZN8ruColG2lTC6I3NV3rhJjJcdYZomkXHOud
+         PWGi54f1gDlzTiRuqwkXfSj8OTNMg/4DULz2QNZnFl3/URAf8U31y7kZutjx3/r5V3Gw
+         UKcE+Qpi/mYPWq31cb4uu6knScW44Qe2r0FrmrnDnKmoayTfo+oasfhs/Ac236WUh45i
+         z786bfXYxU2WJ4GwNPqUBwO2SpDanoicI3w6ZrLPUZj0k4qDo3MVLwwQnFIUehecmXBR
+         90HUyv3wUSx12rbDKquIpYQHY3xEmnTiywIePMlHmG7hm3cULNTJJbz8/EIlPZDfuiCk
+         bRfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=63o3P4q1ZFH6Z3d6V3ABrwdZeiLXPkyAw8esWLYB2Wc=;
-        b=t5fPyAo9AAVCcj3VADPdmFJQ20+cmvfMveE/AK7bhYGqDiHcfjdnIKN3Dz1eXBjIRN
-         5MOFAV9ceIyOqDRXrWWn/iAdlR7ZPyliS8cReGvG5jn8n6GMVIowuvjcoF3tEaklIwGf
-         9daTLbtej9cGpFcqUGqwZVFB72UCosVwi2Ol+aVnq8OQ42/6+MA659DGt5HwgW68RMZ6
-         8EfUSfH/74Pig9tm369gJxz0t/3Uep8GbJNH+c6kdfObh1AHQQ56OJvWxcuc7VN6L/SB
-         D7j5tuLympkWn/NwVxKkaTPFgiBgpG4qHrzQJHsBnhpJdjAeWp8z37A1XE7CccvIHC+I
-         kkXQ==
-X-Gm-Message-State: AOAM5309gsbE2c8F6J1MqEe01xcrQaf0WKCvhKkk6ZEvunWAptzb/Nd6
-        TZwQuGs63+PETqZ/6fZjXzeHwqqx3kk=
-X-Google-Smtp-Source: ABdhPJxmQAWEp0PHLrYjMKt7JmpM1Reoo53YoQatYY4UG9OsUEvgnX4MvGtkddgMznUHrgEDnkP5mA==
-X-Received: by 2002:a7b:c1ca:: with SMTP id a10mr5382711wmj.91.1635336269699;
-        Wed, 27 Oct 2021 05:04:29 -0700 (PDT)
+        bh=QMoWx+vto78ZYKdHTzHFdPgdOaprERVbNGfNe2DRDPg=;
+        b=rNXLBMd3uXAf0byP7LaCdWedsp6wA/JKbN740ibvAV1JScbOSJXy0+Zg6QjXJwEsDW
+         yR+htjJKlkM/V15T9Bow2100cbpiCB+fB4fEtrsHTP+clOzvFS2dcdGFPYsQ1KVifj3K
+         fdMcWNobit2vVSZ8iCQVcITfBOw/FxWq5GKeQrVrpZ0mVRKYpqOuPXAg1dMVp6mvTRVk
+         UGyMfA4OkaYRK8GS0UFHs1STJqxrUWLouuxufsyPefVTIDcWToQfu9pvJbWDbWyzzgbR
+         rjxWFPbTc1GFSBilqQIkgkdRJQBpEQo8YURxmA90ZGShkW7+Q/jm3gscWmisdmFNC3x3
+         W82A==
+X-Gm-Message-State: AOAM5315xtBxjpRSyEkGnSt1rCfw+BuMv+H4h4AwLHpp3xy1wypqdLWW
+        AmFuQN0F3/4dGkNQBEpDCxD84sgRS4I=
+X-Google-Smtp-Source: ABdhPJxRyn0VSbpS0calU6sz5AZSKhoydoeib2aN9rW4mRcPlA5a3UNpdEQSJG3oQf0aZTIWYsAAmA==
+X-Received: by 2002:a05:6000:2c6:: with SMTP id o6mr19590582wry.321.1635336270259;
+        Wed, 27 Oct 2021 05:04:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm511363wrv.4.2021.10.27.05.04.29
+        by smtp.gmail.com with ESMTPSA id f24sm3126733wmb.33.2021.10.27.05.04.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 27 Oct 2021 05:04:29 -0700 (PDT)
-Message-Id: <2717ff500d2ebf82179f89c90d690718221e9fa8.1635336263.git.gitgitgadget@gmail.com>
+Message-Id: <f96fa71d53c491a2fd0a4dc61e9747d73b624329.1635336263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
 References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
         <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 12:04:13 +0000
-Subject: [PATCH v3 06/15] diff --color-moved: avoid false short line matches
- and bad zerba coloring
+Date:   Wed, 27 Oct 2021 12:04:14 +0000
+Subject: [PATCH v3 07/15] diff: simplify allow-indentation-change delta
+ calculation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,193 +75,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When marking moved lines it is possible for a block of potential
-matched lines to extend past a change in sign when there is a sequence
-of added lines whose text matches the text of a sequence of deleted
-and added lines. Most of the time either `match` will be NULL or
-`pmb_advance_or_null()` will fail when the loop encounters a change of
-sign but there are corner cases where `match` is non-NULL and
-`pmb_advance_or_null()` successfully advances the moved block despite
-the change in sign.
-
-One consequence of this is highlighting a short line as moved when it
-should not be. For example
-
--moved line  # Correctly highlighted as moved
-+short line  # Wrongly highlighted as moved
- context
-+moved line  # Correctly highlighted as moved
-+short line
- context
--short line
-
-The other consequence is coloring a moved addition following a moved
-deletion in the wrong color. In the example below the first "+moved
-line 3" should be highlighted as newMoved not newMovedAlternate.
-
--moved line 1 # Correctly highlighted as oldMoved
--moved line 2 # Correctly highlighted as oldMovedAlternate
-+moved line 3 # Wrongly highlighted as newMovedAlternate
- context      # Everything else is highlighted correctly
-+moved line 2
-+moved line 3
- context
-+moved line 1
--moved line 3
-
-These false matches are more likely when using --color-moved-ws with
-the exception of --color-moved-ws=allow-indentation-change which ties
-the sign of the current whitespace delta to the sign of the line to
-avoid this problem. The fix is to check that the sign of the new line
-being matched is the same as the sign of the line that started the
-block of potential matches.
+Now that we reliably end a block when the sign changes we don't need
+the whitespace delta calculation to rely on the sign.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c                     | 17 ++++++----
- t/t4015-diff-whitespace.sh | 65 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 76 insertions(+), 6 deletions(-)
+ diff.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 53f0df75329..efba2789354 100644
+index efba2789354..9aff167be27 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1176,7 +1176,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 	struct moved_block *pmb = NULL; /* potentially moved blocks */
- 	int pmb_nr = 0, pmb_alloc = 0;
- 	int n, flipped_block = 0, block_length = 0;
--	enum diff_symbol last_symbol = 0;
-+	enum diff_symbol moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
+@@ -864,23 +864,17 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
+ 	    a_width = a->indent_width,
+ 	    b_off = b->indent_off,
+ 	    b_width = b->indent_width;
+-	int delta;
  
- 
- 	for (n = 0; n < o->emitted_symbols->nr; n++) {
-@@ -1202,7 +1202,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 			flipped_block = 0;
- 		}
- 
--		if (!match) {
-+		if (pmb_nr && (!match || l->s != moved_symbol)) {
- 			int i;
- 
- 			if (!adjust_last_block(o, n, block_length) &&
-@@ -1219,12 +1219,13 @@ static void mark_color_as_moved(struct diff_options *o,
- 			pmb_nr = 0;
- 			block_length = 0;
- 			flipped_block = 0;
--			last_symbol = l->s;
-+		}
-+		if (!match) {
-+			moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
- 			continue;
- 		}
- 
- 		if (o->color_moved == COLOR_MOVED_PLAIN) {
--			last_symbol = l->s;
- 			l->flags |= DIFF_SYMBOL_MOVED_LINE;
- 			continue;
- 		}
-@@ -1251,11 +1252,16 @@ static void mark_color_as_moved(struct diff_options *o,
- 							    &pmb, &pmb_alloc,
- 							    &pmb_nr);
- 
--			if (contiguous && pmb_nr && last_symbol == l->s)
-+			if (contiguous && pmb_nr && moved_symbol == l->s)
- 				flipped_block = (flipped_block + 1) % 2;
- 			else
- 				flipped_block = 0;
- 
-+			if (pmb_nr)
-+				moved_symbol = l->s;
-+			else
-+				moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
-+
- 			block_length = 0;
- 		}
- 
-@@ -1265,7 +1271,6 @@ static void mark_color_as_moved(struct diff_options *o,
- 			if (flipped_block && o->color_moved != COLOR_MOVED_BLOCKS)
- 				l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
- 		}
--		last_symbol = l->s;
+ 	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE) {
+ 		*out = INDENT_BLANKLINE;
+ 		return 1;
  	}
- 	adjust_last_block(o, n, block_length);
  
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 4e0fd76c6c5..15782c879d2 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1514,6 +1514,71 @@ test_expect_success 'zebra alternate color is only used when necessary' '
- 	test_cmp expected actual
- '
+-	if (a->s == DIFF_SYMBOL_PLUS)
+-		delta = a_width - b_width;
+-	else
+-		delta = b_width - a_width;
+-
+ 	if (a_len - a_off != b_len - b_off ||
+ 	    memcmp(a->line + a_off, b->line + b_off, a_len - a_off))
+ 		return 0;
  
-+test_expect_success 'short lines of opposite sign do not get marked as moved' '
-+	cat >old.txt <<-\EOF &&
-+	this line should be marked as moved
-+	unchanged
-+	unchanged
-+	unchanged
-+	unchanged
-+	too short
-+	this line should be marked as oldMoved newMoved
-+	this line should be marked as oldMovedAlternate newMoved
-+	unchanged 1
-+	unchanged 2
-+	unchanged 3
-+	unchanged 4
-+	this line should be marked as oldMoved newMoved/newMovedAlternate
-+	EOF
-+	cat >new.txt <<-\EOF &&
-+	too short
-+	unchanged
-+	unchanged
-+	this line should be marked as moved
-+	too short
-+	unchanged
-+	unchanged
-+	this line should be marked as oldMoved newMoved/newMovedAlternate
-+	unchanged 1
-+	unchanged 2
-+	this line should be marked as oldMovedAlternate newMoved
-+	this line should be marked as oldMoved newMoved/newMovedAlternate
-+	unchanged 3
-+	this line should be marked as oldMoved newMoved
-+	unchanged 4
-+	EOF
-+	test_expect_code 1 git diff --no-index --color --color-moved=zebra \
-+		old.txt new.txt >output && cat output &&
-+	grep -v index output | test_decode_color >actual &&
-+	cat >expect <<-\EOF &&
-+	<BOLD>diff --git a/old.txt b/new.txt<RESET>
-+	<BOLD>--- a/old.txt<RESET>
-+	<BOLD>+++ b/new.txt<RESET>
-+	<CYAN>@@ -1,13 +1,15 @@<RESET>
-+	<BOLD;MAGENTA>-this line should be marked as moved<RESET>
-+	<GREEN>+<RESET><GREEN>too short<RESET>
-+	 unchanged<RESET>
-+	 unchanged<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as moved<RESET>
-+	<GREEN>+<RESET><GREEN>too short<RESET>
-+	 unchanged<RESET>
-+	 unchanged<RESET>
-+	<RED>-too short<RESET>
-+	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved<RESET>
-+	<BOLD;BLUE>-this line should be marked as oldMovedAlternate newMoved<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
-+	 unchanged 1<RESET>
-+	 unchanged 2<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMovedAlternate newMoved<RESET>
-+	<BOLD;YELLOW>+<RESET><BOLD;YELLOW>this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
-+	 unchanged 3<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved newMoved<RESET>
-+	 unchanged 4<RESET>
-+	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'cmd option assumes configured colored-moved' '
- 	test_config color.diff.oldMoved "magenta" &&
- 	test_config color.diff.newMoved "cyan" &&
+-	*out = delta;
++	*out = a_width - b_width;
+ 
+ 	return 1;
+ }
+@@ -924,10 +918,7 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 	 * match those of the current block and that the text of 'l' and 'cur'
+ 	 * after the indentation match.
+ 	 */
+-	if (cur->es->s == DIFF_SYMBOL_PLUS)
+-		delta = a_width - c_width;
+-	else
+-		delta = c_width - a_width;
++	delta = c_width - a_width;
+ 
+ 	/*
+ 	 * If the previous lines of this block were all blank then set its
 -- 
 gitgitgadget
 
