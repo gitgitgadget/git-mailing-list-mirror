@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B734C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4924DC433EF
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:05:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11ED960F70
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:04:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 338A5610A0
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 12:05:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240320AbhJ0MHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 08:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38564 "EHLO
+        id S241798AbhJ0MH0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 08:07:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241742AbhJ0MHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 08:07:06 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B03A4C061745
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:37 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id z14so3750161wrg.6
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:37 -0700 (PDT)
+        with ESMTP id S241799AbhJ0MHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 08:07:09 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 571FBC06118D
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:39 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id a20-20020a1c7f14000000b003231d13ee3cso6061489wmd.3
+        for <git@vger.kernel.org>; Wed, 27 Oct 2021 05:04:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IQqFcygNNGO8TgTlsU7pdOOW17PYUaCsqLVpjC9Nw7w=;
-        b=NwRfcSUX6nBqWkW30V0RO3ZB2RRCeK6geGwBfW8goG9SEkKZ/gJql2CuDfrk8yC27I
-         0D+WVSRGF4JAqqlTbmScEekBd2IZUEGu2QnX9b6B1MGqAIK8I/FwtBaAoMTVJQBYsRJU
-         ZtD4BN9IhgEl/7dhpQB2R1uJ5D+4pUyTJcM6/zn+zrLU6eutnRSdHuNkegdVCwdXYE2H
-         /WYdo5/LUEdB0QQm0tb2Ny7KO3foMXlnl0hk7TiVGbVYO+8j366BNEmpgZQCvtxVuw2e
-         xF2WeY59In4xUr7cJYtHB7JWVEsVAZ9o/RLkYOZ3oS0V3jhc3MceWNdmbTjNZgBKer0b
-         32Sw==
+        bh=B2qNreqxPbVLHXZVbNIw1FNvHSOsXYeU20/GeFvd7zY=;
+        b=M9bwPztaiDFMSjVzO8GlFPWvOS28hK5NBMyuZ7AeZV/LnGH6FJXjSHCIWIk7ah1Njv
+         4Kt4mFmkWReBbaQZmn4sN3+EIuYTohdyp3vdjhRlFuCVWqlQLEx4rtFoyuFabfAtp5Dp
+         SIJUN7tn2eS+WaD8QP5PUwut6c7Zg4yBPfXHHgn7GfeDeIba/U9rjs5S9nXefVYdV+iC
+         yIkoqhjKRR3vFxL81lrqwBO1vKfLVTx7pV9BONfJ/QkkjjzBDKZrlXsG4XxfVH4m9edI
+         HlYEELphc1pisGqwOrdqPy2OGyyCfSMD9Kh3OIgBKr8KY2/G/jRJWMUs/39H1XNQ1Qnr
+         zr5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IQqFcygNNGO8TgTlsU7pdOOW17PYUaCsqLVpjC9Nw7w=;
-        b=NN1uCi+Qat98zD0x7LGKtwbQ7qU1ipawkLdy7BcAvCC6BTrEA5ttMEPzuNuo47rZWd
-         ohQ4tWDlR8GbscAbFVqig28iijKMW4nLaXLmY8+uVz54E81pwgfwcV19uLEkW2gxB9NN
-         oJgxbx3C3SkloTZKGjTfhcgFdWN+SXSoiExN/B1GjKtD/FfFr6OUpa7RRR9u0cjereNr
-         htnORX7iKN5ZM/U78OgXm2OHkgL/1R5MxWFgMarMjwx4QQBnIXKdkUCcxxnIn7AGPaNY
-         23oGoSmONH/xsDpVubb3gt1YhJBZIDkMWx8okU7yQRAi4IC4kschK2+aEZ605AqGA1ZU
-         8d2A==
-X-Gm-Message-State: AOAM532GXfpDYZubUtKRcufuygply8qjcMF1VPVnNHnQR2tpsKaxkyOG
-        tLSw3OUFIMqLmL8fsTmLPxU/YsbwHTY=
-X-Google-Smtp-Source: ABdhPJyIlupYvlO5D5/IXU7kjL+ctJyjKchHlhf3JRKb7V8VMo26/eKxUMRHvHzOWM6rR31SZL4TSA==
-X-Received: by 2002:adf:c5c8:: with SMTP id v8mr1475515wrg.186.1635336276356;
+        bh=B2qNreqxPbVLHXZVbNIw1FNvHSOsXYeU20/GeFvd7zY=;
+        b=EhNS1j+VIX5eddVhSD0Gmz/a3ZYDLi1m6cKFuUS56sDhtrX9Q7SZmloCRhhRe6oT6c
+         vBJLul47zz4YL+2BRWj8W8oxqU5U3dmTps5c8hGCEu1j8nIAck72Ul3QxTRDLalAGe1k
+         rG0dRibi4jFVMQFvLYsHaM0OThNGZGC/WeNuAlusovf5JEwJwMN9fsyt0+8mbwP3j/Sc
+         D8nks+zJhpjiZklBaDaAU8EzC/MKsNKGKoYCPmj1hrcLjmPYmy3JVmAQlvR7xgua6zeg
+         pSENvo74iTJiMUY/SprzzjDOdJDwMu6tNhEcgMrceTM1EAXObKBAhUH9kH0HGmvWDiVB
+         FpQw==
+X-Gm-Message-State: AOAM533wOl1gAq6XLh9QcstWOnCHpTV/fruVurzqx+0MROhBghaG2QMW
+        EwvUUNWBg+/8JYaPKeIO+hUoM6r0f4g=
+X-Google-Smtp-Source: ABdhPJyrNxhWCfLSXn+vaKdOBO5LxhdTVhMbTA5uRz0K4PMq1B4kuyiknNYNA9xwpT4W1aqWVQLmUA==
+X-Received: by 2002:a05:600c:24d:: with SMTP id 13mr2254687wmj.64.1635336276950;
         Wed, 27 Oct 2021 05:04:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o26sm3279791wmc.17.2021.10.27.05.04.35
+        by smtp.gmail.com with ESMTPSA id c17sm3405265wmk.23.2021.10.27.05.04.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 27 Oct 2021 05:04:36 -0700 (PDT)
-Message-Id: <6a8e9a2724d638cca04e3ac7d52995d9e2b0b990.1635336263.git.gitgitgadget@gmail.com>
+Message-Id: <ef98a6e70153a2de9b4d63b5ba170e1c69e00d03.1635336263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
 References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
         <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 12:04:20 +0000
-Subject: [PATCH v3 13/15] diff --color-moved-ws=allow-indentation-change:
- improve hash lookups
+Date:   Wed, 27 Oct 2021 12:04:21 +0000
+Subject: [PATCH v3 14/15] diff: use designated initializers for
+ emitted_diff_symbol
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,232 +75,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-As libxdiff does not have a whitespace flag to ignore the indentation
-the code for --color-moved-ws=allow-indentation-change uses
-XDF_IGNORE_WHITESPACE and then filters out any hash lookups where
-there are non-indentation changes. This filtering is inefficient as
-we have to perform another string comparison.
-
-By using the offset data that we have already computed to skip the
-indentation we can avoid using XDF_IGNORE_WHITESPACE and safely remove
-the extra checks which improves the performance by 11% and paves the
-way for the elimination of string comparisons in the next commit.
-
-This change slightly increases the run time of other --color-moved
-modes. This could be avoided by using different comparison functions
-for the different modes but after the next two commits there is no
-measurable benefit in doing so.
-
-There is a change in behavior for lines that begin with a form-feed or
-vertical-tab character. Since b46054b374 ("xdiff: use
-git-compat-util", 2019-04-11) xdiff does not treat '\f' or '\v' as
-whitespace characters. This means that lines starting with those
-characters are never considered to be blank and never match a line
-that does not start with the same character. After this patch a line
-matching "^[\f\v\r]*[ \t]*$" is considered to be blank by
---color-moved-ws=allow-indentation-change and lines beginning
-"^[\f\v\r]*[ \t]*" can match another line if the suffixes match. This
-changes the output of git show for d18f76dccf ("compat/regex: use the
-regex engine from gawk for compat", 2010-08-17) as some lines in the
-pre-image before a moved block that contain '\f' are now considered
-moved as well as they match a blank line before the moved lines in the
-post-image. This commit updates one of the tests to reflect this
-change.
-
-Test                                                                  HEAD^             HEAD
---------------------------------------------------------------------------------------------------------------
-4002.1: diff --no-color-moved --no-color-moved-ws large change        0.38(0.33+0.05)   0.38(0.33+0.05)  +0.0%
-4002.2: diff --color-moved --no-color-moved-ws large change           0.86(0.82+0.04)   0.88(0.84+0.04)  +2.3%
-4002.3: diff --color-moved-ws=allow-indentation-change large change   0.97(0.94+0.03)   0.86(0.81+0.05) -11.3%
-4002.4: log --no-color-moved --no-color-moved-ws                      1.16(1.07+0.09)   1.16(1.06+0.09)  +0.0%
-4002.5: log --color-moved --no-color-moved-ws                         1.32(1.26+0.06)   1.33(1.27+0.05)  +0.8%
-4002.6: log --color-moved-ws=allow-indentation-change                 1.35(1.29+0.06)   1.33(1.24+0.08)  -1.5%
+This makes it clearer which fields are being explicitly initialized
+and will simplify the next commit where we add a new field to the
+struct.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c                     | 65 +++++++++++---------------------------
- t/t4015-diff-whitespace.sh | 22 ++++++-------
- 2 files changed, 30 insertions(+), 57 deletions(-)
+ diff.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/diff.c b/diff.c
-index ffbe09937bc..2085c063675 100644
+index 2085c063675..9ef88d7665a 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -850,28 +850,15 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
- }
- 
- static int compute_ws_delta(const struct emitted_diff_symbol *a,
--			    const struct emitted_diff_symbol *b,
--			    int *out)
--{
--	int a_len = a->len,
--	    b_len = b->len,
--	    a_off = a->indent_off,
--	    a_width = a->indent_width,
--	    b_off = b->indent_off,
-+			    const struct emitted_diff_symbol *b)
-+{
-+	int a_width = a->indent_width,
- 	    b_width = b->indent_width;
- 
--	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE) {
--		*out = INDENT_BLANKLINE;
--		return 1;
--	}
--
--	if (a_len - a_off != b_len - b_off ||
--	    memcmp(a->line + a_off, b->line + b_off, a_len - a_off))
--		return 0;
--
--	*out = a_width - b_width;
-+	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE)
-+		return INDENT_BLANKLINE;
- 
--	return 1;
-+	return a_width - b_width;
- }
- 
- static int cmp_in_block_with_wsd(const struct moved_entry *cur,
-@@ -916,26 +903,17 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 			   const void *keydata)
+@@ -1497,7 +1497,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 			     const char *line, int len, unsigned flags)
  {
- 	const struct diff_options *diffopt = hashmap_cmp_fn_data;
--	const struct moved_entry *a, *b;
-+	const struct emitted_diff_symbol *a, *b;
- 	unsigned flags = diffopt->color_moved_ws_handling
- 			 & XDF_WHITESPACE_FLAGS;
+-	struct emitted_diff_symbol e = {line, len, flags, 0, 0, s};
++	struct emitted_diff_symbol e = {
++		.line = line, .len = len, .flags = flags, .s = s
++	};
  
--	a = container_of(eptr, const struct moved_entry, ent);
--	b = container_of(entry_or_key, const struct moved_entry, ent);
-+	a = container_of(eptr, const struct moved_entry, ent)->es;
-+	b = container_of(entry_or_key, const struct moved_entry, ent)->es;
- 
--	if (diffopt->color_moved_ws_handling &
--	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
--		/*
--		 * As there is not specific white space config given,
--		 * we'd need to check for a new block, so ignore all
--		 * white space. The setup of the white space
--		 * configuration for the next block is done else where
--		 */
--		flags |= XDF_IGNORE_WHITESPACE;
--
--	return !xdiff_compare_lines(a->es->line, a->es->len,
--				    b->es->line, b->es->len,
--				    flags);
-+	return !xdiff_compare_lines(a->line + a->indent_off,
-+				    a->len - a->indent_off,
-+				    b->line + b->indent_off,
-+				    b->len - b->indent_off, flags);
- }
- 
- static struct moved_entry *prepare_entry(struct diff_options *o,
-@@ -944,7 +922,8 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- 	struct moved_entry *ret = xmalloc(sizeof(*ret));
- 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
- 	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
--	unsigned int hash = xdiff_hash_string(l->line, l->len, flags);
-+	unsigned int hash = xdiff_hash_string(l->line + l->indent_off,
-+					      l->len - l->indent_off, flags);
- 
- 	hashmap_entry_init(&ret->ent, hash);
- 	ret->es = l;
-@@ -1036,13 +1015,11 @@ static void fill_potential_moved_blocks(struct diff_options *o,
- 	hashmap_for_each_entry_from(hm, match, ent) {
- 		ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
- 		if (o->color_moved_ws_handling &
--		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
--			if (compute_ws_delta(l, match->es, &(pmb[pmb_nr]).wsd))
--				pmb[pmb_nr++].match = match;
--		} else {
-+		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+			pmb[pmb_nr].wsd = compute_ws_delta(l, match->es);
-+		else
- 			pmb[pmb_nr].wsd = 0;
--			pmb[pmb_nr++].match = match;
--		}
-+		pmb[pmb_nr++].match = match;
- 	}
- 
- 	*pmb_p = pmb;
-@@ -6276,10 +6253,6 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 		if (o->color_moved) {
- 			struct hashmap add_lines, del_lines;
- 
--			if (o->color_moved_ws_handling &
--			    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
--				o->color_moved_ws_handling |= XDF_IGNORE_WHITESPACE;
--
- 			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
- 			hashmap_init(&add_lines, moved_entry_cmp, o, 0);
- 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 15782c879d2..50d0cf486be 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -2206,10 +2206,10 @@ EMPTY=''
- test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 
- 	git reset --hard &&
--	tr Q_ "\t " <<-EOF >text.txt &&
--	${EMPTY}
--	____too short without
--	${EMPTY}
-+	tr "^|Q_" "\f\v\t " <<-EOF >text.txt &&
-+	^__
-+	|____too short without
-+	^
- 	___being grouped across blank line
- 	${EMPTY}
- 	context
-@@ -2228,7 +2228,7 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 	git add text.txt &&
- 	git commit -m "add text.txt" &&
- 
--	tr Q_ "\t " <<-EOF >text.txt &&
-+	tr "^|Q_" "\f\v\t " <<-EOF >text.txt &&
- 	context
- 	lines
- 	to
-@@ -2239,7 +2239,7 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 	${EMPTY}
- 	QQtoo short without
- 	${EMPTY}
--	Q_______being grouped across blank line
-+	^Q_______being grouped across blank line
- 	${EMPTY}
- 	Q_QThese two lines have had their
- 	indentation reduced by four spaces
-@@ -2251,16 +2251,16 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 		-c core.whitespace=space-before-tab \
- 		diff --color --color-moved --ws-error-highlight=all \
- 		--color-moved-ws=allow-indentation-change >actual.raw &&
--	grep -v "index" actual.raw | test_decode_color >actual &&
-+	grep -v "index" actual.raw | tr "\f\v" "^|" | test_decode_color >actual &&
- 
- 	cat <<-\EOF >expected &&
- 	<BOLD>diff --git a/text.txt b/text.txt<RESET>
- 	<BOLD>--- a/text.txt<RESET>
- 	<BOLD>+++ b/text.txt<RESET>
- 	<CYAN>@@ -1,16 +1,16 @@<RESET>
--	<BOLD;MAGENTA>-<RESET>
--	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>    too short without<RESET>
--	<BOLD;MAGENTA>-<RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>^<RESET><BRED>  <RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>|    too short without<RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>^<RESET>
- 	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>   being grouped across blank line<RESET>
- 	<BOLD;MAGENTA>-<RESET>
- 	 <RESET>context<RESET>
-@@ -2280,7 +2280,7 @@ test_expect_success 'compare mixed whitespace delta across moved blocks' '
- 	<BOLD;YELLOW>+<RESET>
- 	<BOLD;YELLOW>+<RESET>		<BOLD;YELLOW>too short without<RESET>
- 	<BOLD;YELLOW>+<RESET>
--	<BOLD;YELLOW>+<RESET>	<BOLD;YELLOW>       being grouped across blank line<RESET>
-+	<BOLD;YELLOW>+<RESET><BOLD;YELLOW>^	       being grouped across blank line<RESET>
- 	<BOLD;YELLOW>+<RESET>
- 	<BOLD;CYAN>+<RESET>	<BRED> <RESET>	<BOLD;CYAN>These two lines have had their<RESET>
- 	<BOLD;CYAN>+<RESET><BOLD;CYAN>indentation reduced by four spaces<RESET>
+ 	if (o->emitted_symbols)
+ 		append_emitted_diff_symbol(o, &e);
 -- 
 gitgitgadget
 
