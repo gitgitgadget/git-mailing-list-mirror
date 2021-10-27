@@ -2,158 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 443B4C433EF
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF53C433F5
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:46:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26E27610A4
-	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:20:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D02B061039
+	for <git@archiver.kernel.org>; Wed, 27 Oct 2021 18:46:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243486AbhJ0SWp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 14:22:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243465AbhJ0SWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 14:22:42 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2836FC061745
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 11:20:16 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id b82-20020a1c8055000000b0032ccc728d63so3091172wmd.1
-        for <git@vger.kernel.org>; Wed, 27 Oct 2021 11:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qkq4mQztxITq/GOSkhCIwELaNOZlIiv3dFjIv3bSuQU=;
-        b=hm4wVJqpMGr8bbBAatl5LFOlqR5HKxgjSyLVL69fIrxAszaK+pSRUiFzzNudblVYVs
-         9GtFQkvtOOlMpC/5wwoXZb+ydBTT1QE1Ny1ri+1C8m+GOfh5CR5vQZaypaRkCLcpXf/D
-         jJoNmO0MD7lkxHJL/Kc12KjyTPaG9zxTo1nipI0QpzSbSmezNPJY3wUGxDeF2Zy9tZ81
-         zkzDCG9CR2E19tu0cayqfmcSeWKUAg+0VbwumfPccmxDOUbbCYuobB1NOLq2fcPvA37N
-         XB/+D0EDuJayo40bj2c3dARLjuCgzYQC1Voijj5VlaTffFFO2efnLEVaTo1jx8DpxSUz
-         lcOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qkq4mQztxITq/GOSkhCIwELaNOZlIiv3dFjIv3bSuQU=;
-        b=n5KMFBd5UstVy9vL31FpKFWTy4MD4mC+IfbSZ+hMs7C8lPcc96BnlXKYJfn3MukBBv
-         003Q7sc4C9c4tvEwptIcQSbaTstv3V+R7iHt0k7OYV1g26SIcNN0b4pXbvak8Dt9Un0S
-         IQ6vge4163ar2x3p7H1op1bi1nncNHabcs5dfHVxy0cVRVAkTohXuaDE5B76Y0ZUyVZ6
-         cD/qQV7O7os019dLr5HXfZW53Yv2MUA6jU9WnlUlqKH33lyj1vPsRV/oZ6ZbSTes98lF
-         Ea/kefEePGDZ+Ue5QHjJI28L7eNHg4hyPYQTF14gixB2CN1GyZFRrFzIJGsPnGDALNgH
-         zhRg==
-X-Gm-Message-State: AOAM5310A0MIKY3Nd/yO9sRlQCGWrkO73gTeK43pLQ/rBGsfaVLCOWgh
-        MV/Sa1QDsu7JJwExHo/iFFk7fY3bcOM=
-X-Google-Smtp-Source: ABdhPJzD1Vl8oV7Kq5MNfWCUnQea/Orf12vKzDkr06cQ1W9AyzT2NuUjrLvjjuCYQvgunbNcKtIgGA==
-X-Received: by 2002:a05:600c:350b:: with SMTP id h11mr7140149wmq.123.1635358814770;
-        Wed, 27 Oct 2021 11:20:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2sm620459wrg.1.2021.10.27.11.20.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 11:20:14 -0700 (PDT)
-Message-Id: <d6c3c694e1e96774d12979ad3b7948bdba1dcc24.1635358812.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
-References: <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
-        <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Oct 2021 18:20:11 +0000
-Subject: [PATCH v3 3/3] sparse-index: update do_read_index to ensure correct
- sparsity
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S236720AbhJ0Ssa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 14:48:30 -0400
+Received: from siwi.pair.com ([209.68.5.199]:46498 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233856AbhJ0Ssa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 14:48:30 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B5C263F40E4;
+        Wed, 27 Oct 2021 14:46:03 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 898A33F40FB;
+        Wed, 27 Oct 2021 14:46:03 -0400 (EDT)
+Subject: Re: [PATCH v4 01/29] fsmonitor: enhance existing comments
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v3.git.1634157107.gitgitgadget@gmail.com>
+ <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+ <ecc40795fa26ea86525421682303449f70132216.1634826309.git.gitgitgadget@gmail.com>
+ <xmqq1r4ekt7d.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <295e9e70-8c56-1e77-d878-dd8031b6c2c6@jeffhostetler.com>
+Date:   Wed, 27 Oct 2021 14:46:02 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqq1r4ekt7d.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
 
-If `command_requires_full_index` is false, ensure correct in-core index
-sparsity on read by calling `ensure_correct_sparsity`. This change is meant
-to update the how the index is read in a command after sparse index-related
-repository settings are modified. Previously, for example, if `index.sparse`
-were changed from `true` to `false`, the in-core index on the next command
-would be sparse. The index would only be expanded to full when it was next
-written to disk.
 
-By adding a call to `ensure_correct_sparsity`, the in-core index now matches
-the sparsity dictated by the relevant repository settings as soon as it is
-read into memory, rather than when it is later written to disk.
+On 10/21/21 4:40 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>   fsmonitor.c | 37 ++++++++++++++++++++++++++++++-------
+>>   1 file changed, 30 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/fsmonitor.c b/fsmonitor.c
+>> index ab9bfc60b34..ec4c46407c5 100644
+>> --- a/fsmonitor.c
+>> +++ b/fsmonitor.c
+>> @@ -301,9 +301,25 @@ void refresh_fsmonitor(struct index_state *istate)
+>>   			core_fsmonitor, query_success ? "success" : "failure");
+>>   	}
+>>   
+>> -	/* a fsmonitor process can return '/' to indicate all entries are invalid */
+>> +	/*
+>> +	 * The response from FSMonitor (excluding the header token) is
+>> +	 * either:
+>> +	 *
+>> +	 * [a] a (possibly empty) list of NUL delimited relative
+>> +	 *     pathnames of changed paths.  This list can contain
+>> +	 *     files and directories.  Directories have a trailing
+>> +	 *     slash.
+>> +	 *
+>> +	 * [b] a single '/' to indicate the provider had no
+>> +	 *     information and that we should consider everything
+>> +	 *     invalid.  We call this a trivial response.
+>> +	 */
+>>   	if (query_success && query_result.buf[bol] != '/') {
+>> -		/* Mark all entries returned by the monitor as dirty */
+>> +		/*
+>> +		 * Mark all pathnames returned by the monitor as dirty.
+>> +		 *
+>> +		 * This updates both the cache-entries and the untracked-cache.
+>> +		 */
+> 
+> Not a problem this patch introduces, but we only checked that the
+> query result begins with a slash, not "we did receive a trivial
+> response", but the "else" clause of this statement pretends as if we
+> did.
+> 
+> It is a shame that we do have fsmonitor_is_trivial_response()
+> function defined, but its interface is not capable of helping us
+> here.
+> 
+> Or is fsmonitor_is_trivial_response() already good to do this, and
+> reliance of [bol] this code has is the source of confusion?  I
+> notice that when we have last update token and makes a call to
+> query_fsmonitor() with HOOK_INTERFACE_VERSION1, nobody updates bol
+> (hence it stays 0), and with HOOK_INTERFACE_VERSION2, bol is at the
+> NUL that terminates the initial string of the query result, after
+> which presumably has either '/' NUL (trivial) or list of paths.
+> 
+> I am not sure about the VERSION1 case, but at least in the VERSION2
+> case, making sure that the last three bytes are NUL slash NUL like
+> fsmonitor_is_trivial_response() does and the half check the above is
+> doing (i.e. the byte after the NUL is slash, without making sure
+> about the length of the whole response or what follows the slash is
+> NUL), seems "close enough" (meaning: the check in this code is a
+> sloppy attempt to reinvent what _is_trivial_response() function
+> already does).
+> 
+> So, would it make sense to rewrite the condition to
+> 
+> 	if (query_success &&
+> 	    !fsmonitor_is_trivial_response(&query_result)) {
+> 
+> here?  Or perhaps
+> 
+> 	if (query_success &&
+> 	    !(query_result.len == bol + 3 &&
+> 	      query_result[bol] == '/' && !query_result[bol+1])) {
+> 
+> which would be open coding the _is_trivial_response() function.
+> 
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- read-cache.c                             |  8 ++++++
- t/t1092-sparse-checkout-compatibility.sh | 31 ++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+Yes, there is an opportunity here to clean this up.
 
-diff --git a/read-cache.c b/read-cache.c
-index a78b88a41bf..b3772ba70a1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2337,9 +2337,17 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 
- 	if (!istate->repo)
- 		istate->repo = the_repository;
-+
-+	/*
-+	 * If the command explicitly requires a full index, force it
-+	 * to be full. Otherwise, correct the sparsity based on repository
-+	 * settings and other properties of the index (if necessary).
-+	 */
- 	prepare_repo_settings(istate->repo);
- 	if (istate->repo->settings.command_requires_full_index)
- 		ensure_full_index(istate);
-+	else
-+		ensure_correct_sparsity(istate);
- 
- 	return istate->cache_nr;
- 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index ca91c6a67f8..59accde1fa3 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -694,6 +694,37 @@ test_expect_success 'sparse-index is expanded and converted back' '
- 	test_region index ensure_full_index trace2.txt
- '
- 
-+test_expect_success 'index.sparse disabled inline uses full index' '
-+	init_repos &&
-+
-+	# When index.sparse is disabled inline with `git status`, the
-+	# index is expanded at the beginning of the execution then never
-+	# converted back to sparse. It is then written to disk as a full index.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index -c index.sparse=false status &&
-+	! test_region index convert_to_sparse trace2.txt &&
-+	test_region index ensure_full_index trace2.txt &&
-+
-+	# Since index.sparse is set to true at a repo level, the index
-+	# is converted from full to sparse when read, then never expanded
-+	# over the course of `git status`. It is written to disk as a sparse
-+	# index.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index status &&
-+	test_region index convert_to_sparse trace2.txt &&
-+	! test_region index ensure_full_index trace2.txt &&
-+
-+	# Now that the index has been written to disk as sparse, it is not
-+	# converted to sparse (or expanded to full) when read by `git status`.
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index status &&
-+	! test_region index convert_to_sparse trace2.txt &&
-+	! test_region index ensure_full_index trace2.txt
-+'
-+
- ensure_not_expanded () {
- 	rm -f trace2.txt &&
- 	echo >>sparse-index/untracked.txt &&
--- 
-gitgitgadget
+The original code was a little sloppy -- just testing buf[bol] for
+slash and assuming that that was sufficient.  Technically, no response
+should begin with slash (since the set of reported modified files are
+relative to the root directory), so my _is_trivial_ function could be
+simplified a little.
+
+I'll refactor this.
+
+Thanks
+Jeff
