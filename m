@@ -2,116 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99B26C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 21:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F065C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 21:40:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8040D60FE3
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 21:33:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1927A60F9C
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 21:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbhJ1Vfh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 17:35:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64365 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbhJ1VfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 17:35:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CC39F98A6;
-        Thu, 28 Oct 2021 17:32:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7UJWcQkwJTZslOXWMIuTCSWOoA2sL4Td6Gra7s
-        LxJxY=; b=wtRx49nwKvLHq3IS/gdq0EchFDrtj9X4Gc+WjZnhvlrJhHGDFHlptj
-        vSz5nu1pS55mRnXp9wqpFEtkPxieJtrCMCsmg4y1noAB3oYOH6SA6uWvmW/fO+qC
-        qeu3uSnAoNNeU1RqM6ZBHG8vJMPyZe8mICsNclZXke0qwOLymT0QM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93339F98A5;
-        Thu, 28 Oct 2021 17:32:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S231400AbhJ1Vmt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 17:42:49 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43366 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230476AbhJ1Vms (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 28 Oct 2021 17:42:48 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 09116F98A3;
-        Thu, 28 Oct 2021 17:32:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 01/15] diff --color-moved: add perf tests
-References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
-        <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
-        <8fc8914a37b3c343cd92bb0255088f7b000ff7f7.1635336262.git.gitgitgadget@gmail.com>
-Date:   Thu, 28 Oct 2021 14:32:55 -0700
-In-Reply-To: <8fc8914a37b3c343cd92bb0255088f7b000ff7f7.1635336262.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Wed, 27 Oct 2021 12:04:08
-        +0000")
-Message-ID: <xmqqsfwkq1h4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF3246042C;
+        Thu, 28 Oct 2021 21:40:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1635457220;
+        bh=a+xxMvPKGa5caSgXvZrbrniT/zRaxhrh3d8S5LN+CEQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=KLaYazML4Sp/1Afz9RqvhVeAolGKahiG+O4MxRVdHXAGNpy+dPuDf+ZYkv46bVF7K
+         fHdWqHFwf8i+dQ/KGZQ+Yg7YstBDxF4EKTSMx2Z9TBjrMAistc325q2cDKUwEHJoM9
+         SHW7B1QhPzhwUHNIORb4ZdqeNyWdKgXwYHkWf6cC2EM6NfMisnZNwd1tNY6/OxZEMR
+         ziC6IuCEimrXgY5xS/ESiXk5H/+ik1zbascx4cHr8+Mu+W+GwSMVJvvlR8dXm7Q0+m
+         scDcCK/57Y6xSoNh0INGSfyHT2xs/+6N3Ye06ku0mwG99QA4/uqukw8AdHtvJo4z+I
+         +0xSYQaPMK3G/BXFqTzqwjOLd206CSDoMTxV/BdF5lmgHv6pCcDZ36Rx24TXFTIykQ
+         4lJ5ou2O0ZpaQdNDK836rs+g0RNECZgzZpVO2VZbEQ2OjudC0ylxYTrwx/Q8p5dVsR
+         pLDREJEqbLLsyvNTjfjZ6khVbNaKsmC1VR1nTb+BM0RNJV7Kure
+Date:   Thu, 28 Oct 2021 21:40:14 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] allow disabling fsync everywhere
+Message-ID: <YXsYvgPs7d/0E+sK@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+References: <20211028002102.19384-1-e@80x24.org>
+ <YXq1g4Zwfq8gJEoC@coredump.intra.peff.net>
+ <20211028182824.GA1307@dcvr>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9DEC5BCC-3836-11EC-9E78-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="K9ClioViETVO4szP"
+Content-Disposition: inline
+In-Reply-To: <20211028182824.GA1307@dcvr>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Add some tests so we can monitor changes to the performance of the
-> move detection code. The tests record the performance of a single
-> large diff and a sequence of smaller diffs.
+--K9ClioViETVO4szP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"A single large diff" meaning...?
+On 2021-10-28 at 18:28:24, Eric Wong wrote:
+> Third-party tools and OSes which don't have a tmpfs mounted by
+> default (I don't think most *BSDs have tmpfs enabled by
+> default).
+>=20
+> I try to use libeatmydata everywhere I can; but that's not
+> always installed.
 
-> +if ! git rev-parse --verify v2.29.0^{commit} >/dev/null
-> +then
-> +	skip_all='skipping because tag v2.29.0 was not found'
-> +	test_done
-> +fi
+I was going to suggest libeatmydata for this purpose.  I don't think we
+should grow this option when there's a library that does all of this for
+us without any mistakes and also is universally applicable.  Presumably
+if you find Git too slow in this case, you'll also find dpkg and other
+programs too slow, and want to use it there as well.
 
-Hmph.  So this is designed only to be run in a clone of git.git with
-that tag (and a bit of history, at least to v2.28.0 and 1000 commits)?
+It's also potentially a footgun where people end up "making Git faster"
+and then get corrupted data.  I'm imagining blog posts and Stack
+Overflow suggestions that people do this, just like we see tons of
+suggestions for people to set http.postBuffer without understanding what
+it does.  I think "eat my data" is pretty clear about the consequences
+so we don't have to be, and it comes with a giant warning that you're
+almost certainly going to experience data loss.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-I am asking primarily because this seems to be the first instance of
-a test that hardcodes the dependency on our history, instead of
-allowing the tester to use their favourite history by using the
-GIT_PERF_LARGE_REPO and GIT_PERF_REPO environment variables.
+--K9ClioViETVO4szP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The intention of the tests themselves looks quite clear.  Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-> +GIT_PAGER_IN_USE=1
-> +test_export GIT_PAGER_IN_USE
-> +
-> +test_perf 'diff --no-color-moved --no-color-moved-ws large change' '
-> +	git diff --no-color-moved --no-color-moved-ws v2.28.0 v2.29.0
-> +'
-> +
-> +test_perf 'diff --color-moved --no-color-moved-ws large change' '
-> +	git diff --color-moved=zebra --no-color-moved-ws v2.28.0 v2.29.0
-> +'
-> +
-> +test_perf 'diff --color-moved-ws=allow-indentation-change large change' '
-> +	git diff --color-moved=zebra --color-moved-ws=allow-indentation-change \
-> +		v2.28.0 v2.29.0
-> +'
-> +
-> +test_perf 'log --no-color-moved --no-color-moved-ws' '
-> +	git log --no-color-moved --no-color-moved-ws --no-merges --patch \
-> +		-n1000 v2.29.0
-> +'
-> +
-> +test_perf 'log --color-moved --no-color-moved-ws' '
-> +	git log --color-moved=zebra --no-color-moved-ws --no-merges --patch \
-> +		-n1000 v2.29.0
-> +'
-> +
-> +test_perf 'log --color-moved-ws=allow-indentation-change' '
-> +	git log --color-moved=zebra --color-moved-ws=allow-indentation-change \
-> +		--no-merges --patch -n1000 v2.29.0
-> +'
-> +
-> +test_done
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXsYvAAKCRB8DEliiIei
+gSSjAPkBI3riPxX5Ve/BgZxYkZkuMt/fFsKHa/jJm7wpfF02uAEAnRaHh8cKxFiX
+M1xDWI/vIDpP47VHjOLZlDx+wF76HAY=
+=uTZn
+-----END PGP SIGNATURE-----
+
+--K9ClioViETVO4szP--
