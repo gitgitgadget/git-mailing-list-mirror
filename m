@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89A01C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 16:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85142C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 16:22:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60044610CA
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 16:22:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68C4C610CB
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 16:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230381AbhJ1QYu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 12:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57896 "EHLO
+        id S229925AbhJ1QYy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 12:24:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhJ1QYk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230396AbhJ1QYk (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 28 Oct 2021 12:24:40 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B88FC061224
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 09:22:11 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id o4-20020a1c7504000000b0032cab7473caso4972128wmc.1
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 09:22:11 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B34C061226
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 09:22:12 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 71so4047337wma.4
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 09:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=v8bgle3Tq2F6mibjz2jqkYkWsDKfQ7r5bulyeJU8EXc=;
-        b=eU4aWsekgO0WcfQY7Vs+9Jxd6PIqov3g5XNXr4U0pcS5SEfFdz8kvWTw906CEJGxuU
-         jW9nXdp+MVuetV1R5ffuLngsH4ITBjnasDtNAUznYkAk+N5Qnq7Jl9iojiIo9qtPUfXy
-         NyjX4jSyRMuEigmK07jegaF3/4TqBm3aoXos27tKBKcg8ADBKPA+29jp6F8dE5TJXkri
-         JqxEddFKLIQhashyYLUY0rblI8VWP8Dc0/RStUenwGsi2KxvCegyvdzK3mJg0Gs5/qmE
-         qvgkzWvIINjiSTle9ABRcv/MSh3YNdH3alKFpAPTDS1QlOsIzE6cppAQjZDfnwEQ6KlB
-         xs3w==
+        bh=XX1lWVKMhb1BXx65TAaKwXO4xOQZX6EKOafabP6/jkQ=;
+        b=lRYwdw/+j5tBd1x3QhrSOvdu9E2jHX4cf3qZnmcVL/Tqu4PBJFvfh7Ps5QKmvvXKll
+         3jKWsF4DBTLfud/upPLoUMh7JFnE0UzpV/2GQctvUrudyknjOzsibsp30sakVl63qdZ+
+         awy8tsdjlop3PWaG0C4FOCmgTnVzlOdqGnumyQ8NxL5o5i+1acDtiCz9mNR7iR3ZnxSN
+         vjnnTFV+8k9UVva67qWsA7Pff0U6F2z57K0saaJOHuwG9pdgZLuGaXjYjSiyImJpbcvj
+         sctLHZNcZGBmBmBML38b6ehx9e+I42A3kCc2Gd/HF0d0umU0LBbVSegP+RFluyNt717l
+         0lcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=v8bgle3Tq2F6mibjz2jqkYkWsDKfQ7r5bulyeJU8EXc=;
-        b=t847DhfN0UFDBH/Y/k0a4iFnOQ7aJf+I3POIVtzIp1FvV0rjTdmUdrdbuU6rltWlv6
-         5P1YUdTBbtYLDJn/MKntojf8d2mwv8EbHfdmezmHaHOqB4fK13HHifTEj7n2Bw1YPqKT
-         AwqNgHKo3cla5/M4NbOoj3fbkA/kSWrhGGfbJZqWh5IwHc7ZS5fquJFdHW8mAmzrTHIJ
-         QeXF1/kJutzqx9kxIh/lIUrcaMXpHsQsO0QjLT4U3FisRhpQkTt+qFL5Ick/TiEIq1Cy
-         t2L4L/bTu2jkCkEM9XT5cJC1ZdKhwRNeXD/g5fO3hxeDwCWtXPxO412V5YBy7w3Rd4sa
-         YjhQ==
-X-Gm-Message-State: AOAM5339Nz/0DOinwDBRgl4n8qEYk21sIh3FCNPE1dEBKzIsd5bfxVB1
-        1SdWGhiho/4MeJ6Tx4aJtI+b/kGUVaQ=
-X-Google-Smtp-Source: ABdhPJxRIu3Ynw/ptRyYQHr08MskFfO0RWIu6Ig8PVs4QoMt0M2yA+TfFufJ/nqAn6PsuK2aIplVhA==
-X-Received: by 2002:a05:600c:3511:: with SMTP id h17mr13305325wmq.144.1635438130179;
+        bh=XX1lWVKMhb1BXx65TAaKwXO4xOQZX6EKOafabP6/jkQ=;
+        b=tzwgazebp1Zbeb47FiBiFsuXxwwskz3gW6MtzL9bRglJVfMVPmDBQFPGADGkYKHlM5
+         MN1MrPtU6Foxq1qgWaAzie4EAkvRx1marMBzlFQK7ENDBolanjYb9c2K3sZTgy66stSN
+         N1AB8r1KzVF9+OCF67XwhgzzY62xsNW2EH3gO39tvfkjzwmlxUpHjCHxJJhAmk73lmFW
+         uwnrkNcEvOy0tBZVLVOZF4v4R1UXJ8B2j0KHPIx4gvELEI2geHgA3oJRtzypho8FLT1I
+         g9Fou3kmb+hw/jA/V/8HAruv0uQsoKJAeqouzr622tosk664WisbKe98p6+aA8KaqLIy
+         dOEQ==
+X-Gm-Message-State: AOAM532/d9FLJwDTjdTXM2yLmdnk5DxsEdui0vuc+mrr0ZzbjfYW4RA7
+        mUURp1aAG3S8dBQIzuT8A3TDhL74JFM=
+X-Google-Smtp-Source: ABdhPJzyyt8TKqR1eRh2NeCmGfdpKhorJCVFBLT/SMIDpiyyYWyD7Hhg//EO357EAMVhs3nC8qPhVQ==
+X-Received: by 2002:a7b:c1cf:: with SMTP id a15mr5492227wmj.163.1635438130702;
         Thu, 28 Oct 2021 09:22:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5sm6377638wme.6.2021.10.28.09.22.09
+        by smtp.gmail.com with ESMTPSA id y5sm4493624wrd.75.2021.10.28.09.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 09:22:09 -0700 (PDT)
-Message-Id: <20900b019f835e9293fb5d70ae8dbdced3b781c0.1635438124.git.gitgitgadget@gmail.com>
+        Thu, 28 Oct 2021 09:22:10 -0700 (PDT)
+Message-Id: <7eef3538f3c3015c4f446961ddca78e2868fe644.1635438124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1066.v2.git.1635438124.gitgitgadget@gmail.com>
 References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
         <pull.1066.v2.git.1635438124.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Thu, 28 Oct 2021 16:22:03 +0000
-Subject: [PATCH v2 8/9] doc: git-http-push: describe the refs as pattern pairs
+Date:   Thu, 28 Oct 2021 16:22:04 +0000
+Subject: [PATCH v2 9/9] doc: git-init: clarify file modes in octal.
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,41 +73,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Each member of the pair is explained but they are not defined
-beforehand.
+The previous explanation was mixing the format with the identity of
+the field.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-http-push.txt | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ Documentation/git-init.txt | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-http-push.txt b/Documentation/git-http-push.txt
-index 78f2bb75523..7c6a6dd7f6a 100644
---- a/Documentation/git-http-push.txt
-+++ b/Documentation/git-http-push.txt
-@@ -63,16 +63,15 @@ of such patterns separated by a colon ":" (this means that a ref name
- cannot have a colon in it).  A single pattern '<name>' is just a
- shorthand for '<name>:<name>'.
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index fdb7b3f367d..af0d2ee1825 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -79,7 +79,7 @@ repository.  If not specified, fall back to the default name (currently
+ `master`, but this is subject to change in the future; the name can be
+ customized via the `init.defaultBranch` configuration variable).
  
--Each pattern pair consists of the source side (before the colon)
--and the destination side (after the colon).  The ref to be
--pushed is determined by finding a match that matches the source
--side, and where it is pushed is determined by using the
--destination side.
-+Each pattern pair '<src>:<dst>' consists of the source side (before
-+the colon) and the destination side (after the colon).  The ref to be
-+pushed is determined by finding a match that matches the source side,
-+and where it is pushed is determined by using the destination side.
+---shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
++--shared[=(false|true|umask|group|all|world|everybody|<umask>)]::
  
-- - It is an error if <src> does not match exactly one of the
-+ - It is an error if '<src>' does not match exactly one of the
-    local refs.
+ Specify that the Git repository is to be shared amongst several users.  This
+ allows users belonging to the same group to push into that
+@@ -110,13 +110,15 @@ the repository permissions.
  
-- - If <dst> does not match any remote ref, either
-+ - If '<dst>' does not match any remote ref, either
+ Same as 'group', but make the repository readable by all users.
  
-    * it has to start with "refs/"; <dst> is used as the
-      destination literally in this case.
+-'0xxx'::
++'<umask>'::
+ 
+-'0xxx' is an octal number and each file will have mode '0xxx'. '0xxx' will
+-override users' umask(2) value (and not only loosen permissions as 'group' and
+-'all' does). '0640' will create a repository which is group-readable, but not
+-group-writable or accessible to others. '0660' will create a repo that is
+-readable and writable to the current user and group, but inaccessible to others.
++'<umask>' is an 3-digit octal number prefixed with `0` and each file
++will have mode '<umask>'. '<umask>' will override users' umask(2)
++value (and not only loosen permissions as 'group' and 'all'
++does). '0640' will create a repository which is group-readable, but
++not group-writable or accessible to others. '0660' will create a repo
++that is readable and writable to the current user and group, but
++inaccessible to others.
+ --
+ 
+ By default, the configuration flag `receive.denyNonFastForwards` is enabled
 -- 
 gitgitgadget
-
