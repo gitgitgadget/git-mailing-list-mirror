@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D251C433FE
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78AF0C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:50:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A8660FE3
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:50:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E11860F92
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231132AbhJ1UxP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 16:53:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
+        id S231347AbhJ1UxS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 16:53:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231303AbhJ1UxL (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231307AbhJ1UxL (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 28 Oct 2021 16:53:11 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5492C061767
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:50:42 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id b2-20020a1c8002000000b0032fb900951eso2468894wmd.4
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:50:42 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABF21C061348
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:50:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id o4-20020a1c7504000000b0032cab7473caso5337880wmc.1
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:50:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xQJS77RTg3Pdf1nt4Dna+a75Am/a8dbrk8tITHuHJ9s=;
-        b=m2A6h+t7gJ6+4UzltwtniY0UTX2HJQboeeayDPulBJKCb4fzH3G7vqf8lNefjyJeeX
-         WSOFibLqcaQiDtFSTCoCZfM1twJBIEh9Xgi86GNAAkFv9B2PP/tq7oDmZPW+6UY2RClZ
-         UDItaQmNUOqdXhQx9adSs/rHCUD9ggI47G/wPWQk1WFRw3aUWRHaACfpvcmi5RL6xeFU
-         7k33dVKSJwqLpuhxDe12li8r86YRVaBC9F/iANUh6k65fodfatak/EnYeDzy+Nnp0tmg
-         asM6c+3vqrI0ctfjwFYv7DR+aMah9gAKXXpXbc4Rc7GsdoejnP23SOeT1DJh5DBCmtlR
-         qE3g==
+        bh=oUOtW+VMfF77w6KugTIk7kk1SNVq3GaMJS9+jVTFH/w=;
+        b=UxQLySi2b3e76QvKhtPPYHtzbTjRDXz8WYSn71ED9ZZpxbUYrafgg34LC+P8E36Euw
+         a3TDDK+599H9WMcQk8WmgMx3Ya9EjevTTxRvjZI9S7lOA1/es0u9/EmctUCNYRDXScVh
+         iIz+Oa43HE7jnVNHtnlZ09GA1y5GqdRImPMoqCWYKDlkMn+af8I2YCNk6WUQVLyXEOFG
+         tAjYvNs0VFCbaFlgPszJBavaiY8DS57IYLYqV5bN9Y+0PcTIGdzyrIu+qPuDa4GLlE5z
+         jXKKITb2AsepQyCF3JmEBj5gHSuXg2fed+Smmzo4XiRtDkY94aHR//fLHLAlKATJkpLd
+         Tssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xQJS77RTg3Pdf1nt4Dna+a75Am/a8dbrk8tITHuHJ9s=;
-        b=0Hmf5G9NRB2V13hotz0GJxHEyR6n0/oqw65xYyRbuuImosbA1s3wnHX1obV1LBeXBx
-         IVK+v8cuzcUpbeiddyDH1jBJj4lTm4B+wc71vgKfQYGak/31j8QkppEAx6geAjujefj8
-         hRYIMYe3jY1qxQvPl/lK4kGH+/VgFg/tWXv+dQ6lyFRGHc0s0VSLK3hLI4YxHWGw/79c
-         j8jrh4yQjrl7o2Ksom4H9CW1uYWlIpWoeKO3DqztdE9bVKokCGXRibB55zd6rOHOzSHa
-         O6Jf3W6uD10CC+pkTvbVvXbt8n4/vcRySZJ/dxIJcsq/eFcJ8CSKKrpqUID3lyHx0xu1
-         A88A==
-X-Gm-Message-State: AOAM530HJTVXBztq31cKaAJcNYrPIpAL0EwHSLblnmu7HlX9X+90fe+6
-        tsFgpD5N/KwjV80hEPxOPwdid/NZ1uA=
-X-Google-Smtp-Source: ABdhPJzsw0mcmMT4c/gCV1aahZozUmUC7RRy+WSdj2o1RdqMd858QwhE61bEpw+0+uWzHW6QbAIWqQ==
-X-Received: by 2002:a05:600c:1c21:: with SMTP id j33mr14706576wms.163.1635454241340;
-        Thu, 28 Oct 2021 13:50:41 -0700 (PDT)
+        bh=oUOtW+VMfF77w6KugTIk7kk1SNVq3GaMJS9+jVTFH/w=;
+        b=6rs/y4GsBB9qrjNRr3ghupDS61t7dcGQAJXX5l76aflAM/9ZhrwqbZ/ihCbW2w40zq
+         fLGk8DO60S/HZfEKZv2d6pAWv1WjU0GeMvtsJuNWDwEWO0dtcXiy5m0IK1N97UhBDQto
+         4FzZSCoQhxUQ7pl675+3H6+DbQT90jepC0JBUijI7mTDyZNCwKUmSImraI6AOcU6XyG3
+         oRaLmYvnymUHwXbUPkgXwspotxmBZqKl1Md7+2C22uPI2c9ckvhk2teyCavewqVhh/JB
+         nZiWSRQfXszsyGTQKXlhL+R0IdFzGeuToyCVDHnpvIF4mQLZD/ufHMGNvyr2qXNQLJVk
+         cy8g==
+X-Gm-Message-State: AOAM532mm1LWTzZNvieX9X1T6Hfryasye8+w+LCRJRmKtT+ukSqudnmZ
+        dHDH430NNg6AhT517ZdnBE9OlQQe1Gs=
+X-Google-Smtp-Source: ABdhPJzE0n1tnJMj24Kmg+UFJfFdtHwA32c4fAJ4htsr1gbhZtoYTTI2l1grAsUwmsrQddZw9+H5ww==
+X-Received: by 2002:a7b:c010:: with SMTP id c16mr6933046wmb.141.1635454242375;
+        Thu, 28 Oct 2021 13:50:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r11sm3817625wro.93.2021.10.28.13.50.40
+        by smtp.gmail.com with ESMTPSA id u15sm3661501wmq.12.2021.10.28.13.50.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 13:50:41 -0700 (PDT)
-Message-Id: <3ffd3a001f742713eb0fde8508f876ff95103d82.1635454237.git.gitgitgadget@gmail.com>
+        Thu, 28 Oct 2021 13:50:42 -0700 (PDT)
+Message-Id: <c6910584108250be18713ba248dd7eff8571667b.1635454237.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
 References: <pull.1068.git.1635320952.gitgitgadget@gmail.com>
         <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
 From:   "Matt Cooper via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 Oct 2021 20:50:34 +0000
-Subject: [PATCH v2 4/7] odb: teach read_blob_entry to use size_t
+Date:   Thu, 28 Oct 2021 20:50:36 +0000
+Subject: [PATCH v2 6/7] odb: guard against data loss checking out a huge file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,104 +71,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matt Cooper <vtbassmatt@gmail.com>
 
-There is mixed use of size_t and unsigned long to deal with sizes in the
-codebase. Recall that Windows defines unsigned long as 32 bits even on
-64-bit platforms, meaning that converting size_t to unsigned long narrows
-the range. This mostly doesn't cause a problem since Git rarely deals
-with files larger than 2^32 bytes.
+This introduces an additional guard for platforms where `unsigned long`
+and `size_t` are not of the same size. If the size of an object in the
+database would overflow `unsigned long`, instead we now exit with an
+error.
 
-But adjunct systems such as Git LFS, which use smudge/clean filters to
-keep huge files out of the repository, may have huge file contents passed
-through some of the functions in entry.c and convert.c. On Windows, this
-results in a truncated file being written to the workdir. I traced this to
-one specific use of unsigned long in write_entry (and a similar instance
-in write_pc_item_to_fd for parallel checkout). That appeared to be for
-the call to read_blob_entry, which expects a pointer to unsigned long.
+A complete fix will have to update _many_ other functions throughout the
+codebase to use `size_t` instead of `unsigned long`. It will have to be
+implemented at some stage.
 
-By altering the signature of read_blob_entry to expect a size_t,
-write_entry can be switched to use size_t internally (which all of its
-callers and most of its callees already used). To avoid touching dozens of
-additional files, read_blob_entry uses a local unsigned long to call a
-chain of functions which aren't prepared to accept size_t.
+This commit puts in a stop-gap for the time being.
 
 Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Matt Cooper <vtbassmatt@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- entry.c                     | 8 +++++---
- entry.h                     | 2 +-
- parallel-checkout.c         | 2 +-
- t/t1051-large-conversion.sh | 2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ delta.h       | 6 +++---
+ object-file.c | 6 +++---
+ packfile.c    | 6 +++---
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 711ee0693c7..4cb3942dbdc 100644
---- a/entry.c
-+++ b/entry.c
-@@ -82,11 +82,13 @@ static int create_file(const char *path, unsigned int mode)
- 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
+diff --git a/delta.h b/delta.h
+index 2df5fe13d95..8a56ec07992 100644
+--- a/delta.h
++++ b/delta.h
+@@ -90,15 +90,15 @@ static inline unsigned long get_delta_hdr_size(const unsigned char **datap,
+ 					       const unsigned char *top)
+ {
+ 	const unsigned char *data = *datap;
+-	unsigned long cmd, size = 0;
++	size_t cmd, size = 0;
+ 	int i = 0;
+ 	do {
+ 		cmd = *data++;
+-		size |= (cmd & 0x7f) << i;
++		size |= st_left_shift(cmd & 0x7f, i);
+ 		i += 7;
+ 	} while (cmd & 0x80 && data < top);
+ 	*datap = data;
+-	return size;
++	return cast_size_t_to_ulong(size);
  }
  
--void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
-+void *read_blob_entry(const struct cache_entry *ce, size_t *size)
+ #endif
+diff --git a/object-file.c b/object-file.c
+index f233b440b22..70e456fc2a3 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1344,7 +1344,7 @@ static int parse_loose_header_extended(const char *hdr, struct object_info *oi,
+ 				       unsigned int flags)
  {
- 	enum object_type type;
--	void *blob_data = read_object_file(&ce->oid, &type, size);
-+	unsigned long ul;
-+	void *blob_data = read_object_file(&ce->oid, &type, &ul);
- 
-+	*size = ul;
- 	if (blob_data) {
- 		if (type == OBJ_BLOB)
- 			return blob_data;
-@@ -270,7 +272,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 	int fd, ret, fstat_done = 0;
- 	char *new_blob;
- 	struct strbuf buf = STRBUF_INIT;
+ 	const char *type_buf = hdr;
 -	unsigned long size;
 +	size_t size;
- 	ssize_t wrote;
- 	size_t newsize = 0;
- 	struct stat st;
-diff --git a/entry.h b/entry.h
-index b8c0e170dc7..61ee8c17604 100644
---- a/entry.h
-+++ b/entry.h
-@@ -51,7 +51,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
-  */
- void unlink_entry(const struct cache_entry *ce);
+ 	int type, type_len = 0;
  
--void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
-+void *read_blob_entry(const struct cache_entry *ce, size_t *size);
- int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
- void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
- 			   struct stat *st);
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 6b1af32bb3d..b6f4a25642e 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -261,7 +261,7 @@ static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
- 	struct stream_filter *filter;
- 	struct strbuf buf = STRBUF_INIT;
- 	char *blob;
--	unsigned long size;
-+	size_t size;
- 	ssize_t wrote;
+ 	/*
+@@ -1388,12 +1388,12 @@ static int parse_loose_header_extended(const char *hdr, struct object_info *oi,
+ 			if (c > 9)
+ 				break;
+ 			hdr++;
+-			size = size * 10 + c;
++			size = st_add(st_mult(size, 10), c);
+ 		}
+ 	}
  
- 	/* Sanity check */
-diff --git a/t/t1051-large-conversion.sh b/t/t1051-large-conversion.sh
-index 7c1a2845005..5ba03d02682 100755
---- a/t/t1051-large-conversion.sh
-+++ b/t/t1051-large-conversion.sh
-@@ -85,7 +85,7 @@ test_expect_success 'ident converts on output' '
+ 	if (oi->sizep)
+-		*oi->sizep = size;
++		*oi->sizep = cast_size_t_to_ulong(size);
  
- # This smudge filter prepends 5GB of zeros to the file it checks out. This
- # ensures that smudging doesn't mangle large files on 64-bit Windows.
--test_expect_failure EXPENSIVE,!LONG_IS_64BIT 'files over 4GB convert on output' '
-+test_expect_success EXPENSIVE,!LONG_IS_64BIT 'files over 4GB convert on output' '
- 	test_commit test small "a small file" &&
- 	test_config filter.makelarge.smudge \
- 		"test-tool genzeros $((5*1024*1024*1024)) && cat" &&
+ 	/*
+ 	 * The length must be followed by a zero byte
+diff --git a/packfile.c b/packfile.c
+index 755aa7aec5e..3ccea004396 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1059,7 +1059,7 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 		unsigned long len, enum object_type *type, unsigned long *sizep)
+ {
+ 	unsigned shift;
+-	unsigned long size, c;
++	size_t size, c;
+ 	unsigned long used = 0;
+ 
+ 	c = buf[used++];
+@@ -1073,10 +1073,10 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 			break;
+ 		}
+ 		c = buf[used++];
+-		size += (c & 0x7f) << shift;
++		size = st_add(size, st_left_shift(c & 0x7f, shift));
+ 		shift += 7;
+ 	}
+-	*sizep = size;
++	*sizep = cast_size_t_to_ulong(size);
+ 	return used;
+ }
+ 
 -- 
 gitgitgadget
 
