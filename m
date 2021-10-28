@@ -2,78 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7E4C433F5
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CF1EC433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:21:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E732610C7
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:06:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 332E960F9B
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbhJ1AIh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 20:08:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64009 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbhJ1AIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 20:08:36 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 139F8EC7D3;
-        Wed, 27 Oct 2021 20:06:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=C5XEo26kzfJJ
-        fJSy+GrL4uyAS5pa0a/BpgxgtDK8CbI=; b=UKHZbU4hv46ieSuF7lcTlMJyxqTB
-        G3kcofVMIgF23dRiE7T4vcRvbgQ7QOb91q72by0QXg225lymlRV1UMixsjKxgF/a
-        X6YIEO3EZ1sePCzCR/kxaC+iWc5495Di4X5kg6nHZlH+gH+AfcBkRrnx3ZcojYmv
-        eTcMLpMCV2aVV6Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09AE1EC7D1;
-        Wed, 27 Oct 2021 20:06:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 49D3BEC7D0;
-        Wed, 27 Oct 2021 20:06:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Oct 2021, #06; Mon, 25)
-References: <xmqq5ytkzbt7.fsf@gitster.g>
-        <CAN0heSoxxCR2S8uFuF_bGk8667=RP2=B+SeEDn2XoJanCtehxA@mail.gmail.com>
-Date:   Wed, 27 Oct 2021 17:06:07 -0700
-In-Reply-To: <CAN0heSoxxCR2S8uFuF_bGk8667=RP2=B+SeEDn2XoJanCtehxA@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 27 Oct 2021 21:17:43
- +0200")
-Message-ID: <xmqqh7d2t3m8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229515AbhJ1AX3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 20:23:29 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33372 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229437AbhJ1AX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 20:23:28 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id B6F2D1F953
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 00:21:02 +0000 (UTC)
+From:   Eric Wong <e@80x24.org>
+To:     git@vger.kernel.org
+Subject: [PATCH] allow disabling fsync everywhere
+Date:   Thu, 28 Oct 2021 00:21:02 +0000
+Message-Id: <20211028002102.19384-1-e@80x24.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DA86D594-3782-11EC-86CF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+"core.fsync" and the "GIT_FSYNC" environment variable now exist
+for disabling fsync() even on packfiles and other critical data.
 
-> On Tue, 26 Oct 2021 at 09:00, Junio C Hamano <gitster@pobox.com> wrote:
->> * ma/doc-git-version (2021-10-25) 1 commit
->>   (merged to 'next' on 2021-10-25 at 9f74afec0c)
->>  + git.txt: fix typo
->>
->>  Typofix.
->>
->>  Will merge to 'master'.
->
-> I notice you didn't pick up [1] which was posted as part of the same
-> mini-series as this one. Maybe you intended to place it on
-> ab/unbundle-progress and got distracted. Or if you don't agree with the
-> patch, that's also fine. :-) Just checking.
+Running "make test -j8 NO_SVN_TESTS=1" on a noisy 8-core system
+on an HDD, adding "GIT_FSYNC=0" to the invocation brings my test
+runtime from ~4 minutes down to ~3 minutes.
 
-Ah, that is a good one.  Yes, I noticed that these two unrelated
-changes were sent as if they belong to the same topic, and I meant
-to later find out which branch that other one should go, but was
-distracted.
+SVN interopability tests are minimally affected since SVN will
+still use fsync in various places.
 
-Thanks.
+This will also be useful for 3rd-party tools which create
+throwaway git repositories of temporary data.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ Documentation/config/core.txt |  7 +++++++
+ Documentation/git.txt         |  5 +++++
+ cache.h                       |  1 +
+ config.c                      |  5 +++++
+ environment.c                 |  1 +
+ git-cvsserver.perl            | 22 ++++++++++++++++++++++
+ perl/Git/SVN.pm               | 20 ++++++++++++++++++--
+ t/test-lib.sh                 |  1 +
+ write-or-die.c                |  5 ++++-
+ 9 files changed, 64 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c04f62a54a..2ad5364246 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -555,6 +555,13 @@ data writes properly, but can be useful for filesystems that do not use
+ journalling (traditional UNIX filesystems) or that only journal metadata
+ and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
+ 
++core.fsync::
++	A boolean to control 'fsync()' on all files.
+++
++Setting this to false can speed up writes of unimportant data.
++Disabling fsync will lead to data loss on power failure.  If set
++to false, this also overrides core.fsyncObjectFiles.  Defaults to true.
++
+ core.preloadIndex::
+ 	Enable parallel index preload for operations like 'git diff'
+ +
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d63c65e67d..cda4504e41 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -703,6 +703,11 @@ for further details.
+ 	not set, Git will choose buffered or record-oriented flushing
+ 	based on whether stdout appears to be redirected to a file or not.
+ 
++`GIT_FSYNC`::
++	Setting this environment variable to "0" disables fsync() entirely.
++	This is intended for running test suites and other repositories of
++	unimportant data.  See also core.fsync in linkgit:git-config[1].
++
+ `GIT_TRACE`::
+ 	Enables general trace messages, e.g. alias expansion, built-in
+ 	command execution and external command execution.
+diff --git a/cache.h b/cache.h
+index eba12487b9..de6c45cf44 100644
+--- a/cache.h
++++ b/cache.h
+@@ -986,6 +986,7 @@ extern int read_replace_refs;
+ extern char *git_replace_ref_base;
+ 
+ extern int fsync_object_files;
++extern int use_fsync;
+ extern int core_preload_index;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/config.c b/config.c
+index 2dcbe901b6..1ea7cb801b 100644
+--- a/config.c
++++ b/config.c
+@@ -1492,6 +1492,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.fsync")) {
++		use_fsync = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.preloadindex")) {
+ 		core_preload_index = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 9da7f3c1a1..0d06a31024 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,6 +42,7 @@ const char *git_hooks_path;
+ int zlib_compression_level = Z_BEST_SPEED;
+ int pack_compression_level = Z_DEFAULT_COMPRESSION;
+ int fsync_object_files;
++int use_fsync = -1;
+ size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+ size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit = 96 * 1024 * 1024;
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 64319bed43..7679819e4d 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -3607,6 +3607,25 @@ package GITCVS::updater;
+ use strict;
+ use warnings;
+ use DBI;
++our $_use_fsync;
++
++# n.b. consider using Git.pm
++sub use_fsync {
++    if (!defined($_use_fsync)) {
++        my $x = $ENV{GIT_FSYNC};
++        if (defined $x) {
++            local $ENV{GIT_CONFIG};
++            delete $ENV{GIT_CONFIG};
++            my $v = ::safe_pipe_capture('git', '-c', "core.fsync=$x",
++                                        qw(config --type=bool core.fsync));
++            $_use_fsync = defined($v) ? ($v eq "true\n") : 1;
++        } else {
++            my $v = `git config --type=bool core.fsync`;
++            $_use_fsync = $v eq "false\n" ? 0 : 1;
++        }
++    }
++    $_use_fsync;
++}
+ 
+ =head1 METHODS
+ 
+@@ -3676,6 +3695,9 @@ sub new
+                                 $self->{dbuser},
+                                 $self->{dbpass});
+     die "Error connecting to database\n" unless defined $self->{dbh};
++    if ($self->{dbdriver} eq 'SQLite' && !use_fsync()) {
++        $self->{dbh}->do('PRAGMA synchronous = OFF');
++    }
+ 
+     $self->{tables} = {};
+     foreach my $table ( keys %{$self->{dbh}->table_info(undef,undef,undef,'TABLE')->fetchall_hashref('TABLE_NAME')} )
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 35ff5a6896..7b333ea62e 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -6,7 +6,7 @@ package Git::SVN;
+ use vars qw/$_no_metadata
+             $_repack $_repack_flags $_use_svm_props $_head
+             $_use_svnsync_props $no_reuse_existing
+-	    $_use_log_author $_add_author_from $_localtime/;
++	    $_use_log_author $_add_author_from $_localtime $_use_fsync/;
+ use Carp qw/croak/;
+ use File::Path qw/mkpath/;
+ use IPC::Open3;
+@@ -2269,6 +2269,22 @@ sub mkfile {
+ 	}
+ }
+ 
++# TODO: move this to Git.pm?
++sub use_fsync {
++	if (!defined($_use_fsync)) {
++		my $x = $ENV{GIT_FSYNC};
++		if (defined $x) {
++			my $v = command_oneline('git', '-c', "core.fsync=$x",
++				qw(config --type=bool core.fsync));
++			$_use_fsync = defined($v) ? ($v eq "true\n") : 1;
++		} else {
++			$_use_fsync = Git::config_bool('core.fsync');
++			$_use_fsync = 1 if !defined($_use_fsync);
++		}
++	}
++	$_use_fsync;
++}
++
+ sub rev_map_set {
+ 	my ($self, $rev, $commit, $update_ref, $uuid) = @_;
+ 	defined $commit or die "missing arg3\n";
+@@ -2290,7 +2306,7 @@ sub rev_map_set {
+ 	my $sync;
+ 	# both of these options make our .rev_db file very, very important
+ 	# and we can't afford to lose it because rebuild() won't work
+-	if ($self->use_svm_props || $self->no_metadata) {
++	if (($self->use_svm_props || $self->no_metadata) && use_fsync()) {
+ 		require File::Copy;
+ 		$sync = 1;
+ 		File::Copy::copy($db, $db_lock) or die "rev_map_set(@_): ",
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a291a5d4a2..61bb24444c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -442,6 +442,7 @@ unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
+ 		PERF_
+ 		CURL_VERBOSE
+ 		TRACE_CURL
++		FSYNC
+ 	));
+ 	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
+ 	print join("\n", @vars);
+diff --git a/write-or-die.c b/write-or-die.c
+index 0b1ec8190b..d2962dc423 100644
+--- a/write-or-die.c
++++ b/write-or-die.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "config.h"
+ #include "run-command.h"
+ 
+ /*
+@@ -57,7 +58,9 @@ void fprintf_or_die(FILE *f, const char *fmt, ...)
+ 
+ void fsync_or_die(int fd, const char *msg)
+ {
+-	while (fsync(fd) < 0) {
++	if (use_fsync < 0)
++		use_fsync = git_env_bool("GIT_FSYNC", 1);
++	while (use_fsync && fsync(fd) < 0) {
+ 		if (errno != EINTR)
+ 			die_errno("fsync error on '%s'", msg);
+ 	}
