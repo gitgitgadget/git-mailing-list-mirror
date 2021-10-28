@@ -2,83 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDB0CC433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3232C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 01:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93B3960F9B
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 00:31:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AC1A60F6F
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 01:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbhJ1Ad1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Oct 2021 20:33:27 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64689 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbhJ1Ad1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Oct 2021 20:33:27 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 26D1315BD17;
-        Wed, 27 Oct 2021 20:31:01 -0400 (EDT)
+        id S229723AbhJ1BER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Oct 2021 21:04:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54265 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229705AbhJ1BEQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Oct 2021 21:04:16 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19E9BECDFF;
+        Wed, 27 Oct 2021 21:01:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MdED1PcrJKI4v1uINZ3N4zAoWKBgUrJqVD49yD
-        gj+Wk=; b=naPrMK4aPyTPUZ1DzHjGgUqk9q5+bUAAw2F4gK6oTmXWvGGsJ8af5n
-        vMm2mZx/JOcfENYo5ArW0QqAdAdN369fQOclenpugg3GI4+9NDX+5bJw6rqeyFzM
-        8Ywizt/8lzafmJdsi3t0LhfzYYKW0OGTJ3bZfUi1B2XFjhgGBrL5I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1279A15BD16;
-        Wed, 27 Oct 2021 20:31:01 -0400 (EDT)
+        :content-type; s=sasl; bh=gdC4oHr3RATKH2NWKAyDBfX6vg4abiuWziKSxd
+        rpE+Y=; b=XG9qwW7JnSi04KJfoXeYtyLI9LkIgpdgtf0n9EzwPxd2iGwTKk2MPU
+        usMYWOSqBK3SdQBwmZ1A+hVBg11o1CseJ+QoyakEX3wgjdqyyYX+mA7niMx0mN+f
+        MhvFE0ToY0/qcTk6uRXque8+CVViklcnWax2E4TW9t1J6I3FJSTz0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11D1EECDFE;
+        Wed, 27 Oct 2021 21:01:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6000215BD14;
-        Wed, 27 Oct 2021 20:30:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70599ECDFC;
+        Wed, 27 Oct 2021 21:01:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH 0/2] tmp-objdir: fix regressions in
- core.fsyncobjectfiles=batch
-References: <pull.1067.git.1635287730.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2110271439120.56@tvgsbejvaqbjf.bet>
-        <xmqqo87auqda.fsf@gitster.g>
-        <20211027225706.GA3984@neerajsi-x1.localdomain>
-Date:   Wed, 27 Oct 2021 17:30:57 -0700
-In-Reply-To: <20211027225706.GA3984@neerajsi-x1.localdomain> (Neeraj Singh's
-        message of "Wed, 27 Oct 2021 15:57:06 -0700")
-Message-ID: <xmqqcznqt2gu.fsf@gitster.g>
+To:     "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ivan Frade <ifrade@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v4 1/2] fetch-pack: redact packfile urls in traces
+References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
+        <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com>
+        <973a250752c39c3fe835d69f3fbe8f009fc4fa74.1635288599.git.gitgitgadget@gmail.com>
+Date:   Wed, 27 Oct 2021 18:01:48 -0700
+In-Reply-To: <973a250752c39c3fe835d69f3fbe8f009fc4fa74.1635288599.git.gitgitgadget@gmail.com>
+        (Ivan Frade via GitGitGadget's message of "Tue, 26 Oct 2021 22:49:58
+        +0000")
+Message-ID: <xmqq35omt11f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 521812A0-3786-11EC-AF7E-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A16AF008-378A-11EC-BBC0-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Neeraj Singh <nksingh85@gmail.com> writes:
+"Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Oct 27, 2021 at 02:09:21PM -0700, Junio C Hamano wrote:
->> Yeah, none of the above is attractive this late in the cycle X-<.
->> 
->> It probalby is best to queue the "fixup!" commits as they are on top
->> of ns/tmp-objdir, merge the result to two topics that depend on
->> ns/tmp-objdir, and keep them without merging them down, until the
->> release.  When it is time to rewind 'next' after the release, it
->> would be a good chance to get rid of these "oops, earlier we screwed
->> up" commits by redoing the tmp-objdir (and rebasing the other two
->> topics on top).
->> 
+> From: Ivan Frade <ifrade@google.com>
 >
-> Hi Junio,
-> Apologies for the breakage! I just want to be 100% clear here: is there
-> any action I should take with the patches, or will you handle the merge/rebase?
+> In some setups, packfile uris act as bearer token. It is not
+> recommended to expose them plainly in logs, although in special
+> circunstances (e.g. debug) it makes sense to write them.
+>
+> Redact the packfile URL paths by default, unless the GIT_TRACE_REDACT
+> variable is set to false. This mimics the redacting of the Authorization
+> header in HTTP.
+>
+> Signed-off-by: Ivan Frade <ifrade@google.com>
+> ---
+>  Documentation/git.txt  |  5 +++--
+>  fetch-pack.c           |  3 +++
+>  pkt-line.c             | 40 ++++++++++++++++++++++++++++++++-
+>  pkt-line.h             |  1 +
+>  t/t5702-protocol-v2.sh | 51 ++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 97 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index d63c65e67d8..f64c8ce5183 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -832,8 +832,9 @@ for full details.
+>  
+>  `GIT_TRACE_REDACT`::
+>  	By default, when tracing is activated, Git redacts the values of
+> -	cookies, the "Authorization:" header, and the "Proxy-Authorization:"
+> -	header. Set this variable to `0` to prevent this redaction.
+> +	cookies, the "Authorization:" header, the "Proxy-Authorization:"
+> +	header and packfile URLs. Set this variable to `0` to prevent this
+> +	redaction.
 
-If we all agree on the above plan, then nothing for you for now, but
-we'd ask you to send a cleaned-up patch after the upcoming release
-when the 'next' branch gets rewound and rebuilt, at which time we
-can get rid of the "oops, we screwed up" fixup patches.
+Just a curiosity.  Do we call these packfile URI, or packfile URL?
 
-Thanks for finding and sending in the fix.
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 2dc8ac274bd..ba0a2d65f0c 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -370,6 +370,31 @@ int packet_length(const char lenbuf_hex[4])
+>  	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
+>  }
+>  
+> +static char *find_url_path(const char* buffer, int *path_len)
+> +{
+> +	const char *URL_MARK = "://";
+> +	char *path = strstr(buffer, URL_MARK);
+> +	if (!path)
+> +		return NULL;
 
+Hmph, the format we expect is "<hash> <uri>"; don't we need to
+validate the leading <hash> followed by SP?
+
+    len = strspn(buffer, "0123456789abcdefABCDEF");
+    if (len != 40 || len != 64 || buffer[len] != ' ')
+	return NULL; /* required "<hash> SP" not seen */
+    path = strstr(buffer + len + 1, URL_MARK);
+
+or somesuch?
+
+> +	path += strlen(URL_MARK);
+
+OK.
+
+> +	while (*path && *path != '/')
+> +		path++;
+
+strchr()?
+
+> +	if (!*path || !*(path + 1))
+> +		return NULL;
+
+OK.
+
+> +	// position after '/'
+
+No // comments in our codebase, please.  Unless it is a borrowed
+code, that is.
+
+> +	path++;
+> +
+> +	if (path_len) {
+> +		char *url_end = strchrnul(path, ' ');
+
+Is this because SP is not a valid character in packfile URI, or at
+this point in the callchain it would be encoded or something?  The
+format we expect is "<hash> <uri>", so we shouldn't even have to
+look for SP but just redact everything to the end, no?
+
+Apparently we are assuming that there won't be more than one such
+URL-path that needs redacting in the packet, but that is perfectly
+fine, as the sole goal of this helper is to identify the packfile
+URI packet and redact it in the log.
+
+> +		*path_len = url_end - path;
+> +	}
+> +
+> +	return path;
+> +}
+
+> -	packet_trace(buffer, len, 0);
+> +	if (options & PACKET_READ_REDACT_URL_PATH &&
+> +	    (url_path_start = find_url_path(buffer, &url_path_len))) {
+> +		const char *redacted = "<redacted>";
+> +		struct strbuf tracebuf = STRBUF_INIT;
+> +		strbuf_insert(&tracebuf, 0, buffer, len);
+> +		strbuf_splice(&tracebuf, url_path_start - buffer,
+> +			      url_path_len, redacted, strlen(redacted));
+> +		packet_trace(tracebuf.buf, tracebuf.len, 0);
+> +		strbuf_release(&tracebuf);
+
+I briefly wondered if the repeated allocation (and more
+fundamentally, preparing the redacted copy of packet whether we are
+actually tracing the packet in the first place) is blindly wasting
+the resources too much, but this only happens in the protocol header
+part, so it might be OK.
+
+Even if that is not the case, we should be able to update
+fetch_pack.c::do_fetch_pack_v2() so that the REDACT_URL_PATH bit is
+turned on in a much narrower region of code, right?  Enable when we
+enter the GET_PACK state and drop the bit when we are done with the
+packfile URI packets, or something?
+
+Thanks for working on this.
+
+
+> +	} else {
+> +		packet_trace(buffer, len, 0);
+> +	}
