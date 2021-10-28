@@ -2,144 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D63FC433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2C7C433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:22:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F5AF61056
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:15:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45EB9603E5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231393AbhJ1WRp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 18:17:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53634 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbhJ1WRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 18:17:45 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4840C061570
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 15:15:17 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id z144so8988683iof.0
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 15:15:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LHEAbjDbqSDU4cyln/xc4/8mgBKXTv1XLxeeJMzm5Ig=;
-        b=LYq2SlrjQKgiAdwcNgtKfYoJq3HsJp1b5aiMtE5u3IYPG38AsHJMkwC4ypCUVnKG89
-         UeEsvuVIRjmwMEqFIddUvP9g8zKT6E7o1pKjtWVcISqRn8TNytVa8rR6wL9mhmO5ogBs
-         U9a//Jzr56L3Gu0/02sxbfRR0P5iw3aXDRq7JxdojoCxHz16ProaSoRwSCGK7BGG6QXO
-         8aIo1M6akUdtdi+ev5+YnRyk42UI2XSz539mYAkrrIj2GpXRKmdlT9/rHQv4CKHxFW7U
-         A6YBjlU7hPJNjPXqVbNtZ6e/yTvOqYrKEafLaTKT4QRUDRPeOrft63ktPoyDb5Z24QlW
-         nhQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LHEAbjDbqSDU4cyln/xc4/8mgBKXTv1XLxeeJMzm5Ig=;
-        b=4Q7TH4e9AMuLG7j8S3xXH/flO4Rip43bduqGCvE6pnGLbnq7AqX8jH3aRhsY0zRDOl
-         WQnDJA+UdpGNVA1mhkmfD1g7DRM6V8Mn4/Jh36Gr89eqyEXn85ixLJtBhsPnnLnvld6s
-         U/OV5kn9FqYB+QgMc57iSf+NyVh21DmFnRpmYIl4JNpRvp3DYNPtM0gLKdaIpfiJ4Wwj
-         1rdcWuxtaLBRZv+AAjAfI01WF90ot9nnsXtWYdjriZoRfRDR3osvyzKjo5iNnPA1oov2
-         c5OeOOODvRRwDTYcT4vFWJKp80PICeR3ebcNVfjKd3vGEkS6bd4cADiqU9dnNdyqpzK7
-         VFaA==
-X-Gm-Message-State: AOAM531DXS4mw4f3bcSPw131fXYnBFH7RTc2kYvudKBh2NKoWTpS7eU5
-        t12+MIr4GimFsB60EclkmHlcI3EyF3YR1jkcdUJKFQ==
-X-Google-Smtp-Source: ABdhPJyhXy/IfGfwWOr9oV64LC2YNrljaX5pJ0wy1noYll94vCSfYGi+TAsuix+nC4AhVTk+T+6gmE0CIxLBBMP48VM=
-X-Received: by 2002:a5d:89d0:: with SMTP id a16mr4907037iot.159.1635459316891;
- Thu, 28 Oct 2021 15:15:16 -0700 (PDT)
+        id S231531AbhJ1WYb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 18:24:31 -0400
+Received: from mout.gmx.net ([212.227.17.22]:34793 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231521AbhJ1WYa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 18:24:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1635459720;
+        bh=c+Wn77Nov8d15MK9cvJA9oJDjHgU6dXsQuUyVc63Xlo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=UpOdtSRvDA3PVTgHeTmhPLOXwT8UYy/z2D5708t6xhIJJ4Yeeffg/SZt/pK4Y8CW6
+         rv8zvN1O6rvm5Gk816FEe09sOJIWv2Th54SECm4zCXcBMiksMrskmRlos4Z4EQ87uu
+         DIdwIkae3AGq9WQ9Ga4Svp26mgdEMfcYZFDd0qsw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.119.151] ([213.196.213.185]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMXQF-1mOyBL2Efn-00JWig; Fri, 29
+ Oct 2021 00:22:00 +0200
+Date:   Fri, 29 Oct 2021 00:21:59 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Carlo Arenas <carenas@gmail.com>
+cc:     Matt Cooper via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Matt Cooper <vtbassmatt@gmail.com>
+Subject: Re: [PATCH v2 4/7] odb: teach read_blob_entry to use size_t
+In-Reply-To: <CAPUEsphWBuQybeBe8bjaUFZ=k+5maYCxiY4wche4XLVFPph+fw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2110290019540.56@tvgsbejvaqbjf.bet>
+References: <pull.1068.git.1635320952.gitgitgadget@gmail.com> <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com> <3ffd3a001f742713eb0fde8508f876ff95103d82.1635454237.git.gitgitgadget@gmail.com>
+ <CAPUEsphWBuQybeBe8bjaUFZ=k+5maYCxiY4wche4XLVFPph+fw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
- <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com> <973a250752c39c3fe835d69f3fbe8f009fc4fa74.1635288599.git.gitgitgadget@gmail.com>
- <xmqq35omt11f.fsf@gitster.g>
-In-Reply-To: <xmqq35omt11f.fsf@gitster.g>
-From:   Ivan Frade <ifrade@google.com>
-Date:   Thu, 28 Oct 2021 15:15:05 -0700
-Message-ID: <CANQMx9WFKJAGF+7zti8+-b2je9sFuNxwOx-LCPtEoGCea54Mdw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] fetch-pack: redact packfile urls in traces
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:a5X2pBJEjoglWM4Yz6zL9xB74wfQw4t12XI2fnsM6w1Eyv/ap7R
+ TyI5tGB7LClYz/cjOvQxnhZqJE1e4F0EtrTn2+jOhtGzqMlOuP114ho+GTmcP+0YEBmwEoC
+ kihzSITuZvcD4z1ez0t1C0tssRiU29G0cwvW/6skajxJI6HFuqEa/UTFcwT0VmdvzsGam2W
+ CxpSQdooL4BOcayZ+Ap4A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rTh0o5nqP+4=:1r8qqKn8CahUk5JpFrtp6k
+ W7G1hp9vwltBbWzbm8smFGo1odc0VRrSdBDsXr4DXjWmal0kW0EEwFFemVb6PO0oIqbjmA4j9
+ gfRwRyc5rXEjA1lA9JUWrgXqFYnHPWZ8hy5vxOeB/MYdMdkb9cYYTyu3/2cStWK/ciVmREm6V
+ f1sKzJQF7SjHruucwVoWdsx3b+D2Sj2L/36pi9zYXk9Po6ln2jXUUCmLXavvmzngb6hSeDut5
+ RFvPyrebZWZBUlQgOSt1DqayMi4n9Of56AJc+5ARPXIcaQtw3u3VCMEYFu0SWPLZvsW0xMurI
+ Gsl5w39DlX/85SzT9iHiuiVPEzczhNbv6OL8tt0nsv0KdMWhKbvmUsOIbMDmb6tZx0tPMbF5c
+ 6x3FnZU4a/fK4fkZtwKLNLOKDRV+Dn5944uEYNGcLLr2W9qse9h2BPHuGX66AvnDRpopg01zy
+ C4RAM/rUER6cXgBVTgFcKdm1BSOy+4hA0KROq/YrEhX2I+dclIaJ6+Xpszwj7vXFkHbvCR4e0
+ YPIdK37UZskJchx/2L5DAAfuzBc6/f+ze3fgKSmNEAbcsx1wq2gnwE8/OXXHbDptonugE60yJ
+ 0alpyJoFJUvKfZeTI5Q1/jSDJJdiTyNJceEw+q5QJ04xqg0CbvQYw9laLu20PMi3mxknBE216
+ K95XQQ34VETpAr5o5i/KrN5Gl52DqH+GLz0j6KAsy6w3o57jRO4brBzaXJ1T+Mjie6rs8jxGJ
+ SqGGk3CN9rIQz3RcrZu8mRCPqpZjP9KIhvLZFpPbecCFCCSO2DTcK7NFvV8vxHcUopF6x5jmi
+ eYWX3R8M8bst8hagml9oxqoyYJpV0JBTmkqqrGQQM4Zm8FD6moVyHzUcHXfE5EGJ9RkGn3A9E
+ fc2uROt00cN7ED9RNwoM0wxQHsInX+a1gCB+CykJdrnx+7CNqeRIk/iDF1YNyQZxNaHSmhRQw
+ 9HGlKvlgS2C+GTKyVyDo0pZONGKg/TvuZ/L/OFGlrKbfxSjAQBb/XXYdu5Uuu1lpxsxw3THks
+ d0ByqDnJebbRwmavY/am4mOy0O9toeSQ+NieXODyxHmgWPf9y2QZ4zrG3iuikBQvQqxfhxqLh
+ y7pmiR86Raw954=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 27, 2021 at 6:01 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Ivan Frade <ifrade@google.com>
-> >
+Hi Carlo,
 
-> Just a curiosity.  Do we call these packfile URI, or packfile URL?
+On Thu, 28 Oct 2021, Carlo Arenas wrote:
 
-The feature is "packfile URI" (and the section is called so in the
-protocol). I changed all "url" to "uri".
-
-> > diff --git a/pkt-line.c b/pkt-line.c
-> > index 2dc8ac274bd..ba0a2d65f0c 100644
-> > --- a/pkt-line.c
-> > +++ b/pkt-line.c
-> > @@ -370,6 +370,31 @@ int packet_length(const char lenbuf_hex[4])
-> >       return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
+> On Thu, Oct 28, 2021 at 1:50 PM Matt Cooper via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > diff --git a/entry.c b/entry.c
+> > index 711ee0693c7..4cb3942dbdc 100644
+> > --- a/entry.c
+> > +++ b/entry.c
+> > @@ -82,11 +82,13 @@ static int create_file(const char *path, unsigned =
+int mode)
+> >         return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
 > >  }
 > >
-> > +static char *find_url_path(const char* buffer, int *path_len)
-> > +{
-> > +     const char *URL_MARK = "://";
-> > +     char *path = strstr(buffer, URL_MARK);
-> > +     if (!path)
-> > +             return NULL;
+> > -void *read_blob_entry(const struct cache_entry *ce, unsigned long *si=
+ze)
+> > +void *read_blob_entry(const struct cache_entry *ce, size_t *size)
+> >  {
+> >         enum object_type type;
+> > -       void *blob_data =3D read_object_file(&ce->oid, &type, size);
+> > +       unsigned long ul;
+> > +       void *blob_data =3D read_object_file(&ce->oid, &type, &ul);
+> >
+> > +       *size =3D ul;
 >
-> Hmph, the format we expect is "<hash> <uri>"; don't we need to
-> validate the leading <hash> followed by SP?
+> Considering this unsigned long variable is obviously holding an
+> incorrect value, might be worth adding a "TODO" comment here,
+> mentioning it should be changed to a real size_t (probably after
+> release, since it is obvious that change is too intrusive to need this
+> as a kludge for now).
 
-I was trying to find a uri in a packet in general, not counting on the
-packfile-uri line format. That is probably an overgeneralization.
+I do not think it would be a good idea to introduce a `TODO` comment here.
+Why _here_, of all places? Just because we use `size_t` correctly for a
+bit of the function?
 
-Next patch version follows these suggestions to look for a packfile-uri line.
+No, that `TODO` would easily be forgotten when somebody tackles the big
+`unsigned long` -> `size_t` project. I therefore do not even want to add
+it. We know about this problem. No need for a code comment that is prone
+to become stale.
 
-> > +     if (path_len) {
-> > +             char *url_end = strchrnul(path, ' ');
->
-> Is this because SP is not a valid character in packfile URI, or at
-> this point in the callchain it would be encoded or something?  The
-> format we expect is "<hash> <uri>", so we shouldn't even have to
-> look for SP but just redact everything to the end, no?
-
-Yes, now that we count on the packfile-uri line format, we can redact
-everything to the end and there is no need to return the length.
-
-> > -     packet_trace(buffer, len, 0);
-> > +     if (options & PACKET_READ_REDACT_URL_PATH &&
-> > +         (url_path_start = find_url_path(buffer, &url_path_len))) {
-> > +             const char *redacted = "<redacted>";
-> > +             struct strbuf tracebuf = STRBUF_INIT;
-> > +             strbuf_insert(&tracebuf, 0, buffer, len);
-> > +             strbuf_splice(&tracebuf, url_path_start - buffer,
-> > +                           url_path_len, redacted, strlen(redacted));
-> > +             packet_trace(tracebuf.buf, tracebuf.len, 0);
-> > +             strbuf_release(&tracebuf);
->
-> I briefly wondered if the repeated allocation (and more
-> fundamentally, preparing the redacted copy of packet whether we are
-> actually tracing the packet in the first place) is blindly wasting
-> the resources too much, but this only happens in the protocol header
-> part, so it might be OK.
-
-We only allocate and redact if it looks like a packfile-uri line, so
-it shouldn't happen too frequently.
-
-> Even if that is not the case, we should be able to update
-> fetch_pack.c::do_fetch_pack_v2() so that the REDACT_URL_PATH bit is
-> turned on in a much narrower region of code, right?  Enable when we
-> enter the GET_PACK state and drop the bit when we are done with the
-> packfile URI packets, or something?
-
-I move the set/unset of the redacting flag to the FETCH_GET_PACK
-around the "packfile-uris" section.
-There is no need to check every incoming packet for a packfile-uri
-line, we know when they should come.
-
-Thanks,
-
-Ivan
+Ciao,
+Dscho
