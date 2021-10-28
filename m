@@ -2,142 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0691C433F5
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A3AC433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB98E61039
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AFF860F0F
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 20:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230323AbhJ1U2T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 16:28:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230495AbhJ1U2S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 16:28:18 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605B5C061570
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:25:51 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id f9so9669011ioo.11
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 13:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Iov+rNvqjKeJHLycLiXW4kDd7HO3z5gPmvkO87z1SKM=;
-        b=ZR5Ce1Sa7cPUdnWaxgHA8GewbQ0IdnT8D5sfbg376oL9Qqs1YSA0Dj7iygaZqvggxX
-         U9mrPY1KVkkTJUlS9R15qYAJHh/Auhpt1e5U9XUYvQJ4ChwXt4fu8jdLvp4wAbDeOEWf
-         0ad9WT3pRA0In+1Veu7knqRqiTY5ZebcEnLHHYlU4UqGsuvp1YrWn1WHoW7TvPV2WK08
-         gXo/iywk/CwNaFLbJMV+6TV8MG7qhNjqgbfz03LAWPNC+9Lf4tf9rYwywPo/eV/LrHD/
-         s3Hw6pNCC13/Jg4ynsIX43hJQxRrG59vAZJkswcR5GwE95x9AAd/t3etjgg64N1oBRAs
-         oGQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Iov+rNvqjKeJHLycLiXW4kDd7HO3z5gPmvkO87z1SKM=;
-        b=DCNT42EP7YtCeZfQSXqo7J085l7SyFd/SpixswllSaiTu8IusdjhkfzZfjMD5T1GhF
-         TqraCqesqy5AIsTTL1nxSkdxwh/Azqtg07YYsn/ghAxslAR972I8GxhrR+wP3ofn9L/G
-         xn4/2UN3QDn62EfbWd+tl4BucV6/BbKs5uSpA6dURW6QMjzQTmFqMkz8IOaNRrx5JjY7
-         3MmkAoC7Ph+OHODzjTRm0xKCBG807DR88zdX4IWbMENeWJ7btTU18M2Tn4wqujjNTpJF
-         wZzE5KLdWy4vmgEdX+/PiwzUSFRPbkFSM4tg2JzJTpzcJHmfhyrSDvf6DQYoZ07ICre0
-         2vPw==
-X-Gm-Message-State: AOAM530U4B1qAvuP1TsbPjOWKOxiXkUqzWQYraj016Z0pOtqBKVPLEMG
-        WeDxwQ3o7xjHi2nsm9/51Nt1GA==
-X-Google-Smtp-Source: ABdhPJzNsAKlr2WXZleEaq940yHdvm5kdPlpsX5qfs22wy+KqpJz1YdOyPSzB0ibfugfajlz6C3xZA==
-X-Received: by 2002:a05:6638:1414:: with SMTP id k20mr4951243jad.50.1635452750152;
-        Thu, 28 Oct 2021 13:25:50 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g13sm2066500ile.73.2021.10.28.13.25.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 13:25:49 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 16:25:48 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH v2 5/9] builtin/repack.c: avoid leaking child arguments
-Message-ID: <YXsHTKGBYYeDsdhh@nand.local>
-References: <cover.1635282024.git.me@ttaylorr.com>
- <bcd12ecab81029be825a646348cb7ae69970a819.1635282024.git.me@ttaylorr.com>
- <xmqqzgqut4lr.fsf@gitster.g>
+        id S231215AbhJ1UfY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 16:35:24 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35253 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230323AbhJ1UfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 16:35:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1635453174;
+        bh=0mc5dNPLhi43YW/lDo3j2Ve/lalRI54Qw/3gG7PBcF0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=RlwPxptw/G9NmO7hFKAPravPAt6rFdTe7uPjwurucMtUiJuLNafYuy7KVHXCpVyqV
+         Q8qe4WnxAUEV9e1SkkRGcuotR+6uaa5sWQz8ZEkGDZyim++CSpN2vD8GBgA2/PMXdp
+         O8/JaQJnVYPnHL6EDdXclaDAwNHiH9zferrjZ2eg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.119.151] ([213.196.213.185]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MNbp3-1mHFbZ0YSB-00P4Mz; Thu, 28
+ Oct 2021 22:32:54 +0200
+Date:   Thu, 28 Oct 2021 22:32:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org, vtbassmatt@gmail.com
+Subject: Re: [PATCH] helper/test-genzeros: allow more than 2G zeros in
+ Windows
+In-Reply-To: <20211028085446.78536-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2110282229280.56@tvgsbejvaqbjf.bet>
+References: <CAPUEspi_nxpYzJOjJ0osRRLVQ42uPRA9=9eWp3NBtbpeVtJZng@mail.gmail.com> <20211028085446.78536-1-carenas@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzgqut4lr.fsf@gitster.g>
+Content-Type: multipart/mixed; boundary="8323328-855368057-1635453174=:56"
+X-Provags-ID: V03:K1:8qAbtxs2I+v6LX6i79rBGEcl44BcJXhpB9WPBNcKSB+6hbhUvFq
+ 1RQY2WYRR9V0lTKl0FMuzWFBskpJAbwTY8DqTz4oPnlegk6Ie4MIm5LwCaBUveOEZlil/3O
+ RarpOa7c1Y+iX2wjNyQBvZk4jmsDmdK5HTTGOtc1i1u25yu1Xa7+llVSYHOlQErnIQBcPKq
+ m8k0aAClhTa/8DI7F+isA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UnQadkwXD4I=:6lm+Bq66qtTOVdiJ+L/QE0
+ aNW65/Miyt320m2665pjJ/wLi5OrRf1aFQS/o0CLYXN5Dp3Oa3Iv4Hj4Rg3DaXvcs8QxHtNiW
+ wXj0eotrP0Mq3Zy8yl1FzQnxVbK+6xDBXmea+5pjmGJb9ySkBobEdBofm/RHz+BjhxO4P8Ih4
+ ALOJxqdMPs5SeeIxrPa4ZZs2OiQpcG45k2li1aS6ac0i6srjQNWfss0mW4Y71rZ1tqvJNkkxh
+ sWNEaMs6yF0WqqAdCsHQzjdBKLImLY+l83ez/WasShM5CKJ5P+XrmIpakqLFbbA/ELe2svXdN
+ dg7OnxyztmwPdzCbytYFaC2jY1/QVDHHYsW05cDs0xWsZbMXR9NAGZP//MHneFiWjxEyhG4lA
+ rbdDJ+5wkITfoU7OwutwJqmzhwSBpVunINcfP3qwFN35BNtX+jsmMsN6yzPZFgs19OEEQ2F1r
+ Z8Dtk4nloxJLM9C1RDb4k1iwjMv9LdwvO2KZ1eafT6LjyUoXAK1LPQliH/fqD4hH4qV8UJ/6p
+ 5CIWc8ZPOJB2yjFiVgRjRQxECaH4Mwr11MU07gG/PK3IBXzehUB9MCHAIQp9BIj+7iXCCoWVC
+ FIge3yoiSa3PMEYOBfxXb8eg9ujEFte0MBX9zLT6a3piw+mmVuIJpUO5T3zfco9TGVyFyYdX3
+ 2bHCFR6Xpvo3wwjEVuT9crAL0PeMZRymrvUtXe85ekxnDRMzqXYmv2Q4Quu7hJjUD1ULa40fe
+ picztcdEqmNhlVIQ6SpnQQ9hQmreMGDjCRwO/AdQZZU35veL0mb1DDONPi95zyW/hTVrLQFM6
+ lo+sejfQE0FwOgvJi41Ex83bWiIDkksvT2req3RbNLiXIFmqFAOypy86Q+u+Eyx+suh2m8GWN
+ KinWYhLyT9OSB2NIZvZQJEeJJVLf9r+z6ONzBmgUPR0EL/Tnxt1EUtjMFJAoQFuUKHXEIFPGU
+ fp2Ew7w84+mBEBwb55A572HwY7AL1fXrW2cZ0mPZkxmFcy7m8h45/Wdryl4khOj6WrXxMwshg
+ y1a+dkAU1E6VCyMhX1zJMOWSV6vf5ErDIFnZhPlpUpdZ5cXupCNJpdpJdOl84KpkVPFBddsB/
+ 85zOyqxwb6o35I=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 27, 2021 at 04:44:48PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-855368057-1635453174=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Carlo,
+
+On Thu, 28 Oct 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> d5cfd142ec (tests: teach the test-tool to generate NUL bytes and
+> use it, 2019-02-14), add a way to generate zeroes in a portable
+> way without using /dev/zero (needed by HP NonStop), but uses a
+> long variable that is limited to 2^31 in Windows.
 >
-> > @@ -586,8 +588,10 @@ static int write_midx_included_packs(struct string_list *include,
-> >  		strvec_pushf(&cmd.args, "--refs-snapshot=%s", refs_snapshot);
-> >
-> >  	ret = start_command(&cmd);
-> > -	if (ret)
-> > +	if (ret) {
-> > +		child_process_clear(&cmd);
-> >  		return ret;
-> > +	}
+> Use instead a (POSIX/C99) intmax_t that is at least 64bit wide
+> in 64-bit Windows to use in a future test.
 >
-> This happens only when start_command() returns an error.  But the
-> function always calls child_process_clear() before doing so.
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+
+Thank you for this patch. I integrated it into the patch series.
+
+Unfortunately, it is incomplete, not because it does not work, but because
+it comes at a hefty performance cost. In my tests, generating a gigabyte
+of NULs took around 27 seconds with `genzeros`. Compare that to ~0.75
+seconds with `dd`, and it is not funny, stop laughing.
+
+Happily, I was able to rewrite the core part of `genzeros` to write chunks
+of a 256kB array instead, which pushed it back down to ~0.6 seconds.
+
+Will send out a new iteration as soon as the CI build passes.
+
+Ciao,
+Dscho
+
+> ---
+>  t/helper/test-genzeros.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> So I am not sure if this hunk is needed.  It didn't exist in v1, if
-> I recall correctly.  Am I missing something obvious?
+> diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
+> index 9532f5bac9..b1197e91a8 100644
+> --- a/t/helper/test-genzeros.c
+> +++ b/t/helper/test-genzeros.c
+> @@ -3,14 +3,14 @@
+>
+>  int cmd__genzeros(int argc, const char **argv)
+>  {
+> -	long count;
+> +	intmax_t count;
+>
+>  	if (argc > 2) {
+>  		fprintf(stderr, "usage: %s [<count>]\n", argv[0]);
+>  		return 1;
+>  	}
+>
+> -	count =3D argc > 1 ? strtol(argv[1], NULL, 0) : -1L;
+> +	count =3D argc > 1 ? strtoimax(argv[1], NULL, 0) : -1;
+>
+>  	while (count < 0 || count--) {
+>  		if (putchar(0) =3D=3D EOF)
+> --
+> 2.33.0.1155.gbdb71ac078
+>
+>
+>
 
-No, it was the person replying to you missing something obvious ;).
-
-Any hunks like this that call child_process_clear() after
-start_command() returns a non-zero value are unnecessary. But the one in
-repack_promisor_objects() is good, and does prevent the leak that had
-led me in this direction in the first place.
-
-Here is a suitable replacement for this patch (I believe that everything
-else in this version is fine as-is):
-
---- >8 ---
-
-Subject: [PATCH] builtin/repack.c: avoid leaking child arguments
-
-`git repack` invokes a handful of child processes: one to write the
-actual pack, and optionally ones to repack promisor objects and update
-the MIDX.
-
-Most of these are freed automatically by calling `start_command()` (which
-invokes it on error) and `finish_command()` which calls it
-automatically.
-
-But repack_promisor_objects() can initialize a child_process, populate
-its array of arguments, and then return from the function before even
-calling start_command().
-
-Make sure that the prepared list of arguments is freed by calling
-child_process_clear() ourselves to avoid leaking memory along this path.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 0b2d1e5d82..9b74e0d468 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -258,9 +258,11 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 	for_each_packed_object(write_oid, &cmd,
- 			       FOR_EACH_OBJECT_PROMISOR_ONLY);
-
--	if (cmd.in == -1)
-+	if (cmd.in == -1) {
- 		/* No packed objects; cmd was never started */
-+		child_process_clear(&cmd);
- 		return;
-+	}
-
- 	close(cmd.in);
-
---
-2.33.0.96.g73915697e6
-
+--8323328-855368057-1635453174=:56--
