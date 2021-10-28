@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09FE2C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A111C433FE
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6752610D2
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EDE8610C8
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231169AbhJ1Sdv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 14:33:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
+        id S231208AbhJ1Sdw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 14:33:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230517AbhJ1Sdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 14:33:44 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFC1C061570
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:17 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id kn11-20020a17090b480b00b001a4053c7510so3021371pjb.8
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:17 -0700 (PDT)
+        with ESMTP id S231151AbhJ1Sdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 14:33:46 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70FDC061745
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:19 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id c2-20020a63d5020000b029023ae853b72cso3688776pgg.18
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=LgFgP+WD92/iEa0tJxZQ4c9HWKaXoDGfMblEnM6LJUA=;
-        b=sjPjRFGkoIdWR8uJvv4dYT0k6VlJM+ROcOeQLKtfxTiUY8qaaVE9Gf6na9+E3/mfye
-         Vre8velhdCaABDOORwv+C1igBtYgOqtK3JtLxdVeZZI7nc3zI8S4CwrzEn3eV+vH5kT7
-         FQIpPrn4I30fGE9m6G8co1XTuahExyvEsrNLg3S1vF+/P/C5S1RewvLFs9nmlv4zzqFB
-         dxTU+bu09Jf0Zg3F23xe0bmiulmjpokvFzno+wsbl7YOPcM6YQ9xaRE/LWqlxN/haOT5
-         hqStv9BGglYfdIvsefhB0iC8Y+T9Tx/9YEAjVHaVHhH9jg38EEPTnm0eTE2ByX58UWX4
-         aANA==
+        bh=EPlHpmpm6K/ELW8suEF1UN7ZtD11QnXri6Lmaof06IQ=;
+        b=Fpm4CcAcEPzH3gbSOAAIsl91LBZSkkceTw90+USWUKVnbKPBPn6G00z6TVM/dzLnmh
+         MLCOF7L4A+2ya9f0Gfvf8KOhGhMjfxrAa7AZG+QI6+Bt7yDTnrcWs6Rk32jFpllHlXPT
+         zSiCa53VCNlyuSzedeqx1MR9A8yoo4QqmffvAUFIQMAc+R+mjSOAM1sbinAu41YfxGy0
+         upFHcomeHejpOTHtjeFCwBKt73q8dNe5TDOG5kQ1kOnZtiEdZZi8jma2UfZeNOVuAs6u
+         jHSkck6IbuyiEDvalBge4JJp0SXE8fVgF3qH59RtrTJJyVFde5WXh8Yso8FX8zihAuNa
+         R8Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=LgFgP+WD92/iEa0tJxZQ4c9HWKaXoDGfMblEnM6LJUA=;
-        b=Wh3zVGgQXTmehGFqiEC29ni//pZij1VFVbpywpGu8So9DqV5u55Lnl1zuQAI/Mi30U
-         F9sKKInUKmq1E3aujtTyxc0WT7CZIa/scVBN0twtDHkaRXWdatM54M96FDIs2YDkHivu
-         EYHMfa8E0gwyDblV8qd/s8wIYatSlr3/4zlmakAlxmcozhVvvY1PE/RNV1XcCs8rzAXz
-         VgLt8/lzEHgOD9HhUOuQs7yhf+x/mx1x41AP90055MUPRMY7eVz25x3yPBeTD4xwApk0
-         cHw4mlIPFmsWjRUQ4NcLo+AyPCxMZWKmxf9lClyqJ5rCk433skb7PFFAjoVxnKwTmxoH
-         ZnHw==
-X-Gm-Message-State: AOAM533Rp+/ZmAkUUgWVU9WzTcwMoAYrNfDHuPIXsnGFNENrIPQ9gDGY
-        EZKFfhF0iJjnQ4EvxAuhe1V5LU7faE0WbRwwSy9AGOKut81F5ACJ/UOcwoBch67msA1ot4eaJBE
-        LLTJTqxqEsu+HjEWFnYL/KoxU/4+nH9wUg6LSJf6ueBp74c87ORWssavUhKsrZNo=
-X-Google-Smtp-Source: ABdhPJwyiGZOxmKB3UJCT/FXRLJvnXiu8HkClffUneSiPfM01ek1AbRy3MQRDfTQCaAXWqdq/Lsm6NDDqMHpHA==
+        bh=EPlHpmpm6K/ELW8suEF1UN7ZtD11QnXri6Lmaof06IQ=;
+        b=BfsaC9U97h1kT4WZF+nV2B4nobE/ZyIo+hWPXAIuJQow8JkyMiHXHFRQABJAGnOhx4
+         WBldwF2s8UL4obas47PoNpFqFCPuXkQFW1sgwz/ZARfto6NdcHPBuzCJWwi977Iu+ViV
+         PaXQ+hDx5Cmh7NrLVsoTFU0vG6BmlRpz4wVtxgzNN0j8n4btUfYI3hZXEp6gpXWJvC2V
+         5gnNaAe89SHQDUe/d5sJ74SfgAuKG5wh3lUtrGotxvgooJM7oSsKg8YJZnV0Tudx0bWx
+         C80WhTpKy6G55pKusWWhOjNf4yP5X7MtuwOR64L6t7Ogh+vm3P+wYVxRNLBB+86HDeXK
+         VqjQ==
+X-Gm-Message-State: AOAM532J/wvnkFyAAdt4IhjO974V4gO2bMaRj4X3+HsBuFgzBolwnIB8
+        A+PwHD+hVtov2eZ3KizZ4fNtdklVkafm8KX+DHhxDRV5qWX9SIT756ZIPwglUzmIJWQo8EScCBA
+        iyLSTeoukYKRJvevL2JsEDKGbMMxjxaosD5uI6BXuJvFR9jDoQhF+KRnts8MslZc=
+X-Google-Smtp-Source: ABdhPJyTrlIeBfscXFQZe77rPCL/Lj66jiEc4MsOBI2yMoupF+4IJPD0OvyUYWkVYgCbwpbv9yLGxpRN0ZJhrg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:aa08:b0:13f:eb2e:8ce8 with SMTP
- id be8-20020a170902aa0800b0013feb2e8ce8mr5417975plb.0.1635445876809; Thu, 28
- Oct 2021 11:31:16 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 11:30:59 -0700
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1348:b0:47c:e8f1:69a3 with SMTP
+ id k8-20020a056a00134800b0047ce8f169a3mr6024593pfu.86.1635445878746; Thu, 28
+ Oct 2021 11:31:18 -0700 (PDT)
+Date:   Thu, 28 Oct 2021 11:31:00 -0700
 In-Reply-To: <20211028183101.41013-1-chooglen@google.com>
-Message-Id: <20211028183101.41013-5-chooglen@google.com>
+Message-Id: <20211028183101.41013-6-chooglen@google.com>
 Mime-Version: 1.0
 References: <20211019224339.61881-1-chooglen@google.com> <20211028183101.41013-1-chooglen@google.com>
 X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-Subject: [PATCH v4 4/6] remote: remove the_repository->remote_state from
- static methods
+Subject: [PATCH v4 5/6] remote: die if branch is not found in repository
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Glen Choo <chooglen@google.com>
@@ -65,227 +64,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace all remaining references of the_repository->remote_state in
-static functions with a struct remote_state parameter.
+In a subsequent commit, we would like external-facing functions to be
+able to accept "struct repository" and "struct branch" as a pair. This
+is useful for functions like pushremote_for_branch(), which need to take
+values from the remote_state and branch, even if branch == NULL.
+However, a caller may supply an unrelated repository and branch, which
+is not supported behavior.
 
-To do so, move read_config() calls to non-static functions and create a
-family of static functions, "remotes_*", that behave like "repo_*", but
-accept struct remote_state instead of struct repository. In the case
-where a static function calls a non-static function, replace the
-non-static function with its "remotes_*" equivalent.
+To prevent misuse, add a die_on_missing_branch() helper function that
+dies if a given branch is not from a given repository. Speed up the
+existence check by using a new branches_hash hashmap to remote_state,
+and use the hashmap to remove the branch array iteration in
+make_branch().
+
+Like read_config(), die_on_missing_branch() is only called from
+non-static functions; static functions are less prone to misuse because
+they have strong conventions for keeping remote_state and branch in
+sync.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- remote.c | 96 +++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 71 insertions(+), 25 deletions(-)
+ remote.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ remote.h |  2 ++
+ 2 files changed, 69 insertions(+), 6 deletions(-)
 
 diff --git a/remote.c b/remote.c
-index 48374cc0e2..88697e7e6d 100644
+index 88697e7e6d..2b5166dee0 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -483,7 +483,9 @@ static int valid_remote_nick(const char *name)
- 	return 1;
+@@ -166,17 +166,66 @@ static void add_merge(struct branch *branch, const char *name)
+ 	branch->merge_name[branch->merge_nr++] = name;
  }
  
--const char *remote_for_branch(struct branch *branch, int *explicit)
-+static const char *remotes_remote_for_branch(struct remote_state *remote_state,
-+					     struct branch *branch,
-+					     int *explicit)
- {
- 	if (branch && branch->remote_name) {
- 		if (explicit)
-@@ -495,32 +497,55 @@ const char *remote_for_branch(struct branch *branch, int *explicit)
- 	return "origin";
- }
- 
--const char *pushremote_for_branch(struct branch *branch, int *explicit)
-+const char *remote_for_branch(struct branch *branch, int *explicit)
++struct branches_hash_key {
++	const char *str;
++	int len;
++};
++
++static int branches_hash_cmp(const void *unused_cmp_data,
++			     const struct hashmap_entry *eptr,
++			     const struct hashmap_entry *entry_or_key,
++			     const void *keydata)
 +{
-+	read_config(the_repository);
-+	return remotes_remote_for_branch(the_repository->remote_state, branch,
-+					 explicit);
++	const struct branch *a, *b;
++	const struct branches_hash_key *key = keydata;
++
++	a = container_of(eptr, const struct branch, ent);
++	b = container_of(entry_or_key, const struct branch, ent);
++
++	if (key)
++		return strncmp(a->name, key->str, key->len) ||
++		       a->name[key->len];
++	else
++		return strcmp(a->name, b->name);
 +}
 +
-+static const char *
-+remotes_pushremote_for_branch(struct remote_state *remote_state,
-+			      struct branch *branch, int *explicit)
- {
- 	if (branch && branch->pushremote_name) {
- 		if (explicit)
- 			*explicit = 1;
- 		return branch->pushremote_name;
- 	}
--	if (the_repository->remote_state->pushremote_name) {
-+	if (remote_state->pushremote_name) {
- 		if (explicit)
- 			*explicit = 1;
--		return the_repository->remote_state->pushremote_name;
-+		return remote_state->pushremote_name;
- 	}
--	return remote_for_branch(branch, explicit);
-+	return remotes_remote_for_branch(remote_state, branch, explicit);
- }
- 
-+const char *pushremote_for_branch(struct branch *branch, int *explicit)
++static struct branch *find_branch(struct remote_state *remote_state,
++				  const char *name, size_t len)
 +{
-+	read_config(the_repository);
-+	return remotes_pushremote_for_branch(the_repository->remote_state,
-+					     branch, explicit);
++	struct branches_hash_key lookup;
++	struct hashmap_entry lookup_entry, *e;
++
++	if (!len)
++		len = strlen(name);
++
++	lookup.str = name;
++	lookup.len = len;
++	hashmap_entry_init(&lookup_entry, memhash(name, len));
++
++	e = hashmap_get(&remote_state->branches_hash, &lookup_entry, &lookup);
++	if (e)
++		return container_of(e, struct branch, ent);
++
++	return NULL;
 +}
 +
-+static struct remote *remotes_remote_get(struct remote_state *remote_state,
-+					 const char *name);
++static void die_on_missing_branch(struct repository *repo,
++				  struct branch *branch)
++{
++	/* branch == NULL is always valid because it represents detached HEAD. */
++	if (branch &&
++	    branch != find_branch(repo->remote_state, branch->name, 0))
++		die("branch %s was not found in the repository", branch->name);
++}
 +
+ static struct branch *make_branch(struct remote_state *remote_state,
+ 				  const char *name, size_t len)
+ {
+ 	struct branch *ret;
+-	int i;
+ 
+-	for (i = 0; i < remote_state->branches_nr; i++) {
+-		if (!strncmp(name, remote_state->branches[i]->name, len) &&
+-		    !remote_state->branches[i]->name[len])
+-			return remote_state->branches[i];
+-	}
++	ret = find_branch(remote_state, name, len);
++	if (ret)
++		return ret;
+ 
+ 	ALLOC_GROW(remote_state->branches, remote_state->branches_nr + 1,
+ 		   remote_state->branches_alloc);
+@@ -185,6 +234,9 @@ static struct branch *make_branch(struct remote_state *remote_state,
+ 	ret->name = xstrndup(name, len);
+ 	ret->refname = xstrfmt("refs/heads/%s", ret->name);
+ 
++	hashmap_entry_init(&ret->ent, memhash(name, len));
++	if (hashmap_put_entry(&remote_state->branches_hash, ret, ent))
++		BUG("hashmap_put overwrote entry after hashmap_get returned NULL");
+ 	return ret;
+ }
+ 
+@@ -500,6 +552,8 @@ static const char *remotes_remote_for_branch(struct remote_state *remote_state,
+ const char *remote_for_branch(struct branch *branch, int *explicit)
+ {
+ 	read_config(the_repository);
++	die_on_missing_branch(the_repository, branch);
++
+ 	return remotes_remote_for_branch(the_repository->remote_state, branch,
+ 					 explicit);
+ }
+@@ -524,6 +578,8 @@ remotes_pushremote_for_branch(struct remote_state *remote_state,
+ const char *pushremote_for_branch(struct branch *branch, int *explicit)
+ {
+ 	read_config(the_repository);
++	die_on_missing_branch(the_repository, branch);
++
+ 	return remotes_pushremote_for_branch(the_repository->remote_state,
+ 					     branch, explicit);
+ }
+@@ -534,6 +590,8 @@ static struct remote *remotes_remote_get(struct remote_state *remote_state,
  const char *remote_ref_for_branch(struct branch *branch, int for_push)
  {
-+	read_config(the_repository);
+ 	read_config(the_repository);
++	die_on_missing_branch(the_repository, branch);
++
  	if (branch) {
  		if (!for_push) {
  			if (branch->merge_nr) {
- 				return branch->merge_name[0];
- 			}
- 		} else {
--			const char *dst, *remote_name =
--				pushremote_for_branch(branch, NULL);
--			struct remote *remote = remote_get(remote_name);
-+			const char *dst,
-+				*remote_name = remotes_pushremote_for_branch(
-+					the_repository->remote_state, branch,
-+					NULL);
-+			struct remote *remote = remotes_remote_get(
-+				the_repository->remote_state, remote_name);
- 
- 			if (remote && remote->push.nr &&
- 			    (dst = apply_refspecs(&remote->push,
-@@ -532,42 +557,58 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push)
- 	return NULL;
- }
- 
--static struct remote *remote_get_1(const char *name,
--				   const char *(*get_default)(struct branch *, int *))
-+static struct remote *
-+remotes_remote_get_1(struct remote_state *remote_state, const char *name,
-+		     const char *(*get_default)(struct remote_state *,
-+						struct branch *, int *))
- {
- 	struct remote *ret;
- 	int name_given = 0;
- 
--	read_config(the_repository);
--
- 	if (name)
- 		name_given = 1;
- 	else
--		name = get_default(the_repository->remote_state->current_branch,
-+		name = get_default(remote_state, remote_state->current_branch,
- 				   &name_given);
- 
--	ret = make_remote(the_repository->remote_state, name, 0);
-+	ret = make_remote(remote_state, name, 0);
- 	if (valid_remote_nick(name) && have_git_dir()) {
- 		if (!valid_remote(ret))
--			read_remotes_file(the_repository->remote_state, ret);
-+			read_remotes_file(remote_state, ret);
- 		if (!valid_remote(ret))
--			read_branches_file(the_repository->remote_state, ret);
-+			read_branches_file(remote_state, ret);
- 	}
- 	if (name_given && !valid_remote(ret))
--		add_url_alias(the_repository->remote_state, ret, name);
-+		add_url_alias(remote_state, ret, name);
- 	if (!valid_remote(ret))
- 		return NULL;
- 	return ret;
- }
- 
-+static inline struct remote *
-+remotes_remote_get(struct remote_state *remote_state, const char *name)
-+{
-+	return remotes_remote_get_1(remote_state, name,
-+				    remotes_remote_for_branch);
-+}
-+
- struct remote *remote_get(const char *name)
- {
--	return remote_get_1(name, remote_for_branch);
-+	read_config(the_repository);
-+	return remotes_remote_get(the_repository->remote_state, name);
-+}
-+
-+static inline struct remote *
-+remotes_pushremote_get(struct remote_state *remote_state, const char *name)
-+{
-+	return remotes_remote_get_1(remote_state, name,
-+				    remotes_pushremote_for_branch);
- }
- 
- struct remote *pushremote_get(const char *name)
- {
--	return remote_get_1(name, pushremote_for_branch);
-+	read_config(the_repository);
-+	return remotes_pushremote_get(the_repository->remote_state, name);
- }
- 
- int remote_is_configured(struct remote *remote, int in_repo)
-@@ -1654,7 +1695,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 	}
- }
- 
--static void set_merge(struct branch *ret)
-+static void set_merge(struct remote_state *remote_state, struct branch *ret)
- {
- 	struct remote *remote;
- 	char *ref;
-@@ -1674,7 +1715,7 @@ static void set_merge(struct branch *ret)
- 		return;
- 	}
- 
--	remote = remote_get(ret->remote_name);
-+	remote = remotes_remote_get(remote_state, ret->remote_name);
- 
- 	CALLOC_ARRAY(ret->merge, ret->merge_nr);
- 	for (i = 0; i < ret->merge_nr; i++) {
-@@ -1701,7 +1742,7 @@ struct branch *branch_get(const char *name)
- 	else
- 		ret = make_branch(the_repository->remote_state, name,
- 				  strlen(name));
--	set_merge(ret);
-+	set_merge(the_repository->remote_state, ret);
- 	return ret;
- }
- 
-@@ -1772,11 +1813,14 @@ static const char *tracking_for_push_dest(struct remote *remote,
- 	return ret;
- }
- 
--static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
-+static const char *branch_get_push_1(struct remote_state *remote_state,
-+				     struct branch *branch, struct strbuf *err)
- {
- 	struct remote *remote;
- 
--	remote = remote_get(pushremote_for_branch(branch, NULL));
-+	remote = remotes_remote_get(
-+		remote_state,
-+		remotes_pushremote_for_branch(remote_state, branch, NULL));
- 	if (!remote)
- 		return error_buf(err,
- 				 _("branch '%s' has no remote for pushing"),
-@@ -1834,11 +1878,13 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
- 
+@@ -1879,6 +1937,8 @@ static const char *branch_get_push_1(struct remote_state *remote_state,
  const char *branch_get_push(struct branch *branch, struct strbuf *err)
  {
-+	read_config(the_repository);
+ 	read_config(the_repository);
++	die_on_missing_branch(the_repository, branch);
++
  	if (!branch)
  		return error_buf(err, _("HEAD does not point to a branch"));
  
- 	if (!branch->push_tracking_ref)
--		branch->push_tracking_ref = branch_get_push_1(branch, err);
-+		branch->push_tracking_ref = branch_get_push_1(
-+			the_repository->remote_state, branch, err);
- 	return branch->push_tracking_ref;
+@@ -2652,6 +2712,7 @@ struct remote_state *remote_state_new(void)
+ 	memset(r, 0, sizeof(*r));
+ 
+ 	hashmap_init(&r->remotes_hash, remotes_hash_cmp, NULL, 0);
++	hashmap_init(&r->branches_hash, branches_hash_cmp, NULL, 0);
+ 	return r;
  }
  
+diff --git a/remote.h b/remote.h
+index 85a730b8ef..b205830ac3 100644
+--- a/remote.h
++++ b/remote.h
+@@ -46,6 +46,7 @@ struct remote_state {
+ 	struct branch **branches;
+ 	int branches_alloc;
+ 	int branches_nr;
++	struct hashmap branches_hash;
+ 
+ 	struct branch *current_branch;
+ 	const char *pushremote_name;
+@@ -292,6 +293,7 @@ int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
+  * branch_get(name) for "refs/heads/{name}", or with branch_get(NULL) for HEAD.
+  */
+ struct branch {
++	struct hashmap_entry ent;
+ 
+ 	/* The short name of the branch. */
+ 	const char *name;
 -- 
 2.33.GIT
 
