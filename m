@@ -2,140 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF62AC433F5
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A133C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:38:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A941D610FC
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:33:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EB1F610C7
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:38:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231368AbhJ1Wfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 18:35:30 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43406 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231298AbhJ1WfW (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 28 Oct 2021 18:35:22 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S231368AbhJ1WlT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 18:41:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59327 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231235AbhJ1WlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 18:41:18 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91399F9ECB;
+        Thu, 28 Oct 2021 18:38:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MIcF94vijNusapXX1MAI8jj1V9i4IQUhIkngKh
+        w7BL8=; b=WKGBUZKVpnY2W2FL9z7GrRLybnIsGbAT1K/wvOrTQhXaOSFv/qpyRw
+        ChfxfqPY+WZiuiJ8VZKu/cOXGVu/10PmSSRvF1hwUKofsuDuL5kyqXzyDbIDm15+
+        CtKP1yjD53FooMJFTp5jatKWx29zY7VBn1Vq7cLVTEyIXXTeu7Eos=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86A1AF9ECA;
+        Thu, 28 Oct 2021 18:38:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 417DF6042C;
-        Thu, 28 Oct 2021 22:32:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1635460343;
-        bh=31RLcqtTL0YDC+iab452GX7/ghk0h+qaCxVU1VyPyeY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=KNurDj56wxZGPP9GLmy49zUhYPgQMpATdzeKtqgrihBni6uYUTYJA3Rbo5Z8kXafB
-         ASXRYupQVzKkfjZKTaTI2Nap6ix0F34JYC62R3eu2VvYtnE7SRO04GY/+NhixMw5ek
-         sP4Fh4IJRcE69L2Zydxbl+p2lhdppETBM5fFAhUi5HUusQW1tEOgU549p9fFXML9vc
-         LmOdC9hqc8iiupttkti+iiFXiuXIO68YLtSgHDP/YFOFRMeFvEo7UPgvWDoI3XlV4Q
-         Rzb3dT5nvZj6nje9P66Sps/EKUrNSYGqKJ5COdEGNBphp3ehKGizE/821A/o9mSsjz
-         G8NSYbQxc8tU2wgZwG54ie3atUf7VXC4n6njuybUE+PGNFfqEMI3IRKGqw3zDr2nSX
-         +E2x2ZFcMjvb5rgozchrkX7fk13xhmHeOxLKXTnRFnafhMKPyNqcuX9I28CSOoeflj
-         Fkc1VwtZhsOPev90eJPNoaaBMRVIEZdsVFs5OGGiQ5OJ8Hwri2r
-Date:   Thu, 28 Oct 2021 22:32:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/7] Allow clean/smudge filters to handle huge files
- in the LLP64 data model
-Message-ID: <YXsk8XBwmErf2I3I@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EBBE8F9EBD;
+        Thu, 28 Oct 2021 18:38:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, vtbassmatt@gmail.com
+Subject: Re: [PATCH 1/3] test-lib: add prerequisite for 64-bit platforms
 References: <pull.1068.git.1635320952.gitgitgadget@gmail.com>
- <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
+        <20211028205649.84036-1-carenas@gmail.com>
+        <20211028205649.84036-2-carenas@gmail.com>
+        <nycvar.QRO.7.76.6.2110282344330.56@tvgsbejvaqbjf.bet>
+        <CAPUEspj2B7M_-cbA2O3LickF7MeVYNtXjfJMBMeYkLag5K=Z3g@mail.gmail.com>
+Date:   Thu, 28 Oct 2021 15:38:48 -0700
+In-Reply-To: <CAPUEspj2B7M_-cbA2O3LickF7MeVYNtXjfJMBMeYkLag5K=Z3g@mail.gmail.com>
+        (Carlo Arenas's message of "Thu, 28 Oct 2021 15:09:13 -0700")
+Message-ID: <xmqqee84pyfb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="b4FSX5M00lL+DLVP"
-Content-Disposition: inline
-In-Reply-To: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D20D56DC-383F-11EC-A05B-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Carlo Arenas <carenas@gmail.com> writes:
 
---b4FSX5M00lL+DLVP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> Since this is clearly copied from `LONG_IS_64BIT`, why the change from
+>> `-le` to `-eq`? It is at least inconsistent to use anything different
+>> here.
+>
+> My assumption is that the check for sizeof(size_t) we have is really
+> about finding the bit width of the platform, and we currently support
+> 2 of them (32-bit and 64-bit), which is why the name I chose was
+> "IS_64BIT" and also why I was strict on it being exactly 8 bytes
+> (considering all platforms git supports have bytes with 8 bits).
+>
+> It can go eitherway IMHO, and your point about being inconsistent
+> (with my lack of explanation in the commit) suggests we should instead
+> use your proposal, do you want me to resend or could adjust them in
+> your tree?
 
-On 2021-10-28 at 20:50:30, Johannes Schindelin via GitGitGadget wrote:
-> This patch series came in via the Git for Windows fork
-> [https://github.com/git-for-windows/git/pull/3487], and I intend to merge=
- it
-> before v2.34.0-rc0, therefore I appreciate every careful review you gentle
-> people can spare.
->=20
-> The x86_64 variant of Windows uses the LLP64 data model, where the long d=
-ata
-> type is 32-bit. This is very different from the LP64 data model used e.g.=
- by
-> x86_64 Linux, where unsigned long is 64-bit.
->=20
-> Most notably, this means that sizeof(unsigned long) !=3D sizeof(size_t) in
-> general.
->=20
-> However, since Git was born in the Linux ecosystem, where that inequality
-> does not hold true, it is understandable that unsigned long is used in ma=
-ny
-> code locations where size_t should have been used. As a consequence, quit=
-e a
-> few things are broken e.g. on Windows, when it comes to 4GB file contents=
- or
-> larger.
->=20
-> Using Git LFS [https://git-lfs.github.io/] trying to work around such iss=
-ues
-> is one such a broken scenario. You cannot git checkout, say, 5GB files. H=
-uge
-> files will be truncated to whatever the file size is modulo 4GB (in the c=
-ase
-> of a 5GB file, it would be truncated to 1GB).
->=20
-> This patch series primarily fixes the Git LFS scenario, by allowing clean
-> filters to accept 5GB files, and by allowing smudge filters to produce 5GB
-> files.
->=20
-> The much larger project to teach Git to use size_t instead of unsigned lo=
-ng
-> in all the appropriate places is hardly scratched by this patch series.
->=20
-> Side note: The fix for the clean filter included in this series does not
-> actually affect Git LFS! The reason is that Git LFS marks its filter as
-> required, and therefore Git streams the file contents to Git LFS via a fi=
-le
-> descriptor (which is unaffected by LLP64). A "clean" filter that is not
-> marked as required, however, lets Git take the code path that is fixed by
-> this patch series.
+Is LONG_IS_64BIT used to ensure that long is _at least_ 64 bit?  If
+so, perhaps its name may need to be rethought.  On the other hand,
+if it is meant to ensure that long is exactly 64 bit, then it should
+use -eq to compare.
 
-This series seems sane to me.  I'm delighted we can fix this issue with
-so little code, since it's a been a very inconvenient problem for a lot
-of Windows users.
+And from that point of view, SIZE_T_IS_64BIT and use of -eq look
+consistent with each other, I would think.
 
-I might suggest when we make the giant transition project in the future
-that we use size_t for things that are going to be in memory and off_t
-or, if necessary, intmax_t for general object sizes so it's clear which
-one we want.  However, that has no effect on this series since this
-intentionally has a limited scope.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Thanks.
 
---b4FSX5M00lL+DLVP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYXsk8AAKCRB8DEliiIei
-gf/NAPsEB9vjbAuxTT5/53BzG6KABdTmCEuC/VLW7fvAPEC8eAD+IX+L9KFCjRV3
-w6R37cglzO50WZ2olb/eqt6qwDTz+gU=
-=050C
------END PGP SIGNATURE-----
-
---b4FSX5M00lL+DLVP--
