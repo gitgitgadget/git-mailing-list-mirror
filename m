@@ -2,94 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F597C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87540C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:46:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 011AB60E8F
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:44:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BB3C610E5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 22:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbhJ1Wqz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 18:46:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbhJ1Wqy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 18:46:54 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A6BC061570
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 15:44:26 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id h2so8602678ili.11
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 15:44:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fJRMGniHaGNLdejZ3r1CakuDIWuC55hmiio4hhY7gs8=;
-        b=QwTw68dQYtrGMTp2LnfTQcRS7iS5Zk78kO+wGHSg9mAKIATk5yGgHXiPKplUUME2KG
-         eQ+v3ET84vOE20jFEfCCge/8GIi9PiF9A2whqYJ2IqKQ9J/v8+fAN+8qlqPIfGQSCHq4
-         anIHjSyyVKZY9uw2DwmN7tdinNKqlzn+/Qy0eFvoegW/RIK1vyI+tMtxsspy2mf9XD3E
-         XKJO+E0lbVw73EdpeyFGtKPNfSfJ44+miCR9MAhT0tMgJtAQzZWUvqRkktfIOVkQE0eB
-         oNZn4xRsOCPExJ8Obt0ZaM0ATi9ryfcwBn+Lh2ICd05QhvF7CX3yNQMd4RSD5XvoeJeF
-         XGDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fJRMGniHaGNLdejZ3r1CakuDIWuC55hmiio4hhY7gs8=;
-        b=TG92McuTQHTQj1qi6gT8jXCgC1xXhkyXhcLpEPBrFMj/YSI57whOnC+hDXr8l5nsPJ
-         ze/COzK2w/IrQa2+orOqnu3T3gNmD5l+W9l09iuCCSYHYxwqUNuHGz5MpN0HBtwhAMjD
-         uikq5IwoZo/Loiiw6BdX9QNyf/4jhlJSQOhcErdfc/v0qdkAT0ME2TBotxd4Kv3ZTcba
-         5KpGYOgnurz2RZ0s+qScwZapMjm1bgrvx1NiFILj7aE3Qe1LOsqXcmQ/4sQ+Q+IzUjgc
-         z/sjOBHQidFjsIRAOdamcqOPc+d3/DQeTajZpu1ARaO+PRYacnKvPUFpYsukSYukiar2
-         gnRQ==
-X-Gm-Message-State: AOAM531dxZkXtdcN1zNJCZAt/zci78Sn/On6b6bPZROQVYk67rhFOEjo
-        EtNlcynCqTrrVmCwS1nNsJtT4CnKBgvFcKMH03GFwg==
-X-Google-Smtp-Source: ABdhPJwdEH4SsAPRUxFEcTyHytE0ihQolPdzN4fXicJDbZV4fW/InszjeWR/ECAzXZH2ubhibZ0EWS012I3a7keFwEc=
-X-Received: by 2002:a05:6e02:168b:: with SMTP id f11mr5053640ila.260.1635461066167;
- Thu, 28 Oct 2021 15:44:26 -0700 (PDT)
-MIME-Version: 1.0
+        id S231346AbhJ1WtM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 18:49:12 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63338 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231162AbhJ1WtK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 18:49:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D44A61561F0;
+        Thu, 28 Oct 2021 18:46:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+P3WlFpfEPyokuqvGE8M9iCgcnS0dMzY+DfU2i
+        7SLsI=; b=HeU+5MlTDsv6RdHtOHqNslUn1UJ6Jivg68BnQX17Tq1hqDicQzZhfz
+        lg/rzHGO0q25yeN9tO2/LQAhIDHaow2TbFOIJQ6DTB6xTwKEncCv8b6En/EUqgdL
+        dAErBBSEDKmdYqVdhpkxiIoFnDhACTQUiwuVJUQfesuceqTuPECAM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD1241561EF;
+        Thu, 28 Oct 2021 18:46:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 33D991561EE;
+        Thu, 28 Oct 2021 18:46:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ivan Frade <ifrade@google.com>
+Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v4 1/2] fetch-pack: redact packfile urls in traces
 References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
- <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com> <c7f0977cabd4ba7311b8045bc57e9e30198651fd.1635288599.git.gitgitgadget@gmail.com>
- <211028.86sfwlw10o.gmgdl@evledraar.gmail.com> <CAPig+cTKSp28oUvESCWLB+OLBjbUSt3vhz6n3eVmkfYf9arcrg@mail.gmail.com>
-In-Reply-To: <CAPig+cTKSp28oUvESCWLB+OLBjbUSt3vhz6n3eVmkfYf9arcrg@mail.gmail.com>
-From:   Ivan Frade <ifrade@google.com>
-Date:   Thu, 28 Oct 2021 15:44:14 -0700
-Message-ID: <CANQMx9VAgj8hLkd2+hqRHdD2+zNQ8T0jUTqpzmJE65Z2UtTnDQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] http-fetch: redact url on die() message
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com>
+        <973a250752c39c3fe835d69f3fbe8f009fc4fa74.1635288599.git.gitgitgadget@gmail.com>
+        <xmqq35omt11f.fsf@gitster.g>
+        <CANQMx9WFKJAGF+7zti8+-b2je9sFuNxwOx-LCPtEoGCea54Mdw@mail.gmail.com>
+Date:   Thu, 28 Oct 2021 15:46:39 -0700
+In-Reply-To: <CANQMx9WFKJAGF+7zti8+-b2je9sFuNxwOx-LCPtEoGCea54Mdw@mail.gmail.com>
+        (Ivan Frade's message of "Thu, 28 Oct 2021 15:15:05 -0700")
+Message-ID: <xmqqa6ispy28.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EA575016-3840-11EC-B47A-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 28, 2021 at 10:26 AM Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
->
-> On Thu, Oct 28, 2021 at 12:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
+Ivan Frade <ifrade@google.com> writes:
 
+>> Hmph, the format we expect is "<hash> <uri>"; don't we need to
+>> validate the leading <hash> followed by SP?
 >
-> > nit: die() messages should start with lower-case (in CodingGuidelines),=
- and I think it's better to quote both, so:
-> >
-> >     die("unable to get pack '%s': '%s'", ...)
-> >
-> > Or maybe without the second '%s', as in 3e8084f1884 (http: check
-> > CURLE_SSL_PINNEDPUBKEYNOTMATCH when emitting errors, 2021-09-24) (which
-> > I authored, but just copy/pasted the convention in the surrounding
-> > code)>
+> I was trying to find a uri in a packet in general, not counting on the
+> packfile-uri line format. That is probably an overgeneralization.
+
+Ah, I see.  This is merely a tracing, so we might benefit from a
+generalized version of redactor, and from that point of view, the
+use of strstr and stopping at the whitespace do make sort-of sense
+to me, but then we lack any attempt to redact more than one instance
+of URL in a packet, so the generalization may have quite a limited
+usefulness.
+
+> Next patch version follows these suggestions to look for a packfile-uri line.
+
+Yeah, I think that is a good way to go, at least for now.  When we
+want a more general one, we can revisit it, but not now.
+
+>> > -     packet_trace(buffer, len, 0);
+>> > +     if (options & PACKET_READ_REDACT_URL_PATH &&
+>> > +         (url_path_start = find_url_path(buffer, &url_path_len))) {
+>> > +             const char *redacted = "<redacted>";
+>> > +             struct strbuf tracebuf = STRBUF_INIT;
+>> > +             strbuf_insert(&tracebuf, 0, buffer, len);
+>> > +             strbuf_splice(&tracebuf, url_path_start - buffer,
+>> > +                           url_path_len, redacted, strlen(redacted));
+>> > +             packet_trace(tracebuf.buf, tracebuf.len, 0);
+>> > +             strbuf_release(&tracebuf);
+>>
+>> I briefly wondered if the repeated allocation (and more
+>> fundamentally, preparing the redacted copy of packet whether we are
+>> actually tracing the packet in the first place) is blindly wasting
+>> the resources too much, but this only happens in the protocol header
+>> part, so it might be OK.
 >
-> Note that this is not a new die() call; it just got indented as-is by
-> this patch, so the changes you suggest to the message string are
-> potentially outside the scope of this patch. Possibilities: (1) make
-> the changes in this patch but mention them in the commit message; (2)
-> make the changes in a preparatory patch; (3) punt on the changes for
-> now.
+> We only allocate and redact if it looks like a packfile-uri line, so
+> it shouldn't happen too frequently.
 
-I went for option (1). It is a minimal change and we are moving that
-line in this commit.
+I was mostly wondering about the cost of determining "if it looks
+like?".  But we do this only for the protocol header part, so we
+won't have thousands of attempts to match, I guess.  Oh, or if we
+also do this for the ref advertisement packets, then we might have
+quite a many.  Hmph.
 
-Ivan
+> I move the set/unset of the redacting flag to the FETCH_GET_PACK
+> around the "packfile-uris" section.
+> There is no need to check every incoming packet for a packfile-uri
+> line, we know when they should come.
+
+Yeah, that is quite a wise design decision, I would think.
+
+Thanks.
