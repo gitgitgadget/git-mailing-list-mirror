@@ -2,404 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3828C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B52D0C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:38:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B38D610E5
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:31:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88DA960C40
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 18:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbhJ1Sdy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 14:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59346 "EHLO
+        id S230444AbhJ1SlA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 14:41:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbhJ1Sds (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 14:33:48 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D6AC061745
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:21 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id nv1-20020a17090b1b4100b001a04861d474so3750356pjb.5
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:31:21 -0700 (PDT)
+        with ESMTP id S230293AbhJ1Sk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 14:40:57 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3566BC061570
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:38:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id h7so29147650ede.8
+        for <git@vger.kernel.org>; Thu, 28 Oct 2021 11:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=yeaFnwYPSV2ktOrGS5VHYnqJVzUhpAO17V/BsDi/u2A=;
-        b=HPzra/gl87d3qrHwuw13V9G5QAjzMOsV5nFDAOWUjeDC/pmE9Os1f7Zeu/EHSiQrrU
-         rrKX+NeM1YoAevygB1ozCypwHDWKisV+XBnl7WFemj6HYoQEJGVaIZBCLmDNzwG6qKWe
-         fHQuWfLhTwW1/lLCcwM6vXBTAPOt4nUSzLYEXXR1MCjQ203iHXYdZLHSis+fzR83MfU8
-         nc6za8HtZtGt5FjnNB2az41c3EVoTQJ4HgnI72E6MSp5wAylyJc3qOuA1I9RP4bLYQSR
-         IMUiT67YkcmUuf/lp1f20TIG+vebQZ8GXWv2JeifluaBaPFx+v/4yM45zko34diKEo0G
-         MMbQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=I9V7NrHTe3QvvYK/L6Hfs4Lxp0nuETM88wSn0+4wfEI=;
+        b=k19wiutXsfEKHW+K3GZoQbThand44sA8HgDLgtBvA+BUUV8pFlBujuKecOvN9dgjyD
+         /h3FDuBdTDI8TB++e80AevKdHmpnCHbmrx242s0DmNPw7m7iPN1h5zCN9NE3nNE+p5oY
+         yQCrOd2GRAJDYBKM3YnCE7JE0Mbptz6k+8T+LV0mMVwRysoF9NMYhpK3yjL5dNcR/HLK
+         65BDKf+pljq5qsT37y7OrlUdSlh4RFRsTwDjl7McPl/Irktonp2zk0rAE2Iazepv9XJU
+         eiGwg+IqeFx05EpJUPhuMZHFp39iyWlug++/lUQ7JtHiW2XgbWkFgAAjxRbk9ZEvonvF
+         4FMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=yeaFnwYPSV2ktOrGS5VHYnqJVzUhpAO17V/BsDi/u2A=;
-        b=KkCbEhUMb4ytBvJecDMe9+E8GSp+Vm0KbfZAhLMa/bCgu92yADiUmNdtY7RElUr/8K
-         rDEpUQuC/XZEFz1TkxfrL8K48IcLbhxSyp/LiaYpHfUY+C2hX38D34YJU+erqXrmCWTa
-         i4ftCWnfju+V1odV9YG94qi3iVKpzeqzM4YP93yJGUWgaEf4tTVm62A6oS6BCT0gLsdw
-         DBFRxtOWQeo5uMKmsoKImy6LXHM4lQq2F+FhM8l4OcIceVl7+33hY08vzJ4P0wcReSAE
-         hhT/eVObvnxPSm8RGQ0XbXtRfJ7iCg+xkQfkRmuMHY4xZfLPJS0yDs2/TwF0sUOVTTCQ
-         UMQw==
-X-Gm-Message-State: AOAM532hxb9I/XMsZ6JkDXQurV5FmSvATCJQCGt4qWi8yKE6mCToJui+
-        R1WqblwstDgEQhOQAl7O9DDdzpLTq3mTWbT2Hc9n5dPE/oANuYaP1naPtt94dpZKQ+1JSfiSsGn
-        d3AfH2RcpjHiPqjFRj+FFv+PZ5M6DH2DxEpnzl5Q5i2t/7kiuQqlRdWMVqRpSnmM=
-X-Google-Smtp-Source: ABdhPJwnGraNSr0TdcUklkWrCJTUwYU6/L+KU2P6hiAcsq8h97JxSES7/3mlbbK6eACmwb2275oIXPvBqIAx3w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:9a91:b0:138:efd5:7302 with SMTP
- id w17-20020a1709029a9100b00138efd57302mr5253438plp.35.1635445880536; Thu, 28
- Oct 2021 11:31:20 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 11:31:01 -0700
-In-Reply-To: <20211028183101.41013-1-chooglen@google.com>
-Message-Id: <20211028183101.41013-7-chooglen@google.com>
-Mime-Version: 1.0
-References: <20211019224339.61881-1-chooglen@google.com> <20211028183101.41013-1-chooglen@google.com>
-X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-Subject: [PATCH v4 6/6] remote: add struct repository parameter to external functions
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=I9V7NrHTe3QvvYK/L6Hfs4Lxp0nuETM88wSn0+4wfEI=;
+        b=GBhegbqo39iG3d3WwgFzT8LMgnQ3quifYOjyoqUzG4L3mMbkpwO1qq0gqqmR2tIQP5
+         uFnnwqqnJuWKc54wgPJisEVg7ONTt1IaV/YLN1M+dB8zKg7wmkPx3Wjdihg4DaP+/ZxF
+         xr3E86mYJEKKVNyMQg5nLX0QD/beSZQKQb11XriSlRAa6u1W73qRtpq2yxl5TymjFs5z
+         KmF37FrPurl9V12fRT+DC5OCrq+evnR05oH7PTErskOPSYkursmfScb/GzicCie/zZge
+         ty19FwLRsdI2n9P3CEMW2Nm7/OuchMZRZcLaKh/kqn4B8/czyhvHNZXmE3x1xmAIWB9O
+         Fzrw==
+X-Gm-Message-State: AOAM532q9gV8L7XZoK9Hf2RtHXCZGzeKTXedg0cGMz4rt7snCrRZwfXF
+        ZxtxI931ocCsLizbKS/WUtA=
+X-Google-Smtp-Source: ABdhPJxuuDRfZUPJm5Y5dZco1nOlPM7HVHoNFuoMJpvEqCq7zcZMGCXDzRyk420wNfalh6XWCQW8LA==
+X-Received: by 2002:a05:6402:17db:: with SMTP id s27mr110961edy.325.1635446307645;
+        Thu, 28 Oct 2021 11:38:27 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b9sm2161464edk.62.2021.10.28.11.38.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Oct 2021 11:38:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mgAIE-0023px-JN;
+        Thu, 28 Oct 2021 20:38:26 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/Makefile: fix lint-docs mkdir dependency
+Date:   Thu, 28 Oct 2021 20:30:13 +0200
+References: <YXeu4Hl2cmIPqobd@coredump.intra.peff.net>
+ <xmqqlf2et3r3.fsf@gitster.g> <211028.861r45y3pt.gmgdl@evledraar.gmail.com>
+ <YXq1OE/p5VoPR3WZ@coredump.intra.peff.net> <xmqqzgqtrtd1.fsf@gitster.g>
+ <YXrYh9aPA8csq+UQ@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <YXrYh9aPA8csq+UQ@coredump.intra.peff.net>
+Message-ID: <211028.86o879vvtp.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Finish plumbing remote_state by adding a struct repository
-parameter to repo_* functions. This removes all references to
-the_repository->remote_state in remote.c - explicit references in the
-function bodies and implicit references via calls to non-repo_*
-functions. However, certain functions still use the_repository to parse
-oids.
 
-Where a non-static function has the option to call either the static
-"remotes_*" variant or the non-static "repo_*" variant, use "remotes_*"
-in order to be consistent with the static functions. A desirable
-side-effect of this is that it minimizes the number of calls to
-read_config().
+On Thu, Oct 28 2021, Jeff King wrote:
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- remote.c | 85 ++++++++++++++++++++++++++++----------------------------
- remote.h | 80 ++++++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 109 insertions(+), 56 deletions(-)
+> On Thu, Oct 28, 2021 at 09:45:14AM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>=20
+>> > There's an in-between, I'd think, where the many "foo/bar/baz/$@"
+>> > targets have an order-dependency on "foo/bar/baz", and that single rule
+>> > uses "mkdir -p" to create all of the directories.
+>> >
+>> > It doesn't buy us much simplification in this case, though, because
+>> > various rules independently depend on .build/gitlink/lint-docs/howto,
+>> > .built/gitlink/lint-docs, and .build/gitlink, etc. So we still end up
+>> > with roughly the same number of rules, though the directory rules don't
+>> > have to depend on one another.
+>> >
+>> > It also means that these "mkdir -p" may race with each other, though in
+>> > general I'd hope that most "mkdir" implements could handle this.
+>> >
+>> > Something like this works, I think:
+>>=20
+>> Hmph, what I actually meant was to make sure that the recipe to
+>> create the files to have "mkdir -p $(basename $@)" in front, instead
+>> of having "we need to prepare the containing directory in order to
+>> have a file there" in the makefile.
+>
+> Yeah, I agree that's simpler, and is what =C3=86var showed. But it is slo=
+wer,
+> because we run a bunch of redundant "mkdir -p" calls, one per file.
 
-diff --git a/remote.c b/remote.c
-index 2b5166dee0..f7d9a47faa 100644
---- a/remote.c
-+++ b/remote.c
-@@ -549,13 +549,13 @@ static const char *remotes_remote_for_branch(struct remote_state *remote_state,
- 	return "origin";
- }
- 
--const char *remote_for_branch(struct branch *branch, int *explicit)
-+const char *repo_remote_for_branch(struct repository *repo, struct branch *branch, int *explicit)
- {
--	read_config(the_repository);
--	die_on_missing_branch(the_repository, branch);
-+	read_config(repo);
-+	die_on_missing_branch(repo, branch);
- 
--	return remotes_remote_for_branch(the_repository->remote_state, branch,
--					 explicit);
-+	return remotes_remote_for_branch(repo->remote_state, branch,
-+					     explicit);
- }
- 
- static const char *
-@@ -575,22 +575,22 @@ remotes_pushremote_for_branch(struct remote_state *remote_state,
- 	return remotes_remote_for_branch(remote_state, branch, explicit);
- }
- 
--const char *pushremote_for_branch(struct branch *branch, int *explicit)
-+const char *repo_pushremote_for_branch(struct repository *repo, struct branch *branch, int *explicit)
- {
--	read_config(the_repository);
--	die_on_missing_branch(the_repository, branch);
-+	read_config(repo);
-+	die_on_missing_branch(repo, branch);
- 
--	return remotes_pushremote_for_branch(the_repository->remote_state,
-+	return remotes_pushremote_for_branch(repo->remote_state,
- 					     branch, explicit);
- }
- 
- static struct remote *remotes_remote_get(struct remote_state *remote_state,
- 					 const char *name);
- 
--const char *remote_ref_for_branch(struct branch *branch, int for_push)
-+const char *repo_remote_ref_for_branch(struct repository *repo, struct branch *branch, int for_push)
- {
--	read_config(the_repository);
--	die_on_missing_branch(the_repository, branch);
-+	read_config(repo);
-+	die_on_missing_branch(repo, branch);
- 
- 	if (branch) {
- 		if (!for_push) {
-@@ -600,10 +600,10 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push)
- 		} else {
- 			const char *dst,
- 				*remote_name = remotes_pushremote_for_branch(
--					the_repository->remote_state, branch,
-+					repo->remote_state, branch,
- 					NULL);
- 			struct remote *remote = remotes_remote_get(
--				the_repository->remote_state, remote_name);
-+				repo->remote_state, remote_name);
- 
- 			if (remote && remote->push.nr &&
- 			    (dst = apply_refspecs(&remote->push,
-@@ -650,10 +650,10 @@ remotes_remote_get(struct remote_state *remote_state, const char *name)
- 				    remotes_remote_for_branch);
- }
- 
--struct remote *remote_get(const char *name)
-+struct remote *repo_remote_get(struct repository *repo, const char *name)
- {
--	read_config(the_repository);
--	return remotes_remote_get(the_repository->remote_state, name);
-+	read_config(repo);
-+	return remotes_remote_get(repo->remote_state, name);
- }
- 
- static inline struct remote *
-@@ -663,10 +663,10 @@ remotes_pushremote_get(struct remote_state *remote_state, const char *name)
- 				    remotes_pushremote_for_branch);
- }
- 
--struct remote *pushremote_get(const char *name)
-+struct remote *repo_pushremote_get(struct repository *repo, const char *name)
- {
--	read_config(the_repository);
--	return remotes_pushremote_get(the_repository->remote_state, name);
-+	read_config(repo);
-+	return remotes_pushremote_get(repo->remote_state, name);
- }
- 
- int remote_is_configured(struct remote *remote, int in_repo)
-@@ -678,14 +678,14 @@ int remote_is_configured(struct remote *remote, int in_repo)
- 	return !!remote->origin;
- }
- 
--int for_each_remote(each_remote_fn fn, void *priv)
-+int repo_for_each_remote(struct repository *repo, each_remote_fn fn, void *priv)
- {
- 	int i, result = 0;
--	read_config(the_repository);
--	for (i = 0; i < the_repository->remote_state->remotes_nr && !result;
-+	read_config(repo);
-+	for (i = 0; i < repo->remote_state->remotes_nr && !result;
- 	     i++) {
- 		struct remote *remote =
--			the_repository->remote_state->remotes[i];
-+			repo->remote_state->remotes[i];
- 		if (!remote)
- 			continue;
- 		result = fn(remote, priv);
-@@ -1790,17 +1790,16 @@ static void set_merge(struct remote_state *remote_state, struct branch *ret)
- 	}
- }
- 
--struct branch *branch_get(const char *name)
-+struct branch *repo_branch_get(struct repository *repo, const char *name)
- {
- 	struct branch *ret;
- 
--	read_config(the_repository);
-+	read_config(repo);
- 	if (!name || !*name || !strcmp(name, "HEAD"))
--		ret = the_repository->remote_state->current_branch;
-+		ret = repo->remote_state->current_branch;
- 	else
--		ret = make_branch(the_repository->remote_state, name,
--				  strlen(name));
--	set_merge(the_repository->remote_state, ret);
-+		ret = make_branch(repo->remote_state, name, strlen(name));
-+	set_merge(repo->remote_state, ret);
- 	return ret;
- }
- 
-@@ -1934,17 +1933,17 @@ static const char *branch_get_push_1(struct remote_state *remote_state,
- 	BUG("unhandled push situation");
- }
- 
--const char *branch_get_push(struct branch *branch, struct strbuf *err)
-+const char *repo_branch_get_push(struct repository *repo, struct branch *branch, struct strbuf *err)
- {
--	read_config(the_repository);
--	die_on_missing_branch(the_repository, branch);
-+	read_config(repo);
-+	die_on_missing_branch(repo, branch);
- 
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
- 
- 	if (!branch->push_tracking_ref)
- 		branch->push_tracking_ref = branch_get_push_1(
--			the_repository->remote_state, branch, err);
-+			repo->remote_state, branch, err);
- 	return branch->push_tracking_ref;
- }
- 
-@@ -2197,15 +2196,16 @@ static int stat_branch_pair(const char *branch_name, const char *base,
-  * upstream defined, or ref does not exist).  Returns 0 if the commits are
-  * identical.  Returns 1 if commits are different.
-  */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
--		       const char **tracking_name, int for_push,
--		       enum ahead_behind_flags abf)
-+int repo_stat_tracking_info(struct repository *repo, struct branch *branch,
-+			    int *num_ours, int *num_theirs,
-+			    const char **tracking_name, int for_push,
-+			    enum ahead_behind_flags abf)
- {
- 	const char *base;
- 
- 	/* Cannot stat unless we are marked to build on top of somebody else. */
--	base = for_push ? branch_get_push(branch, NULL) :
--		branch_get_upstream(branch, NULL);
-+	base = for_push ? repo_branch_get_push(repo, branch, NULL) :
-+				branch_get_upstream(branch, NULL);
- 	if (tracking_name)
- 		*tracking_name = base;
- 	if (!base)
-@@ -2217,15 +2217,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- /*
-  * Return true when there is anything to report, otherwise false.
-  */
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf)
-+int repo_format_tracking_info(struct repository *repo, struct branch *branch,
-+			      struct strbuf *sb, enum ahead_behind_flags abf)
- {
- 	int ours, theirs, sti;
- 	const char *full_base;
- 	char *base;
- 	int upstream_is_gone = 0;
- 
--	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-+	sti = repo_stat_tracking_info(repo, branch, &ours, &theirs, &full_base,
-+				      0, abf);
- 	if (sti < 0) {
- 		if (!full_base)
- 			return 0;
-diff --git a/remote.h b/remote.h
-index b205830ac3..9b06afd285 100644
---- a/remote.h
-+++ b/remote.h
-@@ -120,15 +120,28 @@ struct remote {
-  * remote_get(NULL) will return the default remote, given the current branch
-  * and configuration.
-  */
--struct remote *remote_get(const char *name);
+Here's a method that's both less verbose in lines & also faster, but
+maybe too clever a use of GNU make features, on top of "next".
+
+It relies on $(wildcard) returning an empty list on a non-existing
+filename, and then on $(if) to either expand to "mkdir -p $(@D)", or
+nothing, and (perhaps in an ugly way?) piggy-backs on an existing $@
+rule, so one rule has two $(QUIET_*) uses.
+
+With:
+
+    HEAD~2 =3D next
+    HEAD~1 =3D unconditional mkdir -p, upthread <211028.861r45y3pt.gmgdl@ev=
+ledraar.gmail.com>
+    HEAD =3D the below patch
+
+We get these results, i.e. it's also faster:
+=20=20=20=20
+    $ hyperfine --warmup 5 -m 30 -L s ",~,~2" -p 'git checkout HEAD{s} -- M=
+akefile; rm -rf .build' 'make -j8 lint-docs R=3D{s}' -c 'git checkout HEAD =
+-- Makefile'
+    Benchmark #1: make -j8 lint-docs R=3D
+      Time (mean =C2=B1 =CF=83):     628.5 ms =C2=B1  43.2 ms    [User: 2.3=
+85 s, System: 0.445 s]
+      Range (min =E2=80=A6 max):   605.6 ms =E2=80=A6 787.7 ms    30 runs
+    Benchmark #2: make -j8 lint-docs R=3D~
+      Time (mean =C2=B1 =CF=83):     770.2 ms =C2=B1  12.7 ms    [User: 3.4=
+46 s, System: 0.666 s]
+      Range (min =E2=80=A6 max):   756.3 ms =E2=80=A6 831.4 ms    30 runs
+    Benchmark #3: make -j8 lint-docs R=3D~2
+      Time (mean =C2=B1 =CF=83):     696.9 ms =C2=B1   3.5 ms    [User: 2.9=
+67 s, System: 0.600 s]
+      Range (min =E2=80=A6 max):   691.2 ms =E2=80=A6 706.2 ms    30 runs
+    Summary
+      'make -j8 lint-docs R=3D' ran
+        1.11 =C2=B1 0.08 times faster than 'make -j8 lint-docs R=3D~2'
+        1.23 =C2=B1 0.09 times faster than 'make -j8 lint-docs R=3D~'
+
+The one negative thing is that we'll return an inconsistent set of
+"mkdir" lines, since it's racy, but here we're using the race to our
+benefit. It doesn't matter for the end result if we e.g. created a more
+nested directory first, or needed two "mkdir -p" calls because we did a
+shallower one first.
+
+Do you think it's worth submitting that as a non-throwaway?
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index ed656db2ae9..99c2f9d02cf 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -234,6 +234,7 @@ ifndef V
+ 	QUIET_DBLATEX	=3D @echo '   ' DBLATEX $@;
+ 	QUIET_XSLTPROC	=3D @echo '   ' XSLTPROC $@;
+ 	QUIET_GEN	=3D @echo '   ' GEN $@;
++	QUIET_MKDIR_P	=3D @echo '   ' MKDIR -p $(@D);
+ 	QUIET_STDERR	=3D 2> /dev/null
+ 	QUIET_SUBDIR0	=3D +@subdir=3D
+ 	QUIET_SUBDIR1	=3D ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+@@ -463,25 +464,10 @@ quick-install-html: require-htmlrepo
+ print-man1:
+ 	@for i in $(MAN1_TXT); do echo $$i; done
+=20
+-## Lint: Common
+-.build:
+-	$(QUIET)mkdir $@
+-.build/lint-docs: | .build
+-	$(QUIET)mkdir $@
 -
--struct remote *pushremote_get(const char *name);
-+struct remote *repo_remote_get(struct repository *repo, const char *name);
-+static inline struct remote *remote_get(const char *name)
-+{
-+	return repo_remote_get(the_repository, name);
-+}
-+
-+struct remote *repo_pushremote_get(struct repository *repo, const char *name);
-+static inline struct remote *pushremote_get(const char *name)
-+{
-+	return repo_pushremote_get(the_repository, name);
-+}
- int remote_is_configured(struct remote *remote, int in_repo);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
- 
- /* iterate through struct remotes */
--int for_each_remote(each_remote_fn fn, void *priv);
-+int repo_for_each_remote(struct repository *repo, each_remote_fn fn,
-+			 void *priv);
-+static inline int for_each_remote(each_remote_fn fn, void *priv)
-+{
-+	return repo_for_each_remote(the_repository, fn, priv);
-+}
- 
- int remote_has_url(struct remote *remote, const char *url);
- 
-@@ -324,10 +337,29 @@ struct branch {
- 	const char *push_tracking_ref;
- };
- 
--struct branch *branch_get(const char *name);
--const char *remote_for_branch(struct branch *branch, int *explicit);
--const char *pushremote_for_branch(struct branch *branch, int *explicit);
--const char *remote_ref_for_branch(struct branch *branch, int for_push);
-+struct branch *repo_branch_get(struct repository *repo, const char *name);
-+static inline struct branch *branch_get(const char *name)
-+{
-+	return repo_branch_get(the_repository, name);
-+}
-+
-+const char *repo_remote_for_branch(struct repository *repo, struct branch *branch, int *explicit);
-+static inline const char *remote_for_branch(struct branch *branch, int *explicit)
-+{
-+	return repo_remote_for_branch(the_repository, branch, explicit);
-+}
-+
-+const char *repo_pushremote_for_branch(struct repository *repo, struct branch *branch, int *explicit);
-+static inline const char *pushremote_for_branch(struct branch *branch, int *explicit)
-+{
-+	return repo_pushremote_for_branch(the_repository, branch, explicit);
-+}
-+
-+const char *repo_remote_ref_for_branch(struct repository *repo, struct branch *branch, int for_push);
-+static inline const char *remote_ref_for_branch(struct branch *branch, int for_push)
-+{
-+	return repo_remote_ref_for_branch(the_repository, branch, for_push);
-+}
- 
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-@@ -351,7 +383,11 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-  *
-  * The return value and `err` conventions match those of `branch_get_upstream`.
-  */
--const char *branch_get_push(struct branch *branch, struct strbuf *err);
-+const char *repo_branch_get_push(struct repository *repo, struct branch *branch, struct strbuf *err);
-+static inline const char *branch_get_push(struct branch *branch, struct strbuf *err)
-+{
-+	return repo_branch_get_push(the_repository, branch, err);
-+}
- 
- /* Flags to match_refs. */
- enum match_refs_flags {
-@@ -370,11 +406,27 @@ enum ahead_behind_flags {
- };
- 
- /* Reporting of tracking info */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
--		       const char **upstream_name, int for_push,
--		       enum ahead_behind_flags abf);
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf);
-+int repo_stat_tracking_info(struct repository *repo, struct branch *branch,
-+			    int *num_ours, int *num_theirs,
-+			    const char **upstream_name, int for_push,
-+			    enum ahead_behind_flags abf);
-+static inline int stat_tracking_info(struct branch *branch, int *num_ours,
-+				     int *num_theirs,
-+				     const char **upstream_name, int for_push,
-+				     enum ahead_behind_flags abf)
-+{
-+	return repo_stat_tracking_info(the_repository, branch, num_ours,
-+				       num_theirs, upstream_name, for_push,
-+				       abf);
-+}
-+
-+int repo_format_tracking_info(struct repository *repo, struct branch *branch,
-+			      struct strbuf *sb, enum ahead_behind_flags abf);
-+static inline int format_tracking_info(struct branch *branch, struct strbuf *sb,
-+				       enum ahead_behind_flags abf)
-+{
-+	return repo_format_tracking_info(the_repository, branch, sb, abf);
-+}
- 
- struct ref *get_local_heads(void);
- /*
--- 
-2.33.GIT
-
+-## Lint: gitlink
+-.build/lint-docs/gitlink: | .build/lint-docs
+-	$(QUIET)mkdir $@
+-.build/lint-docs/gitlink/howto: | .build/lint-docs/gitlink
+-	$(QUIET)mkdir $@
+-.build/lint-docs/gitlink/config: | .build/lint-docs/gitlink
+-	$(QUIET)mkdir $@
+ LINT_DOCS_GITLINK =3D $(patsubst %.txt,.build/lint-docs/gitlink/%.ok,$(HOW=
+TO_TXT) $(DOC_DEP_TXT))
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink/howto
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink/config
+ $(LINT_DOCS_GITLINK): lint-gitlink.perl
+ $(LINT_DOCS_GITLINK): .build/lint-docs/gitlink/%.ok: %.txt
++	$(if $(wildcard $(@D)),,$(QUIET_MKDIR_P)$(shell mkdir -p $(@D)))
+ 	$(QUIET_LINT_GITLINK)$(PERL_PATH) lint-gitlink.perl \
+ 		$< \
+ 		$(HOWTO_TXT) $(DOC_DEP_TXT) \
+@@ -492,23 +478,19 @@ $(LINT_DOCS_GITLINK): .build/lint-docs/gitlink/%.ok: =
+%.txt
+ lint-docs-gitlink: $(LINT_DOCS_GITLINK)
+=20
+ ## Lint: man-end-blurb
+-.build/lint-docs/man-end-blurb: | .build/lint-docs
+-	$(QUIET)mkdir $@
+ LINT_DOCS_MAN_END_BLURB =3D $(patsubst %.txt,.build/lint-docs/man-end-blur=
+b/%.ok,$(MAN_TXT))
+-$(LINT_DOCS_MAN_END_BLURB): | .build/lint-docs/man-end-blurb
+ $(LINT_DOCS_MAN_END_BLURB): lint-man-end-blurb.perl
+ $(LINT_DOCS_MAN_END_BLURB): .build/lint-docs/man-end-blurb/%.ok: %.txt
+-	$(QUIET_LINT_MANEND)$(PERL_PATH) lint-man-end-blurb.perl $< >$@
++	$(if $(wildcard $(@D)),,$(QUIET_MKDIR_P)$(shell mkdir -p $(@D)))
++	$(QUIET_LINT_MANEND)$($(PERL_PATH) lint-man-end-blurb.perl $< >$@
+ .PHONY: lint-docs-man-end-blurb
+ lint-docs-man-end-blurb: $(LINT_DOCS_MAN_END_BLURB)
+=20
+ ## Lint: man-section-order
+-.build/lint-docs/man-section-order: | .build/lint-docs
+-	$(QUIET)mkdir $@
+ LINT_DOCS_MAN_SECTION_ORDER =3D $(patsubst %.txt,.build/lint-docs/man-sect=
+ion-order/%.ok,$(MAN_TXT))
+-$(LINT_DOCS_MAN_SECTION_ORDER): | .build/lint-docs/man-section-order
+ $(LINT_DOCS_MAN_SECTION_ORDER): lint-man-section-order.perl
+ $(LINT_DOCS_MAN_SECTION_ORDER): .build/lint-docs/man-section-order/%.ok: %=
+.txt
++	$(if $(wildcard $(@D)),,$(QUIET_MKDIR_P)$(shell mkdir -p $(@D)))
+ 	$(QUIET_LINT_MANSEC)$(PERL_PATH) lint-man-section-order.perl $< >$@
+ .PHONY: lint-docs-man-section-order
+ lint-docs-man-section-order: $(LINT_DOCS_MAN_SECTION_ORDER)
