@@ -2,99 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4AD0C433F5
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 17:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C41C433EF
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 17:30:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A66F360D07
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 17:26:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAC9160D07
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 17:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231298AbhJ1R2m convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 28 Oct 2021 13:28:42 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:34757 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbhJ1R23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 13:28:29 -0400
-Received: by mail-ed1-f47.google.com with SMTP id g10so27511051edj.1
-        for <git@vger.kernel.org>; Thu, 28 Oct 2021 10:26:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=E82kjTFyTRMnwaCfURcy9Een0Q2PJQBcO+gNQsGR2fs=;
-        b=uPEClAPfM8f0BzxfwLQw6ZTtTzmqkRzNisj8XdBu1U1PF23z1KM0pi7Y2rwsLo1As1
-         N162tYUnSxDggjwm4KPw1tPO9x+u4VyOwZEH0Az/XDO/bAPaPEGCDAkyy9IftbYtnbrm
-         /7irMNSwyRArxkM9k0issTZBNXqVMHfnGZcU4gxqanbsWbYwHl1selQqSH4MLyv7E27W
-         TZkR0ChE0605pImJBg54aL7IvmVh4Q7wSJf+0/7tBGUKGDP1EqQG9sl2ZFtUoKTyDFL2
-         sL62BMTMYTuNeeVtkuRxq7SByoBOEq3MHRZq6xDX7GKxAI7GisT3MntVq5iMKnUF6Wee
-         iGiA==
-X-Gm-Message-State: AOAM531v7sNvRz7f/+L0fGnihgeOC4tQmXSTxxSJtwZRRFfk8xHfmyRL
-        g+FYxQ38g9tVHhY0+ns8F2BH2F0zM8nQIA46TsQ=
-X-Google-Smtp-Source: ABdhPJwYInvNizkSoGAfL6o9g0Cu8DBu77V15OZI3hn14x02GaMcnCG0cOnKfAa0rr5O6uQ3Nsenv+Jl8RBA4lu+8HY=
-X-Received: by 2002:a17:906:480a:: with SMTP id w10mr7189669ejq.262.1635441961758;
- Thu, 28 Oct 2021 10:26:01 -0700 (PDT)
+        id S230256AbhJ1Rcy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 13:32:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48922 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229645AbhJ1Rcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 13:32:53 -0400
+Received: (qmail 16969 invoked by uid 109); 28 Oct 2021 17:30:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Oct 2021 17:30:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6659 invoked by uid 111); 28 Oct 2021 17:30:26 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Oct 2021 13:30:26 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 Oct 2021 13:30:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: pre-v2.34.0-rc0 regressions: 'git log' has a noisy iconv()
+ warning
+Message-ID: <YXreMYZrTCUkpHXz@coredump.intra.peff.net>
+References: <xmqq5ytkzbt7.fsf@gitster.g>
+ <211026.86y26gyqui.gmgdl@evledraar.gmail.com>
+ <YXk0hAgaSJbLUgeB@coredump.intra.peff.net>
+ <xmqqmtmuwdh9.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
- <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com> <c7f0977cabd4ba7311b8045bc57e9e30198651fd.1635288599.git.gitgitgadget@gmail.com>
- <211028.86sfwlw10o.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211028.86sfwlw10o.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 28 Oct 2021 13:25:50 -0400
-Message-ID: <CAPig+cTKSp28oUvESCWLB+OLBjbUSt3vhz6n3eVmkfYf9arcrg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] http-fetch: redact url on die() message
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Ivan Frade <ifrade@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmtmuwdh9.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 28, 2021 at 12:46 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Oct 26 2021, Ivan Frade via GitGitGadget wrote:
-> >               if (results.curl_result != CURLE_OK) {
-> > -                     die("Unable to get pack file %s\n%s", preq->url,
-> > -                         curl_errorstr);
-> > +                     struct url_info url;
-> > +                     char *nurl = url_normalize(preq->url, &url);
-> > +                     if (!git_env_bool("GIT_TRACE_REDACT", 1) || !nurl) {
-> > +                             die("Unable to get pack file %s\n%s", preq->url,
-> > +                                 curl_errorstr);
->
-> small nit: arrange if's from "if (cheap || expensive)", i.e. no need for
-> getenv() if !nurl, but maybe compilers are smart enough for that...
+On Wed, Oct 27, 2021 at 11:04:50AM -0700, Junio C Hamano wrote:
 
-I had the same passing thought when glancing over this code (although
-this appears to be an error patch, thus not performance critical, so
-not terribly important).
+> Jeff King <peff@peff.net> writes:
+> 
+> > The firehose of warnings for "git log --encoding=nonsense" was known and
+> > discussed in fd680bc558 (logmsg_reencode(): warn when iconv() fails,
+> > 2021-08-27). It's ugly for sure, but I'm still OK with it for the
+> > reasoning there: your next step is to fix the --encoding argument you
+> > gave. Whether you saw one line of warning or many is not that important,
+> > IMHO. Giving a single more sensible warning ("your encoding 'nonsense'
+> > isn't valid") would be better, but I think it's hard to do without
+> > creating other problems.
+> >
+> > But the most compelling argument against warning at all is the case you
+> > gave earlier: that there may be historical garbage commits, and you
+> > can't get rid of them, so being warned constantly that we're not going
+> > to show or grep them correctly is just annoying. And that is true
+> > whether the user sees one warning or a hundred.
+> 
+> Is it really a "firehose"?  I won't use the word for one warning
+> message per commit in the output of "git log --encoding=nonsense".
+> 
+> If you are running "git log --oneline", it may indeed be annoying to
+> double the number of lines shown, and indeed
+> 
+>     $ git log --oneline --encoding=US-ASCII -4 ab/doc-lint
+>     warning: unable to reencode commit to 'US-ASCII'
+>     414abf159f docs: fix linting issues due to incorrect relative section order
+>     warning: unable to reencode commit to 'US-ASCII'
+>     ea8b9271b1 doc lint: lint relative section order
+>     warning: unable to reencode commit to 'US-ASCII'
+>     cafd9828e8 doc lint: lint and fix missing "GIT" end sections
+>     warning: unable to reencode commit to 'US-ASCII'
+>     d2c9908076 doc lint: fix bugs in, simplify and improve lint script
 
-> nit: die() messages should start with lower-case (in CodingGuidelines), and I think it's better to quote both, so:
->
->     die("unable to get pack '%s': '%s'", ...)
->
-> Or maybe without the second '%s', as in 3e8084f1884 (http: check
-> CURLE_SSL_PINNEDPUBKEYNOTMATCH when emitting errors, 2021-09-24) (which
-> I authored, but just copy/pasted the convention in the surrounding
-> code)>
+It's a bit more than that. You get similar warnings for commits which we
+--grep but don't show (and which _might_ have been shown if the encoding
+conversion had been different). Try "git log --grep=foo --encoding=bar".
 
-Note that this is not a new die() call; it just got indented as-is by
-this patch, so the changes you suggest to the message string are
-potentially outside the scope of this patch. Possibilities: (1) make
-the changes in this patch but mention them in the commit message; (2)
-make the changes in a preparatory patch; (3) punt on the changes for
-now.
+And of course the interleaved output you see above looks OK in a pager.
+But if you're sending the output of log (or diff-tree, etc) elsewhere,
+you're just going to get a stream of messages on stderr. That would be a
+bit less egregious if the message mentioned the commit oid, so they
+weren't strict duplicates.
 
-> > +                     } else {
-> > +                             char *schema = xstrndup(url.url, url.scheme_len);
-> > +                             char *host = xstrndup(&url.url[url.host_off], url.host_len);
-> > +                             die("failed to get '%s' url from '%s' "
-> > +                                 "(full URL redacted due to GIT_TRACE_REDACT setting)\n%s",
-> > +                                 schema, host, curl_errorstr);
->
-> Hrm, I haven't tested, but aren't both of those xstrndup's redundant to
-> using %*s instead of %s for the printf format? I.e.:
->
->     die("failed to get '%*s'[...]", url.schema_len, url.url, )
+> is indeed annoying, as everything that is _shown_ ought to be
+> presentable in US-ASCII.  This observation makes us realize an
+> obvious approach to improve over the current behaviour without
+> losing the warning when it matters, but I think the required code
+> change, to first split the commit message into pieces (which roughly
+> corresponds to the atoms in the --format= placeholder language) and
+> reencode only these pieces that will be shown, may be too involved
+> to be worth the effort.
 
-I wondered the same when reading the patch. Thanks for mentioning it.
+Yeah, I think that would complicate things significantly, with the way
+the code is currently structured. It also means parsing commits that are
+in arbitrary encodings, which is not possible in most general sense.
+E.g., imagine an encoding which doesn't have ASCII as subset, like
+UTF-16.  Though I suspect such encodings probably do not work for
+commits anyway (there is a chicken-and-egg with reading the encoding
+header in the first place).
+
+> > So while I do hate to have Git just silently ignore errors, probably the
+> > original behavior is the least-bad thing, and we should just revert
+> > fd680bc558 (logmsg_reencode(): warn when iconv() fails, 2021-08-27). We
+> > probably want to salvage the documentation change (minus the "along with
+> > a warning") part.
+> 
+> I am all for making it convenient to squelch, but it would be sad to
+> lose the convenient way to notice possible misencoding in recent
+> commits.  Or can we have a command line option and pass it through
+> the callchain, or would that be too involved?
+
+Do you mean a command-line option to squelch the warnings? I think it
+would not be too hard to do it as a config option (which is probably
+what you'd want anyway, since historical commits would come up over and
+over again).
+
+-Peff
