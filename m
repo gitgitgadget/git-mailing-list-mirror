@@ -2,95 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3DF4C433EF
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 19:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9905EC433F5
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 19:25:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8196860F92
-	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 19:22:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6475460F92
+	for <git@archiver.kernel.org>; Thu, 28 Oct 2021 19:25:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231254AbhJ1TY5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Oct 2021 15:24:57 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61257 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbhJ1TY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Oct 2021 15:24:57 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DEDE7154BDA;
-        Thu, 28 Oct 2021 15:22:29 -0400 (EDT)
+        id S230183AbhJ1T1n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Oct 2021 15:27:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57972 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230060AbhJ1T1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Oct 2021 15:27:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B585DF8C38;
+        Thu, 28 Oct 2021 15:25:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ECkudZftBrOh
-        lh8h73+VTeQx7zZMqpRghBXG4kPcgYM=; b=WQ8lxC4z0z4lGomlh1rOTkypQTjJ
-        wbrdmfQXsni+0f05pQUm7dq0PowulEGePuLZVpPTCOysyPe2Ckybqt+tkqL6dK24
-        Lt7/8v7DlaqF7eygyFxl/uOHwfyPVpcAoFSEoiR2vKF3EOEPeUVzprLDiK99T2VC
-        zHaEg5iV2XFPvw4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D5CBA154BD9;
-        Thu, 28 Oct 2021 15:22:29 -0400 (EDT)
+        :content-type; s=sasl; bh=Exk7NV0pVLmnkE9f7N+idj+Ha3ude7nr8UNm/o
+        SiDrI=; b=rQ6ifaqVCNfSJz1w0Yq1qld2PhjFCLeWkn77dgRGLMqw0huQKbb5tv
+        V8w4C1JQBn0IAL6CH2GS4YiB14aHPv+MxPmLWvQiX5ZrYwcOsSgFOkzECO2SUgD+
+        Cw4PslAcUwRESdhUlQsrIJf0df6u5xEtpVBNJzwHi5FDghOD1n/Nk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AC7B2F8C37;
+        Thu, 28 Oct 2021 15:25:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2E5B8154BD8;
-        Thu, 28 Oct 2021 15:22:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15372F8C36;
+        Thu, 28 Oct 2021 15:25:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v2 0/9] doc: fix grammar rules in commands' syntax
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
-        <pull.1066.v2.git.1635438124.gitgitgadget@gmail.com>
-Date:   Thu, 28 Oct 2021 12:22:26 -0700
-In-Reply-To: <pull.1066.v2.git.1635438124.gitgitgadget@gmail.com>
- (=?utf-8?Q?=22Jean-No=C3=ABl?=
-        Avila via GitGitGadget"'s message of "Thu, 28 Oct 2021 16:21:55
-        +0000")
-Message-ID: <xmqqv91hq7il.fsf@gitster.g>
+To:     Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] Fix "commit-msg" hook unexpectedly called for "git
+ pull --no-verify"
+References: <YXlBhmfXl3wFQ5Bj@pflmari>
+        <YXlD5ecNSdeBSMoS@coredump.intra.peff.net> <YXlTpzrY7KFqRlno@pflmari>
+        <xmqq4k92w7do.fsf@gitster.g> <YXpFTJTo0pKhM7xG@pflmari>
+        <YXpZddOixrJDd//s@pflmari>
+        <edca7f6b-e89c-7efa-c6f5-2c3aaaea54f9@gmail.com>
+        <YXrFaJXbuSuwfhQ7@pflmari> <YXrFy9I1KPz3IZyp@pflmari>
+        <xmqqv91hrt2y.fsf@gitster.g> <YXra5UgxtgVubJL/@pflmari>
+Date:   Thu, 28 Oct 2021 12:25:13 -0700
+In-Reply-To: <YXra5UgxtgVubJL/@pflmari> (Alex Riesen's message of "Thu, 28 Oct
+        2021 19:16:21 +0200")
+Message-ID: <xmqqmtmtq7dy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 62F85424-3824-11EC-B97C-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C70BA1DC-3824-11EC-BEB4-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jean-No=C3=ABl Avila via GitGitGadget"  <gitgitgadget@gmail.com> writes:
+Alex Riesen <alexander.riesen@cetitec.com> writes:
 
-> There are command expressions which do not follow the grammar syntax ru=
-les.
+> Junio C Hamano, Thu, Oct 28, 2021 18:51:17 +0200:
+>> Alex Riesen <alexander.riesen@cetitec.com> writes:
+>> 
+>> > Subject: Re: [PATCH 2/2] Fix "commit-msg" hook unexpectedly called for "git pull --no-verify"
+>> 
+>> Perhaps
+>> 
+>>     Subject: [PATCH] pull: honor --no-verify and do not call the commit-msg hook
+>> 
+>> instead.
 >
-> According to the coding guidelines, the placeholders must:
->
->  * be in small letters
->  * enclosed in angle brackets
->  * use hyphens as spaces
->
-> They also must represent tokens' meaning as atomic entities.
->
-> Some fixups for git-credential, git-ls-files, git-init and git-http-pus=
-h.
->
-> changes since v1:
->
->  * split changes across simpler commits
->
-> Signed-off-by: Jean-No=C3=ABl Avila jn.avila@free.fr
->
-> Jean-No=C3=ABl Avila (9):
->   doc: fix git credential synopsis
->   doc: split placeholders as individual tokens
->   doc: express grammar placeholders between angle brackets
->   doc: use only hyphens as word separators in placeholders
->   doc: git-ls-files: express options as optional alternatives
->   doc: use three dots for indicating repetition instead of star
->   doc: uniformize <URL> placeholders' case
->   doc: git-http-push: describe the refs as pattern pairs
->   doc: git-init: clarify file modes in octal.
+> Looks fine from my side. Shall I resend?
 
-Thanks.  All looked good to me.
+If you are OK with the updated text, then I can locally amend.
