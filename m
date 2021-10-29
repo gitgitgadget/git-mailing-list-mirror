@@ -2,74 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A73FDC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 20:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B52DC433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 20:14:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 912AA6101E
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 20:11:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49E2660FF2
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 20:14:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230397AbhJ2UNx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 16:13:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62757 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230313AbhJ2UNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 16:13:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BBBEE15FC;
-        Fri, 29 Oct 2021 16:11:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Npp3bRlUZl4hoBdF80kogWmKcGKfgTfs5tcqqw
-        nfg8I=; b=gd3WLvrtsSzziZTxX3hQUwY9Fbm3OF/U/TLSah5rLoFSNmlJeaeGva
-        LiQUoHrkvm4vNoiygxhatgRkMHrWl6iOtr+luQu+1yTMBZGC6ShF70mC8UiaCToU
-        G+j/AWnW4OMdby8Npj4Bw41lTyCFOeGPi0q7pRFuthvoY7wQaOvQU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72283E15FA;
-        Fri, 29 Oct 2021 16:11:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC4CBE15F6;
-        Fri, 29 Oct 2021 16:11:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eli Schwartz <eschwartz@archlinux.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] pretty.c: rework describe options parsing for
- better extensibility
-References: <20211026013452.1372122-1-eschwartz@archlinux.org>
-        <20211029184512.1568017-1-eschwartz@archlinux.org>
-        <20211029184512.1568017-2-eschwartz@archlinux.org>
-Date:   Fri, 29 Oct 2021 13:11:21 -0700
-In-Reply-To: <20211029184512.1568017-2-eschwartz@archlinux.org> (Eli
-        Schwartz's message of "Fri, 29 Oct 2021 14:45:10 -0400")
-Message-ID: <xmqq35ojlhg6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230319AbhJ2UQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 16:16:55 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:27041 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229458AbhJ2UQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 16:16:54 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 19TKENQm073247
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 16:14:23 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: [Bug] wrapper.c uses unportable unsetenv
+Date:   Fri, 29 Oct 2021 16:14:17 -0400
+Organization: Nexbridge Inc.
+Message-ID: <012301d7cd01$90428960$b0c79c20$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 632A599E-38F4-11EC-BD30-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdfM/7sCVI0gXRY4TYOGT9bxO2027A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eli Schwartz <eschwartz@archlinux.org> writes:
+The unsetenv()/setenv(overwrite) calls are not 100% portable - as in not on
+all POSIX implementations. It breaks the build on some of the NonStop
+platforms. This will change in a year or two but I really don't want to fall
+behind on git releases.
 
-> +	struct {
-> +		char *name;
-> +		enum { OPT_STRING } type;
-> +	}  option[] = {
-> +		{ "exclude", OPT_STRING },
-> +		{ "match", OPT_STRING },
-> +	};
+This was introduced at 3540c71 but I was on vacation when it happened so did
+not catch it during reviews - my apologies for that.
 
-I floated OPT_<TYPE> in my earlier illustration as "something like
-this", not "literally use these tokens".  We have CPP macros of the
-same name in parse-options.h API---we may not see troubles from the
-name clashes today, but let's not leave it to chances.
+Is it critical that this be called or can we #ifdef it away if it isn't
+supported for a build? The #if is exactly this:
 
-Perhaps call it like DESCRBE_ARG_STRING or something that ensures
-uniqueness like that?
+wrapper.c@150
++ #if (_TANDEM_ARCH_ > 3 || (_TANDEM_ARCH_ == 3 && __L_Series_RVU >= 2010))
+	if (setenv(name, value, overwrite))
+		die_errno(_("could not setenv '%s'"), name ? name :
+"(null)");
++ #endif
 
-Thanks.
+wrapper.c@154
++ #if (_TANDEM_ARCH_ > 3 || (_TANDEM_ARCH_ == 3 && __L_Series_RVU >= 2010))
+	if (!unsetenv(name))
+		die_errno(_("could not unsetenv '%s'"), name ? name :
+"(null)");
++ #endif
+
+-Randall
+
