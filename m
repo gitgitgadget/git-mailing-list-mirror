@@ -2,112 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF73BC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A8F5C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:12:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3B57610CF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:05:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D81E060E09
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbhJ2SH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 14:07:29 -0400
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:35796 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbhJ2SH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 14:07:29 -0400
-Received: by mail-ed1-f42.google.com with SMTP id g8so41682598edb.2
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:05:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vm5dB/O6WKq3UR3x2bxLm9MNk275/m9/fLsQbxBchmY=;
-        b=LrUgtCHvUO6arCThhuGbG8DuVlJS5dU0AU8THZAxeRcDimion9HRflARQ/d4U7BzE6
-         dqKt6ETGUSg48ue7F/TrE5FAvfLkmcCjFfaqPi66SDTN7rdTWoX5eOiOmO8vDk3+ALzI
-         vCMuuWljwbrRiE2Sj95uJstX4UBdWR2lKxBfKntn2GWIAmYTnYPNqsE7zLQ1lV2nmcL6
-         YSxUs4ht34QamtmhAPhBKLKkrrIywwQEbE1neffKWDnueEJoJnryS0H7QLpKu2uOiFKU
-         AvUbSCiA5vPsSjIEwnw5R8dAycV4w1ZwCR8GmdklJ6+WogqssiNoyNKGIt/SM0bLtQMZ
-         HHWA==
-X-Gm-Message-State: AOAM532+TSvppImPFAp+0pH5Mb++GUUiIFb7g5aNikNe0E7wZ+Fk0CNC
-        0cb0UQhiFVsPScyKtSzwNXE7OUhqqD0P1ZZjiZQb/Ymw7po=
-X-Google-Smtp-Source: ABdhPJzpPLKuwSUebu8t5k6tjssQBvuo+MJCPn9fc53hMtbs8sI9SpvI9kvVsavyKzVSFgl7dMfv4+EZG7667/ouUFk=
-X-Received: by 2002:a17:906:39b:: with SMTP id b27mr15258559eja.568.1635530699254;
- Fri, 29 Oct 2021 11:04:59 -0700 (PDT)
+        id S229826AbhJ2SOk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 14:14:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60551 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229489AbhJ2SOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 14:14:40 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FE2616A2B2;
+        Fri, 29 Oct 2021 14:12:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nPrYfrVlGDZxR6mJGvsWReW94Xzix7rWlOfF+7
+        0WS0Q=; b=YYLu8rrRe+/GWUT2sgxdV6+CcRpzUYUmqTynQPYsjcGP7HYjjV8pM+
+        CuIC6zVldwyP6iTABqSVSwMfklcvpdCA/TzxX9nOjHsoBLcfhRdAA36ozh5flF3L
+        mIIK/P/zj9y/SpJpaAyWaFJCEqSPruZ3typWkjGo8bITWVzISQd9g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 37E7516A2B1;
+        Fri, 29 Oct 2021 14:12:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DF2AF16A2B0;
+        Fri, 29 Oct 2021 14:12:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] tests: disable fsync everywhere
+References: <20211028002102.19384-1-e@80x24.org>
+        <YXq1g4Zwfq8gJEoC@coredump.intra.peff.net>
+        <20211028182824.GA1307@dcvr> <xmqqilxhq774.fsf@gitster.g>
+        <20211029001552.GA29647@dcvr> <xmqqr1c4mmsf.fsf@gitster.g>
+        <20211029075640.M183252@dcvr>
+Date:   Fri, 29 Oct 2021 11:12:06 -0700
+In-Reply-To: <20211029075640.M183252@dcvr> (Eric Wong's message of "Fri, 29
+        Oct 2021 07:56:40 +0000")
+Message-ID: <xmqqpmrnlmyx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1063.git.1635343531.gitgitgadget@gmail.com>
- <pull.1063.v2.git.1635530296.gitgitgadget@gmail.com> <5c9deaf0bccfe158c7f410f084529850a33b7fd0.1635530296.git.gitgitgadget@gmail.com>
-In-Reply-To: <5c9deaf0bccfe158c7f410f084529850a33b7fd0.1635530296.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 29 Oct 2021 14:04:48 -0400
-Message-ID: <CAPig+cRzdzK7f=+38u-RuwL80WPoPvX8pwr8GK5vebvuQH5yUg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] docs: fix places that break compilation in MyFirstObjectWalk
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: BA7FB682-38E3-11EC-B206-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 1:58 PM John Cai via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Two errors in the example code caused compilation failures due to
-> a missing semicolon as well as initialization with an empty struct.
-> This commit fixes that to make the MyFirstObjectWalk tutorial easier to
-> follow.
+Eric Wong <e@80x24.org> writes:
+
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Wong <e@80x24.org> writes:
+>> > +# n.b. consider using Git.pm
+>> > +sub use_fsync {
+>> > +    if (!defined($_use_fsync)) {
+>> > +        my $x = $ENV{GIT_TEST_FSYNC};
+>> > +        if (defined $x) {
+>> 
+>> I would have expected to see "exists $ENV{GIT_TEST_FSYNC}", but I
+>> guess there is no way to place in %ENV anyway, so it would be OK.
 >
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
-> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-> @@ -58,6 +58,7 @@ running, enable trace output by setting the environment variable `GIT_TRACE`.
->  Add usage text and `-h` handling, like all subcommands should consistently do
->  (our test suite will notice and complain if you fail to do so).
-> +We'll need to include the `parse-options.h` header.
+> Was that meant to say: "no way to place `undef' in %ENV anyway"?
 
-It seems like this change belongs in patch [2/2].
+Yes.  Nothing the external callers of a Perl script does by futzing
+the environment with setenv(3) and unsetenv(3) can make undef appear
+as a value in $ENV{SomeKey}, so defined $ENV{V} and exists $ENV{V}
+are equivalent.
 
-> @@ -65,7 +66,7 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
->         const char * const walken_usage[] = {
->                 N_("git walken"),
->                 NULL,
-> -       }
-> +       };
+I still prefer "exists $ENV{V}", which I think conveys the intent of
+the check better, i.e. "we do this iff the environment variable X is
+there".
 
-Whereas, this change correctly resides in patch [1/2].
+> If so, `undef' can actually be in Perl's %ENV, though it appears
+> to get coerced into "" (empty string) when spawning processes.
 
->         struct option options[] = {
->                 OPT_END()
->         };
-> @@ -195,7 +196,8 @@ Similarly to the default values, we don't have anything to do here yet
->  ourselves; however, we should call `git_default_config()` if we aren't calling
->  any other existing config callbacks.
+Yes, but you are talking about the opposite direction, what Perl can
+do to %ENV to affect processes it spawns, which is not what I meant.
+
+> Leaving GIT_CONFIG set was actually causing "git config" to
+> exit(1) since git-cvsserver sets GIT_CONFIG and the GIT_CONFIG
+> file doesn't have a test.fsync setting.  This is the current
+> behavior, I think it's a weird quirk, but intended behavior of
+> git-config.
+
+Ah, sorry, I misread the variable.  GIT_CONFIG was the thing that
+says "read from this file and nowhere else"; we do want to disable
+it locally for "-c var=val" to take effect.
+
+> # this assumes you don't have foo.bar set in your ~/.gitconfig :>
+> $ GIT_CONFIG=$HOME/.gitconfig git -c foo.bar=0 config --type=bool foo.bar
+> $ echo $?
+> 1
 >
-> -Add a new function to `builtin/walken.c`:
-> +Add a new function to `builtin/walken.c`.
-> +We'll also need to include the `config.h` header:
-
-Should be in patch [2/2].
-
-> @@ -229,7 +231,9 @@ typically done by calling `repo_init_revisions()` with the repository you intend
->  to target, as well as the `prefix` argument of `cmd_walken` and your `rev_info`
->  struct.
+>> > +            my $v = ::safe_pipe_capture('git', '-c', "test.fsync=$x",
+>> > +                                        qw(config --type=bool test.fsync));
+>> 
+>> THis is an interesting idiom.
 >
-> -Add the `struct rev_info` and the `repo_init_revisions()` call:
-> +Add the `struct rev_info` and the `repo_init_revisions()` call.
-> +We'll also need to include the `revision.h` header:
+> Heh, I just thought of it before sending my original.  I was
+> going to use a regexp originally (in git-svn, too), but didn't
+> want to get into corner cases such as hex and +/- prefixes).
 
-Patch [2/2].
-
-> @@ -624,7 +628,8 @@ static void walken_object_walk(struct rev_info *rev)
->  Let's start by calling just the unfiltered walk and reporting our counts.
-> -Complete your implementation of `walken_object_walk()`:
-> +Complete your implementation of `walken_object_walk()`.
-> +We'll also need to include the `list-objects.h` header.
-
-Also patch [2/2].
-
-> @@ -697,7 +702,7 @@ First, we'll need to `#include "list-objects-filter-options.h"` and set up the
->  static void walken_object_walk(struct rev_info *rev)
->  {
-> -       struct list_objects_filter_options filter_options = {};
-> +       struct list_objects_filter_options filter_options = { 0 };
-
-Good, this change belongs here in patch [1/2].
+And this I think is the best way to do so ;-)
