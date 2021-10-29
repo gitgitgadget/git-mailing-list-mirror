@@ -2,108 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A5D3C433FE
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 11:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDE18C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 11:37:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1646B6115C
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 11:29:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC5FF60F9C
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 11:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231872AbhJ2Lb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 07:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60216 "EHLO
+        id S232010AbhJ2Ljw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 07:39:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231670AbhJ2Lb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 07:31:27 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F554C061570;
-        Fri, 29 Oct 2021 04:28:59 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id v127so8555275wme.5;
-        Fri, 29 Oct 2021 04:28:59 -0700 (PDT)
+        with ESMTP id S231901AbhJ2Ljv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 07:39:51 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3ADC061570
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 04:37:23 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id w1so18775906edd.0
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 04:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:references:cc:in-reply-to:content-transfer-encoding;
-        bh=3OtKDZH6u6meon+NIAzXtkJKHzFLB40f75M3A4SVnoQ=;
-        b=DPBI5WMO3AFOivb+NmVNMc/+/F1Tw33ZE9JlAXWdin/wLiglRat5+6HOQOvrk5Pz8X
-         g7GNpHGg4wOhghoCPLQhe87Rd2ZDLjfOJrBK5IGUf41I73FBcLXyqV1YswbVYi5TXU75
-         58gsAXTOQbEpqkq4RYtw2IOLB6OQFTL0KAqzD9Vb2HMfWG2vpPJhNN4dgt5blL5fPd4X
-         XgVxY+EXapkyQHhCLVvYdBMCKQwcZnbXsP1X80TSTR2wh0SGGPXGLauJhv7iXfxjYu2O
-         vFHF44nxWoJNFWPNDbgwDpLWjVsmvxl+0t7q2zJ0Wbd7Rd92+Jh3UWsabYd7VVigpE70
-         bysw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=wayvnAlZn48x3+LZKR4fzZMggTIyo3ZHtNKGut7fI60=;
+        b=AxzbVe81r1Hh7G+xck12K2+8R76F3ciliARTWgwVYei+Sp2HSXp2XBdqHBT00bqArN
+         32ro7CMkWI66yTHIHGHQhwG0lEVFiLe38dmSak0sbXojcmw0GXmbqsi+qxT8rSDXT5Gr
+         cMHAcypJfTfLGY778ui7BlSTyusAYOafcUrVDqvQfTZYG4lUtkl3Eefkk0nZxeqSe6ZX
+         ZAzWdqONE5bzInHqHm20Vj46weTDnTDVRcgIHE4Fn0zulk+VNSqy5gKxwaVQtWvr8gDJ
+         QiDh4hp6wt/JrvX+UCfz/Jm+bVFNlU3b6tXaZIBo/B+4M36T9dLwjYKaTtkhv3zS+Lrm
+         i0Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:references:cc:in-reply-to
-         :content-transfer-encoding;
-        bh=3OtKDZH6u6meon+NIAzXtkJKHzFLB40f75M3A4SVnoQ=;
-        b=L2zQOHnGnkmynhEhVHkavwuCSEJc9Fqy/EbE5GHmIP3UIqa6UTcq+ZWg9OchimcX9x
-         6EegfJMrDFetRWfNMz59b0xdE0V1x+8p+9vbYJSaPi/5ujRae0bHIFTtdJjnN6bqShNr
-         MZwJN3buhdIesYl4ZH9mkC9gPMnAYLvy8xOfMdWxL3aickxoGupyo891IBGRgHVFx8a7
-         XGIx8ju4QPqh4o5L+ejtZy3LKXWhvkeNoMfrCp/84FsLDfkDy3smGAJjd2/5jHih2pZV
-         bXMOaW5QH9v2X2/PzwgYSW/KFksVGp3GbBTXwnfv5yY1d75XF+mb0a8Q7y80FUtFxrsS
-         5esg==
-X-Gm-Message-State: AOAM531lLRyxD7R2Kc2mrlMa6KVe2C+hSjomnL/hFSPWGrKjt90SEBaI
-        0BHAlch9Hl2sF1kfCRZ02h1jM5cRgM0=
-X-Google-Smtp-Source: ABdhPJyDPipSCgdKnazFNp9RAmjmx3v3lB1R0SKAnpklGZ3DKJr5RE1aP3ZcUAZGcruRp+oOBsMKnQ==
-X-Received: by 2002:a1c:3504:: with SMTP id c4mr7893077wma.160.1635506937856;
-        Fri, 29 Oct 2021 04:28:57 -0700 (PDT)
-Received: from [10.168.10.11] ([170.253.36.171])
-        by smtp.gmail.com with ESMTPSA id p1sm8743041wmq.23.2021.10.29.04.28.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Oct 2021 04:28:57 -0700 (PDT)
-Message-ID: <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com>
-Date:   Fri, 29 Oct 2021 13:28:56 +0200
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=wayvnAlZn48x3+LZKR4fzZMggTIyo3ZHtNKGut7fI60=;
+        b=U5imMEB0+zl0WbSK0Y3pFYJHwgguE+PHexZ60yYkxjC41Gk6ec8lVcwdQ6kiAPzvTl
+         DhoSZ/IGOGIrp3Bji2w3eYUZWSSIfWCM8JYEFIEs8Q6ViTbQmLHTW6tJEMTxbGeQAQ2K
+         zDmJoHlBo0E/TWMhRneFu8UTYXc530blNFGnUH+o+kAI7We009A27+0SnynL+WgS6HZU
+         X0kayL5mtGacvSrUrmQUSGmir+RS9+TuM9hTtehX+NmyWk4RL6YQesTv1reNbK4Cbr2v
+         IY9c7qQaODssk0pP01HBIPpmPGtiyEO+xUAajt8xMEjT9tefJ+wbsI8kCjn1HN09CvDh
+         8I1g==
+X-Gm-Message-State: AOAM530rOAAUeWp0QTPmLXAB2FfJ0n7pxW61KB0svguN2u7Wpn+mSXy+
+        HLTBtlQ1gg6H3N5tU62vbh4S6y80PKurrg==
+X-Google-Smtp-Source: ABdhPJyyHktXRqLrOVOJppe6L68u/uXsrUvWQ66sHtNAmqxIKBlps/0TlZjGvaeTqUYJbndZ64nMKA==
+X-Received: by 2002:a17:906:15d0:: with SMTP id l16mr13294135ejd.462.1635507441682;
+        Fri, 29 Oct 2021 04:37:21 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id n1sm3302898edf.45.2021.10.29.04.37.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Oct 2021 04:37:21 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mgQCG-0024s8-P3;
+        Fri, 29 Oct 2021 13:37:20 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org, Neeraj Singh <nksingh85@gmail.com>
+Subject: Re: [PATCH] allow disabling fsync everywhere
+Date:   Fri, 29 Oct 2021 13:20:29 +0200
+References: <20211028002102.19384-1-e@80x24.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <20211028002102.19384-1-e@80x24.org>
+Message-ID: <211029.86v91g3vv3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: Is getpass(3) really obsolete?
-Content-Language: en-US
-From:   "Alejandro Colomar (man-pages)" <alx.manpages@gmail.com>
-To:     Libc-alpha <libc-alpha@sourceware.org>,
-        linux-man <linux-man@vger.kernel.org>
-References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
-Cc:     git@vger.kernel.org, "tech@openbsd.org" <tech@openbsd.org>
-In-Reply-To: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Add a few CCs, since I mentioned them.]
 
-On 10/29/21 13:15, Alejandro Colomar wrote:
-> Hi,
-> 
-> As the manual pages says, SUSv2 marked it as LEGACY, and POSIX doesn't 
-> have it at all.  The manual page goes further and says "This function is 
-> obsolete. Do not use it." in its first lines.
-> 
-> But, glibc doesn't seem to have deprecated this function at all.  And it 
-> seems to be the most portable way to get a password, even if it's not in 
-> POSIX.
-> 
-> BSDs have readpassphrase(3), but glibc doesn't, so unless you recommend 
+On Thu, Oct 28 2021, Eric Wong wrote:
 
-OpenBSD also marks getpass(3) as obsolete and recommends readpassphrase(3):
-<https://man.openbsd.org/getpass>
+> "core.fsync" and the "GIT_FSYNC" environment variable now exist
+> for disabling fsync() even on packfiles and other critical data.
 
-> using readpassphrase(3) from libbsd, or plan to add it to glibc, I think 
-> getpass(3) should be the recommended function in Linux, and therefore we 
-> should remove the hard words against it.
-> 
-> As a real example, git(1) uses getpass(3).
-> <https://github.com/git/git/blob/master/compat/terminal.c>
-> 
-> What are your thoughts?
-> 
-> Thanks,
-> 
-> Alex
-> 
-> 
+First off, I think this would be useful to add, even as a non-test
+thing.
 
--- 
-Alejandro Colomar
-Linux man-pages comaintainer; https://www.kernel.org/doc/man-pages/
-http://www.alejandro-colomar.es/
+There's plenty of use-cases where users don't care about fsync(), and
+aside from data reliability it also has implications for say laptop
+battery use.
+
+I care about my E-Mail, but my E-Mail syncing thingy's (mbsync) has an
+fsync=off in its config, I'm pretty confident that I won't lose power on
+that *nix laptop, and even if I did I have other recovery methods.
+
+I wouldn't use this in general, but might for some operations, e.g. when
+I'm doing some batch operation with git-annex or whatever.
+
+> Running "make test -j8 NO_SVN_TESTS=1" on a noisy 8-core system
+> on an HDD, adding "GIT_FSYNC=0" to the invocation brings my test
+> runtime from ~4 minutes down to ~3 minutes.
+
+On a related topic: Have you tried having it use an empty template
+directory? I have some unsubmitted patches for that, and if you retain
+all trash dirs you'll find that we have IIRC 100-200MB of just
+accumulated *.sample etc. hooks, out of ~1GB total for the tests.
+
+> +core.fsync::
+> +	A boolean to control 'fsync()' on all files.
+> ++
+> +Setting this to false can speed up writes of unimportant data.
+> +Disabling fsync will lead to data loss on power failure.  If set
+> +to false, this also overrides core.fsyncObjectFiles.  Defaults to true.
+> +
+
+Per the recent threads about fsync semantics this should really be
+worded to be more scary, i.e. it's not guaranteed that your data is
+on-disk at all. So subsequent git operations might see repo corruption,
+if we're being POSIX-pedantic.
+
+So some more "all bets are off" wording would be better here, and any
+extra promises could be e.g.:
+
+    On commonly deployed OS's such as Linux, OSX etc. a lack of fsync()
+    gives you extra guarantees that are non-standard, primarily that a
+    subsequent running process that accesses the data will see the
+    updated version, as the VFS will serve up the new version, even if
+    it's not on-disk yet. Even these light guarantees may not be
+    something you're getting from our OS. Here be dragons!
+
+> [...]
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -3607,6 +3607,25 @@ package GITCVS::updater;
+>  use strict;
+>  use warnings;
+>  use DBI;
+> +our $_use_fsync;
+
+s/our/my/?
+
+> +# n.b. consider using Git.pm
+> +sub use_fsync {
+> +    if (!defined($_use_fsync)) {
+> +        my $x = $ENV{GIT_FSYNC};
+> +        if (defined $x) {
+> +            local $ENV{GIT_CONFIG};
+> +            delete $ENV{GIT_CONFIG};
+> +            my $v = ::safe_pipe_capture('git', '-c', "core.fsync=$x",
+> +                                        qw(config --type=bool core.fsync));
+> +            $_use_fsync = defined($v) ? ($v eq "true\n") : 1;
+> +        } else {
+> +            my $v = `git config --type=bool core.fsync`;
+> +            $_use_fsync = $v eq "false\n" ? 0 : 1;
+> +        }
+> +    }
+> +    $_use_fsync;
+> +}
+
+I wonder most of all if we really need these perl changes, does it
+really matter for the overall performance that you want, or was it just
+to get all fsync() uses out of the test suite?
+
+This is a more general comment, but so much of scaffolding like that in
+the *.perl scripts could go away if we taught git.c some "not quite a
+builtin, but it's ours" mode, and had say code for git-send-email,
+git-svn etc. to just set the various data they need in the environment
+before we invoke them. Then this would just be say:
+
+    our $use_fsync = $ENV{GIT_FOR_CVSSERVER_FSYNC};
+
+
+> +    if ($self->{dbdriver} eq 'SQLite' && !use_fsync()) {
+> +        $self->{dbh}->do('PRAGMA synchronous = OFF');
+> +    }
+
+..in particular if we're doing this we should update the docs to say
+that we'll also tweak third-party software's use of fsync() in some
+cases.
+
+Even if we "own" that sqlite DB a user might not expect a git option to
+have gone so far as to be the cause of their on-disk sqlite DB's
+corruption.
+
+> [...]
+>  	my $sync;
+>  	# both of these options make our .rev_db file very, very important
+>  	# and we can't afford to lose it because rebuild() won't work
+> -	if ($self->use_svm_props || $self->no_metadata) {
+> +	if (($self->use_svm_props || $self->no_metadata) && use_fsync()) {
+>  		require File::Copy;
+>  		$sync = 1;
+>  		File::Copy::copy($db, $db_lock) or die "rev_map_set(@_): ",
+
+This doesn't just impact $io->sync, but also $io->flush, which is a
+different thing. PerlIO flushing to the OS != fsync().
+
+So even on OS's that make the above noted guarantees you'd get nothing,
+since we're now at the mercy of perl not crashing in the interim, not
+kernel or stdlib behavior.
+
+> @@ -57,7 +58,9 @@ void fprintf_or_die(FILE *f, const char *fmt, ...)
+>  
+>  void fsync_or_die(int fd, const char *msg)
+>  {
+> -	while (fsync(fd) < 0) {
+> +	if (use_fsync < 0)
+> +		use_fsync = git_env_bool("GIT_FSYNC", 1);
+> +	while (use_fsync && fsync(fd) < 0) {
+>  		if (errno != EINTR)
+>  			die_errno("fsync error on '%s'", msg);
+>  	}
+
+This patch direction looks good to me, aside from the above we should
+really update any other fsync() docs we have, maybe with a
+cross-reference in core.fsyncObjectFiles?
+
+I'm not sure offhand what the state of the other fsync patches that
+Neeraj Singh has been submitting is, but let's make sure that whatever
+docs/config knobs etc. we have all play nicely together, and are
+somewhat future-proof if possible.
