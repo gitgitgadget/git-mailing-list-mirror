@@ -2,130 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1FE0C433FE
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FBC3C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:46:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C897D60F4B
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:45:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3952661075
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:46:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231400AbhJ2SsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 14:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231346AbhJ2Srz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 14:47:55 -0400
-Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1706CC061766
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:45:26 -0700 (PDT)
-From:   Eli Schwartz <eschwartz@archlinux.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-rsa; t=1635533123;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=YThjquv3Yec1PDy2Xp0D8f+sRIjrEWH9sfj9grFHTH0=;
-        b=RKJ1ymOmSbu5xvridPgXUcx53xyMjUhP7DX/OMh+/5CFFYF/iWTPPYfjsY/IBPSgMHUyW4
-        lD8d1qvzF/XBSUD7TAohoE0tMn6GXAtGI4OxDIKdgDCD2L3vdUCAHM+ohUsGoyyqZZSlqa
-        wP+k+VAkKqvVqd8MhCTzPhPlp1dyMD+/nU4DD9rjJbj4onVSweoz/5Qq4gU6JQt9vxlX5Q
-        TMX2Hv3fbkQhwgLknAhdhKLqgm657ryg50NRTq6qjxQfyNCDVYFef4Lqyml2j5+RHAHQor
-        kTYHMdvclgn2nI96MFh4zMXcVUllDaGNcUabk7g1aCxRTdpsUv1lUx1Ejfpr1wYeKCL7ko
-        WAI7Vb/dgI8es7nWfy+Cl9LWqZuPcqjYV8/dmWH3cQ/aDtbbimUGV2+jrjXZ+dQd+DEb1n
-        GjS/IlbntbtTW9e8j+Of59Mj0HWcV13ozcn5dromEUU3mQkeIhsE+69i69kjWLST1KJ72J
-        KelbYefVSqtM+5nZOEoFT0EPdbzde5NlZoSu6310Yko77g/kgg57DNpG6RpZ/VepHtAHC4
-        NuwS6Dg3a+Th0YPajB3nNPhI0bgNfNEgfCpp6UzR9eILXIGeEgxAu/+/OxHkVudaHJkE6f
-        Y7BAPFAHbHzYBNfrFaOrKfBtVJZ0xw/9t48N7fHQj2Y03dByWvmNc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-ed25519; t=1635533123;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=YThjquv3Yec1PDy2Xp0D8f+sRIjrEWH9sfj9grFHTH0=;
-        b=xEF6/N/FiSNINjVngXRE/5CRUHmZ+i7gokxZKcb5eBxSeoDoOl2IkpavB6ZtiFXXWc+RI4
-        3e31bMxu+KNe+kBw==
-To:     git@vger.kernel.org
-Subject: [PATCH v3 1/3] pretty.c: rework describe options parsing for better extensibility
-Date:   Fri, 29 Oct 2021 14:45:10 -0400
-Message-Id: <20211029184512.1568017-2-eschwartz@archlinux.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211029184512.1568017-1-eschwartz@archlinux.org>
-References: <20211026013452.1372122-1-eschwartz@archlinux.org>
- <20211029184512.1568017-1-eschwartz@archlinux.org>
+        id S230314AbhJ2Ss5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 14:48:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58552 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231700AbhJ2SsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 14:48:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DFB87FB877;
+        Fri, 29 Oct 2021 14:45:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3Rc5qSXK9aDAPkZ9/1+No0YNUWAePjA1iEVRDg
+        lIHUk=; b=eK7+6L27DgnQ52z5wwZeF8rHgFM2VDUye8vQ74rRL1TTGGqnLIjKRJ
+        Xjb8HoAoATGs3+2zsrZCx3RnPDNiyDLNKU9wa9KuyNG+YZfoL/MQtLjQBQ1Jskwj
+        Xt3RBbi8XQN/t8iOw8OizP1dEgRNPYBhJFSx14K3ssqrMLaelCxqU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D76FCFB876;
+        Fri, 29 Oct 2021 14:45:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3BE8FFB875;
+        Fri, 29 Oct 2021 14:45:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v4 2/4] sparse-index: avoid unnecessary cache tree clearing
+References: <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
+        <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
+        <91351ac4bded2c19264cd2009e90ee71fcf67b81.1635515487.git.gitgitgadget@gmail.com>
+Date:   Fri, 29 Oct 2021 11:45:52 -0700
+In-Reply-To: <91351ac4bded2c19264cd2009e90ee71fcf67b81.1635515487.git.gitgitgadget@gmail.com>
+        (Victoria Dye via GitGitGadget's message of "Fri, 29 Oct 2021 13:51:24
+        +0000")
+Message-ID: <xmqqfssjllen.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: mail.archlinux.org;
-        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
+Content-Type: text/plain
+X-Pobox-Relay-ID: 71B1AA32-38E8-11EC-886E-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It contains option arguments only, not options. We would like to add
-option support here too, but to do that we need to distinguish between
-different types of options.
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Lay out the groundwork for distinguishing between bools, strings, etc.
-and move the central logic (validating values and pushing new arguments
-to *args) into the successful match, because that will be fairly
-conditional on what type of argument is being parsed.
+> From: Victoria Dye <vdye@github.com>
+>
+> When converting a full index to sparse, clear and recreate the cache tree
+> only if the cache tree is not fully valid. The convert_to_sparse operation
+> should exit silently if a cache tree update cannot be successfully completed
+> (e.g., due to a conflicted entry state). However, because this failure
+> scenario only occurs when at least a portion of the cache tree is invalid,
+> we can save ourselves the cost of clearing and recreating the cache tree by
+> skipping the check when the cache tree is fully valid.
 
-Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
----
- pretty.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+I see in cache-tree.c::update_one() this snippet of code.
 
-diff --git a/pretty.c b/pretty.c
-index fe95107ae5..2ec023a0d0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1216,28 +1216,37 @@ int format_set_trailers_options(struct process_trailer_options *opts,
- 
- static size_t parse_describe_args(const char *start, struct strvec *args)
- {
--	const char *options[] = { "match", "exclude" };
-+	struct {
-+		char *name;
-+		enum { OPT_STRING } type;
-+	}  option[] = {
-+		{ "exclude", OPT_STRING },
-+		{ "match", OPT_STRING },
-+	};
- 	const char *arg = start;
- 
- 	for (;;) {
--		const char *matched = NULL;
-+		int found = 0;
- 		const char *argval;
- 		size_t arglen = 0;
- 		int i;
- 
--		for (i = 0; i < ARRAY_SIZE(options); i++) {
--			if (match_placeholder_arg_value(arg, options[i], &arg,
--							&argval, &arglen)) {
--				matched = options[i];
-+		for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
-+			switch (option[i].type) {
-+			case OPT_STRING:
-+				if (match_placeholder_arg_value(arg, option[i].name, &arg,
-+								&argval, &arglen)) {
-+					if (!arglen)
-+						return 0;
-+					strvec_pushf(args, "--%s=%.*s", option[i].name, (int)arglen, argval);
-+					found = 1;
-+				}
- 				break;
- 			}
- 		}
--		if (!matched)
-+		if (!found)
- 			break;
- 
--		if (!arglen)
--			return 0;
--		strvec_pushf(args, "--%s=%.*s", matched, (int)arglen, argval);
- 	}
- 	return arg - start;
- }
--- 
-2.33.1
+	/*
+	 * If the first entry of this region is a sparse directory
+	 * entry corresponding exactly to 'base', then this cache_tree
+	 * struct is a "leaf" in the data structure, pointing to the
+	 * tree OID specified in the entry.
+	 */
+	if (entries > 0) {
+		const struct cache_entry *ce = cache[0];
 
+		if (S_ISSPARSEDIR(ce->ce_mode) &&
+		    ce->ce_namelen == baselen &&
+		    !strncmp(ce->name, base, baselen)) {
+			it->entry_count = 1;
+			oidcpy(&it->oid, &ce->oid);
+			return 1;
+		}
+	}
+
+Sorry for not noticing it earlier, but does this mean that the
+content of a cache-tree changes shape when sparse-ness of the index
+changes?  Is a cache-tree that knows about all of the
+subdirectories, even the ones that are descendants of a directory
+that is represented as a tree-ish entry in the main index array,
+still valid in a sparse index?
+
+If not, then I do not think of a quick and sure way to ensure that
+the cache-tree is valid when the sparse-ness changes.
+
+The earlier suggestion was based on my assumption that even when the
+main index array becomes sparse, the cache tree is still populated
+and valid, so that after writing a tree and writing an on-disk index,
+and then reading the on-disk index back (possibly in another process),
+would not have to incur the recomputation cost of the full tree when
+the reading codepath needs to flip the sparseness.
+
+But the above code snippet makes me worried a lot.  A cache-tree
+that used to be valid when the corresponding in-core index array was
+not sparse will become invalid immediately when we decide to make it
+sparse, right?
