@@ -2,165 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1C8FC433EF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B05C6C433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:55:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B640861184
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:51:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 980006108F
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231481AbhJ2NyE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 09:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36546 "EHLO
+        id S231592AbhJ2N5z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 09:57:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231328AbhJ2NyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 09:54:01 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 910BBC061714
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:51:31 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id i5so8610633wrb.2
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:51:31 -0700 (PDT)
+        with ESMTP id S230252AbhJ2N5x (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 09:57:53 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA3EAC061570;
+        Fri, 29 Oct 2021 06:55:24 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id z20so39275904edc.13;
+        Fri, 29 Oct 2021 06:55:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=EhqpCoJT+8YeldSMIWB/k40BGZlaaKWhf6LrVKaEhLE=;
-        b=p1F7RNzwssFvv6nWrWjllnxf9hnTXn7dvy+X/mhdYHowRZkD0toqm6SOkNpwIV/LMB
-         aGweFCKxgB0ieaHheVUOu/IGKy1DU64Lh/5AKBK7dPeyysF0yxhRILTQ01S9zcRcoruA
-         2kfLsmghw7EohPhtkQQpxQRJhjs4kD4VswRFGILwcoC72aDmg4oncEAfOJelfWc9bPWw
-         mIKpHI/iqfVePGy3dQD/TTDXLve+4iQAxj1QDO4OWstKY7VDA2WLzdowofDrJ0Hsch9T
-         hh6AI93Xcj2rkb9E2A2yNfPvF6VWO746UXCcOOM6YxMj+wkmVZj7FbnT7ZTJ7eAYjC9x
-         uOMg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wPMpf/v+GQEdtJ4v0im5OPSlxsRrjiiCKA2oJgDao4c=;
+        b=TcEE3ljlQ7ZX7jl8JKB/DyhwlhXh+jJ9RZXHhCpSlz2fLplt/gjLeWj+ZwOIRfH+O9
+         UPOKgAxJbedT7IyseQ22kWoxkahx81vVOLJ/7NdkPp2lw+Uj5T1k/+zBVai2/PHd8/c5
+         cnu0Nf4JQHngvj2cW+zEBzqmVgq7e69f5GTzkPLIOLRnbsAeHxn3ytTMjDbydBv8yI8T
+         FHXZsOqfI9q0XrRu9KuI9diXrla6OzmebSgyaTLCtIVQSQ4u/6YS7LObFvAOLQ495uJt
+         b+drRq9V4P7n8BCO1dciX1w6sKbir9s+rJYSFraCDUHP9d0uXu0VyrP6PHfJrEL+lHOO
+         o9Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EhqpCoJT+8YeldSMIWB/k40BGZlaaKWhf6LrVKaEhLE=;
-        b=N3p1Qq8+2P3g8mbn2x2cMAydeEtayMtlWxFuI9gVXWUumEtrQTsq633TqRVvmYs7m7
-         LjRnUytNgXdppAdrQZq1CNiFtLsVWrg4606hS533FwuA1rPdtkfrtKdhlz6YSgU6ySZn
-         hiKuJcUrKnnmXAxnOTHL3Z83XQM9uxZ/nnW+8pPypX/lHr1fhaRB3M8C6Udu3PCI6ZG7
-         g0VqOw+9EiC3QcSWiCUbaN9joa0u74JdKRch3RSd9k2rxRkwL0CV3HVatIcWJfwJ9F1s
-         XYpMbRk3eYFwP7Qa94AleBZI8ehlZ09aiYrWEXR8tVq4sd7Tp/EWMOmxJixYEQdjRa6X
-         Fs3g==
-X-Gm-Message-State: AOAM532pRe7WbOBDObNme7ZOD6mPskK8aWeyeOEKx/0yeGZsLqCCm5o/
-        FwPFzdj1zmMKqPS2x8bhprowVA014uU=
-X-Google-Smtp-Source: ABdhPJzwJ/yKrsIYyab36fGgn1LEfIlFWeJCbxlsL3tVHp5g7+VXr6Xg3vgDtSxUxsBXKDULc+sHBA==
-X-Received: by 2002:a5d:444c:: with SMTP id x12mr14398189wrr.38.1635515490223;
-        Fri, 29 Oct 2021 06:51:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3sm7305030wri.45.2021.10.29.06.51.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 06:51:29 -0700 (PDT)
-Message-Id: <d2133ca1724258be01d7d2c3ac4888cd67eb3642.1635515487.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
-References: <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
-        <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 13:51:25 +0000
-Subject: [PATCH v4 3/4] sparse-index: add ensure_correct_sparsity function
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wPMpf/v+GQEdtJ4v0im5OPSlxsRrjiiCKA2oJgDao4c=;
+        b=p2oJS9Z9ORVWi5gzwDVUNvCh3dTxpv7CRKpugRZrawJRfX+7YwQ74gJ/wv3FI3G+mY
+         PmneBC4uLMOlcgI+CcuiHzg/Ua3/0BtJSqu8EISNi0SpVklnhOlihmFV6uIYa06xYgCY
+         bUkjXAGHHmHg2UAi4VNwhA0d/whDAhCSor/9LInVxOwNfSzhRSz2eS0o29iHcEdG+hxx
+         6EjX5W/xCa4Ged2k8L2XKbjHltMI7lcEQ5iTQOjcGyeh8hvRGgnBnPZSNb5vLqQzzbbl
+         OwnhOkq6jf5II+ovfizCqePGHWk2azfq47nM/xLcUBJ39lxDPrhEMoOqzZ/0K40Cmho0
+         TYkg==
+X-Gm-Message-State: AOAM530L1N9UFg+CBXQhJJzMM2buzYal50ZbSYSJmh9eSXUHyNtUNrzd
+        L38VjXLpFBmNMLPprEAsbOqn+Hed/F4p0qlscDM+NZbDAHg=
+X-Google-Smtp-Source: ABdhPJw5CO+YTNZ3UDxLzowrvu0npcyZ/RKaL2AjURWYs/N7DR5ksO8lZVaC02wMPI5yJ286EWuFmxwTQ8xha1a7KQ8=
+X-Received: by 2002:a17:907:628f:: with SMTP id nd15mr14048416ejc.389.1635515723540;
+ Fri, 29 Oct 2021 06:55:23 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
+ <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com> <00d501d7ccbe$0169c340$043d49c0$@nexbridge.com>
+In-Reply-To: <00d501d7ccbe$0169c340$043d49c0$@nexbridge.com>
+From:   Eugene Syromyatnikov <evgsyr@gmail.com>
+Date:   Fri, 29 Oct 2021 15:55:07 +0200
+Message-ID: <CACGkJdsdK_mgEH_v73NnVwQ2RA6cHtuyP4p1nvKveTEYnRhSBw@mail.gmail.com>
+Subject: Re: Is getpass(3) really obsolete?
+To:     rsbecker@nexbridge.com
+Cc:     "Alejandro Colomar (man-pages)" <alx.manpages@gmail.com>,
+        Libc-alpha <libc-alpha@sourceware.org>,
+        linux-man <linux-man@vger.kernel.org>, git@vger.kernel.org,
+        tech@openbsd.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+On Fri, Oct 29, 2021 at 2:40 PM <rsbecker@nexbridge.com> wrote:
+> getpass() is obsolete in POSIX.2. However, some platforms still are on PO=
+SIX.1, so replacing it instead of providing a configure detection/switch fo=
+r it might cause issues.
 
-The `ensure_correct_sparsity` function is intended to provide a means of
-aligning the in-core index with the sparsity required by the repository
-settings and other properties of the index. The function first checks
-whether a sparse index is allowed (per repository & sparse checkout pattern
-settings). If the sparse index may be used, the index is converted to
-sparse; otherwise, it is explicitly expanded with `ensure_full_index`.
+POSIX.2 is not a newer POSIX version, but rather a book (=E2=80=9CShell and
+utilities=E2=80=9D) in pre-2001 standard revisions, and it has nothing to d=
+o
+with the system interfaces (that is POSIX.1).
+And the only mention of getpass() in POSIX (at least, since the 2001's
+edition) indeed seems to be [1], in the list of functions that have
+not been carried forward from XSH5, the 1997 revision of =E2=80=9CSystem
+Interfaces and Headers=E2=80=9D (that is, SUSv2)[2], where it is inherited
+from SUSv1[4] from XPG[5] and, as Alejandro already mentioned, marked
+as obsolete, per XPG3 to XPG4 migration guide[6]; the previous, 1988,
+version of POSIX[3] does not mention getpass() at all.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- sparse-index.c | 33 +++++++++++++++++++++++++++++----
- sparse-index.h |  1 +
- 2 files changed, 30 insertions(+), 4 deletions(-)
+[1] https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap01.htm=
+l
+[2] https://pubs.opengroup.org/onlinepubs/7908799/xsh/getpass.html
+[3] https://mirror.math.princeton.edu/pub/oldlinux/download/c953.pdf
+[4] https://pubs.opengroup.org/onlinepubs/9695969499/toc.pdf
+[5] https://bitsavers.computerhistory.org/pdf/xOpen/X_Open_Portability_Guid=
+e_1985/xpg_2_xopen_system_v_specification_2.pdf
+[6] http://archive.opengroup.org/publications/archive/CDROM/g501.pdf
 
-diff --git a/sparse-index.c b/sparse-index.c
-index 85613cd8a3a..a1d505d50e9 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -122,17 +122,17 @@ static int index_has_unmerged_entries(struct index_state *istate)
- 	return 0;
- }
- 
--int convert_to_sparse(struct index_state *istate, int flags)
-+static int is_sparse_index_allowed(struct index_state *istate, int flags)
- {
--	int test_env;
--	if (istate->sparse_index || !istate->cache_nr ||
--	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
-+	if (!core_apply_sparse_checkout || !core_sparse_checkout_cone)
- 		return 0;
- 
- 	if (!istate->repo)
- 		istate->repo = the_repository;
- 
- 	if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
-+		int test_env;
-+
- 		/*
- 		 * The sparse index is not (yet) integrated with a split index.
- 		 */
-@@ -168,6 +168,19 @@ int convert_to_sparse(struct index_state *istate, int flags)
- 	if (!istate->sparse_checkout_patterns->use_cone_patterns)
- 		return 0;
- 
-+	return 1;
-+}
-+
-+int convert_to_sparse(struct index_state *istate, int flags)
-+{
-+	/*
-+	 * If the index is already sparse, empty, or otherwise
-+	 * cannot be converted to sparse, do not convert.
-+	 */
-+	if (istate->sparse_index || !istate->cache_nr ||
-+	    !is_sparse_index_allowed(istate, flags))
-+		return 0;
-+
- 	/*
- 	 * NEEDSWORK: If we have unmerged entries, then stay full.
- 	 * Unmerged entries prevent the cache-tree extension from working.
-@@ -316,6 +329,18 @@ void ensure_full_index(struct index_state *istate)
- 	trace2_region_leave("index", "ensure_full_index", istate->repo);
- }
- 
-+void ensure_correct_sparsity(struct index_state *istate)
-+{
-+	/*
-+	 * If the index can be sparse, make it sparse. Otherwise,
-+	 * ensure the index is full.
-+	 */
-+	if (is_sparse_index_allowed(istate, 0))
-+		convert_to_sparse(istate, 0);
-+	else
-+		ensure_full_index(istate);
-+}
-+
- /*
-  * This static global helps avoid infinite recursion between
-  * expand_to_path() and index_file_exists().
-diff --git a/sparse-index.h b/sparse-index.h
-index 9f3d7bc7faf..656bd835b25 100644
---- a/sparse-index.h
-+++ b/sparse-index.h
-@@ -4,6 +4,7 @@
- struct index_state;
- #define SPARSE_INDEX_MEMORY_ONLY (1 << 0)
- int convert_to_sparse(struct index_state *istate, int flags);
-+void ensure_correct_sparsity(struct index_state *istate);
- 
- /*
-  * Some places in the codebase expect to search for a specific path.
--- 
-gitgitgadget
-
+--=20
+Eugene Syromyatnikov
+mailto:evgsyr@gmail.com
+xmpp:esyr@jabber.{ru|org}
