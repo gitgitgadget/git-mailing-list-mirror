@@ -2,141 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C636C433EF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 14:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AFBAC433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 14:54:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15111610CB
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 14:44:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FB3761165
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 14:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbhJ2OrW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 10:47:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbhJ2OrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 10:47:22 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E393C061570;
-        Fri, 29 Oct 2021 07:44:53 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id d3so16481452wrh.8;
-        Fri, 29 Oct 2021 07:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=X9JfUFySD69ZAlm7cX2XXMcyvmRiyxLOKbxqcPiQuaI=;
-        b=qSltCmlUF9WRfPYMvhWViWQ90P20nfHqBgSJ6l2lhZynt0kJ/N0ciDY/EtaATHPO0H
-         URHYqmREjJtJwfhVXe+AhZFEkMc1FGfXyIsR4iy5qNT9dcij9lVqtPrgouAY2/Ax573A
-         WSNuPF9+QNTSp1BPPIcNvWDsi1bsDONsf5EaKnVnf4AgCczmyDfkQm/oo01TJPls0G1P
-         WcL1ZZQWBk0KMeESaVg3omTQ/xZQVaz4KEpA0YLShq9JjPg6AY39xsex7Jo4ajZ/4mgK
-         BrjqpWc4SHyJng7rYXu7R24Zqbi7DqPPW9dM+BBpPi/Qw12Uy8jv9zWZHjH9UQufj0YC
-         1WWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=X9JfUFySD69ZAlm7cX2XXMcyvmRiyxLOKbxqcPiQuaI=;
-        b=shXCVfqkbHq/5NCoCuKlwaItXW05FZtSUnc5gTLohJfXlxg+PysMgi+PMSQkllHCgD
-         2nXVAKJxVpJGWS1WaUaxkDbNKAoRc/JF7ra4Kr095SZOMVTO9/Fg8PFWlygAgLfF8Duk
-         ADf8zecAMZD6FsVuMz1sckE7vl7IjzPcBvFTcu+QzPT2MZpfqN2iWgPFJvIbQQiMhxdv
-         hjHPXZGTrwgUZI7xvDssXrFgSCGsDVmDSSMdGmWRjuer7J6rHi9tQP03Y/9ntviLcxpe
-         DoLcy1SqKSZeHfVLfYQXeCRRB8+FCphE6BAG3UvK/DykiCdQlKExXqKAYiE9GhxmGsyR
-         pgBw==
-X-Gm-Message-State: AOAM5327i95xPN7oG3TlzmzPZUqMuVHBd4UA7DCxpinNbgoixErVPTVi
-        Rr9+8gQRuBxyLedS8FG+vRuqYRFr3+0=
-X-Google-Smtp-Source: ABdhPJxfQmLftsafwLmjRN2t1KvHmBiDiHKuGw10lwslV89x0rXUWvKOcxe08Umz8VR0/dKEwVj1+Q==
-X-Received: by 2002:a5d:4a46:: with SMTP id v6mr14655483wrs.262.1635518692022;
-        Fri, 29 Oct 2021 07:44:52 -0700 (PDT)
-Received: from [10.8.0.130] ([195.53.121.100])
-        by smtp.gmail.com with ESMTPSA id p11sm10197704wmi.0.2021.10.29.07.44.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Oct 2021 07:44:51 -0700 (PDT)
-Message-ID: <326e75f9-f732-a7a8-22dc-5fc304601b39@gmail.com>
-Date:   Fri, 29 Oct 2021 16:44:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: Is getpass(3) really obsolete?
-Content-Language: en-US
-To:     rsbecker@nexbridge.com, 'Theo de Raadt' <deraadt@openbsd.org>
-Cc:     'Libc-alpha' <libc-alpha@sourceware.org>,
-        'linux-man' <linux-man@vger.kernel.org>, git@vger.kernel.org,
-        tech@openbsd.org
+        id S229885AbhJ2O5A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 10:57:00 -0400
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:48473 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229549AbhJ2O47 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 29 Oct 2021 10:56:59 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id F03963201E83;
+        Fri, 29 Oct 2021 10:54:29 -0400 (EDT)
+Received: from imap45 ([10.202.2.95])
+  by compute1.internal (MEProxy); Fri, 29 Oct 2021 10:54:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=owlfolio.org; h=
+        mime-version:message-id:in-reply-to:references:date:from:to
+        :subject:content-type; s=fm1; bh=3NoUJzQkGZEypIiavW9zedOQ+h3u27Y
+        3ZREBYrW0X98=; b=hFW0ng0U3yBN+UZL+lWcFqZYznrF8Von6S0kqGPxyQkAZhf
+        KHmgLeYhmzt2QdFPqP8jaG5ey+RTBr62fk9KxJRlsH5oWlaryvHftrpI6KwKHPYl
+        7i1E2RJEYQJ814Z4NSSjTkfY2JHSyaxVpwJcKXZFXVRwtZxztC/dGwaQXKxGtRa/
+        d7l/gCbclL4Wpp3ok3E9e/hAOM1Mzr08p3lXZdFndeUcN5I5CNb3VP/kTWFXrwul
+        QRjezDb4e/iI+H18apkB+s6XVOL4l7pusTM5lRuhIEkY3eid61grdcbV0i8mWX04
+        1pzbwhwM2pNTPzlqyfnEEEPTMp8Jln4iHBQFtvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=3NoUJz
+        QkGZEypIiavW9zedOQ+h3u27Y3ZREBYrW0X98=; b=f/iXwsok3E7KIqdyOjKBuW
+        MNBdJMOPbehZCyF1SPZh8hlURsUgloWuPv8GN60+jNGaiM2VqSYbKa2+Mq8Zhvsl
+        wWW+cKROFE1k7ZjPISdBrF0bRJKuz5F/y56ze0Ml4RLUNizXCEzv9mPUeOsjiNKw
+        39tezZjURc/MiAPv60sYpbZ8CS5spQaa8o24KdDWMwi6STd6oQknzyg1Bpre3bWV
+        0Y5Zcs410FVbE41X9mlCSjAZYDTpwFlocok5ly0CVMxxHr/kCKCGvHvM9UgJPsRq
+        SnO4AR2QeP923Rfj9ObCZDMzF22Nd8AmqcnXlFYOBPtLmGXtQY84tdEO2/iHuDkQ
+        ==
+X-ME-Sender: <xms:JQt8YSZiaPi-BwXf32Ee0m1Bf4CYh7HISDMFLpOZ1w_168rQxIvPRg>
+    <xme:JQt8YVYKnkMM6UxEhxFd1IJDm7UD2DQtQkMpng5lHBMfJPfVenVS6Qmm1FRS0oU07
+    H_SU0rUmkc_1IDgUNs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdeghedgjeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdgkrggt
+    khcuhggvihhnsggvrhhgfdcuoeiirggtkhesohiflhhfohhlihhordhorhhgqeenucggtf
+    frrghtthgvrhhnpefhuefhveeuffetfffgjeetgfekkeehfedtfeelgfehffffveehkeel
+    fefgheffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpeiirggtkhesohiflhhfohhlihhordhorhhg
+X-ME-Proxy: <xmx:JQt8Yc8CPNo4CrVVYlPdQ7zOALC9GlqU0p22vFO6F077klpLupPRaw>
+    <xmx:JQt8YUqYyjOYw6Xoh3-RrKX9iK-lYe1kRY4DqkDMzCwfOfBIU_DONw>
+    <xmx:JQt8YdoXkd6mkw2ULAV-9Q8jSY-IQcNY-WGaepZZQGfQ695bKEfaig>
+    <xmx:JQt8YekoD0X54cc3UAJr0lppYxH36X7OfPFywbRFrOg5r09OmOimyA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 02F5A24A0074; Fri, 29 Oct 2021 10:54:29 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1369-gd055fb5e7c-fm-20211018.002-gd055fb5e
+Mime-Version: 1.0
+Message-Id: <6d8642e9-71f7-4a83-9791-880d04f67d17@www.fastmail.com>
+In-Reply-To: <63238.1635515736@cvs.openbsd.org>
 References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
  <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com>
  <00d501d7ccbe$0169c340$043d49c0$@nexbridge.com>
  <63238.1635515736@cvs.openbsd.org>
- <00e401d7cccf$ccde0d40$669a27c0$@nexbridge.com>
- <73029.1635517278@cvs.openbsd.org>
- <00e701d7ccd2$058b9070$10a2b150$@nexbridge.com>
-From:   "Alejandro Colomar (man-pages)" <alx.manpages@gmail.com>
-In-Reply-To: <00e701d7ccd2$058b9070$10a2b150$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date:   Fri, 29 Oct 2021 10:53:53 -0400
+From:   "Zack Weinberg" <zack@owlfolio.org>
+To:     "Theo de Raadt" <deraadt@openbsd.org>, rsbecker@nexbridge.com,
+        "'Alejandro Colomar (man-pages)'" <alx.manpages@gmail.com>,
+        'linux-man' <linux-man@vger.kernel.org>, tech@openbsd.org,
+        "Florian Weimer" <libc-alpha@sourceware.org>, git@vger.kernel.org
+Subject: Re: Is getpass(3) really obsolete?
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Randall, Theo,
+On Fri, Oct 29, 2021, at 9:55 AM, Theo de Raadt wrote:
+> <rsbecker@nexbridge.com> wrote:
+>> On October 29, 2021 7:29 AM, Alejandro Colomar wrote:
+>> > On 10/29/21 13:15, Alejandro Colomar wrote:
+>> > > Hi,
+>> > >
+>> > > As the manual pages says, SUSv2 marked it as LEGACY, and POSIX doesn't
+>> > > have it at all.  The manual page goes further and says "This function
+>> > > is obsolete. Do not use it." in its first lines.
+...
+> The community finally had the balls to get rid of gets(3).
+>
+> getpass(3) shares the same flaw, that the buffer size isn't passed.
+> This has been an issue in the past
 
-On 10/29/21 16:33, rsbecker@nexbridge.com wrote:
-> October 29, 2031 10:21 AM, Theo de Raadt will write:
->> <rsbecker@nexbridge.com> wrote:
->>
->>>>> getpass() is obsolete in POSIX.2. However, some platforms still
->>>>> are on
->>> POSIX.1,
->>>> so replacing it instead of providing a configure detection/switch
->>>> for it
->>> might
->>>> cause issues.
->>>>
->>>>
->>>> The community finally had the balls to get rid of gets(3).
->>>>
->>>> getpass(3) shares the same flaw, that the buffer size isn't passed.
->>>> This has been an issue in the past, and incorrectly led to
->>> readpassphrase(3)
+I was about to post exactly the same thing.  getpass(3) is not deprecated because there's a better replacement, it's deprecated because it's _unsafe_.  The glibc implementation wraps getline(3) and therefore  doesn't truncate the passphrase or overflow a fixed-size buffer, no matter how long the input is, but portable code cannot rely on that.  And come to think of it, using getline(3) means that prefixes of the passphrase may be left lying around in malloc's free lists.
 
-That seems a good reason to keep the "Do not use it." note in the manual 
-page.  I think I'll add a recommendation for readpassphrase(3bsd) for 
-the moment which is the only alternative available in Linux.
+(getpass also cannot be made thread safe, due to recycling of a static buffer, but a program in which multiple threads are racing to prompt the user for passwords would be a UX disaster anyway, so I don't think that's a critical flaw the way it is for e.g. strtok(3).)
 
->>>>
->>>> readpassphrase(3) has a few too many features/extensions for my
->>>> taste, but
->>> at
->>>> least it is harder to abuse.
->>>
->>> readpassphrase is not generally supported. This will break builds on
->>> many platforms.
-I found readpassphrase(3) in FreeBSD and OpenBSD.
-It is also present in libbsd(7), which is available in most Linux 
-distributions.
-I also found it on a Mac that I have access.
+The Linux manpage project's documentation is, as I understand it, for Linux with glibc _first_, but not _only_; it should not describe this function as not-deprecated just because glibc has patched its worst problems and doesn't offer any better API.
 
-NetBSD has getpass_r(3) instead.  It is not in any other system I have 
-access.
+> readpassphrase(3) has a few too many features/extensions for my taste, but
+> at least it is harder to abuse.
 
+I am inclined to agree that readpassphrase has too many knobs, and I can't think of any legitimate present-day use for several of them, which is not a good property for an API handling security-critical data.  Also, it relies on the caller to size the buffer for the passphrase, and therefore risks truncating people's passphrases.
 
->>
->> Of course moving forward takes a long time.  If a better API is supplied then
->> there is a choice in 10 years.  If a better API is not supplied, then 10 years from
->> now this conversation can get a reply.
-> 
-> I checked the API 10 years from now (check the above date) at it's still not there 😉 In the meantime, compatibility is important. I checked the latest release (last week's) on my platform and readpassphrase() is not available. Let's please put a compatibility layer in.
-> 
-libbsd(7) is probably the compatibility layer that you're looking for. 
-What system are you on?
+With my libxcrypt hat on I've thought a bit about replacements for getpass.  The conclusion I came to is that the easy changes are all putting lipstick on a pig, and if I was going to work on this at all I was going to design a privilege-separated authentication service that could be asked to take over a tty, read a passphrase, check it, and return just success or failure to the caller.  Neither the passphrase itself, nor any strings derived from it, would ever be in the caller's address space.  But this is obviously well out of scope for the C library.
 
-<https://libbsd.freedesktop.org/wiki/>
-
-Cheers,
-
-Alex
-
-
--- 
-Alejandro Colomar
-Linux man-pages comaintainer; https://www.kernel.org/doc/man-pages/
-http://www.alejandro-colomar.es/
+zw
