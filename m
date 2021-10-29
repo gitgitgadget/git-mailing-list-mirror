@@ -2,85 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9CEC433EF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 22:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 927B0C433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 22:52:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC0FE61056
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 22:51:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6513760D43
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 22:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231539AbhJ2Wxa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 18:53:30 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64673 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbhJ2Wx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 18:53:27 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27E7716BD77;
-        Fri, 29 Oct 2021 18:50:58 -0400 (EDT)
+        id S231481AbhJ2WzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 18:55:17 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56193 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229546AbhJ2WzQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 18:55:16 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B882015EFDF;
+        Fri, 29 Oct 2021 18:52:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PKSjdJQBaHIfhKTYdGTFoy4X4WCODvfamb9fzT
-        h3gyA=; b=gxTuEGSVDyQgCpMPNuCSfiNTUVFvVnBtBtwYRQHAcubgZgVB3lxuWO
-        JCiMfP2ASCxBPDFy066yhe/bTXO3KbJKFMDe3YCzgZIBdCkESE7qC1TKRUMER14G
-        XfJgnVAl5tOLuwebKbw5w0ZkxjEFLpUQOBhlQdndM031S6unyB/lk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20EDC16BD76;
-        Fri, 29 Oct 2021 18:50:58 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=pUWqE7hhCqAn
+        Byj6KKryTMySkv2BiRUISxwxBBP5Dr8=; b=X+gpNE/GA/NDNYShHKdtAIxgeDBo
+        C69E9irCHFto1y2Osr5k242N5llj15Yw/usmzcD0tS+052ovmDB7pSGGcbCORrl/
+        Nzl8r8U9cgkuqWclnxbKCtWh/TwQ6S6IzIZ+/jipf+SoH9EBvWqiNujEf6KdNdUZ
+        6ZRbxeQMf94jUY8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B16E815EFDE;
+        Fri, 29 Oct 2021 18:52:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CF2F516BD75;
-        Fri, 29 Oct 2021 18:50:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68CB715EFDD;
+        Fri, 29 Oct 2021 18:52:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+To:     =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/8] test-tool genzeros: generate large amounts of
- data more efficiently
+Subject: Re: [PATCH v3 3/8] test-lib: add prerequisite for 64-bit platforms
 References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
         <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
-        <052197200141c321118b7766f5615a61f951e59f.1635515959.git.gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 15:50:53 -0700
-In-Reply-To: <052197200141c321118b7766f5615a61f951e59f.1635515959.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 29 Oct 2021
-        13:59:13 +0000")
-Message-ID: <xmqqy26bh2cy.fsf@gitster.g>
+        <489500bb1dcaffecab42672658990cfc26d52d7c.1635515959.git.gitgitgadget@gmail.com>
+Date:   Fri, 29 Oct 2021 15:52:43 -0700
+In-Reply-To: <489500bb1dcaffecab42672658990cfc26d52d7c.1635515959.git.gitgitgadget@gmail.com>
+        ("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
+ of "Fri, 29
+        Oct 2021 13:59:14 +0000")
+Message-ID: <xmqqtugzh29w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AC877DEA-390A-11EC-A747-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EDD7985C-390A-11EC-97A0-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"Carlo Marcelo Arenas Bel=C3=B3n via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
 
-> @@ -12,9 +15,19 @@ int cmd__genzeros(int argc, const char **argv)
->  
->  	count = argc > 1 ? strtoimax(argv[1], NULL, 0) : -1;
->  
-> -	while (count < 0 || count--) {
-> -		if (putchar(0) == EOF)
-> +	/* Writing out individual NUL bytes is slow... */
-> +	while (count < 0)
-> +		if (write(1, zeros, ARRAY_SIZE(zeros)) < 0)
->  			return -1;
+> +test_lazy_prereq SIZE_T_IS_64BIT '
+> +	test 8 -eq "$(build_option sizeof-size_t)"
+> +'
 > +
-> +	while (count > 0) {
-> +		n = write(1, zeros, count < ARRAY_SIZE(zeros) ?
-> +			  count : ARRAY_SIZE(zeros));
-> +
-> +		if (n < 0)
-> +			return -1;
-> +
-> +		count -= n;
->  	}
->  
->  	return 0;
+>  test_lazy_prereq LONG_IS_64BIT '
+>  	test 8 -le "$(build_option sizeof-long)"
+>  '
 
-This round looks OK to me.
+In the longer run, LONG_IS_64BIT wants to be renamed to indicate
+that it is at least 64-bit long.  LONG_HAS_64BIT, perhaps?
+
+Obviously it can be left outside the scope of this series.
