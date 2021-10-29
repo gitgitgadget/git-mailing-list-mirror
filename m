@@ -2,88 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B3EDC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53804C433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:37:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AD2960FED
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:34:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D4606101E
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231546AbhJ2VhH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 17:37:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52285 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230139AbhJ2VhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 17:37:06 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8898D16B71B;
-        Fri, 29 Oct 2021 17:34:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5qJKUMMRLvZFUZnqxMdV2J/CNYwjDG1GVjtB5N
-        YebfA=; b=MsbGJicIvGDp2S2NgfAKAdyyLf3u93+oHQoqy0btZdbITvgDuWnLk2
-        LF/H/Az1kqUiHLcFT6w448UYHIFOGzzPF6ETJr64DJDmNzBzT0rHNPUxrltIKFAf
-        OaqW48vb60O8veWYm9u7NDbwsgGKdPRTL0w3MAG+WzzdTyaiwD8Y4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 813E016B71A;
-        Fri, 29 Oct 2021 17:34:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3BB6B16B718;
-        Fri, 29 Oct 2021 17:34:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eli Schwartz <eschwartz@archlinux.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] pretty.c: rework describe options parsing for
- better extensibility
-References: <20211026013452.1372122-1-eschwartz@archlinux.org>
-        <20211029184512.1568017-1-eschwartz@archlinux.org>
-        <20211029184512.1568017-2-eschwartz@archlinux.org>
-        <xmqq35ojlhg6.fsf@gitster.g>
-        <aef5409c-384e-1010-9f33-e3bfe1aa0685@archlinux.org>
-Date:   Fri, 29 Oct 2021 14:34:33 -0700
-In-Reply-To: <aef5409c-384e-1010-9f33-e3bfe1aa0685@archlinux.org> (Eli
-        Schwartz's message of "Fri, 29 Oct 2021 17:06:56 -0400")
-Message-ID: <xmqq35ojjz12.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231173AbhJ2Vjt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 17:39:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49858 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230139AbhJ2Vjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 17:39:46 -0400
+Received: (qmail 23924 invoked by uid 109); 29 Oct 2021 21:37:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Oct 2021 21:37:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23287 invoked by uid 111); 29 Oct 2021 21:37:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Oct 2021 17:37:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 29 Oct 2021 17:37:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        "Randall S . Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] wrapper: remove xunsetenv()
+Message-ID: <YXxpjLhiguq4HY6g@coredump.intra.peff.net>
+References: <013a01d7cd092d91cb088b5610nexbridge.com>
+ <20211029212705.31721-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 02466D1E-3900-11EC-8C1B-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211029212705.31721-1-carenas@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eli Schwartz <eschwartz@archlinux.org> writes:
+On Fri, Oct 29, 2021 at 02:27:05PM -0700, Carlo Marcelo Arenas Belón wrote:
 
-> On 10/29/21 4:11 PM, Junio C Hamano wrote:
->> Eli Schwartz <eschwartz@archlinux.org> writes:
->> 
->>> +	struct {
->>> +		char *name;
->>> +		enum { OPT_STRING } type;
->>> +	}  option[] = {
->>> +		{ "exclude", OPT_STRING },
->>> +		{ "match", OPT_STRING },
->>> +	};
->> 
->> I floated OPT_<TYPE> in my earlier illustration as "something like
->> this", not "literally use these tokens".  We have CPP macros of the
->> same name in parse-options.h API---we may not see troubles from the
->> name clashes today, but let's not leave it to chances.
->> 
->> Perhaps call it like DESCRBE_ARG_STRING or something that ensures
->> uniqueness like that?
->
->
-> Ah. That alternative seems a bit long though. :( Without breaking enum
-> type into one per line, it will quickly overflow line lengths... though
-> maybe it should be one per line anyway?
+> Platforms that are using the git compatibility layer for unsetenv
+> use void as a return value for unsetenv(), so any function that checks
+> for a return value will fail to build.
 
-Yes, these things should be one item per line; a patch that adds or
-removes one would become easier to read.
+Good catch.
 
->
-> Will try to put some thought into naming.
+> Remove the unused wrapper function.
+
+I don't mind removing this if nobody is using it, but doesn't your first
+paragraph argue that our definition of gitunsetenv() is just wrong?
+I.e., it should return an int, even if it is always "0"?
+
+Or is it a portability question? I.e., are there platforms where
+unsetenv() also returns void, in which case we must make sure nobody
+ever looks at its return value (and xunsetenv() is therefore a wrong
+direction)?
+
+-Peff
