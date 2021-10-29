@@ -2,93 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1785AC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0B88C433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC8A861075
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:37:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A02D760EB4
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbhJ2VkK convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 29 Oct 2021 17:40:10 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:58559 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231628AbhJ2VkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 17:40:08 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 19TLbaWE075555
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 29 Oct 2021 17:37:36 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "=?utf-8?Q?'Carlo_Marcelo_Arenas_Bel=C3=B3n'?=" <carenas@gmail.com>,
-        <git@vger.kernel.org>
-Cc:     <avarab@gmail.com>
-References: <013a01d7cd092d91cb088b5610nexbridge.com> <20211029212705.31721-1-carenas@gmail.com>
-In-Reply-To: <20211029212705.31721-1-carenas@gmail.com>
-Subject: RE: [PATCH] wrapper: remove xunsetenv()
-Date:   Fri, 29 Oct 2021 17:37:30 -0400
-Organization: Nexbridge Inc.
-Message-ID: <014301d7cd0d$3019b8e0$904d2aa0$@nexbridge.com>
+        id S230335AbhJ2Vos (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 17:44:48 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64067 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230168AbhJ2Voq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 17:44:46 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1090F16B76E;
+        Fri, 29 Oct 2021 17:42:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=i4UC8Eoq1s6U/R+Jq66IxH9bkn1n1wIuQ6QyGC
+        4GIOw=; b=UFodB/ZuDLKbYx9lhlMFRhAhY5XRu1D3100IEOLTH8tz9XEkY3d50x
+        gt74vbmZgNr0HBK7DK9TFT+Z4+91vNpo0ZXP4cxBd6c6hy4aqrNenLPMA1uZFQXc
+        1iS/Z+x2+IXchJu2YjV7vlULQpeeBXsqYLCaqjdxNgeExewdk8bCQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0990016B76D;
+        Fri, 29 Oct 2021 17:42:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AB0C916B76C;
+        Fri, 29 Oct 2021 17:42:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Bug] wrapper.c uses unportable unsetenv
+References: <012301d7cd01$90428960$b0c79c20$@nexbridge.com>
+        <xmqqsfwjk1s3.fsf@gitster.g>
+        <013501d7cd06$8c8281e0$a58785a0$@nexbridge.com>
+        <013a01d7cd09$72d91cb0$588b5610$@nexbridge.com>
+Date:   Fri, 29 Oct 2021 14:42:12 -0700
+In-Reply-To: <013a01d7cd09$72d91cb0$588b5610$@nexbridge.com>
+        (rsbecker@nexbridge.com's message of "Fri, 29 Oct 2021 17:10:44
+        -0400")
+Message-ID: <xmqqwnlvik3v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGRg/VseL3IXeLBpvX00zE9WnaeNAD1p6jrrG9kmsA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 14220A42-3901-11EC-B10F-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On October 29, 2021 5:27 PM, Carlo Marcelo Arenas Belón wrote:
-> Platforms that are using the git compatibility layer for unsetenv use void as a
-> return value for unsetenv(), so any function that checks for a return value will
-> fail to build.
-> 
-> Remove the unused wrapper function.
-> 
-> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  git-compat-util.h | 1 -
->  wrapper.c         | 6 ------
->  2 files changed, 7 deletions(-)
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h index 141bb86351..d70ce14286
-> 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -879,7 +879,6 @@ char *xstrndup(const char *str, size_t len);  void
-> *xrealloc(void *ptr, size_t size);  void *xcalloc(size_t nmemb, size_t size);  void
-> xsetenv(const char *name, const char *value, int overwrite); -void
-> xunsetenv(const char *name);  void *xmmap(void *start, size_t length, int prot,
-> int flags, int fd, off_t offset);  const char *mmap_os_err(void);  void
-> *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-> diff --git a/wrapper.c b/wrapper.c index 1460d4e27b..36e12119d7 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -151,12 +151,6 @@ void xsetenv(const char *name, const char *value, int
-> overwrite)
->  		die_errno(_("could not setenv '%s'"), name ? name : "(null)");  }
-> 
-> -void xunsetenv(const char *name)
-> -{
-> -	if (!unsetenv(name))
-> -		die_errno(_("could not unsetenv '%s'"), name ? name : "(null)");
-> -}
-> -
->  /*
->   * Limit size of IO chunks, because huge chunks only cause pain.  OS X
->   * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
-> --
-> 2.33.1.1200.g715dc68e71
+<rsbecker@nexbridge.com> writes:
 
-I will be submitting a separate patch to turn off NO_SETENV and NO_UNSETENV for the NonStop x86 platform, where the calls have been supported since October 2020. The ia64 platform will have to continue to use the compat layer.
+> The actual issue is this:
+>
+>         if (!unsetenv(name))
+>             ^
+> "/home/ituglib/randall/git/wrapper.c", line 156: error(134):  expression
+> must have arithmetic or pointer type
+>
+> This is with NO_UNSETENV = YesPlease. It makes no sense to me why this isn't
+> compiling.
 
-Thank you for solving this.
+Ah, compat/unsetenv.c is broken.  gitunsetenv() should return int,
+not void.
 
-Randall
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: unsetenv(3) returns int, not void
+
+This compatilibity implementation has been returning a wrong type,
+ever since 731043fd (Add compat/unsetenv.c ., 2006-01-25) added to
+the system, yet nobody noticed it in the past 16 years, presumably
+because no code checks failures in their unsetenv() calls.  Sigh.
+
+For now, make it always succeed.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/unsetenv.c | 2 +-
+ git-compat-util.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git c/compat/unsetenv.c w/compat/unsetenv.c
+index bf5fd7063b..46d49c2c5e 100644
+--- c/compat/unsetenv.c
++++ w/compat/unsetenv.c
+@@ -1,6 +1,6 @@
+ #include "../git-compat-util.h"
+ 
+-void gitunsetenv (const char *name)
++int gitunsetenv(const char *name)
+ {
+ #if !defined(__MINGW32__)
+      extern char **environ;
+diff --git c/git-compat-util.h w/git-compat-util.h
+index b46605300a..0f7e369a5d 100644
+--- c/git-compat-util.h
++++ w/git-compat-util.h
+@@ -726,7 +726,7 @@ char *gitmkdtemp(char *);
+ 
+ #ifdef NO_UNSETENV
+ #define unsetenv gitunsetenv
+-void gitunsetenv(const char *);
++int gitunsetenv(const char *);
+ #endif
+ 
+ #ifdef NO_STRCASESTR
+
 
