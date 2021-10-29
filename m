@@ -2,123 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EEDFC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C84CC433FE
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:45:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 322A461039
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7623B60F4B
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230163AbhJ2Spc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 14:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbhJ2Sp1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 14:45:27 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8EB8C061570
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:42:58 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id d3so17799760wrh.8
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:42:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BhbCaUpOAvUzWndZhw4WVCL0/92iUxY65m1Cl1Y3/gg=;
-        b=PEvehcDV31CEc/bgNBmr2zNOxKaiC91zvDG8m14KHTABWvt453OZk+1wFCBHGtWj5e
-         XIvlYiOR/1IJISLnpXYOrZ7JzB+XjlmydSSdMMbNfjPql446sFvJo63x+lCF8RRlvWEL
-         KLm08YazhmEXk9GVhPGRYKrjex3hEgDL0eQ5y5Og8VRrgyHcfhqZkfpV6rqm567UfTQl
-         OV8SMVbvoQIKPBWY26jVEgFc6gdjizQubvaj+Yn/b1o5SKXXa677YdQBc6lPh5XmimQG
-         PusQq9rvZ9V4kYS+MU8I6jxFHCbddWwo1IOhV4cEPft/a4RHeK/q9kBHZvW7JzDOB1J5
-         mj9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BhbCaUpOAvUzWndZhw4WVCL0/92iUxY65m1Cl1Y3/gg=;
-        b=pSejSu/lBjNdM0DxDuijNv3/CPGA7h10r/0IVECfyo9a61pGm17ra9GhlOSyJ0CCzm
-         /FgSeks+HMMg9ngWylaW8Z4FtINnwwMgTc9I7IJ56mwW8L4YYuR54tRZ0yK1GPK8vALO
-         /4dE+DlZXOLwIjfrcE4XL5J8WhCSN2h5xrjUQTH+sbWwLIhSxaI0ibrv37eWnE3mrsGS
-         nHH+2ftX5PT8IGnTBTDMYY1zbQpRBQhSjK5EYixMNDubEKKKruWEs8Q8KMe1nglWAAkB
-         sMqoPkFhEQtiB7aZVauP6w9Li/jhQPOXYI7GrqYlcgK4FvD6PQIuSBUh2epHJ2D87gTA
-         n9Nw==
-X-Gm-Message-State: AOAM532B4ouxSIjI+AOTeHfF+ZDHTyVDVvJmSyV2u1BQ1WU0Yzi2gzrz
-        PTmklBHBj9DbyYuFgeBfoOR+oMn793k=
-X-Google-Smtp-Source: ABdhPJz5Z/l6fJeL/Un7CmrSbmB/fSUAWqg6quFOqU5YSSxqT66Qrtw6L8rNUrANJARHkrA6RMbdIA==
-X-Received: by 2002:adf:d20e:: with SMTP id j14mr8716015wrh.220.1635532977424;
-        Fri, 29 Oct 2021 11:42:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h13sm2193103wrx.82.2021.10.29.11.42.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 11:42:57 -0700 (PDT)
-Message-Id: <38859ae7b7de0f6406180a0427b9ce07fe3b9aa3.1635532975.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
-References: <pull.1052.v5.git.1635461500.gitgitgadget@gmail.com>
-        <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
-From:   "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 18:42:55 +0000
-Subject: [PATCH v6 2/2] http-fetch: redact url on die() message
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S231592AbhJ2SsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 14:48:03 -0400
+Received: from mail.archlinux.org ([95.216.189.61]:56300 "EHLO
+        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231210AbhJ2Srw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 14:47:52 -0400
+From:   Eli Schwartz <eschwartz@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1635533123;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=jvkuA/ug4S0hS2yB0odE/1/5ABERYKJiWMluBy2Z3P0=;
+        b=qtdIEajsFLp+IlVlMnAEXmreHpMB5JmX3DjQp02ET4nCK4l1+TLlkDKgd1OHXKjNEC5U6a
+        mJZZTPQuZVkqWie6T9O7wf58EvFO8wkvizBKwlV4W90Gg/dO36DhzcRnBgRaWPoGhxYWEu
+        EvLianr5legzTZKkxRvFtlx7rKWI2pazRSdMgjYvXNmuMvRTC/RCUd5138Pml+NkhSutI5
+        r75nWTZff3jEUS/q1TFgiWLrjhSTN4XYGboqfENy+1eG5RkgFm+zusDz6AAlVvu/POjq/3
+        6bKn2omn2zNQ4qclDgbOHKy9zxL4S9jCiFbAhXftutkicHhQQymWVSmkGr8FUHih3E1DMT
+        nRBZtnsOca5qkByRgWJJ3YstXbv3z3jKEwwfOnRQhNGLI41X8e0J39mNOluwXkj313aX64
+        xYyk1TgSHed8EUXfGjZmUIaaMfDInmuUAenEPgvw9vp6jexyo1KStkUFrMWdWsIvaanlQx
+        KNkhOyko1QEA2NSHTgiABFJtWyMW4iIUX7vEG24nqxXnwW1rc9L4qs97+q3oV/LKPPNK/A
+        diAQ+pHPDt5U1LQsayyuCSu809ecItxSAZ1DnC4Pb49YIxFNBarv+0tnihLI6VmgfZoxjO
+        /nylHI2iCJN6V1RxBQ4iy9RZ5ByMV/VeQZPiz6XhHo+23u2xz0NhE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1635533123;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=jvkuA/ug4S0hS2yB0odE/1/5ABERYKJiWMluBy2Z3P0=;
+        b=Zx0GbzfpEBXoGcGwvCSKET3dStT5DXBjEyVCaYluzKkFhXvzz0jJlNh7LRZ6trSPmVPKHr
+        dcmsgJMhlwh8p/Cw==
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Ivan Frade <ifrade@google.com>, Ivan Frade <ifrade@google.com>
+Subject: [PATCH v3 0/3] Add some more options to the pretty-formats
+Date:   Fri, 29 Oct 2021 14:45:09 -0400
+Message-Id: <20211029184512.1568017-1-eschwartz@archlinux.org>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211026013452.1372122-1-eschwartz@archlinux.org>
+References: <20211026013452.1372122-1-eschwartz@archlinux.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ivan Frade <ifrade@google.com>
+This revision only contains style nits in response to review comments.
+See below.
 
-http-fetch prints the URL after failing to fetch it. This can be
-confusing to users (they cannot really do anything with it), and they
-can share by accident a sensitive URL (e.g. with credentials) while
-looking for help.
+Eli Schwartz (3):
+  pretty.c: rework describe options parsing for better extensibility
+  pretty: add tag option to %(describe)
+  pretty: add abbrev option to %(describe)
 
-Redact the URL unless the GIT_TRACE_REDACT variable is set to false. This
-mimics the redaction of other sensitive information in git, like the
-Authorization header in HTTP.
+ Documentation/pretty-formats.txt | 16 +++++++---
+ pretty.c                         | 54 ++++++++++++++++++++++++++------
+ t/t4205-log-pretty-formats.sh    | 16 ++++++++++
+ 3 files changed, 71 insertions(+), 15 deletions(-)
 
-Fix also capitalization of previous die() message (must start in
-lowercase).
-
-Signed-off-by: Ivan Frade <ifrade@google.com>
----
- http-fetch.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/http-fetch.c b/http-fetch.c
-index fa642462a9e..c7c7d391ac5 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -4,6 +4,7 @@
- #include "http.h"
- #include "walker.h"
- #include "strvec.h"
-+#include "urlmatch.h"
- 
- static const char http_fetch_usage[] = "git http-fetch "
- "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin | --packfile=hash | commit-id] url";
-@@ -63,8 +64,17 @@ static void fetch_single_packfile(struct object_id *packfile_hash,
- 	if (start_active_slot(preq->slot)) {
- 		run_active_slot(preq->slot);
- 		if (results.curl_result != CURLE_OK) {
--			die("Unable to get pack file %s\n%s", preq->url,
--			    curl_errorstr);
-+			struct url_info url;
-+			char *nurl = url_normalize(preq->url, &url);
-+			if (!nurl || !git_env_bool("GIT_TRACE_REDACT", 1)) {
-+				die("unable to get pack file '%s'\n%s", preq->url,
-+				    curl_errorstr);
-+			} else {
-+				die("failed to get '%.*s' url from '%.*s' "
-+				    "(full URL redacted due to GIT_TRACE_REDACT setting)\n%s",
-+				    (int)url.scheme_len, url.url,
-+				    (int)url.host_len, &url.url[url.host_off], curl_errorstr);
-+			}
- 		}
- 	} else {
- 		die("Unable to start request");
+Range-diff against v2:
+1:  1cf0d82b91 ! 1:  55a20468d3 pretty.c: rework describe options parsing for better extensibility
+    @@ pretty.c: int format_set_trailers_options(struct process_trailer_options *opts,
+     -							&argval, &arglen)) {
+     -				matched = options[i];
+     +		for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
+    -+			switch(option[i].type) {
+    ++			switch (option[i].type) {
+     +			case OPT_STRING:
+     +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+    -+								&argval, &arglen) && arglen) {
+    ++								&argval, &arglen)) {
+     +					if (!arglen)
+     +						return 0;
+     +					strvec_pushf(args, "--%s=%.*s", option[i].name, (int)arglen, argval);
+2:  cb6af9bc14 ! 2:  c34c8a4f7f pretty: add tag option to %(describe)
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+      		int i;
+      
+      		for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
+    - 			switch(option[i].type) {
+    + 			switch (option[i].type) {
+     +			case OPT_BOOL:
+    -+				if(match_placeholder_bool_arg(arg, option[i].name, &arg, &optval)) {
+    -+					if (optval) {
+    ++				if (match_placeholder_bool_arg(arg, option[i].name, &arg, &optval)) {
+    ++					if (optval)
+     +						strvec_pushf(args, "--%s", option[i].name);
+    -+					} else {
+    ++					else
+     +						strvec_pushf(args, "--no-%s", option[i].name);
+    -+					}
+     +					found = 1;
+     +				}
+     +				break;
+      			case OPT_STRING:
+      				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+    - 								&argval, &arglen) && arglen) {
+    + 								&argval, &arglen)) {
+     
+      ## t/t4205-log-pretty-formats.sh ##
+     @@ t/t4205-log-pretty-formats.sh: test_expect_success '%(describe:exclude=...) vs git describe --exclude ...' '
+3:  08ade18b35 ! 3:  b751aaf3c6 pretty: add abbrev option to %(describe)
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+      				break;
+     +			case OPT_INTEGER:
+     +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+    -+								&argval, &arglen) && arglen) {
+    ++								&argval, &arglen)) {
+    ++					char *endptr;
+     +					if (!arglen)
+     +						return 0;
+    -+					char* endptr;
+     +					strtol(argval, &endptr, 10);
+     +					if (endptr - argval != arglen)
+     +						return 0;
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+     +				break;
+      			case OPT_STRING:
+      				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+    - 								&argval, &arglen) && arglen) {
+    + 								&argval, &arglen)) {
+     
+      ## t/t4205-log-pretty-formats.sh ##
+     @@ t/t4205-log-pretty-formats.sh: test_expect_success '%(describe:tags) vs git describe --tags' '
 -- 
-gitgitgadget
+2.33.1
+
