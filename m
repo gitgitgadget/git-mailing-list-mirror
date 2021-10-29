@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D729C433FE
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 807AEC433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:59:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17A3661167
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:59:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6284C61100
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231734AbhJ2OCF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 10:02:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38486 "EHLO
+        id S231641AbhJ2OCG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 10:02:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231573AbhJ2OBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 10:01:55 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95F4FC061767
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:59:26 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 71so6629155wma.4
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:59:26 -0700 (PDT)
+        with ESMTP id S231673AbhJ2OCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 10:02:01 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A82C06120E
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:59:29 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id o14so16235237wra.12
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oUOtW+VMfF77w6KugTIk7kk1SNVq3GaMJS9+jVTFH/w=;
-        b=aoY85z2ScqUWiujne/dtBtScAk9hA0ronrqLgP89suTWs8FZlqKqLo4kHM7rMN1J7z
-         VSGxCadimkZuzRAmV4eI7a1iko8EWDrV1iWi3GIvLVQ2Hp3LPwE6Y0DIAFIn/Px5Z1GS
-         rDgrAX4CMRBSXM695w3fsLvBIqcHEoqGTQrOO+Yo6FeTawLdwQxFVrfphyNjoA7KhEy9
-         4RE8ZEGhI6le5xDa5rJceyBUMG7yFD4BHWEwVDyY4sSwabaOQhmdb4Py6z/zEIxbO25Q
-         BKhNmdN1+LS5qHb3tB2UDvdPN6tKkudYQL3aXK+sFCu2KZwV+kvFGq8THtdLu49LTsdz
-         zL4w==
+        bh=68yNxEpEa4kPiZewgYtxeNWEbIsC/efET42mXCcd9W0=;
+        b=CIYKMwJgWrP4Lk+uH9cOlO1RVRY+DMk/Y1IMYZw03+VPdbJomGI9w3/fzWFxAD4Pxb
+         yHDdtACxthNajIirZiIBTugDKJqjJu9xEupsavsYlnhIdMfh6xDx6wMTzDf4bmvP4q2z
+         PHyxEEUZcu9Ub3WlzrmXbayJkuElBKBTWhy9uyxomL6trv7Ke2WN3RMWBLxtDGVlGc2t
+         cf+T7BnLnt/SSOcL4T0d5/EvZcOGPFf1SdFzEu8xiyEob3pxCU3zbRp4nidrrchnxC+R
+         i9ir9egYa/vKAl6GILDomMVMIk3TNNkJAIGYmUUUmJuFL22UjT7BTD82rrq1wA4zSzUs
+         SJDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oUOtW+VMfF77w6KugTIk7kk1SNVq3GaMJS9+jVTFH/w=;
-        b=RWxegGkUZqNDWDtFNK+EJ8Dkm5ihADHkoGF5j5zWjb+R6DYDkWLQLEh1QEV3RijtuA
-         /6Nx9zLOmhGI9mfkfHz+DUtcHBvOt/pLFc4YzKnAn9pNZfJfjXrdB9MGSf7y4AGPK1M1
-         9FfHNcb1B+27011DZsFaa7E0lw2qknQz5pRI7rkx7GhgxYGxD/hf73SkEEdAh5CwW8jp
-         /ypOwDVJNyHLsOx09HhAA5afRJXJ+LUS1kjlkHz8ibb3+QxrexW3dmx3lm3A1MgVp5tW
-         BZTWoLfvcf/gPO8IsExMsMM6m4r5LpoUP+lOpURrJspEXfWEIv1eLI2i7YxNNZOsmXGK
-         Iw4w==
-X-Gm-Message-State: AOAM531vkV9RmW7jUVDwwK+j+tMzbb1pdF+Mhh3YTj7GESUcQC9LJe85
-        T/UqvA8c15zSIoFvtPaGHmYSTlEW10g=
-X-Google-Smtp-Source: ABdhPJz3Xmbv/65NnMAzFutCOtxHjen+jKi1So2QaXKxqk3H9dfmcNFmO+XhuQAga3xvjSJuhUaPdA==
-X-Received: by 2002:a1c:20cc:: with SMTP id g195mr5193487wmg.42.1635515965251;
-        Fri, 29 Oct 2021 06:59:25 -0700 (PDT)
+        bh=68yNxEpEa4kPiZewgYtxeNWEbIsC/efET42mXCcd9W0=;
+        b=5dzI/OQ230BGp27blvVxdYtjuq5DzdVj227IFWXaoRg/DRFezCTKvH0umCL+9C7E44
+         waNibV1HvnTdjR+tlaw2CGOALOPV5mxG7LjPiY3Pkkpu2nzKFiA6bhC9snR4hY3nsPeV
+         PmWesUtkmK4w8sMF31lSfguM9HqbX3s8JEh0I8z3ln0xnCe3wQwDcM1lcGvMAT9gcdKz
+         jOlWJiNjE4/A+oKMUfdDjentamwZcvC9yKVNNLo2lsyfW6NwDT3YgwqrI2yeRdBReVZu
+         +YQ4b14xCN8plZLKSjFeaqiyDbk54w3jXOswSdwYtvGogIgcKGywDFJ+z0BQF9IoislM
+         gbvg==
+X-Gm-Message-State: AOAM533mak4YkGUvz3r3oI5yvNPcK++3twyiDj0ITQNPXG9hu94EI7Fd
+        sXfveItOc0Fjyh79Q0GjQvyQwJaqqQM=
+X-Google-Smtp-Source: ABdhPJzuI2ZE3KZW3LoAYykYwncC3lankfx+M8Jk1qkzCZyAioeF945i/xp9E5DQn1f541cVdulifQ==
+X-Received: by 2002:adf:a2d4:: with SMTP id t20mr14490928wra.229.1635515968603;
+        Fri, 29 Oct 2021 06:59:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h17sm4237634wrp.34.2021.10.29.06.59.24
+        by smtp.gmail.com with ESMTPSA id l9sm5499383wms.40.2021.10.29.06.59.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 06:59:24 -0700 (PDT)
-Message-Id: <f59c523bcc48b187680be9149e9311f15bfe06dc.1635515959.git.gitgitgadget@gmail.com>
+        Fri, 29 Oct 2021 06:59:25 -0700 (PDT)
+Message-Id: <acc5591517fa519fc45c07c27defb309c891dea0.1635515959.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
 References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
         <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
 From:   "Matt Cooper via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 13:59:18 +0000
-Subject: [PATCH v3 7/8] odb: guard against data loss checking out a huge file
+Date:   Fri, 29 Oct 2021 13:59:19 +0000
+Subject: [PATCH v3 8/8] clean/smudge: allow clean filters to process extremely
+ large files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,103 +73,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matt Cooper <vtbassmatt@gmail.com>
 
-This introduces an additional guard for platforms where `unsigned long`
-and `size_t` are not of the same size. If the size of an object in the
-database would overflow `unsigned long`, instead we now exit with an
-error.
+The filter system allows for alterations to file contents when they're
+moved between the database and the worktree. We already made sure that
+it is possible for smudge filters to produce contents that are larger
+than `unsigned long` can represent (which matters on systems where
+`unsigned long` is narrower than `size_t`, most notably 64-bit Windows).
+Now we make sure that clean filters can _consume_ contents that are
+larger than that.
 
-A complete fix will have to update _many_ other functions throughout the
-codebase to use `size_t` instead of `unsigned long`. It will have to be
-implemented at some stage.
+Note that this commit only allows clean filters' _input_ to be larger
+than can be represented by `unsigned long`.
 
-This commit puts in a stop-gap for the time being.
+This change makes only a very minute dent into the much larger project
+to teach Git to use `size_t` instead of `unsigned long` wherever
+appropriate.
 
 Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Matt Cooper <vtbassmatt@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- delta.h       | 6 +++---
- object-file.c | 6 +++---
- packfile.c    | 6 +++---
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ convert.c                   |  2 +-
+ t/t1051-large-conversion.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/delta.h b/delta.h
-index 2df5fe13d95..8a56ec07992 100644
---- a/delta.h
-+++ b/delta.h
-@@ -90,15 +90,15 @@ static inline unsigned long get_delta_hdr_size(const unsigned char **datap,
- 					       const unsigned char *top)
- {
- 	const unsigned char *data = *datap;
--	unsigned long cmd, size = 0;
-+	size_t cmd, size = 0;
- 	int i = 0;
- 	do {
- 		cmd = *data++;
--		size |= (cmd & 0x7f) << i;
-+		size |= st_left_shift(cmd & 0x7f, i);
- 		i += 7;
- 	} while (cmd & 0x80 && data < top);
- 	*datap = data;
--	return size;
-+	return cast_size_t_to_ulong(size);
- }
+diff --git a/convert.c b/convert.c
+index fd9c84b0257..5ad6dfc08a0 100644
+--- a/convert.c
++++ b/convert.c
+@@ -613,7 +613,7 @@ static int crlf_to_worktree(const char *src, size_t len, struct strbuf *buf,
  
- #endif
-diff --git a/object-file.c b/object-file.c
-index f233b440b22..70e456fc2a3 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1344,7 +1344,7 @@ static int parse_loose_header_extended(const char *hdr, struct object_info *oi,
- 				       unsigned int flags)
- {
- 	const char *type_buf = hdr;
+ struct filter_params {
+ 	const char *src;
 -	unsigned long size;
 +	size_t size;
- 	int type, type_len = 0;
+ 	int fd;
+ 	const char *cmd;
+ 	const char *path;
+diff --git a/t/t1051-large-conversion.sh b/t/t1051-large-conversion.sh
+index 8b23d862600..d4cfe8bf5de 100755
+--- a/t/t1051-large-conversion.sh
++++ b/t/t1051-large-conversion.sh
+@@ -97,4 +97,15 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
+ 	test "$size" -ge $((5 * 1024 * 1024 * 1024))
+ '
  
- 	/*
-@@ -1388,12 +1388,12 @@ static int parse_loose_header_extended(const char *hdr, struct object_info *oi,
- 			if (c > 9)
- 				break;
- 			hdr++;
--			size = size * 10 + c;
-+			size = st_add(st_mult(size, 10), c);
- 		}
- 	}
- 
- 	if (oi->sizep)
--		*oi->sizep = size;
-+		*oi->sizep = cast_size_t_to_ulong(size);
- 
- 	/*
- 	 * The length must be followed by a zero byte
-diff --git a/packfile.c b/packfile.c
-index 755aa7aec5e..3ccea004396 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1059,7 +1059,7 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
- 		unsigned long len, enum object_type *type, unsigned long *sizep)
- {
- 	unsigned shift;
--	unsigned long size, c;
-+	size_t size, c;
- 	unsigned long used = 0;
- 
- 	c = buf[used++];
-@@ -1073,10 +1073,10 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
- 			break;
- 		}
- 		c = buf[used++];
--		size += (c & 0x7f) << shift;
-+		size = st_add(size, st_left_shift(c & 0x7f, shift));
- 		shift += 7;
- 	}
--	*sizep = size;
-+	*sizep = cast_size_t_to_ulong(size);
- 	return used;
- }
- 
++# This clean filter writes down the size of input it receives. By checking against
++# the actual size, we ensure that cleaning doesn't mangle large files on 64-bit Windows.
++test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
++		'files over 4GB convert on input' '
++	test-tool genzeros $((5*1024*1024*1024)) >big &&
++	test_config filter.checklarge.clean "wc -c >big.size" &&
++	echo "big filter=checklarge" >.gitattributes &&
++	git add big &&
++	test $(test_file_size big) -eq $(cat big.size)
++'
++
+ test_done
 -- 
 gitgitgadget
-
