@@ -2,312 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BBBCC433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37724C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:43:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2E1660C51
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:32:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1830061100
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231616AbhJ2Neu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 09:34:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60442 "EHLO
+        id S231411AbhJ2NqW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 09:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbhJ2Neu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 09:34:50 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45488C061570
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:32:21 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id k7so16117224wrd.13
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:32:21 -0700 (PDT)
+        with ESMTP id S229998AbhJ2NqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 09:46:21 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5628EC061570
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:43:53 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id g17so9051610qtk.8
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=3z/pK1JIm/X+kqvbfbGCb/OpHME3iD/6q0jpGaXww4Q=;
-        b=lnAZJKVOZo8Sp30L1iMhl+q45EdskeFpWlDDdCalA5e2BSkV/JPBv3m6oAYnCCiVXI
-         kXbZcroieLoCN17MekhKvbiSbGC/NaEXarVPBM9Qk3u+NgWfyZMGCruweE0rIEEEEdS2
-         xjl8No7sm+Wskb99mCjrTVR+H8enTFDCuzJNc3FrZHi6NaaS2QcVYtQumHaKDQ28RJtT
-         rJ2Cx7CisYDcUIRF1xJiYT5iP481kMR1vu78JFYgdrCc5g3MvmIYOj9NiUOD4fRnNpMu
-         j+hgqlzAG7yKCBbus8Mz9wM98/FJFyXph0ulexHMWxDbgI1nq8ylX7BeJ68VzluuDT9N
-         Jmig==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=diwTvEzCCtVfQ7NZ3dDjG1ewIReYDMnTXGWf3GSCX54=;
+        b=ZYsNvTnMSceiq+5/V+hroBMVvTtiLE0bhTM8m1E21Wprypa7vlKw8czocQ8iswlILK
+         Itl8WMyV9pWunm1LRA7wZ0XtCpyk/KYm7+gR7sSDLQ251rrHxE6W9KVLVT99H4sBUgkO
+         bt4eQn2oW5W0i9kCU9Yw+ouzQkNcykKullaXBs/nBqLpV55zCWd70a8Y+ZWt3IwWwIPB
+         u1l5oFq4CZEFrXfwA/YMGRBM+40V7RxWqAZIWK8YNo3XMjAW9Uit75u4fTvRKjA/+aai
+         xPi15bgPBqVEb5IYVJDkZXR6gKv/8Qh6lzmKy4+J3ZyKEeltPYdoGE9pbXZGtV/5L5/+
+         3QHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=3z/pK1JIm/X+kqvbfbGCb/OpHME3iD/6q0jpGaXww4Q=;
-        b=Ow68QgpakjeNFg6kBFLMfnDe4T8dRyRuOtocCyE+xoSH68tSsbOgZLdjesBc9MsDYv
-         zGbql0V9tOtsLKlI5n4jWtNCfNV7e2fyN91SthhQlTU4SElemgxNcykq/ZXdHc+xIU6E
-         3bnuYNrcCqeIuEmoMcz46g7pSAV+096G9C58r7tfTAXbV3CUQP5ejiXu2t/YlzIM6VhW
-         +fGqoL2b+dHTDsIerPTB40418BZWnGGE8y0F9glEQTpPRWjaP7+U9PEU7agcT6G5A99g
-         MlZRoJUNXvHTjEIZOt/4JgGnb3pQ/dXhFMDmc4NbZ6bIeVELnp690XZn61CCUWldBV36
-         yRGA==
-X-Gm-Message-State: AOAM532zNyxmOevYyAs0TKCWH/dL3xxvjBeVT43yloQmvIEUVNOBAn8R
-        tj+suiJ6JnPQBgYmyHFoKWqO+67geY0=
-X-Google-Smtp-Source: ABdhPJw7HCfIf44rvrAMgnNjmoAA3VghVEseTZ7fxL5parZqiuQa5vflLpiCbIpouM9bxbEpLGj2/Q==
-X-Received: by 2002:adf:e7c2:: with SMTP id e2mr1978383wrn.349.1635514339753;
-        Fri, 29 Oct 2021 06:32:19 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id i6sm7936864wry.71.2021.10.29.06.32.18
+        bh=diwTvEzCCtVfQ7NZ3dDjG1ewIReYDMnTXGWf3GSCX54=;
+        b=PsRBnMet5jYE1rE7GSFR5E/gbzvaaHYAhJSwsIVjRtTbTmzQJhLMcQrrV1T2nCmqqN
+         dsYE4eGJm1sVAXemOxWdvV3004OXkxeWn91GqOYQJelA6C2NJOwfb4228TU9Nc9gk9FR
+         pP6DokrfwX8he8vK3vqSec+47UwfdV6VY/pSx8DlUHimCiXQo36IAIPtgpfuxC28Xf2g
+         xF9OS3tuW4goPxrzFZFK43/8xjGr4LerE/pKbxGrmt+nwp+3md0vNpar+RL8Nus0BieH
+         gAbamHc+SbnvT2yZG4FM/ZRZYWWM0Wl8ugOzFlC6G0nE3XKzIKBLP/fS6EYAYf4W2mX4
+         GmUA==
+X-Gm-Message-State: AOAM5316wZr7/q9O+SiDYAu5rOGe8/jErK8Nr90TYRXdkKX9IYjyLGUN
+        zOJLNbh0cRtb3+QJppJuD0Lx
+X-Google-Smtp-Source: ABdhPJxoFB5f+JBI9fHLeFlRMKoeBA8ogZYaL+7CBLpGMtUEAp59feIgwM8fZIGjmDvL8SEdAqr0Dw==
+X-Received: by 2002:a05:622a:50b:: with SMTP id l11mr11693964qtx.415.1635515032477;
+        Fri, 29 Oct 2021 06:43:52 -0700 (PDT)
+Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id bk13sm3903020qkb.58.2021.10.29.06.43.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Oct 2021 06:32:19 -0700 (PDT)
-Message-ID: <7be2fde3-69b2-1da7-bb94-7c181490f626@gmail.com>
-Date:   Fri, 29 Oct 2021 14:32:16 +0100
+        Fri, 29 Oct 2021 06:43:52 -0700 (PDT)
+Message-ID: <74501e70-7bac-e301-4075-09152f292884@github.com>
+Date:   Fri, 29 Oct 2021 09:43:44 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] Remove negation from the commit and merge option
- "--no-verify"
-Content-Language: en-GB-large
-To:     Alex Riesen <alexander.riesen@cetitec.com>,
-        phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>
-References: <YXfwanz3MynCLDmn@pflmari>
- <YXhwGQOTfD+ypbo8@coredump.intra.peff.net> <YXlBhmfXl3wFQ5Bj@pflmari>
- <YXlD5ecNSdeBSMoS@coredump.intra.peff.net> <YXlTpzrY7KFqRlno@pflmari>
- <xmqq4k92w7do.fsf@gitster.g> <YXpFTJTo0pKhM7xG@pflmari>
- <YXpZddOixrJDd//s@pflmari> <edca7f6b-e89c-7efa-c6f5-2c3aaaea54f9@gmail.com>
- <YXrFaJXbuSuwfhQ7@pflmari>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <YXrFaJXbuSuwfhQ7@pflmari>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.1
+Subject: Re: [PATCH v3 2/3] sparse-index: add ensure_correct_sparsity function
+Content-Language: en-US
+To:     Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
+ <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
+ <9d6511db0728e9880a96f3d9e3a025a9ddc5bc9e.1635358812.git.gitgitgadget@gmail.com>
+ <bf73e2d2-a2ab-8364-d505-1bd5bba3efd2@gmail.com> <xmqqbl3aupbh.fsf@gitster.g>
+ <bc960863-7ff2-d6bf-9710-6803f3784751@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <bc960863-7ff2-d6bf-9710-6803f3784751@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+Derrick Stolee wrote:
+> On 10/27/2021 5:32 PM, Junio C Hamano wrote:
+>> Derrick Stolee <stolee@gmail.com> writes:
+>>
+>>>> +int convert_to_sparse(struct index_state *istate, int flags)
+>>>> +{
+>>>> +	/*
+>>>> +	 * If the index is already sparse, empty, or otherwise
+>>>> +	 * cannot be converted to sparse, do not convert.
+>>>> +	 */
+>>>> +	if (istate->sparse_index || !istate->cache_nr ||
+>>>> +	    !is_sparse_index_allowed(istate, flags))
+>>>> +		return 0;
+>>
+>> Shouldn't we also at least do this?  Blindly blowing away the entire
+>> cache-tree and rebuilding it from scratch may be hiding a latent bug
+>> somewhere else, but is never supposed to be needed, and is a huge
+>> waste of computational resources.
+>>
+>> I say "at least" here, because a cache tree that is partially valid
+>> should be safely salvageable---at least that was the intention back
+>> when I designed the subsystem.
+> 
+> I think you are right, what you propose below. It certainly seems
+> like it would work, and even speed up the conversion from full to
+> sparse. I think I erred on the side of extreme caution and used
+> a hope that converting to sparse would be rare.
+> 
+>>  sparse-index.c | 24 +++++++++++++-----------
+>>  1 file changed, 13 insertions(+), 11 deletions(-)
+>>
+>> diff --git c/sparse-index.c w/sparse-index.c
+>> index bc3ee358c6..a95c3386f3 100644
+>> --- c/sparse-index.c
+>> +++ w/sparse-index.c
+>> @@ -188,17 +188,19 @@ int convert_to_sparse(struct index_state *istate, int flags)
+>>  	if (index_has_unmerged_entries(istate))
+>>  		return 0;
+>>  
+>> -	/* Clear and recompute the cache-tree */
+>> -	cache_tree_free(&istate->cache_tree);
+>> -	/*
+>> -	 * Silently return if there is a problem with the cache tree update,
+>> -	 * which might just be due to a conflict state in some entry.
+>> -	 *
+>> -	 * This might create new tree objects, so be sure to use
+>> -	 * WRITE_TREE_MISSING_OK.
+>> -	 */
+>> -	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+>> -		return 0;
+>> +	if (!cache_tree_fully_valid(&istate->cache_tree)) {
+>> +		/* Clear and recompute the cache-tree */
+>> +		cache_tree_free(&istate->cache_tree);
+>> +		/*
+>> +		 * Silently return if there is a problem with the cache tree update,
+>> +		 * which might just be due to a conflict state in some entry.
+>> +		 *
+>> +		 * This might create new tree objects, so be sure to use
+>> +		 * WRITE_TREE_MISSING_OK.
+>> +		 */
+>> +		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+>> +			return 0;
+>> +	}
+> 
+> I think at this point we have enough tests that check the sparse index
+> and its different conversion points that the test suite might catch if
+> this is a bad idea. Note that this is only a change of behavior if the
+> cache-tree is valid, which I expect to be the case most of the time in
+> the tests.
+> 
+> Thanks,
+> -Stolee
+> 
 
-On 28/10/2021 16:44, Alex Riesen wrote:
-> From: Alex Riesen <raa.lkml@gmail.com>
-> 
-> This documents re-enabling of the hooks disabled by an earlier
-> "--no-verify" in command-line.
-> 
-> Signed-off-by: Alexander Riesen <raa.lkml@gmail.com>
-> ---
-> 
-> Hi Phillip,
-> 
-> Phillip Wood, Thu, Oct 28, 2021 15:57:58 +0200:
->> On 28/10/2021 09:04, Alex Riesen wrote:
->>> From: Alex Riesen <raa.lkml@gmail.com>
->>>
->>> This allows re-enabling of the hooks disabled by an earlier "--no-verify"
->>> in command-line and makes the interface more consistent.
->>
->> Thanks for working on this. Since 0f1930c587 ("parse-options: allow
->> positivation of options starting, with no-", 2012-02-25) merge and commit
->> have accepted "--verify" but it is undocumented. The documentation updates
->> and fix to pull in this patch are very welcome, but I'm not sure we need the
->> other changes. I've left a couple of comments below.
->>
->> [As an aside we should probably improve the documentation in parse-options.h
->> if both Peff and Junio did not know how it handles "--no-foo" but that is
->> outside the scope of this patch]
-> 
-> Interesting feature. It is unfortunate it was so well hidden. You're right, of
-> course, and the newly added tests in t7504-commit-msg-hook.sh pass without any
-> changes to the "builtin/commit.c".
-> 
-> Removal of double-negation in the code was an improvement to its readability,
-> but I like small patches more.
-> 
-> Also, the series has no conflicts with 2.33.0 anymore and the "git pull" can
-> be applied independently.
-> 
->>> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
->>> index a3baea32ae..ba66209274 100644
->>> --- a/Documentation/git-commit.txt
->>> +++ b/Documentation/git-commit.txt
->>> @@ -11,7 +11,7 @@ SYNOPSIS
->>>    'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
->>>    	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
->>>    	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->>> -	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->>> +	   [--allow-empty-message] [--[no-]verify] [-e] [--author=<author>]
->>
->> I think for the synopsis it is fine just to list the most common options.
->> Having --no-verify without the [no-] makes it clear that --verify is the
->> default so is not a commonly used option.
-> 
-> Yep, makes sense.
-> 
->>>    	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
->>>    	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
->>>    	   [-S[<keyid>]] [--] [<pathspec>...]
->>> @@ -174,7 +174,13 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
->>>    -n::
->>>    --no-verify::
->>> -	This option bypasses the pre-commit and commit-msg hooks.
->>> +	By default, pre-merge and commit-msg hooks are run. When one of these
->>
->> I think saying "the pre-merge and commit-msg hooks" would be clearer as you
->> do below.
->>
->>> +	options is given, these are bypassed.
->>> +	See also linkgit:githooks[5].
->>> +
->>> +--verify::
->>> +	This option re-enables running of the pre-commit and commit-msg hooks
->>> +	after an earlier `-n` or `--no-verify`.
->>>    	See also linkgit:githooks[5].
->>
->> Some of the existing documentation describes the "--no-foo" option with
->> "--foo" (e.g --[no-]signoff) but in other places we list the two options
->> separately (e.g. --[no-]edit), I'd lean towards combining them as you have
->> done for the merge documentation but I don't feel strongly about it.
-> 
-> How about this instead:
-> 
->    -n::
->    --no-verify::
->            By default, pre-commit and commit-msg hooks are run. When one of these
->            options is given, the hooks will be bypassed.
->            See also linkgit:githooks[5].
-> 
->    --verify::
->            This option re-enables running of the pre-commit and commit-msg hooks
->            after an earlier `-n` or `--no-verify`.
-> 
->>> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
->>> index 3819fadac1..324ae879d2 100644
->>> --- a/Documentation/git-merge.txt
->>> +++ b/Documentation/git-merge.txt
->>> @@ -10,7 +10,7 @@ SYNOPSIS
->>>    --------
->>>    [verse]
->>>    'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
->>> -	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
->>> +	[--[no-]verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
->>
->> Again I'm not sure changing the synopsis makes things clearer.
-> 
-> Removed.
-> 
->>>    	[--[no-]allow-unrelated-histories]
->>>    	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
->>>    'git merge' (--continue | --abort | --quit)
->>> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
->>> index 80d4831662..f8016b0f7b 100644
->>> --- a/Documentation/merge-options.txt
->>> +++ b/Documentation/merge-options.txt
->>> @@ -112,8 +112,9 @@ option can be used to override --squash.
->>>    +
->>>    With --squash, --commit is not allowed, and will fail.
->>> ---no-verify::
->>> -	This option bypasses the pre-merge and commit-msg hooks.
->>> +--[no-]verify::
->>> +	By default, pre-merge and commit-msg hooks are run. When `--no-verify`
->>
->> I think "the pre-merge ..." would be better here as well.
-> 
-> Like this?
-> 
->    --[no-]verify::
->            By default, the pre-merge and commit-msg hooks are run.
-> 	  When `--no-verify` is given, these are bypassed.
->            See also linkgit:githooks[5].
-> 
->>> diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
->>> index 31b9c6a2c1..166ff5fb26 100755
->>> --- a/t/t7504-commit-msg-hook.sh
->>> +++ b/t/t7504-commit-msg-hook.sh
->>> @@ -130,6 +130,14 @@ test_expect_success '--no-verify with failing hook' '
->>>    '
->>> +test_expect_success '-n with failing hook' '
->>> +
->>> +	echo "more" >> file &&
->>> +	git add file &&
->>> +	git commit -n -m "more"
->>> +
->>> +'
->>
->> Is this to check that "-n" works like "--no-verify"?
-> 
-> Frankly, it was to check that the separate "-n" option works as I supposed it
-> would. I never used parse-options before.
-> 
->> I think it would be very useful to add another test that checks "--verify"
->> overrides "--no-verify".
-> 
-> Replaced the test with one which has "-n --verify".
-> 
-> Thanks!
-> 
-> 
->   Documentation/git-commit.txt    | 7 ++++++-
->   Documentation/merge-options.txt | 5 +++--
->   t/t7504-commit-msg-hook.sh      | 8 ++++++++
->   3 files changed, 17 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index a3baea32ae..2268787483 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -174,9 +174,14 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
->   
->   -n::
->   --no-verify::
-> -	This option bypasses the pre-commit and commit-msg hooks.
-> +	By default, pre-commit and commit-msg hooks are run. When one of these
-
-As I suggested yesterday I think this would be better if it kept the 
-"the" from the original text as you do below for the merge documentation 
-- s/default, /&the /
-
-> +	options is given, the hooks will be bypassed.
->   	See also linkgit:githooks[5]. >
-> +--verify::
-> +	This option re-enables running of the pre-commit and commit-msg hooks
-> +	after an earlier `-n` or `--no-verify`.
-> +
->   --allow-empty::
->   	Usually recording a commit that has the exact same tree as its
->   	sole parent commit is a mistake, and the command prevents you
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> index 80d4831662..80267008af 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -112,8 +112,9 @@ option can be used to override --squash.
->   +
->   With --squash, --commit is not allowed, and will fail.
->   
-> ---no-verify::
-> -	This option bypasses the pre-merge and commit-msg hooks.
-> +--[no-]verify::
-> +	By default, the pre-merge and commit-msg hooks are run.
-> +	When `--no-verify` is given, these are bypassed.
->   	See also linkgit:githooks[5].
-
-This text looks good. It would be nice to be consistent when documenting 
-"--verify" and "--no-verify" so that documentation for commit and merge 
-both have either a separate entry for each option as you have for commit 
-or a shared entry as you have here for merge. I'd be tempted to use this 
-form in the commit documentation.
-
->   -s <strategy>::
-> diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-> index 31b9c6a2c1..67fcc19637 100755
-> --- a/t/t7504-commit-msg-hook.sh
-> +++ b/t/t7504-commit-msg-hook.sh
-> @@ -130,6 +130,14 @@ test_expect_success '--no-verify with failing hook' '
->   
->   '
->   
-> +test_expect_success '-n followed by --verify with failing hook' '
-> +
-> +	echo "even more" >> file &&
-> +	git add file &&
-> +	test_must_fail git commit -n --verify -m "even more"
-> +
-> +'
-
-Thanks, having the new test is very helpful.
-
-Best Wishes
-
-Phillip
+This change doesn't appear to introduce any test failures or other unwanted
+behavior, so I don't see a reason not to include it. I'll add it in a
+re-roll - thanks!
