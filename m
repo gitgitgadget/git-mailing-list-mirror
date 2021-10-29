@@ -2,128 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D56CC433EF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43681C433EF
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:14:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7405860524
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:12:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20A6F60E8C
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 21:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbhJ2VPJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 17:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52772 "EHLO
+        id S231458AbhJ2VQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 17:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbhJ2VPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 17:15:08 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B023AC061570
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 14:12:39 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id d13so18573838wrf.11
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 14:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version;
-        bh=L1tDgnfP8DBTa6zImxEdo9yIDhxVLzuDobqSqtE4o3g=;
-        b=YCm/dMD8MfODOicZVZzSSIYFArxx0BpOsvMXOeqfws2tVjEkSpgwmWwQmp/bLRVMQz
-         LOtLeGnbcLjdWOW8OhN0twHboAlsmQ3wR/lo+oL3YjsM2jnrVplHRuirX0lEkyJPqeUk
-         ElEsqp6yIWFzI+D6hgZMZmbeXskSl3BerH/Dum4C9lgyMQmX9ff0obqAZclrWsYvH7o+
-         DN3cG9rRwmYLqEey4TEbLoh0HD1N54xJfcFIVTyewGPxdcpBav7fjLC3B6ITbJ28m9SM
-         gMtWzu5EOar68lgnBBSr0EAA9U+6d1Nn/n47G1+4MUUyOFZ9rwIKhn60yW4C1Q/MTkCo
-         sWtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version;
-        bh=L1tDgnfP8DBTa6zImxEdo9yIDhxVLzuDobqSqtE4o3g=;
-        b=kbCqH6TUoeOqIAME8kmOTdfpJl1mcr7pxr28wiFaU1vE/7CPF7yIEJGvFnJFqgsNcC
-         1lZkl+QHIQEVjmfYS7lw1nUHCKW5QelcwIMHrM7HlAkteSplgAgnkR2GaTr6X4TTmIJe
-         47mdBGTOjgsTL3k3QN+XouyDawhFmoJDfxEof2gn/w7cVFokUQU/bLM4rmYM8sanqjtj
-         7o92kaglkwP9fVrFl0jTI+n1CCj9v2p09P38FZiTBo7AFpvir36aR6g6KRXqUCPc5h5p
-         LAnRhHuT23J1ddp+sc+fZJUikvcBptHXIaZL27C7o3e7r8G2VFF0fVJ2a4yh7qYfdpOd
-         KvoQ==
-X-Gm-Message-State: AOAM532RHLkfCmtKDCTn9P+clF9eaMBh1n4HKhafBzIZvdT5MjctJh+0
-        RQarjybWsRn8gqstdpaG2sY=
-X-Google-Smtp-Source: ABdhPJyGwQMLV2ATHHBLw6uSI0dFecBH+v1hrji0MNYAg0aJUW3noJ/AbtemajwtEUK39hLOrYvvUA==
-X-Received: by 2002:adf:fc49:: with SMTP id e9mr17306977wrs.130.1635541958275;
-        Fri, 29 Oct 2021 14:12:38 -0700 (PDT)
-Received: from [172.20.119.151] (cgn-213-196-213-29.nc.de. [213.196.213.29])
-        by smtp.gmail.com with ESMTPSA id j10sm6496114wrx.94.2021.10.29.14.12.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Oct 2021 14:12:38 -0700 (PDT)
-Date:   Fri, 29 Oct 2021 23:12:16 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmail.com>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 0/8] Allow clean/smudge filters to handle huge files
- in the LLP64 data model
-In-Reply-To: <nycvar.QRO.7.76.6.2110292239170.56@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2110292311200.56@tvgsbejvaqbjf.bet>
-References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>        <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com> <xmqqk0hvllxp.fsf@gitster.g> <nycvar.QRO.7.76.6.2110292239170.56@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S230257AbhJ2VQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 17:16:49 -0400
+Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1071C061570
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 14:14:20 -0700 (PDT)
+Message-ID: <3cf891ea-58c8-b7d5-0b6e-eb23dff92bd5@archlinux.org>
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1635542058;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=BokRsTBQZrAay8B15O1pCWf5x5esyNIaPo5BVRfwP7s=;
+        b=tgpVydTisiVRldq790q4gEpI0NgQ0aHP6NEsS2PBoxmnpzL7tWnmUuMJK0isHJDe8FD1xx
+        s1sSXBRJdbzwZqCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1635542058;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=BokRsTBQZrAay8B15O1pCWf5x5esyNIaPo5BVRfwP7s=;
+        b=Tvv1fjKZonffIaQtZ4+Bx7iIMYZyqQyCKRhPq6EJiAQC9Bcl6TgtLztq8MHlBbhgqUxyJP
+        DawLskImE46wvrB6spbJ0T6ORg1wL2wLmx3KxJYeJlT0ZALJd4cSHF8QPDZxlu0mdlxhKY
+        AbmP8bF+ixLjF7blZ86gq+Kxfs43IH0KQ9u1jzw42wXh1R0MRJfipDmbyCpOwiGy9rvGh6
+        Y2gcWbZjVPtNcVUhrXAT+wIUgKTKjvNnp2q6HDLV7YzMIqwG95ZFmQREi5OM2fRFBjw8F9
+        Vexo5/xyxGbdsYkcvd3SP+r5dgd8+lmjQAGdW/opniZAIrqKtPTGZAMY8WnVXJqxFQJ+/U
+        /jfDZhPFw0+cTCkCO5c0GKPiCFvC7T0t2/wXZ2dxUyuD488DW7YrSETfM2sJio3aI75wdI
+        kHTSE5DhrWQJkDnb8ZzRcoBSt7Fa5KV1h9m6c1NPF1gMf5imLq09hToVhL4Bdeacfgy8Ef
+        b0Tqb4bcepmfKY31/9xCBWOjwiYt/Lh1f8vKqbtGlPsiIu1mUjt4SYf9cbIVMANzB8pXj1
+        kp8Jj8WLhNf6PuHxglF+HthMMh+a78RcxDzqCzn6gj2jZd+kfLGQZKVTIrrxNLQVlvUCUc
+        pv1FIPVxNNW83uciUkRsrVFk2JN4scJ0Yr4cVoRYgbBDDQqzISTak=
+Date:   Fri, 29 Oct 2021 17:14:15 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [PATCH v3 2/3] pretty: add tag option to %(describe)
+Content-Language: en-US-large
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20211026013452.1372122-1-eschwartz@archlinux.org>
+ <20211029184512.1568017-1-eschwartz@archlinux.org>
+ <20211029184512.1568017-3-eschwartz@archlinux.org>
+ <xmqqy26bk2k9.fsf@gitster.g>
+From:   Eli Schwartz <eschwartz@archlinux.org>
+X-Clacks-Overhead: GNU Terry Pratchett
+In-Reply-To: <xmqqy26bk2k9.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------UyQ6gQVaYQRerK57zc4LgM8g"
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Re-sending, as it seems that the Git mailing list is causing trouble
-again, at least I do not see this on lore.kernel.org/git]
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------UyQ6gQVaYQRerK57zc4LgM8g
+Content-Type: multipart/mixed; boundary="------------0LN0UsxZdpYCTgBwFGXJ0utX";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@archlinux.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Message-ID: <3cf891ea-58c8-b7d5-0b6e-eb23dff92bd5@archlinux.org>
+Subject: Re: [PATCH v3 2/3] pretty: add tag option to %(describe)
+References: <20211026013452.1372122-1-eschwartz@archlinux.org>
+ <20211029184512.1568017-1-eschwartz@archlinux.org>
+ <20211029184512.1568017-3-eschwartz@archlinux.org>
+ <xmqqy26bk2k9.fsf@gitster.g>
+In-Reply-To: <xmqqy26bk2k9.fsf@gitster.g>
+
+--------------0LN0UsxZdpYCTgBwFGXJ0utX
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+On 10/29/21 4:18 PM, Junio C Hamano wrote:
+> Eli Schwartz <eschwartz@archlinux.org> writes:
+>=20
+>>  +
+>> +** 'tags[=3D<BOOL>]': Instead of only considering annotated tags,
+>> +   consider lightweight tags as well.
+>=20
+> This part contradicts what Jean-No=C3=ABl's df34a41f is trying to
+> achieve, which can be seen in these hunks from it:
+>
+> [...]
+>=20
+> So, let's instead use
+>=20
+>     tags[=3D<bool-value>]: Instead of only considering ...
+>=20
+> i.e. lowercase, with -value suffix.
 
 
-On Fri, 29 Oct 2021, Johannes Schindelin wrote:
+An interesting change. I can use that description style, sure. Though I
+will note the commit message for it talks a lot about replacing spaces
+with hyphens, and very little about consolidating on case *or* using
+different language such as:
 
-> Hi Junio,
-> 
-> On Fri, 29 Oct 2021, Junio C Hamano wrote:
-> 
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> > 
-> > > This patch series came in via the Git for Windows fork
-> > > [https://github.com/git-for-windows/git/pull/3487], and I intend to merge it
-> > > before v2.34.0-rc0, therefore I appreciate every careful review you gentle
-> > > people can spare.
-> > 
-> > It is way too late for my tree to go in before -rc0, but the patches
-> > in the last round, with the "Changes since v2" description below,
-> > all sound sensible, including the decision to stop here, instead of
-> > doing "everything should be either size_t or intmax_t" conversion.
-> 
-> Thank you for your careful review, it definitely helped with polishing the
-> patches.
-> 
-> > 7/8 did not apply for me to the tip of 'master', but "am -3" wiggled
-> > it in.  You may want to double check the results.
-> 
-> Right, I purposefully based the patches on v2.32.0 so they would merge
-> cleanly into Git for Windows' `main` branch.
-> 
-> I should have clarified that I was talking about merging that PR into Git
-> for Windows before the -rc0 ;-)
-> 
-> Speaking of which, -rc0 is still coming, right? ;-)
-> https://tinyurl.com/gitcal still claims that it was scheduled for
-> yesterday.
-> 
-> > As the primary author of the series, given the cover title matches the
-> > title of one step in the series, seems to be Matt, let me queue them
-> > under mc/clean-smudge-with-llp64 topic.
-> 
-> Absolutely. Matt was in the driving seat, I was just reviewing and helping
-> here and there, and then shepherding the patch series upstream. It was my
-> decision to start upstreaming before merging it into Git for Windows, but
-> the plan was all along to get this into Git for Windows v2.34.0 because
-> there are Git LFS users using Windows who are eagerly awaiting this fix.
-> 
-> I am not aware of any other popular platform using the LLP64 data model,
-> therefore I do not even think that these patches have to be fast-tracked
-> into Git v2.34.0, next cycle would be good enough. Unless you are aware of
-> other such platforms that do not rely on the Git for Windows fork, but on
-> Git built from your repository?
-> 
-> Ciao,
-> Dscho
-> 
+
+-* 'format:<string>'
++* 'format:<format-string>'
+
+
+I also assume that it's fine for my patches to be inconsistent with the
+base commit, as it's expected df34a41f or some revision of it will be
+merged around the same time?
+
+
+--=20
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
+
+--------------0LN0UsxZdpYCTgBwFGXJ0utX--
+
+--------------UyQ6gQVaYQRerK57zc4LgM8g
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmF8ZCgACgkQzrFn77Vy
+K9Y8Mg//ZfnvNQsCWEPVrPhOIzAWmxoGihe1Mlku5cnc2Q/wkJAH0Lb7AuNj5bAA
+zhfXICP5mW3mMm9pBIzIJS9Vsh6iaInHceceuGL04GqxSal6lNfMFo3ltpvW6k/O
+ocw91vKk3qZFebcYVFsgYQFcIDDF6xQbHVEe7Tptc94zCCCFsLnme2N8WQGVXU1X
+a0yWQ2EXTEvdm68ustyvWYmgFVjnxFByzC9Cs8b1rtUzCHAgb58ucA2lbzTH3aGl
+6RL6x2DHyNlczqEn/i7K2IjK40m8nDO2V+dJAUMNvmc/xPZ2/WZfx0nU+1pjpaZ0
+ARd41UcvhBCnG1qok8RgyB40jE2OSjl2g8ZvgNQPnUAMJGbTI+E4bBDj7TZ+ml3q
+ove9Cbdbzs3RUUEdLRpZq603O2XG86RyO5ncT6jvxcVbxyY4IBbQOaRnpzSuMv5G
+wWtTD1fDgbEMeVfszoIxg8Vw6xQf7M1SqP7VCrBWtBH1yLAYtu0blxvQvwmy2Yl5
+PmnD6eNAw+I5OZolpznrvett/0DIo2dpN24AwwkoT6JjRfJhYhVTSu4Qw0OacgQV
+JVKgO10Y5BhEUd+y4UXcgSATYjoWksoMb0yO4zkLW7nBiNemQOAAaZmZQRZNzN9s
+WotpLn4EEe7y3tX6Iu2eEjYWndigYYE0Gnhm3MdiJw0ATBnEadQ=
+=9MWV
+-----END PGP SIGNATURE-----
+
+--------------UyQ6gQVaYQRerK57zc4LgM8g--
