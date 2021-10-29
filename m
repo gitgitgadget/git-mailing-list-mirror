@@ -2,153 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37724C433EF
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9695C433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:46:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1830061100
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:43:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7FBE61165
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231411AbhJ2NqW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 09:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbhJ2NqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 09:46:21 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5628EC061570
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:43:53 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id g17so9051610qtk.8
-        for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:43:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=diwTvEzCCtVfQ7NZ3dDjG1ewIReYDMnTXGWf3GSCX54=;
-        b=ZYsNvTnMSceiq+5/V+hroBMVvTtiLE0bhTM8m1E21Wprypa7vlKw8czocQ8iswlILK
-         Itl8WMyV9pWunm1LRA7wZ0XtCpyk/KYm7+gR7sSDLQ251rrHxE6W9KVLVT99H4sBUgkO
-         bt4eQn2oW5W0i9kCU9Yw+ouzQkNcykKullaXBs/nBqLpV55zCWd70a8Y+ZWt3IwWwIPB
-         u1l5oFq4CZEFrXfwA/YMGRBM+40V7RxWqAZIWK8YNo3XMjAW9Uit75u4fTvRKjA/+aai
-         xPi15bgPBqVEb5IYVJDkZXR6gKv/8Qh6lzmKy4+J3ZyKEeltPYdoGE9pbXZGtV/5L5/+
-         3QHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=diwTvEzCCtVfQ7NZ3dDjG1ewIReYDMnTXGWf3GSCX54=;
-        b=PsRBnMet5jYE1rE7GSFR5E/gbzvaaHYAhJSwsIVjRtTbTmzQJhLMcQrrV1T2nCmqqN
-         dsYE4eGJm1sVAXemOxWdvV3004OXkxeWn91GqOYQJelA6C2NJOwfb4228TU9Nc9gk9FR
-         pP6DokrfwX8he8vK3vqSec+47UwfdV6VY/pSx8DlUHimCiXQo36IAIPtgpfuxC28Xf2g
-         xF9OS3tuW4goPxrzFZFK43/8xjGr4LerE/pKbxGrmt+nwp+3md0vNpar+RL8Nus0BieH
-         gAbamHc+SbnvT2yZG4FM/ZRZYWWM0Wl8ugOzFlC6G0nE3XKzIKBLP/fS6EYAYf4W2mX4
-         GmUA==
-X-Gm-Message-State: AOAM5316wZr7/q9O+SiDYAu5rOGe8/jErK8Nr90TYRXdkKX9IYjyLGUN
-        zOJLNbh0cRtb3+QJppJuD0Lx
-X-Google-Smtp-Source: ABdhPJxoFB5f+JBI9fHLeFlRMKoeBA8ogZYaL+7CBLpGMtUEAp59feIgwM8fZIGjmDvL8SEdAqr0Dw==
-X-Received: by 2002:a05:622a:50b:: with SMTP id l11mr11693964qtx.415.1635515032477;
-        Fri, 29 Oct 2021 06:43:52 -0700 (PDT)
-Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id bk13sm3903020qkb.58.2021.10.29.06.43.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Oct 2021 06:43:52 -0700 (PDT)
-Message-ID: <74501e70-7bac-e301-4075-09152f292884@github.com>
-Date:   Fri, 29 Oct 2021 09:43:44 -0400
+        id S231546AbhJ2Ns3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 09:48:29 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:51289 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229603AbhJ2Ns2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 09:48:28 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N3omW-1mp0uJ3zjU-00zm1G; Fri, 29 Oct 2021 15:45:47 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id DC12F1E01E7;
+        Fri, 29 Oct 2021 13:45:46 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id XOKpwIELHPOu; Fri, 29 Oct 2021 15:45:46 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (30-usr-pf-main.vpn.it.cetitec.com [10.8.5.30])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 57D501E01E6;
+        Fri, 29 Oct 2021 15:45:46 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from local account)
+Date:   Fri, 29 Oct 2021 15:45:45 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git List <git@vger.kernel.org>
+Subject: [PATCH] Document positive variant of commit and merge option
+ "--no-verify"
+Message-ID: <YXv7CW4QHQOzFla6@pflmari>
+References: <YXhwGQOTfD+ypbo8@coredump.intra.peff.net>
+ <YXlBhmfXl3wFQ5Bj@pflmari>
+ <YXlD5ecNSdeBSMoS@coredump.intra.peff.net>
+ <YXlTpzrY7KFqRlno@pflmari>
+ <xmqq4k92w7do.fsf@gitster.g>
+ <YXpFTJTo0pKhM7xG@pflmari>
+ <YXpZddOixrJDd//s@pflmari>
+ <edca7f6b-e89c-7efa-c6f5-2c3aaaea54f9@gmail.com>
+ <YXrFaJXbuSuwfhQ7@pflmari>
+ <7be2fde3-69b2-1da7-bb94-7c181490f626@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.1
-Subject: Re: [PATCH v3 2/3] sparse-index: add ensure_correct_sparsity function
-Content-Language: en-US
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1059.v2.git.1634849307.gitgitgadget@gmail.com>
- <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
- <9d6511db0728e9880a96f3d9e3a025a9ddc5bc9e.1635358812.git.gitgitgadget@gmail.com>
- <bf73e2d2-a2ab-8364-d505-1bd5bba3efd2@gmail.com> <xmqqbl3aupbh.fsf@gitster.g>
- <bc960863-7ff2-d6bf-9710-6803f3784751@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <bc960863-7ff2-d6bf-9710-6803f3784751@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7be2fde3-69b2-1da7-bb94-7c181490f626@gmail.com>
+X-Provags-ID: V03:K1:uOMjZXVnhURLvtwpxJ5fLXp6v7/jgZqWmF2GJi7veQhb9uzZJXZ
+ x5Rz8JBNkceJSIHzrCMrtvHOzyPuXWbz/BncqezVmw6n9lGTLEN/zCLzD0ywa6UmFX42deA
+ 6EiByHy8m4uZWU9HYvo3CzlO3S4cILb9OORZuV3SBHY0E7KMzltDjw94RNCJlrIICvhbzDq
+ oo7t0R8L4Svhe46ALNzVw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4PbOkbULtCQ=:kqcIu+kIHH8RXsAbXQJ/k2
+ kHz8YhrO2NVOCOnoedqeDh886GEifnH/YbK1Da5bC14lu/tXkjU22VJkP9hNRzOXZ7aTjIYAW
+ uQtxAz19ikfw9/zOYcQEE3uFU2KvW53XPxX8gxqwa9UxZ+X37kKlOxbkzwAJsmTsTf2Y3Buja
+ yjGk+VAz5ASg22Aba2XMV9yYytG5S22+7ZCcIey25NM+v2oiQvXlaaKAgj+dLDcK2MkAse3xU
+ sEMCQ+KllE7WM3egmRADWRiRSaakgjeCWpCNP8OYAkLx9GxpQYfjkV2Tjh+O6FR7TxO9ZP5rj
+ vf/09BEqTMBlOhJ/XZyBDQmwUCmuNfZ0piNjzHFsqwKOLEQstiwLprqsSd6JCRaLvfdX/m9cU
+ hbniq4zM/wUKtszxvKcryvY8eEMUUm0vUyfwaH+0VorV38rke1spsScwQcXhx1BuvQE6BcPij
+ pRB0pfvtbN8IMtOTmtisam8TKH5t4bAmGnP//yb1kCrv5sPsJQtHhxBvtoI2BhFwF+qNMEcBD
+ YzJ6lawB1qVrL33VgLfh7U9d/FRYbgPI5zLbZy3HsNh8FLgNeGuPAVSH5O9iztmqVMFw/76Ei
+ dOVJgQUmLz1xHajBZuNDz3Yxk0G0viBqJlFCy/wCKj2ru3HxUGnPEDQCox99iP0vRGOpraCj3
+ VGcFxim2XimG0y0INQxP1mDdyFdBvzxWLNyX7KLOq780FNArvWVo2zhbRQTLrc3H11ojsOQTY
+ yJn3o8IdSqbSG7cT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 10/27/2021 5:32 PM, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>>> +int convert_to_sparse(struct index_state *istate, int flags)
->>>> +{
->>>> +	/*
->>>> +	 * If the index is already sparse, empty, or otherwise
->>>> +	 * cannot be converted to sparse, do not convert.
->>>> +	 */
->>>> +	if (istate->sparse_index || !istate->cache_nr ||
->>>> +	    !is_sparse_index_allowed(istate, flags))
->>>> +		return 0;
->>
->> Shouldn't we also at least do this?  Blindly blowing away the entire
->> cache-tree and rebuilding it from scratch may be hiding a latent bug
->> somewhere else, but is never supposed to be needed, and is a huge
->> waste of computational resources.
->>
->> I say "at least" here, because a cache tree that is partially valid
->> should be safely salvageable---at least that was the intention back
->> when I designed the subsystem.
-> 
-> I think you are right, what you propose below. It certainly seems
-> like it would work, and even speed up the conversion from full to
-> sparse. I think I erred on the side of extreme caution and used
-> a hope that converting to sparse would be rare.
-> 
->>  sparse-index.c | 24 +++++++++++++-----------
->>  1 file changed, 13 insertions(+), 11 deletions(-)
->>
->> diff --git c/sparse-index.c w/sparse-index.c
->> index bc3ee358c6..a95c3386f3 100644
->> --- c/sparse-index.c
->> +++ w/sparse-index.c
->> @@ -188,17 +188,19 @@ int convert_to_sparse(struct index_state *istate, int flags)
->>  	if (index_has_unmerged_entries(istate))
->>  		return 0;
->>  
->> -	/* Clear and recompute the cache-tree */
->> -	cache_tree_free(&istate->cache_tree);
->> -	/*
->> -	 * Silently return if there is a problem with the cache tree update,
->> -	 * which might just be due to a conflict state in some entry.
->> -	 *
->> -	 * This might create new tree objects, so be sure to use
->> -	 * WRITE_TREE_MISSING_OK.
->> -	 */
->> -	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
->> -		return 0;
->> +	if (!cache_tree_fully_valid(&istate->cache_tree)) {
->> +		/* Clear and recompute the cache-tree */
->> +		cache_tree_free(&istate->cache_tree);
->> +		/*
->> +		 * Silently return if there is a problem with the cache tree update,
->> +		 * which might just be due to a conflict state in some entry.
->> +		 *
->> +		 * This might create new tree objects, so be sure to use
->> +		 * WRITE_TREE_MISSING_OK.
->> +		 */
->> +		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
->> +			return 0;
->> +	}
-> 
-> I think at this point we have enough tests that check the sparse index
-> and its different conversion points that the test suite might catch if
-> this is a bad idea. Note that this is only a change of behavior if the
-> cache-tree is valid, which I expect to be the case most of the time in
-> the tests.
-> 
-> Thanks,
-> -Stolee
-> 
+From: Alex Riesen <raa.lkml@gmail.com>
 
-This change doesn't appear to introduce any test failures or other unwanted
-behavior, so I don't see a reason not to include it. I'll add it in a
-re-roll - thanks!
+This documents "--verify" option of the commands. It can be used to re-enable
+the hooks disabled by an earlier "--no-verify" in command-line.
+
+Signed-off-by: Alexander Riesen <raa.lkml@gmail.com>
+---
+
+Phillip Wood, Fri, Oct 29, 2021 15:32:16 +0200:
+> On 28/10/2021 16:44, Alex Riesen wrote:
+> > diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> > index a3baea32ae..2268787483 100644
+> > --- a/Documentation/git-commit.txt
+> > +++ b/Documentation/git-commit.txt
+> > @@ -174,9 +174,14 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+> >   -n::
+> >   --no-verify::
+> > -	This option bypasses the pre-commit and commit-msg hooks.
+> > +	By default, pre-commit and commit-msg hooks are run. When one of these
+> 
+> As I suggested yesterday I think this would be better if it kept the "the"
+> from the original text as you do below for the merge documentation -
+> s/default, /&the /
+
+Updated:
+
+    -n::
+    --[no-]verify::
+	    By default, the pre-commit and commit-msg hooks are run.
+	    When any of `--no-verify` or `-n` is given, these are bypassed.
+	    See also linkgit:githooks[5].
+
+> > --- a/Documentation/merge-options.txt
+> > +++ b/Documentation/merge-options.txt
+> > @@ -112,8 +112,9 @@ option can be used to override --squash.
+> >   +
+> >   With --squash, --commit is not allowed, and will fail.
+> > ---no-verify::
+> > -	This option bypasses the pre-merge and commit-msg hooks.
+> > +--[no-]verify::
+> > +	By default, the pre-merge and commit-msg hooks are run.
+> > +	When `--no-verify` is given, these are bypassed.
+> >   	See also linkgit:githooks[5].
+> 
+> This text looks good. It would be nice to be consistent when documenting
+> "--verify" and "--no-verify" so that documentation for commit and merge both
+> have either a separate entry for each option as you have for commit or a
+> shared entry as you have here for merge. I'd be tempted to use this form in
+> the commit documentation.
+
+So I did.
+
+Regards,
+Alex
+
+ Documentation/git-commit.txt    | 5 +++--
+ Documentation/merge-options.txt | 5 +++--
+ t/t7504-commit-msg-hook.sh      | 8 ++++++++
+ 3 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index a3baea32ae..b27a4c4c34 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -173,8 +173,9 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	(see http://developercertificate.org/ for more information).
+ 
+ -n::
+---no-verify::
+-	This option bypasses the pre-commit and commit-msg hooks.
++--[no-]verify::
++	By default, the pre-commit and commit-msg hooks are run.
++	When any of `--no-verify` or `-n` is given, these are bypassed.
+ 	See also linkgit:githooks[5].
+ 
+ --allow-empty::
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 80d4831662..80267008af 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -112,8 +112,9 @@ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
+ 
+---no-verify::
+-	This option bypasses the pre-merge and commit-msg hooks.
++--[no-]verify::
++	By default, the pre-merge and commit-msg hooks are run.
++	When `--no-verify` is given, these are bypassed.
+ 	See also linkgit:githooks[5].
+ 
+ -s <strategy>::
+diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
+index 31b9c6a2c1..67fcc19637 100755
+--- a/t/t7504-commit-msg-hook.sh
++++ b/t/t7504-commit-msg-hook.sh
+@@ -130,6 +130,14 @@ test_expect_success '--no-verify with failing hook' '
+ 
+ '
+ 
++test_expect_success '-n followed by --verify with failing hook' '
++
++	echo "even more" >> file &&
++	git add file &&
++	test_must_fail git commit -n --verify -m "even more"
++
++'
++
+ test_expect_success '--no-verify with failing hook (editor)' '
+ 
+ 	echo "more stuff" >> file &&
+-- 
+2.33.0.22.g8cd9218530
+
