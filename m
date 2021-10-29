@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C38C433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EEDFC433F5
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C6AF61040
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 322A461039
+	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 18:43:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbhJ2Sp1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 14:45:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
+        id S230163AbhJ2Spc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 14:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230163AbhJ2Sp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230196AbhJ2Sp1 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 29 Oct 2021 14:45:27 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D147C061570
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8EB8C061570
         for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:42:58 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id v17so17776763wrv.9
+Received: by mail-wr1-x434.google.com with SMTP id d3so17799760wrh.8
         for <git@vger.kernel.org>; Fri, 29 Oct 2021 11:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a031+Xn7FykZoDP70MVfHZ9HM8ud+qK4x3QoEmMdOHQ=;
-        b=CWdeMoifafRaSy7FrRaD6+DjGGrrQ51M27okDjhMVMm644cdyOjM4n/Hfrt+favWev
-         PwJSJj7JR6lHleQ2w7SeLVtw7kMKmoeIJ/rAcLMTfauwxA0QmEr/ZsJYDNJl+K6WQW38
-         NwFuPMDOfGAnSgu+ZL6s4StJqS22yEJCIPzJ738MjcPhLwqvSsTb3x0E8rRdECf+qwwH
-         f8Q/fdOTpEPd2a7c1f/hATSBbyoiYXBhw6KrELw4qV3DgswxJluGzC6wJaI72cUzacvw
-         K8Adf7WUVNFb/n0nv76tZ/5focJhWhvf5hIjn7j+mSiskAkuWSQahtptS10RmYTRBCCE
-         nROA==
+        bh=BhbCaUpOAvUzWndZhw4WVCL0/92iUxY65m1Cl1Y3/gg=;
+        b=PEvehcDV31CEc/bgNBmr2zNOxKaiC91zvDG8m14KHTABWvt453OZk+1wFCBHGtWj5e
+         XIvlYiOR/1IJISLnpXYOrZ7JzB+XjlmydSSdMMbNfjPql446sFvJo63x+lCF8RRlvWEL
+         KLm08YazhmEXk9GVhPGRYKrjex3hEgDL0eQ5y5Og8VRrgyHcfhqZkfpV6rqm567UfTQl
+         OV8SMVbvoQIKPBWY26jVEgFc6gdjizQubvaj+Yn/b1o5SKXXa677YdQBc6lPh5XmimQG
+         PusQq9rvZ9V4kYS+MU8I6jxFHCbddWwo1IOhV4cEPft/a4RHeK/q9kBHZvW7JzDOB1J5
+         mj9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a031+Xn7FykZoDP70MVfHZ9HM8ud+qK4x3QoEmMdOHQ=;
-        b=vjEhR31S4/Ren1cMjn0KbXNtjdMtvL7412qdL5qwlpBJixtcOBkOSc7ka4RNAJDVJx
-         snGvO54ckdCn+d3xgMRiudqhaYiPE86x781QiavqCupC2fC+Efu0ftzbeO/wc3SbMwGm
-         jPkblH5+FAmjjEjgkdgYeFgts8ZOoKYQ9kK1NWkkuB9wir1WdTPEWRTtMeEMISrd4UW6
-         QNFVOcWB++uSjkYmmXCboIfoRi7LDttMYhcqV986KsAO4/tFDNFopEMO+PXW6pZxNwMR
-         himhaRtNF/TN299F1q/2pbejjarmBGZcIwwxuloYodPrt7TMD7DWh5WaECKffMeN1+60
-         Pq+Q==
-X-Gm-Message-State: AOAM532adjZUwZABwpBMLUTYwFo8QzU/5WcIVjJevdV4h05o08JGyR03
-        dDl/U/qClfpm57Eu23fIpF8DxvoR0/Q=
-X-Google-Smtp-Source: ABdhPJzLijWkFFS1CAMO88LRWcChXQCr0udf0g+keda+Mh9q0LaCVnaH99NMMt3ChIT6jVriesTHRg==
-X-Received: by 2002:a1c:f705:: with SMTP id v5mr21702636wmh.121.1635532976877;
-        Fri, 29 Oct 2021 11:42:56 -0700 (PDT)
+        bh=BhbCaUpOAvUzWndZhw4WVCL0/92iUxY65m1Cl1Y3/gg=;
+        b=pSejSu/lBjNdM0DxDuijNv3/CPGA7h10r/0IVECfyo9a61pGm17ra9GhlOSyJ0CCzm
+         /FgSeks+HMMg9ngWylaW8Z4FtINnwwMgTc9I7IJ56mwW8L4YYuR54tRZ0yK1GPK8vALO
+         /4dE+DlZXOLwIjfrcE4XL5J8WhCSN2h5xrjUQTH+sbWwLIhSxaI0ibrv37eWnE3mrsGS
+         nHH+2ftX5PT8IGnTBTDMYY1zbQpRBQhSjK5EYixMNDubEKKKruWEs8Q8KMe1nglWAAkB
+         sMqoPkFhEQtiB7aZVauP6w9Li/jhQPOXYI7GrqYlcgK4FvD6PQIuSBUh2epHJ2D87gTA
+         n9Nw==
+X-Gm-Message-State: AOAM532B4ouxSIjI+AOTeHfF+ZDHTyVDVvJmSyV2u1BQ1WU0Yzi2gzrz
+        PTmklBHBj9DbyYuFgeBfoOR+oMn793k=
+X-Google-Smtp-Source: ABdhPJz5Z/l6fJeL/Un7CmrSbmB/fSUAWqg6quFOqU5YSSxqT66Qrtw6L8rNUrANJARHkrA6RMbdIA==
+X-Received: by 2002:adf:d20e:: with SMTP id j14mr8716015wrh.220.1635532977424;
+        Fri, 29 Oct 2021 11:42:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h22sm6286180wmq.42.2021.10.29.11.42.56
+        by smtp.gmail.com with ESMTPSA id h13sm2193103wrx.82.2021.10.29.11.42.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 11:42:56 -0700 (PDT)
-Message-Id: <a6098f98946bd9cc1186ab9c83d917566c78b805.1635532975.git.gitgitgadget@gmail.com>
+        Fri, 29 Oct 2021 11:42:57 -0700 (PDT)
+Message-Id: <38859ae7b7de0f6406180a0427b9ce07fe3b9aa3.1635532975.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
 References: <pull.1052.v5.git.1635461500.gitgitgadget@gmail.com>
         <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
 From:   "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 18:42:54 +0000
-Subject: [PATCH v6 1/2] fetch-pack: redact packfile urls in traces
+Date:   Fri, 29 Oct 2021 18:42:55 +0000
+Subject: [PATCH v6 2/2] http-fetch: redact url on die() message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,194 +71,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ivan Frade <ifrade@google.com>
 
-In some setups, packfile uris act as bearer token. It is not
-recommended to expose them plainly in logs, although in special
-circunstances (e.g. debug) it makes sense to write them.
+http-fetch prints the URL after failing to fetch it. This can be
+confusing to users (they cannot really do anything with it), and they
+can share by accident a sensitive URL (e.g. with credentials) while
+looking for help.
 
-Redact the packfile URL paths by default, unless the GIT_TRACE_REDACT
-variable is set to false. This mimics the redacting of the Authorization
-header in HTTP.
+Redact the URL unless the GIT_TRACE_REDACT variable is set to false. This
+mimics the redaction of other sensitive information in git, like the
+Authorization header in HTTP.
+
+Fix also capitalization of previous die() message (must start in
+lowercase).
 
 Signed-off-by: Ivan Frade <ifrade@google.com>
 ---
- Documentation/git.txt  |  5 +++--
- fetch-pack.c           |  4 ++++
- pkt-line.c             | 39 +++++++++++++++++++++++++++++++-
- pkt-line.h             |  1 +
- t/t5702-protocol-v2.sh | 51 ++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 97 insertions(+), 3 deletions(-)
+ http-fetch.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index d63c65e67d8..c91aa2737f0 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -832,8 +832,9 @@ for full details.
+diff --git a/http-fetch.c b/http-fetch.c
+index fa642462a9e..c7c7d391ac5 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -4,6 +4,7 @@
+ #include "http.h"
+ #include "walker.h"
+ #include "strvec.h"
++#include "urlmatch.h"
  
- `GIT_TRACE_REDACT`::
- 	By default, when tracing is activated, Git redacts the values of
--	cookies, the "Authorization:" header, and the "Proxy-Authorization:"
--	header. Set this variable to `0` to prevent this redaction.
-+	cookies, the "Authorization:" header, the "Proxy-Authorization:"
-+	header and packfile URIs. Set this variable to `0` to prevent this
-+	redaction.
- 
- `GIT_LITERAL_PATHSPECS`::
- 	Setting this variable to `1` will cause Git to treat all
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a9604f35a3e..62ea90541c5 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1653,8 +1653,12 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 				receive_wanted_refs(&reader, sought, nr_sought);
- 
- 			/* get the pack(s) */
-+			if (git_env_bool("GIT_TRACE_REDACT", 1))
-+				reader.options |= PACKET_READ_REDACT_URI_PATH;
- 			if (process_section_header(&reader, "packfile-uris", 1))
- 				receive_packfile_uris(&reader, &packfile_uris);
-+			reader.options &= ~PACKET_READ_REDACT_URI_PATH;
-+
- 			process_section_header(&reader, "packfile", 0);
- 
- 			/*
-diff --git a/pkt-line.c b/pkt-line.c
-index 2dc8ac274bd..5a69ddc2e77 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -370,6 +370,31 @@ int packet_length(const char lenbuf_hex[4])
- 	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
- }
- 
-+static char *find_packfile_uri_path(const char *buffer)
-+{
-+	const char *URI_MARK = "://";
-+	char *path;
-+	int len;
-+
-+	/* First char is sideband mark */
-+	buffer += 1;
-+
-+	len = strspn(buffer, "0123456789abcdefABCDEF");
-+	if (len != (int)the_hash_algo->hexsz || buffer[len] != ' ')
-+		return NULL; /* required "<hash>SP" not seen */
-+
-+	path = strstr(buffer + len + 1, URI_MARK);
-+	if (!path)
-+		return NULL;
-+
-+	path = strchr(path + strlen(URI_MARK), '/');
-+	if (!path || !*(path + 1))
-+		return NULL;
-+
-+	/* position after '/' */
-+	return ++path;
-+}
-+
- enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 						size_t *src_len, char *buffer,
- 						unsigned size, int *pktlen,
-@@ -377,6 +402,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- {
- 	int len;
- 	char linelen[4];
-+	char *uri_path_start;
- 
- 	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
- 		*pktlen = -1;
-@@ -427,7 +453,18 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 		len--;
- 
- 	buffer[len] = 0;
--	packet_trace(buffer, len, 0);
-+	if (options & PACKET_READ_REDACT_URI_PATH &&
-+	    (uri_path_start = find_packfile_uri_path(buffer))) {
-+		const char *redacted = "<redacted>";
-+		struct strbuf tracebuf = STRBUF_INIT;
-+		strbuf_insert(&tracebuf, 0, buffer, len);
-+		strbuf_splice(&tracebuf, uri_path_start - buffer,
-+			      strlen(uri_path_start), redacted, strlen(redacted));
-+		packet_trace(tracebuf.buf, tracebuf.len, 0);
-+		strbuf_release(&tracebuf);
-+	} else {
-+		packet_trace(buffer, len, 0);
-+	}
- 
- 	if ((options & PACKET_READ_DIE_ON_ERR_PACKET) &&
- 	    starts_with(buffer, "ERR "))
-diff --git a/pkt-line.h b/pkt-line.h
-index 467ae013573..6d2a63db238 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -87,6 +87,7 @@ void packet_fflush(FILE *f);
- #define PACKET_READ_CHOMP_NEWLINE        (1u<<1)
- #define PACKET_READ_DIE_ON_ERR_PACKET    (1u<<2)
- #define PACKET_READ_GENTLE_ON_READ_ERROR (1u<<3)
-+#define PACKET_READ_REDACT_URI_PATH      (1u<<4)
- int packet_read(int fd, char *buffer, unsigned size, int options);
- 
- /*
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index d527cf6c49f..f01af2f2ed3 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1107,6 +1107,57 @@ test_expect_success 'packfile-uri with transfer.fsckobjects fails when .gitmodul
- 	test_i18ngrep "disallowed submodule name" err
- '
- 
-+test_expect_success 'packfile-uri path redacted in trace' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child log &&
-+
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+
-+	git -C "$P" hash-object my-blob >objh &&
-+	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-+	git -C "$P" config --add \
-+		"uploadpack.blobpackfileuri" \
-+		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-+
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+
-+	grep -F "clone< \\1$(cat packh) $HTTPD_URL/<redacted>" log
-+'
-+
-+test_expect_success 'packfile-uri path not redacted in trace when GIT_TRACE_REDACT=0' '
-+	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	rm -rf "$P" http_child log &&
-+
-+	git init "$P" &&
-+	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
-+
-+	echo my-blob >"$P/my-blob" &&
-+	git -C "$P" add my-blob &&
-+	git -C "$P" commit -m x &&
-+
-+	git -C "$P" hash-object my-blob >objh &&
-+	git -C "$P" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
-+	git -C "$P" config --add \
-+		"uploadpack.blobpackfileuri" \
-+		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
-+
-+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
-+	GIT_TRACE_REDACT=0 \
-+	git -c protocol.version=2 \
-+		-c fetch.uriprotocols=http,https \
-+		clone "$HTTPD_URL/smart/http_parent" http_child &&
-+
-+	grep -F "clone< \\1$(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" log
-+'
-+
- test_expect_success 'http:// --negotiate-only' '
- 	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
- 	URI="$HTTPD_URL/smart/server" &&
+ static const char http_fetch_usage[] = "git http-fetch "
+ "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin | --packfile=hash | commit-id] url";
+@@ -63,8 +64,17 @@ static void fetch_single_packfile(struct object_id *packfile_hash,
+ 	if (start_active_slot(preq->slot)) {
+ 		run_active_slot(preq->slot);
+ 		if (results.curl_result != CURLE_OK) {
+-			die("Unable to get pack file %s\n%s", preq->url,
+-			    curl_errorstr);
++			struct url_info url;
++			char *nurl = url_normalize(preq->url, &url);
++			if (!nurl || !git_env_bool("GIT_TRACE_REDACT", 1)) {
++				die("unable to get pack file '%s'\n%s", preq->url,
++				    curl_errorstr);
++			} else {
++				die("failed to get '%.*s' url from '%.*s' "
++				    "(full URL redacted due to GIT_TRACE_REDACT setting)\n%s",
++				    (int)url.scheme_len, url.url,
++				    (int)url.host_len, &url.url[url.host_off], curl_errorstr);
++			}
+ 		}
+ 	} else {
+ 		die("Unable to start request");
 -- 
 gitgitgadget
-
