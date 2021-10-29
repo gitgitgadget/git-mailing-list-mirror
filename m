@@ -2,62 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EDB1C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6A77C433F5
 	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:51:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 113886115B
+	by mail.kernel.org (Postfix) with ESMTP id BB19961100
 	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 13:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230521AbhJ2NyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 09:54:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36538 "EHLO
+        id S231260AbhJ2NyC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 09:54:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230296AbhJ2Nx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 09:53:58 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37AD7C061570
+        with ESMTP id S229603AbhJ2NyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 09:54:00 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5085C061570
         for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:51:30 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id k7so16197207wrd.13
+Received: by mail-wr1-x431.google.com with SMTP id m22so16365613wrb.0
         for <git@vger.kernel.org>; Fri, 29 Oct 2021 06:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fBwFOyZpb1FNiGNmlBqIz8szMCFUAyTVo8d9LrANmrg=;
-        b=Kf7qRSzrhBhTVOLR+opMDn+DgdahYWCMdBdgIx4Xz+tiwXOjwhUIBry4bNm6sLu6Bw
-         9Sr5JB1DpQ4y2552Zrus4T9FrhUYqcpwWC+raaPyBEAEMNe8yTKN8M8uIreS9KXLToBq
-         hm2zzJfIRfDiAM51+CxAP9mlqU43CAVP2DfHC5nXUARKI2zZMVpl1RGeIz8jtZjo3fVd
-         /MDBmXCcHiWFWkwLsvXTUSjdyE0VpV0Hnj/V9yEjz44APMtN3k095x7CbXN2C3U98WT4
-         O7oOVbHG9Rjv+8OLtCA0sofqLU+uNfrLtH1wLq3VuyIyx75F/cvv/oig4+G403BPDsV9
-         9Ulg==
+        bh=+eg35DJMCdU5TsE9YAXGI0p0oomtGVacKPQUl53M+C0=;
+        b=EWsglNEiuWAXzUfiYJxM+x+QU7lVL29IeIqP6N1niotX6S9mWKb3nUxunjbIg2ZMPA
+         Zl5rIR8oL9IVyqfNgvdvlfnTfnWnwpMd1NHgsbv/b5BhiTjvHba9hrYDSuW4tpOaIr1e
+         HzprehDKtp3RbxPovNAmGysZdhKbYSSPLeTPR+gzPYlYC1X/d4BGaqFW4wczgxtLHEjw
+         0o0zSNcUDqRW7chwKd9HBZJsrnwGfW+Q3Yd4RvaFy4kndHaP2OMtX1PC0rANJSxWsYtK
+         BN7XLC1aEjAmNlirvLrX/QDcV31vuX3bpegF26eDIKxBAo52XPXNyfJ5Ga+1y2mGwFU5
+         KIZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fBwFOyZpb1FNiGNmlBqIz8szMCFUAyTVo8d9LrANmrg=;
-        b=OuwJiZ2Tggw3PxS7ywaN0Zre3eovvKpKEKw+2pPnKuDX6pFWeMssyedD41UfLNmkIt
-         JxJYrlpPnGyYauL4z6uwO7BRN32HatyyccIovgnUBbTKg3UbA1PGJBNWal6CTDMAVYcJ
-         71ee8qLCpz8roWXa/ISFmUUbpeMoTHEGYYinpUG7xuhxpqOkjpmFMrh18fjbJAaj1tnz
-         g0CtEdC/anfLg/R+Trr+KHnw9TNqu8w4rymsZFF+kEpcIN/vmOBWJ5PkErI/R7+/wYGR
-         FLvAhQjtgYBk/3R6Owx7W6gNN9jv5EJr9PoFIPtrqkyJmsMNEaq0WpHOMHB5bSFYHg7t
-         fIrw==
-X-Gm-Message-State: AOAM533M0+2fGyguqogZjHnn2iaYI6eFblUMLqmK0Y8sLCSEADzv3Wvz
-        XAEGzz1pzyy9NpF+adTPvujpXlEmkrM=
-X-Google-Smtp-Source: ABdhPJwZR20usDSmwfcd8beGDtlQcmo0VEtlzzhLspIeM34o7s6tUPbwi40x9HxvFsYsjWyg3LSOZQ==
-X-Received: by 2002:adf:a402:: with SMTP id d2mr15184493wra.266.1635515488864;
-        Fri, 29 Oct 2021 06:51:28 -0700 (PDT)
+        bh=+eg35DJMCdU5TsE9YAXGI0p0oomtGVacKPQUl53M+C0=;
+        b=W3/RfSjtbyIBgjo+hep3ogWZXK7DrlU9pMYc3YvUzNZovLQZ+vdXebl7eztRLpCt84
+         djgaQ7jC+VwVzvMnbaZ7de4AS7urkjK4p+dEP9yL60uAvsHH+/tObuMrg5+d5z4nrbkC
+         4cHqdYH5NpXkh6DyBoJhgQyGWtI5Uh/2Qng++THbjLA2EzvGgrn6r8tYnUqcYtuzU3ZU
+         XyzzdqyWu4Lb0CFyFdzMhyGcV+sDvIcL+YrlEwelUe9kXxFhbnA5VRw1+lr4YpX68zRw
+         B8rAZ4TN+YjLOWEUTKUSF1NWe4uuUyx6+0FOoiAxDiHRw7v/LtsqFx6fX+FkdAv+7FBw
+         X6NQ==
+X-Gm-Message-State: AOAM533EPudUa0+6Za9ryPKhvcZltQ/kbjwtxOtzlpULYcYXV9RG/blA
+        s4kVKenDqp261Zlj/GHbGxLhvFc95bE=
+X-Google-Smtp-Source: ABdhPJyAV9YODI6ANTKQn5yn98/A+lcUudZy+Vob5Q8n+CjF/YyEt5KmJ3ma7iheMLmdS2ZVl6g+nw==
+X-Received: by 2002:a05:6000:44:: with SMTP id k4mr14597513wrx.68.1635515489452;
+        Fri, 29 Oct 2021 06:51:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d9sm1774471wre.52.2021.10.29.06.51.28
+        by smtp.gmail.com with ESMTPSA id f8sm5766575wrj.41.2021.10.29.06.51.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 06:51:28 -0700 (PDT)
-Message-Id: <6974ce7e7f568444518f9ff405747653516b2613.1635515487.git.gitgitgadget@gmail.com>
+        Fri, 29 Oct 2021 06:51:29 -0700 (PDT)
+Message-Id: <91351ac4bded2c19264cd2009e90ee71fcf67b81.1635515487.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
 References: <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
         <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Oct 2021 13:51:23 +0000
-Subject: [PATCH v4 1/4] test-read-cache.c: prepare_repo_settings after config
- init
+Date:   Fri, 29 Oct 2021 13:51:24 +0000
+Subject: [PATCH v4 2/4] sparse-index: avoid unnecessary cache tree clearing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,37 +70,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Move `prepare_repo_settings` after the git directory has been set up in
-`test-read-cache.c`. The git directory settings must be initialized to
-properly assign repo settings using the worktree-level git config.
+When converting a full index to sparse, clear and recreate the cache tree
+only if the cache tree is not fully valid. The convert_to_sparse operation
+should exit silently if a cache tree update cannot be successfully completed
+(e.g., due to a conflicted entry state). However, because this failure
+scenario only occurs when at least a portion of the cache tree is invalid,
+we can save ourselves the cost of clearing and recreating the cache tree by
+skipping the check when the cache tree is fully valid.
 
+Helped-by: Derrick Stolee <dstolee@microsoft.com>
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/helper/test-read-cache.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sparse-index.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-index b52c174acc7..0d9f08931a1 100644
---- a/t/helper/test-read-cache.c
-+++ b/t/helper/test-read-cache.c
-@@ -39,8 +39,6 @@ int cmd__read_cache(int argc, const char **argv)
- 	int table = 0, expand = 0;
+diff --git a/sparse-index.c b/sparse-index.c
+index 7b7ff79e044..85613cd8a3a 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -175,17 +175,20 @@ int convert_to_sparse(struct index_state *istate, int flags)
+ 	if (index_has_unmerged_entries(istate))
+ 		return 0;
  
- 	initialize_the_repository();
--	prepare_repo_settings(r);
--	r->settings.command_requires_full_index = 0;
- 
- 	for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
- 		if (skip_prefix(*argv, "--print-and-refresh=", &name))
-@@ -56,6 +54,9 @@ int cmd__read_cache(int argc, const char **argv)
- 	setup_git_directory();
- 	git_config(git_default_config, NULL);
- 
-+	prepare_repo_settings(r);
-+	r->settings.command_requires_full_index = 0;
+-	/* Clear and recompute the cache-tree */
+-	cache_tree_free(&istate->cache_tree);
+-	/*
+-	 * Silently return if there is a problem with the cache tree update,
+-	 * which might just be due to a conflict state in some entry.
+-	 *
+-	 * This might create new tree objects, so be sure to use
+-	 * WRITE_TREE_MISSING_OK.
+-	 */
+-	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+-		return 0;
++	if (!cache_tree_fully_valid(istate->cache_tree)) {
++		/* Clear and recompute the cache-tree */
++		cache_tree_free(&istate->cache_tree);
 +
- 	for (i = 0; i < cnt; i++) {
- 		repo_read_index(r);
++		/*
++		 * Silently return if there is a problem with the cache tree update,
++		 * which might just be due to a conflict state in some entry.
++		 *
++		 * This might create new tree objects, so be sure to use
++		 * WRITE_TREE_MISSING_OK.
++		 */
++		if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
++			return 0;
++	}
+ 
+ 	remove_fsmonitor(istate);
  
 -- 
 gitgitgadget
