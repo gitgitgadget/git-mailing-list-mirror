@@ -2,117 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D162C433F5
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7609C433F5
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:42:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ECBB60EFF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:39:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9BB260F22
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbhJ3Ulw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 16:41:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46428 "EHLO
+        id S231278AbhJ3Uon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 16:44:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbhJ3Ulv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 16:41:51 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06ECFC061570
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:39:20 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id s13so14946632wrb.3
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:39:20 -0700 (PDT)
+        with ESMTP id S229782AbhJ3Uon (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 16:44:43 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A18C061570
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:42:12 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id j35-20020a05600c1c2300b0032caeca81b7so7558845wms.0
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:42:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=p4CfEaR6rYOn3oFAx12kYcIxWmf+oQ1GmNZLUC3rkfs=;
-        b=cspUPqYt5Y0q0KBJBzEjkOMHy1/aItgTzCygM9snHIqd+u8hevHLsiNZLkygqWTLGj
-         BoSkVcLr+Yk5ZILkoqhSFeqxm6UXPO6wDg4Qw4uiSM8/5iQ8X6GDt+LkGgC0GuAPRC0c
-         pL+Q4IK5FOYIKEU6/vG/VL9VbJytz+ryfV+0Jh+0idFZSQ5AGLh5O80z4qaHAicQdpv0
-         j54mwhAthB7bZhQsOPDFN+VxBQQB4KGR/3I5INmmbKN3IcEH/xU+s6l7J+U6ODWj79E+
-         W+4zGoRpwqQsdVNggVi1xA3u5PkySpXMuR5HBHC16o2rqqbf1p+az7keDvj1tMxLyKPH
-         d1vQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Mfaw8VhZuQ9w+Kudt0Ftdz/5k9PkTJdkS1bCKns/FhE=;
+        b=Ee4NMB7dZanTMtUSagKu6YFdeiIHENMe5lD/j0R7Lt54xePlhuwjRYx6kWleiFAJJm
+         T50gqAgAqt387DweTRtW6RxdEtv3EpWqDkh8QkikU/932ITvT4C69LHPQNfbz8OyfBwv
+         GW4cx9yKPU5drrt657pVAJ5lYqLCcfCGwi3X29l7b8FrWBcJKuAjYVJGpVS0rJNV4fwg
+         X0y+Gq4NaC/z/u4anVa6CYKiazsz7Ku9iiMiRTN9POGxZ+1mzaBggLX0HcllsAWRKPCv
+         MizKmRKdLQw9pUNiu8qTWzIBcK0xf6OeoRDLW8WYBO8ch/LIp8wevTdMkeHOdlniEttV
+         GrAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=p4CfEaR6rYOn3oFAx12kYcIxWmf+oQ1GmNZLUC3rkfs=;
-        b=Qca44vrOaMxKAGxlGjxmeFaqM/YkN1L4CvcbCXgVvu71/Saap5rWvSRVcbD2+tnBJR
-         vdS72kBTNAeL8/neX8hGHkOfHATBOmb+AcQaeEC3DHN2KcaHRVY7nkNXlE5Da9zFf3WB
-         yWv2JpJVYU6Sxqn9VVfJRKntSulZbIdgAwbm4TmlZkDpgicdo0o1IeuZRbg24Qe7L08w
-         /oezv2X0LdrgtMgxRGpEK1+cxsaUO8Qv25ZNtdkIyydpsdp6sqlK3sjAzmVLlBdLF6df
-         xRwF/3eIpljccf21sydJX0T9i5LLHYe6Hro5wcKdqEiTxwaRMFw6gHOYCXMZX30Qsx30
-         wsKw==
-X-Gm-Message-State: AOAM532l/a2aS9xpF/aY53R3BdX1+dN9vsZ5rjYacknvzjtnKJreUWxV
-        fcgSRst/AFP98prMiOM7RbWkxW9KQL0=
-X-Google-Smtp-Source: ABdhPJyJaj6IimUlKF9RrOE8iZmP9SNpxszf6/aKCHkWP6G5jx3lXcCaXizwKA2oVWcVuo0uCBm3oQ==
-X-Received: by 2002:a05:6000:248:: with SMTP id m8mr3746953wrz.404.1635626359521;
-        Sat, 30 Oct 2021 13:39:19 -0700 (PDT)
-Received: from gmail.com (62-47-13-59.adsl.highway.telekom.at. [62.47.13.59])
-        by smtp.gmail.com with ESMTPSA id r27sm9246006wrr.70.2021.10.30.13.39.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Mfaw8VhZuQ9w+Kudt0Ftdz/5k9PkTJdkS1bCKns/FhE=;
+        b=XCYK02ICXQvo1Ava4K36MH+UrGx4CiqrYgBJnzChcqvVhdP30U+r/f/uE3dNv0+b8R
+         biSPVpasGtHZ7sqi+DoqAL2zymhDYkOcbV15kdCRoFqAy+z5q7JP6G8z71hWLCfwsAf4
+         nbk7KORVDLLgAgUxI8P5Q0ERgbamDksSmt7g95bon1sKJRLOWu2vejE2zTAW8pZzdDx3
+         wSuqsAtv/aI0/RAp48MESv123kBfMUQEetE8YlKgQySMWelH0h5UvFxhjCLMOX+0g6w+
+         xBLAn9iogAeGAGLrhIVWCB/dB3YINA3ztwUXQgt7/isYJjP+zJntgcHYFAZeSN6hdYxG
+         kZSA==
+X-Gm-Message-State: AOAM531TBm0ZXLbKLuyGMiOtxo3yQYUM4rDpL72/25kN2QnnOmCbMqRr
+        FErhMK350Pb7ztkqvvILz+E=
+X-Google-Smtp-Source: ABdhPJzEiEEbYhTwG8GyzHAZXYy5K9Kiw9lE/+u4URug48Yay4RUAdIcNDPaTrP6jD4OfhfFijYjcQ==
+X-Received: by 2002:a05:600c:244:: with SMTP id 4mr20140035wmj.167.1635626530969;
+        Sat, 30 Oct 2021 13:42:10 -0700 (PDT)
+Received: from lesale.home (62-47-13-59.adsl.highway.telekom.at. [62.47.13.59])
+        by smtp.gmail.com with ESMTPSA id m12sm8925154wrq.69.2021.10.30.13.42.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 13:39:19 -0700 (PDT)
-Date:   Sat, 30 Oct 2021 22:39:16 +0200
+        Sat, 30 Oct 2021 13:42:10 -0700 (PDT)
 From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     "Ryan Hodges (rhodges)" <rhodges@cisco.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Ryan Hodges <rphodges@gmail.com>
-Subject: Re: git apply --intent-to-add deletes other files from the index
-Message-ID: <20211030203916.zopggbajumvb4z3f@gmail.com>
+To:     rhodges@cisco.com
+Cc:     git@vger.kernel.org, rhodges@gmail.com,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ryan Hodges <rphodges@cisco.com>
+Subject: [PATCH] apply: make --intent-to-add not stomp index
+Date:   Sat, 30 Oct 2021 22:41:55 +0200
+Message-Id: <20211030204155.2500624-1-aclopte@gmail.com>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <0DB10E05-094D-4382-AD1F-657878B06A80@cisco.com>
 References: <0DB10E05-094D-4382-AD1F-657878B06A80@cisco.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0DB10E05-094D-4382-AD1F-657878B06A80@cisco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 26, 2021 at 03:11:36PM +0000, Ryan Hodges (rhodges) wrote:
-> Hi all,
->  
-> I’ve got a quick question about ‘git apply –intent-to-add’.  If I’ve got a patch that just adds one file to the tree:
->  
-> [sjc-ads-2565:t.git]$ git diff
-> diff --git a/c.c b/c.c
-> new file mode 100644
-> index 0000000..9daeafb
-> --- /dev/null
-> +++ b/c.c
-> @@ -0,0 +1 @@
-> +test
->  
-> and I apply that patch with –intent-to-add:
->  
-> [sjc-ads-2565:t.git]$ git apply --intent-to-add c.diff
->  
-> The newly added file is tracked but other files in the tree get marked as deleted:
->  
-> [sjc-ads-2565:t.git]$ git status
-> On branch master
-> Changes to be committed:
->   (use “git restore –staged <file>…” to unstage)
->                 deleted:    a.c
+Commit cff5dc09ed (apply: add --intent-to-add, 2018-05-26) introduced
+"apply -N" plus a test to make sure it behaves exactly as "add -N"
+when given equivalent changes.  However, the test only checks working
+tree changes. Now "apply -N" forgot to read the index, so it left
+all tracked files as deleted, except for the ones it touched.
 
-Yep, looks like a bug to me.
-git apply should never change the status of files that are not mentioned in
-the input patch.
+Fix this by reading the index file, like we do for "apply --cached".
+and test that we leave no content changes in the index.
 
->                 deleted:    b.c
->  
-> Changes not staged for commit:
->   (use “git add <file>…” to update what will be committed)
->   (use “git restore <file>…” to discard changes in working directory)
->                 new file:   c.c
->  
-> It looks like Git created a new index with only the newly added file in the patch.
+Reported-by: Ryan Hodges <rphodges@cisco.com>
+Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
+---
+ apply.c               | 2 +-
+ t/t2203-add-intent.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Seems so.
+diff --git a/apply.c b/apply.c
+index 43a0aebf4e..4f740e373b 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4771,7 +4771,7 @@ static int apply_patch(struct apply_state *state,
+ 					       LOCK_DIE_ON_ERROR);
+ 	}
+ 
+-	if (state->check_index && read_apply_cache(state) < 0) {
++	if ((state->check_index || state->ita_only) && read_apply_cache(state) < 0) {
+ 		error(_("unable to read index file"));
+ 		res = -128;
+ 		goto end;
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index cf0175ad6e..035ce3a2b9 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -307,7 +307,7 @@ test_expect_success 'apply --intent-to-add' '
+ 	grep "new file" expected &&
+ 	git reset --hard &&
+ 	git apply --intent-to-add expected &&
+-	git diff >actual &&
++	(git diff && git diff --cached) >actual &&
+ 	test_cmp expected actual
+ '
+ 
+-- 
+2.33.1
 
-> However, I’d like Git to just add one entry to the index corresponding
-> to the newly added file in the patch.  Is this a bug or am I completely
-> misinterpreting the goal of ‘intent-to-add’.
-
-Yeah, I think your "git apply --intent-to-add c.diff" should behave exactly like
-
-	echo test > c.c && git add --intent-to-add c.c
