@@ -2,122 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB256C433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D917C4332F
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:31:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0B2760720
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:25:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EDCE60F4B
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbhJ3V1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 17:27:46 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57664 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbhJ3V1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 17:27:45 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE163152AFE;
-        Sat, 30 Oct 2021 17:25:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AvPqJpSADBWDGylPMM6skbUe9m5OQ9CmAUfq6y
-        LC9kQ=; b=bhDFnE9I1qLEEtKIt/VAOCzj2d2nuZeXx1VjyKmquVreBSsckumBbH
-        yJiOz2Zv5jjv77U/RXYRacnzYYT+zPxZwPtuWauZWVllXiaI/MjXNsn9HdgMiE3r
-        wRu2DFUtrS4oar+TO9/Wc881yJhe7a5pjKrOlirfhpxtRdvKnDaho=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5BB5152AFD;
-        Sat, 30 Oct 2021 17:25:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8A23C152AFC;
-        Sat, 30 Oct 2021 17:25:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Peter Hunkeler <phunsoft@gmx.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailinglist <git@vger.kernel.org>
-Subject: Re: Git not commiting anything if file created and "git add"ed in
- pre-commit hook is the only file in the staging area
-References: <0165d68f-79a7-d8b7-1bba-89a1449e87a7@gmx.net>
-        <YXnNvyi62j5gcxQV@camp.crustytoothpaste.net>
-        <dd79e443-3bb9-8b83-746b-7db7c4997ee3@gmx.net>
-        <c5507ba6-6e31-b143-9791-0bcff54acb64@gmx.net>
-        <4c88e2ae-e42f-491a-2b97-aa1f92c392d5@kdbg.org>
-Date:   Sat, 30 Oct 2021 14:25:09 -0700
-In-Reply-To: <4c88e2ae-e42f-491a-2b97-aa1f92c392d5@kdbg.org> (Johannes Sixt's
-        message of "Sat, 30 Oct 2021 18:44:54 +0200")
-Message-ID: <xmqqlf2adx3e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231459AbhJ3Ve1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 17:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57708 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230299AbhJ3Ve0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 17:34:26 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A39EC061570;
+        Sat, 30 Oct 2021 14:31:55 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id m22so22302551wrb.0;
+        Sat, 30 Oct 2021 14:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fn/yC9dQ+cdFMTs7+hVYN9RwP973zbjYwKitz0z5vTU=;
+        b=c/eZvOeqhurpQwvJnH5PhqxLfsvYX0A78tAjol/u+Be7HuvNrViaeXWJLzGLQp9bpi
+         o14SqSiApHzgsqxxCeZUqonMMo/LATzpTgwA/oqQQq9iwscCNAU2neQj9uaVTieBeQQZ
+         bGuGypgkfpgnamnIOrHWa21q1o8BB2dAx0jlmvwnCd5dPLXctAkRW37LHLlYaAfdt0M7
+         fiJURlO9SGBDpcNTy3g7HgpnJjrc9LGw5y41h4fycuV3c5t6t9JW5TobJHi6QVi+QDIG
+         ODt1irpoA4HUTW/DcHTVXQPkvNDBhb55ITOI02j3RT37+x3LTesydBJ+tzM4sRz2/7yc
+         D3bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fn/yC9dQ+cdFMTs7+hVYN9RwP973zbjYwKitz0z5vTU=;
+        b=jwlr4BaJLwxcxMlm8rquDV8ipODLezco5ceE0imy3Q43+6VN5hKY8ByY5P236alUi+
+         3vDSnPlMFAPP0yflvUAkPIk7cLvLRjxPTbn643OM8apVsPUTWKYm7JhsUCGQiQqPGEFN
+         vzIbuUN+VzuME5fVVVRWrOBdpGkh1lL7OEsjTptb/RJTpi/4FzOfIVdJiTF43kYjYnZ4
+         KqN24VEcAhSkN8Fqa1Ofa2EWv+PUmVJMy6766WYDAzG/xRyJ6XIjuYVeyXxc1AyFVN+k
+         f/PXlVV8Q+u71ZRuWCn1ufs8N2p3MbX+DRvghoNoOmOMj8EIzNDwu4arwsjQ4Ts73LEj
+         uUbA==
+X-Gm-Message-State: AOAM532uZ7SpfgpdWL0AtLbV6TfTzqhSLjF7zahy00MWu5wzqj1/mQAy
+        YZXpnhFXjRCcQgv+WllWJFI=
+X-Google-Smtp-Source: ABdhPJy1v0IHl38vwJSQHkoCi+puWHJWUzjv7R9copvnZeJzlQK7zy1kwZCcF3L9vdk1Qp69r7gxIw==
+X-Received: by 2002:adf:aac5:: with SMTP id i5mr13643160wrc.67.1635629513034;
+        Sat, 30 Oct 2021 14:31:53 -0700 (PDT)
+Received: from sqli.sqli.com ([195.53.121.100])
+        by smtp.googlemail.com with ESMTPSA id c79sm2948689wme.43.2021.10.30.14.31.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Oct 2021 14:31:52 -0700 (PDT)
+From:   Alejandro Colomar <alx.manpages@gmail.com>
+To:     mtk.manpages@gmail.com, linux-man@vger.kernel.org
+Cc:     git@vger.kernel.org, Alejandro Colomar <alx.manpages@gmail.com>,
+        linux-kernel@vger.kernel.org, libc-alpha@sourceware.org
+Subject: [PATCH 00/22] man2: Add [[deprecated]] attribute
+Date:   Sat, 30 Oct 2021 23:31:10 +0200
+Message-Id: <20211030213131.140429-1-alx.manpages@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DCB592D2-39C7-11EC-A2A0-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hello Michael,
 
-> Even though the documentation does not say explicitly that the commit
-> must not be changed, it is implicit in the stated intent (that the
-> commit is only checked). Depending on that some particular behavior
-> works for you sometimes is then your own business, and when it breaks
-> you get to keep both parts.
+I added the C2X [[deprecated]] attribute to the prototypes of some
+system calls.  All of the cases where I added that were already
+marked as deprecated or obsolete somewhere in the manual page,
+so this is just about uniformity and visual effect rather than
+a new deprecation notice.
 
-The above matches my _intention_ for the pre-commit hook when I
-added it in 2005, but there were enough people who wanted to abuse
-the interface that it no longer exactly matches the reality.  It has
-been made usable to inspect the changes (which is the original
-purpose of the hook) and in addition, apply mechanical fixes on top,
-before making the commit.
+There are cases where the syscalls have been simply removed, and
+so they are obviously not to be used any more.
 
-The story so far, however, is that the scenario that started this
-thread is not even that, if I understand it correctly.  The question
-is: what should happen when *nothing* is different between the HEAD
-and the index, the user types "$ git commit" (no pathspec, no
-nothing, commit the index as-is, no --allow-empty option), and the
-pre-commit mucks with the index to "fix" the content in the index.
+There are cases where some implementation (not necessarily Linux)
+is dangerous.
 
-Because we check if there is anything to commit before we invoke the
-pre-commit hook and then reject an empty commit based on that, we
-successfully reject the attempt to commit.  This is in line even
-with the modern intention, as the mucking done by the hook cannot be
-"fixes" based on the observation of the changes made to the index by
-the user (e.g. "The user tries to add changes, with whitespace
-breakages, and then pre-commit hook notices.  Instead of rejecting,
-it fixes the whitespace issues for the user" is the justifying use
-case behind the looser than the original "check only, no touching"
-definition).  So ...
+In some other cases, the functions have been obsoleted by POSIX,
+but are still there in Linux without any deprecation notices.
+In these cases, if there's no clear replacement, or if the
+replacement is not a straight drop-in, or if the replacement adds
+more complexity, I didn't add the [[deprecated]] attribute.
 
-> In conclusion, the pre-commit hook behaves as designed and nothing has
-> to be changed.
+A list of the system calls that I skipped in this patch set:
 
-... in conclusion, pre-commit is *not* a place to make such a change
-that may be created by a script even when there is no human
-initiated change, and "git commit" is behaving as designed.
+- utime(2)
+	Many filesystems have 1 second resolution, so it makes
+	sense to use it in those cases.  git(1) for example uses
+	utime(2) consistently.  Although deprecated by POSIX, it
+	is still part of POSIX; if it ever removes it, we can
+	reconsider.
 
-But there are two things that are not solved yet.
+- setpgrp(2) (the POSIX/SysV version)
+	POSIX deprecated it (not yet removed), but the manual page
+	doesn't mention any replacement.
 
- * It is *not* the ultimate goal of the OP to "use" pre-commit
-   hook.  The goal of OP is to find a workflow ingredient where
-   changes other than human initiated ones are committed at the same
-   time human user tries to commit changes created by human.  So if
-   pre-commit is the wrong tool to use for that purpose, what is it?
+Cheers,
 
-   I suspect that there is no built-in way to do this, and I am not
-   sure if it is a good idea to add such a feature to the tool---as
-   some have already noted in the discussion, it may encourage a bad
-   workflow to include such non-human-created artifacts to human
-   initiated commit.  I don't know.
+Alex
 
- * If we do not consider changes made by pre-commit hook to count as
-   "without --allow-empty, an empty commit is rejected" logic, why
-   do we even call the hook in the first place in such a case?  I
-   think there is a room for improvement on our side---perhaps we
-   can make "git commit" fail much earlier in such a case without
-   calling the pre-commit hook.
 
-Thanks for the discussion so far.
+---
+
+Alejandro Colomar (22):
+  bdflush.2: SYNOPSIS: Mark as [[deprecated]]
+  create_module.2: SYNOPSIS: Mark as [[deprecated]]
+  get_kernel_syms.2: SYNOPSIS: Mark as [[deprecated]]
+  getunwind.2: SYNOPSIS: Mark as [[deprecated]]
+  iopl.2: SYNOPSIS: Mark as [[deprecated]]
+  query_module.2: SYNOPSIS: Mark as [[deprecated]]
+  remap_file_pages.2: SYNOPSIS: Mark as [[deprecated]]
+  sigprocmask.2: SYNOPSIS: Mark the legacy system call as [[deprecated]]
+  statfs.2: SYNOPSIS: Mark as [[deprecated]]
+  stime.2: SYNOPSIS: Mark as [[deprecated]]
+  ustat.2: SYNOPSIS: Mark as [[deprecated]]
+  pthread_mutex_consistent.3: Mark *_np() old function as [[deprecated]]
+  sysctl.2: SYNOPSIS: Mark as [[deprecated]]
+  vfork.2: SYNOPSIS: Mark as [[deprecated]]
+  tkill.2: SYNOPSIS: Mark tkill() as [[deprecated]]
+  sgetmask.2: SYNOPSIS: Mark as [[deprecated]]
+  getitimer.2: SYNOPSIS: Mark as [[deprecated]]
+  futimesat.2: SYNOPSIS: Mark as [[deprecated]]
+  gettimeofday.2: SYNOPSIS: Mark as [[deprecated]]
+  setpgid.2: SYNOPSIS: Mark BSD versions of getpgrp() and setpgrp() as
+    [[deprecated]]
+  sysfs.2: SYNOPSIS: Mark as [[deprecated]]
+  uselib.2: SYNOPSIS: Mark as [[deprecated]]
+
+ man2/bdflush.2                  |  4 ++--
+ man2/create_module.2            |  2 +-
+ man2/futimesat.2                |  4 ++--
+ man2/get_kernel_syms.2          |  2 +-
+ man2/getitimer.2                |  7 ++++---
+ man2/gettimeofday.2             |  8 ++++----
+ man2/getunwind.2                |  3 ++-
+ man2/iopl.2                     |  2 +-
+ man2/query_module.2             |  5 +++--
+ man2/remap_file_pages.2         |  5 +++--
+ man2/setpgid.2                  |  8 ++++----
+ man2/sgetmask.2                 |  4 ++--
+ man2/sigprocmask.2              | 12 +++++++-----
+ man2/statfs.2                   |  4 ++--
+ man2/stime.2                    |  2 +-
+ man2/sysctl.2                   |  2 +-
+ man2/sysfs.2                    |  6 +++---
+ man2/tkill.2                    |  2 +-
+ man2/uselib.2                   |  2 +-
+ man2/ustat.2                    |  2 +-
+ man2/vfork.2                    |  2 +-
+ man3/pthread_mutex_consistent.3 |  1 +
+ 22 files changed, 48 insertions(+), 41 deletions(-)
+
+-- 
+2.33.1
 
