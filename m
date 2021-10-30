@@ -2,157 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D917C4332F
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A67C433FE
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EDCE60F4B
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:31:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C3AE60E8B
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231459AbhJ3Ve1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 17:34:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57708 "EHLO
+        id S231960AbhJ3Ve3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 17:34:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbhJ3Ve0 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230338AbhJ3Ve0 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 30 Oct 2021 17:34:26 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A39EC061570;
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0415C061714;
         Sat, 30 Oct 2021 14:31:55 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id m22so22302551wrb.0;
+Received: by mail-wm1-x32a.google.com with SMTP id j128-20020a1c2386000000b003301a98dd62so6066293wmj.5;
         Sat, 30 Oct 2021 14:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fn/yC9dQ+cdFMTs7+hVYN9RwP973zbjYwKitz0z5vTU=;
-        b=c/eZvOeqhurpQwvJnH5PhqxLfsvYX0A78tAjol/u+Be7HuvNrViaeXWJLzGLQp9bpi
-         o14SqSiApHzgsqxxCeZUqonMMo/LATzpTgwA/oqQQq9iwscCNAU2neQj9uaVTieBeQQZ
-         bGuGypgkfpgnamnIOrHWa21q1o8BB2dAx0jlmvwnCd5dPLXctAkRW37LHLlYaAfdt0M7
-         fiJURlO9SGBDpcNTy3g7HgpnJjrc9LGw5y41h4fycuV3c5t6t9JW5TobJHi6QVi+QDIG
-         ODt1irpoA4HUTW/DcHTVXQPkvNDBhb55ITOI02j3RT37+x3LTesydBJ+tzM4sRz2/7yc
-         D3bw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=peorTGqhDd+FbCixcKr0Q6eTtZHCTSKsiHTZ3zkUsWk=;
+        b=VFJMdnVVQNwyZ0HekDUwbyv3IMSa6R+7ZFnIl9IMcxtYQKz4yyA8hB2owz8trrPMAd
+         DlYh2PuIJoHdCn5TKJ2OdEABzjUFMv3/LjU3PUI9UVQOpDFYRdDRUGDnGhPOgDy+jwd7
+         M63y+w1hibHu6VPS6bUdGwGAH4Pf0rINSSu5e7moWYXOM1FFfnaENoXQXK4aSU2VhLUQ
+         1EeINupVpG3okrJht/6UxVAvl6Aqi2yy3Wjy93v/W7BmrTb0u50bzdsTT/XqV2CjNmse
+         J0+LaEKH09MtTc/iKoyZV7CV2sIWIvgzSIS18Bcssob+befEtcOy2unaS3mpc/EJS53o
+         lzMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fn/yC9dQ+cdFMTs7+hVYN9RwP973zbjYwKitz0z5vTU=;
-        b=jwlr4BaJLwxcxMlm8rquDV8ipODLezco5ceE0imy3Q43+6VN5hKY8ByY5P236alUi+
-         3vDSnPlMFAPP0yflvUAkPIk7cLvLRjxPTbn643OM8apVsPUTWKYm7JhsUCGQiQqPGEFN
-         vzIbuUN+VzuME5fVVVRWrOBdpGkh1lL7OEsjTptb/RJTpi/4FzOfIVdJiTF43kYjYnZ4
-         KqN24VEcAhSkN8Fqa1Ofa2EWv+PUmVJMy6766WYDAzG/xRyJ6XIjuYVeyXxc1AyFVN+k
-         f/PXlVV8Q+u71ZRuWCn1ufs8N2p3MbX+DRvghoNoOmOMj8EIzNDwu4arwsjQ4Ts73LEj
-         uUbA==
-X-Gm-Message-State: AOAM532uZ7SpfgpdWL0AtLbV6TfTzqhSLjF7zahy00MWu5wzqj1/mQAy
-        YZXpnhFXjRCcQgv+WllWJFI=
-X-Google-Smtp-Source: ABdhPJy1v0IHl38vwJSQHkoCi+puWHJWUzjv7R9copvnZeJzlQK7zy1kwZCcF3L9vdk1Qp69r7gxIw==
-X-Received: by 2002:adf:aac5:: with SMTP id i5mr13643160wrc.67.1635629513034;
-        Sat, 30 Oct 2021 14:31:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=peorTGqhDd+FbCixcKr0Q6eTtZHCTSKsiHTZ3zkUsWk=;
+        b=CT2IQJzYzZjwYs454cU+WoUy8ZaepgXMr3j0XWyl+1DRNN8TEItnB7wOjjY1KvDUwo
+         TzHqskuVZFawsCrOBQCqZuM2UPIOEUJcgTSCU1pM/T8dvJyqNuUJPgpxn04ALxidV5Kf
+         mMKgcju9EdgpnIVMa4iTV9PXtE7WOgo9/KwC+2Xa+FFNMf6qR3giS42ff/yCVe/Aide+
+         p+Q6sKr38TnMItK58iLs/lP2x+n52l8INyrM9tjBUodkxmSmQ4wf88IC3azLe98DOgvR
+         Towkvb9ElbULLaOdmwHvo9h3sRGpNWMR3ahhzvLm4jeSLU5XAKwCoDn8zeEWmKDONe0Z
+         DC4A==
+X-Gm-Message-State: AOAM533kp7ImAmfoBWjJM/8JLksvQyF1WCPI/1LC2jpMw0HPQ17aHvi5
+        FJVr8DrrCmHxSXeyFNHaMWc=
+X-Google-Smtp-Source: ABdhPJybMDAwhUGQCe/Gn6rSszx7jKKtDAx3FVFpKWdkgZkqRV3wAvV3DdPFyb5kNY6ptepOLIupTA==
+X-Received: by 2002:a7b:c5d4:: with SMTP id n20mr28770505wmk.32.1635629514096;
+        Sat, 30 Oct 2021 14:31:54 -0700 (PDT)
 Received: from sqli.sqli.com ([195.53.121.100])
-        by smtp.googlemail.com with ESMTPSA id c79sm2948689wme.43.2021.10.30.14.31.51
+        by smtp.googlemail.com with ESMTPSA id c79sm2948689wme.43.2021.10.30.14.31.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 14:31:52 -0700 (PDT)
+        Sat, 30 Oct 2021 14:31:53 -0700 (PDT)
 From:   Alejandro Colomar <alx.manpages@gmail.com>
 To:     mtk.manpages@gmail.com, linux-man@vger.kernel.org
 Cc:     git@vger.kernel.org, Alejandro Colomar <alx.manpages@gmail.com>,
         linux-kernel@vger.kernel.org, libc-alpha@sourceware.org
-Subject: [PATCH 00/22] man2: Add [[deprecated]] attribute
-Date:   Sat, 30 Oct 2021 23:31:10 +0200
-Message-Id: <20211030213131.140429-1-alx.manpages@gmail.com>
+Subject: [PATCH 01/22] bdflush.2: SYNOPSIS: Mark as [[deprecated]]
+Date:   Sat, 30 Oct 2021 23:31:11 +0200
+Message-Id: <20211030213131.140429-2-alx.manpages@gmail.com>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211030213131.140429-1-alx.manpages@gmail.com>
+References: <20211030213131.140429-1-alx.manpages@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Michael,
+This syscal is not supported anymore by glibc, and does nothing.
 
-I added the C2X [[deprecated]] attribute to the prototypes of some
-system calls.  All of the cases where I added that were already
-marked as deprecated or obsolete somewhere in the manual page,
-so this is just about uniformity and visual effect rather than
-a new deprecation notice.
-
-There are cases where the syscalls have been simply removed, and
-so they are obviously not to be used any more.
-
-There are cases where some implementation (not necessarily Linux)
-is dangerous.
-
-In some other cases, the functions have been obsoleted by POSIX,
-but are still there in Linux without any deprecation notices.
-In these cases, if there's no clear replacement, or if the
-replacement is not a straight drop-in, or if the replacement adds
-more complexity, I didn't add the [[deprecated]] attribute.
-
-A list of the system calls that I skipped in this patch set:
-
-- utime(2)
-	Many filesystems have 1 second resolution, so it makes
-	sense to use it in those cases.  git(1) for example uses
-	utime(2) consistently.  Although deprecated by POSIX, it
-	is still part of POSIX; if it ever removes it, we can
-	reconsider.
-
-- setpgrp(2) (the POSIX/SysV version)
-	POSIX deprecated it (not yet removed), but the manual page
-	doesn't mention any replacement.
-
-Cheers,
-
-Alex
-
-
+Signed-off-by: Alejandro Colomar <alx.manpages@gmail.com>
 ---
+ man2/bdflush.2 | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Alejandro Colomar (22):
-  bdflush.2: SYNOPSIS: Mark as [[deprecated]]
-  create_module.2: SYNOPSIS: Mark as [[deprecated]]
-  get_kernel_syms.2: SYNOPSIS: Mark as [[deprecated]]
-  getunwind.2: SYNOPSIS: Mark as [[deprecated]]
-  iopl.2: SYNOPSIS: Mark as [[deprecated]]
-  query_module.2: SYNOPSIS: Mark as [[deprecated]]
-  remap_file_pages.2: SYNOPSIS: Mark as [[deprecated]]
-  sigprocmask.2: SYNOPSIS: Mark the legacy system call as [[deprecated]]
-  statfs.2: SYNOPSIS: Mark as [[deprecated]]
-  stime.2: SYNOPSIS: Mark as [[deprecated]]
-  ustat.2: SYNOPSIS: Mark as [[deprecated]]
-  pthread_mutex_consistent.3: Mark *_np() old function as [[deprecated]]
-  sysctl.2: SYNOPSIS: Mark as [[deprecated]]
-  vfork.2: SYNOPSIS: Mark as [[deprecated]]
-  tkill.2: SYNOPSIS: Mark tkill() as [[deprecated]]
-  sgetmask.2: SYNOPSIS: Mark as [[deprecated]]
-  getitimer.2: SYNOPSIS: Mark as [[deprecated]]
-  futimesat.2: SYNOPSIS: Mark as [[deprecated]]
-  gettimeofday.2: SYNOPSIS: Mark as [[deprecated]]
-  setpgid.2: SYNOPSIS: Mark BSD versions of getpgrp() and setpgrp() as
-    [[deprecated]]
-  sysfs.2: SYNOPSIS: Mark as [[deprecated]]
-  uselib.2: SYNOPSIS: Mark as [[deprecated]]
-
- man2/bdflush.2                  |  4 ++--
- man2/create_module.2            |  2 +-
- man2/futimesat.2                |  4 ++--
- man2/get_kernel_syms.2          |  2 +-
- man2/getitimer.2                |  7 ++++---
- man2/gettimeofday.2             |  8 ++++----
- man2/getunwind.2                |  3 ++-
- man2/iopl.2                     |  2 +-
- man2/query_module.2             |  5 +++--
- man2/remap_file_pages.2         |  5 +++--
- man2/setpgid.2                  |  8 ++++----
- man2/sgetmask.2                 |  4 ++--
- man2/sigprocmask.2              | 12 +++++++-----
- man2/statfs.2                   |  4 ++--
- man2/stime.2                    |  2 +-
- man2/sysctl.2                   |  2 +-
- man2/sysfs.2                    |  6 +++---
- man2/tkill.2                    |  2 +-
- man2/uselib.2                   |  2 +-
- man2/ustat.2                    |  2 +-
- man2/vfork.2                    |  2 +-
- man3/pthread_mutex_consistent.3 |  1 +
- 22 files changed, 48 insertions(+), 41 deletions(-)
-
+diff --git a/man2/bdflush.2 b/man2/bdflush.2
+index 710da7b18..8ad5dfc2b 100644
+--- a/man2/bdflush.2
++++ b/man2/bdflush.2
+@@ -31,8 +31,8 @@ bdflush \- start, flush, or tune buffer-dirty-flush daemon
+ .nf
+ .B #include <sys/kdaemon.h>
+ .PP
+-.BI "int bdflush(int "  func ", long *" address );
+-.BI "int bdflush(int "  func ", long " data );
++.BI "[[deprecated]] int bdflush(int "  func ", long *" address );
++.BI "[[deprecated]] int bdflush(int "  func ", long " data );
+ .fi
+ .PP
+ .IR Note :
 -- 
 2.33.1
 
