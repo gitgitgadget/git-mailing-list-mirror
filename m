@@ -2,148 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A2BBC433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 10:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4381C433FE
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 12:25:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C4FC60F23
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 10:49:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C39F66101E
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 12:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231772AbhJ3KmU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 06:42:20 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45396 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231685AbhJ3KmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 06:42:20 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 8F15E1F953;
-        Sat, 30 Oct 2021 10:39:50 +0000 (UTC)
-Date:   Sat, 30 Oct 2021 10:39:50 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH] allow disabling fsync everywhere
-Message-ID: <20211030103950.M489266@dcvr>
-References: <20211028002102.19384-1-e@80x24.org>
- <211029.86v91g3vv3.gmgdl@evledraar.gmail.com>
+        id S231886AbhJ3M1a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 08:27:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230320AbhJ3M13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 08:27:29 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8508EC061570;
+        Sat, 30 Oct 2021 05:24:59 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id b2-20020a1c8002000000b0032fb900951eso5638382wmd.4;
+        Sat, 30 Oct 2021 05:24:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=n5vtpGuLbWV3CAAtiuCfLxZukTrhBGK1wk/ITta9g68=;
+        b=gzovDBlSZzJIGhFopwqQi4MOl7H/Be364dnK/MhVgp3E07p8zSHQi/HfddUZ475DQ4
+         YTjJle/eQZsdObhoRM4h4ecjOoDgeKRb0SZn8BYphSr7ew7D7+m/a6lBtOAY/Z1VzDDV
+         k7jjWhMtwuKso5cMKWKBQoSwpqkdR+NJt5kaUichQyqRtcj/OkT/OnfGA8qZ7Fr+87kl
+         V5yyhJHhUOz3VyzDRbacdXg35fgwLhOIKtNpALfTJ2ZTdls7i5awhb846+MsjX7Vlz1S
+         ZAEickRTz7QVk43GVHDRDOIVtDeJqoZSoQnHF4bkB1MVa8KZo+M6vzPcg57Ej0zVlSF1
+         ZdHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=n5vtpGuLbWV3CAAtiuCfLxZukTrhBGK1wk/ITta9g68=;
+        b=re5Y3TYIFAXqMgV+6ZgA/iD7gpGo+MvYxGeG65SJI4Bt5W+8nRELFqhUUwC5LJGPbp
+         9EUm9gUuDnYZ0tMk5N2XBTdnoc7yGxAf8UUXOAukKqjizrtgVV3wGD3CxNE/TtlxSkCz
+         Ew4hbN60NG76pswWai4t+i7lz/kM2IKzi4EIjvIQGDa/e/wqq/cKg1zxOQwykg+LQLJN
+         bTm4jVQpNuWoY1hNrRCJKujmGwcnyeY1cunuCfn6n0eaPsPInTUfoeTiUy9rzGuz9di6
+         zeHWRbLaawCpfNZ8hNkfeEcmlm1/uazv5/kbN3plCK3GpxO6kkOuIAwSKiywlr+EIY9A
+         ovhg==
+X-Gm-Message-State: AOAM533vALYxlcMZWKOVV9Ahkzg4+lF0YEXKgJdtWJcLfs2CzzVjFd2q
+        a7+m7HCREtNoPyh27UqgV7o=
+X-Google-Smtp-Source: ABdhPJxLtTWS3HR1G33spvL37/GL3ZcmCM1ODBLKUtjZcBgixghvpKcNDllGvDYaCIGMqa0NKaJ2Cg==
+X-Received: by 2002:a1c:1c8:: with SMTP id 191mr3584110wmb.90.1635596698145;
+        Sat, 30 Oct 2021 05:24:58 -0700 (PDT)
+Received: from [10.8.0.130] ([195.53.121.100])
+        by smtp.gmail.com with ESMTPSA id n9sm7836834wmq.6.2021.10.30.05.24.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Oct 2021 05:24:57 -0700 (PDT)
+Message-ID: <fd78c241-c51e-03c6-1e6b-641536245fbd@gmail.com>
+Date:   Sat, 30 Oct 2021 14:24:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211029.86v91g3vv3.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: Is getpass(3) really obsolete?
+Content-Language: en-US
+To:     Joseph Myers <joseph@codesourcery.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        linux-man <linux-man@vger.kernel.org>,
+        Libc-alpha <libc-alpha@sourceware.org>,
+        "tech@openbsd.org" <tech@openbsd.org>,
+        Klemens Nanni <kn@openbsd.org>,
+        Benoit Lecocq <benoit@openbsd.org>, git@vger.kernel.org
+References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
+ <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com>
+ <211029.86r1c43uwj.gmgdl@evledraar.gmail.com>
+ <865e5899-b991-918d-8bc6-ced65a67a566@gmail.com>
+ <alpine.DEB.2.22.394.2110291627330.1788146@digraph.polyomino.org.uk>
+From:   "Alejandro Colomar (man-pages)" <alx.manpages@gmail.com>
+In-Reply-To: <alpine.DEB.2.22.394.2110291627330.1788146@digraph.polyomino.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Thu, Oct 28 2021, Eric Wong wrote:
+Hi Joseph,
+
+On 10/29/21 18:31, Joseph Myers wrote:
+> On Fri, 29 Oct 2021, Alejandro Colomar (man-pages) via Libc-alpha wrote:
 > 
-> > "core.fsync" and the "GIT_FSYNC" environment variable now exist
-> > for disabling fsync() even on packfiles and other critical data.
+>> The broader context is that I was trying to make the deprecation notices more
+>> consistent in the Linux manpages, by using the [[deprecated]] attribute where
+>> appropriate.  While doing that, I found a few cases where the
+>> deprecation/obsoletion is not so clear to me, such as this one
+>> ([as]ctime[_r](3) is another one, since it is deprecated by POSIX, but not by
+>> the C standard, but I'll start a different thread with that; and isascii(3) is
 > 
-> First off, I think this would be useful to add, even as a non-test
-> thing.
-
-<snip>
-
-Agreed, I've LD_PRELOAD-ed libeatmydata via ~/.bashrc at times :>
-
-OTOH, I understand Junio and brian's positions on dealing with
-misinformed users losing data.  I'm also lazy when it comes to
-docs and support, so I'm leaning towards keeping this exclusively
-for those who read source code.
-
-I also know it's easy to add a sysctl knob for disabling fsync
-et. al. in the kernel; but it's not something I want to deal
-with supporting and documenting, either.
-
-> > Running "make test -j8 NO_SVN_TESTS=1" on a noisy 8-core system
-> > on an HDD, adding "GIT_FSYNC=0" to the invocation brings my test
-> > runtime from ~4 minutes down to ~3 minutes.
+> See the discussion of deprecation starting with
+> <https://sourceware.org/pipermail/libc-alpha/2021-May/126356.html> (C2X
+> has also deprecated those functions).  The comments in that thread
+> supported marking the functions deprecated, but it needs someone to send a
+> patch and I don't know what breakage might result in applications using
+> those functions.
 > 
-> On a related topic: Have you tried having it use an empty template
-> directory? I have some unsubmitted patches for that, and if you retain
-> all trash dirs you'll find that we have IIRC 100-200MB of just
-> accumulated *.sample etc. hooks, out of ~1GB total for the tests.
 
-Not, not yet.  I also expect using reflinks on some Linux FSes
-will help users save space in real-world use
-(ioctl(dst_fd, FICLONE, src_fd)).
+Thanks.  The latest draft for C2x that I know of is N2596.  Is there any 
+newer draft that I can consult for these things?  I see many proposals, 
+but it's difficult to know which have been accepted and which not 
+without an actual recent draft of the standard.
 
-> Per the recent threads about fsync semantics this should really be
-> worded to be more scary, i.e. it's not guaranteed that your data is
-> on-disk at all. So subsequent git operations might see repo corruption,
-> if we're being POSIX-pedantic.
+Cheers,
 
-Yeah, I wasn't sure how strongly to word it.  Now it's
-undocumented; I suppose we can use your wording if we decide
-it's worth documenting.
+Alex
 
-> > --- a/git-cvsserver.perl
-> > +++ b/git-cvsserver.perl
-> > @@ -3607,6 +3607,25 @@ package GITCVS::updater;
-> >  use strict;
-> >  use warnings;
-> >  use DBI;
-> > +our $_use_fsync;
-> 
-> s/our/my/?
 
-Erm, yes.  Though it doesn't matter for a standalone script;
-probably not worth a reroll..
-
-> I wonder most of all if we really need these perl changes, does it
-> really matter for the overall performance that you want, or was it just
-> to get all fsync() uses out of the test suite?
-
-Yes to both, or at least an attempt to...  A single fsync() can
-end up being equivalent to syncfs().
-
-Fully-disabling fsync in SVN doesn't seem possible, though.
-There's a few svnadmin switches (--no-flush-to-disk +
---bdb-txn-nosync) but AFAIK they aren't 100% solutions.
-Fortuntanately, NO_SVN_TESTS=1 exists.
-
-> This is a more general comment, but so much of scaffolding like that in
-> the *.perl scripts could go away if we taught git.c some "not quite a
-> builtin, but it's ours" mode, and had say code for git-send-email,
-> git-svn etc. to just set the various data they need in the environment
-> before we invoke them. Then this would just be say:
-> 
->     our $use_fsync = $ENV{GIT_FOR_CVSSERVER_FSYNC};
-
-That's potentially a lot of environment variables, though.
-Maybe just:  eval($ENV{GIT_CFG_CVSSERVER}) if $ENV{GIT_CFG_PID} == $$;
-The PID check should be sufficient to avoid mismatches and
-malicious code injection.
-
-> > [...]
-> >  	my $sync;
-> >  	# both of these options make our .rev_db file very, very important
-> >  	# and we can't afford to lose it because rebuild() won't work
-> > -	if ($self->use_svm_props || $self->no_metadata) {
-> > +	if (($self->use_svm_props || $self->no_metadata) && use_fsync()) {
-> >  		require File::Copy;
-> >  		$sync = 1;
-> >  		File::Copy::copy($db, $db_lock) or die "rev_map_set(@_): ",
-> 
-> This doesn't just impact $io->sync, but also $io->flush, which is a
-> different thing. PerlIO flushing to the OS != fsync().
-
-Right, close($fh) (right below[1]) also takes care of PerlIO
-flushing.  ->flush was only there for fsync.
-
-[1] https://yhbt.net/lore/git/7b333ea62e/s/?b=perl/Git/SVN.pm#n2334
-
-> This patch direction looks good to me, aside from the above we should
-> really update any other fsync() docs we have, maybe with a
-> cross-reference in core.fsyncObjectFiles?
-
-Alright, though I'm happy with it being undocumented, for now.
-
-> I'm not sure offhand what the state of the other fsync patches that
-> Neeraj Singh has been submitting is, but let's make sure that whatever
-> docs/config knobs etc. we have all play nicely together, and are
-> somewhat future-proof if possible.
-
-It looks like it some changes will be necessary to keep tests fast
-after that lands.
+-- 
+Alejandro Colomar
+Linux man-pages comaintainer; https://www.kernel.org/doc/man-pages/
+http://www.alejandro-colomar.es/
