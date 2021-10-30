@@ -2,72 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E00DBC433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 14:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BF0FC433F5
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 15:16:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1B6560FD9
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 14:51:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBB9060724
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 15:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbhJ3Oxx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 10:53:53 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:53059 "EHLO smtp.hosts.co.uk"
+        id S231969AbhJ3PTE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 11:19:04 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:11386 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229993AbhJ3Oxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 10:53:53 -0400
+        id S229993AbhJ3PTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 11:19:03 -0400
 Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1mgphZ-000C0I-4V; Sat, 30 Oct 2021 15:51:21 +0100
-Message-ID: <c46db4a8-c705-6c6c-bcb3-b2d294120dce@iee.email>
-Date:   Sat, 30 Oct 2021 15:51:19 +0100
+        id 1mgq5v-0006Jj-Bg; Sat, 30 Oct 2021 16:16:31 +0100
+Message-ID: <ae900419-39ca-10f6-8ff2-d278f1b8e2e0@iee.email>
+Date:   Sat, 30 Oct 2021 16:16:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.2.1
-Subject: Re: [PATCH 2/3] protocol v2: specify static seeding of clone/fetch
- via "bundle-uri"
+Subject: Re: [PATCH v3 0/8] Allow clean/smudge filters to handle huge files in
+ the LLP64 data model
 Content-Language: en-GB
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        "Robin H . Johnson" <robbat2@gentoo.org>
-References: <cover-0.3-00000000000-20211025T211159Z-avarab@gmail.com>
- <patch-2.3-3ac0539c053-20211025T211159Z-avarab@gmail.com>
- <7fab28bf-54e7-d0e9-110a-53fad6244cc9@gmail.com>
- <211027.86r1c6yh52.gmgdl@evledraar.gmail.com>
- <756524c1-a3b9-29b5-bb72-f75a0c76ea1f@gmail.com>
- <211027.86ilxixoxz.gmgdl@evledraar.gmail.com>
+To:     Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
+ <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
+ <xmqqk0hvllxp.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2110292239170.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110292311200.56@tvgsbejvaqbjf.bet>
 From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <211027.86ilxixoxz.gmgdl@evledraar.gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2110292311200.56@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An aside:
 
-On 27/10/2021 19:01, Ævar Arnfjörð Bjarmason wrote:
-> I don't think you can say "this bundle has no blobs". The
-> "prerequisites" hard map to the same thing you could put on a
-> "want/have" line during PACK negotiation.
->
-> I think we could/should fix that, i.e. we can 
+On 29/10/2021 22:12, Johannes Schindelin wrote:
+> I am not aware of any other popular platform using the LLP64 data model,
+> therefore I do not even think that these patches have to be fast-tracked
+> into Git v2.34.0, next cycle would be good enough. Unless you are aware of
+> other such platforms that do not rely on the Git for Windows fork, but on
+> Git built from your repository?
 
-> bump the bundle format
-> version and have it encode some extended prerequisites/filter/shallow
-> etc information.
-If the format is bumped, could we also include the
-HEAD=<particular-branch> info within that format.
-The `guess the HEAD` algorithm isn't ideal and shows up in user
-questions every now and again.
+I was under the impression that the original Raspberry Pi also used the
+LLP64 model, or similar, and that had started of Torsten (tboegi) on the
+extensive early work on this. I was just looking at the zlib parts
+following the Git Merge.
 
->  You'd then have a 1=1 match between the features of
-> git-upload-pack and what you can transfer via the bundle side-channel.
---
+Torsten was compiling for Rasbian (gcc (Raspbian 6.3.0-18+rpi1+deb9u1)
+6.3.0 20170516)
+
 Philip
