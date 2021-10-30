@@ -2,118 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08711C433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 13:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 036E8C433EF
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 14:01:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1FC6610A0
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 13:21:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEA5C60F0F
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 14:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbhJ3NYC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 09:24:02 -0400
-Received: from mout.gmx.net ([212.227.15.18]:34277 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230320AbhJ3NX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 09:23:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635600076;
-        bh=uvOYgmvzfGy6Vv6M8A9pd6Z4p/p/AmUtfXdGBvUvyw8=;
-        h=X-UI-Sender-Class:Subject:From:To:References:Date:In-Reply-To;
-        b=gdwl2PRZB0txR+fNsZxr1/I84OCOXI1f3LT4Yl9WZ/T2+J14/haRrrgHQnNtVSogJ
-         lJA8uI2IzUkhdm1oACOaZusfjmO43uWZ7Dc5/48H75akJbml+ntaZEB1m/BwyzwT8o
-         ig9x9hn2ZTyiDm08ocdShrcARooyJcXoD4pTXL2w=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.9.46] ([62.202.180.250]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOA3P-1mIIKb0mN7-00OWLc; Sat, 30
- Oct 2021 15:21:16 +0200
-Subject: Re: Git not commiting anything if file created and "git add"ed in
- pre-commit hook is the only file in the staging area
-From:   Peter Hunkeler <phunsoft@gmx.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailinglist <git@vger.kernel.org>
-References: <0165d68f-79a7-d8b7-1bba-89a1449e87a7@gmx.net>
- <YXnNvyi62j5gcxQV@camp.crustytoothpaste.net>
- <dd79e443-3bb9-8b83-746b-7db7c4997ee3@gmx.net>
-Message-ID: <c5507ba6-6e31-b143-9791-0bcff54acb64@gmx.net>
-Date:   Sat, 30 Oct 2021 15:21:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S230148AbhJ3ODw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 10:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230005AbhJ3ODu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 10:03:50 -0400
+Received: from todd.t-8ch.de (todd.t-8ch.de [IPv6:2a01:4f8:c010:41de::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF15C061570
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 07:01:20 -0700 (PDT)
+From:   =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=t-8ch.de; s=mail;
+        t=1635602477; bh=kHDnxsQO3kiqHY7Tc5YATfzgXg9bscF1vT22csIATyE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hFjmWzPhPkRw1Hfl49LZkP284ykRZ20DtsCqgnKk39QBNBxS8la77VhMHmBnrdEAi
+         q4eXyZQK/Lisirvyk0Jb7YozIAkkH5kAKKnfEoVwR0X11CPGgtgVhzKMC5mbpwELUz
+         XpzA4os7QoPflUeVJrY7NvpTzAWmVD7lBkfBuOcY=
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Subject: [PATCH] builtin: add git-default-branch command
+Date:   Sat, 30 Oct 2021 16:01:12 +0200
+Message-Id: <20211030140112.834650-1-thomas@t-8ch.de>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-In-Reply-To: <dd79e443-3bb9-8b83-746b-7db7c4997ee3@gmx.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: de-CH
-X-Provags-ID: V03:K1:xypknqQAbNn9SZP97YVZn5DYf2U+7mdIBfAMxBIWN0UuBq6cV33
- 16KUmPmclep+aOy0GyVIYnW5OoY7M7IWYKoW6zzcinNKESSsvUlZkGXPNhL/C2OAcYg/TqC
- 5yl68IRWWpMWoqpaT0DyAiOfxLr2KWS/Xy026rUIKRcRylSnESpgb5Oge+/V+9LqUSGt7HS
- 9g2JBYjl1e8ihSRMB7dow==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1kM9rE2feAA=:ECbTFZsDZTM2kO3tSqbytG
- FYpy0DfirBzqRY2dbqFqXxK/xAwhrBy+Rv+9Hqj66OP8BfQyLeIb8Vkoe9D/Z7b7vTq1k7DiM
- V+Jsg02eTvm9W0DTtucsb/b/66BHP28CG+rbFKyt4Ip7GiJqTdG+Ep4N6A5laR/D56gtZNLmi
- 24mSoKK9htLFzYyvwFnIFXnlFWpRXKR5TjXR9dYOKOk+pPcfY7iVhUY2BxJcapM1661mCZSmz
- gQjoI5JJ0wknEcFbsLB6OuDn+tQI/a7U84crBI8peHbupO486GPjMDWIHEWz+C2RqZcS6NyEC
- FGIK7uSI20qU+isxfZYqaz0kprPoPVix3bORrAsRz++IhnbxHdRUpeAXnfW4hE16naY45jeQf
- dK0Zgn2RIdtkzlZ2T252xVjXF6MSNlmi8vwFtJ4Nw/xR4DIe9JU2iAQb7MihbkJWdQrLSNswN
- oGDFpwqaZd6bg8fJ1zzhpyldTN97jIXuC2dm+RFJTVWLavxZjxuiARsb8Qi7ou4W44UTCmccb
- DW2CAS6CUV4gVYYRTjile72FEBfKjylcHyidijQ4apcZJz4aibooVmVAFWqcE1OwHw23DQGmb
- EimUWGS6LYXWibJuJhBaE9QvsuWEjwVxKbg/Ic9c3hjgBu9+KEiVWy9I75RbLy+7/CRFlnoez
- uC+VNgAEZyko6R74em0hiZfJvMT0ByzzasLUdpEzf9GiTc+4g4S48S6V96lol22n3soVgOTEi
- wmCtQ2VQEOgGz6k6z5N+ryH52vL4Bjy37cNYRW01VYwn19OAqo7V5L6XiwXcjl+87RPTkm88A
- RVA08Z9HLIRgvYy97i4kSBy7zyBfwzjTG/h8CJleq0hUprRAAGoS9Vh9GGoupPIE2xYkCb/yc
- oNRlLT3jnNKraVGJTrOAiC3wCJdQo8roPE201RgBaSNC3Ackfp/x0XCRzq7eT2q79oUs51udg
- p3vGZ1oz1kG/NVezLXHIKt6t0IWp4HcIMuPm4QwNVcXiR9wy+nItJDFmFy0KgbqRD7W3/m8co
- +3LLGONOvFx68aYaRPjkZkSlTgxYEPZ/oUGg0U6zJ/9vV9a42Xro7HL8k3ArBTxuR2GElDmSy
- 6PeHnzqjJC7BU0=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pardon my ignorance, but I'm unlear as to how to proceed further with my
-issue.
-What is the proper process to report a bug, and get a consense whether
-it is accepted or rejected?
+Introduce command `default-branch` which allows to retrieve the branch
+that will be used by git-init.
 
-Regards
-Peter
+Currently this command is equivalent to
+	git config init.defaultbranch || 'master'
 
-Am 28.10.2021 um 14:08 schrieb Peter Hunkeler:
-> Am 28.10.2021 um 00:07 schrieb brian m. carlson:
->> I should point out here that it isn't intended for pre-commit hooks to
->> be used this way; they're intended to verify that the commit meets some
->> standards, not to modify it, although it is of course possible to do.
->>
-> I can accept that comment. However:
->
-> - wouldn't you agree that git should work consistently? It does not in
-> this case. If there is anything to be commited in the index, then the
-> "git add" from within the pre-commit hook *is* respected in this commit.
-> If there is *nothing* to be commited, except from what was added by the
-> pre-commit exit, then it is ignored *for this commit*, but it is added
-> and will be commited next time. This is inconsistent behaviour.
->
-> - if the decision will be *not* to allow adding from within a pre-commit
-> hook, then the "git add" should be rejected. And the documentation
-> should say so.
->
-> I'll have to understand what all the comments from you and others mean
-> (still a git newbee).
->
->> In general, you want to avoid adding automatically generated files to
->> your repository.=C2=A0 That tends to bloat the repository needlessly an=
-d is a
->> great way to lead to frequent, hard-to-resolve merge conflicts.
->>
-> I'm trying to use git to keep track of changes to my website, which uses
-> some framework. The problem is: Some changes modify filesystem entities,
-> only, while other changes modify the content of some mysql tables. So I
-> need to pack an unload of those tables into the commit. I can do this
-> manually (and forget every now and then :-), or I thought the pre-commit
-> hook would be a good place to automate this. And, yes, it may well crete
-> merge conflicts.
->
-> I understand the pre-commit hook is a local thing, and I have to make
-> sure the same is active in all repositories. Definitely not something to
-> use in a widely shared project.
->
-> Thanks a lot
-> Peter
+This however will break if at one point the default branch is changed as
+indicated by `default_branch_name_advice` in `refs.c`.
+
+By providing this command ahead of time users of git can make their
+code forward-compatible.
+
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+---
+ .gitignore                           |  1 +
+ Documentation/git-default-branch.txt | 15 +++++++++++++
+ Makefile                             |  1 +
+ builtin.h                            |  1 +
+ builtin/default-branch.c             | 33 ++++++++++++++++++++++++++++
+ command-list.txt                     |  1 +
+ git.c                                |  1 +
+ t/t1417-default-branch.sh            | 21 ++++++++++++++++++
+ 8 files changed, 74 insertions(+)
+ create mode 100644 Documentation/git-default-branch.txt
+ create mode 100644 builtin/default-branch.c
+ create mode 100755 t/t1417-default-branch.sh
+
+diff --git a/.gitignore b/.gitignore
+index 311841f9be..d9b969dc7e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -53,6 +53,7 @@
+ /git-cvsimport
+ /git-cvsserver
+ /git-daemon
++/git-default-branch
+ /git-diff
+ /git-diff-files
+ /git-diff-index
+diff --git a/Documentation/git-default-branch.txt b/Documentation/git-default-branch.txt
+new file mode 100644
+index 0000000000..d5b891e5b4
+--- /dev/null
++++ b/Documentation/git-default-branch.txt
+@@ -0,0 +1,15 @@
++git-default-branch(1)
++===================
++
++NAME
++----
++git-default-branch - Read the default branch ref used by git
++
++SYNOPSIS
++--------
++[verse]
++'git default-branch'
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index d1feab008f..49276359ab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1091,6 +1091,7 @@ BUILTIN_OBJS += builtin/credential-cache.o
+ BUILTIN_OBJS += builtin/credential-store.o
+ BUILTIN_OBJS += builtin/credential.o
+ BUILTIN_OBJS += builtin/describe.o
++BUILTIN_OBJS += builtin/default-branch.o
+ BUILTIN_OBJS += builtin/diff-files.o
+ BUILTIN_OBJS += builtin/diff-index.o
+ BUILTIN_OBJS += builtin/diff-tree.o
+diff --git a/builtin.h b/builtin.h
+index 16ecd5586f..65b41e4c1f 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -143,6 +143,7 @@ int cmd_credential(int argc, const char **argv, const char *prefix);
+ int cmd_credential_cache(int argc, const char **argv, const char *prefix);
+ int cmd_credential_cache_daemon(int argc, const char **argv, const char *prefix);
+ int cmd_credential_store(int argc, const char **argv, const char *prefix);
++int cmd_default_branch(int argc, const char **argv, const char *prefix);
+ int cmd_describe(int argc, const char **argv, const char *prefix);
+ int cmd_diff_files(int argc, const char **argv, const char *prefix);
+ int cmd_diff_index(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/default-branch.c b/builtin/default-branch.c
+new file mode 100644
+index 0000000000..e74c078926
+--- /dev/null
++++ b/builtin/default-branch.c
+@@ -0,0 +1,33 @@
++#include "builtin.h"
++#include "config.h"
++#include "refs.h"
++#include "parse-options.h"
++
++static const char * const git_default_branch_usage[] = {
++	N_("git default-branch"),
++	NULL
++};
++
++
++int cmd_default_branch(int argc, const char **argv, const char *prefix)
++{
++	char *name;
++
++	struct option options[] = {
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_default_branch_usage, 0);
++
++	if (argc != 0)
++		usage_with_options(git_default_branch_usage, options);
++
++	name = repo_default_branch_name(the_repository, 1);
++
++	if (!name)
++		die("Could not fetch default branch name");
++
++	puts(name);
++	return 0;
++}
+diff --git a/command-list.txt b/command-list.txt
+index a289f09ed6..950fa9a993 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -81,6 +81,7 @@ git-cvsexportcommit                     foreignscminterface
+ git-cvsimport                           foreignscminterface
+ git-cvsserver                           foreignscminterface
+ git-daemon                              synchingrepositories
++git-default-branch                      plumbinginterrogators
+ git-describe                            mainporcelain
+ git-diff                                mainporcelain           info
+ git-diff-files                          plumbinginterrogators
+diff --git a/git.c b/git.c
+index 18bed9a996..112f37a7f3 100644
+--- a/git.c
++++ b/git.c
+@@ -516,6 +516,7 @@ static struct cmd_struct commands[] = {
+ 	{ "credential-cache", cmd_credential_cache },
+ 	{ "credential-cache--daemon", cmd_credential_cache_daemon },
+ 	{ "credential-store", cmd_credential_store },
++	{ "default-branch", cmd_default_branch, RUN_SETUP_GENTLY },
+ 	{ "describe", cmd_describe, RUN_SETUP },
+ 	{ "diff", cmd_diff, NO_PARSEOPT },
+ 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+diff --git a/t/t1417-default-branch.sh b/t/t1417-default-branch.sh
+new file mode 100755
+index 0000000000..d81f1ee214
+--- /dev/null
++++ b/t/t1417-default-branch.sh
+@@ -0,0 +1,21 @@
++#!/bin/sh
++
++test_description='Test git default-branch'
++
++. ./test-lib.sh
++
++unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++test_expect_success 'without configuration' '
++	b=$(git default-branch) &&
++	verbose test "$b" = master
++'
++
++test_expect_success 'with configuration' '
++	git config init.defaultbranch foo &&
++	b=$(git default-branch) &&
++	echo $b &&
++	verbose test "$b" = foo
++'
++
++test_done
+
+base-commit: 6c40894d2466d4e7fddc047a05116aa9d14712ee
+-- 
+2.33.1
 
