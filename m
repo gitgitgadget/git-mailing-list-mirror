@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3280C433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E823AC433EF
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99626603E9
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D33E0603E9
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232149AbhJ3W1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 18:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41038 "EHLO
+        id S232072AbhJ3W1V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 18:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232055AbhJ3W1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 18:27:07 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881D6C0613F5
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:35 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 133so1557702wme.0
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:35 -0700 (PDT)
+        with ESMTP id S232033AbhJ3W1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 18:27:08 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881FCC0613B9
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:36 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id i5so14665983wrb.2
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vQ/7T9nZi3wcujIBjqlxBoZvA1ZDwMcxmJhDBRDJkm8=;
-        b=RUms76EtIPxHAhPYk46rZud+LHAp8fN0bkaqRxx/AyhzORfgVUvgVsaKE0zXtYaVaH
-         uPPA8U+xbCfUnxqeB53qsj61A892AAv5psXTZxMS5vc6dmm+3fv+fDKIR7+Pxa150Ld0
-         nR/+3+mdqG3Y/oZ6SQKllYqk7JKEkJ8u/ODzvGFmeZVOOJoSz8arp87HM7CgNGJndyVV
-         jDI94rQ/qlXZPp6O+M8RfFcmO0d89XAmm39BJH2nkgFMwpKDZFkYVZ++siAIzcqo0Za4
-         3FuJ4N1WU+t8PYJzGqUS16+KBL/4i9MIg7ORzZNQUWrhQkK8vabGarzvmsOI3PUmI9xW
-         CfnA==
+        bh=ZsBES3ZDYwWMOrMQ4gn/udb1W0OtudarTDOP2hdgqvs=;
+        b=C61tfU6tu8aydmAZlZ0sKE03M9ZnthsANcllCXuUXD4BIQ8oPTos+aALuhCcTd+vN9
+         i3WaThfx5rv/MCZgHqm087UUNWtkzTX91dQKBwzIJY+ghF5nUjKMoA9crD+QAYrzMUgV
+         kvSP2VSAYTucUi7HEOooNaWNMr2pVigUMgIETsiEsmwkSjK0+rPqHEX3e+oDACIv5aHY
+         KM6C7LVUEx/SA6q5971FGOO9Sl0aV2esC7MTYNy8xyX5ylki08Es7tC2YnmDmJvYDBBH
+         9fs/XJ9FpuWRK6GD6bIiBYzKQt1p5kd0GaOdOPabDdSb3xFeZLS4jVkAIE7/NzPMLc9P
+         F2UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vQ/7T9nZi3wcujIBjqlxBoZvA1ZDwMcxmJhDBRDJkm8=;
-        b=V7n6evbCjLunIyy1tJx9CdFT2Zz5eHqLbMRMPrGJJ2wFGbcRLTrb9w/qvpbwfSelXi
-         Vm+zvUuUjWBzgSIQm++7KUJz//CHfTD0nl37pWftJ6EFhtEaW5fJTjhlP6ppY5z+imVe
-         5Gf9ksJ8vXW7Iuu3fDq9gjThsKs3I7XKGdyzQzVbUdbq4TlYvqcXrKtLhDld7KKtiT0J
-         LO/7T1a9taK1UY4bEpyGX4k/sQ2h8Oa7xijUXwRgi5rX4Ub0tu5l+z1ZArh0UugoOS91
-         edus3K5RPStppGwgy8LnodQmB2g6sIbJohmxlAGcmTvedtU0PEWoMI9COA5Mx3FBeM0F
-         +BQg==
-X-Gm-Message-State: AOAM530EEjaarxnEqkW9i/hswZxXuUXtnZfMh1G1RdHXZD+uJbW7jmpx
-        tKTFfC0AfTZUBZ2zMjFcjy4qUQagq9dwJQ==
-X-Google-Smtp-Source: ABdhPJzJiaig4sDSz7VEiBEh5UBOmKzEeXaUfyue+Dt38+YONwBgugd/1XgGZtVzTKUvg7k2IBDL2w==
-X-Received: by 2002:a1c:cc0b:: with SMTP id h11mr24190735wmb.111.1635632674068;
+        bh=ZsBES3ZDYwWMOrMQ4gn/udb1W0OtudarTDOP2hdgqvs=;
+        b=ljr3yxloH1vKcVpJGhZdqGe25GZKnuaBHD0p2OGNNnfxXLMdIJKB1Pk8TmxrWJCWy/
+         1QCiZnD/NS91azn7yDXOxTHlkqk+QNkHLa5TzT/Zzl/at8BEKkuCM1lcXXQq/+ALcR/w
+         y5ul9p9m3uFv7P+eAEcz057/HIghjXgx8qdFm5vdmIWQDRMbLzPuDEW5ij38AwlMEhRp
+         vH/kXWEQ66bb+Gz5ktziB+S8z60r42S5EFDk+1IAi02MsRDWjcDvj3D2KriK5BKd3FJV
+         sq8Ft4SGQWyV8XRNpBu7OVXfqk753HGgcuqA88u2p34izHE4haZWOzwXqZjL8hkJci7g
+         5lEA==
+X-Gm-Message-State: AOAM532z1KivXr+zO7qO4WftIjtcIoGM440BJXMJKu3ir4pzmBI0DcW+
+        pyGgim8PhYMMTaOXyosLHSCn66UFEbROZg==
+X-Google-Smtp-Source: ABdhPJw1J7wKhpv3cgaviCJufOOy2nVX9/C9JVSbrxcL28s1zApSiDcRhmodA4a/R2AmXONsBd3agg==
+X-Received: by 2002:a5d:47a7:: with SMTP id 7mr25053140wrb.75.1635632674719;
         Sat, 30 Oct 2021 15:24:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l6sm8193399wmq.17.2021.10.30.15.24.33
+        by smtp.gmail.com with ESMTPSA id l6sm8193399wmq.17.2021.10.30.15.24.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 15:24:33 -0700 (PDT)
+        Sat, 30 Oct 2021 15:24:34 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 09/15] leak tests: mark some apply tests as passing with SANITIZE=leak
-Date:   Sun, 31 Oct 2021 00:24:18 +0200
-Message-Id: <patch-09.15-7de1a7291e6-20211030T221945Z-avarab@gmail.com>
+Subject: [PATCH 10/15] leak tests: mark some diff tests as passing with SANITIZE=leak
+Date:   Sun, 31 Oct 2021 00:24:19 +0200
+Message-Id: <patch-10.15-78c76dbf5ea-20211030T221945Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
 In-Reply-To: <cover-00.15-00000000000-20211030T221945Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20211030T221945Z-avarab@gmail.com>
@@ -72,323 +72,353 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark some tests that match "*apply*" as passing when git is compiled
+Mark some tests that match "*diff*" as passing when git is compiled
 with SANITIZE=leak. They'll now be listed as running under the
 "GIT_TEST_PASSING_SANITIZE_LEAK=true" test mode (the "linux-leaks" CI
 target).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4100-apply-stat.sh               | 2 ++
- t/t4101-apply-nonl.sh               | 2 ++
- t/t4102-apply-rename.sh             | 2 ++
- t/t4105-apply-fuzz.sh               | 2 ++
- t/t4106-apply-stdin.sh              | 2 ++
- t/t4109-apply-multifrag.sh          | 2 ++
- t/t4110-apply-scan.sh               | 2 ++
- t/t4112-apply-renames.sh            | 2 ++
- t/t4116-apply-reverse.sh            | 2 ++
- t/t4118-apply-empty-context.sh      | 2 ++
- t/t4119-apply-config.sh             | 2 ++
- t/t4123-apply-shrink.sh             | 2 ++
- t/t4126-apply-empty.sh              | 2 ++
- t/t4127-apply-same-fn.sh            | 2 ++
- t/t4128-apply-root.sh               | 2 ++
- t/t4129-apply-samemode.sh           | 2 ++
- t/t4130-apply-criss-cross-rename.sh | 2 ++
- t/t4132-apply-removal.sh            | 2 ++
- t/t4133-apply-filenames.sh          | 2 ++
- t/t4134-apply-submodule.sh          | 2 ++
- t/t4136-apply-check.sh              | 2 ++
- t/t4139-apply-escape.sh             | 2 ++
- 22 files changed, 44 insertions(+)
+ t/t4000-diff-format.sh             | 2 ++
+ t/t4003-diff-rename-1.sh           | 2 ++
+ t/t4004-diff-rename-symlink.sh     | 2 ++
+ t/t4005-diff-rename-2.sh           | 2 ++
+ t/t4006-diff-mode.sh               | 2 ++
+ t/t4009-diff-rename-4.sh           | 2 ++
+ t/t4010-diff-pathspec.sh           | 2 ++
+ t/t4011-diff-symlink.sh            | 2 ++
+ t/t4012-diff-binary.sh             | 1 +
+ t/t4020-diff-external.sh           | 1 +
+ t/t4024-diff-optimize-common.sh    | 1 +
+ t/t4027-diff-submodule.sh          | 1 +
+ t/t4029-diff-trailing-space.sh     | 1 +
+ t/t4032-diff-inter-hunk-context.sh | 1 +
+ t/t4033-diff-patience.sh           | 1 +
+ t/t4034-diff-words.sh              | 1 +
+ t/t4035-diff-quiet.sh              | 1 +
+ t/t4037-diff-r-t-dirs.sh           | 1 +
+ t/t4040-whitespace-status.sh       | 2 ++
+ t/t4046-diff-unmerged.sh           | 2 ++
+ t/t4049-diff-stat-count.sh         | 2 ++
+ t/t4050-diff-histogram.sh          | 1 +
+ t/t4054-diff-bogus-tree.sh         | 2 ++
+ t/t4062-diff-pickaxe.sh            | 1 +
+ t/t4063-diff-blobs.sh              | 2 ++
+ 25 files changed, 38 insertions(+)
 
-diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
-index 9b433de8363..d503547732c 100755
---- a/t/t4100-apply-stat.sh
-+++ b/t/t4100-apply-stat.sh
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index cce334981e1..bfcaae390f3 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
 @@ -6,6 +6,8 @@
- test_description='git apply --stat --summary test, with --recount
+ test_description='Test built-in diff output engine.
  
  '
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
  
- UNC='s/^\(@@ -[1-9][0-9]*\),[0-9]* \(+[1-9][0-9]*\),[0-9]* @@/\1,999 \2,999 @@/'
-diff --git a/t/t4101-apply-nonl.sh b/t/t4101-apply-nonl.sh
-index e3443d004d0..b1169193ef5 100755
---- a/t/t4101-apply-nonl.sh
-+++ b/t/t4101-apply-nonl.sh
+diff --git a/t/t4003-diff-rename-1.sh b/t/t4003-diff-rename-1.sh
+index f4485a87c63..181e9683a79 100755
+--- a/t/t4003-diff-rename-1.sh
++++ b/t/t4003-diff-rename-1.sh
 @@ -6,6 +6,8 @@
- test_description='git apply should handle files with incomplete lines.
+ test_description='More rename detection
  
  '
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
- # setup
-diff --git a/t/t4102-apply-rename.sh b/t/t4102-apply-rename.sh
-index fae305979a8..d1e06fc1ac4 100755
---- a/t/t4102-apply-rename.sh
-+++ b/t/t4102-apply-rename.sh
+diff --git a/t/t4004-diff-rename-symlink.sh b/t/t4004-diff-rename-symlink.sh
+index 3d495e37bb1..8def4d4aee9 100755
+--- a/t/t4004-diff-rename-symlink.sh
++++ b/t/t4004-diff-rename-symlink.sh
+@@ -9,6 +9,8 @@ The rename detection logic should be able to detect pure rename or
+ copy of symbolic links, but should not produce rename/copy followed
+ by an edit for them.
+ '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+diff --git a/t/t4005-diff-rename-2.sh b/t/t4005-diff-rename-2.sh
+index 6f1b323f979..5c756dc2435 100755
+--- a/t/t4005-diff-rename-2.sh
++++ b/t/t4005-diff-rename-2.sh
+@@ -5,6 +5,8 @@
+ 
+ test_description='Same rename detection as t4003 but testing diff-raw.'
+ 
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
+ 
+diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
+index 6cdee2a2164..dbd4c0da213 100755
+--- a/t/t4006-diff-mode.sh
++++ b/t/t4006-diff-mode.sh
 @@ -6,6 +6,8 @@
- test_description='git apply handling copy/rename patch.
+ test_description='Test mode change diffs.
  
  '
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # setup
-diff --git a/t/t4105-apply-fuzz.sh b/t/t4105-apply-fuzz.sh
-index 3266e394003..76e2c01b0f5 100755
---- a/t/t4105-apply-fuzz.sh
-+++ b/t/t4105-apply-fuzz.sh
-@@ -2,6 +2,8 @@
- 
- test_description='apply with fuzz and offset'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- dotest () {
-diff --git a/t/t4106-apply-stdin.sh b/t/t4106-apply-stdin.sh
-index 72467a1e8ee..a57a318699e 100755
---- a/t/t4106-apply-stdin.sh
-+++ b/t/t4106-apply-stdin.sh
-@@ -2,6 +2,8 @@
- 
- test_description='git apply --numstat - <patch'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4109-apply-multifrag.sh b/t/t4109-apply-multifrag.sh
-index ac58083fe22..4dc6d8e7d3c 100755
---- a/t/t4109-apply-multifrag.sh
-+++ b/t/t4109-apply-multifrag.sh
+ sed_script='s/\(:100644 100755\) \('"$OID_REGEX"'\) \2 /\1 X X /'
+diff --git a/t/t4009-diff-rename-4.sh b/t/t4009-diff-rename-4.sh
+index 59b7f44f058..3480781dabf 100755
+--- a/t/t4009-diff-rename-4.sh
++++ b/t/t4009-diff-rename-4.sh
 @@ -6,6 +6,8 @@
- 
- test_description='git apply test patches with multiple fragments.'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- cp "$TEST_DIRECTORY/t4109/patch1.patch" .
-diff --git a/t/t4110-apply-scan.sh b/t/t4110-apply-scan.sh
-index 09f58112e02..266302a1829 100755
---- a/t/t4110-apply-scan.sh
-+++ b/t/t4110-apply-scan.sh
-@@ -7,6 +7,8 @@
- test_description='git apply test for patches which require scanning forwards and backwards.
+ test_description='Same rename detection as t4003 but testing diff-raw -z.
  
  '
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
- test_expect_success 'git apply scan' '
-diff --git a/t/t4112-apply-renames.sh b/t/t4112-apply-renames.sh
-index f9ad183758c..d53aa4222ea 100755
---- a/t/t4112-apply-renames.sh
-+++ b/t/t4112-apply-renames.sh
-@@ -7,6 +7,8 @@ test_description='git apply should not get confused with rename/copy.
- 
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index 1bbced79ece..9d9650eba7e 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -9,6 +9,8 @@ Prepare:
+         file0
+         path1/file1
  '
- 
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
- # setup
-diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
-index b99e65c0863..f3b635475a4 100755
---- a/t/t4116-apply-reverse.sh
-+++ b/t/t4116-apply-reverse.sh
-@@ -7,6 +7,8 @@ test_description='git apply in reverse
+diff --git a/t/t4011-diff-symlink.sh b/t/t4011-diff-symlink.sh
+index 5a25c259fe3..d7a5f7ae780 100755
+--- a/t/t4011-diff-symlink.sh
++++ b/t/t4011-diff-symlink.sh
+@@ -6,6 +6,8 @@
+ test_description='Test diff of symlinks.
  
  '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
  
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 33ff588ebca..00eeafb2ace 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -6,6 +6,7 @@
+ test_description='Binary diff and apply
+ '
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ cat >expect.binary-numstat <<\EOF
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index e009826fcbe..54bb8ef27e7 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='external diff interface test'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4024-diff-optimize-common.sh b/t/t4024-diff-optimize-common.sh
+index 6b44ce14933..540f93715e4 100755
+--- a/t/t4024-diff-optimize-common.sh
++++ b/t/t4024-diff-optimize-common.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='common tail optimization'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ z=zzzzzzzz ;# 8
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index 94ef77e1dfe..6cef0da982f 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='difference in submodules'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index 32b6e9a4e76..5f8ffef74b6 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -4,6 +4,7 @@
+ #
+ test_description='diff honors config option, diff.suppressBlankEmpty'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ cat <<\EOF >expected ||
+diff --git a/t/t4032-diff-inter-hunk-context.sh b/t/t4032-diff-inter-hunk-context.sh
+index bada0cbd32f..7db92d0d9f4 100755
+--- a/t/t4032-diff-inter-hunk-context.sh
++++ b/t/t4032-diff-inter-hunk-context.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='diff hunk fusing'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ f() {
+diff --git a/t/t4033-diff-patience.sh b/t/t4033-diff-patience.sh
+index 113304dc596..f7be7f5ef01 100755
+--- a/t/t4033-diff-patience.sh
++++ b/t/t4033-diff-patience.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='patience diff algorithm'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff-alternative.sh
+ 
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 561c582d161..d5abcf4b4c6 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='word diff colors'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+index 0352bf81a90..76f8034c60f 100755
+--- a/t/t4035-diff-quiet.sh
++++ b/t/t4035-diff-quiet.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='Return value of diffs'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t4037-diff-r-t-dirs.sh b/t/t4037-diff-r-t-dirs.sh
+index f5ce3b29a2a..b5f96fe23bd 100755
+--- a/t/t4037-diff-r-t-dirs.sh
++++ b/t/t4037-diff-r-t-dirs.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='diff -r -t shows directory additions and deletions'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t4040-whitespace-status.sh b/t/t4040-whitespace-status.sh
+index 3c728a3ebf9..e70e020ae93 100755
+--- a/t/t4040-whitespace-status.sh
++++ b/t/t4040-whitespace-status.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='diff --exit-code with whitespace'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success setup '
-diff --git a/t/t4118-apply-empty-context.sh b/t/t4118-apply-empty-context.sh
-index 65f2e4c3efb..5fc6d3e4e7c 100755
---- a/t/t4118-apply-empty-context.sh
-+++ b/t/t4118-apply-empty-context.sh
-@@ -7,6 +7,8 @@ test_description='git apply with new style GNU diff with empty context
+diff --git a/t/t4046-diff-unmerged.sh b/t/t4046-diff-unmerged.sh
+index ff7cfd884a4..fd3f3a7260b 100755
+--- a/t/t4046-diff-unmerged.sh
++++ b/t/t4046-diff-unmerged.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
  
- '
- 
+ test_description='diff with unmerged index entries'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success setup '
-diff --git a/t/t4119-apply-config.sh b/t/t4119-apply-config.sh
-index a9a05838119..208c961d376 100755
---- a/t/t4119-apply-config.sh
-+++ b/t/t4119-apply-config.sh
-@@ -7,6 +7,8 @@ test_description='git apply --whitespace=strip and configuration file.
- 
- '
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4123-apply-shrink.sh b/t/t4123-apply-shrink.sh
-index 984157f03b9..ef57cd3aebb 100755
---- a/t/t4123-apply-shrink.sh
-+++ b/t/t4123-apply-shrink.sh
+diff --git a/t/t4049-diff-stat-count.sh b/t/t4049-diff-stat-count.sh
+index 53061b104ec..f5b35e7860e 100755
+--- a/t/t4049-diff-stat-count.sh
++++ b/t/t4049-diff-stat-count.sh
 @@ -2,6 +2,8 @@
+ # Copyright (c) 2011, Google Inc.
  
- test_description='apply a patch that is larger than the preimage'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- cat >F  <<\EOF
-diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-index ceb6a79fe0c..a361e79a815 100755
---- a/t/t4126-apply-empty.sh
-+++ b/t/t4126-apply-empty.sh
-@@ -2,6 +2,8 @@
- 
- test_description='apply empty'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4127-apply-same-fn.sh b/t/t4127-apply-same-fn.sh
-index 305b7e649eb..c27e9aec570 100755
---- a/t/t4127-apply-same-fn.sh
-+++ b/t/t4127-apply-same-fn.sh
-@@ -2,6 +2,8 @@
- 
- test_description='apply same filename'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- modify () {
-diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
-index 6cc741a634b..cb3181e8b71 100755
---- a/t/t4128-apply-root.sh
-+++ b/t/t4128-apply-root.sh
-@@ -2,6 +2,8 @@
- 
- test_description='apply same filename'
- 
+ test_description='diff --stat-count'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success 'setup' '
-diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
-index 576632f8681..a1c7686519e 100755
---- a/t/t4129-apply-samemode.sh
-+++ b/t/t4129-apply-samemode.sh
-@@ -2,6 +2,8 @@
+diff --git a/t/t4050-diff-histogram.sh b/t/t4050-diff-histogram.sh
+index fd3e86a74f3..c61b30f96da 100755
+--- a/t/t4050-diff-histogram.sh
++++ b/t/t4050-diff-histogram.sh
+@@ -2,6 +2,7 @@
  
- test_description='applying patch with mode bits'
+ test_description='histogram diff algorithm'
  
-+
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff-alternative.sh
  
- test_expect_success setup '
-diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-criss-cross-rename.sh
-index f8a313bcb98..f3ea6327425 100755
---- a/t/t4130-apply-criss-cross-rename.sh
-+++ b/t/t4130-apply-criss-cross-rename.sh
+diff --git a/t/t4054-diff-bogus-tree.sh b/t/t4054-diff-bogus-tree.sh
+index 8c95f152b23..294fb553137 100755
+--- a/t/t4054-diff-bogus-tree.sh
++++ b/t/t4054-diff-bogus-tree.sh
 @@ -1,6 +1,8 @@
  #!/bin/sh
  
- test_description='git apply handling criss-cross rename patch.'
+ test_description='test diff with a bogus tree containing the null sha1'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- create_file() {
-diff --git a/t/t4132-apply-removal.sh b/t/t4132-apply-removal.sh
-index fec1d6fa51f..c1e3049c041 100755
---- a/t/t4132-apply-removal.sh
-+++ b/t/t4132-apply-removal.sh
-@@ -4,6 +4,8 @@
+ test_expect_success 'create bogus tree' '
+diff --git a/t/t4062-diff-pickaxe.sh b/t/t4062-diff-pickaxe.sh
+index 1130c8019b4..9aaa068ed9b 100755
+--- a/t/t4062-diff-pickaxe.sh
++++ b/t/t4062-diff-pickaxe.sh
+@@ -5,6 +5,7 @@
  
- test_description='git-apply notices removal patches generated by GNU diff'
+ test_description='Pickaxe options'
  
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
-index c5ed3b17c4a..35f1060bc8b 100755
---- a/t/t4133-apply-filenames.sh
-+++ b/t/t4133-apply-filenames.sh
-@@ -5,6 +5,8 @@
- 
- test_description='git apply filename consistency check'
- 
-+
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success setup '
-diff --git a/t/t4134-apply-submodule.sh b/t/t4134-apply-submodule.sh
-index d1c16ba33c1..aceb4c42b0f 100755
---- a/t/t4134-apply-submodule.sh
-+++ b/t/t4134-apply-submodule.sh
-@@ -5,6 +5,8 @@
- 
- test_description='git apply submodule tests'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t4136-apply-check.sh b/t/t4136-apply-check.sh
-index 4c3f264a633..dfec1c5f0f6 100755
---- a/t/t4136-apply-check.sh
-+++ b/t/t4136-apply-check.sh
-@@ -2,6 +2,8 @@
- 
- test_description='git apply should exit non-zero with unrecognized input.'
- 
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t4139-apply-escape.sh b/t/t4139-apply-escape.sh
-index 45b5660a47d..e5c7439df13 100755
---- a/t/t4139-apply-escape.sh
-+++ b/t/t4139-apply-escape.sh
+diff --git a/t/t4063-diff-blobs.sh b/t/t4063-diff-blobs.sh
+index bc69e26c524..7e6c9d63843 100755
+--- a/t/t4063-diff-blobs.sh
++++ b/t/t4063-diff-blobs.sh
 @@ -1,6 +1,8 @@
  #!/bin/sh
  
- test_description='paths written by git-apply cannot escape the working tree'
+ test_description='test direct comparison of blobs via git-diff'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # tests will try to write to ../foo, and we do not
+ run_diff () {
 -- 
 2.33.1.1570.g069344fdd45
 
