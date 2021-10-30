@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE1CEC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDCB4C433F5
 	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3CAA60ED5
+	by mail.kernel.org (Postfix) with ESMTP id A2784603E9
 	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 22:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232034AbhJ3W1C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 18:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232023AbhJ3W1B (ORCPT <rfc822;git@vger.kernel.org>);
+        id S232020AbhJ3W1B (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 30 Oct 2021 18:27:01 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D00C061570
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40990 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232012AbhJ3W1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 18:27:00 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6E8C061570
         for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:30 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 207-20020a1c04d8000000b0033123de3425so4035150wme.0
+Received: by mail-wm1-x336.google.com with SMTP id f7-20020a1c1f07000000b0032ee11917ceso5597548wmf.0
         for <git@vger.kernel.org>; Sat, 30 Oct 2021 15:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7rDyCMrOCXTCTLgVNaLs+t3VNZhB2VdNHT2effvdT2w=;
-        b=lB2/6LCUcoYgLUNARtaGdUwGderZzE3dLIjntew8bqH6X+a3p6ZtbhQQjkicZVviA0
-         2ApoDYIZEvxmTmq0g4Ci7E50pnh4e+LF/gvMih4PL3yloGQOKvUTJ1Dm6cTlWcqww60L
-         dsNAtKz/jf+lxQi8Glfyk+M9jstU4GzT4jVEPr/OU4F5XoOtaiATc/sHVwmmFcHpf82Z
-         IQPSYB7BJTwpS3JpGHmM0S+002Rdhwj+iMrnUAngd8hUZw2wmfYXhxjUO+kFT5Xqr32S
-         G25utJkdmFf/U4UNWADiT9SQ4yMy/3e/m9Ysatb3EJIkWZlvtjMzHjeKM8IXWS65bKtV
-         Ljsg==
+        bh=eQvFweo4VY3//ZnVr76+uHRVQTM52KpzMSnpDsoRanM=;
+        b=MhjIut3m4TXLXP5/MFALqhUowVFXlGE0DC9uVqT5VNtzJKJM7T57K99zQas/V4WLhh
+         1gS+2IWftMIHBeCskcE5n0ijXH7hqgeZ9nuWfbAd2tT2dNOwtZs5M8YjQGxjWX6G63c8
+         qDmBj2hgr07YdFbyg5j+BC/CoAhhHF3qKeHQeqP3aMftXXgiHR2nLF7fjd4fMipj0h2K
+         rz4K1kIM1tMhDiqm8l2uk/Y7wo7BXRlQl5rUPYCsRVflrAviczLYnEKjG2vfLyOKJ2Dv
+         lRvQJr92G7UC2Tn9xF5XcPT7blSWmMdV+Ove55Ky4gWIIwPS+cmWc5EyDJQ22pNIMbj/
+         tG1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7rDyCMrOCXTCTLgVNaLs+t3VNZhB2VdNHT2effvdT2w=;
-        b=KqE3zIx5KICOKjNg/loZ1Rr9aIveBfViR60LY/12b0j/nvNczOzAXLKGzp9EYQGLAM
-         iDMQpENwIa5vesr5rbvGLIUFg6VzETEDcw7B7ZJdUKQ/d1nqbrk8sjNPVNahRTdswnte
-         C0AKP5wWLy3VYEss2a00xQnkCu5fe10LnUF+uUtE6HqCGB5F22u20qKLd92LVzCyP+Ls
-         mIRuzUXd3VfuFIXXYaP29LswSZbqGvXLpx106CSUG+v7biPFfc3W4wLea0qb22kcaovW
-         I4JxoVy1ioFWfQnBG4Mp0nmGBOtt4HBrWuLbRRD/uj4BtAFVz8VWIgH60gQuRcPnvrAk
-         7tJA==
-X-Gm-Message-State: AOAM5324liKL6jQhiYSel8UQbFcsMfFs5OQHbb+DfDNBER+8dUr/vxEN
-        9RYFZ+Yse8q10CjZgZ9FeLYSjI4P3PUcnQ==
-X-Google-Smtp-Source: ABdhPJw6YnW6aI8FkVPMW/wDwND6LB2Zjzi1IhxKSEEtbGe42E2hqqp/EXaSZT78a/ds2yhqRy6juQ==
-X-Received: by 2002:a05:600c:2e46:: with SMTP id q6mr10765828wmf.6.1635632669229;
-        Sat, 30 Oct 2021 15:24:29 -0700 (PDT)
+        bh=eQvFweo4VY3//ZnVr76+uHRVQTM52KpzMSnpDsoRanM=;
+        b=59syvhX0huYqTcq4KnMU71NfJ8zG+Y60BVfbhZSDpjzpDGsv2hoB41HN/788MV3XBA
+         yZOAfHcOA6I7DiiFIy3RBGm/LNN45Dbk2iONgXdeEwh/BRk3XpKy91VCnx4Bzai7MbaG
+         flBTZS3+hEAn7bdLm8Cc4JHtlvegokHMrRph1nyky69pR6a35AyLxzaYatdd9qdfxckU
+         yo6CqzPnifucw0x5QOkg1ZJSOhZvGr29xcuM2thoAHajpnl8A44ib1Z8bn6R4dW1RImV
+         E57uvnTsxtU9sqwSsmw9feDRDY0GA5ZpNWI0oertq1utvgSa7jnmnboSBSLsM/eqjnQc
+         UTSA==
+X-Gm-Message-State: AOAM533xI46Odb/8eEHYnWSUhq3i3T3tTqexFdwMrsYlObZaoWMbpdjH
+        h2SjdOVJJ6tAYvWPZq7QJFUbnsG+RAs=
+X-Google-Smtp-Source: ABdhPJwBbjrM4V9aYVMopy2/isU0LQKbzPh4ebWtFBYPZVZ+qjapJWpdV6e5mMzcsyAdfea053cHlQ==
+X-Received: by 2002:a7b:c7cd:: with SMTP id z13mr5426232wmk.172.1635632668532;
+        Sat, 30 Oct 2021 15:24:28 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l6sm8193399wmq.17.2021.10.30.15.24.28
+        by smtp.gmail.com with ESMTPSA id l6sm8193399wmq.17.2021.10.30.15.24.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 30 Oct 2021 15:24:28 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt <ajrhunt@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/15] leak tests: mark "sort" test as passing SANITIZE=leak
-Date:   Sun, 31 Oct 2021 00:24:11 +0200
-Message-Id: <patch-02.15-a28d06d278b-20211030T221945Z-avarab@gmail.com>
+Subject: [PATCH 01/15] leak tests: mark a read-tree test as passing SANITIZE=leak
+Date:   Sun, 31 Oct 2021 00:24:10 +0200
+Message-Id: <patch-01.15-4f5cc53b2cd-20211030T221945Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
 In-Reply-To: <cover-00.15-00000000000-20211030T221945Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20211030T221945Z-avarab@gmail.com>
@@ -72,29 +72,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark a test that was recently added in e031e9719d2 (test-mergesort:
-add test subcommand, 2021-10-01) as passing with SANITIZE=leak. It
-will now be listed as running under the
+The "t1002-read-tree-m-u-2way.sh" test has passed under SANITIZE=leak
+since 04988c8d182 (unpack-trees: introduce preserve_ignored to
+unpack_trees_options, 2021-09-27) was combined with
+e5a917fcf42 (unpack-trees: don't leak memory in
+verify_clean_subdirectory(), 2021-10-07), but as both were in-flight
+at the time neither could mark it as passing.
+
+It will now be listed as running under the
 "GIT_TEST_PASSING_SANITIZE_LEAK=true" test mode (the "linux-leaks" CI
 target).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0071-sort.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/t1002-read-tree-m-u-2way.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t0071-sort.sh b/t/t0071-sort.sh
-index a8ab1748796..6f9a501c72b 100755
---- a/t/t0071-sort.sh
-+++ b/t/t0071-sort.sh
-@@ -2,6 +2,7 @@
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+index 9c05f5e1f51..ca5c5510c73 100755
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -8,6 +8,8 @@ test_description='Two way merge with read-tree -m -u $H $M
+ This is identical to t1001, but uses -u to update the work tree as well.
  
- test_description='verify sort functions'
- 
+ '
++
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
  
- test_expect_success 'llist_mergesort()' '
 -- 
 2.33.1.1570.g069344fdd45
 
