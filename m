@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2AAAC4321E
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1074CC43217
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:32:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C57360E8B
+	by mail.kernel.org (Postfix) with ESMTP id ED9F260E8B
 	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 21:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232129AbhJ3Veq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 17:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57758 "EHLO
+        id S232155AbhJ3Ver (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 17:34:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbhJ3Vef (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 17:34:35 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA93C061570;
-        Sat, 30 Oct 2021 14:32:04 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id b2-20020a1c8002000000b0032fb900951eso6299276wmd.4;
-        Sat, 30 Oct 2021 14:32:04 -0700 (PDT)
+        with ESMTP id S231278AbhJ3Veg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 17:34:36 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BEFC061714;
+        Sat, 30 Oct 2021 14:32:05 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id r8so9409285wra.7;
+        Sat, 30 Oct 2021 14:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PdB4czh+ZsIDFo2JracuRuKv5/cF7cmLOVxKeV3jbt0=;
-        b=EJPA6dUdFn+grcr0hA9RnqysqYgLSvXfCuA6VXhuarRgnWiQCTHVoxw5CEngGnsvrK
-         J6w2nrYBf/SWzZdU3MVSeMDw1hq+3QKvpeF26EVS1Dz6upmuGQErR2fJZ0X6SYR/qpqc
-         4qNf6OIfomBsn6eBPaG0Iadj6yOQDbaskj6TpfSURCgIU3UVksRFQa0l8znrXDdKJUdY
-         hURj8NeWRZsf7DSVqAVN03jOzQEnwAcpr7JhRD+YVE0oqFmxn16OWdvbbCxA1iPpJ9lR
-         5CFIGg33eEncW8J4EKmpJ6a6kLQjHJxI28Bjl8tSkBovRn8Fix+XpzxN44xYuzVxu+5k
-         ukTQ==
+        bh=v2OWif9ZBdV0J5vEXEOznTzTaenIuinqzzNALe3bBP0=;
+        b=D+9pX1qu+VjmAQ+Pym6FSyWIBWDofzkQ/tj4VJfvCvoJFNuwQQ+RLJLfGmAcduVtJy
+         LpaDgQWxrvMJQHemoWdHPG8tPRZf0DDt2AZt7PkAjdqckVtFoOL7L6I1Y1qJy8PgAlce
+         GPYUuUJaTMRTcrO4T6WxIuAFM8NqqN7XtJGbtzswCP1/Q+xwt3v3YsjyjVl2mHjpAWKs
+         ZQ27fK9f83srhu44H7kO/X7N2kojLi8zEGgAQX+3f/yY2GgJ+XufsKnSP5pezSL/pZ3u
+         K1Yp6IfBtBgpp9bIfUw6F3P9DE/gH2KtXCzjKVV9A8JulggmA3x8peJ7a49oJ36sJ051
+         tMIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PdB4czh+ZsIDFo2JracuRuKv5/cF7cmLOVxKeV3jbt0=;
-        b=soaoWPciGufcOl1uETSqlV9VVxgd2MXlb1QdLrOfavBQ7GZMWUelKgGoLmZVI81fk9
-         cwl7H15IRt7YBGAzkw9p8xMn6eZlxGEQ8pC7a7+SipZKZITlubDgsVHdTX+X44OSp1Uw
-         W0N1S+ZJeo3+G/HjcKe39yUgs7KTztBLVnJtPcjMWTT5DdQQuIIJiL4aC+8hndKPO1LD
-         PYaW/IVP1Hc42jb1rUUHE1LtrXTE4PfMeyfXXgKUR/tqxh6a5erdAetxqoarcC2rT5kj
-         3J+JeRwJZ5hmoFqO+zmiFZSXmp8kd+3unw10SKwN98zhwoZJ0a1BzaKr8PGeJkrWXs15
-         fpWA==
-X-Gm-Message-State: AOAM533jZ6BA6Lma3YPN5ZAmLvYZKaRA2V/2MG2a2d1JtIKuQ9TawqUY
-        58J1iq1df+iQEDzNmYdwnBsRCNLQCTQ=
-X-Google-Smtp-Source: ABdhPJzd3wZxRMcq5skeKPIiwNj2gjCs5mtmXWvglp62/X0eB0GgrFmRVnlk+yIPwlrv8EuYb0A8cg==
-X-Received: by 2002:a1c:7f0a:: with SMTP id a10mr29620154wmd.60.1635629523102;
-        Sat, 30 Oct 2021 14:32:03 -0700 (PDT)
+        bh=v2OWif9ZBdV0J5vEXEOznTzTaenIuinqzzNALe3bBP0=;
+        b=sY+uP9XlIifp5dyU0POMAasBkcHj3jpXo0Eex46n59VpJBl7GK01pR1ehodHpW9M6p
+         6TKcaXM2YpXbn9mrnhulK3d/EbmCsXCz44S7TSsBQSTPqTciGi/j+ngHbiiFGNt8berQ
+         TlfCPe59oMmRrVH8/gJltrniLwva78Oa0d4TVJ9XosAkk53P1AdE+1Il1v4foKSzprFL
+         3R5iUonyd5gf1tpaM4LrrnpEBA9QENAIMmAUUThzJEcQnrP2NTRr/qALmLBuntLZSXK5
+         j15e9uK+2BhWHDE5OsQGfwgXpxKBgjgzDolqHFVhLEhStfBfUxeSAV4KKPbojOdqAEft
+         cBQw==
+X-Gm-Message-State: AOAM532k9JjJqOXIipychg+fziMdHsrBmmW9Xafi/r6WJBsOx7l6JeVd
+        /4Oo/1feMblcmuzm1tLOcXeg6wwV+Xw=
+X-Google-Smtp-Source: ABdhPJzZxQJIIboyHKN7rp1cvPXVhGtj5cvOW6BlwdiYL+FvOi9LklcO61NRgCauZXTQqy1ZUnQwlg==
+X-Received: by 2002:adf:ce0e:: with SMTP id p14mr3396358wrn.423.1635629524116;
+        Sat, 30 Oct 2021 14:32:04 -0700 (PDT)
 Received: from sqli.sqli.com ([195.53.121.100])
-        by smtp.googlemail.com with ESMTPSA id c79sm2948689wme.43.2021.10.30.14.32.01
+        by smtp.googlemail.com with ESMTPSA id c79sm2948689wme.43.2021.10.30.14.32.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 14:32:02 -0700 (PDT)
+        Sat, 30 Oct 2021 14:32:03 -0700 (PDT)
 From:   Alejandro Colomar <alx.manpages@gmail.com>
 To:     mtk.manpages@gmail.com, linux-man@vger.kernel.org
 Cc:     git@vger.kernel.org, Alejandro Colomar <alx.manpages@gmail.com>,
         linux-kernel@vger.kernel.org, libc-alpha@sourceware.org
-Subject: [PATCH 09/22] statfs.2: SYNOPSIS: Mark as [[deprecated]]
-Date:   Sat, 30 Oct 2021 23:31:19 +0200
-Message-Id: <20211030213131.140429-10-alx.manpages@gmail.com>
+Subject: [PATCH 10/22] stime.2: SYNOPSIS: Mark as [[deprecated]]
+Date:   Sat, 30 Oct 2021 23:31:20 +0200
+Message-Id: <20211030213131.140429-11-alx.manpages@gmail.com>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211030213131.140429-1-alx.manpages@gmail.com>
 References: <20211030213131.140429-1-alx.manpages@gmail.com>
@@ -66,28 +66,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-LSB deprecated these syscalls in favor of [f]statvfs(3).
+This syscall was removed from glibc 2.31 for newly linked
+programs.
 
 Signed-off-by: Alejandro Colomar <alx.manpages@gmail.com>
 ---
- man2/statfs.2 | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ man2/stime.2 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/man2/statfs.2 b/man2/statfs.2
-index 77abd7e4b..92dd83460 100644
---- a/man2/statfs.2
-+++ b/man2/statfs.2
-@@ -32,8 +32,8 @@ statfs, fstatfs \- get filesystem statistics
+diff --git a/man2/stime.2 b/man2/stime.2
+index 4aaa6c775..5d40495d0 100644
+--- a/man2/stime.2
++++ b/man2/stime.2
+@@ -34,7 +34,7 @@ stime \- set time
  .nf
- .BR "#include <sys/vfs.h>    " "/* or <sys/statfs.h> */"
+ .B #include <time.h>
  .PP
--.BI "int statfs(const char *" path ", struct statfs *" buf );
--.BI "int fstatfs(int " fd ", struct statfs *" buf );
-+.BI "[[deprecated]] int statfs(const char *" path ", struct statfs *" buf );
-+.BI "[[deprecated]] int fstatfs(int " fd ", struct statfs *" buf );
+-.BI "int stime(const time_t *" t );
++.BI "[[deprecated]] int stime(const time_t *" t );
  .fi
- .SH DESCRIPTION
- The
+ .PP
+ .RS -4
 -- 
 2.33.1
 
