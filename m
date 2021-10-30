@@ -2,115 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 860BFC433EF
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 104FAC433F5
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:52:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 518AC60F45
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:51:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5E9760C40
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 20:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231437AbhJ3Uy2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 16:54:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
+        id S231459AbhJ3Uy6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 16:54:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbhJ3Uy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Oct 2021 16:54:28 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD86C061570
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:51:57 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id o4-20020a1c7504000000b0032cab7473caso7555434wmc.1
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ljOXboz/WVEEHt+2bfCpJYca0Wco7wmLsEG0gRrStx0=;
-        b=QNnyHgBLwYPY3eDvj2UudSwfSbqJg4zGCoi7cKLCQwGrj0HK4tN10iz0NbU3ZDOrAi
-         fWaFwUzd/ibtWJjfsC8j8dB4t2Tn1r18Raru2oqMcr6ve49nUoxWDFCN2G8AvacqAKHm
-         gLv18KLM22WqPmZm/Sk9c7z5Ue8fOUDu0iaE5h+bysiJFD8H+A8XjMamBD3LUsyR5rDQ
-         h20fb3bGYOpWMvfyL4VBqdQFienfLEijbtbj6NWxvsj6b5UIScys26VCqysnRHP63QoQ
-         13DDAUEb2kfHbLDa6Dzkwn+fgD2X/+aQP8mbIcVO27kKF1f4l6vhgVWUI3mnRa/z8V5U
-         zR9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ljOXboz/WVEEHt+2bfCpJYca0Wco7wmLsEG0gRrStx0=;
-        b=vXEiz9YV+hG7xCJd/78FRYKJtaJZo94HnqqYN9pZmIkplCsysuxgVEdN0r+fsg2EhR
-         QsE+zAymM+fdlnpqwvWVuvwoOOqb8x3oHntcu1uIwulD/1jL9biyZhFO8MNiY/HcFVNN
-         2s8olKnSQKOVqF5SYrrbPtezUI+R9/jS3yxQRpzef2JA6oFKZpJI9ErQ7DYlx6vK7udv
-         7nOas/KaL1aPI1yjhnJgiEYvzCyKYqU0j2bjCMBO+bDoDwZRSWj99bi7elv/xr7LGspb
-         fhhV8scLEHm62I46hlp5lbVOsDvjVKqgvEaL1ilJfRXn2CjFIWgKTl1oxNBw8b3KzadH
-         byEQ==
-X-Gm-Message-State: AOAM5319FYc6GNJLUvedCiQZ+2nNCH1ZROo1SAZ0ZinSbIO9ba1E2Mh3
-        Onz58kE0vEZ9J0V2fY1UNE4JBB7G+oI=
-X-Google-Smtp-Source: ABdhPJwyIY8flMrxz/allhR4xa49YRYcwU6c9UA3FebeXz0F2C5NqRz/TvbqFjzCdplAq9MUgbwmlg==
-X-Received: by 2002:a1c:a5c7:: with SMTP id o190mr20258482wme.186.1635627116176;
-        Sat, 30 Oct 2021 13:51:56 -0700 (PDT)
-Received: from lesale.home (62-47-13-59.adsl.highway.telekom.at. [62.47.13.59])
-        by smtp.gmail.com with ESMTPSA id m12sm8942805wrq.69.2021.10.30.13.51.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 13:51:55 -0700 (PDT)
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     rhodges@cisco.com
-Cc:     git@vger.kernel.org, rphodges@gmail.com,
-        Johannes Altmanninger <aclopte@gmail.com>
-Subject: [PATCH v2] apply: make --intent-to-add not stomp index
-Date:   Sat, 30 Oct 2021 22:51:47 +0200
-Message-Id: <20211030205147.2503327-1-aclopte@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211030204155.2500624-1-aclopte@gmail.com>
-References: <20211030204155.2500624-1-aclopte@gmail.com>
+        with ESMTP id S230512AbhJ3Uy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 16:54:57 -0400
+Received: from viathinksoft.de (viathinksoft.de [IPv6:2001:1af8:4700:a07e:1::1337])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FBDBC061570
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 13:52:27 -0700 (PDT)
+Received: by viathinksoft.de (Postfix, from userid 114)
+        id 351EA61C7609; Sat, 30 Oct 2021 22:52:23 +0200 (CEST)
+Received: from webmail.viathinksoft.de (localhost [127.0.0.1])
+        (Authenticated sender: daniel-marschall@viathinksoft.de)
+        by viathinksoft.de (Postfix) with ESMTPA id 552D061C17A9;
+        Sat, 30 Oct 2021 22:52:01 +0200 (CEST)
 MIME-Version: 1.0
+Date:   Sat, 30 Oct 2021 22:52:01 +0200
+From:   Daniel Marschall <info@daniel-marschall.de>
+To:     git@vger.kernel.org
+Cc:     Eric Wong <e@80x24.org>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: git-svn bug: Output git directory has uncommitted changes
+In-Reply-To: <20211027144111.y43o4qdp3pjp6xsh@tb-raspi4>
+References: <77aacb3b44523223c7647bdae1702a31@daniel-marschall.de>
+ <20211025094139.GA22377@dcvr> <20211026151442.65rndwsleyitxvvg@tb-raspi4>
+ <5be6fa92074fb40f3167901d203941bc@daniel-marschall.de>
+ <20211027144111.y43o4qdp3pjp6xsh@tb-raspi4>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <48d96db41fbe4400b995d9e9b9e03277@daniel-marschall.de>
+X-Sender: info@daniel-marschall.de
+Organization: ViaThinkSoft
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit cff5dc09ed (apply: add --intent-to-add, 2018-05-26) introduced
-"apply -N" plus a test to make sure it behaves exactly as "add -N"
-when given equivalent changes.  However, the test only checks working
-tree changes. Now "apply -N" forgot to read the index, so it left
-all tracked files as deleted, except for the ones it touched.
+Am 27.10.2021 16:41, schrieb Torsten Bögershausen:
+> On Tue, Oct 26, 2021 at 09:30:39PM +0200, Daniel Marschall wrote:
+>> Am 26.10.2021 17:14, schrieb Torsten Bögershausen:
+>> 
+>> What I had in mind was the following:
+>> I have files in my SVN repository which are CRLF, and some files are 
+>> LF.
+>> I wanted to tell GIT which line ending the files should have
+>> so that they will have the exact same line endings after the repo is 
+>> checked
+>> out. I think text=auto will also do this, maybe I should try that.
+>> 
+>> The "AFS" files are very special, though. Due to compatibility 
+>> reasons, they
+>> must be in the ancient Macintosh format (CR) otherwise the program 
+>> won't
+>> work. Do I need to state "eol=cr" then? Or will GIT automatically use 
+>> the
+>> same line endings as in the files which I have added to SVN?
+> 
+> Git will not change files with CR as line ending:
+> When there is neither a LF nor CRLF; then the file is "not text".
+> 
+> git ls-files --eol  | grep "^i/-text"
+> 
+> Will list png, afs and some other.
+> You can remove the eol=cr (it doesn't do anything useful, and it is
+> just confusing)
 
-Fix this by reading the index file, like we do for "apply --cached".
-and test that we leave no content changes in the index.
+I looked at the git documentation, but I couldn't find an official 
+statement
+that only "lf" and "crlf" are legal values of "eol". I only found 
+examples of CRLF and LF,
+but I think that doesn't mean that the lack of a CR example implies that 
+CR is forbidden.
+Or did I miss something?
 
-Reported-by: Ryan Hodges <rhodges@cisco.com>
-Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
----
+I think it would be great if "eol=cr" could be implemented.
+If you have a legacy Mac OS9 project or a project that requires files in 
+a
+legacy text format, then I think it would be nice if Git could be able 
+to diff these
+CR-text-files. If I treat them as binary, I think there can't be a
+text-like diff?
 
-Sorry I used the wrong Reported-by: address in v1
+> 
+> Better would be:
+> *.afs -text
+> or
+> *.afs binary
+> 
+> I leave it to the reader, to find out what the difference is.
 
- apply.c               | 2 +-
- t/t2203-add-intent.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+I thought a long time about it, but I can't figure it out.
+Google can't help me either, because "-text" is will be treated as an 
+exclusion in the search term.
 
-diff --git a/apply.c b/apply.c
-index 43a0aebf4e..4f740e373b 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4771,7 +4771,7 @@ static int apply_patch(struct apply_state *state,
- 					       LOCK_DIE_ON_ERROR);
- 	}
- 
--	if (state->check_index && read_apply_cache(state) < 0) {
-+	if ((state->check_index || state->ita_only) && read_apply_cache(state) < 0) {
- 		error(_("unable to read index file"));
- 		res = -128;
- 		goto end;
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index cf0175ad6e..035ce3a2b9 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -307,7 +307,7 @@ test_expect_success 'apply --intent-to-add' '
- 	grep "new file" expected &&
- 	git reset --hard &&
- 	git apply --intent-to-add expected &&
--	git diff >actual &&
-+	(git diff && git diff --cached) >actual &&
- 	test_cmp expected actual
- '
- 
--- 
-2.33.1
+Can you please tell me what the difference is?
+I have the theory that "binary" tells Git to handle it binary, while 
+"-text" tells Git to handle it neither as binary nor as text 
+("undefined")?
 
