@@ -2,68 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC351C433F5
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 23:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E128DC433F5
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 00:13:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87D8660F58
-	for <git@archiver.kernel.org>; Fri, 29 Oct 2021 23:25:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA3D561075
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 00:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231623AbhJ2X2Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 19:28:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51384 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbhJ2X2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 19:28:16 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98C90FD1EF;
-        Fri, 29 Oct 2021 19:25:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QKGTgTCgm05WOVxT2l6Lp0opkrkx4xdTKZIkw2
-        zv5eI=; b=xdbZCf83Z5qGP94v7IHprPpb65PCDsIU/a870qWWpYWgE8UfPx/WdP
-        U6b77om6ZMLB+U8MHO1K30Wp5q3pA61Vlx7oJEhduKEnHt7JaN5Qvluqt3Gt9Qhy
-        6F7KPaXXZMYlJtFfOTIx+BMvvTTameC8LybMt/5hBd427JP+PsW8g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8EDEDFD1ED;
-        Fri, 29 Oct 2021 19:25:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 075EAFD1EC;
-        Fri, 29 Oct 2021 19:25:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 0/8] Allow clean/smudge filters to handle huge files
- in the LLP64 data model
-References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com>
-        <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
-        <xmqqk0hvllxp.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2110292239170.56@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.2110292311200.56@tvgsbejvaqbjf.bet>
-Date:   Fri, 29 Oct 2021 16:25:44 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2110292311200.56@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 29 Oct 2021 23:12:16 +0200 (CEST)")
-Message-ID: <xmqqh7czfm6f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231569AbhJ3AQM convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 29 Oct 2021 20:16:12 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:41645 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229546AbhJ3AQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 20:16:12 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 19U0DXWg079752
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 29 Oct 2021 20:13:34 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Jeff King'" <peff@peff.net>,
+        "=?utf-8?Q?'Carlo_Marcelo_Arenas_Bel=C3=B3n'?=" <carenas@gmail.com>,
+        <git@vger.kernel.org>, <avarab@gmail.com>
+References: <20211029212705.31721-1-carenas@gmail.com>        <YXxpjLhiguq4HY6g@coredump.intra.peff.net>        <YXxs4NZmpjhRkoYA@coredump.intra.peff.net>        <xmqqbl37ijc7.fsf@gitster.g>        <015801d7cd10$8d404810$a7c0d830$@nexbridge.com> <xmqq35ojihx7.fsf@gitster.g>
+In-Reply-To: <xmqq35ojihx7.fsf@gitster.g>
+Subject: RE: [PATCH] wrapper: remove xunsetenv()
+Date:   Fri, 29 Oct 2021 20:13:28 -0400
+Organization: Nexbridge Inc.
+Message-ID: <015d01d7cd22$fa6c6970$ef453c50$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8AF84664-390F-11EC-9497-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQD1p6jrNojDT2nQCeA0hV5rmPbfSQHD8XfqAjjb4UQCj3ErFgC0XlPTAKzdU52tb4qX8A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmail.com> writes:
+On October 29, 2021 6:29 PM, Junio C Hamano wrote:
+> <rsbecker@nexbridge.com> writes:
+> 
+> > On October 29, 2021 5:59 PM, Junio C Hamano wrote:
+> >> Jeff King <peff@peff.net> writes:
+> >>
+> >> > However, according to the unsetenv() manpage:
+> >> >
+> >> >   Prior to glibc 2.2.2, unsetenv() was prototyped as returning void;
+> >> >   more recent glibc versions follow the POSIX.1-compliant prototype
+> >> >   shown in the SYNOPSIS.
+> >> >
+> >> > So it is POSIX to return an int, but that gives us at least one
+> >> > platform where unsetenv() returns void (or used to). glibc 2.2.2 is
+> >> > 2001-era, so that may be old enough that we don't care. But it
+> >> > makes me wonder if other older or obscure platforms will run into this.
+> >>
+> >> Ahh, OK.  Well, we will hear from them soon enough.  It is not like
+> >> this is anything urgent.
+> >
+> > Well... maybe for some of us 😉
+> 
+> Heh, but we all know you are capable of locally patching ;-).
 
->> Speaking of which, -rc0 is still coming, right? ;-)
->> https://tinyurl.com/gitcal still claims that it was scheduled for
->> yesterday.
-
-Was swamped too deeply to even make noises about the delay.  Sorry
-about that.
+Our CI/CD uses Jenkins and depends directly on the git repo, like normal people 😉
 
