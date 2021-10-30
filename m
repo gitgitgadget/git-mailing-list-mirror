@@ -2,987 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC0E4C433F5
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 00:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5D6AC433F5
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 02:09:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C16CB61037
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 00:17:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81F656103E
+	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 02:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231203AbhJ3AUZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Oct 2021 20:20:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64689 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbhJ3AUW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Oct 2021 20:20:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 53C2616C563;
-        Fri, 29 Oct 2021 20:17:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=d
-        z3uJI1KUjlw2tqMwnTLhDwJZeq6e5A3b38Y4oJC30g=; b=vamCFqQWy6lGLrJ8i
-        5XP/e3gdRb+4/Njh7j6TdPPAuMe5kzS0TpChMGf4FWky9oWoUsWIBakaxqVKgkTg
-        SNnEErTK9yFpJ5dFz0YBgFNn/WFsgMRcFjDIW2/pTdGiS09vKs5pYAaIWqecrczd
-        P/4bCB2+Ickp36VY+TKn30mRYY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2727B16C562;
-        Fri, 29 Oct 2021 20:17:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A2F816C55F;
-        Fri, 29 Oct 2021 20:17:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Oct 2021, #07; Fri, 29)
-X-master-at: 7e27bd589d328b9daf154c2444d1a86ec3afedb0
-X-next-at: 81b53c28077674bc88b86c3c3dcc2dc94f93888f
-Date:   Fri, 29 Oct 2021 17:17:45 -0700
-Message-ID: <xmqqr1c3e57a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231569AbhJ3CLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Oct 2021 22:11:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229784AbhJ3CLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Oct 2021 22:11:52 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E58DC061570
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 19:09:23 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id x5so1739774pgk.11
+        for <git@vger.kernel.org>; Fri, 29 Oct 2021 19:09:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=svIAQY2+i76VA9qryNqLQ4zICQVVTdoRRPS1ciwNeJA=;
+        b=iGLD0ghBmCHn9VfHWJanh84laMSzkUDG8SdM8gTfKIT2m/XaRFbWbMocPvEPTde7zo
+         v54LueaG1r7Jfkc0NfSFIpCNk65+dH8BxgI/Xzs3v9ikGNTxD1jP3dEXarDZ25Tp0bkB
+         Q4wnf5uLx/Eyc1ZROuR0cMAAVFc+Hv7kkjonYKkT4QM4RU9ymmSHB5nGZURJ6wDj623i
+         RN2mK8bnpIBjj6eFO7R0qqZ+nGkTiDQomJSGd2Uc5BJFVJqoW85MZtv5LHlIwTLuanPr
+         41/O/kccrz9VqBEbCbb2nHxMcpPbXo1Uml2dBL/BATOGgpiLsVezSKizuS5wwNfGsNIv
+         PJQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=svIAQY2+i76VA9qryNqLQ4zICQVVTdoRRPS1ciwNeJA=;
+        b=Nigs2ymVv4O79RGkP5S99zJDnjaQJloyHmSVJtWfSbbvVhhYL1VoIfT0fK5CKyC+u3
+         Wn8hClbfVq2X6W1wp6JqDyUyrNq94IrxowulsB//fngbvS2XSQeco48uUaau7afCU2bl
+         fnLhFH/QO7lEgilZv3zJSq7fcxezn2/u+96lQYJeRRni9q5UCx8O6TQz0u4sVuQgRGF6
+         aRKNFN930stZ8LUQDAbVZ03UezCDIa4YjO/QOgX4XwdKqDKCl/oezGdeVp7OSzkW0Y30
+         bXTV0lkrR7yQjKruoWADCgFrqRwNZLk9gVQ5E9mmTeM2KvF6/hdfgqMDSw8xNloVWeCV
+         Ah4A==
+X-Gm-Message-State: AOAM530YXnm4kbhsP+CzS08xAiD9dsA5eJnJ6ndEo1PsX1SDNj8lkVB1
+        7a+22sV7AZPGbbXEAgfMjIQA3obHG7k=
+X-Google-Smtp-Source: ABdhPJxNaXSdPQKOiyiCXxvX8v9sIas91IyElYv2vxY6otJsM8y88juJ4MQDO+05AdhWNjjp13lghg==
+X-Received: by 2002:a05:6a00:1709:b0:47e:66f7:1d13 with SMTP id h9-20020a056a00170900b0047e66f71d13mr8278473pfc.36.1635559762824;
+        Fri, 29 Oct 2021 19:09:22 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id b13sm12463148pjl.15.2021.10.29.19.09.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Oct 2021 19:09:22 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <daniel@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.34.0 round #1
+Date:   Sat, 30 Oct 2021 10:09:17 +0800
+Message-Id: <20211030020917.32132-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CEFE315A-3916-11EC-B1F6-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen',
-which means nothing more than that I have found them of interest for
-some reason (like "it may have hard-to-resolve conflicts with
-another topic already in flight" or "this may turn out to be
-useful").  Do not read too much into a topic being in (or not in)
-'seen'.  The ones marked with '.' do not appear in any of the
-integration branches, but I am still holding onto them.
+Hi,
 
-Git 2.34-rc0 has been tagged.  There are still a few topics that
-want to be in the upcoming release in 'next', but from here on,
-let's concentrate more on fixes other than shiny new features.
+Git v2.34.0-rc0 has been released, and it's time to start new round of
+git l10n.  This time there are 134 updated messages need to be translated
+since last update.  Let's start a new round of git l10n based on this
+commit:
 
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
+    l10n: git.pot: v2.34.0 round 1 (134 new, 154 removed)
+    
+    Generate po/git.pot from v2.34.0-rc0 for git v2.34.0 l10n round 1.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-With maint, master, next, seen, todo:
+You can get it from the usual place:
 
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
+    https://github.com/git-l10n/git-po/
 
-With all the integration branches and topics broken out:
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
 
-	https://github.com/gitster/git/
+There is a helper program hosted on https://github.com/git-l10n/git-po-helper
+for git l10n coordinator and git l10n contributors to verify their commits.
 
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
 
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ab/fix-make-lint-docs (2021-10-27) 1 commit
-  (merged to 'next' on 2021-10-27 at 04f0be2a8b)
- + Documentation/Makefile: fix lint-docs mkdir dependency
-
- Hotfix for a topic recently merged to 'master'.
-
-
-* ab/make-sparse-for-real (2021-10-21) 1 commit
-  (merged to 'next' on 2021-10-23 at f7a8389fb3)
- + Makefile: remove redundant GIT-CFLAGS dependency from "sparse"
-
- Fix-up for a recent topic.
-
-
-* ab/plug-handle-path-exclude-leak (2021-10-21) 1 commit
-  (merged to 'next' on 2021-10-23 at 6be5d7bea8)
- + config.c: don't leak memory in handle_path_include()
-
- Leakfix.
-
-
-* ab/plug-random-leaks (2021-10-23) 6 commits
-  (merged to 'next' on 2021-10-23 at 9c04a95718)
- + reflog: free() ref given to us by dwim_log()
- + submodule--helper: fix small memory leaks
- + clone: fix a memory leak of the "git_dir" variable
- + grep: fix a "path_list" memory leak
- + grep: use object_array_clear() in cmd_grep()
- + grep: prefer "struct grep_opt" over its "void *" equivalent
-
- Leakfix.
-
-
-* ab/ref-filter-leakfix (2021-10-20) 3 commits
-  (merged to 'next' on 2021-10-23 at 8066971a3d)
- + branch: use ref_sorting_release()
- + ref-filter API user: add and use a ref_sorting_release()
- + tag: use a "goto cleanup" pattern, leak less memory
- (this branch is used by jc/fix-ref-sorting-parse.)
-
- "git for-each-ref" family of commands were leaking the ref_sorting
- instances that hold sorting keys specified by the user; this has
- been corrected.
-
-
-* ab/sh-retire-rebase-preserve-merges (2021-10-21) 2 commits
-  (merged to 'next' on 2021-10-23 at f1fede7500)
- + git-sh-setup: remove messaging supporting --preserve-merges
- + git-sh-i18n: remove unused eval_ngettext()
-
- Code clean-up to remove unused helpers.
-
-
-* ab/test-bail (2021-10-14) 2 commits
-  (merged to 'next' on 2021-10-23 at 4a16ebdb74)
- + test-lib.sh: use "Bail out!" syntax on bad SANITIZE=leak use
- + test-lib.sh: de-duplicate error() teardown code
-
- A new feature has been added to abort early in the test framework.
-
-
-* ab/unbundle-progress (2021-10-27) 1 commit
-  (merged to 'next' on 2021-10-27 at a6ec5e5fb5)
- + git-bundle.txt: add missing words and punctuation
-
- Doc clarification.
-
-
-* bs/archive-doc-compression-level (2021-10-25) 1 commit
-  (merged to 'next' on 2021-10-25 at 9360d864a2)
- + archive: describe compression level option
-
- Update "git archive" documentation and give explicit mention on the
- compression level for both zip and tar.gz format.
-
-
-* bs/doc-blame-color-lines (2021-10-20) 1 commit
-  (merged to 'next' on 2021-10-23 at 4da10a5162)
- + git config doc: fix recent ASCIIDOC formatting regression
-
- Doc fix.
-
-
-* cm/drop-xunsetenv (2021-10-29) 1 commit
-  (merged to 'next' on 2021-10-29 at 3004dd0e66)
- + wrapper: remove xunsetenv()
-
- Drop a helper function that has never been used since its addition.
-
-
-* jc/branch-copy-doc (2021-10-23) 1 commit
-  (merged to 'next' on 2021-10-27 at efc3d30457)
- + branch (doc): -m/-c copies config and reflog
-
- "git branch -c/-m new old" was not described to copy config, which
- has been corrected.
-
-
-* jk/http-push-status-fix (2021-10-18) 2 commits
-  (merged to 'next' on 2021-10-23 at 9704ff261d)
- + transport-helper: recognize "expecting report" error from send-pack
- + send-pack: complain about "expecting report" with --helper-status
-
- "git push" client talking to an HTTP server did not diagnose the
- lack of the final status report from the other side correctly,
- which has been corrected.
-
-
-* jk/log-warn-on-bogus-encoding (2021-10-29) 2 commits
-  (merged to 'next' on 2021-10-29 at 7fa61a88f4)
- + log: document --encoding behavior on iconv() failure
- + Revert "logmsg_reencode(): warn when iconv() fails"
-
- Squelch over-eager warning message added during this cycle.
-
-
-* js/expand-runtime-prefix (2021-10-25) 1 commit
-  (merged to 'next' on 2021-10-25 at 7ff05e8222)
- + config.txt: fix typo
-
- Typofix.
-
-
-* ks/submodule-add-message-fix (2021-10-27) 2 commits
-  (merged to 'next' on 2021-10-27 at 4fc7c47990)
- + submodule: drop unused sm_name parameter from append_fetch_remotes()
-  (merged to 'next' on 2021-10-25 at 377e759528)
- + submodule--helper: fix incorrect newlines in an error message
-
- Message regression fix.
-
-
-* ma/doc-folder-to-directory (2021-10-25) 3 commits
-  (merged to 'next' on 2021-10-27 at 99200092f7)
- + gitweb.txt: change "folder" to "directory"
- + gitignore.txt: change "folder" to "directory"
- + git-multi-pack-index.txt: change "folder" to "directory"
-
- Consistently use 'directory', not 'folder', to call the filesystem
- entity that collects a group of files and, eh, directories.
-
-
-* ma/doc-git-version (2021-10-25) 1 commit
-  (merged to 'next' on 2021-10-25 at 9f74afec0c)
- + git.txt: fix typo
-
- Typofix.
-
-
-* mt/fix-add-rm-with-sparse-index (2021-10-28) 1 commit
-  (merged to 'next' on 2021-10-29 at 06f21a49b1)
- + add, rm, mv: fix bug that prevents the update of non-sparse dirs
-
- Fix-up to a topic already merged to 'master'.
-
-
-* re/completion-fix-test-equality (2021-10-28) 1 commit
-  (merged to 'next' on 2021-10-29 at 78decd16a0)
- + completion: fix incorrect bash/zsh string equality check
-
- Fix long-standing shell syntax error in the completion script.
-
-
-* sg/sparse-index-not-that-common-a-command (2021-10-25) 1 commit
-  (merged to 'next' on 2021-10-27 at 020dc425a4)
- + command-list.txt: remove 'sparse-index' from main help
-
- Drop "git sparse-index" from the list of common commands.
-
---------------------------------------------------
-[New Topics]
-
-* ar/fix-git-pull-no-verify (2021-10-28) 1 commit
- - pull: honor --no-verify and do not call the commit-msg hook
-
- "git pull --no-verify" did not affect the underlying "git merge".
-
- Will merge to 'next'.
-
-
-* if/redact-packfile-uri (2021-10-29) 2 commits
- - http-fetch: redact url on die() message
- - fetch-pack: redact packfile urls in traces
-
- Redact the path part of packfile URI that appears in the trace output.
-
-
-* ar/no-verify-doc (2021-10-29) 1 commit
- - Document positive variant of commit and merge option "--no-verify"
-
- Doc update.
-
- Will merge to 'next'.
-
-
-* ew/test-wo-fsync (2021-10-29) 1 commit
- - tests: disable fsync everywhere
-
- Allow running our tests while disabling internal fsync.
-
-
-* ja/doc-cleanup (2021-10-28) 10 commits
- - init doc: --shared=0xxx does not give umask but perm bits
- - doc: git-init: clarify file modes in octal.
- - doc: git-http-push: describe the refs as pattern pairs
- - doc: uniformize <URL> placeholders' case
- - doc: use three dots for indicating repetition instead of star
- - doc: git-ls-files: express options as optional alternatives
- - doc: use only hyphens as word separators in placeholders
- - doc: express grammar placeholders between angle brackets
- - doc: split placeholders as individual tokens
- - doc: fix git credential synopsis
-
- Doc update.
-
- Will merge to 'next'.
-
-
-* re/color-default-reset (2021-10-28) 3 commits
- - color: allow colors to be prefixed with "reset"
- - color: support "default" to restore fg/bg color
- - color: add missing GIT_COLOR_* white/black constants
-
- "default" and "reset" colors have been added to our palette.
-
-
-* ab/test-lib (2021-10-29) 1 commit
-  (merged to 'next' on 2021-10-29 at b3d23601bd)
- + t5310: drop lib-bundle.sh include
-
- Test (cosmetic) fix.
-
- Will merge to 'master'.
-
-
-* jc/fix-first-object-walk (2021-10-29) 2 commits
- - docs: add headers in MyFirstObjectWalk
- - docs: fix places that break compilation in MyFirstObjectWalk
-
- Doc update.
-
-
-* jc/unsetenv-returns-an-int (2021-10-29) 1 commit
- - unsetenv(3) returns int, not void
-
- The compatibility implementation for unsetenv(3) were written to
- mimic ancient, non-POSIX, variant seen in an old glibc; it has been
- changed to return an integer to match the more modern era.
-
- Will merge to 'next'.
-
-
-* mc/clean-smudge-with-llp64 (2021-10-29) 8 commits
- - clean/smudge: allow clean filters to process extremely large files
- - odb: guard against data loss checking out a huge file
- - git-compat-util: introduce more size_t helpers
- - odb: teach read_blob_entry to use size_t
- - t1051: introduce a smudge filter test for extremely large files
- - test-lib: add prerequisite for 64-bit platforms
- - test-tool genzeros: generate large amounts of data more efficiently
- - test-genzeros: allow more than 2G zeros in Windows
-
---------------------------------------------------
-[Stalled]
-
-* mp/absorb-submodule-git-dir-upon-deinit (2021-10-07) 1 commit
- - submodule: absorb git dir instead of dying on deinit
-
- "git submodule deinit" for a submodule whose .git metadata
- directory is embedded in its working tree refused to work, until
- the submodule gets converted to use the "absorbed" form where the
- metadata directory is stored in superproject, and a gitfile at the
- top-level of the working tree of the submodule points at it.  The
- command is taught to convert such submodules to the absorbed form
- as needed.
-
- Expecting a reroll.
- cf. <xmqqwnmopqqk.fsf@gitster.g>
-
-
-* ar/submodule-update (2021-10-13) 9 commits
- . submodule--helper: rename helper functions
- . submodule--helper: remove unused helpers
- . submodule: move core cmd_update() logic to C
- . submodule--helper: run update using child process struct
- . submodule--helper: allow setting superprefix for init_submodule()
- . submodule--helper: refactor get_submodule_displaypath()
- . submodule--helper: rename helpers for update-clone
- . submodule--helper: get remote names from any repository
- . submodule--helper: split up ensure_core_worktree()
-
- Rewrite of "git submodule update" in C.
-
- Kicked out of 'seen' to make room for es/superproject-aware-submodules
- which is among the topics this topic stomps on.
-
-
-* cf/fetch-set-upstream-while-detached (2021-07-06) 1 commit
- - fetch: fix segfault on --set-upstream while on a detached HEAD
-
- "git fetch --set-upstream" while on detached HEAD segfaulted
- instead of noticing that such an operation did not make sense.
-
- Getting tired of waiting for a reroll; will discard.
-
---------------------------------------------------
-[Cooking]
-
-* pw/diff-color-moved-fix (2021-10-27) 15 commits
- - diff --color-moved: intern strings
- - diff: use designated initializers for emitted_diff_symbol
- - diff --color-moved-ws=allow-indentation-change: improve hash lookups
- - diff --color-moved: stop clearing potential moved blocks
- - diff --color-moved: shrink potential moved blocks as we go
- - diff --color-moved: unify moved block growth functions
- - diff --color-moved: call comparison function directly
- - diff --color-moved-ws=allow-indentation-change: simplify and optimize
- - diff: simplify allow-indentation-change delta calculation
- - diff --color-moved: avoid false short line matches and bad zerba coloring
- - diff --color-moved=zebra: fix alternate coloring
- - diff --color-moved: rewind when discarding pmb
- - diff --color-moved: factor out function
- - diff --color-moved: clear all flags on blocks that are too short
- - diff --color-moved: add perf tests
-
- Long-overdue correctness and performance update to "diff
- --color-moved" feature.
-
-
-* ab/generate-command-list (2021-10-23) 10 commits
- - generate-cmdlist.sh: replace "cut", "tr" and "grep" with pure-shell
- - generate-cmdlist.sh: replace "grep' invocation with a shell version
- - generate-cmdlist.sh: do not shell out to "sed"
- - generate-cmdlist.sh: stop sorting category lines
- - generate-cmdlist.sh: replace for loop by printf's auto-repeat feature
- - generate-cmdlist.sh: run "grep | sort", not "sort | grep"
- - generate-cmdlist.sh: don't call get_categories() from category_list()
- - generate-cmdlist.sh: spawn fewer processes
- - generate-cmdlist.sh: trivial whitespace change
- - command-list.txt: sort with "LC_ALL=C sort"
-
- Build optimization.
-
- Getting there.
- cf. <xmqqsfwr8j66.fsf@gitster.g>
-
-
-* jc/fix-pull-ff-only-when-already-up-to-date (2021-10-29) 1 commit
-  (merged to 'next' on 2021-10-29 at ad4753e668)
- + pull: --ff-only should make it a noop when already-up-to-date
-
- "git pull --ff-only" and "git pull --rebase --ff-only" should make
- it a no-op to attempt pulling from a remote that is behind us, but
- instead the command errored out by saying it was impossible to
- fast-forward, which may technically be true, but not a useful thing
- to diagnose as an error.  This has been corrected.
-
- Will cook in 'next'.
-
-
-* ab/sh-retire-helper-functions (2021-10-21) 6 commits
- - git-sh-setup: remove "sane_grep", it's not needed anymore
- - git-sh-setup: remove unused sane_egrep() function
- - git-instaweb: unconditionally assume that gitweb is mod_perl capable
- - Makefile: remove $(NO_CURL) from $(SCRIPT_DEFINES)
- - Makefile: remove $(GIT_VERSION) from $(SCRIPT_DEFINES)
- - Makefile: move git-SCRIPT-DEFINES adjacent to $(SCRIPT_DEFINES)
-
- Make a few helper functions unused and then lose them.
-
-
-* ow/stash-count-in-status-porcelain-output (2021-10-21) 2 commits
-  (merged to 'next' on 2021-10-29 at 1a01b886e5)
- + status: print stash info with --porcelain=v2 --show-stash
- + status: count stash entries in separate function
-
- Allow "git status --porcelain=v2" to show the number of stash
- entries with --show-stash like the normal output does.
-
- Will cook in 'next'.
-
-
-* tb/plug-pack-bitmap-leaks (2021-10-28) 9 commits
- - pack-bitmap.c: more aggressively free in free_bitmap_index()
- - pack-bitmap.c: don't leak type-level bitmaps
- - midx.c: write MIDX filenames to strbuf
- - builtin/multi-pack-index.c: don't leak concatenated options
- - builtin/repack.c: avoid leaking child arguments
- - builtin/pack-objects.c: don't leak memory via arguments
- - t/helper/test-read-midx.c: free MIDX within read_midx_file()
- - midx.c: don't leak MIDX from verify_midx_file
- - midx.c: clean up chunkfile after reading the MIDX
-
- Leakfix.
-
- Will merge to 'next'?
-
-
-* es/pretty-describe-more (2021-10-29) 3 commits
- - pretty: add abbrev option to %(describe)
- - pretty: add tag option to %(describe)
- - pretty.c: rework describe options parsing for better extensibility
-
- Extend "git log --format=%(describe)" placeholder to allow passing
- selected command-line options to the underlying "git describe"
- command.
-
-
-* fs/ssh-signing-key-lifetime (2021-10-27) 8 commits
- - ssh signing: make fmt-merge-msg consider key lifetime
- - ssh signing: make verify-tag consider key lifetime
- - ssh signing: make git log verify key lifetime
- - ssh signing: make verify-commit consider key lifetime
- - ssh signing: add key lifetime test prereqs
- - ssh signing: use sigc struct to pass payload
- - Merge branch 'fs/ssh-signing-fix' into fs/ssh-signing-key-lifetime
- - Merge branch 'fs/ssh-signing' into fs/ssh-signing-key-lifetime
-
- Extend the signing of objects with SSH keys and learn to pay
- attention to the key validity time range when verifying.
-
-
-* jc/doc-format-patch-clarify-auto-base (2021-10-23) 1 commit
-  (merged to 'next' on 2021-10-27 at 32c227324a)
- + format-patch (doc): clarify --base=auto
-
- Rephrase the description of "format-patch --base=auto".
-
- Will merge to 'master'.
-
-
-* jc/doc-submitting-patches-choice-of-base (2021-10-25) 2 commits
- - (wip) reword the final review part
- - SubmittingPatchs: clarify choice of base and testing
-
- Extend the guidance to choose the base commit to build your work
- on, and hint/nudge contributors to read others' changes.
-
-
-* rd/http-backend-code-simplification (2021-10-25) 1 commit
- - http-backend: remove a duplicated code branch
-
- (slight) Code simplification.
-
- Will merge to 'next'?
-
-
-* gc/remote-with-fewer-static-global-variables (2021-10-28) 6 commits
- - remote: add struct repository parameter to external functions
- - remote: die if branch is not found in repository
- - remote: remove the_repository->remote_state from static methods
- - remote: use remote_state parameter internally
- - remote: move static variables into per-repository struct
- - t5516: add test case for pushing remote refspecs
-
- Code clean-up to eventually allow information on remotes defined
- for an arbitrary repository to be read.
-
- Will merge to 'next'?
-
-
-* jk/loosen-urlmatch (2021-10-12) 1 commit
-  (merged to 'next' on 2021-10-25 at f66ca39ebe)
- + urlmatch: add underscore to URL_HOST_CHARS
-
- Treat "_" as any other URL-valid characters in an URL when matching
- the per-URL configuration variable names.
-
- Will cook in 'next'.
-
-
-* ab/config-based-hooks-2 (2021-10-20) 14 commits
- - run-command: remove old run_hook_{le,ve}() hook API
- - receive-pack: convert push-to-checkout hook to hook.h
- - read-cache: convert post-index-change to use hook.h
- - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
- - git-p4: use 'git hook' to run hooks
- - send-email: use 'git hook run' for 'sendemail-validate'
- - git hook run: add an --ignore-missing flag
- - merge: convert post-merge to use hook.h
- - hooks: convert 'post-checkout' hook to hook library
- - am: convert applypatch to use hook.h
- - rebase: convert pre-rebase to use hook.h
- - gc: use hook library for pre-auto-gc hook
- - hook: add 'run' subcommand
- - Merge branch 'ab/config-based-hooks-1' into ab/config-based-hooks-2
-
- More "config-based hooks".
-
-
-* ab/ignore-replace-while-working-on-commit-graph (2021-10-15) 3 commits
-  (merged to 'next' on 2021-10-25 at 5ed4266a96)
- + commit-graph: don't consider "replace" objects with "verify"
- + commit-graph tests: fix another graph_git_two_modes() helper
- + commit-graph tests: fix error-hiding graph_git_two_modes() helper
- (this branch is used by gc/use-repo-settings.)
-
- Teach "git commit-graph" command not to allow using replace objects
- at all, as we do not use the commit-graph at runtime when we see
- object replacement.
-
- Will merge to 'master'.
-
-
-* so/stash-staged (2021-10-28) 2 commits
-  (merged to 'next' on 2021-10-29 at 50335e8eeb)
- + stash: get rid of unused argument in stash_staged()
-  (merged to 'next' on 2021-10-25 at 68b88e35c4)
- + stash: implement '--staged' option for 'push' and 'save'
-
- "git stash" learned the "--staged" option to stash away what has
- been added to the index (and nothing else).
-
- Will cook in 'next'.
-
-
-* vd/sparse-sparsity-fix-on-read (2021-10-27) 3 commits
- - sparse-index: update do_read_index to ensure correct sparsity
- - sparse-index: add ensure_correct_sparsity function
- - test-read-cache.c: prepare_repo_settings after config init
-
- Ensure that the sparseness of the in-core index matches the
- index.sparse configuration specified by the repository immediately
- after the on-disk index file is read.
-
- Will merge to 'next'?
-
-
-* jc/fix-ref-sorting-parse (2021-10-20) 2 commits
-  (merged to 'next' on 2021-10-29 at e3ec6e8e77)
- + for-each-ref: delay parsing of --sort=<atom> options
- + Merge branch 'ab/ref-filter-leakfix' into jc/fix-ref-sorting-parse
-
- Things like "git -c branch.sort=bogus branch new HEAD", i.e. the
- operation modes of the "git branch" command that do not need the
- sort key information, no longer errors out by seeing a bogus sort
- key.
-
- Will cook in 'next'.
-
-
-* jc/tutorial-format-patch-base (2021-10-23) 1 commit
-  (merged to 'next' on 2021-10-29 at 67ff1a5a77)
- + MyFirstContribution: teach to use "format-patch --base=auto"
-
- Teach and encourage first-time contributors to this project to
- state the base commit when they submit their topic.
-
- Will cook in 'next'.
-
-
-* js/branch-track-inherit (2021-10-18) 1 commit
- - branch: add flags and config to inherit tracking
-
- "git -c branch.autosetupmerge=inherit branch new old" makes "new"
- to have the same upstream as the "old" branch, instead of marking
- "old" itself as its upstream.
-
- Under discussion.
- cf. <87a6j6tbsv.fsf@gmgdl.gmail.com>
-
-
-* jh/builtin-fsmonitor-part2 (2021-10-21) 29 commits
- - t7527: test status with untracked-cache and fsmonitor--daemon
- - fsmonitor: force update index after large responses
- - fsmonitor--daemon: use a cookie file to sync with file system
- - fsmonitor--daemon: periodically truncate list of modified files
- - t/perf/p7519: add fsmonitor--daemon test cases
- - t/perf/p7519: speed up test on Windows
- - t/helper/test-chmtime: skip directories on Windows
- - t/perf: avoid copying builtin fsmonitor files into test repo
- - t7527: create test for fsmonitor--daemon
- - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
- - help: include fsmonitor--daemon feature flag in version info
- - fsmonitor--daemon: implement handle_client callback
- - compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on MacOS
- - compat/fsmonitor/fsm-listen-darwin: add macos header files for FSEvent
- - compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on Windows
- - fsmonitor--daemon: create token-based changed path cache
- - fsmonitor--daemon: define token-ids
- - fsmonitor--daemon: add pathname classification
- - fsmonitor--daemon: implement 'start' command
- - fsmonitor--daemon: implement 'run' command
- - compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
- - compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
- - fsmonitor--daemon: implement 'stop' and 'status' commands
- - fsmonitor--daemon: add a built-in fsmonitor daemon
- - fsmonitor: document builtin fsmonitor
- - fsmonitor: use IPC to query the builtin FSMonitor daemon
- - fsmonitor: config settings are repository-specific
- - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
- - fsmonitor: enhance existing comments
-
- Built-in fsmonitor (part 2).
-
-
-* ld/sparse-diff-blame (2021-10-27) 3 commits
- - blame: enable and test the sparse index
- - diff: enable and test the sparse index
- - Merge branch 'vd/sparse-reset' into ld/sparse-diff-blame
- (this branch uses vd/sparse-reset.)
-
- Teach diff and blame to work well with sparse index.
-
- Expecting a reroll.
- cf. <YXgpqJIS2OgOgS+k@nand.local>
-
-
-* ns/remerge-diff (2021-10-27) 9 commits
- - doc/diff-options: explain the new --remerge-diff option
- - show, log: adapt Elijah Newren's changes to common tmp-objdir API
- - show, log: provide a --remerge-diff capability
- - merge-ort: capture and print ll-merge warnings in our preferred fashion
- - ll-merge: add API for capturing warnings in a strbuf instead of stderr
- - merge-ort: add ability to record conflict messages in a file
- - merge-ort: mark a few more conflict messages as omittable
- - Merge branch 'ns/tmp-objdir' into ns/remerge-diff
- - Merge branch 'ns/tmp-objdir' into ns/remerge-diff
- (this branch uses ns/tmp-objdir.)
-
- A new presentation for two-parent merge "--remerge-diff" can be
- used to show the difference between mechanical (and possibly
- conflicted) merge results and the recorded resolution.
-
- On hold.
- This is Elijah's remerge-diff rebased on ns/tmp-objdir to share the
- "create objects temporarily, only to discard without committing
- them to longer-term storage" infrastructure with another topic.
-
-
-* ns/tmp-objdir (2021-10-27) 4 commits
-  (merged to 'next' on 2021-10-27 at 001a18c0e1)
- + fixup! tmp-objdir: new API for creating temporary writable databases
- + fixup! tmp-objdir: new API for creating temporary writable databases
-  (merged to 'next' on 2021-10-23 at 358d376f61)
- + tmp-objdir: disable ref updates when replacing the primary odb
- + tmp-objdir: new API for creating temporary writable databases
- (this branch is used by ns/batched-fsync and ns/remerge-diff.)
-
- New interface into the tmp-objdir API to help in-core use of the
- quarantine feature.
-
- On hold.
- cf. <xmqqo87auqda.fsf@gitster.g>
-
-
-* vd/sparse-reset (2021-10-27) 8 commits
- - unpack-trees: improve performance of next_cache_entry
- - reset: make --mixed sparse-aware
- - reset: make sparse-aware (except --mixed)
- - reset: integrate with sparse index
- - reset: expand test coverage for sparse checkouts
- - sparse-index: update command for expand/collapse test
- - reset: preserve skip-worktree bit in mixed reset
- - reset: rename is_missing to !is_in_reset_tree
- (this branch is used by ld/sparse-diff-blame.)
-
- Various operating modes of "git reset" have been made to work
- better with the sparse index.
-
- Ready?
-
-
-* gc/use-repo-settings (2021-10-15) 4 commits
-  (merged to 'next' on 2021-10-25 at 3d38c09a8d)
- + gc: perform incremental repack when implictly enabled
- + fsck: verify multi-pack-index when implictly enabled
- + fsck: verify commit graph when implicitly enabled
- + Merge branch 'ab/ignore-replace-while-working-on-commit-graph' into gc/use-repo-settings
- (this branch uses ab/ignore-replace-while-working-on-commit-graph.)
-
- It is wrong to read some settings directly from the config
- subsystem, as things like feature.experimental can affect their
- default values.
-
- Will merge to 'master'.
-
-
-* pw/fix-some-issues-in-reset-head (2021-10-01) 12 commits
- - rebase -m: don't fork git checkout
- - rebase --apply: set ORIG_HEAD correctly
- - rebase --apply: fix reflog
- - reset_head(): take struct rebase_head_opts
- - rebase: cleanup reset_head() calls
- - reset_head(): make default_reflog_action optional
- - reset_head(): factor out ref updates
- - reset_head(): remove action parameter
- - reset_head(): don't run checkout hook if there is an error
- - reset_head(): fix checkout
- - rebase: factor out checkout for up to date branch
- - Merge branch 'pw/rebase-of-a-tag-fix' into pw/fix-some-issues-in-reset-head
-
- Fix "some issues" in a helper function reset_head().
-
- Expecting a reroll.
- Needs a lot better explanation, including what the issues are,
- which codepaths the helper is used and to do what, and tests to
- protect the fixes.
-
-
-* es/superproject-aware-submodules (2021-10-14) 4 commits
- - submodule: record superproject gitdir during 'update'
- - submodule: record superproject gitdir during absorbgitdirs
- - introduce submodule.superprojectGitDir record
- - t7400-submodule-basic: modernize inspect() helper
-
- A configuration variable in a submodule points at the location of
- the superproject it is bound to (RFC).
-
- Under discussion.
- cf. <911ab2c1-8a11-d9d0-4b28-fc801112f6da@gmail.com>
-
-
-* tp/send-email-completion (2021-10-28) 2 commits
- - send-email docs: add format-patch options
- - send-email: programmatically generate bash completions
-
- The command line complation for "git send-email" options have been
- tweaked to make it easier to keep it in sync with the command itself.
-
- Will merge to 'next'?
-
-
-* hm/paint-hits-in-log-grep (2021-10-15) 4 commits
-  (merged to 'next' on 2021-10-25 at e3edea3fa9)
- + grep/pcre2: fix an edge case concerning ascii patterns and UTF-8 data
- + pretty: colorize pattern matches in commit messages
- + grep: refactor next_match() and match_one_pattern() for external use
- + Merge branch 'jk/grep-haystack-is-read-only' into hm/paint-hits-in-log-grep
-
- "git log --grep=string --author=name" learns to highlight hits just
- like "git grep string" does.
-
- Will merge to 'master'.
-
-
-* ns/batched-fsync (2021-10-27) 9 commits
-  (merged to 'next' on 2021-10-27 at eb2a3afdd1)
- + Merge branch 'ns/tmp-objdir' into ns/batched-fsync
-  (merged to 'next' on 2021-10-25 at e45c907d41)
- + core.fsyncobjectfiles: performance tests for add and stash
- + core.fsyncobjectfiles: tests for batch mode
- + unpack-objects: use the bulk-checkin infrastructure
- + update-index: use the bulk-checkin infrastructure
- + core.fsyncobjectfiles: add windows support for batch mode
- + core.fsyncobjectfiles: batched disk flushes
- + bulk-checkin: rename 'state' variable and separate 'plugged' boolean
- + Merge branch 'ns/tmp-objdir' into ns/batched-fsync
- (this branch uses ns/tmp-objdir.)
-
- The "core.fsyncobjectfiles" configuration variable can now be set
- to "batch" for improved performance.
-
- On hold.
- cf. <xmqqo87auqda.fsf@gitster.g>
-
-
-* en/zdiff3 (2021-09-20) 2 commits
- - update documentation for new zdiff3 conflictStyle
- - xdiff: implement a zealous diff3, or "zdiff3"
-
- "Zealous diff3" style of merge conflict presentation has been added.
-
-
-* js/scalar (2021-10-27) 15 commits
- - scalar: accept -C and -c options before the subcommand
- - scalar: implement the `version` command
- - scalar: implement the `delete` command
- - scalar: teach 'reconfigure' to optionally handle all registered enlistments
- - scalar: allow reconfiguring an existing enlistment
- - scalar: implement the `run` command
- - scalar: teach 'clone' to support the --single-branch option
- - scalar: implement the `clone` subcommand
- - scalar: implement 'scalar list'
- - scalar: let 'unregister' handle a deleted enlistment directory gracefully
- - scalar: 'unregister' stops background maintenance
- - scalar: 'register' sets recommended config and starts maintenance
- - scalar: create test infrastructure
- - scalar: start documenting the command
- - scalar: create a rudimentary executable
-
- Add pieces from "scalar" to contrib/.
-
- What's the status of this thing?
-
-
-* ms/customizable-ident-expansion (2021-09-01) 1 commit
- - keyword expansion: make "$Id$" string configurable
-
- Instead of "$Id$", user-specified string (like $FreeBSD$) can be
- used as an in-blob placeholder for keyword expansion.
-
- What's the status of this one?  Meh?
-
-
-* ab/refs-errno-cleanup (2021-10-16) 21 commits
-  (merged to 'next' on 2021-10-29 at 3f57147176)
- + refs API: post-migration API renaming [2/2]
- + refs API: post-migration API renaming [1/2]
- + refs API: don't expose "errno" in run_transaction_hook()
- + refs API: make expand_ref() & repo_dwim_log() not set errno
- + refs API: make resolve_ref_unsafe() not set errno
- + refs API: make refs_ref_exists() not set errno
- + refs API: make refs_resolve_refdup() not set errno
- + refs tests: ignore ignore errno in test-ref-store helper
- + refs API: ignore errno in worktree.c's find_shared_symref()
- + refs API: ignore errno in worktree.c's add_head_info()
- + refs API: make files_copy_or_rename_ref() et al not set errno
- + refs API: make loose_fill_ref_dir() not set errno
- + refs API: make resolve_gitlink_ref() not set errno
- + refs API: remove refs_read_ref_full() wrapper
- + refs/files: remove "name exist?" check in lock_ref_oid_basic()
- + reflog tests: add --updateref tests
- + refs API: make refs_rename_ref_available() static
- + refs API: make parse_loose_ref_contents() not set errno
- + refs API: make refs_read_raw_ref() not set errno
- + refs API: add a version of refs_resolve_ref_unsafe() with "errno"
- + branch tests: test for errno propagating on failing read
-
- The "remainder" of hn/refs-errno-cleanup topic.
-
- Will cook in 'next'.
-
-
-* ab/only-single-progress-at-once (2021-10-27) 8 commits
- - progress.c: add & assert a "global_progress" variable
- - various *.c: use isatty(1|2), not isatty(STDIN_FILENO|STDERR_FILENO)
- - pack-bitmap-write.c: don't return without stop_progress()
- - progress.c: add temporary variable from progress struct
- - progress.c tests: test some invalid usage
- - progress.c tests: make start/stop commands on stdin
- - progress.c test helper: add missing braces
- - leak tests: fix a memory leaks in "test-progress" helper
-
- Further tweaks on progress API.
-
- Correction of the course may be required?
- cf. <211025.8635opi8om.gmgdl@evledraar.gmail.com>
- cf. <cover-v4-0.8-00000000000-20211025T111915Z-avarab@gmail.com>
-
-
-* hn/reftable (2021-10-08) 19 commits
- - Add "test-tool dump-reftable" command.
- - reftable: add dump utility
- - reftable: implement stack, a mutable database of reftable files.
- - reftable: implement refname validation
- - reftable: add merged table view
- - reftable: add a heap-based priority queue for reftable records
- - reftable: reftable file level tests
- - reftable: read reftable files
- - reftable: generic interface to tables
- - reftable: write reftable files
- - reftable: a generic binary tree implementation
- - reftable: reading/writing blocks
- - Provide zlib's uncompress2 from compat/zlib-compat.c
- - reftable: (de)serialization for the polymorphic record type.
- - reftable: add blocksource, an abstraction for random access reads
- - reftable: utility functions
- - reftable: add error related functionality
- - reftable: add LICENSE
- - hash.h: provide constants for the hash IDs
-
- The "reftable" backend for the refs API, without integrating into
- the refs subsystem.
-
---------------------------------------------------
-[Discarded]
-
-* en/remerge-diff (2021-08-31) 7 commits
- . doc/diff-options: explain the new --remerge-diff option
- . show, log: provide a --remerge-diff capability
- . tmp-objdir: new API for creating and removing primary object dirs
- . merge-ort: capture and print ll-merge warnings in our preferred fashion
- . ll-merge: add API for capturing warnings in a strbuf instead of stderr
- . merge-ort: add ability to record conflict messages in a file
- . merge-ort: mark a few more conflict messages as omittable
-
- A new presentation for two-parent merge "--remerge-diff" can be
- used to show the difference between mechanical (and possibly
- conflicted) merge results and the recorded resolution.
-
-
-* rb/doc-commit-header-continuation-line (2021-10-11) 1 commit
- . signature-format.txt: add space to fix gpgsig continuation line
-
- Values in the header portion of commit object can be multi-lined
- by a single SP indentation of the second and subsequent lines, and
- this applies to an empty line as well.  Update an example in the
- technical documentation to highlight it.
-
- Superseded by the jc/doc-commit-header-continuation-line topic.
+--
+Jiang Xin
