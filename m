@@ -2,141 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B10F6C433EF
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 14:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9FB0C433EF
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 17:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EF7760FC1
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 14:02:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4C7860C40
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 17:15:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229925AbhJaOFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Oct 2021 10:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
+        id S230106AbhJaRSK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Oct 2021 13:18:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbhJaOFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Oct 2021 10:05:11 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55D34C061570
-        for <git@vger.kernel.org>; Sun, 31 Oct 2021 07:02:39 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id m17so54228951edc.12
-        for <git@vger.kernel.org>; Sun, 31 Oct 2021 07:02:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=FntGyRDFICzwTaNAoHaza+tkuMc2kMOd3ZrweXUbXrU=;
-        b=oB60mRVnjIaD4jC35Lfhyf2QnvnOJxERf6hZ1YHmD0UJ6n0ZMjB5AuKVo2mWncYrnn
-         2XUCqllCXiQM8Ppc397PaunaJadyglN3skXfRM6BGvqzmwD5y+CkAdVteKgDIgo29CQ3
-         5G45Zzi0T9pwC95bafw0pSF/KfWDL0bsp2rcx4NpO8HMaLNk712ypHrmopzK72DCEm8N
-         SUfDBSkLSSssJf87lXbOTaedWULnPejpIbDhPGo5zJrrr6zAs+JbVDNUVxjmDbbF2JkJ
-         lmdBe/Xmyynq4nea7gxIeybBptzSCC8AcdCzsVusLcKe6483hiB9t5jyUIERTgsF9IPk
-         sEug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=FntGyRDFICzwTaNAoHaza+tkuMc2kMOd3ZrweXUbXrU=;
-        b=pWEan6F7vcEHG5u5bSMTo+35pZuxoecizpF/ls82DCFO+tFve+56uw7G7p9K8D0lug
-         P3cHlZK+BfJh+ATdp6OgMIUqGZg9Upu6WUY7TKGjGeiKIpD/G/INKdc2qBy14M90i85B
-         cahW4MW3g3Cvj30qO5MoRYqcQi4MOUFkQUzJ04b3zfohYrSdpHeU9rnRnFEdcjr6Jf1K
-         b7cYQISTa7RgxKrrzed9wcCcMci07s2ZDXXzQJaIX2X/7JjMjclybLSZlKAOksACgxIb
-         FnaNHU+1dVDKWV4IyAsxKCTNzzd6EU5zLs6uJnlGd0UC09XeuZ5GKyGTMjutGeL45V/g
-         aJlw==
-X-Gm-Message-State: AOAM530bIJybYWe9W6dBFZaqLnqI5eMewYOS9FHfMVTjlT55qN5Dwd/d
-        U3iYLTc5UN2NTHNNNqc2MdxapCQe6CbCAg==
-X-Google-Smtp-Source: ABdhPJxCjthJr/Ue8PWbjNnMvxFqjmvfxiLTcp00ptvmGd7QbDnEb5LSeI7Njj0kRUQMXVYDSa84ow==
-X-Received: by 2002:a50:be87:: with SMTP id b7mr32989123edk.382.1635688957784;
-        Sun, 31 Oct 2021 07:02:37 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gn16sm2174807ejc.90.2021.10.31.07.02.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Oct 2021 07:02:37 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mhBPw-0028Tv-MQ;
-        Sun, 31 Oct 2021 15:02:36 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: replace most hardcoded object lists with
- $(wildcard)
-Date:   Sun, 31 Oct 2021 14:00:42 +0100
-References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
- <YX5T+wt0hSkxkLHA@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <YX5T+wt0hSkxkLHA@coredump.intra.peff.net>
-Message-ID: <211031.86a6ip47ib.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230063AbhJaRSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Oct 2021 13:18:10 -0400
+Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D1B8C061570
+        for <git@vger.kernel.org>; Sun, 31 Oct 2021 10:15:37 -0700 (PDT)
+From:   Eli Schwartz <eschwartz@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1635700534;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=eEKGndkZw8jIDOxjgqYFfVQFSBvGc0i31hvUlSBWeFg=;
+        b=hzJoGZ5ZJ3/JLfG6g3sReNGo3iPBsTSdyiJl9QgE+ZS2Hd7l3e1TJLlMayCfLbK2SmYkeI
+        z598J8GAnsWL9/+EcwMKYZg75xwhtUu4aSvcYwyNOIphli+LPBAGYoSmYR7eLJxDdi9Bwo
+        dcISaWFzgdKDoc7lkkiTJvNfS63W+QT3nLaSDab0/VIMzV9rKWv3o6pPd0PcUSBvnQcpMT
+        XNBWOZlQRz4Dl0ypj4qONXVTprxK9pDhdciNuMNWfZPoINGsyP7Pb5xpwMkWErk9RgU04S
+        dfiBV+jE2j81Bh7euJIw+B/aOIbF5VFojPuvDghulKIAFU2TgSoZUuNnUnJRAX3b/NcTGv
+        R7ZQoeLplkEKWQzpMScdxk/qrEaZtqjs+diqQ3LpWEFRKHw0rK8rmqvIxhWrzTEFXb9qcZ
+        KCWGbFkgHa6CPLhE4D7MGtPkJ7a5bsyGK37b5bNb04D+jf0aq63OwlA+J7jqIB3kiaKafe
+        wMX/S47C258jJ+V+aDSXZ0SLz7WRv3nxTCw9et5BlUYWEtI9eukaGa78QSOaP5DQZUYlOR
+        AjdbPUmhJ/+PxC/ynO7tID56jKrKoFDdvp1NQxdfa7enDkCb/ccucnSqk/QoX1LMjpOAmM
+        YOj+oC8YwSjcfFtPCCRHwA82xQhcllkxRh2HQgageDM+Rm++r4Jt0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1635700534;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=eEKGndkZw8jIDOxjgqYFfVQFSBvGc0i31hvUlSBWeFg=;
+        b=tDMo9fFsuWJcYzhaS3rz0DCiJJXRMGIescdDGiO1GKy8yxwIodqHyCdsrowEv/OOOzF7Kv
+        zU0S0fLMzMnqQuAg==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v4 0/3] Add some more options to the pretty-formats
+Date:   Sun, 31 Oct 2021 13:15:07 -0400
+Message-Id: <20211031171510.1646396-1-eschwartz@archlinux.org>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211029184512.1568017-1-eschwartz@archlinux.org>
+References: <20211029184512.1568017-1-eschwartz@archlinux.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Renamed enum values. OPT_ -> DESCRIBE_ARG_
+Doc fixups.
 
-On Sun, Oct 31 2021, Jeff King wrote:
+Eli Schwartz (3):
+  pretty.c: rework describe options parsing for better extensibility
+  pretty: add tag option to %(describe)
+  pretty: add abbrev option to %(describe)
 
-> On Sun, Oct 31, 2021 at 12:32:26AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
-> [...]
->> +# LIB_OBJS: compat/* objects that live at the top-level
->> +ALL_COMPAT_OBJS +=3D unix-socket.o
->> +ALL_COMPAT_OBJS +=3D unix-stream-server.o
->> +ALL_COMPAT_OBJS +=3D sha1dc_git.o
->
-> I think "compat" is a misnomer here. For one thing, they're by
-> definition not "compat/*" objects, because they're not in that
-> directory. ;) But more importantly, the interesting thing about them is
-> not that they're compatibility layers, but that they're part of a
-> conditional compilation. I.e., we might or might not want them, which
-> will be determined elsewhere in the Makefile, so they must not be part
-> of the base LIB_OBJS set.
->
-> Probably CONDITIONAL_OBJS or something might be more descriptive. That
-> _could_ be used to include things like CURL_OBJS, but there's probably
-> value in keeping those in their own list anyway.
+ Documentation/pretty-formats.txt | 16 ++++++---
+ pretty.c                         | 58 ++++++++++++++++++++++++++------
+ t/t4205-log-pretty-formats.sh    | 16 +++++++++
+ 3 files changed, 75 insertions(+), 15 deletions(-)
 
-Good point, will rename them.
+Range-diff against v3:
+1:  55a20468d3 ! 1:  be35fee252 pretty.c: rework describe options parsing for better extensibility
+    @@ pretty.c: int format_set_trailers_options(struct process_trailer_options *opts,
+     -	const char *options[] = { "match", "exclude" };
+     +	struct {
+     +		char *name;
+    -+		enum { OPT_STRING } type;
+    ++		enum {
+    ++			DESCRIBE_ARG_STRING,
+    ++		} type;
+     +	}  option[] = {
+    -+		{ "exclude", OPT_STRING },
+    -+		{ "match", OPT_STRING },
+    ++		{ "exclude", DESCRIBE_ARG_STRING },
+    ++		{ "match", DESCRIBE_ARG_STRING },
+     +	};
+      	const char *arg = start;
+      
+    @@ pretty.c: int format_set_trailers_options(struct process_trailer_options *opts,
+     -				matched = options[i];
+     +		for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
+     +			switch (option[i].type) {
+    -+			case OPT_STRING:
+    ++			case DESCRIBE_ARG_STRING:
+     +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+     +								&argval, &arglen)) {
+     +					if (!arglen)
+2:  c34c8a4f7f ! 2:  5830c69d4d pretty: add tag option to %(describe)
+    @@ Documentation/pretty-formats.txt: The placeholders are:
+      			  inconsistent when tags are added or removed at
+      			  the same time.
+      +
+    -+** 'tags[=<BOOL>]': Instead of only considering annotated tags,
+    ++** 'tags[=<bool>]': Instead of only considering annotated tags,
+     +   consider lightweight tags as well.
+      ** 'match=<pattern>': Only consider tags matching the given
+         `glob(7)` pattern, excluding the "refs/tags/" prefix.
+    @@ Documentation/pretty-formats.txt: insert an empty string unless we are traversin
+      decoration format if `--decorate` was not already provided on the command
+      line.
+      
+    -+The boolean options accept an optional value `[=<BOOL>]`. The values
+    ++The boolean options accept an optional value `[=<bool>]`. The values
+     +`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"
+     +sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
+     +option is given with no value, it's enabled.
+    @@ Documentation/pretty-formats.txt: insert an empty string unless we are traversin
+     
+      ## pretty.c ##
+     @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *args)
+    - {
+      	struct {
+      		char *name;
+    --		enum { OPT_STRING } type;
+    -+		enum { OPT_BOOL, OPT_STRING, } type;
+    + 		enum {
+    ++			DESCRIBE_ARG_BOOL,
+    + 			DESCRIBE_ARG_STRING,
+    + 		} type;
+      	}  option[] = {
+    -+		{ "tags", OPT_BOOL},
+    - 		{ "exclude", OPT_STRING },
+    - 		{ "match", OPT_STRING },
+    ++		{ "tags", DESCRIBE_ARG_BOOL},
+    + 		{ "exclude", DESCRIBE_ARG_STRING },
+    + 		{ "match", DESCRIBE_ARG_STRING },
+      	};
+     @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *args)
+      		int found = 0;
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+      
+      		for (i = 0; !found && i < ARRAY_SIZE(option); i++) {
+      			switch (option[i].type) {
+    -+			case OPT_BOOL:
+    ++			case DESCRIBE_ARG_BOOL:
+     +				if (match_placeholder_bool_arg(arg, option[i].name, &arg, &optval)) {
+     +					if (optval)
+     +						strvec_pushf(args, "--%s", option[i].name);
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+     +					found = 1;
+     +				}
+     +				break;
+    - 			case OPT_STRING:
+    + 			case DESCRIBE_ARG_STRING:
+      				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+      								&argval, &arglen)) {
+     
+3:  b751aaf3c6 ! 3:  032513150d pretty: add abbrev option to %(describe)
+    @@ Commit message
+      ## Documentation/pretty-formats.txt ##
+     @@ Documentation/pretty-formats.txt: The placeholders are:
+      +
+    - ** 'tags[=<BOOL>]': Instead of only considering annotated tags,
+    + ** 'tags[=<bool>]': Instead of only considering annotated tags,
+         consider lightweight tags as well.
+    -+** 'abbrev=<N>': Instead of using the default number of hexadecimal digits
+    ++** 'abbrev=<number>': Instead of using the default number of hexadecimal digits
+     +   (which will vary according to the number of objects in the repository with a
+    -+   default of 7) of the abbreviated object name, use <n> digits, or as many digits
+    -+   as needed to form a unique object name.
+    ++   default of 7) of the abbreviated object name, use <number> digits, or as many
+    ++   digits as needed to form a unique object name.
+      ** 'match=<pattern>': Only consider tags matching the given
+         `glob(7)` pattern, excluding the "refs/tags/" prefix.
+      ** 'exclude=<pattern>': Do not consider tags matching the given
+     
+      ## pretty.c ##
+     @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *args)
+    - {
+    - 	struct {
+      		char *name;
+    --		enum { OPT_BOOL, OPT_STRING, } type;
+    -+		enum { OPT_BOOL, OPT_INTEGER, OPT_STRING, } type;
+    + 		enum {
+    + 			DESCRIBE_ARG_BOOL,
+    ++			DESCRIBE_ARG_INTEGER,
+    + 			DESCRIBE_ARG_STRING,
+    + 		} type;
+      	}  option[] = {
+    - 		{ "tags", OPT_BOOL},
+    -+		{ "abbrev", OPT_INTEGER },
+    - 		{ "exclude", OPT_STRING },
+    - 		{ "match", OPT_STRING },
+    + 		{ "tags", DESCRIBE_ARG_BOOL},
+    ++		{ "abbrev", DESCRIBE_ARG_INTEGER },
+    + 		{ "exclude", DESCRIBE_ARG_STRING },
+    + 		{ "match", DESCRIBE_ARG_STRING },
+      	};
+     @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *args)
+      					found = 1;
+      				}
+      				break;
+    -+			case OPT_INTEGER:
+    ++			case DESCRIBE_ARG_INTEGER:
+     +				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+     +								&argval, &arglen)) {
+     +					char *endptr;
+    @@ pretty.c: static size_t parse_describe_args(const char *start, struct strvec *ar
+     +					found = 1;
+     +				}
+     +				break;
+    - 			case OPT_STRING:
+    + 			case DESCRIBE_ARG_STRING:
+      				if (match_placeholder_arg_value(arg, option[i].name, &arg,
+      								&argval, &arglen)) {
+     
+-- 
+2.33.1
 
-> Likewise, they could go into a conditional-src/ directory (or some
-> less-horrible name) to keep them distinct without needing an explicit
-> list in the Makefile. That's sort of the flip-side of putting all the
-> other LIB_OBJS ones into lib/.
-
-The goal here was just to get us rid of tiresome merge conflicts when
-two things are added to adjacent part of these lists going forward,
-rather than some source-tree reorganization. I didn't search around and
-didn't find that 2011-era thread.
-
-I think overall just maintaining the list of the few exceptions is
-better than any sort of general mass-move of these files.
-
-Even if we carefully trickle those in at a rate that doesn't conflict
-with anything in-flight, the end result will be that e.g.:
-
-    git log -- lib/grep.c
-
-Will stop at that rename commit, similar to builtin/log.c, unless you
-specify --follow etc. Just that doesn't make it worth it to me. Likewise
-sha1_file.c to sha1-file.c to object-file.c, which is a case I run into
-every time I get a "git log" pathspec glob wrong.
-
-Also.
-
-I didn't notice before submitting this but this patch breaks the
-vs-build job, because the cmake build in "contrib" is screen-scraping
-the Makefile[1].
-
-What's the status of that code? It's rather tiresome to need to patch
-two independent and incompatible build systems every time there's some
-structural change in the Makefile.
-
-I hadn't looked in any detail at that recipe before, but it the vs-build
-job has a hard dependency on GNU make anyway, since we use it for "make
-artifacts-tar".
-
-So whatever cmake special-sauce is happening there I don't see why
-vs-build couldn't call out "make" for most of the work it's doing, isn't
-it just some replacement for what the "vcxproj" target in
-config.mak.uname used to do?
-
-1. https://github.com/avar/git/runs/4057171803?check_suite_focus=3Dtrue
