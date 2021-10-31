@@ -2,140 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C545C433F5
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 08:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46439C433F5
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 08:53:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 038D860F58
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 08:29:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1952260C40
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 08:53:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbhJaIcX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Oct 2021 04:32:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50476 "EHLO cloud.peff.net"
+        id S229798AbhJaI42 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Oct 2021 04:56:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50490 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229525AbhJaIcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Oct 2021 04:32:22 -0400
-Received: (qmail 28542 invoked by uid 109); 31 Oct 2021 08:29:50 -0000
+        id S229525AbhJaI41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Oct 2021 04:56:27 -0400
+Received: (qmail 28574 invoked by uid 109); 31 Oct 2021 08:53:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 31 Oct 2021 08:29:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 31 Oct 2021 08:53:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8149 invoked by uid 111); 31 Oct 2021 08:29:50 -0000
+Received: (qmail 8386 invoked by uid 111); 31 Oct 2021 08:53:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 31 Oct 2021 04:29:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 31 Oct 2021 04:53:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 31 Oct 2021 04:29:47 -0400
+Date:   Sun, 31 Oct 2021 04:53:55 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: replace most hardcoded object lists with
- $(wildcard)
-Message-ID: <YX5T+wt0hSkxkLHA@coredump.intra.peff.net>
-References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+To:     Dongsheng Song <dongsheng.song@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: timezone related bug of git
+Message-ID: <YX5Zo9uV7qG73p6R@coredump.intra.peff.net>
+References: <CAE8XmWpK0ubcTXOaxBKGKh1qU+73Rr181wMAM7KAAX_A5PEYOw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+In-Reply-To: <CAE8XmWpK0ubcTXOaxBKGKh1qU+73Rr181wMAM7KAAX_A5PEYOw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 31, 2021 at 12:32:26AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Sun, Oct 31, 2021 at 11:23:24AM +0800, Dongsheng Song wrote:
 
-> Remove the hardcoded lists of objects in favor of using
-> $(wildcard). This means that every time a built-in, test tool etc. is
-> added we won't need to patch the top-level Makefile, except for the
-> few remaining cases where the asset in question would make it onto one
-> of our list of exceptions.
+>  I found a timezone related bug in the git:
 > 
-> Ever since 81b50f3ce40 (Move 'builtin-*' into a 'builtin/'
-> subdirectory, 2010-02-22) this has been relatively easy to do (and
-> even before that we could glob builtin-*.c). This pattern of
-> exhaustively enumerating files was then carried forward for
-> e.g. TEST_BUILTINS_OBJS in efd71f8913a (t/helper: add an empty
-> test-tool program, 2018-03-24).
+> 1. git log 11990eba -1 --date=format:%s
 > 
-> One reason not to do this is that now a new *.c file at the top-level
-> will be immediately picked up, so if a new *.c file is being worked on
-> "make" will error if it doesn't compile, whereas before that file
-> would need to be explicitly listed in the Makefile. I think than small
-> trade-off is worth it.
+> commit 11990eba0be50d1ad0655ede4062b7130326c41f (HEAD -> trunk,
+> origin/trunk, origin/HEAD)
+> Author: rillig <rillig@NetBSD.org>
+> Date:   1635604878
+> 
+>     indent: move debugging functions to a separate section
+> 
+> 2. git cat-file -p 11990eba
+> 
+> tree 5d62150f5e2bafd3db76641450ca5d902302a039
+> parent 892557a74bd49983fac28366b772b53c9216ca73
+> author rillig <rillig@NetBSD.org> 1635633678 +0000
+> committer rillig <rillig@NetBSD.org> 1635633678 +0000
+> 
+> indent: move debugging functions to a separate section
+> 
+> 3. conclusion
+> 
+> The unix time stored in git repository not same as the git log output,
+> then there must be a timezone offset bug:
+> 
+> 1635633678 - 1635604878 = 28800 = 8 hours (local timezone offset)
 
-A more general way of thinking about this is that we are switching from
-"ignore source files by default" to "stick source files into LIB_OBJS by
-default". So it's helpful if you were going to stick that file into
-LIB_OBJS, but harmful otherwise.
+The short answer is: don't do that. Use --date=unix instead.
 
-Your "new *.c file" example is one case, because it wouldn't have been
-added _yet_. And I agree it's probably not that big a deal in practice.
+The longer one is:
 
-The other cases are ones similar to what you had to exclude from
-LIB_OBJS manually here:
+The problem is that the strftime() "%s" specifier is a bit broken.
+That function (which is what is interpreting your format) takes a
+broken-down "struct tm", which can only be converted back to an epoch
+time if you know which time zone it's in.
 
-> +LIB_OBJS += $(filter-out \
-> +	$(ALL_COMPAT_OBJS) \
-> +	git.o common-main.o $(PROGRAM_OBJS) \
-> +	$(FUZZ_OBJS) $(CURL_OBJS),\
-> +	$(patsubst %.c,%.o,$(wildcard *.c)))
+But we have no way to tell the function that; the standard indicates
+that it always assumes the local system timezone, and there's no
+provision at all for formatting times in other zones (which is what we
+usually try to do, showing the date in the author's zone). There's no
+field in the "struct tm" to carry any zone information[1].
 
-So if I wanted to add a new external program source but forgot to put it
-into PROGRAM_OBJS, the default would now be to pick it up in LIB_OBJS.
-That's weird and definitely not what you'd want, but presumably you'd
-figure it out pretty quickly because we wouldn't have built the command
-you expected to exist.
-
-Likewise, there's an interesting tradeoff here for non-program object
-files. The current Makefile does not need to mention unix-socket.o
-outside of the NO_UNIX_SOCKETS ifdef block, because that's where we
-stick it in LIB_OBJS. After your patch, it gets mentioned twice: in that
-same spot, but also as an exception to the LIB_OBJS rule (via the
-ALL_COMPAT_OBJS variable above).
-
-So we're trading off having to remember to do one thing (add stuff to
-LIB_OBJS) for another (add stuff to the exception list). Now one of
-those happens a lot more than the other, which is why you get such a
-nice diffstat. So it might be worth the tradeoff.
-
-I don't have a very strong opinion either way on this. I felt like we'd
-discussed this direction before, and came up with this thread from the
-archive:
-
-  https://lore.kernel.org/git/20110222155637.GC27178@sigill.intra.peff.net/
-
-There it was coupled with suggestions to actually change the file
-layout. That could make some of those exceptions go away (say, if all of
-LIB_OBJS was in "lib/"), but it's a bigger change overall. So I offer it
-here mostly for historical context / interest.
-
-I didn't see anything obviously wrong in the patch, but two comments:
-
->  - De-indent an "ifndef" block, we don't usually indent their
->    contents.
-
-Quite a lot of existing conditional blocks are indented, but I think for
-conditional inclusions of one entry in a larger list (where the rest of
-the list isn't indented), this makes sense. And that's what you changed
-here.
-
-> +# LIB_OBJS: compat/* objects that live at the top-level
-> +ALL_COMPAT_OBJS += unix-socket.o
-> +ALL_COMPAT_OBJS += unix-stream-server.o
-> +ALL_COMPAT_OBJS += sha1dc_git.o
-
-I think "compat" is a misnomer here. For one thing, they're by
-definition not "compat/*" objects, because they're not in that
-directory. ;) But more importantly, the interesting thing about them is
-not that they're compatibility layers, but that they're part of a
-conditional compilation. I.e., we might or might not want them, which
-will be determined elsewhere in the Makefile, so they must not be part
-of the base LIB_OBJS set.
-
-Probably CONDITIONAL_OBJS or something might be more descriptive. That
-_could_ be used to include things like CURL_OBJS, but there's probably
-value in keeping those in their own list anyway.
-
-Likewise, they could go into a conditional-src/ directory (or some
-less-horrible name) to keep them distinct without needing an explicit
-list in the Makefile. That's sort of the flip-side of putting all the
-other LIB_OBJS ones into lib/.
+Even when you're in the same timezone, there's a similar problem with
+the is_dst field. There's some discussion in [2], including the
+possibility of intercepting "%s" and handling it ourselves, like we do
+for "%z". I don't think anybody has cared enough to work on it.
 
 -Peff
+
+[1] Some implementations (like glibc) actually _do_ carry this
+    information in private fields of "struct tm". But we can't rely on
+    it, and even where it's available, it's confusing (e.g., mktime()
+    ignores it!). If you're a real masochist, you can read all of:
+
+      https://lore.kernel.org/git/22824.29946.305300.380299@a1i15.kph.uni-mainz.de/
+
+[2] This is a similar bug report from 2020:
+
+      https://lore.kernel.org/git/CAGqZTUu2U6FFXGTXihC64O0gB5Bz_Z3MbD750kMoJWMciAGH6w@mail.gmail.com/
