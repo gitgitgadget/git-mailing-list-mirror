@@ -2,82 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C663C433F5
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 18:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5E61C433F5
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 18:36:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 665F760E54
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 18:08:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F60460249
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 18:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbhJaSKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Oct 2021 14:10:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60566 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbhJaSKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Oct 2021 14:10:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DF3316BC34;
-        Sun, 31 Oct 2021 14:08:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pYliltYOCzCPTkYKF5quyAU9Rov54vbWRc8N7F
-        JppH8=; b=c2sKBv/hFqdKfmSTONtPwC59WDfGIvREQywKhYL7ZhvdFWTB36O0r4
-        RLTIrUWBlZHgjRM1pJEfjttkEfBzczIojs0TPO2Nx8OYQ65RcDuGDs/Zuhk+XhZi
-        3ksshtOfPWeqj3yDLoxpEaNc2EIZczgQ+5bD7mfPslE0A67y4uYL0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4791016BC33;
-        Sun, 31 Oct 2021 14:08:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3C36E16BC31;
-        Sun, 31 Oct 2021 14:07:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eli Schwartz <eschwartz@archlinux.org>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v4 2/3] pretty: add tag option to %(describe)
-References: <20211029184512.1568017-1-eschwartz@archlinux.org>
-        <20211031171510.1646396-1-eschwartz@archlinux.org>
-        <20211031171510.1646396-3-eschwartz@archlinux.org>
-Date:   Sun, 31 Oct 2021 11:07:55 -0700
-In-Reply-To: <20211031171510.1646396-3-eschwartz@archlinux.org> (Eli
-        Schwartz's message of "Sun, 31 Oct 2021 13:15:09 -0400")
-Message-ID: <xmqqh7cxdq4k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230388AbhJaSjA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Oct 2021 14:39:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47506 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230041AbhJaSi7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Oct 2021 14:38:59 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5489C061570
+        for <git@vger.kernel.org>; Sun, 31 Oct 2021 11:36:27 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id l13so5140691pls.3
+        for <git@vger.kernel.org>; Sun, 31 Oct 2021 11:36:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IM3gz/Zyu41cQf7mOVt9YGOu6XxL0Aqc5EiG8rOfMLc=;
+        b=lk52dpjwS0oWaTm2W/cd7QDZwgF2UiefgGjWxEB/DVTnfEFK8XZG48mfCkDcdCC5Q5
+         Rc6aTLOjk7JqhzlwJ51f7IXmDFSbludObndxdWJvUtimMVotn0EPQY/U+ylzBwXpe4gc
+         RMhQfEwC2x/XM8iYwsHW0vFO9WxrAWqP8Td0Wk1O9pRGnVCrYXBAZ5vWgq2Rh1z5Dx1w
+         zHvyfL4RTQn7Q7M99hOBM1f9SCr4cM8nG3yzFdDtyRXx71iYe0+PFbzLpjMoHy+2gr0t
+         ofzijEPFfA4i1Xl3z6BvO4OF25ijREWPIDaMuU3Feule+qQajC4eUgf3zlwCiwV61aGJ
+         /trw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IM3gz/Zyu41cQf7mOVt9YGOu6XxL0Aqc5EiG8rOfMLc=;
+        b=j+PRmOVU54KjdQ4g4onW9eFoobUdWbEKQfGA3ObiHA6fvzGeItb8A6FevMY2lCFEXk
+         9Rb6E8w1RATpAsqN2cAQcyXMKa85vdSik0FNTOjyDyIn0IeYD3ZiJ5Kn9p9iMKdc4bu5
+         2Syi2IIJf9tP7hoLWfAAbLI9uEqZvh19H6ApV8j/pyL9SaqB9pCJJVeC+aoouls3p4wA
+         8TEIy/7fqlaQAPLSs58RQ9xCYXNdvJaR/OnQY8DaCwX6lJOAsZJ/H1b9z8xiCVCskFgB
+         E4VyXYSj/GN/dgc3Jz595WPUtgCUtftZSlvThuqPFS68HTrIjDqFIu67P2IArlqqkKHk
+         mTsQ==
+X-Gm-Message-State: AOAM533zhi3pXsVahMT6ekC6+dxbhBeYFuyAoiUC4cFY4+DgksOwRdnN
+        oGfSkExa02S+VxhxBTrCst0=
+X-Google-Smtp-Source: ABdhPJxvKWR+hzL0c/9GSjlAMW3DYpPDbgweuvBTSZUALhaVFnegMbNfRFRnY8OyUMamZiOF8E/Sew==
+X-Received: by 2002:a17:90a:a503:: with SMTP id a3mr15241392pjq.122.1635705387110;
+        Sun, 31 Oct 2021 11:36:27 -0700 (PDT)
+Received: from [192.168.208.38] ([49.204.130.72])
+        by smtp.gmail.com with ESMTPSA id oj1sm7694641pjb.12.2021.10.31.11.36.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Oct 2021 11:36:26 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Oct 2021, #06; Mon, 25)
+To:     Jeff King <peff@peff.net>
+Cc:     Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqq5ytkzbt7.fsf@gitster.g>
+ <YXeRNkO8B4TP/cau@coredump.intra.peff.net>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <1575aeb5-7aec-3d5c-6b2c-11b9866f3f4c@gmail.com>
+Date:   Mon, 1 Nov 2021 00:06:20 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 79E9EEF6-3A75-11EC-BAF6-98D80D944F46-77302942!pb-smtp21.pobox.com
+In-Reply-To: <YXeRNkO8B4TP/cau@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eli Schwartz <eschwartz@archlinux.org> writes:
+On 26/10/21 10:55 am, Jeff King wrote:
+> On Mon, Oct 25, 2021 at 08:48:04PM -0700, Junio C Hamano wrote:
+> 
+>> * ks/submodule-add-message-fix (2021-10-23) 1 commit
+>>    (merged to 'next' on 2021-10-25 at 377e759528)
+>>   + submodule--helper: fix incorrect newlines in an error message
+>>
+>>   Message regression fix.
+>>
+>>   Will merge to 'master'.
+> 
+> This commit has an extra unused parameter in the helper function. I
+> think we'd want the patch below on top.
+> 
 
-> The %(describe) placeholder by default, like `git describe`, only
-> supports annotated tags. However, some people do use lightweight tags
-> for releases, and would like to describe those anyway. The command line
-> tool has an option to support this.
->
-> Teach the placeholder to support this as well.
->
-> Signed-off-by: Eli Schwartz <eschwartz@archlinux.org>
-> ---
->
-> I use lowercase "bool" here not "boolean-value" because I don't see
-> utility in the word "value" here.
+Sorry for the oversight and thanks for catching it (again)!
 
-Such a comment is much more useful if it is sent as a review to the
-patch that touches the same area as your patch does, namely,
+This reminded me to check my config.mak and enable DEVELOPER=1
+which I seem to have turned off for some reason. I did notice
+we explicitly add -Wno-unused-parameter to DEVELOPER_CFLAGS (likely
+with good reason). The rest of the flags should be helpful though :)
 
-https://lore.kernel.org/git/984b6d687a2e779c775de6ea80536afe6ecc0aaf.1635438124.git.gitgitgadget@gmail.com/
-
-not here.
-
-Thanks.
-
-[jc: added a few folks involved in the other patch to the addressee
-lists]
+-- 
+Sivaraam
