@@ -2,87 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E995DC433F5
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 23:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5045DC433EF
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 00:12:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C041560F3A
-	for <git@archiver.kernel.org>; Sat, 30 Oct 2021 23:36:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34D8060F92
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 00:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232087AbhJ3Xig (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Oct 2021 19:38:36 -0400
-Received: from gateway32.websitewelcome.com ([192.185.145.1]:45637 "EHLO
-        gateway32.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231387AbhJ3Xif (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 30 Oct 2021 19:38:35 -0400
-X-Greylist: delayed 1246 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Oct 2021 19:38:35 EDT
-Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
-        by gateway32.websitewelcome.com (Postfix) with ESMTP id 97612244E35A
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 18:15:15 -0500 (CDT)
-Received: from box5922.bluehost.com ([162.241.30.80])
-        by cmsmtp with SMTP
-        id gxZDmgKsXG0jLgxZDmklBj; Sat, 30 Oct 2021 18:15:15 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=yi9YIU9RYq3Fl2ylH+U/GrHbOvg/8hwYtd3Zdqjre5I=; b=AczyS96BRLUHtsDsaP26SEEoHg
-        DD9UyaJFgzojOy7XGtqLWn9dogYUQEMKaUBZ6O8BVlwqbMYyUMsVBpcBzIxGGkB8TSYXlVrl+sGXJ
-        +KjuAeUtW81gf9dhDsNbGd+Ht;
-Received: from pool-96-233-64-159.bstnma.fios.verizon.net ([96.233.64.159]:52204 helo=pdslaptop.home.arpa)
-        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1mgxZD-0037B9-86; Sat, 30 Oct 2021 17:15:15 -0600
-Message-ID: <f5807fd2eb0c16ab0400e8f3138a90f564fd303c.camel@mad-scientist.net>
-Subject: Re: [PATCH] Makefile: replace most hardcoded object lists with
- $(wildcard)
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Date:   Sat, 30 Oct 2021 19:15:14 -0400
-In-Reply-To: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
-References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
-Organization: Please remain calm--I may be mad but I am a professional!
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+        id S232041AbhJaAO6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Oct 2021 20:14:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232058AbhJaAOt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Oct 2021 20:14:49 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9320EC061746
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 17:12:18 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id j2so28781511lfg.3
+        for <git@vger.kernel.org>; Sat, 30 Oct 2021 17:12:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0Zq8sUjDokxvEHkYMJ+/tdbLsP8yreMGdcecGSqdZ/I=;
+        b=hKIOiOjv/kYRxntuD3iUKrzUg8UsEULjs3IeXmVaE6fb+nWrnVt5m5jR1g2vOv41Aa
+         KMWh9K2LXqqpthZvLw6QcJvz4oI7lPxRAIJmMpZQHimQwi6L97Q+bnFnVLv4rwkNwhI0
+         d2Nmt6/PTmis/MiWSR25tqtkn4q3TkldexiiCL8FUYK87pMZaWOZHa8Aa3hhCt8CtrEH
+         4ock/Nc+ovO4kJIuOe+Yx0NF683GBftEPK9Sx2MKRdi4B+LKm/THVI5Bih/RfJbE+TRA
+         xkekEJ95Ok4cnmZf2ery4Pv/iGPbvIdmwG5Abf2kJ8cl3SsxhOZa4FjEpzR90X3mtDDd
+         faJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0Zq8sUjDokxvEHkYMJ+/tdbLsP8yreMGdcecGSqdZ/I=;
+        b=jf/J85phHayLIxPegjNQtz6643YekTcf49wD86G+vsDklZvZnLO6SHkEpZyHEIqFZk
+         cfnhxGxYxtdJXXuiUwcCso8eftCtmjL4lzJwxdQEBWQZ0OznxJn5aXfDvZP49GTOOoK+
+         J7THyk+HMeZX3XU9WlK8pycRp77uBy4btg2UI58F9xTobZlI3KKn6vlteVR27XCcalFx
+         KiIHJz1j41gW4rH38SO66zdxJeZkyhZZU2EsO31lowXM2TZIqE59BsbJtZQF7q9Mh8GS
+         P4kY288D20ZvEBZibOu27+2PDrSjm3DOD1VRp10XzFuZPY+hv/AbPh4HF0/Ypaik2C7T
+         GZUg==
+X-Gm-Message-State: AOAM5339H+mvA6zA5v3pIqhkf8m1rmMby/gnaaihDSMEa1pitzaoCXZa
+        yiAyXFeUjI3hoFMMWt1TuH8RcvL+3S34uQ/YF2s=
+X-Google-Smtp-Source: ABdhPJwM1qQlFbUHu6FBQqYxXrjirP3FbvijAMA6ESw0QGEreEUWQWiO/8CdHldQPfAgY/Owerr7HFFuNLXTx1dM17U=
+X-Received: by 2002:a05:6512:5c8:: with SMTP id o8mr19347441lfo.339.1635639136919;
+ Sat, 30 Oct 2021 17:12:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5922.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 96.233.64.159
-X-Source-L: No
-X-Exim-ID: 1mgxZD-0037B9-86
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-96-233-64-159.bstnma.fios.verizon.net (pdslaptop.home.arpa) [96.233.64.159]:52204
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+References: <20211027233101.GA762862@rhi.hi.is> <211028.86wnlxwnqt.gmgdl@evledraar.gmail.com>
+ <20211030231514.GA1086559@rhi.hi.is>
+In-Reply-To: <20211030231514.GA1086559@rhi.hi.is>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Sat, 30 Oct 2021 17:12:06 -0700
+Message-ID: <CAPx1GvfJcmUQm515U9fWW9fKKZihoO+PiM08G_xiARtiG_Eb6w@mail.gmail.com>
+Subject: Re: "git describe --debug" does not show the latest tag for "groff"
+To:     Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2021-10-31 at 00:32 +0200, Ævar Arnfjörð Bjarmason wrote:
-> +LIB_OBJS += $(patsubst %.c,%.o,$(foreach dir,$(LIB_OBJS_DIRS),$(wildcard $(dir)/*.c)))
+On Sat, Oct 30, 2021 at 4:24 PM Bjarni Ingi Gislason <bjarniig@rhi.hi.is> wrote:
+>   "git log" on the console shows the tag "1.23.0.rc1" to be the first
+> one.
 
-Another way to write this would be:
+By this, do you mean that `git log` shows the tag on the HEAD commit?
+Or do you mean that this is the first tag that `git log` emits?  Note
+that `git log` walks complex graphs in a funny order by default; you'd
+need `--topo-order` (and usually `--graph` too) to see what's really
+going on.
 
-   LIB_OBJS += $(patsubst %.c,%.o,$(wildcard $(addsuffix /*.c,$(LIB_OBJS_DIRS)))
+>   "git log" directed to a file does not show any 'tag' in the commit
+> lines!
 
-I don't know that there's any reason to choose one over the other.  I
-don't think there's any real performance difference although one could
-imagine this version to be VERY SLIGHTLY faster.  Also this one is a
-little more "Lisp-ish"... that might be a pro or a con depending :).
+That's normal if you have `--decorate`  set to `auto` (many do: it used
+to be sensible ages ago, and I still have that set in my own default git
+config).  Tags, in `git log` output,are decorations, and
+`auto` means *if going to terminal*.
 
-Just kibitzing while waiting for dinner to arrive...
-
+Chris
