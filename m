@@ -2,80 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1700DC433F5
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 06:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1D0C433EF
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 07:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC7D56054F
-	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 06:43:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37E3760E8C
+	for <git@archiver.kernel.org>; Sun, 31 Oct 2021 07:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbhJaGpg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Oct 2021 02:45:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34742 "EHLO
+        id S229839AbhJaHHO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Oct 2021 03:07:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbhJaGpf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Oct 2021 02:45:35 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 804B9C061570
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 23:43:04 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id v127so11151641wme.5
-        for <git@vger.kernel.org>; Sat, 30 Oct 2021 23:43:04 -0700 (PDT)
+        with ESMTP id S229638AbhJaHHO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Oct 2021 03:07:14 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A81C061570
+        for <git@vger.kernel.org>; Sun, 31 Oct 2021 00:04:42 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id n23so3572843pgh.8
+        for <git@vger.kernel.org>; Sun, 31 Oct 2021 00:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FWC0o+rywJOEQld2fiR3qq8nS7Sz7JFseiGBBxsqVH4=;
-        b=CRAdmcOT678wkkz0dPqbj/XUf9uEnRQMrdwg+jrh8MwMXk+E0AjAb3GFp8+cHSpzjY
-         JA40VzBi+NGmdnvQsVW6mW0yP+tt6qa245SgtcWpc1XpBS/tt+aiRGPaL7XAiSXNiqdW
-         jNMGd0Tcq/dZE5ERiALmanHL1ryB+eogZyHXFX9WWuLKnWj4q3uqdHOQZwASaAJ5bznE
-         F4a5Qlsp1KDp+tyyz2boCRurKbKaV3vw2kLfFSvrAtb4CZTY3GPZQZ0Ba0Rfj+m/mNdP
-         iXMDXf4FsNcNozSBVIZ53+pSKRNfsLro2nSzRk+Z41ZGdXK+9hhgMf7Cd/MmxaWzDBQ7
-         TteQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=JzvXpNHPnhXa1ni7YO0s94OB5r2GqBDBHsTCA1AX/18=;
+        b=jYy9ElhGDL7vqTimq5nk1N5CCL8TCJVXdEGMxUSLX+Qwj8W+1WCmV1+RDe0P8txor4
+         Ud1a5Q/6osbpZxyLCdKVBfm4+pzU0UKfmabIWx/FXyxvcnYaznNA7wwtOK29MCjuw5fo
+         a1eGTeo2jyV566llttw+sWUqsEU2k2VTpIBu9Bw+36ArvEdpfmQnZlzFNHJn1Y53nuez
+         H+PDE77h7hBXbt2FIlK/Ohi7qOApjDg8H1ZlOeUq55W84plqQ0iaxtDe13F4yHAtnbjQ
+         Kw6/hGkxHo7oY1k+YorJOLMfAZxvuc4nF2KywvK/ryDDilchkHOssQXPh7Mm751GwMJA
+         xh+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FWC0o+rywJOEQld2fiR3qq8nS7Sz7JFseiGBBxsqVH4=;
-        b=jOO85RPaIGZvSgZ3qw0MWVU99qEwwHcHgXwH39OrkGYd8KBlXtH5HeCr/tMF3vjWhv
-         iuHkhRqVt6gF6fMH2jzAVoxr/uNxKg9oJwSRKXn7ncSnmikrPR+X0fm8DTU1sV+tOsdh
-         MoY21uoc4E7eXfUVuegfizC5lg013sOwes2Rb6QcBiKti8h3Li0oUSx3Ms64uTqCaR1+
-         rSqPcaAZ0Z/5sjbLbF1gjAyMKniJ4ZusCG4/VaFpivEIYgGMPjO8atnOxjzXh2m2583x
-         RAUZJoyXkxLwfbwY1R7vjzZjxSbOlaM3NGm1SoUMxppnXcg3Pd6LdakP1NFZWm7BjaqB
-         Z7jA==
-X-Gm-Message-State: AOAM533TI7azM3zhiFNz1n6D9FHeXRjW8Ry11ngnU7S6eURXvzVD7Cix
-        CuWvvf3lYibMtMTsmqRB9ysjGI7PfLI=
-X-Google-Smtp-Source: ABdhPJy2Yqo209w4PKggo3ZKy+zube4OFKlI2J7hUum58UI1TIEDecMogIacb3WkuRGaK/F17hmMCA==
-X-Received: by 2002:a7b:c770:: with SMTP id x16mr3461275wmk.66.1635662582495;
-        Sat, 30 Oct 2021 23:43:02 -0700 (PDT)
-Received: from gmail.com (62-47-13-59.adsl.highway.telekom.at. [62.47.13.59])
-        by smtp.gmail.com with ESMTPSA id h13sm6000074wrx.82.2021.10.30.23.43.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 23:43:02 -0700 (PDT)
-Date:   Sun, 31 Oct 2021 07:43:00 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Ryan Hodges <rphodges@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git apply --intent-to-add deletes other files from the index
-Message-ID: <20211031064300.z6lk4wpojwudgxjw@gmail.com>
-References: <0DB10E05-094D-4382-AD1F-657878B06A80@cisco.com>
- <20211030203916.zopggbajumvb4z3f@gmail.com>
- <C09B3C5C-86D1-47B4-B4BC-9D0355596A1D@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=JzvXpNHPnhXa1ni7YO0s94OB5r2GqBDBHsTCA1AX/18=;
+        b=hTmHzGzjlWxnwR5jS4rEWfMENSX/G5BexQ+2OGKf/+y0VMBzTrni3wD4dY/5XWF6Xf
+         8ixECi8chU/yXyRiSSWDvdTFE0dRijZhgr16uHKTTJEZEmPpW6bvwu7bezA/Z18n+ii+
+         iv2dXkX/9it5G5zGDDg5xXLQWOo6rOtMnXes37e1TQVwpkDfGm47sXvNdaM1SVa7GgZU
+         fCSdYTrUX2QXwK1JWapfP0e74UIZyRI2KSF+cLPP0H/ikxM5A5LVd00nyY4ISgXS9pWG
+         o6KMMrG4wgCbsd3tnyNfDA+lr6pvJpZcqvxAnjHdSQxlh2d4lijO5IFv18+zMdV1eVC/
+         fX0g==
+X-Gm-Message-State: AOAM5326NRbi1J8RlHpgrkU4Iz2cFE2q8pRxrZaFvVvxaPARieG1D6DJ
+        CGkY1EnlVQxqYxpvAgDhHCA=
+X-Google-Smtp-Source: ABdhPJz8uX25S1FyRosAr2kbbzPzOpGc2OJpW3T4mLr8rSCiRljh0BjjtM6siYSqYI/H2LG095J0zQ==
+X-Received: by 2002:a63:2a93:: with SMTP id q141mr9083068pgq.45.1635663882309;
+        Sun, 31 Oct 2021 00:04:42 -0700 (PDT)
+Received: from ?IPV6:2409:4060:2d9e:bfec:c94:c5a9:fe0f:3e04? ([2409:4060:2d9e:bfec:c94:c5a9:fe0f:3e04])
+        by smtp.gmail.com with ESMTPSA id b18sm12945250pfl.24.2021.10.31.00.04.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Oct 2021 00:04:41 -0700 (PDT)
+Message-ID: <2dd5cf43-31da-a494-077b-4cdfdd86daec@gmail.com>
+Date:   Sun, 31 Oct 2021 12:34:37 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <C09B3C5C-86D1-47B4-B4BC-9D0355596A1D@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH] amend error message violations
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1062.git.1635164026698.gitgitgadget@gmail.com>
+ <211025.86y26hgtm0.gmgdl@evledraar.gmail.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+In-Reply-To: <211025.86y26hgtm0.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 30, 2021 at 02:42:42PM -0700, Ryan Hodges wrote:
-> Thank you. I was hoping to be the one that fixed this because it was a level of logic that matched my current knowledge level.
-
-Sorry I should have just confirmed the bug since you had already said to
-look into it. (I usually try to send things when they are "done" from my
-side to minimize roundtrips.)
-I'm sure there are more low-hanging fruits but finding them is the hard part,
-see also https://lore.kernel.org/git/xmqq7dl5z425.fsf@gitster.g/
-
-> I was kind of surprised no one has reported this before.
-
-I guess no one has used it since it was added in 2018.
+Any opinion about this patch?
