@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F0DAC433EF
-	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 19:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC896C433F5
+	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 19:09:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3359560EBB
-	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 19:09:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4F9460F58
+	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 19:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232490AbhKATMN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Nov 2021 15:12:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35184 "EHLO
+        id S232500AbhKATMO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Nov 2021 15:12:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232520AbhKATMB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232517AbhKATMB (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 1 Nov 2021 15:12:01 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63DCCC06120C
-        for <git@vger.kernel.org>; Mon,  1 Nov 2021 12:09:26 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id m22so29642261wrb.0
-        for <git@vger.kernel.org>; Mon, 01 Nov 2021 12:09:26 -0700 (PDT)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71593C06120B
+        for <git@vger.kernel.org>; Mon,  1 Nov 2021 12:09:25 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso595120wme.3
+        for <git@vger.kernel.org>; Mon, 01 Nov 2021 12:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s0et02o0GKm6Ox9HByfxeLAz3rXAsfI3+dwDFZjnI+8=;
-        b=CGVpXry/ytlDWFu6JRtemfSywvnJqsBt9jGSAmlVbWDhSS/kuWstYnI9eF/eDtPurl
-         rquWFJ0REOcowW/CYDXAXYHWnNBTN1Fm9KMRhkFLNdz+dJXXdnsdxVIT4zPjC+6Grt+2
-         C9Z8ZDsDXIvsdPmBs8thdfho+yAjsyu80Lo2GleVkRdLcLE7xpSp702j3vY1xmkPqHC/
-         6DO6VWjIWinpMRNk92Hh9Uxt/viiPAbOD51wIHYIzcCnADVwrfWKD1dbw2UHbWrfIEZN
-         MWfCbyHBQ8rRH73r05k0k9s8c57BYchPJ3Ch8ptLUBtztBOUk/J+EFOLOGPTUZ9UKZu0
-         XJGw==
+        bh=uzxcFHQVtEZW9iywmr5Ek4mRkrzTo4elB00GDlu2nkU=;
+        b=JebI1TWSQALthQ7u+UznuscOeNPnpfSguIRtsHLM7RXl1dVxAIpawpg1An/STZJhi0
+         PpxwhDOUBa4GG6ZLraKVG7p/VbkaVzgthUq6mQy+0dnroekDnSMvLp6yvmc5JTO2ngMH
+         UEQ8xZsuvlrxEtiRmPRzXQnbyCTuEV/XgvZiQiU9UHF5hmfzQ7rqEVQ+Wb+yVp6SCZVI
+         nCANZywNLpqEJCn70lsMO6VOvmyY8QzswrEaGM55Hxo+7UnxHVPi8nAzEBdjqKWl7Oz/
+         H8sKQXD0Dbje1mlxOCse87+DZc9027+1HAYjYmyA8xt9ADmkMz0PzNexyVVDsw0Hqwkc
+         qOvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s0et02o0GKm6Ox9HByfxeLAz3rXAsfI3+dwDFZjnI+8=;
-        b=6ygGtPS+M21gDmkcBvwvXSHXyWFix7AD07GpOc0C+q2Xd93MjLpLl5UkxWwXRTbqXB
-         RnLEaDZdUIkqjG92bEREOmksY1Ru4GEHDDGgE5IHWFosg9UrRmQoUS7TYbPh3siIG10X
-         lS5SGj5dLPkE3BhlQ5buIg39VL9oqERpYGXcItXzdO0W4lB0IddxvQPwS0XA2JkHCwmy
-         lWBw/AFPB/Qzl7hwofkCi37+SYlsCG+Iixa9TqCMIUolICRh5/vmGsRA2wdWYEprPEfU
-         p0QeRTTILKFddx4VprCutu45xKeA49LgbmhqfKZUyKBT8OcE+hHV5rL4hUSfxCKzS/55
-         XMVg==
-X-Gm-Message-State: AOAM531t/vcDhTCryfqx4aLrqIoyYwEci+UQ8Lj+8XQnOvYZKDFrWiPu
-        NHTmiqrpRk9+jYQsBXS2pedExGG5AF4ehEtb
-X-Google-Smtp-Source: ABdhPJw51d82crCsAk5YmI84HiDAAQDtCBpSRaHW0pRH0E90iYEo3jKnWi+qra0IEnUTFIemGKQzVg==
-X-Received: by 2002:a5d:5846:: with SMTP id i6mr6156721wrf.19.1635793764670;
-        Mon, 01 Nov 2021 12:09:24 -0700 (PDT)
+        bh=uzxcFHQVtEZW9iywmr5Ek4mRkrzTo4elB00GDlu2nkU=;
+        b=LjdnfMxRBW457fE4h4RfHmp5xJA94f5cOSQq2j5RGZ7S0oahVumJZT45I6WGFi1Ray
+         /cHpwu3m6DC+oT4zlPODgRrZKfSbQkahOJt8KNSFvGEqFST07+XufRkuS2FyNx/dGCJH
+         pbCEzp/QjT7rLPO+QjzFwOIdns4oJ5bnCpwhFQOLg17M8rInpg/7AX0gMUTC8GEiLaO1
+         Xo7PEtkpLZuVJ5ugKCBxHUhaMXHXdhsRmYjX7KLeZtoogvPSn0/P6MRbvB3p3AeOscXT
+         Lneg4jvG940+EpUuOwixBjfOnUP4ms9Mu3F88yFCj4nOXLbiFuBwhqZxW+22/5vrT5nn
+         /z1Q==
+X-Gm-Message-State: AOAM533zdXnyM2AMAdTTWupgKWUFm+S2Kp444B8loHQuN5+l3znAG9yV
+        jsL78OOLBewIWXi8vqcKYm5f2SHyoE+mEPPa
+X-Google-Smtp-Source: ABdhPJzzhiFJ3oRCkAh+P82pkF+cJOzuN+bYdXk3P4n1EQ2hrjtLVQUnKbHyU63rWGyyDu8XFRFNpw==
+X-Received: by 2002:a1c:4d8:: with SMTP id 207mr979123wme.2.1635793763826;
+        Mon, 01 Nov 2021 12:09:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id p12sm4337211wro.33.2021.11.01.12.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 12:09:24 -0700 (PDT)
+        Mon, 01 Nov 2021 12:09:23 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 8/8] progress.c: add & assert a "global_progress" variable
-Date:   Mon,  1 Nov 2021 20:09:14 +0100
-Message-Id: <patch-v5-8.8-e58f4a0c1b9-20211101T190630Z-avarab@gmail.com>
+Subject: [PATCH v5 7/8] various *.c: use isatty(1|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+Date:   Mon,  1 Nov 2021 20:09:13 +0100
+Message-Id: <patch-v5-7.8-4795d4835b0-20211101T190630Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
 In-Reply-To: <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com>
 References: <cover-v4-0.8-00000000000-20211025T111915Z-avarab@gmail.com> <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com>
@@ -73,199 +73,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The progress.c code makes a hard assumption that only one progress bar
-be active at a time (see [1] for a bug where this wasn't the
-case). Add a BUG() that'll trigger if we ever regress on that promise
-and have two progress bars active at the same time.
+We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
+only these two used the stdlib.h macros to refer to them.
 
-There was an alternative test-only approach to doing the same
-thing[2], but by doing this outside of a GIT_TEST_* mode we'll know
-we've put a hard stop to this particular API misuse.
-
-It will also establish scaffolding to address current fundamental
-limitations in the progress output: The current output must be
-"driven" by calls to the likes of display_progress().
-
-Once we have a global current progress object we'll be able to update
-that object via SIGALRM, this will cover cases where we're busy, but
-either haven't invoked our first display_progress() yet, or the time
-between display_progress() is too long. See [3] for early code to do
-that.
-
-The linked code in [3] is WIP and not signal-safe since among other
-things it calls sprintf() from within a signal handler, see e.g. "man
-7 signal-safety". But on some platforms a real implementation of it
-would be able to write() out a prepared-formatted progress update from
-within a signal handler. That would be sufficient to e.g. show that
-we're "stalled", or to display something like a simple pre-formatted
-"spinner".
-
-It's conceivable that this change will hit the BUG() condition in some
-scenario that we don't currently have tests for, this would be very
-bad. If that happened we'd die just because we couldn't emit some
-pretty output.
-
-See [4] for a discussion of why our test coverage is lacking; our
-progress display is hidden behind isatty(2) checks in many cases, so
-the test suite doesn't cover it unless individual tests are run in
-"--verbose" mode, we might also have multi-threaded use of the API, so
-two progress bars stopping and starting would only be visible due to a
-race condition.
-
-Despite that, I think that this change won't introduce such
-regressions, because:
-
- 1. I've read all the code using the progress API (and have modified a
-    large part of it in some WIP code I have). Almost all of it is really
-    simple, the parts that aren't[5] are complex in the display_progress() part,
-    not in starting or stopping the progress bar.
-
- 2. The entire test suite passes when instrumented with an ad-hoc
-    Linux-specific mode (it uses gettid()) to die if progress bars are
-    ever started or stopped on anything but the main thread[6].
-
-    Extending that to die if display_progress() is called in a thread
-    reveals that we have exactly two users of the progress bar under
-    threaded conditions, "git index-pack" and "git pack-objects". Both
-    uses are straightforward, and they don't start/stop the progress
-    bar when threads are active.
-
- 3. I've likewise done an ad-hoc test to force progress bars to be
-    displayed with:
-
-        perl -pi -e 's[isatty\(2\)][1]g' $(git grep -l -F 'isatty(2)')
-
-    I.e. to replace all checks (not just for progress) of checking
-    whether STDERR is connected to a TTY, and then monkeypatching
-    is_foreground_fd() in progress.c to always "return 1". Running the
-    tests with those applied, interactively and under -V reveals via:
-
-        $ grep -e set_progress_signal -e clear_progress_signal test-results/*out
-
-    That nothing our tests cover hits the BUG conditions added here,
-    except the expected "BUG: start two concurrent progress bars" test
-    being added here.
-
-    That isn't entirely true since we won't be getting 100% coverage
-    due to cascading failures from tests that expected no progress
-    output on stderr. To make sure I covered 100% I also tried making
-    the display() function in progress.c a NOOP on top of that (it's
-    the calls to start_progress_delay() and stop_progress()) that
-    matter.
-
-    That doesn't hit the BUG() either. Some tests fail in that mode
-    due to a combination of the overzealous isatty(2) munging noted
-    above, and the tests that are testing that the progress output
-    itself is present (but for testing I'd made display() a NOOP).
-
-This doesn't address any currently out-of-tree user of progress.c,
-i.e. WIP patches, or progress output that's a part of forks of
-git.git. Those hopefully have test coverage that would expose the
-BUG().
-
-If they don't they'll either run into it in code that displays more
-than one progress bar for the lifetime of the progress, or which calls
-stop_progress() with a non-NULL "progress" without a corresponding
-start_progress(). Both of those cases are less likely than the general
-cases of progress.c API misuse.
-
-Between those three points above and the discussion of how this could
-impact out-of-tree users I think it's safe to go ahead with this
-change.
-
-1. 6f9d5f2fda1 (commit-graph: fix progress of reachable commits, 2020-07-09)
-2. https://lore.kernel.org/git/20210620200303.2328957-3-szeder.dev@gmail.com
-3. https://lore.kernel.org/git/patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com/
-4. https://lore.kernel.org/git/cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com/
-5. b50c37aa44d (Merge branch 'ab/progress-users-adjust-counters' into
-   next, 2021-09-10)
-6. https://lore.kernel.org/git/877dffg37n.fsf@evledraar.gmail.com/
+Let's change these for consistency, and because a subsequent commit's
+commit message outlines a recipe to change all of these for ad-hoc
+testing, not needing to match these with that ad-hoc regex will make
+things easier to explain.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- progress.c                  | 18 ++++++++++++++++++
- t/t0500-progress-display.sh | 11 +++++++++++
- 2 files changed, 29 insertions(+)
+ builtin/bisect--helper.c | 2 +-
+ builtin/bundle.c         | 2 +-
+ compat/mingw.c           | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/progress.c b/progress.c
-index 76a95cb7322..7483aec2e2a 100644
---- a/progress.c
-+++ b/progress.c
-@@ -46,6 +46,7 @@ struct progress {
- };
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 28a2e6a5750..1727cb051fb 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -830,7 +830,7 @@ static int bisect_autostart(struct bisect_terms *terms)
+ 	fprintf_ln(stderr, _("You need to start by \"git bisect "
+ 			  "start\"\n"));
  
- static volatile sig_atomic_t progress_update;
-+static struct progress *global_progress;
+-	if (!isatty(STDIN_FILENO))
++	if (!isatty(1))
+ 		return -1;
  
- /*
-  * These are only intended for testing the progress output, i.e. exclusively
-@@ -249,6 +250,14 @@ void display_progress(struct progress *progress, uint64_t n)
- 		display(progress, n, NULL);
- }
+ 	/*
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 5a85d7cd0fe..df69c651753 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -56,7 +56,7 @@ static int parse_options_cmd_bundle(int argc,
  
-+static void set_global_progress(struct progress *progress)
-+{
-+	if (global_progress)
-+		BUG("'%s' progress still active when trying to start '%s'",
-+		    global_progress->title, progress->title);
-+	global_progress = progress;
-+}
-+
- static struct progress *start_progress_delay(const char *title, uint64_t total,
- 					     unsigned delay, unsigned sparse)
- {
-@@ -264,6 +273,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
- 	strbuf_init(&progress->counters_sb, 0);
- 	progress->title_len = utf8_strwidth(title);
- 	progress->split = 0;
-+	set_global_progress(progress);
- 	set_progress_signal();
- 	trace2_region_enter("progress", title, the_repository);
- 	return progress;
-@@ -340,6 +350,13 @@ void stop_progress(struct progress **p_progress)
- 	stop_progress_msg(p_progress, _("done"));
- }
- 
-+static void unset_global_progress(void)
-+{
-+	if (!global_progress)
-+		BUG("should have active global_progress when cleaning up");
-+	global_progress = NULL;
-+}
-+
- void stop_progress_msg(struct progress **p_progress, const char *msg)
- {
- 	struct progress *progress;
-@@ -369,6 +386,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 		free(buf);
- 	}
- 	clear_progress_signal();
-+	unset_global_progress();
- 	strbuf_release(&progress->counters_sb);
- 	if (progress->throughput)
- 		strbuf_release(&progress->throughput->display);
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 59e9f226ea4..867fdace3f2 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -298,6 +298,17 @@ test_expect_success 'cover up after throughput shortens a lot' '
- 	test_cmp expect out
- '
- 
-+test_expect_success 'BUG: start two concurrent progress bars' '
-+	cat >in <<-\EOF &&
-+	start 0 one
-+	start 0 two
-+	EOF
-+
-+	test_must_fail test-tool progress \
-+		<in 2>stderr &&
-+	grep "^BUG: .*'\''one'\'' progress still active when trying to start '\''two'\''$" stderr
-+'
-+
- test_expect_success 'progress generates traces' '
- 	cat >in <<-\EOF &&
- 	start 40
+ static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
+ 	int all_progress_implied = 0;
+-	int progress = isatty(STDERR_FILENO);
++	int progress = isatty(2);
+ 	struct strvec pack_opts;
+ 	int version = -1;
+ 	int ret;
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 9e0cd1e097f..0f545c1a7d1 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2374,7 +2374,7 @@ int mingw_raise(int sig)
+ 	switch (sig) {
+ 	case SIGALRM:
+ 		if (timer_fn == SIG_DFL) {
+-			if (isatty(STDERR_FILENO))
++			if (isatty(2))
+ 				fputs("Alarm clock\n", stderr);
+ 			exit(128 + SIGALRM);
+ 		} else if (timer_fn != SIG_IGN)
 -- 
 2.33.1.1570.g069344fdd45
 
