@@ -2,61 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A25C433EF
-	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 17:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 181D9C433F5
+	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 17:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA63760E52
-	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 17:30:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED68360EBC
+	for <git@archiver.kernel.org>; Mon,  1 Nov 2021 17:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232495AbhKARdM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Nov 2021 13:33:12 -0400
-Received: from omta013.uswest2.a.cloudfilter.net ([35.164.127.236]:48986 "EHLO
-        omta013.uswest2.a.cloudfilter.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231892AbhKARdL (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 1 Nov 2021 13:33:11 -0400
-X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Nov 2021 13:33:11 EDT
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.16.209])
-        by cmsmtp with ESMTP
-        id hYY2mtE8Lydxuhb1smiHiP; Mon, 01 Nov 2021 17:23:28 +0000
-Received: from thunderbird.smith.home ([68.231.75.33])
-        by cmsmtp with ESMTPSA
-        id hb1pmO8ynB82Ohb1rm5VwV; Mon, 01 Nov 2021 17:23:28 +0000
-Authentication-Results: cox.net; auth=pass (PLAIN) smtp.auth=ischis2@cox.net
-X-Authority-Analysis: v=2.4 cv=K9hBowaI c=1 sm=1 tr=0 ts=61802290
- a=WsxEcZHXDFRvve1sQRspCw==:117 a=WsxEcZHXDFRvve1sQRspCw==:17
- a=kj9zAlcOel0A:10 a=vIxV3rELxO4A:10 a=3s-vBJz8GoMgv9zTGrsA:9 a=CjuIK1q_8ugA:10
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 231642E00063
-        for <git@vger.kernel.org>; Mon,  1 Nov 2021 10:23:25 -0700 (MST)
-From:   Stephen Smith <ischis2@cox.net>
-To:     git@vger.kernel.org
-Subject: make failure when  building on cygwin.
-Date:   Mon, 01 Nov 2021 10:23:25 -0700
-Message-ID: <2285333.UEd3U9ABtK@thunderbird>
+        id S231946AbhKARrf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Nov 2021 13:47:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54900 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229947AbhKARrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Nov 2021 13:47:33 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFD9BF90B2;
+        Mon,  1 Nov 2021 13:44:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=HFbyL0B2ROqN
+        vCq0F+YvTQwgD5dQuBEGtdUanDoqVIU=; b=dP7DblkED+dkzPP+LJMgad81shB6
+        TUpA3imN8T2sM961sm0Kg+K2AiROZfcux/JRjEsITFCLHRJKZqWmAd1eg6Ugq0As
+        +KCP1KiidEZJHNf+NvvFt1jZIDXj+X50RYJwbnCOByQvpFpSwSJ8frPneIOJ1e/X
+        M+SUgrX2alt1Zk0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B5768F90B1;
+        Mon,  1 Nov 2021 13:44:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2873BF90B0;
+        Mon,  1 Nov 2021 13:44:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] gpg-interface: avoid buffer overrun in
+ parse_ssh_output()
+References: <f6fca7c0-079c-4337-23d9-cd970c79b8ad@web.de>
+        <a72ebd19-9871-f811-cd5c-72b89dad6c6f@web.de>
+        <d758381f-064a-1d0a-afab-cb2160ea2eec@gigacodes.de>
+Date:   Mon, 01 Nov 2021 10:44:57 -0700
+In-Reply-To: <d758381f-064a-1d0a-afab-cb2160ea2eec@gigacodes.de> (Fabian
+        Stelzer's message of "Mon, 1 Nov 2021 09:33:39 +0100")
+Message-ID: <xmqqbl33db3a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-CMAE-Envelope: MS4xfP0DVf23I+5EgfaXlXtohsgwWYYOS5Ip9oNWMtpjoBPFEo8KNYuJno46bx7um8GZWAPfeACFwblg4ogL692wBRhy/m6i3NKYt7j58TlAW8emwgCReMMr
- nT8/ccmB/Xap3THRsnHHitXvjt4wdILGfY5I/5+pWC9LNKEgTZuuln+81kiYtVnZD4kQYIR3kObxkw==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6EEE1B50-3B3B-11EC-B96A-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I tried to build the 2.34.0 version on cygwin and received the following.  I 
-am using commit 7e27bd589d328b9da.  the make utility is GNU Make 4.2.1
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-$  make prefix=/usr/local all html 
-GIT_VERSION = 2.34.0.rc0.dirty 
-GIT_VERSION = 2.34.0.rc0 
-GIT_VERSION = 2.34.0.rc0.dirty 
-GIT_VERSION = 2.34.0.rc0 
-GIT_VERSION = 2.34.0.rc0.dirty 
-GIT_VERSION = 2.34.0.rc0
+> On 30.10.21 19:07, Ren=C3=A9 Scharfe wrote:
+>> If the string "key" we found in the output of ssh-keygen happens to be
+>> located at the very end of the line, then going four characters furthe=
+r
+>> leaves us beyond the end of the string.  Explicitly search for the
+>> space after "key" to handle a missing one gracefully.
+>>=20
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>> This code was added after v2.33.0.
+>>=20
+>>=20
+>
+> Thanks. This is obviously correct.
 
-I broke out of the build and and re-issued the make command at which point the 
-code starts to build correctly.
-
-This is just an FYI.
-
-
-
+Thanks, both.  Will apply.
