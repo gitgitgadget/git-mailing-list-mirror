@@ -2,101 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D91C433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F15FC433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:26:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1480E60F24
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:20:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29D6B60F02
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231877AbhKBPWy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 11:22:54 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55847 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231437AbhKBPWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 11:22:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635866411;
-        bh=A8rzlOuRffRDxYqtxL4Mvf/lViMNeksd4P9OXGLrjKo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LxsEVtMqaOsskMURaIwhr1pukc6TbNwj/dUee3ypENrXcxGvEuddADmSwqP2Yh8sG
-         Y9Jm1JTUVOaPF7I6CmEWk7UB9zi61EerLr/1PsTPBYXMM10RrfEjOEZu0N8Fmy+Gku
-         7EeESsIwHNC6qdRrhMFix9+upzNAwjTx21ImEgcU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.119.151] ([213.196.213.29]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N79uI-1mgv1b1Zxk-017RxL; Tue, 02
- Nov 2021 16:20:11 +0100
-Date:   Tue, 2 Nov 2021 16:20:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        vtbassmatt@gmail.com
-Subject: Re: [PATCH 1/3] test-lib: add prerequisite for 64-bit platforms
-In-Reply-To: <xmqqee84pyfb.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111021619020.56@tvgsbejvaqbjf.bet>
-References: <pull.1068.git.1635320952.gitgitgadget@gmail.com> <20211028205649.84036-1-carenas@gmail.com> <20211028205649.84036-2-carenas@gmail.com> <nycvar.QRO.7.76.6.2110282344330.56@tvgsbejvaqbjf.bet> <CAPUEspj2B7M_-cbA2O3LickF7MeVYNtXjfJMBMeYkLag5K=Z3g@mail.gmail.com>
- <xmqqee84pyfb.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S234622AbhKBP2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 11:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55060 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234605AbhKBP2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 11:28:53 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9661FC061767
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 08:26:18 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id ee33so6413446edb.8
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 08:26:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=J+p97iAAQLFiA1OKy1r7bjYD8RVs59Xl8xVkyNh7x/w=;
+        b=NGJgP7BvBNL4NbIsxI7FhJPgg/QpKWKiFDEiKwoTEPeB5D/K8FNmP8T6b7mTp3BG2x
+         R/CO39/nULh0/tWn1f9eBkem2A44FSqxL/N4UjJZnof2WOydocyKXAiHMJkcHHxl5uk2
+         Vf/LN7Ywmr7z/iJajsEJTRZSh8mmHlCwTEMZAB7vY5oJIdIVwWW5m603HQVoW5lLIuY+
+         Plc4HZhwQUnRWy9S2tCGXpfmUTIIUV9LUFPI+g8qCpE82uj7/INiDbGUzCm9VDNjtyAl
+         m1pfubYcixN/oB3NdHbSdqWQm6xox72RDmrzkULKHej40DQ9ajLADNKtDjHMT8ewLxkk
+         yalA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=J+p97iAAQLFiA1OKy1r7bjYD8RVs59Xl8xVkyNh7x/w=;
+        b=RLy2UfPbf5dDP4HKKZ0VC8xgll0tQcS5wCtG+z3RVuZqgE4asU9Qs14E8okwJUpLhx
+         oxo1zMwEr1v8Z58Cs4tF94KrX/PUrCp63JLNbLvBHxOgcJYPC2xNTL0tMz9tmVVwUv8U
+         /uze7Fp/wtMcMIVcwIK1HgrdiNjYf4MrV9TgWyHZQPJ+zB9mhATyHu1b5BhrlrnhIe25
+         8hitQw7k+bl/Gd4dnK10Tnl/5ge/NDb5ppPcI9vq4ACh1j38e/I3jh9fjy0b5S7tuJ2H
+         +iLfYBqTFR0p0f92DNPmvsZtvgT+BfhQy/578HrDj0z+2Zylz8nH+9lPvO3YFK65KkZi
+         q3iQ==
+X-Gm-Message-State: AOAM532/3hjkYC4+meTdR/BQTVuliUTyE1f1n4tBYwv8oCsinEtLMKg1
+        takoNoqbeK89Y0apFV8C9ao=
+X-Google-Smtp-Source: ABdhPJyJMtz3pKPeXVitkqAkVYYEB7KZQSOU1NHXxAjBqId0T1sk9lAy7gQXJBKFOYvZ0Wi7O8uYOA==
+X-Received: by 2002:a17:907:72c9:: with SMTP id du9mr46258390ejc.124.1635866777069;
+        Tue, 02 Nov 2021 08:26:17 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j11sm8213875ejt.114.2021.11.02.08.26.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Nov 2021 08:26:16 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mhvfz-002EFY-W6;
+        Tue, 02 Nov 2021 16:26:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: disallow directional formatting
+Date:   Tue, 02 Nov 2021 16:01:57 +0100
+References: <pull.1071.git.1635857935312.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <pull.1071.git.1635857935312.gitgitgadget@gmail.com>
+Message-ID: <211102.86tugu1svc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:urR/ljm6o+SmklT5pKuw62IiRPjbjC5ThL7S3M0ck+oFsSyV084
- A6KOLYnlzhU8jeFWYA7X49a2C4KD2W6HprSxD3gVgGXUQhqeo6B88+eP2mFyLzCc29SELPL
- DTW82MAUGmjNWjaCvNxxbjOLGuq0yQK4AoGLMdoV9BaJv/OUChk9o3fluq5ORhHQAzgl3ix
- 9Pw34JXYPNaqeM9QrO25Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1J9flrWwPig=:lMAYGyFisWij6l9A1c7CxX
- rAD3ALVYG47ZU7jxIAT3dKgQ4qb4sN98+8DVMaTySyezqOhUpPb4DCXd8L5dPRKRFAG9C1mA1
- FVMIbMZa3igFYaKEaw71r3exBWV26NY+jOFcRrMMkx9P3BTKWY4DLaeiuOg9i22/eQgUlxN0j
- +Wd2jQq/MVOR64W95aPwUD9V+w4lWEbZMboYH4tCyc54Vmsz2bxWvGmsWg933oQ9+8Zeu4iLN
- 20mw44ABqSaDNxkKJg7wOAT+IAimB6RcksrtxpuOM1MYwJfn5yqrb9xPu/+ieTwsMsMJVDZQ6
- c+9KFxZws0BqkrEEvWzt9sCA4Fj0o8hBkdYN6Hyng0vjw6CzRtA5c3g3WqyIB1IQuRAdT9j1d
- HauZGoiDz3MgMxIB05STnOMx3+tI1yataThWEGcpP/Qe3ntRfIBcnh7t5shq5XPg4eqP5UhLi
- SKc8s8dhX/kvM8SXud/hwTwBf520f3hP68WtEO/01sH/Qol3jlUxN2JLyFa+tL7G/9LSSTc6A
- Wzt7hSzA2/ziK0qq+1BhTVjZG19w+kXLQ5BgjFztwOv4BQ+I6UehEU0DJ7KDzt7MqLo/zJ6Fu
- Rj1VMdj9LXJvCC+NtLQo4uoL8hmXusIyqYLfHhMKV8SJ1W7/228oDb1aFj6azbhGi1KFnFpic
- VNCwxpYYPCjQS7IkC3H2p+nQrxgZVlMpsZ1DZI6RS5d1Z0kTc5qrLF0uLIFHnFZ5t+414Rx5n
- V7LWhuLQql3MHIcW9oRaZ5pitJM0+kjQ4CxapxYutpdwLVaunI/YhZ+ydJLhT64q3uN0UAUHj
- ZP9Tj7r/54fdYb971URzm3e3/aZbWvxItjI8IUvjHAYvkAU0rbf6GJClSkeJvs7LsI8+D9o3o
- UiRUCyqp/gbGx21+k6IhRd2F/fEYkR7bTQcA5GK6DyQoSv21TRu6wv6+mqey9hieSwVYO3Bcs
- k4z6oMz/0MoiqBh1Dzp5TksOtvylPLpsG0vRSvtCvRMo/kQU8PHS3Glv0uu/092DkGeX4TFAP
- rXlzVwQNp4S2iZ1j/j6cH5+TlM7RxdwKzVhRW+JkSXZxUKLTIJyFgIRwaa6VOobx/HDRgBe4v
- 3yXaGquJwvZHaw=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Thu, 28 Oct 2021, Junio C Hamano wrote:
+On Tue, Nov 02 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> Carlo Arenas <carenas@gmail.com> writes:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> >> Since this is clearly copied from `LONG_IS_64BIT`, why the change fro=
-m
-> >> `-le` to `-eq`? It is at least inconsistent to use anything different
-> >> here.
-> >
-> > My assumption is that the check for sizeof(size_t) we have is really
-> > about finding the bit width of the platform, and we currently support
-> > 2 of them (32-bit and 64-bit), which is why the name I chose was
-> > "IS_64BIT" and also why I was strict on it being exactly 8 bytes
-> > (considering all platforms git supports have bytes with 8 bits).
-> >
-> > It can go eitherway IMHO, and your point about being inconsistent
-> > (with my lack of explanation in the commit) suggests we should instead
-> > use your proposal, do you want me to resend or could adjust them in
-> > your tree?
+> As described in https://trojansource.codes/trojan-source.pdf, it is
+> possible to abuse directional formatting (a feature of Unicode) to
+> deceive human readers into interpreting code differently from compilers.
 >
-> Is LONG_IS_64BIT used to ensure that long is _at least_ 64 bit?  If
-> so, perhaps its name may need to be rethought.  On the other hand,
-> if it is meant to ensure that long is exactly 64 bit, then it should
-> use -eq to compare.
+> It is highly unlikely that Git's source code wants to contain such
+> directional formatting in the first place, so let's disallow it.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     ci: disallow directional formatting
+>     
+>     I just stumbled over
+>     https://siliconangle.com/2021/11/01/trojan-source-technique-can-inject-malware-source-code-without-detection/,
+>     which details an interesting social-engineering attack: it uses
+>     directional formatting in source code to pretend to human readers that
+>     the code does something different than it actually does.
+>     
+>     It is highly unlikely that Git's source code wants to contain such
+>     directional formatting in the first place, so let's disallow it.
+>     
+>     Technically, this is not exactly -rc material, but the paper was just
+>     published, and I want us to be safe.
 
-`LONG_IS_64BIT` is used by the `tar` tests to ensure that `long` can
-represent file sizes larger than 4GB. So yeah, it is an `_AT_LEAST_`
-instead of an `_IS_`.
+There's a parallel discussion about doing something to detect this in
+"git am", which for the git project seems like a better place to put
+this.
 
-Not -rc material, though.
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1071%2Fdscho%2Fcheck-for-utf-8-directional-formatting-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1071/dscho/check-for-utf-8-directional-formatting-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1071
+>
+>  .github/workflows/main.yml | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 6ed6a9e8076..7b4b4df03c3 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -289,6 +289,13 @@ jobs:
+>      - uses: actions/checkout@v2
+>      - run: ci/install-dependencies.sh
+>      - run: ci/run-static-analysis.sh
+> +    - name: disallow Unicode directional formatting
+> +      run: |
+> +        # Use UTF-8-aware `printf` to feed a byte pattern to non-UTF-8-aware `git grep`
+> +        # (Ubuntu's `git grep` is compiled without support for libpcre, otherwise we
+> +        # could use `git grep -P` with the `\u` syntax).
+> +        ! LANG=C git grep -Il "$(LANG=C.UTF-8 printf \
+> +          '\\(\u202a\\|\u202b\\|\u202c\\|\u202d\\|\u202e\\|\u2066\\|\u2067\\|\u2068\\|\u2069\\)')"
+>    sparse:
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>
+> base-commit: 0cddd84c9f3e9c3d793ec93034ef679335f35e49
 
-Ciao,
-Dscho
+It would be easier to maintain this if were added to
+ci/run-static-analysis.sh instead, where we have some similar tests, and
+if it lives there we could do away with the double-escaping, then it can
+also be run manually.
+
+Also, can't we just pipe "git ls-files -z" into "perl -0ne" here and use
+its unconditional support for e.g. unicode properties in regexes.
+
+How will this change impact RTL languages being added to po/?
