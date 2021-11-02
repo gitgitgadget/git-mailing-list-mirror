@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A855BC433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 16:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FD9BC433F5
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 16:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90B3761052
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 16:48:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1732060F58
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 16:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234788AbhKBQuw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 12:50:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45582 "EHLO
+        id S234841AbhKBQuy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 12:50:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234428AbhKBQuu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 12:50:50 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E26C061714
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 09:48:15 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id f7-20020a1c1f07000000b0032ee11917ceso2596648wmf.0
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 09:48:15 -0700 (PDT)
+        with ESMTP id S229906AbhKBQuv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 12:50:51 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225D7C0613F5
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 09:48:16 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id y196so6920873wmc.3
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 09:48:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ob61+8toor8D2HDdu1gMRySXYu6e3orQvaxp2IZ62Eg=;
-        b=GsJe1kNorDZOe3sC3VUDU5SJyOKm3ggmMU6U9F5jGDtSAnCmxppspPPG8LsnCJYO21
-         KuYs50NCfoto75CXoBcHfpbXdKBLHPmo22ob8vult1KGBTKtVEucw3U+nBRMLgLfdeyX
-         P/sy9CrFciWNsHszbDd/fZl7Li8L3zF4iebKujTcx1Ww9g3P9cyK3+Y5kEWSMNA670Lf
-         PDYdiPGVP9WMcDUbA7cwykBEhg5j0EtUcr+9IXQkKtd7mRBTLpwW/PNdsEqxYVZ2iLjJ
-         oRcrSPNt2KlSozdz5vmGqizJ7HTc5D+eDASsfl/7i/E8b9nGfC5+CsfRJaninn5+QFN0
-         iuUg==
+        bh=g9U3pzATxaPFHAdu5PhrrCFfhD1qmuTlVk5G2GoP+/o=;
+        b=hnC+Cjkt5XyjlKUKUN9BuV9MyfAqfiNIUkKlXrU5cq7Q+9L+9/Jp9qALQVf0IvsCkR
+         GAOtjzP6li22eN5tyZYQw5eqb8d7GF4ZkauxeOQFQpWpuz0z85uSC0l3xTjGnDbz5lzh
+         etN6ThEYKMBF4XyRo9W0FfBHilbHyGbYOtFbg2pA6W2eSjs+X/OP1CH4UxHWS2YHuQRS
+         PwtkjSHbLyCMdnz3bkKZmS/1tSrCqSWzHEaA3YGjAiZ68NSBP0H4RN6A8SLXHoU8TuBb
+         Pk0RAp6uBFrB08qPBlTbM1gbSIPLsMhvu5PIgS/2l3kOAuwkkm6nweelJrFJtjR2gVOf
+         9Hhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ob61+8toor8D2HDdu1gMRySXYu6e3orQvaxp2IZ62Eg=;
-        b=TxH2Bh4b9BYvuZF7ocyzeBbr1Mmg0PEwPB2jiJS+BOZxd4LFAXKYZ1xTaxXt8ONWEH
-         ZW66umUUloaCFcCWRAqeCNfvWq0MLoNrTUQE1Otw8STOxSBZyTTwEh1AvZhiIqktj8/l
-         Cru7UPloIfGtbepkNEY0HXhUTzH7+d6Z4rO7n2cUnV3ynONDq0jdvf8qCeJ4NaMiOoYB
-         xfW/HF5eHj9+SK0xRITaUlsJ6PvtaiIFI22653nrPt9JOphsEHtCLC+VFzzrxpUVQmN7
-         OFvuzOytBJGK6fPNd9G9zTlXR8nGduAyGnIjDJo6PIZgqHGCruYZrbCFywvmsFtL7Gk4
-         r++g==
-X-Gm-Message-State: AOAM5323Cw9WeWVn1BEoi/1EgLmgYKLhoSyaQBaIwpTVbfZZShr85ixS
-        z9qBKF8+L340hpMey7zdUJlj0ZfwZ6AT1A==
-X-Google-Smtp-Source: ABdhPJyAiy8FrDvTATwVJYf2JzzhCdV9tsK04VmPV4rVfkJDDC7KD781nwvv48NQ0oRIJxyhYVwXXw==
-X-Received: by 2002:a1c:5414:: with SMTP id i20mr7574878wmb.88.1635871693641;
-        Tue, 02 Nov 2021 09:48:13 -0700 (PDT)
+        bh=g9U3pzATxaPFHAdu5PhrrCFfhD1qmuTlVk5G2GoP+/o=;
+        b=sjN69pO1F+jp/3puiQqR/PoC5ZuKTXF+z/RbP5nPJ+OhetZ08uM9QJf22nqBIKsfre
+         3fd/C1j1AHxLY0OgZxmF4NMgX0pIBMi9S+Tu8fhPy47e2od+QvhefkNFRtlDY1Le/gLr
+         P1ScTMHuqywNgIIYU1nwYvUyTSbOWEIZz82oBSrBHmjzFxAgYs28NduuzV/WZsfeoLJF
+         NizICxxnOK6jf9ztoMpCxwz5lwfLK/U/0VEMhDKba1yyv3bnqLodEYuhkGPl/7pfABJd
+         v/zixos6sJzBX7m1QrPRAtn2yAOy/tc9koVvR0TTp5GYtk4hSHaLUlUxIs/6VpjkPb8k
+         ppgQ==
+X-Gm-Message-State: AOAM530EY8sahFrNYyy6Z2vbBXUwhKoqi+HyS59/LsbwBtLvdp1I+VgG
+        zag7hzxGTpKh3QGuAOp9aaXQ/g4dUxPuFQ==
+X-Google-Smtp-Source: ABdhPJyjxCWTHHI4XG8SlGK7lpXyIRZ7RPdqn4XR6tetXoiev528XopK41d5t56uWW5nbvYM28LCrA==
+X-Received: by 2002:a05:600c:6d2:: with SMTP id b18mr8767548wmn.98.1635871694440;
+        Tue, 02 Nov 2021 09:48:14 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm17203188wrs.19.2021.11.02.09.48.12
+        by smtp.gmail.com with ESMTPSA id c15sm17203188wrs.19.2021.11.02.09.48.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 02 Nov 2021 09:48:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Alejandro Sanchez <asanchez1987@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] prompt.c: split up the password and non-password handling
-Date:   Tue,  2 Nov 2021 17:48:09 +0100
-Message-Id: <patch-1.2-ce5bea43f03-20211102T155046Z-avarab@gmail.com>
+Subject: [PATCH 2/2] prompt.c: add and use a GIT_TEST_TERMINAL_PROMPT=true
+Date:   Tue,  2 Nov 2021 17:48:10 +0100
+Message-Id: <patch-2.2-964e7f4531f-20211102T155046Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
 In-Reply-To: <cover-0.2-00000000000-20211102T155046Z-avarab@gmail.com>
 References: <20190524062724.GC25694@sigill.intra.peff.net> <cover-0.2-00000000000-20211102T155046Z-avarab@gmail.com>
@@ -71,324 +71,228 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than pass PROMPT_ASKPASS and PROMPT_ECHO flags to git_prompt()
-let's split it up into git_prompt_echo() and git_prompt_noecho()
-functions, the latter only ever needs to be called from credential.c,
-and the same goes for the previous password-only codepath in
-git_prompt(), which is now exposed as a git_prompt_password().
+In 97387c8bdd9 (am: read interactive input from stdin, 2019-05-20) we
+we fixed a behavior change in the conversion of git-am from a
+shellscript to a C program by changing it from using git_prompt() to
+using fgets(..., stdin). This ensured that we could run:
 
-Doing this paves the way towards addressing some of the issues brought
-up in 97387c8bdd9 (am: read interactive input from stdin, 2019-05-20).
+    echo y | git am --interactive [...]
+
+But along with that in the subsequent 6e7baf246a2 (am: drop tty
+requirement for --interactive, 2019-05-20) we had to remove support
+for:
+
+    git am --interactive </dev/null
+
+This change builds on the refactoring of git_prompt() into "normal
+prompt" and "wants password" functions in the preceding commit, and
+moves "git am --interactive" back to using the prompt function.
+
+This allows us to have our cake and eat it too by adding a
+GIT_TERMINAL_PROMPT=true mode to test-lib.sh. Adjusting "git am
+--interactive" for use in our tests (see
+e.g. "t/t4257-am-interactive.sh") was what 97387c8bdd9 and 6e7baf246a2
+were aiming for.
+
+Then more recently in 09535f056b0 (bisect--helper: reimplement
+`bisect_autostart` shell function in C, 2020-09-24) we've had the same
+sort of behavior change happen to "git bisect"'s interactive question
+mode, it now uses git_prompt()'s /dev/tty, not stdin.
+
+It seems to me that using /dev/tty is desirable over using stdin,
+these prompts are meant to be interactive, and our acceptance of stdin
+was an artifact of how these commands were originally implemented in
+shellscript.
+
+So let's move "git am --interactive" back to using
+"git_prompt()" (which is called "git_prompt_echo()" as of the
+preceding commit), and similarly remove the "!isatty(STDIN_FILENO)"
+test added in 09535f056b0, that control flow was converted as-is from
+the shellscript behavior.
+
+Let's also change a similar assertion added to "git am" in
+6e7baf246a2. Now we'll die on:
+
+    # no arguments provided
+    git am --interactive
+
+But not:
+
+    git am --interactive </dev/null
+
+Or:
+
+    git am --interactive <mbox
+
+To do this we'll need to add a GIT_TEST_TERMINAL_PROMPT variable for
+use in test-lib.sh, by doing so this "echo input | git cmd ..."
+behavior of interactive commands is now isolated to our own test
+suite, instead of leaking out into the wild.
+
+Now that we've done that we can exhaustively test the prompt behavior
+of "git bisect", which wasn't previously possible.
+
+There is some discussion downthread of the series 97387c8bdd9 is in
+about whether we should always accept stdin input in these
+commands[1]. I think that's arguably a good idea, and perhaps we'll
+need to change the approach here.
+
+Using a git_prompt_echo() that we know never needs to handle passwords
+should provide us with an easy path towards deciding what to do in
+those cases, we'll be able to consistently pick one behavior or the
+other, instead of having the behavior of specific commands cater to
+test-only needs.
+
+The lack of _() on the new die() message is intentional. This message
+will only be emitted if there's a bug in our own test suite, so it's a
+waste of translator time to translate it.
+
+1. https://lore.kernel.org/git/20190520125016.GA13474@sigill.intra.peff.net/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile                 |  1 +
- builtin/bisect--helper.c |  5 ++-
- credential.c             | 17 ++++++----
- help.c                   |  2 +-
- prompt-password.c        | 63 ++++++++++++++++++++++++++++++++++
- prompt-password.h        |  7 ++++
- prompt.c                 | 73 ++++++----------------------------------
- prompt.h                 |  7 ++--
- 8 files changed, 97 insertions(+), 78 deletions(-)
- create mode 100644 prompt-password.c
- create mode 100644 prompt-password.h
+ builtin/am.c                |  8 +++-----
+ builtin/bisect--helper.c    |  3 ---
+ prompt.c                    |  8 +++++++-
+ t/t6030-bisect-porcelain.sh | 41 +++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh               |  4 ++++
+ 5 files changed, 55 insertions(+), 9 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 12be39ac497..e8815860e22 100644
---- a/Makefile
-+++ b/Makefile
-@@ -967,6 +967,7 @@ LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += promisor-remote.o
-+LIB_OBJS += prompt-password.o
- LIB_OBJS += prompt.o
- LIB_OBJS += protocol.o
- LIB_OBJS += protocol-caps.o
+diff --git a/builtin/am.c b/builtin/am.c
+index 8677ea2348a..1e90b9ea0cd 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1693,7 +1693,7 @@ static int do_interactive(struct am_state *state)
+ 	assert(state->msg);
+ 
+ 	for (;;) {
+-		char reply[64];
++		const char *reply;
+ 
+ 		puts(_("Commit Body is:"));
+ 		puts("--------------------------");
+@@ -1705,9 +1705,7 @@ static int do_interactive(struct am_state *state)
+ 		 * in your translation. The program will only accept English
+ 		 * input at this point.
+ 		 */
+-		printf(_("Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all: "));
+-		if (!fgets(reply, sizeof(reply), stdin))
+-			die("unable to read from stdin; aborting");
++		reply = git_prompt_echo(_("Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all: "));
+ 
+ 		if (*reply == 'y' || *reply == 'Y') {
+ 			return 0;
+@@ -2437,7 +2435,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 				strvec_push(&paths, mkpath("%s/%s", prefix, argv[i]));
+ 		}
+ 
+-		if (state.interactive && !paths.nr)
++		if (state.interactive && !paths.nr && isatty(0))
+ 			die(_("interactive mode requires patches on the command line"));
+ 
+ 		am_setup(&state, patch_format, paths.v, keep_cr);
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28a2e6a5750..30533a70b53 100644
+index 30533a70b53..dd73d76df3e 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -370,7 +370,7 @@ static int decide_next(const struct bisect_terms *terms,
- 		 * translation. The program will only accept English input
- 		 * at this point.
- 		 */
--		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
-+		yesno = git_prompt_echo(_("Are you sure [Y/n]? "));
- 		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
- 			return -1;
- 		return 0;
-@@ -838,8 +838,7 @@ static int bisect_autostart(struct bisect_terms *terms)
+@@ -830,9 +830,6 @@ static int bisect_autostart(struct bisect_terms *terms)
+ 	fprintf_ln(stderr, _("You need to start by \"git bisect "
+ 			  "start\"\n"));
+ 
+-	if (!isatty(STDIN_FILENO))
+-		return -1;
+-
+ 	/*
+ 	 * TRANSLATORS: Make sure to include [Y] and [n] in your
  	 * translation. The program will only accept English input
- 	 * at this point.
- 	 */
--	yesno = git_prompt(_("Do you want me to do it for you "
--			     "[Y/n]? "), PROMPT_ECHO);
-+	yesno = git_prompt_echo(_("Do you want me to do it for you [Y/n]? "));
- 	res = tolower(*yesno) == 'n' ?
- 		-1 : bisect_start(terms, empty_strvec, 0);
- 
-diff --git a/credential.c b/credential.c
-index e7240f3f636..5509de382a5 100644
---- a/credential.c
-+++ b/credential.c
-@@ -5,6 +5,7 @@
- #include "run-command.h"
- #include "url.h"
- #include "prompt.h"
-+#include "prompt-password.h"
- #include "sigchain.h"
- #include "urlmatch.h"
- 
-@@ -169,11 +170,11 @@ static void credential_format(struct credential *c, struct strbuf *out)
- 	}
- }
- 
--static char *credential_ask_one(const char *what, struct credential *c,
--				int flags)
-+static char *credential_ask_one(struct credential *c, unsigned int password)
- {
- 	struct strbuf desc = STRBUF_INIT;
- 	struct strbuf prompt = STRBUF_INIT;
-+	const char *what = password ? "Password" : "Username";
- 	char *r;
- 
- 	credential_describe(c, &desc);
-@@ -182,7 +183,11 @@ static char *credential_ask_one(const char *what, struct credential *c,
- 	else
- 		strbuf_addf(&prompt, "%s: ", what);
- 
--	r = git_prompt(prompt.buf, flags);
-+	/* We'll try "askpass" for both usernames and passwords */
-+	r = git_prompt_askpass(prompt.buf);
-+	if (!r)
-+		r = password ? git_prompt_noecho(prompt.buf)
-+			     : git_prompt_echo(prompt.buf);
- 
- 	strbuf_release(&desc);
- 	strbuf_release(&prompt);
-@@ -192,11 +197,9 @@ static char *credential_ask_one(const char *what, struct credential *c,
- static void credential_getpass(struct credential *c)
- {
- 	if (!c->username)
--		c->username = credential_ask_one("Username", c,
--						 PROMPT_ASKPASS|PROMPT_ECHO);
-+		c->username = credential_ask_one(c, 0);
- 	if (!c->password)
--		c->password = credential_ask_one("Password", c,
--						 PROMPT_ASKPASS);
-+		c->password = credential_ask_one(c, 1);
- }
- 
- int credential_read(struct credential *c, FILE *fp)
-diff --git a/help.c b/help.c
-index 973e47cdc30..6eebc26fbeb 100644
---- a/help.c
-+++ b/help.c
-@@ -644,7 +644,7 @@ const char *help_unknown_cmd(const char *cmd)
- 			char *answer;
- 			struct strbuf msg = STRBUF_INIT;
- 			strbuf_addf(&msg, _("Run '%s' instead? (y/N)"), assumed);
--			answer = git_prompt(msg.buf, PROMPT_ECHO);
-+			answer = git_prompt_echo(msg.buf);
- 			strbuf_release(&msg);
- 			if (!(starts_with(answer, "y") ||
- 			      starts_with(answer, "Y")))
-diff --git a/prompt-password.c b/prompt-password.c
-new file mode 100644
-index 00000000000..5fa00363d6c
---- /dev/null
-+++ b/prompt-password.c
-@@ -0,0 +1,63 @@
-+#include "cache.h"
-+#include "prompt-password.h"
-+#include "strbuf.h"
-+#include "run-command.h"
-+#include "prompt.h"
-+
-+static char *do_askpass(const char *cmd, const char *prompt)
-+{
-+	struct child_process pass = CHILD_PROCESS_INIT;
-+	const char *args[3];
-+	static struct strbuf buffer = STRBUF_INIT;
-+	int err = 0;
-+
-+	args[0] = cmd;
-+	args[1]	= prompt;
-+	args[2] = NULL;
-+
-+	pass.argv = args;
-+	pass.out = -1;
-+
-+	if (start_command(&pass))
-+		return NULL;
-+
-+	strbuf_reset(&buffer);
-+	if (strbuf_read(&buffer, pass.out, 20) < 0)
-+		err = 1;
-+
-+	close(pass.out);
-+
-+	if (finish_command(&pass))
-+		err = 1;
-+
-+	if (err) {
-+		error("unable to read askpass response from '%s'", cmd);
-+		strbuf_release(&buffer);
-+		return NULL;
-+	}
-+
-+	strbuf_setlen(&buffer, strcspn(buffer.buf, "\r\n"));
-+
-+	return buffer.buf;
-+}
-+
-+char *git_prompt_askpass(const char *prompt)
-+{
-+	const char *askpass;
-+	char *r = NULL;
-+
-+	askpass = getenv("GIT_ASKPASS");
-+	if (!askpass)
-+		askpass = askpass_program;
-+	if (!askpass)
-+		askpass = getenv("SSH_ASKPASS");
-+	if (askpass && *askpass)
-+		r = do_askpass(askpass, prompt);
-+
-+	return r;
-+}
-+
-+char *git_prompt_noecho(const char *prompt)
-+{
-+	return git_prompt(prompt, 0);
-+}
-diff --git a/prompt-password.h b/prompt-password.h
-new file mode 100644
-index 00000000000..84933d2b7c5
---- /dev/null
-+++ b/prompt-password.h
-@@ -0,0 +1,7 @@
-+#ifndef PROMPT_PASSWORD_H
-+#define PROMPT_PASSWORD_H
-+
-+char *git_prompt_askpass(const char *prompt);
-+char *git_prompt_noecho(const char *prompt);
-+
-+#endif
 diff --git a/prompt.c b/prompt.c
-index 5ded21a017f..458d6637506 100644
+index 458d6637506..273bc30bf0e 100644
 --- a/prompt.c
 +++ b/prompt.c
-@@ -1,78 +1,27 @@
- #include "cache.h"
- #include "config.h"
--#include "run-command.h"
- #include "strbuf.h"
- #include "prompt.h"
- #include "compat/terminal.h"
+@@ -6,9 +6,15 @@
  
--static char *do_askpass(const char *cmd, const char *prompt)
-+char *git_prompt(const char *prompt, unsigned int echo)
+ char *git_prompt(const char *prompt, unsigned int echo)
  {
--	struct child_process pass = CHILD_PROCESS_INIT;
--	const char *args[3];
--	static struct strbuf buffer = STRBUF_INIT;
--	int err = 0;
--
--	args[0] = cmd;
--	args[1]	= prompt;
--	args[2] = NULL;
--
--	pass.argv = args;
--	pass.out = -1;
--
--	if (start_command(&pass))
--		return NULL;
--
--	strbuf_reset(&buffer);
--	if (strbuf_read(&buffer, pass.out, 20) < 0)
--		err = 1;
--
--	close(pass.out);
--
--	if (finish_command(&pass))
--		err = 1;
-+	char *r = NULL;
++	const char *test_var = "GIT_TEST_TERMINAL_PROMPT";
+ 	char *r = NULL;
  
--	if (err) {
--		error("unable to read askpass response from '%s'", cmd);
--		strbuf_release(&buffer);
--		return NULL;
-+	if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
-+		r = git_terminal_prompt(prompt, echo);
-+		if (!r)
-+			die_errno("could not read");
-+	} else {
-+		die("could not read terminal prompts disabled");
- 	}
+-	if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
++	if (git_env_bool(test_var, 0) && !isatty(0)) {
++		char reply[64];
++		if (!fgets(reply, sizeof(reply), stdin))
++			die("unable to read from stdin in '%s=true' mode", test_var);
++		return xstrdup(reply);
++	} else if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
+ 		r = git_terminal_prompt(prompt, echo);
+ 		if (!r)
+ 			die_errno("could not read");
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 1be85d064e7..2afb1b57b45 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -45,6 +45,47 @@ test_expect_success 'set up basic repo with 1 file (hello) and 4 commits' '
+      HASH4=$(git rev-parse --verify HEAD)
+ '
  
--	strbuf_setlen(&buffer, strcspn(buffer.buf, "\r\n"));
--
--	return buffer.buf;
-+	return r;
- }
++test_expect_success 'bisect "good" without a "start": no prompt' '
++	cat >expect <<-\EOF &&
++	You need to start by "git bisect start"
++
++	fatal: unable to read from stdin in '\''GIT_TEST_TERMINAL_PROMPT=true'\'' mode
++	EOF
++	test_expect_code 128 git bisect good HEAD 2>actual &&
++	test_cmp expect actual &&
++	test_must_fail git bisect bad HEAD~ 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'bisect "good" without a "start": have prompt' '
++	cat >expect <<-\EOF &&
++	You need to start by "git bisect start"
++
++	EOF
++	echo n | test_expect_code 1 git bisect good HEAD 2>actual &&
++	test_cmp expect actual &&
++	echo n | test_must_fail git bisect bad HEAD~ 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'bisect "good" without a "start": answer prompt' '
++	cat >expect <<-\EOF &&
++	You need to start by "git bisect start"
++
++	EOF
++	echo Y | git bisect good HEAD 2>actual &&
++	test_cmp expect actual &&
++
++	# We will only get this far with the "Y" prompt
++	cat >expect <<-\EOF &&
++	Some good revs are not ancestors of the bad rev.
++	git bisect cannot work properly in this case.
++	Maybe you mistook good and bad revs?
++	EOF
++	test_must_fail git bisect bad HEAD~ 2>actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'bisect starts with only one bad' '
+ 	git bisect reset &&
+ 	git bisect start &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 2679a7596a6..778a08ffe4b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -476,6 +476,10 @@ export GIT_TEST_MERGE_ALGORITHM
+ GIT_TRACE_BARE=1
+ export GIT_TRACE_BARE
  
--char *git_prompt(const char *prompt, int flags)
-+char *git_prompt_echo(const char *prompt)
- {
--	char *r = NULL;
--
--	if (flags & PROMPT_ASKPASS) {
--		const char *askpass;
--
--		askpass = getenv("GIT_ASKPASS");
--		if (!askpass)
--			askpass = askpass_program;
--		if (!askpass)
--			askpass = getenv("SSH_ASKPASS");
--		if (askpass && *askpass)
--			r = do_askpass(askpass, prompt);
--	}
--
--	if (!r) {
--		const char *err;
--
--		if (git_env_bool("GIT_TERMINAL_PROMPT", 1)) {
--			r = git_terminal_prompt(prompt, flags & PROMPT_ECHO);
--			err = strerror(errno);
--		} else {
--			err = "terminal prompts disabled";
--		}
--		if (!r) {
--			/* prompts already contain ": " at the end */
--			die("could not read %s%s", prompt, err);
--		}
--	}
--	return r;
-+	return git_prompt(prompt, 1);
- }
- 
- int git_read_line_interactively(struct strbuf *line)
-diff --git a/prompt.h b/prompt.h
-index e294e93541c..f4d38178bc4 100644
---- a/prompt.h
-+++ b/prompt.h
-@@ -1,11 +1,8 @@
- #ifndef PROMPT_H
- #define PROMPT_H
- 
--#define PROMPT_ASKPASS (1<<0)
--#define PROMPT_ECHO    (1<<1)
--
--char *git_prompt(const char *prompt, int flags);
--
-+char *git_prompt(const char *prompt, unsigned int echo);
-+char *git_prompt_echo(const char *prompt);
- int git_read_line_interactively(struct strbuf *line);
- 
- #endif /* PROMPT_H */
++# Have git_prompt_noecho() accept stdin
++GIT_TEST_TERMINAL_PROMPT=true
++export GIT_TEST_TERMINAL_PROMPT
++
+ # Use specific version of the index file format
+ if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
+ then
 -- 
 2.33.1.1570.g069344fdd45
 
