@@ -2,125 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C3DC433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 743CFC433F5
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8629F61078
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:20:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D00560F5A
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbhKBMXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 08:23:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40402 "EHLO
+        id S230305AbhKBMaK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 08:30:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbhKBMXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 08:23:12 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 613EBC061714
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 05:20:37 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id b12so28546857wrh.4
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 05:20:37 -0700 (PDT)
+        with ESMTP id S229778AbhKBMaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 08:30:09 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0917C061714
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 05:27:34 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id b71so4004118wmd.2
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 05:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=3MAVL0A/vqxyIJoQoO7MaZu3moL/Y4BKhLtuWbWx0pw=;
-        b=piI2lnhNyS4LxKkHOORcVJLUTmmQdbJVnq0WK0i1/RFJim39Rm0Zb4+tm5S35p/DDD
-         Zz43SP+oStBJnKm/9YhYZG9hQgwO3x9VeM2KiZcJKbbgGm6I+RSoJVzLn9MlxAIoliaI
-         Bv/NJNU/ToXl+dFIe4BCMCnPyxINZFmA56XQidP2r4SxDi6rKQED/2lDrPpbdd+NaIFl
-         VcUwzWR2XMx1YxbVdqxY/FqZb2YaAcP6ofVF/9451/aHVOhhm/8tdoh5yGbNNU5hrZnU
-         jQdG0lX2q/fNuYeDRnfMwORZT45ChazHig/1sWB2fXTm3ur3JVRRfOb01YOQUfnmzCk6
-         7afw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2OYZfL9SRn5IRgpOpTnH35YrlP+TgIADx/mAqsiLuNA=;
+        b=KJyKsNsgLYkz1Wsq/XUJ/G7BalLw0LzTY0yRV2nrlb16tBRQMewPaztULWTvacmgtJ
+         cDIQQSaJ/vHM+5DThanJxFaS7WJfsPGxdXFHy74BEAgMstjMKOl8ZcaOgU2qxy5n6wyq
+         vj3j6vTizXA6Da5L8bi7g7rg6xILU7GNcYcpwCRlfVFpoqWPf3kMGhQ8gcFwBCT1GCsS
+         8h+PeiIIW8sJH67E5YqG+eqx7xrS2MirKMQven5Gh88ai2nwaZcHY/82WKeqGe40KzFc
+         UwxVs+PEbqt6V/XGtWdF/lriD21YRByrN3v8Ilo6yfcUJCnpOAYBDpH3hrWl6hWxX/qt
+         GEqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=3MAVL0A/vqxyIJoQoO7MaZu3moL/Y4BKhLtuWbWx0pw=;
-        b=xSi0HCZBMBuLdB40Hjyoo0DlHYw8czaok2AneNf05AGqN9Ki/SukXA+U1Qc89H25DW
-         Kc3hiq7Dy4T9C8gW7aZLoQ1d/yBUCHC4Yoqnmeb+Ggb1t5YQEjlQ8nD1rnRalfOkuLTC
-         n7Wfr+7jR0sXt+FnqL78zb0Vm/Zc70GEJQY6HzUE5OHO3MCbN6qmbyDyKqGlPYuHLsMX
-         meslRJjw7nrps8QwV8NwrRXBkv5ueHcC0JBqepeZWHBjz+lDEZL0VLCL8Vpy26rzXGaM
-         +3aox5eOWldH+9NOdo4JBcQklQ5K3NNuH6FCENjPg+njSolnLERGaebn5MFognO9r0Va
-         STVw==
-X-Gm-Message-State: AOAM5321ntiHLLF3n81MZ6YXLb6MW4XC9qqIKvTIeaEzZllDsXYvzTf4
-        CFxtTij+dGqodvbzxK/JBjU=
-X-Google-Smtp-Source: ABdhPJyTdEAy7daGFuXG3f7JOsmRnEUFG2yFEyS9//xJ+HgvlWc4T8alfsyLSChvtXmruUL2cJ6dKQ==
-X-Received: by 2002:adf:f88c:: with SMTP id u12mr35776441wrp.29.1635855636016;
-        Tue, 02 Nov 2021 05:20:36 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id v6sm20361245wrx.17.2021.11.02.05.20.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Nov 2021 05:20:35 -0700 (PDT)
-Message-ID: <c510fd61-a079-c8fd-9203-61706f5534ac@gmail.com>
-Date:   Tue, 2 Nov 2021 12:20:35 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2OYZfL9SRn5IRgpOpTnH35YrlP+TgIADx/mAqsiLuNA=;
+        b=CxpN1sZ5Qu8CmH8iHqEE5U5XvmqTsucJBRC7E1JSc6TFbpo8ho3CfD+pJU+G5zaU2b
+         BY6V/LMrrI7v3+U46ZOgJgic8PJHutg+mRegAzz9ixiaJvd1J4Rgexut3Bb04nrsLXMx
+         rc0L9b6tQiUSkohPgTyf1AuDhWQJ3GUPe9KAGCusnslEvHXgOr98dbzTTJ9WkFbkCydQ
+         j/08wT7rsc7qzR7Phm4gvnJNp38atvHS21PgxnCa/RL4/0q9u3m3qmWnV91yV1KmyCwH
+         msd+7J4ffQHO3OKdS8PigPZT3anusvMPKk28x1Lzu6Do/oKgj2KiHNcRHX4tHPsoIPz5
+         RkuQ==
+X-Gm-Message-State: AOAM530IasfZUKExK2FpkjkeBvnUMgXb83S5JwKCzAaFDpqU7TcNSdFL
+        bLnPEKO0PR+4feHyqEUblZttUKe/YsT7eA==
+X-Google-Smtp-Source: ABdhPJwZVXYQOlhENbzYr1dj+R4KgXo84Rm4r9A95aF01gfCCDQ3rxafmdoyHPo/Cve37BbKWLLoxg==
+X-Received: by 2002:a1c:4c19:: with SMTP id z25mr6659976wmf.177.1635856053049;
+        Tue, 02 Nov 2021 05:27:33 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q84sm3332236wme.3.2021.11.02.05.27.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Nov 2021 05:27:32 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
+        Carlo Arenas <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v6 0/8] progress: assert "global_progress" + test fixes / cleanup
+Date:   Tue,  2 Nov 2021 13:27:22 +0100
+Message-Id: <cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
+In-Reply-To: <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com>
+References: <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: `BUG: sequencer.c:921: GIT_AUTHOR_DATE missing from author
- script` when trying to reword in interactive rebase
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-References: <000201d7cf76$a4861460$ed923d20$@ruhr-uni-bochum.de>
- <YYCT7tLfphH049h+@coredump.intra.peff.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <YYCT7tLfphH049h+@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/11/2021 01:27, Jeff King wrote:
-> On Tue, Nov 02, 2021 at 12:17:29AM +0100, Jonas Kittner wrote:
-> 
->> In the interactive prompt I changed `pick` to `reword`, saved and closed the
->> prompt.
->> Commands to repoduce see below
-> 
-> Thanks for the easy reproduction. Here are commands that slightly
-> simplify / automate things, which I used to bisect:
-> 
->    rm -rf repo
->    git init repo
->    cd repo
->    git commit --allow-empty -qm base
-> 
->    touch file
->    git add .
->    GIT_AUTHOR_DATE='@123456789 +0000' git commit -qm "this message says pick"
-> 
->    GIT_EDITOR='sed -i s/pick/reword/' \
->    git.compile rebase -i --committer-date-is-author-date HEAD^
-> 
->    # not strictly necessary, but when it works, you can see that the
->    # timestamps correctly match, and that "pick" was changed to "reword"
->    # in the message. Of course when it doesn't work, rebase aborts, so
->    # that's easier to see than looking at the commit. :)
->    git cat-file commit HEAD
-> 
->> What happened instead? (Actual behavior)
->> segfault: `BUG: sequencer.c:921: GIT_AUTHOR_DATE missing from author script`
->>
->> [...]
->>
->> https://github.com/git/git/commit/7573cec52c0274ceb166c425be4288f6b3103d6f#d
->> iff-0e574dc9087fc7831bbc1403545a8561f08869576c1ccc4146aa276146ff9777R888-R88
->> 9
->> this seems to be not the case and needs to be handled differently I guess?
-> 
-> It looks like things did work back in 7573cec52c (rebase -i: support
-> --committer-date-is-author-date, 2020-08-17). Bisecting shows that it
-> broke in baf8ec8d3a (rebase -r: don't write .git/MERGE_MSG when
-> fast-forwarding, 2021-08-20). +cc Phillip (who wrote both commits).
+A minor but important fixup of v5[1], as pointed out by Carlo Arenas
+the STDIN_FILENO I added in response to feedback in an earlier re-roll
+had a pretty bad off-by-one bug.
 
-Thanks for bisecting, I think I know what the problem is, I'll post a 
-fix tomorrow.
+As an aside that we have no tests for this "git bisect" code at all is
+pretty bad, I'll try to address that separately from this series.
 
-Best Wishes
+https://lore.kernel.org/git/cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com/
 
-Phillip
+Ævar Arnfjörð Bjarmason (8):
+  leak tests: fix a memory leaks in "test-progress" helper
+  progress.c test helper: add missing braces
+  progress.c tests: make start/stop commands on stdin
+  progress.c tests: test some invalid usage
+  progress.c: add temporary variable from progress struct
+  pack-bitmap-write.c: don't return without stop_progress()
+  various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+  progress.c: add & assert a "global_progress" variable
+
+ builtin/bisect--helper.c    |   2 +-
+ builtin/bundle.c            |   2 +-
+ compat/mingw.c              |   2 +-
+ pack-bitmap-write.c         |   6 +--
+ progress.c                  |  23 +++++++-
+ t/helper/test-progress.c    |  52 +++++++++++++-----
+ t/t0500-progress-display.sh | 105 ++++++++++++++++++++++++++++--------
+ 7 files changed, 150 insertions(+), 42 deletions(-)
+
+Range-diff against v5:
+1:  0c0e5bfc656 = 1:  88d89652831 leak tests: fix a memory leaks in "test-progress" helper
+2:  0ae86e40e16 = 2:  2fa92e7db83 progress.c test helper: add missing braces
+3:  767aa010026 = 3:  400b491449e progress.c tests: make start/stop commands on stdin
+4:  9bcc8cfc9d2 = 4:  7557975a122 progress.c tests: test some invalid usage
+5:  3a95613cd04 = 5:  61c8da31aeb progress.c: add temporary variable from progress struct
+6:  0300b802dcb = 6:  f6a76b80e91 pack-bitmap-write.c: don't return without stop_progress()
+7:  4795d4835b0 ! 7:  1a2eadf28d0 various *.c: use isatty(1|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    various *.c: use isatty(1|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+    +    various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+     
+         We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
+    -    only these two used the stdlib.h macros to refer to them.
+    +    and around 10 "isatty(0)", but these used the
+    +    {STDIN_FILENO,STD{OUT,ERR}_FILENO} macros in "stdlib.h" to refer to
+    +    them.
+     
+         Let's change these for consistency, and because a subsequent commit's
+         commit message outlines a recipe to change all of these for ad-hoc
+    @@ builtin/bisect--helper.c: static int bisect_autostart(struct bisect_terms *terms
+      			  "start\"\n"));
+      
+     -	if (!isatty(STDIN_FILENO))
+    -+	if (!isatty(1))
+    ++	if (!isatty(0))
+      		return -1;
+      
+      	/*
+8:  e58f4a0c1b9 = 8:  bff919994b5 progress.c: add & assert a "global_progress" variable
+-- 
+2.33.1.1570.g069344fdd45
 
