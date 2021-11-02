@@ -2,180 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D28C4C433F5
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8133C433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:46:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB9B661053
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:30:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB55B60FC4
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbhKBVdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 17:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230357AbhKBVd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 17:33:29 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 010FEC061714
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 14:30:54 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id b184-20020a1c1bc1000000b0033140bf8dd5so368921wmb.5
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 14:30:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qK3GXWF4UnQreLNCI6x6NZVoWEDu+NpG/tLx3DDiLqU=;
-        b=oGZG3ZInQGInrmsxZJjudqp2BvuH43I9l2ISEFm6lpPcSoBhDjcq3DAwnEfIM6w4+x
-         MqR5IZVZvcOW/LdjxnX9mrPg87dh54unRpbvCo2K60K+NwpCqQc0Yk68tKWBXfZB/Tno
-         HzvtW2W+EaMQZ23kqy37J4Duxb2Uk4KcGud0b8Z7w8BkoEMqxbnt38adYbF2hSFXcavv
-         zxxHMxzMDCU52g5UDnfDpmPbwmxWWp9/p6p1/ia5x8xe7wKdH7JtmQQGyFU0ECyIJPsU
-         5uMii5Y6Hx0g7TBnVi+NUz9iLA7lNFw6qwl5cvFDbmFYMHZqaC5p9XuQ6Bv72YK4dSB3
-         4cGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qK3GXWF4UnQreLNCI6x6NZVoWEDu+NpG/tLx3DDiLqU=;
-        b=Jc0Qb+Byu9sDIE6rzbHh1Ik+klN+Af+2vFos6MU8upWJE5TSPp9BpvCP1shPfx4ROm
-         SoB/SWc/KZUYTDLRDQCAvaY6oa8p1YsHs1DiHw2fy3O2BSY37Vbd3DNnvR2HuUvDjqMl
-         Hx7+1m8IW+EaFPuCaewT4XYPWUeDIu7b8CMHb05EnRx9aQ7YaEVUkcYYA33UJb/CHwJA
-         sQNqwNjGBS51IXaXrdmkcfK1oNyKTq48WlOyd3LdjewEf4rTCCPTqHQw9Pp5dmknSGpX
-         vlDAM/cCU6iF+4JsdtNRAbDffGN4C3FI/0CxzQoTr7qPCpNgTLhjsrpa8Y+6LmreTtT8
-         WtgA==
-X-Gm-Message-State: AOAM5313weqB4uNT1RtDwJe+XPADx4yTyXWnTzz6a4/b4UBsu7eSxlee
-        VeKTq1iScetRPwU4HhG6F+rSoFcMymc=
-X-Google-Smtp-Source: ABdhPJyip5FxIp0Db28h9kUGieB5LO3EoGSDkiMIMNeYxtMA0/NHrdpoeFBXgPI04XzVMgICOJ7fyQ==
-X-Received: by 2002:a05:600c:1c87:: with SMTP id k7mr10291840wms.103.1635888652489;
-        Tue, 02 Nov 2021 14:30:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k187sm3959547wme.0.2021.11.02.14.30.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Nov 2021 14:30:51 -0700 (PDT)
-Message-Id: <pull.1123.v2.git.git.1635888651183.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1123.git.git.1635883844710.gitgitgadget@gmail.com>
-References: <pull.1123.git.git.1635883844710.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 Nov 2021 21:30:51 +0000
-Subject: [PATCH v2] rebase -i: fix rewording with
- --committer-date-is-author-date
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S231218AbhKBVtB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 17:49:01 -0400
+Received: from mout.web.de ([212.227.15.14]:45277 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230382AbhKBVtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 17:49:00 -0400
+X-Greylist: delayed 3934 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Nov 2021 17:48:59 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1635889576;
+        bh=plUbFLyv4wMEKfQTcdvpEaYxLAM9tEwphn0B8cgB03c=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=YmEc93Yw1KuuKqanwxQ0+JrRnrx0FWzS3XpWW2/QAsMBExD4OSs8AJr3BGtWc5/W/
+         tRmjG2uozk40xOMlU1IAZsd+OjVtvrnIdUUoKaH6AYwg942uy2GYoHyFH/QJy2uvI/
+         VIZsxFH0a4hCylRddp20tBeNjGiu44o7y4rAzucg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8QeQ-1mVI9S0orq-00w0R8; Tue, 02
+ Nov 2021 22:46:16 +0100
+Date:   Tue, 2 Nov 2021 22:46:15 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 0/8] Allow clean/smudge filters to handle huge files
+ in the LLP64 data model
+Message-ID: <20211102214615.sflg5xgztdzrb27l@tb-raspi4>
+References: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
+ <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:HBUImWLVYUKptf2225DNlvKS0GbRwaFYaZKhMdV8R3XMuPkysTp
+ HUJvRh2kUXnX31FWpkaNL83V1WO2d3hHhW7QD0lplFzZWc9wJ7j76sxGWevHjnwGWxwmv9o
+ K7gMOvdCA8kJaWJh9NVIinjdgXhZ5JW/Wk9zWRPqOSw7ZB6cwBHfMgkRAbuFTiVfqWb8z9c
+ eUTKgR/QEdtk1PJsJSAMQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/rW9v8Jclzg=:1OMh2wakUBBNGYfYr7SokJ
+ 05IeH62qbU1HpWUsgX5/6350SqVtVpXoaW2QihDFukdxz5SFku/rjULuwGJ5tKzSvRqmZDcfT
+ 2KVZJVOdTNRUsKdvvgYhdZQlUM2YPmbT5auV+4rLyGFwWfXG0Toh+xYlZTq3U6JNm5PFOzZfu
+ IKnZ0UlzuqGiuWif08hkgGCZZvTYuTS3W4AMahn6/aMQ9XuitVVcyAtMsHalaHnZKeZ+/cTEn
+ eKA2LtAvRGp5uSTgUOgHpbGvZheaxCk5nptHEyblzdHua9YcH7xLVO9mLC3dzIFMVfDcJvYiX
+ 9AjiAN0lEfApGyQqo6l8CEOM2vQ63/gkN9CZWQ3PEvsn0ls37GHza/ELkskD/cTPApgwRtCVX
+ cSWLrofNec17eskenOPhrVMt0Chg2FbTPddJG3/XTIPuY4Kn5LSHSI441FrDt82y9MaND0Mqu
+ hQ04FdEeYXPmUHZVAry5V7KC5w+4w/460etAET6mxRsYN7eSxw8BSigeA1T3dGJxRWH59riBn
+ ZhudSmX5/8whrq5DO23CrjD0qoN572KVdrTV4iQlse5XWjdlnmCDOIQ74so8SWPtpQOOf31a/
+ VlAXBQHWBIlbbMfE/BOSUbbZ8Bo1KCmozeLryk9FpX7trvZZ7FWgC1L6xvnlhEYhKhyf4Yj4y
+ aycx9ry+wgnTdwr/PWoA5BpPagN+slARv28kPueR/U3UKyAbDZ+oBERSekF9nrs1GHh+QhbwD
+ rvVaBUuGVNR/kgdULlE+sBG1xNb5ZSRORP8ggM5OQWlPDyRBkOc5pvIYHYy+SMulXpCLJML4G
+ /jKlAaqVJimixQF8H2E5Pa/tU/0Q+QFSfXdbxuodVY0vMKI3CwDJkemCiBvtn+qUculGKOHGs
+ 3xuRsSO0Trlfmd8iXobdtQYjfJtlImqKb/AmN636uCfEDMoTVRYvq/erGBKRvqfvsGcxk3y4j
+ K8exnHfIzP9TO9gxEf5t+e2ZsYumWyQRAjPOltSJx3FRKAqfZug9r2NB63kpefpRD2bGn0ekj
+ RDTUFEAXgZ/HVrIJX3swDm6yAB74Ds/OFRmcaUDHsQktO8DqC5L8zaslSILxNY4zeec3LTlaC
+ zNmqraoxVPHhjo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Nov 02, 2021 at 03:46:03PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-baf8ec8d3a (rebase -r: don't write .git/MERGE_MSG when
-fast-forwarding, 2021-08-20) stopped reading the author script in
-run_git_commit() when rewording a commit. This is normally safe
-because "git commit --amend" preserves the authorship. However if the
-user passes "--committer-date-is-author-date" then we need to read the
-author date from the author script when rewording. Fix this regression
-by tightening the check for when it is safe to skip reading the author
-script.
+I could not convince my raspi to apply patch 7/8:
 
-Reported-by: Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-    rebase -i: fix rewording with --committer-date-is-author-date
-    
-    This regression was introduced in the current cycle and is present in
-    v2.34.0-rc0, v2.33.1 and maint
-    
-    Thanks to Jonas for reporting it and Peff for bisecting
+  git am </tmp/7
+  Applying: odb: guard against data loss checking out a huge file
+  error: patch failed: object-file.c:1344
+  error: object-file.c: patch does not apply
+  Patch failed at 0001 odb: guard against data loss checking out a huge file
+  hint: Use 'git am --show-current-patch=diff' to see the failed patch
+  When you have resolved this problem, run "git am --continue".
+  If you prefer to skip this patch, run "git am --skip" instead.
+  To restore the original branch and stop patching, run "git am --abort".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1123%2Fphillipwood%2Fwip%2Frebase-committer-date-is-author-date-fix-reword-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1123/phillipwood/wip/rebase-committer-date-is-author-date-fix-reword-v2
-Pull-Request: https://github.com/git/git/pull/1123
+I am not sure, what went wrong. I can retry the next days - or is this
+branch/series somewhere available ?
 
-Range-diff vs v1:
+But beside this, up to patch 6/8 it compiled without warnings.
+And the series looks good so far.
+Some minor nits had been found and reported for 2 of the patches/commit messages.
 
- 1:  fb88c58d2fb ! 1:  6565c02ba89 rebase -i: fix rewording with --committer-date-is-author-date
-     @@ Commit message
-          by tightening the check for when it is safe to skip reading the author
-          script.
-      
-     +    Reported-by: Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>
-          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-      
-       ## sequencer.c ##
-
-
- sequencer.c                    |  4 +++-
- t/t3436-rebase-more-options.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index cd2aabf1f76..ea96837cde3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -997,7 +997,9 @@ static int run_git_commit(const char *defmsg,
- 
- 	cmd.git_cmd = 1;
- 
--	if (is_rebase_i(opts) && !(!defmsg && (flags & AMEND_MSG)) &&
-+	if (is_rebase_i(opts) &&
-+	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
-+	     !(!defmsg && (flags & AMEND_MSG))) &&
- 	    read_env_script(&cmd.env_array)) {
- 		const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index 4d106642ba7..94671d3c465 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -82,6 +82,20 @@ test_expect_success '--committer-date-is-author-date works with merge backend' '
- 	test_ctime_is_atime -1
- '
- 
-+test_expect_success '--committer-date-is-author-date works when rewording' '
-+	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_MESSAGE=edited \
-+			FAKE_LINES="reword 1" \
-+			git rebase -i --committer-date-is-author-date HEAD^
-+	) &&
-+	test_write_lines edited "" >expect &&
-+	git log --format="%B" -1 >actual &&
-+	test_cmp expect actual &&
-+	test_ctime_is_atime -1
-+'
-+
- test_expect_success '--committer-date-is-author-date works with rebase -r' '
- 	git checkout side &&
- 	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
-@@ -155,6 +169,21 @@ test_expect_success '--reset-author-date with --committer-date-is-author-date wo
- 	test_atime_is_ignored -2
- '
- 
-+test_expect_success 'reset-author-date with --committer-date-is-author-date works when rewording' '
-+	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_MESSAGE=edited \
-+			FAKE_LINES="reword 1" \
-+			git rebase -i --committer-date-is-author-date \
-+				--reset-author-date HEAD^
-+	) &&
-+	test_write_lines edited "" >expect &&
-+	git log --format="%B" -1 >actual &&
-+	test_cmp expect actual &&
-+	test_atime_is_ignored -1
-+'
-+
- test_expect_success '--reset-author-date --committer-date-is-author-date works when forking merge' '
- 	GIT_SEQUENCE_EDITOR="echo \"merge -C $(git rev-parse HEAD) commit3\">" \
- 		PATH="./test-bin:$PATH" git rebase -i --strategy=test \
-
-base-commit: 0cddd84c9f3e9c3d793ec93034ef679335f35e49
--- 
-gitgitgadget
+[snip]
