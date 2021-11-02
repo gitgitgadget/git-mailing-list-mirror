@@ -2,133 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B47D8C433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 11:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFAEC433F5
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 11:35:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9496860EBB
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 11:29:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3196260F36
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 11:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbhKBLbc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 07:31:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56900 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbhKBLbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 07:31:32 -0400
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2E3C061714
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 04:28:57 -0700 (PDT)
-Received: by mail-ua1-x92f.google.com with SMTP id b17so27184400uas.0
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 04:28:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1UkS18fRvQFSLcV0XMZZOUL7xNGooLP3MDFxy1aZ6BI=;
-        b=ZwVD6nPWVOZx98RfzfLJ/2liAQo9uQlQBFOM0cEjuty6ADGzqcoujM8z56cvCa1YAR
-         xgeJOaCeZ7WhRff+ROVCUDqJ0oWoyLvW4JeTkJCmk5FoTlhgbWGyEVhR/RtwDKRSsucg
-         PwqpqO1v76gZh6KkfLuGAmLr77/1htGDIs1kQMmL5S+j/EDQ3uMYZgiuapDluHaVuOfY
-         GPtAh6GlHzyqz2/ercwwBP3TRbW+Vz5A4fWSQkRjYfgTVffyL/mQE+gV6IjfI9kgRjmw
-         OxuoDpIilNu1JSC7U4rBTdT6M75Oj0qhDr4a3x04CUAtiWGJ9IeBGdSfoEv0hJ5gtA0K
-         ICVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1UkS18fRvQFSLcV0XMZZOUL7xNGooLP3MDFxy1aZ6BI=;
-        b=Wo34sH+MTUp15/7uh26W/C48w9QRuicLbYMqrgQNKtkE9a045B/WV5tKeDfLpGCMdf
-         UL0wwqugiZJ6yRCyVWtCzgGC++qseB/KleXAdT+5hH6t7c54GzD+CfdlrFRd2nISBpGi
-         TJ+4U6Yqf+o1POmT6DpA8I3huxH5uLMu3rCutlLe/YJz4VtylE8F+LtA5AzNw70ivEdS
-         onklpEAE60+AgCOONBvOLC0h0yx6QjS03ZimaRTKBlC0LQN7RnMgum0l7FXO6Y3nf6wC
-         RW6cNIxA3fFE2Fod7R4cTYxOfBYliJW4jDeFCP/eSF5l/QF/UQCS0L3gU+jvH8d7HQ1r
-         O8OQ==
-X-Gm-Message-State: AOAM532PWtf1Fcm9wKtDi4ZKoD1QG7P+sOkGGvw9QbZ/1IYcQfP3GQPM
-        QQmIexS/QYNilasAQc31hW5Nm0BjMbYHILXBEqTS/vtq/9sYoQ==
-X-Google-Smtp-Source: ABdhPJxnnmNst8KeBwU0mOSQxRpfJ1QxxoYFb2VehS6+kPi+UxrVrwP95XxHRP9J3AMWKyBFalpuewwgkaU3+hCEpe0=
-X-Received: by 2002:a05:6102:d8d:: with SMTP id d13mr15368602vst.43.1635852536775;
- Tue, 02 Nov 2021 04:28:56 -0700 (PDT)
+        id S230102AbhKBLiL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 07:38:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51312 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229778AbhKBLiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 07:38:11 -0400
+Received: (qmail 2423 invoked by uid 109); 2 Nov 2021 11:35:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Nov 2021 11:35:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4317 invoked by uid 111); 2 Nov 2021 11:35:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Nov 2021 07:35:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 2 Nov 2021 07:35:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Dongsheng Song <dongsheng.song@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] strbuf_addftime(): handle "%s" manually
+Message-ID: <YYEihoLbEGi44dDb@coredump.intra.peff.net>
+References: <CAE8XmWpK0ubcTXOaxBKGKh1qU+73Rr181wMAM7KAAX_A5PEYOw@mail.gmail.com>
+ <YX5Zo9uV7qG73p6R@coredump.intra.peff.net>
+ <CAE8XmWqexT89v0R+iVcjOHF+WsF1caMu+toY_gyNmJ6BU_L=ZQ@mail.gmail.com>
+ <xmqqcznldobz.fsf@gitster.g>
+ <YX9nLJZXB3rOrMru@coredump.intra.peff.net>
+ <xmqq1r3zd9k5.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20211030020917.32132-1-worldhello.net@gmail.com> <20211031052156.5237-1-worldhello.net@gmail.com>
-In-Reply-To: <20211031052156.5237-1-worldhello.net@gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 2 Nov 2021 19:28:45 +0800
-Message-ID: <CAOLTT8Rv8jqWazJoKA0qTTRfQUxRny2b6XG+YsvXkT4D1xZ6_A@mail.gmail.com>
-Subject: Re: [PATCH] i18n: fix typos found during l10n for git 2.34.0
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <daniel@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1r3zd9k5.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> =E4=BA=8E2021=E5=B9=B410=E6=9C=8831=E6=
-=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8B=E5=8D=881:25=E5=86=99=E9=81=93=EF=BC=9A
->
-> Emir reported typos in some i18n messages in the pull request[1] of
-> Turkish language l10n for git 2.34.0.
->
-> * Use stable spelling for config variable "gpg.ssh.defaultKeyCommand".
-> * Add missing space between "with" and "--python".
->
-> [1] https://github.com/git-l10n/git-po/pull/567
->
-> Reported-by: Emir Sar=C4=B1 <bitigchi@me.com>
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  gpg-interface.c | 2 +-
->  ref-filter.c    | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 800d8caa67..68d2f29be7 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -775,7 +775,7 @@ static const char *get_default_ssh_signing_key(void)
->                 if (keys[0] && starts_with(keys[0]->buf, "ssh-")) {
->                         default_key =3D strbuf_detach(keys[0], NULL);
->                 } else {
-> -                       warning(_("gpg.ssh.defaultKeycommand succeeded bu=
-t returned no keys: %s %s"),
-> +                       warning(_("gpg.ssh.defaultKeyCommand succeeded bu=
-t returned no keys: %s %s"),
->                                 key_stderr.buf, key_stdout.buf);
->                 }
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 282cdad103..08a3f839c9 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1037,7 +1037,7 @@ int verify_ref_format(struct ref_format *format)
->                      format->quote_style =3D=3D QUOTE_TCL) &&
->                      used_atom[at].atom_type =3D=3D ATOM_RAW &&
->                      used_atom[at].u.raw_data.option =3D=3D RAW_BARE)
-> -                       die(_("--format=3D%.*s cannot be used with"
-> +                       die(_("--format=3D%.*s cannot be used with "
->                               "--python, --shell, --tcl"), (int)(ep - sp =
-- 2), sp + 2);
->                 cp =3D ep + 1;
->
+On Mon, Nov 01, 2021 at 11:18:02AM -0700, Junio C Hamano wrote:
 
-It is my negligence. Thanks.
+> > diff --git a/strbuf.c b/strbuf.c
+> > index b22e981655..8b8b1900bc 100644
+> > --- a/strbuf.c
+> > +++ b/strbuf.c
+> > @@ -1019,6 +1019,13 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+> >  			strbuf_addstr(&munged_fmt, "%%");
+> >  			fmt++;
+> >  			break;
+> > +		case 's':
+> > +			strbuf_addf(&munged_fmt, "%"PRItime,
+> > +				    tm_to_time_t(tm) -
+> > +				    3600 * (tz_offset / 100) -
+> > +				    60 * (tz_offset % 100));
+> > +			fmt++;
+> > +			break;
+> 
+> In show_date(), we start from UNIX time and go to "struct tm" using
+> either the system gmtime_r() (after adjusting the value with the tz
+> offset of the original timestamp) or localtime_r() (when we are
+> trying to show the value in our local timestamp), but this codepath
+> needs to undo that.  Our tm_to_time_t() indeed is basic but should
+> work correctly on a broken down UTC.  So the caller needs to further
+> compensate for the tz offset.
 
-> --
-> 2.34.0.rc0.8.g1f511a9b56
->
+This made me wonder how things interact with format-local. There's some
+subtlety, but I think all is well.
 
---
-ZheNing Hu
+I hadn't planned to work further on this, but now having thought about
+it some more, it seemed worth capturing that and putting the finishing
+touches on a real commit.
+
+-- >8 --
+Subject: [PATCH] strbuf_addftime(): handle "%s" manually
+
+The strftime() function has a non-standard "%s" extension, which prints
+the number of seconds since the epoch. But the "struct tm" we get has
+already been adjusted for a particular time zone; going back to an epoch
+time requires knowing that zone offset. Since strftime() doesn't take
+such an argument, round-tripping to a "struct tm" and back to the "%s"
+format may produce the wrong value (off by tz_offset seconds).
+
+Since we're already passing in the zone offset courtesy of c3fbf81a85
+(strbuf: let strbuf_addftime handle %z and %Z itself, 2017-06-15), we
+can use that same value to adjust our epoch seconds accordingly.
+
+Note that the description above makes it sound like strftime()'s "%s" is
+useless (and really, the issue is shared by mktime(), which is what
+strftime() would use under the hood). But it gets the two cases for
+which it's designed correct:
+
+  - the result of gmtime() will have a zero offset, so no adjustment is
+    necessary
+
+  - the result of localtime() will be offset by the local zone offset,
+    and mktime() and strftime() are defined to assume this offset when
+    converting back (there's actually some magic here; some
+    implementations record this in the "struct tm", but we can't
+    portably access or manipulate it. But they somehow "know" whether a
+    "struct tm" is from gmtime() or localtime()).
+
+This latter point means that "format-local:%s" actually works correctly
+already, because in that case we rely on the system routines due to
+6eced3ec5e (date: use localtime() for "-local" time formats,
+2017-06-15). Our problem comes when trying to show times in the author's
+zone, as the system routines provide no mechanism for converting in
+non-local zones. So in those cases we have a "struct tm" that came from
+gmtime(), but has been manipulated according to our offset.
+
+The tests cover the broken round-trip by formatting "%s" for a time in a
+non-system timezone. We use the made-up "+1234" here, which has two
+advantages. One, we know it won't ever be the real system zone (and so
+we're actually testing a case that would break). And two, since it has a
+minute component, we're testing the full decoding of the +HHMM zone into
+a number of seconds. Likewise, we test the "-1234" variant to make sure
+there aren't any sign mistakes.
+
+There's one final test, which covers "format-local:%s". As noted, this
+already passes, but it's important to check that we didn't regress this
+case. In particular, the caller in show_date() is relying on localtime()
+to have done the zone adjustment, independent of any tz_offset we
+compute ourselves. These should match up, since our local_tzoffset() is
+likewise built around localtime(). But it would be easy for a caller to
+forget to pass in a correct tz_offset to strbuf_addftime(). Fortunately
+show_date() does this correctly (it has to because of the existing
+handling of %z), and the test continues to pass. So this one is just
+future-proofing against a change in our assumptions.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache.h         |  1 +
+ date.c          |  2 +-
+ strbuf.c        | 14 +++++++++++++-
+ t/t0006-date.sh |  4 ++++
+ 4 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index eba12487b9..aa6f380d10 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1588,6 +1588,7 @@ timestamp_t approxidate_careful(const char *, int *);
+ timestamp_t approxidate_relative(const char *date);
+ void parse_date_format(const char *format, struct date_mode *mode);
+ int date_overflows(timestamp_t date);
++time_t tm_to_time_t(const struct tm *tm);
+ 
+ #define IDENT_STRICT	       1
+ #define IDENT_NO_DATE	       2
+diff --git a/date.c b/date.c
+index c55ea47e96..84bb4451c1 100644
+--- a/date.c
++++ b/date.c
+@@ -9,7 +9,7 @@
+ /*
+  * This is like mktime, but without normalization of tm_wday and tm_yday.
+  */
+-static time_t tm_to_time_t(const struct tm *tm)
++time_t tm_to_time_t(const struct tm *tm)
+ {
+ 	static const int mdays[] = {
+ 	    0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334
+diff --git a/strbuf.c b/strbuf.c
+index b22e981655..a569b99ab9 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -1006,7 +1006,12 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+ 
+ 	/*
+ 	 * There is no portable way to pass timezone information to
+-	 * strftime, so we handle %z and %Z here.
++	 * strftime, so we handle %z and %Z here. Likewise '%s', because
++	 * going back to an epoch time requires knowing the zone.
++	 *
++	 * Note that tz_offset is in the "[-+]HHMM" decimal form; this is what
++	 * we want for %z, but the computation for %s has to convert to number
++	 * of seconds.
+ 	 */
+ 	for (;;) {
+ 		const char *percent = strchrnul(fmt, '%');
+@@ -1019,6 +1024,13 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
+ 			strbuf_addstr(&munged_fmt, "%%");
+ 			fmt++;
+ 			break;
++		case 's':
++			strbuf_addf(&munged_fmt, "%"PRItime,
++				    tm_to_time_t(tm) -
++				    3600 * (tz_offset / 100) -
++				    60 * (tz_offset % 100));
++			fmt++;
++			break;
+ 		case 'z':
+ 			strbuf_addf(&munged_fmt, "%+05d", tz_offset);
+ 			fmt++;
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 6b757d7169..794186961e 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -63,6 +63,10 @@ check_show 'format-local:%%z' "$TIME" '%z'
+ check_show 'format:%Y-%m-%d %H:%M:%S' "$TIME" '2016-06-15 16:13:20'
+ check_show 'format-local:%Y-%m-%d %H:%M:%S' "$TIME" '2016-06-15 09:13:20' '' EST5
+ 
++check_show 'format:%s' '123456789 +1234' 123456789
++check_show 'format:%s' '123456789 -1234' 123456789
++check_show 'format-local:%s' '123456789 -1234' 123456789
++
+ # arbitrary time absurdly far in the future
+ FUTURE="5758122296 -0400"
+ check_show iso       "$FUTURE" "2152-06-19 18:24:56 -0400" TIME_IS_64BIT,TIME_T_IS_64BIT
+-- 
+2.34.0.rc0.612.g98bfd90890
+
