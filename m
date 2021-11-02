@@ -2,65 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AAE0C433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D91C433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:20:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AD7E60F24
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:12:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1480E60F24
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 15:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234200AbhKBPPO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 11:15:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41665 "EHLO mout.gmx.net"
+        id S231877AbhKBPWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 11:22:54 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55847 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234629AbhKBPNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 11:13:48 -0400
+        id S231437AbhKBPWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 11:22:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635865859;
-        bh=DDb95HAf7rXxatyWHQCeE73r2cBLVgaxIIU5pudMZDk=;
+        s=badeba3b8450; t=1635866411;
+        bh=A8rzlOuRffRDxYqtxL4Mvf/lViMNeksd4P9OXGLrjKo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NdlvbcZ4aHUZiVQkjOmG9GWWQ5D9L+tdO4A2GngLNX94+8IOr80A/gcx3/bl1GFt0
-         k/U/dY16p430DgCAdKHJ/JO5fZWjA8sfKaYE+k+fQzFd10NFNdW9fulXVW3nGcH+Ba
-         OtO8njbI7JS7CMrmGXM+cGeULNqnIE5/pW7tZ1zk=
+        b=LxsEVtMqaOsskMURaIwhr1pukc6TbNwj/dUee3ypENrXcxGvEuddADmSwqP2Yh8sG
+         Y9Jm1JTUVOaPF7I6CmEWk7UB9zi61EerLr/1PsTPBYXMM10RrfEjOEZu0N8Fmy+Gku
+         7EeESsIwHNC6qdRrhMFix9+upzNAwjTx21ImEgcU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.20.119.151] ([213.196.213.29]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Msq2E-1mSbXv07uS-00tAab; Tue, 02
- Nov 2021 16:10:59 +0100
-Date:   Tue, 2 Nov 2021 16:10:57 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N79uI-1mgv1b1Zxk-017RxL; Tue, 02
+ Nov 2021 16:20:11 +0100
+Date:   Tue, 2 Nov 2021 16:20:09 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Matt Cooper via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matt Cooper <vtbassmatt@gmail.com>
-Subject: Re: [PATCH v3 5/8] odb: teach read_blob_entry to use size_t
-In-Reply-To: <xmqqwnlvfmjr.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111021601360.56@tvgsbejvaqbjf.bet>
-References: <pull.1068.v2.git.1635454237.gitgitgadget@gmail.com> <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com> <dbef8168bc7044dbc8471c5ecc7146cf3e979263.1635515959.git.gitgitgadget@gmail.com> <xmqqwnlvfmjr.fsf@gitster.g>
+cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        vtbassmatt@gmail.com
+Subject: Re: [PATCH 1/3] test-lib: add prerequisite for 64-bit platforms
+In-Reply-To: <xmqqee84pyfb.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111021619020.56@tvgsbejvaqbjf.bet>
+References: <pull.1068.git.1635320952.gitgitgadget@gmail.com> <20211028205649.84036-1-carenas@gmail.com> <20211028205649.84036-2-carenas@gmail.com> <nycvar.QRO.7.76.6.2110282344330.56@tvgsbejvaqbjf.bet> <CAPUEspj2B7M_-cbA2O3LickF7MeVYNtXjfJMBMeYkLag5K=Z3g@mail.gmail.com>
+ <xmqqee84pyfb.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QzvlihCl6Uorj60K5r/7BBOiB5Ztm+tiYXdznBgE5bavb0953cj
- cmxyiTW1aDohhWDB0CCYVmSYkp+Dsy+njsW1nPfLgXqAPb187sHxIlwuOHS8UaQ6bJtJvTe
- IhcPmZm9/g4LyNbidIW8SGugDfjHb3LRhkZSjzTtEGIJVaQ1JkQMMaGKMLQlbHaq8mtAg93
- SuE/Rct0zR3pcu5lteyGw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0q25PFgRHm0=:3ZKSR+EkLxfb2981hZbbKh
- A9bkbWT3wnkQk8CVRyIVmp+ouMt7ZGnyv89RdzWodxf/CFfB5x8d+j8+WTw6zlRuKZP2bReEb
- Ixhjxay0g5JXOtcaGI5G3YZbGs7tfEDxtNJYk3wVd7JI7Vxc2SdJ4l2EiNmXTycXjEnKNXiFB
- cS9S3Wt+gBfBHC0t6xQYIASPmWa+ttWV3Vgspsrmttfp+xm//N7fS8MA8JYH+H+SkDLGil3cm
- 1YzLNcizpsVWqrWltJm+WxhCq3j3nQwyWfdoDLe2FSJKoCmssYJn4yLmx/ALxziRV4lbay9mH
- epyAc6paQPEkG//Qr2DaP2+No6Bf5uRlbOcsJxcEtYG3hhj9nwmvPMExwOUkJU5BSw4UGeGFA
- nmKUAle31KHea2LETxG1NSsQl2oPGHoMV4NWAFYpea1AYPerXVi/3WFb0/L52m3vW3N8KMMQR
- A1OHOwYSSod8fZBXM0hAOXExViWygNjwxcwZ1IPV1IOsj7MWnQUNE2Aa5g5snQHe0r9O9pykO
- xvdw+7xykBt1HhF0i6A7IGt6S3wO+IjQabmydErGgnimMe/Toi8Mjl9LjtXXVGv8wO4m+3zg4
- QeOiNF1gwAaqo2wlg710Zz9kv6NB5VgnRei8vco4A/I6PxsrxuqsPDY8fxBZtMyqqXLjrBEb8
- yxSVSYkgl/nbWkwmoCNB0DQ/QI/BgKJlIFlDiXEPpdY9Yp6TTddmXZSbjx5ahp02wqtDGL+xM
- ERkHMEwc1g4moDD7zDu+rFIQlSj80cRgcJgC99/Rt++3XDXEaQBg2ZM/pMcHLleWnKNI6gMub
- 1TFiSBUvcx/vIYDNbTV3LJzgxM9WenU0gaOTC1FBh9ur4rEp51/6xj7jHcrEV3s1Zhj8mBKGQ
- 4xuG9P4gL9oiXFaAoMDnllQ+LdSz0CwCIpqyjdpipjE3FPn9zIIsxfkxax+jdy1uT9zcILQQB
- Y0oeQJiIQ4bF4xKRLki/qbuWSX6JZfr89Y3si7e4vJoqd1Z2qcIKXGSe7vTuh+/CO3GDuBK9l
- IQauKID4VGeHbJc1mX2OxkikO1WoyvTeon8Vey7BjRbqEVvfEfApfT8O9qELk8bcFx6lv03YP
- Axhvxq1SMWq1Q8=
+X-Provags-ID: V03:K1:urR/ljm6o+SmklT5pKuw62IiRPjbjC5ThL7S3M0ck+oFsSyV084
+ A6KOLYnlzhU8jeFWYA7X49a2C4KD2W6HprSxD3gVgGXUQhqeo6B88+eP2mFyLzCc29SELPL
+ DTW82MAUGmjNWjaCvNxxbjOLGuq0yQK4AoGLMdoV9BaJv/OUChk9o3fluq5ORhHQAzgl3ix
+ 9Pw34JXYPNaqeM9QrO25Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1J9flrWwPig=:lMAYGyFisWij6l9A1c7CxX
+ rAD3ALVYG47ZU7jxIAT3dKgQ4qb4sN98+8DVMaTySyezqOhUpPb4DCXd8L5dPRKRFAG9C1mA1
+ FVMIbMZa3igFYaKEaw71r3exBWV26NY+jOFcRrMMkx9P3BTKWY4DLaeiuOg9i22/eQgUlxN0j
+ +Wd2jQq/MVOR64W95aPwUD9V+w4lWEbZMboYH4tCyc54Vmsz2bxWvGmsWg933oQ9+8Zeu4iLN
+ 20mw44ABqSaDNxkKJg7wOAT+IAimB6RcksrtxpuOM1MYwJfn5yqrb9xPu/+ieTwsMsMJVDZQ6
+ c+9KFxZws0BqkrEEvWzt9sCA4Fj0o8hBkdYN6Hyng0vjw6CzRtA5c3g3WqyIB1IQuRAdT9j1d
+ HauZGoiDz3MgMxIB05STnOMx3+tI1yataThWEGcpP/Qe3ntRfIBcnh7t5shq5XPg4eqP5UhLi
+ SKc8s8dhX/kvM8SXud/hwTwBf520f3hP68WtEO/01sH/Qol3jlUxN2JLyFa+tL7G/9LSSTc6A
+ Wzt7hSzA2/ziK0qq+1BhTVjZG19w+kXLQ5BgjFztwOv4BQ+I6UehEU0DJ7KDzt7MqLo/zJ6Fu
+ Rj1VMdj9LXJvCC+NtLQo4uoL8hmXusIyqYLfHhMKV8SJ1W7/228oDb1aFj6azbhGi1KFnFpic
+ VNCwxpYYPCjQS7IkC3H2p+nQrxgZVlMpsZ1DZI6RS5d1Z0kTc5qrLF0uLIFHnFZ5t+414Rx5n
+ V7LWhuLQql3MHIcW9oRaZ5pitJM0+kjQ4CxapxYutpdwLVaunI/YhZ+ydJLhT64q3uN0UAUHj
+ ZP9Tj7r/54fdYb971URzm3e3/aZbWvxItjI8IUvjHAYvkAU0rbf6GJClSkeJvs7LsI8+D9o3o
+ UiRUCyqp/gbGx21+k6IhRd2F/fEYkR7bTQcA5GK6DyQoSv21TRu6wv6+mqey9hieSwVYO3Bcs
+ k4z6oMz/0MoiqBh1Dzp5TksOtvylPLpsG0vRSvtCvRMo/kQU8PHS3Glv0uu/092DkGeX4TFAP
+ rXlzVwQNp4S2iZ1j/j6cH5+TlM7RxdwKzVhRW+JkSXZxUKLTIJyFgIRwaa6VOobx/HDRgBe4v
+ 3yXaGquJwvZHaw=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,66 +67,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Fri, 29 Oct 2021, Junio C Hamano wrote:
+On Thu, 28 Oct 2021, Junio C Hamano wrote:
 
-> "Matt Cooper via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Carlo Arenas <carenas@gmail.com> writes:
 >
-> > -void *read_blob_entry(const struct cache_entry *ce, unsigned long *si=
-ze)
-> > +void *read_blob_entry(const struct cache_entry *ce, size_t *size)
-> >  {
-> >  	enum object_type type;
-> > -	void *blob_data =3D read_object_file(&ce->oid, &type, size);
-> > +	unsigned long ul;
-> > +	void *blob_data =3D read_object_file(&ce->oid, &type, &ul);
+> >> Since this is clearly copied from `LONG_IS_64BIT`, why the change fro=
+m
+> >> `-le` to `-eq`? It is at least inconsistent to use anything different
+> >> here.
 > >
-> > +	*size =3D ul;
+> > My assumption is that the check for sizeof(size_t) we have is really
+> > about finding the bit width of the platform, and we currently support
+> > 2 of them (32-bit and 64-bit), which is why the name I chose was
+> > "IS_64BIT" and also why I was strict on it being exactly 8 bytes
+> > (considering all platforms git supports have bytes with 8 bits).
+> >
+> > It can go eitherway IMHO, and your point about being inconsistent
+> > (with my lack of explanation in the commit) suggests we should instead
+> > use your proposal, do you want me to resend or could adjust them in
+> > your tree?
 >
-> It is a bit curious place to draw the line; we want to make sure
-> that blob_entry can hold huge data, but in this step we do not mind
-> read_object_file() is not capable of going full 64-bit?
+> Is LONG_IS_64BIT used to ensure that long is _at least_ 64 bit?  If
+> so, perhaps its name may need to be rethought.  On the other hand,
+> if it is meant to ensure that long is exactly 64 bit, then it should
+> use -eq to compare.
 
-Indeed that is the case. The consideration here is: how large of a patch
-series do I want to take this late in the cycle?
+`LONG_IS_64BIT` is used by the `tar` tests to ensure that `long` can
+represent file sizes larger than 4GB. So yeah, it is an `_AT_LEAST_`
+instead of an `_IS_`.
 
-Here is the call tree (for full details, look no further than
-https://github.com/git-for-windows/git/pull/3487#issuecomment-950727616):
-
-    read_object_file()
-        repo_read_object_file()
-            read_object_file_extended()
-                read_object()
-                    oid_object_info_extended()
-                        do_oid_object_info_extended()
-                            loose_object_info()
-                                parse_loose_header_extended()
-                            packed_object_info()
-                                cache_or_unpack_entry()
-                                    unpack_entry()
-                                        unpack_object_header()
-                                           unpack_object_header_buffer()
-                                get_size_from_delta()
-                                    get_delta_hdr_size()
-
-All three leaves have code that needs to be adjusted to use `size_t`
-instead of `unsigned long`, and all of the other functions in that call
-tree need to be adjusted for that. Some of the callers do not even pass an
-`unsigned long` pointer around, but instead a pointer to `struct
-object_info` (which, you guessed it, also has an `unsigned long` that
-should have been a `size_t` from the beginning).
-
-This is too big a change I am willing to work on, let alone accept, this
-late in the cycle.
-
-Sure, it would fix the scenario where clean/smudge filters are not even
-involved (read: `git add`ing a 5GB file _directly_). But the potential for
-bugs to hide!
-
-> I guess I'll see soon enough why by reading later steps.  I can see
-> that for the purpose of making write_entry() aware of the size_t,
-> this is necessary at the minimum.
-
-I fear that you won't see more about this in the later steps ;-)
+Not -rc material, though.
 
 Ciao,
 Dscho
