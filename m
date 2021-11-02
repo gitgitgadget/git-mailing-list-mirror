@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97B4CC4332F
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A9AC433F5
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8363860F5A
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A623060EDF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 12:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbhKBMaR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 08:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
+        id S231303AbhKBMaS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 08:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231194AbhKBMaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 08:30:14 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46780C0613F5
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 05:27:39 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso1946377wme.3
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 05:27:39 -0700 (PDT)
+        with ESMTP id S231138AbhKBMaP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 08:30:15 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46DA0C061766
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 05:27:40 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id z11-20020a1c7e0b000000b0030db7b70b6bso1769195wmc.1
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 05:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xzlJzQtD48Z6qakgyJN9Jyj7/OVEDeqjq2OC7yZmO2s=;
-        b=DgqA0R+yGuTpynBsCzlaneTvsSxlRwLQynukmcrynik/736qq59BWwoa8jIyfzFrYT
-         eS1szLL6YA39BM8g7Q+RLw94RqGssDN/OGXRL1ca2eP6C7q4qc1WGgz5PARsx6t8ePC+
-         3n+Iu9P8Seu2yvOI7BjL9t7TWjO8IsTkDk8lOHBtZfz1nP664U6dRkBRn8J8ZGEk5s5P
-         SIPWuXZuAUbaeL8BlnhPga7SkcNbwfNFnyGocJIye/0BAE2yGOZfHKCajcXdcXmagTmM
-         eCZHXNeLowxZfSwb0J4NGBXnjTenLFVgGpsvFPpOYEJlQFQmL7FndHSuBnbN8O9HFkwN
-         zGBw==
+        bh=r/jMWJfUEO0PCU/P85MG9HQhuFL4Ay91kAEpF6M/Lyk=;
+        b=h+LjEajZWr43bEAJ0NzaZqGfQHaop3tEUWQnh67zomXRUsFqOAmB2flWBEQ3zKU/oV
+         yHJpi5lTF9KEIwf0ysNoJ/ZequGf/Ey+eFkO3LoG26LdV5iZzIly7MQJhzJSOSVyEBrQ
+         LaY7GLDdr7pzAjeVxTTUJmuVm1Bodw+e1E391fOfJSQv/eq7tbgVLYtyRAXAM8jY8o14
+         ByRwN51E3xI7jJ6MAMmJ/caJKCecLKdR1yerHFp1tpFZsUD+cTh1SBuT/OSaiVDACcIp
+         Nu+egvO/dwiD6WbB8hbM77wARyms57tTMiVEBnCbgorq/6miwkIfJHoGpk7NalS7Vr/9
+         qqPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xzlJzQtD48Z6qakgyJN9Jyj7/OVEDeqjq2OC7yZmO2s=;
-        b=a3uYimVkZZXGLNWiKqC8UY5KgCqEaeg8C9KRMEqcj5DvnUeSyvl35OtkFgWMSthkGY
-         GbqcEm/oNvzi+gprOlaR9ksqh7P1D+b03GN6gMNcUdEnToaw9LHI4uB5Ug3wlPQYtK7j
-         /UHU0LmdoVwKPtM8NKW9yoqNZ325X6VBXMGq6oEDE5Lxvzv1uHVFKCffaDWLirvjx966
-         YcoOJJRlR0KHNcyPR+vJTEoPdRfOcMAOUMWJyIKJAuE2Yn7AnCTcXqVSz7pduJ0dDIzy
-         n+Y8iEY4dbWOquB8iPqCvLq9plSTvFXS86v0XUwxMffk0+7fgiwmtWrrQIxkXXwvbZnd
-         N3tw==
-X-Gm-Message-State: AOAM530JjB4yEd5pEvT4JSqEPnfrTv02f7GShscIsiQ1A3kaXwtmVLYs
-        tclT+ct+CMsRtrMoXsxfCRw/zZdYmcZGUg==
-X-Google-Smtp-Source: ABdhPJwdt5gvDjVNGaJ6n7D5C33/9AO973RfYeF7EawdD9pk7sBalrYT+jQ9CdKBcv2MwWv2Ne8FDg==
-X-Received: by 2002:a05:600c:a45:: with SMTP id c5mr6589698wmq.79.1635856057514;
-        Tue, 02 Nov 2021 05:27:37 -0700 (PDT)
+        bh=r/jMWJfUEO0PCU/P85MG9HQhuFL4Ay91kAEpF6M/Lyk=;
+        b=5279UVcvpX5/nKfYhmY75pMJSXsY39aR0tYDiR0hfcAj1rF5s5MZMVmm0V9txN4h23
+         YA8EjvmlHDloHlfkjgEnKt7+LxRwqEPskXoc/2qbPl617z86V8bNGe+XETWpPDWatnSp
+         sPxUedX7IAA7GNA+FZN3tJ8SeSFsgGEN3t4QyW38bEUi5X1UPCjb2lJoZKkxudXy/9lI
+         oYe1PWQkECgZpQWHVXOu9Ju/RrNfyWLt+x9jqUQuUuqdl1XxrA/LChUk0YCn2fIV8kDF
+         pjXW0FVb05p0Emlzc03wUjEKF8c32X2RiorJLZlw6iO7roTQl1pue3UW7Dhj8Vt5GSMl
+         HMGQ==
+X-Gm-Message-State: AOAM5316wxCdXLZ8B9QvOFR29Z4PTFCOUt74JGG3WxRuMYpMWt1xyb8m
+        jgGfXnMJnJSNJ948O0fn+Jo34luIbCh0+Q==
+X-Google-Smtp-Source: ABdhPJz/94YPuOaDcpkARk9UXhvzojxOMR7GIqFMYL0hcnMdCMZVDJtsuJ4iPb/KY3zg8lslWHfgIQ==
+X-Received: by 2002:a1c:f31a:: with SMTP id q26mr6624957wmq.148.1635856058577;
+        Tue, 02 Nov 2021 05:27:38 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q84sm3332236wme.3.2021.11.02.05.27.36
+        by smtp.gmail.com with ESMTPSA id q84sm3332236wme.3.2021.11.02.05.27.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Nov 2021 05:27:36 -0700 (PDT)
+        Tue, 02 Nov 2021 05:27:37 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Carlo Arenas <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 5/8] progress.c: add temporary variable from progress struct
-Date:   Tue,  2 Nov 2021 13:27:27 +0100
-Message-Id: <patch-v6-5.8-61c8da31aeb-20211102T122507Z-avarab@gmail.com>
+Subject: [PATCH v6 6/8] pack-bitmap-write.c: don't return without stop_progress()
+Date:   Tue,  2 Nov 2021 13:27:28 +0100
+Message-Id: <patch-v6-6.8-f6a76b80e91-20211102T122507Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.1.1570.g069344fdd45
 In-Reply-To: <cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com>
 References: <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com> <cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com>
@@ -74,41 +74,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a temporary "progress" variable for the dereferenced p_progress
-pointer to a "struct progress *". Before 98a13647408 (trace2: log
-progress time and throughput, 2020-05-12) we didn't dereference
-"p_progress" in this function, now that we do it's easier to read the
-code if we work with a "progress" struct pointer like everywhere else,
-instead of a pointer to a pointer.
+Fix a bug that's been here since 7cc8f971085 (pack-objects: implement
+bitmap writing, 2013-12-21), we did not call stop_progress() if we
+reached the early exit in this function.
 
+We could call stop_progress() before we return, but better yet is to
+defer calling start_progress() until we need it.
+
+This will matter in a subsequent commit where we BUG(...) out if this
+happens, and matters now e.g. because we don't have a corresponding
+"region_end" for the progress trace2 event.
+
+Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- progress.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ pack-bitmap-write.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/progress.c b/progress.c
-index 680c6a8bf93..76a95cb7322 100644
---- a/progress.c
-+++ b/progress.c
-@@ -325,15 +325,16 @@ void stop_progress(struct progress **p_progress)
- 	finish_if_sparse(*p_progress);
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 9c55c1531e1..cab3eaa2acd 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -575,15 +575,15 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
  
- 	if (*p_progress) {
-+		struct progress *progress = *p_progress;
- 		trace2_data_intmax("progress", the_repository, "total_objects",
- 				   (*p_progress)->total);
+ 	QSORT(indexed_commits, indexed_commits_nr, date_compare);
  
- 		if ((*p_progress)->throughput)
- 			trace2_data_intmax("progress", the_repository,
- 					   "total_bytes",
--					   (*p_progress)->throughput->curr_total);
-+					   progress->throughput->curr_total);
- 
--		trace2_region_leave("progress", (*p_progress)->title, the_repository);
-+		trace2_region_leave("progress", progress->title, the_repository);
+-	if (writer.show_progress)
+-		writer.progress = start_progress("Selecting bitmap commits", 0);
+-
+ 	if (indexed_commits_nr < 100) {
+ 		for (i = 0; i < indexed_commits_nr; ++i)
+ 			push_bitmapped_commit(indexed_commits[i]);
+ 		return;
  	}
  
- 	stop_progress_msg(p_progress, _("done"));
++	if (writer.show_progress)
++		writer.progress = start_progress("Selecting bitmap commits", 0);
++
+ 	for (;;) {
+ 		struct commit *chosen = NULL;
+ 
 -- 
 2.33.1.1570.g069344fdd45
 
