@@ -2,128 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5666C433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 00:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD212C433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 00:58:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ABCF61051
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 00:45:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6B8560EE9
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 00:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbhKBAm7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Nov 2021 20:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53656 "EHLO
+        id S229947AbhKBBBZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Nov 2021 21:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbhKBAm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Nov 2021 20:42:58 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0BAC061714
-        for <git@vger.kernel.org>; Mon,  1 Nov 2021 17:40:24 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id w15so70127104edc.9
-        for <git@vger.kernel.org>; Mon, 01 Nov 2021 17:40:24 -0700 (PDT)
+        with ESMTP id S229479AbhKBBBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Nov 2021 21:01:25 -0400
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325E0C061714
+        for <git@vger.kernel.org>; Mon,  1 Nov 2021 17:58:51 -0700 (PDT)
+Received: by mail-vk1-xa2a.google.com with SMTP id b125so8006894vkb.9
+        for <git@vger.kernel.org>; Mon, 01 Nov 2021 17:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=BFaKfEqmHojqJjUI5Ki8nofXRFj4oURD7Qe2nVYWWm8=;
-        b=G3kFt8LbuFjuoeqTZ7xXbRX8mdxh/TPChFYg3uiNG0PdQ8ekuN/BJ/84wTJXzrD2ki
-         oCA63Uk6YEy+0ygC8LrRttsezO/A7rQcc2Z2GBNrQCHuTKigZu7+IAKOugeR3+jTsQ2H
-         /I9g7jp7asoz+cgxhlY+lE4BhOZ8/qTby729jvYsCIDQX9h90iGMz+SN83zdBcMFyosp
-         409aOjXsZfNHF62l2zagtd75WUNcJba5JJSFH3IB2nX7fJuijd3jMXt4q2R7m3cy09qE
-         VwvBOqniYyBYplusQTF5MoFF8bJoxTmXs310uqyihB7aSxs/z2CBKasBXC0DIf3qQmcP
-         hHPw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uukVM7otUzKFp2fZzJtgbsWvp+YWzbxXeF4PpC5piX0=;
+        b=qVZDb0U+cvKwOtkO0XzOF5/RJiLaEf7/m79QQchNcZT7Ah+6JZ8QyyH8nVIp441/dC
+         VanomMutK70OyuFr8ZVVhlIUhyiD0RSWxw6zyxvOzG6pMNpy765DGHjVPYk2Gw6hKeVc
+         mWhhCM5sL+AD+/K8Jnie3tk3lA2Q7MN+JKEcO3WMNQxhXfTIIPMlWlJiPcg2mp7UO7Wb
+         pKPwAM8l0cQ+DJ6ILP3RsHozQUWte6VZBvqus8pCtoKI5DQ5uLPtfBIzyQ3mKyt68U/f
+         Qx7O6C1lmbuwMTrGumKwQv78QjNPofERFkcdC9o8cQk5kT2j2lKXX1RCLOMScb16TbNY
+         MTEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=BFaKfEqmHojqJjUI5Ki8nofXRFj4oURD7Qe2nVYWWm8=;
-        b=6I+m6IDTwfTrXuFawdUBh7j9EgTi5oimhjGw1OilPQTgb4f6dOcG64gy/iPtqf/bB0
-         AN3dPgDaVVe5ZzcOy6KIbasbPLBjvNiBuIZJ3JyH9MTuPB8bVYHV/aihDHrvshDrRDqX
-         cFsiICSW6SL/SN/gLK9W1WfZbtGAfa2Ckebd8Kp76sz3vyU0aPhZTMvRDCMwy/uZGFNn
-         DTxeRvbwputIAH1/MgBUElc19dEsZKMyTg1QzxT0zaHQ6PsEaoRVgjhHTgT6I4DmrcOv
-         AZOVhBfPkcOllzht/oHFp5WxtHXOzmzAxhzUBSwohmsx+92un5mT884EIe1WtwBFoJdR
-         QyFw==
-X-Gm-Message-State: AOAM531I+M4rVFPPAtnvlqeHH98Vfcz7R8FZmpTMtowC0J7i2XWy9YEM
-        KYGKiRCOB9JXOE8vePIVOV+mJZ5QgfYy8A==
-X-Google-Smtp-Source: ABdhPJwWUd06jGi/xIucCb9Wn599KlPzpNwFoQ70n5EQtKQffA1RlhY8uEz8PjCanTdNSDUwsBtjJw==
-X-Received: by 2002:a50:e0cf:: with SMTP id j15mr47502838edl.23.1635813622063;
-        Mon, 01 Nov 2021 17:40:22 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id oz40sm7717922ejc.82.2021.11.01.17.40.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 17:40:21 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mhhqf-002CRV-58;
-        Tue, 02 Nov 2021 01:40:21 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com, gitster@pobox.com,
-        johannes.schindelin@gmx.de
-Subject: Re: [PATCH v3 1/3] t0301: fixes for windows compatibility
-Date:   Tue, 02 Nov 2021 01:37:01 +0100
-References: <20210913085600.35506-1-carenas@gmail.com>
- <20210914072600.11552-1-carenas@gmail.com>
- <20210914072600.11552-2-carenas@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20210914072600.11552-2-carenas@gmail.com>
-Message-ID: <211102.86y2671jbe.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uukVM7otUzKFp2fZzJtgbsWvp+YWzbxXeF4PpC5piX0=;
+        b=RObB5GQTyuAiQKfE+SoMKZ648T6PAVk+Q0nY8x2uENWtsKok4S2mxSSBy+IiU45ro9
+         LOQSdRsleuYGV53SyyLaviHV6UMef1vpS/3bRwQKTqCRa2Fmdc+M0f5SyUkV0tbvRUqG
+         dUtyP2r/3PgEbVxn+dmnORKAf+UEWNdeYBnhrYtcg1Rsg8VMo7vbYNLrt2H3DIfuPdO8
+         pbjXzse7bZoY/OPjQINnpmmZUNQcrJ0D7hROBJJeFAWS61OegZOali67ujf0MRrnT1P4
+         SgXg1YW55hkF+jfxIhxbJuhWkV7cJ/Ao6jfcEZiOXopYbdx6xiviefdCgXHeTO4C+mrE
+         GHpQ==
+X-Gm-Message-State: AOAM530OtVVY/s83eAsKWCp+cDlzjLhl/9YO+uzZVL4ZvrxLz7IS0c5l
+        Wua9FRboYGn0woo5/Q/OvQrPTmRuTTeHHa9hgkY=
+X-Google-Smtp-Source: ABdhPJwY7WUiOYbVPz4ynIuHywyseFx95b40/yuXCrLSvhBNcAfvSuNG/zvoOg1WSie4pK13CWNzaflvExoPPOHU6QU=
+X-Received: by 2002:a05:6122:50a:: with SMTP id x10mr7155254vko.23.1635814730305;
+ Mon, 01 Nov 2021 17:58:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <cover-v4-0.8-00000000000-20211025T111915Z-avarab@gmail.com>
+ <cover-v5-0.8-00000000000-20211101T190630Z-avarab@gmail.com> <patch-v5-7.8-4795d4835b0-20211101T190630Z-avarab@gmail.com>
+In-Reply-To: <patch-v5-7.8-4795d4835b0-20211101T190630Z-avarab@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 1 Nov 2021 17:58:39 -0700
+Message-ID: <CAPUEspg1wFhQviN652E0riDOuicxF_gS=hguk4+Dd7BLoci90g@mail.gmail.com>
+Subject: Re: [PATCH v5 7/8] various *.c: use isatty(1|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 1, 2021 at 12:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
+> only these two used the stdlib.h macros to refer to them.
+>
+> Let's change these for consistency, and because a subsequent commit's
+> commit message outlines a recipe to change all of these for ad-hoc
+> testing, not needing to match these with that ad-hoc regex will make
+> things easier to explain.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/bisect--helper.c | 2 +-
+>  builtin/bundle.c         | 2 +-
+>  compat/mingw.c           | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 28a2e6a5750..1727cb051fb 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -830,7 +830,7 @@ static int bisect_autostart(struct bisect_terms *term=
+s)
+>         fprintf_ln(stderr, _("You need to start by \"git bisect "
+>                           "start\"\n"));
+>
+> -       if (!isatty(STDIN_FILENO))
+> +       if (!isatty(1))
 
-On Tue, Sep 14 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+STDIN_FILENO -> 0
 
-> [...]
-> `mkdir -m` can't represent a valid ACL directly and fails with
-> permission problems, so instead call mkdir followed by chmod, which
-> has been enhanced to do so.
-
-This looks like a good change:
-
->  test_expect_success 'use user socket if user directory exists' '
-> @@ -79,14 +94,15 @@ test_expect_success 'use user socket if user director=
-y exists' '
->  		git credential-cache exit &&
->  		rmdir \"\$HOME/.git-credential-cache/\"
->  	" &&
-> -	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
-> +	mkdir -p "$HOME/.git-credential-cache/" &&
-> +	chmod 700 "$HOME/.git-credential-cache/" &&
->  	check approve cache <<-\EOF &&
->  	protocol=3Dhttps
->  	host=3Dexample.com
->  	username=3Dstore-user
->  	password=3Dstore-pass
->  	EOF
-> -	test -S "$HOME/.git-credential-cache/socket"
-> +	test_path_is_socket "$HOME/.git-credential-cache/socket"
->  '
-
-But this adjacent changes is also needed to make this pass on
-AIX. I.e. for the adjacent test, which I assume "works" on your Windows
-setup because it doesn't have SYMLINKS:
-
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index 698b7159f03..120b50e8c14 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -111,7 +111,8 @@ test_expect_success SYMLINKS 'use user socket if user d=
-irectory is a symlink to
-                rmdir \"\$HOME/dir/\" &&
-                rm \"\$HOME/.git-credential-cache\"
-        " &&
--       mkdir -p -m 700 "$HOME/dir/" &&
-+       mkdir -p "$HOME/dir/" &&
-+       chmod 700 "$HOME/dir/" &&
-        ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
-        check approve cache <<-\EOF &&
-        protocol=3Dhttps
-
-FWIW on AIX this fails because apparently they got quoting wrong and end
-up trying to shell out to "chmod 700 [trash dir name up to the first
-space]", i.e. the "trash directory" part.
-
-Not an rc0 issue, this has been in "master" for a while...
+Carlo
