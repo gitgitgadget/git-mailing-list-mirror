@@ -2,92 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8133C433EF
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A170EC433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 22:32:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB55B60FC4
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 21:46:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8431E61058
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 22:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbhKBVtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 17:49:01 -0400
-Received: from mout.web.de ([212.227.15.14]:45277 "EHLO mout.web.de"
+        id S229835AbhKBWer (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 18:34:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51892 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230382AbhKBVtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 17:49:00 -0400
-X-Greylist: delayed 3934 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Nov 2021 17:48:59 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1635889576;
-        bh=plUbFLyv4wMEKfQTcdvpEaYxLAM9tEwphn0B8cgB03c=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=YmEc93Yw1KuuKqanwxQ0+JrRnrx0FWzS3XpWW2/QAsMBExD4OSs8AJr3BGtWc5/W/
-         tRmjG2uozk40xOMlU1IAZsd+OjVtvrnIdUUoKaH6AYwg942uy2GYoHyFH/QJy2uvI/
-         VIZsxFH0a4hCylRddp20tBeNjGiu44o7y4rAzucg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8QeQ-1mVI9S0orq-00w0R8; Tue, 02
- Nov 2021 22:46:16 +0100
-Date:   Tue, 2 Nov 2021 22:46:15 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 0/8] Allow clean/smudge filters to handle huge files
- in the LLP64 data model
-Message-ID: <20211102214615.sflg5xgztdzrb27l@tb-raspi4>
-References: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
- <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
+        id S229685AbhKBWeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 18:34:46 -0400
+Received: (qmail 3756 invoked by uid 109); 2 Nov 2021 22:32:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Nov 2021 22:32:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12018 invoked by uid 111); 2 Nov 2021 22:32:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Nov 2021 18:32:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 2 Nov 2021 18:32:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: fix rewording with
+ --committer-date-is-author-date
+Message-ID: <YYG8aq85UmMMVW4l@coredump.intra.peff.net>
+References: <pull.1123.git.git.1635883844710.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:HBUImWLVYUKptf2225DNlvKS0GbRwaFYaZKhMdV8R3XMuPkysTp
- HUJvRh2kUXnX31FWpkaNL83V1WO2d3hHhW7QD0lplFzZWc9wJ7j76sxGWevHjnwGWxwmv9o
- K7gMOvdCA8kJaWJh9NVIinjdgXhZ5JW/Wk9zWRPqOSw7ZB6cwBHfMgkRAbuFTiVfqWb8z9c
- eUTKgR/QEdtk1PJsJSAMQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/rW9v8Jclzg=:1OMh2wakUBBNGYfYr7SokJ
- 05IeH62qbU1HpWUsgX5/6350SqVtVpXoaW2QihDFukdxz5SFku/rjULuwGJ5tKzSvRqmZDcfT
- 2KVZJVOdTNRUsKdvvgYhdZQlUM2YPmbT5auV+4rLyGFwWfXG0Toh+xYlZTq3U6JNm5PFOzZfu
- IKnZ0UlzuqGiuWif08hkgGCZZvTYuTS3W4AMahn6/aMQ9XuitVVcyAtMsHalaHnZKeZ+/cTEn
- eKA2LtAvRGp5uSTgUOgHpbGvZheaxCk5nptHEyblzdHua9YcH7xLVO9mLC3dzIFMVfDcJvYiX
- 9AjiAN0lEfApGyQqo6l8CEOM2vQ63/gkN9CZWQ3PEvsn0ls37GHza/ELkskD/cTPApgwRtCVX
- cSWLrofNec17eskenOPhrVMt0Chg2FbTPddJG3/XTIPuY4Kn5LSHSI441FrDt82y9MaND0Mqu
- hQ04FdEeYXPmUHZVAry5V7KC5w+4w/460etAET6mxRsYN7eSxw8BSigeA1T3dGJxRWH59riBn
- ZhudSmX5/8whrq5DO23CrjD0qoN572KVdrTV4iQlse5XWjdlnmCDOIQ74so8SWPtpQOOf31a/
- VlAXBQHWBIlbbMfE/BOSUbbZ8Bo1KCmozeLryk9FpX7trvZZ7FWgC1L6xvnlhEYhKhyf4Yj4y
- aycx9ry+wgnTdwr/PWoA5BpPagN+slARv28kPueR/U3UKyAbDZ+oBERSekF9nrs1GHh+QhbwD
- rvVaBUuGVNR/kgdULlE+sBG1xNb5ZSRORP8ggM5OQWlPDyRBkOc5pvIYHYy+SMulXpCLJML4G
- /jKlAaqVJimixQF8H2E5Pa/tU/0Q+QFSfXdbxuodVY0vMKI3CwDJkemCiBvtn+qUculGKOHGs
- 3xuRsSO0Trlfmd8iXobdtQYjfJtlImqKb/AmN636uCfEDMoTVRYvq/erGBKRvqfvsGcxk3y4j
- K8exnHfIzP9TO9gxEf5t+e2ZsYumWyQRAjPOltSJx3FRKAqfZug9r2NB63kpefpRD2bGn0ekj
- RDTUFEAXgZ/HVrIJX3swDm6yAB74Ds/OFRmcaUDHsQktO8DqC5L8zaslSILxNY4zeec3LTlaC
- zNmqraoxVPHhjo=
+In-Reply-To: <pull.1123.git.git.1635883844710.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 02, 2021 at 03:46:03PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Tue, Nov 02, 2021 at 08:10:44PM +0000, Phillip Wood via GitGitGadget wrote:
 
-I could not convince my raspi to apply patch 7/8:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> baf8ec8d3a (rebase -r: don't write .git/MERGE_MSG when
+> fast-forwarding, 2021-08-20) stopped reading the author script in
+> run_git_commit() when rewording a commit. This is normally safe
+> because "git commit --amend" preserves the authorship. However if the
+> user passes "--committer-date-is-author-date" then we need to read the
+> author date from the author script when rewording. Fix this regression
+> by tightening the check for when it is safe to skip reading the author
+> script.
 
-  git am </tmp/7
-  Applying: odb: guard against data loss checking out a huge file
-  error: patch failed: object-file.c:1344
-  error: object-file.c: patch does not apply
-  Patch failed at 0001 odb: guard against data loss checking out a huge file
-  hint: Use 'git am --show-current-patch=diff' to see the failed patch
-  When you have resolved this problem, run "git am --continue".
-  If you prefer to skip this patch, run "git am --skip" instead.
-  To restore the original branch and stop patching, run "git am --abort".
+That description makes sense, and the patch matches. Not being that
+familiar with this area, my biggest question would be: are there are
+other cases that would need the same treatment? And is there a way we
+can make it easier to avoid forgetting such a case in the future?
 
-I am not sure, what went wrong. I can retry the next days - or is this
-branch/series somewhere available ?
+> diff --git a/sequencer.c b/sequencer.c
+> index cd2aabf1f76..ea96837cde3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -997,7 +997,9 @@ static int run_git_commit(const char *defmsg,
+>  
+>  	cmd.git_cmd = 1;
+>  
+> -	if (is_rebase_i(opts) && !(!defmsg && (flags & AMEND_MSG)) &&
+> +	if (is_rebase_i(opts) &&
+> +	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
+> +	     !(!defmsg && (flags & AMEND_MSG))) &&
+>  	    read_env_script(&cmd.env_array)) {
+>  		const char *gpg_opt = gpg_sign_opt_quoted(opts);
 
-But beside this, up to patch 6/8 it compiled without warnings.
-And the series looks good so far.
-Some minor nits had been found and reported for 2 of the patches/commit messages.
+This conditional is getting pretty complicated. I wonder if a helper
+like:
 
-[snip]
+  if (is_rebase_i(opts) && !needs_env_script(...))
+
+might help, but I guess it needs a funky array of inputs (defmsg, flags,
+and opts). So maybe it is just making things worse.
+
+> +test_expect_success '--committer-date-is-author-date works when rewording' '
+> +	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_COMMIT_MESSAGE=edited \
+> +			FAKE_LINES="reword 1" \
+> +			git rebase -i --committer-date-is-author-date HEAD^
+> +	) &&
+> +	test_write_lines edited "" >expect &&
+> +	git log --format="%B" -1 >actual &&
+> +	test_cmp expect actual &&
+> +	test_ctime_is_atime -1
+> +'
+
+This test make sense (I had to look up what "-1" means for
+test_ctime_is_atime; it's passed to git-log to decide which commits to
+look at).
+
+> +test_expect_success 'reset-author-date with --committer-date-is-author-date works when rewording' '
+> +	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_COMMIT_MESSAGE=edited \
+> +			FAKE_LINES="reword 1" \
+> +			git rebase -i --committer-date-is-author-date \
+> +				--reset-author-date HEAD^
+> +	) &&
+> +	test_write_lines edited "" >expect &&
+> +	git log --format="%B" -1 >actual &&
+> +	test_cmp expect actual &&
+> +	test_atime_is_ignored -1
+> +'
+
+And this one I guess is covering the --ignore-date cut-out in the code?
+I think it would pass even without it, as that is just noting a case
+where we _don't_ need to call read_env_script(). But I don't know if
+there is any user-visible effect of accidentally calling it when we
+don't need to (my impression is that it's just a performance thing).
+
+-Peff
