@@ -2,170 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF4B6C43219
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 20:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91E88C433F5
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 20:10:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA67660720
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 20:08:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D5A86109F
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 20:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbhKBUK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 16:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36508 "EHLO
+        id S230376AbhKBUNX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 16:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230071AbhKBUKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 16:10:54 -0400
-Received: from todd.t-8ch.de (todd.t-8ch.de [IPv6:2a01:4f8:c010:41de::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47223C061203
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 13:08:18 -0700 (PDT)
-Date:   Tue, 2 Nov 2021 21:08:16 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=t-8ch.de; s=mail;
-        t=1635883697; bh=5vaxMYzvl5hd1DdMFCSOq0jIdl6n2ErKzOf4Bd/HAXI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nteTu9XmvfLKBbNl+CWZH3btC1vc/KHNUFdrt96yohHT/9+xUrrQxwdKtdZkLQPWQ
-         q0JDqS8Ld2FMstIVZFM11hOnZy6cduDUPTDkzasl7FcrP6jfGrpUiwDN1v199Q8tdS
-         nkzc6exS9Eygb3oAFJ9B6RM1+/dzX3Nc+ebUKZjs=
-From:   Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] var: add GIT_DEFAULT_BRANCH variable
-Message-ID: <5a64a438-07c3-489a-aca5-d677ae15c3ca@t-8ch.de>
-References: <nycvar.QRO.7.76.6.2111021433010.56@tvgsbejvaqbjf.bet>
- <20211102164434.1005707-1-thomas@t-8ch.de>
- <211102.86czni1o72.gmgdl@evledraar.gmail.com>
- <06095eb4-df18-4f23-8e72-26882c49f25c@t-8ch.de>
- <211102.868ry61hy3.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        with ESMTP id S229813AbhKBUNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 16:13:22 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618B7C061714
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 13:10:47 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id o4-20020a1c7504000000b0032cab7473caso2221833wmc.1
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 13:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=0B3D0MVt5XUnBVfz1RB+yowAcX4X/EWu1jCZgtEOY7k=;
+        b=RjITMyFwqK1a4Ko7rStZBMXA147rnzBvBKow5igKFSpGG0vGXTIS4JpIlnZYA7yrl1
+         w5WabqjOB+HyYRiTk/Jk0YWjFPv8wi95qmliv+6+P/9dbuCzomYuhaqRDc3EjyzdGI8n
+         O/NRAIjEj5auUit+g7SHaTwDyzrrH7cHWidEpGwDyh6EuwKDjXZKh/Tz39ZaXoCRap8I
+         IJjYvWn5QIUU/QEfbYCCUGbRE32oF4BrKgv8IjfO1F7dvnR0zYaBtqtZsPnJ1BekksB8
+         9o9eOu0mFay4RwQlGTLoLZmnvLd/o6GhrtyKohVbeS6hc63hrPs6who23MYT5f9AKH5x
+         T0uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=0B3D0MVt5XUnBVfz1RB+yowAcX4X/EWu1jCZgtEOY7k=;
+        b=yGmBC+d0IzZ4SoiFN7xtST3V/X+IU12DHaIocUsMgn3nB7dCIW4dvNGOcKIZSlBHq4
+         a7Y/jgBEAcKTnfOan9CCly/6iRgwRmxr2lt/xBcGrgfaWDJWWfAn1ZUFUra3LnqAJ9EE
+         ScSCHNUMxvPIopchlqWQ/85BsEK/NulDMMIzPS96g5dNtd/gmSrJ7CctMksVSmN8Jx3T
+         c8mNT1B3YCNdhel3INtvNGKHp6LQXO9iFx8Ex4dTwIdrPGHETKcGDmGOsU5Ja2KBAcQq
+         TCI28MZFKD4gCuRHpz/8PpYK1D2PqBHEfLpdI1jRlgVHjs4Y6Ydt9L/lxGXUdoo8HC1/
+         pg5Q==
+X-Gm-Message-State: AOAM530bL8H8ZeLXdVHzRcjCFCCcazi555Z15v/UdRYhCJ7oAh8MJZq+
+        q/CfkLGgfwM5Nj1s2avjreDFqEOIMXw=
+X-Google-Smtp-Source: ABdhPJwWHLAuFQhVx3cfA1G3NhHqIixoXIpbPSXWzf6I1Eszc4+cLvIUTfzGAFUUlJzS1ct9JiBX0Q==
+X-Received: by 2002:a1c:a710:: with SMTP id q16mr9971392wme.138.1635883845743;
+        Tue, 02 Nov 2021 13:10:45 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u6sm11532wmc.29.2021.11.02.13.10.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Nov 2021 13:10:45 -0700 (PDT)
+Message-Id: <pull.1123.git.git.1635883844710.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 02 Nov 2021 20:10:44 +0000
+Subject: [PATCH] rebase -i: fix rewording with --committer-date-is-author-date
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <211102.868ry61hy3.gmgdl@evledraar.gmail.com>
-Jabber-ID: thomas@t-8ch.de
-X-Accept: text/plain, text/html;q=0.2, text/*;q=0.1
-X-Accept-Language: en-us, en;q=0.8, de-de;q=0.7, de;q=0.6
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jonas Kittner <jonas.kittner@ruhr-uni-bochum.de>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-11-02 20:14+0100, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Nov 02 2021, Thomas Weißschuh wrote:
-> 
-> > On 2021-11-02 17:53+0100, Ævar Arnfjörð Bjarmason wrote:
-> >> On Tue, Nov 02 2021, Thomas Weißschuh wrote:
-> >> 
-> >> > Introduce the builtin variable GIT_DEFAULT_BRANCH which represents the
-> >> > the default branch name that will be used by git-init.
-> >> >
-> >> > Currently this variable is equivalent to
-> >> >     git config init.defaultbranch || 'master'
-> >> >
-> >> > This however will break if at one point the default branch is changed as
-> >> > indicated by `default_branch_name_advice` in `refs.c`.
-> >> >
-> >> > By providing this command ahead of time users of git can make their
-> >> > code forward-compatible.
-> >> >
-> >> > Co-developed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> >> > Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-> >> > ---
-> >> >
-> >> > Changes from v1 ( https://lore.kernel.org/git/20211030140112.834650-1-thomas@t-8ch.de/ ):
-> >> > * Replaced the custom subcommand with an internal variable
-> >> > * Cleaned up the tests
-> >> >
-> >> > @Johannes: I replaced BUG() with die() from your example because that seems to be
-> >> > nicer for user facing messages.
-> >> >
-> >> >  Documentation/git-var.txt |  3 +++
-> >> >  builtin/var.c             | 13 +++++++++++++
-> >> >  t/t0007-git-var.sh        | 19 +++++++++++++++++++
-> >> >  3 files changed, 35 insertions(+)
-> >> >
-> >> >  
-> >> > +static const char *default_branch(int flag)
-> >> > +{
-> >> > +	const char *name = repo_default_branch_name(the_repository, 1);
-> >> > +
-> >> > +	if (!name)
-> >> > +		die("could not determine the default branch name");
-> >> 
-> >> Isn't this die() unrechable given the similar logic in
-> >> repo_default_branch_name()? Hence the previous BUG(...)?
-> >
-> > Ok. Good point.
-> >
-> >> I really don't see how it makes sense to add this to "git var", we have
-> >> that to correspond to environment variables we use.
-> >> 
-> >> *Maybe* if we renamed GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME to
-> >> GIT_INITIAL_BRANCH_NAME and made it a non-test thing like
-> >> GIT_TEMPLATE_DIR, but even then shouldn't we be adding
-> >> "GIT_TEMPLATE_DIR" and any number of other things to this as well?
-> >> 
-> >> I'm not saying that your patch needs to do that, but we really should
-> >> think about the interface & future implications if we're going in this
-> >> direction.
-> >> 
-> >> The reason I suggested extending "git config" in [1] is because it seems
-> >> like a natural thing for "git config" to learn to spew out our idea of
-> >> default hardcoded config values to the user.
-> >> 
-> >> But creating a variable form of that existing config just so we can have
-> >> "git var" spew it out just seems weird.
-> >> 
-> >> We don't have or need such a variable now for anything else, so why go
-> >> through that indirection, instead of something that closes the feature
-> >> gap of asking what a config variable default is?
-> >> 
-> >> In any case whatever we do here this really should be updating the
-> >> documentation of init.defaultbranch & the relevant bits in the "git
-> >> init" manpage to add cross-references, similar to how we discuss
-> >> GIT_TEMPLATE_DIR now.
-> >>
-> >> 1. https://lore.kernel.org/git/211030.86ilxe4edm.gmgdl@evledraar.gmail.com/
-> >
-> > I'll then wait for a consensus of the git devs. The actual implementation
-> > shouldn't be the issue afterwards.
-> >
-> > Thanks for looking into this!
-> 
-> Please don't take that message as me or anyone else "pulling rank" just
-> because we've got some previous commits in git.git. That applies to both
-> me and Johannes, and clearly we disagree on this minor bit of UX
-> direction.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This was not my impression, although my message has a bit of a resignated
-tone. That was not the intention.
+baf8ec8d3a (rebase -r: don't write .git/MERGE_MSG when
+fast-forwarding, 2021-08-20) stopped reading the author script in
+run_git_commit() when rewording a commit. This is normally safe
+because "git commit --amend" preserves the authorship. However if the
+user passes "--committer-date-is-author-date" then we need to read the
+author date from the author script when rewording. Fix this regression
+by tightening the check for when it is safe to skip reading the author
+script.
 
-> I'd think if anything the opinion of someone who's not overly familiar
-> with the system would be more valuable, i.e. yours, especially since you
-> tried & failed to find a way to do this recently. Would you find it more
-> intuitive to look in say "git var" over "git config" for this sort of
-> information?
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    rebase -i: fix rewording with --committer-date-is-author-date
+    
+    This regression was introduced in the current cycle and is present in
+    v2.34.0-rc0, v2.33.1 and maint
+    
+    Thanks to Jonas for reporting it and Peff for bisecting
 
-To be honest I was not aware of "git var" before Johannes before proposed it.
-And I am still not sure how to understand the "logical" aspect of "git-var".
-(git-var - Show a Git logical variable)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1123%2Fphillipwood%2Fwip%2Frebase-committer-date-is-author-date-fix-reword-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1123/phillipwood/wip/rebase-committer-date-is-author-date-fix-reword-v1
+Pull-Request: https://github.com/git/git/pull/1123
 
-A "git config" variable using a generic config default framework looks like the
-generally cleanest interface.
-The appeal of "git var" was the easy and quick implementation.
+ sequencer.c                    |  4 +++-
+ t/t3436-rebase-more-options.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
-> A further weirdness is that another effective source of config for this
-> is the "unborn" ls-refs feature[1]. I'm not sure what that means for any
-> query interface, i.e. would a user want to know what branch a freshly
-> cloned repo would end up with in advance, taking into account all of the
-> local config, remote "unborn" etc?
+diff --git a/sequencer.c b/sequencer.c
+index cd2aabf1f76..ea96837cde3 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -997,7 +997,9 @@ static int run_git_commit(const char *defmsg,
+ 
+ 	cmd.git_cmd = 1;
+ 
+-	if (is_rebase_i(opts) && !(!defmsg && (flags & AMEND_MSG)) &&
++	if (is_rebase_i(opts) &&
++	    ((opts->committer_date_is_author_date && !opts->ignore_date) ||
++	     !(!defmsg && (flags & AMEND_MSG))) &&
+ 	    read_env_script(&cmd.env_array)) {
+ 		const char *gpg_opt = gpg_sign_opt_quoted(opts);
+ 
+diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+index 4d106642ba7..94671d3c465 100755
+--- a/t/t3436-rebase-more-options.sh
++++ b/t/t3436-rebase-more-options.sh
+@@ -82,6 +82,20 @@ test_expect_success '--committer-date-is-author-date works with merge backend' '
+ 	test_ctime_is_atime -1
+ '
+ 
++test_expect_success '--committer-date-is-author-date works when rewording' '
++	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
++	(
++		set_fake_editor &&
++		FAKE_COMMIT_MESSAGE=edited \
++			FAKE_LINES="reword 1" \
++			git rebase -i --committer-date-is-author-date HEAD^
++	) &&
++	test_write_lines edited "" >expect &&
++	git log --format="%B" -1 >actual &&
++	test_cmp expect actual &&
++	test_ctime_is_atime -1
++'
++
+ test_expect_success '--committer-date-is-author-date works with rebase -r' '
+ 	git checkout side &&
+ 	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
+@@ -155,6 +169,21 @@ test_expect_success '--reset-author-date with --committer-date-is-author-date wo
+ 	test_atime_is_ignored -2
+ '
+ 
++test_expect_success 'reset-author-date with --committer-date-is-author-date works when rewording' '
++	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
++	(
++		set_fake_editor &&
++		FAKE_COMMIT_MESSAGE=edited \
++			FAKE_LINES="reword 1" \
++			git rebase -i --committer-date-is-author-date \
++				--reset-author-date HEAD^
++	) &&
++	test_write_lines edited "" >expect &&
++	git log --format="%B" -1 >actual &&
++	test_cmp expect actual &&
++	test_atime_is_ignored -1
++'
++
+ test_expect_success '--reset-author-date --committer-date-is-author-date works when forking merge' '
+ 	GIT_SEQUENCE_EDITOR="echo \"merge -C $(git rev-parse HEAD) commit3\">" \
+ 		PATH="./test-bin:$PATH" git rebase -i --strategy=test \
 
-I have no idea how that should work.
-
-> 1. https://lore.kernel.org/git/878s8apthr.fsf@evledraar.gmail.com/
-
-If you and Johannes think it would help the design-process I would also
-volunteer to implement your original proposal:
-
-    git config --get-or-git-default init.defaultBranch
-
-Please note that I'm not doing (primarily) doing this to get commits into
-git.git, so if somebody with more knowledge about the git architecture wants to
-bring this forward, please feel free.
+base-commit: 0cddd84c9f3e9c3d793ec93034ef679335f35e49
+-- 
+gitgitgadget
