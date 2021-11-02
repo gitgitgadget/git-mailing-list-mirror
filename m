@@ -2,176 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D7EC433F5
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 17:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5361EC433EF
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 17:31:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2118D608FB
-	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 17:07:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3941761050
+	for <git@archiver.kernel.org>; Tue,  2 Nov 2021 17:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234972AbhKBRJv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Nov 2021 13:09:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50124 "EHLO
+        id S232245AbhKBRdq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Nov 2021 13:33:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234898AbhKBRJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Nov 2021 13:09:50 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9EEC061714
-        for <git@vger.kernel.org>; Tue,  2 Nov 2021 10:07:15 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id f4so20250529edx.12
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 10:07:15 -0700 (PDT)
+        with ESMTP id S229684AbhKBRdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Nov 2021 13:33:45 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E2BC061714
+        for <git@vger.kernel.org>; Tue,  2 Nov 2021 10:31:10 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id w1so169893edd.10
+        for <git@vger.kernel.org>; Tue, 02 Nov 2021 10:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=r9+zFS0l1zDpF4/Pu44l6TkdpHljELVZtgF4e6KVDvI=;
-        b=ErCXoOJbE9V+G/lkCTpJmyBPR6602QecUiatlxWW/o/dDAzZctFDsaLDWZIlUei7RC
-         CliirWwyt3y3ue+v254p2JNp0kWD4u00CGS6Rc6WqEQfzM4ZeNX2q2TKhusr5eZyXONj
-         fyqXVQhFaVZkyLqXS7768WjWe5UghlidQfujZSigUYB8I4TIQYOjultIQXaXL05ZQcFN
-         JQCloYktij/f9oY53vu8QhJQZH7NSoBn2SCnZbFUnqKPloZFsguzw8tOlX9zbL4qfv+L
-         ydaf8jRvMa3+VGL7UkDi81CoP/gW+Vub/WfhQ4EmfzPNdeAWDYfXeZVL5vaO2yEP3rjZ
-         8wzg==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=KgzzrynJWGE33rt2QYOOyyhMFLyUZWXkoiv5wIPYjvk=;
+        b=QzsEIr4Jk1n661/cIFw7W2ATDVUEk3LmqJYK4RSj/HUs6+qb9RS48R1/UqEVzMFH7d
+         P9cbHOqv4Q/KT8C2AWE/2GYFNy2fhY2c5jaRqywpyERmfxNxUZjNpkV++YIAg0q0V9vk
+         fC3SWGTCtqowvN12RsdJHY81cWpZKQVOYQ3egADdq+bHGILD3uuDEHLSycdMCf2uD6/c
+         93FepiE3cpkWURgWoUuc29ktCn+NY4ZLRoQ8n2ZttgiKBmbfPXibbQjg3/dzAdiFY5Dl
+         6cgeypwNPw4aNrfFC8xRcd63gyoJ+Hfxuvazy45QWY3NNVvQQTNNS1JCQ9jATUOf4qjb
+         5PNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=r9+zFS0l1zDpF4/Pu44l6TkdpHljELVZtgF4e6KVDvI=;
-        b=YzFOXv9EsTUhvI6R1chp7/e+uavWPV20hVSFsNRiVkQtjuYGaOPgx8rbmUWgfN7x5Q
-         xd2cJlbsmbVys9v+4bhj2eFrdjvvDUD2V8/BvFvf6Je/UCMIZp+RhahLHRQpu0qQtALm
-         9oYn7f9tEQOlySDWzGgB1i1HxCQlzxsspCaYWvXTtr/sarcjPnew2qGKbXH1xlaqr1kq
-         kFaF7ffIaxcFQd0aukgJSwVMKLZihB5KSR54WkDyM2GsDniQM8PuGYSmHxFx//6thTrZ
-         WIUtsjJhmQ+MudoGonBnVOGJdjujNNn9dnAcqSH2qrWj5sfwzWMWVIK3YD+mT2IAk+jk
-         8+WQ==
-X-Gm-Message-State: AOAM531RanJ+8/FLoPWDCIJBwcpOBmGrtU+wzByzjZkJghL6nqhlceog
-        x47gr25Vn6qMXK0Bhoz6DXU+6QIf880IVw==
-X-Google-Smtp-Source: ABdhPJwFnNvcjMQq+73b9oNKlytiEfm61VKz5Wdrs4XxPnE91w2JAaOBJdxxas1gXC7VkOuzPJ1dkA==
-X-Received: by 2002:a17:906:26da:: with SMTP id u26mr47000407ejc.315.1635872833910;
-        Tue, 02 Nov 2021 10:07:13 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s28sm4100013edw.81.2021.11.02.10.07.13
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=KgzzrynJWGE33rt2QYOOyyhMFLyUZWXkoiv5wIPYjvk=;
+        b=j9ok6aEScnwN9VWI+KaePbUpQJV2nuz4GrXWQ2zhYYFC8dGVXdoKSdBnFojnNl76fz
+         tQ+s8GWRDtfowtgrrkscVqzos+HUzhV4qlIN3BPAZ0VHASB6sFgexM5bDkaq6wmQbPSy
+         EWGw6qmCHCaalCJumCYfdpiqIrby5H4bhmy/nkrjpNq00hinxn4p2imcQbHTyVma01in
+         tpvIjCP58EkVp+3XZZRyU9XC21utmoztWrr9Y2a1fcoFacSDCR+kdj4KjrLegsl4OBom
+         YUq17h+xoO+3x5raRJLD/3K8qR5aJ7gwxc7F8hqJhXD4b9Ar4XMImTsmz7bcgh42vj1Q
+         gD9Q==
+X-Gm-Message-State: AOAM530CUFJPGWhQUVxZBqUYYlsREh8J05PNlqnUlI26P+F3a7J3h1xR
+        NrowJT1cjmgRobImtgJvEG72qZ0dUIQ=
+X-Google-Smtp-Source: ABdhPJwzOvvR0EWR2Xbg7p+3ShFd4GfSscs4lHbPXBBHSow2Rl0iYPcSkLMvUGK9816mcqbqFC7goA==
+X-Received: by 2002:a05:6402:278e:: with SMTP id b14mr3731339ede.321.1635874268707;
+        Tue, 02 Nov 2021 10:31:08 -0700 (PDT)
+Received: from gmail.com (ip5b40c175.dynamic.kabel-deutschland.de. [91.64.193.117])
+        by smtp.gmail.com with ESMTPSA id ee7sm2059762edb.1.2021.11.02.10.31.08
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Nov 2021 10:07:13 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mhxFh-002ElO-39;
-        Tue, 02 Nov 2021 18:07:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] var: add GIT_DEFAULT_BRANCH variable
-Date:   Tue, 02 Nov 2021 17:53:46 +0100
-References: <nycvar.QRO.7.76.6.2111021433010.56@tvgsbejvaqbjf.bet>
- <20211102164434.1005707-1-thomas@t-8ch.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20211102164434.1005707-1-thomas@t-8ch.de>
-Message-ID: <211102.86czni1o72.gmgdl@evledraar.gmail.com>
+        Tue, 02 Nov 2021 10:31:08 -0700 (PDT)
+Date:   Tue, 2 Nov 2021 18:26:44 +0100
+From:   Federico Kircheis <federico.kircheis@gmail.com>
+To:     git@vger.kernel.org
+Subject: Re: git aliases and GIT_PREFIX
+Message-ID: <20211102172644.cnsro5p3m6o6b6po@gmail.com>
+References: <2e328484-d0e3-8801-61da-07544cc93eef@gmail.com>
+ <nycvar.QRO.7.76.6.2111021520370.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2111021520370.56@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Nov 02 2021, Thomas Wei=C3=9Fschuh wrote:
+Sorry for the late reply.
 
-> Introduce the builtin variable GIT_DEFAULT_BRANCH which represents the
-> the default branch name that will be used by git-init.
+On Tue, Nov 02, 2021 at 03:26:05PM +0100, Johannes Schindelin wrote:
+>Hi Federico,
 >
-> Currently this variable is equivalent to
->     git config init.defaultbranch || 'master'
+>On Thu, 28 Oct 2021, Federico Kircheis wrote:
 >
-> This however will break if at one point the default branch is changed as
-> indicated by `default_branch_name_advice` in `refs.c`.
+>> today I reported what I believed to be a bug on
+>>
+>>  https://github.com/git-for-windows/git/issues/3496
+>>
+>> and learned about GIT_DIR when working with aliases and git worktree.
+>>
+>> It's annoying that GIT_DIR it is defined only if (as far as I've understood)
+>> working from a worktrees or submodule, as it does not seem to be related to
+>> those type of repositories.
 >
-> By providing this command ahead of time users of git can make their
-> code forward-compatible.
+>To clarify: `GIT_DIR` is set when executing an alias in a worktree other
+>than the primary one (and probably also in submodules), but not when
+>executing in a primary worktree.
 >
-> Co-developed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
-> ---
+>> This is also irritating because apparently working aliases breaks when being
+>> executed from those repositories.
 >
-> Changes from v1 ( https://lore.kernel.org/git/20211030140112.834650-1-tho=
-mas@t-8ch.de/ ):
-> * Replaced the custom subcommand with an internal variable
-> * Cleaned up the tests
+>To clarify: an alias that wants to switch to a different repository and
+>execute Git commands there works well in a primary worktree. But when you
+>switch to a different repository while executing an alias from a secondary
+>worktree, it will fail because of `GIT_DIR` having been set.
 >
-> @Johannes: I replaced BUG() with die() from your example because that see=
-ms to be
-> nicer for user facing messages.
+>> I believe it would be better if GIT_DIR it's either always set or never
+>> (could someone enlighten me why the variable is needed in first place?).
+
+Yes, sorry if I was not clear, your clarification are what I meant to 
+say.
+
+>The fact that `GIT_DIR` is not set when calling an alias in a primary
+>worktree suggests that the behavior in secondary worktrees is not by
+>design. We should therefore be able to stop setting it there.
 >
->  Documentation/git-var.txt |  3 +++
->  builtin/var.c             | 13 +++++++++++++
->  t/t0007-git-var.sh        | 19 +++++++++++++++++++
->  3 files changed, 35 insertions(+)
+>The question is: what code is responsible for setting it only in some
+>circumstances but not others?
 >
-> diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-> index 6072f936ab..387cc1b914 100644
-> --- a/Documentation/git-var.txt
-> +++ b/Documentation/git-var.txt
-> @@ -59,6 +59,9 @@ ifdef::git-default-pager[]
->      The build you are using chose '{git-default-pager}' as the default.
->  endif::git-default-pager[]
->=20=20
-> +GIT_DEFAULT_BRANCH::
-> +    The name of the first branch created in newly initialized repositori=
-es.
-> +
->  SEE ALSO
->  --------
->  linkgit:git-commit-tree[1]
-> diff --git a/builtin/var.c b/builtin/var.c
-> index 6c6f46b4ae..d1d82b6c93 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
-> @@ -5,6 +5,7 @@
->   */
->  #include "builtin.h"
->  #include "config.h"
-> +#include "refs.h"
->=20=20
->  static const char var_usage[] =3D "git var (-l | <variable>)";
->=20=20
-> @@ -27,6 +28,17 @@ static const char *pager(int flag)
->  	return pgm;
->  }
->=20=20
-> +static const char *default_branch(int flag)
-> +{
-> +	const char *name =3D repo_default_branch_name(the_repository, 1);
-> +
-> +	if (!name)
-> +		die("could not determine the default branch name");
+>Federico, do you have any experience in debugging C code? If so, it would
+>be good if you could take a crack at investigating this.
+>
+>Ciao,
+>Johannes
 
-Isn't this die() unrechable given the similar logic in
-repo_default_branch_name()? Hence the previous BUG(...)?
+Yes, I have some experience, but never looked at the git codebase.
 
-I really don't see how it makes sense to add this to "git var", we have
-that to correspond to environment variables we use.
+On GitHub (https://github.com/git-for-windows/git/issues/3496) there is 
+already an hint where those variables are set:
 
-*Maybe* if we renamed GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME to
-GIT_INITIAL_BRANCH_NAME and made it a non-test thing like
-GIT_TEMPLATE_DIR, but even then shouldn't we be adding
-"GIT_TEMPLATE_DIR" and any number of other things to this as well?
+   https://github.com/git/git/blob/v2.33.1/git.c#L354
 
-I'm not saying that your patch needs to do that, but we really should
-think about the interface & future implications if we're going in this
-direction.
+Or do you mean if I could investigate the test cases Ævar Arnfjörð 
+Bjarmason mentioned?
 
-The reason I suggested extending "git config" in [1] is because it seems
-like a natural thing for "git config" to learn to spew out our idea of
-default hardcoded config values to the user.
-
-But creating a variable form of that existing config just so we can have
-"git var" spew it out just seems weird.
-
-We don't have or need such a variable now for anything else, so why go
-through that indirection, instead of something that closes the feature
-gap of asking what a config variable default is?
-
-In any case whatever we do here this really should be updating the
-documentation of init.defaultbranch & the relevant bits in the "git
-init" manpage to add cross-references, similar to how we discuss
-GIT_TEMPLATE_DIR now.
-
-1. https://lore.kernel.org/git/211030.86ilxe4edm.gmgdl@evledraar.gmail.com/
