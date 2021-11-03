@@ -2,92 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4466BC433EF
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 05:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D9ECC433EF
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 06:31:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FA926109F
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 05:10:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 637F161139
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 06:31:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbhKCFMr convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 3 Nov 2021 01:12:47 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:38464 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbhKCFMo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 01:12:44 -0400
-Received: by mail-ed1-f49.google.com with SMTP id r4so4964833edi.5
-        for <git@vger.kernel.org>; Tue, 02 Nov 2021 22:10:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iiialm1dIQ/5UaPKYfDqo1EhZm+Xz8akF9sd7Bdn3Co=;
-        b=EjgPFz4mR9GmcB2tDKlIbsRxM5gqIsI4LqkYGEn6fw62hcm1CVWDvf9Z5R4lKKyOXJ
-         mqNKx9gMS6kMvnkqAN4YFImfulMb9WNmevKCkzpVMpIjGNj1o+eJTCw+2Yh8x3t0zD7d
-         bIX30XBmPKRna3N58ue/uxMj8usfr4Xa1kmvq8Nyw7v0+hKXH+Leqkej4XiCzKKXf4Fk
-         Ck0A/L97YmSOYkznMfqLnNWjSV2Xd7Bt//Z3rBDkNFZ+AKwmhP+by3xTqmYiBglONTGj
-         e2aeHSV/w47ysWagS+yvNZSJOKkC2vn0cVlziBxjVGULMjezG2CyqjBqkkgXnrWxfmjX
-         nOCA==
-X-Gm-Message-State: AOAM530cjUcI2BUUYVUBo3o4LqEB3b4qrk0NRuWzEevjm3DAEff/KxxZ
-        cX7Cjt/0T5ag/pbgqLQ5HZJuB/D8EOm3TCpx6nOchXwa
-X-Google-Smtp-Source: ABdhPJyABySbetF/ONNoKAhk7swtOte4t3AF1pSNnwQL+BSDqPWh8kr0N1kpZ+7CqwVK22WpGZN1fsDlykDu+RYiJVs=
-X-Received: by 2002:a17:906:128d:: with SMTP id k13mr51613048ejb.517.1635916207726;
- Tue, 02 Nov 2021 22:10:07 -0700 (PDT)
+        id S231514AbhKCGed (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 02:34:33 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:64546 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230152AbhKCGed (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 02:34:33 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4HkcPQ59Z0z5tlB;
+        Wed,  3 Nov 2021 07:31:54 +0100 (CET)
+Subject: Re: [PATCH v4 0/8] Allow clean/smudge filters to handle huge files in
+ the LLP64 data model
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
+ <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
+ <20211102214615.sflg5xgztdzrb27l@tb-raspi4>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <d9c537e6-de37-5cf5-a595-7a61b8df20a3@kdbg.org>
+Date:   Wed, 3 Nov 2021 07:31:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-References: <211026.8635oo11jk.gmgdl@evledraar.gmail.com> <patch-1.1-90172a8ddcc-20211102T142351Z-avarab@gmail.com>
-In-Reply-To: <patch-1.1-90172a8ddcc-20211102T142351Z-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Nov 2021 01:09:56 -0400
-Message-ID: <CAPig+cRxW2A8rzJfna7KOc5fu46qr+Y7VLzSi0377SpCG-mVbA@mail.gmail.com>
-Subject: Re: [PATCH] maintenance tests: fix systemd v2.34.0-rc* test regression
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20211102214615.sflg5xgztdzrb27l@tb-raspi4>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 2, 2021 at 10:25 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> Fix tests added in b681b191f92 (maintenance: add support for systemd
-> timers on Linux, 2021-09-04) to run successfully no systems where
+Am 02.11.21 um 22:46 schrieb Torsten Bögershausen:
+> On Tue, Nov 02, 2021 at 03:46:03PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> 
+> I could not convince my raspi to apply patch 7/8:
+> 
+>   git am </tmp/7
+>   Applying: odb: guard against data loss checking out a huge file
+>   error: patch failed: object-file.c:1344
+>   error: object-file.c: patch does not apply
+>   Patch failed at 0001 odb: guard against data loss checking out a huge file
+>   hint: Use 'git am --show-current-patch=diff' to see the failed patch
+>   When you have resolved this problem, run "git am --continue".
+>   If you prefer to skip this patch, run "git am --skip" instead.
+>   To restore the original branch and stop patching, run "git am --abort".
+> 
+> I am not sure, what went wrong. I can retry the next days - or is this
+> branch/series somewhere available ?
 
-s/no/on/
+This was submitted via Gitgitgadget. Therefore, the cover letter
+that you are responding to has these footers:
 
-> systemd-analyze is installed, but on which there's a discrepancy
-> between a FILE argument of "/lib/systemd/system/basic.target" and
-> "systemd/user/git-maintenance@.service" succeeding.
->
-> There was an attempt to work around previous breakage in these tests
-> in 670e5973992 (maintenance: fix test t7900-maintenance.sh,
-> 2021-09-27), as noted in my [1] that commit is wrong about its
-> assumption that we can use "/lib/systemd/system/basic.target" as a
-> canary.argument.
->
-> To fix this let's adjust this test to test what it really should be
-> testing: If we've got systemd-analyze reporting anything useful, we
-> should use it to check the syntax of our just-generated
-> "systemd/user/git-maintenance@.service" file.
->
-> Even on systems where this previously succeeded we weren't effectively
-> doing that, because "systemd-analyze" will pass various syntax errors
-> by and exit with a status code of 0, e.g. if the "[Unit]" section is
-> replaced with a nonsensical "[HlaghUnfUnf]" section.
->
-> To do that ignore whatever exit code we get from "systemd-analyze
-> verify", and filter its stderr output to extract the sorts of lines it
-> emits no note syntax warnings and errors. We need to filter out
+> base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1068%2Fdscho%2Fhuge-file-smudge-clean-v4
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1068/dscho/huge-file-smudge-clean-v4
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1068
 
-s/no/on/
-
-
-> "Failed to load", which would be emitted e.g. on the
-> gcc135.fsffrance.org test box[1].
->
-> We also need to pipe this output to FD's 5 & 6, to avoid mixing up the
-> trace output with our own output under "-x".
->
-> 1. https://lore.kernel.org/git/211026.8635oo11jk.gmgdl@evledraar.gmail.com/
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+-- Hannes
