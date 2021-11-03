@@ -2,67 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31591C433EF
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 17:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 619C8C433EF
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 17:28:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16E0961101
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 17:22:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C94C6115B
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 17:28:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230471AbhKCRZW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 13:25:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54163 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbhKCRZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 13:25:20 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79736E36C7;
-        Wed,  3 Nov 2021 13:22:43 -0400 (EDT)
+        id S231219AbhKCRbA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 13:31:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61385 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230198AbhKCRa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 13:30:59 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BBC92F3C34;
+        Wed,  3 Nov 2021 13:28:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QrR6DrTdMuUrLw8BTG2gOopaEMZwsNdYchEelh
-        cUdMQ=; b=vGKzbbwSK1yLVIAhZA0zBA9aPfqv7UEj2J9W5a4QGMYB6eYz+/ru3l
-        h1UTaZNDPmmxiyxMOd1NesdoxaN0VHopzflqgV5sGFF9FG/KwRITAykYOpm2Qu7G
-        yvn+hDxnmGXJCmX2SgQyoqRimlTn1VWJR5csINbAh5TJx0XbZoFbc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6FFFCE36C5;
-        Wed,  3 Nov 2021 13:22:43 -0400 (EDT)
+        :content-type; s=sasl; bh=9zn0Y69FYEoq999luggQOmWnB8EhUCmr0232Xf
+        hLT/c=; b=R3YVa4O9+q/2mFZ3ugUGvXbU5Ie6+Jge6uy0dkzyTXrOB1NxARxCya
+        zxS5uW9EKXF1IHACfvObRfQjOUp+rfg14+HiWMW3k86oV+Bix7zZDDYPB3okrFkx
+        7nTXZyjQXTiTFUAcK8Hvdg/qp03PzIATRwyM7p6B6Edz61h5i4a+s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3CC1F3C33;
+        Wed,  3 Nov 2021 13:28:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDA76E36C4;
-        Wed,  3 Nov 2021 13:22:42 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1EF45F3C32;
+        Wed,  3 Nov 2021 13:28:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] builtin: add git-default-branch command
-References: <20211030140112.834650-1-thomas@t-8ch.de>
-        <nycvar.QRO.7.76.6.2111021433010.56@tvgsbejvaqbjf.bet>
-Date:   Wed, 03 Nov 2021 10:22:41 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2111021433010.56@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 2 Nov 2021 14:39:27 +0100 (CET)")
-Message-ID: <xmqqy2656tni.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alejandro Sanchez <asanchez1987@gmail.com>
+Subject: Re: [PATCH 1/2] prompt.c: split up the password and non-password
+ handling
+References: <20190524062724.GC25694@sigill.intra.peff.net>
+        <cover-0.2-00000000000-20211102T155046Z-avarab@gmail.com>
+        <patch-1.2-ce5bea43f03-20211102T155046Z-avarab@gmail.com>
+        <YYJ4HYyl1tBs2cZN@coredump.intra.peff.net>
+Date:   Wed, 03 Nov 2021 10:28:21 -0700
+In-Reply-To: <YYJ4HYyl1tBs2cZN@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 3 Nov 2021 07:53:01 -0400")
+Message-ID: <xmqqtugt6te2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A73ED8D8-3CCA-11EC-8768-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 71796C3A-3CCB-11EC-AE13-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> But we do have prior art in Git how to display similar information: `git
-> var -l` will list e.g. `GIT_PAGER`, even if it is not configured
-> explicitly.
+> So I dunno. This seems somewhere between churn and making things worse,
+> and I don't see what it's buying us at all.
 
-Nice.  I was hoping that somebody would remember this one.
+Unfortunately I have to agree with the summary.  Not a material I
+want to spend time on this time in the cycle anyway X-<.
 
-GIT_AUTHOR_IDENT and such that do not even exist as a variable is
-part of "git var -l"; the name for the default initial branch falls
-into the same category.
-
-Thanks.
+Thanks for reading.
