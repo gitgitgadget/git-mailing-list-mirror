@@ -2,156 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47C78C433F5
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 18:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB584C433F5
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 19:27:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BA1060EB9
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 18:53:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAB5B60FC2
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 19:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbhKCS4R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 14:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34750 "EHLO
+        id S230156AbhKCTa0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 15:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbhKCS4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 14:56:16 -0400
-Received: from todd.t-8ch.de (todd.t-8ch.de [IPv6:2a01:4f8:c010:41de::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0899BC061714
-        for <git@vger.kernel.org>; Wed,  3 Nov 2021 11:53:39 -0700 (PDT)
-From:   =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=t-8ch.de; s=mail;
-        t=1635965616; bh=BIilJ0hM6E3a5JlDPQfZL5s7lBk+oY6nIw3qwY5gCVI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=knBLmxHX4otohB0IJJs7qBgxYRdJv/t9cUkCtQ2wSmSfJdTYsXyi03NkYsEhbjs+6
-         rO87WIK1yc/QE7hQouLB9o8p8RqI+sjtJXJgsHmddNld1ScNVuP7N/U3N3BzxRULZc
-         CVVWLgnwuUrTX2+M7/7X9PdJhyYkfl/bYMJ+AKZs=
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] var: add GIT_DEFAULT_BRANCH variable
-Date:   Wed,  3 Nov 2021 19:53:31 +0100
-Message-Id: <20211103185331.599463-1-thomas@t-8ch.de>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <xmqqa6il6qxu.fsf@gitster.g>
-References: <xmqqa6il6qxu.fsf@gitster.g>
+        with ESMTP id S229697AbhKCTa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 15:30:26 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C1AEC061714
+        for <git@vger.kernel.org>; Wed,  3 Nov 2021 12:27:49 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id t127so8863340ybf.13
+        for <git@vger.kernel.org>; Wed, 03 Nov 2021 12:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z6+4ONhYv/xYT2tlB061iTH6QMbmpjv9f/CH9cC1YLk=;
+        b=n2la40DgUIfULbJDhwV5POv2dVSe7Cfgx9D6aftthbULEbWQ8FsMLOI+2+co/lugyG
+         pkOV1RI0z8bFrnnYSXn+SCeLHVGlpYuP7AtoNqCubGWOcDOOtRocVwm3xHJ32Kmlh1d6
+         2rLnGzhC6U4ppQpEFNsb6GaLT7c/zlBGg8jNI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z6+4ONhYv/xYT2tlB061iTH6QMbmpjv9f/CH9cC1YLk=;
+        b=oIYEfImX1T4WKWwCcd8jY9hJJQbSk49U7AA9hSb63SJH3bpUQxE05Q0A3EtKZpMTJH
+         8g91CjH43jvZhcJWwSzTxsRPiGpU3vSp5HOMdJbMxJ9rAEfkmEDIvz28cqI59wD11VWP
+         e1enBx+qt+n7aELkjmUvOGc04P0hy7Pi059iKoSHRHyoCPUDdCi4JRsbvZK0rZgxilAA
+         qZnf4T/9fclPg3X7tNJeUK0KUka6XjwjiBZt99t3BZ9bIL9ZAHYpmFGiCFoUbsbAyslH
+         baQTcLB06NpFwZUEiqo8aGfKUfGXUHv9rB8PAXQXlf296NHjLhih9WYWSR1E50HXZUOW
+         yRXw==
+X-Gm-Message-State: AOAM532Ib7Nso/qkxAjf7O7gPcDUZ1WJFKyc+wofww+vA+eoOO+Vp25f
+        BtTwkrOi4iFjZj9Bbiog6CssuAwXZ+apL6umURWJKA==
+X-Google-Smtp-Source: ABdhPJywb8TnhDzocQsfQf5WWN2MXy1tuiEH1sunyBaeoy0d6RICz8cMU4piiI/w6LnshXR2im9qp7R0YelLe9eONRo=
+X-Received: by 2002:a25:d114:: with SMTP id i20mr45888456ybg.323.1635967668533;
+ Wed, 03 Nov 2021 12:27:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20211027080616.619956-1-fs@gigacodes.de>
+In-Reply-To: <20211027080616.619956-1-fs@gigacodes.de>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Wed, 3 Nov 2021 19:27:20 +0000
+Message-ID: <CA+kUOakzQ5aEQf81rQULiz6FRdmCLnbhspt9e6behPS3sbZT8w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] ssh signing: verify key lifetime
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the logical variable GIT_DEFAULT_BRANCH which represents the
-the default branch name that will be used by "git init".
+On Wed, 27 Oct 2021 at 09:06, Fabian Stelzer <fs@gigacodes.de> wrote:
+> This series adds key lifetime validity checks by parsing commit/tag
+> dates from the paylod and passing them to the ssh-keygen operations.
+>
+> changes since v1:
+>  - struct signature_check is now used to input payload data into
+>    check_function
+>  - payload metadata parsing is completely internal to check_signature.
+>    the caller only need to set the payload type in the sigc struct
+>  - small nits and readability fixes
+>  - removed payload_signer parameter. since we now use the struct we can extend
+>    this later.
+>
+> Since the last 3 patches now only contain a minimal code change and the
+> tests for the seperate callers we could merge them together. I don't
+> mind either way.
+>
+> Fabian Stelzer (6):
+>   ssh signing: use sigc struct to pass payload
+>   ssh signing: add key lifetime test prereqs
+>   ssh signing: make verify-commit consider key lifetime
+>   ssh signing: make git log verify key lifetime
+>   ssh signing: make verify-tag consider key lifetime
+>   ssh signing: make fmt-merge-msg consider key lifetime
+>
+>  Documentation/config/gpg.txt     |  5 ++
+>  builtin/receive-pack.c           |  6 ++-
+>  commit.c                         |  6 ++-
+>  fmt-merge-msg.c                  |  5 +-
+>  gpg-interface.c                  | 87 ++++++++++++++++++++++++--------
+>  gpg-interface.h                  | 15 ++++--
+>  log-tree.c                       | 10 ++--
+>  t/lib-gpg.sh                     | 19 ++++++-
+>  t/t4202-log.sh                   | 43 ++++++++++++++++
+>  t/t6200-fmt-merge-msg.sh         | 54 ++++++++++++++++++++
+>  t/t7031-verify-tag-signed-ssh.sh | 42 +++++++++++++++
+>  t/t7528-signed-commit-ssh.sh     | 42 +++++++++++++++
+>  tag.c                            |  5 +-
+>  13 files changed, 303 insertions(+), 36 deletions(-)
+>
+>
+> base-commit: e9e5ba39a78c8f5057262d49e261b42a8660d5b9
 
-Currently this variable is equivalent to
-    git config init.defaultbranch || 'master'
+As part of testing v2.34-rc0 on Cygwin, I've found this patch series
+is breaking t4202, t5534, and t6200.
 
-This however will break if at one point the default branch is changed as
-indicated by `default_branch_name_advice` in `refs.c`.
+Specifically, bisecting points to f265f2d630 (ssh signing: tests for
+logs, tags & push certs, 2021-09-10) as breaking t4202 and t5534,
+while responsibility for t6200 seems to be 9d12546de9 (ssh signing:
+fmt-merge-msg tests & config parse, 2021-10-12).
 
-By providing this command ahead of time users of git can make their
-code forward-compatible.
-
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
----
-
-Changes from v1 ( https://lore.kernel.org/git/20211030140112.834650-1-thomas@t-8ch.de/ ):
-* Replaced the custom subcommand with an internal variable
-* Cleaned up the tests
-
-Changes from v2 ( https://lore.kernel.org/git/20211102164434.1005707-1-thomas@t-8ch.de/ ):
-* Removed superfluous error handling
-* Switched to better fitting function
-* Reworded commit message to be more consistent with the rest of git
-
- Documentation/git-var.txt |  3 +++
- builtin/var.c             |  7 +++++++
- t/t0007-git-var.sh        | 19 +++++++++++++++++++
- 3 files changed, 29 insertions(+)
-
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 6072f936ab..387cc1b914 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -59,6 +59,9 @@ ifdef::git-default-pager[]
-     The build you are using chose '{git-default-pager}' as the default.
- endif::git-default-pager[]
- 
-+GIT_DEFAULT_BRANCH::
-+    The name of the first branch created in newly initialized repositories.
-+
- SEE ALSO
- --------
- linkgit:git-commit-tree[1]
-diff --git a/builtin/var.c b/builtin/var.c
-index 6c6f46b4ae..491db27429 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -5,6 +5,7 @@
-  */
- #include "builtin.h"
- #include "config.h"
-+#include "refs.h"
- 
- static const char var_usage[] = "git var (-l | <variable>)";
- 
-@@ -27,6 +28,11 @@ static const char *pager(int flag)
- 	return pgm;
- }
- 
-+static const char *default_branch(int flag)
-+{
-+	return git_default_branch_name(1);
-+}
-+
- struct git_var {
- 	const char *name;
- 	const char *(*read)(int);
-@@ -36,6 +42,7 @@ static struct git_var git_vars[] = {
- 	{ "GIT_AUTHOR_IDENT",   git_author_info },
- 	{ "GIT_EDITOR", editor },
- 	{ "GIT_PAGER", pager },
-+	{ "GIT_DEFAULT_BRANCH", default_branch },
- 	{ "", NULL },
- };
- 
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index 53af92d571..6b6852e35e 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -27,6 +27,25 @@ test_expect_success !FAIL_PREREQS,!AUTOIDENT 'requested identities are strict' '
- 	)
- '
- 
-+test_expect_success 'get GIT_DEFAULT_BRANCH without configuration' '
-+	(
-+		sane_unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-+		echo master >expect &&
-+		git var GIT_DEFAULT_BRANCH >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_DEFAULT_BRANCH with configuration' '
-+	test_config init.defaultbranch foo &&
-+	(
-+		sane_unset GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-+		echo foo >expect &&
-+		git var GIT_DEFAULT_BRANCH >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- # For git var -l, we check only a representative variable;
- # testing the whole output would make our test too brittle with
- # respect to unrelated changes in the test suite's environment.
-
-base-commit: 0cddd84c9f3e9c3d793ec93034ef679335f35e49
--- 
-2.33.1
-
+I've not yet done any investigation into the specifics of these
+failures, but I wanted to report them early so other folks could get
+on with investigating as appropriate.
