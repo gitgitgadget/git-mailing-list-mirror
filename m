@@ -2,103 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 982A1C433F5
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 16:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42DEC433EF
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 16:28:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AD0B60F39
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 16:01:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B40260F58
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 16:28:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232532AbhKCQEI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 12:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51206 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231868AbhKCQEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 12:04:01 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF080C061714
-        for <git@vger.kernel.org>; Wed,  3 Nov 2021 09:01:24 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id o6-20020a17090a0a0600b001a64b9a11aeso1734425pjo.3
-        for <git@vger.kernel.org>; Wed, 03 Nov 2021 09:01:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TTld+PhKexeTn2hszwLWk+w6PFA/kDIlDGVSEe8PX7c=;
-        b=KiR/yxNQMYACiFyY+3rnrT7XwxlDeqTZnNcm24/KRvePmf9CNg/jfy4zSE8XOw+s0G
-         4oifuGmDpSyFI5Z/RoAI1O+XEu5XHWnnw6YY3Z7AREiLGKUKR2LL89ZGVTic9t0SWVuu
-         P7p9Q0tjd/1rE6G72dSN7D++wnKFZaqgLMT6txR4eIA83fRvBnRyW2hfkS4tXL0BVR2c
-         IUcCNqsEfzJ2Tv1cAKSGm0QnXaEfneiQ56PPj9j6XjXG8/kQspiru08wn3ibP6vfNoKh
-         Xz8Yqc6J5sWnspcWYTCsxlADYMohkn+ggcs/Z4ZMmyzB7lq9kRQH1S3p1tt8/kmQSBgh
-         bRvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TTld+PhKexeTn2hszwLWk+w6PFA/kDIlDGVSEe8PX7c=;
-        b=Av1JGv8TzfGoochIVjLAYfM1iyq5e1P9EfCELLg4IGI6QNZrvxUznDAhyIxh+Lvzng
-         QyZERGlRohMWBDgCpSwXfIbegm6tINbSO0x6uK4EHgYwJL3EyLBAG/+aBUYdIJQpvVeD
-         /venXN7uKyNjw8CXTTfuv+2Os9oPtgbr14+dI1Zg0g97AqMvWhBaaEPPWPqck7NiVXHc
-         M3ZYNPpBiO9wxeU/1Q5hy0GpcPVHvrz43E6tDkrRWOP2HYPceqLlhQA3AG7V97P5U+2J
-         0eIiyFHTeuXV/75wXgkHQvUAf0J+neTdWua+xLPC2I/hGi9pXnHhYL0XsporNrqwlCb6
-         y5rQ==
-X-Gm-Message-State: AOAM530RAHei+/AXRwjCV45urOD/UE3EeGhrMVLRUFnRb3utkqeqPV0J
-        HYo2uHTZog0OFZc2U1HtlHsX2990+bJVYuKVcI1CM6nv+rXoWzfu
-X-Google-Smtp-Source: ABdhPJzsuwBVe4mcwSnxT3AYyYlSdh+grQdGRauvRxz9UdFoFMQHPFeVowdm5aVPZYwBRZ0PbkwxGDurKby0T1SS04M=
-X-Received: by 2002:a17:90a:4701:: with SMTP id h1mr15594399pjg.184.1635955284045;
- Wed, 03 Nov 2021 09:01:24 -0700 (PDT)
+        id S232564AbhKCQbS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 12:31:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51068 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232101AbhKCQbR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 12:31:17 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A539170B8A;
+        Wed,  3 Nov 2021 12:28:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=OCeNaUWEXcqK
+        zJcu2jMSFrwNW2bYCGvYwypdIufph10=; b=KrV01XOHI3t6u2qIdwzst7npHg3Y
+        67O5nw2oK3ui+H18HDp38aFN9rXloWrKL8lcP/EUowDfGqjOS7X9e2ErKassTSzJ
+        /L/i+Jshl4NikMup4j+Y1OOeMh9z2tOgOwP2rqIlN1VSwR7eoIAB+uZ57CtD44m/
+        OaOJXBM8ccVmMrg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2232D170B89;
+        Wed,  3 Nov 2021 12:28:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE7AC170B88;
+        Wed,  3 Nov 2021 12:28:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        =?utf-8?Q?Jean-N?= =?utf-8?Q?o=C3=ABl?= Avila via
+         GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Eli Schwartz <eschwartz@archlinux.org>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/9] doc: use only hyphens as word separators in
+ placeholders
+References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
+        <984b6d687a2e779c775de6ea80536afe6ecc0aaf.1635438124.git.gitgitgadget@gmail.com>
+        <ee376004-a4dd-539d-28b3-3fc5baa6fe00@archlinux.org>
+        <2803948.JoDkH9avOM@cayenne> <xmqqmtmocqz4.fsf@gitster.g>
+        <0b404448-cd4b-8614-2c49-c4683b56879f@gmail.com>
+Date:   Wed, 03 Nov 2021 09:28:36 -0700
+In-Reply-To: <0b404448-cd4b-8614-2c49-c4683b56879f@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+        Avila"'s message of "Wed, 3 Nov 2021 13:46:39 +0100")
+Message-ID: <xmqqlf258aq3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAP8dQmu6Dfo4KBsVk+6xeR6=+S8bOKk-kbc3ub7c0jAsH61-cg@mail.gmail.com>
- <YYHzDuoJfWknI1XM@coredump.intra.peff.net> <CAP8dQmvoxWDnD_rbCdBS9cnwS90YFjjXcCPWLmjMq=ck7vo1Ww@mail.gmail.com>
- <YYJuK70U8Sk7xSYl@coredump.intra.peff.net>
-In-Reply-To: <YYJuK70U8Sk7xSYl@coredump.intra.peff.net>
-From:   Steven Penny <srpen6@gmail.com>
-Date:   Wed, 3 Nov 2021 11:01:16 -0500
-Message-ID: <CAP8dQmsbR7V1zX=xpk+ah-5bgkOP3vJGTMBq_25m9Vhw_fADAQ@mail.gmail.com>
-Subject: Re: credential-store get: No such file or directory
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 18FF75AC-3CC3-11EC-B9CF-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 3, 2021 at 6:10 AM Jeff King wrote:
-> Hmm, that's the right output, I think. Even though it's wrapped in
-> single-quotes I think that's just how run_command shows it.
+Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
 
-Why does this have no quotes:
+> Junio C Hamano wrote:
+>> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+>>
+>>> The choices here may be awkward; no problem to propose even more desc=
+riptive=20
+>>> names.
+>>>
+>>>>   Similarly "the 'format:<format-string>' format" feels highly
+>>>>   redundant, I expect the reader knows that <string> contains a form=
+at
+>>>>   inside it as it's mentioned immediately before *and* after.
+>>>>
+>>> The fact that it is a string doesn't tell you much about what you can=
+ do with=20
+>>> it. For me, this isn't a problem that the explanation is redundant.
+>> I agree that --format:<string> is quite poor, as type alone does not
+>> give readers any information on what it means and how it is supposed
+>> to look like.  Calling it <format-string> does make quite a lot of
+>> sense.
+>>
+>> It is a bit less obvious how much value we get out of <bool-value>,
+>> though.  In --opt=3D<arg> scheme of things, what comes after '=3D' are
+>> all <value>s, so <bool-value> does not clarify over <bool> like the
+>> way <format-string> clarifies over <string>.
+>>
+> Agreed. Should reroll the patch series?
 
-    run-command.c:666 trace: run_command: git-remote-https origin
-https://github.com/89z/googleplay
+I guess another (hopefully the final) reroll would not hurt (but we
+are not in hurry---this may be among the topics that graduate early
+in the next cycle, but not during this cycle).
 
-and this have quotes:
-
-    run-command.c:666       trace: run_command: 'git credential-store get'
-
-If youre saying that both commands ran unquoted, then I believe you. But
-hopefully you'll agree that even if nothing is wrong with the code that runs the
-commands, that the output is confusing at best, and misleading at worst.
-
-> So I'm quite confused about exactly what's failing and why. At this point I'd
-> probably try running it under strace to see what's actually happening at the
-> syscall level. I don't think you said what OS you're on; if it's Linux,
-
-With all due respect, I am not going to do that. I am on Windows. I used "git
-credential-store" years ago, and it worked fine. Then at some point, I
-changed to
-using Netrc, as it worked with both Git, and also cURL. I recently discovered
-that the Python Requests [1] package will use Netrc as well, and that even if
-you explicitly provide an Authorization header, Requests just go ahead and
-ignores that, and uses Netrc instead. This was causing failed responses, and the
-maintainers don't seem interested in fixing it, with the advice being
-"just don't
-use Netrc". So I decided to go back to "git credential-store", only to discover
-that it doesn't work anymore.
-
-Hopefully you won't fault me for just wanting something that works, so I am just
-going to use my AskPass program [2] that I wrote in response to this situation.
-Ironically, "git push" is actually faster now than it was with Netrc, so I guess
-that's a win. Thanks for the responses.
-
-1. https://docs.python-requests.org
-2. http://public-inbox.org/git/CAP8dQmvguqPXy6Rg_RkuFmf4+LPh79HM_EBM+Wi9dYn3N+vrcQ@mail.gmail.com
+Thanks.
