@@ -2,207 +2,458 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24B49C433F5
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 09:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D12C433F5
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 10:07:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 053876112D
-	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 09:44:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 489E0610E8
+	for <git@archiver.kernel.org>; Wed,  3 Nov 2021 10:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbhKCJqh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 05:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49570 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231721AbhKCJqg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 05:46:36 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E40C061714
-        for <git@vger.kernel.org>; Wed,  3 Nov 2021 02:44:00 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id o8so7025513edc.3
-        for <git@vger.kernel.org>; Wed, 03 Nov 2021 02:44:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=DEZ2aqStUkVdMyz4IllyNTJUzA4+EP359TEVxutc9iM=;
-        b=j981RH79cOPVbky5SSxdUgzMImNDac5MPLGRUJJEaoaj/NvRPioEz8tz1EwLZKDds9
-         h0X4DAi5cqt1A4MDwgn/SuO1g2RPoN3D5WLsukBc/QV/nkrSG3kBv2AJ2Bjmr57qUgl3
-         Lj4JgBGsjq3M7ik6nu78sbc/QrLrlDUEtbfbM7TU2lNxuD6lgTxpzLCOOsS8lYUovBra
-         XtycWtyLbpQsLq2VelJ8Xkn9o85fvCLhvPmKVVa5Je7LIhERvY0vUfAfxkkRrq8EMcUh
-         tqz0JIEAgumwW0SX3pAWFcnwsUx+OXtXGud8E7pYQ9fynh04MtcUiKmxTL5TbVo7Gc/z
-         LQsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=DEZ2aqStUkVdMyz4IllyNTJUzA4+EP359TEVxutc9iM=;
-        b=IV74kRrK4lFdT1gem8nlCioo8waylOMDxG+s4F/sK2ugTOd8IRUI3S38j2fKMqWe4S
-         P90k90XJm4kZQbpuErTvhMszgB4iBGp/X+5Swe+gqTt1B7pyGA+hrKw5gsNQdr3l9elD
-         fHUwzORbekSGYHHMiAxpuqeKoKLt65VrGYXOCW9dCsNPXTSVnOfRMelhNsZAsEXOUJcj
-         8/tPP8fOETrB0VXemhwIMsdzgTqOs6XWDoGiBEIB6+MXeYBvCcfZYulnBSGHxL6tm8DK
-         Z7I+L/fyghggPKOKMp5D3Scx5qW14IJWacU0xPqDIFVYxKfFbpSUyCqleu+NdqSUcJrL
-         U2Rg==
-X-Gm-Message-State: AOAM532awpW1w8t/1owQwWapZcddn25NXb64e/gJblEIYnu1/pt/od4l
-        8MMJIbhZhFmJhkCoSHnJqM6LG+cW1anAhg==
-X-Google-Smtp-Source: ABdhPJwIEchdgM5niiMlSvOfzy4s9sqh66FzbvZUpaOWYXtlpC1Difvpl1Jue8II/mwMDCXv9LkKXg==
-X-Received: by 2002:a17:906:c9d0:: with SMTP id hk16mr52141184ejb.109.1635932638645;
-        Wed, 03 Nov 2021 02:43:58 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m5sm845290ejc.62.2021.11.03.02.43.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Nov 2021 02:43:58 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1miCoH-002Frr-Iw;
-        Wed, 03 Nov 2021 10:43:57 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: test suite speedups via some not-so-crazy ideas (was: scripting
- speedups[...])
-Date:   Wed, 03 Nov 2021 10:24:57 +0100
-References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.2110211144490.56@tvgsbejvaqbjf.bet>
- <20211026201448.GA29480@dcvr>
- <211030.86ee8246hy.gmgdl@evledraar.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <211030.86ee8246hy.gmgdl@evledraar.gmail.com>
-Message-ID: <211103.864k8t1sma.gmgdl@evledraar.gmail.com>
+        id S231657AbhKCKKS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 06:10:18 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:38351 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231338AbhKCKKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 06:10:15 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1miDB9-0005s7-6A; Wed, 03 Nov 2021 10:07:36 +0000
+Message-ID: <828d1d4c-43da-7cbb-bc39-18f6892e1562@iee.email>
+Date:   Wed, 3 Nov 2021 10:07:33 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH] unpack-objects: unpack large object in stream
+Content-Language: en-GB
+To:     Han Xin <chiyutianyi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+References: <20211009082058.41138-1-chiyutianyi@gmail.com>
+ <CAO0brD3uT6y0ytPvjMzi9LdNRUR9bWXf3-o+D7RbdSLAJxCfAw@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAO0brD3uT6y0ytPvjMzi9LdNRUR9bWXf3-o+D7RbdSLAJxCfAw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(replies to the alibaba-inc.com aren't getting through for me)
 
-On Sat, Oct 30 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Tue, Oct 26 2021, Eric Wong wrote:
+On 03/11/2021 01:48, Han Xin wrote:
+> Any more suggestions?
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>> * Test suite is slow. Shell scripts and process forking.
->>>=20
->>>    * What if we had a special shell that interpreted the commands in a
->>>      single process?
->>>=20
->>>    * Even Git commands like rev-parse and hash-object, as long as that=
-=E2=80=99s
->>>      not the command you=E2=80=99re trying to test
+> Han Xin <chiyutianyi@gmail.com> 于2021年10月9日周六 下午4:21写道：
+>> From: Han Xin <hanxin.hx@alibaba-inc.com>
 >>
->> This is something I've wanted in a very long time as a scripter.
->> fast-import has been great over the years, as is
->> "cat-file --batch(-check)", but there's gaps should be filled
->> (preferably without fragile linkage of shared libraries into a
->> script process)
+>> When calling "unpack_non_delta_entry()", will allocate full memory for
+>> the whole size of the unpacked object and write the buffer to loose file
+>> on disk. This may lead to OOM for the git-unpack-objects process when
+>> unpacking a very large object.
+
+Is it possible to split the patch into smaller pieces, taking each item
+separately?
+
+For large files (as above), it should be possible to stream the
+unpacking direct to disk, in the same way that the zlib reading is
+chunked. However having the same 'code' in two places would need to be
+addressed (the DRY principle).
+
+At the moment on LLP64 systems (Windows) there is already a long (32bit)
+vs size_t (64bit) problem there (zlib stream), and the size_t problem
+then permeates the wider codebase.
+
+The normal Git file operations does tend to memory map whole files, but
+here it looks like you can bypass that.
 >>
->>>    * Dscho wants to slip in a C-based solution
->>>=20
->>>    * Jonathan tan commented: going back to your custom shell for tests
->>>      idea, one thing we could do is have a custom command that generates
->>>      the repo commits that we want (and that saves process spawns and
->>>      might make the tests simpler too)
+>> In function "unpack_delta_entry()", will also allocate full memory to
+>> buffer the whole delta, but since there will be no delta for an object
+>> larger than "core.bigFileThreshold", this issue is moderate.
+
+What does 'moderate' mean here? Does it mean there is a simple test that
+allows you to side step the whole problem?
+
 >>
->> Perhaps a not-seriously-proposed patch from 2006 could be
->> modernized for our now-libified internals:
->
-> I think something very short of a "C-based solution" could give us most
-> of the wins here. Johannes was probably thinking of the scripting being
-> slow on Windows aspect of it.
->
-> But the main benefit of hypothetical C-based testing is that you can
-> connect it to the dependency tree we have in the Makefile, and only
-> re-run tests for code you needed to re-compile.
->
-> So e.g. we don't need to run tests that invoke "git tag" if the
-> dependency graph of builtin/tag.c didn't change.
->
-> With COMPUTE_HEADER_DEPENDENCIES we've got access to that dependency
-> information for our C code.
->
-> With trace2 we could record an initial test run, and know which built-in
-> commands are executed by which tests (even down to the sub-test level).
->
-> Connecting these two means that we can find all tests that say run "git
-> fsck", and if builtin/fsck.c is the only thing that changed in an
-> interactive rebase, that's the only tests we need to run.
->
-> Of course changes to things like cache.h or t/test-lib.sh would spoil
-> that cache entirely, but pretty much the same is true for re-compiling
-> things now, so would changing say builtin/init-db.c, as almost every
-> test does a "git init" somewhere.
->
-> But I think that approch is viable, and should take us from a huge
-> hypothetical project like "rewrite all the tests in C" to something
-> that's a viable weekend hacking project for someone who's interested.
+>> To resolve the OOM issue in "git-unpack-objects", we can unpack large
+>> object to file in stream, and use the setting of "core.bigFileThreshold" as
+>> the threshold for large object.
 
-First to outline some goals: I think saying we'd like to speed up
-scripts is really getting into the weeds.
+Is this "core.bigFileThreshold" the core element? If so, it is too far
+down the commit message. The readers have already (potentially) misread
+the message and reacted too soon.  Perhaps: "use `core.bigFileThreshold`
+to avoid mmap OOM limits when unpacking".
 
-Surely we'd like to speed up test runs, and generally speaking our test
-suite can be parallelized, and it mostly doesn't matter if it runs on
-your computer or other people's computers, as long as it runs your
-code. So:
+--
+Philip
+>>
+>> Reviewed-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+>> ---
+>>  builtin/unpack-objects.c          |  41 +++++++-
+>>  object-file.c                     | 149 +++++++++++++++++++++++++++---
+>>  object-store.h                    |   9 ++
+>>  t/t5590-receive-unpack-objects.sh |  92 ++++++++++++++++++
+>>  4 files changed, 279 insertions(+), 12 deletions(-)
+>>  create mode 100755 t/t5590-receive-unpack-objects.sh
+>>
+>> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+>> index 4a9466295b..8ac77e60a8 100644
+>> --- a/builtin/unpack-objects.c
+>> +++ b/builtin/unpack-objects.c
+>> @@ -320,11 +320,50 @@ static void added_object(unsigned nr, enum object_type type,
+>>         }
+>>  }
+>>
+>> +static void fill_stream(struct git_zstream *stream)
+>> +{
+>> +       stream->next_in = fill(1);
+>> +       stream->avail_in = len;
+>> +}
+>> +
+>> +static void use_stream(struct git_zstream *stream)
+>> +{
+>> +       use(len - stream->avail_in);
+>> +}
+>> +
+>> +static void write_stream_blob(unsigned nr, unsigned long size)
+>> +{
+>> +       struct git_zstream_reader reader;
+>> +       struct object_id *oid = &obj_list[nr].oid;
+>> +
+>> +       reader.fill = &fill_stream;
+>> +       reader.use = &use_stream;
+>> +
+>> +       if (write_stream_object_file(&reader, size, type_name(OBJ_BLOB),
+>> +                                    oid, dry_run))
+>> +               die("failed to write object in stream");
+>> +       if (strict && !dry_run) {
+>> +               struct blob *blob = lookup_blob(the_repository, oid);
+>> +               if (blob)
+>> +                       blob->object.flags |= FLAG_WRITTEN;
+>> +               else
+>> +                       die("invalid blob object from stream");
+>> +       }
+>> +       obj_list[nr].obj = NULL;
+>> +}
+>> +
+>>  static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+>>                                    unsigned nr)
+>>  {
+>> -       void *buf = get_data(size);
+>> +       void *buf;
+>> +
+>> +       /* Write large blob in stream without allocating full buffer. */
+>> +       if (type == OBJ_BLOB && size > big_file_threshold) {
+>> +               write_stream_blob(nr, size);
+>> +               return;
+>> +       }
+>>
+>> +       buf = get_data(size);
+>>         if (!dry_run && buf)
+>>                 write_object(nr, type, buf, size);
+>>         else
+>> diff --git a/object-file.c b/object-file.c
+>> index a8be899481..06c1693675 100644
+>> --- a/object-file.c
+>> +++ b/object-file.c
+>> @@ -1913,6 +1913,28 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+>>         return fd;
+>>  }
+>>
+>> +static int write_object_buffer(struct git_zstream *stream, git_hash_ctx *c,
+>> +                              int fd, unsigned char *compressed,
+>> +                              int compressed_len, const void *buf,
+>> +                              size_t len, int flush)
+>> +{
+>> +       int ret;
+>> +
+>> +       stream->next_in = (void *)buf;
+>> +       stream->avail_in = len;
+>> +       do {
+>> +               unsigned char *in0 = stream->next_in;
+>> +               ret = git_deflate(stream, flush);
+>> +               the_hash_algo->update_fn(c, in0, stream->next_in - in0);
+>> +               if (write_buffer(fd, compressed, stream->next_out - compressed) < 0)
+>> +                       die(_("unable to write loose object file"));
+>> +               stream->next_out = compressed;
+>> +               stream->avail_out = compressed_len;
+>> +       } while (ret == Z_OK);
+>> +
+>> +       return ret;
+>> +}
+>> +
+>>  static int write_loose_object(const struct object_id *oid, char *hdr,
+>>                               int hdrlen, const void *buf, unsigned long len,
+>>                               time_t mtime)
+>> @@ -1949,17 +1971,9 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+>>         the_hash_algo->update_fn(&c, hdr, hdrlen);
+>>
+>>         /* Then the data itself.. */
+>> -       stream.next_in = (void *)buf;
+>> -       stream.avail_in = len;
+>> -       do {
+>> -               unsigned char *in0 = stream.next_in;
+>> -               ret = git_deflate(&stream, Z_FINISH);
+>> -               the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
+>> -               if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
+>> -                       die(_("unable to write loose object file"));
+>> -               stream.next_out = compressed;
+>> -               stream.avail_out = sizeof(compressed);
+>> -       } while (ret == Z_OK);
+>> +       ret = write_object_buffer(&stream, &c, fd, compressed,
+>> +                                 sizeof(compressed), buf, len,
+>> +                                 Z_FINISH);
+>>
+>>         if (ret != Z_STREAM_END)
+>>                 die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
+>> @@ -2020,6 +2034,119 @@ int write_object_file(const void *buf, unsigned long len, const char *type,
+>>         return write_loose_object(oid, hdr, hdrlen, buf, len, 0);
+>>  }
+>>
+>> +int write_stream_object_file(struct git_zstream_reader *reader,
+>> +                            unsigned long len, const char *type,
+>> +                            struct object_id *oid,
+>> +                            int dry_run)
+>> +{
+>> +       git_zstream istream, ostream;
+>> +       unsigned char buf[8192], compressed[4096];
+>> +       char hdr[MAX_HEADER_LEN];
+>> +       int istatus, ostatus, fd = 0, hdrlen, dirlen, flush = 0;
+>> +       int ret = 0;
+>> +       git_hash_ctx c;
+>> +       struct strbuf tmp_file = STRBUF_INIT;
+>> +       struct strbuf filename = STRBUF_INIT;
+>> +
+>> +       /* Write tmpfile in objects dir, because oid is unknown */
+>> +       if (!dry_run) {
+>> +               strbuf_addstr(&filename, the_repository->objects->odb->path);
+>> +               strbuf_addch(&filename, '/');
+>> +               fd = create_tmpfile(&tmp_file, filename.buf);
+>> +               if (fd < 0) {
+>> +                       if (errno == EACCES)
+>> +                               ret = error(_("insufficient permission for adding an object to repository database %s"),
+>> +                                       get_object_directory());
+>> +                       else
+>> +                               ret = error_errno(_("unable to create temporary file"));
+>> +                       goto cleanup;
+>> +               }
+>> +       }
+>> +
+>> +       memset(&istream, 0, sizeof(istream));
+>> +       istream.next_out = buf;
+>> +       istream.avail_out = sizeof(buf);
+>> +       git_inflate_init(&istream);
+>> +
+>> +       if (!dry_run) {
+>> +               /* Set it up */
+>> +               git_deflate_init(&ostream, zlib_compression_level);
+>> +               ostream.next_out = compressed;
+>> +               ostream.avail_out = sizeof(compressed);
+>> +               the_hash_algo->init_fn(&c);
+>> +
+>> +               /* First header */
+>> +               hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %" PRIuMAX, type,
+>> +                               (uintmax_t)len) + 1;
+>> +               ostream.next_in = (unsigned char *)hdr;
+>> +               ostream.avail_in = hdrlen;
+>> +               while (git_deflate(&ostream, 0) == Z_OK)
+>> +                       ; /* nothing */
+>> +               the_hash_algo->update_fn(&c, hdr, hdrlen);
+>> +       }
+>> +
+>> +       /* Then the data itself */
+>> +       do {
+>> +               unsigned char *last_out = istream.next_out;
+>> +               reader->fill(&istream);
+>> +               istatus = git_inflate(&istream, 0);
+>> +               if (istatus == Z_STREAM_END)
+>> +                       flush = Z_FINISH;
+>> +               reader->use(&istream);
+>> +               if (!dry_run)
+>> +                       ostatus = write_object_buffer(&ostream, &c, fd, compressed,
+>> +                                                     sizeof(compressed), last_out,
+>> +                                                     istream.next_out - last_out,
+>> +                                                     flush);
+>> +               istream.next_out = buf;
+>> +               istream.avail_out = sizeof(buf);
+>> +       } while (istatus == Z_OK);
+>> +
+>> +       if (istream.total_out != len || istatus != Z_STREAM_END)
+>> +               die( _("inflate returned %d"), istatus);
+>> +       git_inflate_end(&istream);
+>> +
+>> +       if (dry_run)
+>> +               goto cleanup;
+>> +
+>> +       if (ostatus != Z_STREAM_END)
+>> +               die(_("unable to deflate new object (%d)"), ostatus);
+>> +       ostatus = git_deflate_end_gently(&ostream);
+>> +       if (ostatus != Z_OK)
+>> +               die(_("deflateEnd on object failed (%d)"), ostatus);
+>> +       the_hash_algo->final_fn(oid->hash, &c);
+>> +       close_loose_object(fd);
+>> +
+>> +       /* We get the oid now */
+>> +       loose_object_path(the_repository, &filename, oid);
+>> +
+>> +       dirlen = directory_size(filename.buf);
+>> +       if (dirlen) {
+>> +               struct strbuf dir = STRBUF_INIT;
+>> +               /*
+>> +                * Make sure the directory exists; note that the contents
+>> +                * of the buffer are undefined after mkstemp returns an
+>> +                * error, so we have to rewrite the whole buffer from
+>> +                * scratch.
+>> +                */
+>> +               strbuf_add(&dir, filename.buf, dirlen - 1);
+>> +               if (mkdir(dir.buf, 0777) && errno != EEXIST) {
+>> +                       unlink_or_warn(tmp_file.buf);
+>> +                       strbuf_release(&dir);
+>> +                       ret = -1;
+>> +                       goto cleanup;
+>> +               }
+>> +               strbuf_release(&dir);
+>> +       }
+>> +
+>> +       ret = finalize_object_file(tmp_file.buf, filename.buf);
+>> +
+>> +cleanup:
+>> +       strbuf_release(&tmp_file);
+>> +       strbuf_release(&filename);
+>> +       return ret;
+>> +}
+>> +
+>>  int hash_object_file_literally(const void *buf, unsigned long len,
+>>                                const char *type, struct object_id *oid,
+>>                                unsigned flags)
+>> diff --git a/object-store.h b/object-store.h
+>> index d24915ced1..12b113ef93 100644
+>> --- a/object-store.h
+>> +++ b/object-store.h
+>> @@ -33,6 +33,11 @@ struct object_directory {
+>>         char *path;
+>>  };
+>>
+>> +struct git_zstream_reader {
+>> +       void (*fill)(struct git_zstream *);
+>> +       void (*use)(struct git_zstream *);
+>> +};
+>> +
+>>  KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+>>         struct object_directory *, 1, fspathhash, fspatheq)
+>>
+>> @@ -225,6 +230,10 @@ int hash_object_file(const struct git_hash_algo *algo, const void *buf,
+>>  int write_object_file(const void *buf, unsigned long len,
+>>                       const char *type, struct object_id *oid);
+>>
+>> +int write_stream_object_file(struct git_zstream_reader *reader,
+>> +                            unsigned long len, const char *type,
+>> +                            struct object_id *oid, int dry_run);
+>> +
+>>  int hash_object_file_literally(const void *buf, unsigned long len,
+>>                                const char *type, struct object_id *oid,
+>>                                unsigned flags);
+>> diff --git a/t/t5590-receive-unpack-objects.sh b/t/t5590-receive-unpack-objects.sh
+>> new file mode 100755
+>> index 0000000000..7e63dfc0db
+>> --- /dev/null
+>> +++ b/t/t5590-receive-unpack-objects.sh
+>> @@ -0,0 +1,92 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (c) 2021 Han Xin
+>> +#
+>> +
+>> +test_description='Test unpack-objects when receive pack'
+>> +
+>> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success "create commit with big blobs (1.5 MB)" '
+>> +       test-tool genrandom foo 1500000 >big-blob &&
+>> +       test_commit --append foo big-blob &&
+>> +       test-tool genrandom bar 1500000 >big-blob &&
+>> +       test_commit --append bar big-blob &&
+>> +       (
+>> +               cd .git &&
+>> +               find objects/?? -type f | sort
+>> +       ) >expect &&
+>> +       git repack -ad
+>> +'
+>> +
+>> +test_expect_success 'setup GIT_ALLOC_LIMIT to 1MB' '
+>> +       GIT_ALLOC_LIMIT=1m &&
+>> +       export GIT_ALLOC_LIMIT
+>> +'
+>> +
+>> +test_expect_success 'prepare dest repository' '
+>> +       git init --bare dest.git &&
+>> +       git -C dest.git config core.bigFileThreshold 2m &&
+>> +       git -C dest.git config receive.unpacklimit 100
+>> +'
+>> +
+>> +test_expect_success 'fail to push: cannot allocate' '
+>> +       test_must_fail git push dest.git HEAD 2>err &&
+>> +       test_i18ngrep "remote: fatal: attempting to allocate" err &&
+>> +       (
+>> +               cd dest.git &&
+>> +               find objects/?? -type f | sort
+>> +       ) >actual &&
+>> +       ! test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'set a lower bigfile threshold' '
+>> +       git -C dest.git config core.bigFileThreshold 1m
+>> +'
+>> +
+>> +test_expect_success 'unpack big object in stream' '
+>> +       git push dest.git HEAD &&
+>> +       git -C dest.git fsck &&
+>> +       (
+>> +               cd dest.git &&
+>> +               find objects/?? -type f | sort
+>> +       ) >actual &&
+>> +       test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'setup for unpack-objects dry-run test' '
+>> +       PACK=$(echo main | git pack-objects --progress --revs test) &&
+>> +       unset GIT_ALLOC_LIMIT &&
+>> +       git init --bare unpack-test.git
+>> +'
+>> +
+>> +test_expect_success 'unpack-objects dry-run with large threshold' '
+>> +       (
+>> +               cd unpack-test.git &&
+>> +               git config core.bigFileThreshold 2m &&
+>> +               git unpack-objects -n <../test-$PACK.pack
+>> +       ) &&
+>> +       (
+>> +               cd unpack-test.git &&
+>> +               find objects/ -type f
+>> +       ) >actual &&
+>> +       test_must_be_empty actual
+>> +'
+>> +
+>> +test_expect_success 'unpack-objects dry-run with small threshold' '
+>> +       (
+>> +               cd unpack-test.git &&
+>> +               git config core.bigFileThreshold 1m &&
+>> +               git unpack-objects -n <../test-$PACK.pack
+>> +       ) &&
+>> +       (
+>> +               cd unpack-test.git &&
+>> +               find objects/ -type f
+>> +       ) >actual &&
+>> +       test_must_be_empty actual
+>> +'
+>> +
+>> +test_done
+>> --
+>> 2.33.0.1.g09a6bb964f.dirty
+>>
 
- 1. Even for contributors that have a slow system they could benefit from
-    the hosted CI (on GitHub or wherever else) being faster.
-
- 2. Our CI takes around 30-60m to finish.
-
- 3. That CI time is almost entirely something that could be sped up by
-    throwing hardware at it.
-
- 4. We're currently using "Dv2 and DSv2-series" hosted runners
-    (https://docs.github.com/en/actions/using-github-hosted-runners/about-g=
-ithub-hosted-runners)
-    we have quite a few people on-list who work for the
-    company/companies involved.
-
-    Is it within the realm of possibility to get more CI resources
-    assigned to git/git's organization network?
-
- 5. Or, is there willingness to host/pay for hosted runners from
-    someone?
-
-    Not wearing PLC hat I'd think that we could speed that up a lot with
-    some reasonable money spending, and if pushing to CI made CI run in
-    3-5m instead of 60m that would be worthwhile.
-
- 6. Related to #5: I've been able to setup hosted runner jobs, and
-    self-hosted runner jobs, but is there a way to do some opportunistic
-    mixture of the two? Even one where self-hosted runners could come
-    and go, and if they're present contribute resources to git/git's
-    network?
-
- 7. We run the various GIT_TEST_* etc. jobs in sequence, is there a
-    reason for why we're serializing things in GitHub CI that could be
-    parallelized?
-
-    The vs-build and vs-test tests run in parallel, any reason we're not
-    doing that trick on the ubuntu runners other than "nobody got to
-    it?". We seem to be trying hard to do the exact opposite there..
-
-    At the extreme end we could build git ~once, and have N tests depend
-    on that, where N ~=3D $(ls t/*.sh) x $number_of_test_modes). But
-    perhaps runner starting overhead starts to be the limiting factor at
-    some point.
-
- 8. To a first approximation, does anyone really care about getting an
-    exhaustive list of all failures in a run, or just that we have *a*
-    failure? You can always do an exhaustive run later.
-
- 9. On the "no" answer to #8: When I build/test my own git I first run
-    those tests that I modified in the relevant branches, and if any of
-    those fail I just stop.
-
-    I generally don't need to run the entirety of the rest of the test
-    suite to stop and investigate why I have a failure.
-
-    Perhaps our CI could use a similar trick, i.e. first test the set of
-    modified test files, and perhaps with some ad-hoc matching of
-    filenames, so e.g. if you modify builtin/add.c we'd run t/*add*.sh
-    in the first set, and all with --immediate per #8 above.
-
-    If we pass that we'd run the full set, minus that initial set.
