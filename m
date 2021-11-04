@@ -2,138 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B270DC433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77143C433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9648B611F2
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52B4861076
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhKDN6G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 09:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhKDN6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 09:58:05 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3D9C061714
-        for <git@vger.kernel.org>; Thu,  4 Nov 2021 06:55:27 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id ee33so21799470edb.8
-        for <git@vger.kernel.org>; Thu, 04 Nov 2021 06:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=zw6dXAQRfaqKZmaMEUZNklagpLXCMIcdLsPEQDypzGQ=;
-        b=nn6pR3MOZmg6fkYEdA6YGbB9/9m+DQXNOsMCJASOlFAGiyy4jLXwHQm4Xxi4gAXoeB
-         7/w9Zih0oUNTG8FmG9ZQvHnkSw9FD9IJ6F8o0yx9gcuPoL+DR9WHpUz8rg+tf6s54h2j
-         XGakU3Mj+Rm0hRJdJEObF57tvUDk77X+ocK0NHslvNREJoSlUhUkBJaTbYes02KH7vu2
-         dSAwYeRZhUbbGMR0tPJrBVpgejU02MfjlUnCxtn246WYD7WQFORh1N+CJG92Bx/yvIFR
-         114LvsS6IrOtHmHI0icqAWQRCP4iMz+alPqzkvgXMke6FeLykdv3c0OnjJXdbQYJ8c2T
-         y4WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=zw6dXAQRfaqKZmaMEUZNklagpLXCMIcdLsPEQDypzGQ=;
-        b=Wgqo9euTpN3PGvtQRp3hLZEagh5TiL4ZHLucKEQU/pmKHWZFANIEy5AkqyPcrG7ShB
-         e4/97n77RXVYvjDzwRb/iT5Iji6WykieV7wqks1oLi3t9RwlnzvlVbwQQChtIDfI9bRo
-         QSuaRulOeXKJ/36ZR0optuScuzr6TrAYbBbdbjf8JLm4rSs6dvb/zGKf3t6ckrwMpuy+
-         fp5CfVPVr6bMTXSpuFhG32MC8gwOqC16n0kQD4r4FPvMEmRqVopKHxNwNo9dAoG0BSoe
-         O9umh/ED4Bi6qVNJbUzmy7Qr8udB44u6FvlKbrYTVAEn0NVWhSBBPvKBRTzJdukk1wJK
-         YkjQ==
-X-Gm-Message-State: AOAM530jHHGWl37IFgR39D0D7b4iKJU9jcieherVYM2xl8RRWsEzhvLf
-        4uxUT/LkJ4lAZy57ILUmUAw=
-X-Google-Smtp-Source: ABdhPJx4wY4CF4A+JQIUj7ox2DxLcotmhCGzR8XlM0RmwzERihHpMK6m0pA+grH81Fjwa/0jxQJBNw==
-X-Received: by 2002:a05:6402:2712:: with SMTP id y18mr13925558edd.212.1636034125529;
-        Thu, 04 Nov 2021 06:55:25 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f7sm2923574edl.33.2021.11.04.06.55.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Nov 2021 06:55:25 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1midDA-000Bc9-KQ;
-        Thu, 04 Nov 2021 14:55:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] ci: disallow directional formatting
-Date:   Thu, 04 Nov 2021 14:48:29 +0100
-References: <pull.1071.v2.git.1635942236065.gitgitgadget@gmail.com>
- <pull.1071.v3.git.1636031609982.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <pull.1071.v3.git.1636031609982.gitgitgadget@gmail.com>
-Message-ID: <211104.86ee7whvoz.gmgdl@evledraar.gmail.com>
+        id S231243AbhKDN6Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 09:58:24 -0400
+Received: from mout.gmx.net ([212.227.15.18]:48519 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229505AbhKDN6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 09:58:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636034144;
+        bh=NlgXWgkzu7mJo1ZqE/hLBfHqO6U+d+BOfGdiQ1ezQCo=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=ZKuUcMzxvF+eh6AtzCDsmmDzo/vq38nXQ0XSNDoGLe/cCcmri4vApcBl9ma43ZE/d
+         D2qh6uubvWDFWUP2oaNNakbv7+SzPdcUJVCPd5tU6SzDNB48IHvXloJNgZKUXQO0NC
+         +2iw8VUPqLOiU9Kn4Ynbg5vO14rbt5pUzShYTcGc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az30-490.nwfnsqwsw4julhrdclvecef41g.jx.internal.cloudapp.net
+ ([13.84.210.207]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MpDJd-1mOxO42tOZ-00qm8l; Thu, 04 Nov 2021 14:55:44 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.34.0-rc1
+Date:   Thu,  4 Nov 2021 13:55:40 +0000
+Message-Id: <20211104135541.4902-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.33.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:1++oiAU7V1hDIJhx94TkloLlrUItvfZZMFaDg0rjwMPAcWCR+xF
+ hSRZrjcH/OsQNOYa6or5S9Szy2yfcYsDAU2wh7p/OKbv8D+p0RTTSDMGDm2W7nRcRfYnxf7
+ FTJFu6kuw9zVXoQMpmYkLq1nBflF1NNyqzEeQY1rMwfW/n8XerR2GOgRLt05WbFEVqgvEqf
+ Aw+KmApNNx/71uNNOZe8w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eJIE0CAFEoQ=:2deV54s7leeLPWJKYtFC/X
+ DmZZAF8OR0/LfcdyZca4r8ct99sXGQUGTp1Li5zKw0bfTH7e8qxvP7pcTyV+vApL7bV9bORgP
+ 5mesl5t5BQzTs4wIvOUd8MJewK8FL1/mdJS9xxGwqs0JM19RLywZk3RnyAKYj9sOAZqLCqKfr
+ nF3XIxRnQoPjjNPuLVmzRYRJq03X4PapH7wO7h19l++l9MviJ+4GVxfHsSH+sArbj1FuTABRF
+ 83UAHRZrIzh5NLf4cKbYSW4WYS6zJ/2Ez/VHoc7MkYUI1EDhsr+DK2h5GZDYmhM87KMlDjKDU
+ GzrZK0IRuNJT5FnxzZWeZJYryMhrgyz6wKJGtLWAEifK6/PFdYo9d+bdUI4Xhar5jhoIvKFzG
+ UiKuGrwxwsur1W0B8raABtyoSEEz8X89rkuWiHqyyyIex2pQ6BZvdTGaKEpAAOwtvR4QH76+s
+ F1Mpxxk4/5VP0ugPINm8/ttNEC9rim03JhNJPLayzWYKzAtY/FOmjVSaGTN+jaqoo3eRSfRsw
+ 4q389EDi5MSkYZ1HWO9HurHZFF9WG6JbW9G3X2gUxw5pZvTxsoDBs5JcNKe5UEYTxAPSjcz3a
+ wsz9Vg/hsJXpQWKGug7zt01fHWqUkbanWQrJ7a+ym7FEU4XE8sBVqqs9Zpz2Xqghioi6xGIAV
+ Fk19WmDVLDgdZ6AjSROkuEq3jwBvLTQrblqPkE+T/au+wzECAHg9ZbPT+of+IVYSOm0mUXjqR
+ KIKRoCLeGg2wK0WhpUxgDcPJwvgwRDUhq/NYHO/k+AOSScBudJjmiCws37JmMC/oU2VYC8CWq
+ NhiFASTVS1qfoFtNBehUntkRvXCXwseV+tKzo/M3s++cCVkvrHmQWcChXh91oJ/hjFBYzTMul
+ fhBpzzuDrdI+qJqzCV4nOsSYNS5PeOgV6oPesywJJwbmOjdWNKZSMybBAeKtJL79vZEZPkKsq
+ RHvnLrP6pO7LWT5TUu/RkWsQRFDZIZEK9kyPtzlutkDOJCmn3G7XfPwrNcBDj+MAyruuob2cS
+ GEtjo03ZFZQMzeIIfM8SOF3e1QgJVumI8xkMv/nQSzbk0Lf78bg76KC/F5kdWbb1d2OojnAOw
+ 343I+82X6HUCx8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Git users,
 
-On Thu, Nov 04 2021, Johannes Schindelin via GitGitGadget wrote:
+I hereby announce that Git for Windows 2.34.0-rc1 is available from:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> [...]
->      * Corrected a code comment: my custom git grep was not PCRE-enabled,
->        but Ubuntu's isn't. But git grep -P still does not understand \uNNNN.
->      * Even if the *.po files currently pass the check, the script is now
->        future-proof by excluding them.
-> [...]
+    https://github.com/git-for-windows/git/releases/tag/v2.34.0-rc1.windows.1
 
-> +# This is intended to run on an Ubuntu agent in a GitHub workflow.
-> +#
-> +# To allow translated messages to introduce such directional formatting in the
-> +# future, we exclude the `.po` files from this validation.
-> +#
-> +# Neither GNU grep nor `git grep` (not even with `-P`) handle `\u` as a way to
-> +# specify UTF-8.
-> +#
-> +# To work around that, we use `printf` to produce the pattern as a byte
-> +# sequence, and then feed that to `git grep` as a byte sequence (setting
-> +# `LC_CTYPE` to make sure that the arguments are interpreted as intended).
-> +#
-> +# Note: we need to use Bash here because its `printf` interprets `\uNNNN` as
-> +# UTF-8 code points, as desired. Running this script through Ubuntu's `dash`,
-> +# for example, would use a `printf` that does not understand that syntax.
-> +
-> +# U+202a..U+2a2e: LRE, RLE, PDF, LRO and RLO
-> +# U+2066..U+2069: LRI, RLI, FSI and PDI
-> +regex='(\u202a|\u202b|\u202c|\u202d|\u202e|\u2066|\u2067|\u2068|\u2069)'
-> +
-> +! LC_CTYPE=C git grep -El "$(LC_CTYPE=C.UTF-8 printf "$regex")" \
-> +	-- ':(exclude,attr:binary)' ':(exclude)*.po'
->
-> base-commit: 0cddd84c9f3e9c3d793ec93034ef679335f35e49
+Changes since Git for Windows v2.33.1 (October 13th 2021)
 
-So this is still using not-PCRE instead of the much simpler PCRE-enabled
-one I suggested in[1] because your locally-built git doesn't link to
-libpcre?
+New Features
 
-At the very least that comment is still quite confusing. I.e. it starts
-out by saying that it's meant to run in CI where we've got PCRE, but
-then goes on to describe an elaborate workaround that's only needed with
-a not-PCRE grep.
+  * Comes with Git v2.34.0-rc1.
+  * Config settings referring to paths relative to where Git is
+    installed now have to be marked via %(prefix)/ instead of the
+    now-deprecated leading slash.
+  * Comes with Git LFS v3.0.2.
+  * Contains new, experimental support for core.fsyncObjectFiles=batch.
 
-Would be less confusing to understand why it's so complex as:
+Bug Fixes
 
-   # This is intended to run on an Ubuntu agent in a GitHub
-   # workflow. We've got PCRE there, so all of the below could also be:
-   #
-   #    ! git -P grep -nP '[\N{U+202a}-\N{U+202e}\N{U+2066}-\N{U+2069}]' ':!(attr:binary)' ':!**po/**'
-   #
-   #
-   # But the author wanted to run this locally on a system that didn't
-   # have PCRE, So [go on to describe elaborate bash / "git grep -E" /
-   # LC_* tweaking workaround....]
-   [...]
+  * Configuring a system-wide VS Code as Git's editor was broken, which
+    has been fixed.
+  * It is now possible to clone files larger than 4GB as long as they
+    are transferred via Git LFS.
+  * Git now works around an issue with vi and incorrect line breaks in
+    the Windows Terminal.
 
-B.t.w. I think that **po/** exclusion is closer to what you want,
-i.e. "a 'po' dir anywhere in our tree". It'll also exclude this if we
-e.g. end up using these in language-specific README files there or
-whatever.
+Git-2.34.0-rc1-64-bit.exe | accea106d3da55dfcf638970371b429f84e35e076d2d2a35c1092f282f83fe0c
+Git-2.34.0-rc1-32-bit.exe | 7701b03b209c4ea784303ececb1d3b6885a971989ed35b4322d3df0c353c9f15
+PortableGit-2.34.0-rc1-64-bit.7z.exe | 6f2ad8d09d4a57e7f7b244044b127a3bce92d68fa0d8fd8dcb45e46cff53c3e5
+PortableGit-2.34.0-rc1-32-bit.7z.exe | c61bd63a2d10188fc7547cc0e5f66f5c29b5fe6b23111f2d8b7c94f1db38b8f0
+MinGit-2.34.0-rc1-64-bit.zip | 5865c94a9264d22cd4e99912f6359a7834e232578eee7de8b6ab5ee5a0a422dd
+MinGit-2.34.0-rc1-32-bit.zip | 43da6248745dc8c342362719d8d5dd2c8eebc0342fb05bb3d89eeec9dd670e6b
+MinGit-2.34.0-rc1-busybox-64-bit.zip | 6730c02e10e632367fd686d21c3664d7f0b467a9c7c7477e97d3646c674e4e9c
+MinGit-2.34.0-rc1-busybox-32-bit.zip | 33ff05478a19a4303408f4d5ea53355a3d71d3520be56d390ab6c403f3114c9b
+Git-2.34.0-rc1-64-bit.tar.bz2 | e66e8e07d6e4e95260eff30d10b8561461b1e1415ff28d1ab381ad1c556fd71d
+Git-2.34.0-rc1-32-bit.tar.bz2 | 5fb3e3bebd6696e40f758c88cfea33c67690504eb6a03d35c06821c0795e37be
 
-1. https://lore.kernel.org/git/211103.86zgqlhzvz.gmgdl@evledraar.gmail.com/ or:
-
-   ! git -P grep -nP '[\N{U+202a}-\N{U+202e}\N{U+2066}-\N{U+2069}]' ':!(attr:binary)'
+Ciao,
+Johannes
