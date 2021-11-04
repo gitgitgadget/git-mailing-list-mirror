@@ -2,107 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 820F9C433F5
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3277C433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:27:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6869160F9D
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:56:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7236611EE
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:27:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbhKDA67 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 20:58:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59564 "EHLO
+        id S231373AbhKDBaV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 21:30:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbhKDA66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 20:58:58 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D1EC061714
-        for <git@vger.kernel.org>; Wed,  3 Nov 2021 17:56:21 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id s136so3909486pgs.4
-        for <git@vger.kernel.org>; Wed, 03 Nov 2021 17:56:21 -0700 (PDT)
+        with ESMTP id S231206AbhKDBaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 21:30:20 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50336C061714
+        for <git@vger.kernel.org>; Wed,  3 Nov 2021 18:27:43 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id t127so10699467ybf.13
+        for <git@vger.kernel.org>; Wed, 03 Nov 2021 18:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WGJ1yDdrdG5FfeVYWjSK4WKLmEvtzGLwOYHdFOwnA0I=;
-        b=ZZVC4SeBKbjxAqio606RkmdhmA6xY/EhwqkvwuZ/FNmxeMZkU/x5GyTIkEUNr/A9iU
-         V2hdBI+xIdoBva+g6fbBg2krkoSUUZRPpClB/tJ8+PYCFFbbFlrI6RS9aO54LAerC+AS
-         DFjNcNhg1p4r7GvGy4aDYYMefn8Z/FciT/MqEvYM0D4/vRahMdXDjiE6HOTGi5CcvIdI
-         fvDhxeS2GHMrNsaiS4B6WBzUoMBwZD6s1qzS6FUa+E6EkqePR53i3uitdu7DYpcjt0ec
-         hAZxFL8+e0FOzGC0XvzEsbYrjQFqLCIiABJ3LjTdZm/jw2bDPAvupeiMuhDbVrmpz82p
-         sRhw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c44BmN8oo64wOLUdLmooq5TeSJLZf+y4Y0mLuyhFVSs=;
+        b=EIOGM/mQ9pgdDbxGWykwYt03g3gmKNBs3MorDHLmJxaSzGIQre5YztiYEIxFb+mh/7
+         AfkoT6rgimcfxfJ12EHXRJ7+H/CyOGkzXB3aPo1zsQf8pCqSAMI8MNuVfKVt4O+kxnhq
+         cY511odQj6cAHJP6pYjo3cYL5GLS6KOgbCpZgYc8ruiawJyyZJNYV6icMF/qWhj47Z5p
+         +LyAyO3OZbvjhjKWNYN6zLIQULASBDbTRZgJM71HgRvcYjDmRi/yQTA4yDR6JTgpolrS
+         PaKF7/bI9YU5jwYgLmI5Qy4ZWlUGgyASDqoO7jWQTZAwwGlDCsY3ktazywGdsbJ9xTSj
+         tWnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WGJ1yDdrdG5FfeVYWjSK4WKLmEvtzGLwOYHdFOwnA0I=;
-        b=JQU5LB0HSEPVNNhEJ5WO+dJyYhh4VtdHOiZNtc5pTUbzgw2XMcekAXubPb10Tisrk5
-         aZggYOPmCbL9o4UWb0PbxsgPqiYABVcFFGjqUOdYX6yhV+i7+ULg+9XorBptWkCsWbWV
-         lLtiCbKY4wpqoibBlf8Y3o5D6sc1ixLpLtjky6Ivbe8Djk8j6HVPswOdO96MenK2Rx3w
-         fiFgYnx/hxI04cdwRzH1gR3Aj/XrVjBjQPNG5prrH+jmzvs9urjhhhebA97es3YQxBZ/
-         NbxLTqwF6aAL+XbfcJoQdJXniLNPzuMHCDzkmXzFbqOYDBjOoHFhNSmDgPX1X83/+zPY
-         uC6w==
-X-Gm-Message-State: AOAM533RsL7ZZqvQChRzt/R2QtorWfs4JkshmihY49iPX6hpff0xvRa8
-        n2oLPi+YrwvUQMmWXpGMo40DxcaJjuvTqw==
-X-Google-Smtp-Source: ABdhPJwdZLyKs+QD+qj2/Jp+y8WcvwbN/N74N2rnT1YQO6PwXziqQ3jS/soiLoovBpTnVd6k5k4MgQ==
-X-Received: by 2002:a05:6a00:148d:b0:492:66d3:e37e with SMTP id v13-20020a056a00148d00b0049266d3e37emr7888387pfu.41.1635987380952;
-        Wed, 03 Nov 2021 17:56:20 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id h6sm3443835pfi.174.2021.11.03.17.56.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Nov 2021 17:56:20 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c44BmN8oo64wOLUdLmooq5TeSJLZf+y4Y0mLuyhFVSs=;
+        b=PdttI/0kdsuHct2S4LLkaU9nTyqyksQy39PWPjJ+dgaNUsI+miQQWa6AiNoLrlxA+w
+         naEmbE9QveVsuMFwU3XVmwB5sHkh0DixpqdkNCJm1JLiwZwD4NpoYKngn9oeny2DXjqn
+         XKPt2UyAQqFGPlisK1BHN5EAfm1992v7OCXI7MPgsKjcudN6vKD28Z9Wso6eYxqK6Thv
+         Ip3o3ccSjas+GAnJsZJd4jpwGgb0gVBeqcLAVT5NQ00IRXn21xEON+iMO06Bo9/bWW5h
+         lexqb7j7xW7m8w7wxBhXXqQhEXWBUBebkc4H7AukZhiLmg74mnL0nXG4zVWb8zygFRWK
+         zpAw==
+X-Gm-Message-State: AOAM531g09YTaBsDcniiQBN+7loH3sqK1tHR/llz63q7mpgyAeZyYb9V
+        41X4smJ8P3x8YLCqV8kH7iGzqhTeVd+EDWFQiT8=
+X-Google-Smtp-Source: ABdhPJz6BYE2jnOennfXH504iAyp60HBu/8ch1clMHHopmJY7ySSIo3OAdDofDsbSnhbH4kryrT6qAt3yu2pLZLRd6Y=
+X-Received: by 2002:a25:d6d4:: with SMTP id n203mr51832193ybg.80.1635989262466;
+ Wed, 03 Nov 2021 18:27:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <20211031052156.5237-1-worldhello.net@gmail.com>
+ <20211101021417.9549-1-worldhello.net@gmail.com> <7d9a893e-5dad-bd21-4ef7-6d47303abdc1@gmail.com>
+ <xmqqpmrh8atl.fsf@gitster.g>
+In-Reply-To: <xmqqpmrh8atl.fsf@gitster.g>
 From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Git l10n discussion group <git-l10n@googlegroups.com>,
+Date:   Thu, 4 Nov 2021 09:27:31 +0800
+Message-ID: <CANYiYbE9=HZk2wD0u4uPGT9Mv2nZZis-s31fvG0QzhM7HmRisg@mail.gmail.com>
+Subject: Re: [PATCH v2] i18n: fix typos found during l10n for git 2.34.0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        ZheNing Hu <adlternative@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Alexander Shopov <ash@kambanaria.org>,
         Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
         Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
         Alessandro Menti <alessandro.menti@alessandromenti.it>,
         Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
         Daniel Santos <daniel@brilhante.top>,
         Dimitriy Ryazantcev <DJm00n@mail.ru>,
         Peter Krefting <peter@softwolves.pp.se>,
         Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.34.0 round #2
-Date:   Thu,  4 Nov 2021 08:56:13 +0800
-Message-Id: <20211104005613.25005-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Nov 4, 2021 at 12:26 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+>
+> >> diff --git a/ref-filter.c b/ref-filter.c
+> >> index 282cdad103..08a3f839c9 100644
+> >> --- a/ref-filter.c
+> >> +++ b/ref-filter.c
+> >> @@ -1037,7 +1037,7 @@ int verify_ref_format(struct ref_format *format)
+> >>                   format->quote_style == QUOTE_TCL) &&
+> >>                   used_atom[at].atom_type == ATOM_RAW &&
+> >>                   used_atom[at].u.raw_data.option == RAW_BARE)
+> >> -                    die(_("--format=%.*s cannot be used with"
+> >> +                    die(_("--format=%.*s cannot be used with "
+> >>                            "--python, --shell, --tcl"), (int)(ep - sp - 2), sp + 2);
+> >>              cp = ep + 1;
+> >>
+> >
+> > Why not using \n?
+>
+> It is not quite clear to me why it should.
+>
+> Among the possible string that is (ep - sp - 2) bytes long (i.e.
+> --python, --shell, --tcl, --raw), even with the longest, the
+> resulting message would become
+>
+>     fatal: --format=--python cannot be used with
+>     --python, --shell, --tcl.
+>
+> that is unusually short with such a newline in the middle.
 
-Git v2.34.0-rc1 has been released, and fixed three typos of i18n messages.
-Let's start a new round of git l10n based on this commit:
+In order to detect typos in new i18n messages added upstream in time,
+a new CI workflow has been added in the "pot/CI" branch. See:
 
-    l10n: git.pot: v2.34.0 round 2 (3 new, 3 removed)
-    
-    Generate po/git.pot from v2.34.0-rc1 for git v2.34.0 l10n round 2.
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+    https://github.com/git-l10n/git-po/blob/pot/CI/.github/workflows/git-pot.yml
 
-You can get it from the usual place:
+This workflow will be triggered several times a day, and changes of
+i18n messages will be saved as "YYYY-mm-dd.diff" in the following
+branches:
 
-    https://github.com/git-l10n/git-po/
+* https://github.com/git-l10n/git-po/tree/pot/master
+* https://github.com/git-l10n/git-po/tree/pot/next
+* https://github.com/git-l10n/git-po/tree/pot/seen
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
-
-There is a helper program hosted on https://github.com/git-l10n/git-po-helper
-for git l10n coordinators and git l10n contributors to check the conventions
-of git l10n contributions.
-
+L10n contributors can also refer to the "po/git.pot" file in the
+"pot/master" branch to prepare translations in advance.
 
 --
 Jiang Xin
