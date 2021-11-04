@@ -2,85 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B5B6C433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 882ECC433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:29:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AC58610FD
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:12:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6106761053
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231206AbhKDOP1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 10:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbhKDOP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 10:15:26 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89613C061714
-        for <git@vger.kernel.org>; Thu,  4 Nov 2021 07:12:48 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id h74so6016863pfe.0
-        for <git@vger.kernel.org>; Thu, 04 Nov 2021 07:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NKwzkqUvf5KBohoQ8SGqrxZt4uDMBy1hQHwB8JR8Fho=;
-        b=dI0aW6S8wQOk+jT+w1RBsXQo7d5+qUdCdoG3CDMv41Jpa0JVggfk7BK/zcie9P/xBK
-         FEXLLANOvvHM2yitRWSbc0pgQSkl3NWvVVEEjQwuuw5TbY3H5Gh8a2jMuCSK+W2pNgT3
-         dRvybUobf9Pf4T3mnUJMRwsnykdSiW+LUUT0Gh7Eh9KSUOjyZI4BR1wHJ5jNPdiUtTiq
-         em350yviML7YSDK46KXztdDgp7gu7pis1ZHXP04VJ5CDG5jLchKsHrkHF4e0qf1Te3zY
-         3bZRPGI4e2CQLQgZ8mk+Z69f8Y5sK0N9w8sgkJqPulv38K2Sq5Svr1KXGoCRkF2LQBta
-         14Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NKwzkqUvf5KBohoQ8SGqrxZt4uDMBy1hQHwB8JR8Fho=;
-        b=LfOVHeh3MQX/aXGv6QCeQM5xNR7qVGGejTBCS6iR9QwcLQ2QVrkS5glSNbeppS/TrK
-         Oxwo9K7mbWcLERWqLmZ4L+O/B+/EKfiSKbK1sNNTFpd+AzNpjZ9v4PRBPhcLEH5x6wUE
-         Kf9XYAJiIESDRcnicx/GxmGceEZGBJvAtqYpL3P7qdlSd+n4zA4Ja0IQRepir81I1mD0
-         kK3oVfCDIJflB3+jiXJppZG3xzUoLwkB9aXDtgvA8dbb8EKpbbgbLfbWoaSBkQqGVHDH
-         KF7A3XCLx+Vi7ZafSjANJ7MPpVid3n66N/b2icrlmlv6lE+jaSMPe9oTgabSz4+Gn74g
-         RMHw==
-X-Gm-Message-State: AOAM53344UJLRNr/IZeJOaPUTuucPxXRorJRhQ/C0Wl+ITYcZaYPv77z
-        mqATR11oN6aY8gFm3zRLnXzESD2BzXxVxE0nHhZiE+V+XrE1JI6Y
-X-Google-Smtp-Source: ABdhPJy5WjtVJJd+A1DgltqyiBEpalN/E3m+V/gnFmZ3eDaKColBQxh11hF459oOUUOZbhpSTBgT6KbgMggsGqKgcOE=
-X-Received: by 2002:a63:8749:: with SMTP id i70mr23387512pge.158.1636035167928;
- Thu, 04 Nov 2021 07:12:47 -0700 (PDT)
+        id S231215AbhKDOcV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 10:32:21 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:9768 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230511AbhKDOcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 10:32:21 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1midkK-0008Wd-7X; Thu, 04 Nov 2021 14:29:40 +0000
+Message-ID: <45402a12-e08a-bb27-09cf-db1c64c76bba@iee.email>
+Date:   Thu, 4 Nov 2021 14:29:39 +0000
 MIME-Version: 1.0
-References: <CAP8dQmu6Dfo4KBsVk+6xeR6=+S8bOKk-kbc3ub7c0jAsH61-cg@mail.gmail.com>
- <YYHzDuoJfWknI1XM@coredump.intra.peff.net> <CAP8dQmvoxWDnD_rbCdBS9cnwS90YFjjXcCPWLmjMq=ck7vo1Ww@mail.gmail.com>
- <YYJuK70U8Sk7xSYl@coredump.intra.peff.net> <CAP8dQmsbR7V1zX=xpk+ah-5bgkOP3vJGTMBq_25m9Vhw_fADAQ@mail.gmail.com>
- <YYOrLgj3KMq6eKpp@coredump.intra.peff.net>
-In-Reply-To: <YYOrLgj3KMq6eKpp@coredump.intra.peff.net>
-From:   Steven Penny <srpen6@gmail.com>
-Date:   Thu, 4 Nov 2021 09:12:39 -0500
-Message-ID: <CAP8dQmtLt_2+ExGUB71nJz_PWHKRrzqQVtX7d8T6FpPqgatiFQ@mail.gmail.com>
-Subject: Re: credential-store get: No such file or directory
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH] Makefile: replace most hardcoded object lists with
+ $(wildcard)
+Content-Language: en-GB
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+ <YX5T+wt0hSkxkLHA@coredump.intra.peff.net>
+ <211031.86a6ip47ib.gmgdl@evledraar.gmail.com>
+ <YYJy4BuX6JI6p+aV@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2111040124430.56@tvgsbejvaqbjf.bet>
+ <211104.86r1bwi6f7.gmgdl@evledraar.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <211104.86r1bwi6f7.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 4, 2021 at 4:43 AM Jeff King wrote:
-> It's because internally, the "git credential-store get" command is
-> assembled as a single string passed to the shell, whereas remote-https
-> is run directly via exec/spawn.
+On 04/11/2021 09:46, Ævar Arnfjörð Bjarmason wrote:
+>> he entire point of the CMake configuration is to allow developers on
+>> Windows to use the tools they are used to, to build Git. And believe it or
+>> not, GNU make is not one of those tools! I know. Very hard to believe. :-)
+> I believe that, the question is why it isn't a better trade-off to just
+> ask those users to install that software. Our Windows CI is doing it
+> on-the-fly, so clearly it's not that hard to do it.
+Just to say that, while it is real easy to download and install the
+Git-for-Windows SDK (https://gitforwindows.org/#download-sdk), for most
+(Windows) users it's a foreign land, with few friends who understand
+what things like `gdb` are all about. It's all doable, but the learning
+curve can be hard. The CI doesn't need a learning curve ;-)
 
-Actually, I bet that is whats causing the problem. I am using MSYS2 Git [1],
-which is not a native Windows build of Git, but one that relies on the MSYS2 DLL
-for path translations and such. I have actually built a Windows native Git, but
-its a pain, so its easier just to use the package. Anyway, the "non native"
-Windows version, probably considers Bash the shell, so any commands being passed
-to a shell probably will be looking for Bash. I dont have Bash on my system,
-because for the most part I dont want or need it. If I need a shell, I just use
-PowerShell.
+Being able to fire up a well 'trusted' tool like Visual Studio to
+investigate the code does help contributors understand the code.
 
-Would it be possible for Git to just run "credential-store" directly, like other
-commands? I assume stuff like "~/.git-credentials" would be a problem, but
-couldnt you just do something like this instead (pseudocode):
-
-    var cred string = os.Getenv("HOME") + "/.git-credentials"
-
-1. https://packages.msys2.org/package/git
+--
+Philip
