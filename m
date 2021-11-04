@@ -2,75 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00856C433F5
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 09:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32FBEC433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 09:54:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB6A0610E7
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 09:47:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 105F06113B
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 09:54:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231136AbhKDJtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 05:49:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52950 "EHLO cloud.peff.net"
+        id S230123AbhKDJ4i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 05:56:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52964 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230057AbhKDJtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 05:49:51 -0400
-Received: (qmail 8135 invoked by uid 109); 4 Nov 2021 09:47:11 -0000
+        id S229809AbhKDJ4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 05:56:37 -0400
+Received: (qmail 8249 invoked by uid 109); 4 Nov 2021 09:53:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Nov 2021 09:47:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Nov 2021 09:53:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32197 invoked by uid 111); 4 Nov 2021 09:47:13 -0000
+Received: (qmail 32241 invoked by uid 111); 4 Nov 2021 09:54:01 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Nov 2021 05:47:13 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Nov 2021 05:54:01 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 4 Nov 2021 05:47:10 -0400
+Date:   Thu, 4 Nov 2021 05:53:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Alejandro Sanchez <asanchez1987@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alejandro Sanchez <asanchez1987@gmail.com>
 Subject: Re: [PATCH 2/2] prompt.c: add and use a GIT_TEST_TERMINAL_PROMPT=true
-Message-ID: <YYOsHkMgUa7CXLic@coredump.intra.peff.net>
+Message-ID: <YYOttuoQT2X6HC/C@coredump.intra.peff.net>
 References: <20190524062724.GC25694@sigill.intra.peff.net>
  <cover-0.2-00000000000-20211102T155046Z-avarab@gmail.com>
  <patch-2.2-964e7f4531f-20211102T155046Z-avarab@gmail.com>
  <YYJ5IpvGRoDvp8V6@coredump.intra.peff.net>
  <xmqqo8716sqx.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111040945280.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2111040945280.56@tvgsbejvaqbjf.bet>
+In-Reply-To: <xmqqo8716sqx.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 04, 2021 at 09:48:35AM +0100, Johannes Schindelin wrote:
+On Wed, Nov 03, 2021 at 10:42:14AM -0700, Junio C Hamano wrote:
 
-> Hi Junio & Peff,
+> Jeff King <peff@peff.net> writes:
 > 
-> On Wed, 3 Nov 2021, Junio C Hamano wrote:
+> > Basically, I think I just disagree with this paragraph entirely. Moving
+> > to stdin in the commits you referenced was done to help testing, but I
+> > also think it's just a more flexible direction overall.
 > 
-> > Jeff King <peff@peff.net> writes:
-> >
-> > > Basically, I think I just disagree with this paragraph entirely.
-> > > Moving to stdin in the commits you referenced was done to help
-> > > testing, but I also think it's just a more flexible direction overall.
-> >
-> > It is OK, and it is more convenient for writing test scripts, to take
-> > interactive input from the standard input stream, if the command does
-> > not use the standard input for other purposes.
+> It is OK, and it is more convenient for writing test scripts, to
+> take interactive input from the standard input stream, if the
+> command does not use the standard input for other purposes.
 > 
-> I think I remember when we talked about this, it was in the context of
-> `git add -p` becoming a built-in, and we all agreed that it is actually a
-> very nice side effect that you can feed commands to `git add -p` in
-> scripts via stdin, not only for testing.
+> "git am -i <mbox" cannot take prompted input via the standard input,
+> but "git am -i mbox" is an easy workaround, for example.
 > 
-> It might have been in the context of another command, but even then it is
-> a fact that this is a very nice side effect.
+> Commands that are designed to be used in the downstream of a pipe
+> (e.g. "git rev-list ... | git pack-objects") cannot easily use such
+> a workaround, so they may still need to open and interact with
+> /dev/tty if they want to do an interactive input, though [*].
 
-Yes, we definitely had that discussion about "add -p", and I agree it is
-nice. People are probably less likely to drive other tools like git-am
-and git-bisect in such a way, though, as their interactive modes just do
-a lot less.
+True. The most Unix-y thing there would be to provide an option for
+reading interactive input from an arbitrary descriptor. That gives the
+most flexibility, though it's probably a bit arcane for most folks to
+do:
+
+  git foo | git bar --interactive-from=3 3</dev/tty
+
+We could directly allow:
+
+  git foo | git bar --interactive-from=/dev/tty
+
+which is a bit less arcane. Or alternatively this could come from the
+environment, like:
+
+  export GIT_INTERACTIVE_FROM=/dev/tty
+  git foo | git bar --interactive
+
+Which is equivalent-ish to having a boolean env variable to say "read
+from the terminal", except that it retains some more of the flexibility
+(especially if we treat a numeric value as a descriptor).
+
+Of course yet another option is to teach commands like pack-objects that
+read input only from stdin to accept a command-line option to read that
+input from a file. Then stdin is free for interactive use. ;)
+
+But I would not do any of that until we had a command that was a good
+candidate. In the case of git-am and git-bisect, I think it's fine to
+assume that "-i" will use stdin.
 
 -Peff
