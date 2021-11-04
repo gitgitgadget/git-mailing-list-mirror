@@ -2,87 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5946EC433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 19:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 757E2C433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 19:26:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30F1F61157
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 19:08:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 507A361212
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 19:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234133AbhKDTLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 15:11:12 -0400
-Received: from kitenet.net ([66.228.36.95]:46712 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232340AbhKDTLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 15:11:11 -0400
-X-Greylist: delayed 534 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Nov 2021 15:11:11 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1636052365; bh=BS68msn+Io0r4eXUG9ytLrCJJHOuSnkZkjWBS3syw50=;
-        h=Date:From:To:Subject:From;
-        b=M3/pdQ/3Ttehswixxk08f6lUNSibEjb4XjWxvaGZZFNZ6jh2SpzmpDnjr8quMPOvQ
-         ZHaSMc0aLQtC5XBoxVgaZot1HZt8sn+MaJSb4QCL25FxGvnZfqCV9FUs8hY7yyYeTz
-         XbP0blF6f/JzYBvUgKWd7EU5sl/UcCh8h5Iw/Dyk=
-X-Question: 42
-Date:   Thu, 4 Nov 2021 14:59:25 -0400
-From:   Joey Hess <id@joeyh.name>
+        id S231538AbhKDT2n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 15:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55486 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230245AbhKDT2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 15:28:42 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66903C061714
+        for <git@vger.kernel.org>; Thu,  4 Nov 2021 12:26:04 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id s13so10299372wrb.3
+        for <git@vger.kernel.org>; Thu, 04 Nov 2021 12:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EaNfZsgLhuLVs9hBVELrUwvZXh5TRsVM2ZXLMuy1k4U=;
+        b=TpR8fntZlrJYjwEtuOohjAopa/1gJX/XBep8+9enUY/CCh8JjdzJeUWhxDlLKxUksw
+         ouvMfPxXgXxd5ab7c85A3yIzw4JmqZlnXbDOJPZ8Q7wJ5TsqxK9Bla0KCsZFSo0yWK1J
+         4wbswBgziDjAlxx39KJ/oR8vj6zAW+5F9nRdI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EaNfZsgLhuLVs9hBVELrUwvZXh5TRsVM2ZXLMuy1k4U=;
+        b=VCQYcmKbuumDBwUADl4IKB0tozsT+8UQNFI/KmLRx4QFCJY8G7gTWCKGWlgKGTSm+R
+         Px9SiiONkJrPUhBVExIVnK4GjQxn0IOEkIjJW4bDYJfgbMgUtCKj+yqsOykSBy2yq0pT
+         teJ4esfXSFZprkX4+0pUbkBKEU/YXHPp9YLUVEi0tgUZ1iS1RJprttIYms2gNvlw5Zu3
+         r1NgOi20bmoTmJVDngkr6DynJsxxvNcagHVuPuvc7AgcjTseur/cIyPVfVXFRoPlE/8C
+         DFB+vdxb9PXM+np/PaVdxi2r6AMPvWGlbbwjdiIshRYm8cs2eOrdBHY4Kouuo+ujQ8cL
+         Odhw==
+X-Gm-Message-State: AOAM530VI80Qdabbe+8p4o3csY/DzLLaiqft1pufNKOAjxZGzDMRJX5i
+        t+jPeBEJIW7OSbd7zS8Gdo6eVMQnz0szyw==
+X-Google-Smtp-Source: ABdhPJwhE3MTMKLhyZK9X/ZZ73JwSHwoc/f+HC1qoVcxK6ZzxbSeWY3WA9o/r1DIaJjEx+xmFieeww==
+X-Received: by 2002:a5d:6d8b:: with SMTP id l11mr21922708wrs.178.1636053962917;
+        Thu, 04 Nov 2021 12:26:02 -0700 (PDT)
+Received: from localhost.localdomain ([2a00:23c6:c68a:1a01:159:f855:564c:e3b5])
+        by smtp.gmail.com with ESMTPSA id h1sm5876465wmb.7.2021.11.04.12.26.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Nov 2021 12:26:02 -0700 (PDT)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
 To:     git@vger.kernel.org
-Subject: surprising value of LARGE_PACKET_MAX
-Message-ID: <YYQtjWSb+z4taphX@kitenet.net>
+Cc:     Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
+Date:   Thu,  4 Nov 2021 19:25:33 +0000
+Message-Id: <20211104192533.2520-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hRnK3tS2H7RP7zLy"
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SSH keys are expected to be created with very restrictive permissions,
+and SSH commands will fail if the permissions are not appropriate.  When
+creating a directory for SSH keys in test scripts, attempt to clear any
+ACLs that might otherwise cause the private key to inherit less
+restrictive permissions than it requires.
 
---hRnK3tS2H7RP7zLy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This change is required in particular to avoid tests relating to SSH
+signing failing in Cygwin.
 
-I implemented a git-filter-server using the long-running process
-protocol, and was surprised to discover in testing that git rejected
-a maximally sized pkt-line starting with "ffff" as having an invalid
-size.
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+Helped-by: Fabian Stelzer <fs@gigacodes.de>
+---
+ t/lib-gpg.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-The docs don't say what the maximum size is, so I assumed I could make
-it as large as the length header allows, which I think is a natural
-conclusion to draw from the documentation. But looking in git's source,
-fff0 is the maximum:
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index f99ef3e859..1d8e5b5b7e 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -106,6 +106,7 @@ test_lazy_prereq GPGSSH '
+ 	test $? = 0 || exit 1;
+ 	mkdir -p "${GNUPGHOME}" &&
+ 	chmod 0700 "${GNUPGHOME}" &&
++	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
+ 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
+ 	echo "\"principal with number 1\" $(cat "${GPGSSH_KEY_PRIMARY}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
+ 	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
+-- 
+2.33.0
 
-#define LARGE_PACKET_MAX 65520
-#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
-
-Which dates back to commit d47f3db75c58139cdcbca5cc63b17bf5db293b6a in
-2006, which does not give a rationalle for the slightly small
-size. Whatever the reason, it seems likely that changing that would be
-likely to break interoperability with older versions of git.
-
-Perhaps the best thing to do would be to document it in
-Documentation/technical/protocol-common.txt
-
---=20
-see shy jo
-
---hRnK3tS2H7RP7zLy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmGELYwACgkQ2xLbD/Bf
-jzhx+A/9FHKs4JOGE9F0XYsVRGiFEtfXzyAVVUCS+MJHDG5UHnQwFlHre1p3YBgm
-Hiy5HS232Bz0oG96h6WXsVc76XmtrIlq5Nr9A0Q/wqAaBHQjHgSyTVD7Yr6KxSO4
-7JuoDanMJI47pfqPB+cdmR9rYg8++DM+mJhOG+SG6Tz3TafqROZxDGRT4C0Tl4eR
-LprGjjbHv0Q9pEEFRoI31h5R7LiUwsC7DalTrNpNpg9Z9QGOR8nxSFPYvPOZjH65
-yehSGrVWEDwfadexxBS0rvAAQjMkwcKy1sKow04CP28yNaJd+FMRHdS0dBa2rC+M
-lqitSctQbvsJrAoKJdp+qYEANPm3M5sptABEpJRwBShiO7fFZKLHV5ktw71CstIW
-H4nuRPLKEN8GI4To+VqM4D/5gx9R5s4T2+QmJwuZJ2AlAEdzcEdGoVtgpqWLrzsX
-kRAxkDrdgeMFF7fgzo8hbTHnzAuzxmB4oD078xpXWdVmPoEcToMeenqiCTUiy5AJ
-FvoKJt995skvEas84jWzdXw8QaomdtIMdS2xUw8bRxjv0hKe0QtTxkfcDE0EzMWy
-jKG2P5MYM5QHmQfmRbUdFBNtAhhtaapv2R9I3bWGYKM0+t0gWl0H3TJXkCf9CIDo
-DNCZpMg69yJm2C9qld2KSUJ3lQgGRZysztjI1jXhlAV2DeYkYaU=
-=tmFQ
------END PGP SIGNATURE-----
-
---hRnK3tS2H7RP7zLy--
