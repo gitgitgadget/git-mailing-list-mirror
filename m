@@ -2,128 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3515DC433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 23:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0AC3C433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 23:55:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1936861215
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 23:49:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89D4561159
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 23:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232443AbhKDXwf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 19:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57534 "EHLO
+        id S231756AbhKDX5v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 19:57:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231148AbhKDXwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 19:52:33 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82C9AC061714
-        for <git@vger.kernel.org>; Thu,  4 Nov 2021 16:49:54 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id k63-20020a628442000000b004812ea67c34so4886398pfd.2
-        for <git@vger.kernel.org>; Thu, 04 Nov 2021 16:49:54 -0700 (PDT)
+        with ESMTP id S229725AbhKDX5s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 19:57:48 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09160C061714
+        for <git@vger.kernel.org>; Thu,  4 Nov 2021 16:55:10 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id q203so8750620iod.12
+        for <git@vger.kernel.org>; Thu, 04 Nov 2021 16:55:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=VP1JQEESXQRZnGmzjO+twoEcTFqKxG/iXsJViD0Mfog=;
-        b=eLgOtEGJJgBLvNqlLJYMDu/tSV+Kt3Hxz34Ib/zaWf2ecRPTHoDY4SyQLEP+D2u0MK
-         QPS2yc64xuKAmsGN+wIDOcMQHy9iydwdozH6ztvNMJ2UHbBhiSht7gWqZkOlCtDf+PIr
-         bIoxDHOD6uM/3ECGDIgU1InFnFH1ULk0t6PdspMX0vNc+pVijK93TMLKLcgn6H0/2Gkb
-         ummCZK+ms05oL66izQSgETjaHxvKc/pJENzik/YtzUURm0dhFs24HxpM72044ACfEWhv
-         30iSuw49A9qgC26GwnKQJ27ZTZ9AZknzr7mGsjzvkyn9nZ7sHmMlZeKWp1Uq7h48YS/I
-         j9Ew==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=N0l7OT6D2d1Hty/dDzYwBUxacWpu1O5/OWePB8P7OeI=;
+        b=fmnkq7km0a4QHvRwdhaMquXsJrTIiBEaBSeT3cevWc578RBrlAhjYYwBjT/49XJnDG
+         gEBQTVimihvXiIud4KVYAq7NWn2Fj5qcLk1ulSZpVUhWkRqRsupoC2caAxC2/5LvlW+V
+         97qzJL6eYqQQsnm0H0b4KA87SBYfokkjR+Gqa8b0oI7pT/O3EQljM7pDXwX7FK+V+2T7
+         t2RjxjQ2ypebaT7EG2L67AN3IyAywkSV6cRjF2ex+gkE+liwOKrvleWNyZXBM4ZRtFgT
+         mEhiPlcYqxpnYg4+nDmM4VQ+TmZ91UFfagjfoPJdKhZog0Ao2CNDSZCJxqwj56jz4Jf1
+         rCLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VP1JQEESXQRZnGmzjO+twoEcTFqKxG/iXsJViD0Mfog=;
-        b=wt8hyVCrJezD+Iam4N+6ZS1HSoa5FxgTB3pGrruI7nFSEUUbjdfSHhbqKFH2JyKIA6
-         /bxR6dXzcLdBO4jZOh6j02Lmvee+mJ5pcNVzFhusObd0VwjImWWCaQ2XZ1VRfsBpPYUs
-         Emp4B+WLD7j0YSEYhevlKZN8HkFvIHvbRXALrzAT8c2MaHssXiWT88lXpXxhAFMLLKMU
-         ARqwBSv6+rip8f64wsjFgN9bbiwsgF6Beut9bmKTvcjTI1o8htYCmx/6Ap8IW66lUQh7
-         0sEfoOHhyFJilxubr8/4CHh4M7pZYRkegNmzLEODggN43B0fv7usOETI8Zee3V2MLd/0
-         t/8w==
-X-Gm-Message-State: AOAM531PqRR48+FM4YTdOPlz/7mFcun+47r4E0lvfPM8kYU7D5NJQoYg
-        4yCmnEa1oVe6y+rFWnCH9fv31FaPCdiUeW6jbw9Fx/FWL+AQuPRnyXq5WuVGfozh5F0bYXN2wMU
-        s1HEd9NtMJnDMZjWQjM54hWuhaQLtRd2UErhHs43DoRAGbcE9UIEVWstkRLsZyHKQmBPeMhdSmQ
-        ==
-X-Google-Smtp-Source: ABdhPJwsFHP9fYWpeypv6YpZHL6RWlk6zITMCqwZl0ycV/20OiG1ny8q7mSFWXIfNQ1DJImzdg0Q2yXVDZ/5ao4qdyk=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:35a1:c171:b6f3:d46c])
- (user=emilyshaffer job=sendgmr) by 2002:a17:902:654b:b0:13d:c967:9cbd with
- SMTP id d11-20020a170902654b00b0013dc9679cbdmr47627732pln.88.1636069793943;
- Thu, 04 Nov 2021 16:49:53 -0700 (PDT)
-Date:   Thu,  4 Nov 2021 16:49:42 -0700
-In-Reply-To: <20211104234942.3473650-1-emilyshaffer@google.com>
-Message-Id: <20211104234942.3473650-5-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20211104234942.3473650-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.34.0.rc0.344.g81b53c2807-goog
-Subject: [PATCH v5 4/4] submodule: record superproject gitdir during 'update'
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=N0l7OT6D2d1Hty/dDzYwBUxacWpu1O5/OWePB8P7OeI=;
+        b=Ey2bFFM67f36DuqCXnuNmMM+ZZLPB13X3hSDFzEng4NnTdSbxeOztYlIlrcIjyI/0M
+         YAhp98Lz/wTJjn5wEn8IdiZWB2lZJK8K5C0puAqTlbqiFCLmD2E1XIClJ+jTmb9FNdnq
+         T8oFnBLLxBCprsqfKAIAnpasM+Z6HYivYnAx2AGfnFGcaPDolfsOWFkhr/rzoe7O6nhN
+         D4XKxGu42udh/AOxHk8/yeYmXZKMhmk/2wz9dMUjKfXvy7qF6mJDMafqVQ3Osjteaek4
+         vTCLKtoplJk8ab38tKVeAhAU4SL6sVnSUx5RONDBpfebGJvoQrMqO//rO11mSOeVeekg
+         cBHQ==
+X-Gm-Message-State: AOAM531QqPeBTe7jWBp+bwLh8n8grbg/rk9hwi+nwJLWhkxtAPtCWphv
+        +AhEWf9CNJHuyT0tqng/cls=
+X-Google-Smtp-Source: ABdhPJyoq/V2GXA57Fs2d2z1NyqSiAItw6caiGYKAKdjMaaxXt4N/gfisqV8pJVuYMOLLIaZ35oBqQ==
+X-Received: by 2002:a6b:f812:: with SMTP id o18mr8053861ioh.64.1636070109481;
+        Thu, 04 Nov 2021 16:55:09 -0700 (PDT)
+Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
+        by smtp.gmail.com with ESMTPSA id q6sm3339444iow.1.2021.11.04.16.55.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Nov 2021 16:55:09 -0700 (PDT)
+Message-ID: <1a269d05-49f6-6c49-860a-044070f14ffc@gmail.com>
+Date:   Thu, 4 Nov 2021 16:55:06 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.1
+Subject: Re: [PATCH v3 1/2] diff: enable and test the sparse index
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1050.v2.git.1634332835.gitgitgadget@gmail.com>
+ <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
+ <991aaad37b41f71faa19fdef4373ccc115edcc40.1635802069.git.gitgitgadget@gmail.com>
+ <xmqqcznh8913.fsf@gitster.g>
+From:   Lessley Dennington <lessleydennington@gmail.com>
+In-Reply-To: <xmqqcznh8913.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A recorded hint path to the superproject's gitdir might be added during
-'git submodule add', but in some cases - like submodules which were
-created before 'git submodule add' learned to record that info - it might
-be useful to update the hint. Let's do it during 'git submodule
-update', when we already have a handle to the superproject while calling
-operations on the submodules.
+On 11/3/21 10:05 AM, Junio C Hamano wrote:
+> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+>> 2000.34: git diff --staged (full-v3)      0.08    0.08 +0.0%
+>> 2000.35: git diff --staged (full-v4)      0.08    0.08 +0.0%
+>> 2000.36: git diff --staged (sparse-v3)    0.17    0.04 -76.5%
+>> 2000.37: git diff --staged (sparse-v4)    0.16    0.04 -75.0%
+> 
+> Please do not add more use of the synonym to the test suite, other
+> than the one that makes sure the synonym works the same way as the
+> real option, which is "--cached".
+>
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- git-submodule.sh            | 14 ++++++++++++++
- t/t7406-submodule-update.sh | 12 ++++++++++++
- 2 files changed, 26 insertions(+)
+Thank you, changed for v4.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 652861aa66..873d64eb99 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -449,6 +449,20 @@ cmd_update()
- 			;;
- 		esac
- 
-+		# Cache a pointer to the superproject's common dir. This may have
-+		# changed, unless it's a fresh clone. Writes it to worktree
-+		# if applicable, otherwise to local.
-+		if test -z "$just_cloned"
-+		then
-+			sm_gitdir="$(git -C "$sm_path" rev-parse --absolute-git-dir)"
-+			relative_gitdir="$(git rev-parse --path-format=relative \
-+							 --prefix "${sm_gitdir}" \
-+							 --git-common-dir)"
-+
-+			git -C "$sm_path" config --worktree \
-+				submodule.superprojectgitdir "$relative_gitdir"
-+		fi
-+
- 		if test -n "$recursive"
- 		then
- 			(
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 11cccbb333..5146237abc 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1061,4 +1061,16 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
- 	)
- '
- 
-+test_expect_success 'submodule update adds superproject gitdir to older repos' '
-+	(cd super &&
-+	 git -C submodule config --unset submodule.superprojectGitdir &&
-+	 git submodule update &&
-+	 test-tool path-utils relative_path \
-+		"$(git rev-parse --path-format=absolute --git-common-dir)" \
-+		"$(git -C submodule rev-parse --path-format=absolute --git-common-dir)" >expect &&
-+	 git -C submodule config submodule.superprojectGitdir >actual &&
-+	 test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-2.34.0.rc0.344.g81b53c2807-goog
+>> diff --git a/builtin/diff.c b/builtin/diff.c
+>> index dd8ce688ba7..cbf7b51c7c0 100644
+>> --- a/builtin/diff.c
+>> +++ b/builtin/diff.c
+>> @@ -437,6 +437,9 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>>   
+>>   	prefix = setup_git_directory_gently(&nongit);
+>>   
+>> +	prepare_repo_settings(the_repository);
+>> +	the_repository->settings.command_requires_full_index = 0;
+>> +
+> 
+> Doesn't the code need to be protected with
+> 
+> 	if (!nongit) {
+> 		prepare_repo_settings(the_repository);
+> 		the_repository->settings.command_requires_full_index = 0;
+> 	}
+> 
+> at the very least?  It may be that the code is getting lucky because
+> the_repository may be initialized with a random value (after all,
+> when we are not in a repository, there is nowhere to read the
+> on-disk settings from) and we may even be able to set a bit in the
+> settings structure without crashing, but conceptually, doing the
+> above when we _know_ we are not in any repository is simply wrong.
+> 
+> I wonder if prepare_repo_settings() needs be more strict.  For
+> example, shouldn't it check if we have a repository to begin with
+> and BUG() if it was called when there is not a repository?  After
+> all, it tries to read from the repository configuration file, so any
+> necessary set-up to discover where the gitdir is must have been done
+> already before it can be called.
+> 
+> With such a safety feature to catch a programmer errors, perhaps the
+> above could have been caught before the patch hit the list.
+> 
+> Thoughts?  Am I missing some chicken-and-egg situation where
+> prepare_repo_settings() must be callable before we know where the
+> repository is, or something, which justifies why the function is so
+> loose in its sanity checks in the current form?
+> 
+> 
 
+This seems like a good idea. I've added both the nongit check and the 
+prepare_repo_settings() updates you've suggested for v4, pending review 
+by my team.
+
+Best,
+Lessley
