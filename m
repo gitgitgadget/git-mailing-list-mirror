@@ -2,138 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8CE6C433F5
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0F5EC433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87B20611C1
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C779960F45
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbhKDIqT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 04:46:19 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40703 "EHLO mout.gmx.net"
+        id S230494AbhKDIvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 04:51:24 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49195 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230229AbhKDIqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 04:46:18 -0400
+        id S230472AbhKDIvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 04:51:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636015408;
-        bh=WC3ru3WDcNedFYx7n7Z/AcDqhUCiK2NDXBiGINAlS7U=;
+        s=badeba3b8450; t=1636015717;
+        bh=cRdu3YUbYAKAaAFG+DWynkM0bE2u9HCakt3T/ENmhl8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hLY8wtfc/v6cP7enueyvnOSzaCoCmQAj9eLI3R2Wklet/WFJqA3ZTlcpCFVvnYR0v
-         jxfzPzZrJ5fut5t2JBTfyWEwLz0WSNJQuZwo9C6sUCJ8uBPRub+/0ys4C+n0+q/9Fv
-         sn+yjEVBFT6A3n+1BxQA4Tl2SYJgR1z6MY2ZpBik=
+        b=ATk8BAdBqzkRTW6a0oNdJyoNtM6v3UuCt6afKZ7MnmWvPhov7gdwjkYbxnO9Yn6J7
+         8gvIkRdEAC9vbWeHLqZNR36uEYmUfllljeeE3/7imKzU322IWLOW8Ym/KV56nPJz91
+         /FaVew060u/bGhkeLijN0QLLog8Pxb+wTMOBk/Oo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.20.119.151] ([89.1.212.10]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MzQkK-1mVGiG07JQ-00vM5m; Thu, 04
- Nov 2021 09:43:28 +0100
-Date:   Thu, 4 Nov 2021 09:43:25 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsEx-1mR9lK16e7-00ssBg; Thu, 04
+ Nov 2021 09:48:37 +0100
+Date:   Thu, 4 Nov 2021 09:48:35 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, philipoakley@iee.email,
-        eschwartz@archlinux.org, Carlo Arenas <carenas@gmail.com>,
-        Jeff King <peff@peff.net>, Victoria Dye <vdye@github.com>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2] async_die_is_recursing: work around GCC v11.x issue
- on Fedora
-In-Reply-To: <pull.1072.v2.git.1635998463474.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111040823270.56@tvgsbejvaqbjf.bet>
-References: <pull.1072.git.1635990465854.gitgitgadget@gmail.com> <pull.1072.v2.git.1635998463474.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Alejandro Sanchez <asanchez1987@gmail.com>
+Subject: Re: [PATCH 2/2] prompt.c: add and use a
+ GIT_TEST_TERMINAL_PROMPT=true
+In-Reply-To: <xmqqo8716sqx.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111040945280.56@tvgsbejvaqbjf.bet>
+References: <20190524062724.GC25694@sigill.intra.peff.net> <cover-0.2-00000000000-20211102T155046Z-avarab@gmail.com> <patch-2.2-964e7f4531f-20211102T155046Z-avarab@gmail.com> <YYJ5IpvGRoDvp8V6@coredump.intra.peff.net> <xmqqo8716sqx.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:93Zb4f0nZ8ZUYeiRMvrvPDnhqqddLcTdqKGveMdbJL4u1Q0C6fc
- DVqLZXWh6brl4zS+t8Un1KSHPi+dB4xuHkqU/3Iet+HNLWA3dzYViJE2pCTGyAjHAaAiYdQ
- sq//ij6TigLMhZSsuw+Yvh3xT9NjFoviFQIxGB9Bgn0qqEcPIniTR/xJJ7UrjWr/gp3SxV/
- IKeGFq1otEV5yQJEiMjxQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XreK6dXF24Y=:mFm6xDu4pYYzYiqO6IYjY+
- 5lfwNGNse504c2bv9FiP2dc7fb+e8unmw47YWVX7qeEmn9vNFRdD/jm+bzLUNyEv5WMu6NPrY
- kPokrqYrf30tZYKvwzJDzUqCZfxEkR6wTKw7IQyMxWvweoV3Ryt0bMJBuURMRB5lz4TGVWPvo
- TiH1dQElgNgAAMFVBQSrw/G//lgdO3jg6f3OerT9czBjM9iXre1BcSd3wJiqCwF3EUOMXoyNh
- IvBdSRRmwsgEhtdUV45z1mT8mYOXn5vUtVVvREmpZxKtEUJhzp7AsJack6weO1b7qM58HAEte
- K1dPJVOzUMNKPbGkxmikIxKDfA9lJs7qBi8Yr1h/D2m/3bYb3oXW1ndy//PnuuwsNyd+extv9
- Tk46IrVAbc4w45oJTTY3K89CWicdUYpsc8MWJvxuFpjs9i410PgvZMGPhCj6uQ1Y+UidxeC0q
- G9RizJm1ME73pz02fcGQVK1iIWdYbDEjS87RUFjb82RR/+sRjKrNI2olhEl1+gzWwdmUwzaW4
- lpeyNx5n0Ttf0EzQM1o8Gvcf/kKsPZ0SmkFN0UdR2x3x8dht8+xoBaKLWKeJbn59qavhtIElO
- iy0IUGoCbP80piiEpjaocGlgTseubhmRoEaDWO/WXih++Q6Xr20qf1hU16GvBkttMSV9A6rO4
- 3xPMlm5qLJpH3xhZhBEMq00sT0UHjfy5BJ7FLDw/bplv4PjanZNxt5wIGT01ORMSz9xUqAeQR
- jB5ekX14g9qoVvfMhPNxnMTSTXl2XZmwJbQHXKXyE/WxucxCKq3ZZbxB72FoxmlCaLZmUBYlk
- KRVS4R/TxhOCQ0oaY/TSREbAqL/FLavNIfdix6XHhd4OxwRiPMrNBjsoQJUVqvdTeRqVVbBV0
- FR9ejLFlGvXeFmqFO2gXae8MwBcTRYqhIxOLugwDUQ7VW7puoczqVuR7xofUtqZYXw89GIlup
- lsz/brAr6kwxiNrUDJzhnVbjXOkYlRyZK/X3uJwalSCBBM0RtMuX+BAftnIfVbtWSi80r0say
- NAkh9ehxpMiAKKuJ+YKT7nDDZ2FR6j4yiXZ2rVZAxUGv2NxodU+rIJT8KJuD3QEIbyA2grsKA
- aoCQ/N6qRFWQyI=
+X-Provags-ID: V03:K1:Jein6ZMtJtKt/8wBnqFPPloLiH1a4N4OBeRxl5+ASvnC4NASzUH
+ dHQnu3NR7xsGWAaJSEdtc7rWsCgaFnDBTT0QB/JketmE66TSg/BJtuJxoJC+yYsE10cUbXN
+ uZStQJut6m0qY0Pz4CiEiMG9GU8po5JaNNwop1zyXypLQUWg078EbJLFUk7Hw0e9jI3Ona9
+ EgB5BsT0ImG/x4fNaWZCg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OBvlaGkGrzQ=:f8/gFjjH61PbeuC+ddeJvZ
+ /lU6/DjQQFZ+wGHtw8INgEtUrVkWSD5ljLr74e55v0bEsG/d/fPbAjLyp9aDO8wTezxrOm0Rb
+ iVr4Pq2nrmIJ0Iy3f3+/Pz6jgvu9EaaJ40RQzb/0+JK2Yr2RIvCSvxbZr/XyqeEhgUH/EOtcl
+ M1ircWHPHR8HDCADAxqGC8nPH/2Yw6U0FmFv7gLgCeTRnNirfM5yLo4BAr0EHqzzCMrwnmYd+
+ wFEK+NIe43NNjZ+kdSk7kxRs/dXdqH4oIHKOld8FBEPRZk17rwzUXHKmzJ8uMEP04tuQG9K9i
+ R9Cu7p+qtzmaq+zcVK5f+8NTx9IbuY5TMho9sdR+1HwADqahg8bmJpPvfod7KC71bqCgejr8I
+ QxSSeicAtmswqE7h578BAQA0pDJVST+uWuQCBFaGI1cMWB7qjWIgjg4QGZ20MOP3nP22D9vw0
+ vrdoe1+ZWCKe0TFzjazmWrhfQ/AfQaASJO7Kq0LJ9YRHlQu7546mR4Qbe7ZFmVn2EKJRinonS
+ 5MbjyyXTDYS1V6jxGMvBZhQQMb9deOAhdoB6cXr0b2DPsAhz3yl39zOrHKlT7EzSaaJTR7Ksn
+ LZGGzuYF643CauIMzB4OOZJYIw5prryz6XeYGsuviNnO5i2lkn2zsx1t7aoP2PB/061RPTpFl
+ ZnIXDh1Qg+F0DXigLhkPM6DlESklup0vbjI84a4XsdCJZEe0RKHCRRlyFY+R1mkuF3LCf7CgF
+ Iwk7xDaZZtdz8sqtPGsakxZweAkrFUi5rMayfGb4eTxHdGdYufuCPujdN77I28FZqlM1svY+R
+ SyxFqH4gPZBooT7kiJMQV/hT+I3RT29ehm8DSobevO7xx6gJFlJmQBse9fYEtxee/WdRHagH5
+ jd1mS2p5XAKuAs4V9wHKY5hQko1lZ2IzLMylqhwDmI1Lh4msfB/4zNP64C8j4uWHQczEmfWHG
+ FjFM+pbJ0phefRsikqw2GCN5hysgU96zQiEO6tPzwkzW1DtVeIOgzQIOAoUgOJa3BU0apXoDx
+ Gh7ls813jZhzi4mBJzHqW5ybO3JvMP9+NQTgoBmb4cHZWMyboXxI2ZyLchJFcJmErDUQAToon
+ UXojCHuo9bF4As=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria,
+Hi Junio & Peff,
 
-excellent work! The patch looks very good to me. I just want to add a
-little context below, and thank you _so much_ for letting me sleep while
-you tie it all up in a neat patch.
+On Wed, 3 Nov 2021, Junio C Hamano wrote:
 
-On Thu, 4 Nov 2021, Victoria Dye via GitGitGadget wrote:
+> Jeff King <peff@peff.net> writes:
+>
+> > Basically, I think I just disagree with this paragraph entirely.
+> > Moving to stdin in the commits you referenced was done to help
+> > testing, but I also think it's just a more flexible direction overall.
+>
+> It is OK, and it is more convenient for writing test scripts, to take
+> interactive input from the standard input stream, if the command does
+> not use the standard input for other purposes.
 
-> [...] This image includes a version of `glibc` with the attribute
-> `__attr_access_none` added to `pthread_setspecific` [1], the
-> implementation of which only exists for GCC 11.X - the version included
-> in the Fedora image. The attribute requires that the pointer provided in
-> the second argument of `pthread_getspecific` must, if not NULL, be a
-> pointer to a valid object.
+I think I remember when we talked about this, it was in the context of
+`git add -p` becoming a built-in, and we all agreed that it is actually a
+very nice side effect that you can feed commands to `git add -p` in
+scripts via stdin, not only for testing.
 
-My initial reading last night was that the `none` mode means that the
-pointer does not have to be valid, but you're right, the documentation at
-https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html
-clearly spells it out:
+It might have been in the context of another command, but even then it is
+a fact that this is a very nice side effect.
 
-	Unless the pointer is null the pointed-to object must exist and
-	have at least the size as denoted by the size-index argument. The
-	object need not be initialized. The mode is intended to be used as
-	a means to help validate the expected object size, for example in
-	functions that call __builtin_object_size.
-
-Which means that yes, `(void *)1` was incorrect and _had_ to be changed.
-The patch is therefore a fix, not a work-around (contrary to my initial
-impression).
-
-So then I got puzzled by this while sleeping: why does it fail on Fedora,
-when it does _not_ fail in Git for Windows' SDK (where we also recently
-upgraded to GCC v11.x, thanks to the hard work of the MSYS2 project)?
-
-My best guess is that my GCC (which is v11.2.0) and Fedora's GCC (which is
-v11.2.1 plus the usual Fedora customization) behave slightly differently
-with respect to that optional `size-index` argument:
-`pthread_setspecific()` is essentially declared without a `size-index`, so
-I guess GCC v11.2.1 probably defaults to `size-index =3D 1`.
-
-> diff --git a/run-command.c b/run-command.c
-> index 7ef5cc712a9..f40df01c772 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1099,7 +1099,7 @@ static NORETURN void die_async(const char *err, va=
-_list params)
->  static int async_die_is_recursing(void)
->  {
->  	void *ret =3D pthread_getspecific(async_die_counter);
-> -	pthread_setspecific(async_die_counter, (void *)1);
-> +	pthread_setspecific(async_die_counter, &async_die_counter); /* set to =
-any non-NULL valid pointer */
-
-This looks good! To make the intention even clearer, we could change the
-line above to `int ret =3D !!pthread_getspecific(async_die_counter);`, but
-as we are _really_ late in the -rc cycle, I am very much in favor of
-leaving out such clean-ups that do not fix any bug.
-
-Again, thank you so much for your hard work, it was fun debugging this
-with you,
+Ciao,
 Dscho
-
->  	return ret !=3D NULL;
->  }
->
->
-> base-commit: 876b1423317071f43c99666f3fc3db3642dfbe14
-> --
-> gitgitgadget
->
