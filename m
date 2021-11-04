@@ -2,81 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7565C433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F60BC433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:09:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C5936120F
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:03:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C79660F70
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232063AbhKDUFp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 16:05:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64691 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231989AbhKDUFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 16:05:44 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6ED28149C31;
-        Thu,  4 Nov 2021 16:03:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3vzQ5TjMwQK5QxlAEbhMcytd7uYwZ1MroaJ4SQ
-        pa7xk=; b=UA4IFqbKj1gxYN4tG3s7RSCvLYKlpMintKmxHRBmmtzkBNUkMNqGWb
-        lbE/U7XBWJ3Pv8nZg2itD17Ow9V39Gh8KMzqS/CfJNHZNMdnSepg4I3B621ycb7J
-        9c0FVDP3/mm+ja2GIibX/XH8Jf/olwCM5vUHXXf/l8vFtwiDhw1zs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 66A21149C30;
-        Thu,  4 Nov 2021 16:03:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1382D149C2B;
-        Thu,  4 Nov 2021 16:03:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
+        id S232160AbhKDULq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 16:11:46 -0400
+Received: from avasout-peh-001.plus.net ([212.159.14.17]:40173 "EHLO
+        avasout-peh-001.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232167AbhKDULp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 16:11:45 -0400
+Received: from [10.0.2.15] ([147.147.167.109])
+        by smtp with ESMTPA
+        id ij2lm1K9VCV4Tij2mmFT9t; Thu, 04 Nov 2021 20:09:05 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1636056545; bh=3qehuz2oN/Dztr2QIvi0oE3a69Tkcm7cQXEcQFrOfsA=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=L0i8Bx8CDSad5JrrMZ8aYpDkFvvYXGro+vY/aBc/YhI4eCz/KrT5vZYOkrTE/DZvu
+         Cg5VexJ56u2vawrT2SVL/NS1zbYfVeZCzP9e9i9pD6LVUkiHDU9v1UBMKRXGc8AnYs
+         aFwFTWHljOZgeYzGfh6S+TuotL2fJbDGtBE/ueskq+QyWWlUlZPnNSKpNGSGzVt172
+         AZ9tu4jnN9kEc+Cq9012/Qqv+ZwP1tqhUb+SP4dTxaFPClL2fx0If4D71HfTWeQmDR
+         P6xgvKe48YTPHplpq0G/ABXy3pXdqOEFLxEDNJOpwky6xi5Y8rerNN3cDcF0x+bXax
+         MIJVYzD7t47bQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=Yrts+6UX c=1 sm=1 tr=0 ts=61843de1
+ a=QdS5mZX/VJYKMdXaSBaSIA==:117 a=QdS5mZX/VJYKMdXaSBaSIA==:17
+ a=IkcTkHD0fZMA:10 a=hwfoqT4wVfvneG3jFG0A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
 Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
+To:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+Cc:     Fabian Stelzer <fs@gigacodes.de>
 References: <20211104192533.2520-1-adam@dinwoodie.org>
-        <xmqq7ddn3dlt.fsf@gitster.g>
-Date:   Thu, 04 Nov 2021 13:03:00 -0700
-In-Reply-To: <xmqq7ddn3dlt.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        04 Nov 2021 12:49:50 -0700")
-Message-ID: <xmqqzgqj1yff.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <6acb22bc-a90c-b8b6-2e7d-d7e17ba595ea@ramsayjones.plus.com>
+Date:   Thu, 4 Nov 2021 20:09:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 372B0810-3DAA-11EC-9C0F-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20211104192533.2520-1-adam@dinwoodie.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfINy1KMCjYW2um4VAiEYeCtYcvlm1Eb70wphMJcpUar1gprUv/LZUZe+g93Vd2HsMj1lTX358KaVYB1VF7AG9YBNoh6n52ZDsOLMemv+Ss0CatUoWAcj
+ Iecwm+fiVJvYLroijAv2j16NDApV7/sHrzk84CLHmEQE2VsJ9406qg55nRoQL5Kp+C1UZ0GnHhsXQOo/W/fXBwqysIGH1b87IQc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Adam,
 
->> This change is required in particular to avoid tests relating to SSH
->> signing failing in Cygwin.
->
-> ... I am not quite sure how this explains "tests relating to ssh
-> signing failing on Cygwin".  After all, this piece of code is
-> lazy_prereq, which means that ssh-keygen in this block that fails
-> (due to a less restrictive permissions) would merely mean that tests
-> that are protected with GPGSSH prerequisite will be skipped without
-> causing test failures.  After all that is the whole point of
-> computing prereq on the fly.
+On 04/11/2021 19:25, Adam Dinwoodie wrote:
+> SSH keys are expected to be created with very restrictive permissions,
+> and SSH commands will fail if the permissions are not appropriate.  When
+> creating a directory for SSH keys in test scripts, attempt to clear any
+> ACLs that might otherwise cause the private key to inherit less
+> restrictive permissions than it requires.
 
-The reason why I wondered about the above is that it can be an
-indication of another breakage, namely, that we may have tests that
-require a working ssh-keygen but are by mistake not protected with
-GPGSSH prerequisite.
+I was somewhat surprised to see your report, since all these tests
+passed without issue for me on '-rc0'! :D (64-bit cygwin only).
 
-The test_lazy_prereq block you touched may refrain from setting the
-prerequisite on your system (due to the faulty test here that you
-touched), but if we had such unprotected tests, we still will run
-ssh signing tests and they would fail, due to the lack of the
-prerequisite.
+So, the difference seems to be down to FS ACLs, Hmmm ...
 
-And fixing the prereq block alone will hide that other breakage, at
-least on your system.  Hence my question.
+(BTW, I am on windows 10 21H1)
 
-Thanks.
+ATB,
+Ramsay Jones
