@@ -2,132 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B1FC433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 820F9C433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:56:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CC3A61053
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:38:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6869160F9D
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 00:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbhKDAk4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 20:40:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56469 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230030AbhKDAkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 20:40:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1635986286;
-        bh=2Is69GLewasMXFJfXZ/iAOFp5S3PTRxLF/afkseZtsw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AizHmBFPhgJimGmtJxdbHHvyD3xTk+svUU4IbEWCZHnc8n/zsug73H+q94PdY9SvJ
-         SWqePU0IY5hyfWFB8+ATQeGwmHBEzVXWCU9wqNhzRm9HjcTOMJikOhJL7cApC5Y20R
-         eNsFHRRiSfepgtFDpPTOO1vuKw07f7H8kIv/bzys=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.119.151] ([89.1.212.10]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2O6Y-1mlAqu1n1K-003vDy; Thu, 04
- Nov 2021 01:38:06 +0100
-Date:   Thu, 4 Nov 2021 01:38:03 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>,
-        =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
-        "=?UTF-8?Q?Jean-No=C3=ABl_Avila_via_________GitGitGa?= =?UTF-8?Q?dget?=" 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Eli Schwartz <eschwartz@archlinux.org>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 4/9] doc: use only hyphens as word separators in
- placeholders
-In-Reply-To: <xmqqlf258aq3.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111040134110.56@tvgsbejvaqbjf.bet>
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>        <984b6d687a2e779c775de6ea80536afe6ecc0aaf.1635438124.git.gitgitgadget@gmail.com>        <ee376004-a4dd-539d-28b3-3fc5baa6fe00@archlinux.org>        <2803948.JoDkH9avOM@cayenne>
- <xmqqmtmocqz4.fsf@gitster.g>        <0b404448-cd4b-8614-2c49-c4683b56879f@gmail.com> <xmqqlf258aq3.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S230361AbhKDA67 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 20:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59564 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229676AbhKDA66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 20:58:58 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D1EC061714
+        for <git@vger.kernel.org>; Wed,  3 Nov 2021 17:56:21 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id s136so3909486pgs.4
+        for <git@vger.kernel.org>; Wed, 03 Nov 2021 17:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WGJ1yDdrdG5FfeVYWjSK4WKLmEvtzGLwOYHdFOwnA0I=;
+        b=ZZVC4SeBKbjxAqio606RkmdhmA6xY/EhwqkvwuZ/FNmxeMZkU/x5GyTIkEUNr/A9iU
+         V2hdBI+xIdoBva+g6fbBg2krkoSUUZRPpClB/tJ8+PYCFFbbFlrI6RS9aO54LAerC+AS
+         DFjNcNhg1p4r7GvGy4aDYYMefn8Z/FciT/MqEvYM0D4/vRahMdXDjiE6HOTGi5CcvIdI
+         fvDhxeS2GHMrNsaiS4B6WBzUoMBwZD6s1qzS6FUa+E6EkqePR53i3uitdu7DYpcjt0ec
+         hAZxFL8+e0FOzGC0XvzEsbYrjQFqLCIiABJ3LjTdZm/jw2bDPAvupeiMuhDbVrmpz82p
+         sRhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WGJ1yDdrdG5FfeVYWjSK4WKLmEvtzGLwOYHdFOwnA0I=;
+        b=JQU5LB0HSEPVNNhEJ5WO+dJyYhh4VtdHOiZNtc5pTUbzgw2XMcekAXubPb10Tisrk5
+         aZggYOPmCbL9o4UWb0PbxsgPqiYABVcFFGjqUOdYX6yhV+i7+ULg+9XorBptWkCsWbWV
+         lLtiCbKY4wpqoibBlf8Y3o5D6sc1ixLpLtjky6Ivbe8Djk8j6HVPswOdO96MenK2Rx3w
+         fiFgYnx/hxI04cdwRzH1gR3Aj/XrVjBjQPNG5prrH+jmzvs9urjhhhebA97es3YQxBZ/
+         NbxLTqwF6aAL+XbfcJoQdJXniLNPzuMHCDzkmXzFbqOYDBjOoHFhNSmDgPX1X83/+zPY
+         uC6w==
+X-Gm-Message-State: AOAM533RsL7ZZqvQChRzt/R2QtorWfs4JkshmihY49iPX6hpff0xvRa8
+        n2oLPi+YrwvUQMmWXpGMo40DxcaJjuvTqw==
+X-Google-Smtp-Source: ABdhPJwdZLyKs+QD+qj2/Jp+y8WcvwbN/N74N2rnT1YQO6PwXziqQ3jS/soiLoovBpTnVd6k5k4MgQ==
+X-Received: by 2002:a05:6a00:148d:b0:492:66d3:e37e with SMTP id v13-20020a056a00148d00b0049266d3e37emr7888387pfu.41.1635987380952;
+        Wed, 03 Nov 2021 17:56:20 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id h6sm3443835pfi.174.2021.11.03.17.56.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Nov 2021 17:56:20 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <daniel@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.34.0 round #2
+Date:   Thu,  4 Nov 2021 08:56:13 +0800
+Message-Id: <20211104005613.25005-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-50210553-1635986286=:56"
-X-Provags-ID: V03:K1:gVlKoOj2k3r8fUfFn3KYfMH31ZMSjV6WuMcewV2OA160Kskah4v
- Lsqx/qXJNYz7wloXB2wbTtJoOEwJy59TmYrBZI6l9Ezr/EgdMS+JLLixx21OZ2aucCiS0W7
- T5MGa6NVgAoWccoMONeuZ/8PmBXWtM0rjslJiaEPQNVysB+TZjbSveGK8JuCr+MWO7laHRK
- xNQiyYLkIworMOAsN2gLg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rt/xOA87dXk=:Wf26T2Ym01J+X/f8Uahk1R
- Oa/yB6JOaERxEwLkyJD1XN1m9e2W+pl6EJVgOYp6U7Q4fAUknd6RBDZSsGaSj3kWyVSB8yiQN
- m63Js/IAydUrR5CdtMTz8FaPkcmVKKiJZv2FL+q4QDA+eAPEd7B+Mv63Rtl/gBpnqrwO4Bi4d
- pCetCfhIsAnZxac5wjWhjOGI+c2LkwmaX6v0bfhci6kC7XVZD0+5MgWzi+PX2304V9Nr1FUYe
- eTGz4NIr57VVGGdM/ViYCzjIfXJWaB+QziGQ99r3Zbz9FiiZ53LQPMNKKsGJg0ZdBHrzQziYo
- quxVbhj6jTHUPyO9C2izIi46PuPvvVW6UvYIuhTrTHeZv3Al5XskfHs8nc4HvPaq8L8KAq0oB
- OUnn7y0ziCQ7fPudHjL5x+QUng41y/c0E4DMgdQI8NxXKIZy2O0cl0Ii8uDwwL0QcK52pUQxh
- WOvxT8JB6hTP+NgvNv+w38kr8wnClJ3nIb7OvEbWr+OjQqkZj5scFM6+TewOTAInpaWalT/oG
- RdhN+mfuyYkGG/GRw64M5+Su6v2/r/W/AFYj1tyKB7LXE/C2c/FxFjTHPzG0SyV1dVCxNkEbq
- 4QItIHyd4NBYDIq5YxD7oxeyZ6L5DwsZTnWJzC7UQOp1rsJvInNq4Xdvbq3boy8qKE8TT0Uut
- janlnr7+h3EVxSb8YDHnp3wpJNsqrTBVUITaHD6bmKPNCXLpxNwf5MMEBzjNXtDsGKXXURRdZ
- Vj646k9yqFhz9WHImSF96uyvZ0DpFUd4Fh8vEDl1cx0aLGtiHjgb97E2Uqyzg7EqNxcszp5mL
- Ve6FfGXwvzqhqpqzUzyr1k73Vob4LMR/giL7GltYngwVNbmwKGRCRTnkfh9yREJyUNJB0Lj9a
- u2QIHPDjfECCLbv8JUJyxCaaHLRNLa4u1pREuuuPFkidg/pE9F+1i/1skxC8igdH21xexPCf+
- iJjy1rNA68fTosmObWu6UF51aztfYKDtouIEP7+rwgItqsepX8oag6lbs93I//eADQ+iHTcnm
- lLPJcstmP2hBrldjZGfWxvuCqPv1Fey+ik/Jf3Ku452lkblb5XVmiCnX1rsW9wVVoXGlA0TQ1
- TSM44veqt69ee0=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-50210553-1635986286=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
 Hi,
 
-On Wed, 3 Nov 2021, Junio C Hamano wrote:
+Git v2.34.0-rc1 has been released, and fixed three typos of i18n messages.
+Let's start a new round of git l10n based on this commit:
 
-> Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
->
-> > Junio C Hamano wrote:
-> >> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
-> >>
-> >>> The choices here may be awkward; no problem to propose even more des=
-criptive
-> >>> names.
-> >>>
-> >>>>   Similarly "the 'format:<format-string>' format" feels highly
-> >>>>   redundant, I expect the reader knows that <string> contains a for=
-mat
-> >>>>   inside it as it's mentioned immediately before *and* after.
-> >>>>
-> >>> The fact that it is a string doesn't tell you much about what you ca=
-n do with
-> >>> it. For me, this isn't a problem that the explanation is redundant.
-> >> I agree that --format:<string> is quite poor, as type alone does not
-> >> give readers any information on what it means and how it is supposed
-> >> to look like.  Calling it <format-string> does make quite a lot of
-> >> sense.
-> >>
-> >> It is a bit less obvious how much value we get out of <bool-value>,
-> >> though.  In --opt=3D<arg> scheme of things, what comes after '=3D' ar=
-e
-> >> all <value>s, so <bool-value> does not clarify over <bool> like the
-> >> way <format-string> clarifies over <string>.
-> >>
-> > Agreed. Should reroll the patch series?
->
-> I guess another (hopefully the final) reroll would not hurt (but we
-> are not in hurry---this may be among the topics that graduate early
-> in the next cycle, but not during this cycle).
+    l10n: git.pot: v2.34.0 round 2 (3 new, 3 removed)
+    
+    Generate po/git.pot from v2.34.0-rc1 for git v2.34.0 l10n round 2.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-I fear that it won't be as easy to send the next iteration as one might
-think: GitGitGadget works off of open Pull Requests on GitHub. And the
-branch for the Pull Request corresponding to this series has been deleted,
-thereby permanently closing the Pull Request (it cannot be reopened
-anymore): https://github.com/gitgitgadget/git/pull/1066#event-5541689437
+You can get it from the usual place:
 
-That means that none of GitGitGadget's convenience can be used to send v3
-with a range-diff. All that can be done at this point is to open a new
-Pull Request, generate a range-diff manually (which could very easily
-differ from the actual range-diff, whether by design or mistake) and put
-it into the cover letter, then send a "v3" (which is actually a v1).
+    https://github.com/git-l10n/git-po/
 
-Ciao,
-Johannes
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
 
---8323328-50210553-1635986286=:56--
+There is a helper program hosted on https://github.com/git-l10n/git-po-helper
+for git l10n coordinators and git l10n contributors to check the conventions
+of git l10n contributions.
+
+
+--
+Jiang Xin
