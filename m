@@ -2,130 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3277C433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBC9C433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:47:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7236611EE
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:27:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46015611ED
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 01:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231373AbhKDBaV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Nov 2021 21:30:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
+        id S232889AbhKDBu0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Nov 2021 21:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbhKDBaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Nov 2021 21:30:20 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50336C061714
-        for <git@vger.kernel.org>; Wed,  3 Nov 2021 18:27:43 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id t127so10699467ybf.13
-        for <git@vger.kernel.org>; Wed, 03 Nov 2021 18:27:43 -0700 (PDT)
+        with ESMTP id S231206AbhKDBuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Nov 2021 21:50:25 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 806BAC061714
+        for <git@vger.kernel.org>; Wed,  3 Nov 2021 18:47:48 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id i5so6269553wrb.2
+        for <git@vger.kernel.org>; Wed, 03 Nov 2021 18:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c44BmN8oo64wOLUdLmooq5TeSJLZf+y4Y0mLuyhFVSs=;
-        b=EIOGM/mQ9pgdDbxGWykwYt03g3gmKNBs3MorDHLmJxaSzGIQre5YztiYEIxFb+mh/7
-         AfkoT6rgimcfxfJ12EHXRJ7+H/CyOGkzXB3aPo1zsQf8pCqSAMI8MNuVfKVt4O+kxnhq
-         cY511odQj6cAHJP6pYjo3cYL5GLS6KOgbCpZgYc8ruiawJyyZJNYV6icMF/qWhj47Z5p
-         +LyAyO3OZbvjhjKWNYN6zLIQULASBDbTRZgJM71HgRvcYjDmRi/yQTA4yDR6JTgpolrS
-         PaKF7/bI9YU5jwYgLmI5Qy4ZWlUGgyASDqoO7jWQTZAwwGlDCsY3ktazywGdsbJ9xTSj
-         tWnA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=B6hh3hf7UUqXcC6GfpiCK2A7XHjxQNhG/vKKYR/k2cY=;
+        b=VFkrxabktaSOpjopVRFUT+7quf0QaYHkymPLiZjGNdAMmddINuXl5tlRGT4Svt6NWG
+         Jy1iusLC+CwU2EBrXz/WdawhTRUhNlC5TkrLcvJAarPzADelD10R6S6cgNSvT0Ei+yKh
+         7XHz/AzFgp8e5bHtaIpQFuh58BL+tAMrmuWsTAmdduqm9kvAcwzfXdCemm8oizihC9sV
+         yQ8TylU+xmYg3F08CclIYTG4FrxxyYEj0oQXbQLh3/OO9So0y7OwVld9VmMWr6Y+sSAZ
+         ihs9+h9sd01XIjkFtVT0YsanmGNMonSG7fIJv90Zd95XEwrBNSgu0RTKEmJ2pgMobXZ+
+         TPEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c44BmN8oo64wOLUdLmooq5TeSJLZf+y4Y0mLuyhFVSs=;
-        b=PdttI/0kdsuHct2S4LLkaU9nTyqyksQy39PWPjJ+dgaNUsI+miQQWa6AiNoLrlxA+w
-         naEmbE9QveVsuMFwU3XVmwB5sHkh0DixpqdkNCJm1JLiwZwD4NpoYKngn9oeny2DXjqn
-         XKPt2UyAQqFGPlisK1BHN5EAfm1992v7OCXI7MPgsKjcudN6vKD28Z9Wso6eYxqK6Thv
-         Ip3o3ccSjas+GAnJsZJd4jpwGgb0gVBeqcLAVT5NQ00IRXn21xEON+iMO06Bo9/bWW5h
-         lexqb7j7xW7m8w7wxBhXXqQhEXWBUBebkc4H7AukZhiLmg74mnL0nXG4zVWb8zygFRWK
-         zpAw==
-X-Gm-Message-State: AOAM531g09YTaBsDcniiQBN+7loH3sqK1tHR/llz63q7mpgyAeZyYb9V
-        41X4smJ8P3x8YLCqV8kH7iGzqhTeVd+EDWFQiT8=
-X-Google-Smtp-Source: ABdhPJz6BYE2jnOennfXH504iAyp60HBu/8ch1clMHHopmJY7ySSIo3OAdDofDsbSnhbH4kryrT6qAt3yu2pLZLRd6Y=
-X-Received: by 2002:a25:d6d4:: with SMTP id n203mr51832193ybg.80.1635989262466;
- Wed, 03 Nov 2021 18:27:42 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=B6hh3hf7UUqXcC6GfpiCK2A7XHjxQNhG/vKKYR/k2cY=;
+        b=gm7amUrOz6KZVCQfCHeD9k4LpD4aM9Y/0HLl7wxnYhamLf1s8pwHJnAb3rODXlLFGU
+         jpqSM5UeUVsICxeAYQUEyjWBHj1X2Q+0u1yDWx09IJ2GLg2An1WUOnHz+8h9VFgyGGVJ
+         5jzfjmJW+8DDB5XeZmz1gK2tRk+Kboc0Nfo6HlsdCMl0XpI8jqlJNVVJoXStMJ1hTaWd
+         FG3dK72dIaXrSv+tfveMlp0Tk6sI3TMOymiuW15X5URz/lG1CGVLrFu4DmEQKx5cDaNT
+         fEjYTOwQV32IsiGwTlWZeu8H+VIEgakrQB2886JLubmOppSjKSinT1SAF/6ReKTQg7VT
+         ZHiA==
+X-Gm-Message-State: AOAM531cTE0LD386kBaVqgt9hxa1CN16joMXFt+s/JRXnp0Wv+Gowi3H
+        pHtD0zMXxH6ptBeDEySSOFkxFEBGqbI=
+X-Google-Smtp-Source: ABdhPJynud4+vFD9FKAujXihzupH5c+SH0+2he5rez8CYf3VjJj/CWa8G4rkU1MyRUgSyfzWtQocMA==
+X-Received: by 2002:a05:6000:1aca:: with SMTP id i10mr19807436wry.407.1635990467004;
+        Wed, 03 Nov 2021 18:47:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t189sm3425007wma.8.2021.11.03.18.47.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Nov 2021 18:47:46 -0700 (PDT)
+Message-Id: <pull.1072.git.1635990465854.gitgitgadget@gmail.com>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 04 Nov 2021 01:47:45 +0000
+Subject: [PATCH] async_die_is_recursing: fix use of pthread_getspecific for
+ Fedora
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20211031052156.5237-1-worldhello.net@gmail.com>
- <20211101021417.9549-1-worldhello.net@gmail.com> <7d9a893e-5dad-bd21-4ef7-6d47303abdc1@gmail.com>
- <xmqqpmrh8atl.fsf@gitster.g>
-In-Reply-To: <xmqqpmrh8atl.fsf@gitster.g>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 4 Nov 2021 09:27:31 +0800
-Message-ID: <CANYiYbE9=HZk2wD0u4uPGT9Mv2nZZis-s31fvG0QzhM7HmRisg@mail.gmail.com>
-Subject: Re: [PATCH v2] i18n: fix typos found during l10n for git 2.34.0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        ZheNing Hu <adlternative@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <daniel@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, philipoakley@iee.email, eschwartz@archlinux.org,
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 4, 2021 at 12:26 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Bagas Sanjaya <bagasdotme@gmail.com> writes:
->
-> >> diff --git a/ref-filter.c b/ref-filter.c
-> >> index 282cdad103..08a3f839c9 100644
-> >> --- a/ref-filter.c
-> >> +++ b/ref-filter.c
-> >> @@ -1037,7 +1037,7 @@ int verify_ref_format(struct ref_format *format)
-> >>                   format->quote_style == QUOTE_TCL) &&
-> >>                   used_atom[at].atom_type == ATOM_RAW &&
-> >>                   used_atom[at].u.raw_data.option == RAW_BARE)
-> >> -                    die(_("--format=%.*s cannot be used with"
-> >> +                    die(_("--format=%.*s cannot be used with "
-> >>                            "--python, --shell, --tcl"), (int)(ep - sp - 2), sp + 2);
-> >>              cp = ep + 1;
-> >>
-> >
-> > Why not using \n?
->
-> It is not quite clear to me why it should.
->
-> Among the possible string that is (ep - sp - 2) bytes long (i.e.
-> --python, --shell, --tcl, --raw), even with the longest, the
-> resulting message would become
->
->     fatal: --format=--python cannot be used with
->     --python, --shell, --tcl.
->
-> that is unusually short with such a newline in the middle.
+From: Victoria Dye <vdye@github.com>
 
-In order to detect typos in new i18n messages added upstream in time,
-a new CI workflow has been added in the "pot/CI" branch. See:
+Correct an issue encountered in the `dockerized(pedantic, fedora)` CI build,
+first appearing after the release of v36 as the latest stable version of the
+Fedora docker image. This image includes a version of `glibc` with the
+attribute `__attr_access_none` added to `pthread_getspecific` [1], the
+implementation of which only exists for GCC 11.X - the version included in
+Fedora. The attribute requires that the pointer provided in the second
+argument of `pthread_getspecific` must, if not NULL, be a pointer to a valid
+object. In the usage in `async_die_is_recursing`, `(void *)1` is not valid,
+resulting in the error.
 
-    https://github.com/git-l10n/git-po/blob/pot/CI/.github/workflows/git-pot.yml
+The fix imitates a workaround added in SELinux [2] by using the pointer to
+`ret` as the second argument to `pthread_getspecific`. This guaranteed
+non-NULL, valid pointer adheres to the current intended usage of
+`pthread_getspecific` while not triggering the build error.
 
-This workflow will be triggered several times a day, and changes of
-i18n messages will be saved as "YYYY-mm-dd.diff" in the following
-branches:
+[1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a1561c3bbe8
+[2] https://lore.kernel.org/all/20211021140519.6593-1-cgzones@googlemail.com/
 
-* https://github.com/git-l10n/git-po/tree/pot/master
-* https://github.com/git-l10n/git-po/tree/pot/next
-* https://github.com/git-l10n/git-po/tree/pot/seen
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+    async_die_is_recursing: fix use of pthread_getspecific for Fedora
+    
+    Following up on Johannes' report earlier [1], this patch fixes a
+    compiler error in the Fedora CI build (the same issue was identified in
+    a local developer build about a week ago [2]). This fix changes the
+    second argument in the call to pthread_getspecific from '(void *)1' to a
+    valid pointer, thus preventing the error in the use of
+    __attr_access_none.
+    
+    [1]
+    https://lore.kernel.org/git/nycvar.QRO.7.76.6.2111040007170.56@tvgsbejvaqbjf.bet/
+    [2]
+    https://lore.kernel.org/git/43fe6d5c-bdb2-585c-c601-1da7a1b3ff8b@archlinux.org/
 
-L10n contributors can also refer to the "po/git.pot" file in the
-"pot/master" branch to prepare translations in advance.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1072%2Fvdye%2Ffix-fedora-build-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1072/vdye/fix-fedora-build-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1072
 
---
-Jiang Xin
+ run-command.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/run-command.c b/run-command.c
+index 7ef5cc712a9..a82cf69e7d3 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1099,7 +1099,7 @@ static NORETURN void die_async(const char *err, va_list params)
+ static int async_die_is_recursing(void)
+ {
+ 	void *ret = pthread_getspecific(async_die_counter);
+-	pthread_setspecific(async_die_counter, (void *)1);
++	pthread_setspecific(async_die_counter, &ret); /* set to any non-NULL valid pointer */
+ 	return ret != NULL;
+ }
+ 
+
+base-commit: 876b1423317071f43c99666f3fc3db3642dfbe14
+-- 
+gitgitgadget
