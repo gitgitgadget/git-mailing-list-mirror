@@ -2,101 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77143C433F5
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B5B6C433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:12:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52B4861076
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 13:55:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AC58610FD
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:12:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231243AbhKDN6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 09:58:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:48519 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229505AbhKDN6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 09:58:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636034144;
-        bh=NlgXWgkzu7mJo1ZqE/hLBfHqO6U+d+BOfGdiQ1ezQCo=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=ZKuUcMzxvF+eh6AtzCDsmmDzo/vq38nXQ0XSNDoGLe/cCcmri4vApcBl9ma43ZE/d
-         D2qh6uubvWDFWUP2oaNNakbv7+SzPdcUJVCPd5tU6SzDNB48IHvXloJNgZKUXQO0NC
-         +2iw8VUPqLOiU9Kn4Ynbg5vO14rbt5pUzShYTcGc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az30-490.nwfnsqwsw4julhrdclvecef41g.jx.internal.cloudapp.net
- ([13.84.210.207]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MpDJd-1mOxO42tOZ-00qm8l; Thu, 04 Nov 2021 14:55:44 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.34.0-rc1
-Date:   Thu,  4 Nov 2021 13:55:40 +0000
-Message-Id: <20211104135541.4902-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.33.1
-Content-Type: text/plain; charset=UTF-8
+        id S231206AbhKDOP1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 10:15:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230509AbhKDOP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 10:15:26 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89613C061714
+        for <git@vger.kernel.org>; Thu,  4 Nov 2021 07:12:48 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id h74so6016863pfe.0
+        for <git@vger.kernel.org>; Thu, 04 Nov 2021 07:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NKwzkqUvf5KBohoQ8SGqrxZt4uDMBy1hQHwB8JR8Fho=;
+        b=dI0aW6S8wQOk+jT+w1RBsXQo7d5+qUdCdoG3CDMv41Jpa0JVggfk7BK/zcie9P/xBK
+         FEXLLANOvvHM2yitRWSbc0pgQSkl3NWvVVEEjQwuuw5TbY3H5Gh8a2jMuCSK+W2pNgT3
+         dRvybUobf9Pf4T3mnUJMRwsnykdSiW+LUUT0Gh7Eh9KSUOjyZI4BR1wHJ5jNPdiUtTiq
+         em350yviML7YSDK46KXztdDgp7gu7pis1ZHXP04VJ5CDG5jLchKsHrkHF4e0qf1Te3zY
+         3bZRPGI4e2CQLQgZ8mk+Z69f8Y5sK0N9w8sgkJqPulv38K2Sq5Svr1KXGoCRkF2LQBta
+         14Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NKwzkqUvf5KBohoQ8SGqrxZt4uDMBy1hQHwB8JR8Fho=;
+        b=LfOVHeh3MQX/aXGv6QCeQM5xNR7qVGGejTBCS6iR9QwcLQ2QVrkS5glSNbeppS/TrK
+         Oxwo9K7mbWcLERWqLmZ4L+O/B+/EKfiSKbK1sNNTFpd+AzNpjZ9v4PRBPhcLEH5x6wUE
+         Kf9XYAJiIESDRcnicx/GxmGceEZGBJvAtqYpL3P7qdlSd+n4zA4Ja0IQRepir81I1mD0
+         kK3oVfCDIJflB3+jiXJppZG3xzUoLwkB9aXDtgvA8dbb8EKpbbgbLfbWoaSBkQqGVHDH
+         KF7A3XCLx+Vi7ZafSjANJ7MPpVid3n66N/b2icrlmlv6lE+jaSMPe9oTgabSz4+Gn74g
+         RMHw==
+X-Gm-Message-State: AOAM53344UJLRNr/IZeJOaPUTuucPxXRorJRhQ/C0Wl+ITYcZaYPv77z
+        mqATR11oN6aY8gFm3zRLnXzESD2BzXxVxE0nHhZiE+V+XrE1JI6Y
+X-Google-Smtp-Source: ABdhPJy5WjtVJJd+A1DgltqyiBEpalN/E3m+V/gnFmZ3eDaKColBQxh11hF459oOUUOZbhpSTBgT6KbgMggsGqKgcOE=
+X-Received: by 2002:a63:8749:: with SMTP id i70mr23387512pge.158.1636035167928;
+ Thu, 04 Nov 2021 07:12:47 -0700 (PDT)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:1++oiAU7V1hDIJhx94TkloLlrUItvfZZMFaDg0rjwMPAcWCR+xF
- hSRZrjcH/OsQNOYa6or5S9Szy2yfcYsDAU2wh7p/OKbv8D+p0RTTSDMGDm2W7nRcRfYnxf7
- FTJFu6kuw9zVXoQMpmYkLq1nBflF1NNyqzEeQY1rMwfW/n8XerR2GOgRLt05WbFEVqgvEqf
- Aw+KmApNNx/71uNNOZe8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eJIE0CAFEoQ=:2deV54s7leeLPWJKYtFC/X
- DmZZAF8OR0/LfcdyZca4r8ct99sXGQUGTp1Li5zKw0bfTH7e8qxvP7pcTyV+vApL7bV9bORgP
- 5mesl5t5BQzTs4wIvOUd8MJewK8FL1/mdJS9xxGwqs0JM19RLywZk3RnyAKYj9sOAZqLCqKfr
- nF3XIxRnQoPjjNPuLVmzRYRJq03X4PapH7wO7h19l++l9MviJ+4GVxfHsSH+sArbj1FuTABRF
- 83UAHRZrIzh5NLf4cKbYSW4WYS6zJ/2Ez/VHoc7MkYUI1EDhsr+DK2h5GZDYmhM87KMlDjKDU
- GzrZK0IRuNJT5FnxzZWeZJYryMhrgyz6wKJGtLWAEifK6/PFdYo9d+bdUI4Xhar5jhoIvKFzG
- UiKuGrwxwsur1W0B8raABtyoSEEz8X89rkuWiHqyyyIex2pQ6BZvdTGaKEpAAOwtvR4QH76+s
- F1Mpxxk4/5VP0ugPINm8/ttNEC9rim03JhNJPLayzWYKzAtY/FOmjVSaGTN+jaqoo3eRSfRsw
- 4q389EDi5MSkYZ1HWO9HurHZFF9WG6JbW9G3X2gUxw5pZvTxsoDBs5JcNKe5UEYTxAPSjcz3a
- wsz9Vg/hsJXpQWKGug7zt01fHWqUkbanWQrJ7a+ym7FEU4XE8sBVqqs9Zpz2Xqghioi6xGIAV
- Fk19WmDVLDgdZ6AjSROkuEq3jwBvLTQrblqPkE+T/au+wzECAHg9ZbPT+of+IVYSOm0mUXjqR
- KIKRoCLeGg2wK0WhpUxgDcPJwvgwRDUhq/NYHO/k+AOSScBudJjmiCws37JmMC/oU2VYC8CWq
- NhiFASTVS1qfoFtNBehUntkRvXCXwseV+tKzo/M3s++cCVkvrHmQWcChXh91oJ/hjFBYzTMul
- fhBpzzuDrdI+qJqzCV4nOsSYNS5PeOgV6oPesywJJwbmOjdWNKZSMybBAeKtJL79vZEZPkKsq
- RHvnLrP6pO7LWT5TUu/RkWsQRFDZIZEK9kyPtzlutkDOJCmn3G7XfPwrNcBDj+MAyruuob2cS
- GEtjo03ZFZQMzeIIfM8SOF3e1QgJVumI8xkMv/nQSzbk0Lf78bg76KC/F5kdWbb1d2OojnAOw
- 343I+82X6HUCx8=
+References: <CAP8dQmu6Dfo4KBsVk+6xeR6=+S8bOKk-kbc3ub7c0jAsH61-cg@mail.gmail.com>
+ <YYHzDuoJfWknI1XM@coredump.intra.peff.net> <CAP8dQmvoxWDnD_rbCdBS9cnwS90YFjjXcCPWLmjMq=ck7vo1Ww@mail.gmail.com>
+ <YYJuK70U8Sk7xSYl@coredump.intra.peff.net> <CAP8dQmsbR7V1zX=xpk+ah-5bgkOP3vJGTMBq_25m9Vhw_fADAQ@mail.gmail.com>
+ <YYOrLgj3KMq6eKpp@coredump.intra.peff.net>
+In-Reply-To: <YYOrLgj3KMq6eKpp@coredump.intra.peff.net>
+From:   Steven Penny <srpen6@gmail.com>
+Date:   Thu, 4 Nov 2021 09:12:39 -0500
+Message-ID: <CAP8dQmtLt_2+ExGUB71nJz_PWHKRrzqQVtX7d8T6FpPqgatiFQ@mail.gmail.com>
+Subject: Re: credential-store get: No such file or directory
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Thu, Nov 4, 2021 at 4:43 AM Jeff King wrote:
+> It's because internally, the "git credential-store get" command is
+> assembled as a single string passed to the shell, whereas remote-https
+> is run directly via exec/spawn.
 
-I hereby announce that Git for Windows 2.34.0-rc1 is available from:
+Actually, I bet that is whats causing the problem. I am using MSYS2 Git [1],
+which is not a native Windows build of Git, but one that relies on the MSYS2 DLL
+for path translations and such. I have actually built a Windows native Git, but
+its a pain, so its easier just to use the package. Anyway, the "non native"
+Windows version, probably considers Bash the shell, so any commands being passed
+to a shell probably will be looking for Bash. I dont have Bash on my system,
+because for the most part I dont want or need it. If I need a shell, I just use
+PowerShell.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.34.0-rc1.windows.1
+Would it be possible for Git to just run "credential-store" directly, like other
+commands? I assume stuff like "~/.git-credentials" would be a problem, but
+couldnt you just do something like this instead (pseudocode):
 
-Changes since Git for Windows v2.33.1 (October 13th 2021)
+    var cred string = os.Getenv("HOME") + "/.git-credentials"
 
-New Features
-
-  * Comes with Git v2.34.0-rc1.
-  * Config settings referring to paths relative to where Git is
-    installed now have to be marked via %(prefix)/ instead of the
-    now-deprecated leading slash.
-  * Comes with Git LFS v3.0.2.
-  * Contains new, experimental support for core.fsyncObjectFiles=batch.
-
-Bug Fixes
-
-  * Configuring a system-wide VS Code as Git's editor was broken, which
-    has been fixed.
-  * It is now possible to clone files larger than 4GB as long as they
-    are transferred via Git LFS.
-  * Git now works around an issue with vi and incorrect line breaks in
-    the Windows Terminal.
-
-Git-2.34.0-rc1-64-bit.exe | accea106d3da55dfcf638970371b429f84e35e076d2d2a35c1092f282f83fe0c
-Git-2.34.0-rc1-32-bit.exe | 7701b03b209c4ea784303ececb1d3b6885a971989ed35b4322d3df0c353c9f15
-PortableGit-2.34.0-rc1-64-bit.7z.exe | 6f2ad8d09d4a57e7f7b244044b127a3bce92d68fa0d8fd8dcb45e46cff53c3e5
-PortableGit-2.34.0-rc1-32-bit.7z.exe | c61bd63a2d10188fc7547cc0e5f66f5c29b5fe6b23111f2d8b7c94f1db38b8f0
-MinGit-2.34.0-rc1-64-bit.zip | 5865c94a9264d22cd4e99912f6359a7834e232578eee7de8b6ab5ee5a0a422dd
-MinGit-2.34.0-rc1-32-bit.zip | 43da6248745dc8c342362719d8d5dd2c8eebc0342fb05bb3d89eeec9dd670e6b
-MinGit-2.34.0-rc1-busybox-64-bit.zip | 6730c02e10e632367fd686d21c3664d7f0b467a9c7c7477e97d3646c674e4e9c
-MinGit-2.34.0-rc1-busybox-32-bit.zip | 33ff05478a19a4303408f4d5ea53355a3d71d3520be56d390ab6c403f3114c9b
-Git-2.34.0-rc1-64-bit.tar.bz2 | e66e8e07d6e4e95260eff30d10b8561461b1e1415ff28d1ab381ad1c556fd71d
-Git-2.34.0-rc1-32-bit.tar.bz2 | 5fb3e3bebd6696e40f758c88cfea33c67690504eb6a03d35c06821c0795e37be
-
-Ciao,
-Johannes
+1. https://packages.msys2.org/package/git
