@@ -2,82 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A89B3C433F5
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B473BC433EF
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 16:08:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8603A611EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 14:55:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99CF8611F2
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 16:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231283AbhKDO6a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 10:58:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53092 "EHLO cloud.peff.net"
+        id S231649AbhKDQLf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 12:11:35 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:46405 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230058AbhKDO63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 10:58:29 -0400
-Received: (qmail 8697 invoked by uid 109); 4 Nov 2021 14:55:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Nov 2021 14:55:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3157 invoked by uid 111); 4 Nov 2021 14:55:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Nov 2021 10:55:51 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 4 Nov 2021 10:55:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Steven Penny <srpen6@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: credential-store get: No such file or directory
-Message-ID: <YYP0dnBgfY16fSP7@coredump.intra.peff.net>
-References: <CAP8dQmu6Dfo4KBsVk+6xeR6=+S8bOKk-kbc3ub7c0jAsH61-cg@mail.gmail.com>
- <YYHzDuoJfWknI1XM@coredump.intra.peff.net>
- <CAP8dQmvoxWDnD_rbCdBS9cnwS90YFjjXcCPWLmjMq=ck7vo1Ww@mail.gmail.com>
- <YYJuK70U8Sk7xSYl@coredump.intra.peff.net>
- <CAP8dQmsbR7V1zX=xpk+ah-5bgkOP3vJGTMBq_25m9Vhw_fADAQ@mail.gmail.com>
- <YYOrLgj3KMq6eKpp@coredump.intra.peff.net>
- <CAP8dQmtLt_2+ExGUB71nJz_PWHKRrzqQVtX7d8T6FpPqgatiFQ@mail.gmail.com>
+        id S231639AbhKDQLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 12:11:35 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mibnE-0001Sk-67; Thu, 04 Nov 2021 12:24:33 +0000
+Message-ID: <36140d50-be1f-669f-999b-4ee2314200bf@iee.email>
+Date:   Thu, 4 Nov 2021 12:24:31 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8dQmtLt_2+ExGUB71nJz_PWHKRrzqQVtX7d8T6FpPqgatiFQ@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH v4 5/8] odb: teach read_blob_entry to use size_t
+Content-Language: en-GB
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     Matt Cooper via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Matt Cooper <vtbassmatt@gmail.com>
+References: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
+ <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
+ <308a8f2a3ade63ef21feb945e45866f2a83ae101.1635867971.git.gitgitgadget@gmail.com>
+ <20211102204040.nnndsqrzu7ozpva7@tb-raspi4>
+ <nycvar.QRO.7.76.6.2111040102560.56@tvgsbejvaqbjf.bet>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <nycvar.QRO.7.76.6.2111040102560.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 04, 2021 at 09:12:39AM -0500, Steven Penny wrote:
+On 04/11/2021 00:09, Johannes Schindelin wrote:
+> I would say that in the context of talking about a signature, "expect" is
+> a better verb than "use".
+>
+> But then, just like you I am not a native speaker, so I think we should
+> maybe stop telling a native speaker like Matt how to use his native
+> tongue...
+>
+>> (I am not a native English speaker, would "changing" be better than "altering" ?)
+>>  By changing the signature of read_blob_entry to use size_t,
+> As I said, I am not a native English speaker, either. So I believe that
+> Matt knows better than the two of us together how to phrase things in
+> English.
+Being a native speaker can be a bit of a Catch 22, especially in
+English, as we can use unusual idioms and find them normal, and often
+weren't taught 'grammar'.
 
-> On Thu, Nov 4, 2021 at 4:43 AM Jeff King wrote:
-> > It's because internally, the "git credential-store get" command is
-> > assembled as a single string passed to the shell, whereas remote-https
-> > is run directly via exec/spawn.
-> 
-> Actually, I bet that is whats causing the problem. I am using MSYS2 Git [1],
-> which is not a native Windows build of Git, but one that relies on the MSYS2 DLL
-> for path translations and such. I have actually built a Windows native Git, but
-> its a pain, so its easier just to use the package. Anyway, the "non native"
-> Windows version, probably considers Bash the shell, so any commands being passed
-> to a shell probably will be looking for Bash. I dont have Bash on my system,
-> because for the most part I dont want or need it. If I need a shell, I just use
-> PowerShell.
+It is important that the text is understandable to those for whom
+English isn't their first language. At least we don't have to use
+simplified English [e.g. 1,2]
 
-OK, that would explain it, I think.
+Philip
 
-> Would it be possible for Git to just run "credential-store" directly, like other
-> commands? I assume stuff like "~/.git-credentials" would be a problem, but
-> couldnt you just do something like this instead (pseudocode):
-> 
->     var cred string = os.Getenv("HOME") + "/.git-credentials"
+[1] https://en.wikipedia.org/wiki/Simplified_Technical_English
+[2]
+https://www.boeing.com/company/key-orgs/licensing/simplified-english-checker.page
+(not actually used;-)
 
-Possible yes, easy no.
 
-The "~" part is trivial; that's expanded inside the C program anyway.
-The harder thing is that helper strings can be arbitrary shell commands
-(if you start them with "!"), so we decide at parse time whether to
-stick the "git credential-" in front and then always treat it as a shell
-command, rather than carrying through the knowledge that it doesn't need
-a shell. So switching that would ripple through the whole call stack and
-the data structures.
-
-Definitely not impossible, and not even _hard_, but it's not like a
-one-liner change.
-
--Peff
