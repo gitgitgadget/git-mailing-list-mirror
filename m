@@ -2,119 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34332C433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8CE6C433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10FF4611C3
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:34:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87B20611C1
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 08:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230335AbhKDIgq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 04:36:46 -0400
-Received: from mout.web.de ([212.227.15.4]:37971 "EHLO mout.web.de"
+        id S230252AbhKDIqT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 04:46:19 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40703 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230084AbhKDIgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 04:36:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1636014837;
-        bh=nMNBTFlhSmwXVKNdBplx67dhPsyLvqcQCthWSUHGmcw=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=YgfGMuTGg3zJB9MLDJSwtrJqDy6CN/INbjqt4RLHVTe/Kqw288nx7Ln964D8QawmX
-         julXPzklNeXZzS2iEoHylT4j7pQgg+we/npQFDNFHi2FiFE6Ts4t3D2FR6Yy5QzVEA
-         S0lgj6dNPbidD5AzCmZXdZYIVoiAwsXXDIg2M94w=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMWA2-1mpfzu3OSE-008JUE; Thu, 04
- Nov 2021 09:33:56 +0100
-Date:   Thu, 4 Nov 2021 09:33:55 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Matt Cooper via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Matt Cooper <vtbassmatt@gmail.com>
-Subject: Re: [PATCH v4 8/8] clean/smudge: allow clean filters to process
- extremely large files
-Message-ID: <20211104083355.wybcczuwktlu2fmu@tb-raspi4>
-References: <pull.1068.v3.git.1635515959.gitgitgadget@gmail.com>
- <pull.1068.v4.git.1635867971.gitgitgadget@gmail.com>
- <41fda423982d99847d3879f5ea1eb3570ae9eab6.1635867971.git.gitgitgadget@gmail.com>
- <20211102204737.3wzphfcd6ne3sj2n@tb-raspi4>
- <nycvar.QRO.7.76.6.2111040109440.56@tvgsbejvaqbjf.bet>
+        id S230229AbhKDIqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 04:46:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636015408;
+        bh=WC3ru3WDcNedFYx7n7Z/AcDqhUCiK2NDXBiGINAlS7U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hLY8wtfc/v6cP7enueyvnOSzaCoCmQAj9eLI3R2Wklet/WFJqA3ZTlcpCFVvnYR0v
+         jxfzPzZrJ5fut5t2JBTfyWEwLz0WSNJQuZwo9C6sUCJ8uBPRub+/0ys4C+n0+q/9Fv
+         sn+yjEVBFT6A3n+1BxQA4Tl2SYJgR1z6MY2ZpBik=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.119.151] ([89.1.212.10]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MzQkK-1mVGiG07JQ-00vM5m; Thu, 04
+ Nov 2021 09:43:28 +0100
+Date:   Thu, 4 Nov 2021 09:43:25 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, philipoakley@iee.email,
+        eschwartz@archlinux.org, Carlo Arenas <carenas@gmail.com>,
+        Jeff King <peff@peff.net>, Victoria Dye <vdye@github.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2] async_die_is_recursing: work around GCC v11.x issue
+ on Fedora
+In-Reply-To: <pull.1072.v2.git.1635998463474.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111040823270.56@tvgsbejvaqbjf.bet>
+References: <pull.1072.git.1635990465854.gitgitgadget@gmail.com> <pull.1072.v2.git.1635998463474.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:93Zb4f0nZ8ZUYeiRMvrvPDnhqqddLcTdqKGveMdbJL4u1Q0C6fc
+ DVqLZXWh6brl4zS+t8Un1KSHPi+dB4xuHkqU/3Iet+HNLWA3dzYViJE2pCTGyAjHAaAiYdQ
+ sq//ij6TigLMhZSsuw+Yvh3xT9NjFoviFQIxGB9Bgn0qqEcPIniTR/xJJ7UrjWr/gp3SxV/
+ IKeGFq1otEV5yQJEiMjxQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XreK6dXF24Y=:mFm6xDu4pYYzYiqO6IYjY+
+ 5lfwNGNse504c2bv9FiP2dc7fb+e8unmw47YWVX7qeEmn9vNFRdD/jm+bzLUNyEv5WMu6NPrY
+ kPokrqYrf30tZYKvwzJDzUqCZfxEkR6wTKw7IQyMxWvweoV3Ryt0bMJBuURMRB5lz4TGVWPvo
+ TiH1dQElgNgAAMFVBQSrw/G//lgdO3jg6f3OerT9czBjM9iXre1BcSd3wJiqCwF3EUOMXoyNh
+ IvBdSRRmwsgEhtdUV45z1mT8mYOXn5vUtVVvREmpZxKtEUJhzp7AsJack6weO1b7qM58HAEte
+ K1dPJVOzUMNKPbGkxmikIxKDfA9lJs7qBi8Yr1h/D2m/3bYb3oXW1ndy//PnuuwsNyd+extv9
+ Tk46IrVAbc4w45oJTTY3K89CWicdUYpsc8MWJvxuFpjs9i410PgvZMGPhCj6uQ1Y+UidxeC0q
+ G9RizJm1ME73pz02fcGQVK1iIWdYbDEjS87RUFjb82RR/+sRjKrNI2olhEl1+gzWwdmUwzaW4
+ lpeyNx5n0Ttf0EzQM1o8Gvcf/kKsPZ0SmkFN0UdR2x3x8dht8+xoBaKLWKeJbn59qavhtIElO
+ iy0IUGoCbP80piiEpjaocGlgTseubhmRoEaDWO/WXih++Q6Xr20qf1hU16GvBkttMSV9A6rO4
+ 3xPMlm5qLJpH3xhZhBEMq00sT0UHjfy5BJ7FLDw/bplv4PjanZNxt5wIGT01ORMSz9xUqAeQR
+ jB5ekX14g9qoVvfMhPNxnMTSTXl2XZmwJbQHXKXyE/WxucxCKq3ZZbxB72FoxmlCaLZmUBYlk
+ KRVS4R/TxhOCQ0oaY/TSREbAqL/FLavNIfdix6XHhd4OxwRiPMrNBjsoQJUVqvdTeRqVVbBV0
+ FR9ejLFlGvXeFmqFO2gXae8MwBcTRYqhIxOLugwDUQ7VW7puoczqVuR7xofUtqZYXw89GIlup
+ lsz/brAr6kwxiNrUDJzhnVbjXOkYlRyZK/X3uJwalSCBBM0RtMuX+BAftnIfVbtWSi80r0say
+ NAkh9ehxpMiAKKuJ+YKT7nDDZ2FR6j4yiXZ2rVZAxUGv2NxodU+rIJT8KJuD3QEIbyA2grsKA
+ aoCQ/N6qRFWQyI=
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <nycvar.QRO.7.76.6.2111040109440.56@tvgsbejvaqbjf.bet>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:F3da10D1Gh/eujvG6A7DqBA9EbwLdih+o8XGvW6U9X17mYRwowL
- dRF6Mgcxsf1zt074Mqi4xA2/Q82yrw1d5VI6YK056jONEidM/8IlspXi+6ihi+QndAGy6Sy
- Bl2VuXK/e9BP1T05SO1VJ+64N/3wrNpqmTmzwChXk1p5yJFVOVrmRMQ2exxjFKYpBF9oNx1
- cROgdT75tuhWqkEZKwLSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:egTvvrifYbM=:IF4/mjLSNgpZRzNcPfDmcG
- CRExOTvyI4TXZsuhpriqTxWY5EXjfZxLcvVWS85uXWuqhiJy8WY7mQ5yI6Yw9nt0hShShwc0q
- rr6ocEQFgg+o1u5qlCO/XQ50ypDjyoEGWfkmDUea/dvSlp9ByDNa4i3pf0mDPdoWnmbOlPpwP
- DdFbFXL51Fd0/C0hsz5dfZAKrJ/oz6mWwmBkPNo+HqejGoPO7t6vnOIZS1w7xKulnpSfNyyp6
- taOW8/CsFxIvn0P17tqTGI4wPci5ydKEOiqMiY8xWvrV7hGujrQQnaBWkRxUWIzdOuuuSVuU8
- NXlbjKNiK3HEucNQYsR6a3dXWRnSICuTKtEx2bZxivtrjCgheZjhPtG45jGblfVB1R69/S1Qx
- LnFd+c0uc8udzH1hZbiybWLzPDb1V+V55LkYAPQhGwLFGmHv6kVdeD64T2vaDud2+Hh+OSWrb
- iEBOfmcuEEghMuOsc3Bf2vtnQitgKQillw/oA6hI3DzIlHlz0AcfZ7K7MNsajy5lA8buhsglq
- z63ihydJhxdp8Y9QMGLnKvQJ0kK96yV242NQL7VsR64ZyWgqU4bkjRS/g7eez9eV5X05suxyM
- +7bCnUkdSagL4a8eYcDvbR9D5wyEpCHBIpGinnj40+7rxkDbxx715srQnRhP811UMUwywym+U
- Us7D9xj3qn0VbP6t7k/UOTdnSHe/MAEa8vSq+a8vW7Aoq7FU56//203c9WPckTdFLPijA6dtE
- 2qi07yNTzDb3U+2h93OGqKrwFvg0Tgoi8Ln4PNtFasOIFpl0IeYDB1nrUY2+UZd7iKzYfVcyU
- DT70Fq6VrRNPgYXmnzOURQcgTKwmL07En3aZipT0MBKkhYikK5Obf48ZggzghG6zANbkr8vy7
- cRTUz9fWZoQ1wo8fCnSsN7Cs5eagfboKKXZ/HGIsoa2p+CEKl20H+PKAdL5pm1F6tECrUzClA
- umphI2iOKS4BoE4UcbkWKxYfu8bzaurGIoZ3JasjXqzu2LWCI7lAs+Qi0F0DnHPTUI42jAIqJ
- sNG+qtL0nZMSFcvisD/Kd8rI1HYBs9IW1AachMJ6ovKWNelcQF7BseFLMNh8yjfM8zrz/j5Mh
- wT+RDBUa6VKxvE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 04, 2021 at 01:11:44AM +0100, Johannes Schindelin wrote:
-> Hi Torsten,
->
-> On Tue, 2 Nov 2021, Torsten B=F6gershausen wrote:
->
-> > On Tue, Nov 02, 2021 at 03:46:11PM +0000, Matt Cooper via GitGitGadget=
- wrote:
-> > > From: Matt Cooper <vtbassmatt@gmail.com>
-> > >
-> > > The filter system allows for alterations to file contents when they'=
-re
-> >
-> > Some nit-picking:
-> > looking at
-> > https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
-> > we can read
-> > "...substitutions in files on commit/checkout."
-> >
-> > Should we use this wording here as well ?
->
-> Again, I believe that Matt's command of the English language is pretty
-> good (but then, I have the advantage of knowing him and I very much enjo=
-y
-> learning new English words while chatting with him). I would therefore
-> chalk it up to artistic license when he uses the word "alterations".
+Hi Victoria,
 
-That was not really what my comment was about.
-We have exising documentations about Git at other places, and my question
-was if we can/should/could use the same terminolgy here in the commit mess=
-age
-as well.
-This could make it easier for readers, if the same words are used for the =
-same
-thing.
+excellent work! The patch looks very good to me. I just want to add a
+little context below, and thank you _so much_ for letting me sleep while
+you tie it all up in a neat patch.
 
+On Thu, 4 Nov 2021, Victoria Dye via GitGitGadget wrote:
+
+> [...] This image includes a version of `glibc` with the attribute
+> `__attr_access_none` added to `pthread_setspecific` [1], the
+> implementation of which only exists for GCC 11.X - the version included
+> in the Fedora image. The attribute requires that the pointer provided in
+> the second argument of `pthread_getspecific` must, if not NULL, be a
+> pointer to a valid object.
+
+My initial reading last night was that the `none` mode means that the
+pointer does not have to be valid, but you're right, the documentation at
+https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html
+clearly spells it out:
+
+	Unless the pointer is null the pointed-to object must exist and
+	have at least the size as denoted by the size-index argument. The
+	object need not be initialized. The mode is intended to be used as
+	a means to help validate the expected object size, for example in
+	functions that call __builtin_object_size.
+
+Which means that yes, `(void *)1` was incorrect and _had_ to be changed.
+The patch is therefore a fix, not a work-around (contrary to my initial
+impression).
+
+So then I got puzzled by this while sleeping: why does it fail on Fedora,
+when it does _not_ fail in Git for Windows' SDK (where we also recently
+upgraded to GCC v11.x, thanks to the hard work of the MSYS2 project)?
+
+My best guess is that my GCC (which is v11.2.0) and Fedora's GCC (which is
+v11.2.1 plus the usual Fedora customization) behave slightly differently
+with respect to that optional `size-index` argument:
+`pthread_setspecific()` is essentially declared without a `size-index`, so
+I guess GCC v11.2.1 probably defaults to `size-index =3D 1`.
+
+> diff --git a/run-command.c b/run-command.c
+> index 7ef5cc712a9..f40df01c772 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1099,7 +1099,7 @@ static NORETURN void die_async(const char *err, va=
+_list params)
+>  static int async_die_is_recursing(void)
+>  {
+>  	void *ret =3D pthread_getspecific(async_die_counter);
+> -	pthread_setspecific(async_die_counter, (void *)1);
+> +	pthread_setspecific(async_die_counter, &async_die_counter); /* set to =
+any non-NULL valid pointer */
+
+This looks good! To make the intention even clearer, we could change the
+line above to `int ret =3D !!pthread_getspecific(async_die_counter);`, but
+as we are _really_ late in the -rc cycle, I am very much in favor of
+leaving out such clean-ups that do not fix any bug.
+
+Again, thank you so much for your hard work, it was fun debugging this
+with you,
+Dscho
+
+>  	return ret !=3D NULL;
+>  }
 >
-> Since you did not comment on the patch, may I assume that you find it
-> flawless?
-
-I could not find any flaws.
-
 >
-> Ciao,
-> Dscho
-
+> base-commit: 876b1423317071f43c99666f3fc3db3642dfbe14
+> --
+> gitgitgadget
+>
