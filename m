@@ -2,91 +2,215 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7914BC433EF
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F645C433F5
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 21:06:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F31D60EFE
-	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 20:14:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1D8C61106
+	for <git@archiver.kernel.org>; Thu,  4 Nov 2021 21:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232078AbhKDUQv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 16:16:51 -0400
-Received: from avasout-peh-001.plus.net ([212.159.14.17]:35263 "EHLO
-        avasout-peh-001.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231826AbhKDUQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 16:16:51 -0400
-Received: from [10.0.2.15] ([147.147.167.109])
-        by smtp with ESMTPA
-        id ij7fm1KdaCV4Tij7gmFTF6; Thu, 04 Nov 2021 20:14:11 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1636056851; bh=QS+w6vt8pOhCE8hHpXr/RpqjUTxIuY8iglxJMNm1C7I=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=EYidUKhAirvCtPgml5zLa3aaESeeTYhaSGF7BrheZz5oTQJnRImTXV78PFkWF/DLF
-         6LdPypsVnIdbAAfQ/GGyTVFNOh/K/aAyYhFCj+jCxio36DTaaBIGyC6XbYYgYga2Hu
-         5RvT4O4h4OHSoQYo20k/nc9jzihZzZiw+RxW4Vs7Mg6aOnEA7N+hElY8zVSUkFwuu1
-         +RxhrDwMzbk+TMUa32kNPm/js4kd5AXfxWNJ03f6TMsKK8kvnZvOiYpJalo7jxIuFS
-         pz6C4EIPuWHA+KOkZdSlhMUx6q+5a7z2CD5dReD/ryarV8FDvWK+eW4IrOBUHNl1Vs
-         +RW6H/Emwe7bA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=Yrts+6UX c=1 sm=1 tr=0 ts=61843f13
- a=QdS5mZX/VJYKMdXaSBaSIA==:117 a=QdS5mZX/VJYKMdXaSBaSIA==:17
- a=IkcTkHD0fZMA:10 a=yMhMjlubAAAA:8 a=JlIclTKqokGVGb9i5vwA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 7/7] t/helper/simple-ipc: convert test-simple-ipc to
- use start_bg_command
-To:     Adam Dinwoodie <adam@dinwoodie.org>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
- <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
- <20211104194619.GA12886@dinwoodie.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <079bdbee-e1fe-83e0-f986-c5795ca20848@ramsayjones.plus.com>
-Date:   Thu, 4 Nov 2021 20:14:07 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S231916AbhKDVIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 17:08:44 -0400
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:46465 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S230162AbhKDVIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 17:08:43 -0400
+Received: from [192.168.9.206] (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A4L5tgG027642
+        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NOT);
+        Thu, 4 Nov 2021 17:05:57 -0400
+Message-ID: <9dfca5ec-4426-d3d4-988e-b81ebb087584@mit.edu>
+Date:   Thu, 4 Nov 2021 14:05:54 -0700
 MIME-Version: 1.0
-In-Reply-To: <20211104194619.GA12886@dinwoodie.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Andreas Heiduk <andreas.heiduk@mathema.de>
+From:   Anders Kaseorg <andersk@mit.edu>
+Subject: [PATCH] fetch: Protect branches checked out in all worktrees
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfDgcgVc2/tobDa9ylo9/Su+9XcWtQEcI26dPH8vgBiQrV14SnGdBE8UzrFnq6REuFc4bVKyCnBdI5keUkw9gBXGTBDFGvKy/2os5qc0+SeY9D8f4/2nX
- yehm43E1JycwVoaV8EIaH/yl4En4qEj61f/CWUiik6eLYSvZEF1aMiTvlOi2q31US0gRq351SUhAVcX1Md/zcWwQ3ASFwGNGlSQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adam,
+Refuse to fetch into the currently checked out branch of any working
 
-On 04/11/2021 19:46, Adam Dinwoodie wrote:
-> On Monday 20 September 2021 at 03:36 pm +0000, Jeff Hostetler via GitGitGadget wrote:
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Convert test helper to use `start_bg_command()` when spawning a server
->> daemon in the background rather than blocks of platform-specific code.
->>
->> Also, while here, remove _() translation around error messages since
->> this is a test helper and not Git code.
-> 
-> As part of testing the v2.34.0-rc0 release candidate on Cygwin, I've
-> found this commit -- 05881a6fc9 (t/helper/simple-ipc: convert
-> test-simple-ipc to use start_bg_command, 2021-09-20), according to my
-> bisecting -- is causing t0052.1 to fail on 32-bit Cygwin.  Somehow this
-> is only affecting the 32-bit Cygwin build; the 64-bit build is working
-> as expected.
+tree, not just the current one.
 
-Hmmm, I am seeing exactly the same, but on 64-bit cygwin!
 
-I haven't found time to look at this in detail yet (except for
-what you have already done). Unfortunately, about an hour ago,
-I did a 'make test' for the '-rc1' build, so I won't be able to
-take a look for hours yet, ... :(
 
-ATB,
-Ramsay Jones
+Fixes this previously reported bug:
+
+
+
+https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema.de
+
+
+
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+
+---
+
+ builtin/fetch.c       | 22 +++++++++-------------
+
+ t/t5516-fetch-push.sh | 10 ++++++++++
+
+ 2 files changed, 19 insertions(+), 13 deletions(-)
+
+
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+
+index f7abbc31ff..a6549c2ab6 100644
+
+--- a/builtin/fetch.c
+
++++ b/builtin/fetch.c
+
+@@ -28,6 +28,7 @@
+
+ #include "promisor-remote.h"
+
+ #include "commit-graph.h"
+
+ #include "shallow.h"
+
++#include "worktree.h"
+
+ 
+
+ #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+
+ 
+
+@@ -854,7 +855,6 @@ static int update_local_ref(struct ref *ref,
+
+ 			    int summary_width)
+
+ {
+
+ 	struct commit *current = NULL, *updated;
+
+-	struct branch *current_branch = branch_get(NULL);
+
+ 	const char *pretty_ref = prettify_refname(ref->name);
+
+ 	int fast_forward = 0;
+
+ 
+
+@@ -868,9 +868,8 @@ static int update_local_ref(struct ref *ref,
+
+ 		return 0;
+
+ 	}
+
+ 
+
+-	if (current_branch &&
+
+-	    !strcmp(ref->name, current_branch->name) &&
+
+-	    !(update_head_ok || is_bare_repository()) &&
+
++	if (!update_head_ok &&
+
++	    find_shared_symref("HEAD", ref->name) &&
+
+ 	    !is_null_oid(&ref->old_oid)) {
+
+ 		/*
+
+ 		 * If this is the head, and it's not okay to update
+
+@@ -1387,16 +1386,13 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
+
+ 
+
+ static void check_not_current_branch(struct ref *ref_map)
+
+ {
+
+-	struct branch *current_branch = branch_get(NULL);
+
+-
+
+-	if (is_bare_repository() || !current_branch)
+
+-		return;
+
+-
+
++	const struct worktree *wt;
+
+ 	for (; ref_map; ref_map = ref_map->next)
+
+-		if (ref_map->peer_ref && !strcmp(current_branch->refname,
+
+-					ref_map->peer_ref->name))
+
+-			die(_("Refusing to fetch into current branch %s "
+
+-			    "of non-bare repository"), current_branch->refname);
+
++		if (ref_map->peer_ref &&
+
++		    (wt = find_shared_symref("HEAD", ref_map->peer_ref->name)))
+
++			die(_("Refusing to fetch into branch '%s' "
+
++			      "checked out at '%s'"),
+
++			    ref_map->peer_ref->name, wt->path);
+
+ }
+
+ 
+
+ static int truncate_fetch_head(void)
+
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+
+index 8212ca56dc..c8cb62c05d 100755
+
+--- a/t/t5516-fetch-push.sh
+
++++ b/t/t5516-fetch-push.sh
+
+@@ -1771,4 +1771,14 @@ test_expect_success 'denyCurrentBranch and worktrees' '
+
+ 	git -C cloned push origin HEAD:new-wt &&
+
+ 	test_must_fail git -C cloned push --delete origin new-wt
+
+ '
+
++
+
++test_expect_success 'refuse fetch to current branch of worktree' '
+
++	test_commit -C cloned second &&
+
++	test_must_fail git fetch cloned HEAD:new-wt &&
+
++	git clone --bare . bare.git &&
+
++	git -C bare.git worktree add bare-wt &&
+
++	test_must_fail git -C bare.git fetch ../cloned HEAD:bare-wt &&
+
++	git fetch -u cloned HEAD:new-wt &&
+
++	git -C bare.git fetch -u ../cloned HEAD:bare-wt
+
++'
+
+ test_done
+
+-- 
+
+2.33.0
+
