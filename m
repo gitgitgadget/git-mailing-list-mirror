@@ -2,110 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66503C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A414C433EF
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:30:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BFDE61262
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:17:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 513FE61266
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232512AbhKEHUN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 03:20:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53696 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232129AbhKEHUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 03:20:09 -0400
-Received: (qmail 10756 invoked by uid 109); 5 Nov 2021 07:17:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Nov 2021 07:17:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15211 invoked by uid 111); 5 Nov 2021 07:17:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Nov 2021 03:17:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 5 Nov 2021 03:17:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] refs: sync loose refs to disk before committing them
-Message-ID: <YYTaiIlEKxHRVdCy@coredump.intra.peff.net>
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
- <YYTYJpyrxtyR8yYZ@coredump.intra.peff.net>
+        id S231628AbhKEHdI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 03:33:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56245 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229529AbhKEHdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 03:33:04 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4676F2517;
+        Fri,  5 Nov 2021 03:30:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=5SFohYKDfyhpTWhp4yDIAC22Tv6SLIDs9UwvU9vxh+o=; b=h90n
+        Yzf529lXC9gFYaBeYZVQj21m4WMmF1mu6FpCPloeCNOo6O/qrOTz23Yu9BE+L2fK
+        Zdk0SfCgi1XZl4qaQTLNUbvnPPj38fxJJsiLbxQFd0xh+TMHy7agbvlPrvy7zXz0
+        pJTwdKY6dvydAVJw3tyTCBIw8ELBiDUH9DAmHCQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99946F2516;
+        Fri,  5 Nov 2021 03:30:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C254F2514;
+        Fri,  5 Nov 2021 03:30:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
+Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
+References: <20211104192533.2520-1-adam@dinwoodie.org>
+        <xmqq7ddn3dlt.fsf@gitster.g> <xmqqzgqj1yff.fsf@gitster.g>
+        <20211104223633.5j556ggfga43myz5@fs>
+Date:   Fri, 05 Nov 2021 00:30:22 -0700
+Message-ID: <xmqqtugrxdo1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YYTYJpyrxtyR8yYZ@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D4C79F8-3E0A-11EC-834F-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 05, 2021 at 03:07:18AM -0400, Jeff King wrote:
+Fabian Stelzer <fs@gigacodes.de> writes:
 
->   2. It's not clear what the performance implications will be,
->      especially on a busy server doing a lot of ref updates, or on a
->      filesystem where fsync() ends up syncing everything, not just the
->      one file (my impression is ext3 is such a system, but not ext4).
->      Whereas another solution may be journaling data and metadata writes
->      in order without worrying about the durability of writing them to
->      disk.
-> 
->      I suspect for small updates (say, a push of one or two refs), this
->      will have little impact. We'd generally fsync the incoming packfile
->      and its idx anyway, so we're adding may one or two fsyncs on top of
->      that. But if you're pushing 100 refs, that will be 100 sequential
->      fsyncs, which may add up to quite a bit of latency. It would be
->      nice if we could batch these by somehow (e.g., by opening up all of
->      the lockfiles, writing and fsyncing them, and then renaming one by
->      one).
+> The problem is that the ssh-keygen in the layz_prereq will succeed but
+> might create a private key with world readable permissions. Only the
+> remaining tests using this key will then fail with a "your private key
+> permissions are too restrictive" like error. If we would like to make
+> sure in the prereq that the keys actually work fine we would need to do
+> a signing operation with them in it.
 
-So here's a quick experiment that shows a worst case: a small push that
-updates a bunch of refs. After building Git with and without your patch,
-I set up a small repo like:
+That sounds like a right thing to do, with or without the setfacl fix.
 
-  git init
-  git commit --allow-empty -m foo
-  for i in $(seq 100); do
-    git update-ref refs/heads/$i HEAD
-  done
+>
+> Something like the following call would be enough:
+> echo "test" | ssh-keygen -Y sign -f $GPGSSHKEY_PRIMARY -n "git" 
+> Not sure if we want to go that far though. The setfacl seems fine to me
+> otherwise.
 
-To give a clean slate between runs, I stuck this in a script called
-"setup":
-
-  #!/bin/sh
-  rm -rf dst.git
-  git init --bare dst.git
-  sync
-
-And then ran:
-
-  $ hyperfine -L v orig,fsync -p ./setup '/tmp/{v}/bin/git push dst.git refs/heads/*'
-  Benchmark 1: /tmp/orig/bin/git push dst.git refs/heads/*
-    Time (mean ± σ):       9.9 ms ±   0.2 ms    [User: 6.3 ms, System: 4.7 ms]
-    Range (min … max):     9.5 ms …  10.5 ms    111 runs
-   
-  Benchmark 2: /tmp/fsync/bin/git push dst.git refs/heads/*
-    Time (mean ± σ):     401.0 ms ±   7.7 ms    [User: 9.4 ms, System: 15.2 ms]
-    Range (min … max):   389.4 ms … 412.4 ms    10 runs
-   
-  Summary
-    '/tmp/orig/bin/git push dst.git refs/heads/*' ran
-     40.68 ± 1.16 times faster than '/tmp/fsync/bin/git push dst.git refs/heads/*'
-
-So it really does produce a noticeable impact (this is on a system with
-a decent SSD and no other disk load, so I'd expect it to be about
-average for modern hardware).
-
-Now this test isn't entirely fair. 100 refs is a larger than average
-number to be pushing, and the effect is out-sized because there's
-virtually no time spent dealing with the objects themselves, nor is
-there any network latency. But 400ms feels like a non-trivial amount of
-time just in absolute numbers.
-
-The numbers scale pretty linearly, as you'd expect. Pushing 10 refs
-takes ~40ms, 100 takes ~400ms, and 1000 takes ~4s. The non-fsyncing
-version gets slower, too (there's more work to do), but much more slowly
-(6ms, 10ms, and 50ms respectively).
-
-So this will definitely hurt at edge / pathological cases.
-
--Peff
