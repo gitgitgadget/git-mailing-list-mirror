@@ -2,79 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFC51C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 21:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB40DC433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 21:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C32F611C1
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 21:00:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDFCF60FBF
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 21:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233869AbhKEVDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 17:03:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230064AbhKEVDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 17:03:24 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96145C061570
-        for <git@vger.kernel.org>; Fri,  5 Nov 2021 14:00:44 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id e64so5238217vke.4
-        for <git@vger.kernel.org>; Fri, 05 Nov 2021 14:00:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uPDO4e8wmGHTgoLbBRh7FWAREjYuFmuzhtXdSt2EG0I=;
-        b=ehEn48frCddhqUsKXWOYQ6GncrPWYiPtEjSnRWfybc0lPT2SYv4d3b781zXEQh6yLP
-         c/40vgqL032n5XdF8XRUA3wg9/FXOFSK9nkE0EPkHBq4nKhIiGVAZj0bXeKnOjVcEEdQ
-         i/DM9TP8CFtVFy3JYi9ejBwZ+lu/ZJLTksWjF8RKnx/sM12X61RuswT8n9emktJ22HSY
-         42vDDSSAjMIFZiGM7CtKPIBBe0+euTR1knfAIOgTg8CbMquwugZAaxNSC3TneXclDnd/
-         XY7w6uqubvVYDOXg8hepn9LZZGJ8EihkiFEpQ0Zsw7i1rZ+OoE15Mytb1fHEs0P22Qwo
-         xiYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uPDO4e8wmGHTgoLbBRh7FWAREjYuFmuzhtXdSt2EG0I=;
-        b=NSpDyv7Sciwhn9YCJS/IYW6ns4zwoYykej3fHR6t1PSCub468nzgmNfVCoHeb2/YO9
-         H2qV3zP/BDlEvHoFG1GOmZ7EK2H5dCtJPoHSFv5aW3zK3MwsvGq161aYl51upBRtpETn
-         h0y3eiG1CRqbgr/gbVT4UlU99ZCnaCEwi6R19doiBETyXL0WrA2rlFlY8k74TmjP88JG
-         GAlk/z+Uoa2pYsXpXgMs2nd2LdpJqDJN/XdXSSiog00RBGpxMK5CRz/2kVn4QfhnfZLx
-         E9C0AbSAoMfRPibbVIOxuOofI9juMhl8Wycp0C0TdNsOUmIAZoBx4iUWi46InU/QhUpK
-         HX1Q==
-X-Gm-Message-State: AOAM531hKbeaQNlA3LH6e3lpF3hnWw92An3/aIalCCxrniKOeBw7hUNw
-        VXCs7jYD4slSuAUeQghJz/aHGh/Q22ho8hx63zI=
-X-Google-Smtp-Source: ABdhPJz43cpJ8r/bcJuPdgGosE8g9rZdX78aIr14tnucPoCcFqhp4l3pJudSwZX6oObiKWjxvjQqdviMslYjRBMMGXc=
-X-Received: by 2002:a05:6122:2201:: with SMTP id bb1mr73686265vkb.19.1636146043637;
- Fri, 05 Nov 2021 14:00:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211104192533.2520-1-adam@dinwoodie.org> <xmqq7ddn3dlt.fsf@gitster.g>
- <20211105112525.GA25887@dinwoodie.org> <YYUeKt0xQm/6QT+w@coredump.intra.peff.net>
- <xmqqk0hmxyw0.fsf@gitster.g> <CA+kUOa=vqFNXe2QKc8K31OLL0zkEsK7wAk6hPMxjQJNVM7PsGQ@mail.gmail.com>
- <xmqqv916wh7t.fsf@gitster.g> <CA+kUOamwQmK6te66sE+EVLPhwmBFZ+CXC9p=HJ4y0KC0wnkNsQ@mail.gmail.com>
-In-Reply-To: <CA+kUOamwQmK6te66sE+EVLPhwmBFZ+CXC9p=HJ4y0KC0wnkNsQ@mail.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 5 Nov 2021 14:00:32 -0700
-Message-ID: <CAPUEsphasEqT=qfHgO1o4LpzFSWcdhmtTk3o+hYaGNTs35EQKw@mail.gmail.com>
-Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
+        id S233648AbhKEVGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 17:06:33 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60066 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230064AbhKEVGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 17:06:32 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46132153B70;
+        Fri,  5 Nov 2021 17:03:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ShWDtRryCOZpISenNr27Qc0iY7uMsd04j7Zcn+
+        YZ8+Q=; b=mQTPIjJmxMB8zu1oPoPzwybqJ5yGhrybaO3Ravq41jjBhqMVnw6Kwc
+        cIJ1qQBWJ6lLT+7LIIgiolPZbOGeRwzZgS0CSJ4f7RcC5ody/5ScqRZHh1dxH/1G
+        iy9Q4TM9HGDMwXi0rS2NrwqO0VbKS6tbuIQ7Dn/o2PPhyDsMR5pHo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FA2A153B6F;
+        Fri,  5 Nov 2021 17:03:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E3769153B6E;
+        Fri,  5 Nov 2021 17:03:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
+Subject: Re: [PATCH v2] t/lib-git.sh: fix ACL-related permissions failure
+References: <20211104192533.2520-1-adam@dinwoodie.org>
+        <20211105193106.3195-1-adam@dinwoodie.org>
+Date:   Fri, 05 Nov 2021 14:03:47 -0700
+In-Reply-To: <20211105193106.3195-1-adam@dinwoodie.org> (Adam Dinwoodie's
+        message of "Fri, 5 Nov 2021 19:31:06 +0000")
+Message-ID: <xmqqk0hmwc0c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF45F506-3E7B-11EC-AB8E-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 5, 2021 at 1:16 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+Adam Dinwoodie <adam@dinwoodie.org> writes:
 
-> If OpenSSH were not installed on my system, Git would be compiled
-> without this function and the tests would be skipped.
+> As well as checking that the relevant functionality is available, the
+> GPGSSH prerequisite check creates the SSH keys that are used by the test
+> functions it gates.  If these keys are created in a directory that
+> has a default Access Control List, the key files can inherit those
+> permissions.
+>
+> This can result in a scenario where the private keys are created
+> successfully, so the prerequisite check passes and the tests are run,
+> but the key files have permissions that are too permissive, meaning
+> OpenSSH will refuse to load them and the tests will fail.
 
-that is correct for the http dependency (because it is a library that
-gets linked in), but not for the OpenSSH dependency, which is just
-invoking the binary at runtime.
+That may indicate that "private keys are created successfully" is a
+bit too optimistic.  A key that did not exist but now exists indeed
+was created, but if it cannot be used in tests, calling it
+"successfully created" is a bit too charitable, I would say.
 
-Regardless of what you have in your build environment the code will be
-compiled in (and tested or not), and will fail instead at runtime if
-OpenSSH is not installed.
+    ... where the private keys appear to have been created
+    successfully, but at the runtime OpenSSH will refuse to load
+    these keys due to permissions that are too loose.  In other
+    words, the keys created here are not usable. Yet the lazy_prereq
+    is set, pretending all is well, and makes the real tests fail.
 
-Carlo
+And when described that way, we'd realize that "setfacl -k" solution
+may be closing one known way that a key, that seemingly was created
+successfully, can be unusable in real tests, but it is not
+addressing the root cause of the breakage you observed---the
+lazy_prereq is not set based on what really matters, i.e. is the key
+usable to sign and verify?
+
+> To avoid this happening, before creating the keys, clear any default ACL
+
+"happening" -> "from happening"
+
+> set on the directory that will contain them.  This step allowed to fail;
+
+"allowed" -> "is allowed".
+
+> if setfacl isn't present, that's a very likely indicator that the
+> filesystem in question simply doesn't support default ACLs.
+
+True.  Or setfacl command fails to futz with the ACL for whatever
+reason, in which case you may still have the "we 'successfully'
+created a key, but it turns out that it was unusable in real tests"
+problem.  As long as the lazy_prereq is not set to pretend that all
+is well, we won't see test breakage noise that distracts those who
+are watching for breakage due to "git".  And that is why we want to
+add "is the key really usable" check before the lazy_prereq declares
+a success.
+
+> Helped-by: Fabian Stelzer <fs@gigacodes.de>
+> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+> ---
+>  t/lib-gpg.sh | 1 +
+>  1 file changed, 1 insertion(+)
+
+Other than that, the above explanation reads well.
+
+Thanks.
+
+>
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index f99ef3e859..1d8e5b5b7e 100644
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -106,6 +106,7 @@ test_lazy_prereq GPGSSH '
+>  	test $? = 0 || exit 1;
+>  	mkdir -p "${GNUPGHOME}" &&
+>  	chmod 0700 "${GNUPGHOME}" &&
+> +	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
+>  	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
+>  	echo "\"principal with number 1\" $(cat "${GPGSSH_KEY_PRIMARY}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
