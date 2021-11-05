@@ -2,83 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3F20C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51225C433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 18:04:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D453461244
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:57:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26E6461053
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 18:04:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233278AbhKEPAU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 11:00:20 -0400
-Received: from kitenet.net ([66.228.36.95]:50518 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229680AbhKEPAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 11:00:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1636124246; bh=vOH/vLu1sn3OGk/8q6bNwSGlVrCo6oSzVTW28DDzvb4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ks6+u5flK7WI5rWBOWxZMQ7jYgPeJCMwwgTrv1LbJ7hEKjBd8tTHVKgM2ENw92rNx
-         D2r1TYpX7MAOsPESl8WVr/3COhVOIkIYaY02EdAVlDt1kAND4Mztk00i4bR/YM1dMD
-         pnZrmGpE4csqeQHMNDZ5HGoW5oxXz+g5/dqEHv/U=
-X-Question: 42
-Date:   Fri, 5 Nov 2021 10:57:26 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: surprising value of LARGE_PACKET_MAX
-Message-ID: <YYVGVoaJBzMDfyqi@kitenet.net>
-References: <YYQtjWSb+z4taphX@kitenet.net>
- <CAHd-oW6q67u=XGCGK=n25Kjph+ceuqPHLxQ0LH=Vydn4xctZ-A@mail.gmail.com>
+        id S234525AbhKESHB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 14:07:01 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50351 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233657AbhKESHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 14:07:00 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35CD114F653;
+        Fri,  5 Nov 2021 14:04:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=08iIY8LzT69/RSH4Ftm+pFFlWRPRtiQS0rDbN/
+        gOQMI=; b=iTomk1L9yzhI/IsuGbN+GobfGQHpcvh3yAeHyxTITzPU7sKaARu66V
+        WOjyL9i7EnsHnDlnoXb3ARNrpIcRDBoofHzfvjT0ZogmjcwY+aC/sCBFHvTdmDA3
+        1cr+sgn39OoWQ0cLDFHiA1ldIlauJU8wrXMbhz9QsWwnzUcWXhWr4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2DA7414F650;
+        Fri,  5 Nov 2021 14:04:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D8DFC14F64F;
+        Fri,  5 Nov 2021 14:04:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org,
+        Fabian Stelzer <fs@gigacodes.de>
+Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
+References: <20211104192533.2520-1-adam@dinwoodie.org>
+        <xmqq7ddn3dlt.fsf@gitster.g> <20211105112525.GA25887@dinwoodie.org>
+        <YYUeKt0xQm/6QT+w@coredump.intra.peff.net>
+Date:   Fri, 05 Nov 2021 11:04:15 -0700
+In-Reply-To: <YYUeKt0xQm/6QT+w@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 5 Nov 2021 08:06:02 -0400")
+Message-ID: <xmqqk0hmxyw0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="N1xWPjUN6RwJ6eI/"
-Content-Disposition: inline
-In-Reply-To: <CAHd-oW6q67u=XGCGK=n25Kjph+ceuqPHLxQ0LH=Vydn4xctZ-A@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAA2E348-3E62-11EC-B730-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---N1xWPjUN6RwJ6eI/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Fri, Nov 05, 2021 at 11:25:25AM +0000, Adam Dinwoodie wrote:
+>
+>> > ... I am not quite sure how this explains "tests relating to ssh
+>> > signing failing on Cygwin".  After all, this piece of code is
+>> > lazy_prereq, which means that ssh-keygen in this block that fails
+>> > (due to a less restrictive permissions) would merely mean that tests
+>> > that are protected with GPGSSH prerequisite will be skipped without
+>> > causing test failures.  After all that is the whole point of
+>> > computing prereq on the fly.
+>> 
+>> The issue is that the prerequisite check isn't _just_ checking a
+>> prerequisite: it's also creating an SSH key that's used without further
+>> modification by the tests.
+>
+> This is sort of a side note to your main issue, but I think that relying
+> on a lazy_prereq for side effects is an anti-pattern. We make no
+> promises about when or how often the prereqs might be run, and we try to
+> insulate them from the main tests (by putting them in a subshell and
+> switching their cwd).
+>
+> It does happen to work here because the prereq script writes directly to
+> $GNUPGHOME, and we run the lazy prereqs about when you'd expect. So I
+> don't think it's really in any danger of breaking, but it is definitely
+> not using the feature as it was intended. :)
 
-Matheus Tavares wrote:
-> Could it be that you consulted an older version of this file? The
-> current [1] version of the doc says:
->=20
-> "The maximum length of a pkt-line's data component is 65516 bytes.
-> Implementations MUST NOT send pkt-line whose length exceeds 65520
-> (65516 bytes of payload + 4 bytes of length data)."
+This merely imitates what GPG lazy-prerequisite started and imitated
+by other existing signature backends.
 
-I'm sure I did read the current version, so I think I must have glanced
-at 65516 and seen 65535. I don't see FFFF in decimal very often.
+I'd expect that you need some "initialization" for a feature X as
+part of asking "is feature X usable in this environment?".  Reusing
+the result of the initialization for true tests is probably an
+optimization worth making.  As long as the question is answered for
+the true tests, that is [*].
 
-I think FFF0 would have stood out better to me, but still the current
-docs are ok.
+    side note: so being able to create a key alone, without
+    verifying the resulting key is usable, is a no-no.  That is why
+    I said it is a good idea to check if the resulting key is usable
+    inside the lazy-prereq.
 
---=20
-see shy jo
+> Again, that's mostly a tangent to your issue, and maybe not worth
+> futzing with at this point in the release cycle. I'm mostly just
+> registering my surprise. ;)
 
---N1xWPjUN6RwJ6eI/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAmGFRlYACgkQ2xLbD/Bf
-jzjClA/+IdRy0tKkzZDxYlGAqEVhOBSbCBpx/NfvFgq9X8c6GWJ6+DB++Ah56Uyt
-6sCuH0U8OyiTYPtj7ljWYKvWHHF57gO0I739zshcX5bDXLF+0eNbDhj6QU7fn6yA
-XUTqnEawTBxzDx0H9ry54O6ipthHYlw5AYj7G4UszOVBxt8auoqc2+Vg+lyEhKnj
-FNomPS/pdk239Z7oJm9HIozPs3rnXQW7r9ELdapAdIMnAZiOLn25aHPg1lcRGqnZ
-17NbphLblU8RHgKLFUw8nBaNT+XGvvVtZAXe37NKsWUfhRr4i7wIqQ5aUXclDKAl
-O5IBHm86Xtygc1Axeg5eZQr6133t/eWRsXbhd9q4lyC+rxlxCdpCQeH8cn3sS67n
-DXJ/UW2BjVSkSY941Q0tRSmiyIHjFhBfoLftzn6uAgvVMrWiuVWPsKT3vvslw9jf
-J8/8DxFzFnZcgXIZ+rKaQZ7mhaAqjGuzwz7WA2Lpj4HhvADnKP22Zr+oNSOL9HkT
-YbkFnHM9izBHTsJP6W/6Llon4QvEy3T+aywbgZ5tdyQPzZx8v9EqhqCTkb8BNdft
-h+aCMkrWa8SdwWWYjUwjx8t54kYbbgEfKXEHMfnpZGoZCof0k7hIwtQeiIAfNu5k
-5T6X673uMKkNJ3KBvyzAS8GlV8SuXpwIqit7DMi3VSCzBDGv1m8=
-=ouna
------END PGP SIGNATURE-----
-
---N1xWPjUN6RwJ6eI/--
+My purist side is with you and share the surprise.  But my practical
+side says this is probably an optimization worth taking.  If prereq
+only checks "if we initialize the keys right way, we can use ssh
+signing" and then removes the key and the equivalent to .ssh/
+directory, and a real test does "Ok, prereq passes so we know ssh
+signing is to be tested.  Now initialize the .ssh/ equivalent and
+create key", a fix like Adam came up with must be duplicated in two
+(or more) places, one for the prereq that initializes the keys
+"right way", and one for each test script that prepares the key used
+for it.
