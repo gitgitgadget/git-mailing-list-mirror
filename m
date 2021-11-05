@@ -2,109 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87802C433F5
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 19:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52A30C433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 19:31:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 637F261216
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 19:25:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2818B60EDF
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 19:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233329AbhKET2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 15:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38260 "EHLO
+        id S232476AbhKETeX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 15:34:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230318AbhKET2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 15:28:09 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0555C061714
-        for <git@vger.kernel.org>; Fri,  5 Nov 2021 12:25:29 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id e136so22044195ybc.4
-        for <git@vger.kernel.org>; Fri, 05 Nov 2021 12:25:29 -0700 (PDT)
+        with ESMTP id S231806AbhKETeW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 15:34:22 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75A4C061714
+        for <git@vger.kernel.org>; Fri,  5 Nov 2021 12:31:42 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so7164694wme.4
+        for <git@vger.kernel.org>; Fri, 05 Nov 2021 12:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=INLvjVLd5BVEq5l3kDUHNcPkQG4AgB9EZAlTMoNo/vY=;
-        b=G8cKzhHb4Q7GzKh5fDx5B5uckmtKR3bxQQKmgz0RAKGTY5FQ7xAh6X0YC+gKKm3KSZ
-         TfLnJkf1md7WW3LyzhPPWmC9Y6HhCDAeCyJelRxzh8QB2TDrMQoOUUIuLauBT6Pfyvum
-         7dO4LlmgjwtqPdWvNm8zMF14Thoqw+747lxnQ=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jjHORktoZHUgjZHDi/JXRZE6f1chDtYhTLjY0wfuiYs=;
+        b=pmgnLlYAoUNIUFlGLbr0v9qo/nA4NpIPC8P4YkA+FEB/2EkexgKZxvaPsQjr2LBOPp
+         euhAJ1NCgjDU4VACLMWnsafnaLQfTf43N2SauIHH8yRxq7P+SKvnuHuJSpOicxmA+ioS
+         qnuEpCOc83/JfKROXPrBxieM/TH6emuAzW6sA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=INLvjVLd5BVEq5l3kDUHNcPkQG4AgB9EZAlTMoNo/vY=;
-        b=D9f2oWpuKYTXwJRS11JpfVYSPiwjC5JDOz6k1UIcMprNgJmeR1kZxkXtdUcwuGrSaX
-         hEkStQ9rT5i9RD6lPz/TaarW2dJJ3VjjTomxsEPXq+QySqdD08ugG4lLuXoS2JbkC2bm
-         LbN1qeX8XA+IlHrpqCENncP7sw9YiSBgQKvtcFC1LJHnBDjGFfxo0v168kqFvQtbJtn+
-         T8KhpHrT8/bCDDsiqvBi+PtlI10vZANhOqlgCVf+9osqJJw3BmfI+vDtj7EuBZ+15IB3
-         GjQ2G7FMgzlKpW9oj8F0nT+6AKfPe3t2WKboHzGd+vFZ1U+r87rD+T1ZdbCWNxfdxERu
-         3Exw==
-X-Gm-Message-State: AOAM532mcJ3xggBgvJzakOuoh3WOwTImbnGtOCgMnRrhlMeQz1uRWkQA
-        3FtvsBLMnhevJYSpyzpEkqvb8SsG+YdDnYfYQDS6F8sXWvo=
-X-Google-Smtp-Source: ABdhPJwPpznDw+fHc2RWf6mPqrZqrHO+Qy5yABPwq26wTJYVTPrMePwquL9wa1O9sf6+LcYYbBNGODT4vrlf1u+gzWA=
-X-Received: by 2002:a25:b294:: with SMTP id k20mr63265715ybj.232.1636140327456;
- Fri, 05 Nov 2021 12:25:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211104192533.2520-1-adam@dinwoodie.org> <xmqq7ddn3dlt.fsf@gitster.g>
- <20211105112525.GA25887@dinwoodie.org> <YYUeKt0xQm/6QT+w@coredump.intra.peff.net>
- <xmqqk0hmxyw0.fsf@gitster.g> <CA+kUOa=vqFNXe2QKc8K31OLL0zkEsK7wAk6hPMxjQJNVM7PsGQ@mail.gmail.com>
- <xmqqv916wh7t.fsf@gitster.g>
-In-Reply-To: <xmqqv916wh7t.fsf@gitster.g>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jjHORktoZHUgjZHDi/JXRZE6f1chDtYhTLjY0wfuiYs=;
+        b=jFWGS6QzKDohJFQ+8b0V5iON5BWCMaHSZ9D6YYEXI5fIy2ebQMhW6DVcTTCUiSF+ol
+         /81AzzU8fB1ASlmsGh7Voq8AX5jkRqdQEbAUgoqJZCaTggjbI1weuSJq79Wy+bXS+l+B
+         x5zDezhvpfQO/4Kn+hzWspH+mGepnlD+sOWVf580MXC/GSTtfUPAIp7QCDra9nwnX10E
+         +Z3YsAMZbSCub0UdqvofIGow2K1wfny/Y/jVZ1qHTkPuo6wEkKi/OnsIYJvGJKUM8m1h
+         LyRJE85aWU0itbCuP0V1LqHgDbc8BwZ+IQvnGD+gBC6nfebgVH/CYijSlIM9u5jn26fl
+         qbEA==
+X-Gm-Message-State: AOAM530PoQS/pnpNq1auWQ10zw7/28kqPkrveyVDJCqJkDd3t8luZCMU
+        r0Fdb4oo6YunST3LCOXfcWqcZ0rT/0puRg==
+X-Google-Smtp-Source: ABdhPJxEUwa5mhL6GumCsZhNgpIe0XdQCm1mFcQQ4rSkw51ISqFU2IIBofr86jmy7pRRR1LvQwseYw==
+X-Received: by 2002:a05:600c:4f8a:: with SMTP id n10mr22055371wmq.54.1636140701383;
+        Fri, 05 Nov 2021 12:31:41 -0700 (PDT)
+Received: from localhost.localdomain ([2a00:23c6:c68a:1a01:a526:ad51:24cb:f2cf])
+        by smtp.gmail.com with ESMTPSA id l4sm8372468wrv.94.2021.11.05.12.31.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Nov 2021 12:31:40 -0700 (PDT)
 From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Fri, 5 Nov 2021 19:24:53 +0000
-Message-ID: <CA+kUOamwQmK6te66sE+EVLPhwmBFZ+CXC9p=HJ4y0KC0wnkNsQ@mail.gmail.com>
-Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Fabian Stelzer <fs@gigacodes.de>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH v2] t/lib-git.sh: fix ACL-related permissions failure
+Date:   Fri,  5 Nov 2021 19:31:06 +0000
+Message-Id: <20211105193106.3195-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20211104192533.2520-1-adam@dinwoodie.org>
+References: <20211104192533.2520-1-adam@dinwoodie.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 5 Nov 2021 at 19:11, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
->
-> > This is probably a much broader conversation. I remember when I first
-> > started packaging Git for Cygwin, I produced a release that didn't
-> > have support for HTTPS URLs due to a missing dependency in my build
-> > environment. The build and test suite all passed -- it assumed I just
-> > wanted to build a release that didn't have HTTPS support -- so some
-> > relatively critical function was silently skipped. I don't know how to
-> > avoid that sort of issue other than relying on (a) user bug (or at
-> > least missing function) reports and (b) folk building Git for
-> > themselves/others periodically going through the output of the
-> > configure scripts and the skipped subtests to make sure only expected
-> > things get missed; neither of those options seem great to me.
->
-> I agree with you that there needs a good way to enumerate what the
-> unsatisfied prerequisites for a particular build are.  That would
-> have helped in your HTTPS situation.
->
-> But that is a separate issue how we should determine a lazy
-> prerequisite for any feature is satisified.
->
-> "We have this feature that our code utilizes. If it is not working
-> correctly, then we can expect our code that depends on it would not
-> work, and it is no use testing" is what the test prerequisite system
-> tries to achieve.  That is quite different from "the frotz feature
-> could work here as we see a binary /usr/bin/frotz installed, so
-> let's go test our code that depends on it---we'll find out if the
-> installed frotz is not what we expect, or way too old to help our
-> code, as the test will break and let us notice."
+As well as checking that the relevant functionality is available, the
+GPGSSH prerequisite check creates the SSH keys that are used by the test
+functions it gates.  If these keys are created in a directory that
+has a default Access Control List, the key files can inherit those
+permissions.
 
-I can see how they're separate problems, but they seem related to me.
-If OpenSSH were not installed on my system, Git would be compiled
-without this function and the tests would be skipped. If OpenSSH is
-installed but the prerequisite check fails, Git will be compiled with
-the function, but the tests will be skipped. In the first case,
-function some users might depend on will be missing; in the second,
-the function will be nominally present but we won't be sure it's
-actually working as expected. Both issues would be avoided if the
-tests were always run, because suddenly both sorts of silent failure
-become noisy.
+This can result in a scenario where the private keys are created
+successfully, so the prerequisite check passes and the tests are run,
+but the key files have permissions that are too permissive, meaning
+OpenSSH will refuse to load them and the tests will fail.
 
-I'm not actually advocating that -- running all tests all the time
-would clearly cause far more problems than it would solve! -- but
-that's why I'm seeing these as two sides of the same coin, and
-problems that might have a single shared solution.
+To avoid this happening, before creating the keys, clear any default ACL
+set on the directory that will contain them.  This step allowed to fail;
+if setfacl isn't present, that's a very likely indicator that the
+filesystem in question simply doesn't support default ACLs.
+
+Helped-by: Fabian Stelzer <fs@gigacodes.de>
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ t/lib-gpg.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index f99ef3e859..1d8e5b5b7e 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -106,6 +106,7 @@ test_lazy_prereq GPGSSH '
+ 	test $? = 0 || exit 1;
+ 	mkdir -p "${GNUPGHOME}" &&
+ 	chmod 0700 "${GNUPGHOME}" &&
++	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
+ 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
+ 	echo "\"principal with number 1\" $(cat "${GPGSSH_KEY_PRIMARY}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
+ 	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
+-- 
+2.33.0
+
