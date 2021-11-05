@@ -2,138 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 649C2C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C9BFC433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:39:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43E776125F
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:38:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 750C561263
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232659AbhKEIky (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 04:40:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53714 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229473AbhKEIkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 04:40:53 -0400
-Received: (qmail 11169 invoked by uid 109); 5 Nov 2021 08:38:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Nov 2021 08:38:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15703 invoked by uid 111); 5 Nov 2021 08:38:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Nov 2021 04:38:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 5 Nov 2021 04:38:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Anders Kaseorg <andersk@mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Andreas Heiduk <andreas.heiduk@mathema.de>
-Subject: Re: [PATCH v2] fetch: Protect branches checked out in all worktrees
-Message-ID: <YYTtdZblnHYgDgBq@coredump.intra.peff.net>
-References: <9dfca5ec-4426-d3d4-988e-b81ebb087584@mit.edu>
- <alpine.DEB.2.21.999.2111041709080.94135@tardis-on-the-dome.mit.edu>
+        id S232685AbhKEImN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 04:42:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229473AbhKEImM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 04:42:12 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0075C061714
+        for <git@vger.kernel.org>; Fri,  5 Nov 2021 01:39:32 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id r4so29765166edi.5
+        for <git@vger.kernel.org>; Fri, 05 Nov 2021 01:39:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9gF4Ua5Qj5w2GEZAwfUTf4kztOFU1/8CVXWmzcvZBGc=;
+        b=oDyqUHTPVecgmM3WcN3dKarkE/S8oX7ikmxDspf/bT0To03AkHrMlhIjdwRsk0B5Kf
+         zlY3KyNOGBtFcTtVEnfuFY2Rbds2WxEd2wIMEDxV/2BgEaQ+D2ZSAwJ3GC9aDAEaumoZ
+         hdYJ9OSlnIhCiW+JTn4O34Fca7DLkxoKj9NiCKAUs/8dh3EjRPY3TwxWInqnKbcx1zRr
+         17ob7PhdXkNTfq8vNQgTd9JIOYThsmnUCiOLKf3NUu6Ec5Vw+TRW+mW8p6WLTlfy6c58
+         +5WkfJhazfmk3vn90S6Dn6Kv4pi7Q/Jz6amowOL676IEpSMWjXDVT81qtWQXNQgF1oWu
+         haUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=9gF4Ua5Qj5w2GEZAwfUTf4kztOFU1/8CVXWmzcvZBGc=;
+        b=unDle29nlQtG8CBiaWzKL1ppsGMgNsGCfTtonq+09SerTLugDScZrXYfK4wJ/+FlbI
+         X1FZLjYS+dqu0YdYcpHnJNC86+GtnNides8DLrje4/DB19I5f3qw5i8Ji1x0xx78iqEx
+         a++sv6T40l5K8Hn3i+b1Q54aV5SYHdCt8B9kAETkPYRE/yxN3TZxZOHXoHa5065/csZw
+         9t8DpA305fne6Xd+1jRGf44nNhJrb9zUn9fFvx6YHd7Kq79aDe2AOMuTMqOUzALYz84v
+         et0ZvP33GJ9mM2Mk1944YJt8Ctg8BLOKuEYNf//kpoF08pxegUQoizlhlmVrHENN+W6Z
+         UzJw==
+X-Gm-Message-State: AOAM531AVltLJXEzKgoXlZ9bfh0ymWj7PB9tHf7RK0YFP2Bub82UKe0v
+        JJLWDXZjY0RsgCfaYd6kex4=
+X-Google-Smtp-Source: ABdhPJwgcKWKACOdd8CE6FdYV39WqpLCJPvC2H1yyn1Wds2dPS8ugVs/2X+v3dNpm1v2g7BkZ2Xcpw==
+X-Received: by 2002:a17:907:e8e:: with SMTP id ho14mr10621038ejc.12.1636101571241;
+        Fri, 05 Nov 2021 01:39:31 -0700 (PDT)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t25sm4094471edv.31.2021.11.05.01.39.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Nov 2021 01:39:30 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1miul0-000GpD-3t;
+        Fri, 05 Nov 2021 09:39:30 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH] refs: sync loose refs to disk before committing them
+Date:   Fri, 05 Nov 2021 09:35:24 +0100
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
+ <211104.86ilx8hwvi.gmgdl@evledraar.gmail.com> <xmqqk0hn1unp.fsf@gitster.g>
+ <20211104223600.GA4069@neerajsi-x1.localdomain>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <20211104223600.GA4069@neerajsi-x1.localdomain>
+Message-ID: <211105.865yt7hu7x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.999.2111041709080.94135@tardis-on-the-dome.mit.edu>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 04, 2021 at 05:10:52PM -0400, Anders Kaseorg wrote:
 
-> Refuse to fetch into the currently checked out branch of any working
-> tree, not just the current one.
+On Thu, Nov 04 2021, Neeraj Singh wrote:
 
-I think that makes sense as a goal.
+> On Thu, Nov 04, 2021 at 02:24:26PM -0700, Junio C Hamano wrote:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>=20
+>> > I think it would probably be best to create a git_fsync_fd() function
+>> > which is non-fatal and has that config/while loop, and have
+>> > fsync_or_die() be a "..or die()" wrapper around that, then you could
+>> > call that git_fsync_fd() here.
+>>=20
+>> Adding git_fsync_fd() smells like a poor taste, as git_fsync() takes
+>> an fd already.  How about making the current one into a static helper
+>>=20
+>> 	-int git_fsync(int fd, enum fsync_action action)
+>> 	+static int git_fsync_once(int fd, enum fsync_action action)
+>> 	 ...
+>>=20
+>> and then hide the looping behavior behind git_fsync() proper?
+>>=20
+>>         int git_fsync(int fd, enum fsync_action action)
+>>         {
+>>                 while (git_fsync_once(fd, action) < 0)
+>>                         if (errno !=3D EINTR)
+>>                                 return -1;
+>>                 return 0;
+>>         }
+>>=20
+>> fsync_or_die() can be simplified by getting rid of its loop.
+>>=20
+>> None of that needs to block Patrick's work, I think.  A version that
+>> uses raw fsync() and punts on EINTR can graduate first, which makes
+>> the situation better than the status quo, and all the ongoing work
+>> that deal with fsync can be extended with an eye to make it also
+>> usable to replace the fsync() call Patrick's fix adds.
+>
+> Is there some reason we shouldn't die if writing the ref fails? We are
+> already accustomed to dying if fsyncing a packfile or the index fails.
+>
+> I assume the number of refs updated is not that high on any given git
+> operation, so it's not worth having a batch mode for this eventually.
 
->  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
->  
-> @@ -854,7 +855,6 @@ static int update_local_ref(struct ref *ref,
->  			    int summary_width)
->  {
->  	struct commit *current = NULL, *updated;
-> -	struct branch *current_branch = branch_get(NULL);
->  	const char *pretty_ref = prettify_refname(ref->name);
->  	int fast_forward = 0;
->  
-> @@ -868,9 +868,8 @@ static int update_local_ref(struct ref *ref,
->  		return 0;
->  	}
->  
-> -	if (current_branch &&
-> -	    !strcmp(ref->name, current_branch->name) &&
-> -	    !(update_head_ok || is_bare_repository()) &&
-> +	if (!update_head_ok &&
-> +	    find_shared_symref("HEAD", ref->name) &&
->  	    !is_null_oid(&ref->old_oid)) {
->  		/*
->  		 * If this is the head, and it's not okay to update
+Others have mostly touched on this, but usually (always?) we're about to
+die anyway, but by not calling die() here we'll die with a less crappy
+message.
 
-OK, so this is where we'd say "no, I won't update the HEAD". That makes
-sense, and the find_shared_symref() helper from worktree.h makes it
-easy.
+I.e. this bit:
 
-If we get the non-default worktree here, it might be nice to tell the
-user which worktree has it checked out. Otherwise it may lead to
-head-scratching as they peek at their current HEAD.
+    strbuf_addf(err, [...]
 
-I also notice that find_shared_symref() will catch cases where we're on
-a detached HEAD, but it's because we're rebasing or bisecting on a given
-branch. Arguably that's a sensible thing to do for this check, but it is
-a change from the current behavior (even if you are not using worktrees
-at all).
+Is effectively a deferred die() in most (all?) cases, and be passed up
+to the ref update code. because instead of a nondescript message like:
 
-> @@ -1387,16 +1386,13 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
->  
->  static void check_not_current_branch(struct ref *ref_map)
->  {
-> -	struct branch *current_branch = branch_get(NULL);
-> -
-> -	if (is_bare_repository() || !current_branch)
-> -		return;
-> -
-> +	const struct worktree *wt;
-> [...]
+    fsync: failed somewhere
 
-So if the earlier hunk covered this case, then what is this hunk for? :)
+We want:
 
-It looks like we call it from do_fetch() when update_head_ok isn't set.
-I'm not clear why we have two distinct code paths that check
-update_head_ok. It seems like this one is the one that _actually_ kicks
-in, because it's only later that we call update_local_ref(), several
-layers down. If I put a BUG() in that one, it is never reached in the
-test suite. Hmm.
+    couldn't update ref xyz to OID abc: fsync failed
 
-It looks like this situation is quite old, and certainly it's nothing
-new in your patch. So let's file it as a curiosity for now, and we can
-deal with it separately (if at all).
+Or similar.=20
 
->  	for (; ref_map; ref_map = ref_map->next)
-> -		if (ref_map->peer_ref && !strcmp(current_branch->refname,
-> -					ref_map->peer_ref->name))
-> -			die(_("Refusing to fetch into current branch %s "
-> -			    "of non-bare repository"), current_branch->refname);
-> +		if (ref_map->peer_ref &&
-> +		    (wt = find_shared_symref("HEAD", ref_map->peer_ref->name)))
-> +			die(_("Refusing to fetch into branch '%s' "
-> +			      "checked out at '%s'"),
-> +			    ref_map->peer_ref->name, wt->path);
+Hrm, actually having written the above there's a really good reason not
+to die, which is that fsync can return ENOSPC.
 
-This one does update the message, which is nice (and from my analysis
-above, the message from the other hunk doesn't matter at all!). It's a
-bit more verbose if you're not using worktrees at all, though. I used to get:
+So if we're in the middle of a transaction and have created and written
+the lockfile we might only notice that the disk has is full when we do
+the fsync().
 
-  $ git init
-  $ git commit --allow-empty -qm foo
-  $ git fetch . main:main
-  fatal: Refusing to fetch into current branch refs/heads/main of non-bare repository
+In that case we'll (or should, I didn't check just now) unroll the ref
+transaction, and delete the *.lock files we created, which presumably
+will succeed in that scenario.
 
-but now get:
-
-  $ git fetch . main:main
-  fatal: Refusing to fetch into branch 'refs/heads/main' checked out at '/home/peff/tmp'
-
-It's technically correct, but perhaps it would be nicer to keep the old
-message if the worktree we found is the current one.
-
--Peff
+So calling die() at this level is the difference between leaving the
+repo in an inconsistent state due to a disk error, and something like
+"git fetch --atomic" gracefully failing.
