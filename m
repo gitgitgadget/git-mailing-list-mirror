@@ -2,61 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96303C433F5
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A29DFC433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73D3961246
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:38:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 868486124B
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbhKEBlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 21:41:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231532AbhKEBlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 21:41:10 -0400
-Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02A4C061714
-        for <git@vger.kernel.org>; Thu,  4 Nov 2021 18:38:31 -0700 (PDT)
-Received: by mail-ua1-x92e.google.com with SMTP id v20so14375653uaj.9
-        for <git@vger.kernel.org>; Thu, 04 Nov 2021 18:38:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0MPPqzRv5tbR35AcPWbM4ZQ0Kt1zBRDvDNv/hnPAYfo=;
-        b=DUFiPDvcAg8AuzoxeEr0r+FNHligQQ83Yvm6e+LPoAD/1hJMPwazORfycTdsnnwcum
-         JwlPelVtesHeatlS5+W9qbTy0D0qNFBTpkhPNr3k+ugGuuacjtMCuOE9p2rannH3mv/J
-         775en1MpAp7SCZK3sQDzb9b2ZN2ZJVVaSPNa478N15cZvVWiUOxBTlP5VotzBKDVrnmB
-         cms8JmMo/iuHajPEpRmx+KBSy6rrA/drYGGxZ5J7DLrzts7hZIrnjeg2EMjCe98691m7
-         eE1Sk4Jf6dyWp2FQw/Mb1A2Ds54GENPdD8G+uuRVQJw0rkR4NGD5PDJ3tRErIA9Mkb1y
-         0IFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0MPPqzRv5tbR35AcPWbM4ZQ0Kt1zBRDvDNv/hnPAYfo=;
-        b=V2+D96PgRL1YuxNXomduZRnwKEeba7U1iYVXXKf4pp0ztMUki6h+DUTX+G6ZIxSVS2
-         9iKOKrxUSEc5ji9edUJOMxF+5J0pooRhhPDmL88aPWOq/BDjmXeOFP0IB59Dy6Wqz0D7
-         LcQD/G8MKIg/2qcWXKIRSLDxZ6ZQ7hk8Y/36bEpVoK54AVO0qgn0HPtjUh4hu4L4H2X8
-         yIFOrAnrgjoKer2orlKe5roRpdqbt8oJ3Dh0a6jkxRt4Qdo6ZK4+VFgez/0OrVoKk74z
-         NxVSFtGhaBIoWfbu7fsZKgl8PiKpr9FfLgaR3jiuOk4rBmvn5ryhUfAThXmYyiMyttMe
-         QxPQ==
-X-Gm-Message-State: AOAM531jPyLGVPovBbXSBqdGpIWyRx4Pnk3YyttlGOlO4HJmz2OwwVi6
-        yExkTM/90qaF5J4AeV3w1QWO+UwWzWZp3xoaCJxSShSBRJ4=
-X-Google-Smtp-Source: ABdhPJyXhwABEZEygeb7S7nCovpsH5a9+6WKM5rW1HVzhso1Ewv0KcDRdO0YzcssFXGwroYfKS7LFILndL0AQFzDrMA=
-X-Received: by 2002:ab0:6446:: with SMTP id j6mr61412294uap.121.1636076310928;
- Thu, 04 Nov 2021 18:38:30 -0700 (PDT)
+        id S231627AbhKEBnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 21:43:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64613 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231607AbhKEBnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 21:43:03 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B2E94FF51D;
+        Thu,  4 Nov 2021 21:40:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=t45662GAWDnJcz7yI/2kDiR/2/PMUvvJwzeBhg4quvc=; b=v2nn
+        mqBOuAfFyCS2NVG9oV5gTPEW4luj8bc1o1zQyIQQHRW3hyyAbsR2upsCMW40d7L4
+        SqJc+UJtsB4jjleAoRvX1UZUIqvIBYFxRv8xA0NpCCJeF1fZvnLaeAAUY/DUk8sA
+        dg7NGgCVKBmF3Ns48t389YwbxvM9Fqh0CSkMG1o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA3CBFF51C;
+        Thu,  4 Nov 2021 21:40:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 156CDFF51B;
+        Thu,  4 Nov 2021 21:40:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH] refs: sync loose refs to disk before committing them
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
+        <211104.86ilx8hwvi.gmgdl@evledraar.gmail.com>
+        <xmqqk0hn1unp.fsf@gitster.g>
+        <20211104223600.GA4069@neerajsi-x1.localdomain>
+Date:   Thu, 04 Nov 2021 18:40:22 -0700
+Message-ID: <xmqqfssbz8ft.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Austin Stephens <austinjstephens@gmail.com>
-Date:   Thu, 4 Nov 2021 19:38:20 -0600
-Message-ID: <CAO++afGMFu5XBQ7aSMJD4KraTQ+pbo5ksq3zULwFt01zj4HWHA@mail.gmail.com>
-Subject: 3-way diff tool support
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 58586FE4-3DD9-11EC-A7BA-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When might you be able to implement this? 3-way merges are doable, but
-I was hoping to be able to have my diff tool (Beyond Compare) be able
-to receive a 3-way diff from git without having to manually check out
-a copy or modify my repository's state.
-There are multiple Stack Overflow questions regarding this.
+Neeraj Singh <nksingh85@gmail.com> writes:
+
+> Is there some reason we shouldn't die if writing the ref fails? We are
+> already accustomed to dying if fsyncing a packfile or the index fails.
+
+If we look at the surrounding code and the callers of the function,
+this caller of fsync() is about to signal a failure to its callers
+by returning an error().  The callers are prepared to see an error
+and cope with it.
+
+Introducing die() to such a library-ish part of the code deep in the
+callchain is not exactly a good change, especially when it is
+obvious how we can avoid it.
