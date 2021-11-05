@@ -2,69 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A414C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08393C433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:35:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 513FE61266
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:30:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E04E961262
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231628AbhKEHdI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 03:33:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56245 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbhKEHdE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 03:33:04 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4676F2517;
-        Fri,  5 Nov 2021 03:30:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=5SFohYKDfyhpTWhp4yDIAC22Tv6SLIDs9UwvU9vxh+o=; b=h90n
-        Yzf529lXC9gFYaBeYZVQj21m4WMmF1mu6FpCPloeCNOo6O/qrOTz23Yu9BE+L2fK
-        Zdk0SfCgi1XZl4qaQTLNUbvnPPj38fxJJsiLbxQFd0xh+TMHy7agbvlPrvy7zXz0
-        pJTwdKY6dvydAVJw3tyTCBIw8ELBiDUH9DAmHCQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99946F2516;
-        Fri,  5 Nov 2021 03:30:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C254F2514;
-        Fri,  5 Nov 2021 03:30:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
-Subject: Re: [PATCH] t/lib-git.sh: fix ACL-related permissions failure
-References: <20211104192533.2520-1-adam@dinwoodie.org>
-        <xmqq7ddn3dlt.fsf@gitster.g> <xmqqzgqj1yff.fsf@gitster.g>
-        <20211104223633.5j556ggfga43myz5@fs>
-Date:   Fri, 05 Nov 2021 00:30:22 -0700
-Message-ID: <xmqqtugrxdo1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230469AbhKEHi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 03:38:26 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76]:51051 "EHLO
+        gandalf.ozlabs.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229749AbhKEHiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 03:38:25 -0400
+Received: by gandalf.ozlabs.org (Postfix, from userid 1003)
+        id 4Hlsk875kdz4xdM; Fri,  5 Nov 2021 18:35:44 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.org;
+        s=201707; t=1636097745;
+        bh=Wri33NgL7RtyY8Qg1Vo8CiG9pwhOLi8ABqoDLPPgP70=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uaDYrekrl5unb19PMg1n4ykDwcLLjWCQzf8F3nuvWZ/nTRdpdqAmwS8EieNaLVH7A
+         ZPqGt+Fk2GBGiTJVxg+5Lf9oUBXSxUTjGTfkItJZAcWoIeZXWg875FRAzqUC4iHexM
+         Me2HodQND3c1d90Ve/bwrPn4WKpMBLEi/52GXkPhPdKPuAZ4gPq4kZ+BBJjJoUbq5x
+         9eopxPW4K3FW7QI7kGFdw8vfSTZv3uN1FHV/U/hGzeAtUE1pe4kPNWwUgMTw7jvG/I
+         tB43d9I/RHj8jnuhxT4njABw3LWfEdnqZKZqRAHPv9GLYmrnrskN7pbDXfev5RERkM
+         F3VhLWsayKR7g==
+Date:   Fri, 5 Nov 2021 18:35:39 +1100
+From:   Paul Mackerras <paulus@ozlabs.org>
+To:     Vladimir Chigarev <chiga17@gmail.com>
+Cc:     Vladimir Chigarev via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Vladimir Chigarev <chiga17@mail.ru>
+Subject: Re: [PATCH] gitk: add option to perform 'git fetch' command
+Message-ID: <YYTey3B8Bw7vJo+u@thinks.paulus.ozlabs.org>
+References: <pull.872.git.git.1611328595003.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2104072142001.54@tvgsbejvaqbjf.bet>
+ <CAGyQznWL_X+-2jyfJCOkTGsp5Ucd3aomQ0Rf5W4nSo8sEz9d5Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3D4C79F8-3E0A-11EC-834F-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGyQznWL_X+-2jyfJCOkTGsp5Ucd3aomQ0Rf5W4nSo8sEz9d5Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
+On Wed, Nov 03, 2021 at 01:01:14PM +0300, Vladimir Chigarev wrote:
+> Hello Paul,
+> 
+> Just a gentle reminder.
+> May I ask you to review my changes in gitk?
 
-> The problem is that the ssh-keygen in the layz_prereq will succeed but
-> might create a private key with world readable permissions. Only the
-> remaining tests using this key will then fail with a "your private key
-> permissions are too restrictive" like error. If we would like to make
-> sure in the prereq that the keys actually work fine we would need to do
-> a signing operation with them in it.
+Thanks for the reminder.  See comments below.
 
-That sounds like a right thing to do, with or without the setfacl fix.
+> > > +proc fetch {} {
+> > > +    global bgcolor NS fetch_output
+> > > +
+> > > +    set fetch_output {}
+> > > +    if {[catch {exec sh -c "git fetch -v 2>&1"} fetch_output]} {
 
->
-> Something like the following call would be enough:
-> echo "test" | ssh-keygen -Y sign -f $GPGSSHKEY_PRIMARY -n "git" 
-> Not sure if we want to go that far though. The setfacl seems fine to me
-> otherwise.
+This "exec" call is synchronous, meaning that the gitk process won't
+do anything else until the exec call returns.  Since git fetch is a
+network operation, that could be quite a long time, during which the
+GUI will be unresponsive.  It would be better to use open rather than
+exec, which will return a file descriptor.  You would then use filerun
+to set up a procedure to be called when the file descriptor is
+readable.  That way you can arrange for the GUI to continue to respond
+while the git fetch is happening.
 
+Also, it may be more useful to do "git fetch --all" rather than just
+"git fetch", though I'm not going to insist on that.
+
+> > > +    }
+> > > +
+> > > +    set w .about
+
+Why are you reusing the "About gitk" window here?  That doesn't seem
+right.  Don't you mean "set w .fetch" or similar?
+
+> > > +    if {[winfo exists $w]} {
+> > > +     raise $w
+> > > +     return
+> > > +    }
+> > > +    ttk_toplevel $w
+> > > +    wm title $w [mc "Fetch"]
+> > > +    make_transient $w .
+> > > +    message $w.m -text [mc " $fetch_output "] \
+> > > +         -justify left -aspect 600 -border 2 -bg $bgcolor -relief groove
+
+How long can the git fetch output be?  If it can be say ten or more
+lines you might need to use a text widget and a scrollbar rather than
+a message widget.
+
+> > > +    pack $w.m -side top -fill x -padx 2 -pady 2
+> > > +    ${NS}::button $w.ok -text [mc "Close"] -command "destroy $w"
+> > -default active
+> > > +    pack $w.ok -side bottom
+> > > +    bind $w <Visibility> "focus $w.ok"
+> > > +    bind $w <Key-Escape> "destroy $w"
+> > > +    bind $w <Key-Return> "destroy $w"
+> > > +    tk::PlaceWindow $w widget .
+> > > +
+> > > +    reloadcommits
+> > > +}
+> > > +
+> > >  proc updatecommits {} {
+> > >      global curview vcanopt vorigargs vfilelimit viewinstances
+> > >      global viewactive viewcomplete tclencoding
+> > > @@ -2089,6 +2117,7 @@ proc makewindow {} {
+> > >          mc "&File" cascade {
+> > >              {mc "&Update" command updatecommits -accelerator F5}
+> > >              {mc "&Reload" command reloadcommits -accelerator Shift-F5}
+> > > +            {mc "&Fetch" command fetch -accelerator F7}
+> > >              {mc "Reread re&ferences" command rereadrefs}
+> > >              {mc "&List references" command showrefs -accelerator F2}
+> > >              {xx "" separator}
+> > > @@ -2609,6 +2638,7 @@ proc makewindow {} {
+> > >      bindkey f nextfile
+> > >      bind . <F5> updatecommits
+> > >      bindmodfunctionkey Shift 5 reloadcommits
+> > > +    bind . <F7> fetch
+> > >      bind . <F2> showrefs
+> > >      bindmodfunctionkey Shift 4 {newview 0}
+> > >      bind . <F4> edit_or_newview
+> > > @@ -3125,6 +3155,7 @@ proc keys {} {
+> > >  [mc "<%s-KP->        Decrease font size" $M1T]
+> > >  [mc "<%s-minus>      Decrease font size" $M1T]
+> > >  [mc "<F5>            Update"]
+> > > +[mc "<F7>            Fetch"]
+> > >  " \
+> > >              -justify left -bg $bgcolor -border 2 -relief groove
+> > >      pack $w.m -side top -fill both -padx 2 -pady 2
+
+Paul.
