@@ -2,118 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16A06C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97572C433EF
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:17:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED12661268
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 07:50:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 695AF6120E
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 08:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbhKEHxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 03:53:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50094 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbhKEHxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 03:53:04 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89A30E15EC;
-        Fri,  5 Nov 2021 03:50:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=GJV3PL5ZqmNwPyq48mup4Uo9CXuC4XWPCmMMYB0qG+0=; b=mvfe
-        Y8M3eqoIaw45+5bitV4N6LFvrm6tHhhZWt95fRL6nEWWPCtK/rcemJR9u6rtkZTZ
-        A3LMrrgNcfvS95rjFuJXknq31XxoEajid9fM3nW1FTwcImMk+nxHp0Cd3CmTGwtB
-        TKTVt27UyWYGbwf82Yook7zsUWwuLqtjfnt68/Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 820AAE15E8;
-        Fri,  5 Nov 2021 03:50:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E5F20E15E7;
-        Fri,  5 Nov 2021 03:50:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
+        id S231878AbhKEIUb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 04:20:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53706 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229482AbhKEIUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 04:20:31 -0400
+Received: (qmail 11140 invoked by uid 109); 5 Nov 2021 08:17:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Nov 2021 08:17:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15591 invoked by uid 111); 5 Nov 2021 08:17:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Nov 2021 04:17:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 5 Nov 2021 04:17:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Vipul Kumar <kumar+git@onenetbeyond.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 2/4] introduce submodule.superprojectGitDir record
-References: <20211104234942.3473650-1-emilyshaffer@google.com>
-        <20211104234942.3473650-3-emilyshaffer@google.com>
-Date:   Fri, 05 Nov 2021 00:50:22 -0700
-Message-ID: <xmqqo86zxcqp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Subject: Re: List all commits of a specified file in oldest to newest order
+Message-ID: <YYTorS1DiuTXv0/V@coredump.intra.peff.net>
+References: <c3932b3c-323a-39d6-26a7-ba0c3d17378b@onenetbeyond.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 087D3458-3E0D-11EC-AADC-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c3932b3c-323a-39d6-26a7-ba0c3d17378b@onenetbeyond.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Fri, Nov 05, 2021 at 04:10:31AM +0000, Vipul Kumar wrote:
 
-> By using a relative path instead of an absolute path, we can move the
-> superproject directory around on the filesystem without breaking the
-> submodule's cache. And by using the path from gitdir to gitdir, we can
-> move the submodule within the superproject's tree structure without
-> breaking the submodule's cache, too.
+> I want to list all commits (including renames) of a specified file in oldest
+> to newest order. But when I run "git log --follow --reverse --
+> <path/to/the/file>" command, I'm getting a single commit, which points to
+> the "rename of the file". This behavior is weird to me because I expected to
+> get list of all commit in oldest to newest order, whereas "git log --follow
+> -- <path/to/the/file>" command works as expected.
 
-All of the above explains what the design choice is, and what
-benefit the chosen design brings us.  But this last one ...
+This has to do with the hacky way --follow is implemented. We don't
+compute the full set of commits to show ahead of time, but rather as we
+traverse, we change which pathspec we'll match when we hit a commit that
+has a rename. Whereas --reverse is applied before we even start the main
+traversal, and instead collect all possible commits and then walk them
+in reverse order.
 
-> Finally, by pointing at "get_git_common_dir()" instead of
-> "get_git_dir()", we ensure the link will refer to the parent repo,
-> not to a specific worktree.
+So the very first commit we'll look at for --follow is the one that
+created the file from the rename, at which point we'll start looking
+only for the old name. But of course all of the other commits post-date
+the rename, so they don't use that old name.
 
-... only says that we choose to point at the common one, not a
-specific worktree (i.e. what behaviour was chosen by the design),
-but it is left unclear what benefit it is trying to bring us.
+So yes, it's a bug in the sense that the behavior is nonsense and it
+doesn't work as one might expect. But it's also the hacky "--follow"
+working as designed, and is just a limitation of its approach. It would
+need to be rewritten completely to work correctly.  Arguably we should
+at least disallow the combination of --reverse and --follow for now, as
+it will never help (OTOH, if there is nothing to follow it should behave
+OK, and I suspect some people and scripts may add --follow "just in
+case").
 
-Thinking aloud, imagine that there are two worktrees for the
-superproject.  For simplicity, let's further imagine that these
-worktrees have a clean check-out of the same commit, hence, these
-two worktrees have the same commit from the same submodule checked
-out at the same location relative to the project root.
+As a workaround, you can get what you want by two separate traversals:
+one to collect the commits via --follow, and then another to actually
+show them (but without doing any further walking). Like:
 
-The subdirectory in each of these two superproject worktrees that
-checks out the submodule has .git file (as we "absorb" the gitdir in
-the modern submodule layout) pointing at somewhere.  It probably is
-OK if they point at the same place, but it might be more natural if
-these two submodule checkouts are two worktrees for a single
-submodule repository (this part I am not very clear, and that is why
-I labeled the discussion "thinking aloud").
+  git log --follow --format=%H -- $your_file |
+  git log --stdin --no-walk --reverse [--oneline, -p, etc]
 
-It seems to me that both design choices would have equally valid
-arguments for them.  If both of these submodule worktrees point at
-the "common" dir of the superproject, because the "common" one is
-part of the primary worktree, which is harder to lose than secondary
-worktrees, of the superproject, it is presumably harder to go stale
-when "worktree rm" is done at superproject, which may be a plus.
-But then from the "cached" pointer, each of these submodule
-worktrees cannot tell which worktree of the superproject they are
-checked out as a part of.  Of course we can go to the root level of
-the submodule worktree and do the usual repository discovery to
-learn where the root level of the superproject worktree it belongs
-to, but it somehow feels that it defeats half the point of having
-this "cache" information.
-
-If we instead point at the git-dir, from there, it is just one level
-of indirection to find out where the common dir of the superproject
-is.
-
-> If the new config is present, we can do some optional value-added
-> behavior, like letting "git status" print additional info about the
-> submodule's status in relation to its superproject, or like letting the
-> superproject and submodule share an additional config file separate from
-> either one's local config.
-
-And one value-add that I would think of off the top of my head is to
-show "we have commit X checked out, which is 4 commits on top of
-what the superproject's index records for this submodule" when "git
-status" is run in the submodule's worktree.  I do not know that is
-an operation to specifically optimize for, but by choosing to
-"cache" the common dir, not the one specific to the worktree of the
-superporject our submodule checkout is a part of, the chosen design
-seems to make it harder to implement?
-
-Thanks.
+-Peff
