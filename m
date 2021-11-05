@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A995C433F5
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82228C433FE
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:08:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FE74604AC
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:08:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 614DE611EF
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 14:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbhKEOKy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Nov 2021 10:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50442 "EHLO
+        id S233148AbhKEOK4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Nov 2021 10:10:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232410AbhKEOKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Nov 2021 10:10:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34354C061205
+        with ESMTP id S233130AbhKEOKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Nov 2021 10:10:53 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E70CBC061208
         for <git@vger.kernel.org>; Fri,  5 Nov 2021 07:08:13 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id d5so13967161wrc.1
+Received: by mail-wr1-x42b.google.com with SMTP id i5so13970543wrb.2
         for <git@vger.kernel.org>; Fri, 05 Nov 2021 07:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5lrq6z6PLdxKS9goKrC2uYDa0J4yg2UZwSVn1O3lNE4=;
-        b=TFufTc7KX+P1EtoZLUisN0Qsdq3YRZ4aAXbhgIKza/RBsinrrHnFUXBZXh9rBLGNNw
-         zbqYKGBOa+Cza4fBjI4zcg+dNOOZGSYc9dyYKXo0eMWaEtiBVdkLCHW83Qm4stSVl1W8
-         Y4hbDsg9Ip2z0OVbrYQHUE/iUuLcwx1Wne+tN0PyqT2N4VsxntjfcXoAsmUmi1gofzXa
-         WtFvw9EpeJwYhmRXAiuyAhDVbAC2/kV0k8bj7Q1I+ETydvO0DcEstrTOCmeZowSSS1kY
-         PyRIscojLMRmPx1jAHbZbMhzF2AC3tLP7xYAjylJn3eL6pAUMO2sPxRVi5jXujfUTyVD
-         q/gQ==
+        bh=WRZm/at5iGOJf0oQhG1GWx8xFWrOZi/Q89gc/btS3rM=;
+        b=BTNhsCKVT/X4kIx/lWuBtr4CscUTdZRyccYN2tKMgALOyax2kFu3w95ot6hBjuLLMh
+         cwYLCDScK5Mt6ZfKNPowpH16GNdAHGk8o+R8McAkHFdAGRETVmTwhmfuvjaenmSKAMJh
+         81qwH1tcQxySsj2mIA+iP/kxd5tqa4bYXg4Vab5yoHTRD0i5Ld/ev6d6dtM5udNKIf8v
+         MMyKKbghFDBYlq0h7b19vLtMeyST0Iy+ZSolLTPACxa3YBTXKR+bqaDANbhtPpe9s0Ul
+         z9U9WXUhpxLbFpNGdDesD4N5T4l+ADq3XH6kXEvu1lA4H2QqQg3rb4Tqfx48YN5uRrfk
+         Y4Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5lrq6z6PLdxKS9goKrC2uYDa0J4yg2UZwSVn1O3lNE4=;
-        b=xITa4m3l7ZEkbASzYd5atP8IY455jZ/qF0X4VCVN2tfaOqtGNG3i+iS9VyKaY9r3Jj
-         2xXkS+0fYLHKLNBygZn+AsKZjEY8M0e0moGVrpfJDP0Pi2mJqCOgQ838XreqNX3rGz9J
-         gMUt71oHKJksKQdR3RMCvvBlC97peNus7KvmdjTQGkbArio1D6+E6GcE9sBVZ1Oj7A3Y
-         qjEar/2JoD9i5arzZuGJhMMZXMFtoz25NBv21PSNs0fTHECyDnLWl0ubiAmMizE+VAsk
-         EQvquEp29NOK7FSYcIW4+fFX2WP2YfVges6q6hLB8WE2oWPBqCc6oncyjv30lMExGtWk
-         nO9A==
-X-Gm-Message-State: AOAM5333/pJd5w+9iylvWZr+AnLG2Fz5a7EFgfV0gouM2gxqmH9NxzSv
-        UTFSTvz8g2M3gc+K1vLwfU1GyJQIteFtww==
-X-Google-Smtp-Source: ABdhPJz1qg8R84x8D4qR3EevFQhaSPQguakHwXWXG2uk1b27eIKOBNxTX0th1WBbBKn+S7VsaX++Eg==
-X-Received: by 2002:adf:dd0a:: with SMTP id a10mr21365105wrm.60.1636121290776;
-        Fri, 05 Nov 2021 07:08:10 -0700 (PDT)
+        bh=WRZm/at5iGOJf0oQhG1GWx8xFWrOZi/Q89gc/btS3rM=;
+        b=5d8xQelmyu056WMsDFJRgoP3kng1A9lRvdwFrKuDvcJVhijXRAuUny7gNuLVBKrH0M
+         An/6uDEWnFgeLHpOcD8+fKoYZgGcHcbI4xfSevnw1oF0JaAUvlrE9hwbPiDQHwfVY2jZ
+         YtXHf2PR3UpfBUToeoZ6JZ/ygSF/UozSn3I8iqC5jQenoZ6+kAggOjHbaKWC70LwOYe3
+         7Vc5NRaIXlaKAgoKYsUrPyZMJ8cEqaVolzObQWVm+QsT4MmMdthLzxTcM8Bd1/1WSMAJ
+         +oqMESwf6uyDWZq/TRX5pVQQnOyQc+YMsMtcIZWq9l/zWK83LSaU3DL+ew/9k52qeD+Z
+         QrJA==
+X-Gm-Message-State: AOAM53361fvhEBbobGmVXPEBvn+U8lE77muHILH8R4PBPkioC6zmAds5
+        cWWXidbDwCvtKMq1LmnCxYWcYeYvs07EdA==
+X-Google-Smtp-Source: ABdhPJxRfgKHX2ob9uoCx2YeK/7NGrlQT/52UGecp733FtQtaOgQRrFQAXPXPuHrA91qqibxclwYDg==
+X-Received: by 2002:a5d:6488:: with SMTP id o8mr18652130wri.348.1636121292278;
+        Fri, 05 Nov 2021 07:08:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7821556wrs.19.2021.11.05.07.08.09
+        by smtp.gmail.com with ESMTPSA id c15sm7821556wrs.19.2021.11.05.07.08.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 07:08:10 -0700 (PDT)
+        Fri, 05 Nov 2021 07:08:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,12 +60,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 00/10] generate-cmdlist.sh: make it (and "make") run faster
-Date:   Fri,  5 Nov 2021 15:07:58 +0100
-Message-Id: <cover-v3-00.10-00000000000-20211105T135058Z-avarab@gmail.com>
+Subject: [PATCH v3 02/10] generate-cmdlist.sh: trivial whitespace change
+Date:   Fri,  5 Nov 2021 15:08:00 +0100
+Message-Id: <patch-v3-02.10-b4b4c3aa135-20211105T135058Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc1.741.gab7bfd97031
-In-Reply-To: <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
-References: <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-00.10-00000000000-20211105T135058Z-avarab@gmail.com>
+References: <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com> <cover-v3-00.10-00000000000-20211105T135058Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,285 +73,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series makes the rather slow generate-cmdlist.sh shellscript run
-in ~20ms on my box instead of ~400ms. This helps a lot with "make"
-runtime, e.g. during interactive rebase.
+Add " " before a "|" at the end of a line in generate-cmdlist.sh for
+consistency with other code in the file. Some of the surrounding code
+will be modified in subsequent commits.
 
-This hopefully addresses all the feedback on v2. I kept the
-penultimate patch as explained in an updated commit message it helped
-quite a bit in the CI environment, and presumably on various other
-setup.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ generate-cmdlist.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There's also a new ~1.3x speedup of "generate-cmdlist.sh: don't parse
-command-list.txt thrice" new at the end here, but on some faster boxes
-that's against a relative slowdown in 9/10 compared to Jeff's
-8/10[1]. I opted to keep 9/10 to give slower systems where process
-spawning isn't as fast the benefit of the doubt. We spend less user
-time in 10/10 than in 8/10, but more system time.
-
-1. This is HEAD~n at the tip of the series. So .2 = 8/10, .1 = 9/10 '' = 10/10
-  $ hyperfine --warmup 20 -L v .2,.1, 'sh generate-cmdlist.sh{v} command-list.txt'
-   Benchmark #1: sh generate-cmdlist.sh.2 command-list.txt
-     Time (mean ± σ):      19.5 ms ±   0.2 ms    [User: 16.7 ms, System: 8.1 ms]
-     Range (min … max):    18.9 ms …  20.5 ms    151 runs
-   
-   Benchmark #2: sh generate-cmdlist.sh.1 command-list.txt
-     Time (mean ± σ):      30.1 ms ±   0.3 ms    [User: 24.8 ms, System: 17.1 ms]
-     Range (min … max):    29.3 ms …  31.3 ms    97 runs
-   
-   Benchmark #3: sh generate-cmdlist.sh command-list.txt
-     Time (mean ± σ):      22.8 ms ±   0.3 ms    [User: 15.2 ms, System: 10.1 ms]
-     Range (min … max):    22.5 ms …  23.7 ms    125 runs
-   
-   Summary
-     'sh generate-cmdlist.sh.2 command-list.txt' ran
-       1.17 ± 0.02 times faster than 'sh generate-cmdlist.sh command-list.txt'
-       1.54 ± 0.02 times faster than 'sh generate-cmdlist.sh.1 command-list.txt'
-   
-
-Jeff King (1):
-  generate-cmdlist.sh: do not shell out to "sed"
-
-Johannes Sixt (2):
-  generate-cmdlist.sh: spawn fewer processes
-  generate-cmdlist.sh: replace for loop by printf's auto-repeat feature
-
-Ævar Arnfjörð Bjarmason (7):
-  command-list.txt: sort with "LC_ALL=C sort"
-  generate-cmdlist.sh: trivial whitespace change
-  generate-cmdlist.sh: don't call get_categories() from category_list()
-  generate-cmdlist.sh: run "grep | sort", not "sort | grep"
-  generate-cmdlist.sh: stop sorting category lines
-  generate-cmdlist.sh: replace "grep' invocation with a shell version
-  generate-cmdlist.sh: don't parse command-list.txt thrice
-
- command-list.txt    | 22 ++++++-------
- generate-cmdlist.sh | 78 ++++++++++++++++++++++++++-------------------
- 2 files changed, 56 insertions(+), 44 deletions(-)
-
-Range-diff against v2:
- 1:  96885282988 !  1:  c385e84c04c command-list.txt: sort with "LC_ALL=C sort"
-    @@ Commit message
-         separate step, right now the generate-cmdlist.sh script just uses the
-         order found in this file.
-     
-    +    Note that this refers to the sort order of the lines in
-    +    command-list.txt, a subsequent commit will also change how we treat
-    +    the sort order of the "category" fields, but that's unrelated to this
-    +    change.
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## command-list.txt ##
-    @@ command-list.txt: git-request-pull                        foreignscminterface
-      git-show-ref                            plumbinginterrogators
-     -git-sh-i18n                             purehelpers
-     -git-sh-setup                            purehelpers
-    - git-sparse-checkout                     mainporcelain           worktree
-    + git-sparse-checkout                     mainporcelain
-     -git-stash                               mainporcelain
-      git-stage                                                               complete
-     +git-stash                               mainporcelain
-    @@ command-list.txt: git-var                                 plumbinginterrogators
-      git-whatchanged                         ancillaryinterrogators          complete
-      git-worktree                            mainporcelain
-      git-write-tree                          plumbingmanipulators
-    +@@ command-list.txt: gitfaq                                  guide
-    + gitglossary                             guide
-    + githooks                                guide
-    + gitignore                               guide
-     +gitk                                    mainporcelain
-    -+gitweb                                  ancillaryinterrogators
-    - gitattributes                           guide
-    - gitcli                                  guide
-    - gitcore-tutorial                        guide
-    + gitmailmap                              guide
-    + gitmodules                              guide
-    + gitnamespaces                           guide
-     @@ command-list.txt: gitremote-helpers                       guide
-      gitrepository-layout                    guide
-      gitrevisions                            guide
-    @@ command-list.txt: gitremote-helpers                       guide
-     -gittutorial-2                           guide
-      gittutorial                             guide
-     +gittutorial-2                           guide
-    ++gitweb                                  ancillaryinterrogators
-      gitworkflows                            guide
- 2:  5e8fef90e42 !  2:  b4b4c3aa135 generate-cmdlist.sh: trivial whitespace change
-    @@ Metadata
-      ## Commit message ##
-         generate-cmdlist.sh: trivial whitespace change
-     
-    -    This makes a subsequent diff smaller, and won't leave us with this
-    -    syntax nit at the end.
-    +    Add " " before a "|" at the end of a line in generate-cmdlist.sh for
-    +    consistency with other code in the file. Some of the surrounding code
-    +    will be modified in subsequent commits.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
- 3:  6b4de6a6088 =  3:  737cca59d99 generate-cmdlist.sh: spawn fewer processes
- 4:  074685cf714 =  4:  6ad17ab56c2 generate-cmdlist.sh: don't call get_categories() from category_list()
- 5:  f01c1fd8088 =  5:  d7be565b567 generate-cmdlist.sh: run "grep | sort", not "sort | grep"
- 6:  e0b11514b8d =  6:  646363db11f generate-cmdlist.sh: replace for loop by printf's auto-repeat feature
- 7:  f2f37c2963b =  7:  d8cc7c246b8 generate-cmdlist.sh: stop sorting category lines
- 8:  83318d6c0da =  8:  aeeecc575fb generate-cmdlist.sh: do not shell out to "sed"
- 9:  7903dd1f8c2 !  9:  e2702bcc1d0 generate-cmdlist.sh: replace "grep' invocation with a shell version
-    @@ Commit message
-         test-lib-functions.sh.
-     
-         On my *nix system this makes things quite a bit slower compared to
-    -    HEAD~, but since the generate-cmdlist.sh is already quite fast, and
-    -    this likely helps systems where command invocations are more
-    -    expensive (i.e. Windows) let's use this anyway.
-    -
-    +    HEAD~:
-    +    o
-           'sh generate-cmdlist.sh.old command-list.txt' ran
-             1.56 ± 0.11 times faster than 'sh generate-cmdlist.sh command-list.txt'
-            18.00 ± 0.19 times faster than 'sh generate-cmdlist.sh.master command-list.txt'
-     
-    -    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    +    But when I tried running generate-cmdlist.sh 100 times in CI I found
-    +    that it helped across the board even on OSX & Linux. I tried testing
-    +    it in CI with this ad-hoc few-liner:
-    +
-    +        for i in $(seq -w 0 11 | sort -nr)
-    +        do
-    +            git show HEAD~$i:generate-cmdlist.sh >generate-cmdlist-HEAD$i.sh &&
-    +            git add generate-cmdlist* &&
-    +            cp t/t0000-generate-cmdlist.sh t/t00$i-generate-cmdlist.sh || : &&
-    +            perl -pi -e "s/HEAD0/HEAD$i/g" t/t00$i-generate-cmdlist.sh &&
-    +            git add t/t00*.sh
-    +        done && git commit -m"generated it"
-    +
-    +    Here HEAD~02 and the t0002* file refers to this change, and HEAD~03
-    +    and t0003* file to the preceding commit, the relevant results were:
-    +
-    +        linux-gcc:
-    +
-    +        [12:05:33] t0002-generate-cmdlist.sh .. ok       14 ms ( 0.00 usr  0.00 sys +  3.64 cusr  3.09 csys =  6.73 CPU)
-    +        [12:05:30] t0003-generate-cmdlist.sh .. ok       32 ms ( 0.00 usr  0.00 sys +  2.66 cusr  1.81 csys =  4.47 CPU)
-    +
-    +        osx-gcc:
-    +
-    +        [11:58:04] t0002-generate-cmdlist.sh .. ok    80081 ms ( 0.02 usr  0.02 sys + 17.80 cusr 10.07 csys = 27.91 CPU)
-    +        [11:58:16] t0003-generate-cmdlist.sh .. ok    92127 ms ( 0.02 usr  0.01 sys + 22.54 cusr 14.27 csys = 36.84 CPU)
-    +
-    +        vs-test:
-    +
-    +        [12:03:14] t0002-generate-cmdlist.sh .. ok       30 s ( 0.02 usr  0.00 sys + 13.14 cusr 26.19 csys = 39.35 CPU)
-    +        [12:03:20] t0003-generate-cmdlist.sh .. ok       32 s ( 0.00 usr  0.02 sys + 13.25 cusr 26.10 csys = 39.37 CPU)
-    +
-    +    I.e. even on *nix running 100 of these in a loop was up to ~2x faster
-    +    in absolute runtime, I suspect it's due factors that are exacerbated
-    +    in the CI, e.g. much slower process startup due to some platform
-    +    limits, or a slower FS.
-    +
-    +    The "cut -d" change here is because we're not emitting the
-    +    40-character aligned output anymore, i.e. we'll get the output from
-    +    command_list() now, not an as-is line from command-list.txt.
-    +
-    +    This also makes the parsing more reliable, as we could tweak the
-    +    whitespace alignment without breaking this parser. Let's reword a
-    +    now-inaccurate comment in "command-list.txt" describing that previous
-    +    alignment limitation. We'll still need the "### command-list [...]"
-    +    line due to the "Documentation/cmd-list.perl" logic added in
-    +    11c6659d85d (command-list: prepare machinery for upcoming "common
-    +    groups" section, 2015-05-21).
-    +
-    +    There was a proposed change subsequent to this one[3] which continued
-    +    moving more logic into the "command_list() function, i.e. replaced the
-    +    "cut | tr | grep" chain in "category_list()" with an argument to
-    +    "command_list()".
-    +
-    +    That change might have had a bit of an effect, but not as much as the
-    +    preceding commit, so I decided to drop it. The relevant performance
-    +    numbers from it were:
-    +
-    +        linux-gcc:
-    +
-    +        [12:05:33] t0001-generate-cmdlist.sh .. ok       13 ms ( 0.00 usr  0.00 sys +  3.33 cusr  2.78 csys =  6.11 CPU)
-    +        [12:05:33] t0002-generate-cmdlist.sh .. ok       14 ms ( 0.00 usr  0.00 sys +  3.64 cusr  3.09 csys =  6.73 CPU)
-    +
-    +        osx-gcc:
-    +
-    +        [11:58:03] t0001-generate-cmdlist.sh .. ok    78416 ms ( 0.02 usr  0.01 sys + 11.78 cusr  6.22 csys = 18.03 CPU)
-    +        [11:58:04] t0002-generate-cmdlist.sh .. ok    80081 ms ( 0.02 usr  0.02 sys + 17.80 cusr 10.07 csys = 27.91 CPU)
-    +
-    +        vs-test:
-    +
-    +        [12:03:20] t0001-generate-cmdlist.sh .. ok       34 s ( 0.00 usr  0.03 sys + 12.42 cusr 19.55 csys = 32.00 CPU)
-    +        [12:03:14] t0002-generate-cmdlist.sh .. ok       30 s ( 0.02 usr  0.00 sys + 13.14 cusr 26.19 csys = 39.35 CPU)
-    +
-    +    As above HEAD~2 and t0002* are testing the code in this commit (and
-    +    the line is the same), but HEAD~1 and t0001* are testing that dropped
-    +    change in [3].
-    +
-    +    1. https://lore.kernel.org/git/cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com/
-    +    2. https://lore.kernel.org/git/patch-v2-08.10-83318d6c0da-20211022T193027Z-avarab@gmail.com/
-    +    3. https://lore.kernel.org/git/patch-v2-10.10-e10a43756d1-20211022T193027Z-avarab@gmail.com/
-    +
-    + ## command-list.txt ##
-    +@@
-    + # specified here, which can only have "guide" attribute and nothing
-    + # else.
-    + #
-    +-### command list (do not change this line, also do not change alignment)
-    ++### command list (do not change this line)
-    + # command name                          category [category] [category]
-    + git-add                                 mainporcelain           worktree
-    + git-am                                  mainporcelain
-     
-      ## generate-cmdlist.sh ##
-     @@ generate-cmdlist.sh: die () {
-    @@ generate-cmdlist.sh: die () {
-     +	while read cmd rest
-     +	do
-     +		case "$cmd" in
-    -+		"#"*)
-    -+			continue;
-    ++		"#"* | '')
-    ++			# Ignore comments and allow empty lines
-    ++			continue
-     +			;;
-     +		*)
-     +			case "$exclude_programs" in
-    -+				*":$cmd:"*)
-    ++			*":$cmd:"*)
-     +				;;
-     +			*)
-     +				echo "$cmd $rest"
-     +				;;
-     +			esac
-     +		esac
-    -+	done
-    ++	done <"$1"
-      }
-      
-      category_list () {
-    --	command_list "$1" |
-    + 	command_list "$1" |
-     -	cut -c 40- |
-    -+	command_list <"$1" |
-     +	cut -d' ' -f2- |
-      	tr ' ' '\012' |
-      	grep -v '^$' |
-      	LC_ALL=C sort -u
-    -@@ generate-cmdlist.sh: define_category_names () {
-    - print_command_list () {
-    - 	echo "static struct cmdname_help command_list[] = {"
-    - 
-    --	command_list "$1" |
-    -+	command_list <"$1" |
-    - 	while read cmd rest
-    - 	do
-    - 		synopsis=
-     @@ generate-cmdlist.sh: print_command_list () {
-      	echo "};"
-      }
-10:  e10a43756d1 <  -:  ----------- generate-cmdlist.sh: replace "cut", "tr" and "grep" with pure-shell
- -:  ----------- > 10:  100084070fd generate-cmdlist.sh: don't parse command-list.txt thrice
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9dbbb08e70a..5114f46680a 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -10,7 +10,7 @@ command_list () {
+ }
+ 
+ get_categories () {
+-	tr ' ' '\012'|
++	tr ' ' '\012' |
+ 	grep -v '^$' |
+ 	sort |
+ 	uniq
 -- 
 2.34.0.rc1.721.ga0c1db665bc
 
