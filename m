@@ -2,163 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F004C433EF
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 00:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96303C433F5
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:38:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AD416121E
-	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 00:04:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73D3961246
+	for <git@archiver.kernel.org>; Fri,  5 Nov 2021 01:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232410AbhKEAHb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Nov 2021 20:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60934 "EHLO
+        id S231563AbhKEBlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Nov 2021 21:41:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232362AbhKEAHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Nov 2021 20:07:30 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B885DC061714
-        for <git@vger.kernel.org>; Thu,  4 Nov 2021 17:04:51 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id n128so8898470iod.9
-        for <git@vger.kernel.org>; Thu, 04 Nov 2021 17:04:51 -0700 (PDT)
+        with ESMTP id S231532AbhKEBlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Nov 2021 21:41:10 -0400
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02A4C061714
+        for <git@vger.kernel.org>; Thu,  4 Nov 2021 18:38:31 -0700 (PDT)
+Received: by mail-ua1-x92e.google.com with SMTP id v20so14375653uaj.9
+        for <git@vger.kernel.org>; Thu, 04 Nov 2021 18:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4dgpA+kyIgyRHjz8AE2ecJ3NQUSJduJhBhXUYe1+uwc=;
-        b=W4A37i2HqifcZ5H19ICm0WMw1UYmJsDFAd462HdvXmUqGf9ul1YF7Zb30V8BqetFXH
-         YIkiifeB6+8z0ihedHVcNzTQuNmR/vnCzfrhfHiSQ8V3OSuft6aAiqJ+UtnYfHGAkK2+
-         CtsmEDx2jsrU7WKqOF7ovpKscSlRxI6wXtGprhhMx1zUIlSrrDB8X6whYH27R/atZ1Iu
-         r5FXW2mvu9GFbIHXIVHplMwweG9PgHXRucpzkKBDulUccswU9abnzQN/6hncWYBVH7lH
-         I3I1qMJ7qgAr7yOCnFp9Dr6DUx65Yze6eDIOkTIld94nLyeHMnfxqddTrgcmrNGFszSr
-         cX3Q==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0MPPqzRv5tbR35AcPWbM4ZQ0Kt1zBRDvDNv/hnPAYfo=;
+        b=DUFiPDvcAg8AuzoxeEr0r+FNHligQQ83Yvm6e+LPoAD/1hJMPwazORfycTdsnnwcum
+         JwlPelVtesHeatlS5+W9qbTy0D0qNFBTpkhPNr3k+ugGuuacjtMCuOE9p2rannH3mv/J
+         775en1MpAp7SCZK3sQDzb9b2ZN2ZJVVaSPNa478N15cZvVWiUOxBTlP5VotzBKDVrnmB
+         cms8JmMo/iuHajPEpRmx+KBSy6rrA/drYGGxZ5J7DLrzts7hZIrnjeg2EMjCe98691m7
+         eE1Sk4Jf6dyWp2FQw/Mb1A2Ds54GENPdD8G+uuRVQJw0rkR4NGD5PDJ3tRErIA9Mkb1y
+         0IFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4dgpA+kyIgyRHjz8AE2ecJ3NQUSJduJhBhXUYe1+uwc=;
-        b=uANPvb7JMPjfmp7rLXfvj0mQrXoDgaGj4cJ7C1GolJ3qTTOoewEqCmBAS+YHBLPcLD
-         /rVMSKYbiKjeFjwkcM6tKaSot2oOnvnYN3L6/FGTEsd+QDZlCADX6pAAH7rERgWNDTEZ
-         2KiZ07wTODg+ZB+uxwqD7S1+1mERaZv8NGm+QxOsPgRCmZqV35L7ELV1O+avJtkBVPBU
-         kAXwMWtttWLBEYK/ZGOzMreZ5DHCVje9zRcuAtVClblMlParUL1iQWvhEpVFGiUWenxq
-         tNdAk5rYFm+pAdO71Ke8g1kSIP/E/9zQfBg+3tcI/dYT9P4TKkBQeZtXjB4JFeEzAH4S
-         FPwg==
-X-Gm-Message-State: AOAM530gDZ+VGVcuvGx5JPDczZsxVMM/U1nRB757hT61saLKdc+ksQwC
-        dj/SeEWTpmuHhdBk9NYtJkwJPV2Zwec=
-X-Google-Smtp-Source: ABdhPJykmLP8MLaTXAykKWpaIJmZ1sIrO4zOVIxUOlvOEsTKHp6FvmxCj2P8FgTErmDsLlwQrsxfAQ==
-X-Received: by 2002:a05:6638:268c:: with SMTP id o12mr6377466jat.93.1636070691160;
-        Thu, 04 Nov 2021 17:04:51 -0700 (PDT)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id s12sm3197630iol.30.2021.11.04.17.04.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Nov 2021 17:04:50 -0700 (PDT)
-Message-ID: <49ada9fe-3cd5-622d-fdc7-92f95b040b47@gmail.com>
-Date:   Thu, 4 Nov 2021 17:04:49 -0700
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0MPPqzRv5tbR35AcPWbM4ZQ0Kt1zBRDvDNv/hnPAYfo=;
+        b=V2+D96PgRL1YuxNXomduZRnwKEeba7U1iYVXXKf4pp0ztMUki6h+DUTX+G6ZIxSVS2
+         9iKOKrxUSEc5ji9edUJOMxF+5J0pooRhhPDmL88aPWOq/BDjmXeOFP0IB59Dy6Wqz0D7
+         LcQD/G8MKIg/2qcWXKIRSLDxZ6ZQ7hk8Y/36bEpVoK54AVO0qgn0HPtjUh4hu4L4H2X8
+         yIFOrAnrgjoKer2orlKe5roRpdqbt8oJ3Dh0a6jkxRt4Qdo6ZK4+VFgez/0OrVoKk74z
+         NxVSFtGhaBIoWfbu7fsZKgl8PiKpr9FfLgaR3jiuOk4rBmvn5ryhUfAThXmYyiMyttMe
+         QxPQ==
+X-Gm-Message-State: AOAM531jPyLGVPovBbXSBqdGpIWyRx4Pnk3YyttlGOlO4HJmz2OwwVi6
+        yExkTM/90qaF5J4AeV3w1QWO+UwWzWZp3xoaCJxSShSBRJ4=
+X-Google-Smtp-Source: ABdhPJyXhwABEZEygeb7S7nCovpsH5a9+6WKM5rW1HVzhso1Ewv0KcDRdO0YzcssFXGwroYfKS7LFILndL0AQFzDrMA=
+X-Received: by 2002:ab0:6446:: with SMTP id j6mr61412294uap.121.1636076310928;
+ Thu, 04 Nov 2021 18:38:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.1
-Subject: Re: [PATCH v3 2/2] blame: enable and test the sparse index
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.1050.v2.git.1634332835.gitgitgadget@gmail.com>
- <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
- <cfdd33129ec6860cbec0cb20302598429db1115e.1635802069.git.gitgitgadget@gmail.com>
- <xmqqh7ct89us.fsf@gitster.g>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <xmqqh7ct89us.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Austin Stephens <austinjstephens@gmail.com>
+Date:   Thu, 4 Nov 2021 19:38:20 -0600
+Message-ID: <CAO++afGMFu5XBQ7aSMJD4KraTQ+pbo5ksq3zULwFt01zj4HWHA@mail.gmail.com>
+Subject: 3-way diff tool support
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/3/21 9:47 AM, Junio C Hamano wrote:
-> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
->> We do not include paths outside the sparse checkout cone because blame
->> currently does not support blaming files outside of the sparse definition.
->> Attempting to do so fails with the following error:
->>
->>    fatal: no such path '<path outside sparse definition>' in HEAD
-> 
-> Does this indicate that we need to update how the command line
-> safety in verify_working_tree_path() works in a sparsely checked out
-> working tree?  If foo/bar is outside the sparse definition,
-> 
->      git blame HEAD foo/bar
-> 
-> may get such a message, but shouldn't
-> 
->      git blame HEAD -- foo/bar
-> 
-> make it work?
-> 
-This is something we could consider for the future, and I've updated the 
-comment you called out below to better reflect that in the next version. 
-However, I don't know that this change belongs in this series, which 
-aims to enable the sparse index. Perhaps even updating the 'blame with 
-pathspec outside sparse definition' test was a bit too far outside the 
-target scope of this change - I can remove my updates if that is the case.
-
->> -# TODO: blame currently does not support blaming files outside of the
->> -# sparse definition. It complains that the file doesn't exist locally.
->> -test_expect_failure 'blame with pathspec outside sparse definition' '
->> +# Blame does not support blaming files outside of the sparse
->> +# definition, so we verify this scenario.
-> 
-> IOW, why is it a good idea to drop the "TODO" and "currently" and pretend
-> as if the current behaviour is the desirable one?
-> 
-Thank you, updated for v4.
-
->> +test_expect_success 'blame with pathspec outside sparse definition' '
->>   	init_repos &&
->> +	test_sparse_match git sparse-checkout set &&
->>   
->> -	test_all_match git blame folder1/a &&
->> -	test_all_match git blame folder2/a &&
->> -	test_all_match git blame deep/deeper2/a &&
->> -	test_all_match git blame deep/deeper2/deepest/a
->> +	for file in a \
->> +			deep/a \
->> +			deep/deeper1/a \
->> +			deep/deeper1/deepest/a
->> +	do
->> +		test_sparse_match test_must_fail git blame $file &&
->> +		cat >expect <<-EOF &&
->> +		fatal: Cannot lstat '"'"'$file'"'"': No such file or directory
->> +		EOF
->> +		# We compare sparse-checkout-err and sparse-index-err in
->> +		# `test_sparse_match`. Given we know they are the same, we
->> +		# only check the content of sparse-index-err here.
->> +		test_cmp expect sparse-index-err
->> +	done
->>   '
->>   
->>   test_expect_success 'checkout and reset (mixed)' '
->> @@ -878,6 +892,18 @@ test_expect_success 'sparse index is not expanded: diff' '
->>   	ensure_not_expanded diff --staged
->>   '
->>   
->> +test_expect_success 'sparse index is not expanded: blame' '
->> +	init_repos &&
->> +
->> +	for file in a \
->> +			deep/a \
->> +			deep/deeper1/a \
->> +			deep/deeper1/deepest/a
->> +	do
->> +		ensure_not_expanded blame $file
->> +	done
->> +'
->> +
->>   # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
->>   # in this scenario, but it shouldn't.
->>   test_expect_success 'reset mixed and checkout orphan' '
-
-Best,
-
-Lessley
+When might you be able to implement this? 3-way merges are doable, but
+I was hoping to be able to have my diff tool (Beyond Compare) be able
+to receive a 3-way diff from git without having to manually check out
+a copy or modify my repository's state.
+There are multiple Stack Overflow questions regarding this.
