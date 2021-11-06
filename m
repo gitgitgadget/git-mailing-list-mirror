@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA453C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5983C4332F
 	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C4DE6108D
+	by mail.kernel.org (Postfix) with ESMTP id 9E15D611EE
 	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234151AbhKFVtx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 17:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43472 "EHLO
+        id S234176AbhKFVty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 17:49:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbhKFVtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 17:49:50 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89FF3C061714
-        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:08 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id u1so19599451wru.13
-        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:47:08 -0700 (PDT)
+        with ESMTP id S234088AbhKFVtv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 17:49:51 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FE94C061746
+        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:09 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso8944518wme.3
+        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wGpunmhWTIGblwwNJnqv7uORoqqxob92N9CZAXEsfTo=;
-        b=MttYNUy0kg3B5hRiWFNus+PaJIvrt28P9/CT6MegftAb0BYOCFrPCZaFZ+yRnjjFqD
-         TWiKnVd3X8mXsx6Wlp8TGw5VHUgxKHHjTwheRvRWJJuA0b5RGYLZ5hmJKhZa8+fN3l3f
-         btTIPlFy1JG37Olmxd+yWx2oAAP3Dgp0afWa1VXPZv0DSUtbqJ6EAqKNewRUvuSIQF6j
-         KOm4tmG7FG03yupD3xUh2HepgIxkRilUHnA7gZ9SFHdbE+YBzFTBGRdUPH23b5Mak9v8
-         eY/7Sc5Kys0pPpGBgKBYJYCzjJ/N0/CDHz48ozZYMygOzWzZ/GLgNK+bAg2wP1X7HgB8
-         2+nw==
+        bh=C2BvJ07ODMQc6mT0PcKKlVh6MLlitNEUGixbqbryvmk=;
+        b=kK3NwLZSN3C1PL97QngFblxmgv0x4GbUiR6Oy+066u1mr5mQpiN+nQl6VPRyaWmx9f
+         1hRxb96+sbupyc2wdSOLQfopi6BJzJvUA8XmqYVxTjDHLMI52z8NsUpyUggIArc7kCBp
+         7eEs5B3buJLuj7L0OVh7G+nePXYjeFeL8uRqvjHU9W44/1WZeauUdPfOlbJm8x9f3a6J
+         2daG9Q5PRqNHylEAVQCGoX/1adG1vHzUmFuithdRnXfGT6hmyUQtbFr/6nol9NvDyhgy
+         TvHuPdLJUbhOa4maTwFl97zhrtARO5VWJ0EQe0b/MCp40fj43ze8uLYiUSzEgX1yOTwV
+         23YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wGpunmhWTIGblwwNJnqv7uORoqqxob92N9CZAXEsfTo=;
-        b=WBM6P09Jl/IztrtDOHgXvQAESsE5h5sFj7D+9tmR6K4Yc1vnAh7UsC/nTbJ2bDZac6
-         agvXQUbGlMVHabfm6x2+/pReNVO1DJZSRVqMzsl0cbaVI6X44jNeJXHwawH8dQug58Ve
-         lqf10B5sDlyOunRDkfmh08BdAS6NXVL8MebtaJKMbudacnLnIq+CtMOl/yxWyrAsBfWf
-         tlDKOPo65UrswhUOWab770Niydrs9/Pzz7Y+K6ey3SNvR7hYJAhxfhAYr6KFs+YITG7o
-         CQ0WXd7aw1r69+MDGQYLs5Gb8zpzUWJJ6P8/nZmWt5A1POs5jdyTxf2IHCFh9C76gdXd
-         +7Eg==
-X-Gm-Message-State: AOAM533P1B7dIqpYuxHSxx31RWz2LkEgaoMO5iAPcWq4GUWj05aEDk7P
-        KZGc9ygzKTQDQVTZ88f+nQfsfxj2sk5COQ==
-X-Google-Smtp-Source: ABdhPJySzKPbiOPHeoVy7W8ZCT/m/kAh6WEvHdo9SoY73+h/Q5nWllILGymKYBrb9Fn4hN3iYylk9A==
-X-Received: by 2002:adf:df0b:: with SMTP id y11mr60626674wrl.181.1636235226960;
-        Sat, 06 Nov 2021 14:47:06 -0700 (PDT)
+        bh=C2BvJ07ODMQc6mT0PcKKlVh6MLlitNEUGixbqbryvmk=;
+        b=ikqIVStM3bVIIJDFawiH68fb0XaYkxQIo513QTLOD7NIX0gHenMv4t6CD8vj381pBo
+         xTSk3+HANQrxKLpUEVzCT7lxS9PnALhPrESJRKEZ3FDOFIt3qIXy6O1whPBJL8ezG3/K
+         s618P5QqeLewpbrY16xPf0mYtd0WV78HmcsufW6r3wrFvsyZrjUdPISI+uyOXE/5xgG5
+         qR2MnMBAF3/dM/FmEAsfuiWvAvhmzAl14OW1/ys0fgblIIYTXv9/FZjui8GMGYzt7bvh
+         ec3l8ZqdxFtgB6JD9B0tBPuuuFku7BSmE6t4vrruZ11DC9hekjRELKI33u/uaV4Gmc4y
+         zFwA==
+X-Gm-Message-State: AOAM531OoOfnImiimZ87ORboQxbDeJTC0TxOsWcIdeZ4Fqn0TEuI2aJU
+        HrLXaF///DTyg0Z01uSnzNYdX2/9+NH1sg==
+X-Google-Smtp-Source: ABdhPJyS4bvw72EBAeofS/a/6krDyPkuyc8rRrg2JZ1UtZ9qy66hNM1jaRfFcb+wzwEhJbQwGJcPIA==
+X-Received: by 2002:a7b:c351:: with SMTP id l17mr41740188wmj.120.1636235227706;
+        Sat, 06 Nov 2021 14:47:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f19sm12736630wmq.34.2021.11.06.14.47.06
+        by smtp.gmail.com with ESMTPSA id f19sm12736630wmq.34.2021.11.06.14.47.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Nov 2021 14:47:06 -0700 (PDT)
+        Sat, 06 Nov 2021 14:47:07 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/10] parse-options API: add a usage_msg_optf()
-Date:   Sat,  6 Nov 2021 22:46:55 +0100
-Message-Id: <patch-03.10-5d87897f49c-20211106T214259Z-avarab@gmail.com>
+Subject: [PATCH 04/10] cat-file docs: fix SYNOPSIS and "-h" output
+Date:   Sat,  6 Nov 2021 22:46:56 +0100
+Message-Id: <patch-04.10-29b67330a48-20211106T214259Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc1.741.gab7bfd97031
 In-Reply-To: <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
 References: <xmqqlf33i36a.fsf@gitster.g> <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
@@ -71,79 +71,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a usage_msg_optf() as a shorthand for the sort of
-usage_msg_opt(xstrfmt(...)) used in builtin/stash.c. I'll make more
-use of this function in builtin/cat-file.c shortly.
+There were various inaccuracies in the previous SYNOPSIS output,
+e.g. "--path" is not something that can optionally go with any options
+except --textconv or --filters, as the output implied.
 
-The disconnect between the "..." and "fmt" is a bit unusual, but it
-works just fine and this keeps it consistent with usage_msg_opt(),
-i.e. a caller of it can be moved to usage_msg_optf() and not have to
-have its arguments re-arranged.
+The opening line of the DESCRIPTION section is also "In its first
+form[...]", which refers to "git cat-file <type> <object>", but the
+SYNOPSIS section wasn't showing that as the first form!
+
+That part of the documentation made sense in
+d83a42f34a6 (Documentation: minor grammatical fixes in
+git-cat-file.txt, 2009-03-22) when it was introduced, but since then
+various options that were added have made that intro make no sense in
+the context it was in. Now the two will match again.
+
+The usage output here is not properly aligned on "master" currently,
+but will be with my in-flight 4631cfc20bd (parse-options: properly
+align continued usage output, 2021-09-21), so let's indent things
+correctly in the C code in anticipation of that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/stash.c |  4 ++--
- parse-options.c | 13 +++++++++++++
- parse-options.h | 10 ++++++++++
- 3 files changed, 25 insertions(+), 2 deletions(-)
+ Documentation/git-cat-file.txt | 10 ++++++++--
+ builtin/cat-file.c             | 10 ++++++++--
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index a0ccc8654df..e27ade3e821 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1749,8 +1749,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "save"))
- 		return !!save_stash(argc, argv, prefix);
- 	else if (*argv[0] != '-')
--		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
--			      git_stash_usage, options);
-+		usage_msg_optf(_("unknown subcommand: %s"),
-+			       git_stash_usage, options, argv[0]);
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 27b27e2b300..73ebbc70ee2 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -9,8 +9,14 @@ git-cat-file - Provide content or type and size information for repository objec
+ SYNOPSIS
+ --------
+ [verse]
+-'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--path=<path>] <object>
+-'git cat-file' (--batch[=<format>] | --batch-check[=<format>]) [ --textconv | --filters ] [--follow-symlinks]
++'git cat-file' <type> <object>
++'git cat-file' (-e | -p) <object>
++'git cat-file' ( -t | -s ) [--allow-unknown-type] <object>
++'git cat-file' (--batch | --batch-check) [--batch-all-objects]
++	     [--buffer] [--follow-symlinks] [--unordered]
++	     [--textconv | --filters]
++'git cat-file' (--textconv | --filters )
++	     [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]
  
- 	/* Assume 'stash push' */
- 	strvec_push(&args, "push");
-diff --git a/parse-options.c b/parse-options.c
-index 9a0484c8831..3a8e46be255 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1078,3 +1078,16 @@ void NORETURN usage_msg_opt(const char *msg,
- 	fprintf(stderr, "fatal: %s\n\n", msg);
- 	usage_with_options(usagestr, options);
+ DESCRIPTION
+ -----------
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 86fc03242b8..1df7f797cb6 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -619,8 +619,14 @@ static int batch_objects(struct batch_options *opt)
  }
-+
-+void NORETURN usage_msg_optf(const char * const fmt,
-+			     const char * const *usagestr,
-+			     const struct option *options, ...)
-+{
-+	struct strbuf msg = STRBUF_INIT;
-+	va_list ap;
-+	va_start(ap, options);
-+	strbuf_vaddf(&msg, fmt, ap);
-+	va_end(ap);
-+
-+	usage_msg_opt(msg.buf, usagestr, options);
-+}
-diff --git a/parse-options.h b/parse-options.h
-index bdea052c399..cd1ef584166 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -226,6 +226,16 @@ NORETURN void usage_msg_opt(const char *msg,
- 			    const char * const *usagestr,
- 			    const struct option *options);
  
-+/**
-+ * usage_msg_optf() is like usage_msg_opt() except that the first
-+ * argument is a format string, and optional format arguments follow
-+ * after the 3rd option.
-+ */
-+__attribute__((format (printf,1,4)))
-+void NORETURN usage_msg_optf(const char *fmt,
-+			     const char * const *usagestr,
-+			     const struct option *options, ...);
-+
- /*
-  * Use these assertions for callbacks that expect to be called with NONEG and
-  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
+ static const char * const cat_file_usage[] = {
+-	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
+-	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
++	N_("git cat-file <type> <object>"),
++	N_("git cat-file (-e | -p) <object>"),
++	N_("git cat-file ( -t | -s ) [--allow-unknown-type] <object>"),
++	N_("git cat-file (--batch | --batch-check) [--batch-all-objects]\n"
++	   "             [--buffer] [--follow-symlinks] [--unordered]\n"
++	   "             [--textconv | --filters]"),
++	N_("git cat-file (--textconv | --filters )\n"
++	   "             [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]"),
+ 	NULL
+ };
+ 
 -- 
 2.34.0.rc1.741.gab7bfd97031
 
