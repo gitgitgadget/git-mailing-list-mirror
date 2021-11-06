@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83257C433EF
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E321C433FE
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C0E561027
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8209361027
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234124AbhKFVt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 17:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43484 "EHLO
+        id S234160AbhKFVt6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 17:49:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234106AbhKFVtw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 17:49:52 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC1F8C061570
-        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:10 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i5so19646130wrb.2
-        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:47:10 -0700 (PDT)
+        with ESMTP id S234147AbhKFVtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 17:49:53 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7235AC061714
+        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:11 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so8949859wme.4
+        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UNeutd+7Q6QYKDENZjGNOsI17wHLb60tv+jNnqHwQVY=;
-        b=Rhf6abBWNLFiI9XaSRVUINug0ES3mJcVuU730UU/nQcpWzvhdbwck8Mv+kCx/HN1FZ
-         4vYfzde2elsuuGjEn3LqQZQQ448PgSpN+SPBgN5DbnEi6ikZPMFAtZQqvGWOmCdf7+l3
-         6A4ZlZB/r3+HrrbvtKZe/GhFS9W6hzCWqtus1+NJ7+ggKf9eTmFqHyUC0vNQ1GCO6AQS
-         PVm2ymPL360jVgfZqKfA95xtwrrvOsof1x94PPWFGpppR3rF4vERCpEbZLcg9AmzEDO+
-         dr2I/FR0qgyr5e2UaMd+Spkh27Q9UJ1hyhGRUZ5W+KvZLZkCIwwzAyAivo8+UhEbBKbI
-         T6Fg==
+        bh=7Ej5mKu/FFt2l0QuFb6RejAsBWBHoG6bttRnOnGFAAk=;
+        b=TsrQQ65xiPrssGaTHTKabRhyGMjBwoQm7NiuA6hn6UomYs7p/k1Uzn6qeZiAe+WZPX
+         OUInN3XsCe5RE/fnRWaHndUkx0xAu64HcWileQU6TlB0VhS4hVtEs/6e/Uax90qXRRs8
+         B1va6NSlFNIQ+h7FMgtMkPVvlYgG/Hp4bHnCZVBFNBXBDYlUPogbuPVIPfhUoBBfwxZL
+         JCW+TzpeS5iAresIYGdBRswwtRfd5o5qvh1FtDCvp4eCm8F/BqCvTLDnmIyDNR8DOCgi
+         lqIN4UXOO0LeufO/lxfEmjdIZcPwbC2RySw0GCMHbarhU/rvGSmmQwpw9e5Rn/dvQ1dX
+         xBtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UNeutd+7Q6QYKDENZjGNOsI17wHLb60tv+jNnqHwQVY=;
-        b=1QC1jNyzBE27QFFu+02CJld2dHbch0jPggQ9F5DzWlT25wHjNSgyYDDCrgzTzo99Ze
-         +W16GTLs206xIbCMJygi4lLbBHlBImygWwq/7AAX/3ZWQLya5Zj4Jy9m2LpYkYHXIkEB
-         o2LG+xJNmTRmLTLBbD+CiTVslZfsevY0efTox2aWm6ixFlXo0lT7UaVYNo2erVeUigcv
-         NGH/CkKkYsZjUaPmIIR6pdNL/FufaTdGMFyVvRrogVXt+Ooz/rqJxByMf797nbhZUOgq
-         Jm4m2wSzR21wGkDk7aDGUTknh7QJZvNqcizhQ0H9idC2mUxYhYMAH26H4Q/0ku9cecQS
-         lgpQ==
-X-Gm-Message-State: AOAM530THbbjCR5JUE8SnYXKXg5zILVRBjSM+TuQtRKo19uFMg6RLLZM
-        4mhd3kJiOqUzsBATOObAV5wK4XdDuJdEMw==
-X-Google-Smtp-Source: ABdhPJwZntuGpbAK+T946bBTSv8PJDjO9TLKN25l6gyqpLDl3ep/RCMq284wH6QUf6q0xmhw4IV8jg==
-X-Received: by 2002:a05:6000:18a3:: with SMTP id b3mr36858875wri.343.1636235229104;
+        bh=7Ej5mKu/FFt2l0QuFb6RejAsBWBHoG6bttRnOnGFAAk=;
+        b=ehkdvA8lQzGAhI9JTbtzRxZDunzE1I3ssvxfPIpekqmghTh4Qa5h7azSW0SheKzjRZ
+         FcGQaioYBaeMUs8EjYlCbhzsCZLC0oi+qdxDVvVuBigQg6QjoZ+z80itGB1AJPrUfB3c
+         zEBtjAwPBJnpny3yVc7WQbMf0sqcHlvT0BvfXa+5Sl5pIsy7OrYEHtK2A1lM68x0kfI7
+         VawY/tL7206aMDg7jh3F/6ZH6slFouvOJ+RwAVUuIZ9gM+sRcDd8BQEKonA8v4CzA749
+         VsatsbtM8qjNdZ9UAyVwjG2XeQ1Jy1PFrTsihU9H3SpWEk29eex450G/hKvcSzeloYgp
+         MI2A==
+X-Gm-Message-State: AOAM530np9meKkhqK5xCgoT7y1XbjhBm+vwOjaIgqHwq+OawaCcI38Gv
+        tH4nIUAmx8kzd0++Y7L5VleUpOYUO7a/QQ==
+X-Google-Smtp-Source: ABdhPJySD2rnEuj/OtFwnEcXVqKwOWtO8DKxlAdutrAt4XOKpmLeNEq2QGQ5tu/v5LXEH7AFnHMXLg==
+X-Received: by 2002:a05:600c:2156:: with SMTP id v22mr42775425wml.159.1636235229810;
         Sat, 06 Nov 2021 14:47:09 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f19sm12736630wmq.34.2021.11.06.14.47.08
+        by smtp.gmail.com with ESMTPSA id f19sm12736630wmq.34.2021.11.06.14.47.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Nov 2021 14:47:08 -0700 (PDT)
+        Sat, 06 Nov 2021 14:47:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 06/10] cat-file: make --batch-all-objects a CMDMODE
-Date:   Sat,  6 Nov 2021 22:46:58 +0100
-Message-Id: <patch-06.10-ee49e586483-20211106T214259Z-avarab@gmail.com>
+Subject: [PATCH 07/10] cat-file: fix remaining usage bugs
+Date:   Sat,  6 Nov 2021 22:46:59 +0100
+Message-Id: <patch-07.10-9e1dcd6b824-20211106T214259Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc1.741.gab7bfd97031
 In-Reply-To: <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
 References: <xmqqlf33i36a.fsf@gitster.g> <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
@@ -71,125 +71,250 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The usage of OPT_CMDMODE() in "cat-file"[1] was added in parallel with
-the development of[3] the --batch-all-objects option[4], so we've
-since grown[5] checks that it can't be combined with other command
-modes, when it should just be made a top-level command-mode
-instead. It doesn't combine with --filters, --textconv etc.
+With the migration of --batch-all-objects to OPT_CMDMODE() in the
+preceding commit one bug with combining it and other OPT_CMDMODE()
+options was solved, but we were still left with e.g. --buffer silently
+being discarded when not in batch mode.
 
-By giving parse_options() information about what options are mutually
-exclusive with one another we can get the die9) message being removed
-here for free, we didn't even use that removed message in some cases,
-e.g. for both of:
+Fix all those bugs, and in addition emit errors telling the user
+specifically what options can't be combined with what other options,
+before this we'd usually just emit the cryptic usage text and leave
+the users to work it out by themselves.
 
-    --batch-all-objects --textconv
-    --batch-all-objects --filters
+This change is rather large, because to do so we need to untangle the
+options processing so that we can not only error out, but emit
+sensible errors, and e.g. emit errors about options before errors
+about stray argc elements (as they might become valid if the option
+were removed).
 
-We'd take the "goto usage" in the "if (opt)" branch, and never reach
-the previous message. Now we'll emit e.g.:
-
-    $ git cat-file --batch-all-objects --filters
-    error: option `filters' is incompatible with --batch-all-objects
-
-1. b48158ac94c (cat-file: make the options mutually exclusive, 2015-05-03)
-2. https://lore.kernel.org/git/xmqqtwspgusf.fsf@gitster.dls.corp.google.com/
-3. https://lore.kernel.org/git/20150622104559.GG14475@peff.net/
-4. 6a951937ae1 (cat-file: add --batch-all-objects option, 2015-06-22)
-5. 321459439e1 (cat-file: support --textconv/--filters in batch mode, 2016-09-09)
+Some of the output changes ("error:" to "fatal:" with
+usage_msg_opt[f]()), but none of the exit codes change, except in
+those cases where we silently accepted bad option combinations before,
+now we'll error out.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/cat-file.c  | 25 +++++++++++--------------
- t/t1006-cat-file.sh |  7 ++-----
- 2 files changed, 13 insertions(+), 19 deletions(-)
+ builtin/cat-file.c  | 95 ++++++++++++++++++++++++++++++---------------
+ t/t1006-cat-file.sh | 41 +++++++++----------
+ 2 files changed, 84 insertions(+), 52 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 6d0f645301b..87356208134 100644
+index 87356208134..f507e3ae46c 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -674,6 +674,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
- 		OPT_CMDMODE(0, "filters", &opt,
- 			    N_("for blob objects, run filters on object's content"), 'w'),
-+		OPT_CMDMODE(0, "batch-all-objects", &opt,
-+			    N_("show all objects with --batch or --batch-check"), 'b'),
- 		OPT_STRING(0, "path", &force_path, N_("blob"),
- 			   N_("use a specific path for --textconv/--filters")),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
-@@ -689,8 +691,6 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			batch_option_callback),
- 		OPT_BOOL(0, "follow-symlinks", &batch.follow_symlinks,
- 			 N_("follow in-tree symlinks (used with --batch or --batch-check)")),
--		OPT_BOOL(0, "batch-all-objects", &batch.all_objects,
--			 N_("show all objects with --batch or --batch-check")),
- 		OPT_BOOL(0, "unordered", &batch.unordered,
- 			 N_("do not order --batch-all-objects output")),
- 		OPT_END()
-@@ -699,30 +699,27 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	git_config(git_cat_file_config, NULL);
- 
+@@ -648,6 +648,8 @@ static int batch_option_callback(const struct option *opt,
+ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ {
+ 	int opt = 0;
++	int opt_cw = 0;
++	int opt_epts = 0;
+ 	const char *exp_type = NULL, *obj_name = NULL;
+ 	struct batch_options batch = {0};
+ 	int unknown_type = 0;
+@@ -701,45 +703,74 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
  	batch.buffer_output = -1;
--	argc = parse_options(argc, argv, prefix, options, usage, 0);
  
--	if (opt) {
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc && batch.enabled)
-+		usage_with_options(usage, options);
-+	if (opt == 'b') {
-+		batch.all_objects = 1;
-+	} else if (opt) {
- 		if (batch.enabled && (opt == 'c' || opt == 'w'))
- 			batch.cmdmode = opt;
- 		else if (argc == 1)
- 			obj_name = argv[0];
- 		else
- 			usage_with_options(usage, options);
--	}
--	if (!opt && !batch.enabled) {
-+	} else if (!opt && !batch.enabled) {
- 		if (argc == 2) {
- 			exp_type = argv[0];
- 			obj_name = argv[1];
- 		} else
- 			usage_with_options(usage, options);
--	}
--	if (batch.enabled) {
--		if (batch.cmdmode != opt || argc)
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+-	if (argc && batch.enabled)
+-		usage_with_options(usage, options);
+-	if (opt == 'b') {
+-		batch.all_objects = 1;
+-	} else if (opt) {
+-		if (batch.enabled && (opt == 'c' || opt == 'w'))
+-			batch.cmdmode = opt;
+-		else if (argc == 1)
+-			obj_name = argv[0];
+-		else
 -			usage_with_options(usage, options);
--		if (batch.cmdmode && batch.all_objects)
--			die("--batch-all-objects cannot be combined with "
--			    "--textconv nor with --filters");
--	}
-+	} else if (batch.enabled && batch.cmdmode != opt)
-+		usage_with_options(usage, options);
+-	} else if (!opt && !batch.enabled) {
+-		if (argc == 2) {
+-			exp_type = argv[0];
+-			obj_name = argv[1];
+-		} else
+-			usage_with_options(usage, options);
+-	} else if (batch.enabled && batch.cmdmode != opt)
+-		usage_with_options(usage, options);
++	opt_cw = (opt == 'c' || opt == 'w');
++	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
  
- 	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
- 		usage_with_options(usage, options);
+-	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
+-		usage_with_options(usage, options);
+-	}
+-
+-	if (force_path && opt != 'c' && opt != 'w') {
+-		error("--path=<path> needs --textconv or --filters");
+-		usage_with_options(usage, options);
+-	}
++	/* --batch-all-objects? */
++	if (opt == 'b')
++		batch.all_objects = 1;
+ 
+-	if (force_path && batch.enabled) {
+-		error("--path=<path> incompatible with --batch");
+-		usage_with_options(usage, options);
+-	}
++	/* Option compatibility */
++	if (force_path && !opt_cw)
++		usage_msg_optf(_("'%s=<%s> needs '%s' or '%s'"),
++			       usage, options,
++			       "--path", _("path|tree-ish"), "--filters",
++			       "--textconv");
+ 
++	/* Option compatibility with batch mode */
++	if (batch.enabled)
++		;
++	else if (batch.follow_symlinks)
++		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++			       "--follow_symlinks");
++	else if (batch.buffer_output >= 0)
++		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++			       "--buffer");
++	else if (batch.all_objects)
++		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++			       "--batch-all_objects");
++
++	/* Batch defaults */
+ 	if (batch.buffer_output < 0)
+ 		batch.buffer_output = batch.all_objects;
+ 
+-	if (batch.enabled)
++	/* Return early if we're in batch mode? */
++	if (batch.enabled) {
++		if (opt_cw)
++			batch.cmdmode = opt;
++		else if (opt && opt != 'b')
++			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
++				       usage, options, opt);
++		else if (argc)
++			usage_msg_opt(_("batch modes take no arguments"), usage,
++				      options);
++
+ 		return batch_objects(&batch);
++	}
++
++	if (opt) {
++		if (!argc && opt == 'c')
++			usage_msg_optf(_("<rev> required with '%s'"),
++				       usage, options, "--textconv");
++		else if (!argc && opt == 'w')
++			usage_msg_optf(_("<rev> required with '%s'"),
++				       usage, options, "--filters");
++		else if (!argc && opt_epts)
++			usage_msg_optf(_("<object> required with '-%c'"),
++				       usage, options, opt);
++		else if (argc == 1)
++			obj_name = argv[0];
++		else
++			usage_msg_opt(_("too many arguments"), usage, options);
++	} else if (!argc) {
++		usage_with_options(usage, options);
++	} else if (argc != 2) {
++		usage_msg_optf(_("only two arguments allowed in <type> <object> mode, not %d"),
++			      usage, options, argc);
++	} else if (argc) {
++		exp_type = argv[0];
++		obj_name = argv[1];
++	}
+ 
+ 	if (unknown_type && opt != 't' && opt != 's')
+ 		die("git cat-file --allow-unknown-type: use with -s or -t");
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 0ad00e1fe73..44285f749cd 100755
+index 44285f749cd..10bf46fc513 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -14,7 +14,8 @@ test_expect_success 'usage: cmdmode' '
- 	test_cmdmode_usage git cat-file -p -t &&
- 	test_cmdmode_usage git cat-file -t -s &&
- 	test_cmdmode_usage git cat-file -s --textconv &&
--	test_cmdmode_usage git cat-file --textconv --filters
-+	test_cmdmode_usage git cat-file --textconv --filters &&
-+	test_cmdmode_usage git cat-file --batch-all-objects -e
- '
+@@ -20,7 +20,7 @@ test_expect_success 'usage: cmdmode' '
  
  test_incompatible_usage() {
-@@ -37,10 +38,6 @@ do
- 	test_expect_success "usage: $opt requires another option" '
- 		test_expect_code 129 git cat-file $opt
+ 	test_expect_code 129 "$@" 2>err &&
+-	grep -E "^error:.*$switch.*needs" err
++	grep -E "^(fatal|error):.*$switch.*(requires|incompatible with|needs)" err
+ }
+ 
+ for opt in --batch --batch-check
+@@ -30,48 +30,54 @@ do
  	'
--
--	test_expect_failure "usage: incompatible options: --batch-all-objects with $opt" '
--		test_incompatible_usage git cat-file --batch-all-objects $opt
--	'
+ done
+ 
++test_missing_usage() {
++	test_expect_code 129 "$@" 2>err &&
++	grep -E "^fatal:.*required" err
++}
++
+ short_modes="-e -p -t -s"
+ cw_modes="--textconv --filters"
+ 
+ for opt in $cw_modes
+ do
+ 	test_expect_success "usage: $opt requires another option" '
+-		test_expect_code 129 git cat-file $opt
++		test_missing_usage git cat-file $opt
+ 	'
  done
  
  for opt in $short_modes
+ do
+ 	test_expect_success "usage: $opt requires another option" '
+-		test_expect_code 129 git cat-file $opt
++		test_missing_usage git cat-file $opt
+ 	'
+ 
+ 	for opt2 in --batch \
+ 		--batch-check \
+-		--follow-symlinks
++		--follow-symlinks \
++		"--path=foo HEAD:some-path.txt"
+ 	do
+-		test_expect_failure "usage: incompatible options: $opt and $opt2" '
++		test_expect_success "usage: incompatible options: $opt and $opt2" '
+ 			test_incompatible_usage git cat-file $opt $opt2
+ 		'
+ 	done
+-
+-	opt2="--path=foo HEAD:some-path.txt"
+-	test_expect_success "usage: incompatible options: $opt and $opt2" '
+-		test_incompatible_usage git cat-file $opt $opt2
+-	'
+ done
+ 
++test_too_many_arguments() {
++	test_expect_code 129 "$@" 2>err &&
++	grep -E "^fatal: too many arguments$" err
++}
++
+ for opt in $short_modes $cw_modes
+ do
+ 	args="one two three"
+ 	test_expect_success "usage: too many arguments: $opt $args" '
+-		test_expect_code 129 git cat-file $opt $args
++		test_too_many_arguments git cat-file $opt $args
+ 	'
+ 
+ 	for opt2 in --buffer --follow-symlinks
+ 	do
+ 		test_expect_success "usage: incompatible arguments: $opt with batch option $opt2" '
+-			test_expect_code 129 git cat-file $opt $opt2
++			test_incompatible_usage git cat-file $opt $opt2
+ 		'
+ 	done
+ done
+@@ -80,14 +86,9 @@ for opt in --buffer \
+ 	--follow-symlinks \
+ 	--batch-all-objects
+ do
+-	status=success
+-	if test $opt = "--buffer"
+-	then
+-		status=failure
+-	fi
+-	test_expect_$status "usage: bad option combination: $opt without batch mode" '
+-		test_expect_code 129 git cat-file $opt &&
+-		test_expect_code 129 git cat-file $opt commit HEAD
++	test_expect_success "usage: bad option combination: $opt without batch mode" '
++		test_incompatible_usage git cat-file $opt &&
++		test_incompatible_usage git cat-file $opt commit HEAD
+ 	'
+ done
+ 
 -- 
 2.34.0.rc1.741.gab7bfd97031
 
