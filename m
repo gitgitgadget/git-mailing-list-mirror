@@ -2,28 +2,29 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D38E6C433EF
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 18:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05DEDC433F5
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 18:49:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA6B1611EE
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 18:49:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFAA2611EE
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 18:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234737AbhKFSwU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 14:52:20 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:64126 "EHLO smtp4-g21.free.fr"
+        id S234794AbhKFSwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 14:52:24 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:64564 "EHLO smtp4-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234059AbhKFSwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 14:52:19 -0400
+        id S234266AbhKFSwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 14:52:23 -0400
 Received: from localhost.localdomain (unknown [IPv6:2a01:e0a:d1:f360:9225:6fd8:b89b:1501])
-        by smtp4-g21.free.fr (Postfix) with ESMTP id 928DA19F4B5;
-        Sat,  6 Nov 2021 19:49:33 +0100 (CET)
+        by smtp4-g21.free.fr (Postfix) with ESMTP id D446D19F574;
+        Sat,  6 Nov 2021 19:49:36 +0100 (CET)
 From:   =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 03/10] doc: express grammar placeholders between angle brackets
-Date:   Sat,  6 Nov 2021 19:48:51 +0100
-Message-Id: <20211106184858.11500-4-jn.avila@free.fr>
+        Junio C Hamano <gitster@pobox.com>,
+        Eli Schwartz <eschwartz@archlinux.org>
+Subject: [PATCH v3 04/10] doc: use only hyphens as word separators in placeholders
+Date:   Sat,  6 Nov 2021 19:48:52 +0100
+Message-Id: <20211106184858.11500-5-jn.avila@free.fr>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211106184858.11500-1-jn.avila@free.fr>
 References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
@@ -35,300 +36,523 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This discerns user inputs from verbatim options in the synopsis.
+According to CodingGuidelines, multi-word placeholders should use
+hyphens as word separators.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Reviewed-by: Eli Schwartz <eschwartz@archlinux.org>
 ---
- Documentation/git-cherry-pick.txt     |  6 ++--
- Documentation/git-config.txt          | 46 +++++++++++++--------------
- Documentation/git-cvsexportcommit.txt |  4 +--
- Documentation/git-gui.txt             |  2 +-
- Documentation/git-help.txt            |  6 ++--
- Documentation/git-http-fetch.txt      |  2 +-
- Documentation/git-init.txt            |  2 +-
- Documentation/git-pack-objects.txt    |  4 +--
- Documentation/git-pack-redundant.txt  |  2 +-
- Documentation/git-reflog.txt          |  4 +--
- Documentation/git-sparse-checkout.txt |  2 +-
- Documentation/git-stage.txt           |  2 +-
- 12 files changed, 41 insertions(+), 41 deletions(-)
+ Documentation/date-formats.txt   |  6 ++--
+ Documentation/git-checkout.txt   | 36 ++++++++++-----------
+ Documentation/git-clone.txt      |  8 ++---
+ Documentation/git-cvsimport.txt  |  8 ++---
+ Documentation/git-diff-files.txt |  2 +-
+ Documentation/git-diff-index.txt |  2 +-
+ Documentation/git-diff-tree.txt  |  2 +-
+ Documentation/git-init-db.txt    |  2 +-
+ Documentation/git-init.txt       |  8 ++---
+ Documentation/git-log.txt        |  8 ++---
+ Documentation/git-p4.txt         |  6 ++--
+ Documentation/git-shortlog.txt   |  8 ++---
+ Documentation/git-svn.txt        |  2 +-
+ Documentation/pretty-formats.txt | 54 ++++++++++++++++----------------
+ 14 files changed, 76 insertions(+), 76 deletions(-)
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 5d750314b2..78dcc9171f 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -8,7 +8,7 @@ git-cherry-pick - Apply the changes introduced by some existing commits
- SYNOPSIS
- --------
- [verse]
--'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
-+'git cherry-pick' [--edit] [-n] [-m <parent-number>] [-s] [-x] [--ff]
- 		  [-S[<keyid>]] <commit>...
- 'git cherry-pick' (--continue | --skip | --abort | --quit)
+diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+index 99c455f51c..67645cae64 100644
+--- a/Documentation/date-formats.txt
++++ b/Documentation/date-formats.txt
+@@ -5,9 +5,9 @@ The `GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE` environment variables
+ support the following date formats:
  
-@@ -81,8 +81,8 @@ OPTIONS
- 	described above, and `-r` was to disable it.  Now the
- 	default is not to do `-x` so this option is a no-op.
+ Git internal format::
+-	It is `<unix timestamp> <time zone offset>`, where `<unix
+-	timestamp>` is the number of seconds since the UNIX epoch.
+-	`<time zone offset>` is a positive or negative offset from UTC.
++	It is `<unix-timestamp> <time-zone-offset>`, where
++	`<unix-timestamp>` is the number of seconds since the UNIX epoch.
++	`<time-zone-offset>` is a positive or negative offset from UTC.
+ 	For example CET (which is 1 hour ahead of UTC) is `+0100`.
  
---m parent-number::
----mainline parent-number::
-+-m <parent-number>::
-+--mainline <parent-number>::
- 	Usually you cannot cherry-pick a merge because you do not know which
- 	side of the merge should be considered the mainline.  This
- 	option specifies the parent number (starting from 1) of
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 992225f612..2285effb36 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,20 +9,20 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git config' [<file-option>] [--type=<type>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] name [value [value-pattern]]
--'git config' [<file-option>] [--type=<type>] --add name value
--'git config' [<file-option>] [--type=<type>] [--fixed-value] --replace-all name value [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get name [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all name [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp name_regex [value-pattern]
--'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
--'git config' [<file-option>] [--fixed-value] --unset name [value-pattern]
--'git config' [<file-option>] [--fixed-value] --unset-all name [value-pattern]
--'git config' [<file-option>] --rename-section old_name new_name
--'git config' [<file-option>] --remove-section name
-+'git config' [<file-option>] [--type=<type>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] <name> [<value> [<value-pattern>]]
-+'git config' [<file-option>] [--type=<type>] --add <name> <value>
-+'git config' [<file-option>] [--type=<type>] [--fixed-value] --replace-all <name> <value> [<value-pattern>]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get <name> [<value-pattern>]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all <name> [<value-pattern>]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp <name-regex> [<value-pattern>]
-+'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch <name> <URL>
-+'git config' [<file-option>] [--fixed-value] --unset <name> [<value-pattern>]
-+'git config' [<file-option>] [--fixed-value] --unset-all <name> [<value-pattern>]
-+'git config' [<file-option>] --rename-section <old-name> <new-name>
-+'git config' [<file-option>] --remove-section <name>
- 'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [--name-only] -l | --list
--'git config' [<file-option>] --get-color name [default]
--'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
-+'git config' [<file-option>] --get-color <name> [<default>]
-+'git config' [<file-option>] --get-colorbool <name> [<stdout-is-tty>]
- 'git config' [<file-option>] -e | --edit
+ RFC 2822::
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index d473c9bf38..a52dc49a3d 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] [<branch>]
+ 'git checkout' [-q] [-f] [-m] --detach [<branch>]
+ 'git checkout' [-q] [-f] [-m] [--detach] <commit>
+-'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
++'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new-branch>] [<start-point>]
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
+ 'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+@@ -43,7 +43,7 @@ You could omit `<branch>`, in which case the command degenerates to
+ rather expensive side-effects to show only the tracking information,
+ if exists, for the current branch.
  
- DESCRIPTION
-@@ -102,9 +102,9 @@ OPTIONS
- 	in which section and variable names are lowercased, but subsection
- 	names are not.
+-'git checkout' -b|-B <new_branch> [<start point>]::
++'git checkout' -b|-B <new-branch> [<start-point>]::
  
----get-urlmatch name URL::
-+--get-urlmatch <name> <URL>::
- 	When given a two-part name section.key, the value for
--	section.<url>.key whose <url> part matches the best to the
-+	section.<URL>.key whose <URL> part matches the best to the
- 	given URL is returned (if no such key exists, the value for
- 	section.key is used as a fallback).  When given just the
- 	section as name, do so for all the keys in the section and
-@@ -145,8 +145,8 @@ See also <<FILES>>.
- 	read from or written to if `extensions.worktreeConfig` is
- 	present. If not it's the same as `--local`.
- 
---f config-file::
----file config-file::
-+-f <config-file>::
-+--file <config-file>::
- 	For writing options: write to the specified file rather than the
- 	repository `.git/config`.
+ 	Specifying `-b` causes a new branch to be created as if
+ 	linkgit:git-branch[1] were called and then checked out.  In
+@@ -52,11 +52,11 @@ if exists, for the current branch.
+ 	`--track` without `-b` implies branch creation; see the
+ 	description of `--track` below.
  +
-@@ -155,7 +155,7 @@ available files.
+-If `-B` is given, `<new_branch>` is created if it doesn't exist; otherwise, it
++If `-B` is given, `<new-branch>` is created if it doesn't exist; otherwise, it
+ is reset. This is the transactional equivalent of
  +
- See also <<FILES>>.
+ ------------
+-$ git branch -f <branch> [<start point>]
++$ git branch -f <branch> [<start-point>]
+ $ git checkout <branch>
+ ------------
+ +
+@@ -145,13 +145,13 @@ as `ours` (i.e. "our shared canonical history"), while what you did
+ on your side branch as `theirs` (i.e. "one contributor's work on top
+ of it").
  
----blob blob::
-+--blob <blob>::
- 	Similar to `--file` but use the given blob instead of a file. E.g.
- 	you can use 'master:.gitmodules' to read values from the file
- 	'.gitmodules' in the master branch. See "SPECIFYING REVISIONS"
-@@ -246,18 +246,18 @@ Valid `<type>`'s include:
- 	all queried config options with the scope of that value
- 	(local, global, system, command).
+--b <new_branch>::
+-	Create a new branch named `<new_branch>` and start it at
+-	`<start_point>`; see linkgit:git-branch[1] for details.
++-b <new-branch>::
++	Create a new branch named `<new-branch>` and start it at
++	`<start-point>`; see linkgit:git-branch[1] for details.
  
----get-colorbool name [stdout-is-tty]::
-+--get-colorbool <name> [<stdout-is-tty>]::
+--B <new_branch>::
+-	Creates the branch `<new_branch>` and start it at `<start_point>`;
+-	if it already exists, then reset it to `<start_point>`. This is
++-B <new-branch>::
++	Creates the branch `<new-branch>` and start it at `<start-point>`;
++	if it already exists, then reset it to `<start-point>`. This is
+ 	equivalent to running "git branch" with "-f"; see
+ 	linkgit:git-branch[1] for details.
  
--	Find the color setting for `name` (e.g. `color.diff`) and output
--	"true" or "false".  `stdout-is-tty` should be either "true" or
-+	Find the color setting for `<name>` (e.g. `color.diff`) and output
-+	"true" or "false".  `<stdout-is-tty>` should be either "true" or
- 	"false", and is taken into account when configuration says
--	"auto".  If `stdout-is-tty` is missing, then checks the standard
-+	"auto".  If `<stdout-is-tty>` is missing, then checks the standard
- 	output of the command itself, and exits with status 0 if color
- 	is to be used, or exits with status 1 otherwise.
- 	When the color setting for `name` is undefined, the command uses
- 	`color.ui` as fallback.
+@@ -210,16 +210,16 @@ variable.
+ 	`<commit>` is not a branch name.  See the "DETACHED HEAD" section
+ 	below for details.
  
----get-color name [default]::
-+--get-color <name> [<default>]::
+---orphan <new_branch>::
+-	Create a new 'orphan' branch, named `<new_branch>`, started from
+-	`<start_point>` and switch to it.  The first commit made on this
++--orphan <new-branch>::
++	Create a new 'orphan' branch, named `<new-branch>`, started from
++	`<start-point>` and switch to it.  The first commit made on this
+ 	new branch will have no parents and it will be the root of a new
+ 	history totally disconnected from all the other branches and
+ 	commits.
+ +
+ The index and the working tree are adjusted as if you had previously run
+-`git checkout <start_point>`.  This allows you to start a new history
+-that records a set of paths similar to `<start_point>` by easily running
++`git checkout <start-point>`.  This allows you to start a new history
++that records a set of paths similar to `<start-point>` by easily running
+ `git commit -a` to make the root commit.
+ +
+ This can be useful when you want to publish the tree from a commit
+@@ -229,7 +229,7 @@ whose full history contains proprietary or otherwise encumbered bits of
+ code.
+ +
+ If you want to start a disconnected history that records a set of paths
+-that is totally different from the one of `<start_point>`, then you should
++that is totally different from the one of `<start-point>`, then you should
+ clear the index and the working tree right after creating the orphan
+ branch by running `git rm -rf .` from the top level of the working tree.
+ Afterwards you will be ready to prepare your new files, repopulating the
+@@ -341,10 +341,10 @@ As a special case, you may use `A...B` as a shortcut for the
+ merge base of `A` and `B` if there is exactly one merge base. You can
+ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
  
- 	Find the color configured for `name` (e.g. `color.diff.new`) and
- 	output it as the ANSI color escape sequence to the standard
-diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
-index 00154b6c85..41c8a8a05c 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -9,8 +9,8 @@ git-cvsexportcommit - Export a single commit to a CVS checkout
+-<new_branch>::
++<new-branch>::
+ 	Name for the new branch.
+ 
+-<start_point>::
++<start-point>::
+ 	The name of a commit at which to start the new branch; see
+ 	linkgit:git-branch[1] for details. Defaults to `HEAD`.
+ +
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 3fe3810f1c..9685ea0691 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -9,10 +9,10 @@ git-clone - Clone a repository into a new directory
  SYNOPSIS
  --------
  [verse]
--'git cvsexportcommit' [-h] [-u] [-v] [-c] [-P] [-p] [-a] [-d cvsroot]
--	[-w cvsworkdir] [-W] [-f] [-m msgprefix] [PARENTCOMMIT] COMMITID
-+'git cvsexportcommit' [-h] [-u] [-v] [-c] [-P] [-p] [-a] [-d <cvsroot>]
-+	[-w <cvs-workdir>] [-W] [-f] [-m <msgprefix>] [<parent-commit>] <commit-id>
+-'git clone' [--template=<template_directory>]
++'git clone' [--template=<template-directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--dissociate] [--separate-git-dir <git dir>]
++	  [--dissociate] [--separate-git-dir <git-dir>]
+ 	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+ 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+ 	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+@@ -211,7 +211,7 @@ objects from the source repository into a pack in the cloned repository.
+ 	via ssh, this specifies a non-default path for the command
+ 	run on the other end.
+ 
+---template=<template_directory>::
++--template=<template-directory>::
+ 	Specify the directory from which templates will be used;
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+ 
+@@ -294,7 +294,7 @@ or `--mirror` is given)
+ 	superproject's recorded SHA-1. Equivalent to passing `--remote` to
+ 	`git submodule update`.
+ 
+---separate-git-dir=<git dir>::
++--separate-git-dir=<git-dir>::
+ 	Instead of placing the cloned repository where it is supposed
+ 	to be, place the cloned repository at the specified directory,
+ 	then make a filesystem-agnostic Git symbolic link to there.
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index de1ebed67d..b3f27671a0 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -11,9 +11,9 @@ SYNOPSIS
+ [verse]
+ 'git cvsimport' [-o <branch-for-HEAD>] [-h] [-v] [-d <CVSROOT>]
+ 	      [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
+-	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
+-	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
+-	      [-r <remote>] [-R] [<CVS_module>]
++	      [-C <git-repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
++	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commit-limit>]
++	      [-r <remote>] [-R] [<CVS-module>]
  
  
  DESCRIPTION
-diff --git a/Documentation/git-gui.txt b/Documentation/git-gui.txt
-index c9d7e96214..e8f3ccb433 100644
---- a/Documentation/git-gui.txt
-+++ b/Documentation/git-gui.txt
-@@ -8,7 +8,7 @@ git-gui - A portable graphical interface to Git
+@@ -59,7 +59,7 @@ OPTIONS
+ 	from `CVS/Root`. If no such file exists, it checks for the
+ 	`CVSROOT` environment variable.
+ 
+-<CVS_module>::
++<CVS-module>::
+ 	The CVS module you want to import. Relative to <CVSROOT>.
+ 	If not given, 'git cvsimport' tries to read it from
+ 	`CVS/Repository`.
+diff --git a/Documentation/git-diff-files.txt b/Documentation/git-diff-files.txt
+index 906774f0f7..bf1febb9ae 100644
+--- a/Documentation/git-diff-files.txt
++++ b/Documentation/git-diff-files.txt
+@@ -9,7 +9,7 @@ git-diff-files - Compares files in the working tree and the index
  SYNOPSIS
  --------
  [verse]
--'git gui' [<command>] [arguments]
-+'git gui' [<command>] [<arguments>]
+-'git diff-files' [-q] [-0|-1|-2|-3|-c|--cc] [<common diff options>] [<path>...]
++'git diff-files' [-q] [-0|-1|-2|-3|-c|--cc] [<common-diff-options>] [<path>...]
  
  DESCRIPTION
  -----------
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index 96d5f598b4..44ea63cc6d 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -9,14 +9,14 @@ SYNOPSIS
- --------
- [verse]
- 'git help' [-a|--all [--[no-]verbose]]
--	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
-+	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
- 'git help' [-g|--guides]
- 'git help' [-c|--config]
- 
- DESCRIPTION
- -----------
- 
--With no options and no COMMAND or GUIDE given, the synopsis of the 'git'
-+With no options and no '<command>' or '<guide>' given, the synopsis of the 'git'
- command and a list of the most commonly used Git commands are printed
- on the standard output.
- 
-@@ -33,7 +33,7 @@ variables.
- 
- If an alias is given, git shows the definition of the alias on
- standard output. To get the manual page for the aliased command, use
--`git COMMAND --help`.
-+`git <command> --help`.
- 
- Note that `git --help ...` is identical to `git help ...` because the
- former is internally converted into the latter.
-diff --git a/Documentation/git-http-fetch.txt b/Documentation/git-http-fetch.txt
-index 9fa17b60e4..fa4bb6cbc3 100644
---- a/Documentation/git-http-fetch.txt
-+++ b/Documentation/git-http-fetch.txt
-@@ -9,7 +9,7 @@ git-http-fetch - Download from a remote Git repository via HTTP
+diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
+index 27acb31cbf..679cae27d9 100644
+--- a/Documentation/git-diff-index.txt
++++ b/Documentation/git-diff-index.txt
+@@ -9,7 +9,7 @@ git-diff-index - Compare a tree to the working tree or index
  SYNOPSIS
  --------
  [verse]
--'git http-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [--stdin | --packfile=<hash> | <commit>] <url>
-+'git http-fetch' [-c] [-t] [-a] [-d] [-v] [-w <filename>] [--recover] [--stdin | --packfile=<hash> | <commit>] <url>
+-'git diff-index' [-m] [--cached] [--merge-base] [<common diff options>] <tree-ish> [<path>...]
++'git diff-index' [-m] [--cached] [--merge-base] [<common-diff-options>] <tree-ish> [<path>...]
  
  DESCRIPTION
  -----------
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+index 2fc24c542f..274d5eaba9 100644
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git diff-tree' [--stdin] [-m] [-s] [-v] [--no-commit-id] [--pretty]
+ 	      [-t] [-r] [-c | --cc] [--combined-all-paths] [--root] [--merge-base]
+-	      [<common diff options>] <tree-ish> [<tree-ish>] [<path>...]
++	      [<common-diff-options>] <tree-ish> [<tree-ish>] [<path>...]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-db.txt
+index 648a6cd78a..18bf1a3c8c 100644
+--- a/Documentation/git-init-db.txt
++++ b/Documentation/git-init-db.txt
+@@ -9,7 +9,7 @@ git-init-db - Creates an empty Git repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git init-db' [-q | --quiet] [--bare] [--template=<template_directory>] [--separate-git-dir <git dir>] [--shared[=<permissions>]]
++'git init-db' [-q | --quiet] [--bare] [--template=<template-directory>] [--separate-git-dir <git-dir>] [--shared[=<permissions>]]
+ 
+ 
+ DESCRIPTION
 diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index b611d80697..7781d0b354 100644
+index 7781d0b354..fdb7b3f367 100644
 --- a/Documentation/git-init.txt
 +++ b/Documentation/git-init.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
- 	  [--separate-git-dir <git dir>] [--object-format=<format>]
- 	  [-b <branch-name> | --initial-branch=<branch-name>]
--	  [--shared[=<permissions>]] [directory]
-+	  [--shared[=<permissions>]] [<directory>]
- 
- 
- DESCRIPTION
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index dbfd1f9017..f8344e1e5b 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -13,8 +13,8 @@ SYNOPSIS
- 	[--no-reuse-delta] [--delta-base-offset] [--non-empty]
- 	[--local] [--incremental] [--window=<n>] [--depth=<n>]
- 	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
--	[--stdout [--filter=<filter-spec>] | base-name]
--	[--shallow] [--keep-true-parents] [--[no-]sparse] < object-list
-+	[--stdout [--filter=<filter-spec>] | <base-name>]
-+	[--shallow] [--keep-true-parents] [--[no-]sparse] < <object-list>
- 
- 
- DESCRIPTION
-diff --git a/Documentation/git-pack-redundant.txt b/Documentation/git-pack-redundant.txt
-index f2869da572..ee7034b5e5 100644
---- a/Documentation/git-pack-redundant.txt
-+++ b/Documentation/git-pack-redundant.txt
-@@ -9,7 +9,7 @@ git-pack-redundant - Find redundant pack files
+@@ -9,8 +9,8 @@ git-init - Create an empty Git repository or reinitialize an existing one
  SYNOPSIS
  --------
  [verse]
--'git pack-redundant' [ --verbose ] [ --alt-odb ] < --all | .pack filename ... >
-+'git pack-redundant' [ --verbose ] [ --alt-odb ] ( --all | <pack-filename>... )
+-'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
+-	  [--separate-git-dir <git dir>] [--object-format=<format>]
++'git init' [-q | --quiet] [--bare] [--template=<template-directory>]
++	  [--separate-git-dir <git-dir>] [--object-format=<format>]
+ 	  [-b <branch-name> | --initial-branch=<branch-name>]
+ 	  [--shared[=<permissions>]] [<directory>]
+ 
+@@ -57,12 +57,12 @@ values are 'sha1' and (if enabled) 'sha256'.  'sha1' is the default.
+ +
+ include::object-format-disclaimer.txt[]
+ 
+---template=<template_directory>::
++--template=<template-directory>::
+ 
+ Specify the directory from which templates will be used.  (See the "TEMPLATE
+ DIRECTORY" section below.)
+ 
+---separate-git-dir=<git dir>::
++--separate-git-dir=<git-dir>::
+ 
+ Instead of initializing the repository as a directory to either `$GIT_DIR` or
+ `./.git/`, create a text file there containing the path to the actual
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 0498e7bacb..20e87cecf4 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -9,7 +9,7 @@ git-log - Show commit logs
+ SYNOPSIS
+ --------
+ [verse]
+-'git log' [<options>] [<revision range>] [[--] <path>...]
++'git log' [<options>] [<revision-range>] [[--] <path>...]
  
  DESCRIPTION
  -----------
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index ff487ff77d..5ced7ad4f8 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -17,12 +17,12 @@ The command takes various subcommands, and different options
- depending on the subcommand:
+@@ -81,13 +81,13 @@ produced by `--stat`, etc.
  
- [verse]
--'git reflog' ['show'] [log-options] [<ref>]
-+'git reflog' ['show'] [<log-options>] [<ref>]
- 'git reflog expire' [--expire=<time>] [--expire-unreachable=<time>]
- 	[--rewrite] [--updateref] [--stale-fix]
- 	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
- 'git reflog delete' [--rewrite] [--updateref]
--	[--dry-run | -n] [--verbose] ref@\{specifier\}...
-+	[--dry-run | -n] [--verbose] <ref>@\{<specifier>\}...
- 'git reflog exists' <ref>
+ include::line-range-options.txt[]
  
- Reference logs, or "reflogs", record when the tips of branches and
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 42056ee9ff..9a78dd721e 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -11,7 +11,7 @@ given by a list of patterns.
+-<revision range>::
++<revision-range>::
+ 	Show only commits in the specified revision range.  When no
+-	<revision range> is specified, it defaults to `HEAD` (i.e. the
++	<revision-range> is specified, it defaults to `HEAD` (i.e. the
+ 	whole history leading to the current commit).  `origin..HEAD`
+ 	specifies all the commits reachable from the current commit
+ 	(i.e. `HEAD`), but not from `origin`. For a complete list of
+-	ways to spell <revision range>, see the 'Specifying Ranges'
++	ways to spell <revision-range>, see the 'Specifying Ranges'
+ 	section of linkgit:gitrevisions[7].
+ 
+ [--] <path>...::
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 8a6addcf72..e21fcd8f71 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -9,10 +9,10 @@ git-p4 - Import from and submit to Perforce repositories
  SYNOPSIS
  --------
  [verse]
--'git sparse-checkout <subcommand> [options]'
-+'git sparse-checkout <subcommand> [<options>]'
+-'git p4 clone' [<sync options>] [<clone options>] <p4 depot path>...
+-'git p4 sync' [<sync options>] [<p4 depot path>...]
++'git p4 clone' [<sync-options>] [<clone-options>] <p4-depot-path>...
++'git p4 sync' [<sync-options>] [<p4-depot-path>...]
+ 'git p4 rebase'
+-'git p4 submit' [<submit options>] [<master branch name>]
++'git p4 submit' [<submit-options>] [<master-branch-name>]
  
  
  DESCRIPTION
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-index 25bcda936d..2f6aaa75b9 100644
---- a/Documentation/git-stage.txt
-+++ b/Documentation/git-stage.txt
-@@ -9,7 +9,7 @@ git-stage - Add file contents to the staging area
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index c9c7f3065c..f64e77047b 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -8,7 +8,7 @@ git-shortlog - Summarize 'git log' output
  SYNOPSIS
  --------
  [verse]
--'git stage' args...
-+'git stage' <arg>...
- 
+-'git shortlog' [<options>] [<revision range>] [[--] <path>...]
++'git shortlog' [<options>] [<revision-range>] [[--] <path>...]
+ git log --pretty=short | 'git shortlog' [<options>]
  
  DESCRIPTION
+@@ -89,13 +89,13 @@ counts both authors and co-authors.
+ If width is `0` (zero) then indent the lines of the output without wrapping
+ them.
+ 
+-<revision range>::
++<revision-range>::
+ 	Show only commits in the specified revision range.  When no
+-	<revision range> is specified, it defaults to `HEAD` (i.e. the
++	<revision-range> is specified, it defaults to `HEAD` (i.e. the
+ 	whole history leading to the current commit).  `origin..HEAD`
+ 	specifies all the commits reachable from the current commit
+ 	(i.e. `HEAD`), but not from `origin`. For a complete list of
+-	ways to spell <revision range>, see the "Specifying Ranges"
++	ways to spell <revision-range>, see the "Specifying Ranges"
+ 	section of linkgit:gitrevisions[7].
+ 
+ [--] <path>...::
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 222b556d7a..4e92308e85 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -575,7 +575,7 @@ OPTIONS
+ -------
+ 
+ --shared[=(false|true|umask|group|all|world|everybody)]::
+---template=<template_directory>::
++--template=<template-directory>::
+ 	Only used with the 'init' command.
+ 	These are passed directly to 'git init'.
+ 
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index ef6bd420ae..23f6335887 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -20,7 +20,7 @@ built-in formats:
+ 
+ * 'oneline'
+ 
+-	  <hash> <title line>
++	  <hash> <title-line>
+ +
+ This is designed to be as compact as possible.
+ 
+@@ -29,17 +29,17 @@ This is designed to be as compact as possible.
+ 	  commit <hash>
+ 	  Author: <author>
+ 
+-	      <title line>
++	      <title-line>
+ 
+ * 'medium'
+ 
+ 	  commit <hash>
+ 	  Author: <author>
+-	  Date:   <author date>
++	  Date:   <author-date>
+ 
+-	      <title line>
++	      <title-line>
+ 
+-	      <full commit message>
++	      <full-commit-message>
+ 
+ * 'full'
+ 
+@@ -47,25 +47,25 @@ This is designed to be as compact as possible.
+ 	  Author: <author>
+ 	  Commit: <committer>
+ 
+-	      <title line>
++	      <title-line>
+ 
+-	      <full commit message>
++	      <full-commit-message>
+ 
+ * 'fuller'
+ 
+ 	  commit <hash>
+ 	  Author:     <author>
+-	  AuthorDate: <author date>
++	  AuthorDate: <author-date>
+ 	  Commit:     <committer>
+-	  CommitDate: <committer date>
++	  CommitDate: <committer-date>
+ 
+-	       <title line>
++	       <title-line>
+ 
+-	       <full commit message>
++	       <full-commit-message>
+ 
+ * 'reference'
+ 
+-	  <abbrev hash> (<title line>, <short author date>)
++	  <abbrev-hash> (<title-line>, <short-author-date>)
+ +
+ This format is used to refer to another commit in a commit message and
+ is the same as `--pretty='format:%C(auto)%h (%s, %ad)'`.  By default,
+@@ -78,10 +78,10 @@ placeholders, its output is not affected by other options like
+ 
+ 	  From <hash> <date>
+ 	  From: <author>
+-	  Date: <author date>
+-	  Subject: [PATCH] <title line>
++	  Date: <author-date>
++	  Subject: [PATCH] <title-line>
+ 
+-	  <full commit message>
++	  <full-commit-message>
+ 
+ * 'mboxrd'
+ +
+@@ -101,9 +101,9 @@ commits are displayed, but not the way the diff is shown e.g. with
+ `git log --raw`. To get full object names in a raw diff format,
+ use `--no-abbrev`.
+ 
+-* 'format:<string>'
++* 'format:<format-string>'
+ +
+-The 'format:<string>' format allows you to specify which information
++The 'format:<format-string>' format allows you to specify which information
+ you want to show. It works a little bit like printf format,
+ with the notable exception that you get a newline with '%n'
+ instead of '\n'.
+@@ -273,12 +273,12 @@ endif::git-rev-list[]
+ 			  If any option is provided multiple times the
+ 			  last occurrence wins.
+ +
+-The boolean options accept an optional value `[=<BOOL>]`. The values
++The boolean options accept an optional value `[=<value>]`. The values
+ `true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"
+ sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
+ option is given with no value, it's enabled.
+ +
+-** 'key=<K>': only show trailers with specified key. Matching is done
++** 'key=<key>': only show trailers with specified <key>. Matching is done
+    case-insensitively and trailing colon is optional. If option is
+    given multiple times trailer lines matching any of the keys are
+    shown. This option automatically enables the `only` option so that
+@@ -286,25 +286,25 @@ option is given with no value, it's enabled.
+    desired it can be disabled with `only=false`.  E.g.,
+    `%(trailers:key=Reviewed-by)` shows trailer lines with key
+    `Reviewed-by`.
+-** 'only[=<BOOL>]': select whether non-trailer lines from the trailer
++** 'only[=<bool>]': select whether non-trailer lines from the trailer
+    block should be included.
+-** 'separator=<SEP>': specify a separator inserted between trailer
++** 'separator=<sep>': specify a separator inserted between trailer
+    lines. When this option is not given each trailer line is
+-   terminated with a line feed character. The string SEP may contain
++   terminated with a line feed character. The string <sep> may contain
+    the literal formatting codes described above. To use comma as
+    separator one must use `%x2C` as it would otherwise be parsed as
+    next option. E.g., `%(trailers:key=Ticket,separator=%x2C )`
+    shows all trailer lines whose key is "Ticket" separated by a comma
+    and a space.
+-** 'unfold[=<BOOL>]': make it behave as if interpret-trailer's `--unfold`
++** 'unfold[=<bool>]': make it behave as if interpret-trailer's `--unfold`
+    option was given. E.g.,
+    `%(trailers:only,unfold=true)` unfolds and shows all trailer lines.
+-** 'keyonly[=<BOOL>]': only show the key part of the trailer.
+-** 'valueonly[=<BOOL>]': only show the value part of the trailer.
+-** 'key_value_separator=<SEP>': specify a separator inserted between
++** 'keyonly[=<bool>]': only show the key part of the trailer.
++** 'valueonly[=<bool>]': only show the value part of the trailer.
++** 'key_value_separator=<sep>': specify a separator inserted between
+    trailer lines. When this option is not given each trailer key-value
+    pair is separated by ": ". Otherwise it shares the same semantics
+-   as 'separator=<SEP>' above.
++   as 'separator=<sep>' above.
+ 
+ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
 -- 
 2.33.1
 
