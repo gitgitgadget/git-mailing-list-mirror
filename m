@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 848C0C433F5
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0430C433FE
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:03:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DD2860F5A
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:03:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 961936103B
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:03:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235136AbhKFVGc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 17:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33928 "EHLO
+        id S235186AbhKFVGf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 17:06:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235120AbhKFVGX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 17:06:23 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E313C061225
-        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:03:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id y196so9904509wmc.3
-        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:03:30 -0700 (PDT)
+        with ESMTP id S235142AbhKFVG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 17:06:29 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF5C4C06122E
+        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:03:32 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c4so19507434wrd.9
+        for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kMEK4PGMVqBWfUdgpyt9hV8DI/yukZ7Pgsb8A4rMWx4=;
-        b=JXe39cMx6Jw+15grwzuItZZws5GP8Y0/3Gmbj820Y6Vwegt48X23qEQHyEG1neI38h
-         PBnzGahFxDl6GTsxw36iHG4sBi9HHkgVeXqHvH6+BNZDG2tH/XWErJemVGCVO+MVr8LR
-         hZHOGAl+LYJ8HMkdGiIdbYJFtpUqlKop3ROfDM/S1f79msgrDYUioEpa3Wjozxo+91/X
-         q/k/oShVwQw943sZXNt6T+C1Wshtq+17v2nSS66Wq2eRIcvckbPzSKsD2v/BVjm1M956
-         58FwmdfqujBbmdBCcXj+W83XdRxpXUEf8gRZ/cUZCt73lMZ5rNW9XxNy+CpOKWYjEf/t
-         m6Sw==
+        bh=eUk10tCbVUGqdRS2Nn0vavZp3L9Qj6y1ycAwiMheU1w=;
+        b=ilLFttBXOI5yW99QX3t4l83rLolCppNkVKxrn0anPkXC4rHstCYkr3K8EJPc2GF0PF
+         mAT5+3XiVjvuqAxaghG8vsCn9R6uwhlEoH3bk+25Ev3obhKov+8nwlcg4fnFyuFCeKh1
+         dKlyke+LQk3XZf1ViZDIg5WDdIviH6a1f4vJt9T3dIbquVdggL/7v3liRhPLEzh1F6jq
+         fvpJJy9iSTMrq6gcsaoj/2DZpAcgxgcmQbMws96snQFx4DQXL95IyahWexNQ4H9US2kb
+         AY5T4V/GC5VaxRn4NeFYUdJYW4FYoH6w2GkOt0mOUtkzo6t1Yvrklbf3GZHp2brEQ3uy
+         d8DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kMEK4PGMVqBWfUdgpyt9hV8DI/yukZ7Pgsb8A4rMWx4=;
-        b=icOisBBRou04xoR3K0j3JTlFPxzEsD/DsA/JAQVT54BxKkibCy3umBm7FHG6Nb9UAy
-         WP0lpimkAGJC+p6oCa9hAQb74gGcmvFe55UtA6KcfYhCBiCH3aU/7ucPkmBF9muXbmzI
-         WYtgCbntwKDlMFkGKB7BozpMqPf1r+5t4Q6BVgNh9wwdz8RShKR4gvQ4bIVwDXTEoDoA
-         G6OONHr3VdwSaRIIcEnMiSkVOgAs6g3DQD+xXhLZ6X3zXjh7TJkiWuOwpb1RZrPQivrR
-         kbOhIUuW4TnzmsllSmxxb1J6ySZgGs5YvbV+JTX0or3181Dqm3eMo7i6XIAopPrLiSzM
-         gKjQ==
-X-Gm-Message-State: AOAM533Ja2km2JL64B6ku31I4IyGSSSyeWzqru1pHP0zDUV/DIkzRu1D
-        C3UJTw1Ml4Qx0Ffer3gT3Tk8HVtKGDWhUQ==
-X-Google-Smtp-Source: ABdhPJx5mC4HHgsosivlH35GkeLuL21VThNkNRJJiKYcoQ4t5DdH/Zy7AtNaO0uH7hEEcc9FXo2Ndg==
-X-Received: by 2002:a1c:1c8:: with SMTP id 191mr40197983wmb.90.1636232608925;
-        Sat, 06 Nov 2021 14:03:28 -0700 (PDT)
+        bh=eUk10tCbVUGqdRS2Nn0vavZp3L9Qj6y1ycAwiMheU1w=;
+        b=G6ZVfqGGPUrt96J2KfQjJeWDyT/uyny1BFUDsLuBId1QiZ+UkQeYIuKQVRqmi6/9b7
+         xOr1mGYXCl9conF0XSWCqRfyFmn17Oa4BakdZlwuqePr3VRYea5HDGMtBq53vvceibY+
+         PmtszzELEDoFo8ZzZ/44yR4PnnxY218HywPo4Obqm7nntyAF799Zfsnv6RCX3H/JxkAC
+         hOB712EHsELHr+gmwIJGhS5fW8Dsr8EyEYYrzsuaU/rtA2OIkZU4ZDkYzrthj5NgPp9g
+         yI9pEQ97+VIdzCcX5QrTPJj9MXH74dKArWDRtm9NoJ4iR5ZUj5W/0bBJg2GnjxAHvujr
+         Gxhg==
+X-Gm-Message-State: AOAM533UgpKNwtIyLlRd6SP/BqSimY+o6qm9PEJbXQD7OjqCb7Rbzn0s
+        H5ykCTv8PfWRGpz98kRzZMhoOSccfVfjIQ==
+X-Google-Smtp-Source: ABdhPJzdbOv4pO77AFxPSxMb3ZT83UWGvhHZaBfnH6UtXafYgVcZ7Mus67dGplEMl2sR4/6SjAOwAA==
+X-Received: by 2002:a05:6000:1289:: with SMTP id f9mr15139355wrx.329.1636232610707;
+        Sat, 06 Nov 2021 14:03:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u16sm14108433wmc.21.2021.11.06.14.03.28
+        by smtp.gmail.com with ESMTPSA id u16sm14108433wmc.21.2021.11.06.14.03.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Nov 2021 14:03:28 -0700 (PDT)
+        Sat, 06 Nov 2021 14:03:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 11/16] Makefile: re-add and use the "shellquote" macros
-Date:   Sat,  6 Nov 2021 22:03:12 +0100
-Message-Id: <patch-11.16-67dbad03c14-20211106T205717Z-avarab@gmail.com>
+Subject: [PATCH 13/16] Makefile: add "$(QUIET)" boilerplate to shared.mak
+Date:   Sat,  6 Nov 2021 22:03:14 +0100
+Message-Id: <patch-13.16-d927202fb89-20211106T205717Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc1.741.gab7bfd97031
 In-Reply-To: <cover-00.16-00000000000-20211106T205717Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20211106T205717Z-avarab@gmail.com>
@@ -72,254 +72,201 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Re-add and use, and expand on "shellquote" macros added in
-4769948afe7 (Deal with $(bindir) and friends with whitespaces.,
-2005-10-10).
+The $(QUIET) variables we define are largely duplicated between our
+various Makefiles, let's define them in the new "shared.mak" instead.
 
-We avoided using them due to the "$(call)" feature of GNU make being
-relatively new at the time, but it isn't anymore. We hard depend on
-GNU make versions that have it.
-
-The use of "$(call)" was removed in 39c015c556f (Fixes for ancient
-versions of GNU make, 2006-02-18) and 7ffe7098dca (Fix installation of
-templates on ancient systems., 2006-07-29) due to those
-incompatibilities with older GNU make versions, and we've used the
-more verbose *_SQ pattern ever since.
-
-The "$(call)" feature was introduced in GNU make version 3.78,
-released on the 22nd of September, 1999. That release also introduced
-"$(error)" and "$(warning)", which we've been making use of since
-f2fabbf76e4 (Teach Makefile to check header dependencies, 2010-01-26).
-
-This extends upon the macros added in 4769948afe7: We now have macros
-for quoting a ' inside '', and a ' with no surrounding '' as before.
-
-Additionally provide and use a "shelldquote" macro along with
-"shellquote" for the common case of wanting to quote a C string we
-pass to the compiler with a -D flag.
-
-This doesn't get rid of all of our shell quoting. We've still got some
-in the main Makefile, let's leave most of it to avoid in-flight
-conflicts. I've fully converted "templates/Makefile" and "t/Makefile"
-though.
+Since we're not using the environment to pass these around we don't
+need to export the "QUIET_GEN" and "QUIET_BUILT_IN" variables
+anymore. The "QUIET_GEN" variable is used in "git-gui/Makefile" and
+"gitweb/Makefile", but they've got their own definition for those. The
+"QUIET_BUILT_IN" variable is only used in the top-level "Makefile". We
+still need to export the "V" variable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile           | 15 +++++----------
- shared.mak         | 14 ++++++++++++++
- t/Makefile         | 34 +++++++++++++++-------------------
- templates/Makefile | 14 +++++---------
- 4 files changed, 39 insertions(+), 38 deletions(-)
+ Documentation/Makefile | 32 -------------------------
+ Makefile               | 33 --------------------------
+ config.mak.uname       |  1 -
+ shared.mak             | 53 ++++++++++++++++++++++++++++++++++++++++++
+ templates/Makefile     |  5 ----
+ 5 files changed, 53 insertions(+), 71 deletions(-)
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 4a939cc2c25..69a9af35397 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -218,38 +218,6 @@ DEFAULT_EDITOR_SQ = $(subst ','\'',$(DEFAULT_EDITOR))
+ ASCIIDOC_EXTRA += -a 'git-default-editor=$(DEFAULT_EDITOR_SQ)'
+ endif
+ 
+-QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
+-QUIET_SUBDIR1  =
+-
+-ifneq ($(findstring $(MAKEFLAGS),w),w)
+-PRINT_DIR = --no-print-directory
+-else # "make -w"
+-NO_SUBDIR = :
+-endif
+-
+-ifneq ($(findstring $(MAKEFLAGS),s),s)
+-ifndef V
+-	QUIET		= @
+-	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+-	QUIET_XMLTO	= @echo '   ' XMLTO $@;
+-	QUIET_DB2TEXI	= @echo '   ' DB2TEXI $@;
+-	QUIET_MAKEINFO	= @echo '   ' MAKEINFO $@;
+-	QUIET_DBLATEX	= @echo '   ' DBLATEX $@;
+-	QUIET_XSLTPROC	= @echo '   ' XSLTPROC $@;
+-	QUIET_GEN	= @echo '   ' GEN $@;
+-	QUIET_STDERR	= 2> /dev/null
+-	QUIET_SUBDIR0	= +@subdir=
+-	QUIET_SUBDIR1	= ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+-			  $(MAKE) $(PRINT_DIR) -C $$subdir
+-
+-	QUIET_LINT_GITLINK	= @echo '   ' LINT GITLINK $<;
+-	QUIET_LINT_MANSEC	= @echo '   ' LINT MAN SEC $<;
+-	QUIET_LINT_MANEND	= @echo '   ' LINT MAN END $<;
+-
+-	export V
+-endif
+-endif
+-
+ all: html man
+ 
+ html: $(DOC_HTML)
 diff --git a/Makefile b/Makefile
-index f3ad497fcb1..baf815c48b4 100644
+index c1ad99a5399..cd7727ebe39 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1996,11 +1996,7 @@ ifneq ("$(PROFILE)","")
- endif
+@@ -1939,39 +1939,6 @@ ifndef PAGER_ENV
+ PAGER_ENV = LESS=FRX LV=-c
  endif
  
--# Shell quote (do not use $(call) to accommodate ancient setups);
+-QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
+-QUIET_SUBDIR1  =
 -
--ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
--ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
+-ifneq ($(findstring w,$(MAKEFLAGS)),w)
+-PRINT_DIR = --no-print-directory
+-else # "make -w"
+-NO_SUBDIR = :
+-endif
 -
-+# Shell quote, should be changed to use $(call shellquote,...)
- DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
- NO_GETTEXT_SQ = $(subst ','\'',$(NO_GETTEXT))
- bindir_SQ = $(subst ','\'',$(bindir))
-@@ -2525,11 +2521,11 @@ builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
- 
- config.sp config.s config.o: GIT-PREFIX
- config.sp config.s config.o: EXTRA_CPPFLAGS = \
--	-DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
-+	-DETC_GITCONFIG=$(call shelldquote,$(ETC_GITCONFIG))
- 
- attr.sp attr.s attr.o: GIT-PREFIX
- attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
--	-DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
-+	-DETC_GITATTRIBUTES=$(call shelldquote,$(ETC_GITATTRIBUTES))
- 
- gettext.sp gettext.s gettext.o: GIT-PREFIX
- gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
-@@ -2690,14 +2686,13 @@ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
- 	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
- 	    -e 's|@@NO_GETTEXT@@|$(NO_GETTEXT_SQ)|g' \
--	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
-+	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(call shq,$(NO_PERL_CPAN_FALLBACKS))|g' \
- 	< $< > $@
- 
- all:: $(LIB_PERL_GEN)
- ifndef NO_PERL_CPAN_FALLBACKS
- all:: $(LIB_CPAN_GEN)
+-ifneq ($(findstring s,$(MAKEFLAGS)),s)
+-ifndef V
+-	QUIET_CC       = @echo '   ' CC $@;
+-	QUIET_AR       = @echo '   ' AR $@;
+-	QUIET_LINK     = @echo '   ' LINK $@;
+-	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
+-	QUIET_GEN      = @echo '   ' GEN $@;
+-	QUIET_LNCP     = @echo '   ' LN/CP $@;
+-	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
+-	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
+-	QUIET_GCOV     = @echo '   ' GCOV $@;
+-	QUIET_SP       = @echo '   ' SP $<;
+-	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
+-	QUIET_RC       = @echo '   ' RC $@;
+-	QUIET_SPATCH   = @echo '   ' SPATCH $<;
+-	QUIET_SUBDIR0  = +@subdir=
+-	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+-			 $(MAKE) $(PRINT_DIR) -C $$subdir
+-	export V
+-	export QUIET_GEN
+-	export QUIET_BUILT_IN
+-endif
+-endif
+-
+ ifdef NO_INSTALL_HARDLINKS
+ 	export NO_INSTALL_HARDLINKS
  endif
--NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
- endif
+diff --git a/config.mak.uname b/config.mak.uname
+index d0701f9beb0..1a12d8c635f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -715,7 +715,6 @@ vcxproj:
+ 	git diff-index --cached --quiet HEAD --
  
- # install-man depends on Git.3pm even with NO_PERL=Y
-@@ -3011,7 +3006,7 @@ else
- 	$(INSTALL) $(vcpkg_dbg_bin)/*.pdb '$(DESTDIR_SQ)$(bindir_SQ)'
- endif
- endif
--	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
-+	$(MAKE) -C templates DESTDIR=$(call shellquote,$(DESTDIR)) install
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
- 	$(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
- ifndef NO_GETTEXT
+ 	# Make .vcxproj files and add them
+-	unset QUIET_GEN QUIET_BUILT_IN; \
+ 	perl contrib/buildsystems/generate -g Vcxproj
+ 	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
+ 
 diff --git a/shared.mak b/shared.mak
-index 2d597ef7603..ef03c2bc094 100644
+index 3b4163e652a..850ce1f6a0f 100644
 --- a/shared.mak
 +++ b/shared.mak
-@@ -8,6 +8,20 @@
- #    info make --index-search=.DELETE_ON_ERROR
- .DELETE_ON_ERROR:
- 
-+### Quoting helpers
+@@ -51,3 +51,56 @@ $(1): FORCE
+ 		echo "$$$$FLAGS" >$(1); \
+ 	fi
+ endef
 +
-+## Quote a ' inside a '': FOO='$(call shq,$(BAR))'
-+shq = $(subst ','\'',$(1))
++### Quieting
++## common
++QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
++QUIET_SUBDIR1  =
 +
-+## Quote a ' and provide a '': FOO=$(call shq,$(BAR))
-+shellquote = '$(call shq,$(1))'
++ifneq ($(findstring w,$(MAKEFLAGS)),w)
++PRINT_DIR = --no-print-directory
++else # "make -w"
++NO_SUBDIR = :
++endif
 +
-+## Quote a " inside a ""
-+shdq = $(subst ",\",$(1))
++ifneq ($(findstring s,$(MAKEFLAGS)),s)
++ifndef V
++## common
++	QUIET_SUBDIR0  = +@subdir=
++	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
++			 $(MAKE) $(PRINT_DIR) -C $$subdir
 +
-+## Quote ' for the shell, and embedded " for C: -DFOO=$(call shelldquote,$(BAR))
-+shelldquote = '"$(call shdq,$(call shq,$(1)))"'
++	QUIET          = @
++	QUIET_GEN      = @echo '   ' GEN $@;
 +
- ### Global variables
- 
- ## comma, empty, space: handy variables as these tokens are either
-diff --git a/t/Makefile b/t/Makefile
-index 882d26eee30..4168b5c6ce6 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include ../shared.mak
++## Used in "Makefile"
++	QUIET_CC       = @echo '   ' CC $@;
++	QUIET_AR       = @echo '   ' AR $@;
++	QUIET_LINK     = @echo '   ' LINK $@;
++	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
++	QUIET_LNCP     = @echo '   ' LN/CP $@;
++	QUIET_XGETTEXT = @echo '   ' XGETTEXT $@;
++	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
++	QUIET_GCOV     = @echo '   ' GCOV $@;
++	QUIET_SP       = @echo '   ' SP $<;
++	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
++	QUIET_RC       = @echo '   ' RC $@;
++	QUIET_SPATCH   = @echo '   ' SPATCH $<;
 +
- # Run tests
- #
- # Copyright (c) 2005 Junio C Hamano
-@@ -24,13 +27,6 @@ TEST_RESULTS_DIRECTORY = test-results
- CHAINLINTTMP = chainlinttmp
- endif
- 
--# Shell quote;
--SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
--TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
--PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
--TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
--CHAINLINTTMP_SQ = $(subst ','\'',$(CHAINLINTTMP))
--
- T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
- TGITWEB = $(sort $(wildcard t95[0-9][0-9]-*.sh))
- THELPERS = $(sort $(filter-out $(T),$(wildcard *.sh)))
-@@ -44,38 +40,38 @@ test: pre-clean check-chainlint $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
- failed:
--	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
-+	@failed=$$(cd $(call shellquote,$(TEST_RESULTS_DIRECTORY)) && \
- 		grep -l '^failed [1-9]' *.counts | \
- 		sed -n 's/\.counts$$/.sh/p') && \
- 	test -z "$$failed" || $(MAKE) $$failed
- 
- prove: pre-clean check-chainlint $(TEST_LINT)
--	@echo "*** prove ***"; $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	@echo "*** prove ***"; $(PROVE) --exec $(call shellquote,$(SHELL_PATH)) $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
- 
- $(T):
--	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+	@echo "*** $@ ***"; $(call shellquote,$(SHELL_PATH)) $@ $(GIT_TEST_OPTS)
- 
- pre-clean:
--	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r $(call shellquote,$(TEST_RESULTS_DIRECTORY))
- 
- clean-except-prove-cache: clean-chainlint
--	$(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r 'trash directory'.* $(call shellquote,$(TEST_RESULTS_DIRECTORY))
- 	$(RM) -r valgrind/bin
- 
- clean: clean-except-prove-cache
- 	$(RM) .prove
- 
- clean-chainlint:
--	$(RM) -r '$(CHAINLINTTMP_SQ)'
-+	$(RM) -r $(call shellquote,$(CHAINLINTTMP))
- 
- check-chainlint:
--	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
-+	@mkdir -p $(call shellquote,$(CHAINLINTTMP)) && \
- 	err=0 && \
- 	for i in $(CHAINLINTTESTS); do \
- 		$(CHAINLINT) <chainlint/$$i.test | \
--		sed -e '/^# LINT: /d' >'$(CHAINLINTTMP_SQ)'/$$i.actual && \
--		diff -u chainlint/$$i.expect '$(CHAINLINTTMP_SQ)'/$$i.actual || err=1; \
-+		sed -e '/^# LINT: /d' >$(call shellquote,$(CHAINLINTTMP))/$$i.actual && \
-+		diff -u chainlint/$$i.expect $(call shellquote,$(CHAINLINTTMP))/$$i.actual || err=1; \
- 	done && exit $$err
- 
- test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
-@@ -92,7 +88,7 @@ test-lint-executable:
- 		echo >&2 "non-executable tests:" $$bad; exit 1; }
- 
- test-lint-shell-syntax:
--	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T) $(THELPERS) $(TPERF)
-+	@$(call shellquote,$(PERL_PATH)) check-non-portable-shell.pl $(T) $(THELPERS) $(TPERF)
- 
- test-lint-filenames:
- 	@# We do *not* pass a glob to ls-files but use grep instead, to catch
-@@ -107,9 +103,9 @@ aggregate-results-and-cleanup: $(T)
- 	$(MAKE) clean
- 
- aggregate-results:
--	for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
-+	for f in $(call shellquote,$(TEST_RESULTS_DIRECTORY))/t*-*.counts; do \
- 		echo "$$f"; \
--	done | '$(SHELL_PATH_SQ)' ./aggregate-results.sh
-+	done | $(call shellquote,$(SHELL_PATH)) ./aggregate-results.sh
- 
- gitweb-test:
- 	$(MAKE) $(TGITWEB)
++## Used in "Documentation/Makefile"
++	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
++	QUIET_XMLTO	= @echo '   ' XMLTO $@;
++	QUIET_DB2TEXI	= @echo '   ' DB2TEXI $@;
++	QUIET_MAKEINFO	= @echo '   ' MAKEINFO $@;
++	QUIET_DBLATEX	= @echo '   ' DBLATEX $@;
++	QUIET_XSLTPROC	= @echo '   ' XSLTPROC $@;
++	QUIET_GEN	= @echo '   ' GEN $@;
++	QUIET_STDERR	= 2> /dev/null
++
++	QUIET_LINT_GITLINK	= @echo '   ' LINT GITLINK $<;
++	QUIET_LINT_MANSEC	= @echo '   ' LINT MAN SEC $<;
++	QUIET_LINT_MANEND	= @echo '   ' LINT MAN END $<;
++
++	export V
++endif
++endif
 diff --git a/templates/Makefile b/templates/Makefile
-index d22a71a3999..c9251a96622 100644
+index c9251a96622..b056e710b7e 100644
 --- a/templates/Makefile
 +++ b/templates/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include ../shared.mak
-+
+@@ -2,11 +2,6 @@
+ include ../shared.mak
+ 
  # make and install sample templates
- 
- ifndef V
-@@ -18,13 +21,6 @@ ifndef PERL_PATH
- 	PERL_PATH = perl
- endif
- 
--SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
--PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
 -
--# Shell quote (do not use $(call) to accommodate ancient setups);
--DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
--template_instdir_SQ = $(subst ','\'',$(template_instdir))
+-ifndef V
+-	QUIET = @
+-endif
 -
- all: boilerplates.made custom
- 
- # Put templates that can be copied straight from the source
-@@ -61,6 +57,6 @@ clean:
- 	$(RM) -r blt boilerplates.made
- 
- install: all
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
-+	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_instdir))
- 	(cd blt && $(TAR) cf - .) | \
--	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof -)
-+	(cd $(call shellquote,$(DESTDIR)$(template_instdir)) && umask 022 && $(TAR) xof -)
+ INSTALL ?= install
+ TAR ?= tar
+ RM ?= rm -f
 -- 
 2.34.0.rc1.741.gab7bfd97031
 
