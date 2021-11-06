@@ -2,50 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5983C4332F
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E806C433F5
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E15D611EE
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 422B06108D
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 21:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234176AbhKFVty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 17:49:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43478 "EHLO
+        id S234197AbhKFVtz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 17:49:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234088AbhKFVtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 17:49:51 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FE94C061746
-        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:09 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso8944518wme.3
+        with ESMTP id S234095AbhKFVtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 17:49:52 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077DFC061205
+        for <git@vger.kernel.org>; Sat,  6 Nov 2021 14:47:10 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id u18so19599523wrg.5
         for <git@vger.kernel.org>; Sat, 06 Nov 2021 14:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C2BvJ07ODMQc6mT0PcKKlVh6MLlitNEUGixbqbryvmk=;
-        b=kK3NwLZSN3C1PL97QngFblxmgv0x4GbUiR6Oy+066u1mr5mQpiN+nQl6VPRyaWmx9f
-         1hRxb96+sbupyc2wdSOLQfopi6BJzJvUA8XmqYVxTjDHLMI52z8NsUpyUggIArc7kCBp
-         7eEs5B3buJLuj7L0OVh7G+nePXYjeFeL8uRqvjHU9W44/1WZeauUdPfOlbJm8x9f3a6J
-         2daG9Q5PRqNHylEAVQCGoX/1adG1vHzUmFuithdRnXfGT6hmyUQtbFr/6nol9NvDyhgy
-         TvHuPdLJUbhOa4maTwFl97zhrtARO5VWJ0EQe0b/MCp40fj43ze8uLYiUSzEgX1yOTwV
-         23YA==
+        bh=nAgveEnnTUZ1IrS9pNMlRlq/C4CLz8miJeoiSauvwz8=;
+        b=DA14c668Tr6Bln7aJLBqGosqkGU/fFc9Idcrm3l6nFgyGFnj5SaoEwArcadNHbvMZv
+         FjEA6GCSKF6I8QPZ67gNbfGhNFyrDOP0UfX6eJ2uaP/MDlH3OBW5tDP6cTg5wqAj1A8x
+         XdapdbaewckGxTwZmFuN2gIXpzPZybNBWAlxneVCi7/gvVnwzvYsCdOp1gLtK03k2cB8
+         J38TjJJvfaBNKJZX5sVEQTrYm1kCfIyVHkrzWqnQJVkRniYwmeXngbYSKXm9xIIs+1VB
+         dLwxYE7O8MFUdu3ZSm+tQcY5RkQlKWDNGTCP+MG4LW0I/MKTGQZhVshtcED5qE3gsWx8
+         wb+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C2BvJ07ODMQc6mT0PcKKlVh6MLlitNEUGixbqbryvmk=;
-        b=ikqIVStM3bVIIJDFawiH68fb0XaYkxQIo513QTLOD7NIX0gHenMv4t6CD8vj381pBo
-         xTSk3+HANQrxKLpUEVzCT7lxS9PnALhPrESJRKEZ3FDOFIt3qIXy6O1whPBJL8ezG3/K
-         s618P5QqeLewpbrY16xPf0mYtd0WV78HmcsufW6r3wrFvsyZrjUdPISI+uyOXE/5xgG5
-         qR2MnMBAF3/dM/FmEAsfuiWvAvhmzAl14OW1/ys0fgblIIYTXv9/FZjui8GMGYzt7bvh
-         ec3l8ZqdxFtgB6JD9B0tBPuuuFku7BSmE6t4vrruZ11DC9hekjRELKI33u/uaV4Gmc4y
-         zFwA==
-X-Gm-Message-State: AOAM531OoOfnImiimZ87ORboQxbDeJTC0TxOsWcIdeZ4Fqn0TEuI2aJU
-        HrLXaF///DTyg0Z01uSnzNYdX2/9+NH1sg==
-X-Google-Smtp-Source: ABdhPJyS4bvw72EBAeofS/a/6krDyPkuyc8rRrg2JZ1UtZ9qy66hNM1jaRfFcb+wzwEhJbQwGJcPIA==
-X-Received: by 2002:a7b:c351:: with SMTP id l17mr41740188wmj.120.1636235227706;
-        Sat, 06 Nov 2021 14:47:07 -0700 (PDT)
+        bh=nAgveEnnTUZ1IrS9pNMlRlq/C4CLz8miJeoiSauvwz8=;
+        b=ZzEzlPW6i8kmihyfkZBwGttjO70iRxBSLYP/f59WFF0xnlfkCZPy2aAP1oSAiQbHAT
+         R+W8pMzeMPwwBPQSrtD37woMz9vyGBZwtC5XbfCfSmJGE8a4M/Hp+pS3Qs8cE4i5NvJZ
+         1p2HDMQcJF9/aFuqmi+DU1YZrWJjo+22+qfseD5RwiStkQyv0j4uJFNM+TbLCDE/tXqS
+         3rKLCxA8p3WQjgQofh00XIxpGw5eiLNARxqlU7aCYMMThHnKsRO+zbUrqNuAyYjUHkl6
+         tLCsRdc/nd+jog8CN/bKhC9rsZn0f66tl7+VQ5e9nJA6L/ofi4C8LDuKqNFKnansV6v4
+         0rXg==
+X-Gm-Message-State: AOAM530G/KTXSSguFeGviGJBprb3Q6A2EZbSsQNOX8rDQCmMNNeupeLl
+        tK+5Evbei3KvKBNIyJOmAc8l7lBNp5yHJg==
+X-Google-Smtp-Source: ABdhPJwa04q2mEpntYfQQ2TIvcxpR2tiMJOaJd7RCZrg5e44Su4SVAHre3cIyCwE8+sLOOoTAVFNiw==
+X-Received: by 2002:a5d:4e52:: with SMTP id r18mr57542449wrt.224.1636235228466;
+        Sat, 06 Nov 2021 14:47:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id f19sm12736630wmq.34.2021.11.06.14.47.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/10] cat-file docs: fix SYNOPSIS and "-h" output
-Date:   Sat,  6 Nov 2021 22:46:56 +0100
-Message-Id: <patch-04.10-29b67330a48-20211106T214259Z-avarab@gmail.com>
+Subject: [PATCH 05/10] cat-file: move "usage" variable to cmd_cat_file()
+Date:   Sat,  6 Nov 2021 22:46:57 +0100
+Message-Id: <patch-05.10-1974136d483-20211106T214259Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc1.741.gab7bfd97031
 In-Reply-To: <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
 References: <xmqqlf33i36a.fsf@gitster.g> <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com>
@@ -71,73 +71,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There were various inaccuracies in the previous SYNOPSIS output,
-e.g. "--path" is not something that can optionally go with any options
-except --textconv or --filters, as the output implied.
+There's no benefit to defining this at a distance, and it makes the
+code harder to read as you've got to scroll up to see the usage that
+corresponds to the options.
 
-The opening line of the DESCRIPTION section is also "In its first
-form[...]", which refers to "git cat-file <type> <object>", but the
-SYNOPSIS section wasn't showing that as the first form!
-
-That part of the documentation made sense in
-d83a42f34a6 (Documentation: minor grammatical fixes in
-git-cat-file.txt, 2009-03-22) when it was introduced, but since then
-various options that were added have made that intro make no sense in
-the context it was in. Now the two will match again.
-
-The usage output here is not properly aligned on "master" currently,
-but will be with my in-flight 4631cfc20bd (parse-options: properly
-align continued usage output, 2021-09-21), so let's indent things
-correctly in the C code in anticipation of that.
+In subsequent commits I'll make use of usage_msg_opt(), which will be
+quite noisy if I have to use the long "cat_file_usage" variable,
+there's no other command being defined in this file, so let's rename
+it to just "usage".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-cat-file.txt | 10 ++++++++--
- builtin/cat-file.c             | 10 ++++++++--
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ builtin/cat-file.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 27b27e2b300..73ebbc70ee2 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -9,8 +9,14 @@ git-cat-file - Provide content or type and size information for repository objec
- SYNOPSIS
- --------
- [verse]
--'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--path=<path>] <object>
--'git cat-file' (--batch[=<format>] | --batch-check[=<format>]) [ --textconv | --filters ] [--follow-symlinks]
-+'git cat-file' <type> <object>
-+'git cat-file' (-e | -p) <object>
-+'git cat-file' ( -t | -s ) [--allow-unknown-type] <object>
-+'git cat-file' (--batch | --batch-check) [--batch-all-objects]
-+	     [--buffer] [--follow-symlinks] [--unordered]
-+	     [--textconv | --filters]
-+'git cat-file' (--textconv | --filters )
-+	     [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]
- 
- DESCRIPTION
- -----------
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 86fc03242b8..1df7f797cb6 100644
+index 1df7f797cb6..6d0f645301b 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -619,8 +619,14 @@ static int batch_objects(struct batch_options *opt)
+@@ -618,18 +618,6 @@ static int batch_objects(struct batch_options *opt)
+ 	return retval;
  }
  
- static const char * const cat_file_usage[] = {
--	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
--	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
-+	N_("git cat-file <type> <object>"),
-+	N_("git cat-file (-e | -p) <object>"),
-+	N_("git cat-file ( -t | -s ) [--allow-unknown-type] <object>"),
-+	N_("git cat-file (--batch | --batch-check) [--batch-all-objects]\n"
-+	   "             [--buffer] [--follow-symlinks] [--unordered]\n"
-+	   "             [--textconv | --filters]"),
-+	N_("git cat-file (--textconv | --filters )\n"
-+	   "             [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]"),
- 	NULL
- };
+-static const char * const cat_file_usage[] = {
+-	N_("git cat-file <type> <object>"),
+-	N_("git cat-file (-e | -p) <object>"),
+-	N_("git cat-file ( -t | -s ) [--allow-unknown-type] <object>"),
+-	N_("git cat-file (--batch | --batch-check) [--batch-all-objects]\n"
+-	   "             [--buffer] [--follow-symlinks] [--unordered]\n"
+-	   "             [--textconv | --filters]"),
+-	N_("git cat-file (--textconv | --filters )\n"
+-	   "             [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]"),
+-	NULL
+-};
+-
+ static int git_cat_file_config(const char *var, const char *value, void *cb)
+ {
+ 	if (userdiff_config(var, value) < 0)
+@@ -664,6 +652,17 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	struct batch_options batch = {0};
+ 	int unknown_type = 0;
  
++	const char * const usage[] = {
++		N_("git cat-file <type> <object>"),
++		N_("git cat-file (-e | -p) <object>"),
++		N_("git cat-file ( -t | -s ) [--allow-unknown-type] <object>"),
++		N_("git cat-file (--batch | --batch-check) [--batch-all-objects]\n"
++		   "             [--buffer] [--follow-symlinks] [--unordered]\n"
++		   "             [--textconv | --filters]"),
++		N_("git cat-file (--textconv | --filters )\n"
++		   "             [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]"),
++		NULL
++	};
+ 	const struct option options[] = {
+ 		OPT_GROUP(N_("<type> can be one of: blob, tree, commit, tag")),
+ 		OPT_CMDMODE('t', NULL, &opt, N_("show object type"), 't'),
+@@ -700,7 +699,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	git_config(git_cat_file_config, NULL);
+ 
+ 	batch.buffer_output = -1;
+-	argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
+ 
+ 	if (opt) {
+ 		if (batch.enabled && (opt == 'c' || opt == 'w'))
+@@ -708,35 +707,35 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 		else if (argc == 1)
+ 			obj_name = argv[0];
+ 		else
+-			usage_with_options(cat_file_usage, options);
++			usage_with_options(usage, options);
+ 	}
+ 	if (!opt && !batch.enabled) {
+ 		if (argc == 2) {
+ 			exp_type = argv[0];
+ 			obj_name = argv[1];
+ 		} else
+-			usage_with_options(cat_file_usage, options);
++			usage_with_options(usage, options);
+ 	}
+ 	if (batch.enabled) {
+ 		if (batch.cmdmode != opt || argc)
+-			usage_with_options(cat_file_usage, options);
++			usage_with_options(usage, options);
+ 		if (batch.cmdmode && batch.all_objects)
+ 			die("--batch-all-objects cannot be combined with "
+ 			    "--textconv nor with --filters");
+ 	}
+ 
+ 	if ((batch.follow_symlinks || batch.all_objects) && !batch.enabled) {
+-		usage_with_options(cat_file_usage, options);
++		usage_with_options(usage, options);
+ 	}
+ 
+ 	if (force_path && opt != 'c' && opt != 'w') {
+ 		error("--path=<path> needs --textconv or --filters");
+-		usage_with_options(cat_file_usage, options);
++		usage_with_options(usage, options);
+ 	}
+ 
+ 	if (force_path && batch.enabled) {
+ 		error("--path=<path> incompatible with --batch");
+-		usage_with_options(cat_file_usage, options);
++		usage_with_options(usage, options);
+ 	}
+ 
+ 	if (batch.buffer_output < 0)
 -- 
 2.34.0.rc1.741.gab7bfd97031
 
