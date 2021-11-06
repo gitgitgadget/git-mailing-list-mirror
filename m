@@ -2,241 +2,904 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E57B4C433F5
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 05:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FDC3C433F5
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 10:57:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAF4060E9B
-	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 05:31:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6060560EB8
+	for <git@archiver.kernel.org>; Sat,  6 Nov 2021 10:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232771AbhKFFeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Nov 2021 01:34:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57918 "EHLO
+        id S233397AbhKFLAD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Nov 2021 07:00:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbhKFFeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Nov 2021 01:34:36 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91BDC061570
-        for <git@vger.kernel.org>; Fri,  5 Nov 2021 22:31:55 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id j21so40050135edt.11
-        for <git@vger.kernel.org>; Fri, 05 Nov 2021 22:31:55 -0700 (PDT)
+        with ESMTP id S229500AbhKFLAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Nov 2021 07:00:02 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B92C061570
+        for <git@vger.kernel.org>; Sat,  6 Nov 2021 03:57:21 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id v127so9075489wme.5
+        for <git@vger.kernel.org>; Sat, 06 Nov 2021 03:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=LddS7sMXIc24cSC32H7OU79qsInBS9RL7eX8g911UGE=;
-        b=BJTZOWoC/SsGnZEzbIsqG6oZdPDJicXnd6afEvGVIKZGBAmaeLlva/dzm/JfGItJqh
-         nj50nTVTGiqLxkrYSNL3RXCbFxCIqVFIjPqEMbwReF88l0j3zLcldSQf3g3Gjun7tsYN
-         m/+IzQTXNJ6PplnUWx5VaMZY8vviLdvUgqUQDJNPda7pRTMFq48+Ki5Wg/zudh17HpJa
-         RL05Q04JFuzAXxyV3s65QtUTcivR/cIrHvcejsRgQwFGwofMGyRfMoVasyq2uvuHtXKq
-         vINT4qvElEmeoa3AdMcJPGm/zbzaQkuuMiYvoogsGSyhxlTtPd0B2VACDJxWX1IpQsfZ
-         07qg==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QXEFRYTS8IYcqJ23F4KjbxEmRTaU0FOHUvYJ6Pr8Vn4=;
+        b=jwL6v/gqNmn9jvZ/1ENKkR4g4oN9+RXdBO/MH7pWLXf0JyWTCIkrJggoYGG4dgJ9Ti
+         CHUyyJQ09kUvRBbKELh+wfvx0Df/Y5qL8Gk1fZH9s/XvPgdnGwhZPmx1tDlu9kNqeLSV
+         O+K5TqMm6vbSt0ZqcUpivLm/wiHYIHIcS1ZT9BgO4sTgZVtc8lvwKAcmOx37m4gid6BF
+         y3nAxx4r5wvqH3nIQ1NIV2MMA2d+hrjajg50R5oTpGMc8iAXuATv3uhwAq5oWBZZ+3ma
+         Sa8ACxj96rlq3FgN2+myBDn3gTpZHLqDd3m+uEwbV8eBecdewNHexKF3rGyJE+sE2+nP
+         w2Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=LddS7sMXIc24cSC32H7OU79qsInBS9RL7eX8g911UGE=;
-        b=1jIyY63Lo/LyI3uxXUifiVNQMMaDAcD+loBug4O8moxpuc61LjioxXg7q2WUOhaUvQ
-         NwKfV+uJ//217tNicjlDVccG6Ygtg4YQErzh4eAK72N6Pu8aqInTqpbqG02GooZdRARq
-         eg1/2JbEVR8aB84UFvxDRwN6x4SYBGzoVPkw2+tz9Z41LKkdWwwCSKra5d/bJF5PAI5c
-         pNwcDW81ey9pdsiDzdS1aRBfsbcgSKQAvRPhySOwwjHmArNI5IkplSyNHeNiJsq7WCeI
-         HP3Jpm9sXD4yUpm8l7RaZTOzZTy0OFDcFIOsSJBKSKq3N8wha+ZGOENEm+2xVfyDtekT
-         ym5w==
-X-Gm-Message-State: AOAM532ehMsWqwog60QDAybIF8fJwne1jGxJ8IVf4oHixNWzZs1PAhBn
-        X8RiiYrxZFhjiK8PxLWhXChqwK6G0FiDVA==
-X-Google-Smtp-Source: ABdhPJxhzsdWLR1Xep9Y1gQHh8J80ioJmL4whfr7BPN/1008autI9POn4H3bGyYGJM5uw693gazfWA==
-X-Received: by 2002:a17:906:dc90:: with SMTP id cs16mr53294823ejc.432.1636176713801;
-        Fri, 05 Nov 2021 22:31:53 -0700 (PDT)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i4sm5369026edt.29.2021.11.05.22.31.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 22:31:53 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mjEIy-000b38-Up;
-        Sat, 06 Nov 2021 06:31:52 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Robin Jarry <robin.jarry@6wind.com>
-Cc:     git@vger.kernel.org, Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Jan Smets <jan.smets@nokia.com>,
-        Stephen Morton <stephen.morton@nokia.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] receive-pack: run post-receive before reporting status
-Date:   Sat, 06 Nov 2021 06:03:22 +0100
-References: <20211104133546.1967308-1-robin.jarry@6wind.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <20211104133546.1967308-1-robin.jarry@6wind.com>
-Message-ID: <211106.86y261g88n.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QXEFRYTS8IYcqJ23F4KjbxEmRTaU0FOHUvYJ6Pr8Vn4=;
+        b=KGd5Z2jXn6cY0dUsd6lVY3R1xB9R2gtKv6Xo2xm/DbfsvvuDc7Hqk4Oz9nHdZzBwIR
+         9nKEXBK3VQVp3K8bQAOypfVB6oTAOTdPXIXDcuth4J+bmFahYIcTw/MEvo/spGQ5wCNI
+         IYj95mrr6FxUtNlIq4EZeRR4/cwLyc4LpdouT99xPvb2mGDcaN0cwz2us3v/KHdO8V1K
+         pcug/WQi+owQJrOUjf/YijC34ylQ8oY9YSxZnHxsR3L+YnJLIKZmDyXGmbxvSnFFuNy4
+         4TfynfbOMIH1Sp0imVSJJ6z/MoNPnCWGZjewJMECcVzPXZVh/t9miO0n5Exw8Lp85HMA
+         fBrQ==
+X-Gm-Message-State: AOAM530bs9LdmxOJmutHBuR31JhS01UQ+nLXx7oCwoCnyp27O8qN4olu
+        WAetq+d/y72AF6JTd9L96wqQbrC5VWwwRg==
+X-Google-Smtp-Source: ABdhPJyPLdZHMWOO//wI9/MwvmOmo2Qb0l1PZcOEfAjcF1XRFk1Xfi0lZB/pgYjuSOoXA6K1H5Cyig==
+X-Received: by 2002:a1c:1f06:: with SMTP id f6mr37126937wmf.55.1636196239603;
+        Sat, 06 Nov 2021 03:57:19 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id m34sm14246878wms.25.2021.11.06.03.57.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 Nov 2021 03:57:19 -0700 (PDT)
+Message-ID: <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
+Date:   Sat, 6 Nov 2021 10:57:17 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists with
+ $(wildcard)
+Content-Language: en-GB-large
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Paul Smith <paul@mad-scientist.net>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+ <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com>
+ <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
-On Thu, Nov 04 2021, Robin Jarry wrote:
+On 01/11/2021 19:19, Ævar Arnfjörð Bjarmason wrote:
+> Remove the hardcoded lists of objects in favor of using
+> $(wildcard). This means that every time a built-in, test tool etc. is
+> added we won't need to patch the top-level Makefile, except for the
+> few remaining cases where the asset in question would make it onto one
+> of our list of exceptions.
+> 
+> Ever since 81b50f3ce40 (Move 'builtin-*' into a 'builtin/'
+> subdirectory, 2010-02-22) this has been relatively easy to do (and
+> even before that we could glob builtin-*.c). This pattern of
+> exhaustively enumerating files was then carried forward for
+> e.g. TEST_BUILTINS_OBJS in efd71f8913a (t/helper: add an empty
+> test-tool program, 2018-03-24).
+> 
+> One reason not to do this is that now a new *.c file at the top-level
+> will be immediately picked up, so if a new *.c file is being worked on
+> "make" will error if it doesn't compile, whereas before that file
+> would need to be explicitly listed in the Makefile. I think than small
+> trade-off is worth it.
 
-> When a remote client exits while the pre-receive hook is running,
-> receive-pack is not killed by SIGPIPE because the signal is ignored.
-> This is a side effect of commit ec7dbd145bd8 ("receive-pack: allow hooks
-> to ignore its standard input stream").
+If I need to split up some uncommitted changes into several commits and 
+I know it is going to be fiddly to do so I will sometimes copy the 
+original file to foo.safe.c and then edit foo.c to create each commit. 
+Then I can easily compile and test each commit and editing the file 
+directly is often easier than using add -p and editing the hunks. With 
+this patch running make will fail in that case I think.
 
-FWIW we include the date when mentioning commits. E.g. ec7dbd145bd
-(receive-pack: allow hooks to ignore its standard input stream,
-2014-09-12).
+> We could make this simpler still for the Makefile by moving
+> "unix-socket.c" etc. to e.g. a "conditional-src/" directory, likewise
+> for $(PROGRAM_OBJS) to e.g. "programs/". If we did that we would not
+> need the "$(filter-out)" for LIB_OBJS. I don't think that's worth it,
+> e.g. due to "git log -- <path>" on the files now needing a "--follow".
+> 
+> There's a few small "while we're at it" changes here, since I'm
+> touching the code in question:
+> 
+>   - Start splitting up the the "Guard against the environment" section
+>     at the top, but don't move anything that exists there out to avoid
+>     merge conflicts
+> 
+>   - The $(TEST_BUILTINS_OBJS) variable was needlessly complex, because
+>     it didn't have the full paths we'd pathsubst it back & forth.
+> 
+>   - Introduce *_SRC in addition to *_OBJ for the variable I'm
+>     touching. Eventually we'll want to do this for all the *.o files,
+>     i.e. make the *.c list a source of truth for *.o, which means we can
+>     e.g. use that exhaustive list for "make TAGS".
+> 
+>   - Add a missing "curl-objs" target. See 029bac01a87 (Makefile: add
+>     {program,xdiff,test,git,fuzz}-objs & objects targets, 2021-02-23)
+>     for the commit that added the rest.
+> 
+>   - De-indent an "ifndef" block, we don't usually indent their
+>     contents.
+> 
+> On the CMake changes here:
+> 
+>   - When CMake support was introduced in was introduced
+>     061c2240b1b (Introduce CMake support for configuring Git, 2020-06-12)
+>     there was a discussion about the maintenance burden of maintaining the
+>     top-level Makefile in parallel with CMakeLists.txt[1] where reviewers
+>     were assured that doing so would simply be a matter of adding something
+>     to a list in the CMake recipe.
+> 
+>     Between change and some recent changes of mine where the "vs-build"
+>     job failed to a divergence between the Makefile and CMakeList.txt I
+>     can confidently say that that doesn't at all match reality. Even
+>     seemingly trivial changes to the Makefile like this one are forcing
+>     us to do a deep-dive into CMake internals to make forward progress
+>     with our main build system.
 
-> The pre-receive hook is not interrupted and does not receive any error
-> since its stdout is a pipe which is read in an async thread and output
-> back to the client socket in a side band channel. When writing the data
-> in the socket, the async thread gets a SIGPIPE which also seems ignored.
-> This may be a race between the main and the async threads. I do not know
-> the code well enough to be sure.
->
-> After the pre-receive has exited the SIGPIPE default handler is restored
-> and if the hook did not report any error, objects are migrated from
-> temporary to permanent storage.
->
-> Before running the post-receive hook, status info is reported back to
-> the client. Since the client has died, receive-pack is killed by SIGPIPE
-> and post-receive is never executed.
->
-> The post-receive hook is often used to send email notifications (see
-> contrib/hooks/post-receive-email), update bug trackers, start automatic
-> builds, etc. Not executing it after an interrupted yet "successful" push
-> can lead to inconsistencies.
->
-> Execute the post-receive hook before reporting status to the client to
-> avoid this issue. This is not an ideal solution but I don't know if
-> allowing hooks to be killed when a client exits is a good idea. Maybe
-> for pre-receive but definitely not for post-receive.
->
-> Signed-off-by: Robin Jarry <robin.jarry@6wind.com>
-> Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+My recollection is that the discussions were about not having to touch 
+CMakeList.txt when adding new files to the build and I think that 
+largely works. I don't think a lot of the changes you have been making 
+recently were anticipated in that discussion.
+
+>   - The promised "We can add a (continue-on-error) to vs-build job to
+>     make this process less of a hindrance." in [2] never materialized.
+>     Since 4c2c38e800f (ci: modification of main.yml to use cmake for
+>     vs-build job, 2020-06-26) got a hard dependency on CMake as far as
+>     getting the CI to pass goes.
+> 
+>   - The "vs-build" CI doesn't actually require that there be no GNU make
+>     usage in the job, as it itself has a hard dependency on running a
+>     "make -n artifacts-tar" command. So as far as any vs-specific special-sauce
+>     goes we don't need a GNU-make free build system for vs-build.
+
+We need GNU-make for the ci job but an individual developer using CMake 
+does not need GNU-make installed. On linux it is possible to build git 
+without having make installed by using cmake and ninja [1]
+
+>   - The stated goal in 061c2240b1b of avoiding a GNU make dependency
+>     for developer because it requires an SDK that "occupies around two
+>     gigabytes" and "three quarters of a gigabyte worth of Git objects"
+>     hardly seems worthwhile trade-off given the above. Disk space is cheap,
+>     developer time required to maintain two parallel build systems isn't.
+
+That rather assumes everyone has plenty of disk space and a decent 
+network connection.
+
+> My attempt to amend/revert 4c2c38e800f to have it use the
+> pre-4c2c38e800f "make" invocation as a fallback failed, partially
+> because I don't have a Windows development environment, so any attempt
+> to change it is a painfully slow round-trip to GitHub CI.
+> 
+> Let's instead have CMake call out to the Makefile asking it what the
+> definition of various variables lists is, rather than being forced to
+> maintain those lists in a way that CMake can parse with regexes (which
+> precludes anything but a giant hardcoded list).
+> 
+> I could familiarize myself enough with CMake to do this in some
+> CMake-native way, but that would take "just as long as adding it to
+> the Makefile"[2] (I think that took me <5 minutes, but I'm several
+> hours into fighting with CMake)
+> 
+> So I consider this both a bugfix to the stated aims of this CMake
+> integration, and a better way forward for having an alternate build
+> system. I.e. If someone really does care about a having a
+> GNU-make-less dependency for the "vs-build" I think this change offers
+> a much better way forward for that.
+
+I don't see how relying on GNU-make is a step forward for the CMake 
+integration when it works without it now.
+
+Overall I'm don't think that moving from a known set of dependencies to 
+"build whatever C files are lying around in this directory" is an 
+improvement.
+
+Best Wishes
+
+Phillip
+
+[1] The CMake integration is currently broken for non-windows builds, 
+I've got some fixes at 
+https://github.com/phillipwood/git/tree/wip/cmake-fixes
+
+> Once we invoke the Makefile to spew out e.g. its idea of "LIB_OBJS",
+> it's going to be trivial to do that via some wrapper script that lives
+> in "contrib/buildsystems". Such a script would either invoke "make
+> print-{var,list}-%", or alternatively use an in-tree committed text
+> file with the last known result of such a "make print-{var,list}-%"
+> run.
+> 
+> 1. https://lore.kernel.org/git/xmqq8sikblv2.fsf@gitster.c.googlers.com
+> 2. https://lore.kernel.org/git/CAKiG+9Xtof8Hj3npsS-M0SnT_dcjtHjP_+avWB4oOHkaMdnSbw@mail.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->  builtin/receive-pack.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 49b846d96052..df8bedf71319 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -2564,14 +2564,14 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->  		use_keepalive = KEEPALIVE_ALWAYS;
->  		execute_commands(commands, unpack_status, &si,
->  				 &push_options);
-> +		run_receive_hook(commands, "post-receive", 1,
-> +				 &push_options);
->  		if (pack_lockfile)
->  			unlink_or_warn(pack_lockfile);
->  		if (report_status_v2)
->  			report_v2(commands, unpack_status);
->  		else if (report_status)
->  			report(commands, unpack_status);
-> -		run_receive_hook(commands, "post-receive", 1,
-> -				 &push_options);
->  		run_update_post_hook(commands);
->  		string_list_clear(&push_options, 0);
->  		if (auto_gc) {
-
-I think the discussion at [1] is current to everything you're seeing
-here.
-
-tl;dr: Even with this change you're not guaranteed to run your hook.
-
-Personally I've implemented something (independent of) what Junio
-suggested downthread[2] of that. I.e. to simply insert a DB record on
-pre-receive/post-receive, and have all "real" work done async by a job
-that's following that.
-
-I used MySQL as a dumb queue, but this can also be done with a text
-file. I'd end up with 3x records:
-
- A. pre-receive: what the client wants to push
- B. pre-receive (at the very end): what we accepted the client pushing (after running all checks)
- C. post-receive: logging the same rev range, hopefully
-
-As you've found you won't always get a "C", so such a following job
-currently needs to repair such records after the fact, i.e. be ready to
-inspect the repo and see if the push actually happened. You also won't
-get "C" if you OK'd a push, but had a race for the *.lock file, or other
-similar push contention.
-
-I think one objection some might have to this is that we'd like to not
-wait for the post-receive hook, which I falsely recalled would be
-impacted by this, but as Jeff King points out at [3] we'd do the same
-either way, so this change won't impact that either way.
-
-But I think one thing that will be negatively impacted is touched upon
-by your:
-
-    "Since the client has died[...]Not executing it after an interrupted
-    yet "successful" push can lead to inconsistencies".
-
-You don't know if it died, you just got killed by SIGPIPE. That can
-happen for any number of reasons, the client might have gotten its data,
-you just can't reach it anymore.
-
-I think you're right that it's inconsistent, but wrong about this
-"fixing" the inconsistency. I.e. the inconsistency is just being moved
-from the server-side to the client-side.
-
-I'd think that in this case we'd very much want to give the client the
-benefit of the doubt, because the server can more easily work around
-issues with its hook workflow.
-
-But a client inherently can't work around not getting an "OK & flush"
-while waiting for the hook to execute, and in the meantime the cat
-unplugged the WiFi, so we won't be getting the "OK" at all.
-
-I.e. if put a "sleep 30" in a post-receive hook, push, and in the middle
-of that sleep have the client disconnect from the network the push will
-have gone through.
-
-But aren't we changing what gets shown to the client from being a
-successful push to a non-successful one, since they never got the
-report() (and therefore flush) they were expecting? *Goes and tests*
-
-Yes, e.g. with this:
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 49b846d9605..fc273e7dc4d 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2567,9 +2567,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
-                if (pack_lockfile)
-                        unlink_or_warn(pack_lockfile);
-                if (report_status_v2)
--                       report_v2(commands, unpack_status);
-+                       exit(0);
-                else if (report_status)
--                       report(commands, unpack_status);
-+                       exit(0);
-                run_receive_hook(commands, "post-receive", 1,
-                                 &push_options);
-                run_update_post_hook(commands);
-
-I've made an attempt to emulate that, and running that we'll get various
-test suite failures with e.g.:
-    
-    + git push dest HEAD
-    Enumerating objects: 4, done.
-    Counting objects: 100% (4/4), done.
-    Delta compression using up to 8 threads
-    Compressing objects: 100% (3/3), done.
-    Writing objects: 100% (4/4), 1.25 KiB | 1.25 MiB/s, done.
-    Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
-    send-pack: unexpected disconnect while reading sideband packet
-    fatal: the remote end hung up unexpectedly
-    error: last command exited with $?=128
-
-Which is a race we'll definitely see now, but would increase in
-frequency if we wait longer in sending the OK.
-
-But as noted in [1] there's a way forward to having our cake & eating it
-too. I.e. when we into that on the server-side we can try a little
-harder not to die, and run post-receive anyway, and in either case it
-would be nice if we'd run it after disconnecting from the client, so it
-doesn't have to wait for it.
-
-1. https://lore.kernel.org/git/5795EB1C.1080102@nokia.com/
-2. https://lore.kernel.org/git/xmqqlh0d8w6v.fsf@gitster.mtv.corp.google.com/
-3. https://lore.kernel.org/git/20160803193018.ydhmxntikhyowmjz@sigill.intra.peff.net/
+>   Makefile                            | 485 ++++------------------------
+>   contrib/buildsystems/CMakeLists.txt |  53 ++-
+>   2 files changed, 74 insertions(+), 464 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 4139bcf675c..5d78ab6860a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -590,6 +590,19 @@ TEST_OBJS =
+>   TEST_PROGRAMS_NEED_X =
+>   THIRD_PARTY_SOURCES =
+>   
+> +## Guard against env: programs
+> +TEST_PROGRAMS =
+> +
+> +## Guard against env: sources
+> +CURL_SRC =
+> +TEST_PROGRAMS_NEED_X_SRC =
+> +XDIFF_SRC =
+> +
+> +## Guard against env: objects
+> +CONDITIONAL_OBJS =
+> +CURL_OBJS =
+> +LIB_OBJS_DIRS =
+> +
+>   # Utility to dump whatever variables are defined here
+>   print-var-%:
+>   	@echo $($*)
+> @@ -697,87 +710,23 @@ X =
+>   
+>   PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+>   
+> -TEST_BUILTINS_OBJS += test-advise.o
+> -TEST_BUILTINS_OBJS += test-bitmap.o
+> -TEST_BUILTINS_OBJS += test-bloom.o
+> -TEST_BUILTINS_OBJS += test-chmtime.o
+> -TEST_BUILTINS_OBJS += test-config.o
+> -TEST_BUILTINS_OBJS += test-crontab.o
+> -TEST_BUILTINS_OBJS += test-ctype.o
+> -TEST_BUILTINS_OBJS += test-date.o
+> -TEST_BUILTINS_OBJS += test-delta.o
+> -TEST_BUILTINS_OBJS += test-dir-iterator.o
+> -TEST_BUILTINS_OBJS += test-drop-caches.o
+> -TEST_BUILTINS_OBJS += test-dump-cache-tree.o
+> -TEST_BUILTINS_OBJS += test-dump-fsmonitor.o
+> -TEST_BUILTINS_OBJS += test-dump-split-index.o
+> -TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+> -TEST_BUILTINS_OBJS += test-example-decorate.o
+> -TEST_BUILTINS_OBJS += test-fast-rebase.o
+> -TEST_BUILTINS_OBJS += test-genrandom.o
+> -TEST_BUILTINS_OBJS += test-genzeros.o
+> -TEST_BUILTINS_OBJS += test-getcwd.o
+> -TEST_BUILTINS_OBJS += test-hash-speed.o
+> -TEST_BUILTINS_OBJS += test-hash.o
+> -TEST_BUILTINS_OBJS += test-hashmap.o
+> -TEST_BUILTINS_OBJS += test-index-version.o
+> -TEST_BUILTINS_OBJS += test-json-writer.o
+> -TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+> -TEST_BUILTINS_OBJS += test-match-trees.o
+> -TEST_BUILTINS_OBJS += test-mergesort.o
+> -TEST_BUILTINS_OBJS += test-mktemp.o
+> -TEST_BUILTINS_OBJS += test-oid-array.o
+> -TEST_BUILTINS_OBJS += test-oidmap.o
+> -TEST_BUILTINS_OBJS += test-oidtree.o
+> -TEST_BUILTINS_OBJS += test-online-cpus.o
+> -TEST_BUILTINS_OBJS += test-parse-options.o
+> -TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
+> -TEST_BUILTINS_OBJS += test-partial-clone.o
+> -TEST_BUILTINS_OBJS += test-path-utils.o
+> -TEST_BUILTINS_OBJS += test-pcre2-config.o
+> -TEST_BUILTINS_OBJS += test-pkt-line.o
+> -TEST_BUILTINS_OBJS += test-prio-queue.o
+> -TEST_BUILTINS_OBJS += test-proc-receive.o
+> -TEST_BUILTINS_OBJS += test-progress.o
+> -TEST_BUILTINS_OBJS += test-reach.o
+> -TEST_BUILTINS_OBJS += test-read-cache.o
+> -TEST_BUILTINS_OBJS += test-read-graph.o
+> -TEST_BUILTINS_OBJS += test-read-midx.o
+> -TEST_BUILTINS_OBJS += test-ref-store.o
+> -TEST_BUILTINS_OBJS += test-regex.o
+> -TEST_BUILTINS_OBJS += test-repository.o
+> -TEST_BUILTINS_OBJS += test-revision-walking.o
+> -TEST_BUILTINS_OBJS += test-run-command.o
+> -TEST_BUILTINS_OBJS += test-scrap-cache-tree.o
+> -TEST_BUILTINS_OBJS += test-serve-v2.o
+> -TEST_BUILTINS_OBJS += test-sha1.o
+> -TEST_BUILTINS_OBJS += test-sha256.o
+> -TEST_BUILTINS_OBJS += test-sigchain.o
+> -TEST_BUILTINS_OBJS += test-simple-ipc.o
+> -TEST_BUILTINS_OBJS += test-strcmp-offset.o
+> -TEST_BUILTINS_OBJS += test-string-list.o
+> -TEST_BUILTINS_OBJS += test-submodule-config.o
+> -TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
+> -TEST_BUILTINS_OBJS += test-subprocess.o
+> -TEST_BUILTINS_OBJS += test-trace2.o
+> -TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
+> -TEST_BUILTINS_OBJS += test-userdiff.o
+> -TEST_BUILTINS_OBJS += test-wildmatch.o
+> -TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+> -TEST_BUILTINS_OBJS += test-write-cache.o
+> -TEST_BUILTINS_OBJS += test-xml-encode.o
+> -
+>   # Do not add more tests here unless they have extra dependencies. Add
+>   # them in TEST_BUILTINS_OBJS above.
+>   TEST_PROGRAMS_NEED_X += test-fake-ssh
+>   TEST_PROGRAMS_NEED_X += test-tool
+>   
+> -TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
+> +TEST_PROGRAMS_NEED_X_SRC += $(TEST_PROGRAMS_NEED_X:%=t/helper/%.c)
+> +TEST_PROGRAMS += $(TEST_PROGRAMS_NEED_X_SRC:%.c=%$X)
+> +TEST_BUILTINS_SRC += $(filter-out $(TEST_PROGRAMS_NEED_X_SRC),$(wildcard t/helper/*.c))
+> +TEST_BUILTINS_OBJS += $(TEST_BUILTINS_SRC:%.c=%.o)
+>   
+> -# List built-in command $C whose implementation cmd_$C() is not in
+> -# builtin/$C.o but is linked in as part of some other command.
+> +# List built-in command $C whose implementation cmd_$C() is in
+> +# builtin/$C.o
+> +BUILTIN_OBJS = $(patsubst %.c,%.o,$(wildcard builtin/*.c))
+>   BUILT_INS += $(patsubst builtin/%.o,git-%$X,$(BUILTIN_OBJS))
+>   
+> +# List built-in command $C whose implementation cmd_$C() is not in
+> +# builtin/$C.o but is linked in as part of some other command.
+>   BUILT_INS += git-cherry$X
+>   BUILT_INS += git-cherry-pick$X
+>   BUILT_INS += git-format-patch$X
+> @@ -837,355 +786,28 @@ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentat
+>   	-name Documentation -prune -o \
+>   	-name '*.h' -print)))
+>   
+> -LIB_OBJS += abspath.o
+> -LIB_OBJS += add-interactive.o
+> -LIB_OBJS += add-patch.o
+> -LIB_OBJS += advice.o
+> -LIB_OBJS += alias.o
+> -LIB_OBJS += alloc.o
+> -LIB_OBJS += apply.o
+> -LIB_OBJS += archive-tar.o
+> -LIB_OBJS += archive-zip.o
+> -LIB_OBJS += archive.o
+> -LIB_OBJS += attr.o
+> -LIB_OBJS += base85.o
+> -LIB_OBJS += bisect.o
+> -LIB_OBJS += blame.o
+> -LIB_OBJS += blob.o
+> -LIB_OBJS += bloom.o
+> -LIB_OBJS += branch.o
+> -LIB_OBJS += bulk-checkin.o
+> -LIB_OBJS += bundle.o
+> -LIB_OBJS += cache-tree.o
+> -LIB_OBJS += cbtree.o
+> -LIB_OBJS += chdir-notify.o
+> -LIB_OBJS += checkout.o
+> -LIB_OBJS += chunk-format.o
+> -LIB_OBJS += color.o
+> -LIB_OBJS += column.o
+> -LIB_OBJS += combine-diff.o
+> -LIB_OBJS += commit-graph.o
+> -LIB_OBJS += commit-reach.o
+> -LIB_OBJS += commit.o
+> +# LIB_OBJS: compat/* objects that live at the top-level
+> +CONDITIONAL_OBJS += unix-socket.o
+> +CONDITIONAL_OBJS += unix-stream-server.o
+> +CONDITIONAL_OBJS += sha1dc_git.o
+> +
+> +# LIB_OBJS: Mostly glob *.c at the top-level, with some exlusions
+> +LIB_OBJS += $(filter-out \
+> +	$(CONDITIONAL_OBJS) \
+> +	git.o common-main.o $(PROGRAM_OBJS) \
+> +	$(FUZZ_OBJS) $(CURL_OBJS),\
+> +	$(patsubst %.c,%.o,$(wildcard *.c)))
+> +
+> +# LIB_OBJS: Directories that contain only LIB_OBJS
+> +LIB_OBJS_DIRS += ewah
+> +LIB_OBJS_DIRS += negotiator
+> +LIB_OBJS_DIRS += refs
+> +LIB_OBJS_DIRS += trace2
+> +LIB_OBJS += $(patsubst %.c,%.o,$(wildcard $(addsuffix /*.c,$(LIB_OBJS_DIRS))))
+> +
+> +# LIB_OBJS: unconditional compat/* objects
+>   LIB_OBJS += compat/obstack.o
+>   LIB_OBJS += compat/terminal.o
+> -LIB_OBJS += config.o
+> -LIB_OBJS += connect.o
+> -LIB_OBJS += connected.o
+> -LIB_OBJS += convert.o
+> -LIB_OBJS += copy.o
+> -LIB_OBJS += credential.o
+> -LIB_OBJS += csum-file.o
+> -LIB_OBJS += ctype.o
+> -LIB_OBJS += date.o
+> -LIB_OBJS += decorate.o
+> -LIB_OBJS += delta-islands.o
+> -LIB_OBJS += diff-delta.o
+> -LIB_OBJS += diff-merges.o
+> -LIB_OBJS += diff-lib.o
+> -LIB_OBJS += diff-no-index.o
+> -LIB_OBJS += diff.o
+> -LIB_OBJS += diffcore-break.o
+> -LIB_OBJS += diffcore-delta.o
+> -LIB_OBJS += diffcore-order.o
+> -LIB_OBJS += diffcore-pickaxe.o
+> -LIB_OBJS += diffcore-rename.o
+> -LIB_OBJS += diffcore-rotate.o
+> -LIB_OBJS += dir-iterator.o
+> -LIB_OBJS += dir.o
+> -LIB_OBJS += editor.o
+> -LIB_OBJS += entry.o
+> -LIB_OBJS += environment.o
+> -LIB_OBJS += ewah/bitmap.o
+> -LIB_OBJS += ewah/ewah_bitmap.o
+> -LIB_OBJS += ewah/ewah_io.o
+> -LIB_OBJS += ewah/ewah_rlw.o
+> -LIB_OBJS += exec-cmd.o
+> -LIB_OBJS += fetch-negotiator.o
+> -LIB_OBJS += fetch-pack.o
+> -LIB_OBJS += fmt-merge-msg.o
+> -LIB_OBJS += fsck.o
+> -LIB_OBJS += fsmonitor.o
+> -LIB_OBJS += gettext.o
+> -LIB_OBJS += gpg-interface.o
+> -LIB_OBJS += graph.o
+> -LIB_OBJS += grep.o
+> -LIB_OBJS += hash-lookup.o
+> -LIB_OBJS += hashmap.o
+> -LIB_OBJS += help.o
+> -LIB_OBJS += hex.o
+> -LIB_OBJS += hook.o
+> -LIB_OBJS += ident.o
+> -LIB_OBJS += json-writer.o
+> -LIB_OBJS += kwset.o
+> -LIB_OBJS += levenshtein.o
+> -LIB_OBJS += line-log.o
+> -LIB_OBJS += line-range.o
+> -LIB_OBJS += linear-assignment.o
+> -LIB_OBJS += list-objects-filter-options.o
+> -LIB_OBJS += list-objects-filter.o
+> -LIB_OBJS += list-objects.o
+> -LIB_OBJS += ll-merge.o
+> -LIB_OBJS += lockfile.o
+> -LIB_OBJS += log-tree.o
+> -LIB_OBJS += ls-refs.o
+> -LIB_OBJS += mailinfo.o
+> -LIB_OBJS += mailmap.o
+> -LIB_OBJS += match-trees.o
+> -LIB_OBJS += mem-pool.o
+> -LIB_OBJS += merge-blobs.o
+> -LIB_OBJS += merge-ort.o
+> -LIB_OBJS += merge-ort-wrappers.o
+> -LIB_OBJS += merge-recursive.o
+> -LIB_OBJS += merge.o
+> -LIB_OBJS += mergesort.o
+> -LIB_OBJS += midx.o
+> -LIB_OBJS += name-hash.o
+> -LIB_OBJS += negotiator/default.o
+> -LIB_OBJS += negotiator/noop.o
+> -LIB_OBJS += negotiator/skipping.o
+> -LIB_OBJS += notes-cache.o
+> -LIB_OBJS += notes-merge.o
+> -LIB_OBJS += notes-utils.o
+> -LIB_OBJS += notes.o
+> -LIB_OBJS += object-file.o
+> -LIB_OBJS += object-name.o
+> -LIB_OBJS += object.o
+> -LIB_OBJS += oid-array.o
+> -LIB_OBJS += oidmap.o
+> -LIB_OBJS += oidset.o
+> -LIB_OBJS += oidtree.o
+> -LIB_OBJS += pack-bitmap-write.o
+> -LIB_OBJS += pack-bitmap.o
+> -LIB_OBJS += pack-check.o
+> -LIB_OBJS += pack-objects.o
+> -LIB_OBJS += pack-revindex.o
+> -LIB_OBJS += pack-write.o
+> -LIB_OBJS += packfile.o
+> -LIB_OBJS += pager.o
+> -LIB_OBJS += parallel-checkout.o
+> -LIB_OBJS += parse-options-cb.o
+> -LIB_OBJS += parse-options.o
+> -LIB_OBJS += patch-delta.o
+> -LIB_OBJS += patch-ids.o
+> -LIB_OBJS += path.o
+> -LIB_OBJS += pathspec.o
+> -LIB_OBJS += pkt-line.o
+> -LIB_OBJS += preload-index.o
+> -LIB_OBJS += pretty.o
+> -LIB_OBJS += prio-queue.o
+> -LIB_OBJS += progress.o
+> -LIB_OBJS += promisor-remote.o
+> -LIB_OBJS += prompt.o
+> -LIB_OBJS += protocol.o
+> -LIB_OBJS += protocol-caps.o
+> -LIB_OBJS += prune-packed.o
+> -LIB_OBJS += quote.o
+> -LIB_OBJS += range-diff.o
+> -LIB_OBJS += reachable.o
+> -LIB_OBJS += read-cache.o
+> -LIB_OBJS += rebase-interactive.o
+> -LIB_OBJS += rebase.o
+> -LIB_OBJS += ref-filter.o
+> -LIB_OBJS += reflog-walk.o
+> -LIB_OBJS += refs.o
+> -LIB_OBJS += refs/debug.o
+> -LIB_OBJS += refs/files-backend.o
+> -LIB_OBJS += refs/iterator.o
+> -LIB_OBJS += refs/packed-backend.o
+> -LIB_OBJS += refs/ref-cache.o
+> -LIB_OBJS += refspec.o
+> -LIB_OBJS += remote.o
+> -LIB_OBJS += replace-object.o
+> -LIB_OBJS += repo-settings.o
+> -LIB_OBJS += repository.o
+> -LIB_OBJS += rerere.o
+> -LIB_OBJS += reset.o
+> -LIB_OBJS += resolve-undo.o
+> -LIB_OBJS += revision.o
+> -LIB_OBJS += run-command.o
+> -LIB_OBJS += send-pack.o
+> -LIB_OBJS += sequencer.o
+> -LIB_OBJS += serve.o
+> -LIB_OBJS += server-info.o
+> -LIB_OBJS += setup.o
+> -LIB_OBJS += shallow.o
+> -LIB_OBJS += sideband.o
+> -LIB_OBJS += sigchain.o
+> -LIB_OBJS += sparse-index.o
+> -LIB_OBJS += split-index.o
+> -LIB_OBJS += stable-qsort.o
+> -LIB_OBJS += strbuf.o
+> -LIB_OBJS += streaming.o
+> -LIB_OBJS += string-list.o
+> -LIB_OBJS += strmap.o
+> -LIB_OBJS += strvec.o
+> -LIB_OBJS += sub-process.o
+> -LIB_OBJS += submodule-config.o
+> -LIB_OBJS += submodule.o
+> -LIB_OBJS += symlinks.o
+> -LIB_OBJS += tag.o
+> -LIB_OBJS += tempfile.o
+> -LIB_OBJS += thread-utils.o
+> -LIB_OBJS += tmp-objdir.o
+> -LIB_OBJS += trace.o
+> -LIB_OBJS += trace2.o
+> -LIB_OBJS += trace2/tr2_cfg.o
+> -LIB_OBJS += trace2/tr2_cmd_name.o
+> -LIB_OBJS += trace2/tr2_dst.o
+> -LIB_OBJS += trace2/tr2_sid.o
+> -LIB_OBJS += trace2/tr2_sysenv.o
+> -LIB_OBJS += trace2/tr2_tbuf.o
+> -LIB_OBJS += trace2/tr2_tgt_event.o
+> -LIB_OBJS += trace2/tr2_tgt_normal.o
+> -LIB_OBJS += trace2/tr2_tgt_perf.o
+> -LIB_OBJS += trace2/tr2_tls.o
+> -LIB_OBJS += trailer.o
+> -LIB_OBJS += transport-helper.o
+> -LIB_OBJS += transport.o
+> -LIB_OBJS += tree-diff.o
+> -LIB_OBJS += tree-walk.o
+> -LIB_OBJS += tree.o
+> -LIB_OBJS += unpack-trees.o
+> -LIB_OBJS += upload-pack.o
+> -LIB_OBJS += url.o
+> -LIB_OBJS += urlmatch.o
+> -LIB_OBJS += usage.o
+> -LIB_OBJS += userdiff.o
+> -LIB_OBJS += utf8.o
+> -LIB_OBJS += varint.o
+> -LIB_OBJS += version.o
+> -LIB_OBJS += versioncmp.o
+> -LIB_OBJS += walker.o
+> -LIB_OBJS += wildmatch.o
+> -LIB_OBJS += worktree.o
+> -LIB_OBJS += wrapper.o
+> -LIB_OBJS += write-or-die.o
+> -LIB_OBJS += ws.o
+> -LIB_OBJS += wt-status.o
+> -LIB_OBJS += xdiff-interface.o
+> -LIB_OBJS += zlib.o
+> -
+> -BUILTIN_OBJS += builtin/add.o
+> -BUILTIN_OBJS += builtin/am.o
+> -BUILTIN_OBJS += builtin/annotate.o
+> -BUILTIN_OBJS += builtin/apply.o
+> -BUILTIN_OBJS += builtin/archive.o
+> -BUILTIN_OBJS += builtin/bisect--helper.o
+> -BUILTIN_OBJS += builtin/blame.o
+> -BUILTIN_OBJS += builtin/branch.o
+> -BUILTIN_OBJS += builtin/bugreport.o
+> -BUILTIN_OBJS += builtin/bundle.o
+> -BUILTIN_OBJS += builtin/cat-file.o
+> -BUILTIN_OBJS += builtin/check-attr.o
+> -BUILTIN_OBJS += builtin/check-ignore.o
+> -BUILTIN_OBJS += builtin/check-mailmap.o
+> -BUILTIN_OBJS += builtin/check-ref-format.o
+> -BUILTIN_OBJS += builtin/checkout--worker.o
+> -BUILTIN_OBJS += builtin/checkout-index.o
+> -BUILTIN_OBJS += builtin/checkout.o
+> -BUILTIN_OBJS += builtin/clean.o
+> -BUILTIN_OBJS += builtin/clone.o
+> -BUILTIN_OBJS += builtin/column.o
+> -BUILTIN_OBJS += builtin/commit-graph.o
+> -BUILTIN_OBJS += builtin/commit-tree.o
+> -BUILTIN_OBJS += builtin/commit.o
+> -BUILTIN_OBJS += builtin/config.o
+> -BUILTIN_OBJS += builtin/count-objects.o
+> -BUILTIN_OBJS += builtin/credential-cache--daemon.o
+> -BUILTIN_OBJS += builtin/credential-cache.o
+> -BUILTIN_OBJS += builtin/credential-store.o
+> -BUILTIN_OBJS += builtin/credential.o
+> -BUILTIN_OBJS += builtin/describe.o
+> -BUILTIN_OBJS += builtin/diff-files.o
+> -BUILTIN_OBJS += builtin/diff-index.o
+> -BUILTIN_OBJS += builtin/diff-tree.o
+> -BUILTIN_OBJS += builtin/diff.o
+> -BUILTIN_OBJS += builtin/difftool.o
+> -BUILTIN_OBJS += builtin/env--helper.o
+> -BUILTIN_OBJS += builtin/fast-export.o
+> -BUILTIN_OBJS += builtin/fast-import.o
+> -BUILTIN_OBJS += builtin/fetch-pack.o
+> -BUILTIN_OBJS += builtin/fetch.o
+> -BUILTIN_OBJS += builtin/fmt-merge-msg.o
+> -BUILTIN_OBJS += builtin/for-each-ref.o
+> -BUILTIN_OBJS += builtin/for-each-repo.o
+> -BUILTIN_OBJS += builtin/fsck.o
+> -BUILTIN_OBJS += builtin/gc.o
+> -BUILTIN_OBJS += builtin/get-tar-commit-id.o
+> -BUILTIN_OBJS += builtin/grep.o
+> -BUILTIN_OBJS += builtin/hash-object.o
+> -BUILTIN_OBJS += builtin/help.o
+> -BUILTIN_OBJS += builtin/index-pack.o
+> -BUILTIN_OBJS += builtin/init-db.o
+> -BUILTIN_OBJS += builtin/interpret-trailers.o
+> -BUILTIN_OBJS += builtin/log.o
+> -BUILTIN_OBJS += builtin/ls-files.o
+> -BUILTIN_OBJS += builtin/ls-remote.o
+> -BUILTIN_OBJS += builtin/ls-tree.o
+> -BUILTIN_OBJS += builtin/mailinfo.o
+> -BUILTIN_OBJS += builtin/mailsplit.o
+> -BUILTIN_OBJS += builtin/merge-base.o
+> -BUILTIN_OBJS += builtin/merge-file.o
+> -BUILTIN_OBJS += builtin/merge-index.o
+> -BUILTIN_OBJS += builtin/merge-ours.o
+> -BUILTIN_OBJS += builtin/merge-recursive.o
+> -BUILTIN_OBJS += builtin/merge-tree.o
+> -BUILTIN_OBJS += builtin/merge.o
+> -BUILTIN_OBJS += builtin/mktag.o
+> -BUILTIN_OBJS += builtin/mktree.o
+> -BUILTIN_OBJS += builtin/multi-pack-index.o
+> -BUILTIN_OBJS += builtin/mv.o
+> -BUILTIN_OBJS += builtin/name-rev.o
+> -BUILTIN_OBJS += builtin/notes.o
+> -BUILTIN_OBJS += builtin/pack-objects.o
+> -BUILTIN_OBJS += builtin/pack-redundant.o
+> -BUILTIN_OBJS += builtin/pack-refs.o
+> -BUILTIN_OBJS += builtin/patch-id.o
+> -BUILTIN_OBJS += builtin/prune-packed.o
+> -BUILTIN_OBJS += builtin/prune.o
+> -BUILTIN_OBJS += builtin/pull.o
+> -BUILTIN_OBJS += builtin/push.o
+> -BUILTIN_OBJS += builtin/range-diff.o
+> -BUILTIN_OBJS += builtin/read-tree.o
+> -BUILTIN_OBJS += builtin/rebase.o
+> -BUILTIN_OBJS += builtin/receive-pack.o
+> -BUILTIN_OBJS += builtin/reflog.o
+> -BUILTIN_OBJS += builtin/remote-ext.o
+> -BUILTIN_OBJS += builtin/remote-fd.o
+> -BUILTIN_OBJS += builtin/remote.o
+> -BUILTIN_OBJS += builtin/repack.o
+> -BUILTIN_OBJS += builtin/replace.o
+> -BUILTIN_OBJS += builtin/rerere.o
+> -BUILTIN_OBJS += builtin/reset.o
+> -BUILTIN_OBJS += builtin/rev-list.o
+> -BUILTIN_OBJS += builtin/rev-parse.o
+> -BUILTIN_OBJS += builtin/revert.o
+> -BUILTIN_OBJS += builtin/rm.o
+> -BUILTIN_OBJS += builtin/send-pack.o
+> -BUILTIN_OBJS += builtin/shortlog.o
+> -BUILTIN_OBJS += builtin/show-branch.o
+> -BUILTIN_OBJS += builtin/show-index.o
+> -BUILTIN_OBJS += builtin/show-ref.o
+> -BUILTIN_OBJS += builtin/sparse-checkout.o
+> -BUILTIN_OBJS += builtin/stash.o
+> -BUILTIN_OBJS += builtin/stripspace.o
+> -BUILTIN_OBJS += builtin/submodule--helper.o
+> -BUILTIN_OBJS += builtin/symbolic-ref.o
+> -BUILTIN_OBJS += builtin/tag.o
+> -BUILTIN_OBJS += builtin/unpack-file.o
+> -BUILTIN_OBJS += builtin/unpack-objects.o
+> -BUILTIN_OBJS += builtin/update-index.o
+> -BUILTIN_OBJS += builtin/update-ref.o
+> -BUILTIN_OBJS += builtin/update-server-info.o
+> -BUILTIN_OBJS += builtin/upload-archive.o
+> -BUILTIN_OBJS += builtin/upload-pack.o
+> -BUILTIN_OBJS += builtin/var.o
+> -BUILTIN_OBJS += builtin/verify-commit.o
+> -BUILTIN_OBJS += builtin/verify-pack.o
+> -BUILTIN_OBJS += builtin/verify-tag.o
+> -BUILTIN_OBJS += builtin/worktree.o
+> -BUILTIN_OBJS += builtin/write-tree.o
+>   
+>   # THIRD_PARTY_SOURCES is a list of patterns compatible with the
+>   # $(filter) and $(filter-out) family of functions. They specify source
+> @@ -2076,6 +1698,7 @@ endif
+>   LIBS = $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
+>   
+>   BASIC_CFLAGS += $(COMPAT_CFLAGS)
+> +LIB_OBJS_NO_COMPAT := $(LIB_OBJS)
+>   LIB_OBJS += $(COMPAT_OBJS)
+>   
+>   # Quote for C
+> @@ -2436,17 +2059,12 @@ reconfigure config.mak.autogen: config.status
+>   .PHONY: reconfigure # This is a convenience target.
+>   endif
+>   
+> -XDIFF_OBJS += xdiff/xdiffi.o
+> -XDIFF_OBJS += xdiff/xemit.o
+> -XDIFF_OBJS += xdiff/xhistogram.o
+> -XDIFF_OBJS += xdiff/xmerge.o
+> -XDIFF_OBJS += xdiff/xpatience.o
+> -XDIFF_OBJS += xdiff/xprepare.o
+> -XDIFF_OBJS += xdiff/xutils.o
+> +XDIFF_SRC += $(wildcard xdiff/*.c)
+> +XDIFF_OBJS += $(XDIFF_SRC:.c=.o)
+>   .PHONY: xdiff-objs
+>   xdiff-objs: $(XDIFF_OBJS)
+>   
+> -TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+> +TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(TEST_BUILTINS_OBJS)
+>   .PHONY: test-objs
+>   test-objs: $(TEST_OBJS)
+>   
+> @@ -2457,13 +2075,20 @@ GIT_OBJS += git.o
+>   .PHONY: git-objs
+>   git-objs: $(GIT_OBJS)
+>   
+> +CURL_SRC += http.c
+> +CURL_SRC += http-walker.c
+> +CURL_SRC += remote-curl.c
+> +CURL_OBJS += $(CURL_SRC:.c=.o)
+> +.PHONY: curl-objs
+> +curl-objs: $(CURL_OBJS)
+> +
+>   OBJECTS += $(GIT_OBJS)
+>   OBJECTS += $(PROGRAM_OBJS)
+>   OBJECTS += $(TEST_OBJS)
+>   OBJECTS += $(XDIFF_OBJS)
+>   OBJECTS += $(FUZZ_OBJS)
+>   ifndef NO_CURL
+> -	OBJECTS += http.o http-walker.o remote-curl.o
+> +OBJECTS += $(CURL_OBJS)
+>   endif
+>   .PHONY: objects
+>   objects: $(OBJECTS)
+> @@ -2900,7 +2525,7 @@ perf: all
+>   
+>   .PRECIOUS: $(TEST_OBJS)
+>   
+> -t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+> +t/helper/test-tool$X: $(TEST_BUILTINS_OBJS)
+>   
+>   t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+>   	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index fd1399c440f..d57c9203b66 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
+> @@ -111,32 +111,15 @@ project(git
+>   #TODO Add pcre support
+>   
+>   #macros for parsing the Makefile for sources and scripts
+> -macro(parse_makefile_for_sources list_var regex)
+> -	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
+> -	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
+> -	string(REPLACE "$(COMPAT_OBJS)" "" ${list_var} ${${list_var}}) #remove "$(COMPAT_OBJS)" This is only for libgit.
+> -	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
+> -	string(REPLACE ".o" ".c;" ${list_var} ${${list_var}}) #change .o to .c, ; is for converting the string into a list
+> -	list(TRANSFORM ${list_var} STRIP) #remove trailing/leading whitespaces for each element in list
+> -	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
+> -endmacro()
+> -
+> -macro(parse_makefile_for_scripts list_var regex lang)
+> -	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
+> -	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
+> -	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
+> -	string(REPLACE " " ";" ${list_var} ${${list_var}}) #convert string to a list
+> -	if(NOT ${lang}) #exclude for SCRIPT_LIB
+> -		list(TRANSFORM ${list_var} REPLACE "${lang}" "") #do the replacement
+> -	endif()
+> -endmacro()
+> -
+> -macro(parse_makefile_for_executables list_var regex)
+> -	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+= git-(.*)")
+> -	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
+> +macro(ask_makefile_for_list list_var var_name)
+> +	execute_process(COMMAND make print-list-${var_name}
+> +			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+> +			OUTPUT_VARIABLE ${list_var})
+> +	string(REGEX REPLACE "\\.o\n" ".c\n" ${list_var} ${${list_var}}) #change .o to .c
+>   	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
+> -	string(REPLACE "git-" "" ${list_var} ${${list_var}}) #strip `git-` prefix
+> -	string(REPLACE "\$X" ";" ${list_var} ${${list_var}}) #strip $X, ; is for converting the string into a list
+> +	## Parse the Makefile print-list-% format
+> +	string(REGEX REPLACE "${var_name} =\n" "" ${list_var} ${${list_var}})
+> +	string(REGEX REPLACE "${var_name} \\+?= ([^\n]+)" "\\1;" ${list_var} ${${list_var}})
+>   	list(TRANSFORM ${list_var} STRIP) #remove trailing/leading whitespaces for each element in list
+>   	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
+>   endmacro()
+> @@ -635,14 +618,14 @@ include_directories(${CMAKE_BINARY_DIR})
+>   
+>   #build
+>   #libgit
+> -parse_makefile_for_sources(libgit_SOURCES "LIB_OBJS")
+> +ask_makefile_for_list(libgit_SOURCES "LIB_OBJS_NO_COMPAT")
+>   
+>   list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+>   list(TRANSFORM compat_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+>   add_library(libgit ${libgit_SOURCES} ${compat_SOURCES})
+>   
+>   #libxdiff
+> -parse_makefile_for_sources(libxdiff_SOURCES "XDIFF_OBJS")
+> +ask_makefile_for_list(libxdiff_SOURCES "XDIFF_OBJS")
+>   
+>   list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+>   add_library(xdiff STATIC ${libxdiff_SOURCES})
+> @@ -693,7 +676,7 @@ elseif(UNIX)
+>   endif()
+>   
+>   #git
+> -parse_makefile_for_sources(git_SOURCES "BUILTIN_OBJS")
+> +ask_makefile_for_list(git_SOURCES "BUILTIN_OBJS")
+>   
+>   list(TRANSFORM git_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+>   add_executable(git ${CMAKE_SOURCE_DIR}/git.c ${git_SOURCES})
+> @@ -729,7 +712,9 @@ if(CURL_FOUND)
+>   	endif()
+>   endif()
+>   
+> -parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
+> +ask_makefile_for_list(git_builtin_extra "BUILT_INS")
+> +list(TRANSFORM git_builtin_extra REPLACE "^git-(.*)" "\\1") #strip `git-` prefix
+> +list(TRANSFORM git_builtin_extra REPLACE "\.exe$" "") #strip $X
+>   
+>   option(SKIP_DASHED_BUILT_INS "Skip hardlinking the dashed versions of the built-ins")
+>   
+> @@ -766,8 +751,8 @@ set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
+>   set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
+>   
+>   #shell scripts
+> -parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
+> -parse_makefile_for_scripts(git_shlib_scripts "SCRIPT_LIB" "")
+> +ask_makefile_for_list(git_sh_scripts "SCRIPT_SH_GEN")
+> +ask_makefile_for_list(git_shlib_scripts "SCRIPT_LIB_GEN")
+>   set(git_shell_scripts
+>   	${git_sh_scripts} ${git_shlib_scripts} git-instaweb)
+>   
+> @@ -787,7 +772,7 @@ foreach(script ${git_shell_scripts})
+>   endforeach()
+>   
+>   #perl scripts
+> -parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
+> +ask_makefile_for_list(git_perl_scripts "SCRIPT_PERL_GEN")
+>   
+>   #create perl header
+>   file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
+> @@ -910,9 +895,9 @@ add_executable(test-fake-ssh ${CMAKE_SOURCE_DIR}/t/helper/test-fake-ssh.c)
+>   target_link_libraries(test-fake-ssh common-main)
+>   
+>   #test-tool
+> -parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
+> +ask_makefile_for_list(test-tool_SOURCES "TEST_BUILTINS_OBJS")
+>   
+> -list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
+> +list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+>   add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES})
+>   target_link_libraries(test-tool common-main)
+>   
+> 
