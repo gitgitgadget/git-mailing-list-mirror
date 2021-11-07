@@ -2,108 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3BC8C433F5
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 16:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 521BAC433F5
+	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 16:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7EB860EE0
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 16:19:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 358226105A
+	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 16:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235192AbhKGQWF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 11:22:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56858 "EHLO
+        id S235254AbhKGQab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Nov 2021 11:30:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234949AbhKGQWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Nov 2021 11:22:04 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFC8C061570
-        for <git@vger.kernel.org>; Sun,  7 Nov 2021 08:19:21 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id g17so12836073ybe.13
-        for <git@vger.kernel.org>; Sun, 07 Nov 2021 08:19:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MA7mpLG7ixCUK2NYDqm4ef7Qo20sGoCQp+9hzpiJ8bk=;
-        b=WkHgvNTxYevRhKB2JBORTKmAJQL7qh7cWdl/sFLVLonBZed47+HgshYo8COu7Lf13r
-         5MUbwBk0NweYwntVhH7s5FyCZ8OlF2Qtu7e9UUGDsvXPG0weS3xO8WAIPGndK4EJfRHi
-         96QPw+w0gT4xXpwiIxOJAY8YiIeEDI+uaEThSTHzoCqLOd7VaptNZ1X4GfXE1ODfF7jj
-         sHX1jM+9iFPHeCcgf0+nKbeYngzf/PQwKJcvj6fqrtRvFurTChaEZKmrIUw3qZzH6fCO
-         6SY5Xj0SZawwZ0w5UvNld1oNLq8U7yOo3l+mFC9GTzK11doQigW4CQp84z0b5BQ2M0yK
-         Sqsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MA7mpLG7ixCUK2NYDqm4ef7Qo20sGoCQp+9hzpiJ8bk=;
-        b=F78J2jeCDifA5yGmrWdCLWionP5bTHuCdzG493PVs0lzExxK0rThdgyR82T89bQC/F
-         uPrNMZa9qvPjXR3XRQfIR63Rqlgm91EeQiNsYFFAXzuyCok7Y9kzl0Ez0P16qaqbAKkL
-         NSgl/Z9bpQywyBjrlAh2Gwbo7rf625bBI+I0Ve78Z3mHeYpV3Q8EDrXSn0bKRSyXWFQl
-         ZIFEjQN51fQuKP1nCOk+jfA+nJOmCQ8gtWsWWzf6nL6U/C7u6igDheb19ppVTvEAN77Q
-         fBd6SDaiUkNnPhQNBVHwwFfl5DiKk5oIqiMzSFc4qrWlCYU0X+xlRxusJHTy63dO3yxD
-         hgMg==
-X-Gm-Message-State: AOAM532txGBzfD/ohy/siIjZt+y8wc0gicB0xHk0k0WEWKrdDXS6u076
-        tSOPIOAlkjK6nMvlsvk8qiptwJ81n+L8EQanOaFQLzykCjk=
-X-Google-Smtp-Source: ABdhPJyZydqgnYNTBNque1pYgnPRoISTmX/ztfjKq7A2WJY/TojD4GTLiJOw+XWT0zCepjsqZxjEPJCkNa0pSnJZgC4=
-X-Received: by 2002:a25:3853:: with SMTP id f80mr16378800yba.147.1636301960505;
- Sun, 07 Nov 2021 08:19:20 -0800 (PST)
-MIME-Version: 1.0
-From:   php fan <php4fan@gmail.com>
-Date:   Sun, 7 Nov 2021 17:19:09 +0100
-Message-ID: <CAPxO=juWu9xU8UCW1B4L6vGeXHQ=ef9Q4cEAPgkGqdpyHPyAYA@mail.gmail.com>
-Subject: gitk bug
+        with ESMTP id S234632AbhKGQaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Nov 2021 11:30:30 -0500
+Received: from mackerel.carobme.de (unknown [IPv6:2a01:4f8:1c1c:4990::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1354BC061570
+        for <git@vger.kernel.org>; Sun,  7 Nov 2021 08:27:46 -0800 (PST)
+Received: from mail.carobme.de (pd9512634.dip0.t-ipconnect.de [217.81.38.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: mrelay)
+        by mackerel.carobme.de (Postfix) with ESMTPSA id 4HnKR42MzdzFVVf
+        for <git@vger.kernel.org>; Sun,  7 Nov 2021 17:27:44 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eaddrinuse.net;
+        s=thorn; t=1636302464;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=QkN7UXfHwaBTs82jWaeDJvbOQjuw7WrcJ04A0tSKGCQ=;
+        b=SPfXSVBNEjkHB5uSvTsc5ZZH0OaTMe1qF1p/C6pm1iLY+IqbT0gQw0FU3VJbLrOhypEHKv
+        48k14uLDbehEufZV9wH0ErdNjUAHKXJ08jT3pO+pF0E0fvM33i5ZeBO6BFge0zNnIJOr5G
+        Qw9SFR7Lg6U0qM10tF+wBWKGnbOGOjPWr+QqueG87zkTT8H2303BqGY/PMdn7Dvy/x7HGS
+        DKpq2UIsCZoQUKomBFnEfdEt4V4AaWgIqy+j3MmllKRPov4gvnDyQ5XL3wTPW0+ShwvGp1
+        HLPrrDvPzgHjHhAouZ8kZWDDOZBdhat8vOtHaKoUkF1nJ2yZuWA47zSu0Gs5Eg==
+Received: from octopus.int.carobme.de (octopus.int.carobme.de [192.168.78.3])
+        by mail.carobme.de (Postfix) with ESMTP id 4HnKR36dClzXRQQ
+        for <git@vger.kernel.org>; Sun,  7 Nov 2021 17:27:43 +0100 (CET)
+Received: from mbeck (uid 1000)
+        (envelope-from mbeck@eaddrinuse.net)
+        id 7e228a
+        by octopus.int.carobme.de (DragonFly Mail Agent v0.11+);
+        Sun, 07 Nov 2021 17:27:43 +0100
+Date:   Sun, 7 Nov 2021 17:27:43 +0100
+From:   Marco Beck <mbeck@eaddrinuse.net>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] gpg-interface: allow selecting key id with env variable
+Message-ID: <YYf+f4DOtILHSNoX@octopus.int.carobme.de>
+References: <20211024193625.148-1-mbeck@eaddrinuse.net>
+ <xmqqsfwq40w7.fsf@gitster.g>
+ <YXXMroOBvDERXIMP@octopus.int.carobme.de>
+ <8661a491-5ef1-a469-878f-7dd81d4a1aa2@gigacodes.de>
+ <YXZpyWesc8VRWYwr@octopus.int.carobme.de>
+ <bc6b915a-7aa0-298b-e1ec-bf548e4dbdfc@gigacodes.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <bc6b915a-7aa0-298b-e1ec-bf548e4dbdfc@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Oh gosh, using a mailing list for bug reports...)
+On Mon, Oct 25, 2021 at 10:46:56AM +0200, Fabian Stelzer wrote:
+>
+>If you insist on using environment variables there is:
+>GIT_CONFIG_KEY_<n>
+>GIT_CONFIG_VALUE_<n>
+>
+>https://git-scm.com/docs/git-config
+>
+>A bit clunky in my opinion but you can set any config variable via env vars:
+>
+>e.g.:
+>GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=user.name GIT_CONFIG_VALUE_0=testing
 
-I just installed gitk on OpenSUSE Tumbleweed with zypper and found this bug.
+Works for me, thank you.
 
-Here's the report generated with git bugreport:
-
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-1. cd into the directory of a git repository
-2. Run "gitk" (this opens the repository in gitk)
-3. Click on a commit
-
-What did you expect to happen? (Expected behavior)
-
-Should select the commit I clicked on
-
-What happened instead? (Actual behavior)
-
-Selects the commit just below it
-
-What's different between what you expected and what actually happened?
-
-See above
-
-Anything else you want to add:
-
-no
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.33.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.14.14-1-default #1 SMP Thu Oct 21 05:05:03 UTC 2021
-(2b5383f) x86_64
-compiler info: gnuc: 11.2
-libc info: glibc: 2.34
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Marco
