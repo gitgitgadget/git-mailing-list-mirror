@@ -2,119 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD89C433F5
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 13:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8876FC433F5
+	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 14:41:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 016F26120D
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 13:23:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EFDE61357
+	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 14:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232890AbhKGNZq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 08:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46542 "EHLO
+        id S229639AbhKGOoa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Nov 2021 09:44:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232562AbhKGNZq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Nov 2021 08:25:46 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F323CC061570
-        for <git@vger.kernel.org>; Sun,  7 Nov 2021 05:23:02 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id s13so21997852wrb.3
-        for <git@vger.kernel.org>; Sun, 07 Nov 2021 05:23:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=3f+Cn3GJDVfcgG0vEWB8OuafMt+xwzo8g38WqaHw1lo=;
-        b=opwXjmLho2181VbtmfSr/e8Q6EvbQ4e0J/gLHoRwIGnEjKDZ2nj9u76WbtmKq7yC9M
-         +g9gyDtlnrxto4dKKuYGCmja2bI/Wu5ZY9x3DuQrzSiP//nJjbOTmVFGVT9aHgSIJPT2
-         9PjKh3bh7jGsCTubG52nf7XE6AigJiVPMuVe1ITycKmtCS4xIh6QpSjtJvUF/l12O2kT
-         F1T+Rd96OoNs5Rp0STBeQ/Zt2TI23zZTGrpfHXW5KE9NWuJC13OrzjlJqrHfjelG0Bpo
-         EFK0ipgGpVtHRQGAQeoTd6ZfXVVzhmmSM+hkDe0AK7OnWkupih1v1j5LwQx7zMSGTQj6
-         gE/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=3f+Cn3GJDVfcgG0vEWB8OuafMt+xwzo8g38WqaHw1lo=;
-        b=GWbkR5KhM4beeuHCgKGnLSuXZcw3CxVNcvYoSTVfv14W7wv+YSllVWlLyIyPrdqe2U
-         lsP5MAjR/bKq/C6LY3oFuWfsthkXIv5YbDrtydnFq20qYV2qxvvNcc7++iDM4xYJh2ON
-         ZzS9qLE3wxV89TRned46V9/XuaaF5jpwKUNkkssF2J3Gg0+Sx59jo/9vvwMjlPn6nxKV
-         ecsZrHQGB1ntsKtuZk4/wsPky5jpW6aCekc2ujDY9zv5N0YlMgb1JMlpLjCzR1HA1QvB
-         cpDPh87VFShnGZUOU9S+EeJ9z4YN8nfcwtAvB2MGPt4i0E4bTvi5b1r5HBQc2tKvozSm
-         CQsg==
-X-Gm-Message-State: AOAM5324bDTN/Mu08ruPnWUCUxld0Kzn/mFv0Zncyr5CRAklnYCX/me4
-        UrXSFGphvqTOQROsiS0r5gGdJe3JY2o=
-X-Google-Smtp-Source: ABdhPJwC3Y0hxoy46jqcbdU1yfbLiEonBVY4ti+yOkub2i5zaxMXc/uSr6Gp+g0Ub0oeVAMXZDAEQw==
-X-Received: by 2002:adf:fd90:: with SMTP id d16mr86336863wrr.385.1636291381614;
-        Sun, 07 Nov 2021 05:23:01 -0800 (PST)
-Received: from gmail.com (193-81-63-211.adsl.highway.telekom.at. [193.81.63.211])
-        by smtp.gmail.com with ESMTPSA id a134sm14010627wmd.9.2021.11.07.05.23.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Nov 2021 05:23:01 -0800 (PST)
-Date:   Sun, 7 Nov 2021 14:22:59 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 10/10] init doc: --shared=0xxx does not give umask but
- perm bits
-Message-ID: <20211107132259.jntrqxu5jn5v3vcw@gmail.com>
-References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
- <20211106184858.11500-1-jn.avila@free.fr>
- <20211106184858.11500-11-jn.avila@free.fr>
+        with ESMTP id S229520AbhKGOo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Nov 2021 09:44:29 -0500
+Received: from mail.archlinux.org (mail.archlinux.org [IPv6:2a01:4f9:c010:3052::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CB9C061570
+        for <git@vger.kernel.org>; Sun,  7 Nov 2021 06:41:46 -0800 (PST)
+Message-ID: <74eec375-e7e1-dd2a-870c-cd46d870a4e6@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1636296105;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=BNXZBXOBwdhnfX0Ol9ZQWhJp5QJW/frVXKHYBWXOIkc=;
+        b=SOiEz8SGUnmIqJK4FA2efGOd14atxJE9RGmNKTpDBcoTMQbyqwMu7ZanPyDzat/BFFTgzA
+        wIeAGwSvawdpKWcUfArjNmcUIwhlUXh2mTkiwjqZsosSa6l7aXt7MBfiTyoWCQUr5qRXfw
+        PrH06ntJGGsxlq/xvNbpYDbHkLkp69BvFM/ASnDCkJWCPOkl37FBeSTiYQXqZvnBhnkd9r
+        5bPDmTrA4sJw8ULX7EdTEvSUHR3J8BEOzWbMQNPoe9uqz3HK1rVsMOdon0ual352Vr5K+h
+        h4G/oaUeIvIeb3/fluPy2pUyRnvz6oY43BNg/EQkMKThtiP1eygkSi8VskM91CZrt7tonX
+        jIRsX1u18pUh/aKomx92YeeHfUzy6DUIaP55ZaC8oooDsbwMKNWCTVAB1nACGPKLKM5Wk3
+        ONapkKjvbrXsq8fPEi3uDXzIWW2sOA+EgMA5d9zGGLqlWoK27W0uI+2o1lZ/JyI+SiECiX
+        O/hOBk+OC7+vSofmCjQRTraZvvS6yjbJ8IPiIrUJvtC2Re4nVPM8o0XQqJy7Rg7lj4j8xo
+        FvkDodUxPadCpRoZ4hzr1ILZqlNV5bu92dGjM4SrFGoyTw1OTBbDP78zOZdhzNekGeK8ce
+        Evuwe6kHcK6QWy5Q1alMcnYRzD1xlZj29Ad9AUjHZGOXdYuhDrLZY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1636296105;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=BNXZBXOBwdhnfX0Ol9ZQWhJp5QJW/frVXKHYBWXOIkc=;
+        b=l8a75fiZjY5h9w9muQOzt4GZbHN/EXJnkqErzXWsSS9qcMhPWKO2E3v0tqbvQy0btTKr4B
+        IYkAhDHRFKkVaIBQ==
+Date:   Sun, 7 Nov 2021 07:40:08 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211106184858.11500-11-jn.avila@free.fr>
+Subject: Re: [PATCH v2 4/9] doc: use only hyphens as word separators in
+ placeholders
+Content-Language: en-US-large
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
+        =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
+ <984b6d687a2e779c775de6ea80536afe6ecc0aaf.1635438124.git.gitgitgadget@gmail.com>
+ <ee376004-a4dd-539d-28b3-3fc5baa6fe00@archlinux.org>
+ <2803948.JoDkH9avOM@cayenne> <xmqqmtmocqz4.fsf@gitster.g>
+ <0b404448-cd4b-8614-2c49-c4683b56879f@gmail.com> <xmqqlf258aq3.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111040134110.56@tvgsbejvaqbjf.bet>
+From:   Eli Schwartz <eschwartz@archlinux.org>
+X-Clacks-Overhead: GNU Terry Pratchett
+In-Reply-To: <nycvar.QRO.7.76.6.2111040134110.56@tvgsbejvaqbjf.bet>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------1sRoxO3RP4anH3vxmGON0CLJ"
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 06, 2021 at 07:48:58PM +0100, Jean-Noël Avila wrote:
-> From: Junio C Hamano <gitster@pobox.com>
-> 
-> The description that 0640 makes sure that the group members can read
-> the repository is correct, but calling that octal number a <umask>
-> is wrong.  Let's call it <perm>, as the value is used to set the
-> permission bits.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-init.txt | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-> index af0d2ee182..42268ada22 100644
-> --- a/Documentation/git-init.txt
-> +++ b/Documentation/git-init.txt
-> @@ -79,7 +79,7 @@ repository.  If not specified, fall back to the default name (currently
->  `master`, but this is subject to change in the future; the name can be
->  customized via the `init.defaultBranch` configuration variable).
->  
-> ---shared[=(false|true|umask|group|all|world|everybody|<umask>)]::
-> +--shared[=(false|true|umask|group|all|world|everybody|<perm>)]::
->  
->  Specify that the Git repository is to be shared amongst several users.  This
->  allows users belonging to the same group to push into that
-> @@ -110,15 +110,16 @@ the repository permissions.
->  
->  Same as 'group', but make the repository readable by all users.
->  
-> -'<umask>'::
-> +'<perm>'::
->  
-> -'<umask>' is an 3-digit octal number prefixed with `0` and each file
-> -will have mode '<umask>'. '<umask>' will override users' umask(2)
-> +'<perm>' is an 3-digit octal number prefixed with `0` and each file
-> +will have mode '<perm>'. '<perm>' will override users' umask(2)
->  value (and not only loosen permissions as 'group' and 'all'
->  does). '0640' will create a repository which is group-readable, but
->  not group-writable or accessible to others. '0660' will create a repo
->  that is readable and writable to the current user and group, but
-> -inaccessible to others.
-> +inaccessible to others (directories and executable files get their
-> +`x` bit from the `r` bit for corresponding classes of uses).
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------1sRoxO3RP4anH3vxmGON0CLJ
+Content-Type: multipart/mixed; boundary="------------F80mHZ0Zot0q8GuOyaB7j90n";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@archlinux.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>,
+ =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
+ =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+Message-ID: <74eec375-e7e1-dd2a-870c-cd46d870a4e6@archlinux.org>
+Subject: Re: [PATCH v2 4/9] doc: use only hyphens as word separators in
+ placeholders
+References: <pull.1066.git.1635261072531.gitgitgadget@gmail.com>
+ <984b6d687a2e779c775de6ea80536afe6ecc0aaf.1635438124.git.gitgitgadget@gmail.com>
+ <ee376004-a4dd-539d-28b3-3fc5baa6fe00@archlinux.org>
+ <2803948.JoDkH9avOM@cayenne> <xmqqmtmocqz4.fsf@gitster.g>
+ <0b404448-cd4b-8614-2c49-c4683b56879f@gmail.com> <xmqqlf258aq3.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111040134110.56@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2111040134110.56@tvgsbejvaqbjf.bet>
 
-This confused me until I realized that "classes of uses" should be "classes of users".
+--------------F80mHZ0Zot0q8GuOyaB7j90n
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Other than that the whole series looks great.
+On 11/3/21 8:38 PM, Johannes Schindelin wrote:
+> I fear that it won't be as easy to send the next iteration as one might=
+
+> think: GitGitGadget works off of open Pull Requests on GitHub. And the
+> branch for the Pull Request corresponding to this series has been delet=
+ed,
+> thereby permanently closing the Pull Request (it cannot be reopened
+> anymore): https://github.com/gitgitgadget/git/pull/1066#event-554168943=
+7
+
+
+In fact, I know you *can* re-open such a PR. The author of the PR would
+need to restore the branch in the fork, and ensure that the latest
+commit on the branch is the same commit that it was when the branch got
+deleted.
+
+I know this is possible because I've accidentally deleted branches that
+I thought were already merged, when they got reused for another PR that
+was still open --I restored the PR by restoring the branch immediately,
+I *think* github may offer a button to do that on the PR webpage but I'm
+not sure.
+
+
+--=20
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
+
+--------------F80mHZ0Zot0q8GuOyaB7j90n--
+
+--------------1sRoxO3RP4anH3vxmGON0CLJ
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmGHySgACgkQzrFn77Vy
+K9awoBAA1+nuJuWWCHUYITYDggetJXEaaFFYNbGnzod85FtuEzq2WOdVjvbtoHZj
+yBh2err54mCqDT2wqeSknuOHJDAcfE9+4VERGQOVLdBAcABU0+hZFCXmm0umiJ+g
+xf66SwPtDnPLuybLJV1JFZqp2DjgUkrbTCJA+zjYTwn1kwbglfT8xI0RlIYBO1PH
+6QTUZtpS8PJj7Ka47IWXkiVDsjUWkfz0XgPxwc87COrdTSwLDzhO7eIcX0NXKCFw
+nLjuNQzfkdWD0xS3qArfn/bIBG1Rp7hOQDu1oKHxCpm30H0ILBTPQhAgz3od/7mq
+ZK5Q/yRRc4coWPcv92zRDIIfh97tmoNIUgWrexsdPUYw4AkRyveKZi8EBdAw4lqG
+4nDwvQYV9s/m59haVE/RovCJZwEiI0XeE45a6AlEck1NCzca+nc5OHKMhDqMG3gz
+d4kXgz6Cu6OCfiZr2dgLgN0Q1HKyd6MfqiR7lIayzNYzdMiJiZhG+5Wu0b3YSx1W
+2smyDCtifmcqqTwLY+rBETd7LN4NPRDg7yu+XinmY0w3/wxrRcJnocO6vblopdhc
+ytRaMhN5W0edDlsEm69CaCaWf5liypQanPY9IdveMn8l9b813AZewMuPhi9406JS
+CtTHOpn3Z35dz3g4wCNjTPIw9h3ZF158VlJRE2CN4yAE/V72IlE=
+=MmIg
+-----END PGP SIGNATURE-----
+
+--------------1sRoxO3RP4anH3vxmGON0CLJ--
